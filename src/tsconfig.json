@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es2015", "es2017", "dom"],
+    "module": "commonjs",
+    "sourceMap": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "baseUrl": "./",
+    "paths": {
+        "cc.decorator": [
+            "cocos/core/data/decorators/index.ts"
+        ],
+        "@cocos/engine/*": [
+            "*"
+        ]
+    },
+    "types": [
+      "./@types/globals",
+      "./@types/consts",
+      "./@types/jsb",
+      "./@types/editor-extends",
+      "./@types/webGL.extras",
+      "./@types/webGL2.extras",
+
+      // pal
+      "./@types/pal/system-info",
+      "./@types/pal/screen-adapter",
+      "./@types/pal/minigame",
+      "./@types/pal/audio",
+      "./@types/pal/input",
+      "./@types/pal/env",
+      "./@types/pal/pacer",
+      "./@types/pal/wasm"
+    ]
+  },
+  "include": [
+      "exports/**/*.ts",
+      "predefine.ts",
+      "cocos/**/*.ts",
+      "pal/**/*.ts",
+      "external/**/*.ts"
+  ],
+  "exclude": [
+      "editor"
+  ]
+}

@@ -1,0 +1,9 @@
+# Cocos Air V0.1
+node_modules/
+bin/
+build/.tmp-*/
+*.log
+.playwright-cli/
+
+# 本机智能体工作数据
+.workbuddy/

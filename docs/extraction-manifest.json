@@ -1,0 +1,3750 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-11T20:41:41.165Z",
+    "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+    "sourceOfTruth": "docs/web-dependency-graph.json",
+    "note": "destination = src/<source relative path>; engine root = src/"
+  },
+  "entries": [
+    {
+      "source": "air/app.ts",
+      "destination": "src/air/app.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "air/bootstrap.ts",
+      "destination": "src/air/bootstrap.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "air/builtin/builtin-effects.ts",
+      "destination": "src/air/builtin/builtin-effects.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "air/builtin/builtin-glsl4.ts",
+      "destination": "src/air/builtin/builtin-glsl4.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "air/builtin/builtin-material.ts",
+      "destination": "src/air/builtin/builtin-material.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "air/builtin/register.ts",
+      "destination": "src/air/builtin/register.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "air/index.ts",
+      "destination": "src/air/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/graphics/helper.ts",
+      "destination": "src/cocos/2d/assembler/graphics/helper.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/graphics/types.ts",
+      "destination": "src/cocos/2d/assembler/graphics/types.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/graphics/webgl/earcut.ts",
+      "destination": "src/cocos/2d/assembler/graphics/webgl/earcut.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/graphics/webgl/graphics-assembler.ts",
+      "destination": "src/cocos/2d/assembler/graphics/webgl/graphics-assembler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/graphics/webgl/impl.ts",
+      "destination": "src/cocos/2d/assembler/graphics/webgl/impl.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/index.ts",
+      "destination": "src/cocos/2d/assembler/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/bmfont.ts",
+      "destination": "src/cocos/2d/assembler/label/bmfont.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/bmfontUtils.ts",
+      "destination": "src/cocos/2d/assembler/label/bmfontUtils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/font-utils.ts",
+      "destination": "src/cocos/2d/assembler/label/font-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/index.ts",
+      "destination": "src/cocos/2d/assembler/label/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/letter-font.ts",
+      "destination": "src/cocos/2d/assembler/label/letter-font.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/letter.ts",
+      "destination": "src/cocos/2d/assembler/label/letter.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/text-layout.ts",
+      "destination": "src/cocos/2d/assembler/label/text-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/text-output-data.ts",
+      "destination": "src/cocos/2d/assembler/label/text-output-data.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/text-processing.ts",
+      "destination": "src/cocos/2d/assembler/label/text-processing.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/text-style.ts",
+      "destination": "src/cocos/2d/assembler/label/text-style.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/ttf.ts",
+      "destination": "src/cocos/2d/assembler/label/ttf.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/label/ttfUtils.ts",
+      "destination": "src/cocos/2d/assembler/label/ttfUtils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/sprite/bar-filled.ts",
+      "destination": "src/cocos/2d/assembler/sprite/bar-filled.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/sprite/index.ts",
+      "destination": "src/cocos/2d/assembler/sprite/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/sprite/radial-filled.ts",
+      "destination": "src/cocos/2d/assembler/sprite/radial-filled.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/sprite/simple.ts",
+      "destination": "src/cocos/2d/assembler/sprite/simple.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/sprite/sliced.ts",
+      "destination": "src/cocos/2d/assembler/sprite/sliced.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/sprite/tiled.ts",
+      "destination": "src/cocos/2d/assembler/sprite/tiled.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assembler/utils.ts",
+      "destination": "src/cocos/2d/assembler/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assets/bitmap-font.ts",
+      "destination": "src/cocos/2d/assets/bitmap-font.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assets/font.ts",
+      "destination": "src/cocos/2d/assets/font.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assets/index.ts",
+      "destination": "src/cocos/2d/assets/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assets/label-atlas.ts",
+      "destination": "src/cocos/2d/assets/label-atlas.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assets/sprite-atlas.ts",
+      "destination": "src/cocos/2d/assets/sprite-atlas.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assets/sprite-frame.ts",
+      "destination": "src/cocos/2d/assets/sprite-frame.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/assets/ttf-font.ts",
+      "destination": "src/cocos/2d/assets/ttf-font.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/deprecated.ts",
+      "destination": "src/cocos/2d/components/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/graphics.ts",
+      "destination": "src/cocos/2d/components/graphics.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/index.ts",
+      "destination": "src/cocos/2d/components/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/label-outline.ts",
+      "destination": "src/cocos/2d/components/label-outline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/label-shadow.ts",
+      "destination": "src/cocos/2d/components/label-shadow.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/label.ts",
+      "destination": "src/cocos/2d/components/label.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/mask.ts",
+      "destination": "src/cocos/2d/components/mask.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/rich-text.ts",
+      "destination": "src/cocos/2d/components/rich-text.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/sprite.ts",
+      "destination": "src/cocos/2d/components/sprite.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/ui-mesh-renderer.ts",
+      "destination": "src/cocos/2d/components/ui-mesh-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/ui-opacity.ts",
+      "destination": "src/cocos/2d/components/ui-opacity.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/components/ui-static-batch.ts",
+      "destination": "src/cocos/2d/components/ui-static-batch.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/event/index.ts",
+      "destination": "src/cocos/2d/event/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/event/pointer-event-dispatcher.ts",
+      "destination": "src/cocos/2d/event/pointer-event-dispatcher.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/canvas.ts",
+      "destination": "src/cocos/2d/framework/canvas.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/deprecated-1.2.0.ts",
+      "destination": "src/cocos/2d/framework/deprecated-1.2.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/deprecated-3.0.0.ts",
+      "destination": "src/cocos/2d/framework/deprecated-3.0.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/deprecated-3.6.0.ts",
+      "destination": "src/cocos/2d/framework/deprecated-3.6.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/deprecated.ts",
+      "destination": "src/cocos/2d/framework/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/index.ts",
+      "destination": "src/cocos/2d/framework/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/render-root-2d.ts",
+      "destination": "src/cocos/2d/framework/render-root-2d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/sprite-renderer.ts",
+      "destination": "src/cocos/2d/framework/sprite-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/ui-component.ts",
+      "destination": "src/cocos/2d/framework/ui-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/ui-renderer-manager.ts",
+      "destination": "src/cocos/2d/framework/ui-renderer-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/ui-renderer.ts",
+      "destination": "src/cocos/2d/framework/ui-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/ui-skew-utils.ts",
+      "destination": "src/cocos/2d/framework/ui-skew-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/ui-skew.ts",
+      "destination": "src/cocos/2d/framework/ui-skew.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/framework/ui-transform.ts",
+      "destination": "src/cocos/2d/framework/ui-transform.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/index.ts",
+      "destination": "src/cocos/2d/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/base.ts",
+      "destination": "src/cocos/2d/renderer/base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/batcher-2d.ts",
+      "destination": "src/cocos/2d/renderer/batcher-2d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/buffer-accessor.ts",
+      "destination": "src/cocos/2d/renderer/buffer-accessor.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/deprecated.ts",
+      "destination": "src/cocos/2d/renderer/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/draw-batch.ts",
+      "destination": "src/cocos/2d/renderer/draw-batch.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/i-batcher.ts",
+      "destination": "src/cocos/2d/renderer/i-batcher.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/mesh-buffer.ts",
+      "destination": "src/cocos/2d/renderer/mesh-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/native-2d-empty.ts",
+      "destination": "src/cocos/2d/renderer/native-2d-empty.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/native-2d.ts",
+      "destination": "src/cocos/2d/renderer/native-2d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/render-data.ts",
+      "destination": "src/cocos/2d/renderer/render-data.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/render-draw-info.ts",
+      "destination": "src/cocos/2d/renderer/render-draw-info.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/render-entity.ts",
+      "destination": "src/cocos/2d/renderer/render-entity.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/static-vb-accessor.ts",
+      "destination": "src/cocos/2d/renderer/static-vb-accessor.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/stencil-manager.ts",
+      "destination": "src/cocos/2d/renderer/stencil-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/renderer/vertex-format.ts",
+      "destination": "src/cocos/2d/renderer/vertex-format.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/utils/dynamic-atlas/atlas-manager.ts",
+      "destination": "src/cocos/2d/utils/dynamic-atlas/atlas-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/utils/dynamic-atlas/atlas.ts",
+      "destination": "src/cocos/2d/utils/dynamic-atlas/atlas.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/utils/font-loader.ts",
+      "destination": "src/cocos/2d/utils/font-loader.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/utils/html-text-parser.ts",
+      "destination": "src/cocos/2d/utils/html-text-parser.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/utils/index.ts",
+      "destination": "src/cocos/2d/utils/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/2d/utils/text-utils.ts",
+      "destination": "src/cocos/2d/utils/text-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/assets/deprecated.ts",
+      "destination": "src/cocos/3d/assets/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/assets/index.ts",
+      "destination": "src/cocos/3d/assets/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/assets/mesh.ts",
+      "destination": "src/cocos/3d/assets/mesh.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/assets/morph-rendering.ts",
+      "destination": "src/cocos/3d/assets/morph-rendering.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/assets/morph.ts",
+      "destination": "src/cocos/3d/assets/morph.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/assets/skeleton.ts",
+      "destination": "src/cocos/3d/assets/skeleton.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/framework/deprecated.ts",
+      "destination": "src/cocos/3d/framework/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/framework/index.ts",
+      "destination": "src/cocos/3d/framework/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/framework/mesh-renderer.ts",
+      "destination": "src/cocos/3d/framework/mesh-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/index.ts",
+      "destination": "src/cocos/3d/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/deprecated.ts",
+      "destination": "src/cocos/3d/lights/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/directional-light-component.ts",
+      "destination": "src/cocos/3d/lights/directional-light-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/index.ts",
+      "destination": "src/cocos/3d/lights/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/light-component.ts",
+      "destination": "src/cocos/3d/lights/light-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/point-light-component.ts",
+      "destination": "src/cocos/3d/lights/point-light-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/ranged-directional-light-component.ts",
+      "destination": "src/cocos/3d/lights/ranged-directional-light-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/sphere-light-component.ts",
+      "destination": "src/cocos/3d/lights/sphere-light-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lights/spot-light-component.ts",
+      "destination": "src/cocos/3d/lights/spot-light-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lod/index.ts",
+      "destination": "src/cocos/3d/lod/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/lod/lodgroup-component.ts",
+      "destination": "src/cocos/3d/lod/lodgroup-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/batch-utils.ts",
+      "destination": "src/cocos/3d/misc/batch-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/buffer-blob.ts",
+      "destination": "src/cocos/3d/misc/buffer-blob.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/buffer.ts",
+      "destination": "src/cocos/3d/misc/buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/create-mesh.ts",
+      "destination": "src/cocos/3d/misc/create-mesh.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/index.ts",
+      "destination": "src/cocos/3d/misc/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/joint-texture-sampler-info.ts",
+      "destination": "src/cocos/3d/misc/joint-texture-sampler-info.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/mesh-codec.ts",
+      "destination": "src/cocos/3d/misc/mesh-codec.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/ppm.ts",
+      "destination": "src/cocos/3d/misc/ppm.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/misc/read-mesh.ts",
+      "destination": "src/cocos/3d/misc/read-mesh.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/models/baked-skinning-model.ts",
+      "destination": "src/cocos/3d/models/baked-skinning-model.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/models/morph-model.ts",
+      "destination": "src/cocos/3d/models/morph-model.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/models/skinning-model.ts",
+      "destination": "src/cocos/3d/models/skinning-model.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/reflection-probe/index.ts",
+      "destination": "src/cocos/3d/reflection-probe/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/reflection-probe/reflection-probe-component.ts",
+      "destination": "src/cocos/3d/reflection-probe/reflection-probe-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/reflection-probe/reflection-probe-enum.ts",
+      "destination": "src/cocos/3d/reflection-probe/reflection-probe-enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/reflection-probe/reflection-probe-manager.ts",
+      "destination": "src/cocos/3d/reflection-probe/reflection-probe-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/data-pool-manager.ts",
+      "destination": "src/cocos/3d/skeletal-animation/data-pool-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/deprecated.ts",
+      "destination": "src/cocos/3d/skeletal-animation/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/index.ts",
+      "destination": "src/cocos/3d/skeletal-animation/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/limits.ts",
+      "destination": "src/cocos/3d/skeletal-animation/limits.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/skeletal-animation-blending.ts",
+      "destination": "src/cocos/3d/skeletal-animation/skeletal-animation-blending.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/skeletal-animation-data-hub.ts",
+      "destination": "src/cocos/3d/skeletal-animation/skeletal-animation-data-hub.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/skeletal-animation-state.ts",
+      "destination": "src/cocos/3d/skeletal-animation/skeletal-animation-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/skeletal-animation-utils.ts",
+      "destination": "src/cocos/3d/skeletal-animation/skeletal-animation-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skeletal-animation/skeletal-animation.ts",
+      "destination": "src/cocos/3d/skeletal-animation/skeletal-animation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skinned-mesh-renderer/deprecated.ts",
+      "destination": "src/cocos/3d/skinned-mesh-renderer/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skinned-mesh-renderer/index.ts",
+      "destination": "src/cocos/3d/skinned-mesh-renderer/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skinned-mesh-renderer/skinned-mesh-batch-renderer.ts",
+      "destination": "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-batch-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts",
+      "destination": "src/cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/animation-clip.ts",
+      "destination": "src/cocos/animation/animation-clip.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/animation-component.ts",
+      "destination": "src/cocos/animation/animation-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/animation-curve.ts",
+      "destination": "src/cocos/animation/animation-curve.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/animation-manager.ts",
+      "destination": "src/cocos/animation/animation-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/animation-state.ts",
+      "destination": "src/cocos/animation/animation-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/animation.ts",
+      "destination": "src/cocos/animation/animation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/auxiliary-curve-entry.ts",
+      "destination": "src/cocos/animation/auxiliary-curve-entry.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/core/animation-handle.ts",
+      "destination": "src/cocos/animation/core/animation-handle.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/core/pose-allocator.ts",
+      "destination": "src/cocos/animation/core/pose-allocator.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/core/pose-heap-allocator.ts",
+      "destination": "src/cocos/animation/core/pose-heap-allocator.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/core/pose.ts",
+      "destination": "src/cocos/animation/core/pose.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/core/shared-stack-based-allocator.ts",
+      "destination": "src/cocos/animation/core/shared-stack-based-allocator.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/core/transform-array.ts",
+      "destination": "src/cocos/animation/core/transform-array.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/core/transform.ts",
+      "destination": "src/cocos/animation/core/transform.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/cross-fade.ts",
+      "destination": "src/cocos/animation/cross-fade.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/cubic-spline-value.ts",
+      "destination": "src/cocos/animation/cubic-spline-value.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/define.ts",
+      "destination": "src/cocos/animation/define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/embedded-player/embedded-animation-clip-player.ts",
+      "destination": "src/cocos/animation/embedded-player/embedded-animation-clip-player.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/embedded-player/embedded-particle-system-player.ts",
+      "destination": "src/cocos/animation/embedded-player/embedded-particle-system-player.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/embedded-player/embedded-player.ts",
+      "destination": "src/cocos/animation/embedded-player/embedded-player.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/event/event-emitter.ts",
+      "destination": "src/cocos/animation/event/event-emitter.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/exotic-animation/exotic-animation.ts",
+      "destination": "src/cocos/animation/exotic-animation/exotic-animation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/global-animation-manager.ts",
+      "destination": "src/cocos/animation/global-animation-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/index.ts",
+      "destination": "src/cocos/animation/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/internal-symbols.ts",
+      "destination": "src/cocos/animation/internal-symbols.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/legacy-clip-data.ts",
+      "destination": "src/cocos/animation/legacy-clip-data.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-controller.ts",
+      "destination": "src/cocos/animation/marionette/animation-controller.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-graph-animation-clip-binding.ts",
+      "destination": "src/cocos/animation/marionette/animation-graph-animation-clip-binding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-graph-context.ts",
+      "destination": "src/cocos/animation/marionette/animation-graph-context.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-graph-editor-extras-clone-helper.ts",
+      "destination": "src/cocos/animation/marionette/animation-graph-editor-extras-clone-helper.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-graph-like.ts",
+      "destination": "src/cocos/animation/marionette/animation-graph-like.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-graph-variant.ts",
+      "destination": "src/cocos/animation/marionette/animation-graph-variant.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-graph.ts",
+      "destination": "src/cocos/animation/marionette/animation-graph.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/animation-mask.ts",
+      "destination": "src/cocos/animation/marionette/animation-mask.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/clip-overriding.ts",
+      "destination": "src/cocos/animation/marionette/clip-overriding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/create-eval.ts",
+      "destination": "src/cocos/animation/marionette/create-eval.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/errors.ts",
+      "destination": "src/cocos/animation/marionette/errors.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/event/event-binding.ts",
+      "destination": "src/cocos/animation/marionette/event/event-binding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/graph-debug.ts",
+      "destination": "src/cocos/animation/marionette/graph-debug.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/graph-eval.ts",
+      "destination": "src/cocos/animation/marionette/graph-eval.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/index-empty.ts",
+      "destination": "src/cocos/animation/marionette/index-empty.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/animation-blend-1d.ts",
+      "destination": "src/cocos/animation/marionette/motion/animation-blend-1d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/animation-blend-2d.ts",
+      "destination": "src/cocos/animation/marionette/motion/animation-blend-2d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/animation-blend-direct.ts",
+      "destination": "src/cocos/animation/marionette/motion/animation-blend-direct.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/animation-blend.ts",
+      "destination": "src/cocos/animation/marionette/motion/animation-blend.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/blend-1d.ts",
+      "destination": "src/cocos/animation/marionette/motion/blend-1d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/blend-2d.ts",
+      "destination": "src/cocos/animation/marionette/motion/blend-2d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/clip-motion.ts",
+      "destination": "src/cocos/animation/marionette/motion/clip-motion.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/index.ts",
+      "destination": "src/cocos/animation/marionette/motion/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/motion/motion.ts",
+      "destination": "src/cocos/animation/marionette/motion/motion.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/ownership.ts",
+      "destination": "src/cocos/animation/marionette/ownership.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/parametric.ts",
+      "destination": "src/cocos/animation/marionette/parametric.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/decorator/input.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/decorator/input.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/decorator/node.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/decorator/node.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/default-top-level-pose-node.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/default-top-level-pose-node.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/foundation/authoring/enter-node-info.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/foundation/authoring/enter-node-info.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/foundation/authoring/input-authoring.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/foundation/authoring/input-authoring.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/foundation/authoring/node-authoring.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/foundation/authoring/node-authoring.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/foundation/errors.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/foundation/errors.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/foundation/node-shell.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/foundation/node-shell.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/foundation/pose-graph-node.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/foundation/pose-graph-node.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/foundation/type-system.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/foundation/type-system.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/graph-output-node.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/graph-output-node.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/instantiation.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/instantiation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/motion-sync/motion-sync-info.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/motion-sync/motion-sync-info.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/motion-sync/runtime-motion-sync.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/motion-sync/runtime-motion-sync.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-graph.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-graph.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-node.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-node.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/menu-common.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/menu-common.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/play-motion.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/play-motion.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/play-or-sample-motion-pose-node-shared.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/play-or-sample-motion-pose-node-shared.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/transform-space.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/transform-space.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pure-value-node.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pure-value-node.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/stash/runtime-stash.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/stash/runtime-stash.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/runtime-exports.ts",
+      "destination": "src/cocos/animation/marionette/runtime-exports.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binary-condition.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binary-condition.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binding/auxiliary-curve-binding.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binding/auxiliary-curve-binding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binding/binding.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binding/binding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binding/editor.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binding/editor.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binding/runtime.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binding/runtime.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binding/state-motion-time-binding.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binding/state-motion-time-binding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binding/state-weight-binding.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binding/state-weight-binding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/binding/variable-binding.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/binding/variable-binding.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/condition-base.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/condition-base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/index.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/trigger-condition.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/trigger-condition.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/condition/unary-condition.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/condition/unary-condition.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/motion-state.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/motion-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/state-machine-component.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/state-machine-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/state-machine-eval.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/state-machine-eval.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/state-machine/state.ts",
+      "destination": "src/cocos/animation/marionette/state-machine/state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/variable/basic.ts",
+      "destination": "src/cocos/animation/marionette/variable/basic.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/variable/index.ts",
+      "destination": "src/cocos/animation/marionette/variable/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/variable/primitive-variable.ts",
+      "destination": "src/cocos/animation/marionette/variable/primitive-variable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/variable/quat-variable.ts",
+      "destination": "src/cocos/animation/marionette/variable/quat-variable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/variable/trigger-variable.ts",
+      "destination": "src/cocos/animation/marionette/variable/trigger-variable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/marionette/variable/vec3-variable.ts",
+      "destination": "src/cocos/animation/marionette/variable/vec3-variable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/playable.ts",
+      "destination": "src/cocos/animation/playable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/pose-output.ts",
+      "destination": "src/cocos/animation/pose-output.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/skeletal-animation-utils.ts",
+      "destination": "src/cocos/animation/skeletal-animation-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/target-path.ts",
+      "destination": "src/cocos/animation/target-path.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/array-track.ts",
+      "destination": "src/cocos/animation/tracks/array-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/color-track.ts",
+      "destination": "src/cocos/animation/tracks/color-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/object-track.ts",
+      "destination": "src/cocos/animation/tracks/object-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/quat-track.ts",
+      "destination": "src/cocos/animation/tracks/quat-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/real-track.ts",
+      "destination": "src/cocos/animation/tracks/real-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/size-track.ts",
+      "destination": "src/cocos/animation/tracks/size-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/track.ts",
+      "destination": "src/cocos/animation/tracks/track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/untyped-track.ts",
+      "destination": "src/cocos/animation/tracks/untyped-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/utils.ts",
+      "destination": "src/cocos/animation/tracks/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/tracks/vector-track.ts",
+      "destination": "src/cocos/animation/tracks/vector-track.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/transform-utils.ts",
+      "destination": "src/cocos/animation/transform-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/types.ts",
+      "destination": "src/cocos/animation/types.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/value-proxy-factories/morph-weights.ts",
+      "destination": "src/cocos/animation/value-proxy-factories/morph-weights.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/value-proxy-factories/uniform.ts",
+      "destination": "src/cocos/animation/value-proxy-factories/uniform.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/value-proxy.ts",
+      "destination": "src/cocos/animation/value-proxy.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/animation/wrap.ts",
+      "destination": "src/cocos/animation/wrap.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/asset-manager.ts",
+      "destination": "src/cocos/asset/asset-manager/asset-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/bin-package-unpack.ts",
+      "destination": "src/cocos/asset/asset-manager/bin-package-unpack.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/builtin-res-mgr.ts",
+      "destination": "src/cocos/asset/asset-manager/builtin-res-mgr.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/bundle.ts",
+      "destination": "src/cocos/asset/asset-manager/bundle.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/cache-manager.ts",
+      "destination": "src/cocos/asset/asset-manager/cache-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/cache.ts",
+      "destination": "src/cocos/asset/asset-manager/cache.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/config.ts",
+      "destination": "src/cocos/asset/asset-manager/config.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/depend-maps.ts",
+      "destination": "src/cocos/asset/asset-manager/depend-maps.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/depend-util.ts",
+      "destination": "src/cocos/asset/asset-manager/depend-util.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/deprecated.ts",
+      "destination": "src/cocos/asset/asset-manager/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/deserialize.ts",
+      "destination": "src/cocos/asset/asset-manager/deserialize.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/download-dom-image.ts",
+      "destination": "src/cocos/asset/asset-manager/download-dom-image.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/download-file.ts",
+      "destination": "src/cocos/asset/asset-manager/download-file.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/download-script.ts",
+      "destination": "src/cocos/asset/asset-manager/download-script.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/downloader.ts",
+      "destination": "src/cocos/asset/asset-manager/downloader.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/editor-path-replace.ts",
+      "destination": "src/cocos/asset/asset-manager/editor-path-replace.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/factory.ts",
+      "destination": "src/cocos/asset/asset-manager/factory.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/fetch.ts",
+      "destination": "src/cocos/asset/asset-manager/fetch.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/helper.ts",
+      "destination": "src/cocos/asset/asset-manager/helper.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/index.ts",
+      "destination": "src/cocos/asset/asset-manager/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/load.ts",
+      "destination": "src/cocos/asset/asset-manager/load.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/pack-manager.ts",
+      "destination": "src/cocos/asset/asset-manager/pack-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/parser.ts",
+      "destination": "src/cocos/asset/asset-manager/parser.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/pipeline.ts",
+      "destination": "src/cocos/asset/asset-manager/pipeline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/plist-parser.ts",
+      "destination": "src/cocos/asset/asset-manager/plist-parser.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/preprocess.ts",
+      "destination": "src/cocos/asset/asset-manager/preprocess.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/release-manager.ts",
+      "destination": "src/cocos/asset/asset-manager/release-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/request-item.ts",
+      "destination": "src/cocos/asset/asset-manager/request-item.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/shared.ts",
+      "destination": "src/cocos/asset/asset-manager/shared.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/task.ts",
+      "destination": "src/cocos/asset/asset-manager/task.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/url-transformer.ts",
+      "destination": "src/cocos/asset/asset-manager/url-transformer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/utilities.ts",
+      "destination": "src/cocos/asset/asset-manager/utilities.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/asset-manager/weak-cache.ts",
+      "destination": "src/cocos/asset/asset-manager/weak-cache.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/asset-enum.ts",
+      "destination": "src/cocos/asset/assets/asset-enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/asset.ts",
+      "destination": "src/cocos/asset/assets/asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/buffer-asset.ts",
+      "destination": "src/cocos/asset/assets/buffer-asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/deprecation.ts",
+      "destination": "src/cocos/asset/assets/deprecation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/effect-asset.ts",
+      "destination": "src/cocos/asset/assets/effect-asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/image-asset.ts",
+      "destination": "src/cocos/asset/assets/image-asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/index.ts",
+      "destination": "src/cocos/asset/assets/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/json-asset.ts",
+      "destination": "src/cocos/asset/assets/json-asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/material.ts",
+      "destination": "src/cocos/asset/assets/material.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/render-texture.ts",
+      "destination": "src/cocos/asset/assets/render-texture.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/rendering-sub-mesh.ts",
+      "destination": "src/cocos/asset/assets/rendering-sub-mesh.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/scene-asset.ts",
+      "destination": "src/cocos/asset/assets/scene-asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/scripts.ts",
+      "destination": "src/cocos/asset/assets/scripts.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/simple-texture.ts",
+      "destination": "src/cocos/asset/assets/simple-texture.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/text-asset.ts",
+      "destination": "src/cocos/asset/assets/text-asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/texture-2d.ts",
+      "destination": "src/cocos/asset/assets/texture-2d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/texture-base.ts",
+      "destination": "src/cocos/asset/assets/texture-base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/asset/assets/texture-cube.ts",
+      "destination": "src/cocos/asset/assets/texture-cube.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/algorithm/binary-search.ts",
+      "destination": "src/cocos/core/algorithm/binary-search.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/algorithm/easing.ts",
+      "destination": "src/cocos/core/algorithm/easing.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/algorithm/index.ts",
+      "destination": "src/cocos/core/algorithm/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/algorithm/move.ts",
+      "destination": "src/cocos/core/algorithm/move.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/algorithm/murmurhash2_gc.ts",
+      "destination": "src/cocos/core/algorithm/murmurhash2_gc.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/algorithm/partition.ts",
+      "destination": "src/cocos/core/algorithm/partition.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/bezier.ts",
+      "destination": "src/cocos/core/curves/bezier.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/curve-base.ts",
+      "destination": "src/cocos/core/curves/curve-base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/curve.ts",
+      "destination": "src/cocos/core/curves/curve.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/easing-method.ts",
+      "destination": "src/cocos/core/curves/easing-method.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/gradient.ts",
+      "destination": "src/cocos/core/curves/gradient.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/index.ts",
+      "destination": "src/cocos/core/curves/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/keyframe-curve.ts",
+      "destination": "src/cocos/core/curves/keyframe-curve.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/object-curve.ts",
+      "destination": "src/cocos/core/curves/object-curve.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/quat-curve.ts",
+      "destination": "src/cocos/core/curves/quat-curve.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/real-curve-param.ts",
+      "destination": "src/cocos/core/curves/real-curve-param.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/curves/solve-cubic.ts",
+      "destination": "src/cocos/core/curves/solve-cubic.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/class-decorator.ts",
+      "destination": "src/cocos/core/data/class-decorator.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/class-stash.ts",
+      "destination": "src/cocos/core/data/class-stash.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/class.ts",
+      "destination": "src/cocos/core/data/class.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/custom-serializable.ts",
+      "destination": "src/cocos/core/data/custom-serializable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/ccclass.ts",
+      "destination": "src/cocos/core/data/decorators/ccclass.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/component.ts",
+      "destination": "src/cocos/core/data/decorators/component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/editable.ts",
+      "destination": "src/cocos/core/data/decorators/editable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/index.ts",
+      "destination": "src/cocos/core/data/decorators/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/override.ts",
+      "destination": "src/cocos/core/data/decorators/override.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/property.ts",
+      "destination": "src/cocos/core/data/decorators/property.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/serializable.ts",
+      "destination": "src/cocos/core/data/decorators/serializable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/type.ts",
+      "destination": "src/cocos/core/data/decorators/type.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/decorators/utils.ts",
+      "destination": "src/cocos/core/data/decorators/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/editor-extendable.ts",
+      "destination": "src/cocos/core/data/editor-extendable.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/editor-extras-tag.ts",
+      "destination": "src/cocos/core/data/editor-extras-tag.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/garbage-collection.ts",
+      "destination": "src/cocos/core/data/garbage-collection.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/gc-object.ts",
+      "destination": "src/cocos/core/data/gc-object.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/index.ts",
+      "destination": "src/cocos/core/data/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/object.ts",
+      "destination": "src/cocos/core/data/object.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/serialization-metadata.ts",
+      "destination": "src/cocos/core/data/serialization-metadata.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/asserts.ts",
+      "destination": "src/cocos/core/data/utils/asserts.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/attribute-defines.ts",
+      "destination": "src/cocos/core/data/utils/attribute-defines.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/attribute-internal.ts",
+      "destination": "src/cocos/core/data/utils/attribute-internal.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/attribute.ts",
+      "destination": "src/cocos/core/data/utils/attribute.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/compact-value-type-array.ts",
+      "destination": "src/cocos/core/data/utils/compact-value-type-array.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/compiler.ts",
+      "destination": "src/cocos/core/data/utils/compiler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/preprocess-class.ts",
+      "destination": "src/cocos/core/data/utils/preprocess-class.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/data/utils/requiring-frame.ts",
+      "destination": "src/cocos/core/data/utils/requiring-frame.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/deprecated-3.7.0.ts",
+      "destination": "src/cocos/core/deprecated-3.7.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/deprecated.ts",
+      "destination": "src/cocos/core/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/effect-settings.ts",
+      "destination": "src/cocos/core/effect-settings.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/event/async-delegate.ts",
+      "destination": "src/cocos/core/event/async-delegate.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/event/callbacks-invoker.ts",
+      "destination": "src/cocos/core/event/callbacks-invoker.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/event/event-target-factory.ts",
+      "destination": "src/cocos/core/event/event-target-factory.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/event/event-target.ts",
+      "destination": "src/cocos/core/event/event-target.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/event/eventify.ts",
+      "destination": "src/cocos/core/event/eventify.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/event/index.ts",
+      "destination": "src/cocos/core/event/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/aabb.ts",
+      "destination": "src/cocos/core/geometry/aabb.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/capsule.ts",
+      "destination": "src/cocos/core/geometry/capsule.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/curve.ts",
+      "destination": "src/cocos/core/geometry/curve.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/deprecated-3.0.0.ts",
+      "destination": "src/cocos/core/geometry/deprecated-3.0.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/deprecated.ts",
+      "destination": "src/cocos/core/geometry/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/distance.ts",
+      "destination": "src/cocos/core/geometry/distance.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/enums.ts",
+      "destination": "src/cocos/core/geometry/enums.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/frustum.ts",
+      "destination": "src/cocos/core/geometry/frustum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/geometry-native-ext.ts",
+      "destination": "src/cocos/core/geometry/geometry-native-ext.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/index.ts",
+      "destination": "src/cocos/core/geometry/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/intersect.ts",
+      "destination": "src/cocos/core/geometry/intersect.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/line.ts",
+      "destination": "src/cocos/core/geometry/line.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/obb.ts",
+      "destination": "src/cocos/core/geometry/obb.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/plane.ts",
+      "destination": "src/cocos/core/geometry/plane.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/ray.ts",
+      "destination": "src/cocos/core/geometry/ray.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/spec.ts",
+      "destination": "src/cocos/core/geometry/spec.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/sphere.ts",
+      "destination": "src/cocos/core/geometry/sphere.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/spline.ts",
+      "destination": "src/cocos/core/geometry/spline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/geometry/triangle.ts",
+      "destination": "src/cocos/core/geometry/triangle.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/global-exports.ts",
+      "destination": "src/cocos/core/global-exports.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/index.ts",
+      "destination": "src/cocos/core/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/internal-index.ts",
+      "destination": "src/cocos/core/internal-index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/legacy.ts",
+      "destination": "src/cocos/core/legacy.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/bits.ts",
+      "destination": "src/cocos/core/math/bits.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/color.ts",
+      "destination": "src/cocos/core/math/color.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/deprecated.ts",
+      "destination": "src/cocos/core/math/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/index.ts",
+      "destination": "src/cocos/core/math/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/mat3.ts",
+      "destination": "src/cocos/core/math/mat3.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/mat4.ts",
+      "destination": "src/cocos/core/math/mat4.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/math-base.ts",
+      "destination": "src/cocos/core/math/math-base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/math-native-ext.ts",
+      "destination": "src/cocos/core/math/math-native-ext.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/quat.ts",
+      "destination": "src/cocos/core/math/quat.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/rect.ts",
+      "destination": "src/cocos/core/math/rect.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/size.ts",
+      "destination": "src/cocos/core/math/size.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/type-define.ts",
+      "destination": "src/cocos/core/math/type-define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/utils.ts",
+      "destination": "src/cocos/core/math/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/vec2.ts",
+      "destination": "src/cocos/core/math/vec2.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/vec3.ts",
+      "destination": "src/cocos/core/math/vec3.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/math/vec4.ts",
+      "destination": "src/cocos/core/math/vec4.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/memop/cached-array.ts",
+      "destination": "src/cocos/core/memop/cached-array.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/memop/index.ts",
+      "destination": "src/cocos/core/memop/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/memop/pool.ts",
+      "destination": "src/cocos/core/memop/pool.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/memop/recycle-pool.ts",
+      "destination": "src/cocos/core/memop/recycle-pool.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/memop/scalable-container.ts",
+      "destination": "src/cocos/core/memop/scalable-container.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/platform/debug.ts",
+      "destination": "src/cocos/core/platform/debug.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/platform/deprecated.ts",
+      "destination": "src/cocos/core/platform/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/platform/index.ts",
+      "destination": "src/cocos/core/platform/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/platform/macro.ts",
+      "destination": "src/cocos/core/platform/macro.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/platform/screen.ts",
+      "destination": "src/cocos/core/platform/screen.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/platform/sys.ts",
+      "destination": "src/cocos/core/platform/sys.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/platform/visible-rect.ts",
+      "destination": "src/cocos/core/platform/visible-rect.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/scheduler.ts",
+      "destination": "src/cocos/core/scheduler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/settings.ts",
+      "destination": "src/cocos/core/settings.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/system.ts",
+      "destination": "src/cocos/core/system.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/array.ts",
+      "destination": "src/cocos/core/utils/array.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/coordinates-converts-utils.ts",
+      "destination": "src/cocos/core/utils/coordinates-converts-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/decode-uuid.ts",
+      "destination": "src/cocos/core/utils/decode-uuid.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/deprecated-3.6.0.ts",
+      "destination": "src/cocos/core/utils/deprecated-3.6.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/id-generator.ts",
+      "destination": "src/cocos/core/utils/id-generator.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/index.ts",
+      "destination": "src/cocos/core/utils/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/internal.ts",
+      "destination": "src/cocos/core/utils/internal.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/js-typed.ts",
+      "destination": "src/cocos/core/utils/js-typed.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/js.ts",
+      "destination": "src/cocos/core/utils/js.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/jsb-utils.ts",
+      "destination": "src/cocos/core/utils/jsb-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/misc.ts",
+      "destination": "src/cocos/core/utils/misc.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/path.ts",
+      "destination": "src/cocos/core/utils/path.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/pool.ts",
+      "destination": "src/cocos/core/utils/pool.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/utils/x-deprecated.ts",
+      "destination": "src/cocos/core/utils/x-deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/value-types/bitmask.ts",
+      "destination": "src/cocos/core/value-types/bitmask.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/value-types/enum.ts",
+      "destination": "src/cocos/core/value-types/enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/value-types/index.ts",
+      "destination": "src/cocos/core/value-types/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/core/value-types/value-type.ts",
+      "destination": "src/cocos/core/value-types/value-type.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/game/deprecated.ts",
+      "destination": "src/cocos/game/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/game/director.ts",
+      "destination": "src/cocos/game/director.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/game/game.ts",
+      "destination": "src/cocos/game/game.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/game/index.ts",
+      "destination": "src/cocos/game/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/game/splash-screen.ts",
+      "destination": "src/cocos/game/splash-screen.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/buffer.ts",
+      "destination": "src/cocos/gfx/base/buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/command-buffer.ts",
+      "destination": "src/cocos/gfx/base/command-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/define.ts",
+      "destination": "src/cocos/gfx/base/define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/descriptor-set-layout.ts",
+      "destination": "src/cocos/gfx/base/descriptor-set-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/descriptor-set.ts",
+      "destination": "src/cocos/gfx/base/descriptor-set.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/device.ts",
+      "destination": "src/cocos/gfx/base/device.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/framebuffer.ts",
+      "destination": "src/cocos/gfx/base/framebuffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/input-assembler.ts",
+      "destination": "src/cocos/gfx/base/input-assembler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/pipeline-layout.ts",
+      "destination": "src/cocos/gfx/base/pipeline-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/pipeline-state.ts",
+      "destination": "src/cocos/gfx/base/pipeline-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/pipeline-sub-state.ts",
+      "destination": "src/cocos/gfx/base/pipeline-sub-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/queue.ts",
+      "destination": "src/cocos/gfx/base/queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/render-pass.ts",
+      "destination": "src/cocos/gfx/base/render-pass.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/shader.ts",
+      "destination": "src/cocos/gfx/base/shader.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/states/buffer-barrier.ts",
+      "destination": "src/cocos/gfx/base/states/buffer-barrier.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/states/general-barrier.ts",
+      "destination": "src/cocos/gfx/base/states/general-barrier.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/states/sampler.ts",
+      "destination": "src/cocos/gfx/base/states/sampler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/states/texture-barrier.ts",
+      "destination": "src/cocos/gfx/base/states/texture-barrier.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/swapchain.ts",
+      "destination": "src/cocos/gfx/base/swapchain.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/base/texture.ts",
+      "destination": "src/cocos/gfx/base/texture.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/deprecated-3.0.0.ts",
+      "destination": "src/cocos/gfx/deprecated-3.0.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/deprecated-3.5.0.ts",
+      "destination": "src/cocos/gfx/deprecated-3.5.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/device-manager.ts",
+      "destination": "src/cocos/gfx/device-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/index.ts",
+      "destination": "src/cocos/gfx/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/polyfill-legacy-cc.ts",
+      "destination": "src/cocos/gfx/polyfill-legacy-cc.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gi/light-probe/auto-placement.ts",
+      "destination": "src/cocos/gi/light-probe/auto-placement.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gi/light-probe/delaunay.ts",
+      "destination": "src/cocos/gi/light-probe/delaunay.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gi/light-probe/index.ts",
+      "destination": "src/cocos/gi/light-probe/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gi/light-probe/light-probe-group.ts",
+      "destination": "src/cocos/gi/light-probe/light-probe-group.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gi/light-probe/light-probe.ts",
+      "destination": "src/cocos/gi/light-probe/light-probe.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gi/light-probe/polynomial-solver.ts",
+      "destination": "src/cocos/gi/light-probe/polynomial-solver.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gi/light-probe/sh.ts",
+      "destination": "src/cocos/gi/light-probe/sh.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/deprecated-3.3.0.ts",
+      "destination": "src/cocos/input/deprecated-3.3.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/deprecated-3.4.0.ts",
+      "destination": "src/cocos/input/deprecated-3.4.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/deprecated.ts",
+      "destination": "src/cocos/input/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/index.ts",
+      "destination": "src/cocos/input/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/input.ts",
+      "destination": "src/cocos/input/input.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/system-event.ts",
+      "destination": "src/cocos/input/system-event.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/acceleration.ts",
+      "destination": "src/cocos/input/types/acceleration.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event-enum.ts",
+      "destination": "src/cocos/input/types/event-enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-acceleration.ts",
+      "destination": "src/cocos/input/types/event/event-acceleration.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-gamepad.ts",
+      "destination": "src/cocos/input/types/event/event-gamepad.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-handheld.ts",
+      "destination": "src/cocos/input/types/event/event-handheld.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-handle.ts",
+      "destination": "src/cocos/input/types/event/event-handle.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-hmd.ts",
+      "destination": "src/cocos/input/types/event/event-hmd.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-keyboard.ts",
+      "destination": "src/cocos/input/types/event/event-keyboard.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-mouse.ts",
+      "destination": "src/cocos/input/types/event/event-mouse.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event-touch.ts",
+      "destination": "src/cocos/input/types/event/event-touch.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/event.ts",
+      "destination": "src/cocos/input/types/event/event.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/event/index.ts",
+      "destination": "src/cocos/input/types/event/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/index.ts",
+      "destination": "src/cocos/input/types/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/key-code.ts",
+      "destination": "src/cocos/input/types/key-code.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/input/types/touch.ts",
+      "destination": "src/cocos/input/types/touch.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/FeedStatusController.ts",
+      "destination": "src/cocos/misc/FeedStatusController.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/camera-component.ts",
+      "destination": "src/cocos/misc/camera-component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/deprecated.ts",
+      "destination": "src/cocos/misc/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/index.ts",
+      "destination": "src/cocos/misc/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/intersect.ts",
+      "destination": "src/cocos/misc/intersect.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/missing-script.ts",
+      "destination": "src/cocos/misc/missing-script.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/model-renderer.ts",
+      "destination": "src/cocos/misc/model-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/prefab-link.ts",
+      "destination": "src/cocos/misc/prefab-link.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/renderer.ts",
+      "destination": "src/cocos/misc/renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/misc/webassembly-support.ts",
+      "destination": "src/cocos/misc/webassembly-support.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/native-binding/impl.ts",
+      "destination": "src/cocos/native-binding/impl.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/native-binding/index.ts",
+      "destination": "src/cocos/native-binding/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/color-overtime.ts",
+      "destination": "src/cocos/particle/animator/color-overtime.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/curve-range.ts",
+      "destination": "src/cocos/particle/animator/curve-range.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/force-overtime.ts",
+      "destination": "src/cocos/particle/animator/force-overtime.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/gradient-range.ts",
+      "destination": "src/cocos/particle/animator/gradient-range.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/limit-velocity-overtime.ts",
+      "destination": "src/cocos/particle/animator/limit-velocity-overtime.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/noise-module.ts",
+      "destination": "src/cocos/particle/animator/noise-module.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/rotation-overtime.ts",
+      "destination": "src/cocos/particle/animator/rotation-overtime.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/size-overtime.ts",
+      "destination": "src/cocos/particle/animator/size-overtime.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/texture-animation.ts",
+      "destination": "src/cocos/particle/animator/texture-animation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/animator/velocity-overtime.ts",
+      "destination": "src/cocos/particle/animator/velocity-overtime.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/billboard.ts",
+      "destination": "src/cocos/particle/billboard.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/burst.ts",
+      "destination": "src/cocos/particle/burst.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/deprecated.ts",
+      "destination": "src/cocos/particle/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/emitter/shape-module.ts",
+      "destination": "src/cocos/particle/emitter/shape-module.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/enum.ts",
+      "destination": "src/cocos/particle/enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/index.ts",
+      "destination": "src/cocos/particle/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/line.ts",
+      "destination": "src/cocos/particle/line.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/models/line-model.ts",
+      "destination": "src/cocos/particle/models/line-model.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/models/particle-batch-model.ts",
+      "destination": "src/cocos/particle/models/particle-batch-model.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/noise.ts",
+      "destination": "src/cocos/particle/noise.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/particle-culler.ts",
+      "destination": "src/cocos/particle/particle-culler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/particle-general-function.ts",
+      "destination": "src/cocos/particle/particle-general-function.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/particle-system.ts",
+      "destination": "src/cocos/particle/particle-system.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/particle-utils.ts",
+      "destination": "src/cocos/particle/particle-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/particle.ts",
+      "destination": "src/cocos/particle/particle.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/renderer/particle-system-renderer-base.ts",
+      "destination": "src/cocos/particle/renderer/particle-system-renderer-base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/renderer/particle-system-renderer-cpu.ts",
+      "destination": "src/cocos/particle/renderer/particle-system-renderer-cpu.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/renderer/particle-system-renderer-data.ts",
+      "destination": "src/cocos/particle/renderer/particle-system-renderer-data.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/renderer/particle-system-renderer-gpu.ts",
+      "destination": "src/cocos/particle/renderer/particle-system-renderer-gpu.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/particle/renderer/trail.ts",
+      "destination": "src/cocos/particle/renderer/trail.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/assets/physics-material.ts",
+      "destination": "src/cocos/physics/framework/assets/physics-material.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/collision-matrix.ts",
+      "destination": "src/cocos/physics/framework/collision-matrix.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/character-controllers/box-character-controller.ts",
+      "destination": "src/cocos/physics/framework/components/character-controllers/box-character-controller.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/character-controllers/capsule-character-controller.ts",
+      "destination": "src/cocos/physics/framework/components/character-controllers/capsule-character-controller.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/character-controllers/character-controller.ts",
+      "destination": "src/cocos/physics/framework/components/character-controllers/character-controller.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/box-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/box-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/capsule-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/capsule-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/cone-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/cone-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/cylinder-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/cylinder-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/mesh-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/mesh-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/plane-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/plane-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/simplex-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/simplex-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/sphere-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/sphere-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/colliders/terrain-collider.ts",
+      "destination": "src/cocos/physics/framework/components/colliders/terrain-collider.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/constant-force.ts",
+      "destination": "src/cocos/physics/framework/components/constant-force.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/constraints/configurable-constraint.ts",
+      "destination": "src/cocos/physics/framework/components/constraints/configurable-constraint.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/constraints/constraint.ts",
+      "destination": "src/cocos/physics/framework/components/constraints/constraint.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/constraints/fixed-constraint.ts",
+      "destination": "src/cocos/physics/framework/components/constraints/fixed-constraint.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/constraints/hinge-constraint.ts",
+      "destination": "src/cocos/physics/framework/components/constraints/hinge-constraint.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/constraints/point-to-point-constraint.ts",
+      "destination": "src/cocos/physics/framework/components/constraints/point-to-point-constraint.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/components/rigid-body.ts",
+      "destination": "src/cocos/physics/framework/components/rigid-body.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/deprecated.ts",
+      "destination": "src/cocos/physics/framework/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/index.ts",
+      "destination": "src/cocos/physics/framework/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/physics-config.ts",
+      "destination": "src/cocos/physics/framework/physics-config.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/physics-enum.ts",
+      "destination": "src/cocos/physics/framework/physics-enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/physics-interface.ts",
+      "destination": "src/cocos/physics/framework/physics-interface.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/physics-ray-result.ts",
+      "destination": "src/cocos/physics/framework/physics-ray-result.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/physics-selector.ts",
+      "destination": "src/cocos/physics/framework/physics-selector.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/framework/physics-system.ts",
+      "destination": "src/cocos/physics/framework/physics-system.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-character-controller.ts",
+      "destination": "src/cocos/physics/spec/i-character-controller.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-external.ts",
+      "destination": "src/cocos/physics/spec/i-external.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-group-mask.ts",
+      "destination": "src/cocos/physics/spec/i-group-mask.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-lifecycle.ts",
+      "destination": "src/cocos/physics/spec/i-lifecycle.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-physics-constraint.ts",
+      "destination": "src/cocos/physics/spec/i-physics-constraint.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-physics-shape.ts",
+      "destination": "src/cocos/physics/spec/i-physics-shape.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-physics-world.ts",
+      "destination": "src/cocos/physics/spec/i-physics-world.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/spec/i-rigid-body.ts",
+      "destination": "src/cocos/physics/spec/i-rigid-body.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/physics/utils/util.ts",
+      "destination": "src/cocos/physics/utils/util.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/box.ts",
+      "destination": "src/cocos/primitive/box.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/capsule.ts",
+      "destination": "src/cocos/primitive/capsule.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/circle.ts",
+      "destination": "src/cocos/primitive/circle.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/cone.ts",
+      "destination": "src/cocos/primitive/cone.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/cylinder.ts",
+      "destination": "src/cocos/primitive/cylinder.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/define.ts",
+      "destination": "src/cocos/primitive/define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/index.ts",
+      "destination": "src/cocos/primitive/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/plane.ts",
+      "destination": "src/cocos/primitive/plane.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/primitive.ts",
+      "destination": "src/cocos/primitive/primitive.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/quad.ts",
+      "destination": "src/cocos/primitive/quad.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/sphere.ts",
+      "destination": "src/cocos/primitive/sphere.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/torus.ts",
+      "destination": "src/cocos/primitive/torus.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/transform.ts",
+      "destination": "src/cocos/primitive/transform.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/primitive/utils.ts",
+      "destination": "src/cocos/primitive/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/constants.ts",
+      "destination": "src/cocos/render-scene/core/constants.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/material-instance.ts",
+      "destination": "src/cocos/render-scene/core/material-instance.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/memory-pools.ts",
+      "destination": "src/cocos/render-scene/core/memory-pools.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/native-pools.ts",
+      "destination": "src/cocos/render-scene/core/native-pools.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/pass-instance.ts",
+      "destination": "src/cocos/render-scene/core/pass-instance.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/pass-utils.ts",
+      "destination": "src/cocos/render-scene/core/pass-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/pass.ts",
+      "destination": "src/cocos/render-scene/core/pass.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/program-lib.ts",
+      "destination": "src/cocos/render-scene/core/program-lib.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/program-utils.ts",
+      "destination": "src/cocos/render-scene/core/program-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/render-scene.ts",
+      "destination": "src/cocos/render-scene/core/render-scene.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/render-window.ts",
+      "destination": "src/cocos/render-scene/core/render-window.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/core/texture-buffer-pool.ts",
+      "destination": "src/cocos/render-scene/core/texture-buffer-pool.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/deprecated.ts",
+      "destination": "src/cocos/render-scene/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/index.ts",
+      "destination": "src/cocos/render-scene/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/ambient.ts",
+      "destination": "src/cocos/render-scene/scene/ambient.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/camera.ts",
+      "destination": "src/cocos/render-scene/scene/camera.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/directional-light.ts",
+      "destination": "src/cocos/render-scene/scene/directional-light.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/fog.ts",
+      "destination": "src/cocos/render-scene/scene/fog.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/index.ts",
+      "destination": "src/cocos/render-scene/scene/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/light.ts",
+      "destination": "src/cocos/render-scene/scene/light.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/lod-group.ts",
+      "destination": "src/cocos/render-scene/scene/lod-group.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/model.ts",
+      "destination": "src/cocos/render-scene/scene/model.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/octree.ts",
+      "destination": "src/cocos/render-scene/scene/octree.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/point-light.ts",
+      "destination": "src/cocos/render-scene/scene/point-light.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/post-settings.ts",
+      "destination": "src/cocos/render-scene/scene/post-settings.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/ranged-directional-light.ts",
+      "destination": "src/cocos/render-scene/scene/ranged-directional-light.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/reflection-probe.ts",
+      "destination": "src/cocos/render-scene/scene/reflection-probe.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/shadows.ts",
+      "destination": "src/cocos/render-scene/scene/shadows.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/skin.ts",
+      "destination": "src/cocos/render-scene/scene/skin.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/skybox.ts",
+      "destination": "src/cocos/render-scene/scene/skybox.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/sphere-light.ts",
+      "destination": "src/cocos/render-scene/scene/sphere-light.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/spot-light.ts",
+      "destination": "src/cocos/render-scene/scene/spot-light.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/scene/submodel.ts",
+      "destination": "src/cocos/render-scene/scene/submodel.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/render-scene/utils.ts",
+      "destination": "src/cocos/render-scene/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/archive.ts",
+      "destination": "src/cocos/rendering/custom/archive.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/binary-archive.ts",
+      "destination": "src/cocos/rendering/custom/binary-archive.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/compiler.ts",
+      "destination": "src/cocos/rendering/custom/compiler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/define.ts",
+      "destination": "src/cocos/rendering/custom/define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/effect.ts",
+      "destination": "src/cocos/rendering/custom/effect.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/executor.ts",
+      "destination": "src/cocos/rendering/custom/executor.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/framework.ts",
+      "destination": "src/cocos/rendering/custom/framework.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/graph.ts",
+      "destination": "src/cocos/rendering/custom/graph.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/index.ts",
+      "destination": "src/cocos/rendering/custom/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/layout-graph-utils.ts",
+      "destination": "src/cocos/rendering/custom/layout-graph-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/layout-graph.ts",
+      "destination": "src/cocos/rendering/custom/layout-graph.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/pipeline.ts",
+      "destination": "src/cocos/rendering/custom/pipeline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/private.ts",
+      "destination": "src/cocos/rendering/custom/private.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/render-graph.ts",
+      "destination": "src/cocos/rendering/custom/render-graph.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/scene-culling.ts",
+      "destination": "src/cocos/rendering/custom/scene-culling.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/serialization.ts",
+      "destination": "src/cocos/rendering/custom/serialization.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/types.ts",
+      "destination": "src/cocos/rendering/custom/types.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/utils.ts",
+      "destination": "src/cocos/rendering/custom/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/web-pipeline-types.ts",
+      "destination": "src/cocos/rendering/custom/web-pipeline-types.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/web-pipeline.ts",
+      "destination": "src/cocos/rendering/custom/web-pipeline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/web-program-library.ts",
+      "destination": "src/cocos/rendering/custom/web-program-library.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/custom/web-types.ts",
+      "destination": "src/cocos/rendering/custom/web-types.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/debug-view.ts",
+      "destination": "src/cocos/rendering/debug-view.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/define.ts",
+      "destination": "src/cocos/rendering/define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/geometry-renderer.ts",
+      "destination": "src/cocos/rendering/geometry-renderer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/global-descriptor-set-manager.ts",
+      "destination": "src/cocos/rendering/global-descriptor-set-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/index.ts",
+      "destination": "src/cocos/rendering/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/instanced-buffer.ts",
+      "destination": "src/cocos/rendering/instanced-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/pass-phase.ts",
+      "destination": "src/cocos/rendering/pass-phase.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/pipeline-event.ts",
+      "destination": "src/cocos/rendering/pipeline-event.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/pipeline-funcs.ts",
+      "destination": "src/cocos/rendering/pipeline-funcs.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/pipeline-scene-data-utils.ts",
+      "destination": "src/cocos/rendering/pipeline-scene-data-utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/pipeline-scene-data.ts",
+      "destination": "src/cocos/rendering/pipeline-scene-data.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/pipeline-state-manager.ts",
+      "destination": "src/cocos/rendering/pipeline-state-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/post-process-setting.ts",
+      "destination": "src/cocos/rendering/post-process/components/post-process-setting.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/post-process.ts",
+      "destination": "src/cocos/rendering/post-process/components/post-process.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-types.ts",
+      "destination": "src/cocos/rendering/render-types.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/shadow/csm-layers.ts",
+      "destination": "src/cocos/rendering/shadow/csm-layers.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/root.ts",
+      "destination": "src/cocos/root.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/component-event-handler.schema.ts",
+      "destination": "src/cocos/scene-graph/component-event-handler.schema.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/component-event-handler.ts",
+      "destination": "src/cocos/scene-graph/component-event-handler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/component-scheduler.ts",
+      "destination": "src/cocos/scene-graph/component-scheduler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/component.ts",
+      "destination": "src/cocos/scene-graph/component.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/deprecated-3.7.0.ts",
+      "destination": "src/cocos/scene-graph/deprecated-3.7.0.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/deprecated.ts",
+      "destination": "src/cocos/scene-graph/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/find.ts",
+      "destination": "src/cocos/scene-graph/find.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/index.ts",
+      "destination": "src/cocos/scene-graph/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/layers.ts",
+      "destination": "src/cocos/scene-graph/layers.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/node-activator.ts",
+      "destination": "src/cocos/scene-graph/node-activator.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/node-dev.ts",
+      "destination": "src/cocos/scene-graph/node-dev.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/node-enum.ts",
+      "destination": "src/cocos/scene-graph/node-enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/node-event-processor.ts",
+      "destination": "src/cocos/scene-graph/node-event-processor.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/node-event.ts",
+      "destination": "src/cocos/scene-graph/node-event.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/node-ui-properties.ts",
+      "destination": "src/cocos/scene-graph/node-ui-properties.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/node.ts",
+      "destination": "src/cocos/scene-graph/node.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/prefab/index.ts",
+      "destination": "src/cocos/scene-graph/prefab/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/prefab/prefab-info.ts",
+      "destination": "src/cocos/scene-graph/prefab/prefab-info.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/prefab/prefab.ts",
+      "destination": "src/cocos/scene-graph/prefab/prefab.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/prefab/utils.ts",
+      "destination": "src/cocos/scene-graph/prefab/utils.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/scene-globals.ts",
+      "destination": "src/cocos/scene-graph/scene-globals.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/scene-graph/scene.ts",
+      "destination": "src/cocos/scene-graph/scene.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/ccon.ts",
+      "destination": "src/cocos/serialization/ccon.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/compiled/builtin-value-type.ts",
+      "destination": "src/cocos/serialization/compiled/builtin-value-type.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/deserialize-dynamic.ts",
+      "destination": "src/cocos/serialization/deserialize-dynamic.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/deserialize-symbols.ts",
+      "destination": "src/cocos/serialization/deserialize-symbols.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/deserialize-type-utilities.ts",
+      "destination": "src/cocos/serialization/deserialize-type-utilities.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/deserialize.ts",
+      "destination": "src/cocos/serialization/deserialize.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/index.ts",
+      "destination": "src/cocos/serialization/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/instantiate-jit.ts",
+      "destination": "src/cocos/serialization/instantiate-jit.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/instantiate.ts",
+      "destination": "src/cocos/serialization/instantiate.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/serialization/report-missing-class.ts",
+      "destination": "src/cocos/serialization/report-missing-class.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/sorting/sorting-layers.ts",
+      "destination": "src/cocos/sorting/sorting-layers.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/terrain/terrain-asset.ts",
+      "destination": "src/cocos/terrain/terrain-asset.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/actions/action-instant.ts",
+      "destination": "src/cocos/tween/actions/action-instant.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/actions/action-interval.ts",
+      "destination": "src/cocos/tween/actions/action-interval.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/actions/action-manager.ts",
+      "destination": "src/cocos/tween/actions/action-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/actions/action-unknown-duration.ts",
+      "destination": "src/cocos/tween/actions/action-unknown-duration.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/actions/action.ts",
+      "destination": "src/cocos/tween/actions/action.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/export-api.ts",
+      "destination": "src/cocos/tween/export-api.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/index.ts",
+      "destination": "src/cocos/tween/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/set-action.ts",
+      "destination": "src/cocos/tween/set-action.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/tween-action.ts",
+      "destination": "src/cocos/tween/tween-action.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/tween-progress.ts",
+      "destination": "src/cocos/tween/tween-progress.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/tween-system.ts",
+      "destination": "src/cocos/tween/tween-system.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/tween/tween.ts",
+      "destination": "src/cocos/tween/tween.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/ui/view.ts",
+      "destination": "src/cocos/ui/view.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/ui/widget.ts",
+      "destination": "src/cocos/ui/widget.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/xr/xr-enums.ts",
+      "destination": "src/cocos/xr/xr-enums.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/3d.ts",
+      "destination": "src/exports/3d.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/air.ts",
+      "destination": "src/exports/air.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/animation.ts",
+      "destination": "src/exports/animation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/base.ts",
+      "destination": "src/exports/base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/physics-framework.ts",
+      "destination": "src/exports/physics-framework.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/primitive.ts",
+      "destination": "src/exports/primitive.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/skeletal-animation.ts",
+      "destination": "src/exports/skeletal-animation.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/tween.ts",
+      "destination": "src/exports/tween.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "extensions/ccpool/node-pool.ts",
+      "destination": "src/extensions/ccpool/node-pool.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "external/compression/zlib.min.js",
+      "destination": "src/external/compression/zlib.min.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "external/deserialize/notepack_decode.ts",
+      "destination": "src/external/deserialize/notepack_decode.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "external/deserialize/notepack_encode.ts",
+      "destination": "src/external/deserialize/notepack_encode.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/env/web/env.js",
+      "destination": "src/pal/env/web/env.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/input-source.js",
+      "destination": "src/pal/input/input-source.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/input/keycodes.js",
+      "destination": "src/pal/input/keycodes.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/input/touch-manager.js",
+      "destination": "src/pal/input/touch-manager.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/accelerometer-input.js",
+      "destination": "src/pal/input/web/accelerometer-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/gamepad-input.js",
+      "destination": "src/pal/input/web/gamepad-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/handheld-input.js",
+      "destination": "src/pal/input/web/handheld-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/handle-input.js",
+      "destination": "src/pal/input/web/handle-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/hmd-input.js",
+      "destination": "src/pal/input/web/hmd-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/index.js",
+      "destination": "src/pal/input/web/index.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/keyboard-input.js",
+      "destination": "src/pal/input/web/keyboard-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/mouse-input.js",
+      "destination": "src/pal/input/web/mouse-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/input/web/touch-input.js",
+      "destination": "src/pal/input/web/touch-input.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/minigame/non-minigame.js",
+      "destination": "src/pal/minigame/non-minigame.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/pacer/pacer-web.js",
+      "destination": "src/pal/pacer/pacer-web.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/screen-adapter/enum-type/index.js",
+      "destination": "src/pal/screen-adapter/enum-type/index.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/screen-adapter/enum-type/orientation.js",
+      "destination": "src/pal/screen-adapter/enum-type/orientation.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/screen-adapter/web/screen-adapter.js",
+      "destination": "src/pal/screen-adapter/web/screen-adapter.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/browser-type.js",
+      "destination": "src/pal/system-info/enum-type/browser-type.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/feature.js",
+      "destination": "src/pal/system-info/enum-type/feature.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/index.js",
+      "destination": "src/pal/system-info/enum-type/index.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/language.js",
+      "destination": "src/pal/system-info/enum-type/language.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/network-type.js",
+      "destination": "src/pal/system-info/enum-type/network-type.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/operating-system.js",
+      "destination": "src/pal/system-info/enum-type/operating-system.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/enum-type/platform.js",
+      "destination": "src/pal/system-info/enum-type/platform.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/system-info/web/system-info.js",
+      "destination": "src/pal/system-info/web/system-info.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "pal/utils.js",
+      "destination": "src/pal/utils.js",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "pal/wasm/wasm-web.js",
+      "destination": "src/pal/wasm/wasm-web.js",
+      "category": "WEB_REQUIRED"
+    },
+    {
+      "source": "predefine.ts",
+      "destination": "src/predefine.ts",
+      "category": "COMMON_REQUIRED"
+    }
+  ]
+}
