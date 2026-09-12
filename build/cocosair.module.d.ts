@@ -1,5 +1,4 @@
-declare module "cc" {
-    export namespace utils {
+export namespace utils {
         /**
          * @en Finds a node by hierarchy path, the path is case-sensitive.
          * It will traverse the hierarchy by splitting the path using '/' character.
@@ -7409,7 +7408,7 @@ declare module "cc" {
              * @param targetType Target type of the handle, i.e. the type of data when read/write to it.
              * @example
              * ```
-             * import { Vec3, gfx } from 'cc';
+             * import { Vec3, gfx } from "./cocosair.module";
              * // say 'pbrParams' is a uniform vec4
              * const hParams = pass.getHandle('pbrParams'); // get the default handle
              * pass.setUniform(hAlbedo, new Vec3(1, 0, 0)); // wrong! pbrParams.w is NaN now
@@ -11347,7 +11346,7 @@ declare module "cc" {
              * @returns HSV format color
              * @example
              * ```
-             * import { Color } from 'cc';
+             * import { Color } from "./cocosair.module";
              * const color = Color.YELLOW;
              * color.toHSV(); // {h: 0.1533864541832669, s: 0.9843137254901961, v: 1}
              * ```
@@ -14203,7 +14202,7 @@ declare module "cc" {
             /**
              * @example
              * ```
-             * import { js } from 'cc';
+             * import { js } from "./cocosair.module";
              * var array = [0, 1, 2, 3, 4];
              * var iterator = new js.array.MutableForwardIterator(array);
              * for (iterator.i = 0; iterator.i < array.length; ++iterator.i) {
@@ -14258,7 +14257,7 @@ declare module "cc" {
              * @deprecated since v3.5.0, this is an engine private interface that will be removed in the future.
              * @example
              * ```
-             * import { js } from 'cc';
+             * import { js } from "./cocosair.module";
              * // save all registered classes before loading scripts
              * let builtinClassIds = js._registeredClassIds;
              * let builtinClassNames = js._registeredClassNames;
@@ -14277,7 +14276,7 @@ declare module "cc" {
              * @zh 引擎中已注册的所有类型，通过 ID 进行索引。
              * @example
              * ```
-             * import { js } from 'cc';
+             * import { js } from "./cocosair.module";
              * // save all registered classes before loading scripts
              * let builtinClassIds = js._registeredClassIds;
              * let builtinClassNames = js._registeredClassNames;
@@ -14422,7 +14421,7 @@ declare module "cc" {
          * @returns @en A new formatted string. @zh 格式化后的新字符串。
          * @example
          * ```
-         * import { js } from 'cc';
+         * import { js } from "./cocosair.module";
          * js.formatStr("a: %s, b: %s", a, b);
          * js.formatStr(a, b, c);
          * ```
@@ -14436,7 +14435,7 @@ declare module "cc" {
          * @returns @en A new formatted string. @zh 格式化后的新字符串。
          * @example
          * ```
-         * import { js } from 'cc';
+         * import { js } from "./cocosair.module";
          * js.formatStr({}, null, undefined);  // [object Object] null undefined
          * ```
          */
@@ -14888,7 +14887,7 @@ declare module "cc" {
          * While deserializing, these two references would point two distinct objects.
          * For example:
          * ```ts
-         * import { _decorator } from 'cc';
+         * import { _decorator } from "./cocosair.module";
          * @_decorator.ccclass
          * @_decorator.uniquelyReferenced
          * class Foo { }
@@ -14911,7 +14910,7 @@ declare module "cc" {
          * 而当反序列化后，这两个引用将指向截然不同的两个对象。
          * 例如：
          * ```ts
-         * import { _decorator } from 'cc';
+         * import { _decorator } from "./cocosair.module";
          * @_decorator.ccclass
          * @_decorator.uniquelyReferenced
          * class Foo { }
@@ -14936,7 +14935,7 @@ declare module "cc" {
          * @param name - The class name used for serialization.
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass} = _decorator;
          *
          * // define a CCClass, omit the name
@@ -14997,7 +14996,7 @@ declare module "cc" {
          * @param priority - The execution order of life cycle methods for Component. Smaller priority gets invoked before larger priority.
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, executionOrder} = _decorator;
          *
          * @ccclass
@@ -15013,7 +15012,7 @@ declare module "cc" {
          * @zh 防止多个相同类型（或子类型）的组件被添加到同一个节点。
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, disallowMultiple} = _decorator;
          *
          * @ccclass
@@ -15032,7 +15031,7 @@ declare module "cc" {
          * 默认情况下，所有 Component 都只会在运行时才会执行，也就是说它们的生命周期回调不会在编辑器里触发。
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, executeInEditMode} = _decorator;
          *
          *  @ccclass
@@ -15049,7 +15048,7 @@ declare module "cc" {
          * @param path - The path is the menu represented like a pathname. For example, the menu could be "Rendering/CameraCtrl".
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, menu} = _decorator;
          *
          * @ccclass
@@ -15066,7 +15065,7 @@ declare module "cc" {
          * @zh 当指定了 [[_decorator.executeInEditMode]] 以后，playOnFocus 可以在选中当前组件所在的节点时，提高编辑器的场景刷新频率到 60 FPS，否则场景就只会在必要的时候进行重绘。
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, playOnFocus, executeInEditMode} = _decorator;
          *
          * @ccclass
@@ -15084,7 +15083,7 @@ declare module "cc" {
          * @param url The URL of the page definition in js
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, inspector} = _decorator;
          *
          * @ccclass
@@ -15102,7 +15101,7 @@ declare module "cc" {
          * @private
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, icon} = _decorator;
          *
          *  @ccclass
@@ -15120,7 +15119,7 @@ declare module "cc" {
          * @param url The URL of the help documentation
          * @example
          * ```ts
-         * import { _decorator, Component } from 'cc';
+         * import { _decorator, Component } from "./cocosair.module";
          * const {ccclass, help} = _decorator;
          *
          * @ccclass
@@ -15244,7 +15243,7 @@ declare module "cc" {
          * @readOnly
          * @example
          * ```ts
-         * import { Node, log } from 'cc';
+         * import { Node, log } from "./cocosair.module";
          * const node = new Node();
          * log(node.isValid);    // true
          * node.destroy();
@@ -15426,7 +15425,7 @@ declare module "cc" {
      * 指定编辑器以整数形式对待该属性或数组元素。
      * @example
      * ```ts
-     * import { CCInteger, _decorator } from "cc";
+     * import { CCInteger, _decorator } from "./cocosair.module";
      *
      * // in the class definition:
      *
@@ -15445,7 +15444,7 @@ declare module "cc" {
      * 指定编辑器以浮点数形式对待该属性或数组元素。
      * @example
      * ```ts
-     * import { CCFloat, _decorator } from "cc";
+     * import { CCFloat, _decorator } from "./cocosair.module";
      *
      * // in the class definition:
      *
@@ -15465,7 +15464,7 @@ declare module "cc" {
      *
      * @example
      * ```ts
-     * import { CCBoolean, _decorator } from "cc";
+     * import { CCBoolean, _decorator } from "./cocosair.module";
      * // in the class definition
      * @_decorator.property({type: CCBoolean})
      * isTrue = false;
@@ -15482,7 +15481,7 @@ declare module "cc" {
      * 指定编辑器以字符串形式对待该属性或数组元素。
      * @example
      * ```ts
-     * import { CCString, _decorator } from "cc";
+     * import { CCString, _decorator } from "./cocosair.module";
      *
      * // in the class definition
      *
@@ -16367,7 +16366,7 @@ declare module "cc" {
          * It is recommended that the maximum value does not exceed 1048576 kb (1GB); otherwise, buffer creation will fail due to JS engine limitations.
          * @example
          * ```typescript
-         * import { macro } from 'cc';
+         * import { macro } from "./cocosair.module";
          * macro.BATCHER2D_MEM_INCREMENT = 4096; //4096 KB
          * ```
          * @default 144 KB
@@ -18735,7 +18734,7 @@ declare module "cc" {
          * @deprecated please destroy the component to remove it.
          * @example
          * ```
-         * import { Sprite } from 'cc';
+         * import { Sprite } from "./cocosair.module";
          * const sprite = node.getComponent(Sprite);
          * if (sprite) {
          *     node.removeComponent(sprite);
@@ -19560,7 +19559,7 @@ declare module "cc" {
      *     }
      * }
      *
-     * import { Component } from 'cc';
+     * import { Component } from "./cocosair.module";
      * const eventHandler = new Component.EventHandler();
      * eventHandler.target = newTarget;
      * eventHandler.component = "MainMenu";
@@ -19622,7 +19621,7 @@ declare module "cc" {
          * @param params - The arguments for invoking the callback
          * @example
          * ```ts
-         * import { Component } from 'cc';
+         * import { Component } from "./cocosair.module";
          * const eventHandler = new Component.EventHandler();
          * eventHandler.target = newTarget;
          * eventHandler.component = "MainMenu";
@@ -19654,7 +19653,7 @@ declare module "cc" {
          * @readOnly
          * @example
          * ```ts
-         * import { log } from 'cc';
+         * import { log } from "./cocosair.module";
          * log(comp.uuid);
          * ```
          */
@@ -19669,7 +19668,7 @@ declare module "cc" {
          * @default true
          * @example
          * ```ts
-         * import { log } from 'cc';
+         * import { log } from "./cocosair.module";
          * comp.enabled = true;
          * log(comp.enabled);
          * ```
@@ -19682,7 +19681,7 @@ declare module "cc" {
          * @readOnly
          * @example
          * ```ts
-         * import { log } from 'cc';
+         * import { log } from "./cocosair.module";
          * log(comp.enabledInHierarchy);
          * ```
          */
@@ -19693,7 +19692,7 @@ declare module "cc" {
          * @readOnly
          * @example
          * ```ts
-         * import { log } from 'cc';
+         * import { log } from "./cocosair.module";
          * log(this._isOnLoadCalled > 0);
          * ```
          *
@@ -19706,7 +19705,7 @@ declare module "cc" {
          * @zh 该组件被附加到的节点。组件总会附加到一个节点。
          * @example
          * ```ts
-         * import { log } from 'cc';
+         * import { log } from "./cocosair.module";
          * log(comp.node);
          * ```
          */
@@ -19738,7 +19737,7 @@ declare module "cc" {
          * @param classConstructor The class of component to be retrieved or to be created
          * @example
          * ```ts
-         * import { Sprite } from 'cc';
+         * import { Sprite } from "./cocosair.module";
          * const sprite = node.addComponent(Sprite);
          * ```
          */
@@ -19763,7 +19762,7 @@ declare module "cc" {
          * @param classConstructor The class of component to be retrieved or to be created
          * @example
          * ```ts
-         * import { Sprite } from 'cc';
+         * import { Sprite } from "./cocosair.module";
          * // get sprite component.
          * var sprite = node.getComponent(Sprite);
          * ```
@@ -19790,7 +19789,7 @@ declare module "cc" {
          * @param classConstructor The class of components to be retrieved
          * @example
          * ```ts
-         * import { Sprite } from 'cc';
+         * import { Sprite } from "./cocosair.module";
          * const sprites = node.getComponents(Sprite);
          * ```
          */
@@ -19811,7 +19810,7 @@ declare module "cc" {
          * @param classConstructor The class of component to be retrieved
          * @example
          * ```ts
-         * import { Sprite } from 'cc';
+         * import { Sprite } from "./cocosair.module";
          * const sprite = node.getComponentInChildren(Sprite);
          * ```
          */
@@ -19832,7 +19831,7 @@ declare module "cc" {
          * @param classConstructor The class of components to be retrieved
          * @example
          * ```ts
-         * import { Sprite } from 'cc';
+         * import { Sprite } from "./cocosair.module";
          * const sprites = node.getComponentsInChildren(Sprite);
          * ```
          */
@@ -19869,7 +19868,7 @@ declare module "cc" {
          * @param delay     The delay time for the first invocation, Unit: s
          * @example
          * ```ts
-         * import { log } from 'cc';
+         * import { log } from "./cocosair.module";
          * this.schedule((dt) => void log(`time: ${dt}`), 1);
          * ```
          */
@@ -19883,7 +19882,7 @@ declare module "cc" {
          * @param delay  The delay time for the first invocation, Unit: s
          * @example
          * ```ts
-         * import { log } from 'cc';
+         * import { log } from "./cocosair.module";
          * this.scheduleOnce((dt) => void log(`time: ${dt}`), 2);
          * ```
          */
@@ -20134,7 +20133,7 @@ declare module "cc" {
          * @default Prefab.OptimizationPolicy.AUTO
          * @example
          * ```ts
-         * import { Prefab } from 'cc';
+         * import { Prefab } from "./cocosair.module";
          * prefab.optimizationPolicy = Prefab.OptimizationPolicy.MULTI_INSTANCE;
          * ```
          */
@@ -21926,7 +21925,7 @@ declare module "cc" {
          * @zh 获取当前逻辑场景。
          * @example
          * ```
-         * import { director } from 'cc';
+         * import { director } from "./cocosair.module";
          * // This will help you to get the Canvas node in scene
          * director.getScene().getChildByName('Canvas');
          * ```
@@ -22193,7 +22192,7 @@ declare module "cc" {
          * 在原生平台，它对应的是应用被切换到后台事件，下拉菜单和上拉状态栏等不一定会触发这个事件，这取决于系统行为。
          * @example
          * ```ts
-         * import { game } from 'cc';
+         * import { game } from "./cocosair.module";
          * game.on(Game.EVENT_HIDE, function () {
          *
          * });
@@ -22287,7 +22286,7 @@ declare module "cc" {
          * @zh 游戏暂停时触发该事件。<br>
          * @example
          * ```ts
-         * import { game } from 'cc';
+         * import { game } from "./cocosair.module";
          * game.on(Game.EVENT_PAUSE, function () {
          *     //pause audio or video
          * });
@@ -22778,7 +22777,7 @@ declare module "cc" {
      * @returns The instantiated node.
      * @example
      * ```ts
-     * import { instantiate, director } from 'cc';
+     * import { instantiate, director } from "./cocosair.module";
      * // Instantiate node from prefab.
      * const node = instantiate(prefabAsset);
      * node.parent = director.getScene();
@@ -22796,7 +22795,7 @@ declare module "cc" {
      * @returns The newly instantiated object.
      * @example
      * ```ts
-     * import { instantiate, director } from 'cc';
+     * import { instantiate, director } from "./cocosair.module";
      * // Clone a node.
      * const node = instantiate(targetNode);
      * node.parent = director.getScene();
@@ -26655,7 +26654,7 @@ declare module "cc" {
          * 使用构造函数来创建一个节点专用的对象池，您可以传递一个组件类型或名称，用于处理节点回收和复用时的事件逻辑。
          * @param poolHandlerComp @en The constructor or the class name of the component to control the unuse/reuse logic. @zh 处理节点回收和复用事件逻辑的组件类型或名称。
          * @example
-         * import { NodePool, Prefab } from 'cc';
+         * import { NodePool, Prefab } from "./cocosair.module";
          *  properties: {
          *      template: Prefab
          *     },
@@ -26684,7 +26683,7 @@ declare module "cc" {
          * 这个函数会自动将目标节点从父节点上移除，但是不会进行 cleanup 操作。
          * 这个函数会调用 poolHandlerComp 的 unuse 函数，如果组件和函数都存在的话。
          * @example
-         * import { instantiate } from 'cc';
+         * import { instantiate } from "./cocosair.module";
          * const myNode = instantiate(this.template);
          * this.myPool.put(myNode);
          */
@@ -28411,7 +28410,7 @@ declare module "cc" {
      *
      * @example
      * ```
-     * import { systemEvent, SystemEvent } from 'cc';
+     * import { systemEvent, SystemEvent } from "./cocosair.module";
      * systemEvent.on(SystemEvent.EventType.DEVICEMOTION, this.onDeviceMotionEvent, this);
      * systemEvent.off(SystemEvent.EventType.DEVICEMOTION, this.onDeviceMotionEvent, this);
      * ```
@@ -28480,7 +28479,7 @@ declare module "cc" {
      *
      * @example
      * ```ts
-     * import { native } from 'cc';
+     * import { native } from "./cocosair.module";
      * import { NATIVE } from 'cc/env';
      *
      * if (NATIVE) {
@@ -29905,7 +29904,7 @@ declare module "cc" {
          * @zh 使用一组序列帧图片来创建动画剪辑
          * @example
          * ```
-         * import { AnimationClip } from 'cc';
+         * import { AnimationClip } from "./cocosair.module";
          * const clip = AnimationClip.createWithSpriteFrames(spriteFrames, 10);
          * ```
          */
@@ -39384,7 +39383,7 @@ declare module "cc" {
          *
          * @example
          * ```ts
-         * import { resources } from 'cc';
+         * import { resources } from "./cocosair.module";
          * // First way to use a SpriteFrame
          * const url = "assets/PurpleMonster/icon/spriteFrame";
          * resources.load(url, (err, spriteFrame) => {
@@ -40966,7 +40965,7 @@ declare module "cc" {
              * 指定编辑器以整数形式对待该属性或数组元素。
              * @example
              * ```ts
-             * import { CCInteger, _decorator } from "cc";
+             * import { CCInteger, _decorator } from "./cocosair.module";
              *
              * // in the class definition:
              *
@@ -40985,7 +40984,7 @@ declare module "cc" {
              * 指定编辑器以浮点数形式对待该属性或数组元素。
              * @example
              * ```ts
-             * import { CCFloat, _decorator } from "cc";
+             * import { CCFloat, _decorator } from "./cocosair.module";
              *
              * // in the class definition:
              *
@@ -41005,7 +41004,7 @@ declare module "cc" {
              *
              * @example
              * ```ts
-             * import { CCBoolean, _decorator } from "cc";
+             * import { CCBoolean, _decorator } from "./cocosair.module";
              * // in the class definition
              * @_decorator.property({type: CCBoolean})
              * isTrue = false;
@@ -41022,7 +41021,7 @@ declare module "cc" {
              * 指定编辑器以字符串形式对待该属性或数组元素。
              * @example
              * ```ts
-             * import { CCString, _decorator } from "cc";
+             * import { CCString, _decorator } from "./cocosair.module";
              *
              * // in the class definition
              *
@@ -41070,7 +41069,7 @@ declare module "cc" {
              * You should use the editor extras tag to visit this property.
              * @example
              * ```ts
-             * import { editorExtrasTag } from 'cc';
+             * import { editorExtrasTag } from "./cocosair.module";
              * node[editorExtrasTag] = {};
              * node[editorExtrasTag].someWhat;
              * ```
@@ -41088,7 +41087,7 @@ declare module "cc" {
              * 你应该仅使用编辑器额外数据标签来访问此数据。
              * @example
              * ```ts
-             * import { editorExtrasTag } from 'cc';
+             * import { editorExtrasTag } from "./cocosair.module";
              * node[editorExtrasTag] = {};
              * node[editorExtrasTag].someWhat;
              * ```
@@ -41158,7 +41157,7 @@ declare module "cc" {
              * @param thisArg - The target (this object) to invoke the callback, can be null
              * @return - Just returns the incoming callback so you can save the anonymous function easier.
              * @example
-             * import { log } from 'cc';
+             * import { log } from "./cocosair.module";
              * eventTarget.on('fire', function () {
              *     log("fire in the hole");
              * }, node);
@@ -41176,7 +41175,7 @@ declare module "cc" {
              *                              The callback is ignored if it is a duplicate (the callbacks are unique).
              * @param target - The target (this object) to invoke the callback, can be null
              * @example
-             * import { log } from 'cc';
+             * import { log } from "./cocosair.module";
              * eventTarget.once('fire', function () {
              *     log("this is the callback and will be invoked only once");
              * }, node);
@@ -41193,7 +41192,7 @@ declare module "cc" {
              * @param callback - The callback to remove.
              * @param target - The target (this object) to invoke the callback, if it's not given, only callback without target will be removed
              * @example
-             * import { log } from 'cc';
+             * import { log } from "./cocosair.module";
              * // register fire eventListener
              * var callback = eventTarget.on('fire', function () {
              *     log("fire in the hole");
@@ -42929,7 +42928,7 @@ declare module "cc" {
              * @param size @en The size of the UI transform. @zh UI Transform 的 Size 大小。
              * @example
              * ```ts
-             * import { Size } from 'cc';
+             * import { Size } from "./cocosair.module";
              * node.setContentSize(new Size(100, 100));
              * ```
              */
@@ -42945,7 +42944,7 @@ declare module "cc" {
              * @param height @en The height of the UI transform. @zh UI Transform 的高。
              * @example
              * ```ts
-             * import { Size } from 'cc';
+             * import { Size } from "./cocosair.module";
              * node.setContentSize(100, 100);
              * ```
              */
@@ -42973,7 +42972,7 @@ declare module "cc" {
              *          @zh 节点 y 轴锚。
              * @example
              * ```ts
-             * import { Vec2 } from 'cc';
+             * import { Vec2 } from "./cocosair.module";
              * node.setAnchorPoint(new Vec2(1, 1));
              * node.setAnchorPoint(1, 1);
              * ```
@@ -46227,6 +46226,7 @@ declare module "cc" {
             readonly buffers: ArrayBuffer[];
             constructor(json: _air_assets_gltf_schema__GLTFDocument, baseUrl?: string | undefined);
             warn(message: string): void;
+            releaseDecodedData(): void;
             resolve(uri: string): string;
             request(uri: string): Promise<ArrayBuffer>;
             loadBuffers(bin?: ArrayBuffer): Promise<void>;
@@ -47235,7 +47235,6 @@ declare module "cc" {
             [x: string]: any;
         }
     }
-    export { MeshRenderer as ModelComponent, DirectionalLight as DirectionalLightComponent, Light as LightComponent, SphereLight as SphereLightComponent, SpotLight as SpotLightComponent, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, Node as BaseNode, Camera as CameraComponent, ModelRenderer as RenderableComponent, Animation as AnimationComponent, SkeletalAnimation as SkeletalAnimationComponent } from "cc";
-    import { Details as _Details } from "cc";
+    export { MeshRenderer as ModelComponent, DirectionalLight as DirectionalLightComponent, Light as LightComponent, SphereLight as SphereLightComponent, SpotLight as SpotLightComponent, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, Node as BaseNode, Camera as CameraComponent, ModelRenderer as RenderableComponent, Animation as AnimationComponent, SkeletalAnimation as SkeletalAnimationComponent } from "./cocosair.module";
+    import { Details as _Details } from "./cocosair.module";
     export {};
-}

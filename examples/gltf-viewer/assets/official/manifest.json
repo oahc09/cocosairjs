@@ -1,0 +1,50 @@
+[
+  {
+    "name": "SimpleSparseAccessor",
+    "file": "SimpleSparseAccessor.gltf",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/SimpleSparseAccessor/glTF-Embedded/SimpleSparseAccessor.gltf",
+    "sha256": "895d36d90acbecad1f228047d008b854d5940261198bcc747c2833211eaf4987",
+    "bytes": 1683
+  },
+  {
+    "name": "InterpolationTest",
+    "file": "InterpolationTest.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/InterpolationTest/glTF-Binary/InterpolationTest.glb",
+    "sha256": "a86eb331b4a083715e75fe19a1f747eac5692d5b9ff120f1eaa457c23ba72bca",
+    "bytes": 7952
+  },
+  {
+    "name": "VertexColorTest",
+    "file": "VertexColorTest.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/VertexColorTest/glTF-Binary/VertexColorTest.glb",
+    "sha256": "58006bdcff8084339da0f6e24400160890638c16dbcb83c362ccaf150e8c6e10",
+    "bytes": 26220
+  },
+  {
+    "name": "Material_AlphaBlend_00",
+    "file": "Material_AlphaBlend_00.gltf",
+    "revision": "3d99767e9a67fbfe109f0d298c1e8d909bcac9db",
+    "url": "https://github.com/KhronosGroup/glTF-Asset-Generator/blob/3d99767e9a67fbfe109f0d298c1e8d909bcac9db/Output/Positive/Material_AlphaBlend/Material_AlphaBlend_00.gltf",
+    "sha256": "77a1b3d59af6bac55f2af170c6838866117ac61d907acf5cc0f85edff4358b3c",
+    "bytes": 1465
+  },
+  {
+    "name": "Material_AlphaBlend_00",
+    "file": "Material_AlphaBlend_00.bin",
+    "revision": "3d99767e9a67fbfe109f0d298c1e8d909bcac9db",
+    "url": "https://github.com/KhronosGroup/glTF-Asset-Generator/blob/3d99767e9a67fbfe109f0d298c1e8d909bcac9db/Output/Positive/Material_AlphaBlend/Material_AlphaBlend_00.bin",
+    "sha256": "bcc0db4425e1685077bcfbfd9a6de0151fb90e8c63184d8c0dd9b63c4b6cee8c",
+    "bytes": 136
+  },
+  {
+    "name": "Material_AlphaBlend_00",
+    "file": "AssetGenerator.LICENSE.txt",
+    "revision": "3d99767e9a67fbfe109f0d298c1e8d909bcac9db",
+    "url": "https://github.com/KhronosGroup/glTF-Asset-Generator/blob/3d99767e9a67fbfe109f0d298c1e8d909bcac9db/LICENSE",
+    "sha256": "cbdee2dc18c52b9075678c31afd10bae64deef064dcd1a1e4b1b93fba09a9e58",
+    "bytes": 1070
+  }
+]

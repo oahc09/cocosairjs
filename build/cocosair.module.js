@@ -3992,7 +3992,7 @@ function join(...segments) {
   return result;
 }
 function extname(path) {
-  const temp = EXTNAME_RE.exec(path);
+  const temp = EXTNAME_RE.exec(path.split('#', 1)[0]);
   return temp ? temp[1] : '';
 }
 function mainFileName(fileName) {
@@ -69217,173 +69217,6 @@ function createSkeletons(context, layout, skeletons) {
   }
 }
 
-class GLTFCubicQuatTrack extends Track {
-  constructor(times, values) {
-    super();
-    this.quaternionChannels = void 0;
-    this.times = times;
-    this.values = values;
-    this.quaternionChannels = [0, 1, 2, 3].map(c => {
-      const curve = new RealCurve();
-      curve.assignSorted(realKeys(times, values, 4, c, 'CUBICSPLINE'));
-      return new Channel(curve);
-    });
-  }
-  channels() {
-    return this.quaternionChannels;
-  }
-  range() {
-    return {
-      min: this.times[0],
-      max: this.times[this.times.length - 1]
-    };
-  }
-  [createEvalSymbol]() {
-    const result = new Quat();
-    return {
-      requiresDefault: false,
-      evaluate: time => {
-        const values = sampleCubicQuaternion(this.times, this.values, time);
-        result.set(values[0], values[1], values[2], values[3]);
-        return result;
-      }
-    };
-  }
-}
-function sampleCubicQuaternion(times, values, time) {
-  let lo = 0;
-  let hi = times.length - 1;
-  while (lo + 1 < hi) {
-    const mid = lo + hi >>> 1;
-    if (times[mid] <= time) {
-      lo = mid;
-    } else {
-      hi = mid;
-    }
-  }
-  let result;
-  if (time <= times[0]) {
-    result = values.slice(4, 8);
-  } else if (time >= times[times.length - 1]) {
-    result = values.slice((times.length - 1) * 12 + 4, (times.length - 1) * 12 + 8);
-  } else {
-    const dt = times[hi] - times[lo];
-    const t = (time - times[lo]) / dt;
-    const t2 = t * t;
-    const t3 = t2 * t;
-    result = [0, 1, 2, 3].map(c => (2 * t3 - 3 * t2 + 1) * values[lo * 12 + 4 + c] + (t3 - 2 * t2 + t) * dt * values[lo * 12 + 8 + c] + (-2 * t3 + 3 * t2) * values[hi * 12 + 4 + c] + (t3 - t2) * dt * values[hi * 12 + c]);
-  }
-  const length = Math.hypot(...result);
-  check(length > 1e-12, 'CUBICSPLINE produced zero quaternion');
-  return result.map(v => v / length);
-}
-function createGLTFAnimations(context, paths, included) {
-  const clips = [];
-  try {
-    for (const [clipIndex, source] of (context.json.animations || []).entries()) {
-      const clip = new AnimationClip();
-      clips.push(clip);
-      const base = source.name || `animation_${clipIndex}`;
-      clip.name = clips.slice(0, -1).some(c => c.name === base) ? `${base}__${clipIndex}` : base;
-      const seen = new Set();
-      for (const channel of source.channels) {
-        var _mesh$primitives$0$ta;
-        const target = channel.target;
-        if (target.node === undefined) {
-          continue;
-        }
-        const node = item(context.json.nodes, target.node, 'animation node');
-        const key = `${target.node}:${target.path}`;
-        check(!seen.has(key), 'duplicate animation target');
-        seen.add(key);
-        check(['translation', 'rotation', 'scale', 'weights'].includes(target.path), `unsupported animation target ${target.path}`);
-        check(target.path === 'weights' || !node.matrix, 'TRS animation cannot target a matrix node');
-        const sampler = item(source.samplers, channel.sampler, 'animation sampler');
-        const input = context.accessor(sampler.input);
-        const output = context.accessor(sampler.output);
-        const times = input.values;
-        check(input.source.type === 'SCALAR' && input.source.componentType === 5126 && times.every((v, i) => v >= 0 && (!i || v > times[i - 1])), 'invalid animation times');
-        const interpolation = sampler.interpolation || 'LINEAR';
-        check(['STEP', 'LINEAR', 'CUBICSPLINE'].includes(interpolation), 'invalid animation interpolation');
-        const cubic = interpolation === 'CUBICSPLINE';
-        const mesh = target.path === 'weights' ? item(context.json.meshes, node.mesh, 'morph mesh') : undefined;
-        const width = mesh ? ((_mesh$primitives$0$ta = mesh.primitives[0].targets) == null ? void 0 : _mesh$primitives$0$ta.length) || 0 : target.path === 'rotation' ? 4 : 3;
-        check(width > 0 && output.source.componentType === 5126 && output.values.length === times.length * width * (cubic ? 3 : 1) && output.source.type === (mesh ? 'SCALAR' : width === 4 ? 'VEC4' : 'VEC3'), 'invalid animation output');
-        clip.duration = Math.max(clip.duration, times[times.length - 1]);
-        if (included && !included.has(target.node)) {
-          continue;
-        }
-        const path = new TrackPath().toHierarchy(paths[target.node]);
-        if (target.path !== 'weights') {
-          path.toProperty(target.path === 'translation' ? 'position' : target.path);
-        }
-        if (target.path === 'rotation') {
-          let track;
-          if (cubic) {
-            track = new GLTFCubicQuatTrack(times.slice(), output.values.slice());
-          } else {
-            const quat = new QuatTrack();
-            quat.channel.curve.assignSorted(times.map((time, i) => {
-              const q = new Quat(...output.values.slice(i * 4, i * 4 + 4));
-              check(Math.hypot(q.x, q.y, q.z, q.w) > 1e-12, 'invalid animation quaternion');
-              Quat.normalize(q, q);
-              return [time, {
-                value: q,
-                interpolationMode: interpolation === 'STEP' ? QuatInterpolationMode.CONSTANT : QuatInterpolationMode.SLERP
-              }];
-            }));
-            track = quat;
-          }
-          track.path = path;
-          clip.addTrack(track);
-        } else if (target.path === 'weights') {
-          for (let c = 0; c < width; ++c) {
-            const track = new RealTrack();
-            track.path = path;
-            track.proxy = {
-              forTarget: object => ({
-                get: () => {
-                  var _object$getComponent;
-                  return ((_object$getComponent = object.getComponent(MeshRenderer)) == null ? void 0 : _object$getComponent.getWeight(0, c)) || 0;
-                },
-                set: value => {
-                  const renderer = object.getComponent(MeshRenderer);
-                  for (let sub = 0; sub < mesh.primitives.length; ++sub) {
-                    renderer.setWeight(value, sub, c);
-                  }
-                }
-              })
-            };
-            track.channel.curve.assignSorted(realKeys(times, output.values, width, c, interpolation));
-            clip.addTrack(track);
-          }
-        } else {
-          const track = new VectorTrack();
-          track.componentsCount = 3;
-          track.path = path;
-          for (let c = 0; c < 3; ++c) {
-            track.channels()[c].curve.assignSorted(realKeys(times, output.values, 3, c, interpolation));
-          }
-          clip.addTrack(track);
-        }
-      }
-    }
-    return clips;
-  } catch (error) {
-    clips.forEach(clip => clip.destroy());
-    throw error;
-  }
-}
-function realKeys(times, values, width, component, interpolation) {
-  const cubic = interpolation === 'CUBICSPLINE';
-  return times.map((time, i) => [time, {
-    value: values[(i * (cubic ? 3 : 1) + (cubic ? 1 : 0)) * width + component],
-    interpolationMode: cubic ? RealInterpolationMode.CUBIC : interpolation === 'STEP' ? RealInterpolationMode.CONSTANT : RealInterpolationMode.LINEAR,
-    leftTangent: cubic ? values[i * 3 * width + component] : 0,
-    rightTangent: cubic ? values[(i * 3 + 2) * width + component] : 0
-  }]);
-}
-
 var _dec$h, _class$h;
 let GLTFWinding = (_dec$h = ccclass$9('air.GLTFWinding'), _dec$h(_class$h = class GLTFWinding extends Component {
   constructor(...args) {
@@ -69492,7 +69325,19 @@ class GLTFAsset extends Asset {
     }
     let clips = this.sceneClips.get(sceneIndex);
     if (!clips) {
-      clips = createGLTFAnimations(this.context, this.layout.paths, included);
+      const paths = new Set(Array.from(included, i => this.layout.paths[i]));
+      clips = this.animations.map(source => {
+        const clip = new AnimationClip();
+        clip.name = source.name;
+        clip.duration = source.duration;
+        clip.wrapMode = source.wrapMode;
+        for (const track of source.tracks) {
+          if (paths.has(track.path.parseHierarchyAt(0))) {
+            clip.addTrack(track);
+          }
+        }
+        return clip;
+      });
       this.sceneClips.set(sceneIndex, clips);
     }
     const root = new Node$1(this.sceneNames[sceneIndex]);
@@ -69569,10 +69414,13 @@ class GLTFAsset extends Asset {
     }
   }
   destroy() {
-    if (this.destroyRequested) {
+    if (!this.isValid || this.destroyRequested) {
       return false;
     }
     this.destroyRequested = true;
+    if (assets.get(this._uuid) === this) {
+      assets.remove(this._uuid);
+    }
     if (!this.instances) {
       this.releaseResources();
     }
@@ -69673,6 +69521,11 @@ class GLTFContext {
   warn(message) {
     this.warnings.push(message);
     console.warn(`[glTF] ${message}`);
+  }
+  releaseDecodedData() {
+    this.buffers.length = 0;
+    this.accessors.clear();
+    this.requests.clear();
   }
   resolve(uri) {
     if (/^[a-z][a-z0-9+.-]*:/i.test(uri)) {
@@ -70188,6 +70041,9 @@ function gltfEffect() {
         shader[language].vert = shader[language].vert.replace(/\bgl_VertexIndex\b/g, 'gl_VertexID');
       } else if (language === 'glsl1') {
         shader[language].vert = shader[language].vert.replace('int getVertexId() {', 'attribute float a_vertexId;\nint getVertexId() {').replace(/\bgl_VertexIndex\b/g, 'int(a_vertexId)').replace(/ivec2 texSize = textureSize\(tex, 0\);\s*return texelFetch\(tex, ivec2\(pixelIndex % texSize.x, pixelIndex \/ texSize.x\), 0\);/g, 'return texture2D(tex, getPixelCoordFromLocation(getPixelLocation(cc_displacementTextureInfo.xy, pixelIndex), cc_displacementTextureInfo.xy));');
+        if (!/uniform\s+(?:highp\s+)?vec4\s+cc_joints\s*\[/.test(shader[language].vert)) {
+          shader[language].vert = '#if CC_USE_SKINNING && !CC_USE_BAKED_ANIMATION && !CC_USE_REAL_TIME_JOINT_TEXTURE\n' + 'uniform highp vec4 cc_joints[CC_JOINT_UNIFORM_CAPACITY * 3];\n#endif\n' + shader[language].vert;
+        }
       }
       shader[language].frag = shader[language].frag.replace('baseColor.rgb *= SRGBToLinear(v_color.rgb);', 'baseColor.rgb *= v_color.rgb;').replace(/pbr.x \*= (texture2D|texture)\(occlusionMap, PBR_UV\).r;/g, 'pbr.x = mix(1.0, $1(occlusionMap, OCCLUSION_UV).r, pbrParams.x);').replace('s.occlusion = pbr.x;', '#if !USE_OCCLUSION_MAP\npbr.x = 1.0;\n#endif\ns.occlusion = pbr.x;').replace('s.albedo = baseColor;', '#if AIR_GLTF_OPAQUE\nbaseColor.a = 1.0;\n#endif\ns.albedo = baseColor;').replace('vec4 color = CCStandardShadingBase(s, v_shadowPos);', '#if AIR_GLTF_UNLIT\nvec4 color = s.albedo;\n#else\nvec4 color = CCStandardShadingBase(s, v_shadowPos);\n#endif').replace(/return gamma \* gamma;/g, 'return mix(gamma / 12.92, pow((gamma + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), gamma));');
     }
@@ -70343,6 +70199,171 @@ function createGLTFMaterial(source, textures, vertexColor) {
   }
 }
 
+class GLTFCubicQuatTrack extends Track {
+  constructor(times, values) {
+    super();
+    this.quaternionChannels = void 0;
+    this.times = times;
+    this.values = values;
+    this.quaternionChannels = [0, 1, 2, 3].map(c => {
+      const curve = new RealCurve();
+      curve.assignSorted(realKeys(times, values, 4, c, 'CUBICSPLINE'));
+      return new Channel(curve);
+    });
+  }
+  channels() {
+    return this.quaternionChannels;
+  }
+  range() {
+    return {
+      min: this.times[0],
+      max: this.times[this.times.length - 1]
+    };
+  }
+  [createEvalSymbol]() {
+    const result = new Quat();
+    return {
+      requiresDefault: false,
+      evaluate: time => {
+        const values = sampleCubicQuaternion(this.times, this.values, time);
+        result.set(values[0], values[1], values[2], values[3]);
+        return result;
+      }
+    };
+  }
+}
+function sampleCubicQuaternion(times, values, time) {
+  let lo = 0;
+  let hi = times.length - 1;
+  while (lo + 1 < hi) {
+    const mid = lo + hi >>> 1;
+    if (times[mid] <= time) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  let result;
+  if (time <= times[0]) {
+    result = values.slice(4, 8);
+  } else if (time >= times[times.length - 1]) {
+    result = values.slice((times.length - 1) * 12 + 4, (times.length - 1) * 12 + 8);
+  } else {
+    const dt = times[hi] - times[lo];
+    const t = (time - times[lo]) / dt;
+    const t2 = t * t;
+    const t3 = t2 * t;
+    result = [0, 1, 2, 3].map(c => (2 * t3 - 3 * t2 + 1) * values[lo * 12 + 4 + c] + (t3 - 2 * t2 + t) * dt * values[lo * 12 + 8 + c] + (-2 * t3 + 3 * t2) * values[hi * 12 + 4 + c] + (t3 - t2) * dt * values[hi * 12 + c]);
+  }
+  const length = Math.hypot(...result);
+  check(length > 1e-12, 'CUBICSPLINE produced zero quaternion');
+  return result.map(v => v / length);
+}
+function createGLTFAnimations(context, paths, included) {
+  const clips = [];
+  try {
+    for (const [clipIndex, source] of (context.json.animations || []).entries()) {
+      const clip = new AnimationClip();
+      clips.push(clip);
+      const base = source.name || `animation_${clipIndex}`;
+      clip.name = clips.slice(0, -1).some(c => c.name === base) ? `${base}__${clipIndex}` : base;
+      const seen = new Set();
+      for (const channel of source.channels) {
+        var _mesh$primitives$0$ta;
+        const target = channel.target;
+        if (target.node === undefined) {
+          continue;
+        }
+        const node = item(context.json.nodes, target.node, 'animation node');
+        const key = `${target.node}:${target.path}`;
+        check(!seen.has(key), 'duplicate animation target');
+        seen.add(key);
+        check(['translation', 'rotation', 'scale', 'weights'].includes(target.path), `unsupported animation target ${target.path}`);
+        check(target.path === 'weights' || !node.matrix, 'TRS animation cannot target a matrix node');
+        const sampler = item(source.samplers, channel.sampler, 'animation sampler');
+        const input = context.accessor(sampler.input);
+        const output = context.accessor(sampler.output);
+        const times = input.values;
+        check(input.source.type === 'SCALAR' && input.source.componentType === 5126 && times.every((v, i) => v >= 0 && (!i || v > times[i - 1])), 'invalid animation times');
+        const interpolation = sampler.interpolation || 'LINEAR';
+        check(['STEP', 'LINEAR', 'CUBICSPLINE'].includes(interpolation), 'invalid animation interpolation');
+        const cubic = interpolation === 'CUBICSPLINE';
+        const mesh = target.path === 'weights' ? item(context.json.meshes, node.mesh, 'morph mesh') : undefined;
+        const width = mesh ? ((_mesh$primitives$0$ta = mesh.primitives[0].targets) == null ? void 0 : _mesh$primitives$0$ta.length) || 0 : target.path === 'rotation' ? 4 : 3;
+        check(width > 0 && output.source.componentType === 5126 && output.values.length === times.length * width * (cubic ? 3 : 1) && output.source.type === (mesh ? 'SCALAR' : width === 4 ? 'VEC4' : 'VEC3'), 'invalid animation output');
+        clip.duration = Math.max(clip.duration, times[times.length - 1]);
+        if (included && !included.has(target.node)) ;
+        const path = new TrackPath().toHierarchy(paths[target.node]);
+        if (target.path !== 'weights') {
+          path.toProperty(target.path === 'translation' ? 'position' : target.path);
+        }
+        if (target.path === 'rotation') {
+          let track;
+          if (cubic) {
+            track = new GLTFCubicQuatTrack(times.slice(), output.values.slice());
+          } else {
+            const quat = new QuatTrack();
+            quat.channel.curve.assignSorted(times.map((time, i) => {
+              const q = new Quat(...output.values.slice(i * 4, i * 4 + 4));
+              check(Math.hypot(q.x, q.y, q.z, q.w) > 1e-12, 'invalid animation quaternion');
+              Quat.normalize(q, q);
+              return [time, {
+                value: q,
+                interpolationMode: interpolation === 'STEP' ? QuatInterpolationMode.CONSTANT : QuatInterpolationMode.SLERP
+              }];
+            }));
+            track = quat;
+          }
+          track.path = path;
+          clip.addTrack(track);
+        } else if (target.path === 'weights') {
+          for (let c = 0; c < width; ++c) {
+            const track = new RealTrack();
+            track.path = path;
+            track.proxy = {
+              forTarget: object => ({
+                get: () => {
+                  var _object$getComponent;
+                  return ((_object$getComponent = object.getComponent(MeshRenderer)) == null ? void 0 : _object$getComponent.getWeight(0, c)) || 0;
+                },
+                set: value => {
+                  const renderer = object.getComponent(MeshRenderer);
+                  for (let sub = 0; sub < mesh.primitives.length; ++sub) {
+                    renderer.setWeight(value, sub, c);
+                  }
+                }
+              })
+            };
+            track.channel.curve.assignSorted(realKeys(times, output.values, width, c, interpolation));
+            clip.addTrack(track);
+          }
+        } else {
+          const track = new VectorTrack();
+          track.componentsCount = 3;
+          track.path = path;
+          for (let c = 0; c < 3; ++c) {
+            track.channels()[c].curve.assignSorted(realKeys(times, output.values, 3, c, interpolation));
+          }
+          clip.addTrack(track);
+        }
+      }
+    }
+    return clips;
+  } catch (error) {
+    clips.forEach(clip => clip.destroy());
+    throw error;
+  }
+}
+function realKeys(times, values, width, component, interpolation) {
+  const cubic = interpolation === 'CUBICSPLINE';
+  return times.map((time, i) => [time, {
+    value: values[(i * (cubic ? 3 : 1) + (cubic ? 1 : 0)) * width + component],
+    interpolationMode: cubic ? RealInterpolationMode.CUBIC : interpolation === 'STEP' ? RealInterpolationMode.CONSTANT : RealInterpolationMode.LINEAR,
+    leftTangent: cubic ? values[i * 3 * width + component] : 0,
+    rightTangent: cubic ? values[(i * 3 + 2) * width + component] : 0
+  }]);
+}
+
 function gltfExtension(url) {
   var _exec;
   return (_exec = /\.(gltf|glb)$/i.exec(url.split(/[?#]/, 1)[0])) == null ? void 0 : _exec[0].toLowerCase();
@@ -70396,8 +70417,10 @@ class GLTFLoader {
         }
       }
       asset.owned.animations.push(...createGLTFAnimations(context, layout.paths));
+      context.releaseDecodedData();
       return asset;
     } catch (error) {
+      context.releaseDecodedData();
       asset.destroy();
       throw error;
     }
@@ -70503,7 +70526,13 @@ const v_scale = new Vec3();
 function restoreBindPose(root, skeleton) {
   const joints = skeleton.joints;
   const bindposes = skeleton.bindposes;
-  for (let i = 0; i < joints.length; i++) {
+  const order = joints.map((path, index) => ({
+    index,
+    depth: path.split('/').length
+  })).sort((a, b) => a.depth - b.depth);
+  for (const {
+    index: i
+  } of order) {
     const bindpose = bindposes[i];
     if (!bindpose) {
       continue;
@@ -70538,8 +70567,17 @@ function frameObject(camera, target, fallbackDistance = DEFAULT_DISTANCE) {
   if (bounds) {
     const fov = (camera.fov > 0 ? camera.fov : 45) * Math.PI / 180;
     const radius = Math.max(bounds.halfExtents.lengthSqr() > 0 ? bounds.halfExtents.length() : 0, 1e-3);
-    const fit = camera.projection === Camera.ProjectionType.ORTHO ? radius * 2.2 : radius / Math.sin(Math.min(fov / 2, Math.PI / 2 - 1e-3));
+    const rawAspect = camera.camera ? camera.camera.aspect : 1;
+    const aspect = Number.isFinite(rawAspect) && rawAspect > 0 ? rawAspect : 1;
+    const halfFov = Math.min(fov / 2, Math.PI / 2 - 1e-3);
+    const otherHalfFov = Math.atan(Math.tan(halfFov) * (camera.fovAxis === Camera.FOVAxis.HORIZONTAL ? 1 / aspect : aspect));
+    const fit = radius / Math.sin(Math.min(halfFov, otherHalfFov));
+    if (camera.projection === Camera.ProjectionType.ORTHO) {
+      camera.orthoHeight = radius * 1.15 / Math.min(1, aspect);
+    }
     distance = Math.max(fit * 1.15, 0.5);
+    distance = Math.max(distance, camera.near + radius * 1.15);
+    camera.far = Math.max(camera.far, distance + radius * 1.15);
     Vec3.copy(v3_center, bounds.center);
   } else {
     Vec3.copy(v3_center, worldCenter);
@@ -70549,7 +70587,7 @@ function frameObject(camera, target, fallbackDistance = DEFAULT_DISTANCE) {
     v3_dir.set(0, 0, 1);
   }
   v3_dir.normalize();
-  camNode.setPosition(v3_center.x + v3_dir.x * distance, v3_center.y + v3_dir.y * distance, v3_center.z + v3_dir.z * distance);
+  camNode.setWorldPosition(v3_center.x + v3_dir.x * distance, v3_center.y + v3_dir.y * distance, v3_center.z + v3_dir.z * distance);
   camNode.lookAt(v3_center);
 }
 function collectWorldBounds(target) {
@@ -70566,12 +70604,15 @@ function collectWorldBounds(target) {
     }
   }
   for (const r of renderers) {
+    if (r.model) {
+      r.model.updateWorldBound();
+    }
     const b = r.model ? r.model.worldBounds : null;
     if (!b) {
       continue;
     }
     if (!result) {
-      result = AABB.clone(b);
+      result = b.clone();
     } else {
       AABB.merge(result, result, b);
     }

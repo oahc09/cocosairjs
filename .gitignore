@@ -7,3 +7,8 @@ build/.tmp-*/
 
 # 本机智能体工作数据
 .workbuddy/
+
+# 瞬态验证产物与构建临时目录（V0.3）
+output/
+build/.dts-*/
+build/.dev-log.txt

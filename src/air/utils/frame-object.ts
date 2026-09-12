@@ -22,11 +22,12 @@ const v3_center = new Vec3();
  * @zh 沿相机当前视线方向调整距离与朝向，使目标节点居中完整显示。
  *     距离优先按目标渲染包围盒估算（MeshRenderer.model.worldBounds 并集）；
  *     无可用包围盒时使用 fallbackDistance。
+ *     取景考虑 fovAxis、视口宽高比及相机父节点的世界变换。
  *
  * @example
  * ```ts
  * frameObject(camera, modelRoot);        // 按包围盒自动取景
- * frameObject(camera, modelRoot, 8);     // 显式距离
+ * frameObject(camera, modelRoot, 8);     // 无包围盒时的回退距离
  * ```
  */
 export function frameObject (camera: Camera, target: Node, fallbackDistance = DEFAULT_DISTANCE): void {
@@ -38,10 +39,19 @@ export function frameObject (camera: Camera, target: Node, fallbackDistance = DE
     if (bounds) {
         const fov = (camera.fov > 0 ? camera.fov : 45) * Math.PI / 180;
         const radius = Math.max(bounds.halfExtents.lengthSqr() > 0 ? bounds.halfExtents.length() : 0, 1e-3);
-        const fit = camera.projection === Camera.ProjectionType.ORTHO
-            ? radius * 2.2
-            : radius / Math.sin(Math.min(fov / 2, Math.PI / 2 - 1e-3));
+        const rawAspect = camera.camera ? camera.camera.aspect : 1;
+        const aspect = Number.isFinite(rawAspect) && rawAspect > 0 ? rawAspect : 1;
+        const halfFov = Math.min(fov / 2, Math.PI / 2 - 1e-3);
+        const otherHalfFov = Math.atan(Math.tan(halfFov)
+            * (camera.fovAxis === Camera.FOVAxis.HORIZONTAL ? 1 / aspect : aspect));
+        const fit = radius / Math.sin(Math.min(halfFov, otherHalfFov));
+        if (camera.projection === Camera.ProjectionType.ORTHO) {
+            // orthoHeight is a vertical half-height; moving the camera does not zoom.
+            camera.orthoHeight = radius * 1.15 / Math.min(1, aspect);
+        }
         distance = Math.max(fit * 1.15, 0.5);
+        distance = Math.max(distance, camera.near + radius * 1.15);
+        camera.far = Math.max(camera.far, distance + radius * 1.15);
         Vec3.copy(v3_center, bounds.center);
     } else {
         Vec3.copy(v3_center, worldCenter);
@@ -53,7 +63,7 @@ export function frameObject (camera: Camera, target: Node, fallbackDistance = DE
         v3_dir.set(0, 0, 1);
     }
     v3_dir.normalize();
-    camNode.setPosition(
+    camNode.setWorldPosition(
         v3_center.x + v3_dir.x * distance,
         v3_center.y + v3_dir.y * distance,
         v3_center.z + v3_dir.z * distance,
@@ -71,10 +81,11 @@ function collectWorldBounds (target: Node): geometry.AABB | null {
     for (const r of children) { if (renderers.indexOf(r) === -1) { renderers.push(r); } }
 
     for (const r of renderers) {
+        if (r.model) { r.model.updateWorldBound(); }
         const b = r.model ? r.model.worldBounds : null;
         if (!b) { continue; }
         if (!result) {
-            result = geometry.AABB.clone(b);
+            result = b.clone();
         } else {
             geometry.AABB.merge(result, result, b);
         }

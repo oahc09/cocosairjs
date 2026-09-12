@@ -53,7 +53,8 @@ export function join (...segments: string[]): string {
  * @example {@link cocos/core/utils/CCPath/extname.js}
  */
 export function extname (path: string): string {
-    const temp = EXTNAME_RE.exec(path);
+    // URL fragments are not part of a filename (loadRemote also uses this helper).
+    const temp = EXTNAME_RE.exec(path.split('#', 1)[0]);
     return temp ? temp[1] : '';
 }
 

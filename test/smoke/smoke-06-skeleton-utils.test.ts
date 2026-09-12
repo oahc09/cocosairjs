@@ -70,4 +70,17 @@ describe('smoke 6 — skeleton utilities', () => {
         expectVecNear(bone2.position, { x: 0, y: 1, z: 0 });
         expectVecNear(bone1.scale, { x: 2, y: 1, z: 1 });
     });
+
+    test('restoreBindPose accepts child-first joint order without changing indices', () => {
+        const root = makeArmature();
+        const paths = JOINTS.slice().reverse();
+        const skeleton = buildSkeletonTree(root, paths);
+        root.getChildByPath(JOINTS[0])!.setPosition(9, 8, 7);
+        root.getChildByPath(JOINTS[1])!.setPosition(-3, 0, 0);
+        restoreBindPose(root, skeleton);
+        expect(skeleton.joints).toEqual(paths);
+        expectVecNear(root.getChildByPath(JOINTS[0])!.position, { x: 1, y: 2, z: 3 });
+        expectVecNear(root.getChildByPath(JOINTS[1])!.position, { x: 0, y: 5, z: 0 });
+        expectVecNear(root.getChildByPath(JOINTS[2])!.position, { x: 0, y: 1, z: 0 });
+    });
 });

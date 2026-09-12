@@ -1,0 +1,38 @@
+[
+  {
+    "file": "AnimatedMorphCube.glb",
+    "sha256": "214ee56160a50dbf22543a1d66dbf860986e87f0efac3d89feac1359d0e6aeab"
+  },
+  {
+    "file": "BoxTextured.glb",
+    "sha256": "b510eca2e2ef33f62f9ed57d6e7ce2d10ebb2bdebc4a8e59d347719ba81abdf4"
+  },
+  {
+    "file": "SimpleSkin.gltf",
+    "sha256": "8d92e9888340eb98e82a65a1f8b037d9a1d9f09e5fd0b6ba6d40fd93700b3239"
+  },
+  {
+    "file": "SimpleSkin_animation.bin",
+    "sha256": "ff21b1bc3d0abbe53f7665060ec6c22d873b6e85a7669171a2b6b8ae01c39347"
+  },
+  {
+    "file": "SimpleSkin_geometry.bin",
+    "sha256": "35f0ca6bc07976c0aadc163d4737758989cfcc9870a99800004c4478fe698b63"
+  },
+  {
+    "file": "SimpleSkin_inverseBindMatrices.bin",
+    "sha256": "5844ab221cd2ad367420a248f6387b46e5f8498604427730a37ee96b4d4ec599"
+  },
+  {
+    "file": "SimpleSkin_skinningData.bin",
+    "sha256": "413bc8a8c0da673df767874e6f05f0b00c9261756a08586b9d555bd5535414b5"
+  },
+  {
+    "file": "combined.glb",
+    "sha256": "5f584eb581c0f8b50aafda9b3e59b16752e8b326de84b10032a6e959ed4281f9"
+  },
+  {
+    "file": "diagnostics.glb",
+    "sha256": "bf0f25d0ac58a074908671e7a90ff59613821d72c5161f3ed4397ee25704096b"
+  }
+]

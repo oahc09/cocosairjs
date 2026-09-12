@@ -61,7 +61,7 @@ const sourceMesh = utils.createMesh({
     positions: modelAsset.positions,
     normals: modelAsset.normals,
     uvs: modelAsset.uvs,
-});
+}, undefined, { calculateBounds: true });
 // 注册进 assetManager 全局缓存（以 path 为键），loadAssetAsync 按约定解析
 assetManager.assets.add('models/pyramid', sourceMesh);
 const restoredMesh = await loadAssetAsync('models/pyramid', Mesh);
@@ -69,13 +69,13 @@ console.assert(restoredMesh === sourceMesh, '[static-model] loadAssetAsync round
 
 // ---------- 3. 材质：standard + albedo 纹理（Material Effect） ----------
 const material = new Material();
-material.initialize({ effectName: 'builtin-standard' });
+material.initialize({ effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } });
 material.setProperty('mainTexture', checkerTexture);
 
 // ---------- 4. 场景组装 ----------
 const scene = new Scene('static-model');
 const camera = setupCamera(scene, { position: [0, 3, 6], rotationEuler: [-20, 0, 0] });
-setupDirectionalLight(scene, { position: [0, 10, 0], illuminance: 2 });
+setupDirectionalLight(scene, { position: [0, 10, 0], illuminance: 20000 });
 
 const boxNode = new Node('StaticBox');
 scene.addChild(boxNode);

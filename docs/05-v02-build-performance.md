@@ -3,6 +3,10 @@
 > V0.2 Task 8/17（计划书 §16/§29）：性能只记录，不优化。
 > 全部数据来自本仓库 `tools/build/build.cjs`（ccbuild 单管线，未更换 bundler）真实测量。
 
+> **审查更正（V0.3 前置）**：下文是修复前历史测量。“性能只记录”不能代替 V0.2 的增量能力要求。
+> 当前已接入 Rollup 原生模块缓存；冷构建 618 个转换、热构建 0 个、单 Air 文件变更 1 个。
+> TypeScript 初始化和 bundle 链接仍执行。验证脚本及本次环境记录见 [V0.3 验证](11-v03-verification.md)。
+
 ## 测量环境
 
 - Windows 11 / Node 22 / Ryzen AI 9 HX 370 + 32GB

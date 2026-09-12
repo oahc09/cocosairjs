@@ -30,7 +30,10 @@ const v_scale = new Vec3();
 export function restoreBindPose (root: Node, skeleton: Skeleton): void {
     const joints = skeleton.joints;
     const bindposes = skeleton.bindposes;
-    for (let i = 0; i < joints.length; i++) {
+    // Restore ancestors before descendants without reordering the skin's joint indices.
+    const order = joints.map((path, index) => ({ index, depth: path.split('/').length }))
+        .sort((a, b) => a.depth - b.depth);
+    for (const { index: i } of order) {
         const bindpose = bindposes[i];
         if (!bindpose) { continue; }
         const node = root.getChildByPath(joints[i]);

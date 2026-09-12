@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason",
-    "modifiedCount": 4
+    "modifiedCount": 5
   },
   "mapping": [
     {
@@ -2991,8 +2991,8 @@
       "airPath": "src/cocos/core/utils/path.ts",
       "upstreamPath": "cocos/core/utils/path.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "Ignore URL fragments when resolving asset extensions, required by direct glTF/GLB loadRemote URLs."
     },
     {
       "airPath": "src/cocos/core/utils/pool.ts",

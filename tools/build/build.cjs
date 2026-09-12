@@ -10,10 +10,11 @@
  *
  * 引擎根目录为 src/（与上游相对布局一致）；feature 集见 docs/01-web-feature-set.md。
  */
-const { join } = require('path');
+const { join, dirname, resolve, relative, isAbsolute } = require('path');
 const fs = require('fs');
 const { ensureDir, moveSync, existsSync } = require('fs-extra');
 const { buildEngine } = require('@cocos/ccbuild');
+const { withIncrementalCache, acquireBuildLock } = require('./incremental.cjs');
 
 const ROOT = join(__dirname, '..', '..');
 const ENGINE = join(ROOT, 'src');
@@ -30,6 +31,8 @@ const formatIdx = args.indexOf('--format');
 const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
 
 (async function exec () {
+    const release = await acquireBuildLock(ROOT);
+    try {
     // 唯一临时目录：避免 emptyDir 对上一次产物做批量删除（本机 safe-delete shim 会拦截）。
     // 旧 tmp 目录清理失败时静默忽略（build/ 已 gitignore），不阻塞构建。
     const tmpOut = join(ROOT, 'build', `.tmp-${min ? 'min' : 'dev'}-${Date.now()}`);
@@ -37,7 +40,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
 
     console.log(`[build] cocosair moduleFormat=${moduleFormat} min=${min}`);
     const started = Date.now();
-    await buildEngine({
+    const build = () => buildEngine({
         engine: ENGINE,
         moduleFormat,
         mode: 'BUILD',
@@ -52,6 +55,8 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         // 会产生 `_i is not defined` 的上游变换 bug（program-lib 布局合并路径）。
         targets: { chrome: '66' },
     });
+    if (!min && moduleFormat === 'esm') await withIncrementalCache(ROOT, build);
+    else await build();
     console.log(`[build] ccbuild done in ${((Date.now() - started) / 1000).toFixed(1)}s`);
 
     // 归一化产物名并移动到 build/ 根目录：
@@ -78,7 +83,13 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     for (const m of mapCandidates) {
         const p = join(tmpOut, m);
         if (existsSync(p)) {
-            moveSync(p, join(ROOT, 'build', bundleName + '.map'), { overwrite: true });
+            const map = JSON.parse(fs.readFileSync(p, 'utf8'));
+            map.file = bundleName;
+            map.sources = map.sources.map((source) => {
+                if (isAbsolute(source) || /^[a-z]+:/i.test(source)) return source;
+                return relative(join(ROOT, 'build'), resolve(dirname(p), source)).replace(/\\/g, '/');
+            });
+            fs.writeFileSync(join(ROOT, 'build', bundleName + '.map'), JSON.stringify(map));
             // bundle 内 sourceMappingURL 指向 cc.js.map，需改写为最终产物名
             const bundlePath = join(ROOT, 'build', bundleName);
             const code = fs.readFileSync(bundlePath, 'utf8');
@@ -89,6 +100,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         }
     }
     console.log('[build] output: build/' + bundleName);
+    } finally { release(); }
 })().catch((e) => {
     console.error('[build] FAILED:', e && e.message ? e.message : e);
     process.exit(1);

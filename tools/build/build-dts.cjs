@@ -17,7 +17,7 @@
  */
 const { join } = require('path');
 const fs = require('fs');
-const { existsSync, renameSync, copyFileSync } = require('fs-extra');
+const { existsSync, renameSync } = require('fs-extra');
 const { dtsBundler } = require('@cocos/ccbuild');
 
 const ROOT = join(__dirname, '..', '..');
@@ -39,7 +39,16 @@ function copyOutput (outDir) {
     for (const c of candidates) {
         const p = join(outDir, c);
         if (existsSync(p)) {
-            copyFileSync(p, join(ROOT, 'build', 'cocosair.module.d.ts'));
+            // ccbuild emits an ambient "cc" module. The SDK's package types entry must
+            // itself be an external module so normal named imports work for consumers.
+            const declarations = fs.readFileSync(p, 'utf8');
+            if (!/^\s*declare module "cc" \{/.test(declarations) || !/\}\s*$/.test(declarations)) {
+                throw new Error('Unexpected ccbuild declaration format');
+            }
+            const sdk = declarations.replace(/^\s*declare module "cc" \{\s*/, '')
+                .replace(/\}\s*$/, '')
+                .replace(/(["'])cc\1/g, '"./cocosair.module"');
+            fs.writeFileSync(join(ROOT, 'build', 'cocosair.module.d.ts'), sdk);
             return true;
         }
     }

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cocos AIR · glTF / GLB</title>
+    <link rel="icon" href="data:,">
+    <script>if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.dataset.embed = 'true';</script>
+    <style>
+        html, body, #GameDiv, #Cocos3dGameContainer { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+        body { background: #182132; color: #edf4ff; font: 14px system-ui, sans-serif; }
+        canvas { width: 100%; height: 100%; display: block; }
+        aside { position: fixed; top: 20px; left: 20px; padding: 20px; width: min(300px, calc(100vw - 80px)); background: #152031ee; border: 1px solid #40506b; border-radius: 10px; }
+        h1 { font-size: 20px; margin: 0 0 6px; } p { color: #becde3; line-height: 1.6; }
+        label { display: block; margin: 14px 0 6px; } select, input { width: 100%; }
+        select, button { background: #263752; color: #fff; border: 1px solid #5b718f; padding: 8px; border-radius: 4px; }
+        button { margin: 12px 8px 0 0; cursor: pointer; } output { display: block; margin-top: 16px; white-space: pre-line; line-height: 1.6; }
+        a { color: #99d4ff; } #status[data-error] { color: #ffabab; }
+        html[data-embed] aside { top:auto; bottom:12px; left:12px; width:calc(100% - 24px); padding:10px; display:flex; align-items:center; gap:8px; border-radius:3px; }
+        html[data-embed] aside h1, html[data-embed] aside p, html[data-embed] aside label, html[data-embed] #model, html[data-embed] #status { display:none; }
+        html[data-embed] #clip { width:130px; min-width:0; font-size:11px; }
+        html[data-embed] aside button { margin:0; padding:7px; font-size:11px; flex:none; }
+        html[data-embed] #time { width:70px; flex:1; min-width:30px; }
+        html[data-embed][data-animated=false] aside { display:none; }
+        html[data-embed] canvas { touch-action:none; cursor:grab; }
+    </style>
+    <script type="importmap">{ "imports": { "cocosair": "/build/cocosair.module.js" } }</script>
+</head>
+<body>
+    <div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas" aria-label="模型预览"></canvas></div></div>
+    <aside>
+        <h1>glTF / GLB</h1><p>直接加载原始模型，使用 Cocos 原生材质、蒙皮与动画。</p>
+        <label for="model">模型</label>
+        <select id="model">
+            <option value="BoxTextured.glb">纹理立方体 · GLB</option>
+            <option value="SimpleSkin.gltf">骨骼动画 · 多文件 glTF</option>
+            <option value="AnimatedMorphCube.glb">Morph 动画 · GLB</option>
+            <option value="official/SimpleSparseAccessor.gltf">官方 · Sparse / Data URI</option>
+            <option value="official/InterpolationTest.glb">官方 · 插值方式</option>
+            <option value="official/VertexColorTest.glb">官方 · 顶点色</option>
+            <option value="official/Material_AlphaBlend_00.gltf">官方 · 顶点透明混合</option>
+            <option value="diagnostics.glb">材质与负缩放检查 · GLB</option>
+            <option value="combined.glb">骨骼 + Morph + 三次样条</option>
+        </select>
+        <label for="clip">动画</label><select id="clip" aria-label="动画片段"></select>
+        <button id="play">播放</button><button id="pause">暂停</button>
+        <label for="time">时间采样</label><input id="time" type="range" min="0" max="1" step="0.01" value="0">
+        <output id="status" aria-live="polite">正在启动…</output>
+        <p><a href="./assets/SOURCES.md">模型来源与许可</a></p>
+        <p><a href="../gltf-catalog/">浏览全部官方模型 / 对照预览 ↗</a></p>
+    </aside>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

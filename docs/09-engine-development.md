@@ -17,14 +17,16 @@ npm run dev [-- --example starter --port 7454]
 | example | `examples/**` | **仅 reload，绝不触发构建** |
 
 rebuild 统一走 `tools/build/build.cjs`（单一管线，不换 bundler）。
-因 ccbuild 无增量缓存（见 `05-v02-build-performance.md`），air 与 engine 的 rebuild
-都是全量重编；频道分类的价值在于耗时归因与 example-only 零构建。
+V0.3 前置审查补充 `tools/build/incremental.cjs`，为 ccbuild 原有 Rollup 管线接入原生模块缓存。
+未改动模块跳过重复转换；TypeScript program 初始化与最终链接仍会执行，不是 HMR。
+配置/锁文件变化、缓存损坏或构建失败会失效缓存；min/system 构建走完整管线。
+缓存位于 `build/.tmp-rollup-cache/`。同目录构建通过进程锁串行，避免多个 dev server 争用产物。
 
 ## Example 即时编译
 
-- `examples/**/*.ts` 由 dev server 用 esbuild transform 后按 ESM JS 服务
-  （`loader: 'ts'`, target es2022，支持 top-level await），mtime 缓存。
-- 所有 example HTML 自动注入 importmap：`cocosair` → `/build/cocosair.module.js`，
+- `examples/**/*.ts` / `*.mts` 由 dev server 用 esbuild transform 后按 ESM JS 服务
+  （`loader: 'ts'`, target es2022，支持 top-level await），按源内容缓存转换结果，避免快速保存时 mtime 相同而读到旧代码。
+- 没有 importmap 的 example HTML 才注入 `cocosair` → `/build/cocosair.module.js`，
   因此 example 里直接 `import { createAirApp } from 'cocosair'`。
 - 编译错误返回 500 并打印终端，浏览器 console 可见。
 
@@ -40,7 +42,9 @@ rebuild 统一走 `tools/build/build.cjs`（单一管线，不换 bundler）。
 
 - `/__air-test.html`：仅 import bundle 的自检页（title 报告导出数量与 createAirApp 类型）。
 - air-prelude：捕获 window error / unhandledrejection / 资源加载错误到 `window.__airErrors`，
-  并 hook WebGL（draw 计数、shader/link 错误、关键帧像素采样）到 `window.__glStats`。
+  并观察 WebGL draw 计数、shader/link 错误到 `window.__glStats`。
+  不调用 getError 消耗错误状态，也不查询无效枚举；像素采样由独立验收工具负责。
+- `/__runtime-assets.js`：只读 Inspect/Validate 工具，使用方法见 [V0.3 运行时集成](10-v03-runtime-integration.md)。
 
 ## 示例验证
 

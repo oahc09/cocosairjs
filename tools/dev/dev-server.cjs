@@ -45,6 +45,11 @@ if (!example || !examples.includes(example)) {
 let reloadToken = Date.now();
 let building = false;
 let pendingChannel = null;
+let rebuildTimer;
+function scheduleRebuild (channel, reason) {
+    clearTimeout(rebuildTimer);
+    rebuildTimer = setTimeout(() => rebuild(channel, reason), 200);
+}
 
 // ---- Task 8/17：频道耗时记录（进程内存态，/__stats 暴露） ----
 const devStats = {
@@ -65,6 +70,7 @@ function classify (relFile) {
     if (f.startsWith('src/air/')) return 'air';
     if (f.startsWith('src/cocos/') || f.startsWith('src/pal/') || f.startsWith('src/exports/')) return 'engine';
     if (f.startsWith('examples/')) return 'example';
+    if (f.startsWith('src/') && !f.includes('__dts_before_bundle/')) return 'engine';
     return null;
 }
 
@@ -105,7 +111,7 @@ try {
         if (!/\.(ts|json|js)$/.test(f)) return;
         if (f.includes('.tmp')) return;
         const channel = classify(f);
-        if (channel === 'engine' || channel === 'air') rebuild(channel, f);
+        if (channel === 'engine' || channel === 'air') scheduleRebuild(channel, f);
     });
     console.log('[dev] watching src/** (engine: cocos|pal|exports, air: air)');
 } catch (e) {
@@ -133,6 +139,7 @@ const MIME = {
     '.js': 'text/javascript; charset=utf-8',
     '.mjs': 'text/javascript; charset=utf-8',
     '.ts': 'text/javascript; charset=utf-8', // esbuild transform 后按 JS 服务
+    '.css': 'text/css; charset=utf-8',
     '.json': 'application/json',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
@@ -151,7 +158,7 @@ function serveFile (res, file) {
         // 同步读取 + mtime 缓存：避免大量并发/中止请求下 createReadStream 泄漏 fd（EMFILE）
         const st = fs.statSync(file);
         let entry = fileCache.get(file);
-        if (!entry || entry.mtime !== st.mtimeMs) {
+        if (!entry || entry.mtime !== st.mtimeMs || entry.data.length !== st.size) {
             entry = { mtime: st.mtimeMs, data: fs.readFileSync(file) };
             fileCache.set(file, entry);
         }
@@ -166,10 +173,9 @@ function serveFile (res, file) {
 const tsCache = new Map();
 function serveExampleTs (res, file) {
     try {
-        const st = fs.statSync(file);
+        const source = fs.readFileSync(file, 'utf8');
         let entry = tsCache.get(file);
-        if (!entry || entry.mtime !== st.mtimeMs) {
-            const source = fs.readFileSync(file, 'utf8');
+        if (!entry || entry.source !== source) {
             const result = esbuild.transformSync(source, {
                 loader: 'ts',
                 format: 'esm',
@@ -177,7 +183,7 @@ function serveExampleTs (res, file) {
                 sourcefile: file,
                 sourcemap: 'inline',
             });
-            entry = { mtime: st.mtimeMs, data: Buffer.from(result.code), warnings: result.warnings };
+            entry = { source, data: Buffer.from(result.code), warnings: result.warnings };
             tsCache.set(file, entry);
         }
         if (entry.warnings && entry.warnings.length) {
@@ -201,6 +207,11 @@ const IMPORT_MAP = JSON.stringify({
 const server = http.createServer((req, res) => {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     const p = decodeURIComponent(url.pathname);
+
+    if (p === '/favicon.ico') { res.writeHead(204); res.end(); return; }
+    if (p === '/__runtime-assets.js') {
+        return serveFile(res, path.join(ROOT, 'tools', 'verify', 'runtime-assets.js'));
+    }
 
     if (p === '/__reload_token') {
         res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' });
@@ -282,11 +293,13 @@ setTimeout(poll,1000);})();`);
             const html = fs.readFileSync(finalFile, 'utf8');
             res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/html; charset=utf-8' });
             // importmap 必须先于任何 module script；再注入 prelude（诊断）与 reload 轮询
+            const importMap = /<script\b[^>]*type=["']importmap["']/i.test(html)
+                ? '' : `<script type="importmap">${IMPORT_MAP}</script>`;
             res.end(html.replace('</head>',
-                `<script type="importmap">${IMPORT_MAP}</script><script src="/__air-prelude.js"></script><script src="/__reload.js"></script></head>`));
+                `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script></head>`));
             return;
         }
-        if (/\.mts?$/.test(finalFile)) return serveExampleTs(res, finalFile);
+        if (/\.m?ts$/.test(finalFile)) return serveExampleTs(res, finalFile);
         return serveFile(res, finalFile);
     }
 

@@ -2,7 +2,7 @@
  * Smoke 2 — Scene → Camera → Render 流程（HEADLESS 模式）。
  */
 import { createAirApp } from '../../src/air/bootstrap';
-import { Scene, Node, Camera, director, Layers } from '../../src';
+import { Scene, Node, Camera, director, game, Layers } from '../../src';
 
 describe('smoke 2 — scene setup and run', () => {
     beforeAll(() => {
@@ -12,6 +12,7 @@ describe('smoke 2 — scene setup and run', () => {
     test('scene with camera runs through director', async () => {
         const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
         const app = await createAirApp({ canvas, renderMode: 3 });
+        const run = jest.spyOn(game, 'run');
 
         const scene = new Scene('smoke-scene');
         const cameraNode = new Node('Main Camera');
@@ -26,5 +27,11 @@ describe('smoke 2 — scene setup and run', () => {
         app.run(scene);
         expect(director.getScene()?.name).toBe('smoke-scene');
         expect(scene.getChildByName('Cube')).toBeTruthy();
+        const next = new Scene('replacement');
+        app.run(next);
+        expect(app.getScene()).toBe(next);
+        expect(run).toHaveBeenCalledTimes(1);
+        expect(scene.isValid).toBe(false);
+        run.mockRestore();
     });
 });

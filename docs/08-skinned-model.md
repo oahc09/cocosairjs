@@ -28,11 +28,14 @@ V0.2 将上述逻辑正式化为可复用 helper（不读取 Prefab / 不依赖 
 - 算法：`world_i = inverse(bindpose_i)`；`local_i = inverse(parent.world) * world_i`，
   分解为 SRT 后设置节点 —— 父级自身有变换时依然正确。
 - 与 `buildSkeletonTree` 必须使用同一个 skinningRoot。
+- 按层级深度先恢复父关节，再恢复子关节；不会改变 joints/bindposes 的索引对应。
+- 此 helper 捕获的是构建时的世界矩阵约定；不能将其当作任意外部格式的 bindpose 转换器。
 
 ### `frameObject(camera: Camera, target: Node, fallbackDistance = 6): void`
 
 - 按目标世界包围盒（MeshRenderer.model.worldBounds 并集）自动取景；
   无几何时退回 fallbackDistance。透视相机按 fov 计算距离，正交相机按包围盒设置 orthoHeight。
+- 同时考虑 fovAxis、视口宽高比和相机父节点。程序化 Mesh 需要实际 bounds；例如 `utils.createMesh(geometry, undefined, { calculateBounds: true })`。
 
 ## 示例（examples/skinned-animation 骨架）
 

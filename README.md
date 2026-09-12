@@ -5,6 +5,7 @@
 
 > **V0.1 RC**（2026-09-12）：验收矩阵 L0–L14 全部通过，详见 `docs/acceptance-report.md`。
 > **V0.2 RC**（2026-09-12）：Code First DX & SDK 化，验收矩阵 L0–L17 全部通过，详见 `docs/acceptance-report-v02.md`。
+> **V0.3**（2026-09-12）：完成 V0.2 审查修复、资源 Inspect/Validate、多实例生命周期和独立静态验证，见 [验证记录](docs/11-v03-verification.md)。V0.2 原增量/helper 验收的更正也记录于此。
 
 ```bash
 npm install
@@ -80,6 +81,10 @@ cocosair.js/
 
 ## 文档
 
+- [资源集成与运行时检查](docs/10-v03-runtime-integration.md) — 资源关系、Code First 组装、Inspect/Validate、生命周期与静态复现
+- [V0.2 审查与 V0.3 验收](docs/11-v03-verification.md) — 修复证据、验证矩阵与限制
+- [直接加载 glTF / GLB](docs/gltf-runtime.md) — 运行时模型加载、PBR、骨骼动画与 Morph；完整示例见 `examples/gltf-viewer/`
+- [官方模型目录与对照预览](docs/gltf-catalog.md) — 150 个官方模型、格式选择、AIR 预览与 Khronos Viewer 对照
 - `docs/06-code-first-getting-started.md` — 最小入门（createAirApp / GameCanvas 约束）
 - `docs/07-asset-loading.md` — Promise Asset Helper
 - `docs/08-skinned-model.md` — 骨骼工具集（buildSkeletonTree / restoreBindPose / frameObject）
