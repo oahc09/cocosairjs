@@ -1,7 +1,9 @@
 /**
  * Phase 1-3 — Web dependency graph 分析器。
  *
- * 用法: node tools/analyze/dep-graph.cjs [--features base,3d,...] [--out-dir docs]
+ * 用法: AIR_FEATURES=air,base,3d,... node tools/analyze/dep-graph.cjs [--out-dir docs]
+ *       （feature 集走 AIR_FEATURES 环境变量；必须与 tools/build/build.cjs 的 AIR_FEATURES 一致，
+ *        否则会产生假阳性 UNREACHABLE——如缺 gfx-webgl 时会把整个 webgl 后端误标为不可达）
  *
  * 职责:
  *  1. 扫描 cocos/ pal/ exports/ extensions/ vendor/ predefine.ts 的全部 import/export 动态导入
@@ -19,7 +21,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..', '..');
 
 // ---------------------------------------------------------------- feature set
-// Air V0.1 feature 集：以 src/cc.config.json（Air 引擎配置）为准，单一入口 feature 'air'
+// 分析 feature 集：默认 'air'（仅 DX 分析）；裁剪判定必须用与 build.cjs 相同的完整 feature 集
 const AIR_FEATURES = process.env.AIR_FEATURES
     ? process.env.AIR_FEATURES.split(',')
     : ['air'];
@@ -339,17 +341,47 @@ const manifest = {
 };
 fs.writeFileSync(path.join(outDir, 'extraction-manifest.json'), JSON.stringify(manifest, null, 2));
 
+// 人工维护的 modified 标注是 License 审计的权威记录（Phase 19），
+// 再生成时必须从既有文件继承，禁止静默抹除。
+let priorModified = {};
+const priorMapPath = path.join(outDir, 'upstream-file-map.json');
+if (fs.existsSync(priorMapPath)) {
+    try {
+        const prior = JSON.parse(fs.readFileSync(priorMapPath, 'utf8'));
+        for (const m of prior.mapping || []) {
+            if (m.modified) priorModified[m.airPath] = { modified: true, reason: m.reason };
+        }
+    } catch (e) { console.warn('[dep-graph] 读取既有 upstream-file-map.json 失败，modified 标注将丢失:', e.message); }
+}
 const fileMap = {
-    meta: { baseline: depGraph.meta.baseline, note: 'Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason' },
+    meta: {
+        baseline: depGraph.meta.baseline,
+        note: 'Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason',
+        modifiedCount: Object.keys(priorModified).length,
+    },
     mapping: extractSet.map((source) => ({
         airPath: `src/${source}`,
         upstreamPath: source,
         baseline: depGraph.meta.baseline,
-        modified: false,
-        reason: 'extraction copy',
+        ...(priorModified[`src/${source}`] || { modified: false, reason: 'extraction copy' }),
     })),
 };
-fs.writeFileSync(path.join(outDir, 'upstream-file-map.json'), JSON.stringify(fileMap, null, 2));
+// 既有 modified 条目若不在本次抽取集（如 module-override 锚点、override 替换文件），
+// 追加保留——审计记录不允许因再生成而丢失。
+const mapped = new Set(fileMap.mapping.map((m) => m.airPath));
+for (const [airPath, ann] of Object.entries(priorModified)) {
+    if (!mapped.has(airPath)) {
+        fileMap.mapping.push({
+            airPath,
+            upstreamPath: airPath.replace(/^src\//, ''),
+            baseline: depGraph.meta.baseline,
+            ...ann,
+            reason: ann.reason + '（注：非抽取映射文件，module-override/特殊锚点）',
+        });
+    }
+}
+fs.writeFileSync(priorMapPath, JSON.stringify(fileMap, null, 2));
+console.log('upstream-file-map: modified annotations preserved =', Object.keys(priorModified).length);
 
 // console report
 console.log('=== Air V0.1 Web Dependency Analysis ===');

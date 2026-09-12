@@ -6,6 +6,27 @@
 
 ---
 
+## 2026-09-12（三轮）：Phase 18/19 收尾 → **V0.1 RC**
+
+- **首轮 git commit**：`f1bc676`（960 文件，工作区清洁；未 push，按约定待用户确认）。
+- **Phase 18 第二轮裁剪：结论为"无需删除"**。用与 build.cjs 一致的完整 feature 集重建依赖图
+  （此前仅用 'air' 单 feature 分析，曾产生 91 个假阳性 UNREACHABLE——包括运行时在用的
+  webgl 后端与 legacy pipeline，教训已固化到 dep-graph.cjs 注释）。真实闭包 839/843 可达，
+  余 4 个均为必须保留的锚点（module-override 对 ×2、源码统一入口 index.ts、纯类型声明）。
+  物理裁剪已在 Phase 4 extraction 完成，当前 src 树即精确闭包——符合"Minimize Diff From Upstream"。
+- **Phase 19 License audit 复核**：版权头覆盖 723/788（缺 65 个为上游自身未带头文件，非剥离）；
+  上游修改 4 处以 upstream-file-map.json 为权威清单；THIRD_PARTY_LICENSES.md 已同步更新。
+- **README 更新**：V0.1 RC 标识、真实闭包数据、Skeleton.joints 路径注意事项、蒙皮示例通过状态。
+- **新增 `tools/verify/examples-smoke.cjs`**：三示例浏览器冒烟回归（0 错误 + 内容像素判定），
+  RC 验证实测三例 PASS。
+- **RC 最终全量验证（全绿）**：typecheck 0 错误；build 45.6s / build:min 61.4s；
+  verify:web-only PASSED；test 7/7；三示例浏览器冒烟 PASS。
+- **V0.1 RC 标记**（package.json 版本号保持 0.1.0 未变，见版本号策略）。
+
+**计划书 §33 执行顺序 1–24 全部完成。**
+
+---
+
 ## 2026-09-12（二轮）：L13 蒙皮动画修复完成 → V0.1 验收矩阵 15/15 PASS
 
 ### 结论

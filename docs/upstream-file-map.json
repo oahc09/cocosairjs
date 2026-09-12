@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason",
-    "modifiedNote": "modified=true 的条目为 Air 对上游源码的显式修改，均附 reason；其余为原样拷贝。"
+    "modifiedCount": 4
   },
   "mapping": [
     {
@@ -50,6 +50,13 @@
     {
       "airPath": "src/air/index.ts",
       "upstreamPath": "air/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/air/utils/index.ts",
+      "upstreamPath": "air/utils/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
@@ -2837,8 +2844,8 @@
       "airPath": "src/cocos/core/platform/debug.ts",
       "upstreamPath": "cocos/core/platform/debug.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR L13-fix: import '../../../DebugInfos' -> '../../../DebugInfos.json'（显式扩展名）。独立 src/ 树下 ccbuild node-resolve 无法解析扩展名less 的 DebugInfos（同工具链下原始 cocos4-vulkan 树可解析，疑似 @cocos/typescript 插件解析差异）；显式 .json 后 build/typecheck 全部通过。"
     },
     {
       "airPath": "src/cocos/core/platform/deprecated.ts",
@@ -3226,6 +3233,111 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/gfx/empty/empty-buffer.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-command-buffer.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-command-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-descriptor-set-layout.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-descriptor-set-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-descriptor-set.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-descriptor-set.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-device.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-device.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-framebuffer.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-framebuffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-input-assembler.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-input-assembler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-pipeline-layout.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-pipeline-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-pipeline-state.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-pipeline-state.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-queue.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-render-pass.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-render-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-shader.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-shader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-swapchain.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-swapchain.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/empty/empty-texture.ts",
+      "upstreamPath": "cocos/gfx/empty/empty-texture.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/gl-constants.ts",
+      "upstreamPath": "cocos/gfx/gl-constants.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
       "airPath": "src/cocos/gfx/index.ts",
       "upstreamPath": "cocos/gfx/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -3235,6 +3347,286 @@
     {
       "airPath": "src/cocos/gfx/polyfill-legacy-cc.ts",
       "upstreamPath": "cocos/gfx/polyfill-legacy-cc.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/states/webgl-sampler.ts",
+      "upstreamPath": "cocos/gfx/webgl/states/webgl-sampler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-command-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-command-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-commands.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-commands.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-define.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-define.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-descriptor-set-layout.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-descriptor-set-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-descriptor-set.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-descriptor-set.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-device.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-device.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-framebuffer.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-framebuffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-gpu-objects.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-gpu-objects.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-input-assembler.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-input-assembler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-pipeline-layout.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-pipeline-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-pipeline-state.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-pipeline-state.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-primary-command-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-primary-command-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-queue.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-render-pass.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-render-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-shader.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-shader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-state-cache.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-state-cache.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-swapchain.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-swapchain.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": true,
+      "reason": "AIR: preserveDrawingBuffer=true（Code First 像素级验收与截图需要）"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl/webgl-texture.ts",
+      "upstreamPath": "cocos/gfx/webgl/webgl-texture.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/states/webgl2-sampler.ts",
+      "upstreamPath": "cocos/gfx/webgl2/states/webgl2-sampler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-command-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-command-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-commands.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-define.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-define.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-descriptor-set-layout.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-descriptor-set-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-descriptor-set.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-descriptor-set.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-device.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-device.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-framebuffer.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-framebuffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-gpu-objects.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-input-assembler.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-input-assembler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-pipeline-layout.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-pipeline-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-pipeline-state.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-pipeline-state.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-queue.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-render-pass.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-render-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-shader.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-shader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-state-cache.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-state-cache.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-swapchain.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-swapchain.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgl2/webgl2-texture.ts",
+      "upstreamPath": "cocos/gfx/webgl2/webgl2-texture.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
@@ -4500,8 +4892,92 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/rendering/deferred/bloom-stage.ts",
+      "upstreamPath": "cocos/rendering/deferred/bloom-stage.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/deferred/deferred-pipeline-scene-data.ts",
+      "upstreamPath": "cocos/rendering/deferred/deferred-pipeline-scene-data.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/deferred/deferred-pipeline.ts",
+      "upstreamPath": "cocos/rendering/deferred/deferred-pipeline.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/deferred/gbuffer-stage.ts",
+      "upstreamPath": "cocos/rendering/deferred/gbuffer-stage.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/deferred/lighting-stage.ts",
+      "upstreamPath": "cocos/rendering/deferred/lighting-stage.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/deferred/main-flow.ts",
+      "upstreamPath": "cocos/rendering/deferred/main-flow.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/deferred/postprocess-stage.ts",
+      "upstreamPath": "cocos/rendering/deferred/postprocess-stage.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
       "airPath": "src/cocos/rendering/define.ts",
       "upstreamPath": "cocos/rendering/define.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/deprecated.ts",
+      "upstreamPath": "cocos/rendering/deprecated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/enum.ts",
+      "upstreamPath": "cocos/rendering/enum.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/forward/forward-flow.ts",
+      "upstreamPath": "cocos/rendering/forward/forward-flow.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/forward/forward-pipeline.ts",
+      "upstreamPath": "cocos/rendering/forward/forward-pipeline.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/forward/forward-stage.ts",
+      "upstreamPath": "cocos/rendering/forward/forward-stage.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
@@ -4530,6 +5006,13 @@
     {
       "airPath": "src/cocos/rendering/instanced-buffer.ts",
       "upstreamPath": "cocos/rendering/instanced-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/legacy/index.ts",
+      "upstreamPath": "cocos/rendering/legacy/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
@@ -4570,8 +5053,29 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/rendering/pipeline-serialization.ts",
+      "upstreamPath": "cocos/rendering/pipeline-serialization.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
       "airPath": "src/cocos/rendering/pipeline-state-manager.ts",
       "upstreamPath": "cocos/rendering/pipeline-state-manager.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/pipeline-ubo.ts",
+      "upstreamPath": "cocos/rendering/pipeline-ubo.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": true,
+      "reason": "AIR: shadow/CSM UBO 扩容至 2048B（蒙皮变体 CCShadow 1248B 需要更大绑定范围；原 256B 触发 uniform buffer too small）"
+    },
+    {
+      "airPath": "src/cocos/rendering/planar-shadow-queue.ts",
+      "upstreamPath": "cocos/rendering/planar-shadow-queue.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
@@ -4591,6 +5095,76 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/rendering/reflection-probe/reflection-probe-flow.ts",
+      "upstreamPath": "cocos/rendering/reflection-probe/reflection-probe-flow.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/reflection-probe/reflection-probe-stage.ts",
+      "upstreamPath": "cocos/rendering/reflection-probe/reflection-probe-stage.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-additive-light-queue.ts",
+      "upstreamPath": "cocos/rendering/render-additive-light-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-flow.ts",
+      "upstreamPath": "cocos/rendering/render-flow.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-instanced-queue.ts",
+      "upstreamPath": "cocos/rendering/render-instanced-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-pipeline.ts",
+      "upstreamPath": "cocos/rendering/render-pipeline.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-queue.ts",
+      "upstreamPath": "cocos/rendering/render-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-reflection-probe-queue.ts",
+      "upstreamPath": "cocos/rendering/render-reflection-probe-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-shadow-map-batched-queue.ts",
+      "upstreamPath": "cocos/rendering/render-shadow-map-batched-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/render-stage.ts",
+      "upstreamPath": "cocos/rendering/render-stage.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
       "airPath": "src/cocos/rendering/render-types.ts",
       "upstreamPath": "cocos/rendering/render-types.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -4598,8 +5172,36 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/rendering/scene-culling.ts",
+      "upstreamPath": "cocos/rendering/scene-culling.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
       "airPath": "src/cocos/rendering/shadow/csm-layers.ts",
       "upstreamPath": "cocos/rendering/shadow/csm-layers.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/shadow/shadow-flow.ts",
+      "upstreamPath": "cocos/rendering/shadow/shadow-flow.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/shadow/shadow-stage.ts",
+      "upstreamPath": "cocos/rendering/shadow/shadow-stage.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/rendering/ui-phase.ts",
+      "upstreamPath": "cocos/rendering/ui-phase.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
@@ -4983,6 +5585,41 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/exports/custom-pipeline.ts",
+      "upstreamPath": "exports/custom-pipeline.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/exports/gfx-empty.ts",
+      "upstreamPath": "exports/gfx-empty.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/exports/gfx-webgl.ts",
+      "upstreamPath": "exports/gfx-webgl.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/exports/gfx-webgl2.ts",
+      "upstreamPath": "exports/gfx-webgl2.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/exports/legacy-pipeline.ts",
+      "upstreamPath": "exports/legacy-pipeline.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": false,
+      "reason": "extraction copy"
+    },
+    {
       "airPath": "src/exports/physics-framework.ts",
       "upstreamPath": "exports/physics-framework.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -5242,32 +5879,11 @@
       "reason": "extraction copy"
     },
     {
-      "airPath": "src/cocos/rendering/pipeline-ubo.ts",
-      "upstreamPath": "cocos/rendering/pipeline-ubo.ts",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": true,
-      "reason": "AIR: shadow/CSM UBO 扩容至 2048B（蒙皮变体 CCShadow 1248B 需要更大绑定范围；原 256B 触发 uniform buffer too small）"
-    },
-    {
-      "airPath": "src/cocos/gfx/webgl/webgl-swapchain.ts",
-      "upstreamPath": "cocos/gfx/webgl/webgl-swapchain.ts",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": true,
-      "reason": "AIR: preserveDrawingBuffer=true（Code First 像素级验收与截图需要）"
-    },
-    {
       "airPath": "src/cocos/animation/marionette/pose-graph/runtime-exports.ts",
       "upstreamPath": "cocos/animation/marionette/pose-graph/runtime-exports.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: 以空实现覆盖（构建时本就被 !PROCEDURAL_ANIMATION moduleOverride 替换为空实现；测试环境无法走 override 路径，故物理替换）"
-    },
-    {
-      "airPath": "src/cocos/core/platform/debug.ts",
-      "upstreamPath": "cocos/core/platform/debug.ts",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": true,
-      "reason": "AIR L13-fix: import '../../../DebugInfos' -> '../../../DebugInfos.json'（显式扩展名）。独立 src/ 树下 ccbuild node-resolve 无法解析扩展名less 的 DebugInfos（同工具链下原始 cocos4-vulkan 树可解析，疑似 @cocos/typescript 插件解析差异）；显式 .json 后 build/typecheck 全部通过。"
+      "reason": "AIR: 以空实现覆盖（构建时本就被 !PROCEDURAL_ANIMATION moduleOverride 替换为空实现；测试环境无法走 override 路径，故物理替换）（注：非抽取映射文件，module-override/特殊锚点）"
     }
   ]
 }

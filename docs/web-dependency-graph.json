@@ -1,14 +1,37 @@
 {
   "meta": {
-    "generatedAt": "2026-09-11T20:41:41.165Z",
+    "generatedAt": "2026-09-12T02:07:25.970Z",
     "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
     "platform": "HTML5",
     "mode": "BUILD",
     "airFeatures": [
-      "air"
+      "air",
+      "base",
+      "gfx-webgl",
+      "gfx-webgl2",
+      "gfx-empty",
+      "3d",
+      "animation",
+      "skeletal-animation",
+      "primitive",
+      "tween",
+      "custom-pipeline",
+      "legacy-pipeline"
     ],
     "entries": [
-      "exports/air.ts"
+      "exports/air.ts",
+      "exports/base.ts",
+      "exports/gfx-webgl.ts",
+      "exports/gfx-webgl2.ts",
+      "exports/gfx-empty.ts",
+      "exports/3d.ts",
+      "exports/animation.ts",
+      "exports/animation.ts",
+      "exports/skeletal-animation.ts",
+      "exports/primitive.ts",
+      "exports/tween.ts",
+      "exports/custom-pipeline.ts",
+      "exports/legacy-pipeline.ts"
     ],
     "activeOverrideTests": [
       "true",
@@ -19,18 +42,17 @@
       "!context.buildTimeConstants.PROCEDURAL_ANIMATION"
     ],
     "counts": {
-      "scanned": 839,
-      "reachable": 749,
+      "scanned": 843,
+      "reachable": 839,
       "byCategory": {
         "WEB_REQUIRED": 15,
-        "COMMON_REQUIRED": 733,
+        "COMMON_REQUIRED": 824,
         "TYPE_ONLY": 0,
         "NATIVE_ONLY": 0,
         "EDITOR_ONLY": 0,
         "MINIGAME_ONLY": 0,
         "PLATFORM_OTHER_ONLY": 0,
-        "UNUSED_IN_AIR_V01": 91,
-        "GENERATED": 2
+        "UNUSED_IN_AIR_V01": 4
       }
     }
   },
@@ -97,7 +119,22 @@
       "category": "COMMON_REQUIRED",
       "dependencies": [
         "air/app.ts",
-        "air/bootstrap.ts"
+        "air/bootstrap.ts",
+        "air/utils/index.ts"
+      ]
+    },
+    {
+      "path": "air/utils/index.ts",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
+      "dependencies": [
+        "cocos/scene-graph/node.ts",
+        "cocos/3d/assets/skeleton.ts",
+        "cocos/misc/camera-component.ts",
+        "cocos/core/math/index.ts",
+        "cocos/serialization/index.ts",
+        "cocos/game/index.ts",
+        "cocos/scene-graph/index.ts"
       ]
     },
     {
@@ -2825,6 +2862,19 @@
       ]
     },
     {
+      "path": "cocos/animation/marionette/pose-graph/runtime-exports-empty.ts",
+      "type": "UNREACHABLE",
+      "category": "UNUSED_IN_AIR_V01",
+      "dependencies": []
+    },
+    {
+      "path": "cocos/animation/marionette/pose-graph/runtime-exports.ts",
+      "type": "UNREACHABLE",
+      "category": "UNUSED_IN_AIR_V01",
+      "overriddenTo": "cocos/animation/marionette/pose-graph/runtime-exports-empty.ts",
+      "dependencies": []
+    },
+    {
       "path": "cocos/animation/marionette/pose-graph/stash/runtime-stash.ts",
       "type": "REACHABLE",
       "category": "COMMON_REQUIRED",
@@ -2844,6 +2894,7 @@
       "overriddenTo": "cocos/animation/marionette/index-empty.ts",
       "dependencies": [
         "cocos/animation/marionette/animation-controller.ts",
+        "cocos/animation/marionette/pose-graph/runtime-exports.ts",
         "cocos/animation/marionette/animation-graph.ts",
         "cocos/animation/marionette/animation-graph-variant.ts",
         "cocos/animation/marionette/parametric.ts",
@@ -5104,7 +5155,6 @@
       "category": "COMMON_REQUIRED",
       "dependencies": [
         "virtual:internal-constants",
-        "DebugInfos.json",
         "cocos/core/global-exports.ts"
       ]
     },
@@ -5722,8 +5772,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/buffer.ts"
@@ -5731,8 +5781,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-command-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/base/buffer.ts",
@@ -5750,8 +5800,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-descriptor-set-layout.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/descriptor-set-layout.ts"
@@ -5759,8 +5809,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-descriptor-set.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/base/define.ts"
@@ -5768,8 +5818,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-device.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/base/descriptor-set-layout.ts",
@@ -5808,8 +5858,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-framebuffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/framebuffer.ts"
@@ -5817,8 +5867,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-input-assembler.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/input-assembler.ts"
@@ -5826,8 +5876,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-pipeline-layout.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/pipeline-layout.ts",
         "cocos/gfx/base/define.ts"
@@ -5835,16 +5885,16 @@
     },
     {
       "path": "cocos/gfx/empty/empty-pipeline-state.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/pipeline-state.ts"
       ]
     },
     {
       "path": "cocos/gfx/empty/empty-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/command-buffer.ts",
@@ -5853,8 +5903,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-render-pass.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/render-pass.ts"
@@ -5862,8 +5912,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-shader.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/index.ts",
         "cocos/gfx/base/define.ts",
@@ -5872,8 +5922,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-swapchain.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/swapchain.ts",
@@ -5882,8 +5932,8 @@
     },
     {
       "path": "cocos/gfx/empty/empty-texture.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/texture.ts"
@@ -5891,8 +5941,8 @@
     },
     {
       "path": "cocos/gfx/gl-constants.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": []
     },
     {
@@ -5953,8 +6003,8 @@
     },
     {
       "path": "cocos/gfx/webgl/states/webgl-sampler.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/states/sampler.ts",
@@ -5964,8 +6014,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/buffer.ts",
@@ -5977,8 +6027,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-command-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/base/buffer.ts",
@@ -6002,8 +6052,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-commands.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "virtual:internal-constants",
         "pal/system-info/web/system-info.js",
@@ -6019,16 +6069,16 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-define.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/webgl/webgl-device.ts"
       ]
     },
     {
       "path": "cocos/gfx/webgl/webgl-descriptor-set-layout.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/descriptor-set-layout.ts",
@@ -6037,8 +6087,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-descriptor-set.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/webgl/webgl-buffer.ts",
@@ -6051,8 +6101,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-device.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/base/descriptor-set-layout.ts",
@@ -6098,8 +6148,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-framebuffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/framebuffer.ts",
@@ -6112,8 +6162,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-gpu-objects.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/pipeline-state.ts",
@@ -6125,8 +6175,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-input-assembler.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/platform/debug.ts",
         "cocos/gfx/base/define.ts",
@@ -6139,8 +6189,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-pipeline-layout.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/pipeline-layout.ts",
         "cocos/gfx/webgl/webgl-gpu-objects.ts",
@@ -6150,8 +6200,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-pipeline-state.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/pipeline-state.ts",
         "cocos/gfx/webgl/webgl-gpu-objects.ts",
@@ -6163,8 +6213,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-primary-command-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/buffer.ts",
         "cocos/gfx/base/command-buffer.ts",
@@ -6186,8 +6236,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/command-buffer.ts",
@@ -6196,8 +6246,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-render-pass.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/render-pass.ts",
@@ -6206,8 +6256,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-shader.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/shader.ts",
@@ -6218,8 +6268,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-state-cache.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/pipeline-state.ts"
@@ -6227,8 +6277,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-swapchain.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "virtual:internal-constants",
         "pal/system-info/web/system-info.js",
@@ -6246,8 +6296,8 @@
     },
     {
       "path": "cocos/gfx/webgl/webgl-texture.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/texture.ts",
@@ -6258,8 +6308,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/states/webgl2-sampler.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/states/sampler.ts",
@@ -6272,8 +6322,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/platform/debug.ts",
         "cocos/gfx/base/buffer.ts",
@@ -6285,8 +6335,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-command-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/base/buffer.ts",
@@ -6310,8 +6360,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-commands.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "pal/system-info/web/system-info.js",
         "cocos/gfx/base/define.ts",
@@ -6326,16 +6376,16 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-define.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/webgl2/webgl2-device.ts"
       ]
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-descriptor-set-layout.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/descriptor-set-layout.ts",
@@ -6344,8 +6394,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-descriptor-set.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/descriptor-set.ts",
         "cocos/gfx/webgl2/webgl2-buffer.ts",
@@ -6358,8 +6408,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-device.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "pal/system-info/web/system-info.js",
         "cocos/gfx/base/descriptor-set.ts",
@@ -6408,8 +6458,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-framebuffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/framebuffer.ts",
@@ -6422,8 +6472,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-gpu-objects.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/index.ts",
         "cocos/gfx/base/define.ts",
@@ -6434,8 +6484,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-input-assembler.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/platform/debug.ts",
         "cocos/gfx/base/define.ts",
@@ -6449,8 +6499,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-pipeline-layout.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/pipeline-layout.ts",
         "cocos/gfx/webgl2/webgl2-gpu-objects.ts",
@@ -6460,8 +6510,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-pipeline-state.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/pipeline-state.ts",
         "cocos/gfx/webgl2/webgl2-gpu-objects.ts",
@@ -6474,8 +6524,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/buffer.ts",
         "cocos/gfx/base/command-buffer.ts",
@@ -6497,8 +6547,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/command-buffer.ts",
@@ -6508,8 +6558,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-render-pass.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/render-pass.ts",
@@ -6518,8 +6568,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-shader.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/shader.ts",
@@ -6530,8 +6580,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-state-cache.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/base/define.ts",
         "cocos/gfx/base/pipeline-state.ts"
@@ -6539,8 +6589,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-swapchain.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "virtual:internal-constants",
         "pal/system-info/web/system-info.js",
@@ -6558,8 +6608,8 @@
     },
     {
       "path": "cocos/gfx/webgl2/webgl2-texture.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/platform/debug.ts",
         "cocos/gfx/base/define.ts",
@@ -8884,8 +8934,8 @@
     },
     {
       "path": "cocos/rendering/deferred/bloom-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/render-scene/scene/index.ts",
@@ -8902,8 +8952,8 @@
     },
     {
       "path": "cocos/rendering/deferred/deferred-pipeline-scene-data.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/index.ts",
         "cocos/rendering/render-pipeline.ts",
@@ -8915,8 +8965,8 @@
     },
     {
       "path": "cocos/rendering/deferred/deferred-pipeline.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "virtual:internal-constants",
@@ -8937,8 +8987,8 @@
     },
     {
       "path": "cocos/rendering/deferred/gbuffer-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/render-scene/scene/index.ts",
@@ -8958,8 +9008,8 @@
     },
     {
       "path": "cocos/rendering/deferred/lighting-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/render-scene/scene/camera.ts",
@@ -8987,8 +9037,8 @@
     },
     {
       "path": "cocos/rendering/deferred/main-flow.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/render-scene/scene/index.ts",
@@ -9004,8 +9054,8 @@
     },
     {
       "path": "cocos/rendering/deferred/postprocess-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/render-scene/scene/index.ts",
@@ -9038,8 +9088,8 @@
     },
     {
       "path": "cocos/rendering/deprecated.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/index.ts",
         "cocos/rendering/render-pipeline.ts"
@@ -9047,14 +9097,14 @@
     },
     {
       "path": "cocos/rendering/enum.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": []
     },
     {
       "path": "cocos/rendering/forward/forward-flow.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/rendering/define.ts",
@@ -9067,8 +9117,8 @@
     },
     {
       "path": "cocos/rendering/forward/forward-pipeline.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "virtual:internal-constants",
@@ -9086,8 +9136,8 @@
     },
     {
       "path": "cocos/rendering/forward/forward-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/rendering/define.ts",
@@ -9159,8 +9209,8 @@
     },
     {
       "path": "cocos/rendering/legacy/index.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/rendering/forward/forward-pipeline.ts",
         "cocos/rendering/forward/forward-flow.ts",
@@ -9246,8 +9296,8 @@
     },
     {
       "path": "cocos/rendering/pipeline-serialization.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/core/index.ts",
@@ -9267,8 +9317,8 @@
     },
     {
       "path": "cocos/rendering/pipeline-ubo.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/rendering/define.ts",
         "cocos/gfx/index.ts",
@@ -9285,8 +9335,8 @@
     },
     {
       "path": "cocos/rendering/planar-shadow-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/index.ts",
         "cocos/rendering/define.ts",
@@ -9324,8 +9374,8 @@
     },
     {
       "path": "cocos/rendering/reflection-probe/reflection-probe-flow.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "virtual:internal-constants",
         "cocos/core/data/decorators/index.ts",
@@ -9340,8 +9390,8 @@
     },
     {
       "path": "cocos/rendering/reflection-probe/reflection-probe-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/gfx/index.ts",
@@ -9358,8 +9408,8 @@
     },
     {
       "path": "cocos/rendering/render-additive-light-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/render-scene/core/pass.ts",
         "cocos/render-scene/scene/model.ts",
@@ -9385,8 +9435,8 @@
     },
     {
       "path": "cocos/rendering/render-flow.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/rendering/render-stage.ts",
@@ -9397,8 +9447,8 @@
     },
     {
       "path": "cocos/rendering/render-instanced-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/rendering/instanced-buffer.ts",
         "cocos/gfx/index.ts",
@@ -9408,8 +9458,8 @@
     },
     {
       "path": "cocos/rendering/render-pipeline.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "pal/system-info/web/system-info.js",
@@ -9436,8 +9486,8 @@
     },
     {
       "path": "cocos/rendering/render-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/index.ts",
         "cocos/rendering/define.ts",
@@ -9449,8 +9499,8 @@
     },
     {
       "path": "cocos/rendering/render-reflection-probe-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/render-scene/scene/submodel.ts",
         "cocos/rendering/define.ts",
@@ -9468,8 +9518,8 @@
     },
     {
       "path": "cocos/rendering/render-shadow-map-batched-queue.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/render-scene/scene/submodel.ts",
         "cocos/rendering/define.ts",
@@ -9490,8 +9540,8 @@
     },
     {
       "path": "cocos/rendering/render-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/core/index.ts",
@@ -9511,8 +9561,8 @@
     },
     {
       "path": "cocos/rendering/scene-culling.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/render-scene/scene/model.ts",
         "cocos/render-scene/scene/camera.ts",
@@ -9544,8 +9594,8 @@
     },
     {
       "path": "cocos/rendering/shadow/shadow-flow.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/rendering/define.ts",
@@ -9564,8 +9614,8 @@
     },
     {
       "path": "cocos/rendering/shadow/shadow-stage.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/data/decorators/index.ts",
         "cocos/gfx/index.ts",
@@ -9583,8 +9633,8 @@
     },
     {
       "path": "cocos/rendering/ui-phase.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/index.ts",
         "cocos/rendering/pipeline-state-manager.ts",
@@ -10307,8 +10357,8 @@
     },
     {
       "path": "exports/custom-pipeline.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/global-exports.ts",
         "cocos/rendering/custom/index.ts"
@@ -10316,8 +10366,8 @@
     },
     {
       "path": "exports/gfx-empty.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/empty/empty-device.ts",
         "cocos/core/global-exports.ts"
@@ -10325,8 +10375,8 @@
     },
     {
       "path": "exports/gfx-webgl.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/webgl/webgl-device.ts",
         "cocos/core/global-exports.ts"
@@ -10334,8 +10384,8 @@
     },
     {
       "path": "exports/gfx-webgl2.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/gfx/webgl2/webgl2-device.ts",
         "cocos/core/global-exports.ts"
@@ -10343,8 +10393,8 @@
     },
     {
       "path": "exports/legacy-pipeline.ts",
-      "type": "UNREACHABLE",
-      "category": "UNUSED_IN_AIR_V01",
+      "type": "REACHABLE",
+      "category": "COMMON_REQUIRED",
       "dependencies": [
         "cocos/core/global-exports.ts",
         "cocos/rendering/legacy/index.ts"
@@ -10427,6 +10477,12 @@
         "exports/primitive.ts",
         "exports/tween.ts"
       ]
+    },
+    {
+      "path": "pal/audio/type.d.ts",
+      "type": "UNREACHABLE",
+      "category": "UNUSED_IN_AIR_V01",
+      "dependencies": []
     },
     {
       "path": "pal/env/web/env.js",

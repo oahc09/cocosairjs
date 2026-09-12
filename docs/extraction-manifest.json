@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-09-11T20:41:41.165Z",
+    "generatedAt": "2026-09-12T02:07:25.970Z",
     "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
     "sourceOfTruth": "docs/web-dependency-graph.json",
     "note": "destination = src/<source relative path>; engine root = src/"
@@ -39,6 +39,11 @@
     {
       "source": "air/index.ts",
       "destination": "src/air/index.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "air/utils/index.ts",
+      "destination": "src/air/utils/index.ts",
       "category": "COMMON_REQUIRED"
     },
     {
@@ -2307,6 +2312,81 @@
       "category": "COMMON_REQUIRED"
     },
     {
+      "source": "cocos/gfx/empty/empty-buffer.ts",
+      "destination": "src/cocos/gfx/empty/empty-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-command-buffer.ts",
+      "destination": "src/cocos/gfx/empty/empty-command-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-descriptor-set-layout.ts",
+      "destination": "src/cocos/gfx/empty/empty-descriptor-set-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-descriptor-set.ts",
+      "destination": "src/cocos/gfx/empty/empty-descriptor-set.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-device.ts",
+      "destination": "src/cocos/gfx/empty/empty-device.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-framebuffer.ts",
+      "destination": "src/cocos/gfx/empty/empty-framebuffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-input-assembler.ts",
+      "destination": "src/cocos/gfx/empty/empty-input-assembler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-pipeline-layout.ts",
+      "destination": "src/cocos/gfx/empty/empty-pipeline-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-pipeline-state.ts",
+      "destination": "src/cocos/gfx/empty/empty-pipeline-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-queue.ts",
+      "destination": "src/cocos/gfx/empty/empty-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-render-pass.ts",
+      "destination": "src/cocos/gfx/empty/empty-render-pass.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-shader.ts",
+      "destination": "src/cocos/gfx/empty/empty-shader.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-swapchain.ts",
+      "destination": "src/cocos/gfx/empty/empty-swapchain.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/empty/empty-texture.ts",
+      "destination": "src/cocos/gfx/empty/empty-texture.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/gl-constants.ts",
+      "destination": "src/cocos/gfx/gl-constants.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
       "source": "cocos/gfx/index.ts",
       "destination": "src/cocos/gfx/index.ts",
       "category": "COMMON_REQUIRED"
@@ -2314,6 +2394,206 @@
     {
       "source": "cocos/gfx/polyfill-legacy-cc.ts",
       "destination": "src/cocos/gfx/polyfill-legacy-cc.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/states/webgl-sampler.ts",
+      "destination": "src/cocos/gfx/webgl/states/webgl-sampler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-buffer.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-command-buffer.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-command-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-commands.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-commands.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-define.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-descriptor-set-layout.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-descriptor-set-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-descriptor-set.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-descriptor-set.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-device.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-device.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-framebuffer.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-framebuffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-gpu-objects.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-gpu-objects.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-input-assembler.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-input-assembler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-pipeline-layout.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-pipeline-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-pipeline-state.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-pipeline-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-primary-command-buffer.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-primary-command-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-queue.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-render-pass.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-render-pass.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-shader.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-shader.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-state-cache.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-state-cache.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-swapchain.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-swapchain.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl/webgl-texture.ts",
+      "destination": "src/cocos/gfx/webgl/webgl-texture.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/states/webgl2-sampler.ts",
+      "destination": "src/cocos/gfx/webgl2/states/webgl2-sampler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-buffer.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-command-buffer.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-command-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-commands.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-commands.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-define.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-descriptor-set-layout.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-descriptor-set-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-descriptor-set.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-descriptor-set.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-device.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-device.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-framebuffer.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-framebuffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-gpu-objects.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-input-assembler.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-input-assembler.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-pipeline-layout.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-pipeline-layout.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-pipeline-state.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-pipeline-state.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-queue.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-render-pass.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-render-pass.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-shader.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-shader.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-state-cache.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-state-cache.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-swapchain.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-swapchain.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/gfx/webgl2/webgl2-texture.ts",
+      "destination": "src/cocos/gfx/webgl2/webgl2-texture.ts",
       "category": "COMMON_REQUIRED"
     },
     {
@@ -3217,8 +3497,68 @@
       "category": "COMMON_REQUIRED"
     },
     {
+      "source": "cocos/rendering/deferred/bloom-stage.ts",
+      "destination": "src/cocos/rendering/deferred/bloom-stage.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/deferred/deferred-pipeline-scene-data.ts",
+      "destination": "src/cocos/rendering/deferred/deferred-pipeline-scene-data.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/deferred/deferred-pipeline.ts",
+      "destination": "src/cocos/rendering/deferred/deferred-pipeline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/deferred/gbuffer-stage.ts",
+      "destination": "src/cocos/rendering/deferred/gbuffer-stage.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/deferred/lighting-stage.ts",
+      "destination": "src/cocos/rendering/deferred/lighting-stage.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/deferred/main-flow.ts",
+      "destination": "src/cocos/rendering/deferred/main-flow.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/deferred/postprocess-stage.ts",
+      "destination": "src/cocos/rendering/deferred/postprocess-stage.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
       "source": "cocos/rendering/define.ts",
       "destination": "src/cocos/rendering/define.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/deprecated.ts",
+      "destination": "src/cocos/rendering/deprecated.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/enum.ts",
+      "destination": "src/cocos/rendering/enum.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/forward/forward-flow.ts",
+      "destination": "src/cocos/rendering/forward/forward-flow.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/forward/forward-pipeline.ts",
+      "destination": "src/cocos/rendering/forward/forward-pipeline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/forward/forward-stage.ts",
+      "destination": "src/cocos/rendering/forward/forward-stage.ts",
       "category": "COMMON_REQUIRED"
     },
     {
@@ -3239,6 +3579,11 @@
     {
       "source": "cocos/rendering/instanced-buffer.ts",
       "destination": "src/cocos/rendering/instanced-buffer.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/legacy/index.ts",
+      "destination": "src/cocos/rendering/legacy/index.ts",
       "category": "COMMON_REQUIRED"
     },
     {
@@ -3267,8 +3612,23 @@
       "category": "COMMON_REQUIRED"
     },
     {
+      "source": "cocos/rendering/pipeline-serialization.ts",
+      "destination": "src/cocos/rendering/pipeline-serialization.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
       "source": "cocos/rendering/pipeline-state-manager.ts",
       "destination": "src/cocos/rendering/pipeline-state-manager.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/pipeline-ubo.ts",
+      "destination": "src/cocos/rendering/pipeline-ubo.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/planar-shadow-queue.ts",
+      "destination": "src/cocos/rendering/planar-shadow-queue.ts",
       "category": "COMMON_REQUIRED"
     },
     {
@@ -3282,13 +3642,83 @@
       "category": "COMMON_REQUIRED"
     },
     {
+      "source": "cocos/rendering/reflection-probe/reflection-probe-flow.ts",
+      "destination": "src/cocos/rendering/reflection-probe/reflection-probe-flow.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/reflection-probe/reflection-probe-stage.ts",
+      "destination": "src/cocos/rendering/reflection-probe/reflection-probe-stage.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-additive-light-queue.ts",
+      "destination": "src/cocos/rendering/render-additive-light-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-flow.ts",
+      "destination": "src/cocos/rendering/render-flow.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-instanced-queue.ts",
+      "destination": "src/cocos/rendering/render-instanced-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-pipeline.ts",
+      "destination": "src/cocos/rendering/render-pipeline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-queue.ts",
+      "destination": "src/cocos/rendering/render-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-reflection-probe-queue.ts",
+      "destination": "src/cocos/rendering/render-reflection-probe-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-shadow-map-batched-queue.ts",
+      "destination": "src/cocos/rendering/render-shadow-map-batched-queue.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/render-stage.ts",
+      "destination": "src/cocos/rendering/render-stage.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
       "source": "cocos/rendering/render-types.ts",
       "destination": "src/cocos/rendering/render-types.ts",
       "category": "COMMON_REQUIRED"
     },
     {
+      "source": "cocos/rendering/scene-culling.ts",
+      "destination": "src/cocos/rendering/scene-culling.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
       "source": "cocos/rendering/shadow/csm-layers.ts",
       "destination": "src/cocos/rendering/shadow/csm-layers.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/shadow/shadow-flow.ts",
+      "destination": "src/cocos/rendering/shadow/shadow-flow.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/shadow/shadow-stage.ts",
+      "destination": "src/cocos/rendering/shadow/shadow-stage.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/rendering/ui-phase.ts",
+      "destination": "src/cocos/rendering/ui-phase.ts",
       "category": "COMMON_REQUIRED"
     },
     {
@@ -3559,6 +3989,31 @@
     {
       "source": "exports/base.ts",
       "destination": "src/exports/base.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/custom-pipeline.ts",
+      "destination": "src/exports/custom-pipeline.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/gfx-empty.ts",
+      "destination": "src/exports/gfx-empty.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/gfx-webgl.ts",
+      "destination": "src/exports/gfx-webgl.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/gfx-webgl2.ts",
+      "destination": "src/exports/gfx-webgl2.ts",
+      "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "exports/legacy-pipeline.ts",
+      "destination": "src/exports/legacy-pipeline.ts",
       "category": "COMMON_REQUIRED"
     },
     {

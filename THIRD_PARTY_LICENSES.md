@@ -2,15 +2,23 @@
 
 Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source License Audit 的结果记录。
 
+> 审计复核：2026-09-12（L13 修复与 Phase 18 之后）。
+
 ## 1. 引擎源码（src/cocos、src/pal、src/exports、src/extensions、src/external、src/DebugInfos*）
 
 - 来源：`cocos-creator/engine`（cocos4）`4.0.0-alpha.33` 快照（2026-09-12）。
 - 许可：MIT License。所有上游文件的版权头（Xiamen Yaji Software Co., Ltd. / Chukong / Cocos）
   **原样保留**，未做任何修改或移除（审计方式：抽取为逐文件拷贝，见 docs/upstream-file-map.json）。
-- 例外（Air 新增/修改，文件头含 AIR 注释）：
-  - `src/air/**`（Air 自有代码，MIT，本项目）
-  - `src/cocos/rendering/pipeline-ubo.ts`（Modified：shadow/CSM UBO 扩容至 2048B，见 file-map）
-  - `src/cocos/gfx/webgl/webgl-swapchain.ts`（Modified：preserveDrawingBuffer 开启，调试/像素验收用）
+- 版权头覆盖率（2026-09-12 扫描）：src/cocos + src/pal 共 788 个 .ts，723 个含
+  `Copyright (c)` 头；其余 65 个为**上游本身未携带版权头的文件**（新近文件），
+  非本项目剥离——抽取为逐文件拷贝，未做选择性删头。
+- 上游修改（Modified）以 `docs/upstream-file-map.json` 为准（authoritative），当前 4 处：
+  1. `src/cocos/rendering/pipeline-ubo.ts` — shadow/CSM UBO 扩容 2048B
+  2. `src/cocos/gfx/webgl/webgl-swapchain.ts` — preserveDrawingBuffer 开启
+  3. `src/cocos/animation/marionette/pose-graph/runtime-exports.ts` — 空实现覆盖（构建 override 同源）
+  4. `src/cocos/core/platform/debug.ts` — DebugInfos import 显式 `.json` 扩展
+  （均为功能性最小修改，不改许可/版权归属。）
+- Air 自有代码：`src/air/**`（MIT，本项目）。
 
 ## 2. PAL 平台层（src/pal/**）
 

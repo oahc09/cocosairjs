@@ -91,6 +91,23 @@
 验证：蒙皮变体编译链接成功、3 关节全部注册、网格逐帧变形（4 帧 bbox 变化）、
 typecheck/build/build:min/verify:web-only/test 全绿。证据：docs/evidence/skinned-animation-pose1~3.png。
 
+## 8. Phase 18 — 第二轮裁剪结论（2026-09-12）
+
+用与 build.cjs 完全一致的 feature 集（air,base,gfx-webgl,gfx-webgl2,gfx-empty,3d,animation,
+skeletal-animation,primitive,tween,custom-pipeline,legacy-pipeline）重建依赖图：
+
+- **reachable 839 / scanned 843，未达 4 个且全部必须保留**：
+  - `marionette/pose-graph/runtime-exports{,-empty}.ts`：module-override 锚点对（构建时替换）
+  - `src/index.ts`：源码形态统一入口（与 exports/air.ts 导出面一致，供源码引用/dts）
+  - `pal/audio/type.d.ts`：纯类型声明
+- **结论：无需第二轮删除，当前 src 树即真实构建 feature 集下的精确闭包**
+  （物理裁剪已在 Phase 4 extraction 完成：native/editor/jsb/minigame-pal 等）。
+- 重要教训（已记入 dep-graph.cjs 注释）：早期依赖图仅用 'air' 单 feature 分析，
+  曾把整个 webgl/webgl2 后端与 legacy pipeline 误标为 UNREACHABLE（91 个假阳性）——
+  裁剪判定必须使用与构建一致的 feature 集，"不允许因为感觉应该没用而删除源码"。
+- 分析器遗留提示（非阻塞）：dep-graph 对 `.json` import 与个别 alias 解析有限制，
+  输出 2 条 UNRESOLVED（DebugInfos.json / missing-script.ts），不影响构建。
+
 ## 5. 修复的上游构建 bug（Air 侧规避，上游源码未改）
 
 - babel block-scoping 降级 + rollup 提升 → `_i is not defined`（program-lib 布局合并路径）。

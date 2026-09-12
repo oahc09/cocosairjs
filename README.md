@@ -3,6 +3,8 @@
 **Cocos Agent-first Interactive Runtime** — 基于 cocos4 的纯 TypeScript Web 引擎，
 脱离 Cocos Creator、Editor 与 Native Engine 的 **Code First** Web 运行时。
 
+> **V0.1 RC**（2026-09-12）：验收矩阵 L0–L14 全部通过，详见 `docs/acceptance-report.md`。
+
 ```bash
 npm install
 npm run dev          # Engine Watch + Example Server（http://127.0.0.1:7454）
@@ -36,7 +38,7 @@ cocosair.js/
 │   └── skinned-animation/   # 3 骨骼蒙皮 + 骨骼动画（Code First 骨骼链路）
 ├── src/            # 引擎源码（engine root，与上游 cocos4 相对布局一致）
 │   ├── air/                 # Cocos AIR 新增：bootstrap/app/utils/builtin
-│   ├── cocos/               # 引擎核心（Web 闭包，749 文件）
+│   ├── cocos/               # 引擎核心（Web 闭包：839/843 可达，实测精确闭包）
 │   ├── exports/             # ccbuild feature unit 入口（air.ts 为 bundle 入口）
 │   ├── pal/                 # 平台抽象层（Web 实现）
 │   └── cc.config.json       # Air 引擎构建配置（由 tools/analyze/make-air-config 派生）
@@ -71,7 +73,10 @@ primitive/tween/Web Input/Web PAL + builtin 材质与效果（Air 程序化注�
   参考 `examples/hello-cube/index.html` 的模板结构。
 - Camera 组件需显式设置 `visibility = Layers.Enum.DEFAULT`（4.0-alpha 的默认值为 undefined）。
 - builtin 材质/效果由 `src/air/builtin/register.ts` 程序化注册（无 Creator internal db）。
-- `skinned-animation` 示例依赖蒙皮着色器变体（见 docs/acceptance-report.md 的已知限制）。
+- `Skeleton.joints` 必须是**相对 skinningRoot 的完整路径**（`getChildByPath` 解析），
+  层级骨骼写 `bone0/bone1` 而非 `bone1`，否则关节不会注册、蒙皮不变形。
+- `skinned-animation` 示例（三关节蒙皮 + 骨骼动画）已实测通过，
+  验证与修复记录见 `docs/acceptance-report.md` §7。
 
 ## 基线与上游
 
