@@ -1,16 +1,13 @@
 import { Mesh } from '../../../cocos/3d/assets/mesh';
-import { Attribute, AttributeName, deviceManager, Feature, Format, PrimitiveMode } from '../../../cocos/gfx';
+import { Attribute, deviceManager, Feature, Format, PrimitiveMode } from '../../../cocos/gfx';
 import { Vec3 } from '../../../cocos/core/math';
-import { GLTFContext } from './context';
+import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
-import { textureCoordinates, transformTextureUV, TextureCoordinates } from './texture-transform';
+import { ATTRIBUTES, checkAttributeType } from './attributes';
+import { TEXTURE_SLOTS, slotTextureInfo, TextureSlotName } from './material/features';
+import { coreTextureCoordinates, TextureCoordinates, transformTextureUV } from './material/texture-slots';
+import { KHR_MESH_QUANTIZATION } from './extensions/geometry/quantization';
 
-const ATTRIBUTES: Record<string, [AttributeName, number]> = {
-    POSITION: [AttributeName.ATTR_POSITION, 3], NORMAL: [AttributeName.ATTR_NORMAL, 3],
-    TANGENT: [AttributeName.ATTR_TANGENT, 4], TEXCOORD_0: [AttributeName.ATTR_TEX_COORD, 2],
-    TEXCOORD_1: [AttributeName.ATTR_TEX_COORD1, 2], COLOR_0: [AttributeName.ATTR_COLOR, 4],
-    JOINTS_0: [AttributeName.ATTR_JOINTS, 4], WEIGHTS_0: [AttributeName.ATTR_WEIGHTS, 4],
-};
 const FORMATS = [Format.UNKNOWN, Format.R32F, Format.RG32F, Format.RGB32F, Format.RGBA32F];
 interface Channel { name: string; width: number; values: number[]; }
 export class BinaryBuilder {
@@ -30,7 +27,7 @@ export class BinaryBuilder {
     }
 }
 
-export function createGLTFMesh (context: GLTFContext, meshIndex: number): Mesh {
+export function createGLTFMesh (context: GLTFParserContext, meshIndex: number): Mesh {
     const source = item(context.json.meshes, meshIndex, 'mesh');
     check(source.primitives?.length, `mesh ${meshIndex}: no primitives`);
     const binary = new BinaryBuilder();
@@ -38,31 +35,59 @@ export function createGLTFMesh (context: GLTFContext, meshIndex: number): Mesh {
         minPosition: new Vec3(Infinity, Infinity, Infinity), maxPosition: new Vec3(-Infinity, -Infinity, -Infinity) };
     const morph: NonNullable<Mesh.IStruct['morph']> = { subMeshMorphs: [], weights: source.weights?.slice() };
     const targetCount = source.primitives[0].targets?.length || 0;
+    let morphCount = targetCount;
     if (source.weights) { check(source.weights.length === targetCount && source.weights.every(Number.isFinite), 'invalid mesh morph weights'); }
-    for (const primitive of source.primitives) {
+    // KHR_mesh_quantization widens the accepted component types for mesh attributes.
+    const quantized = context.extensionActive(KHR_MESH_QUANTIZATION);
+    for (const [primitiveIndex, primitive] of source.primitives.entries()) {
         check((primitive.targets?.length || 0) === targetCount, 'inconsistent primitive morph target counts');
-        const position = context.accessor(primitive.attributes.POSITION);
-        check(position.source.type === 'VEC3' && position.source.componentType === 5126, 'POSITION must be float VEC3');
-        let count = position.count;
+        const decoded = context.decodedPrimitive(meshIndex, primitiveIndex);
+        let count: number;
         const channels: Channel[] = [];
-        for (const [name, index] of Object.entries(primitive.attributes)) {
-            if (!(name in ATTRIBUTES)) {
-                check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
-                check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
-                context.warn(`mesh ${meshIndex}: unused attribute ${name}`); continue;
+        let decodedIndices: number[] | undefined;
+        if (decoded) {
+            const position = decoded.attributes.POSITION;
+            check(position && position.length % 3 === 0, `mesh ${meshIndex}: decoded POSITION is missing or invalid`);
+            count = position.length / 3;
+            for (const [name, values] of Object.entries(decoded.attributes)) {
+                const mapping = ATTRIBUTES[name];
+                if (!mapping) {
+                    check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
+                    check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
+                    context.warn(`mesh ${meshIndex}: unused attribute ${name}`); continue;
+                }
+                check(values.length === count * mapping[1],
+                    `mesh ${meshIndex}: decoded ${name} has ${values.length} components, expected ${count * mapping[1]}`);
+                channels.push({ name, width: mapping[1], values: Array.from(values) });
             }
-            const accessor = context.accessor(index);
-            const width = ATTRIBUTES[name][1];
-            check(accessor.count === count && (accessor.components === width || (name === 'COLOR_0' && accessor.components === 3)), `invalid ${name} shape`);
-            if (name === 'JOINTS_0') { check([5121, 5123].includes(accessor.source.componentType) && !accessor.source.normalized, 'invalid JOINTS_0 type'); }
-            else if (name === 'NORMAL' || name === 'TANGENT') { check(accessor.source.componentType === 5126, `${name} must be float`); }
-            else { check(accessor.source.componentType === 5126 || ([5121, 5123].includes(accessor.source.componentType) && accessor.source.normalized), `invalid ${name} type`); }
-            const values = accessor.values.slice();
-            if (name === 'COLOR_0' && accessor.components === 3) {
-                values.length = 0;
-                for (let i = 0; i < count; ++i) { values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1); }
+            if (decoded.indices) { decodedIndices = Array.from(decoded.indices); }
+            if (primitive.targets?.length) {
+                // Draco payloads carry no morph displacements; the declared accessors are placeholders.
+                context.warn(`mesh ${meshIndex}: morph targets are not supported with Draco compression`);
+                morphCount = 0;
             }
-            channels.push({ name, width, values });
+        } else {
+            const position = context.accessor(primitive.attributes.POSITION);
+            check(position.source.type === 'VEC3', 'POSITION must be VEC3');
+            checkAttributeType('POSITION', position.source.componentType, !!position.source.normalized, quantized);
+            count = position.count;
+            for (const [name, index] of Object.entries(primitive.attributes)) {
+                if (!(name in ATTRIBUTES)) {
+                    check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
+                    check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
+                    context.warn(`mesh ${meshIndex}: unused attribute ${name}`); continue;
+                }
+                const accessor = context.accessor(index);
+                const width = ATTRIBUTES[name][1];
+                check(accessor.count === count && (accessor.components === width || (name === 'COLOR_0' && accessor.components === 3)), `invalid ${name} shape`);
+                checkAttributeType(name, accessor.source.componentType, !!accessor.source.normalized, quantized);
+                const values = accessor.values.slice();
+                if (name === 'COLOR_0' && accessor.components === 3) {
+                    values.length = 0;
+                    for (let i = 0; i < count; ++i) { values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1); }
+                }
+                channels.push({ name, width, values });
+            }
         }
         const weights = channels.find((c) => c.name === 'WEIGHTS_0');
         const joints = channels.find((c) => c.name === 'JOINTS_0');
@@ -75,7 +100,9 @@ export function createGLTFMesh (context: GLTFContext, meshIndex: number): Mesh {
             }
         }
         let indices = Array.from({ length: count }, (_, i) => i);
-        if (primitive.indices !== undefined) {
+        if (decodedIndices) {
+            indices = decodedIndices;
+        } else if (primitive.indices !== undefined) {
             const accessor = context.accessor(primitive.indices);
             check(accessor.source.type === 'SCALAR' && !accessor.source.normalized && [5121, 5123, 5125].includes(accessor.source.componentType), 'invalid indices accessor');
             indices = accessor.values.slice();
@@ -84,7 +111,8 @@ export function createGLTFMesh (context: GLTFContext, meshIndex: number): Mesh {
         }
         const topology = convertTopology(indices, primitive.mode ?? 4);
         indices = topology.indices;
-        const targets = (primitive.targets || []).map((target) => {
+        // Draco payloads carry no morph targets; the declared accessors are index placeholders.
+        const targets = decoded ? [] : (primitive.targets || []).map((target) => {
             const entries: Record<string, number[]> = {};
             for (const [name, index] of Object.entries(target)) {
                 check(['POSITION', 'NORMAL', 'TANGENT'].includes(name), `unsupported morph attribute ${name}`);
@@ -119,13 +147,18 @@ export function createGLTFMesh (context: GLTFContext, meshIndex: number): Mesh {
             channels.push({ name: 'NORMAL', width: 3, values: normals });
         }
         const material = primitive.material === undefined ? undefined : item(context.json.materials, primitive.material, 'material');
-        for (const info of [material?.pbrMetallicRoughness?.baseColorTexture, material?.pbrMetallicRoughness?.metallicRoughnessTexture,
-            material?.normalTexture, material?.occlusionTexture, material?.emissiveTexture]) {
-            if (info) { check(channels.some((c) => c.name === `TEXCOORD_${textureCoordinates(info).texCoord}`), 'material references missing UV set'); }
+        const features = primitive.material === undefined ? undefined : context.materialFeatures[primitive.material];
+        const slotCoordinates = (slot: TextureSlotName): TextureCoordinates => {
+            const info = slotTextureInfo(material ?? {}, slot);
+            return features?.uv[slot] ?? coreTextureCoordinates(info);
+        };
+        for (const slot of TEXTURE_SLOTS) {
+            const info = slotTextureInfo(material ?? {}, slot);
+            if (info) { check(channels.some((c) => c.name === `TEXCOORD_${slotCoordinates(slot).texCoord}`), 'material references missing UV set'); }
         }
         if (material?.normalTexture && !channels.some((c) => c.name === 'TANGENT')) {
             check(topology.mode === PrimitiveMode.TRIANGLE_LIST, 'normal mapping requires triangles');
-            channels.push({ name: 'TANGENT', width: 4, values: tangents(channels, indices, textureCoordinates(material.normalTexture)) });
+            channels.push({ name: 'TANGENT', width: 4, values: tangents(channels, indices, slotCoordinates('normal')) });
         }
         // Standard shaders declare these inputs even when their feature macro is disabled.
         for (const [name, width, defaults] of [['NORMAL', 3, [0, 0, 1]], ['TANGENT', 4, [1, 0, 0, 1]],
@@ -162,7 +195,7 @@ export function createGLTFMesh (context: GLTFContext, meshIndex: number): Mesh {
                 targets: targets.map((t) => ({ displacements: names.map((name) => binary.append(new Float32Array(t[name] || count * 3), count * 3, 4)) })) });
         } else { morph.subMeshMorphs.push(null); }
     }
-    if (targetCount) { struct.morph = morph; }
+    if (morphCount) { struct.morph = morph; }
     const mesh = new Mesh(); mesh.name = source.name || `mesh_${meshIndex}`;
     try { mesh.reset({ struct, data: binary.finish() }); return mesh; } catch (error) { mesh.destroy(); throw error; }
 }

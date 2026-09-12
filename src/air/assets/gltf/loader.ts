@@ -2,11 +2,21 @@ import { assetManager } from '../../../cocos/asset/asset-manager';
 import factory from '../../../cocos/asset/asset-manager/factory';
 import { files, parsed } from '../../../cocos/asset/asset-manager/shared';
 import { GLTFAsset } from './asset';
-import { decodeContainer, GLTFContext } from './context';
+import { decodeContainer, GLTFParserContext } from './parser-context';
+import { GLTFExtensionRegistry, GLTFExtensionFactory, GLTFExtensionHandler } from './extension-registry';
+import { GLTFLoaderOptions, GLTFLoadProgress } from './progress';
+import { GLTFExtensionSupport, GLTFExtensionStatus } from './support';
+import type { GLTFDracoDecoder, GLTFMeshoptDecoder, GLTFKTX2Transcoder } from './decoder/types';
 import { prepareNodes, createSkeletons } from './nodes';
 import { createGLTFMesh } from './mesh';
 import { createGLTFMaterial, loadGLTFTextures } from './material';
 import { createGLTFAnimations } from './animation';
+import { createMaterialFeatures, GLTFMaterialFeatures } from './material/features';
+import { unlitFactory } from './extensions/material/unlit';
+import { textureTransformFactory } from './extensions/texture/transform';
+import { meshQuantizationFactory } from './extensions/geometry/quantization';
+import { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION, EXT_MESHOPT_COMPRESSION } from './extensions/geometry/meshopt';
+import { dracoCompressionFactory } from './extensions/geometry/draco';
 import { check, item } from './schema';
 
 export function gltfExtension (url: string): string | undefined {
@@ -15,24 +25,109 @@ export function gltfExtension (url: string): string | undefined {
 function absoluteURL (url: string): string {
     return new URL(url, typeof document !== 'undefined' ? document.baseURI : undefined).href;
 }
+
+let globalDefaults: GLTFLoaderOptions = {};
+/** Sets process-wide fallback options; instance options take precedence over these. */
+export function configureGLTFLoaderDefaults (options: GLTFLoaderOptions): void {
+    globalDefaults = { ...globalDefaults, ...options };
+}
+
+/** Extensions known to the version matrix but not yet implemented by a registered handler. */
+const KNOWN_UNIMPLEMENTED: readonly GLTFExtensionSupport[] = [
+    { name: 'EXT_texture_webp', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
+    { name: 'EXT_texture_avif', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
+    { name: 'KHR_texture_basisu', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
+    { name: 'KHR_lights_punctual', status: 'unsupported', reason: 'planned in V0.5 scene phase' },
+    { name: 'EXT_mesh_gpu_instancing', status: 'unsupported', reason: 'planned in V0.5 scene phase' },
+];
+
 export class GLTFLoader {
+    private readonly registry = new GLTFExtensionRegistry()
+        .register(unlitFactory)
+        .register(textureTransformFactory)
+        .register(meshQuantizationFactory)
+        .register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION))
+        .register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION))
+        .register(dracoCompressionFactory);
+    private options: GLTFLoaderOptions;
+
+    constructor (options?: GLTFLoaderOptions) {
+        this.options = { ...options };
+    }
+
+    public setDRACODecoder (decoder: GLTFDracoDecoder | null): this {
+        this.options = { ...this.options, dracoDecoder: decoder ?? undefined }; return this;
+    }
+    public setMeshoptDecoder (decoder: GLTFMeshoptDecoder | null): this {
+        this.options = { ...this.options, meshoptDecoder: decoder ?? undefined }; return this;
+    }
+    public setKTX2Transcoder (transcoder: GLTFKTX2Transcoder | null): this {
+        this.options = { ...this.options, ktx2Transcoder: transcoder ?? undefined }; return this;
+    }
+    public register (factory: GLTFExtensionFactory): this { this.registry.register(factory); return this; }
+    public unregister (factory: GLTFExtensionFactory): this { this.registry.unregister(factory); return this; }
+
+    /** Instance configuration + device capability; catalogs use this to pick variants. */
+    public getExtensionSupport (): readonly GLTFExtensionSupport[] {
+        const resolved = { ...globalDefaults, ...this.options };
+        const probe = new GLTFParserContext({ asset: { version: '2.0' } }, undefined, resolved);
+        const entries: GLTFExtensionSupport[] = [];
+        for (const handler of this.registry.createHandlers(probe)) {
+            const support = handler.support?.() ?? { name: handler.name, status: 'supported' as GLTFExtensionStatus };
+            entries.push({ ...support, name: handler.name });
+        }
+        const known = new Set(entries.map((entry) => entry.name));
+        for (const entry of KNOWN_UNIMPLEMENTED) { if (!known.has(entry.name)) { entries.push({ ...entry }); } }
+        return entries;
+    }
+
     public loadAsync (url: string): Promise<GLTFAsset> {
         registerGLTFLoader();
         // Binary transport accepts both GLB and JSON. Native factory handles caching and in-flight loads.
         return new Promise((resolve, reject) => assetManager.loadRemote<GLTFAsset>(absoluteURL(url),
-            { ext: gltfExtension(url) || '.glb' }, (error, asset) => error ? reject(error) : resolve(asset)));
+            { ext: gltfExtension(url) || '.glb', gltf: { ...globalDefaults, ...this.options } }, (error, asset) => error ? reject(error) : resolve(asset)));
     }
+
     public async parseAsync (data: string | ArrayBuffer, baseUrl?: string): Promise<GLTFAsset> {
+        const resolved: GLTFLoaderOptions = { ...globalDefaults, ...this.options };
+        if (resolved.signal?.aborted) { throw new DOMException('glTF load aborted', 'AbortError'); }
         const { json, bin } = decodeContainer(data);
-        const context = new GLTFContext(json, baseUrl === undefined ? undefined : absoluteURL(baseUrl));
+        const context = new GLTFParserContext(json, baseUrl === undefined ? undefined : absoluteURL(baseUrl), resolved);
+        const report = (phase: GLTFLoadProgress['phase'], loaded: number, total: number): void =>
+            resolved.onProgress?.({ phase, loaded, total, url: typeof data === 'string' ? data : undefined });
         const layout = prepareNodes(context);
         const asset = new GLTFAsset(context, layout);
         try {
+            context.throwIfAborted();
+            // Required/optional extension policy lives in the registry, not in string sets.
+            const handlers = this.registry.createHandlers(context);
+            context.handlers = handlers;
+            this.registry.validateRequired(context, handlers);
+            for (const handler of handlers) { handler.validate?.(context); }
+            context.throwIfAborted();
+            report('container', 1, 1);
+
             await context.loadBuffers(bin);
             // Validate all accessors before decoding images or allocating GPU resources.
             (json.accessors || []).forEach((_, i) => context.accessor(i));
+            report('decode', json.accessors?.length || 0, json.accessors?.length || 0);
+            context.throwIfAborted();
+
+            // Material features are handler-normalized before meshes/materials consume them.
+            const features: GLTFMaterialFeatures[] = [];
+            for (const [i, source] of (json.materials || []).entries()) {
+                const materialFeatures = createMaterialFeatures(i, source);
+                for (const handler of handlers) { await handler.extendMaterial?.(i, materialFeatures, context); }
+                features.push(materialFeatures);
+            }
+            context.materialFeatures = features;
+
             await loadGLTFTextures(context, asset.owned.textures, asset.images);
+            report('textures', json.textures?.length || 0, json.textures?.length || 0);
             createSkeletons(context, layout, asset.owned.skeletons);
+            // Compressed primitives are decoded before mesh construction; decoded views already
+            // replaced their bufferView payload during loadBuffers().
+            await context.resolvePrimitives();
             const materials = new Map<string, ReturnType<typeof createGLTFMaterial>>();
             for (const [i, mesh] of (json.meshes || []).entries()) {
                 asset.owned.meshes.push(createGLTFMesh(context, i));
@@ -40,8 +135,9 @@ export class GLTFLoader {
                     const key = `${primitive.material ?? -1}:${primitive.attributes.COLOR_0 !== undefined}`;
                     let material = materials.get(key);
                     if (!material) {
-                        const source = primitive.material === undefined ? {} : item(json.materials, primitive.material, 'material');
-                        material = createGLTFMaterial(source, asset.textures, primitive.attributes.COLOR_0 !== undefined);
+                        const materialFeatures = primitive.material === undefined
+                            ? createMaterialFeatures(-1, {}) : item(features, primitive.material, 'material features');
+                        material = createGLTFMaterial(materialFeatures, asset.textures, primitive.attributes.COLOR_0 !== undefined);
                         materials.set(key, material); asset.owned.materials.push(material);
                     }
                     return material;
@@ -54,9 +150,11 @@ export class GLTFLoader {
                 }
             }
             asset.owned.animations.push(...createGLTFAnimations(context, layout.paths));
+            report('objects', 1, 1);
+            context.throwIfAborted();
             context.releaseDecodedData();
             return asset;
-        } catch (error) { context.releaseDecodedData(); asset.destroy(); throw error; }
+        } catch (error) { context.dispose(); asset.destroy(); throw error; }
     }
 }
 
@@ -73,8 +171,9 @@ export function registerGLTFLoader (): void {
         assetManager.parser.register(ext, (data, _options, done) => {
             try { decodeContainer(data); done(null, data); } catch (error) { done(error as Error); }
         });
-        factory.register(ext, (url, data, _options, done) => {
-            new GLTFLoader().parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(
+        factory.register(ext, (url, data, options, done) => {
+            const loaderOptions = (options as { gltf?: GLTFLoaderOptions } | undefined)?.gltf ?? globalDefaults;
+            new GLTFLoader(loaderOptions).parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(
                 (asset) => done(null, asset), (error) => {
                     // Native parsed/file caches must not turn a repaired URL into a permanent failure.
                     files.remove(`${url}@native`); parsed.remove(`${url}@native`); done(error);
@@ -82,3 +181,7 @@ export function registerGLTFLoader (): void {
         });
     }
 }
+
+export type { GLTFExtensionHandler, GLTFExtensionFactory } from './extension-registry';
+export type { GLTFLoaderOptions, GLTFLoadProgress } from './progress';
+export type { GLTFExtensionSupport, GLTFExtensionStatus } from './support';

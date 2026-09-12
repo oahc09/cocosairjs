@@ -5,9 +5,11 @@ import { Texture2D } from '../../../cocos/asset/assets/texture-2d';
 import { API, BlendFactor, CullMode, deviceManager, Type, Uniform } from '../../../cocos/gfx';
 import { Vec4 } from '../../../cocos/core/math';
 import { MacroRecord } from '../../../cocos/render-scene/core/pass-utils';
-import { GLTFContext } from './context';
-import { check, GLTFMaterial, item } from './schema';
-import { textureCoordinates } from './texture-transform';
+import { GLTFParserContext } from './parser-context';
+import { check, item } from './schema';
+import { GLTFMaterialFeatures, TEXTURE_SLOTS, TextureSlotName } from './material/features';
+import { coreTextureCoordinates } from './material/texture-slots';
+import type { DecodedTextureSource } from './decoder/types';
 
 const UV_SLOTS = [
     ['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'],
@@ -105,30 +107,48 @@ export function gltfEffect (): EffectAsset {
     return effect;
 }
 
-export async function loadGLTFTextures (context: GLTFContext, textures: Texture2D[], images: ImageAsset[]): Promise<void> {
+export async function loadGLTFTextures (context: GLTFParserContext, textures: Texture2D[], images: ImageAsset[]): Promise<void> {
     const imageCache = new Map<number, ImageAsset>();
+    const decodeImage = async (key: number, bytes: Uint8Array, mime: string): Promise<ImageAsset> => {
+        const cached = imageCache.get(key);
+        if (cached) { return cached; }
+        const url = URL.createObjectURL(new Blob([bytes], { type: mime }));
+        try {
+            const element = await new Promise<HTMLImageElement>((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = () => reject(new Error(`[glTF] image ${key}: decode failed`));
+                img.src = url;
+            });
+            const image = new ImageAsset(element); images.push(image); imageCache.set(key, image);
+            return image;
+        } finally { URL.revokeObjectURL(url); }
+    };
     for (const [index, source] of (context.json.textures || []).entries()) {
-        check(source.source !== undefined, `texture ${index}: no core image fallback`);
-        const imageSource = item(context.json.images, source.source, 'image');
-        let image = imageCache.get(source.source);
-        if (!image) {
-            check((imageSource.uri !== undefined) !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
-            const bytes = imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView!);
-            const png = bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71;
-            const jpeg = bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
-            check(png || jpeg, 'only PNG and JPEG images are supported');
-            const mime = png ? 'image/png' : 'image/jpeg';
-            check(!imageSource.mimeType || imageSource.mimeType === mime, 'image MIME mismatch');
-            const url = URL.createObjectURL(new Blob([bytes], { type: mime }));
-            try {
-                const element = await new Promise<HTMLImageElement>((resolve, reject) => {
-                    const img = new Image();
-                    img.onload = () => resolve(img);
-                    img.onerror = () => reject(new Error(`[glTF] image ${source.source}: decode failed`));
-                    img.src = url;
-                });
-                image = new ImageAsset(element); images.push(image); imageCache.set(source.source, image);
-            } finally { URL.revokeObjectURL(url); }
+        let image: ImageAsset | undefined;
+        // Extension handlers decode first (KTX2/WebP/AVIF later phases); null falls back to the core image.
+        let decoded: DecodedTextureSource | undefined;
+        for (const handler of context.handlers) {
+            decoded = await handler.resolveTextureSource?.(index, context) ?? undefined;
+            if (decoded) { break; }
+        }
+        if (decoded) {
+            check(decoded.mimeType === 'image/png' || decoded.mimeType === 'image/jpeg', `texture ${index}: decoded source must be PNG/JPEG`);
+            image = await decodeImage(-1 - index, decoded.data, decoded.mimeType);
+        } else {
+            check(source.source !== undefined, `texture ${index}: no core image fallback`);
+            const imageSource = item(context.json.images, source.source, 'image');
+            image = imageCache.get(source.source);
+            if (!image) {
+                check((imageSource.uri !== undefined) !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
+                const bytes = imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView!);
+                const png = bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71;
+                const jpeg = bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
+                check(png || jpeg, 'only PNG and JPEG images are supported');
+                const mime = png ? 'image/png' : 'image/jpeg';
+                check(!imageSource.mimeType || imageSource.mimeType === mime, 'image MIME mismatch');
+                image = await decodeImage(source.source, bytes, mime);
+            }
         }
         const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
         const texture = new Texture2D(); textures.push(texture); texture.name = source.name || `texture_${index}`;
@@ -153,9 +173,10 @@ export async function loadGLTFTextures (context: GLTFContext, textures: Texture2
     }
 }
 
-export function createGLTFMaterial (source: GLTFMaterial, textures: readonly Texture2D[], vertexColor: boolean): Material {
+export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: readonly Texture2D[], vertexColor: boolean): Material {
+    const source = features.source;
     const pbr = source.pbrMetallicRoughness || {};
-    const unlit = !!source.extensions?.KHR_materials_unlit;
+    const unlit = features.unlit;
     const alpha = source.alphaMode || 'OPAQUE';
     check(['OPAQUE', 'MASK', 'BLEND'].includes(alpha), 'invalid alphaMode');
     const factor = pbr.baseColorFactor || [1, 1, 1, 1];
@@ -166,6 +187,7 @@ export function createGLTFMaterial (source: GLTFMaterial, textures: readonly Tex
     const defines: MacroRecord = { USE_VERTEX_COLOR: vertexColor, USE_TWOSIDE: !!source.doubleSided,
         USE_ALPHA_TEST: alpha === 'MASK', ALPHA_TEST_CHANNEL: 'a', AIR_GLTF_OPAQUE: alpha === 'OPAQUE', AIR_GLTF_UNLIT: unlit,
         CC_FORCE_FORWARD_SHADING: true };
+    const slots: TextureSlotName[] = [...TEXTURE_SLOTS];
     const maps = [
         [pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'],
         [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'],
@@ -173,10 +195,10 @@ export function createGLTFMaterial (source: GLTFMaterial, textures: readonly Tex
         [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'],
         [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'],
     ] as const;
-    for (const [info, , macro, uv] of maps) {
+    for (const [index, [info, , macro, uv]] of maps.entries()) {
         defines[macro] = !!info;
         if (info) {
-            const { texCoord } = textureCoordinates(info);
+            const { texCoord } = features.uv[slots[index]]!;
             defines[uv] = texCoord === 1 ? 'v_uv1' : 'v_uv';
             if (texCoord === 1) { defines.HAS_SECOND_UV = true; }
         }
@@ -210,8 +232,8 @@ export function createGLTFMaterial (source: GLTFMaterial, textures: readonly Tex
         check(Number.isFinite(source.normalTexture?.scale ?? 1), 'invalid normal scale');
         material.setProperty('emissiveScaleParam', new Vec4(1, 1, 1, source.normalTexture?.scale ?? 1));
         for (const [info, property] of maps) { if (info) { material.setProperty(property, item(textures, info.index, 'texture')); } }
-        maps.forEach(([info], index) => {
-            const coordinates = textureCoordinates(info);
+        maps.forEach((_, index) => {
+            const coordinates = features.uv[slots[index]] ?? coreTextureCoordinates();
             const prefix = UV_SLOTS[index][2];
             material.setProperty(`${prefix}UV0`, coordinates.row0);
             material.setProperty(`${prefix}UV1`, coordinates.row1);

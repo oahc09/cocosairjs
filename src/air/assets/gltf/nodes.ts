@@ -3,11 +3,11 @@ import { Mat4, Quat, Vec3 } from '../../../cocos/core/math';
 import { Skeleton } from '../../../cocos/3d/assets/skeleton';
 import { deviceManager } from '../../../cocos/gfx';
 import { UBOSkinning } from '../../../cocos/rendering/define';
-import { GLTFContext } from './context';
+import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
 
 export interface NodeLayout { names: string[]; paths: string[]; parents: number[]; transforms: { p: Vec3; q: Quat; s: Vec3 }[]; }
-export function prepareNodes (context: GLTFContext): NodeLayout {
+export function prepareNodes (context: GLTFParserContext): NodeLayout {
     const nodes = context.json.nodes || [];
     const parents = nodes.map(() => -1);
     const names = nodes.map((n, i) => `${(n.name || 'node').replace(/[\\/]/g, '_')}__${i}`);
@@ -62,7 +62,7 @@ export function makeNodes (layout: NodeLayout, included: Set<number>, root: Node
     for (const [i, node] of nodes) { (nodes.get(layout.parents[i]) || root).addChild(node); }
     return nodes;
 }
-export function createSkeletons (context: GLTFContext, layout: NodeLayout, skeletons: Skeleton[]): void {
+export function createSkeletons (context: GLTFParserContext, layout: NodeLayout, skeletons: Skeleton[]): void {
     for (const [i, skin] of (context.json.skins || []).entries()) {
         check(skin.joints.length > 0 && new Set(skin.joints).size === skin.joints.length, 'skin requires unique joints');
         const capacity = UBOSkinning.JOINT_UNIFORM_CAPACITY;

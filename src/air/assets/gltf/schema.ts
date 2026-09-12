@@ -32,6 +32,26 @@ export interface GLTFDocument extends Property {
     scenes?: (Property & { nodes?: number[] })[]; scene?: number; cameras?: unknown[];
 }
 
+/**
+ * `KHR/EXT_meshopt_compression` bufferView payload. mode/filter are strings in the EXT
+ * and KHR_meshopt_compression final schema; the earlier KHR draft also allowed integers.
+ */
+export interface MeshoptCompressionDef {
+    buffer: number;
+    byteOffset?: number;
+    byteLength: number;
+    byteStride: number;
+    count: number;
+    mode: string | number;
+    filter?: string | number;
+}
+
+/** `KHR_draco_mesh_compression` primitive payload: attribute semantic → Draco attribute id. */
+export interface DracoCompressionDef {
+    bufferView: number;
+    attributes: Record<string, number>;
+}
+
 export function check (condition: unknown, message: string): asserts condition {
     if (!condition) { throw new Error(`[glTF] ${message}`); }
 }

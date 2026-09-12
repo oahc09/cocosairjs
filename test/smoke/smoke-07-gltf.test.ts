@@ -1,6 +1,6 @@
 import { TextDecoder, TextEncoder } from 'util';
 import { createAirApp, GLTFLoader, GLTFAsset, Animation, SkinnedMeshRenderer, MeshRenderer, Vec3, Mat4, assetManager, loadAssetAsync } from '../../src';
-import { GLTFContext, decodeContainer } from '../../src/air/assets/gltf/context';
+import { GLTFParserContext, decodeContainer } from '../../src/air/assets/gltf/parser-context';
 import { sampleCubicQuaternion } from '../../src/air/assets/gltf/animation';
 import { convertTopology } from '../../src/air/assets/gltf/mesh';
 import { prepareNodes } from '../../src/air/assets/gltf/nodes';
@@ -8,14 +8,24 @@ import { CCObject } from '../../src/cocos/core/data/object';
 import { createEvalSymbol } from '../../src/cocos/animation/define';
 import { extname } from '../../src/cocos/core/utils/path';
 import { gltfEffect, createGLTFMaterial } from '../../src/air/assets/gltf/material';
+import { createMaterialFeatures, GLTFMaterialFeatures } from '../../src/air/assets/gltf/material/features';
+import { unlitFactory } from '../../src/air/assets/gltf/extensions/material/unlit';
+import { textureTransformFactory } from '../../src/air/assets/gltf/extensions/texture/transform';
+import { GLTFExtensionRegistry } from '../../src/air/assets/gltf/extension-registry';
 import { GLTFWinding } from '../../src/air/assets/gltf/winding';
 import { fixture, toGLB } from '../fixtures/gltf/fixture';
-import { textureCoordinates, transformTextureUV } from '../../src/air/assets/gltf/texture-transform';
+import { textureCoordinates, transformTextureUV } from '../../src/air/assets/gltf/material/texture-slots';
 import { Texture2D } from '../../src/cocos/asset/assets/texture-2d';
 import { Vec4 } from '../../src/cocos/core/math';
 
 Object.assign(globalThis, { TextDecoder, TextEncoder });
 const loader = new GLTFLoader();
+/** Mimics the loader's feature pipeline: core features + built-in extension handlers. */
+const featuresOf = (source: Parameters<typeof createMaterialFeatures>[1]): GLTFMaterialFeatures => {
+    const features = createMaterialFeatures(-1, source);
+    for (const factory of [unlitFactory, textureTransformFactory]) { factory(null as never).extendMaterial?.(-1, features, null as never); }
+    return features;
+};
 
 describe('glTF runtime loader', () => {
     beforeAll(async () => {
@@ -31,7 +41,8 @@ describe('glTF runtime loader', () => {
         const fetchMock = jest.fn().mockResolvedValue({ ok: true, arrayBuffer: async () => f.bin });
         Object.assign(globalThis, { fetch: fetchMock });
         const b = await loader.parseAsync(JSON.stringify(f.json), 'https://example.test/models/');
-        expect(fetchMock).toHaveBeenCalledWith('https://example.test/models/model.bin');
+        // The parser passes an init object carrying the (optional) abort signal.
+        expect(fetchMock).toHaveBeenCalledWith('https://example.test/models/model.bin', expect.anything());
         expect(a.meshes[0].data).toEqual(b.meshes[0].data);
         expect(a.meshes[0].struct.primitives.length).toBe(1);
         expect(a.meshes[0].struct.morph!.subMeshMorphs[0]!.targets.length).toBe(1);
@@ -110,11 +121,14 @@ describe('glTF runtime loader', () => {
         new DataView(f.glb).setUint32(12, 3, true);
         expect(() => decodeContainer(f.glb)).toThrow(/chunk length/);
         f.json.extensionsRequired = ['KHR_draco_mesh_compression'];
-        expect(() => decodeContainer(JSON.stringify(f.json))).toThrow(/required extension/);
+        // Required-extension policy lives in the registry, not in decodeContainer.
+        const registry = new GLTFExtensionRegistry();
+        expect(() => registry.validateRequired(new GLTFParserContext(f.json), registry.createHandlers(new GLTFParserContext(f.json))))
+            .toThrow(/required extension/);
     });
     test('sparse normalized accessors and matrix column padding decode correctly', async () => {
         const bin = new Uint8Array([0, 1, 0, 0, 255, 128, 0, 255, 1, 2, 0, 0, 3, 4, 0, 0]);
-        const context = new GLTFContext({ asset: { version: '2.0' }, buffers: [{ byteLength: 16 }],
+        const context = new GLTFParserContext({ asset: { version: '2.0' }, buffers: [{ byteLength: 16 }],
             bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: 2 }, { buffer: 0, byteOffset: 4, byteLength: 4 }, { buffer: 0, byteOffset: 8, byteLength: 8 }],
             accessors: [{ componentType: 5121, normalized: true, type: 'VEC2', count: 2,
                 sparse: { count: 2, indices: { bufferView: 0, componentType: 5121 }, values: { bufferView: 1 } } },
@@ -127,9 +141,9 @@ describe('glTF runtime loader', () => {
         const f = fixture(); f.json.accessors![0].count = 10000;
         await expect(loader.parseAsync(toGLB(f.json, f.bin))).rejects.toThrow(/out of bounds/);
         const cycle = fixture().json; cycle.nodes![2].children = [0];
-        expect(() => prepareNodes(new GLTFContext(cycle))).toThrow(/cycle/);
+        expect(() => prepareNodes(new GLTFParserContext(cycle))).toThrow(/cycle/);
         const shear = fixture().json; shear.nodes![0] = { matrix: [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1] };
-        expect(() => prepareNodes(new GLTFContext(shear))).toThrow(/shear/);
+        expect(() => prepareNodes(new GLTFParserContext(shear))).toThrow(/shear/);
         const external = fixture().json; external.buffers![0].uri = 'missing.bin';
         await expect(loader.parseAsync(JSON.stringify(external))).rejects.toThrow(/requires baseUrl/);
     });
@@ -162,10 +176,11 @@ describe('glTF runtime loader', () => {
     });
     test('each texture slot has independent native transform uniforms', () => {
         const texture = new Texture2D();
-        const material = createGLTFMaterial({ pbrMetallicRoughness: {
-            baseColorTexture: { index: 0, extensions: { KHR_texture_transform: { offset: [0.2, 0.3] } } },
-            metallicRoughnessTexture: { index: 0, extensions: { KHR_texture_transform: { scale: [2, 3] } } },
-        }, emissiveTexture: { index: 0, texCoord: 0, extensions: { KHR_texture_transform: { texCoord: 1, offset: [0.7, 0.8] } } } }, [texture], false);
+        const material = createGLTFMaterial(featuresOf({
+            pbrMetallicRoughness: {
+                baseColorTexture: { index: 0, extensions: { KHR_texture_transform: { offset: [0.2, 0.3] } } },
+                metallicRoughnessTexture: { index: 0, extensions: { KHR_texture_transform: { scale: [2, 3] } } },
+            }, emissiveTexture: { index: 0, texCoord: 0, extensions: { KHR_texture_transform: { texCoord: 1, offset: [0.7, 0.8] } } } }), [texture], false);
         const read = (name: string): Vec4 => { const v = new Vec4(); material.passes[0].getUniform(material.passes[0].getHandle(name), v); return v; };
         expect(read('airAlbedoUV0').z).toBeCloseTo(0.2);
         expect(read('airMetallicRoughnessUV0').x).toBe(2);
@@ -177,7 +192,7 @@ describe('glTF runtime loader', () => {
     });
     test('stride and normalized vertex color accessors decode without reading padding', async () => {
         const data = new Uint8Array([255, 0, 128, 255, 99, 99, 99, 99, 0, 255, 0, 128]);
-        const context = new GLTFContext({ asset: { version: '2.0' }, buffers: [{ byteLength: 12 }],
+        const context = new GLTFParserContext({ asset: { version: '2.0' }, buffers: [{ byteLength: 12 }],
             bufferViews: [{ buffer: 0, byteLength: 12, byteStride: 8 }],
             accessors: [{ bufferView: 0, count: 2, type: 'VEC4', componentType: 5121, normalized: true }] });
         await context.loadBuffers(data.buffer);
@@ -195,7 +210,7 @@ describe('glTF runtime loader', () => {
         assetManager.assets.remove(url); asset.destroy();
     });
     test('material factors stay linear and mirrored transforms update native winding', async () => {
-        const material = createGLTFMaterial({ pbrMetallicRoughness: { baseColorFactor: [0.5, 0.25, 0.125, 1], metallicFactor: 0.3, roughnessFactor: 0.7 } }, [], false);
+        const material = createGLTFMaterial(featuresOf({ pbrMetallicRoughness: { baseColorFactor: [0.5, 0.25, 0.125, 1], metallicFactor: 0.3, roughnessFactor: 0.7 } }), [], false);
         const albedo = new (await import('../../src/cocos/core/math')).Vec4();
         material.passes[0].getUniform(material.passes[0].getHandle('albedo'), albedo);
         expect(albedo.x).toBeCloseTo(0.5); expect(albedo.y).toBeCloseTo(0.25);

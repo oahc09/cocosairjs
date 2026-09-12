@@ -32897,13 +32897,13 @@ export namespace utils {
         get animations(): readonly AnimationClip[];
         readonly sceneNames: readonly string[];
         /** Original glTF metadata, including camera/light descriptions and original node names. */
-        get document(): Readonly<__private._air_assets_gltf_context__GLTFContext["json"]>;
+        get document(): Readonly<__private._air_assets_gltf_parser_context__GLTFParserContext["json"]>;
         get warnings(): readonly string[];
         /** @internal */
         readonly images: ImageAsset[];
         /** @internal */
         readonly meshMaterials: Material[][];
-        constructor(context: __private._air_assets_gltf_context__GLTFContext, layout: __private._air_assets_gltf_nodes__NodeLayout);
+        constructor(context: __private._air_assets_gltf_parser_context__GLTFParserContext, layout: __private._air_assets_gltf_nodes__NodeLayout);
         instantiate(sceneIndex?: number): GLTFInstance;
         destroy(): boolean;
     }
@@ -32914,10 +32914,179 @@ export namespace utils {
         dispose(): void;
     }
     export class GLTFLoader {
+        constructor(options?: GLTFLoaderOptions);
+        setDRACODecoder(decoder: GLTFDracoDecoder | null): this;
+        setMeshoptDecoder(decoder: GLTFMeshoptDecoder | null): this;
+        setKTX2Transcoder(transcoder: GLTFKTX2Transcoder | null): this;
+        register(factory: GLTFExtensionFactory): this;
+        unregister(factory: GLTFExtensionFactory): this;
+        /** Instance configuration + device capability; catalogs use this to pick variants. */
+        getExtensionSupport(): readonly GLTFExtensionSupport[];
         loadAsync(url: string): Promise<GLTFAsset>;
         parseAsync(data: string | ArrayBuffer, baseUrl?: string): Promise<GLTFAsset>;
     }
     export function registerGLTFLoader(): void;
+    /** Sets process-wide fallback options; instance options take precedence over these. */
+    export function configureGLTFLoaderDefaults(options: GLTFLoaderOptions): void;
+    export interface GLTFLoaderOptions {
+        signal?: AbortSignal;
+        dracoDecoder?: GLTFDracoDecoder;
+        meshoptDecoder?: GLTFMeshoptDecoder;
+        ktx2Transcoder?: GLTFKTX2Transcoder;
+        onProgress?: (progress: GLTFLoadProgress) => void;
+    }
+    export interface GLTFLoadProgress {
+        phase: "container" | "dependencies" | "decode" | "textures" | "objects";
+        loaded: number;
+        total: number;
+        url?: string;
+    }
+    /** Per-parse extension handler; one instance per extension per parse. */
+    export interface GLTFExtensionHandler {
+        readonly name: string;
+        /** Extensions this handler requires to be registered (e.g. data dependencies). */
+        readonly dependencies?: readonly string[];
+        support?(): GLTFExtensionSupport;
+        validate?(context: __private._air_assets_gltf_parser_context__GLTFParserContext): void;
+        loadBufferView?(index: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<Uint8Array | null>;
+        loadPrimitive?(primitiveIndex: number, meshIndex: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<DecodedPrimitive | null>;
+        resolveTextureSource?(textureIndex: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<DecodedTextureSource | null>;
+        extendMaterial?(materialIndex: number, features: GLTFMaterialFeatures, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<void> | void;
+        createNode?(nodeIndex: number, node: Node, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<void> | void;
+        instantiate?(nodeIndex: number, node: Node, context: GLTFInstantiationContext): Promise<void> | void;
+        dispose?(): void;
+    }
+    export type GLTFExtensionFactory = (context: __private._air_assets_gltf_parser_context__GLTFParserContext) => GLTFExtensionHandler;
+    /** Node-scoped state passed to handlers during instantiate(); extended by scene extensions. */
+    export interface GLTFInstantiationContext {
+        readonly json: __private._air_assets_gltf_parser_context__GLTFParserContext["json"];
+    }
+    /**
+     * Ordered extension registry. Registration order defines hook execution order;
+     * duplicate names and missing dependencies are rejected at handler creation.
+     */
+    export class GLTFExtensionRegistry {
+        register(factory: GLTFExtensionFactory): this;
+        unregister(factory: GLTFExtensionFactory): boolean;
+        get size(): number;
+        /** Instantiates handlers in registration order, rejecting duplicate names and missing dependencies. */
+        createHandlers(context: __private._air_assets_gltf_parser_context__GLTFParserContext): GLTFExtensionHandler[];
+        /**
+         * Validates extensionsRequired against handler support. Unknown or unsupported required
+         * extensions fail with a stable GLTFError; optional ones are left to core fallback + warn.
+         */
+        validateRequired(context: __private._air_assets_gltf_parser_context__GLTFParserContext, handlers: readonly GLTFExtensionHandler[]): void;
+    }
+    /** Public extension support reporting types. */
+    export type GLTFExtensionStatus = "supported" | "decoder-required" | "device-dependent" | "fallback" | "unsupported";
+    export interface GLTFExtensionSupport {
+        name: string;
+        status: GLTFExtensionStatus;
+        reason?: string;
+    }
+    /** Error with a stable machine-readable code; every extension failure path must use it. */
+    export class GLTFError extends Error {
+        readonly code: GLTFErrorCode;
+        readonly extension?: string;
+        constructor(code: GLTFErrorCode, message: string, extension?: string);
+    }
+    /** Stable glTF error codes shared by the loader, registry and extension handlers. */
+    export type GLTFErrorCode = "GLTF_EXTENSION_UNSUPPORTED" | "GLTF_DECODER_MISSING" | "GLTF_DEVICE_UNSUPPORTED" | "GLTF_EXTENSION_INVALID" | "GLTF_DECODE_FAILED";
+    export interface GLTFExtensionReportEntry {
+        name: string;
+        required: boolean;
+        status: string;
+        reason?: string;
+    }
+    export interface GLTFDracoDecoder {
+        decodePrimitive(data: ArrayBuffer, attributes: readonly DracoAttributeInfo[], document?: __private._air_assets_gltf_schema__GLTFDocument): Promise<DecodedPrimitive>;
+        dispose?(): void | Promise<void>;
+    }
+    export interface GLTFMeshoptDecoder {
+        /**
+         * Official `meshoptimizer` argument order: (count, byteStride, source, mode, filter).
+         * mode is 'ATTRIBUTES' | 'TRIANGLES' | 'INDICES'; filter is
+         * 'NONE' | 'OCTAHEDRAL' | 'QUATERNION' | 'EXPONENTIAL'.
+         */
+        decodeGltfBufferAsync(count: number, byteStride: number, source: Uint8Array, mode: string, filter?: string): Promise<ArrayBuffer | Uint8Array>;
+        dispose?(): void | Promise<void>;
+    }
+    export interface GLTFKTX2Transcoder {
+        /** Transcoder selects among device-supported compressed formats and falls back to RGBA8. */
+        transcode(data: ArrayBuffer, supportedFormats?: readonly string[]): Promise<DecodedTextureSource>;
+        dispose?(): void | Promise<void>;
+    }
+    /** Decode result consumed by the shared mesh construction path (float components). */
+    export interface DecodedPrimitive {
+        attributes: Record<string, Float32Array | Uint16Array | Uint32Array>;
+        indices?: Uint16Array | Uint32Array;
+    }
+    /** Texture payload produced by KTX2 transcoding; consumed like a core image source. */
+    export interface DecodedTextureSource {
+        data: Uint8Array;
+        mimeType: string;
+    }
+    /** Draco attribute description from the glTF JSON (compressed attribute ids). */
+    export interface DracoAttributeInfo {
+        semantic: string;
+        id: number;
+    }
+    /**
+     * Adapts an official decoder module to the loader contract. `workers` enables the
+     * decoder's own worker pool; the loader never creates workers itself.
+     */
+    export function createMeshoptDecoder(module: MeshoptDecoderModule, workers?: number): GLTFMeshoptDecoder;
+    /** True when the module exposes a usable decoder (WebAssembly present and initialized). */
+    export function isMeshoptAvailable(module: MeshoptDecoderModule | undefined): boolean;
+    /** Structural type of the official decoder module (subset actually used). */
+    export interface MeshoptDecoderModule {
+        supported?: boolean;
+        ready?: Promise<void> | Promise<unknown>;
+        useWorkers?(count: number): void;
+        decodeGltfBufferAsync?(count: number, byteStride: number, source: Uint8Array, mode: string, filter?: string): Promise<ArrayBuffer | Uint8Array>;
+        decodeGltfBuffer?(target: Uint8Array, count: number, byteStride: number, source: Uint8Array, mode: string, filter?: string): void;
+    }
+    /**
+     * Creates a Draco decoder provider for `GLTFLoaderOptions.dracoDecoder`. The module is
+     * created on the first Draco primitive and released by `dispose()`.
+     */
+    export function createDracoDecoder(provider: DracoDecoderProvider): GLTFDracoDecoder;
+    /** Structural type of the official decoder module (subset actually used). */
+    export interface DracoDecoderModule {
+        Decoder: new () => __private._air_assets_gltf_decoder_draco__DracoDecoderLike;
+        DecoderBuffer?: new () => __private._air_assets_gltf_decoder_draco__DracoBufferLike;
+        Mesh: new () => __private._air_assets_gltf_decoder_draco__DracoMeshLike;
+        DracoFloat32Array: new (size?: number) => __private._air_assets_gltf_decoder_draco__DracoArrayLike;
+        DracoInt32Array?: new (size?: number) => __private._air_assets_gltf_decoder_draco__DracoArrayLike;
+        DracoUInt32Array: new (size?: number) => __private._air_assets_gltf_decoder_draco__DracoArrayLike;
+        TRIANGULAR_MESH?: number;
+        /** Emscripten modules release wasm-owned objects through `destroy(obj)`. */
+        destroy?(object?: unknown): void;
+    }
+    /** Accepts a ready module or a factory (e.g. `draco3d.createDecoderModule({})`). */
+    export type DracoDecoderProvider = DracoDecoderModule | (() => DracoDecoderModule | Promise<DracoDecoderModule>);
+    /** Handler: relaxes core attribute typing by declaring support and validating up front. */
+    export function meshQuantizationFactory(context: __private._air_assets_gltf_parser_context__GLTFParserContext): GLTFExtensionHandler;
+    export const KHR_MESH_QUANTIZATION = "KHR_mesh_quantization";
+    /** Creates a handler for either compression extension; both share the decode core. */
+    export function meshoptCompressionFactory(extension: string): GLTFExtensionFactory;
+    export const KHR_MESHOPT_COMPRESSION = "KHR_meshopt_compression";
+    export const EXT_MESHOPT_COMPRESSION = "EXT_meshopt_compression";
+    export const dracoCompressionFactory: GLTFExtensionFactory;
+    export const KHR_DRACO_MESH_COMPRESSION = "KHR_draco_mesh_compression";
+    /**
+     * Normalized material feature state: handlers populate it via extendMaterial and the
+     * material builder consumes it, never reading extension objects directly.
+     */
+    export interface GLTFMaterialFeatures {
+        readonly index: number;
+        readonly source: __private._air_assets_gltf_schema__GLTFMaterial;
+        /** Base UV coordinates per texture slot (core texCoord selection, identity transform). */
+        readonly uv: Record<__private._air_assets_gltf_material_features__TextureSlotName, __private._air_assets_gltf_material_texture_slots__TextureCoordinates | undefined>;
+        /** T5 physical extensions extend this record with normalized scalar/vector features. */
+        readonly physical: Record<string, unknown>;
+        unlit: boolean;
+    }
     export namespace rendering {
         export function createCustomPipeline(): BasicPipeline;
         export function setCustomPipeline(name: string, builder: PipelineBuilder): void;
@@ -46214,25 +46383,56 @@ export namespace utils {
             scene?: number;
             cameras?: unknown[];
         }
-        export interface _air_assets_gltf_context__AccessorData {
+        export interface _air_assets_gltf_parser_context__AccessorData {
             values: number[];
             components: number;
             count: number;
             source: _air_assets_gltf_schema__Accessor;
         }
-        export class _air_assets_gltf_context__GLTFContext {
+        /** Parse-scoped state: buffers, accessor cache, dependency promise cache, cleanup stack and cancellation. */
+        export class _air_assets_gltf_parser_context__GLTFParserContext {
             readonly json: _air_assets_gltf_schema__GLTFDocument;
             readonly baseUrl?: string | undefined;
+            readonly options: GLTFLoaderOptions;
             readonly warnings: string[];
             readonly buffers: ArrayBuffer[];
-            constructor(json: _air_assets_gltf_schema__GLTFDocument, baseUrl?: string | undefined);
+            /** Extension handlers resolved for this parse, in registry order. Set by the loader before use. */
+            handlers: readonly GLTFExtensionHandler[];
+            /** Handler-normalized material features, indexed by material. Set by the loader before mesh/material build. */
+            materialFeatures: readonly GLTFMaterialFeatures[];
+            constructor(json: _air_assets_gltf_schema__GLTFDocument, baseUrl?: string | undefined, options?: GLTFLoaderOptions);
+            get signal(): AbortSignal | undefined;
+            /** True when the document declares the extension and a handler takes part in this parse. */
+            extensionActive(name: string): boolean;
+            throwIfAborted(): void;
+            report(phase: GLTFLoadProgress["phase"], loaded: number, total: number, url?: string): void;
             warn(message: string): void;
+            /**
+             * Deduplicates concurrent dependency work: the promise itself is cached, so the same
+             * key only executes once even before it settles. Failed promises are evicted, allowing
+             * a repaired network or decoder to retry.
+             */
+            dependency<T>(key: string, factory: () => Promise<T>): Promise<T>;
+            /** Registers parser-owned temporaries (blob URLs, workers, decoded buffers) for LIFO disposal. */
+            addCleanup(cleanup: () => void): void;
+            /** Releases all parse-scoped state. Safe to call repeatedly; ownership of Cocos assets is separate. */
+            dispose(): void;
             releaseDecodedData(): void;
             resolve(uri: string): string;
             request(uri: string): Promise<ArrayBuffer>;
             loadBuffers(bin?: ArrayBuffer): Promise<void>;
+            /**
+             * Runs the bufferView hook of every handler (meshopt decompression) once per view and
+             * validates the result. Views without a decompressed payload keep their raw data, which is
+             * the documented fallback for optional compression extensions.
+             */
+            resolveBufferViews(): Promise<void>;
+            /** Runs the primitive hook of every handler (Draco) once per primitive, before mesh build. */
+            resolvePrimitives(): Promise<void>;
+            /** Decoded geometry for a mesh/primitive pair, or undefined when accessors apply. */
+            decodedPrimitive(meshIndex: number, primitiveIndex: number): DecodedPrimitive | undefined;
             bufferView(index: number): Uint8Array;
-            accessor(index: number): _air_assets_gltf_context__AccessorData;
+            accessor(index: number): _air_assets_gltf_parser_context__AccessorData;
         }
         export interface _air_assets_gltf_nodes__NodeLayout {
             names: string[];
@@ -46243,6 +46443,47 @@ export namespace utils {
                 q: math.Quat;
                 s: math.Vec3;
             }[];
+        }
+        export interface _air_assets_gltf_decoder_draco__DracoBufferLike {
+            Init(data: Int8Array | Uint8Array, length: number): void;
+        }
+        export interface _air_assets_gltf_decoder_draco__DracoMeshLike {
+            num_points(): number;
+            num_faces(): number;
+        }
+        export interface _air_assets_gltf_decoder_draco__DracoStatusLike {
+            ok(): boolean;
+            code?(): number;
+        }
+        export interface _air_assets_gltf_decoder_draco__DracoAttributeLike {
+            num_components?(): number;
+        }
+        export interface _air_assets_gltf_decoder_draco__DracoArrayLike {
+            GetValue(index: number): number;
+        }
+        export interface _air_assets_gltf_decoder_draco__DracoDecoderLike {
+            GetEncodedGeometryType(buffer: _air_assets_gltf_decoder_draco__DracoBufferLike): number;
+            DecodeArrayToMesh(data: Int8Array | Uint8Array, length: number, mesh: _air_assets_gltf_decoder_draco__DracoMeshLike): _air_assets_gltf_decoder_draco__DracoStatusLike;
+            DecodeBufferToMesh(buffer: _air_assets_gltf_decoder_draco__DracoBufferLike, mesh: _air_assets_gltf_decoder_draco__DracoMeshLike): _air_assets_gltf_decoder_draco__DracoStatusLike;
+            GetAttributeByUniqueId(mesh: _air_assets_gltf_decoder_draco__DracoMeshLike, id: number): _air_assets_gltf_decoder_draco__DracoAttributeLike | null;
+            GetAttributeFloatForAllPoints(mesh: _air_assets_gltf_decoder_draco__DracoMeshLike, attribute: _air_assets_gltf_decoder_draco__DracoAttributeLike, out: _air_assets_gltf_decoder_draco__DracoArrayLike): boolean;
+            GetAttributeInt32ForAllPoints?(mesh: _air_assets_gltf_decoder_draco__DracoMeshLike, attribute: _air_assets_gltf_decoder_draco__DracoAttributeLike, out: _air_assets_gltf_decoder_draco__DracoArrayLike): boolean;
+            GetTrianglesUInt32Array(mesh: _air_assets_gltf_decoder_draco__DracoMeshLike, out: _air_assets_gltf_decoder_draco__DracoArrayLike): boolean;
+            GetFaceFromMesh?(mesh: _air_assets_gltf_decoder_draco__DracoMeshLike, face: number, out: _air_assets_gltf_decoder_draco__DracoArrayLike): boolean;
+        }
+        /** Texture slot names shared by feature population and material construction. */
+        export const _air_assets_gltf_material_features__TEXTURE_SLOTS: readonly [
+            "baseColor",
+            "metallicRoughness",
+            "normal",
+            "occlusion",
+            "emissive"
+        ];
+        export type _air_assets_gltf_material_features__TextureSlotName = (typeof _air_assets_gltf_material_features__TEXTURE_SLOTS)[number];
+        export interface _air_assets_gltf_material_texture_slots__TextureCoordinates {
+            texCoord: number;
+            row0: math.Vec4;
+            row1: math.Vec4;
         }
         export interface _cocos_rendering_custom_private__ProgramProxy {
             readonly name: string;

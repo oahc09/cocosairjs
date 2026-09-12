@@ -69457,7 +69457,6 @@ const SIZES = {
   5125: 4,
   5126: 4
 };
-const SUPPORTED_EXTENSIONS = new Set(['KHR_materials_unlit', 'KHR_texture_transform']);
 function decodeContainer(data) {
   let text;
   let bin;
@@ -69502,31 +69501,98 @@ function decodeContainer(data) {
   const json = JSON.parse(text.replace(/^\uFEFF/, ''));
   check(json && json.asset && json.asset.version === '2.0', 'only glTF 2.0 is supported');
   check(!json.asset.minVersion || json.asset.minVersion === '2.0', 'unsupported asset.minVersion');
-  for (const extension of json.extensionsRequired || []) {
-    check(SUPPORTED_EXTENSIONS.has(extension), `unsupported required extension: ${extension}`);
-  }
   return {
     json,
     bin
   };
 }
-class GLTFContext {
-  constructor(json, baseUrl) {
+const DependencyKeys = {
+  buffer: index => `buffer:${index}`,
+  bufferView: index => `bufferView:${index}`,
+  decodedBufferView: index => `bufferView-decoded:${index}`,
+  textureSource: index => `texture-source:${index}`,
+  primitive: (meshIndex, primitiveIndex) => `primitive:${meshIndex}:${primitiveIndex}`
+};
+class GLTFParserContext {
+  constructor(json, baseUrl, options = {}) {
     this.warnings = [];
     this.buffers = [];
+    this.handlers = [];
+    this.materialFeatures = [];
     this.accessors = new Map();
     this.requests = new Map();
+    this.dependencies = new Map();
+    this.cleanups = [];
+    this.decodedViews = new Map();
+    this.decodedPrimitives = new Map();
     this.json = json;
     this.baseUrl = baseUrl;
+    this.options = options;
+  }
+  get signal() {
+    return this.options.signal;
+  }
+  extensionActive(name) {
+    var _this$json$extensions, _this$json$extensions2;
+    return this.handlers.some(handler => handler.name === name) && (((_this$json$extensions = this.json.extensionsUsed) == null ? void 0 : _this$json$extensions.includes(name)) || ((_this$json$extensions2 = this.json.extensionsRequired) == null ? void 0 : _this$json$extensions2.includes(name)) || false);
+  }
+  throwIfAborted() {
+    var _this$options$signal;
+    if ((_this$options$signal = this.options.signal) != null && _this$options$signal.aborted) {
+      throw new DOMException('glTF load aborted', 'AbortError');
+    }
+  }
+  report(phase, loaded, total, url) {
+    var _this$options$onProgr, _this$options;
+    (_this$options$onProgr = (_this$options = this.options).onProgress) == null ? void 0 : _this$options$onProgr.call(_this$options, {
+      phase,
+      loaded,
+      total,
+      url
+    });
   }
   warn(message) {
     this.warnings.push(message);
     console.warn(`[glTF] ${message}`);
   }
+  dependency(key, factory) {
+    const cached = this.dependencies.get(key);
+    if (cached) {
+      return cached;
+    }
+    const promise = factory().catch(error => {
+      this.dependencies.delete(key);
+      throw error;
+    });
+    this.dependencies.set(key, promise);
+    return promise;
+  }
+  addCleanup(cleanup) {
+    this.cleanups.push(cleanup);
+  }
+  dispose() {
+    while (this.cleanups.length) {
+      try {
+        this.cleanups.pop()();
+      } catch (error) {
+        console.warn('[glTF] cleanup failed', error);
+      }
+    }
+    this.releaseDecodedData();
+    for (const handler of this.handlers) {
+      try {
+        handler.dispose == null ? void 0 : handler.dispose();
+      } catch (error) {
+        console.warn('[glTF] handler dispose failed', error);
+      }
+    }
+  }
   releaseDecodedData() {
     this.buffers.length = 0;
     this.accessors.clear();
     this.requests.clear();
+    this.decodedViews.clear();
+    this.decodedPrimitives.clear();
   }
   resolve(uri) {
     if (/^[a-z][a-z0-9+.-]*:/i.test(uri)) {
@@ -69539,7 +69605,9 @@ class GLTFContext {
     const url = this.resolve(uri);
     let promise = this.requests.get(url);
     if (!promise) {
-      promise = fetch(url).then(response => {
+      promise = fetch(url, {
+        signal: this.options.signal
+      }).then(response => {
         check(response.ok, `request failed: ${url} (${response.status})`);
         return response.arrayBuffer();
       });
@@ -69549,22 +69617,74 @@ class GLTFContext {
   }
   async loadBuffers(bin) {
     for (const extension of this.json.extensionsUsed || []) {
-      if (!SUPPORTED_EXTENSIONS.has(extension)) {
+      if (!this.handlers.some(handler => handler.name === extension)) {
         this.warn(`optional extension ${extension}: using core fallback where available`);
       }
     }
+    const total = (this.json.buffers || []).length;
     for (const [i, buffer] of (this.json.buffers || []).entries()) {
+      this.throwIfAborted();
       integer(buffer.byteLength, `buffer ${i} length`);
-      const data = buffer.uri !== undefined ? await this.request(buffer.uri) : i === 0 ? bin : undefined;
+      const data = buffer.uri !== undefined ? await this.dependency(DependencyKeys.buffer(i), () => this.request(buffer.uri)) : i === 0 ? bin : undefined;
       check(data, `buffer ${i}: missing URI/BIN (compressed-only buffers are unsupported)`);
       check(data.byteLength >= buffer.byteLength && (buffer.uri !== undefined || data.byteLength <= buffer.byteLength + 3), `buffer ${i}: length mismatch`);
       this.buffers.push(data.slice(0, buffer.byteLength));
+      this.report('dependencies', i + 1, total);
     }
-    for (let i = 0; i < (this.json.bufferViews || []).length; ++i) {
-      this.bufferView(i);
+    await this.resolveBufferViews();
+  }
+  async resolveBufferViews() {
+    const views = this.json.bufferViews || [];
+    for (const [index] of views.entries()) {
+      this.throwIfAborted();
+      let decoded = null;
+      for (const handler of this.handlers) {
+        const result = await (handler.loadBufferView == null ? void 0 : handler.loadBufferView(index, this));
+        if (result) {
+          decoded = result;
+          break;
+        }
+      }
+      if (decoded) {
+        check(decoded.byteLength === views[index].byteLength, `bufferView ${index}: decoded ${decoded.byteLength} bytes, expected ${views[index].byteLength}`);
+        this.decodedViews.set(index, decoded);
+      }
+      this.bufferView(index);
     }
   }
+  async resolvePrimitives() {
+    const meshes = this.json.meshes || [];
+    const total = meshes.reduce((sum, mesh) => {
+      var _mesh$primitives;
+      return sum + (((_mesh$primitives = mesh.primitives) == null ? void 0 : _mesh$primitives.length) || 0);
+    }, 0);
+    let done = 0;
+    for (const [meshIndex, mesh] of meshes.entries()) {
+      for (const [primitiveIndex] of (mesh.primitives || []).entries()) {
+        this.throwIfAborted();
+        let decoded = null;
+        for (const handler of this.handlers) {
+          const result = await (handler.loadPrimitive == null ? void 0 : handler.loadPrimitive(primitiveIndex, meshIndex, this));
+          if (result) {
+            decoded = result;
+            break;
+          }
+        }
+        if (decoded) {
+          this.decodedPrimitives.set(DependencyKeys.primitive(meshIndex, primitiveIndex), decoded);
+        }
+        this.report('decode', ++done, total);
+      }
+    }
+  }
+  decodedPrimitive(meshIndex, primitiveIndex) {
+    return this.decodedPrimitives.get(DependencyKeys.primitive(meshIndex, primitiveIndex));
+  }
   bufferView(index) {
+    const decoded = this.decodedViews.get(index);
+    if (decoded) {
+      return decoded;
+    }
     const source = item(this.json.bufferViews, index, 'bufferView');
     const buffer = item(this.buffers, source.buffer, 'buffer');
     const offset = integer(source.byteOffset || 0, 'bufferView offset');
@@ -69668,6 +69788,194 @@ function readComponent(view, offset, type) {
   }
 }
 
+class GLTFError extends Error {
+  constructor(code, message, extension) {
+    super(`[glTF] ${message}`);
+    this.code = void 0;
+    this.extension = void 0;
+    this.name = 'GLTFError';
+    this.code = code;
+    this.extension = extension;
+  }
+}
+
+const SUPPORT_CODES = {
+  'decoder-required': 'GLTF_DECODER_MISSING',
+  'device-dependent': 'GLTF_DEVICE_UNSUPPORTED',
+  fallback: 'GLTF_EXTENSION_UNSUPPORTED'
+};
+class GLTFExtensionRegistry {
+  constructor() {
+    this.factories = [];
+  }
+  register(factory) {
+    if (!this.factories.includes(factory)) {
+      this.factories.push(factory);
+    }
+    return this;
+  }
+  unregister(factory) {
+    const index = this.factories.indexOf(factory);
+    if (index >= 0) {
+      this.factories.splice(index, 1);
+      return true;
+    }
+    return false;
+  }
+  get size() {
+    return this.factories.length;
+  }
+  createHandlers(context) {
+    const handlers = [];
+    const names = new Set();
+    for (const factory of this.factories) {
+      const handler = factory(context);
+      if (names.has(handler.name)) {
+        throw new Error(`[glTF] duplicate extension handler: ${handler.name}`);
+      }
+      names.add(handler.name);
+      handlers.push(handler);
+    }
+    for (const handler of handlers) {
+      for (const dependency of handler.dependencies || []) {
+        if (!names.has(dependency)) {
+          throw new Error(`[glTF] extension ${handler.name} requires unregistered extension ${dependency}`);
+        }
+      }
+    }
+    return handlers;
+  }
+  validateRequired(context, handlers) {
+    const byName = new Map(handlers.map(handler => [handler.name, handler]));
+    const used = new Set(context.json.extensionsUsed || []);
+    for (const name of context.json.extensionsRequired || []) {
+      used.add(name);
+    }
+    for (const name of used) {
+      var _handler$support, _context$json$extensi2;
+      const handler = byName.get(name);
+      if (!handler) {
+        var _context$json$extensi;
+        if ((_context$json$extensi = context.json.extensionsRequired) != null && _context$json$extensi.includes(name)) {
+          throw new GLTFError('GLTF_EXTENSION_UNSUPPORTED', `unsupported required extension: ${name}`, name);
+        }
+        continue;
+      }
+      const support = (_handler$support = handler.support == null ? void 0 : handler.support()) !== null && _handler$support !== void 0 ? _handler$support : {
+        name: handler.name,
+        status: 'supported'
+      };
+      if (support.status === 'supported') {
+        continue;
+      }
+      if ((_context$json$extensi2 = context.json.extensionsRequired) != null && _context$json$extensi2.includes(name)) {
+        var _SUPPORT_CODES$suppor;
+        const code = (_SUPPORT_CODES$suppor = SUPPORT_CODES[support.status]) !== null && _SUPPORT_CODES$suppor !== void 0 ? _SUPPORT_CODES$suppor : 'GLTF_EXTENSION_UNSUPPORTED';
+        throw new GLTFError(code, `required extension ${name}: ${support.status}${support.reason ? ` (${support.reason})` : ''}`, name);
+      }
+      context.warn(`extension ${name}: ${support.status}${support.reason ? ` (${support.reason})` : ''}`);
+    }
+  }
+}
+
+const ATTRIBUTES = {
+  POSITION: [AttributeName.ATTR_POSITION, 3],
+  NORMAL: [AttributeName.ATTR_NORMAL, 3],
+  TANGENT: [AttributeName.ATTR_TANGENT, 4],
+  TEXCOORD_0: [AttributeName.ATTR_TEX_COORD, 2],
+  TEXCOORD_1: [AttributeName.ATTR_TEX_COORD1, 2],
+  COLOR_0: [AttributeName.ATTR_COLOR, 4],
+  JOINTS_0: [AttributeName.ATTR_JOINTS, 4],
+  WEIGHTS_0: [AttributeName.ATTR_WEIGHTS, 4]
+};
+const BYTE = 5120;
+const UNSIGNED_BYTE = 5121;
+const SHORT = 5122;
+const UNSIGNED_SHORT = 5123;
+const FLOAT = 5126;
+
+const CORE_RULES = {
+  POSITION: {
+    types: [FLOAT]
+  },
+  NORMAL: {
+    types: [FLOAT]
+  },
+  TANGENT: {
+    types: [FLOAT]
+  },
+  JOINTS: {
+    types: [UNSIGNED_BYTE, UNSIGNED_SHORT]
+  },
+  TEXCOORD: {
+    types: [FLOAT],
+    normalizedTypes: [UNSIGNED_BYTE, UNSIGNED_SHORT]
+  },
+  COLOR: {
+    types: [FLOAT],
+    normalizedTypes: [UNSIGNED_BYTE, UNSIGNED_SHORT]
+  },
+  WEIGHTS: {
+    types: [FLOAT],
+    normalizedTypes: [UNSIGNED_BYTE, UNSIGNED_SHORT]
+  }
+};
+const QUANTIZED_RULES = {
+  POSITION: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+  },
+  NORMAL: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+  },
+  TANGENT: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+  },
+  JOINTS: {
+    types: [UNSIGNED_BYTE, UNSIGNED_SHORT]
+  },
+  TEXCOORD: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+  },
+  COLOR: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+  },
+  WEIGHTS: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+  }
+};
+function attributeSemantic(name) {
+  return name.replace(/_\d+$/, '');
+}
+function attributeTypeRule(name, quantized) {
+  var _table$attributeSeman;
+  const table = quantized ? QUANTIZED_RULES : CORE_RULES;
+  return (_table$attributeSeman = table[attributeSemantic(name)]) !== null && _table$attributeSeman !== void 0 ? _table$attributeSeman : {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+  };
+}
+function checkAttributeType(name, componentType, normalized, quantized) {
+  var _rule$normalizedTypes, _rule$normalizedTypes2;
+  const rule = attributeTypeRule(name, quantized);
+  const allowed = rule.types.includes(componentType) || normalized && ((_rule$normalizedTypes = (_rule$normalizedTypes2 = rule.normalizedTypes) == null ? void 0 : _rule$normalizedTypes2.includes(componentType)) !== null && _rule$normalizedTypes !== void 0 ? _rule$normalizedTypes : false);
+  check(allowed, `invalid ${name} componentType ${componentType}${normalized ? ' (normalized)' : ''}` + `${quantized ? ' with KHR_mesh_quantization' : ''}`);
+}
+
+function coreTextureCoordinates(info) {
+  const texCoord = (info == null ? void 0 : info.texCoord) === undefined ? 0 : info.texCoord;
+  check(texCoord === 0 || texCoord === 1, 'only UV0/UV1 are supported');
+  return {
+    texCoord,
+    row0: new Vec4(1, 0, 0, 0),
+    row1: new Vec4(0, 1, 0, 0)
+  };
+}
 function textureCoordinates(info) {
   var _info$extensions;
   const extension = info == null ? void 0 : (_info$extensions = info.extensions) == null ? void 0 : _info$extensions.KHR_texture_transform;
@@ -69697,16 +70005,78 @@ function transformTextureUV(coordinates, u, v) {
   return [row0.x * u + row0.y * v + row0.z, row1.x * u + row1.y * v + row1.z];
 }
 
-const ATTRIBUTES = {
-  POSITION: [AttributeName.ATTR_POSITION, 3],
-  NORMAL: [AttributeName.ATTR_NORMAL, 3],
-  TANGENT: [AttributeName.ATTR_TANGENT, 4],
-  TEXCOORD_0: [AttributeName.ATTR_TEX_COORD, 2],
-  TEXCOORD_1: [AttributeName.ATTR_TEX_COORD1, 2],
-  COLOR_0: [AttributeName.ATTR_COLOR, 4],
-  JOINTS_0: [AttributeName.ATTR_JOINTS, 4],
-  WEIGHTS_0: [AttributeName.ATTR_WEIGHTS, 4]
-};
+const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive'];
+function slotTextureInfo(source, slot) {
+  var _source$pbrMetallicRo, _source$pbrMetallicRo2;
+  switch (slot) {
+    case 'baseColor':
+      return (_source$pbrMetallicRo = source.pbrMetallicRoughness) == null ? void 0 : _source$pbrMetallicRo.baseColorTexture;
+    case 'metallicRoughness':
+      return (_source$pbrMetallicRo2 = source.pbrMetallicRoughness) == null ? void 0 : _source$pbrMetallicRo2.metallicRoughnessTexture;
+    case 'normal':
+      return source.normalTexture;
+    case 'occlusion':
+      return source.occlusionTexture;
+    case 'emissive':
+      return source.emissiveTexture;
+  }
+}
+function createMaterialFeatures(index, source) {
+  const uv = {};
+  for (const slot of TEXTURE_SLOTS) {
+    const info = slotTextureInfo(source, slot);
+    uv[slot] = info ? coreTextureCoordinates(info) : undefined;
+  }
+  return {
+    index,
+    source,
+    uv,
+    physical: {},
+    unlit: false
+  };
+}
+
+const KHR_MESH_QUANTIZATION = 'KHR_mesh_quantization';
+function validateQuantizedAccessors(context) {
+  const checkAccessor = (index, semantic) => {
+    var _rule$normalizedTypes, _rule$normalizedTypes2;
+    const accessor = item(context.json.accessors, index, `accessor for ${semantic}`);
+    const rule = attributeTypeRule(semantic, true);
+    const normalized = !!accessor.normalized;
+    if (!rule.types.includes(accessor.componentType) && !(normalized && ((_rule$normalizedTypes = (_rule$normalizedTypes2 = rule.normalizedTypes) == null ? void 0 : _rule$normalizedTypes2.includes(accessor.componentType)) !== null && _rule$normalizedTypes !== void 0 ? _rule$normalizedTypes : false))) {
+      throw new GLTFError('GLTF_EXTENSION_INVALID', `accessor ${index} (${semantic}): componentType ` + `${accessor.componentType}${normalized ? ' normalized' : ''} is invalid for ${KHR_MESH_QUANTIZATION}`, KHR_MESH_QUANTIZATION);
+    }
+  };
+  for (const [meshIndex, mesh] of (context.json.meshes || []).entries()) {
+    for (const [primitiveIndex, primitive] of (mesh.primitives || []).entries()) {
+      for (const [semantic, index] of Object.entries(primitive.attributes)) {
+        checkAccessor(index, semantic);
+      }
+      if (primitive.indices !== undefined) {
+        const accessor = item(context.json.accessors, primitive.indices, `indices of mesh ${meshIndex}`);
+        if (![5121, 5123, 5125].includes(accessor.componentType) || accessor.normalized) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `accessor ${primitive.indices}: invalid quantized indices type ${accessor.componentType}`, KHR_MESH_QUANTIZATION);
+        }
+      }
+      for (const target of primitive.targets || []) {
+        for (const [semantic, index] of Object.entries(target)) {
+          checkAccessor(index, semantic);
+        }
+      }
+    }
+  }
+}
+function meshQuantizationFactory(context) {
+  return {
+    name: KHR_MESH_QUANTIZATION,
+    support: () => ({
+      name: KHR_MESH_QUANTIZATION,
+      status: 'supported'
+    }),
+    validate: ctx => validateQuantizedAccessors(ctx)
+  };
+}
+
 const FORMATS = [Format.UNKNOWN, Format.R32F, Format.RG32F, Format.RGB32F, Format.RGBA32F];
 class BinaryBuilder {
   constructor() {
@@ -69754,45 +70124,74 @@ function createGLTFMesh(context, meshIndex) {
     weights: (_source$weights = source.weights) == null ? void 0 : _source$weights.slice()
   };
   const targetCount = ((_source$primitives$0$ = source.primitives[0].targets) == null ? void 0 : _source$primitives$0$.length) || 0;
+  let morphCount = targetCount;
   if (source.weights) {
     check(source.weights.length === targetCount && source.weights.every(Number.isFinite), 'invalid mesh morph weights');
   }
-  for (const primitive of source.primitives) {
+  const quantized = context.extensionActive(KHR_MESH_QUANTIZATION);
+  for (const [primitiveIndex, primitive] of source.primitives.entries()) {
     var _primitive$targets, _primitive$mode;
     check((((_primitive$targets = primitive.targets) == null ? void 0 : _primitive$targets.length) || 0) === targetCount, 'inconsistent primitive morph target counts');
-    const position = context.accessor(primitive.attributes.POSITION);
-    check(position.source.type === 'VEC3' && position.source.componentType === 5126, 'POSITION must be float VEC3');
-    let count = position.count;
+    const decoded = context.decodedPrimitive(meshIndex, primitiveIndex);
+    let count;
     const channels = [];
-    for (const [name, index] of Object.entries(primitive.attributes)) {
-      if (!(name in ATTRIBUTES)) {
-        check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
-        check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
-        context.warn(`mesh ${meshIndex}: unused attribute ${name}`);
-        continue;
-      }
-      const accessor = context.accessor(index);
-      const width = ATTRIBUTES[name][1];
-      check(accessor.count === count && (accessor.components === width || name === 'COLOR_0' && accessor.components === 3), `invalid ${name} shape`);
-      if (name === 'JOINTS_0') {
-        check([5121, 5123].includes(accessor.source.componentType) && !accessor.source.normalized, 'invalid JOINTS_0 type');
-      } else if (name === 'NORMAL' || name === 'TANGENT') {
-        check(accessor.source.componentType === 5126, `${name} must be float`);
-      } else {
-        check(accessor.source.componentType === 5126 || [5121, 5123].includes(accessor.source.componentType) && accessor.source.normalized, `invalid ${name} type`);
-      }
-      const values = accessor.values.slice();
-      if (name === 'COLOR_0' && accessor.components === 3) {
-        values.length = 0;
-        for (let i = 0; i < count; ++i) {
-          values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1);
+    let decodedIndices;
+    if (decoded) {
+      var _primitive$targets2;
+      const position = decoded.attributes.POSITION;
+      check(position && position.length % 3 === 0, `mesh ${meshIndex}: decoded POSITION is missing or invalid`);
+      count = position.length / 3;
+      for (const [name, values] of Object.entries(decoded.attributes)) {
+        const mapping = ATTRIBUTES[name];
+        if (!mapping) {
+          check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
+          check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
+          context.warn(`mesh ${meshIndex}: unused attribute ${name}`);
+          continue;
         }
+        check(values.length === count * mapping[1], `mesh ${meshIndex}: decoded ${name} has ${values.length} components, expected ${count * mapping[1]}`);
+        channels.push({
+          name,
+          width: mapping[1],
+          values: Array.from(values)
+        });
       }
-      channels.push({
-        name,
-        width,
-        values
-      });
+      if (decoded.indices) {
+        decodedIndices = Array.from(decoded.indices);
+      }
+      if ((_primitive$targets2 = primitive.targets) != null && _primitive$targets2.length) {
+        context.warn(`mesh ${meshIndex}: morph targets are not supported with Draco compression`);
+        morphCount = 0;
+      }
+    } else {
+      const position = context.accessor(primitive.attributes.POSITION);
+      check(position.source.type === 'VEC3', 'POSITION must be VEC3');
+      checkAttributeType('POSITION', position.source.componentType, !!position.source.normalized, quantized);
+      count = position.count;
+      for (const [name, index] of Object.entries(primitive.attributes)) {
+        if (!(name in ATTRIBUTES)) {
+          check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
+          check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
+          context.warn(`mesh ${meshIndex}: unused attribute ${name}`);
+          continue;
+        }
+        const accessor = context.accessor(index);
+        const width = ATTRIBUTES[name][1];
+        check(accessor.count === count && (accessor.components === width || name === 'COLOR_0' && accessor.components === 3), `invalid ${name} shape`);
+        checkAttributeType(name, accessor.source.componentType, !!accessor.source.normalized, quantized);
+        const values = accessor.values.slice();
+        if (name === 'COLOR_0' && accessor.components === 3) {
+          values.length = 0;
+          for (let i = 0; i < count; ++i) {
+            values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1);
+          }
+        }
+        channels.push({
+          name,
+          width,
+          values
+        });
+      }
     }
     const weights = channels.find(c => c.name === 'WEIGHTS_0');
     const joints = channels.find(c => c.name === 'JOINTS_0');
@@ -69809,7 +70208,9 @@ function createGLTFMesh(context, meshIndex) {
     let indices = Array.from({
       length: count
     }, (_, i) => i);
-    if (primitive.indices !== undefined) {
+    if (decodedIndices) {
+      indices = decodedIndices;
+    } else if (primitive.indices !== undefined) {
       const accessor = context.accessor(primitive.indices);
       check(accessor.source.type === 'SCALAR' && !accessor.source.normalized && [5121, 5123, 5125].includes(accessor.source.componentType), 'invalid indices accessor');
       indices = accessor.values.slice();
@@ -69818,7 +70219,7 @@ function createGLTFMesh(context, meshIndex) {
     }
     const topology = convertTopology(indices, (_primitive$mode = primitive.mode) !== null && _primitive$mode !== void 0 ? _primitive$mode : 4);
     indices = topology.indices;
-    const targets = (primitive.targets || []).map(target => {
+    const targets = decoded ? [] : (primitive.targets || []).map(target => {
       const entries = {};
       for (const [name, index] of Object.entries(target)) {
         check(['POSITION', 'NORMAL', 'TANGENT'].includes(name), `unsupported morph attribute ${name}`);
@@ -69862,10 +70263,16 @@ function createGLTFMesh(context, meshIndex) {
       });
     }
     const material = primitive.material === undefined ? undefined : item(context.json.materials, primitive.material, 'material');
-    for (const info of [material == null ? void 0 : (_material$pbrMetallic = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic.baseColorTexture, material == null ? void 0 : (_material$pbrMetallic2 = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic2.metallicRoughnessTexture, material == null ? void 0 : material.normalTexture, material == null ? void 0 : material.occlusionTexture, material == null ? void 0 : material.emissiveTexture]) {
-      var _material$pbrMetallic, _material$pbrMetallic2;
+    const features = primitive.material === undefined ? undefined : context.materialFeatures[primitive.material];
+    const slotCoordinates = slot => {
+      var _features$uv$slot;
+      const info = slotTextureInfo(material !== null && material !== void 0 ? material : {}, slot);
+      return (_features$uv$slot = features == null ? void 0 : features.uv[slot]) !== null && _features$uv$slot !== void 0 ? _features$uv$slot : coreTextureCoordinates(info);
+    };
+    for (const slot of TEXTURE_SLOTS) {
+      const info = slotTextureInfo(material !== null && material !== void 0 ? material : {}, slot);
       if (info) {
-        check(channels.some(c => c.name === `TEXCOORD_${textureCoordinates(info).texCoord}`), 'material references missing UV set');
+        check(channels.some(c => c.name === `TEXCOORD_${slotCoordinates(slot).texCoord}`), 'material references missing UV set');
       }
     }
     if (material != null && material.normalTexture && !channels.some(c => c.name === 'TANGENT')) {
@@ -69873,7 +70280,7 @@ function createGLTFMesh(context, meshIndex) {
       channels.push({
         name: 'TANGENT',
         width: 4,
-        values: tangents(channels, indices, textureCoordinates(material.normalTexture))
+        values: tangents(channels, indices, slotCoordinates('normal'))
       });
     }
     for (const [name, width, defaults] of [['NORMAL', 3, [0, 0, 1]], ['TANGENT', 4, [1, 0, 0, 1]], ['TEXCOORD_0', 2, [0, 0]], ['TEXCOORD_1', 2, [0, 0]]]) {
@@ -69928,7 +70335,7 @@ function createGLTFMesh(context, meshIndex) {
       morph.subMeshMorphs.push(null);
     }
   }
-  if (targetCount) {
+  if (morphCount) {
     struct.morph = morph;
   }
   const mesh = new Mesh();
@@ -70127,34 +70534,56 @@ function gltfEffect() {
 }
 async function loadGLTFTextures(context, textures, images) {
   const imageCache = new Map();
+  const decodeImage = async (key, bytes, mime) => {
+    const cached = imageCache.get(key);
+    if (cached) {
+      return cached;
+    }
+    const url = URL.createObjectURL(new Blob([bytes], {
+      type: mime
+    }));
+    try {
+      const element = await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`[glTF] image ${key}: decode failed`));
+        img.src = url;
+      });
+      const image = new ImageAsset(element);
+      images.push(image);
+      imageCache.set(key, image);
+      return image;
+    } finally {
+      URL.revokeObjectURL(url);
+    }
+  };
   for (const [index, source] of (context.json.textures || []).entries()) {
     var _sampler$minFilter, _sampler$magFilter, _sampler$wrapS, _sampler$wrapT;
-    check(source.source !== undefined, `texture ${index}: no core image fallback`);
-    const imageSource = item(context.json.images, source.source, 'image');
-    let image = imageCache.get(source.source);
-    if (!image) {
-      check(imageSource.uri !== undefined !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
-      const bytes = imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView);
-      const png = bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71;
-      const jpeg = bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
-      check(png || jpeg, 'only PNG and JPEG images are supported');
-      const mime = png ? 'image/png' : 'image/jpeg';
-      check(!imageSource.mimeType || imageSource.mimeType === mime, 'image MIME mismatch');
-      const url = URL.createObjectURL(new Blob([bytes], {
-        type: mime
-      }));
-      try {
-        const element = await new Promise((resolve, reject) => {
-          const img = new Image();
-          img.onload = () => resolve(img);
-          img.onerror = () => reject(new Error(`[glTF] image ${source.source}: decode failed`));
-          img.src = url;
-        });
-        image = new ImageAsset(element);
-        images.push(image);
-        imageCache.set(source.source, image);
-      } finally {
-        URL.revokeObjectURL(url);
+    let image;
+    let decoded;
+    for (const handler of context.handlers) {
+      var _await$handler$resolv;
+      decoded = (_await$handler$resolv = await (handler.resolveTextureSource == null ? void 0 : handler.resolveTextureSource(index, context))) !== null && _await$handler$resolv !== void 0 ? _await$handler$resolv : undefined;
+      if (decoded) {
+        break;
+      }
+    }
+    if (decoded) {
+      check(decoded.mimeType === 'image/png' || decoded.mimeType === 'image/jpeg', `texture ${index}: decoded source must be PNG/JPEG`);
+      image = await decodeImage(-1 - index, decoded.data, decoded.mimeType);
+    } else {
+      check(source.source !== undefined, `texture ${index}: no core image fallback`);
+      const imageSource = item(context.json.images, source.source, 'image');
+      image = imageCache.get(source.source);
+      if (!image) {
+        check(imageSource.uri !== undefined !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
+        const bytes = imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView);
+        const png = bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71;
+        const jpeg = bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
+        check(png || jpeg, 'only PNG and JPEG images are supported');
+        const mime = png ? 'image/png' : 'image/jpeg';
+        check(!imageSource.mimeType || imageSource.mimeType === mime, 'image MIME mismatch');
+        image = await decodeImage(source.source, bytes, mime);
       }
     }
     const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
@@ -70180,10 +70609,10 @@ async function loadGLTFTextures(context, textures, images) {
     texture.image = image;
   }
 }
-function createGLTFMaterial(source, textures, vertexColor) {
-  var _source$extensions;
+function createGLTFMaterial(features, textures, vertexColor) {
+  const source = features.source;
   const pbr = source.pbrMetallicRoughness || {};
-  const unlit = !!((_source$extensions = source.extensions) != null && _source$extensions.KHR_materials_unlit);
+  const unlit = features.unlit;
   const alpha = source.alphaMode || 'OPAQUE';
   check(['OPAQUE', 'MASK', 'BLEND'].includes(alpha), 'invalid alphaMode');
   const factor = pbr.baseColorFactor || [1, 1, 1, 1];
@@ -70203,13 +70632,14 @@ function createGLTFMaterial(source, textures, vertexColor) {
     AIR_GLTF_UNLIT: unlit,
     CC_FORCE_FORWARD_SHADING: true
   };
+  const slots = [...TEXTURE_SLOTS];
   const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV']];
-  for (const [info,, macro, uv] of maps) {
+  for (const [index, [info,, macro, uv]] of maps.entries()) {
     defines[macro] = !!info;
     if (info) {
       const {
         texCoord
-      } = textureCoordinates(info);
+      } = features.uv[slots[index]];
       defines[uv] = texCoord === 1 ? 'v_uv1' : 'v_uv';
       if (texCoord === 1) {
         defines.HAS_SECOND_UV = true;
@@ -70268,8 +70698,9 @@ function createGLTFMaterial(source, textures, vertexColor) {
         material.setProperty(property, item(textures, info.index, 'texture'));
       }
     }
-    maps.forEach(([info], index) => {
-      const coordinates = textureCoordinates(info);
+    maps.forEach((_, index) => {
+      var _features$uv$slots$in;
+      const coordinates = (_features$uv$slots$in = features.uv[slots[index]]) !== null && _features$uv$slots$in !== void 0 ? _features$uv$slots$in : coreTextureCoordinates();
       const prefix = UV_SLOTS[index][2];
       material.setProperty(`${prefix}UV0`, coordinates.row0);
       material.setProperty(`${prefix}UV1`, coordinates.row1);
@@ -70446,6 +70877,191 @@ function realKeys(times, values, width, component, interpolation) {
   }]);
 }
 
+function unlitFactory(context) {
+  return {
+    name: 'KHR_materials_unlit',
+    extendMaterial(_materialIndex, features) {
+      var _features$source$exte;
+      if ((_features$source$exte = features.source.extensions) != null && _features$source$exte.KHR_materials_unlit) {
+        features.unlit = true;
+      }
+    }
+  };
+}
+
+function textureTransformFactory(context) {
+  return {
+    name: 'KHR_texture_transform',
+    extendMaterial(_materialIndex, features) {
+      for (const slot of TEXTURE_SLOTS) {
+        var _info$extensions;
+        const info = slotTextureInfo(features.source, slot);
+        if (info && ((_info$extensions = info.extensions) == null ? void 0 : _info$extensions.KHR_texture_transform) !== undefined) {
+          features.uv[slot] = textureCoordinates(info);
+        }
+      }
+    }
+  };
+}
+
+const KHR_MESHOPT_COMPRESSION = 'KHR_meshopt_compression';
+const EXT_MESHOPT_COMPRESSION = 'EXT_meshopt_compression';
+const MODES = ['ATTRIBUTES', 'TRIANGLES', 'INDICES'];
+const FILTERS = ['NONE', 'OCTAHEDRAL', 'QUATERNION', 'EXPONENTIAL'];
+function normalizeMode(value, extension) {
+  const mode = typeof value === 'number' ? MODES[value] : typeof value === 'string' ? value : undefined;
+  if (!mode || !MODES.includes(mode)) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension}: invalid mode ${String(value)}`, extension);
+  }
+  return mode;
+}
+function normalizeFilter(value, extension) {
+  if (value === undefined) {
+    return 'NONE';
+  }
+  const filter = typeof value === 'number' ? FILTERS[value] : typeof value === 'string' ? value : undefined;
+  if (!filter || !FILTERS.includes(filter)) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension}: invalid filter ${String(value)}`, extension);
+  }
+  return filter;
+}
+async function decodeBufferView(context, index, definition, extension) {
+  const view = item(context.json.bufferViews, index, 'bufferView');
+  const mode = normalizeMode(definition.mode, extension);
+  const filter = normalizeFilter(definition.filter, extension);
+  integer(definition.buffer, `${extension} buffer index`);
+  const offset = integer(definition.byteOffset || 0, `${extension} byteOffset`);
+  const length = integer(definition.byteLength, `${extension} byteLength`);
+  const stride = integer(definition.byteStride, `${extension} byteStride`);
+  const count = integer(definition.count, `${extension} count`);
+  if (length <= 0 || count <= 0) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: empty payload`, extension);
+  }
+  if (mode !== 'ATTRIBUTES' && filter !== 'NONE') {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter ${filter} requires ATTRIBUTES mode`, extension);
+  }
+  if (mode === 'ATTRIBUTES' && (stride % 4 !== 0 || stride < 4 || stride > 252)) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: invalid byteStride ${stride}`, extension);
+  }
+  const decoder = context.options.meshoptDecoder;
+  if (!decoder) {
+    var _context$json$extensi;
+    if ((_context$json$extensi = context.json.extensionsRequired) != null && _context$json$extensi.includes(extension)) {
+      throw new GLTFError('GLTF_DECODER_MISSING', `${extension}: configure a decoder with setMeshoptDecoder()`, extension);
+    }
+    context.warn(`${extension} on bufferView ${index}: decoder missing, falling back to uncompressed data`);
+    return null;
+  }
+  const buffer = item(context.buffers, definition.buffer, `${extension} buffer`);
+  if (offset + length > buffer.byteLength) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: encoded range out of bounds`, extension);
+  }
+  const source = new Uint8Array(buffer, offset, length);
+  const decoded = await decoder.decodeGltfBufferAsync(count, stride, source, mode, filter).catch(error => {
+    throw new GLTFError('GLTF_DECODE_FAILED', `${extension} on bufferView ${index}: ${error.message}`, extension);
+  });
+  const bytes = decoded instanceof Uint8Array ? decoded : new Uint8Array(decoded);
+  if (bytes.byteLength !== count * stride || bytes.byteLength !== view.byteLength) {
+    throw new GLTFError('GLTF_DECODE_FAILED', `${extension} on bufferView ${index}: decoded ${bytes.byteLength} bytes, expected ${view.byteLength}`, extension);
+  }
+  return bytes;
+}
+function meshoptCompressionFactory(extension) {
+  return context => ({
+    name: extension,
+    support: () => context.options.meshoptDecoder ? {
+      name: extension,
+      status: 'supported'
+    } : {
+      name: extension,
+      status: 'decoder-required',
+      reason: 'configure a decoder with setMeshoptDecoder()'
+    },
+    loadBufferView(index, ctx) {
+      var _view$extensions;
+      const view = item(ctx.json.bufferViews, index, 'bufferView');
+      const definition = (_view$extensions = view.extensions) == null ? void 0 : _view$extensions[extension];
+      if (!definition) {
+        return Promise.resolve(null);
+      }
+      return ctx.dependency(DependencyKeys.decodedBufferView(index), () => decodeBufferView(ctx, index, definition, extension));
+    }
+  });
+}
+
+const KHR_DRACO_MESH_COMPRESSION = 'KHR_draco_mesh_compression';
+const EXTENSION = KHR_DRACO_MESH_COMPRESSION;
+function fail(message) {
+  throw new GLTFError('GLTF_DECODE_FAILED', `${EXTENSION}: ${message}`, EXTENSION);
+}
+async function decodePrimitive(context, meshIndex, primitiveIndex, definition, decoder) {
+  const mesh = item(context.json.meshes, meshIndex, 'mesh');
+  const primitive = item(mesh.primitives, primitiveIndex, 'primitive');
+  const attributes = Object.entries(definition.attributes || {}).map(([semantic, id]) => ({
+    semantic,
+    id: integer(id, `Draco attribute ${semantic}`)
+  }));
+  if (!attributes.some(info => info.semantic === 'POSITION')) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${EXTENSION}: POSITION attribute is required`, EXTENSION);
+  }
+  const bytes = context.bufferView(definition.bufferView);
+  const result = await decoder.decodePrimitive(bytes.slice().buffer, attributes, context.json).catch(error => {
+    if (error instanceof GLTFError) {
+      throw error;
+    }
+    throw new GLTFError('GLTF_DECODE_FAILED', `${KHR_DRACO_MESH_COMPRESSION} on mesh ${meshIndex}: ${error.message}`, KHR_DRACO_MESH_COMPRESSION);
+  });
+  const position = result.attributes.POSITION;
+  if (!position) {
+    fail('decoded primitive has no POSITION');
+  }
+  const count = position.length / 3;
+  for (const [semantic, values] of Object.entries(result.attributes)) {
+    const width = semantic === 'POSITION' || semantic === 'NORMAL' ? 3 : /^TEXCOORD_\d+$/.test(semantic) ? 2 : 4;
+    if (values.length !== count * width) {
+      fail(`decoded ${semantic} has ${values.length} components, expected ${count * width}`);
+    }
+    const accessorIndex = primitive.attributes[semantic];
+    if (accessorIndex !== undefined) {
+      const accessor = item(context.json.accessors, accessorIndex, `accessor for ${semantic}`);
+      if (accessor.count !== count) {
+        fail(`decoded ${semantic} count ${count} does not match accessor count ${accessor.count}`);
+      }
+    }
+  }
+  if (result.indices && !result.indices.every(index => index < count)) {
+    fail('index exceeds decoded vertex count');
+  }
+  return result;
+}
+const dracoCompressionFactory = context => {
+  const decoder = context.options.dracoDecoder;
+  return {
+    name: KHR_DRACO_MESH_COMPRESSION,
+    support: () => decoder ? {
+      name: KHR_DRACO_MESH_COMPRESSION,
+      status: 'supported'
+    } : {
+      name: KHR_DRACO_MESH_COMPRESSION,
+      status: 'decoder-required',
+      reason: 'configure a decoder with setDRACODecoder()'
+    },
+    loadPrimitive(primitiveIndex, meshIndex, ctx) {
+      var _primitive$extensions;
+      const mesh = item(ctx.json.meshes, meshIndex, 'mesh');
+      const primitive = item(mesh.primitives, primitiveIndex, 'primitive');
+      const definition = (_primitive$extensions = primitive.extensions) == null ? void 0 : _primitive$extensions[KHR_DRACO_MESH_COMPRESSION];
+      if (!definition) {
+        return Promise.resolve(null);
+      }
+      if (!decoder) {
+        throw new GLTFError('GLTF_DECODER_MISSING', `${KHR_DRACO_MESH_COMPRESSION}: configure a decoder with setDRACODecoder()`, KHR_DRACO_MESH_COMPRESSION);
+      }
+      return ctx.dependency(DependencyKeys.primitive(meshIndex, primitiveIndex), () => decodePrimitive(ctx, meshIndex, primitiveIndex, definition, decoder));
+    }
+  };
+};
+
 function gltfExtension(url) {
   var _exec;
   return (_exec = /\.(gltf|glb)$/i.exec(url.split(/[?#]/, 1)[0])) == null ? void 0 : _exec[0].toLowerCase();
@@ -70453,26 +71069,163 @@ function gltfExtension(url) {
 function absoluteURL(url) {
   return new URL(url, typeof document !== 'undefined' ? document.baseURI : undefined).href;
 }
+let globalDefaults = {};
+function configureGLTFLoaderDefaults(options) {
+  globalDefaults = {
+    ...globalDefaults,
+    ...options
+  };
+}
+const KNOWN_UNIMPLEMENTED = [{
+  name: 'EXT_texture_webp',
+  status: 'unsupported',
+  reason: 'planned in V0.5 texture phase'
+}, {
+  name: 'EXT_texture_avif',
+  status: 'unsupported',
+  reason: 'planned in V0.5 texture phase'
+}, {
+  name: 'KHR_texture_basisu',
+  status: 'unsupported',
+  reason: 'planned in V0.5 texture phase'
+}, {
+  name: 'KHR_lights_punctual',
+  status: 'unsupported',
+  reason: 'planned in V0.5 scene phase'
+}, {
+  name: 'EXT_mesh_gpu_instancing',
+  status: 'unsupported',
+  reason: 'planned in V0.5 scene phase'
+}];
 class GLTFLoader {
+  constructor(options) {
+    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory);
+    this.options = void 0;
+    this.options = {
+      ...options
+    };
+  }
+  setDRACODecoder(decoder) {
+    this.options = {
+      ...this.options,
+      dracoDecoder: decoder !== null && decoder !== void 0 ? decoder : undefined
+    };
+    return this;
+  }
+  setMeshoptDecoder(decoder) {
+    this.options = {
+      ...this.options,
+      meshoptDecoder: decoder !== null && decoder !== void 0 ? decoder : undefined
+    };
+    return this;
+  }
+  setKTX2Transcoder(transcoder) {
+    this.options = {
+      ...this.options,
+      ktx2Transcoder: transcoder !== null && transcoder !== void 0 ? transcoder : undefined
+    };
+    return this;
+  }
+  register(factory) {
+    this.registry.register(factory);
+    return this;
+  }
+  unregister(factory) {
+    this.registry.unregister(factory);
+    return this;
+  }
+  getExtensionSupport() {
+    const resolved = {
+      ...globalDefaults,
+      ...this.options
+    };
+    const probe = new GLTFParserContext({
+      asset: {
+        version: '2.0'
+      }
+    }, undefined, resolved);
+    const entries = [];
+    for (const handler of this.registry.createHandlers(probe)) {
+      var _handler$support;
+      const support = (_handler$support = handler.support == null ? void 0 : handler.support()) !== null && _handler$support !== void 0 ? _handler$support : {
+        name: handler.name,
+        status: 'supported'
+      };
+      entries.push({
+        ...support,
+        name: handler.name
+      });
+    }
+    const known = new Set(entries.map(entry => entry.name));
+    for (const entry of KNOWN_UNIMPLEMENTED) {
+      if (!known.has(entry.name)) {
+        entries.push({
+          ...entry
+        });
+      }
+    }
+    return entries;
+  }
   loadAsync(url) {
     registerGLTFLoader();
     return new Promise((resolve, reject) => assetManager.loadRemote(absoluteURL(url), {
-      ext: gltfExtension(url) || '.glb'
+      ext: gltfExtension(url) || '.glb',
+      gltf: {
+        ...globalDefaults,
+        ...this.options
+      }
     }, (error, asset) => error ? reject(error) : resolve(asset)));
   }
   async parseAsync(data, baseUrl) {
+    var _resolved$signal;
+    const resolved = {
+      ...globalDefaults,
+      ...this.options
+    };
+    if ((_resolved$signal = resolved.signal) != null && _resolved$signal.aborted) {
+      throw new DOMException('glTF load aborted', 'AbortError');
+    }
     const {
       json,
       bin
     } = decodeContainer(data);
-    const context = new GLTFContext(json, baseUrl === undefined ? undefined : absoluteURL(baseUrl));
+    const context = new GLTFParserContext(json, baseUrl === undefined ? undefined : absoluteURL(baseUrl), resolved);
+    const report = (phase, loaded, total) => resolved.onProgress == null ? void 0 : resolved.onProgress({
+      phase,
+      loaded,
+      total,
+      url: typeof data === 'string' ? data : undefined
+    });
     const layout = prepareNodes(context);
     const asset = new GLTFAsset(context, layout);
     try {
+      var _json$accessors, _json$accessors2, _json$textures, _json$textures2;
+      context.throwIfAborted();
+      const handlers = this.registry.createHandlers(context);
+      context.handlers = handlers;
+      this.registry.validateRequired(context, handlers);
+      for (const handler of handlers) {
+        handler.validate == null ? void 0 : handler.validate(context);
+      }
+      context.throwIfAborted();
+      report('container', 1, 1);
       await context.loadBuffers(bin);
       (json.accessors || []).forEach((_, i) => context.accessor(i));
+      report('decode', ((_json$accessors = json.accessors) == null ? void 0 : _json$accessors.length) || 0, ((_json$accessors2 = json.accessors) == null ? void 0 : _json$accessors2.length) || 0);
+      context.throwIfAborted();
+      const features = [];
+      for (const [i, source] of (json.materials || []).entries()) {
+        const materialFeatures = createMaterialFeatures(i, source);
+        for (const handler of handlers) {
+          await (handler.extendMaterial == null ? void 0 : handler.extendMaterial(i, materialFeatures, context));
+        }
+        features.push(materialFeatures);
+      }
+      context.materialFeatures = features;
       await loadGLTFTextures(context, asset.owned.textures, asset.images);
+      report('textures', ((_json$textures = json.textures) == null ? void 0 : _json$textures.length) || 0, ((_json$textures2 = json.textures) == null ? void 0 : _json$textures2.length) || 0);
       createSkeletons(context, layout, asset.owned.skeletons);
+      await context.resolvePrimitives();
       const materials = new Map();
       for (const [i, mesh] of (json.meshes || []).entries()) {
         asset.owned.meshes.push(createGLTFMesh(context, i));
@@ -70481,8 +71234,8 @@ class GLTFLoader {
           const key = `${(_primitive$material = primitive.material) !== null && _primitive$material !== void 0 ? _primitive$material : -1}:${primitive.attributes.COLOR_0 !== undefined}`;
           let material = materials.get(key);
           if (!material) {
-            const source = primitive.material === undefined ? {} : item(json.materials, primitive.material, 'material');
-            material = createGLTFMaterial(source, asset.textures, primitive.attributes.COLOR_0 !== undefined);
+            const materialFeatures = primitive.material === undefined ? createMaterialFeatures(-1, {}) : item(features, primitive.material, 'material features');
+            material = createGLTFMaterial(materialFeatures, asset.textures, primitive.attributes.COLOR_0 !== undefined);
             materials.set(key, material);
             asset.owned.materials.push(material);
           }
@@ -70499,10 +71252,12 @@ class GLTFLoader {
         }
       }
       asset.owned.animations.push(...createGLTFAnimations(context, layout.paths));
+      report('objects', 1, 1);
+      context.throwIfAborted();
       context.releaseDecodedData();
       return asset;
     } catch (error) {
-      context.releaseDecodedData();
+      context.dispose();
       asset.destroy();
       throw error;
     }
@@ -70532,8 +71287,10 @@ function registerGLTFLoader() {
         done(error);
       }
     });
-    factory.register(ext, (url, data, _options, done) => {
-      new GLTFLoader().parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(asset => done(null, asset), error => {
+    factory.register(ext, (url, data, options, done) => {
+      var _gltf;
+      const loaderOptions = (_gltf = options == null ? void 0 : options.gltf) !== null && _gltf !== void 0 ? _gltf : globalDefaults;
+      new GLTFLoader(loaderOptions).parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(asset => done(null, asset), error => {
         files.remove(`${url}@native`);
         parsed.remove(`${url}@native`);
         done(error);
@@ -70700,6 +71457,181 @@ function collectWorldBounds(target) {
     }
   }
   return result;
+}
+
+function isMeshoptAvailable(module) {
+  return !!module && module.supported !== false && (typeof module.decodeGltfBufferAsync === 'function' || typeof module.decodeGltfBuffer === 'function');
+}
+function createMeshoptDecoder(module, workers) {
+  const ready = module.ready ? Promise.resolve(module.ready) : Promise.resolve();
+  if (workers && typeof module.useWorkers === 'function') {
+    module.useWorkers(workers);
+  }
+  return {
+    async decodeGltfBufferAsync(count, byteStride, source, mode, filter) {
+      await ready;
+      if (typeof module.decodeGltfBufferAsync === 'function') {
+        const result = await module.decodeGltfBufferAsync(count, byteStride, source, mode, filter);
+        return result instanceof Uint8Array ? result : new Uint8Array(result);
+      }
+      if (typeof module.decodeGltfBuffer === 'function') {
+        const target = new Uint8Array(count * byteStride);
+        module.decodeGltfBuffer(target, count, byteStride, source, mode, filter);
+        return target;
+      }
+      throw new GLTFError('GLTF_DECODER_MISSING', 'meshopt decoder provides no decodeGltfBuffer entry point');
+    },
+    dispose() {
+      if (typeof module.dispose === 'function') {
+        module.dispose();
+      }
+    }
+  };
+}
+
+function semanticComponents(semantic) {
+  if (semantic === 'POSITION' || semantic === 'NORMAL') {
+    return 3;
+  }
+  if (/^TEXCOORD_\d+$/.test(semantic)) {
+    return 2;
+  }
+  return 4;
+}
+function createDracoDecoder(provider) {
+  let modulePromise;
+  let moduleRef;
+  let decoder;
+  const init = () => {
+    var _modulePromise;
+    modulePromise = (_modulePromise = modulePromise) !== null && _modulePromise !== void 0 ? _modulePromise : Promise.resolve(typeof provider === 'function' ? provider() : provider).then(module => {
+      moduleRef = module;
+      return module;
+    });
+    return modulePromise;
+  };
+  return {
+    async decodePrimitive(data, attributes) {
+      var _decoder;
+      const module = await init();
+      decoder = (_decoder = decoder) !== null && _decoder !== void 0 ? _decoder : new module.Decoder();
+      const mesh = new module.Mesh();
+      const buffer = module.DecoderBuffer ? new module.DecoderBuffer() : undefined;
+      try {
+        const bytes = new Int8Array(data);
+        if (buffer) {
+          var _module$TRIANGULAR_ME;
+          buffer.Init(bytes, bytes.byteLength);
+          const geometryType = decoder.GetEncodedGeometryType(buffer);
+          if (geometryType !== ((_module$TRIANGULAR_ME = module.TRIANGULAR_MESH) !== null && _module$TRIANGULAR_ME !== void 0 ? _module$TRIANGULAR_ME : 1)) {
+            throw new GLTFError('GLTF_DECODE_FAILED', `Draco: unsupported geometry type ${geometryType}`, 'KHR_draco_mesh_compression');
+          }
+        }
+        const status = buffer ? decoder.DecodeBufferToMesh(buffer, mesh) : decoder.DecodeArrayToMesh(bytes, bytes.byteLength, mesh);
+        checkStatus(status, 'decode failed');
+        const count = mesh.num_points();
+        const result = {};
+        for (const info of attributes) {
+          result[info.semantic] = readAttribute(module, decoder, mesh, info);
+        }
+        const faces = mesh.num_faces();
+        const primitive = {
+          attributes: result
+        };
+        if (faces > 0) {
+          primitive.indices = readIndices(module, decoder, mesh, count);
+        }
+        return primitive;
+      } finally {
+        module.destroy == null ? void 0 : module.destroy(mesh);
+        if (buffer) {
+          module.destroy == null ? void 0 : module.destroy(buffer);
+        }
+      }
+    },
+    dispose() {
+      if (moduleRef && decoder) {
+        moduleRef.destroy == null ? void 0 : moduleRef.destroy(decoder);
+      }
+      decoder = undefined;
+      modulePromise = undefined;
+    }
+  };
+}
+function readIndices(module, decoder, mesh, count) {
+  const faces = mesh.num_faces();
+  const batched = new module.DracoUInt32Array(faces * 3);
+  try {
+    if (decoder.GetTrianglesUInt32Array(mesh, batched)) {
+      return packIndices(readValues(batched, faces * 3), count);
+    }
+  } finally {
+    module.destroy == null ? void 0 : module.destroy(batched);
+  }
+  if (typeof decoder.GetFaceFromMesh !== 'function') {
+    throw new GLTFError('GLTF_DECODE_FAILED', 'Draco: no triangle extraction API available', 'KHR_draco_mesh_compression');
+  }
+  const face = new module.DracoUInt32Array(3);
+  const values = [];
+  try {
+    for (let i = 0; i < faces; ++i) {
+      checkStatus(decoder.GetFaceFromMesh(mesh, i, face), `face ${i} extraction failed`);
+      values.push(face.GetValue(0), face.GetValue(1), face.GetValue(2));
+    }
+  } finally {
+    module.destroy == null ? void 0 : module.destroy(face);
+  }
+  return packIndices(values, count);
+}
+function readValues(out, length) {
+  const values = [];
+  for (let i = 0; i < length; ++i) {
+    values.push(out.GetValue(i));
+  }
+  return values;
+}
+function packIndices(values, count) {
+  if (!values.every(index => index < count)) {
+    throw new GLTFError('GLTF_DECODE_FAILED', 'Draco: index exceeds decoded vertex count', 'KHR_draco_mesh_compression');
+  }
+  return values.every(index => index < 65536) ? new Uint16Array(values) : new Uint32Array(values);
+}
+function readAttribute(module, decoder, mesh, info) {
+  const attribute = decoder.GetAttributeByUniqueId(mesh, info.id);
+  if (!attribute) {
+    throw new GLTFError('GLTF_DECODE_FAILED', `Draco: attribute ${info.semantic} (id ${info.id}) not found`, 'KHR_draco_mesh_compression');
+  }
+  const components = (attribute.num_components == null ? void 0 : attribute.num_components()) || semanticComponents(info.semantic);
+  const length = mesh.num_points() * components;
+  const values = new Float32Array(length);
+  if (/^JOINTS_\d+$/.test(info.semantic) && typeof decoder.GetAttributeInt32ForAllPoints === 'function' && module.DracoInt32Array) {
+    const out = new module.DracoInt32Array(length);
+    try {
+      checkStatus(decoder.GetAttributeInt32ForAllPoints(mesh, attribute, out), `failed to read ${info.semantic}`);
+      for (let i = 0; i < length; ++i) {
+        values[i] = out.GetValue(i);
+      }
+    } finally {
+      module.destroy == null ? void 0 : module.destroy(out);
+    }
+    return values;
+  }
+  const out = new module.DracoFloat32Array(length);
+  try {
+    checkStatus(decoder.GetAttributeFloatForAllPoints(mesh, attribute, out), `failed to read ${info.semantic}`);
+    for (let i = 0; i < length; ++i) {
+      values[i] = out.GetValue(i);
+    }
+  } finally {
+    module.destroy == null ? void 0 : module.destroy(out);
+  }
+  return values;
+}
+function checkStatus(ok, message) {
+  if (typeof ok === 'boolean' ? !ok : !ok.ok()) {
+    const code = typeof ok === 'boolean' ? undefined : ok.code == null ? void 0 : ok.code();
+    throw new GLTFError('GLTF_DECODE_FAILED', `Draco: ${message}${code === undefined ? '' : ` (status ${code})`}`, 'KHR_draco_mesh_compression');
+  }
 }
 
 registerGLTFLoader();
@@ -95124,5 +96056,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { Acceleration, AirAppImpl, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, convertUtils, createAirApp, createDefaultPipeline, debug, debugID, deprecateModuleExportedName, deserialize, deserializeTag, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
+export { Acceleration, AirAppImpl, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createMeshoptDecoder, debug, debugID, deprecateModuleExportedName, deserialize, deserializeTag, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
 //# sourceMappingURL=cocosair.module.js.map

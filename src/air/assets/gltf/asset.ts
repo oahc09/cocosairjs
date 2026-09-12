@@ -11,7 +11,7 @@ import { MeshRenderer } from '../../../cocos/3d/framework/mesh-renderer';
 import { SkinnedMeshRenderer } from '../../../cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer';
 import { AttributeName } from '../../../cocos/gfx';
 import { assets } from '../../../cocos/asset/asset-manager/shared';
-import { GLTFContext } from './context';
+import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
 import { makeNodes, NodeLayout } from './nodes';
 import { GLTFWinding } from './winding';
@@ -37,7 +37,7 @@ export class GLTFAsset extends Asset {
     public get animations (): readonly AnimationClip[] { return this.owned.animations; }
     public readonly sceneNames: readonly string[];
     /** Original glTF metadata, including camera/light descriptions and original node names. */
-    public get document (): Readonly<GLTFContext['json']> { return this.context.json; }
+    public get document (): Readonly<GLTFParserContext['json']> { return this.context.json; }
     public get warnings (): readonly string[] { return this.context.warnings; }
     /** @internal */ public readonly images: ImageAsset[] = [];
     /** @internal */ public readonly meshMaterials: Material[][] = [];
@@ -46,7 +46,7 @@ export class GLTFAsset extends Asset {
     private destroyRequested = false;
     private resourcesReleased = false;
 
-    constructor (private readonly context: GLTFContext, private readonly layout: NodeLayout) {
+    constructor (private readonly context: GLTFParserContext, private readonly layout: NodeLayout) {
         super();
         this._uuid = `air-gltf-parsed-${++parsedAssetId}`;
         this.sceneNames = context.json.scenes?.length ? context.json.scenes.map((s, i) => s.name || `scene_${i}`) : ['scene_0'];

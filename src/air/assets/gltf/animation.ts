@@ -10,7 +10,7 @@ import { QuatInterpolationMode } from '../../../cocos/core/curves/quat-curve';
 import { Quat } from '../../../cocos/core/math';
 import { MeshRenderer } from '../../../cocos/3d/framework/mesh-renderer';
 import { Node } from '../../../cocos/scene-graph/node';
-import { GLTFContext } from './context';
+import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
 
 /** glTF component-wise Hermite quaternion interpolation, evaluated by Cocos Animation. */
@@ -53,7 +53,7 @@ export function sampleCubicQuaternion (times: number[], values: number[], time: 
     return result.map((v) => v / length);
 }
 
-export function createGLTFAnimations (context: GLTFContext, paths: string[], included?: Set<number>): AnimationClip[] {
+export function createGLTFAnimations (context: GLTFParserContext, paths: string[], included?: Set<number>): AnimationClip[] {
     const clips: AnimationClip[] = [];
     try {
         for (const [clipIndex, source] of (context.json.animations || []).entries()) {
