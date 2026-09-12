@@ -2,6 +2,7 @@
 
 > 编制日期：2026-09-12  
 > 状态：规划完成，待实施  
+> 2026-09-13 顺序修订：本版先交付，V0.5.1 后执行包消费与开发工具收口。当前工作区已有实施改动，实际 Gate 状态以执行证据为准，本次修订不宣告完成。
 > 目标：在现有运行时 glTF/GLB 直读能力上，实现 21 项目标扩展的可验证支持。  
 > 参考：[Three.js GLTFLoader](https://threejs.org/docs/pages/GLTFLoader.html)、[Three.js GLTFLoader 源码](https://github.com/mrdoob/three.js/blob/dev/examples/jsm/loaders/GLTFLoader.js)、[Khronos glTF 扩展注册表](https://github.com/KhronosGroup/glTF/tree/main/extensions)。
 
@@ -171,6 +172,7 @@ export function configureGLTFLoaderDefaults(options: GLTFLoaderOptions): void;
 - `AbortSignal` 取消网络、worker 和尚未完成的解码；已创建的临时资源走 cleanup stack。
 - `getExtensionSupport()` 反映当前 Loader 配置及当前设备能力，模型目录直接使用该结果。
 - 所有扩展错误使用稳定错误码：`GLTF_EXTENSION_UNSUPPORTED`、`GLTF_DECODER_MISSING`、`GLTF_DEVICE_UNSUPPORTED`、`GLTF_EXTENSION_INVALID`、`GLTF_DECODE_FAILED`。
+- 能力与错误合同必须机器可读：`getExtensionSupport()` 返回由 registry、当前配置与设备能力生成的结构化状态，不仅写入 README；错误对象暴露稳定 `code` 与上下文，消息文本不是调用方的判断依据。后续 V0.5.1 直接消费，不重复维护扩展名清单。
 
 ## 4. 内部架构与目录
 
@@ -271,6 +273,7 @@ build/gltf-decoders/
 4. 增加 AbortSignal、progress、cleanup stack、失败 cache eviction。
 5. 保持现有 `loadAsync()`、`parseAsync()`、assetManager、loadAssetAsync 行为。
 6. 注册现有 unlit 与 texture transform handler，验证迁移前后像素一致。
+7. 将 §3 能力状态和错误码作为可消费合同验证：覆盖 decoder 未配置、设备不足、unsupported/invalid、decode failure；用公开入口断言结构化 code，不靠匹配消息文本。能力返回与实际注册/配置状态一致，文档/目录消费同一来源。
 
 退出条件：Gate G1；未实现的 required extension 仍失败；两个已支持扩展通过；同一 dependency 只执行一次；取消与失败不残留缓存或 Blob URL。
 
@@ -381,6 +384,10 @@ build/gltf-decoders/
 - dev server、静态 server 和 npm files 包含 decoder MIME 与目录。
 - min/system/dts 构建保持通过；source map 不嵌入 decoder 二进制。
 - 主 bundle、decoder JS/WASM、首次解码和 worker 数分别报告大小与耗时。
+- 发布机制（files/exports、暂存约定、复制入口、目录映射）作为可重复执行的正式工具交付；后续 V0.5.1 能增量审计、扩展，不留一次性手工打包脚本，也不要求 V0.5.1 重建发布机制。
+- 三类 decoder 的运行依赖、版本、来源、SHA-256、license/notice 与离线配置命令随交付清单固定，移交给 V0.5.1 后仍是包必含项；主 bundle 不因随包携带而提前初始化 decoder/worker。
+- 若本阶段修改构建或 dev server，保留/交付统一示例枚举与递归发现入口、相对目录 ID、decoder JS/WASM/worker 服务及 MIME；后续导航只增量接入，不另建枚举器。
+- 构建缓存诊断以本阶段最终脚本为准，保留或补齐 cold/hit/config mismatch/read failure 等机器可读原因。历史 V0.3 偶发失效不单独重构追因；新基线异常提供证据，不把猜测当根因。
 
 退出条件：Gate G5-build；从 `npm pack` 解包后的目录可离线加载三种 decoder；第三方许可完整。
 
@@ -600,6 +607,9 @@ V0.5 DONE 必须同时满足：
 5. 所有公共 API 有 d.ts 消费测试，旧 API 兼容。
 6. 资源反复加载/销毁无缓存、worker、Blob URL 或 GPU 资源增长。
 7. capabilities、部署说明、许可和最终验收报告齐全。
+8. 向 V0.5.1 移交最终 revision、§3 完整公共接口与类型消费证据、§4 所有权合同、三类 decoder 清单与 npm pack 离线证据、包/构建/dev 工具入口、终态示例和 capabilities、四份 glTF 文档与编号索引、§10 性能样本。文件所有权在交接完成后转移，V0.5.1 不并发编辑本版尚未完成的共享文件。
+
+G5 完成允许后续 V0.5.1 做文档与发布准备，但不等同于已获 npm publish 授权。README 仍须保留 decoder-required、device-dependent、fallback 和已知限制；“21 项达到目标状态”不等于所有设备无条件支持。
 
 ## 13. Deviations 与风险控制
 
