@@ -1462,7 +1462,7 @@ var index$2 = /*#__PURE__*/Object.freeze({
     RecyclePool: RecyclePool
 });
 
-var _class$1o;
+var _IDGenerator;
 const NonUuidMark = '.';
 class IDGenerator {
   constructor(category) {
@@ -1473,8 +1473,8 @@ class IDGenerator {
     return this.prefix + (++this.id).toString();
   }
 }
-_class$1o = IDGenerator;
-IDGenerator.global = new _class$1o('global');
+_IDGenerator = IDGenerator;
+IDGenerator.global = new _IDGenerator('global');
 
 const tempCIDGenerator = new IDGenerator('TmpCId.');
 const aliasesTag = typeof Symbol === 'undefined' ? '__aliases__' : Symbol('[[Aliases]]');
@@ -8217,7 +8217,7 @@ function v4(x, y, z, w) {
 }
 legacyCC.v4 = v4;
 
-var _class$1n;
+var _Vec;
 const abs$4 = Math.abs;
 const max$9 = Math.max;
 const min$6 = Math.min;
@@ -8832,7 +8832,7 @@ class Vec3 extends ValueType {
     return new legacyCC.Vec2(this.x, this.y);
   }
 }
-_class$1n = Vec3;
+_Vec = Vec3;
 Vec3.UNIT_X = freezeVec3(1, 0, 0);
 Vec3.UNIT_Y = freezeVec3(0, 1, 0);
 Vec3.UNIT_Z = freezeVec3(0, 0, 1);
@@ -8843,47 +8843,47 @@ Vec3.ZERO = freezeVec3(0, 0, 0);
 Vec3.ONE = freezeVec3(1, 1, 1);
 Vec3.NEG_ONE = freezeVec3(-1, -1, -1);
 Vec3.slerp = (() => {
-  const cacheV1 = new _class$1n();
-  const cacheV2 = new _class$1n();
-  const cacheV3 = new _class$1n();
+  const cacheV1 = new _Vec();
+  const cacheV2 = new _Vec();
+  const cacheV3 = new _Vec();
   return (out, from, to, t) => {
     const EPSILON = 1e-5;
-    const lenFrom = _class$1n.len(from);
-    const lenTo = _class$1n.len(to);
+    const lenFrom = _Vec.len(from);
+    const lenTo = _Vec.len(to);
     if (lenFrom < EPSILON || lenTo < EPSILON) {
-      return _class$1n.lerp(out, from, to, t);
+      return _Vec.lerp(out, from, to, t);
     }
     const lenLerped = lerp(lenFrom, lenTo, t);
-    const dot = _class$1n.dot(from, to) / (lenFrom * lenTo);
+    const dot = _Vec.dot(from, to) / (lenFrom * lenTo);
     if (dot > 1.0 - EPSILON) {
-      return _class$1n.lerp(out, from, to, t);
+      return _Vec.lerp(out, from, to, t);
     } else if (dot < -1.0 + EPSILON) {
-      const fromNormalized = _class$1n.multiplyScalar(cacheV1, from, 1.0 / lenFrom);
-      const axis = _class$1n.generateOrthogonal(cacheV2, fromNormalized);
+      const fromNormalized = _Vec.multiplyScalar(cacheV1, from, 1.0 / lenFrom);
+      const axis = _Vec.generateOrthogonal(cacheV2, fromNormalized);
       const angle = PI$2 * t;
       rotateAxisAngle(cacheV3, fromNormalized, axis, angle);
-      _class$1n.multiplyScalar(out, cacheV3, lenLerped);
+      _Vec.multiplyScalar(out, cacheV3, lenLerped);
       return out;
     } else {
       const dotClamped = dot;
       const theta = acos$3(dotClamped) * t;
-      const fromNormalized = _class$1n.multiplyScalar(cacheV1, from, 1.0 / lenFrom);
-      const toNormalized = _class$1n.multiplyScalar(cacheV2, to, 1.0 / lenTo);
-      _class$1n.scaleAndAdd(cacheV3, toNormalized, fromNormalized, -dotClamped);
-      _class$1n.normalize(cacheV3, cacheV3);
-      _class$1n.multiplyScalar(cacheV3, cacheV3, sin$3(theta));
-      _class$1n.scaleAndAdd(cacheV3, cacheV3, fromNormalized, cos$4(theta));
-      _class$1n.multiplyScalar(out, cacheV3, lenLerped);
+      const fromNormalized = _Vec.multiplyScalar(cacheV1, from, 1.0 / lenFrom);
+      const toNormalized = _Vec.multiplyScalar(cacheV2, to, 1.0 / lenTo);
+      _Vec.scaleAndAdd(cacheV3, toNormalized, fromNormalized, -dotClamped);
+      _Vec.normalize(cacheV3, cacheV3);
+      _Vec.multiplyScalar(cacheV3, cacheV3, sin$3(theta));
+      _Vec.scaleAndAdd(cacheV3, cacheV3, fromNormalized, cos$4(theta));
+      _Vec.multiplyScalar(out, cacheV3, lenLerped);
       return out;
     }
   };
 })();
 Vec3.signedAngle = (() => {
-  const cacheCross = new _class$1n();
+  const cacheCross = new _Vec();
   return (a, b, normal) => {
-    const angle = _class$1n.angle(a, b);
-    const cross = _class$1n.cross(cacheCross, a, b);
-    const dot = _class$1n.dot(cross, normal);
+    const angle = _Vec.angle(a, b);
+    const cross = _Vec.cross(cacheCross, a, b);
+    const dot = _Vec.dot(cross, normal);
     return dot < 0 ? -angle : angle;
   };
 })();
@@ -9382,7 +9382,7 @@ function packRGBE(rgb) {
   return new Vec4(encode_rounded.x / 255.0, encode_rounded.y / 255.0, encode_rounded.z / 255.0, e / 255.0);
 }
 
-var _class$1m;
+var _Mat$1;
 const abs$3 = Math.abs;
 const max$8 = Math.max;
 class Mat3 extends ValueType {
@@ -10054,8 +10054,8 @@ class Mat3 extends ValueType {
     return self;
   }
 }
-_class$1m = Mat3;
-Mat3.IDENTITY = Object.freeze(new _class$1m());
+_Mat$1 = Mat3;
+Mat3.IDENTITY = Object.freeze(new _Mat$1());
 const v3_1$6 = new Vec3();
 const v3_2$2 = new Vec3();
 CCClass.fastDefine('cc.Mat3', Mat3, {
@@ -10071,7 +10071,7 @@ CCClass.fastDefine('cc.Mat3', Mat3, {
 });
 legacyCC.Mat3 = Mat3;
 
-var _class$1l;
+var _Quat;
 const abs$2 = Math.abs;
 const max$7 = Math.max;
 const min$5 = Math.min;
@@ -10612,8 +10612,8 @@ class Quat extends ValueType {
     return `(${this.x}, ${this.y}, ${this.z}, ${this.w})`;
   }
 }
-_class$1l = Quat;
-Quat.IDENTITY = Object.freeze(new _class$1l());
+_Quat = Quat;
+Quat.IDENTITY = Object.freeze(new _Quat());
 const qt_1$1 = new Quat();
 const qt_2 = new Quat();
 const v3_1$5 = new Vec3();
@@ -10631,7 +10631,7 @@ function quat(x = 0, y = 0, z = 0, w = 1) {
 }
 legacyCC.quat = quat;
 
-var _class$1k;
+var _Mat;
 const objectFreeze = Object.freeze;
 const preTransforms = objectFreeze([objectFreeze([1, 0, 0, 1]), objectFreeze([0, 1, -1, 0]), objectFreeze([-1, 0, 0, -1]), objectFreeze([0, -1, 1, 0])]);
 const abs$1 = Math.abs;
@@ -12208,8 +12208,8 @@ class Mat4 extends ValueType {
     return Mat4.fromQuat(this, q);
   }
 }
-_class$1k = Mat4;
-Mat4.IDENTITY = Object.freeze(new _class$1k());
+_Mat = Mat4;
+Mat4.IDENTITY = Object.freeze(new _Mat());
 const v3_1$4 = new Vec3();
 const m3_1$1 = new Mat3();
 CCClass.fastDefine('cc.Mat4', Mat4, {
@@ -12998,7 +12998,7 @@ let MathType;
   MathType[MathType["COLOR"] = 8] = "COLOR";
 })(MathType || (MathType = {}));
 
-var _class$1j;
+var _Size;
 class Size extends ValueType {
   static lerp(out, from, to, ratio) {
     out.width = from.width + (to.width - from.width) * ratio;
@@ -13056,9 +13056,9 @@ class Size extends ValueType {
     return `(${this.width}, ${this.height})`;
   }
 }
-_class$1j = Size;
-Size.ZERO = Object.freeze(new _class$1j(0, 0));
-Size.ONE = Object.freeze(new _class$1j(1, 1));
+_Size = Size;
+Size.ZERO = Object.freeze(new _Size(0, 0));
+Size.ONE = Object.freeze(new _Size(1, 1));
 CCClass.fastDefine('cc.Size', Size, {
   width: 0,
   height: 0
@@ -16492,7 +16492,7 @@ const slide$2 = emptyDecorator ;
 const displayOrder$2 = emptyDecoratorFn ;
 const disallowAnimation$1 = emptyDecorator ;
 
-const integer = type$5(CCInteger);
+const integer$1 = type$5(CCInteger);
 const float = type$5(CCFloat);
 const boolean = type$5(CCBoolean);
 const string = type$5(CCString);
@@ -16533,7 +16533,7 @@ var _decorator = /*#__PURE__*/Object.freeze({
     help: help$3,
     icon: icon,
     inspector: inspector,
-    integer: integer,
+    integer: integer$1,
     menu: menu$4,
     override: override,
     playOnFocus: playOnFocus,
@@ -16550,7 +16550,7 @@ var _decorator = /*#__PURE__*/Object.freeze({
     visible: visible$4
 });
 
-var _dec$1i, _class$1i, _class2$1b, _initializer$11, _initializer2$L, _initializer3$y, _initializer4$r, _class3$n;
+var _dec$1j, _class$1k, _class2$14, _initializer$11, _initializer2$L, _initializer3$y, _initializer4$r, _CompactValueTypeArray;
 let StorageUnit;
 (function (StorageUnit) {
   StorageUnit[StorageUnit["Uint8"] = 0] = "Uint8";
@@ -16581,7 +16581,7 @@ function extractStorageUnitElementType(combined) {
     elementType: combined >> elementTypeBits
   };
 }
-let CompactValueTypeArray = (_dec$1i = ccclass$9('cc.CompactValueTypeArray'), _dec$1i(_class$1i = (_class2$1b = (_class3$n = class CompactValueTypeArray {
+let CompactValueTypeArray = (_dec$1j = ccclass$9('cc.CompactValueTypeArray'), _dec$1j(_class$1k = (_class2$14 = (_CompactValueTypeArray = class CompactValueTypeArray {
   constructor() {
     this._byteOffset = _initializer$11 && _initializer$11();
     this._unitCount = _initializer2$L && _initializer2$L();
@@ -16621,15 +16621,15 @@ let CompactValueTypeArray = (_dec$1i = ccclass$9('cc.CompactValueTypeArray'), _d
     }
     return result;
   }
-}, _class3$n.StorageUnit = StorageUnit, _class3$n.ElementType = ElementType, _class3$n), (_initializer$11 = applyDecoratedInitializer(_class2$1b.prototype, "_byteOffset", [serializable$8], function () {
+}, _CompactValueTypeArray.StorageUnit = StorageUnit, _CompactValueTypeArray.ElementType = ElementType, _CompactValueTypeArray), (_initializer$11 = applyDecoratedInitializer(_class2$14.prototype, "_byteOffset", [serializable$8], function () {
   return 0;
-}), _initializer2$L = applyDecoratedInitializer(_class2$1b.prototype, "_unitCount", [serializable$8], function () {
+}), _initializer2$L = applyDecoratedInitializer(_class2$14.prototype, "_unitCount", [serializable$8], function () {
   return 0;
-}), _initializer3$y = applyDecoratedInitializer(_class2$1b.prototype, "_unitElement", [serializable$8], function () {
+}), _initializer3$y = applyDecoratedInitializer(_class2$14.prototype, "_unitElement", [serializable$8], function () {
   return combineStorageUnitElementType(StorageUnit.Uint8, ElementType.Scalar);
-}), _initializer4$r = applyDecoratedInitializer(_class2$1b.prototype, "_length", [serializable$8], function () {
+}), _initializer4$r = applyDecoratedInitializer(_class2$14.prototype, "_length", [serializable$8], function () {
   return 0;
-})), _class2$1b)) || _class$1i);
+})), _class2$14)) || _class$1k);
 function getElementTraits(elementType) {
   return BuiltinElementTypeTraits[elementType];
 }
@@ -17700,13 +17700,13 @@ function bezierByTime(controlPoints, x) {
 }
 legacyCC.bezierByTime = bezierByTime;
 
-var _dec$1h, _class$1h, _class2$1a, _initializer$10, _initializer2$K, _initializer3$x, _dec2$H, _class4$i, _class5$g, _initializer4$q, _initializer5$k;
+var _dec$1i, _class$1j, _class2$13, _initializer$10, _initializer2$K, _initializer3$x, _dec2$H, _class3$g, _class4$f, _initializer4$q, _initializer5$k;
 let QuatInterpolationMode;
 (function (QuatInterpolationMode) {
   QuatInterpolationMode[QuatInterpolationMode["SLERP"] = 0] = "SLERP";
   QuatInterpolationMode[QuatInterpolationMode["CONSTANT"] = 1] = "CONSTANT";
 })(QuatInterpolationMode || (QuatInterpolationMode = {}));
-let QuatKeyframeValue = (_dec$1h = ccclass$9('cc.QuatKeyframeValue'), _dec$1h(_class$1h = uniquelyReferenced(_class$1h = (_class2$1a = class QuatKeyframeValue {
+let QuatKeyframeValue = (_dec$1i = ccclass$9('cc.QuatKeyframeValue'), _dec$1i(_class$1j = uniquelyReferenced(_class$1j = (_class2$13 = class QuatKeyframeValue {
   constructor({
     value,
     interpolationMode,
@@ -17719,17 +17719,17 @@ let QuatKeyframeValue = (_dec$1h = ccclass$9('cc.QuatKeyframeValue'), _dec$1h(_c
     this.interpolationMode = interpolationMode !== null && interpolationMode !== void 0 ? interpolationMode : this.interpolationMode;
     this.easingMethod = easingMethod !== null && easingMethod !== void 0 ? easingMethod : this.easingMethod;
   }
-}, (_initializer$10 = applyDecoratedInitializer(_class2$1a.prototype, "interpolationMode", [serializable$8], function () {
+}, (_initializer$10 = applyDecoratedInitializer(_class2$13.prototype, "interpolationMode", [serializable$8], function () {
   return QuatInterpolationMode.SLERP;
-}), _initializer2$K = applyDecoratedInitializer(_class2$1a.prototype, "value", [serializable$8], function () {
+}), _initializer2$K = applyDecoratedInitializer(_class2$13.prototype, "value", [serializable$8], function () {
   return Quat.clone(Quat.IDENTITY);
-}), _initializer3$x = applyDecoratedInitializer(_class2$1a.prototype, "easingMethod", [serializable$8], function () {
+}), _initializer3$x = applyDecoratedInitializer(_class2$13.prototype, "easingMethod", [serializable$8], function () {
   return EasingMethod.LINEAR;
-})), _class2$1a)) || _class$1h) || _class$1h);
+})), _class2$13)) || _class$1j) || _class$1j);
 function createQuatKeyframeValue(params) {
   return new QuatKeyframeValue(params);
 }
-let QuatCurve = (_dec2$H = ccclass$9('cc.QuatCurve'), _dec2$H(_class4$i = (_class5$g = class QuatCurve extends KeyframeCurve {
+let QuatCurve = (_dec2$H = ccclass$9('cc.QuatCurve'), _dec2$H(_class3$g = (_class4$f = class QuatCurve extends KeyframeCurve {
   constructor() {
     super();
     this.preExtrapolation = _initializer4$q && _initializer4$q();
@@ -17961,11 +17961,11 @@ let QuatCurve = (_dec2$H = ccclass$9('cc.QuatCurve'), _dec2$H(_class4$i = (_clas
     this._times = times;
     this._values = keyframeValues;
   }
-}, (_initializer4$q = applyDecoratedInitializer(_class5$g.prototype, "preExtrapolation", [serializable$8], function () {
+}, (_initializer4$q = applyDecoratedInitializer(_class4$f.prototype, "preExtrapolation", [serializable$8], function () {
   return ExtrapolationMode.CLAMP;
-}), _initializer5$k = applyDecoratedInitializer(_class5$g.prototype, "postExtrapolation", [serializable$8], function () {
+}), _initializer5$k = applyDecoratedInitializer(_class4$f.prototype, "postExtrapolation", [serializable$8], function () {
   return ExtrapolationMode.CLAMP;
-})), _class5$g)) || _class4$i);
+})), _class4$f)) || _class3$g);
 var QuatCurveKeyframeValueFlagMask;
 (function (QuatCurveKeyframeValueFlagMask) {
   QuatCurveKeyframeValueFlagMask[QuatCurveKeyframeValueFlagMask["INTERPOLATION_MODE"] = 1] = "INTERPOLATION_MODE";
@@ -17979,8 +17979,8 @@ const EASING_METHOD_BYTES = 1;
 const EASING_METHOD_BEZIER_TAG = 255;
 const EASING_METHOD_BEZIER_COMPONENT_BYTES = 4;
 
-var _dec$1g, _class$1g;
-let ObjectCurve = (_dec$1g = ccclass$9('cc.ObjectCurve'), _dec$1g(_class$1g = class ObjectCurve extends KeyframeCurve {
+var _dec$1h, _class$1i;
+let ObjectCurve = (_dec$1h = ccclass$9('cc.ObjectCurve'), _dec$1h(_class$1i = class ObjectCurve extends KeyframeCurve {
   evaluate(time) {
     const iSearch = this.searchKeyframe(time);
     if (iSearch >= 0) {
@@ -17989,7 +17989,7 @@ let ObjectCurve = (_dec$1g = ccclass$9('cc.ObjectCurve'), _dec$1g(_class$1g = cl
     const iPrev = clamp(~iSearch - 1, 0, this._values.length - 1);
     return this._values[iPrev];
   }
-}) || _class$1g);
+}) || _class$1i);
 
 var GradientMode;
 (function (GradientMode) {
@@ -20323,7 +20323,7 @@ Layers.BitMask = BitMask({
 });
 legacyCC.Layers = Layers;
 
-var _class$1f, _class2$19, _class3$m, _class4$h, _class5$f, _class6$4, _class7$6, _class8$5, _class10$5, _class11$5, _class12$1, _class13$5, _class14$4, _class15;
+var _UBOGlobal, _UBOCamera, _UBOShadow, _UBOCSM, _UBOLocal, _UBOWorldBound, _UBOLocalBatched, _UBOForwardLight, _UBOSkinningTexture, _UBOSkinningAnimation, _UBOSkinning, _UBOMorph, _UBOUILocal, _UBOSH;
 const PIPELINE_FLOW_MAIN = 'MainFlow';
 const PIPELINE_FLOW_FORWARD = 'ForwardFlow';
 const PIPELINE_FLOW_SHADOW = 'ShadowFlow';
@@ -20412,7 +20412,7 @@ let UBOGlobalEnum;
   UBOGlobalEnum[UBOGlobalEnum["SIZE"] = 80] = "SIZE";
 })(UBOGlobalEnum || (UBOGlobalEnum = {}));
 class UBOGlobal {}
-_class$1f = UBOGlobal;
+_UBOGlobal = UBOGlobal;
 UBOGlobal.TIME_OFFSET = UBOGlobalEnum.TIME_OFFSET;
 UBOGlobal.SCREEN_SIZE_OFFSET = UBOGlobalEnum.SCREEN_SIZE_OFFSET;
 UBOGlobal.NATIVE_SIZE_OFFSET = UBOGlobalEnum.NATIVE_SIZE_OFFSET;
@@ -20422,8 +20422,8 @@ UBOGlobal.COUNT = UBOGlobalEnum.COUNT;
 UBOGlobal.SIZE = UBOGlobalEnum.SIZE;
 UBOGlobal.NAME = 'CCGlobal';
 UBOGlobal.BINDING = PipelineGlobalBindings.UBO_GLOBAL;
-UBOGlobal.DESCRIPTOR = new DescriptorSetLayoutBinding(_class$1f.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.ALL);
-UBOGlobal.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _class$1f.BINDING, _class$1f.NAME, [new Uniform('cc_time', Type.FLOAT4, 1), new Uniform('cc_screenSize', Type.FLOAT4, 1), new Uniform('cc_nativeSize', Type.FLOAT4, 1), new Uniform('cc_probeInfo', Type.FLOAT4, 1), new Uniform('cc_debug_view_mode', Type.FLOAT4, 1)], 1);
+UBOGlobal.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOGlobal.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.ALL);
+UBOGlobal.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _UBOGlobal.BINDING, _UBOGlobal.NAME, [new Uniform('cc_time', Type.FLOAT4, 1), new Uniform('cc_screenSize', Type.FLOAT4, 1), new Uniform('cc_nativeSize', Type.FLOAT4, 1), new Uniform('cc_probeInfo', Type.FLOAT4, 1), new Uniform('cc_debug_view_mode', Type.FLOAT4, 1)], 1);
 globalDescriptorSetLayout.layouts[UBOGlobal.NAME] = UBOGlobal.LAYOUT;
 globalDescriptorSetLayout.bindings[UBOGlobal.BINDING] = UBOGlobal.DESCRIPTOR;
 let UBOCameraEnum;
@@ -20451,7 +20451,7 @@ let UBOCameraEnum;
   UBOCameraEnum[UBOCameraEnum["SIZE"] = 592] = "SIZE";
 })(UBOCameraEnum || (UBOCameraEnum = {}));
 class UBOCamera {}
-_class2$19 = UBOCamera;
+_UBOCamera = UBOCamera;
 UBOCamera.MAT_VIEW_OFFSET = UBOCameraEnum.MAT_VIEW_OFFSET;
 UBOCamera.MAT_VIEW_INV_OFFSET = UBOCameraEnum.MAT_VIEW_INV_OFFSET;
 UBOCamera.MAT_PROJ_OFFSET = UBOCameraEnum.MAT_PROJ_OFFSET;
@@ -20475,8 +20475,8 @@ UBOCamera.COUNT = UBOCameraEnum.COUNT;
 UBOCamera.SIZE = UBOCameraEnum.SIZE;
 UBOCamera.NAME = 'CCCamera';
 UBOCamera.BINDING = PipelineGlobalBindings.UBO_CAMERA;
-UBOCamera.DESCRIPTOR = new DescriptorSetLayoutBinding(_class2$19.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.ALL);
-UBOCamera.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _class2$19.BINDING, _class2$19.NAME, [new Uniform('cc_matView', Type.MAT4, 1), new Uniform('cc_matViewInv', Type.MAT4, 1), new Uniform('cc_matProj', Type.MAT4, 1), new Uniform('cc_matProjInv', Type.MAT4, 1), new Uniform('cc_matViewProj', Type.MAT4, 1), new Uniform('cc_matViewProjInv', Type.MAT4, 1), new Uniform('cc_cameraPos', Type.FLOAT4, 1), new Uniform('cc_surfaceTransform', Type.FLOAT4, 1), new Uniform('cc_screenScale', Type.FLOAT4, 1), new Uniform('cc_exposure', Type.FLOAT4, 1), new Uniform('cc_mainLitDir', Type.FLOAT4, 1), new Uniform('cc_mainLitColor', Type.FLOAT4, 1), new Uniform('cc_ambientSky', Type.FLOAT4, 1), new Uniform('cc_ambientGround', Type.FLOAT4, 1), new Uniform('cc_fogColor', Type.FLOAT4, 1), new Uniform('cc_fogBase', Type.FLOAT4, 1), new Uniform('cc_fogAdd', Type.FLOAT4, 1), new Uniform('cc_nearFar', Type.FLOAT4, 1), new Uniform('cc_viewPort', Type.FLOAT4, 1)], 1);
+UBOCamera.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOCamera.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.ALL);
+UBOCamera.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _UBOCamera.BINDING, _UBOCamera.NAME, [new Uniform('cc_matView', Type.MAT4, 1), new Uniform('cc_matViewInv', Type.MAT4, 1), new Uniform('cc_matProj', Type.MAT4, 1), new Uniform('cc_matProjInv', Type.MAT4, 1), new Uniform('cc_matViewProj', Type.MAT4, 1), new Uniform('cc_matViewProjInv', Type.MAT4, 1), new Uniform('cc_cameraPos', Type.FLOAT4, 1), new Uniform('cc_surfaceTransform', Type.FLOAT4, 1), new Uniform('cc_screenScale', Type.FLOAT4, 1), new Uniform('cc_exposure', Type.FLOAT4, 1), new Uniform('cc_mainLitDir', Type.FLOAT4, 1), new Uniform('cc_mainLitColor', Type.FLOAT4, 1), new Uniform('cc_ambientSky', Type.FLOAT4, 1), new Uniform('cc_ambientGround', Type.FLOAT4, 1), new Uniform('cc_fogColor', Type.FLOAT4, 1), new Uniform('cc_fogBase', Type.FLOAT4, 1), new Uniform('cc_fogAdd', Type.FLOAT4, 1), new Uniform('cc_nearFar', Type.FLOAT4, 1), new Uniform('cc_viewPort', Type.FLOAT4, 1)], 1);
 globalDescriptorSetLayout.layouts[UBOCamera.NAME] = UBOCamera.LAYOUT;
 globalDescriptorSetLayout.bindings[UBOCamera.BINDING] = UBOCamera.DESCRIPTOR;
 let UBOShadowEnum;
@@ -20495,7 +20495,7 @@ let UBOShadowEnum;
   UBOShadowEnum[UBOShadowEnum["SIZE"] = 256] = "SIZE";
 })(UBOShadowEnum || (UBOShadowEnum = {}));
 class UBOShadow {}
-_class3$m = UBOShadow;
+_UBOShadow = UBOShadow;
 UBOShadow.MAT_LIGHT_VIEW_OFFSET = UBOShadowEnum.MAT_LIGHT_VIEW_OFFSET;
 UBOShadow.MAT_LIGHT_VIEW_PROJ_OFFSET = UBOShadowEnum.MAT_LIGHT_VIEW_PROJ_OFFSET;
 UBOShadow.SHADOW_INV_PROJ_DEPTH_INFO_OFFSET = UBOShadowEnum.SHADOW_INV_PROJ_DEPTH_INFO_OFFSET;
@@ -20510,8 +20510,8 @@ UBOShadow.COUNT = UBOShadowEnum.COUNT;
 UBOShadow.SIZE = UBOShadowEnum.SIZE;
 UBOShadow.NAME = 'CCShadow';
 UBOShadow.BINDING = PipelineGlobalBindings.UBO_SHADOW;
-UBOShadow.DESCRIPTOR = new DescriptorSetLayoutBinding(_class3$m.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.ALL);
-UBOShadow.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _class3$m.BINDING, _class3$m.NAME, [new Uniform('cc_matLightView', Type.MAT4, 1), new Uniform('cc_matLightViewProj', Type.MAT4, 1), new Uniform('cc_shadowInvProjDepthInfo', Type.FLOAT4, 1), new Uniform('cc_shadowProjDepthInfo', Type.FLOAT4, 1), new Uniform('cc_shadowProjInfo', Type.FLOAT4, 1), new Uniform('cc_shadowNFLSInfo', Type.FLOAT4, 1), new Uniform('cc_shadowWHPBInfo', Type.FLOAT4, 1), new Uniform('cc_shadowLPNNInfo', Type.FLOAT4, 1), new Uniform('cc_shadowColor', Type.FLOAT4, 1), new Uniform('cc_planarNDInfo', Type.FLOAT4, 1)], 1);
+UBOShadow.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOShadow.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.ALL);
+UBOShadow.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _UBOShadow.BINDING, _UBOShadow.NAME, [new Uniform('cc_matLightView', Type.MAT4, 1), new Uniform('cc_matLightViewProj', Type.MAT4, 1), new Uniform('cc_shadowInvProjDepthInfo', Type.FLOAT4, 1), new Uniform('cc_shadowProjDepthInfo', Type.FLOAT4, 1), new Uniform('cc_shadowProjInfo', Type.FLOAT4, 1), new Uniform('cc_shadowNFLSInfo', Type.FLOAT4, 1), new Uniform('cc_shadowWHPBInfo', Type.FLOAT4, 1), new Uniform('cc_shadowLPNNInfo', Type.FLOAT4, 1), new Uniform('cc_shadowColor', Type.FLOAT4, 1), new Uniform('cc_planarNDInfo', Type.FLOAT4, 1)], 1);
 globalDescriptorSetLayout.layouts[UBOShadow.NAME] = UBOShadow.LAYOUT;
 globalDescriptorSetLayout.bindings[UBOShadow.BINDING] = UBOShadow.DESCRIPTOR;
 let UBOCSMEnum;
@@ -20529,7 +20529,7 @@ let UBOCSMEnum;
   UBOCSMEnum[UBOCSMEnum["SIZE"] = 656] = "SIZE";
 })(UBOCSMEnum || (UBOCSMEnum = {}));
 class UBOCSM {}
-_class4$h = UBOCSM;
+_UBOCSM = UBOCSM;
 UBOCSM.CSM_LEVEL_COUNT = UBOCSMEnum.CSM_LEVEL_COUNT;
 UBOCSM.CSM_VIEW_DIR_0_OFFSET = UBOCSMEnum.CSM_VIEW_DIR_0_OFFSET;
 UBOCSM.CSM_VIEW_DIR_1_OFFSET = UBOCSMEnum.CSM_VIEW_DIR_1_OFFSET;
@@ -20543,8 +20543,8 @@ UBOCSM.COUNT = UBOCSMEnum.COUNT;
 UBOCSM.SIZE = UBOCSMEnum.SIZE;
 UBOCSM.NAME = 'CCCSM';
 UBOCSM.BINDING = PipelineGlobalBindings.UBO_CSM;
-UBOCSM.DESCRIPTOR = new DescriptorSetLayoutBinding(_class4$h.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.FRAGMENT);
-UBOCSM.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _class4$h.BINDING, _class4$h.NAME, [new Uniform('cc_csmViewDir0', Type.FLOAT4, _class4$h.CSM_LEVEL_COUNT), new Uniform('cc_csmViewDir1', Type.FLOAT4, _class4$h.CSM_LEVEL_COUNT), new Uniform('cc_csmViewDir2', Type.FLOAT4, _class4$h.CSM_LEVEL_COUNT), new Uniform('cc_csmAtlas', Type.FLOAT4, _class4$h.CSM_LEVEL_COUNT), new Uniform('cc_matCSMViewProj', Type.MAT4, _class4$h.CSM_LEVEL_COUNT), new Uniform('cc_csmProjDepthInfo', Type.FLOAT4, _class4$h.CSM_LEVEL_COUNT), new Uniform('cc_csmProjInfo', Type.FLOAT4, _class4$h.CSM_LEVEL_COUNT), new Uniform('cc_csmSplitsInfo', Type.FLOAT4, 1)], 1);
+UBOCSM.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOCSM.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.FRAGMENT);
+UBOCSM.LAYOUT = new UniformBlock(SetIndex.GLOBAL, _UBOCSM.BINDING, _UBOCSM.NAME, [new Uniform('cc_csmViewDir0', Type.FLOAT4, _UBOCSM.CSM_LEVEL_COUNT), new Uniform('cc_csmViewDir1', Type.FLOAT4, _UBOCSM.CSM_LEVEL_COUNT), new Uniform('cc_csmViewDir2', Type.FLOAT4, _UBOCSM.CSM_LEVEL_COUNT), new Uniform('cc_csmAtlas', Type.FLOAT4, _UBOCSM.CSM_LEVEL_COUNT), new Uniform('cc_matCSMViewProj', Type.MAT4, _UBOCSM.CSM_LEVEL_COUNT), new Uniform('cc_csmProjDepthInfo', Type.FLOAT4, _UBOCSM.CSM_LEVEL_COUNT), new Uniform('cc_csmProjInfo', Type.FLOAT4, _UBOCSM.CSM_LEVEL_COUNT), new Uniform('cc_csmSplitsInfo', Type.FLOAT4, 1)], 1);
 globalDescriptorSetLayout.layouts[UBOCSM.NAME] = UBOCSM.LAYOUT;
 globalDescriptorSetLayout.bindings[UBOCSM.BINDING] = UBOCSM.DESCRIPTOR;
 const UNIFORM_SHADOWMAP_NAME = 'cc_shadowMap';
@@ -20586,7 +20586,7 @@ let UBOLocalEnum;
   UBOLocalEnum[UBOLocalEnum["BINDING"] = ModelLocalBindings.UBO_LOCAL] = "BINDING";
 })(UBOLocalEnum || (UBOLocalEnum = {}));
 class UBOLocal {}
-_class5$f = UBOLocal;
+_UBOLocal = UBOLocal;
 UBOLocal.MAT_WORLD_OFFSET = UBOLocalEnum.MAT_WORLD_OFFSET;
 UBOLocal.MAT_WORLD_IT_OFFSET = UBOLocalEnum.MAT_WORLD_IT_OFFSET;
 UBOLocal.LIGHTINGMAP_UVPARAM = UBOLocalEnum.LIGHTINGMAP_UVPARAM;
@@ -20600,33 +20600,33 @@ UBOLocal.SIZE = UBOLocalEnum.SIZE;
 UBOLocal.NAME = 'CCLocal';
 UBOLocal.BINDING = UBOLocalEnum.BINDING;
 UBOLocal.DESCRIPTOR = new DescriptorSetLayoutBinding(UBOLocalEnum.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX | ShaderStageFlagBit.FRAGMENT | ShaderStageFlagBit.COMPUTE, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOLocal.LAYOUT = new UniformBlock(SetIndex.LOCAL, UBOLocalEnum.BINDING, _class5$f.NAME, [new Uniform('cc_matWorld', Type.MAT4, 1), new Uniform('cc_matWorldIT', Type.MAT4, 1), new Uniform('cc_lightingMapUVParam', Type.FLOAT4, 1), new Uniform('cc_localShadowBias', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeData1', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeData2', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeBlendData1', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeBlendData2', Type.FLOAT4, 1)], 1);
+UBOLocal.LAYOUT = new UniformBlock(SetIndex.LOCAL, UBOLocalEnum.BINDING, _UBOLocal.NAME, [new Uniform('cc_matWorld', Type.MAT4, 1), new Uniform('cc_matWorldIT', Type.MAT4, 1), new Uniform('cc_lightingMapUVParam', Type.FLOAT4, 1), new Uniform('cc_localShadowBias', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeData1', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeData2', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeBlendData1', Type.FLOAT4, 1), new Uniform('cc_reflectionProbeBlendData2', Type.FLOAT4, 1)], 1);
 localDescriptorSetLayout.layouts[UBOLocal.NAME] = UBOLocal.LAYOUT;
 localDescriptorSetLayout.bindings[UBOLocalEnum.BINDING] = UBOLocal.DESCRIPTOR;
 class UBOWorldBound {}
-_class6$4 = UBOWorldBound;
+_UBOWorldBound = UBOWorldBound;
 UBOWorldBound.WORLD_BOUND_CENTER = 0;
-UBOWorldBound.WORLD_BOUND_HALF_EXTENTS = _class6$4.WORLD_BOUND_CENTER + 4;
-UBOWorldBound.COUNT = _class6$4.WORLD_BOUND_HALF_EXTENTS + 4;
-UBOWorldBound.SIZE = _class6$4.COUNT * 4;
+UBOWorldBound.WORLD_BOUND_HALF_EXTENTS = _UBOWorldBound.WORLD_BOUND_CENTER + 4;
+UBOWorldBound.COUNT = _UBOWorldBound.WORLD_BOUND_HALF_EXTENTS + 4;
+UBOWorldBound.SIZE = _UBOWorldBound.COUNT * 4;
 UBOWorldBound.NAME = 'CCWorldBound';
 UBOWorldBound.BINDING = ModelLocalBindings.UBO_LOCAL;
-UBOWorldBound.DESCRIPTOR = new DescriptorSetLayoutBinding(_class6$4.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX | ShaderStageFlagBit.COMPUTE, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOWorldBound.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class6$4.BINDING, _class6$4.NAME, [new Uniform('cc_worldBoundCenter', Type.FLOAT4, 1), new Uniform('cc_worldBoundHalfExtents', Type.FLOAT4, 1)], 1);
+UBOWorldBound.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOWorldBound.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX | ShaderStageFlagBit.COMPUTE, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOWorldBound.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOWorldBound.BINDING, _UBOWorldBound.NAME, [new Uniform('cc_worldBoundCenter', Type.FLOAT4, 1), new Uniform('cc_worldBoundHalfExtents', Type.FLOAT4, 1)], 1);
 localDescriptorSetLayout.layouts[UBOWorldBound.NAME] = UBOWorldBound.LAYOUT;
 localDescriptorSetLayout.bindings[UBOWorldBound.BINDING] = UBOWorldBound.DESCRIPTOR;
 const INST_MAT_WORLD = 'a_matWorld0';
 const INST_SH = 'a_sh_linear_const_r';
 class UBOLocalBatched {}
-_class7$6 = UBOLocalBatched;
+_UBOLocalBatched = UBOLocalBatched;
 UBOLocalBatched.BATCHING_COUNT = 10;
 UBOLocalBatched.MAT_WORLDS_OFFSET = 0;
-UBOLocalBatched.COUNT = 16 * _class7$6.BATCHING_COUNT;
-UBOLocalBatched.SIZE = _class7$6.COUNT * 4;
+UBOLocalBatched.COUNT = 16 * _UBOLocalBatched.BATCHING_COUNT;
+UBOLocalBatched.SIZE = _UBOLocalBatched.COUNT * 4;
 UBOLocalBatched.NAME = 'CCLocalBatched';
 UBOLocalBatched.BINDING = ModelLocalBindings.UBO_LOCAL;
-UBOLocalBatched.DESCRIPTOR = new DescriptorSetLayoutBinding(_class7$6.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX | ShaderStageFlagBit.COMPUTE, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOLocalBatched.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class7$6.BINDING, _class7$6.NAME, [new Uniform('cc_matWorlds', Type.MAT4, _class7$6.BATCHING_COUNT)], 1);
+UBOLocalBatched.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOLocalBatched.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX | ShaderStageFlagBit.COMPUTE, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOLocalBatched.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOLocalBatched.BINDING, _UBOLocalBatched.NAME, [new Uniform('cc_matWorlds', Type.MAT4, _UBOLocalBatched.BATCHING_COUNT)], 1);
 localDescriptorSetLayout.layouts[UBOLocalBatched.NAME] = UBOLocalBatched.LAYOUT;
 localDescriptorSetLayout.bindings[UBOLocalBatched.BINDING] = UBOLocalBatched.DESCRIPTOR;
 let UBOForwardLightEnum;
@@ -20641,7 +20641,7 @@ let UBOForwardLightEnum;
   UBOForwardLightEnum[UBOForwardLightEnum["SIZE"] = 80] = "SIZE";
 })(UBOForwardLightEnum || (UBOForwardLightEnum = {}));
 class UBOForwardLight {}
-_class8$5 = UBOForwardLight;
+_UBOForwardLight = UBOForwardLight;
 UBOForwardLight.LIGHTS_PER_PASS = UBOForwardLightEnum.LIGHTS_PER_PASS;
 UBOForwardLight.LIGHT_POS_OFFSET = UBOForwardLightEnum.LIGHT_POS_OFFSET;
 UBOForwardLight.LIGHT_COLOR_OFFSET = UBOForwardLightEnum.LIGHT_COLOR_OFFSET;
@@ -20652,33 +20652,33 @@ UBOForwardLight.COUNT = UBOForwardLightEnum.COUNT;
 UBOForwardLight.SIZE = UBOForwardLightEnum.SIZE;
 UBOForwardLight.NAME = 'CCForwardLight';
 UBOForwardLight.BINDING = ModelLocalBindings.UBO_FORWARD_LIGHTS;
-UBOForwardLight.DESCRIPTOR = new DescriptorSetLayoutBinding(_class8$5.BINDING, DescriptorType.DYNAMIC_UNIFORM_BUFFER, 1, ShaderStageFlagBit.FRAGMENT, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOForwardLight.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class8$5.BINDING, _class8$5.NAME, [new Uniform('cc_lightPos', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightColor', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightSizeRangeAngle', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightDir', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightBoundingSizeVS', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS)], 1);
+UBOForwardLight.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOForwardLight.BINDING, DescriptorType.DYNAMIC_UNIFORM_BUFFER, 1, ShaderStageFlagBit.FRAGMENT, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOForwardLight.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOForwardLight.BINDING, _UBOForwardLight.NAME, [new Uniform('cc_lightPos', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightColor', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightSizeRangeAngle', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightDir', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS), new Uniform('cc_lightBoundingSizeVS', Type.FLOAT4, UBOForwardLightEnum.LIGHTS_PER_PASS)], 1);
 localDescriptorSetLayout.layouts[UBOForwardLight.NAME] = UBOForwardLight.LAYOUT;
 localDescriptorSetLayout.bindings[UBOForwardLight.BINDING] = UBOForwardLight.DESCRIPTOR;
 class UBODeferredLight {}
 UBODeferredLight.LIGHTS_PER_PASS = 10;
 const JOINT_UNIFORM_CAPACITY = 30;
 class UBOSkinningTexture {}
-_class10$5 = UBOSkinningTexture;
+_UBOSkinningTexture = UBOSkinningTexture;
 UBOSkinningTexture.JOINTS_TEXTURE_INFO_OFFSET = 0;
-UBOSkinningTexture.COUNT = _class10$5.JOINTS_TEXTURE_INFO_OFFSET + 4;
-UBOSkinningTexture.SIZE = _class10$5.COUNT * 4;
+UBOSkinningTexture.COUNT = _UBOSkinningTexture.JOINTS_TEXTURE_INFO_OFFSET + 4;
+UBOSkinningTexture.SIZE = _UBOSkinningTexture.COUNT * 4;
 UBOSkinningTexture.NAME = 'CCSkinningTexture';
 UBOSkinningTexture.BINDING = ModelLocalBindings.UBO_SKINNING_TEXTURE;
-UBOSkinningTexture.DESCRIPTOR = new DescriptorSetLayoutBinding(_class10$5.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOSkinningTexture.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class10$5.BINDING, _class10$5.NAME, [new Uniform('cc_jointTextureInfo', Type.FLOAT4, 1)], 1);
+UBOSkinningTexture.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOSkinningTexture.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOSkinningTexture.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOSkinningTexture.BINDING, _UBOSkinningTexture.NAME, [new Uniform('cc_jointTextureInfo', Type.FLOAT4, 1)], 1);
 localDescriptorSetLayout.layouts[UBOSkinningTexture.NAME] = UBOSkinningTexture.LAYOUT;
 localDescriptorSetLayout.bindings[UBOSkinningTexture.BINDING] = UBOSkinningTexture.DESCRIPTOR;
 class UBOSkinningAnimation {}
-_class11$5 = UBOSkinningAnimation;
+_UBOSkinningAnimation = UBOSkinningAnimation;
 UBOSkinningAnimation.JOINTS_ANIM_INFO_OFFSET = 0;
-UBOSkinningAnimation.COUNT = _class11$5.JOINTS_ANIM_INFO_OFFSET + 4;
-UBOSkinningAnimation.SIZE = _class11$5.COUNT * 4;
+UBOSkinningAnimation.COUNT = _UBOSkinningAnimation.JOINTS_ANIM_INFO_OFFSET + 4;
+UBOSkinningAnimation.SIZE = _UBOSkinningAnimation.COUNT * 4;
 UBOSkinningAnimation.NAME = 'CCSkinningAnimation';
 UBOSkinningAnimation.BINDING = ModelLocalBindings.UBO_SKINNING_ANIMATION;
-UBOSkinningAnimation.DESCRIPTOR = new DescriptorSetLayoutBinding(_class11$5.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOSkinningAnimation.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class11$5.BINDING, _class11$5.NAME, [new Uniform('cc_jointAnimInfo', Type.FLOAT4, 1)], 1);
+UBOSkinningAnimation.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOSkinningAnimation.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOSkinningAnimation.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOSkinningAnimation.BINDING, _UBOSkinningAnimation.NAME, [new Uniform('cc_jointAnimInfo', Type.FLOAT4, 1)], 1);
 localDescriptorSetLayout.layouts[UBOSkinningAnimation.NAME] = UBOSkinningAnimation.LAYOUT;
 localDescriptorSetLayout.bindings[UBOSkinningAnimation.BINDING] = UBOSkinningAnimation.DESCRIPTOR;
 const INST_JOINT_ANIM_INFO = 'a_jointAnimInfo';
@@ -20699,14 +20699,14 @@ class UBOSkinning {
     UBOSkinning.LAYOUT.members[0].count = capacity * 3;
   }
 }
-_class12$1 = UBOSkinning;
+_UBOSkinning = UBOSkinning;
 UBOSkinning._jointUniformCapacity = 0;
 UBOSkinning._count = 0;
 UBOSkinning._size = 0;
 UBOSkinning.NAME = 'CCSkinning';
 UBOSkinning.BINDING = ModelLocalBindings.UBO_SKINNING_TEXTURE;
-UBOSkinning.DESCRIPTOR = new DescriptorSetLayoutBinding(_class12$1.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOSkinning.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class12$1.BINDING, _class12$1.NAME, [new Uniform('cc_joints', Type.FLOAT4, 1)], 1);
+UBOSkinning.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOSkinning.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOSkinning.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOSkinning.BINDING, _UBOSkinning.NAME, [new Uniform('cc_joints', Type.FLOAT4, 1)], 1);
 function localDescriptorSetLayout_ResizeMaxJoints(maxCount) {
   UBOSkinning.initLayout(maxCount);
   localDescriptorSetLayout.layouts[UBOSkinning.NAME] = UBOSkinning.LAYOUT;
@@ -20723,7 +20723,7 @@ let UBOMorphEnum;
   UBOMorphEnum[UBOMorphEnum["SIZE"] = 256] = "SIZE";
 })(UBOMorphEnum || (UBOMorphEnum = {}));
 class UBOMorph {}
-_class13$5 = UBOMorph;
+_UBOMorph = UBOMorph;
 UBOMorph.MAX_MORPH_TARGET_COUNT = UBOMorphEnum.MAX_MORPH_TARGET_COUNT;
 UBOMorph.OFFSET_OF_WEIGHTS = UBOMorphEnum.OFFSET_OF_WEIGHTS;
 UBOMorph.OFFSET_OF_DISPLACEMENT_TEXTURE_WIDTH = UBOMorphEnum.OFFSET_OF_DISPLACEMENT_TEXTURE_WIDTH;
@@ -20733,18 +20733,18 @@ UBOMorph.COUNT_BASE_4_BYTES = UBOMorphEnum.COUNT_BASE_4_BYTES;
 UBOMorph.SIZE = UBOMorphEnum.SIZE;
 UBOMorph.NAME = 'CCMorph';
 UBOMorph.BINDING = ModelLocalBindings.UBO_MORPH;
-UBOMorph.DESCRIPTOR = new DescriptorSetLayoutBinding(_class13$5.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOMorph.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class13$5.BINDING, _class13$5.NAME, [new Uniform('cc_displacementWeights', Type.FLOAT4, UBOMorphEnum.MAX_MORPH_TARGET_COUNT / 4), new Uniform('cc_displacementTextureInfo', Type.FLOAT4, 1)], 1);
+UBOMorph.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOMorph.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOMorph.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOMorph.BINDING, _UBOMorph.NAME, [new Uniform('cc_displacementWeights', Type.FLOAT4, UBOMorphEnum.MAX_MORPH_TARGET_COUNT / 4), new Uniform('cc_displacementTextureInfo', Type.FLOAT4, 1)], 1);
 localDescriptorSetLayout.layouts[UBOMorph.NAME] = UBOMorph.LAYOUT;
 localDescriptorSetLayout.bindings[UBOMorph.BINDING] = UBOMorph.DESCRIPTOR;
 class UBOUILocal {
   constructor() {}
 }
-_class14$4 = UBOUILocal;
+_UBOUILocal = UBOUILocal;
 UBOUILocal.NAME = 'CCUILocal';
 UBOUILocal.BINDING = ModelLocalBindings.UBO_UI_LOCAL;
-UBOUILocal.DESCRIPTOR = new DescriptorSetLayoutBinding(_class14$4.BINDING, DescriptorType.DYNAMIC_UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOUILocal.LAYOUT = new UniformBlock(SetIndex.LOCAL, _class14$4.BINDING, _class14$4.NAME, [new Uniform('cc_local_data', Type.FLOAT4, 1)], 1);
+UBOUILocal.DESCRIPTOR = new DescriptorSetLayoutBinding(_UBOUILocal.BINDING, DescriptorType.DYNAMIC_UNIFORM_BUFFER, 1, ShaderStageFlagBit.VERTEX, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
+UBOUILocal.LAYOUT = new UniformBlock(SetIndex.LOCAL, _UBOUILocal.BINDING, _UBOUILocal.NAME, [new Uniform('cc_local_data', Type.FLOAT4, 1)], 1);
 localDescriptorSetLayout.layouts[UBOUILocal.NAME] = UBOUILocal.LAYOUT;
 localDescriptorSetLayout.bindings[UBOUILocal.BINDING] = UBOUILocal.DESCRIPTOR;
 let UBOSHEnum;
@@ -20761,7 +20761,7 @@ let UBOSHEnum;
   UBOSHEnum[UBOSHEnum["BINDING"] = ModelLocalBindings.UBO_SH] = "BINDING";
 })(UBOSHEnum || (UBOSHEnum = {}));
 class UBOSH {}
-_class15 = UBOSH;
+_UBOSH = UBOSH;
 UBOSH.SH_LINEAR_CONST_R_OFFSET = UBOSHEnum.SH_LINEAR_CONST_R_OFFSET;
 UBOSH.SH_LINEAR_CONST_G_OFFSET = UBOSHEnum.SH_LINEAR_CONST_G_OFFSET;
 UBOSH.SH_LINEAR_CONST_B_OFFSET = UBOSHEnum.SH_LINEAR_CONST_B_OFFSET;
@@ -20774,7 +20774,7 @@ UBOSH.SIZE = UBOSHEnum.SIZE;
 UBOSH.NAME = 'CCSH';
 UBOSH.BINDING = UBOSHEnum.BINDING;
 UBOSH.DESCRIPTOR = new DescriptorSetLayoutBinding(UBOSHEnum.BINDING, DescriptorType.UNIFORM_BUFFER, 1, ShaderStageFlagBit.FRAGMENT, MemoryAccessBit.READ_ONLY, ViewDimension.BUFFER);
-UBOSH.LAYOUT = new UniformBlock(SetIndex.LOCAL, UBOSHEnum.BINDING, _class15.NAME, [new Uniform('cc_sh_linear_const_r', Type.FLOAT4, 1), new Uniform('cc_sh_linear_const_g', Type.FLOAT4, 1), new Uniform('cc_sh_linear_const_b', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_r', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_g', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_b', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_a', Type.FLOAT4, 1)], 1);
+UBOSH.LAYOUT = new UniformBlock(SetIndex.LOCAL, UBOSHEnum.BINDING, _UBOSH.NAME, [new Uniform('cc_sh_linear_const_r', Type.FLOAT4, 1), new Uniform('cc_sh_linear_const_g', Type.FLOAT4, 1), new Uniform('cc_sh_linear_const_b', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_r', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_g', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_b', Type.FLOAT4, 1), new Uniform('cc_sh_quadratic_a', Type.FLOAT4, 1)], 1);
 localDescriptorSetLayout.layouts[UBOSH.NAME] = UBOSH.LAYOUT;
 localDescriptorSetLayout.bindings[UBOSHEnum.BINDING] = UBOSH.DESCRIPTOR;
 const UNIFORM_JOINT_TEXTURE_NAME = 'cc_jointTexture';
@@ -21995,13 +21995,13 @@ var helper = /*#__PURE__*/Object.freeze({
     transform: transform
 });
 
-var _dec$1f, _class$1e, _class2$18, _initializer$$;
+var _dec$1g, _class$1h, _class2$12, _initializer$$;
 const {
   ccclass: ccclass$8,
   serializable: serializable$7,
   property: property$2
 } = _decorator;
-let Asset = (_dec$1f = ccclass$8('cc.Asset'), _dec$1f(_class$1e = (_class2$18 = class Asset extends Eventify(CCObject) {
+let Asset = (_dec$1g = ccclass$8('cc.Asset'), _dec$1g(_class$1h = (_class2$12 = class Asset extends Eventify(CCObject) {
   static deserialize(data) {
     return cclegacy.deserialize(data);
   }
@@ -22104,9 +22104,9 @@ let Asset = (_dec$1f = ccclass$8('cc.Asset'), _dec$1f(_class$1e = (_class2$18 = 
     debug(getError(12101, this._uuid));
     return super.destroy();
   }
-}, (_initializer$$ = applyDecoratedInitializer(_class2$18.prototype, "_native", [serializable$7], function () {
+}, (_initializer$$ = applyDecoratedInitializer(_class2$12.prototype, "_native", [serializable$7], function () {
   return '';
-}), _applyDecoratedDescriptor(_class2$18.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$18.prototype, "_nativeAsset"), _class2$18.prototype)), _class2$18)) || _class$1e);
+}), _applyDecoratedDescriptor(_class2$12.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$12.prototype, "_nativeAsset"), _class2$12.prototype)), _class2$12)) || _class$1h);
 
 Asset.prototype.createNode = null;
 cclegacy.Asset = Asset;
@@ -22167,7 +22167,7 @@ let TextureFilter;
   TextureFilter[TextureFilter["NEAREST"] = Filter.POINT] = "NEAREST";
 })(TextureFilter || (TextureFilter = {}));
 
-var _dec$1e, _class$1d, _class2$17, _class3$l;
+var _dec$1f, _class$1g, _class2$11, _ImageAsset;
 const COMPRESSED_HEADER_LENGTH = 4;
 const COMPRESSED_MIPMAP_DATA_SIZE_LENGTH = 4;
 const COMPRESSED_MIPMAP_LEVEL_COUNT_LENGTH = 4;
@@ -22247,7 +22247,7 @@ function isImageBitmap(imageSource) {
 function isNativeImage(imageSource) {
   return imageSource instanceof HTMLImageElement || imageSource instanceof HTMLCanvasElement || isImageBitmap(imageSource);
 }
-let ImageAsset = (_dec$1e = ccclass$9('cc.ImageAsset'), _dec$1e(_class$1d = (_class2$17 = (_class3$l = class ImageAsset extends Asset {
+let ImageAsset = (_dec$1f = ccclass$9('cc.ImageAsset'), _dec$1f(_class$1g = (_class2$11 = (_ImageAsset = class ImageAsset extends Asset {
   static mergeCompressedTextureMips(files) {
     let out = new Uint8Array(0);
     let err = null;
@@ -22595,16 +22595,16 @@ let ImageAsset = (_dec$1e = ccclass$9('cc.ImageAsset'), _dec$1e(_class$1d = (_cl
   validate() {
     return !!this.data;
   }
-}, _class3$l.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _class3$l._sharedPlaceHolderCanvas = null, _class3$l), (_applyDecoratedDescriptor(_class2$17.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$17.prototype, "_nativeAsset"), _class2$17.prototype)), _class2$17)) || _class$1d);
+}, _ImageAsset.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _ImageAsset._sharedPlaceHolderCanvas = null, _ImageAsset), (_applyDecoratedDescriptor(_class2$11.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$11.prototype, "_nativeAsset"), _class2$11.prototype)), _class2$11)) || _class$1g);
 function _getGlobalDevice() {
   return deviceManager.gfxDevice;
 }
 cclegacy.ImageAsset = ImageAsset;
 
-var _dec$1d, _class$1c, _class2$16, _initializer$_, _initializer2$J, _initializer3$w, _initializer4$p, _initializer5$j, _initializer6$f, _initializer7$d, _initializer8$d, _class3$k;
+var _dec$1e, _class$1f, _class2$10, _initializer$_, _initializer2$J, _initializer3$w, _initializer4$p, _initializer5$j, _initializer6$f, _initializer7$d, _initializer8$d, _TextureBase;
 ccenum(Format);
 const idGenerator$2 = new IDGenerator('Tex');
-let TextureBase = (_dec$1d = ccclass$9('cc.TextureBase'), _dec$1d(_class$1c = (_class2$16 = (_class3$k = class TextureBase extends Asset {
+let TextureBase = (_dec$1e = ccclass$9('cc.TextureBase'), _dec$1e(_class$1f = (_class2$10 = (_TextureBase = class TextureBase extends Asset {
   get isCompressed() {
     return this._format >= PixelFormat.RGB_ETC1 && this._format <= PixelFormat.RGBA_ASTC_12x12 || this._format >= PixelFormat.RGB_A_PVRTC_2BPPV1 && this._format <= PixelFormat.RGBA_ETC1;
   }
@@ -22745,47 +22745,47 @@ let TextureBase = (_dec$1d = ccclass$9('cc.TextureBase'), _dec$1d(_class$1c = (_
     }
     return format;
   }
-}, _class3$k.PixelFormat = PixelFormat, _class3$k.WrapMode = WrapMode$1, _class3$k.Filter = TextureFilter, _class3$k), (_initializer$_ = applyDecoratedInitializer(_class2$16.prototype, "_format", [serializable$8], function () {
+}, _TextureBase.PixelFormat = PixelFormat, _TextureBase.WrapMode = WrapMode$1, _TextureBase.Filter = TextureFilter, _TextureBase), (_initializer$_ = applyDecoratedInitializer(_class2$10.prototype, "_format", [serializable$8], function () {
   return PixelFormat.RGBA8888;
-}), _initializer2$J = applyDecoratedInitializer(_class2$16.prototype, "_minFilter", [serializable$8], function () {
+}), _initializer2$J = applyDecoratedInitializer(_class2$10.prototype, "_minFilter", [serializable$8], function () {
   return TextureFilter.LINEAR;
-}), _initializer3$w = applyDecoratedInitializer(_class2$16.prototype, "_magFilter", [serializable$8], function () {
+}), _initializer3$w = applyDecoratedInitializer(_class2$10.prototype, "_magFilter", [serializable$8], function () {
   return TextureFilter.LINEAR;
-}), _initializer4$p = applyDecoratedInitializer(_class2$16.prototype, "_mipFilter", [serializable$8], function () {
+}), _initializer4$p = applyDecoratedInitializer(_class2$10.prototype, "_mipFilter", [serializable$8], function () {
   return TextureFilter.NONE;
-}), _initializer5$j = applyDecoratedInitializer(_class2$16.prototype, "_wrapS", [serializable$8], function () {
+}), _initializer5$j = applyDecoratedInitializer(_class2$10.prototype, "_wrapS", [serializable$8], function () {
   return WrapMode$1.REPEAT;
-}), _initializer6$f = applyDecoratedInitializer(_class2$16.prototype, "_wrapT", [serializable$8], function () {
+}), _initializer6$f = applyDecoratedInitializer(_class2$10.prototype, "_wrapT", [serializable$8], function () {
   return WrapMode$1.REPEAT;
-}), _initializer7$d = applyDecoratedInitializer(_class2$16.prototype, "_wrapR", [serializable$8], function () {
+}), _initializer7$d = applyDecoratedInitializer(_class2$10.prototype, "_wrapR", [serializable$8], function () {
   return WrapMode$1.REPEAT;
-}), _initializer8$d = applyDecoratedInitializer(_class2$16.prototype, "_anisotropy", [serializable$8], function () {
+}), _initializer8$d = applyDecoratedInitializer(_class2$10.prototype, "_anisotropy", [serializable$8], function () {
   return 0;
-})), _class2$16)) || _class$1c);
+})), _class2$10)) || _class$1f);
 cclegacy.TextureBase = TextureBase;
 
-var _dec$1c, _class$1b, _dec2$G, _class2$15, _dec3$p, _class3$j;
-let Script = (_dec$1c = ccclass$9('cc.Script'), _dec$1c(_class$1b = class Script extends Asset {
+var _dec$1d, _class$1e, _dec2$G, _class2$$, _dec3$p, _class3$f;
+let Script = (_dec$1d = ccclass$9('cc.Script'), _dec$1d(_class$1e = class Script extends Asset {
   constructor(name) {
     super(name);
   }
-}) || _class$1b);
+}) || _class$1e);
 cclegacy._Script = Script;
-let JavaScript = (_dec2$G = ccclass$9('cc.JavaScript'), _dec2$G(_class2$15 = class JavaScript extends Script {
+let JavaScript = (_dec2$G = ccclass$9('cc.JavaScript'), _dec2$G(_class2$$ = class JavaScript extends Script {
   constructor(name) {
     super(name);
   }
-}) || _class2$15);
+}) || _class2$$);
 cclegacy._JavaScript = JavaScript;
-let TypeScript = (_dec3$p = ccclass$9('cc.TypeScript'), _dec3$p(_class3$j = class TypeScript extends Script {
+let TypeScript = (_dec3$p = ccclass$9('cc.TypeScript'), _dec3$p(_class3$f = class TypeScript extends Script {
   constructor(name) {
     super(name);
   }
-}) || _class3$j);
+}) || _class3$f);
 cclegacy._TypeScript = TypeScript;
 
-var _dec$1b, _class$1a, _class2$14, _initializer$Z, _initializer2$I, _initializer3$v, _initializer4$o, _initializer5$i;
-let EventHandler = (_dec$1b = ccclass$9('cc.ClickEvent'), _dec$1b(_class$1a = (_class2$14 = class EventHandler {
+var _dec$1c, _class$1d, _class2$_, _initializer$Z, _initializer2$I, _initializer3$v, _initializer4$o, _initializer5$i;
+let EventHandler = (_dec$1c = ccclass$9('cc.ClickEvent'), _dec$1c(_class$1d = (_class2$_ = class EventHandler {
   constructor() {
     this.target = _initializer$Z && _initializer$Z();
     this.component = _initializer2$I && _initializer2$I();
@@ -22845,23 +22845,23 @@ let EventHandler = (_dec$1b = ccclass$9('cc.ClickEvent'), _dec$1b(_class$1a = (_
       this.component = '';
     }
   }
-}, (_initializer$Z = applyDecoratedInitializer(_class2$14.prototype, "target", [serializable$8], function () {
+}, (_initializer$Z = applyDecoratedInitializer(_class2$_.prototype, "target", [serializable$8], function () {
   return null;
-}), _initializer2$I = applyDecoratedInitializer(_class2$14.prototype, "component", [serializable$8], function () {
+}), _initializer2$I = applyDecoratedInitializer(_class2$_.prototype, "component", [serializable$8], function () {
   return '';
-}), _initializer3$v = applyDecoratedInitializer(_class2$14.prototype, "_componentId", [serializable$8], function () {
+}), _initializer3$v = applyDecoratedInitializer(_class2$_.prototype, "_componentId", [serializable$8], function () {
   return '';
-}), _initializer4$o = applyDecoratedInitializer(_class2$14.prototype, "handler", [serializable$8], function () {
+}), _initializer4$o = applyDecoratedInitializer(_class2$_.prototype, "handler", [serializable$8], function () {
   return '';
-}), _initializer5$i = applyDecoratedInitializer(_class2$14.prototype, "customEventData", [serializable$8], function () {
+}), _initializer5$i = applyDecoratedInitializer(_class2$_.prototype, "customEventData", [serializable$8], function () {
   return '';
-})), _class2$14)) || _class$1a);
+})), _class2$_)) || _class$1d);
 
-var _dec$1a, _dec2$F, _class$19, _class2$13, _initializer$Y, _initializer2$H, _initializer3$u, _class3$i;
+var _dec$1b, _dec2$F, _class$1c, _class2$Z, _initializer$Y, _initializer2$H, _initializer3$u, _Component;
 const idGenerator$1 = new IDGenerator('Comp');
 const IsOnLoadCalled$1 = CCObjectFlags.IsOnLoadCalled;
 const NullNode = null;
-let Component = (_dec$1a = ccclass$9('cc.Component'), _dec2$F = type$5(Script), _dec$1a(_class$19 = (_class2$13 = (_class3$i = class Component extends CCObject {
+let Component = (_dec$1b = ccclass$9('cc.Component'), _dec2$F = type$5(Script), _dec$1b(_class$1c = (_class2$Z = (_Component = class Component extends CCObject {
   constructor() {
     super();
     this.node = _initializer$Y && _initializer$Y();
@@ -23019,13 +23019,13 @@ let Component = (_dec$1a = ccclass$9('cc.Component'), _dec2$F = type$5(Script), 
   get internalOnDestroy() {
     return this.onDestroy;
   }
-}, _class3$i.EventHandler = EventHandler, _class3$i._executionOrder = 0, _class3$i._requireComponent = null, _class3$i.system = null, _class3$i), (_applyDecoratedDescriptor(_class2$13.prototype, "__scriptAsset", [_dec2$F], Object.getOwnPropertyDescriptor(_class2$13.prototype, "__scriptAsset"), _class2$13.prototype), _initializer$Y = applyDecoratedInitializer(_class2$13.prototype, "node", [serializable$8], function () {
+}, _Component.EventHandler = EventHandler, _Component._executionOrder = 0, _Component._requireComponent = null, _Component.system = null, _Component), (_applyDecoratedDescriptor(_class2$Z.prototype, "__scriptAsset", [_dec2$F], Object.getOwnPropertyDescriptor(_class2$Z.prototype, "__scriptAsset"), _class2$Z.prototype), _initializer$Y = applyDecoratedInitializer(_class2$Z.prototype, "node", [serializable$8], function () {
   return NullNode;
-}), _initializer2$H = applyDecoratedInitializer(_class2$13.prototype, "_enabled", [serializable$8], function () {
+}), _initializer2$H = applyDecoratedInitializer(_class2$Z.prototype, "_enabled", [serializable$8], function () {
   return true;
-}), _initializer3$u = applyDecoratedInitializer(_class2$13.prototype, "__prefab", [serializable$8], function () {
+}), _initializer3$u = applyDecoratedInitializer(_class2$Z.prototype, "__prefab", [serializable$8], function () {
   return null;
-})), _class2$13)) || _class$19);
+})), _class2$Z)) || _class$1c);
 value(Component, '_registerEditorProps', (cls, props) => {
   let reqComp = props.requireComponent;
   if (reqComp) {
@@ -23041,8 +23041,8 @@ value(Component, '_registerEditorProps', (cls, props) => {
 });
 legacyCC.Component = Component;
 
-var _dec$19, _class$18, _class2$12, _initializer$X;
-let MissingScript = (_dec$19 = ccclass$9('cc.MissingScript'), _dec$19(_class$18 = (_class2$12 = class MissingScript extends Component {
+var _dec$1a, _class$1b, _class2$Y, _initializer$X;
+let MissingScript = (_dec$1a = ccclass$9('cc.MissingScript'), _dec$1a(_class$1b = (_class2$Y = class MissingScript extends Component {
   static safeFindClass(id) {
     const cls = getClassById(id);
     if (cls) {
@@ -23059,9 +23059,9 @@ let MissingScript = (_dec$19 = ccclass$9('cc.MissingScript'), _dec$19(_class$18 
   onLoad() {
     warnID(4600, this.node.name);
   }
-}, (_initializer$X = applyDecoratedInitializer(_class2$12.prototype, "_$erialized", [serializable$8, editorOnly], function () {
+}, (_initializer$X = applyDecoratedInitializer(_class2$Y.prototype, "_$erialized", [serializable$8, editorOnly], function () {
   return null;
-})), _class2$12)) || _class$18);
+})), _class2$Y)) || _class$1b);
 cclegacy._MissingScript = MissingScript;
 try {
   const props = MissingScript.__values__;
@@ -24849,7 +24849,7 @@ class DependUtil {
 DependUtil._instance = void 0;
 var dependUtil = DependUtil.instance;
 
-var _dec$18, _class$17;
+var _dec$19, _class$1a;
 const _regions = [new BufferTextureCopy()];
 function getMipLevel(width, height) {
   let size = Math.max(width, height);
@@ -24870,7 +24870,7 @@ function canGenerateMipmap(device, w, h) {
   }
   return true;
 }
-let SimpleTexture = (_dec$18 = ccclass$9('cc.SimpleTexture'), _dec$18(_class$17 = class SimpleTexture extends TextureBase {
+let SimpleTexture = (_dec$19 = ccclass$9('cc.SimpleTexture'), _dec$19(_class$1a = class SimpleTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._gfxTexture = null;
@@ -25033,12 +25033,12 @@ let SimpleTexture = (_dec$18 = ccclass$9('cc.SimpleTexture'), _dec$18(_class$17 
       this._gfxTextureView = null;
     }
   }
-}) || _class$17);
+}) || _class$1a);
 cclegacy.SimpleTexture = SimpleTexture;
 
-var _dec$17, _dec2$E, _class$16, _class2$11, _initializer$W;
+var _dec$18, _dec2$E, _class$19, _class2$X, _initializer$W;
 
-let Texture2D = (_dec$17 = ccclass$9('cc.Texture2D'), _dec2$E = type$5([ImageAsset]), _dec$17(_class$16 = (_class2$11 = class Texture2D extends SimpleTexture {
+let Texture2D = (_dec$18 = ccclass$9('cc.Texture2D'), _dec2$E = type$5([ImageAsset]), _dec$18(_class$19 = (_class2$X = class Texture2D extends SimpleTexture {
   constructor(name) {
     super(name);
     this._mipmaps = _initializer$W && _initializer$W();
@@ -25187,12 +25187,12 @@ let Texture2D = (_dec$17 = ccclass$9('cc.Texture2D'), _dec2$E = type$5([ImageAss
   validate() {
     return this.mipmaps && this.mipmaps.length !== 0;
   }
-}, (_initializer$W = applyDecoratedInitializer(_class2$11.prototype, "_mipmaps", [_dec2$E], function () {
+}, (_initializer$W = applyDecoratedInitializer(_class2$X.prototype, "_mipmaps", [_dec2$E], function () {
   return [];
-})), _class2$11)) || _class$16);
+})), _class2$X)) || _class$19);
 cclegacy.Texture2D = Texture2D;
 
-var _dec$16, _class$15, _class2$10, _initializer$V, _initializer2$G, _initializer3$t, _initializer4$n, _class3$h;
+var _dec$17, _class$18, _class2$W, _initializer$V, _initializer2$G, _initializer3$t, _initializer4$n, _TextureCube;
 var FaceIndex;
 (function (FaceIndex) {
   FaceIndex[FaceIndex["right"] = 0] = "right";
@@ -25208,7 +25208,7 @@ let MipmapMode;
   MipmapMode[MipmapMode["AUTO"] = 1] = "AUTO";
   MipmapMode[MipmapMode["BAKED_CONVOLUTION_MAP"] = 2] = "BAKED_CONVOLUTION_MAP";
 })(MipmapMode || (MipmapMode = {}));
-let TextureCube = (_dec$16 = ccclass$9('cc.TextureCube'), _dec$16(_class$15 = (_class2$10 = (_class3$h = class TextureCube extends SimpleTexture {
+let TextureCube = (_dec$17 = ccclass$9('cc.TextureCube'), _dec$17(_class$18 = (_class2$W = (_TextureCube = class TextureCube extends SimpleTexture {
   constructor(name) {
     super(name);
     this.isRGBE = _initializer$V && _initializer$V();
@@ -25537,15 +25537,15 @@ let TextureCube = (_dec$16 = ccclass$9('cc.TextureCube'), _dec$16(_class$15 = (_
       return this._mipmaps.length !== 0 && !this._mipmaps.find(x => !(x.top && x.bottom && x.front && x.back && x.left && x.right));
     }
   }
-}, _class3$h.FaceIndex = FaceIndex, _class3$h), (_initializer$V = applyDecoratedInitializer(_class2$10.prototype, "isRGBE", [serializable$8], function () {
+}, _TextureCube.FaceIndex = FaceIndex, _TextureCube), (_initializer$V = applyDecoratedInitializer(_class2$W.prototype, "isRGBE", [serializable$8], function () {
   return false;
-}), _initializer2$G = applyDecoratedInitializer(_class2$10.prototype, "_mipmapAtlas", [serializable$8], function () {
+}), _initializer2$G = applyDecoratedInitializer(_class2$W.prototype, "_mipmapAtlas", [serializable$8], function () {
   return null;
-}), _initializer3$t = applyDecoratedInitializer(_class2$10.prototype, "_mipmapMode", [serializable$8], function () {
+}), _initializer3$t = applyDecoratedInitializer(_class2$W.prototype, "_mipmapMode", [serializable$8], function () {
   return MipmapMode.NONE;
-}), _initializer4$n = applyDecoratedInitializer(_class2$10.prototype, "_mipmaps", [serializable$8], function () {
+}), _initializer4$n = applyDecoratedInitializer(_class2$W.prototype, "_mipmaps", [serializable$8], function () {
   return [];
-})), _class2$10)) || _class$15);
+})), _class2$W)) || _class$18);
 legacyCC.TextureCube = TextureCube;
 function _forEachFace(mipmap, callback) {
   callback(mipmap.front, FaceIndex.front);
@@ -26859,19 +26859,19 @@ Downloader._instance = void 0;
 const downloader = Downloader.instance;
 var downloader$1 = Downloader.instance;
 
-var _dec$15, _class$14, _class2$$, _initializer$U;
-let JsonAsset = (_dec$15 = ccclass$9('cc.JsonAsset'), _dec$15(_class$14 = (_class2$$ = class JsonAsset extends Asset {
+var _dec$16, _class$17, _class2$V, _initializer$U;
+let JsonAsset = (_dec$16 = ccclass$9('cc.JsonAsset'), _dec$16(_class$17 = (_class2$V = class JsonAsset extends Asset {
   constructor(name) {
     super(name);
     this.json = _initializer$U && _initializer$U();
   }
-}, (_initializer$U = applyDecoratedInitializer(_class2$$.prototype, "json", [serializable$8], function () {
+}, (_initializer$U = applyDecoratedInitializer(_class2$V.prototype, "json", [serializable$8], function () {
   return null;
-})), _class2$$)) || _class$14);
+})), _class2$V)) || _class$17);
 cclegacy.JsonAsset = JsonAsset;
 
-var _dec$14, _class$13, _class2$_, _initializer$T;
-let TextAsset = (_dec$14 = ccclass$9('cc.TextAsset'), _dec$14(_class$13 = (_class2$_ = class TextAsset extends Asset {
+var _dec$15, _class$16, _class2$U, _initializer$T;
+let TextAsset = (_dec$15 = ccclass$9('cc.TextAsset'), _dec$15(_class$16 = (_class2$U = class TextAsset extends Asset {
   toString() {
     return this.text;
   }
@@ -26879,13 +26879,13 @@ let TextAsset = (_dec$14 = ccclass$9('cc.TextAsset'), _dec$14(_class$13 = (_clas
     super(name);
     this.text = _initializer$T && _initializer$T();
   }
-}, (_initializer$T = applyDecoratedInitializer(_class2$_.prototype, "text", [serializable$8], function () {
+}, (_initializer$T = applyDecoratedInitializer(_class2$U.prototype, "text", [serializable$8], function () {
   return '';
-})), _class2$_)) || _class$13);
+})), _class2$U)) || _class$16);
 cclegacy.TextAsset = TextAsset;
 
-var _dec$13, _class$12, _class2$Z;
-let BufferAsset = (_dec$13 = ccclass$9('cc.BufferAsset'), _dec$13(_class$12 = (_class2$Z = class BufferAsset extends Asset {
+var _dec$14, _class$15, _class2$T;
+let BufferAsset = (_dec$14 = ccclass$9('cc.BufferAsset'), _dec$14(_class$15 = (_class2$T = class BufferAsset extends Asset {
   constructor(name) {
     super(name);
     this._buffer = null;
@@ -26907,7 +26907,7 @@ let BufferAsset = (_dec$13 = ccclass$9('cc.BufferAsset'), _dec$13(_class$12 = (_
   validate() {
     return !!this._buffer;
   }
-}, (_applyDecoratedDescriptor(_class2$Z.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$Z.prototype, "_nativeAsset"), _class2$Z.prototype)), _class2$Z)) || _class$12);
+}, (_applyDecoratedDescriptor(_class2$T.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$T.prototype, "_nativeAsset"), _class2$T.prototype)), _class2$T)) || _class$15);
 cclegacy.BufferAsset = BufferAsset;
 
 function createImageAsset(id, data, options, onComplete) {
@@ -30169,9 +30169,9 @@ class SubModel {
   }
 }
 
-var _dec$12, _class$11, _class2$Y, _initializer$S, _initializer2$F, _initializer3$s, _initializer4$m, _class3$g;
+var _dec$13, _class$14, _class2$S, _initializer$S, _initializer2$F, _initializer3$s, _initializer4$m, _EffectAsset;
 const legacyBuiltinEffectNames = ['planar-shadow', 'skybox', 'deferred-lighting', 'bloom', 'hbao', 'copy-pass', 'post-process', 'profiler', 'splash-screen', 'unlit', 'sprite', 'particle', 'particle-gpu', 'particle-trail', 'billboard', 'terrain', 'graphics', 'clear-stencil', 'spine', 'occlusion-query', 'geometry-renderer', 'debug-renderer', 'ssss-blur', 'float-output-process'];
-let EffectAsset = (_dec$12 = ccclass$9('cc.EffectAsset'), _dec$12(_class$11 = (_class2$Y = (_class3$g = class EffectAsset extends Asset {
+let EffectAsset = (_dec$13 = ccclass$9('cc.EffectAsset'), _dec$13(_class$14 = (_class2$S = (_EffectAsset = class EffectAsset extends Asset {
   static register(asset) {
     EffectAsset._effects[asset.name] = asset;
     EffectAsset._layoutValid = false;
@@ -30271,15 +30271,15 @@ let EffectAsset = (_dec$12 = ccclass$9('cc.EffectAsset'), _dec$12(_class$11 = (_
   validate() {
     return this.techniques.length > 0 && this.shaders.length > 0;
   }
-}, _class3$g._effects = {}, _class3$g._layoutValid = true, _class3$g), (_initializer$S = applyDecoratedInitializer(_class2$Y.prototype, "techniques", [serializable$8], function () {
+}, _EffectAsset._effects = {}, _EffectAsset._layoutValid = true, _EffectAsset), (_initializer$S = applyDecoratedInitializer(_class2$S.prototype, "techniques", [serializable$8], function () {
   return [];
-}), _initializer2$F = applyDecoratedInitializer(_class2$Y.prototype, "shaders", [serializable$8], function () {
+}), _initializer2$F = applyDecoratedInitializer(_class2$S.prototype, "shaders", [serializable$8], function () {
   return [];
-}), _initializer3$s = applyDecoratedInitializer(_class2$Y.prototype, "combinations", [serializable$8], function () {
+}), _initializer3$s = applyDecoratedInitializer(_class2$S.prototype, "combinations", [serializable$8], function () {
   return [];
-}), _initializer4$m = applyDecoratedInitializer(_class2$Y.prototype, "hideInEditor", [serializable$8, editorOnly], function () {
+}), _initializer4$m = applyDecoratedInitializer(_class2$S.prototype, "hideInEditor", [serializable$8, editorOnly], function () {
   return false;
-})), _class2$Y)) || _class$11);
+})), _class2$S)) || _class$14);
 cclegacy.EffectAsset = EffectAsset;
 
 class PipelineStateManager {
@@ -30364,10 +30364,10 @@ function renderProfiler(device, renderPass, cmdBuff, profiler, camera) {
   cmdBuff.draw(inputAssembler);
 }
 
-var _dec$11, _dec2$D, _class$10, _class2$X, _initializer$R, _initializer2$E, _initializer3$r, _initializer4$l, _initializer5$h;
+var _dec$12, _dec2$D, _class$13, _class2$R, _initializer$R, _initializer2$E, _initializer3$r, _initializer4$l, _initializer5$h;
 const v4_1 = new Vec4();
 
-let Material = (_dec$11 = ccclass$9('cc.Material'), _dec2$D = type$5(EffectAsset), _dec$11(_class$10 = (_class2$X = class Material extends Asset {
+let Material = (_dec$12 = ccclass$9('cc.Material'), _dec2$D = type$5(EffectAsset), _dec$12(_class$13 = (_class2$R = class Material extends Asset {
   static getHash(material) {
     let hash = 0;
     for (const pass of material.passes) {
@@ -30671,17 +30671,17 @@ let Material = (_dec$11 = ccclass$9('cc.Material'), _dec2$D = type$5(EffectAsset
   validate() {
     return !!this._effectAsset && !this._effectAsset.isDefault && this.passes.length > 0;
   }
-}, (_initializer$R = applyDecoratedInitializer(_class2$X.prototype, "_effectAsset", [_dec2$D], function () {
+}, (_initializer$R = applyDecoratedInitializer(_class2$R.prototype, "_effectAsset", [_dec2$D], function () {
   return null;
-}), _initializer2$E = applyDecoratedInitializer(_class2$X.prototype, "_techIdx", [serializable$8], function () {
+}), _initializer2$E = applyDecoratedInitializer(_class2$R.prototype, "_techIdx", [serializable$8], function () {
   return 0;
-}), _initializer3$r = applyDecoratedInitializer(_class2$X.prototype, "_defines", [serializable$8], function () {
+}), _initializer3$r = applyDecoratedInitializer(_class2$R.prototype, "_defines", [serializable$8], function () {
   return [];
-}), _initializer4$l = applyDecoratedInitializer(_class2$X.prototype, "_states", [serializable$8], function () {
+}), _initializer4$l = applyDecoratedInitializer(_class2$R.prototype, "_states", [serializable$8], function () {
   return [];
-}), _initializer5$h = applyDecoratedInitializer(_class2$X.prototype, "_props", [serializable$8], function () {
+}), _initializer5$h = applyDecoratedInitializer(_class2$R.prototype, "_props", [serializable$8], function () {
   return [];
-})), _class2$X)) || _class$10);
+})), _class2$R)) || _class$13);
 cclegacy.Material = Material;
 
 const ShadowSize = Enum({
@@ -32093,7 +32093,7 @@ NodeEventProcessor._maskComp = null;
 NodeEventProcessor.callbacksInvoker = globalCallbacksInvoker;
 cclegacy.NodeEventProcessor = NodeEventProcessor;
 
-var _dec$10, _dec2$C, _dec3$o, _class$$, _class2$W, _initializer$Q, _initializer2$D, _initializer3$q, _initializer4$k, _initializer5$g, _initializer6$e, _initializer7$c, _initializer8$c, _initializer9$b, _initializer10$a, _initializer11$9, _class3$f;
+var _dec$11, _dec2$C, _dec3$o, _class$12, _class2$Q, _initializer$Q, _initializer2$D, _initializer3$q, _initializer4$k, _initializer5$g, _initializer6$e, _initializer7$c, _initializer8$c, _initializer9$b, _initializer10$a, _initializer11$9, _Node;
 const Destroying = CCObjectFlags.Destroying;
 const DontDestroy = CCObjectFlags.DontDestroy;
 const Deactivating$1 = CCObjectFlags.Deactivating;
@@ -32123,7 +32123,7 @@ const m4_2$3 = mat4();
 const dirtyNodes = [];
 const reserveContentsForAllSyncablePrefabTag = Symbol('ReserveContentsForAllSyncablePrefab');
 let globalFlagChangeVersion = 0;
-let Node$1 = (_dec$10 = ccclass$9('cc.Node'), _dec2$C = type$5(Vec3), _dec3$o = type$5(MobilityMode), _dec$10(_class$$ = (_class2$W = (_class3$f = class Node extends CCObject {
+let Node$1 = (_dec$11 = ccclass$9('cc.Node'), _dec2$C = type$5(Vec3), _dec3$o = type$5(MobilityMode), _dec$11(_class$12 = (_class2$Q = (_Node = class Node extends CCObject {
   get components() {
     return this._components;
   }
@@ -33458,32 +33458,32 @@ let Node$1 = (_dec$10 = ccclass$9('cc.Node'), _dec2$C = type$5(Vec3), _dec3$o = 
   get isSkipTransformUpdate() {
     return (this._objFlags & CCObjectFlags.IsSkipTransformUpdate) !== 0;
   }
-}, _class3$f.idGenerator = idGenerator, _class3$f._stacks = [[]], _class3$f._stackId = 0, _class3$f.EventType = NodeEventType, _class3$f.NodeSpace = NodeSpace, _class3$f.TransformDirtyBit = TransformBit, _class3$f.TransformBit = TransformBit, _class3$f.reserveContentsForAllSyncablePrefabTag = reserveContentsForAllSyncablePrefabTag, _class3$f.ClearFrame = 0, _class3$f.ClearRound = 1000, _class3$f), (_applyDecoratedDescriptor(_class2$W.prototype, "_persistNode", [property$3], Object.getOwnPropertyDescriptor(_class2$W.prototype, "_persistNode"), _class2$W.prototype), _initializer$Q = applyDecoratedInitializer(_class2$W.prototype, "_parent", [serializable$8], function () {
+}, _Node.idGenerator = idGenerator, _Node._stacks = [[]], _Node._stackId = 0, _Node.EventType = NodeEventType, _Node.NodeSpace = NodeSpace, _Node.TransformDirtyBit = TransformBit, _Node.TransformBit = TransformBit, _Node.reserveContentsForAllSyncablePrefabTag = reserveContentsForAllSyncablePrefabTag, _Node.ClearFrame = 0, _Node.ClearRound = 1000, _Node), (_applyDecoratedDescriptor(_class2$Q.prototype, "_persistNode", [property$3], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "_persistNode"), _class2$Q.prototype), _initializer$Q = applyDecoratedInitializer(_class2$Q.prototype, "_parent", [serializable$8], function () {
   return null;
-}), _initializer2$D = applyDecoratedInitializer(_class2$W.prototype, "_children", [serializable$8], function () {
+}), _initializer2$D = applyDecoratedInitializer(_class2$Q.prototype, "_children", [serializable$8], function () {
   return [];
-}), _initializer3$q = applyDecoratedInitializer(_class2$W.prototype, "_active", [serializable$8], function () {
+}), _initializer3$q = applyDecoratedInitializer(_class2$Q.prototype, "_active", [serializable$8], function () {
   return true;
-}), _initializer4$k = applyDecoratedInitializer(_class2$W.prototype, "_components", [serializable$8], function () {
+}), _initializer4$k = applyDecoratedInitializer(_class2$Q.prototype, "_components", [serializable$8], function () {
   return [];
-}), _initializer5$g = applyDecoratedInitializer(_class2$W.prototype, "_prefab", [serializable$8], function () {
+}), _initializer5$g = applyDecoratedInitializer(_class2$Q.prototype, "_prefab", [serializable$8], function () {
   return null;
-}), _initializer6$e = applyDecoratedInitializer(_class2$W.prototype, "_lpos", [serializable$8], function () {
+}), _initializer6$e = applyDecoratedInitializer(_class2$Q.prototype, "_lpos", [serializable$8], function () {
   return new Vec3();
-}), _initializer7$c = applyDecoratedInitializer(_class2$W.prototype, "_lrot", [serializable$8], function () {
+}), _initializer7$c = applyDecoratedInitializer(_class2$Q.prototype, "_lrot", [serializable$8], function () {
   return new Quat();
-}), _initializer8$c = applyDecoratedInitializer(_class2$W.prototype, "_lscale", [serializable$8], function () {
+}), _initializer8$c = applyDecoratedInitializer(_class2$Q.prototype, "_lscale", [serializable$8], function () {
   return new Vec3(1, 1, 1);
-}), _initializer9$b = applyDecoratedInitializer(_class2$W.prototype, "_mobility", [serializable$8], function () {
+}), _initializer9$b = applyDecoratedInitializer(_class2$Q.prototype, "_mobility", [serializable$8], function () {
   return MobilityMode.Static;
-}), _initializer10$a = applyDecoratedInitializer(_class2$W.prototype, "_layer", [serializable$8], function () {
+}), _initializer10$a = applyDecoratedInitializer(_class2$Q.prototype, "_layer", [serializable$8], function () {
   return Layers.Enum.DEFAULT;
-}), _initializer11$9 = applyDecoratedInitializer(_class2$W.prototype, "_euler", [serializable$8], function () {
+}), _initializer11$9 = applyDecoratedInitializer(_class2$Q.prototype, "_euler", [serializable$8], function () {
   return new Vec3();
-}), _applyDecoratedDescriptor(_class2$W.prototype, "eulerAngles", [_dec2$C], Object.getOwnPropertyDescriptor(_class2$W.prototype, "eulerAngles"), _class2$W.prototype), _applyDecoratedDescriptor(_class2$W.prototype, "mobility", [_dec3$o], Object.getOwnPropertyDescriptor(_class2$W.prototype, "mobility"), _class2$W.prototype)), _class2$W)) || _class$$);
+}), _applyDecoratedDescriptor(_class2$Q.prototype, "eulerAngles", [_dec2$C], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "eulerAngles"), _class2$Q.prototype), _applyDecoratedDescriptor(_class2$Q.prototype, "mobility", [_dec3$o], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "mobility"), _class2$Q.prototype)), _class2$Q)) || _class$12);
 cclegacy.Node = Node$1;
 
-var _dec$$, _class$_;
+var _dec$10, _class$11;
 const _colorAttachment = new ColorAttachment();
 _colorAttachment.format = Format.RGBA8;
 const _depthStencilAttachment = new DepthStencilAttachment();
@@ -33494,7 +33494,7 @@ const _windowInfo = {
   height: 1,
   renderPassInfo: passInfo
 };
-let RenderTexture = (_dec$$ = ccclass$9('cc.RenderTexture'), _dec$$(_class$_ = class RenderTexture extends TextureBase {
+let RenderTexture = (_dec$10 = ccclass$9('cc.RenderTexture'), _dec$10(_class$11 = class RenderTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._window = null;
@@ -33601,7 +33601,7 @@ let RenderTexture = (_dec$$ = ccclass$9('cc.RenderTexture'), _dec$$(_class$_ = c
     gfxDevice == null ? void 0 : gfxDevice.copyTextureToBuffers(gfxTexture, bufferViews, regions);
     return buffer;
   }
-}) || _class$_);
+}) || _class$11);
 cclegacy.RenderTexture = RenderTexture;
 
 let ProbeClearFlag;
@@ -37843,7 +37843,7 @@ class RenderingSubMesh {
   }
 }
 
-var _dec$_, _dec2$B, _dec3$n, _dec4$h, _dec5$g, _class$Z, _class2$V, _initializer$P, _initializer2$C, _initializer3$p, _initializer4$j, _initializer5$f, _initializer6$d, _dec6$e, _dec7$b, _dec8$9, _dec9$8, _dec10$7, _dec11$5, _dec12$5, _dec13$4, _dec14$4, _dec15$4, _dec16$3, _dec17$3, _dec18$3, _dec19$3, _dec20$3, _class4$g, _class5$e, _initializer7$b, _initializer8$b, _initializer9$a, _initializer10$9, _initializer11$8, _initializer12$7, _initializer13$7, _initializer14$6, _initializer15$5, _initializer16$5, _initializer17$5, _dec21$3, _dec22$3, _dec23$3, _dec24$3, _dec25$3, _dec26$3, _dec27$3, _dec28$3, _class7$5, _class8$4, _initializer18$5, _initializer19$5, _initializer20$4, _initializer21$4, _initializer22$3, _initializer23$2, _initializer24$2, _initializer25$2, _initializer26$2, _initializer27$1, _class9, _dec29$2, _dec30$2, _dec31$2, _dec32$1, _dec33$1, _dec34$1, _class10$4, _class11$4, _initializer28$1, _initializer29$1, _initializer30$1, _initializer31$1, _initializer32$1, _initializer33$1, _initializer34$1, _initializer35$1, _dec35$1, _dec36$1, _class13$4, _class14$3, _initializer36, _initializer37, _initializer38, _initializer39, _dec37$1, _dec38$1, _dec39$1, _class16$2, _class17$2, _initializer40, _initializer41, _initializer42, _dec40, _dec41, _class19$2, _class20$3, _initializer43, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _class22$2, _class23$2, _initializer44, _initializer45, _initializer46, _initializer47, _initializer48, _initializer49, _initializer50, _initializer51, _initializer52, _dec48, _dec49, _class25, _class26, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60, _initializer61, _initializer62;
+var _dec$$, _dec2$B, _dec3$n, _dec4$h, _dec5$g, _class$10, _class2$P, _initializer$P, _initializer2$C, _initializer3$p, _initializer4$j, _initializer5$f, _initializer6$d, _dec6$e, _dec7$b, _dec8$9, _dec9$8, _dec10$7, _dec11$5, _dec12$5, _dec13$4, _dec14$4, _dec15$4, _dec16$3, _dec17$3, _dec18$3, _dec19$3, _dec20$3, _class3$e, _class4$e, _initializer7$b, _initializer8$b, _initializer9$a, _initializer10$9, _initializer11$8, _initializer12$7, _initializer13$7, _initializer14$6, _initializer15$5, _initializer16$5, _initializer17$5, _dec21$3, _dec22$3, _dec23$3, _dec24$3, _dec25$3, _dec26$3, _dec27$3, _dec28$3, _class5$5, _class6$4, _initializer18$5, _initializer19$5, _initializer20$4, _initializer21$4, _initializer22$3, _initializer23$2, _initializer24$2, _initializer25$2, _initializer26$2, _initializer27$1, _FogInfo, _dec29$2, _dec30$2, _dec31$2, _dec32$1, _dec33$1, _dec34$1, _class7$4, _class8$4, _initializer28$1, _initializer29$1, _initializer30$1, _initializer31$1, _initializer32$1, _initializer33$1, _initializer34$1, _initializer35$1, _dec35$1, _dec36$1, _class9$4, _class10$4, _initializer36, _initializer37, _initializer38, _initializer39, _dec37$1, _dec38$1, _dec39$1, _class11$3, _class12$3, _initializer40, _initializer41, _initializer42, _dec40, _dec41, _class13$2, _class14$2, _initializer43, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _class15$2, _class16$2, _initializer44, _initializer45, _initializer46, _initializer47, _initializer48, _initializer49, _initializer50, _initializer51, _initializer52, _dec48, _dec49, _class17, _class18, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60, _initializer61, _initializer62;
 const _up = new Vec3(0, 1, 0);
 const _v3$2 = new Vec3();
 const _v4 = new Vec4();
@@ -37857,7 +37857,7 @@ const normalizeHDRColor = color => {
     color.z *= intensity;
   }
 };
-let AmbientInfo = (_dec$_ = ccclass$9('cc.AmbientInfo'), _dec2$B = type$5(CCFloat), _dec3$n = formerlySerializedAs$3('_skyColor'), _dec4$h = formerlySerializedAs$3('_skyIllum'), _dec5$g = formerlySerializedAs$3('_groundAlbedo'), _dec$_(_class$Z = (_class2$V = class AmbientInfo {
+let AmbientInfo = (_dec$$ = ccclass$9('cc.AmbientInfo'), _dec2$B = type$5(CCFloat), _dec3$n = formerlySerializedAs$3('_skyColor'), _dec4$h = formerlySerializedAs$3('_skyIllum'), _dec5$g = formerlySerializedAs$3('_groundAlbedo'), _dec$$(_class$10 = (_class2$P = class AmbientInfo {
   constructor() {
     this._skyColorHDR = _initializer$P && _initializer$P();
     this._skyIllumHDR = _initializer2$C && _initializer2$C();
@@ -37960,21 +37960,21 @@ let AmbientInfo = (_dec$_ = ccclass$9('cc.AmbientInfo'), _dec2$B = type$5(CCFloa
     this._resource = resource;
     resource.initialize(this);
   }
-}, (_applyDecoratedDescriptor(_class2$V.prototype, "skyIllum", [_dec2$B], Object.getOwnPropertyDescriptor(_class2$V.prototype, "skyIllum"), _class2$V.prototype), _initializer$P = applyDecoratedInitializer(_class2$V.prototype, "_skyColorHDR", [serializable$8, _dec3$n], function () {
+}, (_applyDecoratedDescriptor(_class2$P.prototype, "skyIllum", [_dec2$B], Object.getOwnPropertyDescriptor(_class2$P.prototype, "skyIllum"), _class2$P.prototype), _initializer$P = applyDecoratedInitializer(_class2$P.prototype, "_skyColorHDR", [serializable$8, _dec3$n], function () {
   return new Vec4(0.2, 0.5, 0.8, 1.0);
-}), _initializer2$C = applyDecoratedInitializer(_class2$V.prototype, "_skyIllumHDR", [serializable$8, _dec4$h], function () {
+}), _initializer2$C = applyDecoratedInitializer(_class2$P.prototype, "_skyIllumHDR", [serializable$8, _dec4$h], function () {
   return Ambient.SKY_ILLUM;
-}), _initializer3$p = applyDecoratedInitializer(_class2$V.prototype, "_groundAlbedoHDR", [serializable$8, _dec5$g], function () {
+}), _initializer3$p = applyDecoratedInitializer(_class2$P.prototype, "_groundAlbedoHDR", [serializable$8, _dec5$g], function () {
   return new Vec4(0.2, 0.2, 0.2, 1.0);
-}), _initializer4$j = applyDecoratedInitializer(_class2$V.prototype, "_skyColorLDR", [serializable$8], function () {
+}), _initializer4$j = applyDecoratedInitializer(_class2$P.prototype, "_skyColorLDR", [serializable$8], function () {
   return new Vec4(0.2, 0.5, 0.8, 1.0);
-}), _initializer5$f = applyDecoratedInitializer(_class2$V.prototype, "_skyIllumLDR", [serializable$8], function () {
+}), _initializer5$f = applyDecoratedInitializer(_class2$P.prototype, "_skyIllumLDR", [serializable$8], function () {
   return Ambient.SKY_ILLUM;
-}), _initializer6$d = applyDecoratedInitializer(_class2$V.prototype, "_groundAlbedoLDR", [serializable$8], function () {
+}), _initializer6$d = applyDecoratedInitializer(_class2$P.prototype, "_groundAlbedoLDR", [serializable$8], function () {
   return new Vec4(0.2, 0.2, 0.2, 1.0);
-})), _class2$V)) || _class$Z);
+})), _class2$P)) || _class$10);
 legacyCC.AmbientInfo = AmbientInfo;
-let SkyboxInfo = (_dec6$e = ccclass$9('cc.SkyboxInfo'), _dec7$b = type$5(EnvironmentLightingType), _dec8$9 = type$5(TextureCube), _dec9$8 = type$5(CCFloat), _dec10$7 = type$5(TextureCube), _dec11$5 = type$5(TextureCube), _dec12$5 = type$5(Material), _dec13$4 = type$5(TextureCube), _dec14$4 = formerlySerializedAs$3('_envmap'), _dec15$4 = type$5(TextureCube), _dec16$3 = type$5(TextureCube), _dec17$3 = type$5(TextureCube), _dec18$3 = type$5(Material), _dec19$3 = type$5(TextureCube), _dec20$3 = type$5(TextureCube), _dec6$e(_class4$g = (_class5$e = class SkyboxInfo {
+let SkyboxInfo = (_dec6$e = ccclass$9('cc.SkyboxInfo'), _dec7$b = type$5(EnvironmentLightingType), _dec8$9 = type$5(TextureCube), _dec9$8 = type$5(CCFloat), _dec10$7 = type$5(TextureCube), _dec11$5 = type$5(TextureCube), _dec12$5 = type$5(Material), _dec13$4 = type$5(TextureCube), _dec14$4 = formerlySerializedAs$3('_envmap'), _dec15$4 = type$5(TextureCube), _dec16$3 = type$5(TextureCube), _dec17$3 = type$5(TextureCube), _dec18$3 = type$5(Material), _dec19$3 = type$5(TextureCube), _dec20$3 = type$5(TextureCube), _dec6$e(_class3$e = (_class4$e = class SkyboxInfo {
   constructor() {
     this._envLightingType = _initializer7$b && _initializer7$b();
     this._envmapHDR = _initializer8$b && _initializer8$b();
@@ -38198,31 +38198,31 @@ let SkyboxInfo = (_dec6$e = ccclass$9('cc.SkyboxInfo'), _dec7$b = type$5(Environ
       });
     }
   }
-}, (_applyDecoratedDescriptor(_class5$e.prototype, "envLightingType", [_dec7$b], Object.getOwnPropertyDescriptor(_class5$e.prototype, "envLightingType"), _class5$e.prototype), _applyDecoratedDescriptor(_class5$e.prototype, "envmap", [_dec8$9], Object.getOwnPropertyDescriptor(_class5$e.prototype, "envmap"), _class5$e.prototype), _applyDecoratedDescriptor(_class5$e.prototype, "rotationAngle", [_dec9$8], Object.getOwnPropertyDescriptor(_class5$e.prototype, "rotationAngle"), _class5$e.prototype), _applyDecoratedDescriptor(_class5$e.prototype, "diffuseMap", [_dec10$7], Object.getOwnPropertyDescriptor(_class5$e.prototype, "diffuseMap"), _class5$e.prototype), _applyDecoratedDescriptor(_class5$e.prototype, "reflectionMap", [_dec11$5], Object.getOwnPropertyDescriptor(_class5$e.prototype, "reflectionMap"), _class5$e.prototype), _applyDecoratedDescriptor(_class5$e.prototype, "skyboxMaterial", [_dec12$5], Object.getOwnPropertyDescriptor(_class5$e.prototype, "skyboxMaterial"), _class5$e.prototype), _initializer7$b = applyDecoratedInitializer(_class5$e.prototype, "_envLightingType", [serializable$8], function () {
+}, (_applyDecoratedDescriptor(_class4$e.prototype, "envLightingType", [_dec7$b], Object.getOwnPropertyDescriptor(_class4$e.prototype, "envLightingType"), _class4$e.prototype), _applyDecoratedDescriptor(_class4$e.prototype, "envmap", [_dec8$9], Object.getOwnPropertyDescriptor(_class4$e.prototype, "envmap"), _class4$e.prototype), _applyDecoratedDescriptor(_class4$e.prototype, "rotationAngle", [_dec9$8], Object.getOwnPropertyDescriptor(_class4$e.prototype, "rotationAngle"), _class4$e.prototype), _applyDecoratedDescriptor(_class4$e.prototype, "diffuseMap", [_dec10$7], Object.getOwnPropertyDescriptor(_class4$e.prototype, "diffuseMap"), _class4$e.prototype), _applyDecoratedDescriptor(_class4$e.prototype, "reflectionMap", [_dec11$5], Object.getOwnPropertyDescriptor(_class4$e.prototype, "reflectionMap"), _class4$e.prototype), _applyDecoratedDescriptor(_class4$e.prototype, "skyboxMaterial", [_dec12$5], Object.getOwnPropertyDescriptor(_class4$e.prototype, "skyboxMaterial"), _class4$e.prototype), _initializer7$b = applyDecoratedInitializer(_class4$e.prototype, "_envLightingType", [serializable$8], function () {
   return EnvironmentLightingType.HEMISPHERE_DIFFUSE;
-}), _initializer8$b = applyDecoratedInitializer(_class5$e.prototype, "_envmapHDR", [serializable$8, _dec13$4, _dec14$4], function () {
+}), _initializer8$b = applyDecoratedInitializer(_class4$e.prototype, "_envmapHDR", [serializable$8, _dec13$4, _dec14$4], function () {
   return null;
-}), _initializer9$a = applyDecoratedInitializer(_class5$e.prototype, "_envmapLDR", [serializable$8, _dec15$4], function () {
+}), _initializer9$a = applyDecoratedInitializer(_class4$e.prototype, "_envmapLDR", [serializable$8, _dec15$4], function () {
   return null;
-}), _initializer10$9 = applyDecoratedInitializer(_class5$e.prototype, "_diffuseMapHDR", [serializable$8, _dec16$3], function () {
+}), _initializer10$9 = applyDecoratedInitializer(_class4$e.prototype, "_diffuseMapHDR", [serializable$8, _dec16$3], function () {
   return null;
-}), _initializer11$8 = applyDecoratedInitializer(_class5$e.prototype, "_diffuseMapLDR", [serializable$8, _dec17$3], function () {
+}), _initializer11$8 = applyDecoratedInitializer(_class4$e.prototype, "_diffuseMapLDR", [serializable$8, _dec17$3], function () {
   return null;
-}), _initializer12$7 = applyDecoratedInitializer(_class5$e.prototype, "_enabled", [serializable$8], function () {
+}), _initializer12$7 = applyDecoratedInitializer(_class4$e.prototype, "_enabled", [serializable$8], function () {
   return false;
-}), _initializer13$7 = applyDecoratedInitializer(_class5$e.prototype, "_useHDR", [serializable$8], function () {
+}), _initializer13$7 = applyDecoratedInitializer(_class4$e.prototype, "_useHDR", [serializable$8], function () {
   return true;
-}), _initializer14$6 = applyDecoratedInitializer(_class5$e.prototype, "_editableMaterial", [serializable$8, _dec18$3], function () {
+}), _initializer14$6 = applyDecoratedInitializer(_class4$e.prototype, "_editableMaterial", [serializable$8, _dec18$3], function () {
   return null;
-}), _initializer15$5 = applyDecoratedInitializer(_class5$e.prototype, "_reflectionHDR", [serializable$8, _dec19$3], function () {
+}), _initializer15$5 = applyDecoratedInitializer(_class4$e.prototype, "_reflectionHDR", [serializable$8, _dec19$3], function () {
   return null;
-}), _initializer16$5 = applyDecoratedInitializer(_class5$e.prototype, "_reflectionLDR", [serializable$8, _dec20$3], function () {
+}), _initializer16$5 = applyDecoratedInitializer(_class4$e.prototype, "_reflectionLDR", [serializable$8, _dec20$3], function () {
   return null;
-}), _initializer17$5 = applyDecoratedInitializer(_class5$e.prototype, "_rotationAngle", [serializable$8], function () {
+}), _initializer17$5 = applyDecoratedInitializer(_class4$e.prototype, "_rotationAngle", [serializable$8], function () {
   return 0;
-})), _class5$e)) || _class4$g);
+})), _class4$e)) || _class3$e);
 legacyCC.SkyboxInfo = SkyboxInfo;
-let FogInfo = (_dec21$3 = ccclass$9('cc.FogInfo'), _dec22$3 = type$5(FogType), _dec23$3 = type$5(CCFloat), _dec24$3 = type$5(CCFloat), _dec25$3 = type$5(CCFloat), _dec26$3 = type$5(CCFloat), _dec27$3 = type$5(CCFloat), _dec28$3 = type$5(CCFloat), _dec21$3(_class7$5 = (_class8$4 = (_class9 = class FogInfo {
+let FogInfo = (_dec21$3 = ccclass$9('cc.FogInfo'), _dec22$3 = type$5(FogType), _dec23$3 = type$5(CCFloat), _dec24$3 = type$5(CCFloat), _dec25$3 = type$5(CCFloat), _dec26$3 = type$5(CCFloat), _dec27$3 = type$5(CCFloat), _dec28$3 = type$5(CCFloat), _dec21$3(_class5$5 = (_class6$4 = (_FogInfo = class FogInfo {
   constructor() {
     this._type = _initializer18$5 && _initializer18$5();
     this._fogColor = _initializer19$5 && _initializer19$5();
@@ -38341,28 +38341,28 @@ let FogInfo = (_dec21$3 = ccclass$9('cc.FogInfo'), _dec22$3 = type$5(FogType), _
     resource.initialize(this);
     resource.activate();
   }
-}, _class9.FogType = FogType, _class9), (_applyDecoratedDescriptor(_class8$4.prototype, "type", [_dec22$3], Object.getOwnPropertyDescriptor(_class8$4.prototype, "type"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "fogDensity", [_dec23$3], Object.getOwnPropertyDescriptor(_class8$4.prototype, "fogDensity"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "fogStart", [_dec24$3], Object.getOwnPropertyDescriptor(_class8$4.prototype, "fogStart"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "fogEnd", [_dec25$3], Object.getOwnPropertyDescriptor(_class8$4.prototype, "fogEnd"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "fogAtten", [_dec26$3], Object.getOwnPropertyDescriptor(_class8$4.prototype, "fogAtten"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "fogTop", [_dec27$3], Object.getOwnPropertyDescriptor(_class8$4.prototype, "fogTop"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "fogRange", [_dec28$3], Object.getOwnPropertyDescriptor(_class8$4.prototype, "fogRange"), _class8$4.prototype), _initializer18$5 = applyDecoratedInitializer(_class8$4.prototype, "_type", [serializable$8], function () {
+}, _FogInfo.FogType = FogType, _FogInfo), (_applyDecoratedDescriptor(_class6$4.prototype, "type", [_dec22$3], Object.getOwnPropertyDescriptor(_class6$4.prototype, "type"), _class6$4.prototype), _applyDecoratedDescriptor(_class6$4.prototype, "fogDensity", [_dec23$3], Object.getOwnPropertyDescriptor(_class6$4.prototype, "fogDensity"), _class6$4.prototype), _applyDecoratedDescriptor(_class6$4.prototype, "fogStart", [_dec24$3], Object.getOwnPropertyDescriptor(_class6$4.prototype, "fogStart"), _class6$4.prototype), _applyDecoratedDescriptor(_class6$4.prototype, "fogEnd", [_dec25$3], Object.getOwnPropertyDescriptor(_class6$4.prototype, "fogEnd"), _class6$4.prototype), _applyDecoratedDescriptor(_class6$4.prototype, "fogAtten", [_dec26$3], Object.getOwnPropertyDescriptor(_class6$4.prototype, "fogAtten"), _class6$4.prototype), _applyDecoratedDescriptor(_class6$4.prototype, "fogTop", [_dec27$3], Object.getOwnPropertyDescriptor(_class6$4.prototype, "fogTop"), _class6$4.prototype), _applyDecoratedDescriptor(_class6$4.prototype, "fogRange", [_dec28$3], Object.getOwnPropertyDescriptor(_class6$4.prototype, "fogRange"), _class6$4.prototype), _initializer18$5 = applyDecoratedInitializer(_class6$4.prototype, "_type", [serializable$8], function () {
   return FogType.LINEAR;
-}), _initializer19$5 = applyDecoratedInitializer(_class8$4.prototype, "_fogColor", [serializable$8], function () {
+}), _initializer19$5 = applyDecoratedInitializer(_class6$4.prototype, "_fogColor", [serializable$8], function () {
   return new Color('#C8C8C8');
-}), _initializer20$4 = applyDecoratedInitializer(_class8$4.prototype, "_enabled", [serializable$8], function () {
+}), _initializer20$4 = applyDecoratedInitializer(_class6$4.prototype, "_enabled", [serializable$8], function () {
   return false;
-}), _initializer21$4 = applyDecoratedInitializer(_class8$4.prototype, "_fogDensity", [serializable$8], function () {
+}), _initializer21$4 = applyDecoratedInitializer(_class6$4.prototype, "_fogDensity", [serializable$8], function () {
   return 0.3;
-}), _initializer22$3 = applyDecoratedInitializer(_class8$4.prototype, "_fogStart", [serializable$8], function () {
+}), _initializer22$3 = applyDecoratedInitializer(_class6$4.prototype, "_fogStart", [serializable$8], function () {
   return 0.5;
-}), _initializer23$2 = applyDecoratedInitializer(_class8$4.prototype, "_fogEnd", [serializable$8], function () {
+}), _initializer23$2 = applyDecoratedInitializer(_class6$4.prototype, "_fogEnd", [serializable$8], function () {
   return 300;
-}), _initializer24$2 = applyDecoratedInitializer(_class8$4.prototype, "_fogAtten", [serializable$8], function () {
+}), _initializer24$2 = applyDecoratedInitializer(_class6$4.prototype, "_fogAtten", [serializable$8], function () {
   return 5;
-}), _initializer25$2 = applyDecoratedInitializer(_class8$4.prototype, "_fogTop", [serializable$8], function () {
+}), _initializer25$2 = applyDecoratedInitializer(_class6$4.prototype, "_fogTop", [serializable$8], function () {
   return 1.5;
-}), _initializer26$2 = applyDecoratedInitializer(_class8$4.prototype, "_fogRange", [serializable$8], function () {
+}), _initializer26$2 = applyDecoratedInitializer(_class6$4.prototype, "_fogRange", [serializable$8], function () {
   return 1.2;
-}), _initializer27$1 = applyDecoratedInitializer(_class8$4.prototype, "_accurate", [serializable$8], function () {
+}), _initializer27$1 = applyDecoratedInitializer(_class6$4.prototype, "_accurate", [serializable$8], function () {
   return false;
-})), _class8$4)) || _class7$5);
-let ShadowsInfo = (_dec29$2 = ccclass$9('cc.ShadowsInfo'), _dec30$2 = type$5(ShadowType), _dec31$2 = type$5(CCFloat), _dec32$1 = type$5(CCFloat), _dec33$1 = type$5(CCInteger), _dec34$1 = type$5(ShadowSize), _dec29$2(_class10$4 = (_class11$4 = class ShadowsInfo {
+})), _class6$4)) || _class5$5);
+let ShadowsInfo = (_dec29$2 = ccclass$9('cc.ShadowsInfo'), _dec30$2 = type$5(ShadowType), _dec31$2 = type$5(CCFloat), _dec32$1 = type$5(CCFloat), _dec33$1 = type$5(CCInteger), _dec34$1 = type$5(ShadowSize), _dec29$2(_class7$4 = (_class8$4 = class ShadowsInfo {
   constructor() {
     this._enabled = _initializer28$1 && _initializer28$1();
     this._type = _initializer29$1 && _initializer29$1();
@@ -38464,28 +38464,28 @@ let ShadowsInfo = (_dec29$2 = ccclass$9('cc.ShadowsInfo'), _dec30$2 = type$5(Sha
     resource.initialize(this);
     resource.activate();
   }
-}, (_applyDecoratedDescriptor(_class11$4.prototype, "type", [_dec30$2], Object.getOwnPropertyDescriptor(_class11$4.prototype, "type"), _class11$4.prototype), _applyDecoratedDescriptor(_class11$4.prototype, "planeHeight", [_dec31$2], Object.getOwnPropertyDescriptor(_class11$4.prototype, "planeHeight"), _class11$4.prototype), _applyDecoratedDescriptor(_class11$4.prototype, "planeBias", [_dec32$1], Object.getOwnPropertyDescriptor(_class11$4.prototype, "planeBias"), _class11$4.prototype), _applyDecoratedDescriptor(_class11$4.prototype, "maxReceived", [_dec33$1], Object.getOwnPropertyDescriptor(_class11$4.prototype, "maxReceived"), _class11$4.prototype), _applyDecoratedDescriptor(_class11$4.prototype, "shadowMapSize", [_dec34$1], Object.getOwnPropertyDescriptor(_class11$4.prototype, "shadowMapSize"), _class11$4.prototype), _initializer28$1 = applyDecoratedInitializer(_class11$4.prototype, "_enabled", [serializable$8], function () {
+}, (_applyDecoratedDescriptor(_class8$4.prototype, "type", [_dec30$2], Object.getOwnPropertyDescriptor(_class8$4.prototype, "type"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "planeHeight", [_dec31$2], Object.getOwnPropertyDescriptor(_class8$4.prototype, "planeHeight"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "planeBias", [_dec32$1], Object.getOwnPropertyDescriptor(_class8$4.prototype, "planeBias"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "maxReceived", [_dec33$1], Object.getOwnPropertyDescriptor(_class8$4.prototype, "maxReceived"), _class8$4.prototype), _applyDecoratedDescriptor(_class8$4.prototype, "shadowMapSize", [_dec34$1], Object.getOwnPropertyDescriptor(_class8$4.prototype, "shadowMapSize"), _class8$4.prototype), _initializer28$1 = applyDecoratedInitializer(_class8$4.prototype, "_enabled", [serializable$8], function () {
   return false;
-}), _initializer29$1 = applyDecoratedInitializer(_class11$4.prototype, "_type", [serializable$8], function () {
+}), _initializer29$1 = applyDecoratedInitializer(_class8$4.prototype, "_type", [serializable$8], function () {
   return ShadowType.Planar;
-}), _initializer30$1 = applyDecoratedInitializer(_class11$4.prototype, "_normal", [serializable$8], function () {
+}), _initializer30$1 = applyDecoratedInitializer(_class8$4.prototype, "_normal", [serializable$8], function () {
   return new Vec3(0, 1, 0);
-}), _initializer31$1 = applyDecoratedInitializer(_class11$4.prototype, "_distance", [serializable$8], function () {
+}), _initializer31$1 = applyDecoratedInitializer(_class8$4.prototype, "_distance", [serializable$8], function () {
   return 0;
-}), _initializer32$1 = applyDecoratedInitializer(_class11$4.prototype, "_planeBias", [serializable$8], function () {
+}), _initializer32$1 = applyDecoratedInitializer(_class8$4.prototype, "_planeBias", [serializable$8], function () {
   return 1.0;
-}), _initializer33$1 = applyDecoratedInitializer(_class11$4.prototype, "_shadowColor", [serializable$8], function () {
+}), _initializer33$1 = applyDecoratedInitializer(_class8$4.prototype, "_shadowColor", [serializable$8], function () {
   return new Color(0, 0, 0, 76);
-}), _initializer34$1 = applyDecoratedInitializer(_class11$4.prototype, "_maxReceived", [serializable$8], function () {
+}), _initializer34$1 = applyDecoratedInitializer(_class8$4.prototype, "_maxReceived", [serializable$8], function () {
   return 4;
-}), _initializer35$1 = applyDecoratedInitializer(_class11$4.prototype, "_size", [serializable$8], function () {
+}), _initializer35$1 = applyDecoratedInitializer(_class8$4.prototype, "_size", [serializable$8], function () {
   return new Vec2(1024, 1024);
-})), _class11$4)) || _class10$4);
+})), _class8$4)) || _class7$4);
 legacyCC.ShadowsInfo = ShadowsInfo;
 const DEFAULT_WORLD_MIN_POS = new Vec3(-1024.0, -1024.0, -1024.0);
 const DEFAULT_WORLD_MAX_POS = new Vec3(1024.0, 1024.0, 1024.0);
 const DEFAULT_OCTREE_DEPTH = 8;
-let OctreeInfo = (_dec35$1 = ccclass$9('cc.OctreeInfo'), _dec36$1 = type$5(CCInteger), _dec35$1(_class13$4 = (_class14$3 = class OctreeInfo {
+let OctreeInfo = (_dec35$1 = ccclass$9('cc.OctreeInfo'), _dec36$1 = type$5(CCInteger), _dec35$1(_class9$4 = (_class10$4 = class OctreeInfo {
   constructor() {
     this._enabled = _initializer36 && _initializer36();
     this._minPos = _initializer37 && _initializer37();
@@ -38534,17 +38534,17 @@ let OctreeInfo = (_dec35$1 = ccclass$9('cc.OctreeInfo'), _dec36$1 = type$5(CCInt
     this._resource = resource;
     resource.initialize(this);
   }
-}, (_applyDecoratedDescriptor(_class14$3.prototype, "depth", [_dec36$1], Object.getOwnPropertyDescriptor(_class14$3.prototype, "depth"), _class14$3.prototype), _initializer36 = applyDecoratedInitializer(_class14$3.prototype, "_enabled", [serializable$8], function () {
+}, (_applyDecoratedDescriptor(_class10$4.prototype, "depth", [_dec36$1], Object.getOwnPropertyDescriptor(_class10$4.prototype, "depth"), _class10$4.prototype), _initializer36 = applyDecoratedInitializer(_class10$4.prototype, "_enabled", [serializable$8], function () {
   return false;
-}), _initializer37 = applyDecoratedInitializer(_class14$3.prototype, "_minPos", [serializable$8], function () {
+}), _initializer37 = applyDecoratedInitializer(_class10$4.prototype, "_minPos", [serializable$8], function () {
   return new Vec3(DEFAULT_WORLD_MIN_POS);
-}), _initializer38 = applyDecoratedInitializer(_class14$3.prototype, "_maxPos", [serializable$8], function () {
+}), _initializer38 = applyDecoratedInitializer(_class10$4.prototype, "_maxPos", [serializable$8], function () {
   return new Vec3(DEFAULT_WORLD_MAX_POS);
-}), _initializer39 = applyDecoratedInitializer(_class14$3.prototype, "_depth", [serializable$8], function () {
+}), _initializer39 = applyDecoratedInitializer(_class10$4.prototype, "_depth", [serializable$8], function () {
   return DEFAULT_OCTREE_DEPTH;
-})), _class14$3)) || _class13$4);
+})), _class10$4)) || _class9$4);
 legacyCC.OctreeInfo = OctreeInfo;
-let SkinInfo = (_dec37$1 = ccclass$9('cc.SkinInfo'), _dec38$1 = type$5(CCFloat), _dec39$1 = type$5(CCFloat), _dec37$1(_class16$2 = (_class17$2 = class SkinInfo {
+let SkinInfo = (_dec37$1 = ccclass$9('cc.SkinInfo'), _dec38$1 = type$5(CCFloat), _dec39$1 = type$5(CCFloat), _dec37$1(_class11$3 = (_class12$3 = class SkinInfo {
   constructor() {
     this._enabled = _initializer40 && _initializer40();
     this._blurRadius = _initializer41 && _initializer41();
@@ -38583,15 +38583,15 @@ let SkinInfo = (_dec37$1 = ccclass$9('cc.SkinInfo'), _dec38$1 = type$5(CCFloat),
     this._resource = resource;
     resource.initialize(this);
   }
-}, (_applyDecoratedDescriptor(_class17$2.prototype, "blurRadius", [_dec38$1], Object.getOwnPropertyDescriptor(_class17$2.prototype, "blurRadius"), _class17$2.prototype), _applyDecoratedDescriptor(_class17$2.prototype, "sssIntensity", [_dec39$1], Object.getOwnPropertyDescriptor(_class17$2.prototype, "sssIntensity"), _class17$2.prototype), _initializer40 = applyDecoratedInitializer(_class17$2.prototype, "_enabled", [serializable$8], function () {
+}, (_applyDecoratedDescriptor(_class12$3.prototype, "blurRadius", [_dec38$1], Object.getOwnPropertyDescriptor(_class12$3.prototype, "blurRadius"), _class12$3.prototype), _applyDecoratedDescriptor(_class12$3.prototype, "sssIntensity", [_dec39$1], Object.getOwnPropertyDescriptor(_class12$3.prototype, "sssIntensity"), _class12$3.prototype), _initializer40 = applyDecoratedInitializer(_class12$3.prototype, "_enabled", [serializable$8], function () {
   return true;
-}), _initializer41 = applyDecoratedInitializer(_class17$2.prototype, "_blurRadius", [serializable$8], function () {
+}), _initializer41 = applyDecoratedInitializer(_class12$3.prototype, "_blurRadius", [serializable$8], function () {
   return 0.01;
-}), _initializer42 = applyDecoratedInitializer(_class17$2.prototype, "_sssIntensity", [serializable$8], function () {
+}), _initializer42 = applyDecoratedInitializer(_class12$3.prototype, "_sssIntensity", [serializable$8], function () {
   return 3.0;
-})), _class17$2)) || _class16$2);
+})), _class12$3)) || _class11$3);
 legacyCC.SkinInfo = SkinInfo;
-let PostSettingsInfo = (_dec40 = ccclass$9('cc.PostSettingsInfo'), _dec41 = type$5(ToneMappingType), _dec40(_class19$2 = (_class20$3 = class PostSettingsInfo {
+let PostSettingsInfo = (_dec40 = ccclass$9('cc.PostSettingsInfo'), _dec41 = type$5(ToneMappingType), _dec40(_class13$2 = (_class14$2 = class PostSettingsInfo {
   constructor() {
     this._toneMappingType = _initializer43 && _initializer43();
     this._resource = null;
@@ -38610,11 +38610,11 @@ let PostSettingsInfo = (_dec40 = ccclass$9('cc.PostSettingsInfo'), _dec41 = type
     resource.initialize(this);
     resource.activate();
   }
-}, (_applyDecoratedDescriptor(_class20$3.prototype, "toneMappingType", [_dec41], Object.getOwnPropertyDescriptor(_class20$3.prototype, "toneMappingType"), _class20$3.prototype), _initializer43 = applyDecoratedInitializer(_class20$3.prototype, "_toneMappingType", [serializable$8], function () {
+}, (_applyDecoratedDescriptor(_class14$2.prototype, "toneMappingType", [_dec41], Object.getOwnPropertyDescriptor(_class14$2.prototype, "toneMappingType"), _class14$2.prototype), _initializer43 = applyDecoratedInitializer(_class14$2.prototype, "_toneMappingType", [serializable$8], function () {
   return ToneMappingType.DEFAULT;
-})), _class20$3)) || _class19$2);
+})), _class14$2)) || _class13$2);
 legacyCC.PostSettingsInfo = PostSettingsInfo;
-let LightProbeInfo = (_dec42 = ccclass$9('cc.LightProbeInfo'), _dec43 = type$5(CCFloat), _dec44 = type$5(CCInteger), _dec45 = type$5(CCInteger), _dec46 = type$5(CCFloat), _dec47 = type$5(CCFloat), _dec42(_class22$2 = (_class23$2 = class LightProbeInfo {
+let LightProbeInfo = (_dec42 = ccclass$9('cc.LightProbeInfo'), _dec43 = type$5(CCFloat), _dec44 = type$5(CCInteger), _dec45 = type$5(CCInteger), _dec46 = type$5(CCFloat), _dec47 = type$5(CCFloat), _dec42(_class15$2 = (_class16$2 = class LightProbeInfo {
   constructor() {
     this._giScale = _initializer44 && _initializer44();
     this._giSamples = _initializer45 && _initializer45();
@@ -38849,26 +38849,26 @@ let LightProbeInfo = (_dec42 = ccclass$9('cc.LightProbeInfo'), _dec43 = type$5(C
       model.tetrahedronIndex = -1;
     });
   }
-}, (_applyDecoratedDescriptor(_class23$2.prototype, "giScale", [_dec43], Object.getOwnPropertyDescriptor(_class23$2.prototype, "giScale"), _class23$2.prototype), _applyDecoratedDescriptor(_class23$2.prototype, "giSamples", [_dec44], Object.getOwnPropertyDescriptor(_class23$2.prototype, "giSamples"), _class23$2.prototype), _applyDecoratedDescriptor(_class23$2.prototype, "bounces", [_dec45], Object.getOwnPropertyDescriptor(_class23$2.prototype, "bounces"), _class23$2.prototype), _applyDecoratedDescriptor(_class23$2.prototype, "reduceRinging", [_dec46], Object.getOwnPropertyDescriptor(_class23$2.prototype, "reduceRinging"), _class23$2.prototype), _applyDecoratedDescriptor(_class23$2.prototype, "lightProbeSphereVolume", [_dec47], Object.getOwnPropertyDescriptor(_class23$2.prototype, "lightProbeSphereVolume"), _class23$2.prototype), _initializer44 = applyDecoratedInitializer(_class23$2.prototype, "_giScale", [serializable$8], function () {
+}, (_applyDecoratedDescriptor(_class16$2.prototype, "giScale", [_dec43], Object.getOwnPropertyDescriptor(_class16$2.prototype, "giScale"), _class16$2.prototype), _applyDecoratedDescriptor(_class16$2.prototype, "giSamples", [_dec44], Object.getOwnPropertyDescriptor(_class16$2.prototype, "giSamples"), _class16$2.prototype), _applyDecoratedDescriptor(_class16$2.prototype, "bounces", [_dec45], Object.getOwnPropertyDescriptor(_class16$2.prototype, "bounces"), _class16$2.prototype), _applyDecoratedDescriptor(_class16$2.prototype, "reduceRinging", [_dec46], Object.getOwnPropertyDescriptor(_class16$2.prototype, "reduceRinging"), _class16$2.prototype), _applyDecoratedDescriptor(_class16$2.prototype, "lightProbeSphereVolume", [_dec47], Object.getOwnPropertyDescriptor(_class16$2.prototype, "lightProbeSphereVolume"), _class16$2.prototype), _initializer44 = applyDecoratedInitializer(_class16$2.prototype, "_giScale", [serializable$8], function () {
   return 1.0;
-}), _initializer45 = applyDecoratedInitializer(_class23$2.prototype, "_giSamples", [serializable$8], function () {
+}), _initializer45 = applyDecoratedInitializer(_class16$2.prototype, "_giSamples", [serializable$8], function () {
   return 1024;
-}), _initializer46 = applyDecoratedInitializer(_class23$2.prototype, "_bounces", [serializable$8], function () {
+}), _initializer46 = applyDecoratedInitializer(_class16$2.prototype, "_bounces", [serializable$8], function () {
   return 2;
-}), _initializer47 = applyDecoratedInitializer(_class23$2.prototype, "_reduceRinging", [serializable$8], function () {
+}), _initializer47 = applyDecoratedInitializer(_class16$2.prototype, "_reduceRinging", [serializable$8], function () {
   return 0.0;
-}), _initializer48 = applyDecoratedInitializer(_class23$2.prototype, "_showProbe", [serializable$8], function () {
+}), _initializer48 = applyDecoratedInitializer(_class16$2.prototype, "_showProbe", [serializable$8], function () {
   return true;
-}), _initializer49 = applyDecoratedInitializer(_class23$2.prototype, "_showWireframe", [serializable$8], function () {
+}), _initializer49 = applyDecoratedInitializer(_class16$2.prototype, "_showWireframe", [serializable$8], function () {
   return true;
-}), _initializer50 = applyDecoratedInitializer(_class23$2.prototype, "_showConvex", [serializable$8], function () {
+}), _initializer50 = applyDecoratedInitializer(_class16$2.prototype, "_showConvex", [serializable$8], function () {
   return false;
-}), _initializer51 = applyDecoratedInitializer(_class23$2.prototype, "_data", [serializable$8], function () {
+}), _initializer51 = applyDecoratedInitializer(_class16$2.prototype, "_data", [serializable$8], function () {
   return null;
-}), _initializer52 = applyDecoratedInitializer(_class23$2.prototype, "_lightProbeSphereVolume", [serializable$8], function () {
+}), _initializer52 = applyDecoratedInitializer(_class16$2.prototype, "_lightProbeSphereVolume", [serializable$8], function () {
   return 1.0;
-})), _class23$2)) || _class22$2);
-let SceneGlobals = (_dec48 = ccclass$9('cc.SceneGlobals'), _dec49 = type$5(SkyboxInfo), _dec48(_class25 = (_class26 = class SceneGlobals {
+})), _class16$2)) || _class15$2);
+let SceneGlobals = (_dec48 = ccclass$9('cc.SceneGlobals'), _dec49 = type$5(SkyboxInfo), _dec48(_class17 = (_class18 = class SceneGlobals {
   constructor() {
     this.ambient = _initializer53 && _initializer53();
     this.shadows = _initializer54 && _initializer54();
@@ -38904,38 +38904,38 @@ let SceneGlobals = (_dec48 = ccclass$9('cc.SceneGlobals'), _dec49 = type$5(Skybo
     const root = legacyCC.director.root;
     root.onGlobalPipelineStateChanged();
   }
-}, (_initializer53 = applyDecoratedInitializer(_class26.prototype, "ambient", [serializable$8], function () {
+}, (_initializer53 = applyDecoratedInitializer(_class18.prototype, "ambient", [serializable$8], function () {
   return new AmbientInfo();
-}), _initializer54 = applyDecoratedInitializer(_class26.prototype, "shadows", [serializable$8], function () {
+}), _initializer54 = applyDecoratedInitializer(_class18.prototype, "shadows", [serializable$8], function () {
   return new ShadowsInfo();
-}), _initializer55 = applyDecoratedInitializer(_class26.prototype, "_skybox", [serializable$8], function () {
+}), _initializer55 = applyDecoratedInitializer(_class18.prototype, "_skybox", [serializable$8], function () {
   return new SkyboxInfo();
-}), _initializer56 = applyDecoratedInitializer(_class26.prototype, "fog", [serializable$8], function () {
+}), _initializer56 = applyDecoratedInitializer(_class18.prototype, "fog", [serializable$8], function () {
   return new FogInfo();
-}), _applyDecoratedDescriptor(_class26.prototype, "skybox", [_dec49], Object.getOwnPropertyDescriptor(_class26.prototype, "skybox"), _class26.prototype), _initializer57 = applyDecoratedInitializer(_class26.prototype, "octree", [serializable$8], function () {
+}), _applyDecoratedDescriptor(_class18.prototype, "skybox", [_dec49], Object.getOwnPropertyDescriptor(_class18.prototype, "skybox"), _class18.prototype), _initializer57 = applyDecoratedInitializer(_class18.prototype, "octree", [serializable$8], function () {
   return new OctreeInfo();
-}), _initializer58 = applyDecoratedInitializer(_class26.prototype, "skin", [serializable$8], function () {
+}), _initializer58 = applyDecoratedInitializer(_class18.prototype, "skin", [serializable$8], function () {
   return new SkinInfo();
-}), _initializer59 = applyDecoratedInitializer(_class26.prototype, "lightProbeInfo", [serializable$8], function () {
+}), _initializer59 = applyDecoratedInitializer(_class18.prototype, "lightProbeInfo", [serializable$8], function () {
   return new LightProbeInfo();
-}), _initializer60 = applyDecoratedInitializer(_class26.prototype, "postSettings", [serializable$8], function () {
+}), _initializer60 = applyDecoratedInitializer(_class18.prototype, "postSettings", [serializable$8], function () {
   return new PostSettingsInfo();
-}), _initializer61 = applyDecoratedInitializer(_class26.prototype, "bakedWithStationaryMainLight", [serializable$8], function () {
+}), _initializer61 = applyDecoratedInitializer(_class18.prototype, "bakedWithStationaryMainLight", [serializable$8], function () {
   return false;
-}), _initializer62 = applyDecoratedInitializer(_class26.prototype, "bakedWithHighpLightmap", [serializable$8], function () {
+}), _initializer62 = applyDecoratedInitializer(_class18.prototype, "bakedWithHighpLightmap", [serializable$8], function () {
   return false;
-})), _class26)) || _class25);
+})), _class18)) || _class17);
 legacyCC.SceneGlobals = SceneGlobals;
 
-var _dec$Z, _dec2$A, _class$Y, _class2$U, _initializer$O, _dec3$m, _dec4$g, _dec5$f, _dec6$d, _dec7$a, _dec8$8, _class4$f, _class5$d, _initializer2$B, _initializer3$o, _initializer4$i, _initializer5$e, _initializer6$c, _dec9$7, _class7$4, _class8$3, _initializer7$a, _dec10$6, _dec11$4, _dec12$4, _class10$3, _class11$3, _initializer8$a, _initializer9$9, _initializer10$8, _dec13$3, _dec14$3, _dec15$3, _class13$3, _class14$2, _initializer11$7, _initializer12$6, _dec16$2, _dec17$2, _dec18$2, _class16$1, _class17$1, _initializer13$6, _initializer14$5, _dec19$2, _dec20$2, _dec21$2, _dec22$2, _dec23$2, _dec24$2, _class19$1, _class20$2, _initializer15$4, _initializer16$4, _initializer17$4, _initializer18$4, _initializer19$4, _initializer20$3, _dec25$2, _dec26$2, _dec27$2, _dec28$2, _class22$1, _class23$1, _initializer21$3, _initializer22$2, _initializer23$1, _initializer24$1, _initializer25$1, _initializer26$1;
-let TargetInfo = (_dec$Z = ccclass$9('cc.TargetInfo'), _dec2$A = type$5([CCString]), _dec$Z(_class$Y = (_class2$U = class TargetInfo {
+var _dec$_, _dec2$A, _class$$, _class2$O, _initializer$O, _dec3$m, _dec4$g, _dec5$f, _dec6$d, _dec7$a, _dec8$8, _class3$d, _class4$d, _initializer2$B, _initializer3$o, _initializer4$i, _initializer5$e, _initializer6$c, _dec9$7, _class5$4, _class6$3, _initializer7$a, _dec10$6, _dec11$4, _dec12$4, _class7$3, _class8$3, _initializer8$a, _initializer9$9, _initializer10$8, _dec13$3, _dec14$3, _dec15$3, _class9$3, _class10$3, _initializer11$7, _initializer12$6, _dec16$2, _dec17$2, _dec18$2, _class11$2, _class12$2, _initializer13$6, _initializer14$5, _dec19$2, _dec20$2, _dec21$2, _dec22$2, _dec23$2, _dec24$2, _class13$1, _class14$1, _initializer15$4, _initializer16$4, _initializer17$4, _initializer18$4, _initializer19$4, _initializer20$3, _dec25$2, _dec26$2, _dec27$2, _dec28$2, _class15$1, _class16$1, _initializer21$3, _initializer22$2, _initializer23$1, _initializer24$1, _initializer25$1, _initializer26$1;
+let TargetInfo = (_dec$_ = ccclass$9('cc.TargetInfo'), _dec2$A = type$5([CCString]), _dec$_(_class$$ = (_class2$O = class TargetInfo {
   constructor() {
     this.localID = _initializer$O && _initializer$O();
   }
-}, (_initializer$O = applyDecoratedInitializer(_class2$U.prototype, "localID", [serializable$8, _dec2$A], function () {
+}, (_initializer$O = applyDecoratedInitializer(_class2$O.prototype, "localID", [serializable$8, _dec2$A], function () {
   return [];
-})), _class2$U)) || _class$Y);
-let TargetOverrideInfo = (_dec3$m = ccclass$9('cc.TargetOverrideInfo'), _dec4$g = type$5(CCObject), _dec5$f = type$5(TargetInfo), _dec6$d = type$5([CCString]), _dec7$a = type$5(Node$1), _dec8$8 = type$5(TargetInfo), _dec3$m(_class4$f = (_class5$d = class TargetOverrideInfo {
+})), _class2$O)) || _class$$);
+let TargetOverrideInfo = (_dec3$m = ccclass$9('cc.TargetOverrideInfo'), _dec4$g = type$5(CCObject), _dec5$f = type$5(TargetInfo), _dec6$d = type$5([CCString]), _dec7$a = type$5(Node$1), _dec8$8 = type$5(TargetInfo), _dec3$m(_class3$d = (_class4$d = class TargetOverrideInfo {
   constructor() {
     this.source = _initializer2$B && _initializer2$B();
     this.sourceInfo = _initializer3$o && _initializer3$o();
@@ -38943,25 +38943,25 @@ let TargetOverrideInfo = (_dec3$m = ccclass$9('cc.TargetOverrideInfo'), _dec4$g 
     this.target = _initializer5$e && _initializer5$e();
     this.targetInfo = _initializer6$c && _initializer6$c();
   }
-}, (_initializer2$B = applyDecoratedInitializer(_class5$d.prototype, "source", [serializable$8, _dec4$g], function () {
+}, (_initializer2$B = applyDecoratedInitializer(_class4$d.prototype, "source", [serializable$8, _dec4$g], function () {
   return null;
-}), _initializer3$o = applyDecoratedInitializer(_class5$d.prototype, "sourceInfo", [serializable$8, _dec5$f], function () {
+}), _initializer3$o = applyDecoratedInitializer(_class4$d.prototype, "sourceInfo", [serializable$8, _dec5$f], function () {
   return null;
-}), _initializer4$i = applyDecoratedInitializer(_class5$d.prototype, "propertyPath", [serializable$8, _dec6$d], function () {
+}), _initializer4$i = applyDecoratedInitializer(_class4$d.prototype, "propertyPath", [serializable$8, _dec6$d], function () {
   return [];
-}), _initializer5$e = applyDecoratedInitializer(_class5$d.prototype, "target", [serializable$8, _dec7$a], function () {
+}), _initializer5$e = applyDecoratedInitializer(_class4$d.prototype, "target", [serializable$8, _dec7$a], function () {
   return null;
-}), _initializer6$c = applyDecoratedInitializer(_class5$d.prototype, "targetInfo", [serializable$8, _dec8$8], function () {
+}), _initializer6$c = applyDecoratedInitializer(_class4$d.prototype, "targetInfo", [serializable$8, _dec8$8], function () {
   return null;
-})), _class5$d)) || _class4$f);
-let CompPrefabInfo = (_dec9$7 = ccclass$9('cc.CompPrefabInfo'), _dec9$7(_class7$4 = (_class8$3 = class CompPrefabInfo {
+})), _class4$d)) || _class3$d);
+let CompPrefabInfo = (_dec9$7 = ccclass$9('cc.CompPrefabInfo'), _dec9$7(_class5$4 = (_class6$3 = class CompPrefabInfo {
   constructor() {
     this.fileId = _initializer7$a && _initializer7$a();
   }
-}, (_initializer7$a = applyDecoratedInitializer(_class8$3.prototype, "fileId", [serializable$8], function () {
+}, (_initializer7$a = applyDecoratedInitializer(_class6$3.prototype, "fileId", [serializable$8], function () {
   return '';
-})), _class8$3)) || _class7$4);
-let PropertyOverrideInfo = (_dec10$6 = ccclass$9('CCPropertyOverrideInfo'), _dec11$4 = type$5(TargetInfo), _dec12$4 = type$5([CCString]), _dec10$6(_class10$3 = (_class11$3 = class PropertyOverrideInfo {
+})), _class6$3)) || _class5$4);
+let PropertyOverrideInfo = (_dec10$6 = ccclass$9('CCPropertyOverrideInfo'), _dec11$4 = type$5(TargetInfo), _dec12$4 = type$5([CCString]), _dec10$6(_class7$3 = (_class8$3 = class PropertyOverrideInfo {
   constructor() {
     this.targetInfo = _initializer8$a && _initializer8$a();
     this.propertyPath = _initializer9$9 && _initializer9$9();
@@ -38969,36 +38969,36 @@ let PropertyOverrideInfo = (_dec10$6 = ccclass$9('CCPropertyOverrideInfo'), _dec
   }
   isTarget(localID, propPath) {
   }
-}, (_initializer8$a = applyDecoratedInitializer(_class11$3.prototype, "targetInfo", [serializable$8, _dec11$4], function () {
+}, (_initializer8$a = applyDecoratedInitializer(_class8$3.prototype, "targetInfo", [serializable$8, _dec11$4], function () {
   return null;
-}), _initializer9$9 = applyDecoratedInitializer(_class11$3.prototype, "propertyPath", [serializable$8, _dec12$4], function () {
+}), _initializer9$9 = applyDecoratedInitializer(_class8$3.prototype, "propertyPath", [serializable$8, _dec12$4], function () {
   return [];
-}), _initializer10$8 = applyDecoratedInitializer(_class11$3.prototype, "value", [serializable$8], null)), _class11$3)) || _class10$3);
-let MountedChildrenInfo = (_dec13$3 = ccclass$9('cc.MountedChildrenInfo'), _dec14$3 = type$5(TargetInfo), _dec15$3 = type$5([Node$1]), _dec13$3(_class13$3 = (_class14$2 = class MountedChildrenInfo {
+}), _initializer10$8 = applyDecoratedInitializer(_class8$3.prototype, "value", [serializable$8], null)), _class8$3)) || _class7$3);
+let MountedChildrenInfo = (_dec13$3 = ccclass$9('cc.MountedChildrenInfo'), _dec14$3 = type$5(TargetInfo), _dec15$3 = type$5([Node$1]), _dec13$3(_class9$3 = (_class10$3 = class MountedChildrenInfo {
   constructor() {
     this.targetInfo = _initializer11$7 && _initializer11$7();
     this.nodes = _initializer12$6 && _initializer12$6();
   }
   isTarget(localID) {
   }
-}, (_initializer11$7 = applyDecoratedInitializer(_class14$2.prototype, "targetInfo", [serializable$8, _dec14$3], function () {
+}, (_initializer11$7 = applyDecoratedInitializer(_class10$3.prototype, "targetInfo", [serializable$8, _dec14$3], function () {
   return null;
-}), _initializer12$6 = applyDecoratedInitializer(_class14$2.prototype, "nodes", [serializable$8, _dec15$3], function () {
+}), _initializer12$6 = applyDecoratedInitializer(_class10$3.prototype, "nodes", [serializable$8, _dec15$3], function () {
   return [];
-})), _class14$2)) || _class13$3);
-let MountedComponentsInfo = (_dec16$2 = ccclass$9('cc.MountedComponentsInfo'), _dec17$2 = type$5(TargetInfo), _dec18$2 = type$5([Component]), _dec16$2(_class16$1 = (_class17$1 = class MountedComponentsInfo {
+})), _class10$3)) || _class9$3);
+let MountedComponentsInfo = (_dec16$2 = ccclass$9('cc.MountedComponentsInfo'), _dec17$2 = type$5(TargetInfo), _dec18$2 = type$5([Component]), _dec16$2(_class11$2 = (_class12$2 = class MountedComponentsInfo {
   constructor() {
     this.targetInfo = _initializer13$6 && _initializer13$6();
     this.components = _initializer14$5 && _initializer14$5();
   }
   isTarget(localID) {
   }
-}, (_initializer13$6 = applyDecoratedInitializer(_class17$1.prototype, "targetInfo", [serializable$8, _dec17$2], function () {
+}, (_initializer13$6 = applyDecoratedInitializer(_class12$2.prototype, "targetInfo", [serializable$8, _dec17$2], function () {
   return null;
-}), _initializer14$5 = applyDecoratedInitializer(_class17$1.prototype, "components", [serializable$8, _dec18$2], function () {
+}), _initializer14$5 = applyDecoratedInitializer(_class12$2.prototype, "components", [serializable$8, _dec18$2], function () {
   return [];
-})), _class17$1)) || _class16$1);
-let PrefabInstance = (_dec19$2 = ccclass$9('cc.PrefabInstance'), _dec20$2 = type$5(Node$1), _dec21$2 = type$5([MountedChildrenInfo]), _dec22$2 = type$5([MountedComponentsInfo]), _dec23$2 = type$5([PropertyOverrideInfo]), _dec24$2 = type$5([TargetInfo]), _dec19$2(_class19$1 = (_class20$2 = class PrefabInstance {
+})), _class12$2)) || _class11$2);
+let PrefabInstance = (_dec19$2 = ccclass$9('cc.PrefabInstance'), _dec20$2 = type$5(Node$1), _dec21$2 = type$5([MountedChildrenInfo]), _dec22$2 = type$5([MountedComponentsInfo]), _dec23$2 = type$5([PropertyOverrideInfo]), _dec24$2 = type$5([TargetInfo]), _dec19$2(_class13$1 = (_class14$1 = class PrefabInstance {
   constructor() {
     this.fileId = _initializer15$4 && _initializer15$4();
     this.prefabRootNode = _initializer16$4 && _initializer16$4();
@@ -39014,18 +39014,18 @@ let PrefabInstance = (_dec19$2 = ccclass$9('cc.PrefabInstance'), _dec20$2 = type
   }
   removePropertyOverride(localID, propPath) {
   }
-}, (_initializer15$4 = applyDecoratedInitializer(_class20$2.prototype, "fileId", [serializable$8], function () {
+}, (_initializer15$4 = applyDecoratedInitializer(_class14$1.prototype, "fileId", [serializable$8], function () {
   return '';
-}), _initializer16$4 = applyDecoratedInitializer(_class20$2.prototype, "prefabRootNode", [serializable$8, _dec20$2], null), _initializer17$4 = applyDecoratedInitializer(_class20$2.prototype, "mountedChildren", [serializable$8, _dec21$2], function () {
+}), _initializer16$4 = applyDecoratedInitializer(_class14$1.prototype, "prefabRootNode", [serializable$8, _dec20$2], null), _initializer17$4 = applyDecoratedInitializer(_class14$1.prototype, "mountedChildren", [serializable$8, _dec21$2], function () {
   return [];
-}), _initializer18$4 = applyDecoratedInitializer(_class20$2.prototype, "mountedComponents", [serializable$8, _dec22$2], function () {
+}), _initializer18$4 = applyDecoratedInitializer(_class14$1.prototype, "mountedComponents", [serializable$8, _dec22$2], function () {
   return [];
-}), _initializer19$4 = applyDecoratedInitializer(_class20$2.prototype, "propertyOverrides", [serializable$8, _dec23$2], function () {
+}), _initializer19$4 = applyDecoratedInitializer(_class14$1.prototype, "propertyOverrides", [serializable$8, _dec23$2], function () {
   return [];
-}), _initializer20$3 = applyDecoratedInitializer(_class20$2.prototype, "removedComponents", [serializable$8, _dec24$2], function () {
+}), _initializer20$3 = applyDecoratedInitializer(_class14$1.prototype, "removedComponents", [serializable$8, _dec24$2], function () {
   return [];
-})), _class20$2)) || _class19$1);
-let PrefabInfo = (_dec25$2 = ccclass$9('cc.PrefabInfo'), _dec26$2 = type$5(Node$1), _dec27$2 = type$5(PrefabInstance), _dec28$2 = type$5([TargetOverrideInfo]), _dec25$2(_class22$1 = (_class23$1 = class PrefabInfo {
+})), _class14$1)) || _class13$1);
+let PrefabInfo = (_dec25$2 = ccclass$9('cc.PrefabInfo'), _dec26$2 = type$5(Node$1), _dec27$2 = type$5(PrefabInstance), _dec28$2 = type$5([TargetOverrideInfo]), _dec25$2(_class15$1 = (_class16$1 = class PrefabInfo {
   constructor() {
     this.root = _initializer21$3 && _initializer21$3();
     this.asset = _initializer22$2 && _initializer22$2();
@@ -39034,9 +39034,9 @@ let PrefabInfo = (_dec25$2 = ccclass$9('cc.PrefabInfo'), _dec26$2 = type$5(Node$
     this.targetOverrides = _initializer25$1 && _initializer25$1();
     this.nestedPrefabInstanceRoots = _initializer26$1 && _initializer26$1();
   }
-}, (_initializer21$3 = applyDecoratedInitializer(_class23$1.prototype, "root", [serializable$8, _dec26$2], null), _initializer22$2 = applyDecoratedInitializer(_class23$1.prototype, "asset", [serializable$8], null), _initializer23$1 = applyDecoratedInitializer(_class23$1.prototype, "fileId", [serializable$8], function () {
+}, (_initializer21$3 = applyDecoratedInitializer(_class16$1.prototype, "root", [serializable$8, _dec26$2], null), _initializer22$2 = applyDecoratedInitializer(_class16$1.prototype, "asset", [serializable$8], null), _initializer23$1 = applyDecoratedInitializer(_class16$1.prototype, "fileId", [serializable$8], function () {
   return '';
-}), _initializer24$1 = applyDecoratedInitializer(_class23$1.prototype, "instance", [serializable$8, _dec27$2], null), _initializer25$1 = applyDecoratedInitializer(_class23$1.prototype, "targetOverrides", [serializable$8, _dec28$2], null), _initializer26$1 = applyDecoratedInitializer(_class23$1.prototype, "nestedPrefabInstanceRoots", [serializable$8], null)), _class23$1)) || _class22$1);
+}), _initializer24$1 = applyDecoratedInitializer(_class16$1.prototype, "instance", [serializable$8, _dec27$2], null), _initializer25$1 = applyDecoratedInitializer(_class16$1.prototype, "targetOverrides", [serializable$8, _dec28$2], null), _initializer26$1 = applyDecoratedInitializer(_class16$1.prototype, "nestedPrefabInstanceRoots", [serializable$8], null)), _class16$1)) || _class15$1);
 cclegacy._PrefabInfo = PrefabInfo;
 
 function createNodeWithPrefab(node) {
@@ -39376,8 +39376,8 @@ var utils$1 = /*#__PURE__*/Object.freeze({
     getTarget: getTarget
 });
 
-var _dec$Y, _class$X, _class2$T, _initializer$N, _initializer2$A;
-let Scene = (_dec$Y = ccclass$9('cc.Scene'), _dec$Y(_class$X = (_class2$T = class Scene extends Node$1 {
+var _dec$Z, _class$_, _class2$N, _initializer$N, _initializer2$A;
+let Scene = (_dec$Z = ccclass$9('cc.Scene'), _dec$Z(_class$_ = (_class2$N = class Scene extends Node$1 {
   get renderScene() {
     return this._renderScene;
   }
@@ -39449,15 +39449,15 @@ let Scene = (_dec$Y = ccclass$9('cc.Scene'), _dec$Y(_class$X = (_class2$T = clas
       this._globals.activate(this);
     }
   }
-}, (_initializer$N = applyDecoratedInitializer(_class2$T.prototype, "autoReleaseAssets", [serializable$8], function () {
+}, (_initializer$N = applyDecoratedInitializer(_class2$N.prototype, "autoReleaseAssets", [serializable$8], function () {
   return false;
-}), _initializer2$A = applyDecoratedInitializer(_class2$T.prototype, "_globals", [serializable$8], function () {
+}), _initializer2$A = applyDecoratedInitializer(_class2$N.prototype, "_globals", [serializable$8], function () {
   return new SceneGlobals();
-})), _class2$T)) || _class$X);
+})), _class2$N)) || _class$_);
 legacyCC.Scene = Scene;
 
-var _dec$X, _class$W, _class2$S, _initializer$M;
-let SceneAsset = (_dec$X = ccclass$9('cc.SceneAsset'), _dec$X(_class$W = (_class2$S = class SceneAsset extends Asset {
+var _dec$Y, _class$Z, _class2$M, _initializer$M;
+let SceneAsset = (_dec$Y = ccclass$9('cc.SceneAsset'), _dec$Y(_class$Z = (_class2$M = class SceneAsset extends Asset {
   constructor(name) {
     super(name);
     this.scene = _initializer$M && _initializer$M();
@@ -39469,9 +39469,9 @@ let SceneAsset = (_dec$X = ccclass$9('cc.SceneAsset'), _dec$X(_class$W = (_class
   validate() {
     return !!this.scene;
   }
-}, (_initializer$M = applyDecoratedInitializer(_class2$S.prototype, "scene", [serializable$8], function () {
+}, (_initializer$M = applyDecoratedInitializer(_class2$M.prototype, "scene", [serializable$8], function () {
   return null;
-})), _class2$S)) || _class$W);
+})), _class2$M)) || _class$Z);
 cclegacy.SceneAsset = SceneAsset;
 
 const _mat4Trans = new Mat4();
@@ -42448,7 +42448,7 @@ markAsWarning(macro, 'macro', [{
   suggest: 'please use KeyCode instead'
 }]);
 
-var _dec$W, _class$V;
+var _dec$X, _class$Y;
 replaceProperty(Node$1.prototype, 'Node', [{
   name: 'childrenCount',
   newName: 'children.length',
@@ -42645,13 +42645,13 @@ removeProperty(Layers.BitMask, 'Layers.BitMask', [{
 }]);
 const HideInHierarchy = CCObjectFlags.HideInHierarchy;
 const DontSave = CCObjectFlags.DontSave;
-let PrivateNode = (_dec$W = ccclass$9('cc.PrivateNode'), _dec$W(_class$V = class PrivateNode extends Node$1 {
+let PrivateNode = (_dec$X = ccclass$9('cc.PrivateNode'), _dec$X(_class$Y = class PrivateNode extends Node$1 {
   constructor(name) {
     super(name);
     warnID(12003, this.name);
     this.hideFlags |= DontSave | HideInHierarchy;
   }
-}) || _class$V);
+}) || _class$Y);
 replaceProperty(SystemEventType, 'SystemEventType', ['MOUSE_ENTER', 'MOUSE_LEAVE', 'TRANSFORM_CHANGED', 'SCENE_CHANGED_FOR_PERSISTS', 'SIZE_CHANGED', 'ANCHOR_CHANGED', 'COLOR_CHANGED', 'CHILD_ADDED', 'CHILD_REMOVED', 'PARENT_CHANGED', 'NODE_DESTROYED', 'LAYER_CHANGED', 'SIBLING_ORDER_CHANGED'].map(name => ({
   name,
   target: Node$1.EventType,
@@ -43516,13 +43516,13 @@ function compile(node) {
   return parser.result;
 }
 
-var _dec$V, _class$U, _class2$R, _initializer$L, _initializer2$z, _initializer3$n, _class3$e;
+var _dec$W, _class$X, _class2$L, _initializer$L, _initializer2$z, _initializer3$n, _Prefab;
 const OptimizationPolicy = Enum({
   AUTO: 0,
   SINGLE_INSTANCE: 1,
   MULTI_INSTANCE: 2
 });
-let Prefab = (_dec$V = ccclass$9('cc.Prefab'), _dec$V(_class$U = (_class2$R = (_class3$e = class Prefab extends Asset {
+let Prefab = (_dec$W = ccclass$9('cc.Prefab'), _dec$W(_class$X = (_class2$L = (_Prefab = class Prefab extends Asset {
   constructor() {
     super();
     this.data = _initializer$L && _initializer$L();
@@ -43588,13 +43588,13 @@ let Prefab = (_dec$V = ccclass$9('cc.Prefab'), _dec$V(_class$U = (_class2$R = (_
     expandNestedPrefabInstanceNode(rootNode);
     applyTargetOverrides(rootNode);
   }
-}, _class3$e.OptimizationPolicy = OptimizationPolicy, _class3$e.OptimizationPolicyThreshold = 3, _class3$e), (_initializer$L = applyDecoratedInitializer(_class2$R.prototype, "data", [serializable$8], function () {
+}, _Prefab.OptimizationPolicy = OptimizationPolicy, _Prefab.OptimizationPolicyThreshold = 3, _Prefab), (_initializer$L = applyDecoratedInitializer(_class2$L.prototype, "data", [serializable$8], function () {
   return null;
-}), _initializer2$z = applyDecoratedInitializer(_class2$R.prototype, "optimizationPolicy", [serializable$8], function () {
+}), _initializer2$z = applyDecoratedInitializer(_class2$L.prototype, "optimizationPolicy", [serializable$8], function () {
   return OptimizationPolicy.AUTO;
-}), _initializer3$n = applyDecoratedInitializer(_class2$R.prototype, "persistent", [serializable$8], function () {
+}), _initializer3$n = applyDecoratedInitializer(_class2$L.prototype, "persistent", [serializable$8], function () {
   return false;
-})), _class2$R)) || _class$U);
+})), _class2$L)) || _class$X);
 value(Prefab, '_utils', utils$1);
 legacyCC.Prefab = Prefab;
 {
@@ -43818,8 +43818,8 @@ intersect.rayModel = rayModel;
 intersect.raySubMesh = raySubMesh;
 intersect.rayMesh = rayMesh;
 
-var _dec$U, _class$T, _class2$Q, _initializer$K, _initializer2$y, _initializer3$m, _class3$d;
-let PostProcess = (_dec$U = ccclass$9('cc.PostProcess'), _dec$U(_class$T = disallowMultiple$1(_class$T = (_class2$Q = (_class3$d = class PostProcess extends Component {
+var _dec$V, _class$W, _class2$K, _initializer$K, _initializer2$y, _initializer3$m, _PostProcess;
+let PostProcess = (_dec$V = ccclass$9('cc.PostProcess'), _dec$V(_class$W = disallowMultiple$1(_class$W = (_class2$K = (_PostProcess = class PostProcess extends Component {
   constructor() {
     super();
     this.global = _initializer$K && _initializer$K();
@@ -43851,15 +43851,15 @@ let PostProcess = (_dec$U = ccclass$9('cc.PostProcess'), _dec$U(_class$T = disal
       PostProcess.all.splice(idx, 1);
     }
   }
-}, _class3$d.all = [], _class3$d), (_initializer$K = applyDecoratedInitializer(_class2$Q.prototype, "global", [property$3, serializable$8], function () {
+}, _PostProcess.all = [], _PostProcess), (_initializer$K = applyDecoratedInitializer(_class2$K.prototype, "global", [property$3, serializable$8], function () {
   return true;
-}), _initializer2$y = applyDecoratedInitializer(_class2$Q.prototype, "_shadingScale", [serializable$8], function () {
+}), _initializer2$y = applyDecoratedInitializer(_class2$K.prototype, "_shadingScale", [serializable$8], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$Q.prototype, "shadingScale", [property$3], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "shadingScale"), _class2$Q.prototype), _initializer3$m = applyDecoratedInitializer(_class2$Q.prototype, "enableShadingScaleInEditor", [property$3, serializable$8], function () {
+}), _applyDecoratedDescriptor(_class2$K.prototype, "shadingScale", [property$3], Object.getOwnPropertyDescriptor(_class2$K.prototype, "shadingScale"), _class2$K.prototype), _initializer3$m = applyDecoratedInitializer(_class2$K.prototype, "enableShadingScaleInEditor", [property$3, serializable$8], function () {
   return false;
-})), _class2$Q)) || _class$T) || _class$T);
+})), _class2$K)) || _class$W) || _class$W);
 
-var _dec$T, _dec2$z, _dec3$l, _dec4$f, _dec5$e, _dec6$c, _dec7$9, _dec8$7, _dec9$6, _dec10$5, _class$S, _class2$P, _initializer$J, _initializer2$x, _initializer3$l, _initializer4$h, _initializer5$d, _initializer6$b, _initializer7$9, _initializer8$9, _initializer9$8, _initializer10$7, _initializer11$6, _initializer12$5, _initializer13$5, _initializer14$4, _initializer15$3, _initializer16$3, _initializer17$3, _initializer18$3, _initializer19$3, _initializer20$2, _initializer21$2, _initializer22$1, _class3$c;
+var _dec$U, _dec2$z, _dec3$l, _dec4$f, _dec5$e, _dec6$c, _dec7$9, _dec8$7, _dec9$6, _dec10$5, _class$V, _class2$J, _initializer$J, _initializer2$x, _initializer3$l, _initializer4$h, _initializer5$d, _initializer6$b, _initializer7$9, _initializer8$9, _initializer9$8, _initializer10$7, _initializer11$6, _initializer12$5, _initializer13$5, _initializer14$4, _initializer15$3, _initializer16$3, _initializer17$3, _initializer18$3, _initializer19$3, _initializer20$2, _initializer21$2, _initializer22$1, _Camera;
 const _temp_vec3_1 = new Vec3();
 const ProjectionType = Enum(CameraProjection);
 const FOVAxis = Enum(CameraFOVAxis);
@@ -43877,7 +43877,7 @@ let CameraEvent;
 (function (CameraEvent) {
   CameraEvent["TARGET_TEXTURE_CHANGE"] = "tex-change";
 })(CameraEvent || (CameraEvent = {}));
-let Camera = (_dec$T = ccclass$9('cc.Camera'), _dec2$z = type$5(Layers.BitMask), _dec3$l = type$5(ClearFlag), _dec4$f = type$5(ProjectionType), _dec5$e = type$5(FOVAxis), _dec6$c = type$5(Aperture), _dec7$9 = type$5(Shutter), _dec8$7 = type$5(ISO), _dec9$6 = type$5(RenderTexture), _dec10$5 = type$5(PostProcess), _dec$T(_class$S = (_class2$P = (_class3$c = class Camera extends Component {
+let Camera = (_dec$U = ccclass$9('cc.Camera'), _dec2$z = type$5(Layers.BitMask), _dec3$l = type$5(ClearFlag), _dec4$f = type$5(ProjectionType), _dec5$e = type$5(FOVAxis), _dec6$c = type$5(Aperture), _dec7$9 = type$5(Shutter), _dec8$7 = type$5(ISO), _dec9$6 = type$5(RenderTexture), _dec10$5 = type$5(PostProcess), _dec$U(_class$V = (_class2$J = (_Camera = class Camera extends Component {
   constructor() {
     super();
     this._projection = _initializer$J && _initializer$J();
@@ -44278,54 +44278,54 @@ let Camera = (_dec$T = ccclass$9('cc.Camera'), _dec2$z = type$5(Layers.BitMask),
       this._camera.setFixedSize(window.width, window.height);
     }
   }
-}, _class3$c.ProjectionType = ProjectionType, _class3$c.FOVAxis = FOVAxis, _class3$c.ClearFlag = ClearFlag, _class3$c.Aperture = Aperture, _class3$c.Shutter = Shutter, _class3$c.ISO = ISO, _class3$c.TARGET_TEXTURE_CHANGE = CameraEvent.TARGET_TEXTURE_CHANGE, _class3$c), (_initializer$J = applyDecoratedInitializer(_class2$P.prototype, "_projection", [serializable$8], function () {
+}, _Camera.ProjectionType = ProjectionType, _Camera.FOVAxis = FOVAxis, _Camera.ClearFlag = ClearFlag, _Camera.Aperture = Aperture, _Camera.Shutter = Shutter, _Camera.ISO = ISO, _Camera.TARGET_TEXTURE_CHANGE = CameraEvent.TARGET_TEXTURE_CHANGE, _Camera), (_initializer$J = applyDecoratedInitializer(_class2$J.prototype, "_projection", [serializable$8], function () {
   return ProjectionType.PERSPECTIVE;
-}), _initializer2$x = applyDecoratedInitializer(_class2$P.prototype, "_priority", [serializable$8], function () {
+}), _initializer2$x = applyDecoratedInitializer(_class2$J.prototype, "_priority", [serializable$8], function () {
   return 0;
-}), _initializer3$l = applyDecoratedInitializer(_class2$P.prototype, "_fov", [serializable$8], function () {
+}), _initializer3$l = applyDecoratedInitializer(_class2$J.prototype, "_fov", [serializable$8], function () {
   return 45;
-}), _initializer4$h = applyDecoratedInitializer(_class2$P.prototype, "_fovAxis", [serializable$8], function () {
+}), _initializer4$h = applyDecoratedInitializer(_class2$J.prototype, "_fovAxis", [serializable$8], function () {
   return FOVAxis.VERTICAL;
-}), _initializer5$d = applyDecoratedInitializer(_class2$P.prototype, "_orthoHeight", [serializable$8], function () {
+}), _initializer5$d = applyDecoratedInitializer(_class2$J.prototype, "_orthoHeight", [serializable$8], function () {
   return 10;
-}), _initializer6$b = applyDecoratedInitializer(_class2$P.prototype, "_near", [serializable$8], function () {
+}), _initializer6$b = applyDecoratedInitializer(_class2$J.prototype, "_near", [serializable$8], function () {
   return 1;
-}), _initializer7$9 = applyDecoratedInitializer(_class2$P.prototype, "_far", [serializable$8], function () {
+}), _initializer7$9 = applyDecoratedInitializer(_class2$J.prototype, "_far", [serializable$8], function () {
   return 1000;
-}), _initializer8$9 = applyDecoratedInitializer(_class2$P.prototype, "_color", [serializable$8], function () {
+}), _initializer8$9 = applyDecoratedInitializer(_class2$J.prototype, "_color", [serializable$8], function () {
   return new Color('#333333');
-}), _initializer9$8 = applyDecoratedInitializer(_class2$P.prototype, "_depth", [serializable$8], function () {
+}), _initializer9$8 = applyDecoratedInitializer(_class2$J.prototype, "_depth", [serializable$8], function () {
   return 1;
-}), _initializer10$7 = applyDecoratedInitializer(_class2$P.prototype, "_stencil", [serializable$8], function () {
+}), _initializer10$7 = applyDecoratedInitializer(_class2$J.prototype, "_stencil", [serializable$8], function () {
   return 0;
-}), _initializer11$6 = applyDecoratedInitializer(_class2$P.prototype, "_clearFlags", [serializable$8], function () {
+}), _initializer11$6 = applyDecoratedInitializer(_class2$J.prototype, "_clearFlags", [serializable$8], function () {
   return ClearFlag.SOLID_COLOR;
-}), _initializer12$5 = applyDecoratedInitializer(_class2$P.prototype, "_rect", [serializable$8], function () {
+}), _initializer12$5 = applyDecoratedInitializer(_class2$J.prototype, "_rect", [serializable$8], function () {
   return new Rect(0, 0, 1, 1);
-}), _initializer13$5 = applyDecoratedInitializer(_class2$P.prototype, "_aperture", [serializable$8], function () {
+}), _initializer13$5 = applyDecoratedInitializer(_class2$J.prototype, "_aperture", [serializable$8], function () {
   return Aperture.F16_0;
-}), _initializer14$4 = applyDecoratedInitializer(_class2$P.prototype, "_shutter", [serializable$8], function () {
+}), _initializer14$4 = applyDecoratedInitializer(_class2$J.prototype, "_shutter", [serializable$8], function () {
   return Shutter.D125;
-}), _initializer15$3 = applyDecoratedInitializer(_class2$P.prototype, "_iso", [serializable$8], function () {
+}), _initializer15$3 = applyDecoratedInitializer(_class2$J.prototype, "_iso", [serializable$8], function () {
   return ISO.ISO100;
-}), _initializer16$3 = applyDecoratedInitializer(_class2$P.prototype, "_screenScale", [serializable$8], function () {
+}), _initializer16$3 = applyDecoratedInitializer(_class2$J.prototype, "_screenScale", [serializable$8], function () {
   return 1;
-}), _initializer17$3 = applyDecoratedInitializer(_class2$P.prototype, "_visibility", [serializable$8], function () {
+}), _initializer17$3 = applyDecoratedInitializer(_class2$J.prototype, "_visibility", [serializable$8], function () {
   return CAMERA_DEFAULT_MASK;
-}), _initializer18$3 = applyDecoratedInitializer(_class2$P.prototype, "_targetTexture", [serializable$8], function () {
+}), _initializer18$3 = applyDecoratedInitializer(_class2$J.prototype, "_targetTexture", [serializable$8], function () {
   return null;
-}), _initializer19$3 = applyDecoratedInitializer(_class2$P.prototype, "_postProcess", [serializable$8], function () {
+}), _initializer19$3 = applyDecoratedInitializer(_class2$J.prototype, "_postProcess", [serializable$8], function () {
   return null;
-}), _initializer20$2 = applyDecoratedInitializer(_class2$P.prototype, "_usePostProcess", [serializable$8], function () {
+}), _initializer20$2 = applyDecoratedInitializer(_class2$J.prototype, "_usePostProcess", [serializable$8], function () {
   return false;
-}), _initializer21$2 = applyDecoratedInitializer(_class2$P.prototype, "_cameraType", [serializable$8], function () {
+}), _initializer21$2 = applyDecoratedInitializer(_class2$J.prototype, "_cameraType", [serializable$8], function () {
   return CameraType.DEFAULT;
-}), _initializer22$1 = applyDecoratedInitializer(_class2$P.prototype, "_trackingType", [serializable$8], function () {
+}), _initializer22$1 = applyDecoratedInitializer(_class2$J.prototype, "_trackingType", [serializable$8], function () {
   return TrackingType.NO_TRACKING;
-}), _applyDecoratedDescriptor(_class2$P.prototype, "visibility", [_dec2$z], Object.getOwnPropertyDescriptor(_class2$P.prototype, "visibility"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "clearFlags", [_dec3$l], Object.getOwnPropertyDescriptor(_class2$P.prototype, "clearFlags"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "projection", [_dec4$f], Object.getOwnPropertyDescriptor(_class2$P.prototype, "projection"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "fovAxis", [_dec5$e], Object.getOwnPropertyDescriptor(_class2$P.prototype, "fovAxis"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "aperture", [_dec6$c], Object.getOwnPropertyDescriptor(_class2$P.prototype, "aperture"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "shutter", [_dec7$9], Object.getOwnPropertyDescriptor(_class2$P.prototype, "shutter"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "iso", [_dec8$7], Object.getOwnPropertyDescriptor(_class2$P.prototype, "iso"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "targetTexture", [_dec9$6], Object.getOwnPropertyDescriptor(_class2$P.prototype, "targetTexture"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$P.prototype, "usePostProcess"), _class2$P.prototype), _applyDecoratedDescriptor(_class2$P.prototype, "postProcess", [_dec10$5], Object.getOwnPropertyDescriptor(_class2$P.prototype, "postProcess"), _class2$P.prototype)), _class2$P)) || _class$S);
+}), _applyDecoratedDescriptor(_class2$J.prototype, "visibility", [_dec2$z], Object.getOwnPropertyDescriptor(_class2$J.prototype, "visibility"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "clearFlags", [_dec3$l], Object.getOwnPropertyDescriptor(_class2$J.prototype, "clearFlags"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "projection", [_dec4$f], Object.getOwnPropertyDescriptor(_class2$J.prototype, "projection"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "fovAxis", [_dec5$e], Object.getOwnPropertyDescriptor(_class2$J.prototype, "fovAxis"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "aperture", [_dec6$c], Object.getOwnPropertyDescriptor(_class2$J.prototype, "aperture"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "shutter", [_dec7$9], Object.getOwnPropertyDescriptor(_class2$J.prototype, "shutter"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "iso", [_dec8$7], Object.getOwnPropertyDescriptor(_class2$J.prototype, "iso"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "targetTexture", [_dec9$6], Object.getOwnPropertyDescriptor(_class2$J.prototype, "targetTexture"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$J.prototype, "usePostProcess"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "postProcess", [_dec10$5], Object.getOwnPropertyDescriptor(_class2$J.prototype, "postProcess"), _class2$J.prototype)), _class2$J)) || _class$V);
 cclegacy.Camera = Camera;
 
-var _dec$S, _dec2$y, _dec3$k, _class$R, _class2$O, _initializer$I;
+var _dec$T, _dec2$y, _dec3$k, _class$U, _class2$I, _initializer$I;
 const _matInsInfo = {
   parent: null,
   owner: null,
@@ -44339,7 +44339,7 @@ const {
   displayOrder: displayOrder$1,
   displayName
 } = _decorator;
-let Renderer = (_dec$S = ccclass$7('cc.Renderer'), _dec2$y = type$4(Material), _dec3$k = type$4([Material]), _dec$S(_class$R = disallowMultiple(_class$R = (_class2$O = class Renderer extends Component {
+let Renderer = (_dec$T = ccclass$7('cc.Renderer'), _dec2$y = type$4(Material), _dec3$k = type$4([Material]), _dec$T(_class$U = disallowMultiple(_class$U = (_class2$I = class Renderer extends Component {
   constructor() {
     super();
     this._materials = _initializer$I && _initializer$I();
@@ -44464,13 +44464,13 @@ let Renderer = (_dec$S = ccclass$7('cc.Renderer'), _dec2$y = type$4(Material), _
   }
   _clearMaterials() {
   }
-}, (_applyDecoratedDescriptor(_class2$O.prototype, "sharedMaterials", [_dec2$y], Object.getOwnPropertyDescriptor(_class2$O.prototype, "sharedMaterials"), _class2$O.prototype), _initializer$I = applyDecoratedInitializer(_class2$O.prototype, "_materials", [_dec3$k], function () {
+}, (_applyDecoratedDescriptor(_class2$I.prototype, "sharedMaterials", [_dec2$y], Object.getOwnPropertyDescriptor(_class2$I.prototype, "sharedMaterials"), _class2$I.prototype), _initializer$I = applyDecoratedInitializer(_class2$I.prototype, "_materials", [_dec3$k], function () {
   return [];
-})), _class2$O)) || _class$R) || _class$R);
+})), _class2$I)) || _class$U) || _class$U);
 
-var _dec$R, _class$Q, _class2$N, _initializer$H;
+var _dec$S, _class$T, _class2$H, _initializer$H;
 getPhaseID$1('specular-pass');
-let ModelRenderer = (_dec$R = ccclass$9('cc.ModelRenderer'), _dec$R(_class$Q = (_class2$N = class ModelRenderer extends Renderer {
+let ModelRenderer = (_dec$S = ccclass$9('cc.ModelRenderer'), _dec$S(_class$T = (_class2$H = class ModelRenderer extends Renderer {
   constructor() {
     super();
     this._visFlags = _initializer$H && _initializer$H();
@@ -44508,33 +44508,33 @@ let ModelRenderer = (_dec$R = ccclass$9('cc.ModelRenderer'), _dec$R(_class$Q = (
       }
     }
   }
-}, (_initializer$H = applyDecoratedInitializer(_class2$N.prototype, "_visFlags", [serializable$8], function () {
+}, (_initializer$H = applyDecoratedInitializer(_class2$H.prototype, "_visFlags", [serializable$8], function () {
   return Layers.Enum.NONE;
-})), _class2$N)) || _class$Q);
+})), _class2$H)) || _class$T);
 
-var _dec$Q, _dec2$x, _class$P, _class2$M, _initializer$G;
+var _dec$R, _dec2$x, _class$S, _class2$G, _initializer$G;
 const {
   ccclass: ccclass$6,
   serializable: serializable$5,
   type: type$3,
   visible: visible$3
 } = _decorator;
-let PrefabLink = (_dec$Q = ccclass$6('cc.PrefabLink'), _dec2$x = type$3(Prefab), _dec$Q(_class$P = (_class2$M = class PrefabLink extends Component {
+let PrefabLink = (_dec$R = ccclass$6('cc.PrefabLink'), _dec2$x = type$3(Prefab), _dec$R(_class$S = (_class2$G = class PrefabLink extends Component {
   constructor() {
     super();
     this.prefab = _initializer$G && _initializer$G();
   }
-}, (_initializer$G = applyDecoratedInitializer(_class2$M.prototype, "prefab", [_dec2$x, serializable$5], function () {
+}, (_initializer$G = applyDecoratedInitializer(_class2$G.prototype, "prefab", [_dec2$x, serializable$5], function () {
   return null;
-})), _class2$M)) || _class$P);
+})), _class2$G)) || _class$S);
 
-var _dec$P, _dec2$w, _class$O;
+var _dec$Q, _dec2$w, _class$R;
 const {
   ccclass: ccclass$5,
   menu: menu$3,
   executionOrder: executionOrder$1
 } = _decorator;
-let FeedStatusController = (_dec$P = ccclass$5('FeedStatusController'), _dec2$w = executionOrder$1(90), _dec$P(_class$O = _dec2$w(_class$O = class FeedStatusController extends Component {
+let FeedStatusController = (_dec$Q = ccclass$5('FeedStatusController'), _dec2$w = executionOrder$1(90), _dec$Q(_class$R = _dec2$w(_class$R = class FeedStatusController extends Component {
   constructor() {
     super();
   }
@@ -44549,7 +44549,7 @@ let FeedStatusController = (_dec$P = ccclass$5('FeedStatusController'), _dec2$w 
       minigame.offFeedStatusChange(this.feedStatusChangeCallBack);
     }
   }
-}) || _class$O) || _class$O);
+}) || _class$R) || _class$R);
 
 replaceProperty(Camera, 'Camera', [{
   name: 'CameraClearFlag',
@@ -48604,7 +48604,7 @@ _p.Inflate = _p["Inflate"];
 _p.Inflate.BufferType = _p.Inflate["BufferType"];
 _p.Inflate.prototype.decompress = _p.Inflate.prototype["decompress"];
 
-var _dec$O, _class$N, _class2$L, _initializer$F, _initializer2$w, _initializer3$k;
+var _dec$P, _class$Q, _class2$F, _initializer$F, _initializer2$w, _initializer3$k;
 const vec3Add = Vec3.add;
 const vec3MultiplyScalar = Vec3.multiplyScalar;
 const vec3Subtract = Vec3.subtract;
@@ -48629,7 +48629,7 @@ function getIndexStrideCtor(stride) {
 const v3_1$3 = new Vec3();
 const v3_2$1 = new Vec3();
 const globalEmptyMeshBuffer = new Uint8Array();
-let Mesh = (_dec$O = ccclass$9('cc.Mesh'), _dec$O(_class$N = (_class2$L = class Mesh extends Asset {
+let Mesh = (_dec$P = ccclass$9('cc.Mesh'), _dec$P(_class$Q = (_class2$F = class Mesh extends Asset {
   get _nativeAsset() {
     return this._data.buffer;
   }
@@ -49415,16 +49415,16 @@ let Mesh = (_dec$O = ccclass$9('cc.Mesh'), _dec$O(_class$N = (_class2$L = class 
   releaseData() {
     this._data = globalEmptyMeshBuffer;
   }
-}, (_initializer$F = applyDecoratedInitializer(_class2$L.prototype, "_struct", [serializable$8], function () {
+}, (_initializer$F = applyDecoratedInitializer(_class2$F.prototype, "_struct", [serializable$8], function () {
   return {
     vertexBundles: [],
     primitives: []
   };
-}), _initializer2$w = applyDecoratedInitializer(_class2$L.prototype, "_hash", [serializable$8], function () {
+}), _initializer2$w = applyDecoratedInitializer(_class2$F.prototype, "_hash", [serializable$8], function () {
   return 0;
-}), _initializer3$k = applyDecoratedInitializer(_class2$L.prototype, "_allowDataAccess", [serializable$8], function () {
+}), _initializer3$k = applyDecoratedInitializer(_class2$F.prototype, "_allowDataAccess", [serializable$8], function () {
   return true;
-})), _class2$L)) || _class$N);
+})), _class2$F)) || _class$Q);
 cclegacy.Mesh = Mesh;
 function getOffset(attributes, attributeIndex) {
   let result = 0;
@@ -50113,7 +50113,7 @@ class MorphModel extends Model {
   }
 }
 
-var _dec$N, _dec2$v, _dec3$j, _dec4$e, _dec5$d, _dec6$b, _dec7$8, _class$M, _class2$K, _initializer$E, _initializer2$v, _initializer3$j, _initializer4$g, _initializer5$c, _initializer6$a, _initializer7$8, _initializer8$8, _initializer9$7, _initializer10$6, _class3$b, _dec8$6, _dec9$5, _dec10$4, _dec11$3, _dec12$3, _dec13$2, _dec14$2, _dec15$2, _class4$e, _class5$c, _initializer11$5, _initializer12$4, _initializer13$4, _initializer14$3, _initializer15$2, _initializer16$2, _initializer17$2, _initializer18$2, _initializer19$2, _initializer20$1, _initializer21$1, _class6$3;
+var _dec$O, _dec2$v, _dec3$j, _dec4$e, _dec5$d, _dec6$b, _dec7$8, _class$P, _class2$E, _initializer$E, _initializer2$v, _initializer3$j, _initializer4$g, _initializer5$c, _initializer6$a, _initializer7$8, _initializer8$8, _initializer9$7, _initializer10$6, _ModelBakeSettings, _dec8$6, _dec9$5, _dec10$4, _dec11$3, _dec12$3, _dec13$2, _dec14$2, _dec15$2, _class3$c, _class4$c, _initializer11$5, _initializer12$4, _initializer13$4, _initializer14$3, _initializer15$2, _initializer16$2, _initializer17$2, _initializer18$2, _initializer19$2, _initializer20$1, _initializer21$1, _MeshRenderer;
 const {
   ccclass: ccclass$4,
   help: help$2,
@@ -50153,7 +50153,7 @@ var ModelBakeSettingsEvent;
   ModelBakeSettingsEvent["REFLECTION_PROBE_CHANGED"] = "reflection_probe_changed";
   ModelBakeSettingsEvent["BAKE_TO_REFLECTION_PROBE_CHANGED"] = "bake_to_reflection_probe_changed";
 })(ModelBakeSettingsEvent || (ModelBakeSettingsEvent = {}));
-let ModelBakeSettings = (_dec$N = ccclass$4('cc.ModelBakeSettings'), _dec2$v = formerlySerializedAs$2('_recieveShadow'), _dec3$j = type$2(CCInteger), _dec4$e = type$2(CCBoolean), _dec5$d = type$2(CCBoolean), _dec6$b = type$2(Enum(ReflectionProbeType)), _dec7$8 = type$2(CCBoolean), _dec$N(_class$M = (_class2$K = (_class3$b = class ModelBakeSettings extends EventTarget {
+let ModelBakeSettings = (_dec$O = ccclass$4('cc.ModelBakeSettings'), _dec2$v = formerlySerializedAs$2('_recieveShadow'), _dec3$j = type$2(CCInteger), _dec4$e = type$2(CCBoolean), _dec5$d = type$2(CCBoolean), _dec6$b = type$2(Enum(ReflectionProbeType)), _dec7$8 = type$2(CCBoolean), _dec$O(_class$P = (_class2$E = (_ModelBakeSettings = class ModelBakeSettings extends EventTarget {
   constructor() {
     super();
     this.texture = _initializer$E && _initializer$E();
@@ -50221,28 +50221,28 @@ let ModelBakeSettings = (_dec$N = ccclass$4('cc.ModelBakeSettings'), _dec2$v = f
     this._bakeToReflectionProbe = val;
     this.emit(ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED);
   }
-}, _class3$b.USE_LIGHT_PROBE_CHANGED = ModelBakeSettingsEvent.USE_LIGHT_PROBE_CHANGED, _class3$b.REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.REFLECTION_PROBE_CHANGED, _class3$b.BAKE_TO_REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED, _class3$b), (_initializer$E = applyDecoratedInitializer(_class2$K.prototype, "texture", [serializable$4], function () {
+}, _ModelBakeSettings.USE_LIGHT_PROBE_CHANGED = ModelBakeSettingsEvent.USE_LIGHT_PROBE_CHANGED, _ModelBakeSettings.REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.REFLECTION_PROBE_CHANGED, _ModelBakeSettings.BAKE_TO_REFLECTION_PROBE_CHANGED = ModelBakeSettingsEvent.BAKE_TO_REFLECTION_PROBE_CHANGED, _ModelBakeSettings), (_initializer$E = applyDecoratedInitializer(_class2$E.prototype, "texture", [serializable$4], function () {
   return null;
-}), _initializer2$v = applyDecoratedInitializer(_class2$K.prototype, "uvParam", [serializable$4], function () {
+}), _initializer2$v = applyDecoratedInitializer(_class2$E.prototype, "uvParam", [serializable$4], function () {
   return new Vec4();
-}), _initializer3$j = applyDecoratedInitializer(_class2$K.prototype, "_bakeable", [serializable$4], function () {
+}), _initializer3$j = applyDecoratedInitializer(_class2$E.prototype, "_bakeable", [serializable$4], function () {
   return false;
-}), _initializer4$g = applyDecoratedInitializer(_class2$K.prototype, "_castShadow", [serializable$4], function () {
+}), _initializer4$g = applyDecoratedInitializer(_class2$E.prototype, "_castShadow", [serializable$4], function () {
   return false;
-}), _initializer5$c = applyDecoratedInitializer(_class2$K.prototype, "_receiveShadow", [_dec2$v], function () {
+}), _initializer5$c = applyDecoratedInitializer(_class2$E.prototype, "_receiveShadow", [_dec2$v], function () {
   return false;
-}), _initializer6$a = applyDecoratedInitializer(_class2$K.prototype, "_lightmapSize", [serializable$4], function () {
+}), _initializer6$a = applyDecoratedInitializer(_class2$E.prototype, "_lightmapSize", [serializable$4], function () {
   return 64;
-}), _initializer7$8 = applyDecoratedInitializer(_class2$K.prototype, "_useLightProbe", [serializable$4], function () {
+}), _initializer7$8 = applyDecoratedInitializer(_class2$E.prototype, "_useLightProbe", [serializable$4], function () {
   return false;
-}), _initializer8$8 = applyDecoratedInitializer(_class2$K.prototype, "_bakeToLightProbe", [serializable$4], function () {
+}), _initializer8$8 = applyDecoratedInitializer(_class2$E.prototype, "_bakeToLightProbe", [serializable$4], function () {
   return true;
-}), _initializer9$7 = applyDecoratedInitializer(_class2$K.prototype, "_reflectionProbeType", [serializable$4], function () {
+}), _initializer9$7 = applyDecoratedInitializer(_class2$E.prototype, "_reflectionProbeType", [serializable$4], function () {
   return ReflectionProbeType.NONE;
-}), _initializer10$6 = applyDecoratedInitializer(_class2$K.prototype, "_bakeToReflectionProbe", [serializable$4], function () {
+}), _initializer10$6 = applyDecoratedInitializer(_class2$E.prototype, "_bakeToReflectionProbe", [serializable$4], function () {
   return true;
-}), _applyDecoratedDescriptor(_class2$K.prototype, "lightmapSize", [_dec3$j], Object.getOwnPropertyDescriptor(_class2$K.prototype, "lightmapSize"), _class2$K.prototype), _applyDecoratedDescriptor(_class2$K.prototype, "useLightProbe", [_dec4$e], Object.getOwnPropertyDescriptor(_class2$K.prototype, "useLightProbe"), _class2$K.prototype), _applyDecoratedDescriptor(_class2$K.prototype, "bakeToLightProbe", [_dec5$d], Object.getOwnPropertyDescriptor(_class2$K.prototype, "bakeToLightProbe"), _class2$K.prototype), _applyDecoratedDescriptor(_class2$K.prototype, "reflectionProbe", [_dec6$b], Object.getOwnPropertyDescriptor(_class2$K.prototype, "reflectionProbe"), _class2$K.prototype), _applyDecoratedDescriptor(_class2$K.prototype, "bakeToReflectionProbe", [_dec7$8], Object.getOwnPropertyDescriptor(_class2$K.prototype, "bakeToReflectionProbe"), _class2$K.prototype)), _class2$K)) || _class$M);
-let MeshRenderer = (_dec8$6 = ccclass$4('cc.MeshRenderer'), _dec9$5 = executionOrder(100), _dec10$4 = type$2(CCFloat), _dec11$3 = type$2(CCFloat), _dec12$3 = type$2(ModelShadowCastingMode), _dec13$2 = type$2(ModelShadowReceivingMode), _dec14$2 = type$2(Mesh), _dec15$2 = type$2(CCBoolean), _dec8$6(_class4$e = _dec9$5(_class4$e = (_class5$c = (_class6$3 = class MeshRenderer extends ModelRenderer {
+}), _applyDecoratedDescriptor(_class2$E.prototype, "lightmapSize", [_dec3$j], Object.getOwnPropertyDescriptor(_class2$E.prototype, "lightmapSize"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "useLightProbe", [_dec4$e], Object.getOwnPropertyDescriptor(_class2$E.prototype, "useLightProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "bakeToLightProbe", [_dec5$d], Object.getOwnPropertyDescriptor(_class2$E.prototype, "bakeToLightProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "reflectionProbe", [_dec6$b], Object.getOwnPropertyDescriptor(_class2$E.prototype, "reflectionProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "bakeToReflectionProbe", [_dec7$8], Object.getOwnPropertyDescriptor(_class2$E.prototype, "bakeToReflectionProbe"), _class2$E.prototype)), _class2$E)) || _class$P);
+let MeshRenderer = (_dec8$6 = ccclass$4('cc.MeshRenderer'), _dec9$5 = executionOrder(100), _dec10$4 = type$2(CCFloat), _dec11$3 = type$2(CCFloat), _dec12$3 = type$2(ModelShadowCastingMode), _dec13$2 = type$2(ModelShadowReceivingMode), _dec14$2 = type$2(Mesh), _dec15$2 = type$2(CCBoolean), _dec8$6(_class3$c = _dec9$5(_class3$c = (_class4$c = (_MeshRenderer = class MeshRenderer extends ModelRenderer {
   get shadowBias() {
     return this._shadowBias;
   }
@@ -50966,29 +50966,29 @@ let MeshRenderer = (_dec8$6 = ccclass$4('cc.MeshRenderer'), _dec9$5 = executionO
       }
     }
   }
-}, _class6$3.ShadowCastingMode = ModelShadowCastingMode, _class6$3.ShadowReceivingMode = ModelShadowReceivingMode, _class6$3), (_initializer11$5 = applyDecoratedInitializer(_class5$c.prototype, "bakeSettings", [serializable$4], function () {
+}, _MeshRenderer.ShadowCastingMode = ModelShadowCastingMode, _MeshRenderer.ShadowReceivingMode = ModelShadowReceivingMode, _MeshRenderer), (_initializer11$5 = applyDecoratedInitializer(_class4$c.prototype, "bakeSettings", [serializable$4], function () {
   return new ModelBakeSettings();
-}), _initializer12$4 = applyDecoratedInitializer(_class5$c.prototype, "_mesh", [serializable$4], function () {
+}), _initializer12$4 = applyDecoratedInitializer(_class4$c.prototype, "_mesh", [serializable$4], function () {
   return null;
-}), _initializer13$4 = applyDecoratedInitializer(_class5$c.prototype, "_shadowCastingMode", [serializable$4], function () {
+}), _initializer13$4 = applyDecoratedInitializer(_class4$c.prototype, "_shadowCastingMode", [serializable$4], function () {
   return ModelShadowCastingMode.OFF;
-}), _initializer14$3 = applyDecoratedInitializer(_class5$c.prototype, "_shadowReceivingMode", [serializable$4], function () {
+}), _initializer14$3 = applyDecoratedInitializer(_class4$c.prototype, "_shadowReceivingMode", [serializable$4], function () {
   return ModelShadowReceivingMode.ON;
-}), _initializer15$2 = applyDecoratedInitializer(_class5$c.prototype, "_shadowBias", [serializable$4], function () {
+}), _initializer15$2 = applyDecoratedInitializer(_class4$c.prototype, "_shadowBias", [serializable$4], function () {
   return 0;
-}), _initializer16$2 = applyDecoratedInitializer(_class5$c.prototype, "_shadowNormalBias", [serializable$4], function () {
+}), _initializer16$2 = applyDecoratedInitializer(_class4$c.prototype, "_shadowNormalBias", [serializable$4], function () {
   return 0;
-}), _initializer17$2 = applyDecoratedInitializer(_class5$c.prototype, "_reflectionProbeId", [serializable$4], function () {
+}), _initializer17$2 = applyDecoratedInitializer(_class4$c.prototype, "_reflectionProbeId", [serializable$4], function () {
   return -1;
-}), _initializer18$2 = applyDecoratedInitializer(_class5$c.prototype, "_reflectionProbeBlendId", [serializable$4], function () {
+}), _initializer18$2 = applyDecoratedInitializer(_class4$c.prototype, "_reflectionProbeBlendId", [serializable$4], function () {
   return -1;
-}), _initializer19$2 = applyDecoratedInitializer(_class5$c.prototype, "_reflectionProbeBlendWeight", [serializable$4], function () {
+}), _initializer19$2 = applyDecoratedInitializer(_class4$c.prototype, "_reflectionProbeBlendWeight", [serializable$4], function () {
   return 0;
-}), _initializer20$1 = applyDecoratedInitializer(_class5$c.prototype, "_enabledGlobalStandardSkinObject", [serializable$4], function () {
+}), _initializer20$1 = applyDecoratedInitializer(_class4$c.prototype, "_enabledGlobalStandardSkinObject", [serializable$4], function () {
   return false;
-}), _applyDecoratedDescriptor(_class5$c.prototype, "shadowBias", [_dec10$4], Object.getOwnPropertyDescriptor(_class5$c.prototype, "shadowBias"), _class5$c.prototype), _applyDecoratedDescriptor(_class5$c.prototype, "shadowNormalBias", [_dec11$3], Object.getOwnPropertyDescriptor(_class5$c.prototype, "shadowNormalBias"), _class5$c.prototype), _applyDecoratedDescriptor(_class5$c.prototype, "shadowCastingMode", [_dec12$3], Object.getOwnPropertyDescriptor(_class5$c.prototype, "shadowCastingMode"), _class5$c.prototype), _applyDecoratedDescriptor(_class5$c.prototype, "receiveShadow", [_dec13$2], Object.getOwnPropertyDescriptor(_class5$c.prototype, "receiveShadow"), _class5$c.prototype), _applyDecoratedDescriptor(_class5$c.prototype, "mesh", [_dec14$2], Object.getOwnPropertyDescriptor(_class5$c.prototype, "mesh"), _class5$c.prototype), _applyDecoratedDescriptor(_class5$c.prototype, "isGlobalStandardSkinObject", [_dec15$2], Object.getOwnPropertyDescriptor(_class5$c.prototype, "isGlobalStandardSkinObject"), _class5$c.prototype), _initializer21$1 = applyDecoratedInitializer(_class5$c.prototype, "_enableMorph", [serializable$4], function () {
+}), _applyDecoratedDescriptor(_class4$c.prototype, "shadowBias", [_dec10$4], Object.getOwnPropertyDescriptor(_class4$c.prototype, "shadowBias"), _class4$c.prototype), _applyDecoratedDescriptor(_class4$c.prototype, "shadowNormalBias", [_dec11$3], Object.getOwnPropertyDescriptor(_class4$c.prototype, "shadowNormalBias"), _class4$c.prototype), _applyDecoratedDescriptor(_class4$c.prototype, "shadowCastingMode", [_dec12$3], Object.getOwnPropertyDescriptor(_class4$c.prototype, "shadowCastingMode"), _class4$c.prototype), _applyDecoratedDescriptor(_class4$c.prototype, "receiveShadow", [_dec13$2], Object.getOwnPropertyDescriptor(_class4$c.prototype, "receiveShadow"), _class4$c.prototype), _applyDecoratedDescriptor(_class4$c.prototype, "mesh", [_dec14$2], Object.getOwnPropertyDescriptor(_class4$c.prototype, "mesh"), _class4$c.prototype), _applyDecoratedDescriptor(_class4$c.prototype, "isGlobalStandardSkinObject", [_dec15$2], Object.getOwnPropertyDescriptor(_class4$c.prototype, "isGlobalStandardSkinObject"), _class4$c.prototype), _initializer21$1 = applyDecoratedInitializer(_class4$c.prototype, "_enableMorph", [serializable$4], function () {
   return true;
-})), _class5$c)) || _class4$e) || _class4$e);
+})), _class4$c)) || _class3$c) || _class3$c);
 
 function checkMaterialisSame(comp1, comp2) {
   const matNum = comp1.sharedMaterials.length;
@@ -51063,8 +51063,8 @@ removeProperty(Mesh.prototype, 'Mesh.prototype', [{
   name: 'destroyFlatBuffers'
 }]);
 
-var _dec$M, _dec2$u, _dec3$i, _class$L, _class2$J, _initializer$D, _initializer2$u, _initializer3$i;
-let Skeleton = (_dec$M = ccclass$9('cc.Skeleton'), _dec2$u = type$5([CCString]), _dec3$i = type$5([Mat4]), _dec$M(_class$L = (_class2$J = class Skeleton extends Asset {
+var _dec$N, _dec2$u, _dec3$i, _class$O, _class2$D, _initializer$D, _initializer2$u, _initializer3$i;
+let Skeleton = (_dec$N = ccclass$9('cc.Skeleton'), _dec2$u = type$5([CCString]), _dec3$i = type$5([Mat4]), _dec$N(_class$O = (_class2$D = class Skeleton extends Asset {
   constructor(name) {
     super(name);
     this._joints = _initializer$D && _initializer$D();
@@ -51114,13 +51114,13 @@ let Skeleton = (_dec$M = ccclass$9('cc.Skeleton'), _dec2$u = type$5([CCString]),
   validate() {
     return this.joints.length > 0 && this.bindposes.length > 0;
   }
-}, (_initializer$D = applyDecoratedInitializer(_class2$J.prototype, "_joints", [_dec2$u], function () {
+}, (_initializer$D = applyDecoratedInitializer(_class2$D.prototype, "_joints", [_dec2$u], function () {
   return [];
-}), _initializer2$u = applyDecoratedInitializer(_class2$J.prototype, "_bindposes", [_dec3$i], function () {
+}), _initializer2$u = applyDecoratedInitializer(_class2$D.prototype, "_bindposes", [_dec3$i], function () {
   return [];
-}), _initializer3$i = applyDecoratedInitializer(_class2$J.prototype, "_hash", [serializable$8], function () {
+}), _initializer3$i = applyDecoratedInitializer(_class2$D.prototype, "_hash", [serializable$8], function () {
   return 0;
-})), _class2$J)) || _class$L);
+})), _class2$D)) || _class$O);
 cclegacy.Skeleton = Skeleton;
 
 removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
@@ -51131,13 +51131,13 @@ removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
 cclegacy.ModelComponent = MeshRenderer;
 setClassAlias(MeshRenderer, 'cc.ModelComponent');
 
-var _dec$L, _class$K, _class2$I, _initializer$C, _initializer2$t, _initializer3$h, _dec2$t, _dec3$h, _dec4$d, _class4$d, _class5$b, _initializer4$f, _initializer5$b, _initializer6$9, _initializer7$7, _initializer8$7, _class6$2;
+var _dec$M, _class$N, _class2$C, _initializer$C, _initializer2$t, _initializer3$h, _dec2$t, _dec3$h, _dec4$d, _class3$b, _class4$b, _initializer4$f, _initializer5$b, _initializer6$9, _initializer7$7, _initializer8$7, _Light;
 const _color_tmp = new Vec3();
 const PhotometricTerm = Enum({
   LUMINOUS_FLUX: 0,
   LUMINANCE: 1
 });
-let StaticLightSettings = (_dec$L = ccclass$9('cc.StaticLightSettings'), _dec$L(_class$K = (_class2$I = class StaticLightSettings {
+let StaticLightSettings = (_dec$M = ccclass$9('cc.StaticLightSettings'), _dec$M(_class$N = (_class2$C = class StaticLightSettings {
   constructor() {
     this._baked = _initializer$C && _initializer$C();
     this._editorOnly = _initializer2$t && _initializer2$t();
@@ -51161,14 +51161,14 @@ let StaticLightSettings = (_dec$L = ccclass$9('cc.StaticLightSettings'), _dec$L(
   set castShadow(val) {
     this._castShadow = val;
   }
-}, (_initializer$C = applyDecoratedInitializer(_class2$I.prototype, "_baked", [serializable$8], function () {
+}, (_initializer$C = applyDecoratedInitializer(_class2$C.prototype, "_baked", [serializable$8], function () {
   return false;
-}), _initializer2$t = applyDecoratedInitializer(_class2$I.prototype, "_editorOnly", [serializable$8], function () {
+}), _initializer2$t = applyDecoratedInitializer(_class2$C.prototype, "_editorOnly", [serializable$8], function () {
   return false;
-}), _initializer3$h = applyDecoratedInitializer(_class2$I.prototype, "_castShadow", [serializable$8], function () {
+}), _initializer3$h = applyDecoratedInitializer(_class2$C.prototype, "_castShadow", [serializable$8], function () {
   return false;
-})), _class2$I)) || _class$K);
-let Light = (_dec2$t = ccclass$9('cc.Light'), _dec3$h = type$5(StaticLightSettings), _dec4$d = type$5(Layers.BitMask), _dec2$t(_class4$d = (_class5$b = (_class6$2 = class Light extends Component {
+})), _class2$C)) || _class$N);
+let Light = (_dec2$t = ccclass$9('cc.Light'), _dec3$h = type$5(StaticLightSettings), _dec4$d = type$5(Layers.BitMask), _dec2$t(_class3$b = (_class4$b = (_Light = class Light extends Component {
   get color() {
     return this._color;
   }
@@ -51317,19 +51317,19 @@ let Light = (_dec2$t = ccclass$9('cc.Light'), _dec3$h = type$5(StaticLightSettin
   }
   _onUpdateReceiveDirLight() {
   }
-}, _class6$2.Type = LightType, _class6$2.PhotometricTerm = PhotometricTerm, _class6$2), (_initializer4$f = applyDecoratedInitializer(_class5$b.prototype, "_color", [serializable$8], function () {
+}, _Light.Type = LightType, _Light.PhotometricTerm = PhotometricTerm, _Light), (_initializer4$f = applyDecoratedInitializer(_class4$b.prototype, "_color", [serializable$8], function () {
   return Color.WHITE.clone();
-}), _initializer5$b = applyDecoratedInitializer(_class5$b.prototype, "_useColorTemperature", [serializable$8], function () {
+}), _initializer5$b = applyDecoratedInitializer(_class4$b.prototype, "_useColorTemperature", [serializable$8], function () {
   return false;
-}), _initializer6$9 = applyDecoratedInitializer(_class5$b.prototype, "_colorTemperature", [serializable$8], function () {
+}), _initializer6$9 = applyDecoratedInitializer(_class4$b.prototype, "_colorTemperature", [serializable$8], function () {
   return 6550;
-}), _initializer7$7 = applyDecoratedInitializer(_class5$b.prototype, "_staticSettings", [serializable$8], function () {
+}), _initializer7$7 = applyDecoratedInitializer(_class4$b.prototype, "_staticSettings", [serializable$8], function () {
   return new StaticLightSettings();
-}), _initializer8$7 = applyDecoratedInitializer(_class5$b.prototype, "_visibility", [serializable$8], function () {
+}), _initializer8$7 = applyDecoratedInitializer(_class4$b.prototype, "_visibility", [serializable$8], function () {
   return CAMERA_DEFAULT_MASK;
-}), _applyDecoratedDescriptor(_class5$b.prototype, "staticSettings", [_dec3$h], Object.getOwnPropertyDescriptor(_class5$b.prototype, "staticSettings"), _class5$b.prototype), _applyDecoratedDescriptor(_class5$b.prototype, "visibility", [_dec4$d], Object.getOwnPropertyDescriptor(_class5$b.prototype, "visibility"), _class5$b.prototype)), _class5$b)) || _class4$d);
+}), _applyDecoratedDescriptor(_class4$b.prototype, "staticSettings", [_dec3$h], Object.getOwnPropertyDescriptor(_class4$b.prototype, "staticSettings"), _class4$b.prototype), _applyDecoratedDescriptor(_class4$b.prototype, "visibility", [_dec4$d], Object.getOwnPropertyDescriptor(_class4$b.prototype, "visibility"), _class4$b.prototype)), _class4$b)) || _class3$b);
 
-var _dec$K, _dec2$s, _dec3$g, _dec4$c, _dec5$c, _dec6$a, _dec7$7, _dec8$5, _dec9$4, _dec10$3, _dec11$2, _dec12$2, _dec13$1, _dec14$1, _dec15$1, _dec16$1, _dec17$1, _dec18$1, _dec19$1, _dec20$1, _dec21$1, _dec22$1, _dec23$1, _dec24$1, _dec25$1, _dec26$1, _dec27$1, _dec28$1, _dec29$1, _dec30$1, _dec31$1, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _class$J, _class2$H, _initializer$B, _initializer2$s, _initializer3$g, _initializer4$e, _initializer5$a, _initializer6$8, _initializer7$6, _initializer8$6, _initializer9$6, _initializer10$5, _initializer11$4, _initializer12$3, _initializer13$3, _initializer14$2, _initializer15$1, _initializer16$1, _initializer17$1, _initializer18$1, _initializer19$1;
+var _dec$L, _dec2$s, _dec3$g, _dec4$c, _dec5$c, _dec6$a, _dec7$7, _dec8$5, _dec9$4, _dec10$3, _dec11$2, _dec12$2, _dec13$1, _dec14$1, _dec15$1, _dec16$1, _dec17$1, _dec18$1, _dec19$1, _dec20$1, _dec21$1, _dec22$1, _dec23$1, _dec24$1, _dec25$1, _dec26$1, _dec27$1, _dec28$1, _dec29$1, _dec30$1, _dec31$1, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _class$M, _class2$B, _initializer$B, _initializer2$s, _initializer3$g, _initializer4$e, _initializer5$a, _initializer6$8, _initializer7$6, _initializer8$6, _initializer9$6, _initializer10$5, _initializer11$4, _initializer12$3, _initializer13$3, _initializer14$2, _initializer15$1, _initializer16$1, _initializer17$1, _initializer18$1, _initializer19$1;
 const {
   ccclass: ccclass$3,
   menu: menu$1,
@@ -51345,7 +51345,7 @@ const {
   slide: slide$1,
   range: range$1
 } = _decorator;
-let DirectionalLight = (_dec$K = ccclass$3('cc.DirectionalLight'), _dec2$s = formerlySerializedAs$1('_illuminance'), _dec3$g = type$1(CCInteger), _dec4$c = property$1({
+let DirectionalLight = (_dec$L = ccclass$3('cc.DirectionalLight'), _dec2$s = formerlySerializedAs$1('_illuminance'), _dec3$g = type$1(CCInteger), _dec4$c = property$1({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -51435,7 +51435,7 @@ let DirectionalLight = (_dec$K = ccclass$3('cc.DirectionalLight'), _dec2$s = for
     name: 'DynamicShadowSettings',
     displayOrder: 21
   }
-}), _dec39 = type$1(CCFloat), _dec$K(_class$J = (_class2$H = class DirectionalLight extends Light {
+}), _dec39 = type$1(CCFloat), _dec$L(_class$M = (_class2$B = class DirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51696,48 +51696,48 @@ let DirectionalLight = (_dec$K = ccclass$3('cc.DirectionalLight'), _dec2$s = for
       meshRender.onUpdateReceiveDirLight(this._visibility);
     }
   }
-}, (_initializer$B = applyDecoratedInitializer(_class2$H.prototype, "_illuminanceHDR", [property$1, _dec2$s], function () {
+}, (_initializer$B = applyDecoratedInitializer(_class2$B.prototype, "_illuminanceHDR", [property$1, _dec2$s], function () {
   return 65000;
-}), _initializer2$s = applyDecoratedInitializer(_class2$H.prototype, "_illuminanceLDR", [serializable$3], function () {
+}), _initializer2$s = applyDecoratedInitializer(_class2$B.prototype, "_illuminanceLDR", [serializable$3], function () {
   return 65000 * Camera$1.standardExposureValue;
-}), _initializer3$g = applyDecoratedInitializer(_class2$H.prototype, "_shadowEnabled", [serializable$3], function () {
+}), _initializer3$g = applyDecoratedInitializer(_class2$B.prototype, "_shadowEnabled", [serializable$3], function () {
   return false;
-}), _initializer4$e = applyDecoratedInitializer(_class2$H.prototype, "_shadowPcf", [serializable$3], function () {
+}), _initializer4$e = applyDecoratedInitializer(_class2$B.prototype, "_shadowPcf", [serializable$3], function () {
   return PCFType.HARD;
-}), _initializer5$a = applyDecoratedInitializer(_class2$H.prototype, "_shadowBias", [serializable$3], function () {
+}), _initializer5$a = applyDecoratedInitializer(_class2$B.prototype, "_shadowBias", [serializable$3], function () {
   return 0.00001;
-}), _initializer6$8 = applyDecoratedInitializer(_class2$H.prototype, "_shadowNormalBias", [serializable$3], function () {
+}), _initializer6$8 = applyDecoratedInitializer(_class2$B.prototype, "_shadowNormalBias", [serializable$3], function () {
   return 0.0;
-}), _initializer7$6 = applyDecoratedInitializer(_class2$H.prototype, "_shadowSaturation", [serializable$3], function () {
+}), _initializer7$6 = applyDecoratedInitializer(_class2$B.prototype, "_shadowSaturation", [serializable$3], function () {
   return 1.0;
-}), _initializer8$6 = applyDecoratedInitializer(_class2$H.prototype, "_shadowDistance", [serializable$3], function () {
+}), _initializer8$6 = applyDecoratedInitializer(_class2$B.prototype, "_shadowDistance", [serializable$3], function () {
   return 50;
-}), _initializer9$6 = applyDecoratedInitializer(_class2$H.prototype, "_shadowInvisibleOcclusionRange", [serializable$3], function () {
+}), _initializer9$6 = applyDecoratedInitializer(_class2$B.prototype, "_shadowInvisibleOcclusionRange", [serializable$3], function () {
   return 200;
-}), _initializer10$5 = applyDecoratedInitializer(_class2$H.prototype, "_csmLevel", [serializable$3], function () {
+}), _initializer10$5 = applyDecoratedInitializer(_class2$B.prototype, "_csmLevel", [serializable$3], function () {
   return CSMLevel.LEVEL_4;
-}), _initializer11$4 = applyDecoratedInitializer(_class2$H.prototype, "_csmLayerLambda", [serializable$3], function () {
+}), _initializer11$4 = applyDecoratedInitializer(_class2$B.prototype, "_csmLayerLambda", [serializable$3], function () {
   return 0.75;
-}), _initializer12$3 = applyDecoratedInitializer(_class2$H.prototype, "_csmOptimizationMode", [serializable$3], function () {
+}), _initializer12$3 = applyDecoratedInitializer(_class2$B.prototype, "_csmOptimizationMode", [serializable$3], function () {
   return CSMOptimizationMode.RemoveDuplicates;
-}), _initializer13$3 = applyDecoratedInitializer(_class2$H.prototype, "_csmAdvancedOptions", [serializable$3], function () {
+}), _initializer13$3 = applyDecoratedInitializer(_class2$B.prototype, "_csmAdvancedOptions", [serializable$3], function () {
   return false;
-}), _initializer14$2 = applyDecoratedInitializer(_class2$H.prototype, "_csmLayersTransition", [serializable$3], function () {
+}), _initializer14$2 = applyDecoratedInitializer(_class2$B.prototype, "_csmLayersTransition", [serializable$3], function () {
   return false;
-}), _initializer15$1 = applyDecoratedInitializer(_class2$H.prototype, "_csmTransitionRange", [serializable$3], function () {
+}), _initializer15$1 = applyDecoratedInitializer(_class2$B.prototype, "_csmTransitionRange", [serializable$3], function () {
   return 0.05;
-}), _initializer16$1 = applyDecoratedInitializer(_class2$H.prototype, "_shadowFixedArea", [serializable$3], function () {
+}), _initializer16$1 = applyDecoratedInitializer(_class2$B.prototype, "_shadowFixedArea", [serializable$3], function () {
   return false;
-}), _initializer17$1 = applyDecoratedInitializer(_class2$H.prototype, "_shadowNear", [serializable$3], function () {
+}), _initializer17$1 = applyDecoratedInitializer(_class2$B.prototype, "_shadowNear", [serializable$3], function () {
   return 0.1;
-}), _initializer18$1 = applyDecoratedInitializer(_class2$H.prototype, "_shadowFar", [serializable$3], function () {
+}), _initializer18$1 = applyDecoratedInitializer(_class2$B.prototype, "_shadowFar", [serializable$3], function () {
   return 10.0;
-}), _initializer19$1 = applyDecoratedInitializer(_class2$H.prototype, "_shadowOrthoSize", [serializable$3], function () {
+}), _initializer19$1 = applyDecoratedInitializer(_class2$B.prototype, "_shadowOrthoSize", [serializable$3], function () {
   return 5;
-}), _applyDecoratedDescriptor(_class2$H.prototype, "illuminance", [_dec3$g], Object.getOwnPropertyDescriptor(_class2$H.prototype, "illuminance"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowEnabled", [_dec4$c, _dec5$c], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowEnabled"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowPcf", [_dec6$a, _dec7$7], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowPcf"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowBias", [_dec8$5, _dec9$4], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowBias"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowNormalBias", [_dec10$3, _dec11$2], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowNormalBias"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowSaturation", [_dec12$2, _dec13$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowSaturation"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowDistance", [_dec14$1, _dec15$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowDistance"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowInvisibleOcclusionRange", [_dec16$1, _dec17$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowInvisibleOcclusionRange"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "csmLevel", [_dec18$1, _dec19$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "csmLevel"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "enableCSM", [_dec20$1, _dec21$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "enableCSM"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "csmLayerLambda", [_dec22$1, _dec23$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "csmLayerLambda"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "csmOptimizationMode", [_dec24$1, _dec25$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "csmOptimizationMode"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowFixedArea", [_dec26$1, _dec27$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowFixedArea"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowNear", [_dec28$1, _dec29$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowNear"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowFar", [_dec30$1, _dec31$1], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowFar"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "shadowOrthoSize", [_dec32, _dec33], Object.getOwnPropertyDescriptor(_class2$H.prototype, "shadowOrthoSize"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "csmAdvancedOptions", [_dec34, _dec35], Object.getOwnPropertyDescriptor(_class2$H.prototype, "csmAdvancedOptions"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "csmLayersTransition", [_dec36, _dec37], Object.getOwnPropertyDescriptor(_class2$H.prototype, "csmLayersTransition"), _class2$H.prototype), _applyDecoratedDescriptor(_class2$H.prototype, "csmTransitionRange", [_dec38, _dec39], Object.getOwnPropertyDescriptor(_class2$H.prototype, "csmTransitionRange"), _class2$H.prototype)), _class2$H)) || _class$J);
+}), _applyDecoratedDescriptor(_class2$B.prototype, "illuminance", [_dec3$g], Object.getOwnPropertyDescriptor(_class2$B.prototype, "illuminance"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowEnabled", [_dec4$c, _dec5$c], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowEnabled"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowPcf", [_dec6$a, _dec7$7], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowPcf"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowBias", [_dec8$5, _dec9$4], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowBias"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowNormalBias", [_dec10$3, _dec11$2], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowNormalBias"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowSaturation", [_dec12$2, _dec13$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowSaturation"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowDistance", [_dec14$1, _dec15$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowDistance"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowInvisibleOcclusionRange", [_dec16$1, _dec17$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowInvisibleOcclusionRange"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLevel", [_dec18$1, _dec19$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLevel"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "enableCSM", [_dec20$1, _dec21$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "enableCSM"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLayerLambda", [_dec22$1, _dec23$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLayerLambda"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmOptimizationMode", [_dec24$1, _dec25$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmOptimizationMode"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowFixedArea", [_dec26$1, _dec27$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowFixedArea"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowNear", [_dec28$1, _dec29$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowNear"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowFar", [_dec30$1, _dec31$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowFar"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowOrthoSize", [_dec32, _dec33], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowOrthoSize"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmAdvancedOptions", [_dec34, _dec35], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmAdvancedOptions"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLayersTransition", [_dec36, _dec37], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLayersTransition"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmTransitionRange", [_dec38, _dec39], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmTransitionRange"), _class2$B.prototype)), _class2$B)) || _class$M);
 
-var _dec$J, _dec2$r, _dec3$f, _dec4$b, _dec5$b, _dec6$9, _dec7$6, _class$I, _class2$G, _initializer$A, _initializer2$r, _initializer3$f, _initializer4$d, _initializer5$9;
-let SphereLight = (_dec$J = ccclass$9('cc.SphereLight'), _dec2$r = formerlySerializedAs$3('_luminance'), _dec3$f = type$5(CCInteger), _dec4$b = type$5(CCInteger), _dec5$b = type$5(PhotometricTerm), _dec6$9 = type$5(CCFloat), _dec7$6 = type$5(CCFloat), _dec$J(_class$I = (_class2$G = class SphereLight extends Light {
+var _dec$K, _dec2$r, _dec3$f, _dec4$b, _dec5$b, _dec6$9, _dec7$6, _class$L, _class2$A, _initializer$A, _initializer2$r, _initializer3$f, _initializer4$d, _initializer5$9;
+let SphereLight = (_dec$K = ccclass$9('cc.SphereLight'), _dec2$r = formerlySerializedAs$3('_luminance'), _dec3$f = type$5(CCInteger), _dec4$b = type$5(CCInteger), _dec5$b = type$5(PhotometricTerm), _dec6$9 = type$5(CCFloat), _dec7$6 = type$5(CCFloat), _dec$K(_class$L = (_class2$A = class SphereLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51819,19 +51819,19 @@ let SphereLight = (_dec$J = ccclass$9('cc.SphereLight'), _dec2$r = formerlySeria
       this._light.luminanceLDR = this._luminanceLDR;
     }
   }
-}, (_initializer$A = applyDecoratedInitializer(_class2$G.prototype, "_size", [serializable$8], function () {
+}, (_initializer$A = applyDecoratedInitializer(_class2$A.prototype, "_size", [serializable$8], function () {
   return 0.15;
-}), _initializer2$r = applyDecoratedInitializer(_class2$G.prototype, "_luminanceHDR", [serializable$8, _dec2$r], function () {
+}), _initializer2$r = applyDecoratedInitializer(_class2$A.prototype, "_luminanceHDR", [serializable$8, _dec2$r], function () {
   return 1700 / nt2lm(0.15);
-}), _initializer3$f = applyDecoratedInitializer(_class2$G.prototype, "_luminanceLDR", [serializable$8], function () {
+}), _initializer3$f = applyDecoratedInitializer(_class2$A.prototype, "_luminanceLDR", [serializable$8], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
-}), _initializer4$d = applyDecoratedInitializer(_class2$G.prototype, "_term", [serializable$8], function () {
+}), _initializer4$d = applyDecoratedInitializer(_class2$A.prototype, "_term", [serializable$8], function () {
   return PhotometricTerm.LUMINOUS_FLUX;
-}), _initializer5$9 = applyDecoratedInitializer(_class2$G.prototype, "_range", [serializable$8], function () {
+}), _initializer5$9 = applyDecoratedInitializer(_class2$A.prototype, "_range", [serializable$8], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$G.prototype, "luminousFlux", [_dec3$f], Object.getOwnPropertyDescriptor(_class2$G.prototype, "luminousFlux"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "luminance", [_dec4$b], Object.getOwnPropertyDescriptor(_class2$G.prototype, "luminance"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "term", [_dec5$b], Object.getOwnPropertyDescriptor(_class2$G.prototype, "term"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "size", [_dec6$9], Object.getOwnPropertyDescriptor(_class2$G.prototype, "size"), _class2$G.prototype), _applyDecoratedDescriptor(_class2$G.prototype, "range", [_dec7$6], Object.getOwnPropertyDescriptor(_class2$G.prototype, "range"), _class2$G.prototype)), _class2$G)) || _class$I);
+}), _applyDecoratedDescriptor(_class2$A.prototype, "luminousFlux", [_dec3$f], Object.getOwnPropertyDescriptor(_class2$A.prototype, "luminousFlux"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "luminance", [_dec4$b], Object.getOwnPropertyDescriptor(_class2$A.prototype, "luminance"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "term", [_dec5$b], Object.getOwnPropertyDescriptor(_class2$A.prototype, "term"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "size", [_dec6$9], Object.getOwnPropertyDescriptor(_class2$A.prototype, "size"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "range", [_dec7$6], Object.getOwnPropertyDescriptor(_class2$A.prototype, "range"), _class2$A.prototype)), _class2$A)) || _class$L);
 
-var _dec$I, _dec2$q, _dec3$e, _dec4$a, _dec5$a, _dec6$8, _dec7$5, _dec8$4, _dec9$3, _dec10$2, _dec11$1, _dec12$1, _class$H, _class2$F, _initializer$z, _initializer2$q, _initializer3$e, _initializer4$c, _initializer5$8, _initializer6$7, _initializer7$5, _initializer8$5, _initializer9$5, _initializer10$4, _initializer11$3;
+var _dec$J, _dec2$q, _dec3$e, _dec4$a, _dec5$a, _dec6$8, _dec7$5, _dec8$4, _dec9$3, _dec10$2, _dec11$1, _dec12$1, _class$K, _class2$z, _initializer$z, _initializer2$q, _initializer3$e, _initializer4$c, _initializer5$8, _initializer6$7, _initializer7$5, _initializer8$5, _initializer9$5, _initializer10$4, _initializer11$3;
 const {
   ccclass: ccclass$2,
   range,
@@ -51848,7 +51848,7 @@ const {
   visible,
   property
 } = _decorator;
-let SpotLight = (_dec$I = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerializedAs('_luminance'), _dec3$e = type(PhotometricTerm), _dec4$a = type(CCFloat), _dec5$a = property({
+let SpotLight = (_dec$J = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerializedAs('_luminance'), _dec3$e = type(PhotometricTerm), _dec4$a = type(CCFloat), _dec5$a = property({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -51868,7 +51868,7 @@ let SpotLight = (_dec$I = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerialize
     name: 'DynamicShadowSettings',
     displayOrder: 4
   }
-}), _dec12$1 = type(CCFloat), _dec$I(_class$H = (_class2$F = class SpotLight extends Light {
+}), _dec12$1 = type(CCFloat), _dec$J(_class$K = (_class2$z = class SpotLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -52017,32 +52017,32 @@ let SpotLight = (_dec$I = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerialize
       spotLight.shadowNormalBias = this._shadowNormalBias;
     }
   }
-}, (_initializer$z = applyDecoratedInitializer(_class2$F.prototype, "_size", [serializable$2], function () {
+}, (_initializer$z = applyDecoratedInitializer(_class2$z.prototype, "_size", [serializable$2], function () {
   return 0.15;
-}), _initializer2$q = applyDecoratedInitializer(_class2$F.prototype, "_luminanceHDR", [serializable$2, _dec2$q], function () {
+}), _initializer2$q = applyDecoratedInitializer(_class2$z.prototype, "_luminanceHDR", [serializable$2, _dec2$q], function () {
   return 1700 / nt2lm(0.15);
-}), _initializer3$e = applyDecoratedInitializer(_class2$F.prototype, "_luminanceLDR", [serializable$2], function () {
+}), _initializer3$e = applyDecoratedInitializer(_class2$z.prototype, "_luminanceLDR", [serializable$2], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
-}), _initializer4$c = applyDecoratedInitializer(_class2$F.prototype, "_term", [serializable$2], function () {
+}), _initializer4$c = applyDecoratedInitializer(_class2$z.prototype, "_term", [serializable$2], function () {
   return PhotometricTerm.LUMINOUS_FLUX;
-}), _initializer5$8 = applyDecoratedInitializer(_class2$F.prototype, "_range", [serializable$2], function () {
+}), _initializer5$8 = applyDecoratedInitializer(_class2$z.prototype, "_range", [serializable$2], function () {
   return 1;
-}), _initializer6$7 = applyDecoratedInitializer(_class2$F.prototype, "_spotAngle", [serializable$2], function () {
+}), _initializer6$7 = applyDecoratedInitializer(_class2$z.prototype, "_spotAngle", [serializable$2], function () {
   return 60;
-}), _initializer7$5 = applyDecoratedInitializer(_class2$F.prototype, "_angleAttenuationStrength", [serializable$2], function () {
+}), _initializer7$5 = applyDecoratedInitializer(_class2$z.prototype, "_angleAttenuationStrength", [serializable$2], function () {
   return 0;
-}), _initializer8$5 = applyDecoratedInitializer(_class2$F.prototype, "_shadowEnabled", [serializable$2], function () {
+}), _initializer8$5 = applyDecoratedInitializer(_class2$z.prototype, "_shadowEnabled", [serializable$2], function () {
   return false;
-}), _initializer9$5 = applyDecoratedInitializer(_class2$F.prototype, "_shadowPcf", [serializable$2], function () {
+}), _initializer9$5 = applyDecoratedInitializer(_class2$z.prototype, "_shadowPcf", [serializable$2], function () {
   return PCFType.HARD;
-}), _initializer10$4 = applyDecoratedInitializer(_class2$F.prototype, "_shadowBias", [serializable$2], function () {
+}), _initializer10$4 = applyDecoratedInitializer(_class2$z.prototype, "_shadowBias", [serializable$2], function () {
   return 0.00001;
-}), _initializer11$3 = applyDecoratedInitializer(_class2$F.prototype, "_shadowNormalBias", [serializable$2], function () {
+}), _initializer11$3 = applyDecoratedInitializer(_class2$z.prototype, "_shadowNormalBias", [serializable$2], function () {
   return 0.0;
-}), _applyDecoratedDescriptor(_class2$F.prototype, "term", [_dec3$e], Object.getOwnPropertyDescriptor(_class2$F.prototype, "term"), _class2$F.prototype), _applyDecoratedDescriptor(_class2$F.prototype, "size", [_dec4$a], Object.getOwnPropertyDescriptor(_class2$F.prototype, "size"), _class2$F.prototype), _applyDecoratedDescriptor(_class2$F.prototype, "shadowEnabled", [_dec5$a, _dec6$8], Object.getOwnPropertyDescriptor(_class2$F.prototype, "shadowEnabled"), _class2$F.prototype), _applyDecoratedDescriptor(_class2$F.prototype, "shadowPcf", [_dec7$5, _dec8$4], Object.getOwnPropertyDescriptor(_class2$F.prototype, "shadowPcf"), _class2$F.prototype), _applyDecoratedDescriptor(_class2$F.prototype, "shadowBias", [_dec9$3, _dec10$2], Object.getOwnPropertyDescriptor(_class2$F.prototype, "shadowBias"), _class2$F.prototype), _applyDecoratedDescriptor(_class2$F.prototype, "shadowNormalBias", [_dec11$1, _dec12$1], Object.getOwnPropertyDescriptor(_class2$F.prototype, "shadowNormalBias"), _class2$F.prototype)), _class2$F)) || _class$H);
+}), _applyDecoratedDescriptor(_class2$z.prototype, "term", [_dec3$e], Object.getOwnPropertyDescriptor(_class2$z.prototype, "term"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "size", [_dec4$a], Object.getOwnPropertyDescriptor(_class2$z.prototype, "size"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowEnabled", [_dec5$a, _dec6$8], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowEnabled"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowPcf", [_dec7$5, _dec8$4], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowPcf"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowBias", [_dec9$3, _dec10$2], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowBias"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowNormalBias", [_dec11$1, _dec12$1], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowNormalBias"), _class2$z.prototype)), _class2$z)) || _class$K);
 
-var _dec$H, _dec2$p, _dec3$d, _dec4$9, _dec5$9, _dec6$7, _class$G, _class2$E, _initializer$y, _initializer2$p, _initializer3$d, _initializer4$b;
-let PointLight = (_dec$H = ccclass$9('cc.PointLight'), _dec2$p = formerlySerializedAs$3('_luminance'), _dec3$d = type$5(CCInteger), _dec4$9 = type$5(CCInteger), _dec5$9 = type$5(PhotometricTerm), _dec6$7 = type$5(CCFloat), _dec$H(_class$G = (_class2$E = class PointLight extends Light {
+var _dec$I, _dec2$p, _dec3$d, _dec4$9, _dec5$9, _dec6$7, _class$J, _class2$y, _initializer$y, _initializer2$p, _initializer3$d, _initializer4$b;
+let PointLight = (_dec$I = ccclass$9('cc.PointLight'), _dec2$p = formerlySerializedAs$3('_luminance'), _dec3$d = type$5(CCInteger), _dec4$9 = type$5(CCInteger), _dec5$9 = type$5(PhotometricTerm), _dec6$7 = type$5(CCFloat), _dec$I(_class$J = (_class2$y = class PointLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -52113,18 +52113,18 @@ let PointLight = (_dec$H = ccclass$9('cc.PointLight'), _dec2$p = formerlySeriali
       this._light.luminanceLDR = this._luminanceLDR;
     }
   }
-}, (_initializer$y = applyDecoratedInitializer(_class2$E.prototype, "_luminanceHDR", [serializable$8, _dec2$p], function () {
+}, (_initializer$y = applyDecoratedInitializer(_class2$y.prototype, "_luminanceHDR", [serializable$8, _dec2$p], function () {
   return 1700 / nt2lm(0.15);
-}), _initializer2$p = applyDecoratedInitializer(_class2$E.prototype, "_luminanceLDR", [serializable$8], function () {
+}), _initializer2$p = applyDecoratedInitializer(_class2$y.prototype, "_luminanceLDR", [serializable$8], function () {
   return 1700 / nt2lm(0.15) * Camera$1.standardExposureValue * Camera$1.standardLightMeterScale;
-}), _initializer3$d = applyDecoratedInitializer(_class2$E.prototype, "_term", [serializable$8], function () {
+}), _initializer3$d = applyDecoratedInitializer(_class2$y.prototype, "_term", [serializable$8], function () {
   return PhotometricTerm.LUMINOUS_FLUX;
-}), _initializer4$b = applyDecoratedInitializer(_class2$E.prototype, "_range", [serializable$8], function () {
+}), _initializer4$b = applyDecoratedInitializer(_class2$y.prototype, "_range", [serializable$8], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$E.prototype, "luminousFlux", [_dec3$d], Object.getOwnPropertyDescriptor(_class2$E.prototype, "luminousFlux"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "luminance", [_dec4$9], Object.getOwnPropertyDescriptor(_class2$E.prototype, "luminance"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "term", [_dec5$9], Object.getOwnPropertyDescriptor(_class2$E.prototype, "term"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "range", [_dec6$7], Object.getOwnPropertyDescriptor(_class2$E.prototype, "range"), _class2$E.prototype)), _class2$E)) || _class$G);
+}), _applyDecoratedDescriptor(_class2$y.prototype, "luminousFlux", [_dec3$d], Object.getOwnPropertyDescriptor(_class2$y.prototype, "luminousFlux"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "luminance", [_dec4$9], Object.getOwnPropertyDescriptor(_class2$y.prototype, "luminance"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "term", [_dec5$9], Object.getOwnPropertyDescriptor(_class2$y.prototype, "term"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "range", [_dec6$7], Object.getOwnPropertyDescriptor(_class2$y.prototype, "range"), _class2$y.prototype)), _class2$y)) || _class$J);
 
-var _dec$G, _dec2$o, _dec3$c, _class$F, _class2$D, _initializer$x, _initializer2$o;
-let RangedDirectionalLight = (_dec$G = ccclass$9('cc.RangedDirectionalLight'), _dec2$o = formerlySerializedAs$3('_illuminance'), _dec3$c = type$5(CCInteger), _dec$G(_class$F = (_class2$D = class RangedDirectionalLight extends Light {
+var _dec$H, _dec2$o, _dec3$c, _class$I, _class2$x, _initializer$x, _initializer2$o;
+let RangedDirectionalLight = (_dec$H = ccclass$9('cc.RangedDirectionalLight'), _dec2$o = formerlySerializedAs$3('_illuminance'), _dec3$c = type$5(CCInteger), _dec$H(_class$I = (_class2$x = class RangedDirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -52157,11 +52157,11 @@ let RangedDirectionalLight = (_dec$G = ccclass$9('cc.RangedDirectionalLight'), _
       this._light.illuminanceLDR = this._illuminanceLDR;
     }
   }
-}, (_initializer$x = applyDecoratedInitializer(_class2$D.prototype, "_illuminanceHDR", [property$3, _dec2$o], function () {
+}, (_initializer$x = applyDecoratedInitializer(_class2$x.prototype, "_illuminanceHDR", [property$3, _dec2$o], function () {
   return 65000;
-}), _initializer2$o = applyDecoratedInitializer(_class2$D.prototype, "_illuminanceLDR", [serializable$8], function () {
+}), _initializer2$o = applyDecoratedInitializer(_class2$x.prototype, "_illuminanceLDR", [serializable$8], function () {
   return 65000 * Camera$1.standardExposureValue;
-}), _applyDecoratedDescriptor(_class2$D.prototype, "illuminance", [_dec3$c], Object.getOwnPropertyDescriptor(_class2$D.prototype, "illuminance"), _class2$D.prototype)), _class2$D)) || _class$F);
+}), _applyDecoratedDescriptor(_class2$x.prototype, "illuminance", [_dec3$c], Object.getOwnPropertyDescriptor(_class2$x.prototype, "illuminance"), _class2$x.prototype)), _class2$x)) || _class$I);
 
 cclegacy.LightComponent = Light;
 setClassAlias(Light, 'cc.LightComponent');
@@ -53179,8 +53179,8 @@ class BakedSkinningModel extends MorphModel {
   }
 }
 
-var _dec$F, _dec2$n, _dec3$b, _dec4$8, _dec5$8, _dec6$6, _class$E, _class2$C, _initializer$w, _initializer2$n;
-let SkinnedMeshRenderer = (_dec$F = ccclass$9('cc.SkinnedMeshRenderer'), _dec2$n = executionOrder$2(100), _dec3$b = type$5(Skeleton), _dec4$8 = type$5(Node$1), _dec5$8 = type$5(Skeleton), _dec6$6 = type$5(Node$1), _dec$F(_class$E = _dec2$n(_class$E = (_class2$C = class SkinnedMeshRenderer extends MeshRenderer {
+var _dec$G, _dec2$n, _dec3$b, _dec4$8, _dec5$8, _dec6$6, _class$H, _class2$w, _initializer$w, _initializer2$n;
+let SkinnedMeshRenderer = (_dec$G = ccclass$9('cc.SkinnedMeshRenderer'), _dec2$n = executionOrder$2(100), _dec3$b = type$5(Skeleton), _dec4$8 = type$5(Node$1), _dec5$8 = type$5(Skeleton), _dec6$6 = type$5(Node$1), _dec$G(_class$H = _dec2$n(_class$H = (_class2$w = class SkinnedMeshRenderer extends MeshRenderer {
   get skeleton() {
     return this._skeleton;
   }
@@ -53292,18 +53292,18 @@ let SkinnedMeshRenderer = (_dec$F = ccclass$9('cc.SkinnedMeshRenderer'), _dec2$n
       }
     }
   }
-}, (_initializer$w = applyDecoratedInitializer(_class2$C.prototype, "_skeleton", [_dec3$b], function () {
+}, (_initializer$w = applyDecoratedInitializer(_class2$w.prototype, "_skeleton", [_dec3$b], function () {
   return null;
-}), _initializer2$n = applyDecoratedInitializer(_class2$C.prototype, "_skinningRoot", [_dec4$8], function () {
+}), _initializer2$n = applyDecoratedInitializer(_class2$w.prototype, "_skinningRoot", [_dec4$8], function () {
   return null;
-}), _applyDecoratedDescriptor(_class2$C.prototype, "skeleton", [_dec5$8], Object.getOwnPropertyDescriptor(_class2$C.prototype, "skeleton"), _class2$C.prototype), _applyDecoratedDescriptor(_class2$C.prototype, "skinningRoot", [_dec6$6], Object.getOwnPropertyDescriptor(_class2$C.prototype, "skinningRoot"), _class2$C.prototype)), _class2$C)) || _class$E) || _class$E);
+}), _applyDecoratedDescriptor(_class2$w.prototype, "skeleton", [_dec5$8], Object.getOwnPropertyDescriptor(_class2$w.prototype, "skeleton"), _class2$w.prototype), _applyDecoratedDescriptor(_class2$w.prototype, "skinningRoot", [_dec6$6], Object.getOwnPropertyDescriptor(_class2$w.prototype, "skinningRoot"), _class2$w.prototype)), _class2$w)) || _class$H) || _class$H);
 
-var _dec$E, _dec2$m, _dec3$a, _dec4$7, _dec5$7, _class$D, _class2$B, _initializer$v, _initializer2$m, _initializer3$c, _initializer4$a, _initializer5$7, _initializer6$6, _dec6$5, _dec7$4, _dec8$3, _dec9$2, _class4$c, _class5$a, _initializer7$4, _initializer8$4, _initializer9$4;
+var _dec$F, _dec2$m, _dec3$a, _dec4$7, _dec5$7, _class$G, _class2$v, _initializer$v, _initializer2$m, _initializer3$c, _initializer4$a, _initializer5$7, _initializer6$6, _dec6$5, _dec7$4, _dec8$3, _dec9$2, _class3$a, _class4$a, _initializer7$4, _initializer8$4, _initializer9$4;
 const repeat$1 = n => n - Math.floor(n);
 const batch_id = new Attribute(AttributeName.ATTR_BATCH_ID, Format.R32F);
 const batch_uv = new Attribute(AttributeName.ATTR_BATCH_UV, Format.RG32F);
 const batch_extras_size = FormatInfos[batch_id.format].size + FormatInfos[batch_uv.format].size;
-let SkinnedMeshUnit = (_dec$E = ccclass$9('cc.SkinnedMeshUnit'), _dec2$m = type$5(Mesh), _dec3$a = type$5(Skeleton), _dec4$7 = type$5(Material), _dec5$7 = type$5(SkinnedMeshRenderer), _dec$E(_class$D = (_class2$B = class SkinnedMeshUnit {
+let SkinnedMeshUnit = (_dec$F = ccclass$9('cc.SkinnedMeshUnit'), _dec2$m = type$5(Mesh), _dec3$a = type$5(Skeleton), _dec4$7 = type$5(Material), _dec5$7 = type$5(SkinnedMeshRenderer), _dec$F(_class$G = (_class2$v = class SkinnedMeshUnit {
   constructor() {
     this.mesh = _initializer$v && _initializer$v();
     this.skeleton = _initializer2$m && _initializer2$m();
@@ -53338,23 +53338,23 @@ let SkinnedMeshUnit = (_dec$E = ccclass$9('cc.SkinnedMeshUnit'), _dec2$m = type$
   get copyFrom() {
     return null;
   }
-}, (_initializer$v = applyDecoratedInitializer(_class2$B.prototype, "mesh", [_dec2$m], function () {
+}, (_initializer$v = applyDecoratedInitializer(_class2$v.prototype, "mesh", [_dec2$m], function () {
   return null;
-}), _initializer2$m = applyDecoratedInitializer(_class2$B.prototype, "skeleton", [_dec3$a], function () {
+}), _initializer2$m = applyDecoratedInitializer(_class2$v.prototype, "skeleton", [_dec3$a], function () {
   return null;
-}), _initializer3$c = applyDecoratedInitializer(_class2$B.prototype, "material", [_dec4$7], function () {
+}), _initializer3$c = applyDecoratedInitializer(_class2$v.prototype, "material", [_dec4$7], function () {
   return null;
-}), _initializer4$a = applyDecoratedInitializer(_class2$B.prototype, "_localTransform", [serializable$8], function () {
+}), _initializer4$a = applyDecoratedInitializer(_class2$v.prototype, "_localTransform", [serializable$8], function () {
   return new Mat4();
-}), _initializer5$7 = applyDecoratedInitializer(_class2$B.prototype, "_offset", [serializable$8], function () {
+}), _initializer5$7 = applyDecoratedInitializer(_class2$v.prototype, "_offset", [serializable$8], function () {
   return new Vec2(0, 0);
-}), _initializer6$6 = applyDecoratedInitializer(_class2$B.prototype, "_size", [serializable$8], function () {
+}), _initializer6$6 = applyDecoratedInitializer(_class2$v.prototype, "_size", [serializable$8], function () {
   return new Vec2(1, 1);
-}), _applyDecoratedDescriptor(_class2$B.prototype, "copyFrom", [_dec5$7], Object.getOwnPropertyDescriptor(_class2$B.prototype, "copyFrom"), _class2$B.prototype)), _class2$B)) || _class$D);
-const m4_local = new Mat4();
+}), _applyDecoratedDescriptor(_class2$v.prototype, "copyFrom", [_dec5$7], Object.getOwnPropertyDescriptor(_class2$v.prototype, "copyFrom"), _class2$v.prototype)), _class2$v)) || _class$G);
+const m4_local$1 = new Mat4();
 new Mat4();
 const v3_1 = new Vec3();
-let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer'), _dec7$4 = executionOrder$2(100), _dec8$3 = type$5([CCString]), _dec9$2 = type$5([SkinnedMeshUnit]), _dec6$5(_class4$c = _dec7$4(_class4$c = (_class5$a = class SkinnedMeshBatchRenderer extends SkinnedMeshRenderer {
+let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer'), _dec7$4 = executionOrder$2(100), _dec8$3 = type$5([CCString]), _dec9$2 = type$5([SkinnedMeshUnit]), _dec6$5(_class3$a = _dec7$4(_class3$a = (_class4$a = class SkinnedMeshBatchRenderer extends SkinnedMeshRenderer {
   constructor() {
     super();
     this.atlasSize = _initializer7$4 && _initializer7$4();
@@ -53458,7 +53458,7 @@ let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer
         continue;
       }
       const partial = unit.skeleton;
-      Mat4.invert(m4_local, unit._localTransform);
+      Mat4.invert(m4_local$1, unit._localTransform);
       for (let i = 0; i < partial.joints.length; i++) {
         const path = partial.joints[i];
         const idx = joints.findIndex(p => p === path);
@@ -53466,7 +53466,7 @@ let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer
           continue;
         }
         joints.push(path);
-        bindposes.push(Mat4.multiply(new Mat4(), partial.bindposes[i] || Mat4.IDENTITY, m4_local));
+        bindposes.push(Mat4.multiply(new Mat4(), partial.bindposes[i] || Mat4.IDENTITY, m4_local$1));
       }
     }
     const idxMap = Array.from(Array(joints.length).keys()).sort((a, b) => {
@@ -53529,8 +53529,8 @@ let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer
       }
       const newMesh = this._createUnitMesh(i, unit.mesh);
       const dataView = new DataView(newMesh.data.buffer);
-      Mat4.invert(m4_local, unit._localTransform);
-      Mat4.transpose(m4_local, m4_local);
+      Mat4.invert(m4_local$1, unit._localTransform);
+      Mat4.transpose(m4_local$1, m4_local$1);
       const {
         offset
       } = unit;
@@ -53572,7 +53572,7 @@ let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer
           const normal = readBuffer(dataView, normalFormat, normalOffset, bundle.view.length, bundle.view.stride);
           for (let j = 0; j < normal.length; j += 3) {
             Vec3.fromArray(v3_1, normal, j);
-            Vec3.transformMat4Normal(v3_1, v3_1, m4_local);
+            Vec3.transformMat4Normal(v3_1, v3_1, m4_local$1);
             Vec3.toArray(normal, v3_1, j);
           }
           writeBuffer(dataView, normal, normalFormat, normalOffset, bundle.view.stride);
@@ -53591,7 +53591,7 @@ let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer
           const tangent = readBuffer(dataView, tangentFormat, tangentOffset, bundle.view.length, bundle.view.stride);
           for (let j = 0; j < tangent.length; j += 3) {
             Vec3.fromArray(v3_1, tangent, j);
-            Vec3.transformMat4Normal(v3_1, v3_1, m4_local);
+            Vec3.transformMat4Normal(v3_1, v3_1, m4_local$1);
             Vec3.toArray(tangent, v3_1, j);
           }
           writeBuffer(dataView, tangent, tangentFormat, tangentOffset, bundle.view.stride);
@@ -53795,13 +53795,13 @@ let SkinnedMeshBatchRenderer = (_dec6$5 = ccclass$9('cc.SkinnedMeshBatchRenderer
     });
     return newMesh;
   }
-}, (_initializer7$4 = applyDecoratedInitializer(_class5$a.prototype, "atlasSize", [serializable$8], function () {
+}, (_initializer7$4 = applyDecoratedInitializer(_class4$a.prototype, "atlasSize", [serializable$8], function () {
   return 1024;
-}), _initializer8$4 = applyDecoratedInitializer(_class5$a.prototype, "batchableTextureNames", [_dec8$3, serializable$8], function () {
+}), _initializer8$4 = applyDecoratedInitializer(_class4$a.prototype, "batchableTextureNames", [_dec8$3, serializable$8], function () {
   return [];
-}), _initializer9$4 = applyDecoratedInitializer(_class5$a.prototype, "units", [_dec9$2, serializable$8], function () {
+}), _initializer9$4 = applyDecoratedInitializer(_class4$a.prototype, "units", [_dec9$2, serializable$8], function () {
   return [];
-}), _applyDecoratedDescriptor(_class5$a.prototype, "mesh", [override], Object.getOwnPropertyDescriptor(_class5$a.prototype, "mesh"), _class5$a.prototype), _applyDecoratedDescriptor(_class5$a.prototype, "skeleton", [override], Object.getOwnPropertyDescriptor(_class5$a.prototype, "skeleton"), _class5$a.prototype)), _class5$a)) || _class4$c) || _class4$c);
+}), _applyDecoratedDescriptor(_class4$a.prototype, "mesh", [override], Object.getOwnPropertyDescriptor(_class4$a.prototype, "mesh"), _class4$a.prototype), _applyDecoratedDescriptor(_class4$a.prototype, "skeleton", [override], Object.getOwnPropertyDescriptor(_class4$a.prototype, "skeleton"), _class4$a.prototype)), _class4$a)) || _class3$a) || _class3$a);
 
 cclegacy.SkinningModelComponent = SkinnedMeshRenderer;
 setClassAlias(SkinnedMeshRenderer, 'cc.SkinningModelComponent');
@@ -53810,9 +53810,9 @@ setClassAlias(SkinnedMeshUnit, 'cc.SkinningModelUnit');
 cclegacy.BatchedSkinningModelComponent = SkinnedMeshBatchRenderer;
 setClassAlias(SkinnedMeshBatchRenderer, 'cc.BatchedSkinningModelComponent');
 
-var _dec$D, _dec2$l, _dec3$9, _dec4$6, _dec5$6, _class$C, _class2$A, _initializer$u, _initializer2$l, _dec6$4, _dec7$3, _dec8$2, _class4$b, _class5$9, _initializer3$b, _initializer4$9, _initializer5$6;
+var _dec$E, _dec2$l, _dec3$9, _dec4$6, _dec5$6, _class$F, _class2$u, _initializer$u, _initializer2$l, _dec6$4, _dec7$3, _dec8$2, _class3$9, _class4$9, _initializer3$b, _initializer4$9, _initializer5$6;
 const DEFAULT_SCREEN_OCCUPATION = [0.25, 0.125, 0.01];
-let LOD = (_dec$D = ccclass$9('cc.LOD'), _dec2$l = type$5([MeshRenderer]), _dec3$9 = type$5(CCFloat), _dec4$6 = type$5([MeshRenderer]), _dec5$6 = type$5([CCInteger]), _dec$D(_class$C = (_class2$A = class LOD {
+let LOD = (_dec$E = ccclass$9('cc.LOD'), _dec2$l = type$5([MeshRenderer]), _dec3$9 = type$5(CCFloat), _dec4$6 = type$5([MeshRenderer]), _dec5$6 = type$5([CCInteger]), _dec$E(_class$F = (_class2$u = class LOD {
   constructor() {
     this._screenUsagePercentage = _initializer$u && _initializer$u();
     this._renderers = _initializer2$l && _initializer2$l();
@@ -53909,12 +53909,12 @@ let LOD = (_dec$D = ccclass$9('cc.LOD'), _dec2$l = type$5([MeshRenderer]), _dec3
     this.deleteRenderer(index);
     this.insertRenderer(index, renderer);
   }
-}, (_initializer$u = applyDecoratedInitializer(_class2$A.prototype, "_screenUsagePercentage", [serializable$8], function () {
+}, (_initializer$u = applyDecoratedInitializer(_class2$u.prototype, "_screenUsagePercentage", [serializable$8], function () {
   return 1.0;
-}), _initializer2$l = applyDecoratedInitializer(_class2$A.prototype, "_renderers", [_dec2$l, serializable$8], function () {
+}), _initializer2$l = applyDecoratedInitializer(_class2$u.prototype, "_renderers", [_dec2$l, serializable$8], function () {
   return [];
-}), _applyDecoratedDescriptor(_class2$A.prototype, "screenUsagePercentage", [_dec3$9], Object.getOwnPropertyDescriptor(_class2$A.prototype, "screenUsagePercentage"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "renderers", [_dec4$6], Object.getOwnPropertyDescriptor(_class2$A.prototype, "renderers"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "triangleCount", [_dec5$6], Object.getOwnPropertyDescriptor(_class2$A.prototype, "triangleCount"), _class2$A.prototype)), _class2$A)) || _class$C);
-let LODGroup = (_dec6$4 = ccclass$9('cc.LODGroup'), _dec7$3 = type$5(CCFloat), _dec8$2 = type$5([LOD]), _dec6$4(_class4$b = (_class5$9 = class LODGroup extends Component {
+}), _applyDecoratedDescriptor(_class2$u.prototype, "screenUsagePercentage", [_dec3$9], Object.getOwnPropertyDescriptor(_class2$u.prototype, "screenUsagePercentage"), _class2$u.prototype), _applyDecoratedDescriptor(_class2$u.prototype, "renderers", [_dec4$6], Object.getOwnPropertyDescriptor(_class2$u.prototype, "renderers"), _class2$u.prototype), _applyDecoratedDescriptor(_class2$u.prototype, "triangleCount", [_dec5$6], Object.getOwnPropertyDescriptor(_class2$u.prototype, "triangleCount"), _class2$u.prototype)), _class2$u)) || _class$F);
+let LODGroup = (_dec6$4 = ccclass$9('cc.LODGroup'), _dec7$3 = type$5(CCFloat), _dec8$2 = type$5([LOD]), _dec6$4(_class3$9 = (_class4$9 = class LODGroup extends Component {
   constructor() {
     super();
     this._localBoundaryCenter = _initializer3$b && _initializer3$b();
@@ -54188,13 +54188,13 @@ let LODGroup = (_dec6$4 = ccclass$9('cc.LODGroup'), _dec7$3 = type$5(CCFloat), _
     this._detachFromScene();
     this._attachToScene();
   }
-}, (_initializer3$b = applyDecoratedInitializer(_class5$9.prototype, "_localBoundaryCenter", [serializable$8], function () {
+}, (_initializer3$b = applyDecoratedInitializer(_class4$9.prototype, "_localBoundaryCenter", [serializable$8], function () {
   return new Vec3(0, 0, 0);
-}), _initializer4$9 = applyDecoratedInitializer(_class5$9.prototype, "_objectSize", [serializable$8], function () {
+}), _initializer4$9 = applyDecoratedInitializer(_class4$9.prototype, "_objectSize", [serializable$8], function () {
   return 0;
-}), _initializer5$6 = applyDecoratedInitializer(_class5$9.prototype, "_LODs", [serializable$8], function () {
+}), _initializer5$6 = applyDecoratedInitializer(_class4$9.prototype, "_LODs", [serializable$8], function () {
   return [];
-}), _applyDecoratedDescriptor(_class5$9.prototype, "objectSize", [_dec7$3], Object.getOwnPropertyDescriptor(_class5$9.prototype, "objectSize"), _class5$9.prototype), _applyDecoratedDescriptor(_class5$9.prototype, "LODs", [_dec8$2], Object.getOwnPropertyDescriptor(_class5$9.prototype, "LODs"), _class5$9.prototype)), _class5$9)) || _class4$b);
+}), _applyDecoratedDescriptor(_class4$9.prototype, "objectSize", [_dec7$3], Object.getOwnPropertyDescriptor(_class4$9.prototype, "objectSize"), _class4$9.prototype), _applyDecoratedDescriptor(_class4$9.prototype, "LODs", [_dec8$2], Object.getOwnPropertyDescriptor(_class4$9.prototype, "LODs"), _class4$9.prototype)), _class4$9)) || _class3$9);
 
 const REFLECTION_PROBE_DEFAULT_MASK$1 = Layers.makeMaskExclude([Layers.BitMask.UI_2D, Layers.BitMask.UI_3D, Layers.BitMask.GIZMOS, Layers.BitMask.EDITOR, Layers.BitMask.SCENE_GIZMO, Layers.BitMask.PROFILER, Layers.Enum.IGNORE_RAYCAST]);
 class ReflectionProbeManager {
@@ -55569,7 +55569,7 @@ function absolute(v) {
   return v;
 }
 
-var _dec$C, _dec2$k, _dec3$8, _dec4$5, _dec5$5, _dec6$3, _dec7$2, _dec8$1, _dec9$1, _dec10$1, _class$B, _class2$z, _initializer$t, _initializer2$k, _initializer3$a, _initializer4$8, _initializer5$5, _initializer6$5, _initializer7$3, _initializer8$3, _initializer9$3, _initializer10$3, _class3$a;
+var _dec$D, _dec2$k, _dec3$8, _dec4$5, _dec5$5, _dec6$3, _dec7$2, _dec8$1, _dec9$1, _dec10$1, _class$E, _class2$t, _initializer$t, _initializer2$k, _initializer3$a, _initializer4$8, _initializer5$5, _initializer6$5, _initializer7$3, _initializer8$3, _initializer9$3, _initializer10$3, _ReflectionProbe;
 const tmpVec3 = v3();
 let ProbeResolution;
 (function (ProbeResolution) {
@@ -55577,7 +55577,7 @@ let ProbeResolution;
   ProbeResolution[ProbeResolution["Medium_512x512"] = 512] = "Medium_512x512";
   ProbeResolution[ProbeResolution["High_768x768"] = 768] = "High_768x768";
 })(ProbeResolution || (ProbeResolution = {}));
-let ReflectionProbe = (_dec$C = ccclass$9('cc.ReflectionProbe'), _dec2$k = type$5(Vec3), _dec3$8 = type$5(Enum(ProbeType)), _dec4$5 = type$5(Enum(ProbeResolution)), _dec5$5 = type$5(Enum(ProbeClearFlag)), _dec6$3 = type$5(Color), _dec7$2 = type$5(Layers.BitMask), _dec8$1 = type$5(Camera), _dec9$1 = type$5(CCBoolean), _dec10$1 = type$5(TextureCube), _dec$C(_class$B = (_class2$z = (_class3$a = class ReflectionProbe extends Component {
+let ReflectionProbe = (_dec$D = ccclass$9('cc.ReflectionProbe'), _dec2$k = type$5(Vec3), _dec3$8 = type$5(Enum(ProbeType)), _dec4$5 = type$5(Enum(ProbeResolution)), _dec5$5 = type$5(Enum(ProbeClearFlag)), _dec6$3 = type$5(Color), _dec7$2 = type$5(Layers.BitMask), _dec8$1 = type$5(Camera), _dec9$1 = type$5(CCBoolean), _dec10$1 = type$5(TextureCube), _dec$D(_class$E = (_class2$t = (_ReflectionProbe = class ReflectionProbe extends Component {
   constructor(...args) {
     super(...args);
     this._lastSize = v3();
@@ -55819,35 +55819,35 @@ let ReflectionProbe = (_dec$C = ccclass$9('cc.ReflectionProbe'), _dec2$k = type$
       this._probe.cubemap = this._cubemap;
     }
   }
-}, _class3$a.DEFAULT_CUBE_SIZE = v3(1, 1, 1), _class3$a.DEFAULT_PLANER_SIZE = v3(5, 0.5, 5), _class3$a), (_initializer$t = applyDecoratedInitializer(_class2$z.prototype, "_resolution", [serializable$8], function () {
+}, _ReflectionProbe.DEFAULT_CUBE_SIZE = v3(1, 1, 1), _ReflectionProbe.DEFAULT_PLANER_SIZE = v3(5, 0.5, 5), _ReflectionProbe), (_initializer$t = applyDecoratedInitializer(_class2$t.prototype, "_resolution", [serializable$8], function () {
   return 256;
-}), _initializer2$k = applyDecoratedInitializer(_class2$z.prototype, "_clearFlag", [serializable$8], function () {
+}), _initializer2$k = applyDecoratedInitializer(_class2$t.prototype, "_clearFlag", [serializable$8], function () {
   return ProbeClearFlag.SKYBOX;
-}), _initializer3$a = applyDecoratedInitializer(_class2$z.prototype, "_backgroundColor", [serializable$8], function () {
+}), _initializer3$a = applyDecoratedInitializer(_class2$t.prototype, "_backgroundColor", [serializable$8], function () {
   return new Color(0, 0, 0, 255);
-}), _initializer4$8 = applyDecoratedInitializer(_class2$z.prototype, "_visibility", [serializable$8], function () {
+}), _initializer4$8 = applyDecoratedInitializer(_class2$t.prototype, "_visibility", [serializable$8], function () {
   return CAMERA_DEFAULT_MASK;
-}), _initializer5$5 = applyDecoratedInitializer(_class2$z.prototype, "_probeType", [serializable$8], function () {
+}), _initializer5$5 = applyDecoratedInitializer(_class2$t.prototype, "_probeType", [serializable$8], function () {
   return ProbeType.CUBE;
-}), _initializer6$5 = applyDecoratedInitializer(_class2$z.prototype, "_cubemap", [serializable$8], function () {
+}), _initializer6$5 = applyDecoratedInitializer(_class2$t.prototype, "_cubemap", [serializable$8], function () {
   return null;
-}), _initializer7$3 = applyDecoratedInitializer(_class2$z.prototype, "_size", [serializable$8], function () {
+}), _initializer7$3 = applyDecoratedInitializer(_class2$t.prototype, "_size", [serializable$8], function () {
   return v3(1, 1, 1);
-}), _initializer8$3 = applyDecoratedInitializer(_class2$z.prototype, "_sourceCamera", [serializable$8], function () {
+}), _initializer8$3 = applyDecoratedInitializer(_class2$t.prototype, "_sourceCamera", [serializable$8], function () {
   return null;
-}), _initializer9$3 = applyDecoratedInitializer(_class2$z.prototype, "_probeId", [serializable$8], function () {
+}), _initializer9$3 = applyDecoratedInitializer(_class2$t.prototype, "_probeId", [serializable$8], function () {
   return -1;
-}), _initializer10$3 = applyDecoratedInitializer(_class2$z.prototype, "_fastBake", [serializable$8], function () {
+}), _initializer10$3 = applyDecoratedInitializer(_class2$t.prototype, "_fastBake", [serializable$8], function () {
   return false;
-}), _applyDecoratedDescriptor(_class2$z.prototype, "size", [_dec2$k], Object.getOwnPropertyDescriptor(_class2$z.prototype, "size"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "probeType", [_dec3$8], Object.getOwnPropertyDescriptor(_class2$z.prototype, "probeType"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "resolution", [_dec4$5], Object.getOwnPropertyDescriptor(_class2$z.prototype, "resolution"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "clearFlag", [_dec5$5], Object.getOwnPropertyDescriptor(_class2$z.prototype, "clearFlag"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "backgroundColor", [_dec6$3], Object.getOwnPropertyDescriptor(_class2$z.prototype, "backgroundColor"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "visibility", [_dec7$2], Object.getOwnPropertyDescriptor(_class2$z.prototype, "visibility"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "sourceCamera", [_dec8$1], Object.getOwnPropertyDescriptor(_class2$z.prototype, "sourceCamera"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "fastBake", [_dec9$1], Object.getOwnPropertyDescriptor(_class2$z.prototype, "fastBake"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "cubemap", [_dec10$1], Object.getOwnPropertyDescriptor(_class2$z.prototype, "cubemap"), _class2$z.prototype)), _class2$z)) || _class$B);
+}), _applyDecoratedDescriptor(_class2$t.prototype, "size", [_dec2$k], Object.getOwnPropertyDescriptor(_class2$t.prototype, "size"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "probeType", [_dec3$8], Object.getOwnPropertyDescriptor(_class2$t.prototype, "probeType"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "resolution", [_dec4$5], Object.getOwnPropertyDescriptor(_class2$t.prototype, "resolution"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "clearFlag", [_dec5$5], Object.getOwnPropertyDescriptor(_class2$t.prototype, "clearFlag"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "backgroundColor", [_dec6$3], Object.getOwnPropertyDescriptor(_class2$t.prototype, "backgroundColor"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "visibility", [_dec7$2], Object.getOwnPropertyDescriptor(_class2$t.prototype, "visibility"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "sourceCamera", [_dec8$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "sourceCamera"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "fastBake", [_dec9$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "fastBake"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "cubemap", [_dec10$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "cubemap"), _class2$t.prototype)), _class2$t)) || _class$E);
 
 legacyCC.utils = utils;
 
 const CLASS_NAME_PREFIX_ANIM = 'cc.animation.';
 const createEvalSymbol = Symbol('CreateEval');
 
-var _dec$B, _class$A, _class2$y, _initializer$s, _initializer2$j, _initializer3$9, _initializer4$7;
-(_dec$B = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$B(_class$A = (_class2$y = class EmbeddedPlayer extends EditorExtendable {
+var _dec$C, _class$D, _class2$s, _initializer$s, _initializer2$j, _initializer3$9, _initializer4$7;
+(_dec$C = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$C(_class$D = (_class2$s = class EmbeddedPlayer extends EditorExtendable {
   constructor(...args) {
     super(...args);
     this.begin = _initializer$s && _initializer$s();
@@ -55855,15 +55855,15 @@ var _dec$B, _class$A, _class2$y, _initializer$s, _initializer2$j, _initializer3$
     this.reconciledSpeed = _initializer3$9 && _initializer3$9();
     this.playable = _initializer4$7 && _initializer4$7();
   }
-}, (_initializer$s = applyDecoratedInitializer(_class2$y.prototype, "begin", [serializable$8], function () {
+}, (_initializer$s = applyDecoratedInitializer(_class2$s.prototype, "begin", [serializable$8], function () {
   return 0.0;
-}), _initializer2$j = applyDecoratedInitializer(_class2$y.prototype, "end", [serializable$8], function () {
+}), _initializer2$j = applyDecoratedInitializer(_class2$s.prototype, "end", [serializable$8], function () {
   return 0.0;
-}), _initializer3$9 = applyDecoratedInitializer(_class2$y.prototype, "reconciledSpeed", [serializable$8], function () {
+}), _initializer3$9 = applyDecoratedInitializer(_class2$s.prototype, "reconciledSpeed", [serializable$8], function () {
   return false;
-}), _initializer4$7 = applyDecoratedInitializer(_class2$y.prototype, "playable", [serializable$8], function () {
+}), _initializer4$7 = applyDecoratedInitializer(_class2$s.prototype, "playable", [serializable$8], function () {
   return null;
-})), _class2$y)) || _class$A);
+})), _class2$s)) || _class$D);
 class EmbeddedPlayable {}
 class EmbeddedPlayableState {
   constructor(randomAccess) {
@@ -56457,8 +56457,8 @@ class AnimationState extends Playable {
 }
 cclegacy.AnimationState = AnimationState;
 
-var _dec$A, _class$z, _class2$x, _initializer$r, _initializer2$i;
-(_dec$A = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$A(_class$z = (_class2$x = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
+var _dec$B, _class$C, _class2$r, _initializer$r, _initializer2$i;
+(_dec$B = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$B(_class$C = (_class2$r = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
     this.path = _initializer$r && _initializer$r();
@@ -56481,11 +56481,11 @@ var _dec$A, _class$z, _class2$x, _initializer$r, _initializer2$i;
     state.initialize(clipRoot);
     return new EmbeddedAnimationClipPlayableState(state);
   }
-}, (_initializer$r = applyDecoratedInitializer(_class2$x.prototype, "path", [serializable$8], function () {
+}, (_initializer$r = applyDecoratedInitializer(_class2$r.prototype, "path", [serializable$8], function () {
   return '';
-}), _initializer2$i = applyDecoratedInitializer(_class2$x.prototype, "clip", [serializable$8], function () {
+}), _initializer2$i = applyDecoratedInitializer(_class2$r.prototype, "clip", [serializable$8], function () {
   return null;
-})), _class2$x)) || _class$z);
+})), _class2$r)) || _class$C);
 class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   constructor(animationState) {
     super(true);
@@ -56512,8 +56512,8 @@ class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$z, _class$y, _class2$w, _initializer$q;
-(_dec$z = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$z(_class$y = (_class2$w = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
+var _dec$A, _class$B, _class2$q, _initializer$q;
+(_dec$A = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$A(_class$B = (_class2$q = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
     this.path = _initializer$q && _initializer$q();
@@ -56536,9 +56536,9 @@ var _dec$z, _class$y, _class2$w, _initializer$q;
     }
     return new EmbeddedParticleSystemPlayableState(particleSystem);
   }
-}, (_initializer$q = applyDecoratedInitializer(_class2$w.prototype, "path", [serializable$8], function () {
+}, (_initializer$q = applyDecoratedInitializer(_class2$q.prototype, "path", [serializable$8], function () {
   return '';
-})), _class2$w)) || _class$y);
+})), _class2$q)) || _class$B);
 class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   constructor(particleSystem) {
     super(false);
@@ -56561,14 +56561,14 @@ class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$y, _class$x, _class2$v, _initializer$p, _dec2$j, _class4$a, _class5$8, _initializer2$h;
+var _dec$z, _class$A, _class2$p, _initializer$p, _dec2$j, _class3$8, _class4$8, _initializer2$h;
 function isPropertyPath(path) {
   return typeof path === 'string' || typeof path === 'number';
 }
 function isCustomPath(path, constructor) {
   return path instanceof constructor;
 }
-let HierarchyPath = (_dec$y = ccclass$9('cc.animation.HierarchyPath'), _dec$y(_class$x = (_class2$v = class HierarchyPath {
+let HierarchyPath = (_dec$z = ccclass$9('cc.animation.HierarchyPath'), _dec$z(_class$A = (_class2$p = class HierarchyPath {
   constructor(path) {
     this.path = _initializer$p && _initializer$p();
     this.path = path || '';
@@ -56585,10 +56585,10 @@ let HierarchyPath = (_dec$y = ccclass$9('cc.animation.HierarchyPath'), _dec$y(_c
     }
     return result;
   }
-}, (_initializer$p = applyDecoratedInitializer(_class2$v.prototype, "path", [serializable$8], function () {
+}, (_initializer$p = applyDecoratedInitializer(_class2$p.prototype, "path", [serializable$8], function () {
   return '';
-})), _class2$v)) || _class$x);
-let ComponentPath = (_dec2$j = ccclass$9('cc.animation.ComponentPath'), _dec2$j(_class4$a = (_class5$8 = class ComponentPath {
+})), _class2$p)) || _class$A);
+let ComponentPath = (_dec2$j = ccclass$9('cc.animation.ComponentPath'), _dec2$j(_class3$8 = (_class4$8 = class ComponentPath {
   constructor(component) {
     this.component = _initializer2$h && _initializer2$h();
     this.component = component || '';
@@ -56605,15 +56605,15 @@ let ComponentPath = (_dec2$j = ccclass$9('cc.animation.ComponentPath'), _dec2$j(
     }
     return result;
   }
-}, (_initializer2$h = applyDecoratedInitializer(_class5$8.prototype, "component", [serializable$8], function () {
+}, (_initializer2$h = applyDecoratedInitializer(_class4$8.prototype, "component", [serializable$8], function () {
   return '';
-})), _class5$8)) || _class4$a);
+})), _class4$8)) || _class3$8);
 
-var _dec$x, _class$w, _class2$u, _initializer$o, _dec2$i, _class4$9, _class5$7, _initializer2$g, _initializer3$8, _class6$1, _dec3$7, _class7$3, _class8$2, _initializer4$6, _dec4$4, _class10$2, _class11$2, _initializer5$4, _dec5$4, _class13$2, _class14$1, _initializer6$4;
+var _dec$y, _class$z, _class2$o, _initializer$o, _dec2$i, _class3$7, _class4$7, _initializer2$g, _initializer3$8, _TrackBinding, _dec3$7, _class5$3, _class6$2, _initializer4$6, _dec4$4, _class7$2, _class8$2, _initializer5$4, _dec5$4, _class9$2, _class10$2, _initializer6$4;
 const normalizedFollowTag = Symbol('NormalizedFollow');
 const parseTrsPathTag = Symbol('ConvertAsTrsPath');
 const trackBindingTag = Symbol('TrackBinding');
-let TrackPath = (_dec$x = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$x(_class$w = (_class2$u = class TrackPath {
+let TrackPath = (_dec$y = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$y(_class$z = (_class2$o = class TrackPath {
   constructor() {
     this._paths = _initializer$o && _initializer$o();
   }
@@ -56747,10 +56747,10 @@ let TrackPath = (_dec$x = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$
     }
     return result;
   }
-}, (_initializer$o = applyDecoratedInitializer(_class2$u.prototype, "_paths", [serializable$8], function () {
+}, (_initializer$o = applyDecoratedInitializer(_class2$o.prototype, "_paths", [serializable$8], function () {
   return [];
-})), _class2$u)) || _class$w);
-let TrackBinding = (_dec2$i = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`), _dec2$i(_class4$9 = uniquelyReferenced(_class4$9 = (_class5$7 = (_class6$1 = class TrackBinding {
+})), _class2$o)) || _class$z);
+let TrackBinding = (_dec2$i = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`), _dec2$i(_class3$7 = uniquelyReferenced(_class3$7 = (_class4$7 = (_TrackBinding = class TrackBinding {
   constructor() {
     this.path = _initializer2$g && _initializer2$g();
     this.proxy = _initializer3$8 && _initializer3$8();
@@ -56844,13 +56844,13 @@ let TrackBinding = (_dec2$i = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`)
     }
     return false;
   }
-}, _class6$1._animationFunctions = new WeakMap(), _class6$1), (_initializer2$g = applyDecoratedInitializer(_class5$7.prototype, "path", [serializable$8], function () {
+}, _TrackBinding._animationFunctions = new WeakMap(), _TrackBinding), (_initializer2$g = applyDecoratedInitializer(_class4$7.prototype, "path", [serializable$8], function () {
   return new TrackPath();
-}), _initializer3$8 = applyDecoratedInitializer(_class5$7.prototype, "proxy", [serializable$8], null)), _class5$7)) || _class4$9) || _class4$9);
+}), _initializer3$8 = applyDecoratedInitializer(_class4$7.prototype, "proxy", [serializable$8], null)), _class4$7)) || _class3$7) || _class3$7);
 function isTrsPropertyName(name) {
   return name === 'position' || name === 'rotation' || name === 'scale' || name === 'eulerAngles';
 }
-let Track = (_dec3$7 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}Track`), _dec3$7(_class7$3 = (_class8$2 = class Track {
+let Track = (_dec3$7 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}Track`), _dec3$7(_class5$3 = (_class6$2 = class Track {
   constructor() {
     this._binding = _initializer4$6 && _initializer4$6();
   }
@@ -56883,10 +56883,10 @@ let Track = (_dec3$7 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}Track`), _dec3$7(_cla
     }
     return range;
   }
-}, (_initializer4$6 = applyDecoratedInitializer(_class8$2.prototype, "_binding", [serializable$8], function () {
+}, (_initializer4$6 = applyDecoratedInitializer(_class6$2.prototype, "_binding", [serializable$8], function () {
   return new TrackBinding();
-})), _class8$2)) || _class7$3);
-let Channel = (_dec4$4 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}Channel`), _dec4$4(_class10$2 = (_class11$2 = class Channel {
+})), _class6$2)) || _class5$3);
+let Channel = (_dec4$4 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}Channel`), _dec4$4(_class7$2 = (_class8$2 = class Channel {
   constructor(curve) {
     this.name = '';
     this._curve = _initializer5$4 && _initializer5$4();
@@ -56896,8 +56896,8 @@ let Channel = (_dec4$4 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}Channel`), _dec4$4(
   get curve() {
     return this._curve;
   }
-}, (_initializer5$4 = applyDecoratedInitializer(_class11$2.prototype, "_curve", [serializable$8], null)), _class11$2)) || _class10$2);
-let SingleChannelTrack = (_dec5$4 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SingleChannelTrack`), _dec5$4(_class13$2 = (_class14$1 = class SingleChannelTrack extends Track {
+}, (_initializer5$4 = applyDecoratedInitializer(_class8$2.prototype, "_curve", [serializable$8], null)), _class8$2)) || _class7$2);
+let SingleChannelTrack = (_dec5$4 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SingleChannelTrack`), _dec5$4(_class9$2 = (_class10$2 = class SingleChannelTrack extends Track {
   constructor() {
     super();
     this._channel = _initializer6$4 && _initializer6$4();
@@ -56918,7 +56918,7 @@ let SingleChannelTrack = (_dec5$4 = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SingleCh
     } = this._channel;
     return new SingleChannelTrackEval(curve);
   }
-}, (_initializer6$4 = applyDecoratedInitializer(_class14$1.prototype, "_channel", [serializable$8], null)), _class14$1)) || _class13$2);
+}, (_initializer6$4 = applyDecoratedInitializer(_class10$2.prototype, "_channel", [serializable$8], null)), _class10$2)) || _class9$2);
 class SingleChannelTrackEval {
   constructor(_curve) {
     this._curve = _curve;
@@ -56931,12 +56931,12 @@ class SingleChannelTrackEval {
   }
 }
 
-var _dec$w, _class$v, _class2$t, _initializer$n;
+var _dec$x, _class$y, _class2$n, _initializer$n;
 const {
   ccclass: ccclass$1,
   serializable: serializable$1
 } = _decorator;
-(_dec$w = ccclass$1(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$w(_class$v = (_class2$t = class RealArrayTrack extends Track {
+(_dec$x = ccclass$1(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$x(_class$y = (_class2$n = class RealArrayTrack extends Track {
   constructor(...args) {
     super(...args);
     this._channels = _initializer$n && _initializer$n();
@@ -56965,9 +56965,9 @@ const {
       curve
     }) => curve));
   }
-}, (_initializer$n = applyDecoratedInitializer(_class2$t.prototype, "_channels", [serializable$1], function () {
+}, (_initializer$n = applyDecoratedInitializer(_class2$n.prototype, "_channels", [serializable$1], function () {
   return [];
-})), _class2$t)) || _class$v);
+})), _class2$n)) || _class$y);
 class RealArrayTrackEval {
   constructor(_curves) {
     this._curves = _curves;
@@ -56988,8 +56988,8 @@ class RealArrayTrackEval {
   }
 }
 
-var _dec$v, _class$u, _class2$s, _initializer$m, _initializer2$f, _descriptor;
-let UniformProxyFactory = (_dec$v = ccclass$9('cc.animation.UniformProxyFactory'), _dec$v(_class$u = (_class2$s = class UniformProxyFactory {
+var _dec$w, _class$x, _class2$m, _initializer$m, _initializer2$f, _descriptor;
+let UniformProxyFactory = (_dec$w = ccclass$9('cc.animation.UniformProxyFactory'), _dec$w(_class$x = (_class2$m = class UniformProxyFactory {
   constructor(uniformName, passIndex) {
     this.passIndex = _initializer$m && _initializer$m();
     this.uniformName = _initializer2$f && _initializer2$f();
@@ -57062,18 +57062,18 @@ let UniformProxyFactory = (_dec$v = ccclass$9('cc.animation.UniformProxyFactory'
       };
     }
   }
-}, (_initializer$m = applyDecoratedInitializer(_class2$s.prototype, "passIndex", [serializable$8], function () {
+}, (_initializer$m = applyDecoratedInitializer(_class2$m.prototype, "passIndex", [serializable$8], function () {
   return 0;
-}), _initializer2$f = applyDecoratedInitializer(_class2$s.prototype, "uniformName", [serializable$8], function () {
+}), _initializer2$f = applyDecoratedInitializer(_class2$m.prototype, "uniformName", [serializable$8], function () {
   return '';
-}), _descriptor = _applyDecoratedDescriptor(_class2$s.prototype, "channelIndex", [float], {
+}), _descriptor = _applyDecoratedDescriptor(_class2$m.prototype, "channelIndex", [float], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function () {
     return undefined;
   }
-})), _class2$s)) || _class$u);
+})), _class2$m)) || _class$x);
 function isUniformArray(pass, name) {
   for (const block of pass.shaderInfo.blocks) {
     for (const uniform of block.members) {
@@ -57085,8 +57085,8 @@ function isUniformArray(pass, name) {
   return false;
 }
 
-var _dec$u, _class$t, _class2$r, _initializer$l, _initializer2$e, _dec2$h, _class4$8, _class5$6, _initializer3$7, _dec3$6, _class7$2;
-let MorphWeightValueProxy = (_dec$u = ccclass$9('cc.animation.MorphWeightValueProxy'), _dec$u(_class$t = (_class2$r = class MorphWeightValueProxy {
+var _dec$v, _class$w, _class2$l, _initializer$l, _initializer2$e, _dec2$h, _class3$6, _class4$6, _initializer3$7, _dec3$6, _class5$2;
+let MorphWeightValueProxy = (_dec$v = ccclass$9('cc.animation.MorphWeightValueProxy'), _dec$v(_class$w = (_class2$l = class MorphWeightValueProxy {
   constructor() {
     this.subMeshIndex = _initializer$l && _initializer$l();
     this.shapeIndex = _initializer2$e && _initializer2$e();
@@ -57098,12 +57098,12 @@ let MorphWeightValueProxy = (_dec$u = ccclass$9('cc.animation.MorphWeightValuePr
       }
     };
   }
-}, (_initializer$l = applyDecoratedInitializer(_class2$r.prototype, "subMeshIndex", [serializable$8], function () {
+}, (_initializer$l = applyDecoratedInitializer(_class2$l.prototype, "subMeshIndex", [serializable$8], function () {
   return 0;
-}), _initializer2$e = applyDecoratedInitializer(_class2$r.prototype, "shapeIndex", [serializable$8], function () {
+}), _initializer2$e = applyDecoratedInitializer(_class2$l.prototype, "shapeIndex", [serializable$8], function () {
   return 0;
-})), _class2$r)) || _class$t);
-let MorphWeightsValueProxy = (_dec2$h = ccclass$9('cc.animation.MorphWeightsValueProxy'), _dec2$h(_class4$8 = (_class5$6 = class MorphWeightsValueProxy {
+})), _class2$l)) || _class$w);
+let MorphWeightsValueProxy = (_dec2$h = ccclass$9('cc.animation.MorphWeightsValueProxy'), _dec2$h(_class3$6 = (_class4$6 = class MorphWeightsValueProxy {
   constructor() {
     this.subMeshIndex = _initializer3$7 && _initializer3$7();
   }
@@ -57114,10 +57114,10 @@ let MorphWeightsValueProxy = (_dec2$h = ccclass$9('cc.animation.MorphWeightsValu
       }
     };
   }
-}, (_initializer3$7 = applyDecoratedInitializer(_class5$6.prototype, "subMeshIndex", [serializable$8], function () {
+}, (_initializer3$7 = applyDecoratedInitializer(_class4$6.prototype, "subMeshIndex", [serializable$8], function () {
   return 0;
-})), _class5$6)) || _class4$8);
-let MorphWeightsAllValueProxy = (_dec3$6 = ccclass$9('cc.animation.MorphWeightsAllValueProxy'), _dec3$6(_class7$2 = class MorphWeightsAllValueProxy {
+})), _class4$6)) || _class3$6);
+let MorphWeightsAllValueProxy = (_dec3$6 = ccclass$9('cc.animation.MorphWeightsAllValueProxy'), _dec3$6(_class5$2 = class MorphWeightsAllValueProxy {
   forTarget(target) {
     return {
       set: value => {
@@ -57129,9 +57129,9 @@ let MorphWeightsAllValueProxy = (_dec3$6 = ccclass$9('cc.animation.MorphWeightsA
       }
     };
   }
-}) || _class7$2);
+}) || _class5$2);
 
-var _dec2$g, _class4$7, _class5$5, _initializer4$5, _initializer5$3, _initializer6$3;
+var _dec2$g, _class3$5, _class4$5, _initializer4$5, _initializer5$3, _initializer6$3;
 function makeCubicSplineValueConstructor(name, ConstructorX, scaleFx, scaleAndAdd) {
   var _dec, _class, _class2, _initializer, _initializer2, _initializer3;
   let tempValue = new ConstructorX();
@@ -57190,7 +57190,7 @@ const CubicSplineVec3Value = makeCubicSplineValueConstructor('cc.CubicSplineVec3
 const CubicSplineVec4Value = makeCubicSplineValueConstructor('cc.CubicSplineVec4Value', Vec4, Vec4.multiplyScalar, Vec4.scaleAndAdd);
 
 const CubicSplineQuatValue = makeCubicSplineValueConstructor('cc.CubicSplineQuatValue', Quat, Quat.multiplyScalar, Quat.scaleAndAdd);
-let CubicSplineNumberValue = (_dec2$g = ccclass$9('cc.CubicSplineNumberValue'), _dec2$g(_class4$7 = (_class5$5 = class CubicSplineNumberValue {
+let CubicSplineNumberValue = (_dec2$g = ccclass$9('cc.CubicSplineNumberValue'), _dec2$g(_class3$5 = (_class4$5 = class CubicSplineNumberValue {
   constructor(dataPoint, inTangent, outTangent) {
     this.dataPoint = _initializer4$5 && _initializer4$5();
     this.inTangent = _initializer5$3 && _initializer5$3();
@@ -57215,28 +57215,28 @@ let CubicSplineNumberValue = (_dec2$g = ccclass$9('cc.CubicSplineNumberValue'), 
   getNoLerp() {
     return this.dataPoint;
   }
-}, (_initializer4$5 = applyDecoratedInitializer(_class5$5.prototype, "dataPoint", [serializable$8], function () {
+}, (_initializer4$5 = applyDecoratedInitializer(_class4$5.prototype, "dataPoint", [serializable$8], function () {
   return 0;
-}), _initializer5$3 = applyDecoratedInitializer(_class5$5.prototype, "inTangent", [serializable$8], function () {
+}), _initializer5$3 = applyDecoratedInitializer(_class4$5.prototype, "inTangent", [serializable$8], function () {
   return 0;
-}), _initializer6$3 = applyDecoratedInitializer(_class5$5.prototype, "outTangent", [serializable$8], function () {
+}), _initializer6$3 = applyDecoratedInitializer(_class4$5.prototype, "outTangent", [serializable$8], function () {
   return 0;
-})), _class5$5)) || _class4$7);
+})), _class4$5)) || _class3$5);
 
-var _dec$t, _class$s;
-let RealTrack = (_dec$t = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$t(_class$s = class RealTrack extends SingleChannelTrack {
+var _dec$u, _class$v;
+let RealTrack = (_dec$u = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$u(_class$v = class RealTrack extends SingleChannelTrack {
   createCurve() {
     return new RealCurve();
   }
-}) || _class$s);
+}) || _class$v);
 
 function maskIfEmpty(curve) {
   return curve.keyFramesCount === 0 ? undefined : curve;
 }
 
-var _dec$s, _class$r, _class2$q, _initializer$k, _initializer2$d;
+var _dec$t, _class$u, _class2$k, _initializer$k, _initializer2$d;
 const CHANNEL_NAMES$2 = ['X', 'Y', 'Z', 'W'];
-let VectorTrack = (_dec$s = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$s(_class$r = (_class2$q = class VectorTrack extends Track {
+let VectorTrack = (_dec$t = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$t(_class$u = (_class2$k = class VectorTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$k && _initializer$k();
@@ -57268,9 +57268,9 @@ let VectorTrack = (_dec$s = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _
         return new Vec4TrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve), maskIfEmpty(this._channels[2].curve), maskIfEmpty(this._channels[3].curve));
     }
   }
-}, (_initializer$k = applyDecoratedInitializer(_class2$q.prototype, "_channels", [serializable$8], null), _initializer2$d = applyDecoratedInitializer(_class2$q.prototype, "_nComponents", [serializable$8], function () {
+}, (_initializer$k = applyDecoratedInitializer(_class2$k.prototype, "_channels", [serializable$8], null), _initializer2$d = applyDecoratedInitializer(_class2$k.prototype, "_nComponents", [serializable$8], function () {
   return 4;
-})), _class2$q)) || _class$r);
+})), _class2$k)) || _class$u);
 class Vec2TrackEval {
   constructor(_x, _y) {
     this._result = new Vec2();
@@ -57356,15 +57356,15 @@ class Vec4TrackEval {
   }
 }
 
-var _dec$r, _class$q;
-let QuatTrack = (_dec$r = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$r(_class$q = class QuatTrack extends SingleChannelTrack {
+var _dec$s, _class$t;
+let QuatTrack = (_dec$s = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$s(_class$t = class QuatTrack extends SingleChannelTrack {
   createCurve() {
     return new QuatCurve();
   }
   [createEvalSymbol]() {
     return new QuatTrackEval(this.channels()[0].curve);
   }
-}) || _class$q);
+}) || _class$t);
 class QuatTrackEval {
   constructor(_curve) {
     this._result = new Quat();
@@ -57379,9 +57379,9 @@ class QuatTrackEval {
   }
 }
 
-var _dec$q, _class$p, _class2$p, _initializer$j;
+var _dec$r, _class$s, _class2$j, _initializer$j;
 const CHANNEL_NAMES$1 = ['Red', 'Green', 'Blue', 'Alpha'];
-let ColorTrack = (_dec$q = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$q(_class$p = (_class2$p = class ColorTrack extends Track {
+let ColorTrack = (_dec$r = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$r(_class$s = (_class2$j = class ColorTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$j && _initializer$j();
@@ -57398,7 +57398,7 @@ let ColorTrack = (_dec$q = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _de
   [createEvalSymbol]() {
     return new ColorTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve), maskIfEmpty(this._channels[2].curve), maskIfEmpty(this._channels[3].curve));
   }
-}, (_initializer$j = applyDecoratedInitializer(_class2$p.prototype, "_channels", [serializable$8], null)), _class2$p)) || _class$p);
+}, (_initializer$j = applyDecoratedInitializer(_class2$j.prototype, "_channels", [serializable$8], null)), _class2$j)) || _class$s);
 class ColorTrackEval {
   constructor(_x, _y, _z, _w) {
     this._result = new Color();
@@ -57430,9 +57430,9 @@ class ColorTrackEval {
   }
 }
 
-var _dec$p, _class$o, _class2$o, _initializer$i;
+var _dec$q, _class$r, _class2$i, _initializer$i;
 const CHANNEL_NAMES = ['Width', 'Height'];
-let SizeTrack = (_dec$p = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$p(_class$o = (_class2$o = class SizeTrack extends Track {
+let SizeTrack = (_dec$q = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$q(_class$r = (_class2$i = class SizeTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$i && _initializer$i();
@@ -57449,7 +57449,7 @@ let SizeTrack = (_dec$p = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$
   [createEvalSymbol]() {
     return new SizeTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve));
   }
-}, (_initializer$i = applyDecoratedInitializer(_class2$o.prototype, "_channels", [serializable$8], null)), _class2$o)) || _class$o);
+}, (_initializer$i = applyDecoratedInitializer(_class2$i.prototype, "_channels", [serializable$8], null)), _class2$i)) || _class$r);
 class SizeTrackEval {
   constructor(_width, _height) {
     this._result = new Size();
@@ -57474,12 +57474,12 @@ class SizeTrackEval {
   }
 }
 
-var _dec$o, _class$n;
-let ObjectTrack = (_dec$o = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$o(_class$n = class ObjectTrack extends SingleChannelTrack {
+var _dec$p, _class$q;
+let ObjectTrack = (_dec$p = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$p(_class$q = class ObjectTrack extends SingleChannelTrack {
   createCurve() {
     return new ObjectCurve();
   }
-}) || _class$n);
+}) || _class$q);
 
 var animation = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -57735,16 +57735,16 @@ const selectLerpFx = (() => {
   };
 })();
 
-var _dec$n, _class$m, _class2$n, _initializer$h, _dec2$f, _class4$6, _class5$4, _initializer2$c;
-let UntypedTrackChannel = (_dec$n = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$n(_class$m = (_class2$n = class UntypedTrackChannel extends Channel {
+var _dec$o, _class$p, _class2$h, _initializer$h, _dec2$f, _class3$4, _class4$4, _initializer2$c;
+let UntypedTrackChannel = (_dec$o = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$o(_class$p = (_class2$h = class UntypedTrackChannel extends Channel {
   constructor() {
     super(new RealCurve());
     this.property = _initializer$h && _initializer$h();
   }
-}, (_initializer$h = applyDecoratedInitializer(_class2$n.prototype, "property", [serializable$8], function () {
+}, (_initializer$h = applyDecoratedInitializer(_class2$h.prototype, "property", [serializable$8], function () {
   return '';
-})), _class2$n)) || _class$m);
-let UntypedTrack = (_dec2$f = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`), _dec2$f(_class4$6 = (_class5$4 = class UntypedTrack extends Track {
+})), _class2$h)) || _class$p);
+let UntypedTrack = (_dec2$f = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`), _dec2$f(_class3$4 = (_class4$4 = class UntypedTrack extends Track {
   constructor(...args) {
     super(...args);
     this._channels = _initializer2$c && _initializer2$c();
@@ -57833,9 +57833,9 @@ let UntypedTrack = (_dec2$f = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`)
     }
     return null;
   }
-}, (_initializer2$c = applyDecoratedInitializer(_class5$4.prototype, "_channels", [serializable$8], function () {
+}, (_initializer2$c = applyDecoratedInitializer(_class4$4.prototype, "_channels", [serializable$8], function () {
   return [];
-})), _class5$4)) || _class4$6);
+})), _class4$4)) || _class3$4);
 
 class AnimationClipLegacyData {
   constructor(duration) {
@@ -58339,7 +58339,7 @@ function ensureRightTangentWeightMode(tangentWeightMode) {
   }
 }
 
-var _dec$m, _class$l, _class2$m, _initializer$g, _dec2$e, _class4$5, _class5$3, _initializer2$b, _initializer3$6, _initializer4$4, _initializer5$2, _dec3$5, _class7$1, _class8$1, _initializer6$2, _initializer7$2, _dec4$3, _class10$1, _dec5$3, _class11$1, _dec6$2, _class12, _class13$1, _initializer8$2, _initializer9$2, _dec7$1, _class20$1, _class21, _initializer10$2, _initializer11$2, _initializer12$2, _initializer13$2;
+var _dec$n, _class$o, _class2$g, _initializer$g, _dec2$e, _class3$3, _class4$3, _initializer2$b, _initializer3$6, _initializer4$4, _initializer5$2, _dec3$5, _class5$1, _class6$1, _initializer6$2, _initializer7$2, _dec4$3, _class7$1, _dec5$3, _class8$1, _dec6$2, _class9$1, _class10$1, _initializer8$2, _initializer9$2, _dec7$1, _class11$1, _class12$1, _initializer10$2, _initializer11$2, _initializer12$2, _initializer13$2;
 const {
   ccclass,
   serializable
@@ -58347,7 +58347,7 @@ const {
 function throwIfSplitMethodIsNotValid() {
   throw new Error(`split() only valid in Editor.`);
 }
-(_dec$m = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$m(_class$l = (_class2$m = class ExoticAnimation {
+(_dec$n = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$n(_class$o = (_class2$g = class ExoticAnimation {
   constructor() {
     this._nodeAnimations = _initializer$g && _initializer$g();
   }
@@ -58375,10 +58375,10 @@ function throwIfSplitMethodIsNotValid() {
   toHashString() {
     return this._nodeAnimations.map(nodeAnimation => nodeAnimation.toHashString()).join('\n');
   }
-}, (_initializer$g = applyDecoratedInitializer(_class2$m.prototype, "_nodeAnimations", [serializable], function () {
+}, (_initializer$g = applyDecoratedInitializer(_class2$g.prototype, "_nodeAnimations", [serializable], function () {
   return [];
-})), _class2$m)) || _class$l);
-let ExoticNodeAnimation = (_dec2$e = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticNodeAnimation`), _dec2$e(_class4$5 = (_class5$3 = class ExoticNodeAnimation {
+})), _class2$g)) || _class$o);
+let ExoticNodeAnimation = (_dec2$e = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticNodeAnimation`), _dec2$e(_class3$3 = (_class4$3 = class ExoticNodeAnimation {
   constructor(path) {
     this._path = _initializer2$b && _initializer2$b();
     this._position = _initializer3$6 && _initializer3$6();
@@ -58417,22 +58417,22 @@ let ExoticNodeAnimation = (_dec2$e = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticNod
     var _this$_position$toHas, _this$_position, _this$_scale$toHashSt, _this$_scale, _this$_rotation$toHas, _this$_rotation;
     return `${this._path}\n${(_this$_position$toHas = (_this$_position = this._position) == null ? void 0 : _this$_position.toHashString()) !== null && _this$_position$toHas !== void 0 ? _this$_position$toHas : ''}${(_this$_scale$toHashSt = (_this$_scale = this._scale) == null ? void 0 : _this$_scale.toHashString()) !== null && _this$_scale$toHashSt !== void 0 ? _this$_scale$toHashSt : ''}${(_this$_rotation$toHas = (_this$_rotation = this._rotation) == null ? void 0 : _this$_rotation.toHashString()) !== null && _this$_rotation$toHas !== void 0 ? _this$_rotation$toHas : ''}`;
   }
-}, (_initializer2$b = applyDecoratedInitializer(_class5$3.prototype, "_path", [serializable], function () {
+}, (_initializer2$b = applyDecoratedInitializer(_class4$3.prototype, "_path", [serializable], function () {
   return '';
-}), _initializer3$6 = applyDecoratedInitializer(_class5$3.prototype, "_position", [serializable], function () {
+}), _initializer3$6 = applyDecoratedInitializer(_class4$3.prototype, "_position", [serializable], function () {
   return null;
-}), _initializer4$4 = applyDecoratedInitializer(_class5$3.prototype, "_rotation", [serializable], function () {
+}), _initializer4$4 = applyDecoratedInitializer(_class4$3.prototype, "_rotation", [serializable], function () {
   return null;
-}), _initializer5$2 = applyDecoratedInitializer(_class5$3.prototype, "_scale", [serializable], function () {
+}), _initializer5$2 = applyDecoratedInitializer(_class4$3.prototype, "_scale", [serializable], function () {
   return null;
-})), _class5$3)) || _class4$5);
+})), _class4$3)) || _class3$3);
 function floatToHashString(value) {
   return value.toPrecision(2);
 }
 function floatArrayToHashString(values) {
   return values.map(v => Number.parseFloat(floatToHashString(v))).join(' ');
 }
-let ExoticVectorLikeTrackValues = (_dec3$5 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticVectorLikeTrackValues`), _dec3$5(_class7$1 = (_class8$1 = class ExoticVectorLikeTrackValues {
+let ExoticVectorLikeTrackValues = (_dec3$5 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticVectorLikeTrackValues`), _dec3$5(_class5$1 = (_class6$1 = class ExoticVectorLikeTrackValues {
   constructor(values) {
     this._values = _initializer6$2 && _initializer6$2();
     this._isQuantized = _initializer7$2 && _initializer7$2();
@@ -58453,10 +58453,10 @@ let ExoticVectorLikeTrackValues = (_dec3$5 = ccclass(`${CLASS_NAME_PREFIX_ANIM}E
     } = this;
     return `${isQuantized} ${isQuantized ? values.toHashString() : floatArrayToHashString(values)}`;
   }
-}, (_initializer6$2 = applyDecoratedInitializer(_class8$1.prototype, "_values", [serializable], null), _initializer7$2 = applyDecoratedInitializer(_class8$1.prototype, "_isQuantized", [serializable], function () {
+}, (_initializer6$2 = applyDecoratedInitializer(_class6$1.prototype, "_values", [serializable], null), _initializer7$2 = applyDecoratedInitializer(_class6$1.prototype, "_isQuantized", [serializable], function () {
   return false;
-})), _class8$1)) || _class7$1);
-let ExoticVec3TrackValues = (_dec4$3 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticVec3TrackValues`), _dec4$3(_class10$1 = class ExoticVec3TrackValues extends ExoticVectorLikeTrackValues {
+})), _class6$1)) || _class5$1);
+let ExoticVec3TrackValues = (_dec4$3 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticVec3TrackValues`), _dec4$3(_class7$1 = class ExoticVec3TrackValues extends ExoticVectorLikeTrackValues {
   static imitate(values, model) {
     const trackValues = new ExoticVec3TrackValues(values);
     if (model._isQuantized) {
@@ -58489,8 +58489,8 @@ let ExoticVec3TrackValues = (_dec4$3 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticV
     }
     Vec3.lerp(resultValue, prevValue, nextValue, ratio);
   }
-}) || _class10$1);
-let ExoticQuatTrackValues = (_dec5$3 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticQuatTrackValues`), _dec5$3(_class11$1 = class ExoticQuatTrackValues extends ExoticVectorLikeTrackValues {
+}) || _class7$1);
+let ExoticQuatTrackValues = (_dec5$3 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticQuatTrackValues`), _dec5$3(_class8$1 = class ExoticQuatTrackValues extends ExoticVectorLikeTrackValues {
   static imitate(values, model) {
     const trackValues = new ExoticQuatTrackValues(values);
     if (model._isQuantized) {
@@ -58523,8 +58523,8 @@ let ExoticQuatTrackValues = (_dec5$3 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticQ
     }
     Quat.slerp(resultValue, prevValue, nextValue, ratio);
   }
-}) || _class11$1);
-let ExoticTrack = (_dec6$2 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticTrack`), _dec6$2(_class12 = (_class13$1 = class ExoticTrack {
+}) || _class8$1);
+let ExoticTrack = (_dec6$2 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticTrack`), _dec6$2(_class9$1 = (_class10$1 = class ExoticTrack {
   constructor(times, values) {
     this.times = _initializer8$2 && _initializer8$2();
     this.values = _initializer9$2 && _initializer9$2();
@@ -58538,7 +58538,7 @@ let ExoticTrack = (_dec6$2 = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticTrack`), _d
     } = this;
     return `times: ${floatArrayToHashString(times)}; values: ${values.toHashString()}`;
   }
-}, (_initializer8$2 = applyDecoratedInitializer(_class13$1.prototype, "times", [serializable], null), _initializer9$2 = applyDecoratedInitializer(_class13$1.prototype, "values", [serializable], null)), _class13$1)) || _class12);
+}, (_initializer8$2 = applyDecoratedInitializer(_class10$1.prototype, "times", [serializable], null), _initializer9$2 = applyDecoratedInitializer(_class10$1.prototype, "values", [serializable], null)), _class10$1)) || _class9$1);
 class ExoticTrsAnimationEvaluator {
   constructor(nodeAnimations, binder) {
     this._nodeEvaluations = void 0;
@@ -58738,7 +58738,7 @@ function getFloatArrayPrecision(array) {
       return FloatPrecision.FLOAT_64;
   }
 }
-let QuantizedFloatArray = (_dec7$1 = ccclass(`${CLASS_NAME_PREFIX_ANIM}QuantizedFloatArray`), _dec7$1(_class20$1 = (_class21 = class QuantizedFloatArray {
+let QuantizedFloatArray = (_dec7$1 = ccclass(`${CLASS_NAME_PREFIX_ANIM}QuantizedFloatArray`), _dec7$1(_class11$1 = (_class12$1 = class QuantizedFloatArray {
   get quantizationType() {
     switch (this.values.BYTES_PER_ELEMENT) {
       default:
@@ -58767,7 +58767,7 @@ let QuantizedFloatArray = (_dec7$1 = ccclass(`${CLASS_NAME_PREFIX_ANIM}Quantized
     } = this;
     return `${originalPrecision} ${floatToHashString(min)} ${floatToHashString(extent)} ${values.join(' ')}`;
   }
-}, (_initializer10$2 = applyDecoratedInitializer(_class21.prototype, "originalPrecision", [serializable], null), _initializer11$2 = applyDecoratedInitializer(_class21.prototype, "min", [serializable], null), _initializer12$2 = applyDecoratedInitializer(_class21.prototype, "extent", [serializable], null), _initializer13$2 = applyDecoratedInitializer(_class21.prototype, "values", [serializable], null)), _class21)) || _class20$1);
+}, (_initializer10$2 = applyDecoratedInitializer(_class12$1.prototype, "originalPrecision", [serializable], null), _initializer11$2 = applyDecoratedInitializer(_class12$1.prototype, "min", [serializable], null), _initializer12$2 = applyDecoratedInitializer(_class12$1.prototype, "extent", [serializable], null), _initializer13$2 = applyDecoratedInitializer(_class12$1.prototype, "values", [serializable], null)), _class12$1)) || _class11$1);
 function quantize(values, type) {
   const TypedArrayViewConstructor = QUANTIZATION_TYPE_TO_ARRAY_VIEW_CONSTRUCTOR_MAP[type];
   const MAX = 1 << TypedArrayViewConstructor.BYTES_PER_ELEMENT;
@@ -58806,17 +58806,17 @@ function loadQuatFromQuantized(values, index, out) {
   Quat.set(out, indexQuantized(values, 4 * index + 0), indexQuantized(values, 4 * index + 1), indexQuantized(values, 4 * index + 2), indexQuantized(values, 4 * index + 3));
 }
 
-var _dec$l, _class$k, _class2$l, _initializer$f, _initializer2$a;
-let AuxiliaryCurveEntry = (_dec$l = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$l(_class$k = (_class2$l = class AuxiliaryCurveEntry {
+var _dec$m, _class$n, _class2$f, _initializer$f, _initializer2$a;
+let AuxiliaryCurveEntry = (_dec$m = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$m(_class$n = (_class2$f = class AuxiliaryCurveEntry {
   constructor() {
     this.name = _initializer$f && _initializer$f();
     this.curve = _initializer2$a && _initializer2$a();
   }
-}, (_initializer$f = applyDecoratedInitializer(_class2$l.prototype, "name", [serializable$8], function () {
+}, (_initializer$f = applyDecoratedInitializer(_class2$f.prototype, "name", [serializable$8], function () {
   return '';
-}), _initializer2$a = applyDecoratedInitializer(_class2$l.prototype, "curve", [serializable$8], function () {
+}), _initializer2$a = applyDecoratedInitializer(_class2$f.prototype, "curve", [serializable$8], function () {
   return new RealCurve();
-})), _class2$l)) || _class$k);
+})), _class2$f)) || _class$n);
 
 function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   const components = node.components;
@@ -58830,7 +58830,7 @@ function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   }
 }
 
-var _dec$k, _class$j, _class2$k, _initializer$e, _initializer2$9, _initializer3$5, _initializer4$3, _initializer5$1, _initializer6$1, _initializer7$1, _initializer8$1, _initializer9$1, _initializer10$1, _initializer11$1, _initializer12$1, _class3$9, _dec2$d, _class4$4, _class5$2, _initializer13$1, _initializer14$1;
+var _dec$l, _class$m, _class2$e, _initializer$e, _initializer2$9, _initializer3$5, _initializer4$3, _initializer5$1, _initializer6$1, _initializer7$1, _initializer8$1, _initializer9$1, _initializer10$1, _initializer11$1, _initializer12$1, _AnimationClip, _dec2$d, _class3$2, _class4$2, _initializer13$1, _initializer14$1;
 const searchForRootBonePathSymbol = Symbol('SearchForRootBonePath');
 
 const exoticAnimationTag = Symbol('ExoticAnimation');
@@ -58840,7 +58840,7 @@ const addEmbeddedPlayerTag = Symbol('[[AddEmbeddedPlayer]]');
 const removeEmbeddedPlayerTag = Symbol('[[RemoveEmbeddedPlayer]]');
 const clearEmbeddedPlayersTag = Symbol('[[ClearEmbeddedPlayers]]');
 const additiveSettingsTag = Symbol('[[Additive Settings]]');
-let AnimationClip = (_dec$k = ccclass$9('cc.AnimationClip'), _dec$k(_class$j = (_class2$k = (_class3$9 = class AnimationClip extends Asset {
+let AnimationClip = (_dec$l = ccclass$9('cc.AnimationClip'), _dec$l(_class$m = (_class2$e = (_AnimationClip = class AnimationClip extends Asset {
   static createWithSpriteFrames(spriteFrames, sample) {
     const clip = new AnimationClip();
     clip.sample = sample || clip.sample;
@@ -59372,41 +59372,41 @@ let AnimationClip = (_dec$k = ccclass$9('cc.AnimationClip'), _dec$k(_class$j = (
   _findAuxiliaryCurveEntry(name) {
     return this._auxiliaryCurveEntries.find(entry => entry.name === name);
   }
-}, _class3$9.WrapMode = WrapMode, _class3$9), (_initializer$e = applyDecoratedInitializer(_class2$k.prototype, "sample", [serializable$8], function () {
+}, _AnimationClip.WrapMode = WrapMode, _AnimationClip), (_initializer$e = applyDecoratedInitializer(_class2$e.prototype, "sample", [serializable$8], function () {
   return 60;
-}), _initializer2$9 = applyDecoratedInitializer(_class2$k.prototype, "speed", [serializable$8], function () {
+}), _initializer2$9 = applyDecoratedInitializer(_class2$e.prototype, "speed", [serializable$8], function () {
   return 1;
-}), _initializer3$5 = applyDecoratedInitializer(_class2$k.prototype, "wrapMode", [serializable$8], function () {
+}), _initializer3$5 = applyDecoratedInitializer(_class2$e.prototype, "wrapMode", [serializable$8], function () {
   return WrapMode.Normal;
-}), _initializer4$3 = applyDecoratedInitializer(_class2$k.prototype, "enableTrsBlending", [serializable$8], function () {
+}), _initializer4$3 = applyDecoratedInitializer(_class2$e.prototype, "enableTrsBlending", [serializable$8], function () {
   return false;
-}), _initializer5$1 = applyDecoratedInitializer(_class2$k.prototype, "_duration", [serializable$8], function () {
+}), _initializer5$1 = applyDecoratedInitializer(_class2$e.prototype, "_duration", [serializable$8], function () {
   return 0;
-}), _initializer6$1 = applyDecoratedInitializer(_class2$k.prototype, "_hash", [serializable$8], function () {
+}), _initializer6$1 = applyDecoratedInitializer(_class2$e.prototype, "_hash", [serializable$8], function () {
   return 0;
-}), _initializer7$1 = applyDecoratedInitializer(_class2$k.prototype, "_tracks", [serializable$8], function () {
+}), _initializer7$1 = applyDecoratedInitializer(_class2$e.prototype, "_tracks", [serializable$8], function () {
   return [];
-}), _initializer8$1 = applyDecoratedInitializer(_class2$k.prototype, "_exoticAnimation", [serializable$8], function () {
+}), _initializer8$1 = applyDecoratedInitializer(_class2$e.prototype, "_exoticAnimation", [serializable$8], function () {
   return null;
-}), _initializer9$1 = applyDecoratedInitializer(_class2$k.prototype, "_events", [serializable$8], function () {
+}), _initializer9$1 = applyDecoratedInitializer(_class2$e.prototype, "_events", [serializable$8], function () {
   return [];
-}), _initializer10$1 = applyDecoratedInitializer(_class2$k.prototype, "_embeddedPlayers", [serializable$8], function () {
+}), _initializer10$1 = applyDecoratedInitializer(_class2$e.prototype, "_embeddedPlayers", [serializable$8], function () {
   return [];
-}), _initializer11$1 = applyDecoratedInitializer(_class2$k.prototype, "_additiveSettings", [serializable$8], function () {
+}), _initializer11$1 = applyDecoratedInitializer(_class2$e.prototype, "_additiveSettings", [serializable$8], function () {
   return new AdditiveSettings();
-}), _initializer12$1 = applyDecoratedInitializer(_class2$k.prototype, "_auxiliaryCurveEntries", [serializable$8], function () {
+}), _initializer12$1 = applyDecoratedInitializer(_class2$e.prototype, "_auxiliaryCurveEntries", [serializable$8], function () {
   return [];
-})), _class2$k)) || _class$j);
-let AdditiveSettings = (_dec2$d = ccclass$9('cc.AnimationClipAdditiveSettings'), _dec2$d(_class4$4 = (_class5$2 = class AdditiveSettings {
+})), _class2$e)) || _class$m);
+let AdditiveSettings = (_dec2$d = ccclass$9('cc.AnimationClipAdditiveSettings'), _dec2$d(_class3$2 = (_class4$2 = class AdditiveSettings {
   constructor() {
     this.enabled = _initializer13$1 && _initializer13$1();
     this.refClip = _initializer14$1 && _initializer14$1();
   }
-}, (_initializer13$1 = applyDecoratedInitializer(_class5$2.prototype, "enabled", [serializable$8], function () {
+}, (_initializer13$1 = applyDecoratedInitializer(_class4$2.prototype, "enabled", [serializable$8], function () {
   return false;
-}), _initializer14$1 = applyDecoratedInitializer(_class5$2.prototype, "refClip", [serializable$8], function () {
+}), _initializer14$1 = applyDecoratedInitializer(_class4$2.prototype, "refClip", [serializable$8], function () {
   return null;
-})), _class5$2)) || _class4$4);
+})), _class4$2)) || _class3$2);
 cclegacy.AnimationClip = AnimationClip;
 class TrackEvalStatus {
   constructor(binding, trackEval) {
@@ -60162,8 +60162,8 @@ function mixAveragedQuat(result, previous, accumulatedWeight, input, weight) {
   return newSum;
 }
 
-var _class$i, _class2$j;
-let AnimationManager = ccclass$9(_class$i = (_class2$j = class AnimationManager extends System {
+var _class$l, _AnimationManager;
+let AnimationManager = ccclass$9(_class$l = (_AnimationManager = class AnimationManager extends System {
   constructor(...args) {
     super(...args);
     this._anims = new MutableForwardIterator([]);
@@ -60280,7 +60280,7 @@ let AnimationManager = ccclass$9(_class$i = (_class2$j = class AnimationManager 
       }
     }
   }
-}, _class2$j.ID = 'animation', _class2$j)) || _class$i;
+}, _AnimationManager.ID = 'animation', _AnimationManager)) || _class$l;
 director.on(DirectorEvent.INIT, () => {
   const animationManager = new AnimationManager();
   director.registerSystem(AnimationManager.ID, animationManager, SystemPriority.HIGH);
@@ -60436,8 +60436,8 @@ class CrossFade extends Playable {
   }
 }
 
-var _dec$j, _dec2$c, _dec3$4, _dec4$2, _dec5$2, _class$h, _class2$i, _initializer$d, _initializer2$8, _initializer3$4, _class3$8;
-let Animation = (_dec$j = ccclass$9('cc.Animation'), _dec2$c = executionOrder$2(99), _dec3$4 = type$5([AnimationClip]), _dec4$2 = type$5(AnimationClip), _dec5$2 = type$5([AnimationClip]), _dec$j(_class$h = _dec2$c(_class$h = (_class2$i = (_class3$8 = class Animation extends Eventify(Component) {
+var _dec$k, _dec2$c, _dec3$4, _dec4$2, _dec5$2, _class$k, _class2$d, _initializer$d, _initializer2$8, _initializer3$4, _Animation;
+let Animation = (_dec$k = ccclass$9('cc.Animation'), _dec2$c = executionOrder$2(99), _dec3$4 = type$5([AnimationClip]), _dec4$2 = type$5(AnimationClip), _dec5$2 = type$5([AnimationClip]), _dec$k(_class$k = _dec2$c(_class$k = (_class2$d = (_Animation = class Animation extends Eventify(Component) {
   constructor(...args) {
     super(...args);
     this.playOnLoad = _initializer$d && _initializer$d();
@@ -60659,13 +60659,13 @@ let Animation = (_dec$j = ccclass$9('cc.Animation'), _dec2$c = executionOrder$2(
       }
     }
   }
-}, _class3$8.EventType = AnimationStateEventType, _class3$8), (_applyDecoratedDescriptor(_class2$i.prototype, "clips", [_dec3$4], Object.getOwnPropertyDescriptor(_class2$i.prototype, "clips"), _class2$i.prototype), _applyDecoratedDescriptor(_class2$i.prototype, "defaultClip", [_dec4$2], Object.getOwnPropertyDescriptor(_class2$i.prototype, "defaultClip"), _class2$i.prototype), _initializer$d = applyDecoratedInitializer(_class2$i.prototype, "playOnLoad", [serializable$8], function () {
+}, _Animation.EventType = AnimationStateEventType, _Animation), (_applyDecoratedDescriptor(_class2$d.prototype, "clips", [_dec3$4], Object.getOwnPropertyDescriptor(_class2$d.prototype, "clips"), _class2$d.prototype), _applyDecoratedDescriptor(_class2$d.prototype, "defaultClip", [_dec4$2], Object.getOwnPropertyDescriptor(_class2$d.prototype, "defaultClip"), _class2$d.prototype), _initializer$d = applyDecoratedInitializer(_class2$d.prototype, "playOnLoad", [serializable$8], function () {
   return false;
-}), _initializer2$8 = applyDecoratedInitializer(_class2$i.prototype, "_clips", [_dec5$2], function () {
+}), _initializer2$8 = applyDecoratedInitializer(_class2$d.prototype, "_clips", [_dec5$2], function () {
   return [];
-}), _initializer3$4 = applyDecoratedInitializer(_class2$i.prototype, "_defaultClip", [serializable$8], function () {
+}), _initializer3$4 = applyDecoratedInitializer(_class2$d.prototype, "_defaultClip", [serializable$8], function () {
   return null;
-})), _class2$i)) || _class$h) || _class$h);
+})), _class2$d)) || _class$k) || _class$k);
 function equalClips(clip1, clip2) {
   if (clip1 === clip2) {
     return true;
@@ -60850,19 +60850,19 @@ class SkeletalAnimationState extends AnimationState {
   }
 }
 
-var _dec$i, _dec2$b, _class$g, _class2$h, _initializer$c, _initializer2$7, _dec3$3, _dec4$1, _dec5$1, _dec6$1, _class4$3, _class5$1, _initializer3$3, _initializer4$2, _class6;
-let Socket = (_dec$i = ccclass$9('cc.SkeletalAnimation.Socket'), _dec2$b = type$5(Node$1), _dec$i(_class$g = (_class2$h = class Socket {
+var _dec$j, _dec2$b, _class$j, _class2$c, _initializer$c, _initializer2$7, _dec3$3, _dec4$1, _dec5$1, _dec6$1, _class3$1, _class4$1, _initializer3$3, _initializer4$2, _SkeletalAnimation;
+let Socket = (_dec$j = ccclass$9('cc.SkeletalAnimation.Socket'), _dec2$b = type$5(Node$1), _dec$j(_class$j = (_class2$c = class Socket {
   constructor(path = '', target = null) {
     this.path = _initializer$c && _initializer$c();
     this.target = _initializer2$7 && _initializer2$7();
     this.path = path;
     this.target = target;
   }
-}, (_initializer$c = applyDecoratedInitializer(_class2$h.prototype, "path", [serializable$8], function () {
+}, (_initializer$c = applyDecoratedInitializer(_class2$c.prototype, "path", [serializable$8], function () {
   return '';
-}), _initializer2$7 = applyDecoratedInitializer(_class2$h.prototype, "target", [_dec2$b], function () {
+}), _initializer2$7 = applyDecoratedInitializer(_class2$c.prototype, "target", [_dec2$b], function () {
   return null;
-})), _class2$h)) || _class$g);
+})), _class2$c)) || _class$j);
 setClassAlias(Socket, 'cc.SkeletalAnimationComponent.Socket');
 const m4_1 = new Mat4();
 const m4_2 = new Mat4();
@@ -60878,7 +60878,7 @@ function collectRecursively(node, prefix = '', out = []) {
   }
   return out;
 }
-let SkeletalAnimation = (_dec3$3 = ccclass$9('cc.SkeletalAnimation'), _dec4$1 = executionOrder$2(99), _dec5$1 = type$5([Socket]), _dec6$1 = type$5([Socket]), _dec3$3(_class4$3 = _dec4$1(_class4$3 = (_class5$1 = (_class6 = class SkeletalAnimation extends Animation {
+let SkeletalAnimation = (_dec3$3 = ccclass$9('cc.SkeletalAnimation'), _dec4$1 = executionOrder$2(99), _dec5$1 = type$5([Socket]), _dec6$1 = type$5([Socket]), _dec3$3(_class3$1 = _dec4$1(_class3$1 = (_class4$1 = (_SkeletalAnimation = class SkeletalAnimation extends Animation {
   constructor(...args) {
     super(...args);
     this._useBakedAnimation = _initializer3$3 && _initializer3$3();
@@ -61097,16 +61097,16 @@ let SkeletalAnimation = (_dec3$3 = ccclass$9('cc.SkeletalAnimation'), _dec4$1 = 
       }
     });
   }
-}, _class6.Socket = Socket, _class6), (_applyDecoratedDescriptor(_class5$1.prototype, "sockets", [_dec5$1], Object.getOwnPropertyDescriptor(_class5$1.prototype, "sockets"), _class5$1.prototype), _initializer3$3 = applyDecoratedInitializer(_class5$1.prototype, "_useBakedAnimation", [serializable$8], function () {
+}, _SkeletalAnimation.Socket = Socket, _SkeletalAnimation), (_applyDecoratedDescriptor(_class4$1.prototype, "sockets", [_dec5$1], Object.getOwnPropertyDescriptor(_class4$1.prototype, "sockets"), _class4$1.prototype), _initializer3$3 = applyDecoratedInitializer(_class4$1.prototype, "_useBakedAnimation", [serializable$8], function () {
   return true;
-}), _initializer4$2 = applyDecoratedInitializer(_class5$1.prototype, "_sockets", [_dec6$1], function () {
+}), _initializer4$2 = applyDecoratedInitializer(_class4$1.prototype, "_sockets", [_dec6$1], function () {
   return [];
-})), _class5$1)) || _class4$3) || _class4$3);
+})), _class4$1)) || _class3$1) || _class3$1);
 
 cclegacy.SkeletalAnimationComponent = SkeletalAnimation;
 setClassAlias(SkeletalAnimation, 'cc.SkeletalAnimationComponent');
 
-var _dec$h, _dec2$a, _class$f, _class2$g, _initializer$b, _initializer2$6, _class3$7;
+var _dec$i, _dec2$a, _class$i, _class2$b, _initializer$b, _initializer2$6, _Primitive;
 var PrimitiveType;
 (function (PrimitiveType) {
   PrimitiveType[PrimitiveType["BOX"] = 0] = "BOX";
@@ -61119,7 +61119,7 @@ var PrimitiveType;
   PrimitiveType[PrimitiveType["QUAD"] = 7] = "QUAD";
 })(PrimitiveType || (PrimitiveType = {}));
 Enum(PrimitiveType);
-let Primitive = (_dec$h = ccclass$9('cc.Primitive'), _dec2$a = type$5(PrimitiveType), _dec$h(_class$f = (_class2$g = (_class3$7 = class Primitive extends Mesh {
+let Primitive = (_dec$i = ccclass$9('cc.Primitive'), _dec2$a = type$5(PrimitiveType), _dec$i(_class$i = (_class2$b = (_Primitive = class Primitive extends Mesh {
   constructor(type = PrimitiveType.BOX) {
     super();
     this.type = _initializer$b && _initializer$b();
@@ -61130,11 +61130,11 @@ let Primitive = (_dec$h = ccclass$9('cc.Primitive'), _dec2$a = type$5(PrimitiveT
     const factory = primitives[PrimitiveType[this.type].toLowerCase()];
     createMesh(factory(this.info), this);
   }
-}, _class3$7.PrimitiveType = PrimitiveType, _class3$7), (_initializer$b = applyDecoratedInitializer(_class2$g.prototype, "type", [_dec2$a], function () {
+}, _Primitive.PrimitiveType = PrimitiveType, _Primitive), (_initializer$b = applyDecoratedInitializer(_class2$b.prototype, "type", [_dec2$a], function () {
   return PrimitiveType.BOX;
-}), _initializer2$6 = applyDecoratedInitializer(_class2$g.prototype, "info", [serializable$8], function () {
+}), _initializer2$6 = applyDecoratedInitializer(_class2$b.prototype, "info", [serializable$8], function () {
   return {};
-})), _class2$g)) || _class$f);
+})), _class2$b)) || _class$i);
 cclegacy.Primitive = Primitive;
 
 legacyCC.primitives = primitives;
@@ -63280,6 +63280,9 @@ class AirAppImpl {
       this._started = true;
       game.run();
     }
+  }
+  getScene() {
+    return director.getScene();
   }
 }
 
@@ -69032,7 +69035,7 @@ function ensureCanvasDOM(canvas) {
     style.textContent = ['html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }', '#GameDiv { width: 100%; height: 100%; position: relative; }', '#Cocos3dGameContainer { width: 100%; height: 100%; }', '#GameCanvas { width: 100%; height: 100%; display: block; outline: none; }'].join('\n');
     document.head.appendChild(style);
   }
-  if (!canvas.id) {
+  if (canvas.id !== 'GameCanvas' && !document.getElementById('GameCanvas')) {
     canvas.id = 'GameCanvas';
   }
   if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
@@ -69041,7 +69044,14 @@ function ensureCanvasDOM(canvas) {
   }
 }
 async function createAirApp(options) {
-  const canvas = options.canvas;
+  let canvas = options.canvas;
+  if (typeof canvas === 'string') {
+    const el = document.querySelector(canvas);
+    if (!(el instanceof HTMLCanvasElement)) {
+      throw new Error(`[cocosair] createAirApp: selector '${canvas}' did not match a <canvas> element.`);
+    }
+    canvas = el;
+  }
   if (!canvas) {
     throw new Error('[cocosair] createAirApp requires a canvas.');
   }
@@ -69059,10 +69069,1407 @@ async function createAirApp(options) {
   return new AirAppImpl(canvas);
 }
 
-async function loadAssetAsync(url) {
-  const resp = await fetch(url);
+function check(condition, message) {
+  if (!condition) {
+    throw new Error(`[glTF] ${message}`);
+  }
+}
+function item(array, index, label) {
+  check(Number.isSafeInteger(index) && index >= 0 && array && index < array.length, `${label}: invalid index ${index}`);
+  return array[index];
+}
+function integer(value, label) {
+  check(Number.isSafeInteger(value) && value >= 0, `${label}: expected non-negative integer`);
+  return value;
+}
+
+function prepareNodes(context) {
+  const nodes = context.json.nodes || [];
+  const parents = nodes.map(() => -1);
+  const names = nodes.map((n, i) => `${(n.name || 'node').replace(/[\\/]/g, '_')}__${i}`);
+  for (const [i, node] of nodes.entries()) {
+    var _node$extensions;
+    for (const child of node.children || []) {
+      item(nodes, child, 'child');
+      check(child !== i && parents[child] === -1, 'node cycle/multiple parents');
+      parents[child] = i;
+    }
+    if (node.camera !== undefined) {
+      item(context.json.cameras, node.camera, 'camera');
+      context.warn(`node ${i}: camera metadata retained, camera not instantiated`);
+    }
+    if ((_node$extensions = node.extensions) != null && _node$extensions.KHR_lights_punctual) {
+      context.warn(`node ${i}: light metadata retained, light not instantiated`);
+    }
+  }
+  const paths = [];
+  const visiting = new Set();
+  const path = i => {
+    if (paths[i]) {
+      return paths[i];
+    }
+    check(!visiting.has(i), 'node cycle');
+    visiting.add(i);
+    const result = parents[i] === -1 ? names[i] : `${path(parents[i])}/${names[i]}`;
+    visiting.delete(i);
+    paths[i] = result;
+    return result;
+  };
+  nodes.forEach((_, i) => path(i));
+  const transforms = nodes.map(node => {
+    const p = new Vec3();
+    const q = new Quat();
+    const s = new Vec3(1, 1, 1);
+    const vector = (values, length) => {
+      check(values.length === length && values.every(Number.isFinite), 'invalid node transform');
+    };
+    if (node.matrix) {
+      check(!node.translation && !node.rotation && !node.scale, 'matrix and TRS are mutually exclusive');
+      vector(node.matrix, 16);
+      const m = Mat4.fromArray(new Mat4(), node.matrix);
+      check(Math.abs(Mat4.determinant(m)) > 1e-12, 'singular node matrix cannot be decomposed');
+      Mat4.toSRT(m, q, p, s);
+      const rebuilt = Mat4.fromRTS(new Mat4(), q, p, s);
+      const values = Mat4.toArray(new Array(16), rebuilt);
+      check(values.every((value, i) => Math.abs(value - node.matrix[i]) <= 1e-5 * Math.max(1, Math.abs(value), Math.abs(node.matrix[i]))), 'node matrix contains unsupported shear');
+    } else {
+      if (node.translation) {
+        vector(node.translation, 3);
+        p.set(...node.translation);
+      }
+      if (node.scale) {
+        vector(node.scale, 3);
+        s.set(...node.scale);
+      }
+      if (node.rotation) {
+        vector(node.rotation, 4);
+        q.set(...node.rotation);
+        check(Math.hypot(q.x, q.y, q.z, q.w) > 1e-12, 'zero node quaternion');
+        Quat.normalize(q, q);
+      }
+    }
+    return {
+      p,
+      q,
+      s
+    };
+  });
+  for (const scene of context.json.scenes || []) {
+    const seen = new Set();
+    for (const index of scene.nodes || []) {
+      item(nodes, index, 'scene node');
+      check(parents[index] === -1 && !seen.has(index), 'scene nodes must be unique roots');
+      seen.add(index);
+    }
+  }
+  if (context.json.scene !== undefined) {
+    item(context.json.scenes, context.json.scene, 'default scene');
+  }
+  return {
+    names,
+    paths,
+    parents,
+    transforms
+  };
+}
+function makeNodes(layout, included, root) {
+  const nodes = new Map();
+  for (const i of included) {
+    const node = new Node$1(layout.names[i]);
+    nodes.set(i, node);
+    const {
+      p,
+      q,
+      s
+    } = layout.transforms[i];
+    node.setRTS(q, p, s);
+  }
+  for (const [i, node] of nodes) {
+    (nodes.get(layout.parents[i]) || root).addChild(node);
+  }
+  return nodes;
+}
+function createSkeletons(context, layout, skeletons) {
+  for (const [i, skin] of (context.json.skins || []).entries()) {
+    check(skin.joints.length > 0 && new Set(skin.joints).size === skin.joints.length, 'skin requires unique joints');
+    const capacity = UBOSkinning.JOINT_UNIFORM_CAPACITY;
+    check(skin.joints.length <= Math.max(capacity, 256), 'skin exceeds native joint palette capacity');
+    if (skin.joints.length > capacity && deviceManager.gfxDevice.capabilities.maxVertexAttributes > 0) {
+      check(deviceManager.gfxDevice.capabilities.maxVertexTextureUnits > 0, 'device cannot sample a joint texture');
+    }
+    const skeleton = new Skeleton();
+    skeletons.push(skeleton);
+    skeleton.name = skin.name || `skin_${i}`;
+    skeleton.joints = skin.joints.map(joint => {
+      item(layout.paths, joint, 'joint node');
+      return layout.paths[joint];
+    });
+    if (skin.skeleton !== undefined) {
+      item(layout.paths, skin.skeleton, 'skin skeleton');
+    }
+    if (skin.inverseBindMatrices === undefined) {
+      skeleton.bindposes = skin.joints.map(() => new Mat4());
+    } else {
+      const accessor = context.accessor(skin.inverseBindMatrices);
+      check(accessor.source.type === 'MAT4' && accessor.source.componentType === 5126 && accessor.count === skin.joints.length, 'invalid inverseBindMatrices');
+      skeleton.bindposes = skin.joints.map((_, j) => Mat4.fromArray(new Mat4(), accessor.values, j * 16));
+    }
+  }
+}
+
+class GLTFCubicQuatTrack extends Track {
+  constructor(times, values) {
+    super();
+    this.quaternionChannels = void 0;
+    this.times = times;
+    this.values = values;
+    this.quaternionChannels = [0, 1, 2, 3].map(c => {
+      const curve = new RealCurve();
+      curve.assignSorted(realKeys(times, values, 4, c, 'CUBICSPLINE'));
+      return new Channel(curve);
+    });
+  }
+  channels() {
+    return this.quaternionChannels;
+  }
+  range() {
+    return {
+      min: this.times[0],
+      max: this.times[this.times.length - 1]
+    };
+  }
+  [createEvalSymbol]() {
+    const result = new Quat();
+    return {
+      requiresDefault: false,
+      evaluate: time => {
+        const values = sampleCubicQuaternion(this.times, this.values, time);
+        result.set(values[0], values[1], values[2], values[3]);
+        return result;
+      }
+    };
+  }
+}
+function sampleCubicQuaternion(times, values, time) {
+  let lo = 0;
+  let hi = times.length - 1;
+  while (lo + 1 < hi) {
+    const mid = lo + hi >>> 1;
+    if (times[mid] <= time) {
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+  let result;
+  if (time <= times[0]) {
+    result = values.slice(4, 8);
+  } else if (time >= times[times.length - 1]) {
+    result = values.slice((times.length - 1) * 12 + 4, (times.length - 1) * 12 + 8);
+  } else {
+    const dt = times[hi] - times[lo];
+    const t = (time - times[lo]) / dt;
+    const t2 = t * t;
+    const t3 = t2 * t;
+    result = [0, 1, 2, 3].map(c => (2 * t3 - 3 * t2 + 1) * values[lo * 12 + 4 + c] + (t3 - 2 * t2 + t) * dt * values[lo * 12 + 8 + c] + (-2 * t3 + 3 * t2) * values[hi * 12 + 4 + c] + (t3 - t2) * dt * values[hi * 12 + c]);
+  }
+  const length = Math.hypot(...result);
+  check(length > 1e-12, 'CUBICSPLINE produced zero quaternion');
+  return result.map(v => v / length);
+}
+function createGLTFAnimations(context, paths, included) {
+  const clips = [];
+  try {
+    for (const [clipIndex, source] of (context.json.animations || []).entries()) {
+      const clip = new AnimationClip();
+      clips.push(clip);
+      const base = source.name || `animation_${clipIndex}`;
+      clip.name = clips.slice(0, -1).some(c => c.name === base) ? `${base}__${clipIndex}` : base;
+      const seen = new Set();
+      for (const channel of source.channels) {
+        var _mesh$primitives$0$ta;
+        const target = channel.target;
+        if (target.node === undefined) {
+          continue;
+        }
+        const node = item(context.json.nodes, target.node, 'animation node');
+        const key = `${target.node}:${target.path}`;
+        check(!seen.has(key), 'duplicate animation target');
+        seen.add(key);
+        check(['translation', 'rotation', 'scale', 'weights'].includes(target.path), `unsupported animation target ${target.path}`);
+        check(target.path === 'weights' || !node.matrix, 'TRS animation cannot target a matrix node');
+        const sampler = item(source.samplers, channel.sampler, 'animation sampler');
+        const input = context.accessor(sampler.input);
+        const output = context.accessor(sampler.output);
+        const times = input.values;
+        check(input.source.type === 'SCALAR' && input.source.componentType === 5126 && times.every((v, i) => v >= 0 && (!i || v > times[i - 1])), 'invalid animation times');
+        const interpolation = sampler.interpolation || 'LINEAR';
+        check(['STEP', 'LINEAR', 'CUBICSPLINE'].includes(interpolation), 'invalid animation interpolation');
+        const cubic = interpolation === 'CUBICSPLINE';
+        const mesh = target.path === 'weights' ? item(context.json.meshes, node.mesh, 'morph mesh') : undefined;
+        const width = mesh ? ((_mesh$primitives$0$ta = mesh.primitives[0].targets) == null ? void 0 : _mesh$primitives$0$ta.length) || 0 : target.path === 'rotation' ? 4 : 3;
+        check(width > 0 && output.source.componentType === 5126 && output.values.length === times.length * width * (cubic ? 3 : 1) && output.source.type === (mesh ? 'SCALAR' : width === 4 ? 'VEC4' : 'VEC3'), 'invalid animation output');
+        clip.duration = Math.max(clip.duration, times[times.length - 1]);
+        if (included && !included.has(target.node)) {
+          continue;
+        }
+        const path = new TrackPath().toHierarchy(paths[target.node]);
+        if (target.path !== 'weights') {
+          path.toProperty(target.path === 'translation' ? 'position' : target.path);
+        }
+        if (target.path === 'rotation') {
+          let track;
+          if (cubic) {
+            track = new GLTFCubicQuatTrack(times.slice(), output.values.slice());
+          } else {
+            const quat = new QuatTrack();
+            quat.channel.curve.assignSorted(times.map((time, i) => {
+              const q = new Quat(...output.values.slice(i * 4, i * 4 + 4));
+              check(Math.hypot(q.x, q.y, q.z, q.w) > 1e-12, 'invalid animation quaternion');
+              Quat.normalize(q, q);
+              return [time, {
+                value: q,
+                interpolationMode: interpolation === 'STEP' ? QuatInterpolationMode.CONSTANT : QuatInterpolationMode.SLERP
+              }];
+            }));
+            track = quat;
+          }
+          track.path = path;
+          clip.addTrack(track);
+        } else if (target.path === 'weights') {
+          for (let c = 0; c < width; ++c) {
+            const track = new RealTrack();
+            track.path = path;
+            track.proxy = {
+              forTarget: object => ({
+                get: () => {
+                  var _object$getComponent;
+                  return ((_object$getComponent = object.getComponent(MeshRenderer)) == null ? void 0 : _object$getComponent.getWeight(0, c)) || 0;
+                },
+                set: value => {
+                  const renderer = object.getComponent(MeshRenderer);
+                  for (let sub = 0; sub < mesh.primitives.length; ++sub) {
+                    renderer.setWeight(value, sub, c);
+                  }
+                }
+              })
+            };
+            track.channel.curve.assignSorted(realKeys(times, output.values, width, c, interpolation));
+            clip.addTrack(track);
+          }
+        } else {
+          const track = new VectorTrack();
+          track.componentsCount = 3;
+          track.path = path;
+          for (let c = 0; c < 3; ++c) {
+            track.channels()[c].curve.assignSorted(realKeys(times, output.values, 3, c, interpolation));
+          }
+          clip.addTrack(track);
+        }
+      }
+    }
+    return clips;
+  } catch (error) {
+    clips.forEach(clip => clip.destroy());
+    throw error;
+  }
+}
+function realKeys(times, values, width, component, interpolation) {
+  const cubic = interpolation === 'CUBICSPLINE';
+  return times.map((time, i) => [time, {
+    value: values[(i * (cubic ? 3 : 1) + (cubic ? 1 : 0)) * width + component],
+    interpolationMode: cubic ? RealInterpolationMode.CUBIC : interpolation === 'STEP' ? RealInterpolationMode.CONSTANT : RealInterpolationMode.LINEAR,
+    leftTangent: cubic ? values[i * 3 * width + component] : 0,
+    rightTangent: cubic ? values[(i * 3 + 2) * width + component] : 0
+  }]);
+}
+
+var _dec$h, _class$h;
+let GLTFWinding = (_dec$h = ccclass$9('air.GLTFWinding'), _dec$h(_class$h = class GLTFWinding extends Component {
+  constructor(...args) {
+    super(...args);
+    this.renderers = [];
+    this.mirrored = new Map();
+  }
+  lateUpdate() {
+    for (const renderer of this.renderers) {
+      var _this$mirrored$get;
+      const transform = renderer instanceof SkinnedMeshRenderer ? renderer.skinningRoot : renderer.node;
+      const negative = Mat4.determinant(transform.worldMatrix) < 0;
+      if (((_this$mirrored$get = this.mirrored.get(renderer)) !== null && _this$mirrored$get !== void 0 ? _this$mirrored$get : false) === negative) {
+        continue;
+      }
+      this.mirrored.set(renderer, negative);
+      for (let slot = 0; slot < renderer.sharedMaterials.length; ++slot) {
+        var _renderer$getMaterial;
+        (_renderer$getMaterial = renderer.getMaterialInstance(slot)) == null ? void 0 : _renderer$getMaterial.overridePipelineStates({
+          rasterizerState: {
+            isFrontFaceCCW: !negative
+          }
+        });
+      }
+    }
+  }
+}) || _class$h);
+
+let parsedAssetId = 0;
+class GLTFAsset extends Asset {
+  get meshes() {
+    return this.owned.meshes;
+  }
+  get materials() {
+    return this.owned.materials;
+  }
+  get textures() {
+    return this.owned.textures;
+  }
+  get skeletons() {
+    return this.owned.skeletons;
+  }
+  get animations() {
+    return this.owned.animations;
+  }
+  get document() {
+    return this.context.json;
+  }
+  get warnings() {
+    return this.context.warnings;
+  }
+
+  constructor(context, layout) {
+    var _context$json$scenes;
+    super();
+    this.owned = {
+      meshes: [],
+      materials: [],
+      textures: [],
+      skeletons: [],
+      animations: []
+    };
+    this.sceneNames = void 0;
+    this.images = [];
+    this.meshMaterials = [];
+    this.sceneClips = new Map();
+    this.instances = 0;
+    this.destroyRequested = false;
+    this.resourcesReleased = false;
+    this.context = context;
+    this.layout = layout;
+    this._uuid = `air-gltf-parsed-${++parsedAssetId}`;
+    this.sceneNames = (_context$json$scenes = context.json.scenes) != null && _context$json$scenes.length ? context.json.scenes.map((s, i) => s.name || `scene_${i}`) : ['scene_0'];
+  }
+  instantiate(sceneIndex = (() => {
+    var _this$context$json$sc;
+    return (_this$context$json$sc = this.context.json.scene) !== null && _this$context$json$sc !== void 0 ? _this$context$json$sc : 0;
+  })()) {
+    var _json$scenes;
+    check(!this.destroyRequested && this.isValid, 'asset is destroyed');
+    item(this.sceneNames, sceneIndex, 'scene');
+    const json = this.context.json;
+    const roots = (_json$scenes = json.scenes) != null && _json$scenes.length ? json.scenes[sceneIndex].nodes || [] : this.layout.parents.map((p, i) => p === -1 ? i : -1).filter(i => i >= 0);
+    const visible = new Set();
+    const visit = i => {
+      if (visible.has(i)) {
+        return;
+      }
+      visible.add(i);
+      for (const child of json.nodes[i].children || []) {
+        visit(child);
+      }
+    };
+    roots.forEach(visit);
+    const included = new Set(visible);
+    const includeAncestors = index => {
+      for (let i = index; i !== -1; i = this.layout.parents[i]) {
+        included.add(i);
+      }
+    };
+    for (const i of visible) {
+      const skinIndex = json.nodes[i].skin;
+      if (skinIndex !== undefined) {
+        item(json.skins, skinIndex, 'skin').joints.forEach(includeAncestors);
+      }
+    }
+    let clips = this.sceneClips.get(sceneIndex);
+    if (!clips) {
+      clips = createGLTFAnimations(this.context, this.layout.paths, included);
+      this.sceneClips.set(sceneIndex, clips);
+    }
+    const root = new Node$1(this.sceneNames[sceneIndex]);
+    try {
+      const nodes = makeNodes(this.layout, included, root);
+      const winding = root.addComponent(GLTFWinding);
+      for (const i of visible) {
+        const source = json.nodes[i];
+        if (source.mesh === undefined) {
+          check(source.skin === undefined, 'skin node must reference a mesh');
+          continue;
+        }
+        const node = nodes.get(i);
+        const mesh = item(this.meshes, source.mesh, 'mesh');
+        let renderer;
+        if (source.skin !== undefined) {
+          const skin = item(this.skeletons, source.skin, 'skin');
+          for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
+            const joints = mesh.readAttribute(sub, AttributeName.ATTR_JOINTS);
+            check(joints && Array.from(joints).every(j => j < skin.joints.length), 'mesh has missing/out-of-range skin joints');
+          }
+          const skinned = node.addComponent(SkinnedMeshRenderer);
+          skinned.setUseBakedAnimation(false);
+          skinned.skinningRoot = root;
+          skinned.skeleton = skin;
+          renderer = skinned;
+        } else {
+          renderer = node.addComponent(MeshRenderer);
+        }
+        renderer.mesh = mesh;
+        winding.renderers.push(renderer);
+        this.meshMaterials[source.mesh].forEach((material, slot) => renderer.setSharedMaterial(material, slot));
+        const weights = source.weights || json.meshes[source.mesh].weights;
+        if (weights) {
+          var _source$mesh$primitiv;
+          check(weights.length === (((_source$mesh$primitiv = json.meshes[source.mesh].primitives[0].targets) == null ? void 0 : _source$mesh$primitiv.length) || 0) && weights.every(Number.isFinite), 'invalid node morph weights');
+          for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
+            renderer.setWeights(weights.slice(), sub);
+          }
+        }
+      }
+      const animation = root.addComponent(Animation);
+      winding.lateUpdate();
+      animation.clips = clips.slice();
+      animation.playOnLoad = false;
+      ++this.instances;
+      this.addRef();
+      let disposed = false;
+      root.once(Node$1.EventType.NODE_DESTROYED, () => {
+        void Promise.resolve().then(() => {
+          --this.instances;
+          this.decRef(!this.destroyRequested);
+          if (this.destroyRequested && this.instances === 0) {
+            this.releaseResources();
+          }
+        });
+      });
+      return {
+        root,
+        animations: clips,
+        dispose: () => {
+          if (disposed) {
+            return;
+          }
+          disposed = true;
+          animation.stop();
+          root.active = false;
+          root.destroy();
+        }
+      };
+    } catch (error) {
+      root.destroy();
+      throw error;
+    }
+  }
+  destroy() {
+    if (this.destroyRequested) {
+      return false;
+    }
+    this.destroyRequested = true;
+    if (!this.instances) {
+      this.releaseResources();
+    }
+    return true;
+  }
+  releaseResources() {
+    if (this.resourcesReleased) {
+      return;
+    }
+    this.resourcesReleased = true;
+    const owned = new Set([...this.materials, ...this.meshes, ...this.skeletons, ...this.animations, ...this.textures, ...this.images]);
+    this.sceneClips.forEach(clips => clips.forEach(clip => owned.add(clip)));
+    for (const asset of owned) {
+      asset.destroy();
+    }
+    super.destroy();
+  }
+}
+
+const COMPONENTS = {
+  SCALAR: 1,
+  VEC2: 2,
+  VEC3: 3,
+  VEC4: 4,
+  MAT2: 4,
+  MAT3: 9,
+  MAT4: 16
+};
+const SIZES = {
+  5120: 1,
+  5121: 1,
+  5122: 2,
+  5123: 2,
+  5125: 4,
+  5126: 4
+};
+function decodeContainer(data) {
+  let text;
+  let bin;
+  if (typeof data === 'string') {
+    text = data;
+  } else {
+    const view = new DataView(data);
+    if (data.byteLength >= 4 && view.getUint32(0, true) === 0x46546c67) {
+      check(data.byteLength >= 20, 'truncated GLB header');
+      check(view.getUint32(4, true) === 2, 'only GLB 2.0 is supported');
+      check(view.getUint32(8, true) === data.byteLength, 'GLB length mismatch');
+      let jsonChunk;
+      let chunks = 0;
+      for (let offset = 12; offset < data.byteLength;) {
+        check(offset + 8 <= data.byteLength, 'truncated GLB chunk header');
+        const length = view.getUint32(offset, true);
+        const type = view.getUint32(offset + 4, true);
+        check(length % 4 === 0 && offset + 8 + length <= data.byteLength, 'invalid GLB chunk length');
+        check(chunks !== 0 || type === 0x4e4f534a, 'GLB JSON must be first');
+        const chunk = data.slice(offset + 8, offset + 8 + length);
+        if (type === 0x4e4f534a) {
+          check(!jsonChunk, 'duplicate JSON chunk');
+          jsonChunk = chunk;
+        }
+        if (type === 0x004e4942) {
+          check(!bin && chunks === 1, 'invalid BIN chunk order');
+          bin = chunk;
+        }
+        offset += 8 + length;
+        ++chunks;
+      }
+      check(jsonChunk, 'missing GLB JSON');
+      text = new TextDecoder('utf-8', {
+        fatal: true
+      }).decode(jsonChunk);
+    } else {
+      text = new TextDecoder('utf-8', {
+        fatal: true
+      }).decode(data);
+    }
+  }
+  const json = JSON.parse(text.replace(/^\uFEFF/, ''));
+  check(json && json.asset && json.asset.version === '2.0', 'only glTF 2.0 is supported');
+  check(!json.asset.minVersion || json.asset.minVersion === '2.0', 'unsupported asset.minVersion');
+  for (const extension of json.extensionsRequired || []) {
+    check(extension === 'KHR_materials_unlit', `unsupported required extension: ${extension}`);
+  }
+  return {
+    json,
+    bin
+  };
+}
+class GLTFContext {
+  constructor(json, baseUrl) {
+    this.warnings = [];
+    this.buffers = [];
+    this.accessors = new Map();
+    this.requests = new Map();
+    this.json = json;
+    this.baseUrl = baseUrl;
+  }
+  warn(message) {
+    this.warnings.push(message);
+    console.warn(`[glTF] ${message}`);
+  }
+  resolve(uri) {
+    if (/^[a-z][a-z0-9+.-]*:/i.test(uri)) {
+      return uri;
+    }
+    check(this.baseUrl, `relative resource '${uri}' requires baseUrl`);
+    return new URL(uri, this.baseUrl).href;
+  }
+  request(uri) {
+    const url = this.resolve(uri);
+    let promise = this.requests.get(url);
+    if (!promise) {
+      promise = fetch(url).then(response => {
+        check(response.ok, `request failed: ${url} (${response.status})`);
+        return response.arrayBuffer();
+      });
+      this.requests.set(url, promise);
+    }
+    return promise;
+  }
+  async loadBuffers(bin) {
+    for (const extension of this.json.extensionsUsed || []) {
+      if (extension !== 'KHR_materials_unlit') {
+        this.warn(`optional extension ${extension}: using core fallback where available`);
+      }
+    }
+    for (const [i, buffer] of (this.json.buffers || []).entries()) {
+      integer(buffer.byteLength, `buffer ${i} length`);
+      const data = buffer.uri !== undefined ? await this.request(buffer.uri) : i === 0 ? bin : undefined;
+      check(data, `buffer ${i}: missing URI/BIN (compressed-only buffers are unsupported)`);
+      check(data.byteLength >= buffer.byteLength && (buffer.uri !== undefined || data.byteLength <= buffer.byteLength + 3), `buffer ${i}: length mismatch`);
+      this.buffers.push(data.slice(0, buffer.byteLength));
+    }
+    for (let i = 0; i < (this.json.bufferViews || []).length; ++i) {
+      this.bufferView(i);
+    }
+  }
+  bufferView(index) {
+    const source = item(this.json.bufferViews, index, 'bufferView');
+    const buffer = item(this.buffers, source.buffer, 'buffer');
+    const offset = integer(source.byteOffset || 0, 'bufferView offset');
+    const length = integer(source.byteLength, 'bufferView length');
+    check(offset + length <= buffer.byteLength, `bufferView ${index}: out of bounds`);
+    return new Uint8Array(buffer, offset, length);
+  }
+  accessor(index) {
+    const cached = this.accessors.get(index);
+    if (cached) {
+      return cached;
+    }
+    const source = item(this.json.accessors, index, 'accessor');
+    const size = SIZES[source.componentType];
+    const components = COMPONENTS[source.type];
+    check(size && components, `accessor ${index}: invalid component/type`);
+    const count = integer(source.count, 'accessor count');
+    check(count > 0 && count * components <= 16 * 1024 * 1024, `accessor ${index}: exceeds the 16M decoded-component limit`);
+    check(!source.normalized || [5120, 5121, 5122, 5123].includes(source.componentType), 'invalid normalized componentType');
+    const columns = source.type.startsWith('MAT') ? Math.sqrt(components) : 1;
+    const rows = components / columns;
+    const columnStride = columns > 1 ? Math.ceil(rows * size / 4) * 4 : rows * size;
+    const elementSize = columns * columnStride;
+    if (source.bufferView !== undefined) {
+      const bv = item(this.json.bufferViews, source.bufferView, 'bufferView');
+      const bytes = this.bufferView(source.bufferView);
+      check(integer(source.byteOffset || 0, 'accessor offset') + (count - 1) * (bv.byteStride || elementSize) + elementSize <= bytes.byteLength, `accessor ${index}: out of bounds`);
+    }
+    const values = new Array(count * components).fill(0);
+    const read = (bytes, offset, n, stride, destination) => {
+      integer(offset, 'accessor offset');
+      check(stride >= elementSize && stride % size === 0 && (bytes.byteOffset + offset) % size === 0, `accessor ${index}: invalid alignment/stride`);
+      check(columns === 1 || (bytes.byteOffset + offset) % 4 === 0, 'matrix columns require 4-byte alignment');
+      check(offset + (n - 1) * stride + elementSize <= bytes.byteLength, `accessor ${index}: out of bounds`);
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      for (let i = 0; i < n; ++i) {
+        const dest = destination(i) * components;
+        for (let c = 0; c < components; ++c) {
+          const at = offset + i * stride + Math.floor(c / rows) * columnStride + c % rows * size;
+          let v = readComponent(view, at, source.componentType);
+          if (source.normalized) {
+            const maximum = source.componentType === 5120 ? 127 : source.componentType === 5121 ? 255 : source.componentType === 5122 ? 32767 : 65535;
+            v = Math.max(-1, v / maximum);
+          }
+          check(Number.isFinite(v), `accessor ${index}: non-finite value`);
+          values[dest + c] = v;
+        }
+      }
+    };
+    if (source.bufferView !== undefined) {
+      const bv = item(this.json.bufferViews, source.bufferView, 'bufferView');
+      if (bv.byteStride !== undefined) {
+        check(bv.byteStride >= 4 && bv.byteStride <= 252 && bv.byteStride % 4 === 0, 'invalid byteStride');
+      }
+      read(this.bufferView(source.bufferView), source.byteOffset || 0, count, bv.byteStride || elementSize, i => i);
+    } else {
+      check(!source.byteOffset, 'accessor without bufferView cannot have byteOffset');
+    }
+    if (source.sparse) {
+      const sparse = source.sparse;
+      check(!item(this.json.bufferViews, sparse.indices.bufferView, 'sparse indices view').byteStride && !item(this.json.bufferViews, sparse.values.bufferView, 'sparse values view').byteStride, 'sparse bufferViews cannot have byteStride');
+      check(integer(sparse.count, 'sparse count') > 0 && sparse.count <= count, 'invalid sparse count');
+      check([5121, 5123, 5125].includes(sparse.indices.componentType), 'invalid sparse indices');
+      const bytes = this.bufferView(sparse.indices.bufferView);
+      const offset = integer(sparse.indices.byteOffset || 0, 'sparse offset');
+      const indexSize = SIZES[sparse.indices.componentType];
+      check(offset + sparse.count * indexSize <= bytes.byteLength && (bytes.byteOffset + offset) % indexSize === 0, 'sparse indices out of bounds/alignment');
+      const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+      const indices = [];
+      for (let i = 0; i < sparse.count; ++i) {
+        const value = readComponent(view, offset + i * indexSize, sparse.indices.componentType);
+        check(value < count && (i === 0 || value > indices[i - 1]), 'sparse indices must be increasing and in range');
+        indices.push(value);
+      }
+      read(this.bufferView(sparse.values.bufferView), sparse.values.byteOffset || 0, sparse.count, elementSize, i => indices[i]);
+    }
+    const result = {
+      source,
+      values,
+      components,
+      count
+    };
+    this.accessors.set(index, result);
+    return result;
+  }
+}
+function readComponent(view, offset, type) {
+  switch (type) {
+    case 5120:
+      return view.getInt8(offset);
+    case 5121:
+      return view.getUint8(offset);
+    case 5122:
+      return view.getInt16(offset, true);
+    case 5123:
+      return view.getUint16(offset, true);
+    case 5125:
+      return view.getUint32(offset, true);
+    default:
+      return view.getFloat32(offset, true);
+  }
+}
+
+const ATTRIBUTES = {
+  POSITION: [AttributeName.ATTR_POSITION, 3],
+  NORMAL: [AttributeName.ATTR_NORMAL, 3],
+  TANGENT: [AttributeName.ATTR_TANGENT, 4],
+  TEXCOORD_0: [AttributeName.ATTR_TEX_COORD, 2],
+  TEXCOORD_1: [AttributeName.ATTR_TEX_COORD1, 2],
+  COLOR_0: [AttributeName.ATTR_COLOR, 4],
+  JOINTS_0: [AttributeName.ATTR_JOINTS, 4],
+  WEIGHTS_0: [AttributeName.ATTR_WEIGHTS, 4]
+};
+const FORMATS = [Format.UNKNOWN, Format.R32F, Format.RG32F, Format.RGB32F, Format.RGBA32F];
+class BinaryBuilder {
+  constructor() {
+    this.chunks = [];
+    this.length = 0;
+  }
+  append(values, count, stride) {
+    this.length = Math.ceil(this.length / 4) * 4;
+    const offset = this.length;
+    const bytes = new Uint8Array(values.buffer, values.byteOffset, values.byteLength);
+    this.chunks.push({
+      offset,
+      bytes
+    });
+    this.length += bytes.byteLength;
+    return {
+      offset,
+      length: bytes.byteLength,
+      count,
+      stride
+    };
+  }
+  finish() {
+    const result = new Uint8Array(this.length);
+    this.chunks.forEach(({
+      offset,
+      bytes
+    }) => result.set(bytes, offset));
+    return result;
+  }
+}
+function createGLTFMesh(context, meshIndex) {
+  var _source$primitives, _source$weights, _source$primitives$0$;
+  const source = item(context.json.meshes, meshIndex, 'mesh');
+  check((_source$primitives = source.primitives) == null ? void 0 : _source$primitives.length, `mesh ${meshIndex}: no primitives`);
+  const binary = new BinaryBuilder();
+  const struct = {
+    vertexBundles: [],
+    primitives: [],
+    minPosition: new Vec3(Infinity, Infinity, Infinity),
+    maxPosition: new Vec3(-Infinity, -Infinity, -Infinity)
+  };
+  const morph = {
+    subMeshMorphs: [],
+    weights: (_source$weights = source.weights) == null ? void 0 : _source$weights.slice()
+  };
+  const targetCount = ((_source$primitives$0$ = source.primitives[0].targets) == null ? void 0 : _source$primitives$0$.length) || 0;
+  if (source.weights) {
+    check(source.weights.length === targetCount && source.weights.every(Number.isFinite), 'invalid mesh morph weights');
+  }
+  for (const primitive of source.primitives) {
+    var _primitive$targets, _primitive$mode;
+    check((((_primitive$targets = primitive.targets) == null ? void 0 : _primitive$targets.length) || 0) === targetCount, 'inconsistent primitive morph target counts');
+    const position = context.accessor(primitive.attributes.POSITION);
+    check(position.source.type === 'VEC3' && position.source.componentType === 5126, 'POSITION must be float VEC3');
+    let count = position.count;
+    const channels = [];
+    for (const [name, index] of Object.entries(primitive.attributes)) {
+      if (!(name in ATTRIBUTES)) {
+        check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
+        check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
+        context.warn(`mesh ${meshIndex}: unused attribute ${name}`);
+        continue;
+      }
+      const accessor = context.accessor(index);
+      const width = ATTRIBUTES[name][1];
+      check(accessor.count === count && (accessor.components === width || name === 'COLOR_0' && accessor.components === 3), `invalid ${name} shape`);
+      if (name === 'JOINTS_0') {
+        check([5121, 5123].includes(accessor.source.componentType) && !accessor.source.normalized, 'invalid JOINTS_0 type');
+      } else if (name === 'NORMAL' || name === 'TANGENT') {
+        check(accessor.source.componentType === 5126, `${name} must be float`);
+      } else {
+        check(accessor.source.componentType === 5126 || [5121, 5123].includes(accessor.source.componentType) && accessor.source.normalized, `invalid ${name} type`);
+      }
+      const values = accessor.values.slice();
+      if (name === 'COLOR_0' && accessor.components === 3) {
+        values.length = 0;
+        for (let i = 0; i < count; ++i) {
+          values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1);
+        }
+      }
+      channels.push({
+        name,
+        width,
+        values
+      });
+    }
+    const weights = channels.find(c => c.name === 'WEIGHTS_0');
+    const joints = channels.find(c => c.name === 'JOINTS_0');
+    check(!!weights === !!joints, 'JOINTS_0 and WEIGHTS_0 must occur together');
+    if (weights) {
+      for (let i = 0; i < count; ++i) {
+        const sum = weights.values.slice(i * 4, i * 4 + 4).reduce((a, b) => a + b, 0);
+        check(sum > 0 && weights.values.slice(i * 4, i * 4 + 4).every(w => w >= 0), 'invalid skin weights');
+        for (let c = 0; c < 4; ++c) {
+          weights.values[i * 4 + c] /= sum;
+        }
+      }
+    }
+    let indices = Array.from({
+      length: count
+    }, (_, i) => i);
+    if (primitive.indices !== undefined) {
+      const accessor = context.accessor(primitive.indices);
+      check(accessor.source.type === 'SCALAR' && !accessor.source.normalized && [5121, 5123, 5125].includes(accessor.source.componentType), 'invalid indices accessor');
+      indices = accessor.values.slice();
+      const restart = accessor.source.componentType === 5121 ? 255 : accessor.source.componentType === 5123 ? 65535 : 4294967295;
+      check(indices.every(i => i < count && i !== restart), 'index exceeds vertex count or uses reserved restart value');
+    }
+    const topology = convertTopology(indices, (_primitive$mode = primitive.mode) !== null && _primitive$mode !== void 0 ? _primitive$mode : 4);
+    indices = topology.indices;
+    const targets = (primitive.targets || []).map(target => {
+      const entries = {};
+      for (const [name, index] of Object.entries(target)) {
+        check(['POSITION', 'NORMAL', 'TANGENT'].includes(name), `unsupported morph attribute ${name}`);
+        const accessor = context.accessor(index);
+        check(accessor.count === count && accessor.components === 3 && accessor.source.componentType === 5126, 'invalid morph accessor');
+        entries[name] = accessor.values.slice();
+      }
+      return entries;
+    });
+    if (!channels.some(c => c.name === 'NORMAL') && topology.mode === PrimitiveMode.TRIANGLE_LIST) {
+      for (const channel of channels) {
+        const expanded = [];
+        for (const i of indices) {
+          expanded.push(...channel.values.slice(i * channel.width, (i + 1) * channel.width));
+        }
+        channel.values = expanded;
+      }
+      for (const target of targets) {
+        for (const name of Object.keys(target)) {
+          const expanded = [];
+          for (const i of indices) {
+            expanded.push(...target[name].slice(i * 3, i * 3 + 3));
+          }
+          target[name] = expanded;
+        }
+      }
+      count = indices.length;
+      indices = Array.from({
+        length: count
+      }, (_, i) => i);
+      const p = channels.find(c => c.name === 'POSITION').values;
+      const normals = [];
+      for (let i = 0; i < count; i += 3) {
+        const n = triangleNormal(p, i, i + 1, i + 2);
+        normals.push(...n, ...n, ...n);
+      }
+      channels.push({
+        name: 'NORMAL',
+        width: 3,
+        values: normals
+      });
+    }
+    const material = primitive.material === undefined ? undefined : item(context.json.materials, primitive.material, 'material');
+    for (const info of [material == null ? void 0 : (_material$pbrMetallic = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic.baseColorTexture, material == null ? void 0 : (_material$pbrMetallic2 = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic2.metallicRoughnessTexture, material == null ? void 0 : material.normalTexture, material == null ? void 0 : material.occlusionTexture, material == null ? void 0 : material.emissiveTexture]) {
+      var _material$pbrMetallic, _material$pbrMetallic2;
+      if (info) {
+        check(channels.some(c => c.name === `TEXCOORD_${info.texCoord || 0}`), 'material references missing UV set');
+      }
+    }
+    if (material != null && material.normalTexture && !channels.some(c => c.name === 'TANGENT')) {
+      check(topology.mode === PrimitiveMode.TRIANGLE_LIST, 'normal mapping requires triangles');
+      channels.push({
+        name: 'TANGENT',
+        width: 4,
+        values: tangents(channels, indices, material.normalTexture.texCoord || 0)
+      });
+    }
+    for (const [name, width, defaults] of [['NORMAL', 3, [0, 0, 1]], ['TANGENT', 4, [1, 0, 0, 1]], ['TEXCOORD_0', 2, [0, 0]], ['TEXCOORD_1', 2, [0, 0]]]) {
+      if (!channels.some(c => c.name === name)) {
+        const defaultsValues = [];
+        for (let i = 0; i < count; ++i) {
+          defaultsValues.push(...defaults);
+        }
+        channels.push({
+          name,
+          width,
+          values: defaultsValues
+        });
+      }
+    }
+    const stride = channels.reduce((sum, c) => sum + c.width, 0);
+    const vertices = new Float32Array(count * stride);
+    let offset = 0;
+    for (const channel of channels) {
+      for (let i = 0; i < count; ++i) {
+        vertices.set(channel.values.slice(i * channel.width, (i + 1) * channel.width), i * stride + offset);
+      }
+      offset += channel.width;
+    }
+    const p = channels.find(c => c.name === 'POSITION').values;
+    for (let i = 0; i < count; ++i) {
+      const v = new Vec3(p[i * 3], p[i * 3 + 1], p[i * 3 + 2]);
+      Vec3.min(struct.minPosition, struct.minPosition, v);
+      Vec3.max(struct.maxPosition, struct.maxPosition, v);
+    }
+    const vertexIndex = struct.vertexBundles.length;
+    struct.vertexBundles.push({
+      view: binary.append(vertices, count, stride * 4),
+      attributes: channels.map(c => new Attribute(ATTRIBUTES[c.name][0], FORMATS[c.width]))
+    });
+    const useUint32 = indices.some(i => i >= 65535);
+    check(!useUint32 || deviceManager.gfxDevice.hasFeature(Feature.ELEMENT_INDEX_UINT), 'device does not support 32-bit indices');
+    struct.primitives.push({
+      vertexBundelIndices: [vertexIndex],
+      primitiveMode: topology.mode,
+      indexView: binary.append(useUint32 ? new Uint32Array(indices) : new Uint16Array(indices), indices.length, useUint32 ? 4 : 2)
+    });
+    if (targets.length) {
+      const names = ['POSITION', 'NORMAL', 'TANGENT'].filter(name => targets.some(t => t[name]));
+      morph.subMeshMorphs.push({
+        attributes: names.map(name => ATTRIBUTES[name][0]),
+        targets: targets.map(t => ({
+          displacements: names.map(name => binary.append(new Float32Array(t[name] || count * 3), count * 3, 4))
+        }))
+      });
+    } else {
+      morph.subMeshMorphs.push(null);
+    }
+  }
+  if (targetCount) {
+    struct.morph = morph;
+  }
+  const mesh = new Mesh();
+  mesh.name = source.name || `mesh_${meshIndex}`;
+  try {
+    mesh.reset({
+      struct,
+      data: binary.finish()
+    });
+    return mesh;
+  } catch (error) {
+    mesh.destroy();
+    throw error;
+  }
+}
+function convertTopology(indices, mode) {
+  check(Number.isInteger(mode) && mode >= 0 && mode <= 6, 'invalid primitive mode');
+  const output = [];
+  if (mode === 2 || mode === 3) {
+    for (let i = 1; i < indices.length; ++i) {
+      output.push(indices[i - 1], indices[i]);
+    }
+    if (mode === 2 && indices.length > 1) {
+      output.push(indices[indices.length - 1], indices[0]);
+    }
+  } else if (mode === 5 || mode === 6) {
+    for (let i = 2; i < indices.length; ++i) {
+      output.push(mode === 6 ? indices[0] : indices[i % 2 ? i - 1 : i - 2], mode === 6 ? indices[i - 1] : indices[i % 2 ? i - 2 : i - 1], indices[i]);
+    }
+  } else {
+    const primitiveMode = mode === 0 ? PrimitiveMode.POINT_LIST : mode === 1 ? PrimitiveMode.LINE_LIST : PrimitiveMode.TRIANGLE_LIST;
+    check(indices.length > 0 && (mode !== 1 || indices.length % 2 === 0) && (mode !== 4 || indices.length % 3 === 0), 'invalid primitive element count');
+    return {
+      indices,
+      mode: primitiveMode
+    };
+  }
+  const primitiveMode = mode <= 3 ? PrimitiveMode.LINE_LIST : PrimitiveMode.TRIANGLE_LIST;
+  check(output.length > 0 && (primitiveMode !== PrimitiveMode.TRIANGLE_LIST || output.length % 3 === 0) && (primitiveMode !== PrimitiveMode.LINE_LIST || output.length % 2 === 0), 'invalid primitive element count');
+  return {
+    indices: output,
+    mode: primitiveMode
+  };
+}
+function triangleNormal(p, a, b, c) {
+  const ab = new Vec3(p[b * 3] - p[a * 3], p[b * 3 + 1] - p[a * 3 + 1], p[b * 3 + 2] - p[a * 3 + 2]);
+  const ac = new Vec3(p[c * 3] - p[a * 3], p[c * 3 + 1] - p[a * 3 + 1], p[c * 3 + 2] - p[a * 3 + 2]);
+  Vec3.cross(ab, ab, ac);
+  ab.normalize();
+  return [ab.x, ab.y, ab.z];
+}
+function tangents(channels, indices, uvIndex) {
+  const p = channels.find(c => c.name === 'POSITION').values;
+  const n = channels.find(c => c.name === 'NORMAL').values;
+  const uv = channels.find(c => c.name === `TEXCOORD_${uvIndex}`).values;
+  const tan = new Float32Array(p.length);
+  const bitan = new Float32Array(p.length);
+  for (let i = 0; i < indices.length; i += 3) {
+    const [a, b, c] = indices.slice(i, i + 3);
+    const s1 = uv[b * 2] - uv[a * 2];
+    const t1 = uv[b * 2 + 1] - uv[a * 2 + 1];
+    const s2 = uv[c * 2] - uv[a * 2];
+    const t2 = uv[c * 2 + 1] - uv[a * 2 + 1];
+    const det = s1 * t2 - s2 * t1;
+    if (Math.abs(det) < 1e-12) {
+      continue;
+    }
+    for (let k = 0; k < 3; ++k) {
+      const x1 = p[b * 3 + k] - p[a * 3 + k];
+      const x2 = p[c * 3 + k] - p[a * 3 + k];
+      for (const v of [a, b, c]) {
+        tan[v * 3 + k] += (t2 * x1 - t1 * x2) / det;
+        bitan[v * 3 + k] += (s1 * x2 - s2 * x1) / det;
+      }
+    }
+  }
+  const out = [];
+  for (let i = 0; i < p.length; i += 3) {
+    const normal = new Vec3(n[i], n[i + 1], n[i + 2]).normalize();
+    const tangent = new Vec3(tan[i], tan[i + 1], tan[i + 2]);
+    Vec3.scaleAndAdd(tangent, tangent, normal, -Vec3.dot(normal, tangent));
+    if (tangent.lengthSqr() < 1e-12) {
+      Vec3.cross(tangent, Math.abs(normal.x) < 0.9 ? new Vec3(1, 0, 0) : new Vec3(0, 1, 0), normal);
+    }
+    tangent.normalize();
+    const cross = Vec3.cross(new Vec3(), normal, tangent);
+    const sign = Vec3.dot(cross, new Vec3(bitan[i], bitan[i + 1], bitan[i + 2])) < 0 ? -1 : 1;
+    out.push(tangent.x, tangent.y, tangent.z, sign);
+  }
+  return out;
+}
+
+function gltfEffect() {
+  const name = 'air-gltf-standard';
+  const existing = EffectAsset.get(name);
+  if (existing) {
+    return existing;
+  }
+  const standard = EffectAsset.get('builtin-standard');
+  check(standard, 'initialize createAirApp() before loading models');
+  const effect = new EffectAsset();
+  effect.name = name;
+  effect.shaders = JSON.parse(JSON.stringify(standard.shaders));
+  effect.techniques = JSON.parse(JSON.stringify(standard.techniques));
+  for (const technique of effect.techniques) {
+    for (const pass of technique.passes) {
+      for (const property of Object.values(pass.properties || {})) {
+        delete property.linear;
+      }
+    }
+  }
+  for (const shader of effect.shaders) {
+    const oldName = shader.name;
+    shader.name = `${name}|${oldName}`;
+    shader.hash = (shader.hash ^ 0x5a17c001) >>> 0;
+    for (const technique of effect.techniques) {
+      for (const pass of technique.passes) {
+        if (pass.program === oldName) {
+          pass.program = shader.name;
+        }
+      }
+    }
+    shader.defines.push({
+      name: 'AIR_GLTF_UNLIT',
+      type: 'boolean'
+    }, {
+      name: 'AIR_GLTF_OPAQUE',
+      type: 'boolean'
+    }, {
+      name: 'OCCLUSION_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
+    });
+    for (const language of ['glsl1', 'glsl3', 'glsl4']) {
+      if (!shader[language]) {
+        continue;
+      }
+      shader[language].vert = shader[language].vert.replace('v_tangent.w = In.tangent.w;', 'v_tangent.w = In.tangent.w * sign(dot(cross(matWorld[0].xyz, matWorld[1].xyz), matWorld[2].xyz));');
+      if (language === 'glsl3') {
+        shader[language].vert = shader[language].vert.replace(/\bgl_VertexIndex\b/g, 'gl_VertexID');
+      } else if (language === 'glsl1') {
+        shader[language].vert = shader[language].vert.replace('int getVertexId() {', 'attribute float a_vertexId;\nint getVertexId() {').replace(/\bgl_VertexIndex\b/g, 'int(a_vertexId)').replace(/ivec2 texSize = textureSize\(tex, 0\);\s*return texelFetch\(tex, ivec2\(pixelIndex % texSize.x, pixelIndex \/ texSize.x\), 0\);/g, 'return texture2D(tex, getPixelCoordFromLocation(getPixelLocation(cc_displacementTextureInfo.xy, pixelIndex), cc_displacementTextureInfo.xy));');
+      }
+      shader[language].frag = shader[language].frag.replace('baseColor.rgb *= SRGBToLinear(v_color.rgb);', 'baseColor.rgb *= v_color.rgb;').replace(/pbr.x \*= (texture2D|texture)\(occlusionMap, PBR_UV\).r;/g, 'pbr.x = mix(1.0, $1(occlusionMap, OCCLUSION_UV).r, pbrParams.x);').replace('s.occlusion = pbr.x;', '#if !USE_OCCLUSION_MAP\npbr.x = 1.0;\n#endif\ns.occlusion = pbr.x;').replace('s.albedo = baseColor;', '#if AIR_GLTF_OPAQUE\nbaseColor.a = 1.0;\n#endif\ns.albedo = baseColor;').replace('vec4 color = CCStandardShadingBase(s, v_shadowPos);', '#if AIR_GLTF_UNLIT\nvec4 color = s.albedo;\n#else\nvec4 color = CCStandardShadingBase(s, v_shadowPos);\n#endif').replace(/return gamma \* gamma;/g, 'return mix(gamma / 12.92, pow((gamma + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), gamma));');
+    }
+  }
+  effect.onLoaded();
+  return effect;
+}
+async function loadGLTFTextures(context, textures, images) {
+  const imageCache = new Map();
+  for (const [index, source] of (context.json.textures || []).entries()) {
+    var _sampler$minFilter, _sampler$magFilter, _sampler$wrapS, _sampler$wrapT;
+    check(source.source !== undefined, `texture ${index}: no core image fallback`);
+    const imageSource = item(context.json.images, source.source, 'image');
+    let image = imageCache.get(source.source);
+    if (!image) {
+      check(imageSource.uri !== undefined !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
+      const bytes = imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView);
+      const png = bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71;
+      const jpeg = bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
+      check(png || jpeg, 'only PNG and JPEG images are supported');
+      const mime = png ? 'image/png' : 'image/jpeg';
+      check(!imageSource.mimeType || imageSource.mimeType === mime, 'image MIME mismatch');
+      const url = URL.createObjectURL(new Blob([bytes], {
+        type: mime
+      }));
+      try {
+        const element = await new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error(`[glTF] image ${source.source}: decode failed`));
+          img.src = url;
+        });
+        image = new ImageAsset(element);
+        images.push(image);
+        imageCache.set(source.source, image);
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    }
+    const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
+    const texture = new Texture2D();
+    textures.push(texture);
+    texture.name = source.name || `texture_${index}`;
+    const min = (_sampler$minFilter = sampler.minFilter) !== null && _sampler$minFilter !== void 0 ? _sampler$minFilter : 9987;
+    const mag = (_sampler$magFilter = sampler.magFilter) !== null && _sampler$magFilter !== void 0 ? _sampler$magFilter : 9729;
+    check([9728, 9729, 9984, 9985, 9986, 9987].includes(min) && [9728, 9729].includes(mag), 'invalid texture filter');
+    const wrap = value => {
+      check([33071, 33648, 10497].includes(value), 'invalid texture wrap');
+      return value === 33071 ? Texture2D.WrapMode.CLAMP_TO_EDGE : value === 33648 ? Texture2D.WrapMode.MIRRORED_REPEAT : Texture2D.WrapMode.REPEAT;
+    };
+    texture.setFilters([9728, 9984, 9986].includes(min) ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR, mag === 9728 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR);
+    texture.setMipFilter(min < 9984 ? Texture2D.Filter.NONE : min <= 9985 ? Texture2D.Filter.NEAREST : Texture2D.Filter.LINEAR);
+    texture.setWrapMode(wrap((_sampler$wrapS = sampler.wrapS) !== null && _sampler$wrapS !== void 0 ? _sampler$wrapS : 10497), wrap((_sampler$wrapT = sampler.wrapT) !== null && _sampler$wrapT !== void 0 ? _sampler$wrapT : 10497));
+    const powerOfTwo = n => n > 0 && (n & n - 1) === 0;
+    if (deviceManager.gfxDevice.gfxAPI === API.WEBGL && (!powerOfTwo(image.width) || !powerOfTwo(image.height))) {
+      context.warn(`texture ${index}: WebGL1 NPOT sampler changed to clamp/no mipmaps`);
+      texture.setWrapMode(Texture2D.WrapMode.CLAMP_TO_EDGE, Texture2D.WrapMode.CLAMP_TO_EDGE);
+      texture.setMipFilter(Texture2D.Filter.NONE);
+    }
+    texture.image = image;
+  }
+}
+function createGLTFMaterial(source, textures, vertexColor) {
+  var _source$extensions;
+  const pbr = source.pbrMetallicRoughness || {};
+  const unlit = !!((_source$extensions = source.extensions) != null && _source$extensions.KHR_materials_unlit);
+  const alpha = source.alphaMode || 'OPAQUE';
+  check(['OPAQUE', 'MASK', 'BLEND'].includes(alpha), 'invalid alphaMode');
+  const factor = pbr.baseColorFactor || [1, 1, 1, 1];
+  const emissive = source.emissiveFactor || [0, 0, 0];
+  check(factor.length === 4 && factor.every(v => Number.isFinite(v) && v >= 0 && v <= 1), 'invalid baseColorFactor');
+  check(emissive.length === 3 && emissive.every(v => Number.isFinite(v) && v >= 0 && v <= 1), 'invalid emissiveFactor');
+  const scalar = (v, name) => {
+    check(Number.isFinite(v) && v >= 0 && v <= 1, `invalid ${name}`);
+    return v;
+  };
+  const defines = {
+    USE_VERTEX_COLOR: vertexColor,
+    USE_TWOSIDE: !!source.doubleSided,
+    USE_ALPHA_TEST: alpha === 'MASK',
+    ALPHA_TEST_CHANNEL: 'a',
+    AIR_GLTF_OPAQUE: alpha === 'OPAQUE',
+    AIR_GLTF_UNLIT: unlit,
+    CC_FORCE_FORWARD_SHADING: true
+  };
+  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV']];
+  for (const [info,, macro, uv] of maps) {
+    defines[macro] = !!info;
+    if (info) {
+      check(info.texCoord === undefined || info.texCoord === 0 || info.texCoord === 1, 'only UV0/UV1 are supported');
+      defines[uv] = info.texCoord === 1 ? 'v_uv1' : 'v_uv';
+      if (info.texCoord === 1) {
+        defines.HAS_SECOND_UV = true;
+      }
+    }
+  }
+  const material = new Material();
+  try {
+    var _source$alphaCutoff, _source$occlusionText, _source$occlusionText2, _pbr$roughnessFactor, _pbr$metallicFactor, _source$normalTexture, _source$normalTexture2, _source$normalTexture3, _source$normalTexture4;
+    const effect = gltfEffect();
+    let selectedEffect = effect;
+    if (alpha === 'BLEND' || unlit) {
+      const variantName = 'air-gltf-standard-single-pass';
+      selectedEffect = EffectAsset.get(variantName);
+      if (!selectedEffect) {
+        selectedEffect = new EffectAsset();
+        selectedEffect.name = variantName;
+        selectedEffect.shaders = effect.shaders;
+        selectedEffect.techniques = [{
+          passes: [effect.techniques[0].passes[0]]
+        }];
+        selectedEffect.onLoaded();
+      }
+    }
+    material.initialize({
+      effectAsset: selectedEffect,
+      defines,
+      states: {
+        rasterizerState: {
+          cullMode: source.doubleSided ? CullMode.NONE : CullMode.BACK
+        },
+        depthStencilState: {
+          depthTest: true,
+          depthWrite: alpha !== 'BLEND'
+        },
+        blendState: {
+          targets: [{
+            blend: alpha === 'BLEND',
+            blendSrc: BlendFactor.SRC_ALPHA,
+            blendDst: BlendFactor.ONE_MINUS_SRC_ALPHA,
+            blendSrcAlpha: BlendFactor.ONE,
+            blendDstAlpha: BlendFactor.ONE_MINUS_SRC_ALPHA
+          }]
+        }
+      }
+    });
+    material.name = source.name || 'glTF material';
+    material.setProperty('albedo', new Vec4(...factor));
+    material.setProperty('albedoScaleAndCutoff', new Vec4(1, 1, 1, (_source$alphaCutoff = source.alphaCutoff) !== null && _source$alphaCutoff !== void 0 ? _source$alphaCutoff : 0.5));
+    material.setProperty('pbrParams', new Vec4(scalar((_source$occlusionText = (_source$occlusionText2 = source.occlusionTexture) == null ? void 0 : _source$occlusionText2.strength) !== null && _source$occlusionText !== void 0 ? _source$occlusionText : 1, 'occlusion strength'), scalar((_pbr$roughnessFactor = pbr.roughnessFactor) !== null && _pbr$roughnessFactor !== void 0 ? _pbr$roughnessFactor : 1, 'roughness'), scalar((_pbr$metallicFactor = pbr.metallicFactor) !== null && _pbr$metallicFactor !== void 0 ? _pbr$metallicFactor : 1, 'metallic'), 0.5));
+    material.setProperty('emissive', new Vec4(emissive[0], emissive[1], emissive[2], 1));
+    check(Number.isFinite((_source$normalTexture = (_source$normalTexture2 = source.normalTexture) == null ? void 0 : _source$normalTexture2.scale) !== null && _source$normalTexture !== void 0 ? _source$normalTexture : 1), 'invalid normal scale');
+    material.setProperty('emissiveScaleParam', new Vec4(1, 1, 1, (_source$normalTexture3 = (_source$normalTexture4 = source.normalTexture) == null ? void 0 : _source$normalTexture4.scale) !== null && _source$normalTexture3 !== void 0 ? _source$normalTexture3 : 1));
+    for (const [info, property] of maps) {
+      if (info) {
+        material.setProperty(property, item(textures, info.index, 'texture'));
+      }
+    }
+    return material;
+  } catch (error) {
+    material.destroy();
+    throw error;
+  }
+}
+
+function gltfExtension(url) {
+  var _exec;
+  return (_exec = /\.(gltf|glb)$/i.exec(url.split(/[?#]/, 1)[0])) == null ? void 0 : _exec[0].toLowerCase();
+}
+function absoluteURL(url) {
+  return new URL(url, typeof document !== 'undefined' ? document.baseURI : undefined).href;
+}
+class GLTFLoader {
+  loadAsync(url) {
+    registerGLTFLoader();
+    return new Promise((resolve, reject) => assetManager.loadRemote(absoluteURL(url), {
+      ext: gltfExtension(url) || '.glb'
+    }, (error, asset) => error ? reject(error) : resolve(asset)));
+  }
+  async parseAsync(data, baseUrl) {
+    const {
+      json,
+      bin
+    } = decodeContainer(data);
+    const context = new GLTFContext(json, baseUrl === undefined ? undefined : absoluteURL(baseUrl));
+    const layout = prepareNodes(context);
+    const asset = new GLTFAsset(context, layout);
+    try {
+      await context.loadBuffers(bin);
+      (json.accessors || []).forEach((_, i) => context.accessor(i));
+      await loadGLTFTextures(context, asset.owned.textures, asset.images);
+      createSkeletons(context, layout, asset.owned.skeletons);
+      const materials = new Map();
+      for (const [i, mesh] of (json.meshes || []).entries()) {
+        asset.owned.meshes.push(createGLTFMesh(context, i));
+        asset.meshMaterials.push(mesh.primitives.map(primitive => {
+          var _primitive$material;
+          const key = `${(_primitive$material = primitive.material) !== null && _primitive$material !== void 0 ? _primitive$material : -1}:${primitive.attributes.COLOR_0 !== undefined}`;
+          let material = materials.get(key);
+          if (!material) {
+            const source = primitive.material === undefined ? {} : item(json.materials, primitive.material, 'material');
+            material = createGLTFMaterial(source, asset.textures, primitive.attributes.COLOR_0 !== undefined);
+            materials.set(key, material);
+            asset.owned.materials.push(material);
+          }
+          return material;
+        }));
+      }
+      for (const node of json.nodes || []) {
+        if (node.mesh !== undefined) {
+          item(asset.meshes, node.mesh, 'node mesh');
+        }
+        if (node.skin !== undefined) {
+          item(asset.skeletons, node.skin, 'node skin');
+          check(node.mesh !== undefined, 'skin node must reference mesh');
+        }
+      }
+      asset.owned.animations.push(...createGLTFAnimations(context, layout.paths));
+      return asset;
+    } catch (error) {
+      asset.destroy();
+      throw error;
+    }
+  }
+}
+let registered = false;
+function registerGLTFLoader() {
+  if (registered) {
+    return;
+  }
+  registered = true;
+  for (const ext of ['.gltf', '.glb']) {
+    assetManager.downloader.register(ext, (url, options, done) => {
+      fetch(url, {
+        headers: options.header,
+        credentials: options.withCredentials ? 'include' : 'same-origin'
+      }).then(response => {
+        check(response.ok, `request failed: ${url} (${response.status})`);
+        return response.arrayBuffer();
+      }).then(data => done(null, data), error => done(error));
+    });
+    assetManager.parser.register(ext, (data, _options, done) => {
+      try {
+        decodeContainer(data);
+        done(null, data);
+      } catch (error) {
+        done(error);
+      }
+    });
+    factory.register(ext, (url, data, _options, done) => {
+      new GLTFLoader().parseAsync(data, /^(data|blob):/i.test(url) ? undefined : new URL('.', absoluteURL(url)).href).then(asset => done(null, asset), error => {
+        files.remove(`${url}@native`);
+        parsed.remove(`${url}@native`);
+        done(error);
+      });
+    });
+  }
+}
+
+async function loadAssetAsync(path, type) {
+  if (type === GLTFAsset || !type && gltfExtension(path)) {
+    const cached = assetManager.assets.get(path);
+    if (cached instanceof GLTFAsset && cached.isValid) {
+      return cached;
+    }
+    return new GLTFLoader().loadAsync(path);
+  }
+  if (type) {
+    const res = assetManager.resources;
+    if (res) {
+      try {
+        return await new Promise((resolve, reject) => {
+          res.load(path, type, (err, asset) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(asset);
+            }
+          });
+        });
+      } catch (e) {
+      }
+    }
+    const cached = assetManager.assets.get(path);
+    if (cached && (!type || cached instanceof type)) {
+      return cached;
+    }
+    throw new Error(`[cocosair] loadAssetAsync: '${path}' not found. Register it via assetManager.assets.add('${path}', asset), or set up a resources bundle.`);
+  }
+  const resp = await fetch(path);
   if (!resp.ok) {
-    throw new Error(`[cocosair] loadAssetAsync failed: ${url} (${resp.status})`);
+    throw new Error(`[cocosair] loadAssetAsync failed: ${path} (${resp.status})`);
   }
   const text = await resp.text();
   try {
@@ -69071,51 +70478,108 @@ async function loadAssetAsync(url) {
     return JSON.parse(text);
   }
 }
-function buildSkeletonTree(root, boneNames) {
+
+function buildSkeletonTree(root, jointPaths) {
   const skeleton = new Skeleton();
-  skeleton.joints = boneNames.slice();
+  skeleton.joints = jointPaths.slice();
   const bindposes = [];
-  for (const name of boneNames) {
-    const bone = root.getChildByName(name);
+  for (const path of jointPaths) {
+    const bone = root.getChildByPath(path);
     if (!bone) {
-      throw new Error(`[cocosair] buildSkeletonTree: bone '${name}' not found under '${root.name}'`);
+      throw new Error(`[cocosair] buildSkeletonTree: joint path '${path}' not found under '${root.name}'`);
     }
     bindposes.push(bone.worldMatrix.clone().invert());
   }
   skeleton.bindposes = bindposes;
   return skeleton;
 }
-function restoreBindPose(restPose) {
-  for (const name of Object.keys(restPose)) {
-    const node = findNodeByPath(name);
-    if (node) {
-      const m = restPose[name];
-      const q = new Quat();
-      const pos = new Vec3();
-      const scale = new Vec3();
-      Mat4.toSRT(m, q, pos, scale);
-      node.setPosition(pos);
-      node.setRotation(q);
-      node.setScale(scale);
+
+const m4_world = new Mat4();
+const m4_parentInv = new Mat4();
+const m4_local = new Mat4();
+const q_rot = new Quat();
+const v_pos = new Vec3();
+const v_scale = new Vec3();
+function restoreBindPose(root, skeleton) {
+  const joints = skeleton.joints;
+  const bindposes = skeleton.bindposes;
+  for (let i = 0; i < joints.length; i++) {
+    const bindpose = bindposes[i];
+    if (!bindpose) {
+      continue;
+    }
+    const node = root.getChildByPath(joints[i]);
+    if (!node) {
+      continue;
+    }
+    Mat4.invert(m4_world, bindpose);
+    const parent = node.parent;
+    if (parent) {
+      Mat4.invert(m4_parentInv, parent.worldMatrix);
+      Mat4.multiply(m4_local, m4_parentInv, m4_world);
+    } else {
+      Mat4.copy(m4_local, m4_world);
+    }
+    Mat4.toSRT(m4_local, q_rot, v_pos, v_scale);
+    node.setPosition(v_pos);
+    node.setRotation(q_rot);
+    node.setScale(v_scale);
+  }
+}
+
+const DEFAULT_DISTANCE = 6;
+const v3_dir = new Vec3();
+const v3_center = new Vec3();
+function frameObject(camera, target, fallbackDistance = DEFAULT_DISTANCE) {
+  const camNode = camera.node;
+  const worldCenter = target.worldPosition;
+  let distance = fallbackDistance;
+  const bounds = collectWorldBounds(target);
+  if (bounds) {
+    const fov = (camera.fov > 0 ? camera.fov : 45) * Math.PI / 180;
+    const radius = Math.max(bounds.halfExtents.lengthSqr() > 0 ? bounds.halfExtents.length() : 0, 1e-3);
+    const fit = camera.projection === Camera.ProjectionType.ORTHO ? radius * 2.2 : radius / Math.sin(Math.min(fov / 2, Math.PI / 2 - 1e-3));
+    distance = Math.max(fit * 1.15, 0.5);
+    Vec3.copy(v3_center, bounds.center);
+  } else {
+    Vec3.copy(v3_center, worldCenter);
+  }
+  Vec3.subtract(v3_dir, camNode.worldPosition, v3_center);
+  if (v3_dir.lengthSqr() < 1e-6) {
+    v3_dir.set(0, 0, 1);
+  }
+  v3_dir.normalize();
+  camNode.setPosition(v3_center.x + v3_dir.x * distance, v3_center.y + v3_dir.y * distance, v3_center.z + v3_dir.z * distance);
+  camNode.lookAt(v3_center);
+}
+function collectWorldBounds(target) {
+  let result = null;
+  const renderers = [];
+  const self = target.getComponent(MeshRenderer);
+  if (self) {
+    renderers.push(self);
+  }
+  const children = target.getComponentsInChildren(MeshRenderer);
+  for (const r of children) {
+    if (renderers.indexOf(r) === -1) {
+      renderers.push(r);
     }
   }
-}
-function findNodeByPath(path) {
-  const scene = director.getScene();
-  return scene ? find(path, scene) : null;
-}
-function frameObject(camera, target, distance = 6) {
-  const camNode = camera.node;
-  const wp = target.worldPosition;
-  const dir = new Vec3();
-  Vec3.subtract(dir, camNode.worldPosition, wp);
-  if (dir.lengthSqr() < 1e-6) {
-    dir.set(0, 0, 1);
+  for (const r of renderers) {
+    const b = r.model ? r.model.worldBounds : null;
+    if (!b) {
+      continue;
+    }
+    if (!result) {
+      result = AABB.clone(b);
+    } else {
+      AABB.merge(result, result, b);
+    }
   }
-  dir.normalize();
-  camNode.setPosition(wp.x + dir.x * distance, wp.y + dir.y * distance, wp.z + dir.z * distance);
-  camNode.lookAt(wp);
+  return result;
 }
+
+registerGLTFLoader();
 
 class WebGLDescriptorSet extends DescriptorSet {
   get gpuDescriptorSet() {
@@ -89789,8 +91253,8 @@ class PipelineUBO {
 }
 PipelineUBO._combineSignY = 0;
 
-var _dec$g, _class$e, _class2$f, _initializer$a, _initializer2$5, _initializer3$2;
-let RenderStage = (_dec$g = ccclass$9('RenderStage'), _dec$g(_class$e = (_class2$f = class RenderStage {
+var _dec$g, _class$g, _class2$a, _initializer$a, _initializer2$5, _initializer3$2;
+let RenderStage = (_dec$g = ccclass$9('RenderStage'), _dec$g(_class$g = (_class2$a = class RenderStage {
   constructor() {
     this._name = _initializer$a && _initializer$a();
     this._priority = _initializer2$5 && _initializer2$5();
@@ -89828,17 +91292,17 @@ let RenderStage = (_dec$g = ccclass$9('RenderStage'), _dec$g(_class$e = (_class2
     this._pipeline = pipeline;
     this._flow = flow;
   }
-}, (_initializer$a = applyDecoratedInitializer(_class2$f.prototype, "_name", [serializable$8], function () {
+}, (_initializer$a = applyDecoratedInitializer(_class2$a.prototype, "_name", [serializable$8], function () {
   return '';
-}), _initializer2$5 = applyDecoratedInitializer(_class2$f.prototype, "_priority", [serializable$8], function () {
+}), _initializer2$5 = applyDecoratedInitializer(_class2$a.prototype, "_priority", [serializable$8], function () {
   return 0;
-}), _initializer3$2 = applyDecoratedInitializer(_class2$f.prototype, "_tag", [serializable$8], function () {
+}), _initializer3$2 = applyDecoratedInitializer(_class2$a.prototype, "_tag", [serializable$8], function () {
   return 0;
-})), _class2$f)) || _class$e);
+})), _class2$a)) || _class$g);
 cclegacy.RenderStage = RenderStage;
 
-var _dec$f, _dec2$9, _class$d, _class2$e, _initializer$9, _initializer2$4, _initializer3$1, _initializer4$1;
-let RenderFlow = (_dec$f = ccclass$9('RenderFlow'), _dec2$9 = type$5([RenderStage]), _dec$f(_class$d = (_class2$e = class RenderFlow {
+var _dec$f, _dec2$9, _class$f, _class2$9, _initializer$9, _initializer2$4, _initializer3$1, _initializer4$1;
+let RenderFlow = (_dec$f = ccclass$9('RenderFlow'), _dec2$9 = type$5([RenderStage]), _dec$f(_class$f = (_class2$9 = class RenderFlow {
   constructor() {
     this._name = _initializer$9 && _initializer$9();
     this._priority = _initializer2$4 && _initializer2$4();
@@ -89888,18 +91352,18 @@ let RenderFlow = (_dec$f = ccclass$9('RenderFlow'), _dec2$9 = type$5([RenderStag
     }
     this._stages.length = 0;
   }
-}, (_initializer$9 = applyDecoratedInitializer(_class2$e.prototype, "_name", [serializable$8], function () {
+}, (_initializer$9 = applyDecoratedInitializer(_class2$9.prototype, "_name", [serializable$8], function () {
   return '';
-}), _initializer2$4 = applyDecoratedInitializer(_class2$e.prototype, "_priority", [serializable$8], function () {
+}), _initializer2$4 = applyDecoratedInitializer(_class2$9.prototype, "_priority", [serializable$8], function () {
   return 0;
-}), _initializer3$1 = applyDecoratedInitializer(_class2$e.prototype, "_tag", [serializable$8], function () {
+}), _initializer3$1 = applyDecoratedInitializer(_class2$9.prototype, "_tag", [serializable$8], function () {
   return 0;
-}), _initializer4$1 = applyDecoratedInitializer(_class2$e.prototype, "_stages", [_dec2$9, serializable$8], function () {
+}), _initializer4$1 = applyDecoratedInitializer(_class2$9.prototype, "_stages", [_dec2$9, serializable$8], function () {
   return [];
-})), _class2$e)) || _class$d);
+})), _class2$9)) || _class$f);
 cclegacy.RenderFlow = RenderFlow;
 
-var _dec$e, _dec2$8, _class3$6, _class4$2, _initializer$8, _initializer2$3;
+var _dec$e, _dec2$8, _class$e, _class2$8, _initializer$8, _initializer2$3;
 const MAX_BLOOM_FILTER_PASS_NUM = 6;
 const tmpRect = new Rect$1();
 const tmpViewport = new Viewport();
@@ -89942,7 +91406,7 @@ function hashFrameBuffer(fbo) {
   }
   return hash;
 }
-let RenderPipeline = (_dec$e = ccclass$9('cc.RenderPipeline'), _dec2$8 = type$5([RenderFlow]), _dec$e(_class3$6 = (_class4$2 = class RenderPipeline extends Asset {
+let RenderPipeline = (_dec$e = ccclass$9('cc.RenderPipeline'), _dec2$8 = type$5([RenderFlow]), _dec$e(_class$e = (_class2$8 = class RenderPipeline extends Asset {
   get tag() {
     return this._tag;
   }
@@ -90476,11 +91940,11 @@ let RenderPipeline = (_dec$e = ccclass$9('cc.RenderPipeline'), _dec2$8 = type$5(
   hasEventListener(type, callback, target) {
     return this._eventProcessor.hasEventListener(type, callback, target);
   }
-}, (_initializer$8 = applyDecoratedInitializer(_class4$2.prototype, "_tag", [serializable$8], function () {
+}, (_initializer$8 = applyDecoratedInitializer(_class2$8.prototype, "_tag", [serializable$8], function () {
   return 0;
-}), _initializer2$3 = applyDecoratedInitializer(_class4$2.prototype, "_flows", [_dec2$8, serializable$8], function () {
+}), _initializer2$3 = applyDecoratedInitializer(_class2$8.prototype, "_flows", [_dec2$8, serializable$8], function () {
   return [];
-})), _class4$2)) || _class3$6);
+})), _class2$8)) || _class$e);
 cclegacy.RenderPipeline = RenderPipeline;
 
 markAsWarning(RenderPipeline.prototype, 'RenderPipeline.prototype', [{
@@ -90518,7 +91982,7 @@ let DeferredFlowPriority;
   DeferredFlowPriority[DeferredFlowPriority["UI"] = 10] = "UI";
 })(DeferredFlowPriority || (DeferredFlowPriority = {}));
 
-var _dec$d, _dec2$7, _dec3$2, _dec4, _class$c, _class2$d, _initializer$7, _initializer2$2, _initializer3, _initializer4, _initializer5, _initializer6, _dec5, _dec6, _class4$1, _class5, _initializer7, _initializer8, _dec7, _dec8, _class7, _class8, _initializer9, _initializer10, _dec9, _dec10, _dec11, _class10, _class11, _initializer11, _initializer12, _initializer13, _initializer14, _initializer15, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _class13, _class14, _initializer16, _initializer17, _initializer18, _initializer19, _initializer20, _initializer21, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _class16, _class17, _initializer22, _initializer23, _initializer24, _initializer25, _initializer26, _initializer27, _initializer28, _initializer29, _dec26, _dec27, _dec28, _class19, _class20, _initializer30, _initializer31, _initializer32, _dec29, _dec30, _dec31, _class22, _class23, _initializer33, _initializer34, _initializer35;
+var _dec$d, _dec2$7, _dec3$2, _dec4, _class$d, _class2$7, _initializer$7, _initializer2$2, _initializer3, _initializer4, _initializer5, _initializer6, _dec5, _dec6, _class3, _class4, _initializer7, _initializer8, _dec7, _dec8, _class5, _class6, _initializer9, _initializer10, _dec9, _dec10, _dec11, _class7, _class8, _initializer11, _initializer12, _initializer13, _initializer14, _initializer15, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _class9, _class10, _initializer16, _initializer17, _initializer18, _initializer19, _initializer20, _initializer21, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _class11, _class12, _initializer22, _initializer23, _initializer24, _initializer25, _initializer26, _initializer27, _initializer28, _initializer29, _dec26, _dec27, _dec28, _class13, _class14, _initializer30, _initializer31, _initializer32, _dec29, _dec30, _dec31, _class15, _class16, _initializer33, _initializer34, _initializer35;
 ccenum(TextureType);
 ccenum(TextureUsageBit);
 ccenum(StoreOp);
@@ -90532,7 +91996,7 @@ let RenderFlowTag;
   RenderFlowTag[RenderFlowTag["UI"] = 2] = "UI";
 })(RenderFlowTag || (RenderFlowTag = {}));
 ccenum(RenderFlowTag);
-(_dec$d = ccclass$9('RenderTextureDesc'), _dec2$7 = type$5(TextureType), _dec3$2 = type$5(TextureUsageBit), _dec4 = type$5(Format), _dec$d(_class$c = (_class2$d = class RenderTextureDesc {
+(_dec$d = ccclass$9('RenderTextureDesc'), _dec2$7 = type$5(TextureType), _dec3$2 = type$5(TextureUsageBit), _dec4 = type$5(Format), _dec$d(_class$d = (_class2$7 = class RenderTextureDesc {
   constructor() {
     this.name = _initializer$7 && _initializer$7();
     this.type = _initializer2$2 && _initializer2$2();
@@ -90541,40 +92005,40 @@ ccenum(RenderFlowTag);
     this.width = _initializer5 && _initializer5();
     this.height = _initializer6 && _initializer6();
   }
-}, (_initializer$7 = applyDecoratedInitializer(_class2$d.prototype, "name", [serializable$8], function () {
+}, (_initializer$7 = applyDecoratedInitializer(_class2$7.prototype, "name", [serializable$8], function () {
   return '';
-}), _initializer2$2 = applyDecoratedInitializer(_class2$d.prototype, "type", [_dec2$7], function () {
+}), _initializer2$2 = applyDecoratedInitializer(_class2$7.prototype, "type", [_dec2$7], function () {
   return TextureType.TEX2D;
-}), _initializer3 = applyDecoratedInitializer(_class2$d.prototype, "usage", [_dec3$2], function () {
+}), _initializer3 = applyDecoratedInitializer(_class2$7.prototype, "usage", [_dec3$2], function () {
   return TextureUsageBit.COLOR_ATTACHMENT;
-}), _initializer4 = applyDecoratedInitializer(_class2$d.prototype, "format", [_dec4], function () {
+}), _initializer4 = applyDecoratedInitializer(_class2$7.prototype, "format", [_dec4], function () {
   return Format.UNKNOWN;
-}), _initializer5 = applyDecoratedInitializer(_class2$d.prototype, "width", [serializable$8], function () {
+}), _initializer5 = applyDecoratedInitializer(_class2$7.prototype, "width", [serializable$8], function () {
   return -1;
-}), _initializer6 = applyDecoratedInitializer(_class2$d.prototype, "height", [serializable$8], function () {
+}), _initializer6 = applyDecoratedInitializer(_class2$7.prototype, "height", [serializable$8], function () {
   return -1;
-})), _class2$d)) || _class$c);
-let RenderTextureConfig = (_dec5 = ccclass$9('RenderTextureConfig'), _dec6 = type$5(RenderTexture), _dec5(_class4$1 = (_class5 = class RenderTextureConfig {
+})), _class2$7)) || _class$d);
+let RenderTextureConfig = (_dec5 = ccclass$9('RenderTextureConfig'), _dec6 = type$5(RenderTexture), _dec5(_class3 = (_class4 = class RenderTextureConfig {
   constructor() {
     this.name = _initializer7 && _initializer7();
     this.texture = _initializer8 && _initializer8();
   }
-}, (_initializer7 = applyDecoratedInitializer(_class5.prototype, "name", [serializable$8], function () {
+}, (_initializer7 = applyDecoratedInitializer(_class4.prototype, "name", [serializable$8], function () {
   return '';
-}), _initializer8 = applyDecoratedInitializer(_class5.prototype, "texture", [_dec6], function () {
+}), _initializer8 = applyDecoratedInitializer(_class4.prototype, "texture", [_dec6], function () {
   return null;
-})), _class5)) || _class4$1);
-(_dec7 = ccclass$9('MaterialConfig'), _dec8 = type$5(Material), _dec7(_class7 = (_class8 = class MaterialConfig {
+})), _class4)) || _class3);
+(_dec7 = ccclass$9('MaterialConfig'), _dec8 = type$5(Material), _dec7(_class5 = (_class6 = class MaterialConfig {
   constructor() {
     this.name = _initializer9 && _initializer9();
     this.material = _initializer10 && _initializer10();
   }
-}, (_initializer9 = applyDecoratedInitializer(_class8.prototype, "name", [serializable$8], function () {
+}, (_initializer9 = applyDecoratedInitializer(_class6.prototype, "name", [serializable$8], function () {
   return '';
-}), _initializer10 = applyDecoratedInitializer(_class8.prototype, "material", [_dec8], function () {
+}), _initializer10 = applyDecoratedInitializer(_class6.prototype, "material", [_dec8], function () {
   return null;
-})), _class8)) || _class7);
-(_dec9 = ccclass$9('FrameBufferDesc'), _dec10 = type$5([CCString]), _dec11 = type$5(RenderTexture), _dec9(_class10 = (_class11 = class FrameBufferDesc {
+})), _class6)) || _class5);
+(_dec9 = ccclass$9('FrameBufferDesc'), _dec10 = type$5([CCString]), _dec11 = type$5(RenderTexture), _dec9(_class7 = (_class8 = class FrameBufferDesc {
   constructor() {
     this.name = _initializer11 && _initializer11();
     this.renderPass = _initializer12 && _initializer12();
@@ -90582,18 +92046,18 @@ let RenderTextureConfig = (_dec5 = ccclass$9('RenderTextureConfig'), _dec6 = typ
     this.depthStencilTexture = _initializer14 && _initializer14();
     this.texture = _initializer15 && _initializer15();
   }
-}, (_initializer11 = applyDecoratedInitializer(_class11.prototype, "name", [serializable$8], function () {
+}, (_initializer11 = applyDecoratedInitializer(_class8.prototype, "name", [serializable$8], function () {
   return '';
-}), _initializer12 = applyDecoratedInitializer(_class11.prototype, "renderPass", [serializable$8], function () {
+}), _initializer12 = applyDecoratedInitializer(_class8.prototype, "renderPass", [serializable$8], function () {
   return 0;
-}), _initializer13 = applyDecoratedInitializer(_class11.prototype, "colorTextures", [_dec10], function () {
+}), _initializer13 = applyDecoratedInitializer(_class8.prototype, "colorTextures", [_dec10], function () {
   return [];
-}), _initializer14 = applyDecoratedInitializer(_class11.prototype, "depthStencilTexture", [serializable$8], function () {
+}), _initializer14 = applyDecoratedInitializer(_class8.prototype, "depthStencilTexture", [serializable$8], function () {
   return '';
-}), _initializer15 = applyDecoratedInitializer(_class11.prototype, "texture", [_dec11], function () {
+}), _initializer15 = applyDecoratedInitializer(_class8.prototype, "texture", [_dec11], function () {
   return null;
-})), _class11)) || _class10);
-let ColorDesc = (_dec12 = ccclass$9('ColorDesc'), _dec13 = type$5(Format), _dec14 = type$5(LoadOp), _dec15 = type$5(StoreOp), _dec16 = type$5(AccessFlagBit), _dec17 = type$5(AccessFlagBit), _dec12(_class13 = (_class14 = class ColorDesc {
+})), _class8)) || _class7);
+let ColorDesc = (_dec12 = ccclass$9('ColorDesc'), _dec13 = type$5(Format), _dec14 = type$5(LoadOp), _dec15 = type$5(StoreOp), _dec16 = type$5(AccessFlagBit), _dec17 = type$5(AccessFlagBit), _dec12(_class9 = (_class10 = class ColorDesc {
   constructor() {
     this.format = _initializer16 && _initializer16();
     this.loadOp = _initializer17 && _initializer17();
@@ -90602,20 +92066,20 @@ let ColorDesc = (_dec12 = ccclass$9('ColorDesc'), _dec13 = type$5(Format), _dec1
     this.beginAccesses = _initializer20 && _initializer20();
     this.endAccesses = _initializer21 && _initializer21();
   }
-}, (_initializer16 = applyDecoratedInitializer(_class14.prototype, "format", [_dec13], function () {
+}, (_initializer16 = applyDecoratedInitializer(_class10.prototype, "format", [_dec13], function () {
   return Format.UNKNOWN;
-}), _initializer17 = applyDecoratedInitializer(_class14.prototype, "loadOp", [_dec14], function () {
+}), _initializer17 = applyDecoratedInitializer(_class10.prototype, "loadOp", [_dec14], function () {
   return LoadOp.CLEAR;
-}), _initializer18 = applyDecoratedInitializer(_class14.prototype, "storeOp", [_dec15], function () {
+}), _initializer18 = applyDecoratedInitializer(_class10.prototype, "storeOp", [_dec15], function () {
   return StoreOp.STORE;
-}), _initializer19 = applyDecoratedInitializer(_class14.prototype, "sampleCount", [serializable$8], function () {
+}), _initializer19 = applyDecoratedInitializer(_class10.prototype, "sampleCount", [serializable$8], function () {
   return 1;
-}), _initializer20 = applyDecoratedInitializer(_class14.prototype, "beginAccesses", [_dec16], function () {
+}), _initializer20 = applyDecoratedInitializer(_class10.prototype, "beginAccesses", [_dec16], function () {
   return AccessFlagBit.NONE;
-}), _initializer21 = applyDecoratedInitializer(_class14.prototype, "endAccesses", [_dec17], function () {
+}), _initializer21 = applyDecoratedInitializer(_class10.prototype, "endAccesses", [_dec17], function () {
   return AccessFlagBit.COLOR_ATTACHMENT_WRITE;
-})), _class14)) || _class13);
-let DepthStencilDesc = (_dec18 = ccclass$9('DepthStencilDesc'), _dec19 = type$5(Format), _dec20 = type$5(LoadOp), _dec21 = type$5(StoreOp), _dec22 = type$5(LoadOp), _dec23 = type$5(StoreOp), _dec24 = type$5(AccessFlagBit), _dec25 = type$5(AccessFlagBit), _dec18(_class16 = (_class17 = class DepthStencilDesc {
+})), _class10)) || _class9);
+let DepthStencilDesc = (_dec18 = ccclass$9('DepthStencilDesc'), _dec19 = type$5(Format), _dec20 = type$5(LoadOp), _dec21 = type$5(StoreOp), _dec22 = type$5(LoadOp), _dec23 = type$5(StoreOp), _dec24 = type$5(AccessFlagBit), _dec25 = type$5(AccessFlagBit), _dec18(_class11 = (_class12 = class DepthStencilDesc {
   constructor() {
     this.format = _initializer22 && _initializer22();
     this.depthLoadOp = _initializer23 && _initializer23();
@@ -90626,55 +92090,55 @@ let DepthStencilDesc = (_dec18 = ccclass$9('DepthStencilDesc'), _dec19 = type$5(
     this.beginAccesses = _initializer28 && _initializer28();
     this.endAccesses = _initializer29 && _initializer29();
   }
-}, (_initializer22 = applyDecoratedInitializer(_class17.prototype, "format", [_dec19], function () {
+}, (_initializer22 = applyDecoratedInitializer(_class12.prototype, "format", [_dec19], function () {
   return Format.UNKNOWN;
-}), _initializer23 = applyDecoratedInitializer(_class17.prototype, "depthLoadOp", [_dec20], function () {
+}), _initializer23 = applyDecoratedInitializer(_class12.prototype, "depthLoadOp", [_dec20], function () {
   return LoadOp.CLEAR;
-}), _initializer24 = applyDecoratedInitializer(_class17.prototype, "depthStoreOp", [_dec21], function () {
+}), _initializer24 = applyDecoratedInitializer(_class12.prototype, "depthStoreOp", [_dec21], function () {
   return StoreOp.STORE;
-}), _initializer25 = applyDecoratedInitializer(_class17.prototype, "stencilLoadOp", [_dec22], function () {
+}), _initializer25 = applyDecoratedInitializer(_class12.prototype, "stencilLoadOp", [_dec22], function () {
   return LoadOp.CLEAR;
-}), _initializer26 = applyDecoratedInitializer(_class17.prototype, "stencilStoreOp", [_dec23], function () {
+}), _initializer26 = applyDecoratedInitializer(_class12.prototype, "stencilStoreOp", [_dec23], function () {
   return StoreOp.STORE;
-}), _initializer27 = applyDecoratedInitializer(_class17.prototype, "sampleCount", [serializable$8], function () {
+}), _initializer27 = applyDecoratedInitializer(_class12.prototype, "sampleCount", [serializable$8], function () {
   return 1;
-}), _initializer28 = applyDecoratedInitializer(_class17.prototype, "beginAccesses", [_dec24], function () {
+}), _initializer28 = applyDecoratedInitializer(_class12.prototype, "beginAccesses", [_dec24], function () {
   return AccessFlagBit.NONE;
-}), _initializer29 = applyDecoratedInitializer(_class17.prototype, "endAccesses", [_dec25], function () {
+}), _initializer29 = applyDecoratedInitializer(_class12.prototype, "endAccesses", [_dec25], function () {
   return AccessFlagBit.DEPTH_STENCIL_ATTACHMENT_WRITE;
-})), _class17)) || _class16);
-(_dec26 = ccclass$9('RenderPassDesc'), _dec27 = type$5([ColorDesc]), _dec28 = type$5(DepthStencilDesc), _dec26(_class19 = (_class20 = class RenderPassDesc {
+})), _class12)) || _class11);
+(_dec26 = ccclass$9('RenderPassDesc'), _dec27 = type$5([ColorDesc]), _dec28 = type$5(DepthStencilDesc), _dec26(_class13 = (_class14 = class RenderPassDesc {
   constructor() {
     this.index = _initializer30 && _initializer30();
     this.colorAttachments = _initializer31 && _initializer31();
     this.depthStencilAttachment = _initializer32 && _initializer32();
   }
-}, (_initializer30 = applyDecoratedInitializer(_class20.prototype, "index", [serializable$8], function () {
+}, (_initializer30 = applyDecoratedInitializer(_class14.prototype, "index", [serializable$8], function () {
   return -1;
-}), _initializer31 = applyDecoratedInitializer(_class20.prototype, "colorAttachments", [_dec27], function () {
+}), _initializer31 = applyDecoratedInitializer(_class14.prototype, "colorAttachments", [_dec27], function () {
   return [];
-}), _initializer32 = applyDecoratedInitializer(_class20.prototype, "depthStencilAttachment", [_dec28], function () {
+}), _initializer32 = applyDecoratedInitializer(_class14.prototype, "depthStencilAttachment", [_dec28], function () {
   return new DepthStencilDesc();
-})), _class20)) || _class19);
+})), _class14)) || _class13);
 let RenderQueueSortMode;
 (function (RenderQueueSortMode) {
   RenderQueueSortMode[RenderQueueSortMode["FRONT_TO_BACK"] = 0] = "FRONT_TO_BACK";
   RenderQueueSortMode[RenderQueueSortMode["BACK_TO_FRONT"] = 1] = "BACK_TO_FRONT";
 })(RenderQueueSortMode || (RenderQueueSortMode = {}));
 ccenum(RenderQueueSortMode);
-let RenderQueueDesc = (_dec29 = ccclass$9('RenderQueueDesc'), _dec30 = type$5(RenderQueueSortMode), _dec31 = type$5([CCString]), _dec29(_class22 = (_class23 = class RenderQueueDesc {
+let RenderQueueDesc = (_dec29 = ccclass$9('RenderQueueDesc'), _dec30 = type$5(RenderQueueSortMode), _dec31 = type$5([CCString]), _dec29(_class15 = (_class16 = class RenderQueueDesc {
   constructor() {
     this.isTransparent = _initializer33 && _initializer33();
     this.sortMode = _initializer34 && _initializer34();
     this.stages = _initializer35 && _initializer35();
   }
-}, (_initializer33 = applyDecoratedInitializer(_class23.prototype, "isTransparent", [serializable$8], function () {
+}, (_initializer33 = applyDecoratedInitializer(_class16.prototype, "isTransparent", [serializable$8], function () {
   return false;
-}), _initializer34 = applyDecoratedInitializer(_class23.prototype, "sortMode", [_dec30], function () {
+}), _initializer34 = applyDecoratedInitializer(_class16.prototype, "sortMode", [_dec30], function () {
   return RenderQueueSortMode.FRONT_TO_BACK;
-}), _initializer35 = applyDecoratedInitializer(_class23.prototype, "stages", [_dec31], function () {
+}), _initializer35 = applyDecoratedInitializer(_class16.prototype, "stages", [_dec31], function () {
   return [];
-})), _class23)) || _class22);
+})), _class16)) || _class15);
 
 function opaqueCompareFn(a, b) {
   return a.hash - b.hash || a.depth - b.depth || a.shaderId - b.shaderId;
@@ -91479,9 +92943,9 @@ class UIPhase {
   }
 }
 
-var _dec$c, _dec2$6, _class$b, _class2$c, _initializer$6, _class3$5;
+var _dec$c, _dec2$6, _class$c, _class2$6, _initializer$6, _ForwardStage;
 const colors$6 = [new Color$1(0, 0, 0, 1)];
-let ForwardStage = (_dec$c = ccclass$9('ForwardStage'), _dec2$6 = type$5([RenderQueueDesc]), _dec$c(_class$b = (_class2$c = (_class3$5 = class ForwardStage extends RenderStage {
+let ForwardStage = (_dec$c = ccclass$9('ForwardStage'), _dec2$6 = type$5([RenderQueueDesc]), _dec$c(_class$c = (_class2$6 = (_ForwardStage = class ForwardStage extends RenderStage {
   constructor() {
     super();
     this.renderQueues = _initializer$6 && _initializer$6();
@@ -91591,7 +93055,7 @@ let ForwardStage = (_dec$c = ccclass$9('ForwardStage'), _dec2$6 = type$5([Render
     renderProfiler(device, renderPass, cmdBuff, pipeline.profiler, camera);
     cmdBuff.endRenderPass();
   }
-}, _class3$5.initInfo = {
+}, _ForwardStage.initInfo = {
   name: 'ForwardStage',
   priority: ForwardStagePriority.FORWARD,
   tag: 0,
@@ -91604,12 +93068,12 @@ let ForwardStage = (_dec$c = ccclass$9('ForwardStage'), _dec2$6 = type$5([Render
     sortMode: RenderQueueSortMode.BACK_TO_FRONT,
     stages: ['default', 'planarShadow']
   }]
-}, _class3$5), (_initializer$6 = applyDecoratedInitializer(_class2$c.prototype, "renderQueues", [_dec2$6, serializable$8], function () {
+}, _ForwardStage), (_initializer$6 = applyDecoratedInitializer(_class2$6.prototype, "renderQueues", [_dec2$6, serializable$8], function () {
   return [];
-})), _class2$c)) || _class$b);
+})), _class2$6)) || _class$c);
 
-var _dec$b, _class$a, _class2$b;
-let ForwardFlow = (_dec$b = ccclass$9('ForwardFlow'), _dec$b(_class$a = (_class2$b = class ForwardFlow extends RenderFlow {
+var _dec$b, _class$b, _ForwardFlow;
+let ForwardFlow = (_dec$b = ccclass$9('ForwardFlow'), _dec$b(_class$b = (_ForwardFlow = class ForwardFlow extends RenderFlow {
   initialize(info) {
     super.initialize(info);
     if (this._stages.length === 0) {
@@ -91628,11 +93092,11 @@ let ForwardFlow = (_dec$b = ccclass$9('ForwardFlow'), _dec$b(_class$a = (_class2
   destroy() {
     super.destroy();
   }
-}, _class2$b.initInfo = {
+}, _ForwardFlow.initInfo = {
   name: PIPELINE_FLOW_FORWARD,
   priority: ForwardFlowPriority.FORWARD,
   stages: []
-}, _class2$b)) || _class$a);
+}, _ForwardFlow)) || _class$b);
 
 let _phaseID$1 = getPhaseID$1('shadow-caster');
 function getShadowPassIndex(subModel) {
@@ -91746,9 +93210,9 @@ class RenderShadowMapBatchedQueue {
   }
 }
 
-var _dec$a, _class$9, _class2$a;
+var _dec$a, _class$a, _ShadowStage;
 const colors$5 = [new Color$1(1, 1, 1, 1)];
-let ShadowStage = (_dec$a = ccclass$9('ShadowStage'), _dec$a(_class$9 = (_class2$a = class ShadowStage extends RenderStage {
+let ShadowStage = (_dec$a = ccclass$9('ShadowStage'), _dec$a(_class$a = (_ShadowStage = class ShadowStage extends RenderStage {
   constructor() {
     super();
     this._additiveShadowQueue = void 0;
@@ -91851,15 +93315,15 @@ let ShadowStage = (_dec$a = ccclass$9('ShadowStage'), _dec$a(_class$9 = (_class2
     this._additiveShadowQueue = new RenderShadowMapBatchedQueue(pipeline);
     this._isShadowMapCleared = false;
   }
-}, _class2$a.initInfo = {
+}, _ShadowStage.initInfo = {
   name: 'ShadowStage',
   priority: ForwardStagePriority.FORWARD,
   tag: 0
-}, _class2$a)) || _class$9);
+}, _ShadowStage)) || _class$a);
 
-var _dec$9, _class$8, _class2$9;
+var _dec$9, _class$9, _ShadowFlow;
 const _validLights = [];
-let ShadowFlow = (_dec$9 = ccclass$9('ShadowFlow'), _dec$9(_class$8 = (_class2$9 = class ShadowFlow extends RenderFlow {
+let ShadowFlow = (_dec$9 = ccclass$9('ShadowFlow'), _dec$9(_class$9 = (_ShadowFlow = class ShadowFlow extends RenderFlow {
   constructor() {
     super();
     this._shadowRenderPass = null;
@@ -92070,12 +93534,12 @@ let ShadowFlow = (_dec$9 = ccclass$9('ShadowFlow'), _dec$9(_class$8 = (_class2$9
     }
     shadows.shadowMapDirty = false;
   }
-}, _class2$9.initInfo = {
+}, _ShadowFlow.initInfo = {
   name: PIPELINE_FLOW_SHADOW,
   priority: ForwardFlowPriority.SHADOW,
   tag: RenderFlowTag.SCENE,
   stages: []
-}, _class2$9)) || _class$8);
+}, _ShadowFlow)) || _class$9);
 
 const CC_USE_RGBE_OUTPUT = 'CC_USE_RGBE_OUTPUT';
 let _phaseID = getPhaseID$1('default');
@@ -92228,9 +93692,9 @@ class RenderReflectionProbeQueue {
   }
 }
 
-var _dec$8, _class$7, _class2$8;
+var _dec$8, _class$8, _ReflectionProbeStage;
 const colors$4 = [new Color$1(1, 1, 1, 1)];
-let ReflectionProbeStage = (_dec$8 = ccclass$9('ReflectionProbeStage'), _dec$8(_class$7 = (_class2$8 = class ReflectionProbeStage extends RenderStage {
+let ReflectionProbeStage = (_dec$8 = ccclass$9('ReflectionProbeStage'), _dec$8(_class$8 = (_ReflectionProbeStage = class ReflectionProbeStage extends RenderStage {
   constructor() {
     super();
     this._frameBuffer = null;
@@ -92302,14 +93766,14 @@ let ReflectionProbeStage = (_dec$8 = ccclass$9('ReflectionProbeStage'), _dec$8(_
     super.activate(pipeline, flow);
     this._probeRenderQueue = new RenderReflectionProbeQueue(pipeline);
   }
-}, _class2$8.initInfo = {
+}, _ReflectionProbeStage.initInfo = {
   name: 'ReflectionProbeStage',
   priority: ForwardStagePriority.FORWARD,
   tag: 0
-}, _class2$8)) || _class$7);
+}, _ReflectionProbeStage)) || _class$8);
 
-var _dec$7, _class$6, _class2$7;
-let ReflectionProbeFlow = (_dec$7 = ccclass$9('ReflectionProbeFlow'), _dec$7(_class$6 = (_class2$7 = class ReflectionProbeFlow extends RenderFlow {
+var _dec$7, _class$7, _ReflectionProbeFlow;
+let ReflectionProbeFlow = (_dec$7 = ccclass$9('ReflectionProbeFlow'), _dec$7(_class$7 = (_ReflectionProbeFlow = class ReflectionProbeFlow extends RenderFlow {
   initialize(info) {
     super.initialize(info);
     if (this._stages.length === 0) {
@@ -92359,14 +93823,14 @@ let ReflectionProbeFlow = (_dec$7 = ccclass$9('ReflectionProbeFlow'), _dec$7(_cl
       }
     }
   }
-}, _class2$7.initInfo = {
+}, _ReflectionProbeFlow.initInfo = {
   name: 'PIPELINE_FLOW_RELECTION_PROBE',
   priority: 0,
   tag: RenderFlowTag.SCENE,
   stages: []
-}, _class2$7)) || _class$6);
+}, _ReflectionProbeFlow)) || _class$7);
 
-var _dec$6, _dec2$5, _class$5, _class2$6, _initializer$5;
+var _dec$6, _dec2$5, _class$6, _class2$5, _initializer$5;
 const PIPELINE_TYPE$1 = 0;
 function createDefaultPipeline() {
   const rppl = new ForwardPipeline();
@@ -92375,7 +93839,7 @@ function createDefaultPipeline() {
   });
   return rppl;
 }
-let ForwardPipeline = (_dec$6 = ccclass$9('ForwardPipeline'), _dec2$5 = type$5([RenderTextureConfig]), _dec$6(_class$5 = (_class2$6 = class ForwardPipeline extends RenderPipeline {
+let ForwardPipeline = (_dec$6 = ccclass$9('ForwardPipeline'), _dec2$5 = type$5([RenderTextureConfig]), _dec$6(_class$6 = (_class2$5 = class ForwardPipeline extends RenderPipeline {
   constructor() {
     super();
     this.renderTextures = _initializer$5 && _initializer$5();
@@ -92460,13 +93924,13 @@ let ForwardPipeline = (_dec$6 = ccclass$9('ForwardPipeline'), _dec2$5 = type$5([
       descriptorSet.getTexture(UNIFORM_SPOT_SHADOW_MAP_TEXTURE_BINDING).destroy();
     }
   }
-}, (_initializer$5 = applyDecoratedInitializer(_class2$6.prototype, "renderTextures", [_dec2$5, serializable$8], function () {
+}, (_initializer$5 = applyDecoratedInitializer(_class2$5.prototype, "renderTextures", [_dec2$5, serializable$8], function () {
   return [];
-})), _class2$6)) || _class$5);
+})), _class2$5)) || _class$6);
 
-var _dec$5, _dec2$4, _class$4, _class2$5, _initializer$4, _class3$4;
+var _dec$5, _dec2$4, _class$5, _class2$4, _initializer$4, _GbufferStage;
 const colors$3 = [new Color$1(0, 0, 0, 0), new Color$1(0, 0, 0, 0), new Color$1(0, 0, 0, 0)];
-let GbufferStage = (_dec$5 = ccclass$9('GbufferStage'), _dec2$4 = type$5([RenderQueueDesc]), _dec$5(_class$4 = (_class2$5 = (_class3$4 = class GbufferStage extends RenderStage {
+let GbufferStage = (_dec$5 = ccclass$9('GbufferStage'), _dec2$4 = type$5([RenderQueueDesc]), _dec$5(_class$5 = (_class2$4 = (_GbufferStage = class GbufferStage extends RenderStage {
   constructor() {
     super();
     this.renderQueues = _initializer$4 && _initializer$4();
@@ -92548,7 +94012,7 @@ let GbufferStage = (_dec$5 = ccclass$9('GbufferStage'), _dec2$4 = type$5([Render
     this._instancedQueue.recordCommandBuffer(device, renderPass, cmdBuff);
     cmdBuff.endRenderPass();
   }
-}, _class3$4.initInfo = {
+}, _GbufferStage.initInfo = {
   name: 'GbufferStage',
   priority: DeferredStagePriority.GBUFFER,
   tag: 0,
@@ -92561,16 +94025,16 @@ let GbufferStage = (_dec$5 = ccclass$9('GbufferStage'), _dec2$4 = type$5([Render
     sortMode: RenderQueueSortMode.BACK_TO_FRONT,
     stages: ['default']
   }]
-}, _class3$4), (_initializer$4 = applyDecoratedInitializer(_class2$5.prototype, "renderQueues", [_dec2$4, serializable$8], function () {
+}, _GbufferStage), (_initializer$4 = applyDecoratedInitializer(_class2$4.prototype, "renderQueues", [_dec2$4, serializable$8], function () {
   return [];
-})), _class2$5)) || _class$4);
+})), _class2$4)) || _class$5);
 
-var _dec$4, _dec2$3, _dec3$1, _class$3, _class2$4, _initializer$3, _initializer2$1, _class3$3;
+var _dec$4, _dec2$3, _dec3$1, _class$4, _class2$3, _initializer$3, _initializer2$1, _LightingStage;
 const _v3 = new Vec3();
 const _rangedDirLightBoundingBox = new AABB(0.0, 0.0, 0.0, 0.5, 0.5, 0.5);
 const _tmpBoundingBox = new AABB();
 const colors$2 = [new Color$1(0, 0, 0, 1)];
-let LightingStage = (_dec$4 = ccclass$9('LightingStage'), _dec2$3 = type$5(Material), _dec3$1 = type$5([RenderQueueDesc]), _dec$4(_class$3 = (_class2$4 = (_class3$3 = class LightingStage extends RenderStage {
+let LightingStage = (_dec$4 = ccclass$9('LightingStage'), _dec2$3 = type$5(Material), _dec3$1 = type$5([RenderQueueDesc]), _dec$4(_class$4 = (_class2$3 = (_LightingStage = class LightingStage extends RenderStage {
   constructor() {
     super();
     this._deferredLitsBufs = null;
@@ -92830,19 +94294,19 @@ let LightingStage = (_dec$4 = ccclass$9('LightingStage'), _dec2$3 = type$5(Mater
     this._uiPhase.render(camera, renderPass);
     cmdBuff.endRenderPass();
   }
-}, _class3$3.initInfo = {
+}, _LightingStage.initInfo = {
   name: 'LightingStage',
   priority: DeferredStagePriority.LIGHTING,
   tag: 0
-}, _class3$3), (_initializer$3 = applyDecoratedInitializer(_class2$4.prototype, "_deferredMaterial", [_dec2$3, serializable$8], function () {
+}, _LightingStage), (_initializer$3 = applyDecoratedInitializer(_class2$3.prototype, "_deferredMaterial", [_dec2$3, serializable$8], function () {
   return null;
-}), _initializer2$1 = applyDecoratedInitializer(_class2$4.prototype, "renderQueues", [_dec3$1, serializable$8], function () {
+}), _initializer2$1 = applyDecoratedInitializer(_class2$3.prototype, "renderQueues", [_dec3$1, serializable$8], function () {
   return [];
-})), _class2$4)) || _class$3);
+})), _class2$3)) || _class$4);
 
-var _dec$3, _dec2$2, _dec3, _class$2, _class2$3, _initializer$2, _initializer2, _class3$2;
+var _dec$3, _dec2$2, _dec3, _class$3, _class2$2, _initializer$2, _initializer2, _PostProcessStage;
 const colors$1 = [new Color$1(0, 0, 0, 1)];
-let PostProcessStage = (_dec$3 = ccclass$9('PostProcessStage'), _dec2$2 = type$5(Material), _dec3 = type$5([RenderQueueDesc]), _dec$3(_class$2 = (_class2$3 = (_class3$2 = class PostProcessStage extends RenderStage {
+let PostProcessStage = (_dec$3 = ccclass$9('PostProcessStage'), _dec2$2 = type$5(Material), _dec3 = type$5([RenderQueueDesc]), _dec$3(_class$3 = (_class2$2 = (_PostProcessStage = class PostProcessStage extends RenderStage {
   constructor() {
     super();
     this._postProcessMaterial = _initializer$2 && _initializer$2();
@@ -92919,15 +94383,15 @@ let PostProcessStage = (_dec$3 = ccclass$9('PostProcessStage'), _dec2$2 = type$5
     renderProfiler(device, renderPass, cmdBuff, pipeline.profiler, camera);
     cmdBuff.endRenderPass();
   }
-}, _class3$2.initInfo = {
+}, _PostProcessStage.initInfo = {
   name: 'PostProcessStage',
   priority: CommonStagePriority.POST_PROCESS,
   tag: 0
-}, _class3$2), (_initializer$2 = applyDecoratedInitializer(_class2$3.prototype, "_postProcessMaterial", [_dec2$2, serializable$8], function () {
+}, _PostProcessStage), (_initializer$2 = applyDecoratedInitializer(_class2$2.prototype, "_postProcessMaterial", [_dec2$2, serializable$8], function () {
   return null;
-}), _initializer2 = applyDecoratedInitializer(_class2$3.prototype, "renderQueues", [_dec3, serializable$8], function () {
+}), _initializer2 = applyDecoratedInitializer(_class2$2.prototype, "renderQueues", [_dec3, serializable$8], function () {
   return [];
-})), _class2$3)) || _class$2);
+})), _class2$2)) || _class$3);
 
 let DeferredAntiAliasing;
 (function (DeferredAntiAliasing) {
@@ -93075,14 +94539,14 @@ class DeferredPipelineSceneData extends PipelineSceneData {
   }
 }
 
-var _class$1, _dec$2, _dec2$1, _class2$2, _class3$1, _initializer$1, _class4;
+var _UBOBloom, _dec$2, _dec2$1, _class$2, _class2$1, _initializer$1, _BloomStage;
 const colors = [new Color$1(0, 0, 0, 1)];
 class UBOBloom {}
-_class$1 = UBOBloom;
+_UBOBloom = UBOBloom;
 UBOBloom.TEXTURE_SIZE_OFFSET = 0;
-UBOBloom.COUNT = _class$1.TEXTURE_SIZE_OFFSET + 4;
-UBOBloom.SIZE = _class$1.COUNT * 4;
-let BloomStage = (_dec$2 = ccclass$9('BloomStage'), _dec2$1 = type$5(Material), _dec$2(_class2$2 = (_class3$1 = (_class4 = class BloomStage extends RenderStage {
+UBOBloom.COUNT = _UBOBloom.TEXTURE_SIZE_OFFSET + 4;
+UBOBloom.SIZE = _UBOBloom.COUNT * 4;
+let BloomStage = (_dec$2 = ccclass$9('BloomStage'), _dec2$1 = type$5(Material), _dec$2(_class$2 = (_class2$1 = (_BloomStage = class BloomStage extends RenderStage {
   constructor() {
     super();
     this.threshold = 1.0;
@@ -93276,16 +94740,16 @@ let BloomStage = (_dec$2 = ccclass$9('BloomStage'), _dec2$1 = type$5(Material), 
     }
     cmdBuff.endRenderPass();
   }
-}, _class4.initInfo = {
+}, _BloomStage.initInfo = {
   name: 'BloomStage',
   priority: CommonStagePriority.BLOOM,
   tag: 0
-}, _class4), (_initializer$1 = applyDecoratedInitializer(_class3$1.prototype, "_bloomMaterial", [_dec2$1, serializable$8], function () {
+}, _BloomStage), (_initializer$1 = applyDecoratedInitializer(_class2$1.prototype, "_bloomMaterial", [_dec2$1, serializable$8], function () {
   return null;
-})), _class3$1)) || _class2$2);
+})), _class2$1)) || _class$2);
 
-var _dec$1, _class, _class2$1;
-let MainFlow = (_dec$1 = ccclass$9('MainFlow'), _dec$1(_class = (_class2$1 = class MainFlow extends RenderFlow {
+var _dec$1, _class$1, _MainFlow;
+let MainFlow = (_dec$1 = ccclass$9('MainFlow'), _dec$1(_class$1 = (_MainFlow = class MainFlow extends RenderFlow {
   initialize(info) {
     super.initialize(info);
     if (this._stages.length === 0) {
@@ -93313,13 +94777,13 @@ let MainFlow = (_dec$1 = ccclass$9('MainFlow'), _dec$1(_class = (_class2$1 = cla
   destroy() {
     super.destroy();
   }
-}, _class2$1.initInfo = {
+}, _MainFlow.initInfo = {
   name: PIPELINE_FLOW_MAIN,
   priority: DeferredFlowPriority.MAIN,
   stages: []
-}, _class2$1)) || _class);
+}, _MainFlow)) || _class$1);
 
-var _dec, _dec2, _class2, _class3, _initializer;
+var _dec, _dec2, _class, _class2, _initializer;
 const PIPELINE_TYPE = 1;
 class DeferredRenderData extends PipelineRenderData {
   constructor() {
@@ -93328,7 +94792,7 @@ class DeferredRenderData extends PipelineRenderData {
     this.gbufferRenderTargets = [];
   }
 }
-let DeferredPipeline = (_dec = ccclass$9('DeferredPipeline'), _dec2 = type$5([RenderTextureConfig]), _dec(_class2 = (_class3 = class DeferredPipeline extends RenderPipeline {
+let DeferredPipeline = (_dec = ccclass$9('DeferredPipeline'), _dec2 = type$5([RenderTextureConfig]), _dec(_class = (_class2 = class DeferredPipeline extends RenderPipeline {
   constructor() {
     super();
     this._gbufferRenderPass = null;
@@ -93510,9 +94974,9 @@ let DeferredPipeline = (_dec = ccclass$9('DeferredPipeline'), _dec2 = type$5([Re
       data.gbufferFrameBuffer = this.newFramebufferByRatio(data.outputFrameBuffer);
     });
   }
-}, (_initializer = applyDecoratedInitializer(_class3.prototype, "renderTextures", [_dec2, serializable$8], function () {
+}, (_initializer = applyDecoratedInitializer(_class2.prototype, "renderTextures", [_dec2, serializable$8], function () {
   return [];
-})), _class3)) || _class2);
+})), _class2)) || _class);
 
 var legacy_rendering = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -93537,4 +95001,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { Acceleration, AirAppImpl, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, convertUtils, createAirApp, createDefaultPipeline, debug, debugID, deprecateModuleExportedName, deserialize, deserializeTag, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
+export { Acceleration, AirAppImpl, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, convertUtils, createAirApp, createDefaultPipeline, debug, debugID, deprecateModuleExportedName, deserialize, deserializeTag, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
+//# sourceMappingURL=cocosair.module.js.map

@@ -8,3 +8,4 @@
 export * from './app';
 export * from './bootstrap';
 export * from './utils';
+export * from './assets/gltf';

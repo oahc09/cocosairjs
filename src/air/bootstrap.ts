@@ -40,7 +40,9 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
         ].join('\n');
         document.head.appendChild(style);
     }
-    if (!canvas.id) {
+    // ScreenAdapter 硬编码按 id 'GameCanvas' 查找画布：用户自定义 id（如 '#game'）需归一化，
+    // 仅当文档中不存在真正的 #GameCanvas 时改写，避免与模板 DOM 冲突。
+    if (canvas.id !== 'GameCanvas' && !document.getElementById('GameCanvas')) {
         canvas.id = 'GameCanvas';
     }
     // 画布绘图缓冲必须匹配窗口尺寸（屏幕适配器只在窗口变化时触发，初始尺寸需在此设定）
@@ -52,18 +54,26 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
 
 /**
  * @en Create a Cocos AIR application on the given canvas.
- * @zh 在指定 canvas 上创建 Cocos AIR 应用。
+ * @zh 在指定 canvas 上创建 Cocos AIR 应用。canvas 支持元素或 CSS selector 字符串。
  *
  * @example
  * ```ts
  * import { createAirApp, Scene } from 'cocosair';
  *
- * const app = await createAirApp({ canvas: document.querySelector('#GameCanvas')! });
+ * const app = await createAirApp({ canvas: '#GameCanvas' }); // 或 canvas 元素
  * app.run(new Scene('Main'));
+ * app.getScene(); // → Scene | null
  * ```
  */
 export async function createAirApp (options: AirAppOptions): Promise<AirApp> {
-    const canvas = options.canvas;
+    let canvas = options.canvas;
+    if (typeof canvas === 'string') {
+        const el = document.querySelector(canvas);
+        if (!(el instanceof HTMLCanvasElement)) {
+            throw new Error(`[cocosair] createAirApp: selector '${canvas}' did not match a <canvas> element.`);
+        }
+        canvas = el;
+    }
     if (!canvas) {
         throw new Error('[cocosair] createAirApp requires a canvas.');
     }

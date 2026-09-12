@@ -4,24 +4,42 @@
 脱离 Cocos Creator、Editor 与 Native Engine 的 **Code First** Web 运行时。
 
 > **V0.1 RC**（2026-09-12）：验收矩阵 L0–L14 全部通过，详见 `docs/acceptance-report.md`。
+> **V0.2 RC**（2026-09-12）：Code First DX & SDK 化，验收矩阵 L0–L17 全部通过，详见 `docs/acceptance-report-v02.md`。
 
 ```bash
 npm install
-npm run dev          # Engine Watch + Example Server（http://127.0.0.1:7454）
+npm run dev          # 三频道 Watch（engine/air/example）+ Example Server + 自动刷新
 ```
 
-用户只需要：
+## Quick Start
+
+最小 Code First 模板见 `examples/starter/`：
 
 ```ts
-import { createAirApp, Scene, Node, Camera, MeshRenderer } from 'cocosair';
+import { createAirApp, Scene } from 'cocosair';
 
-const app = await createAirApp({
-    canvas: document.querySelector('#GameCanvas')!,
-});
+const app = await createAirApp({ canvas: '#GameCanvas' }); // 支持 selector 字符串或元素
+app.run(new Scene('Main'));
+app.getScene(); // → Scene | null
+```
 
-const scene = new Scene('Main');
-// Code First...
-app.run(scene);
+Promise 资产加载：
+
+```ts
+import { loadAssetAsync, Mesh } from 'cocosair';
+
+assetManager.assets.add('models/box', utils.createMesh(primitives.box({})));
+const mesh = await loadAssetAsync('models/box', Mesh);
+```
+
+骨骼工具集（V0.1 蒙皮链路正式化）：
+
+```ts
+import { buildSkeletonTree, restoreBindPose, frameObject } from 'cocosair';
+
+const skeleton = buildSkeletonTree(armature, ['bone0', 'bone0/bone1']);
+restoreBindPose(armature, skeleton); // 复位静止姿势
+frameObject(camera, modelRoot);      // 包围盒自动取景
 ```
 
 不需要 Creator、`.scene`、Prefab、Inspector 或任何编辑器资产管线。
@@ -50,14 +68,23 @@ cocosair.js/
 
 | 命令 | 说明 |
 |---|---|
-| `npm run dev` | 引擎 watch（src/** 变化自动重建）+ 示例服务器 + 浏览器自动刷新 |
-| `npm run build` | Development ESM 构建 → `build/cocosair.module.js` |
+| `npm run dev` | 三频道 Watch：engine(src/cocos\|pal\|exports)/air(src/air) 自动重建，example 只刷新不构建；example .ts 即时编译 + importmap |
+| `npm run build` | Development ESM 构建 → `build/cocosair.module.js`（附 source map） |
 | `npm run build:min` | Production ESM 构建 → `build/cocosair.module.min.js` |
+| `npm run build:dts` | 类型声明 → `build/cocosair.module.d.ts`（编辑器补全 / Go to Definition） |
 | `npm run typecheck` | TypeScript 独立编译校验（0 依赖 Creator） |
 | `npm run verify:web-only` | Web-only 依赖守卫（按依赖可达性判定，禁止 native/minigame 泄入） |
 | `npm test` | smoke tests（jsdom + HEADLESS 渲染模式） |
 | `npm run analyze` | 依赖图 / 抽取清单 / 文件映射再生成（docs/*.json） |
 | `npm run baseline` | 上游 Web baseline 复现（验收 L0 证据） |
+
+## 文档
+
+- `docs/06-code-first-getting-started.md` — 最小入门（createAirApp / GameCanvas 约束）
+- `docs/07-asset-loading.md` — Promise Asset Helper
+- `docs/08-skinned-model.md` — 骨骼工具集（buildSkeletonTree / restoreBindPose / frameObject）
+- `docs/09-engine-development.md` — dev server 三频道 / 错误可见性 / 诊断端点
+- `docs/05-v02-build-performance.md` — 构建性能基线（只记录不优化）
 
 ## Air V0.1 能力边界
 

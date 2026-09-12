@@ -1,11 +1,11 @@
 /**
  * Cocos AIR — static-model
  *
- * 验证（计划书 Phase 13 / L12）：
+ * 验证（V0.1 Phase 13 → V0.2 §23）：
  *  1. Runtime Asset：程序化生成 checkerboard Texture2D；
- *  2. 序列化往返：serialize(mesh) → JSON → deserialize → 还原 Mesh（Asset Dependency 链路）；
+ *  2. loadAssetAsync()：V0.2 Promise 资产 helper（assetManager 全局缓存约定），结果与 V0.1 一致；
  *  3. Material Effect：builtin-standard 材质 + albedo 纹理引用（Texture Reference）；
- *  4. MeshRenderer 静态模型渲染。
+ *  4. MeshRenderer 静态模型渲染 + frameObject() 相机取景。
  */
 
 import {
@@ -13,23 +13,22 @@ import {
     Scene,
     Node,
     Camera,
-    DirectionalLight,
     MeshRenderer,
     Material,
     Texture2D,
     ImageAsset,
+    Mesh,
     utils,
     primitives,
-    deserialize,
     assetManager,
-    Layers,
+    loadAssetAsync,
+    frameObject,
     Vec3,
     Color,
 } from 'cocosair';
+import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
-const canvas = document.querySelector('#GameCanvas');
-
-const app = await createAirApp({ canvas });
+const app = await createAirApp({ canvas: '#GameCanvas' });
 
 // ---------- 1. 程序化 checkerboard 纹理（Texture Reference） ----------
 const SIZE = 64;
@@ -55,20 +54,18 @@ const imgAsset = new ImageAsset({
 const checkerTexture = new Texture2D();
 checkerTexture.image = imgAsset;
 
-// ---------- 2. Runtime Asset Load + assetManager 往返（Asset Dependency） ----------
+// ---------- 2. Runtime Asset Load（V0.2 loadAssetAsync Promise 路径） ----------
 const assetResp = await fetch('./assets/model.json');
 const modelAsset = await assetResp.json(); // {positions, normals, uvs, indices}
-const geometry = {
+const sourceMesh = utils.createMesh({
     positions: modelAsset.positions,
     normals: modelAsset.normals,
     uvs: modelAsset.uvs,
-};
-const sourceMesh = utils.createMesh(geometry);
-// 注册进 assetManager 并通过 loadAny 取回（资产管理系统链路）
-assetManager.assets.add('pyramid-mesh', sourceMesh);
-const restoredMesh = await new Promise((resolve, reject) => {
-    assetManager.loadAny({ uuid: 'pyramid-mesh' }, (err, asset) => (err ? reject(err) : resolve(asset)));
 });
+// 注册进 assetManager 全局缓存（以 path 为键），loadAssetAsync 按约定解析
+assetManager.assets.add('models/pyramid', sourceMesh);
+const restoredMesh = await loadAssetAsync('models/pyramid', Mesh);
+console.assert(restoredMesh === sourceMesh, '[static-model] loadAssetAsync round-trip OK');
 
 // ---------- 3. 材质：standard + albedo 纹理（Material Effect） ----------
 const material = new Material();
@@ -77,32 +74,14 @@ material.setProperty('mainTexture', checkerTexture);
 
 // ---------- 4. 场景组装 ----------
 const scene = new Scene('static-model');
-
-const cameraNode = new Node('Main Camera');
-scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 3, 6));
-cameraNode.setRotationFromEuler(-20, 0, 0);
-const camera = cameraNode.addComponent(Camera);
-camera.projection = Camera.ProjectionType.PERSPECTIVE;
-camera.fov = 45;
-camera.near = 0.1;
-camera.far = 1000;
-camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-camera.clearColor = new Color(30, 40, 60, 255);
-camera.visibility = Layers.Enum.DEFAULT;
-
-const lightNode = new Node('Main Light');
-scene.addChild(lightNode);
-lightNode.setPosition(new Vec3(0, 10, 0));
-lightNode.setRotationFromEuler(-45, -30, 0);
-const light = lightNode.addComponent(DirectionalLight);
-light.illuminance = 2;
+const camera = setupCamera(scene, { position: [0, 3, 6], rotationEuler: [-20, 0, 0] });
+setupDirectionalLight(scene, { position: [0, 10, 0], illuminance: 2 });
 
 const boxNode = new Node('StaticBox');
 scene.addChild(boxNode);
 boxNode.setPosition(new Vec3(0, -0.8, 0));
 const boxRenderer = boxNode.addComponent(MeshRenderer);
-boxRenderer.mesh = restoredMesh; // 反序列化还原的 Mesh
+boxRenderer.mesh = restoredMesh; // 缓存往返取回的 Mesh
 boxRenderer.material = material;
 
 // 地面（非序列化路径的对照模型）
@@ -116,6 +95,9 @@ groundMat.initialize({ effectName: 'builtin-standard' });
 groundMat.setProperty('mainColor', new Color(90, 110, 90, 255));
 groundRenderer.material = groundMat;
 
+// V0.2 frameObject：按包围盒重新取景 StaticBox
+frameObject(camera, boxNode);
+
 app.run(scene);
 
-console.log('[static-model] running — serialized round-trip mesh + checkerboard texture + standard material');
+console.log('[static-model] running — loadAssetAsync round-trip mesh + checkerboard texture + frameObject');

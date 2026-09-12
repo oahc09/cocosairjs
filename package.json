@@ -6,6 +6,7 @@
   "type": "commonjs",
   "main": "build/cocosair.module.js",
   "module": "build/cocosair.module.js",
+  "types": "./build/cocosair.module.d.ts",
   "exports": {
     ".": "./build/cocosair.module.js"
   },
@@ -23,6 +24,7 @@
   "scripts": {
     "build": "node tools/build/build.cjs --format esm",
     "build:min": "node tools/build/build.cjs --format esm --min",
+    "build:dts": "node tools/build/build-dts.cjs",
     "build:system": "node tools/build/build.cjs --format system",
     "baseline": "node tools/baseline/build-baseline.cjs",
     "analyze": "node tools/analyze/dep-graph.cjs",
@@ -32,11 +34,13 @@
     "dev": "node tools/dev/dev-server.cjs"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.29.7",
     "@cocos/babel-preset-cc": "2.2.0",
     "@cocos/ccbuild": "^2.3.21",
     "@types/fs-extra": "^5.0.4",
     "@types/jest": "^24.9.1",
     "chalk": "^4.1.2",
+    "esbuild": "^0.28.2",
     "fs-extra": "^7.0.1",
     "jest": "^28.0.2",
     "jest-environment-jsdom": "^28.0.2",

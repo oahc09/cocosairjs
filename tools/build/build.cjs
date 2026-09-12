@@ -11,7 +11,8 @@
  * 引擎根目录为 src/（与上游相对布局一致）；feature 集见 docs/01-web-feature-set.md。
  */
 const { join } = require('path');
-const { ensureDir, emptyDir, moveSync, existsSync } = require('fs-extra');
+const fs = require('fs');
+const { ensureDir, moveSync, existsSync } = require('fs-extra');
 const { buildEngine } = require('@cocos/ccbuild');
 
 const ROOT = join(__dirname, '..', '..');
@@ -29,9 +30,10 @@ const formatIdx = args.indexOf('--format');
 const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
 
 (async function exec () {
-    const tmpOut = join(ROOT, 'build', '.tmp-' + (min ? 'min' : 'dev'));
+    // 唯一临时目录：避免 emptyDir 对上一次产物做批量删除（本机 safe-delete shim 会拦截）。
+    // 旧 tmp 目录清理失败时静默忽略（build/ 已 gitignore），不阻塞构建。
+    const tmpOut = join(ROOT, 'build', `.tmp-${min ? 'min' : 'dev'}-${Date.now()}`);
     await ensureDir(tmpOut);
-    await emptyDir(tmpOut);
 
     console.log(`[build] cocosair moduleFormat=${moduleFormat} min=${min}`);
     const started = Date.now();
@@ -42,7 +44,8 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         platform: 'HTML5',
         out: tmpOut,
         compress: min,
-        sourceMap: min,
+        // V0.2 Task 10（L11）：dev 构建必须附带 source map，浏览器异常可定位 src/**/*.ts。
+        sourceMap: true,
         features: AIR_FEATURES,
         // Air 面向现代浏览器（ESM 产物）。不设 targets 时 ccbuild 的降级变换
         // 会把 `for (let ...)` 闭包转换为 _loop 函数，与 rollup scope 提升组合
@@ -69,6 +72,21 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     if (!moved) {
         console.error('[build] FAILED: bundle output not found:', candidates.join(', '));
         process.exit(1);
+    }
+    // V0.2 Task 10（L11）：source map 与 bundle 同名搬运（cc.js.map → cocosair.module.js.map）
+    const mapCandidates = candidates.map((c) => c + '.map');
+    for (const m of mapCandidates) {
+        const p = join(tmpOut, m);
+        if (existsSync(p)) {
+            moveSync(p, join(ROOT, 'build', bundleName + '.map'), { overwrite: true });
+            // bundle 内 sourceMappingURL 指向 cc.js.map，需改写为最终产物名
+            const bundlePath = join(ROOT, 'build', bundleName);
+            const code = fs.readFileSync(bundlePath, 'utf8');
+            const patched = code.replace(/\/\/# sourceMappingURL=.*?(\s*)$/, `//# sourceMappingURL=${bundleName}.map$1`);
+            if (patched !== code) { fs.writeFileSync(bundlePath, patched); }
+            console.log('[build] output: build/' + bundleName + '.map (source map)');
+            break;
+        }
     }
     console.log('[build] output: build/' + bundleName);
 })().catch((e) => {

@@ -84,3 +84,33 @@
   baseline 对比（17-baseline-comparison.md）全部 PASS
 - L13 蒙皮动画当时为部分通过（骨骼/蒙皮/动画数据链路 OK，蒙皮变体光栅化失败）——
   已于二轮修复（见上）
+
+---
+
+## 2026-09-12（V0.2）：Code First DX & SDK 化 → **V0.2 RC**
+
+依据《Cocos Air V0.2 — Code First DX & SDK 化任务计划书（与 V0.1 连续版）》，L0–L17 全部通过：
+
+- **Task 1/6/7 核心 API**：`createAirApp` 支持 `canvas: string(selector) | HTMLCanvasElement`，
+  新增 `AirApp.getScene()`；`src/air/utils/` 新增 `load-asset.ts`（Promise Asset Helper）、
+  `skeleton-tree.ts` / `restore-bind-pose.ts`（骨骼工具集）、`frame-object.ts`（相机取景）。
+- **Task 12 examples**：新增 `examples/starter/`（最小模板）与 `examples/shared/scene-kit.js`；
+  static-model / skinned-animation 改用 V0.2 helper 重写，四示例浏览器验证 ALL-PASS
+  （starter 0 错误空场景；hello-cube 205 / static-model 236 / skinned 202 draws，均 0 错误）。
+- **Task 7/8/9/10 dev loop**：dev-server 三频道分类（engine/air/example），
+  example 变更仅 reload（服务端 <1ms，绝不触发构建）；example .ts 用 esbuild 即时编译
+  （target es2022，支持 top-level await）+ importmap 注入（`cocosair` → bundle）；
+  构建失败浏览器顶部错误横幅 + `/__build_status`；频道耗时 `/__stats`。
+- **Task 10/11 Source Map + d.ts**：dev 构建附 `.map`（10.5MB，修正 sourceMappingURL 指向）；
+  `npm run build:dts`（ccbuild dtsBundler）→ `build/cocosair.module.d.ts`，
+  package.json 增加 `types` 字段。
+- **Task 16/17 性能基线**：docs/05（Cold 52.1s / Air rebuild 114.4s / Min 127.1s / d.ts 81.2s /
+  Example reload <1ms）；ccbuild 无增量缓存如实记录，未更换 bundler。
+- **测试**：新增 smoke-05（promise asset helper）、smoke-06（skeleton utils）；
+  全量 jest 7 suites / 22 tests PASS；typecheck 0 错误（顺带修复 air/assets/gltf 死代码的
+  up4 相对路径与 es2019 API 兼容）；verify:web-only PASSED。
+- **过程修复**：`@babel/preset-env` 顶层依赖显式化（npm 重排导致缺失）；starter 的
+  GameCanvas id 约束（引擎 import 阶段即查找，文档化于 docs/06）；build.cjs/dts 脚本
+  对本机 safe-delete shim 的批量删除拦截做降级（唯一 tmp 目录 / rename 移出 / finally 拷贝产物）。
+- **文档**：docs/05–09 连续编号 + `docs/acceptance-report-v02.md` + README Quick Start 增补。
+- **V0.2 RC 标记**（package.json 版本号保持 0.1.0 未变；commit 后本地 tag `v0.2.0-rc.1`，不 push）。

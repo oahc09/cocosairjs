@@ -1,0 +1,83 @@
+/**
+ * Cocos AIR — Camera Framing Helper（V0.2 Task 4 / 计划书 §9）。
+ *
+ * 沿相机当前视线调整距离，使目标节点居中并尽量充满视野。
+ * 实现只依赖 Bounds / Transform / Camera 公开 API，不修改 Engine Camera。
+ * 用途：Code First demo、Model preview、Agent prototype。
+ */
+
+import { Node } from '../../cocos/scene-graph/node';
+import { Camera } from '../../cocos/misc/camera-component';
+import { MeshRenderer } from '../../cocos/3d';
+import { Vec3, geometry } from '../../cocos/core';
+
+const DEFAULT_DISTANCE = 6;
+const v3_dir = new Vec3();
+const v3_center = new Vec3();
+
+/**
+ * @en Position the camera along its current view direction so the target node
+ *     is centered and fits the view. Distance is estimated from the target's
+ *     render bounds when available; otherwise `fallbackDistance` is used.
+ * @zh 沿相机当前视线方向调整距离与朝向，使目标节点居中完整显示。
+ *     距离优先按目标渲染包围盒估算（MeshRenderer.model.worldBounds 并集）；
+ *     无可用包围盒时使用 fallbackDistance。
+ *
+ * @example
+ * ```ts
+ * frameObject(camera, modelRoot);        // 按包围盒自动取景
+ * frameObject(camera, modelRoot, 8);     // 显式距离
+ * ```
+ */
+export function frameObject (camera: Camera, target: Node, fallbackDistance = DEFAULT_DISTANCE): void {
+    const camNode = camera.node;
+    const worldCenter = target.worldPosition;
+    let distance = fallbackDistance;
+
+    const bounds = collectWorldBounds(target);
+    if (bounds) {
+        const fov = (camera.fov > 0 ? camera.fov : 45) * Math.PI / 180;
+        const radius = Math.max(bounds.halfExtents.lengthSqr() > 0 ? bounds.halfExtents.length() : 0, 1e-3);
+        const fit = camera.projection === Camera.ProjectionType.ORTHO
+            ? radius * 2.2
+            : radius / Math.sin(Math.min(fov / 2, Math.PI / 2 - 1e-3));
+        distance = Math.max(fit * 1.15, 0.5);
+        Vec3.copy(v3_center, bounds.center);
+    } else {
+        Vec3.copy(v3_center, worldCenter);
+    }
+
+    // 沿当前视线方向放置（视线 = 相机位置 - 目标中心）
+    Vec3.subtract(v3_dir, camNode.worldPosition, v3_center);
+    if (v3_dir.lengthSqr() < 1e-6) {
+        v3_dir.set(0, 0, 1);
+    }
+    v3_dir.normalize();
+    camNode.setPosition(
+        v3_center.x + v3_dir.x * distance,
+        v3_center.y + v3_dir.y * distance,
+        v3_center.z + v3_dir.z * distance,
+    );
+    camNode.lookAt(v3_center);
+}
+
+/** 汇集 target 及其子孙所有 MeshRenderer 的 model.worldBounds 的并集（世界空间）。 */
+function collectWorldBounds (target: Node): geometry.AABB | null {
+    let result: geometry.AABB | null = null;
+    const renderers: MeshRenderer[] = [];
+    const self = target.getComponent(MeshRenderer);
+    if (self) { renderers.push(self); }
+    const children = target.getComponentsInChildren(MeshRenderer);
+    for (const r of children) { if (renderers.indexOf(r) === -1) { renderers.push(r); } }
+
+    for (const r of renderers) {
+        const b = r.model ? r.model.worldBounds : null;
+        if (!b) { continue; }
+        if (!result) {
+            result = geometry.AABB.clone(b);
+        } else {
+            geometry.AABB.merge(result, result, b);
+        }
+    }
+    return result;
+}

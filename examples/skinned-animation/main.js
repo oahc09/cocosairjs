@@ -1,12 +1,11 @@
 /**
  * Cocos AIR — skinned-animation
  *
- * 验证（计划书 Phase 14 / L13，最复杂场景验收）：
- *  1. Skeleton.joints + Skeleton.bindposes（Code First 构建）；
- *  2. 骨骼层级（bone0 → bone1 → bone2）重建；
- *  3. bindpose = inverse(bone 初始世界矩阵)，静止姿势正确；
- *  4. SkinnedMeshRenderer + a_joints/a_weights 蒙皮网格；
- *  5. 骨骼动画（bone 旋转）→ 网格正确变形（Skinning）。
+ * 验证（V0.1 Phase 14 → V0.2 §24，最高复杂度回归）：
+ *  1. buildSkeletonTree()（V0.2 正式 utils）：Skeleton.joints + bindposes（Code First）；
+ *  2. restoreBindPose()（V0.2 正式 utils）：静止姿势复位；
+ *  3. frameObject()（V0.2 正式 utils）：相机按包围盒取景；
+ *  4. 骨骼动画（bone 旋转）→ 网格正确变形（Skinning）。
  *
  * 顶点格式：a_position(FLOAT3) + a_normal(FLOAT3) + a_joints(RGBA32F) + a_weights(RGBA32F)。
  */
@@ -16,17 +15,18 @@ import {
     Scene,
     Node,
     Camera,
-    DirectionalLight,
     SkinnedMeshRenderer,
-    Skeleton,
     Mesh,
     Material,
     Component,
-    Layers,
     gfx,
     Vec3,
     Color,
+    buildSkeletonTree,
+    restoreBindPose,
+    frameObject,
 } from 'cocosair';
+import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 const canvas = document.querySelector('#GameCanvas');
 
@@ -80,7 +80,6 @@ for (let c = 0; c < COLS; c++) {
     indices.push(topCenter, b, a);
 }
 
-// 顶点格式：a_position(FLOAT3=32?) 使用 RGB32F；a_normal RGB32F；a_joints/a_weights RGBA32F
 const FLOAT3 = gfx.Format.RGB32F;
 const FLOAT4 = gfx.Format.RGBA32F;
 const TRIANGLE_LIST = 0;
@@ -137,7 +136,7 @@ function joinBuffers (a, b) {
     return out.buffer;
 }
 
-// ---------------- 2. 骨骼层级 + Skeleton（Code First） ----------------
+// ---------------- 2. 骨骼层级（Code First） ----------------
 const armature = new Node('Armature');
 
 const bone0 = new Node('bone0');
@@ -162,16 +161,9 @@ class TentacleDriver extends Component {
     }
 }
 
-// ---------------- 3. Skeleton 资产（joints + bindposes） ----------------
-// bindpose = inverse(骨骼初始世界矩阵) → 静止姿势还原正确
-// 注意：joints 是相对 skinningRoot 的路径（getChildByPath），层级骨骼必须写完整路径
-const skeleton = new Skeleton();
-skeleton.joints = ['bone0', 'bone0/bone1', 'bone0/bone1/bone2'];
-skeleton.bindposes = [
-    bone0.worldMatrix.clone().invert(),
-    bone1.worldMatrix.clone().invert(),
-    bone2.worldMatrix.clone().invert(),
-];
+// ---------------- 3. Skeleton 资产（V0.2 buildSkeletonTree 正式 utils） ----------------
+// joints 是相对 skinningRoot 的路径；bindpose = inverse(骨骼当前世界矩阵)
+const skeleton = buildSkeletonTree(armature, ['bone0', 'bone0/bone1', 'bone0/bone1/bone2']);
 
 // ---------------- 4. SkinnedMeshRenderer ----------------
 const smr = armature.addComponent(SkinnedMeshRenderer);
@@ -188,28 +180,16 @@ armature.addComponent(TentacleDriver);
 
 // ---------------- 5. 场景 ----------------
 const scene = new Scene('skinned-animation');
-
-const cameraNode = new Node('Main Camera');
-scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 2.4, 6.5));
-const camera = cameraNode.addComponent(Camera);
-camera.projection = Camera.ProjectionType.PERSPECTIVE;
-camera.fov = 45;
-camera.near = 0.1;
-camera.far = 1000;
-camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-camera.clearColor = new Color(30, 40, 60, 255);
-camera.visibility = Layers.Enum.DEFAULT;
-
-const lightNode = new Node('Main Light');
-scene.addChild(lightNode);
-lightNode.setPosition(new Vec3(0, 8, 0));
-lightNode.setRotationFromEuler(-45, -30, 0);
-const light = lightNode.addComponent(DirectionalLight);
-light.illuminance = 2.2;
+const camera = setupCamera(scene, { position: [0, 2.4, 6.5] });
+setupDirectionalLight(scene, { position: [0, 8, 0], illuminance: 2.2 });
 
 scene.addChild(armature);
 
+// V0.2 restoreBindPose：把骨骼复位到静止姿势（再交给动画驱动接管）
+restoreBindPose(armature, skeleton);
+// V0.2 frameObject：按包围盒取景触手
+frameObject(camera, armature);
+
 app.run(scene);
 
-console.log('[skinned-animation] running — 3-bone skeleton + rigid skinned ribbon + bone animation');
+console.log('[skinned-animation] running — buildSkeletonTree/restoreBindPose/frameObject + 3-bone skinned ribbon');

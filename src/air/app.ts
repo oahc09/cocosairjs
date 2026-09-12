@@ -1,20 +1,26 @@
 /**
  * Cocos AIR — Agent-first Interactive Runtime.
  *
- * AirApp: 轻量运行时句柄。V0.1 保持极薄：只负责启动引擎主循环与运行场景。
+ * AirApp: 轻量运行时句柄。保持极薄：只负责启动引擎主循环与运行场景。
+ * V0.2 正式化（计划书 §6）：canvas 支持 selector 字符串；新增 getScene()。
+ * 不承担：资源系统抽象 / Scene DSL / Renderer 配置框架 / Plugin 管理。
  */
 
 import { game, director } from '../cocos/game';
 import { Scene } from '../cocos/scene-graph/scene';
 
 export interface AirAppOptions {
-    canvas: HTMLCanvasElement;
+    /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
+    canvas: HTMLCanvasElement | string;
     /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
     renderMode?: number;
 }
 
 export interface AirApp {
+    /** @en Run the given scene and start the main loop. @zh 运行场景并启动主循环（幂等）。 */
     run(scene: Scene): void;
+    /** @en Current running scene, or null before run(). @zh 当前运行中的场景；run() 之前为 null。 */
+    getScene(): Scene | null;
 }
 
 /**
@@ -37,5 +43,13 @@ export class AirAppImpl implements AirApp {
             this._started = true;
             game.run();
         }
+    }
+
+    /**
+     * @en Current running scene, or null before run().
+     * @zh 当前运行中的场景；run() 之前为 null。
+     */
+    getScene (): Scene | null {
+        return director.getScene();
     }
 }

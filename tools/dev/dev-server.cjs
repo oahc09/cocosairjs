@@ -1,16 +1,28 @@
 /**
- * Phase 12 — Engine Development Loop（验收 L11 / npm run dev）。
+ * V0.2 Task 7/9/10/13 — Engine Development Loop 增强（验收 L7-L11）。
  *
- *   Engine Watch（src/** 变化 → 重 build）
- * + Example Dev Server（静态服务 examples/ 与 build/，浏览器自动 reload）
+ * Watch 三频道分类（计划书 §15）:
+ *   engine : src/cocos|pal|exports/**  → Engine rebuild  → Browser reload
+ *   air    : src/air/**                → Air rebuild     → Browser reload
+ *   example: examples/**               → Dev Server only → Browser reload（不触发任何构建）
  *
- * 用法: npm run dev [-- --example hello-cube --port 7454]
- * V0.1 不做 HMR：引擎内部状态复杂，接受 Full Page Reload（计划书 §19）。
+ * 其他 V0.2 增强:
+ *   - example .ts 即时编译（esbuild transform，mtime 缓存）→ starter/main.ts 直接可用
+ *   - importmap 注入：example 里 `from 'cocosair'` 解析到 /build/cocosair.module.js
+ *   - 构建错误可见性（Task 13）：/__build_status + 浏览器顶部错误横幅
+ *   - 频道耗时记录（Task 8/17）：/__stats 暴露 Cold/Warm/Air/Example 计时
+ *
+ * V0.1 保持不变的部分:
+ *   - 不做 HMR：引擎内部 global state / GPU resource 复杂，Full Page Reload（计划书 §17）
+ *   - build 走 tools/build/build.cjs 单一管线（不更换 bundler，计划书 §16）
+ *
+ * 用法: npm run dev [-- --example starter --port 7454]
  */
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
+const esbuild = require('esbuild');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const args = process.argv.slice(2);
@@ -22,7 +34,7 @@ function argOf (name, def) {
 const EXAMPLES_DIR = path.join(ROOT, 'examples');
 const examples = fs.readdirSync(EXAMPLES_DIR)
     .filter((d) => fs.existsSync(path.join(EXAMPLES_DIR, d, 'index.html')));
-const example = argOf('--example', examples.includes('hello-cube') ? 'hello-cube' : examples[0]);
+const example = argOf('--example', 'starter');
 const port = Number(argOf('--port', '7454'));
 
 if (!example || !examples.includes(example)) {
@@ -32,47 +44,95 @@ if (!example || !examples.includes(example)) {
 
 let reloadToken = Date.now();
 let building = false;
-let pendingRebuild = false;
+let pendingChannel = null;
 
-function rebuild (reason) {
-    if (building) { pendingRebuild = true; return; }
+// ---- Task 8/17：频道耗时记录（进程内存态，/__stats 暴露） ----
+const devStats = {
+    startedAt: new Date().toISOString(),
+    coldBuildMs: null, // dev server 启动后的第一次 engine/air rebuild 记为冷/温基准之外首次
+    engineRebuilds: [], // [{ms, at}]
+    airRebuilds: [],    // [{ms, at}]
+    exampleReloads: 0,
+};
+
+// ---- Task 13：构建状态（错误可见性） ----
+let lastBuild = { channel: null, ok: null, ms: 0, error: '', at: '' };
+
+function classify (relFile) {
+    let f = relFile.replace(/\\/g, '/');
+    // fs.watch 的 file 相对于被监听目录（src/ 或 examples/），归一化为仓库相对路径
+    if (!f.startsWith('src/') && !f.startsWith('examples/')) f = 'src/' + f;
+    if (f.startsWith('src/air/')) return 'air';
+    if (f.startsWith('src/cocos/') || f.startsWith('src/pal/') || f.startsWith('src/exports/')) return 'engine';
+    if (f.startsWith('examples/')) return 'example';
+    return null;
+}
+
+function rebuild (channel, reason) {
+    if (building) { pendingChannel = channel; return; }
     building = true;
     const started = Date.now();
-    console.log(`[dev] rebuild (${reason}) ...`);
+    console.log(`[dev] ${channel} rebuild (${reason}) ...`);
     const child = spawn('node', [path.join(ROOT, 'tools', 'build', 'build.cjs'), '--format', 'esm'], {
         cwd: ROOT,
         stdio: 'inherit',
     });
     child.on('exit', (code) => {
         building = false;
+        const ms = Date.now() - started;
         if (code === 0) {
             reloadToken = Date.now();
-            console.log(`[dev] rebuild ok in ${((Date.now() - started) / 1000).toFixed(1)}s (reload browser)`);
+            // 记录：本进程第一次 rebuild 与启动即跑的第一致（冷热区分见 docs/05 的独立测量）
+            if (devStats.coldBuildMs === null) devStats.coldBuildMs = ms;
+            if (channel === 'air') devStats.airRebuilds.push({ ms, at: new Date().toISOString() });
+            else devStats.engineRebuilds.push({ ms, at: new Date().toISOString() });
+            lastBuild = { channel, ok: true, ms, error: '', at: new Date().toISOString() };
+            console.log(`[dev] ${channel} rebuild ok in ${(ms / 1000).toFixed(1)}s (reload browser)`);
         } else {
-            console.error('[dev] rebuild failed, waiting for next change');
+            // Task 13：构建失败不清 reloadToken（浏览器保留上一个可用 bundle），状态经 /__build_status 暴露
+            lastBuild = { channel, ok: false, ms, error: `build.cjs exited with code ${code} (see terminal)`, at: new Date().toISOString() };
+            console.error(`[dev] ${channel} rebuild FAILED in ${(ms / 1000).toFixed(1)}s, waiting for next change`);
         }
-        if (pendingRebuild) { pendingRebuild = false; rebuild('pending change'); }
+        if (pendingChannel) { const c = pendingChannel; pendingChannel = null; rebuild(c, 'pending change'); }
     });
 }
 
-// watch src/**（Windows recursive 支持）
+// ---- Watch 频道 1/2: src/** → engine / air ----
 try {
     fs.watch(path.join(ROOT, 'src'), { recursive: true }, (_evt, file) => {
         if (!file) return;
         const f = String(file).replace(/\\/g, '/');
         if (!/\.(ts|json|js)$/.test(f)) return;
         if (f.includes('.tmp')) return;
-        rebuild(f);
+        const channel = classify(f);
+        if (channel === 'engine' || channel === 'air') rebuild(channel, f);
     });
-    console.log('[dev] watching src/**');
+    console.log('[dev] watching src/** (engine: cocos|pal|exports, air: air)');
 } catch (e) {
     console.warn('[dev] fs.watch(recursive) 不可用，仅单次构建:', e.message);
+}
+
+// ---- Watch 频道 3: examples/** → 仅 bump reload token（绝不触发 engine build） ----
+try {
+    fs.watch(EXAMPLES_DIR, { recursive: true }, (_evt, file) => {
+        if (!file) return;
+        const f = String(file).replace(/\\/g, '/');
+        if (!/\.(ts|js|json|html|css)$/.test(f)) return;
+        if (f.includes('.tmp')) return;
+        devStats.exampleReloads += 1;
+        reloadToken = Date.now();
+        console.log(`[dev] example change (${f}) → reload only (no engine build)`);
+    });
+    console.log('[dev] watching examples/** (reload only)');
+} catch (e) {
+    console.warn('[dev] fs.watch(examples) 不可用:', e.message);
 }
 
 const MIME = {
     '.html': 'text/html; charset=utf-8',
     '.js': 'text/javascript; charset=utf-8',
     '.mjs': 'text/javascript; charset=utf-8',
+    '.ts': 'text/javascript; charset=utf-8', // esbuild transform 后按 JS 服务
     '.json': 'application/json',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
@@ -80,6 +140,7 @@ const MIME = {
     '.ccon': 'application/octet-stream',
     '.glb': 'model/gltf-binary',
     '.wasm': 'application/wasm',
+    '.map': 'application/json',
 };
 
 const fileCache = new Map();
@@ -101,6 +162,42 @@ function serveFile (res, file) {
     }
 }
 
+// ---- example .ts 即时编译（esbuild transform + mtime 缓存） ----
+const tsCache = new Map();
+function serveExampleTs (res, file) {
+    try {
+        const st = fs.statSync(file);
+        let entry = tsCache.get(file);
+        if (!entry || entry.mtime !== st.mtimeMs) {
+            const source = fs.readFileSync(file, 'utf8');
+            const result = esbuild.transformSync(source, {
+                loader: 'ts',
+                format: 'esm',
+                target: 'es2022', // starter 使用 top-level await
+                sourcefile: file,
+                sourcemap: 'inline',
+            });
+            entry = { mtime: st.mtimeMs, data: Buffer.from(result.code), warnings: result.warnings };
+            tsCache.set(file, entry);
+        }
+        if (entry.warnings && entry.warnings.length) {
+            console.warn(`[dev] esbuild warnings in ${path.relative(ROOT, file)}:`,
+                entry.warnings.map((w) => w.text).join('; '));
+        }
+        res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': MIME['.js'] });
+        res.end(entry.data);
+    } catch (e) {
+        // Task 13：TS 编译错误直接回 500 并在终端显示（浏览器 console 可见）
+        console.error(`[dev] esbuild transform FAILED for ${path.relative(ROOT, file)}:\n${e.message}`);
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('esbuild transform error: ' + e.message);
+    }
+}
+
+const IMPORT_MAP = JSON.stringify({
+    imports: { cocosair: '/build/cocosair.module.js' },
+});
+
 const server = http.createServer((req, res) => {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     const p = decodeURIComponent(url.pathname);
@@ -110,9 +207,37 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify({ token: reloadToken }));
         return;
     }
+    if (p === '/__build_status') {
+        // Task 13：浏览器轮询，构建失败时显示错误横幅
+        res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(lastBuild));
+        return;
+    }
+    if (p === '/__stats') {
+        // Task 8/17：频道耗时统计
+        res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(devStats, null, 2));
+        return;
+    }
     if (p === '/__reload.js') {
         res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/javascript; charset=utf-8' });
-        res.end(`(function poll(){fetch('/__reload_token').then(r=>r.json()).then(j=>{var t=String(j.token);if(sessionStorage.__airToken===undefined)sessionStorage.__airToken=t;if(sessionStorage.__airToken!==t){sessionStorage.__airToken=t;location.reload();}else{setTimeout(poll,1000);}}).catch(()=>setTimeout(poll,2000));})();`);
+        res.end(`(function poll(){
+fetch('/__reload_token').then(r=>r.json()).then(function(j){
+var t=String(j.token);
+if(sessionStorage.__airToken===undefined)sessionStorage.__airToken=t;
+if(sessionStorage.__airToken!==t){sessionStorage.__airToken=t;location.reload();}
+}).catch(function(){});
+fetch('/__build_status').then(r=>r.json()).then(function(s){
+var id='__air-build-error';
+var el=document.getElementById(id);
+if(s&&s.ok===false&&!el){
+el=document.createElement('pre');el.id=id;
+el.style.cssText='position:fixed;left:0;right:0;top:0;z-index:99999;margin:0;padding:8px 12px;background:#7a1010;color:#ffd7d7;font:12px/1.5 monospace;white-space:pre-wrap;';
+el.textContent='[Cocos AIR dev] '+s.channel+' build FAILED ('+(s.ms/1000).toFixed(1)+'s): '+s.error;
+(document.body||document.documentElement).appendChild(el);
+}else if(s&&s.ok!==false&&el){el.remove();}
+}).catch(function(){});
+setTimeout(poll,1000);})();`);
         return;
     }
     if (p === '/__air-test.html') {
@@ -126,7 +251,7 @@ const server = http.createServer((req, res) => {
         res.end(fs.readFileSync(path.join(__dirname, 'air-prelude.js'), 'utf8'));
         return;
     }
-if (p.startsWith('/build/')) {
+    if (p.startsWith('/build/')) {
         const file = path.join(ROOT, p);
         if (fs.existsSync(file)) return serveFile(res, file);
         res.writeHead(404); res.end('not found (build?)');
@@ -156,9 +281,12 @@ if (p.startsWith('/build/')) {
         if (finalFile.endsWith('index.html')) {
             const html = fs.readFileSync(finalFile, 'utf8');
             res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/html; charset=utf-8' });
-            res.end(html.replace('</head>', '<script src="/__air-prelude.js"></script><script src="/__reload.js"></script></head>'));
+            // importmap 必须先于任何 module script；再注入 prelude（诊断）与 reload 轮询
+            res.end(html.replace('</head>',
+                `<script type="importmap">${IMPORT_MAP}</script><script src="/__air-prelude.js"></script><script src="/__reload.js"></script></head>`));
             return;
         }
+        if (/\.mts?$/.test(finalFile)) return serveExampleTs(res, finalFile);
         return serveFile(res, finalFile);
     }
 
@@ -168,5 +296,5 @@ if (p.startsWith('/build/')) {
 server.listen(port, '127.0.0.1', () => {
     console.log(`[dev] Cocos AIR dev server: http://127.0.0.1:${port}/  (example: ${example})`);
     console.log(`[dev] examples: ${examples.join(', ')}`);
-    console.log('[dev] engine watch: edit src/** → auto rebuild → browser auto reload');
+    console.log('[dev] channels: engine(src/cocos|pal|exports) air(src/air) example(examples) — example changes never trigger engine build');
 });
