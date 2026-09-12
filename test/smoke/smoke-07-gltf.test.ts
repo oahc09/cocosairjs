@@ -10,6 +10,9 @@ import { extname } from '../../src/cocos/core/utils/path';
 import { gltfEffect, createGLTFMaterial } from '../../src/air/assets/gltf/material';
 import { GLTFWinding } from '../../src/air/assets/gltf/winding';
 import { fixture, toGLB } from '../fixtures/gltf/fixture';
+import { textureCoordinates, transformTextureUV } from '../../src/air/assets/gltf/texture-transform';
+import { Texture2D } from '../../src/cocos/asset/assets/texture-2d';
+import { Vec4 } from '../../src/cocos/core/math';
 
 Object.assign(globalThis, { TextDecoder, TextEncoder });
 const loader = new GLTFLoader();
@@ -134,6 +137,43 @@ describe('glTF runtime loader', () => {
         expect(convertTopology([0, 1, 2, 3], 5).indices).toEqual([0, 1, 2, 2, 1, 3]);
         expect(convertTopology([0, 1, 2, 3], 6).indices).toEqual([0, 1, 2, 0, 2, 3]);
         expect(convertTopology([0, 1, 2], 2).indices).toEqual([0, 1, 1, 2, 2, 0]);
+    });
+    test('KHR_texture_transform applies scale, then rotation, then offset and overrides UV selection', () => {
+        const coordinates = textureCoordinates({ index: 0, texCoord: 1, extensions: { KHR_texture_transform: {
+            offset: [0.25, 0.5], rotation: Math.PI / 2, scale: [2, 3], texCoord: 0,
+        } } });
+        expect(coordinates.texCoord).toBe(0);
+        const result = transformTextureUV(coordinates, 0.2, 0.4);
+        expect(result[0]).toBeCloseTo(1.45); expect(result[1]).toBeCloseTo(0.1);
+        expect(transformTextureUV(textureCoordinates(), 0.2, 0.4)).toEqual([0.2, 0.4]);
+        expect(transformTextureUV(textureCoordinates({ index: 0, extensions: { KHR_texture_transform: { offset: [0, 1], scale: [1, -1] } } }), 0.2, 0.4)).toEqual([0.2, 0.6]);
+    });
+    test('texture transforms reject malformed data and unsupported UV sets', () => {
+        for (const transform of [{ offset: [1] }, { offset: null }, { scale: [1, Infinity] }, { rotation: '1' }, { texCoord: 2 }, []]) {
+            expect(() => textureCoordinates({ index: 0, extensions: { KHR_texture_transform: transform } })).toThrow();
+        }
+    });
+    test('required texture transform is supported without suppressing other required-extension errors', async () => {
+        const f = fixture(); f.json.extensionsRequired = f.json.extensionsUsed = ['KHR_texture_transform'];
+        const asset = await loader.parseAsync(toGLB(f.json, f.bin));
+        expect(asset.warnings).toEqual([]); asset.destroy();
+        f.json.extensionsRequired.push('KHR_draco_mesh_compression');
+        await expect(loader.parseAsync(toGLB(f.json, f.bin))).rejects.toThrow(/KHR_draco_mesh_compression/);
+    });
+    test('each texture slot has independent native transform uniforms', () => {
+        const texture = new Texture2D();
+        const material = createGLTFMaterial({ pbrMetallicRoughness: {
+            baseColorTexture: { index: 0, extensions: { KHR_texture_transform: { offset: [0.2, 0.3] } } },
+            metallicRoughnessTexture: { index: 0, extensions: { KHR_texture_transform: { scale: [2, 3] } } },
+        }, emissiveTexture: { index: 0, texCoord: 0, extensions: { KHR_texture_transform: { texCoord: 1, offset: [0.7, 0.8] } } } }, [texture], false);
+        const read = (name: string): Vec4 => { const v = new Vec4(); material.passes[0].getUniform(material.passes[0].getHandle(name), v); return v; };
+        expect(read('airAlbedoUV0').z).toBeCloseTo(0.2);
+        expect(read('airMetallicRoughnessUV0').x).toBe(2);
+        expect(read('airMetallicRoughnessUV1').y).toBe(3);
+        expect(read('airEmissiveUV0').z).toBeCloseTo(0.7);
+        expect(read('airNormalUV0').x).toBe(1);
+        expect(gltfEffect().shaders[0].glsl3.frag).toContain('dot(airEmissiveUV0.xyz, vec3(EMISSIVE_UV, 1.0))');
+        material.destroy(); texture.destroy();
     });
     test('stride and normalized vertex color accessors decode without reading padding', async () => {
         const data = new Uint8Array([255, 0, 128, 255, 99, 99, 99, 99, 0, 255, 0, 128]);

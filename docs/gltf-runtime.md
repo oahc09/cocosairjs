@@ -83,7 +83,9 @@ asset.decRef(); // 业务不再持有
 | 蒙皮 | 多 skin、共享 skin、非关节祖先、任意 joint 顺序、有/无 inverseBindMatrices、JOINTS_0/WEIGHTS_0 四权重、原生实时蒙皮 |
 | 动画 | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化 |
 | Morph | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重 |
-| 扩展 | KHR_materials_unlit |
+| 扩展 | KHR_materials_unlit、KHR_texture_transform |
+
+`KHR_texture_transform` 支持每个 textureInfo 独立的 `offset`、`rotation`（弧度）、`scale` 和 `texCoord` 覆盖，作用于 baseColor、metallicRoughness、normal、occlusion、emissive。变换围绕 UV 原点应用，支持负缩放；UV 通道仍限于 UV0/UV1。共享纹理可以在不同材质槽使用不同变换，网格 UV 不会被改写。缺少切线时，法线贴图使用有效 UV 通道及其变换生成切线。
 
 Draco、Meshopt、KTX2/BasisU、额外权重集、UV2 及以上、高级材质扩展不在首版范围。未支持的必需扩展报错；可选扩展仅使用有效核心回退并告警，不把缺失数据冒充加载成功。相机和灯光只保留描述并告警，不自动创建组件。
 

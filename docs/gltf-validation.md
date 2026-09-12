@@ -83,3 +83,28 @@ npx --yes --package @playwright/cli playwright-cli -s=gltf run-code --filename=t
 ```
 
 **Deviations：**原拟使用约 3 MB 的 AlphaBlendModeTest；其 GLB 和多文件版本中的大图片均遇到网络超时。改用同属 Khronos 官方的 glTF-Asset-Generator 小型透明混合用例；没有压缩、替换贴图或修改官方模型。未完整下载的 AlphaBlendModeTest 不列入通过清单，部分下载文件仅留在验收输出目录。本次只增加官方 fixtures、示例选择和验证脚本，没有修改加载器/渲染器。
+
+## KHR_texture_transform 支持修复
+
+用户报告模型在 `decodeContainer` 被 `unsupported required extension: KHR_texture_transform` 拒绝。原因是该扩展未进入支持列表，也没有纹理坐标变换适配；本次补齐实际采样行为后再允许加载，其他未支持的必需扩展仍拒绝。
+
+- 五类核心贴图分别保存两行 UV 仿射矩阵，复用现有材质 Constants block；顶点与片元的布局保持一致，WebGL1 使用对应 uniform。
+- 支持偏移、缩放、旋转与 UV0/UV1 覆盖。旋转方向结合 [官方 Sample Renderer 的实现](https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/gltf/material.js) 和 [官方箭头测试](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/90d7ede14c7e280af263824604b427a1ca02cb66/Models/TextureTransformTest) 校验，避免 UV 原点及行列约定造成反向旋转。
+- 材质槽互相独立，不改写共享纹理和网格 UV；法线贴图的有效 UV 通道与缺省切线生成同步处理。非法参数和超范围 UV 通道报错。
+
+验证结果：
+
+| 检查 | 结果 |
+|---|---|
+| 全量测试 | 9 个套件、36 项通过，含新增 4 项 texture transform 回归 |
+| 类型、ESM、声明构建、声明消费 | 通过 |
+| Web-only 依赖检查 | 通过，764 个可达文件 |
+| 五类贴图 × UV0/UV1 | WebGL1/2 各 10 组，与独立烘焙 UV 参考比较；最大 RGB 通道差为 1/255 |
+| 测试有效性 | 每组存在实际前景，并与未变换画面有 24,623～77,689 个像素变化，排除空帧或无变化导致的假通过 |
+| 官方 TextureTransformTest | 两种 WebGL 均加载；偏移勾号与旋转/缩放/组合的绿色箭头标记正确 |
+| 官方 TextureTransformMultiTest | 必需扩展通过，五类核心贴图的 UV0/UV1 均显示勾号；可选 clearcoat 仍按既定范围回退并告警 |
+| 原有官方模型回归 | 7 个模型通过 |
+
+证据：[WebGL2](../output/playwright/texture-transform-webgl2.json)、[WebGL1](../output/playwright/texture-transform-webgl1.json)、[旧模型回归](../output/playwright/texture-transform-regression.json)、[箭头测试截图](../output/playwright/TextureTransformTest-webgl2.png)、[多贴图测试截图](../output/playwright/TextureTransformMultiTest-webgl2.png)。
+
+复现脚本为 [texture-transform-browser.js](../tools/verify/texture-transform-browser.js)。两种 API 应分别使用新的 Playwright 会话，WebGL1 会话先打开带 `?webgl=1` 的查看器，再运行脚本；脚本会在导航前设置 WebGL1 context 限制。官方案例通过模型目录按固定版本 URL 在线加载，没有改写其文件。

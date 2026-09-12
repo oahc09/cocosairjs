@@ -69457,6 +69457,7 @@ const SIZES = {
   5125: 4,
   5126: 4
 };
+const SUPPORTED_EXTENSIONS = new Set(['KHR_materials_unlit', 'KHR_texture_transform']);
 function decodeContainer(data) {
   let text;
   let bin;
@@ -69502,7 +69503,7 @@ function decodeContainer(data) {
   check(json && json.asset && json.asset.version === '2.0', 'only glTF 2.0 is supported');
   check(!json.asset.minVersion || json.asset.minVersion === '2.0', 'unsupported asset.minVersion');
   for (const extension of json.extensionsRequired || []) {
-    check(extension === 'KHR_materials_unlit', `unsupported required extension: ${extension}`);
+    check(SUPPORTED_EXTENSIONS.has(extension), `unsupported required extension: ${extension}`);
   }
   return {
     json,
@@ -69548,7 +69549,7 @@ class GLTFContext {
   }
   async loadBuffers(bin) {
     for (const extension of this.json.extensionsUsed || []) {
-      if (extension !== 'KHR_materials_unlit') {
+      if (!SUPPORTED_EXTENSIONS.has(extension)) {
         this.warn(`optional extension ${extension}: using core fallback where available`);
       }
     }
@@ -69665,6 +69666,35 @@ function readComponent(view, offset, type) {
     default:
       return view.getFloat32(offset, true);
   }
+}
+
+function textureCoordinates(info) {
+  var _info$extensions;
+  const extension = info == null ? void 0 : (_info$extensions = info.extensions) == null ? void 0 : _info$extensions.KHR_texture_transform;
+  check(extension === undefined || extension !== null && typeof extension === 'object' && !Array.isArray(extension), 'invalid KHR_texture_transform');
+  const transform = extension;
+  const offset = (transform == null ? void 0 : transform.offset) === undefined ? [0, 0] : transform.offset;
+  const scale = (transform == null ? void 0 : transform.scale) === undefined ? [1, 1] : transform.scale;
+  const rotation = (transform == null ? void 0 : transform.rotation) === undefined ? 0 : transform.rotation;
+  check(Array.isArray(offset) && offset.length === 2 && offset.every(Number.isFinite), 'KHR_texture_transform.offset must contain two finite numbers');
+  check(Array.isArray(scale) && scale.length === 2 && scale.every(Number.isFinite), 'KHR_texture_transform.scale must contain two finite numbers');
+  check(typeof rotation === 'number' && Number.isFinite(rotation), 'KHR_texture_transform.rotation must be finite');
+  const texCoord = (transform == null ? void 0 : transform.texCoord) !== undefined ? transform.texCoord : (info == null ? void 0 : info.texCoord) === undefined ? 0 : info.texCoord;
+  check(texCoord === 0 || texCoord === 1, 'only UV0/UV1 are supported (including KHR_texture_transform.texCoord)');
+  const c = Math.cos(rotation);
+  const s = Math.sin(rotation);
+  return {
+    texCoord,
+    row0: new Vec4(c * scale[0], s * scale[1], offset[0], 0),
+    row1: new Vec4(-s * scale[0], c * scale[1], offset[1], 0)
+  };
+}
+function transformTextureUV(coordinates, u, v) {
+  const {
+    row0,
+    row1
+  } = coordinates;
+  return [row0.x * u + row0.y * v + row0.z, row1.x * u + row1.y * v + row1.z];
 }
 
 const ATTRIBUTES = {
@@ -69835,7 +69865,7 @@ function createGLTFMesh(context, meshIndex) {
     for (const info of [material == null ? void 0 : (_material$pbrMetallic = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic.baseColorTexture, material == null ? void 0 : (_material$pbrMetallic2 = material.pbrMetallicRoughness) == null ? void 0 : _material$pbrMetallic2.metallicRoughnessTexture, material == null ? void 0 : material.normalTexture, material == null ? void 0 : material.occlusionTexture, material == null ? void 0 : material.emissiveTexture]) {
       var _material$pbrMetallic, _material$pbrMetallic2;
       if (info) {
-        check(channels.some(c => c.name === `TEXCOORD_${info.texCoord || 0}`), 'material references missing UV set');
+        check(channels.some(c => c.name === `TEXCOORD_${textureCoordinates(info).texCoord}`), 'material references missing UV set');
       }
     }
     if (material != null && material.normalTexture && !channels.some(c => c.name === 'TANGENT')) {
@@ -69843,7 +69873,7 @@ function createGLTFMesh(context, meshIndex) {
       channels.push({
         name: 'TANGENT',
         width: 4,
-        values: tangents(channels, indices, material.normalTexture.texCoord || 0)
+        values: tangents(channels, indices, textureCoordinates(material.normalTexture))
       });
     }
     for (const [name, width, defaults] of [['NORMAL', 3, [0, 0, 1]], ['TANGENT', 4, [1, 0, 0, 1]], ['TEXCOORD_0', 2, [0, 0]], ['TEXCOORD_1', 2, [0, 0]]]) {
@@ -69950,10 +69980,14 @@ function triangleNormal(p, a, b, c) {
   ab.normalize();
   return [ab.x, ab.y, ab.z];
 }
-function tangents(channels, indices, uvIndex) {
+function tangents(channels, indices, coordinates) {
   const p = channels.find(c => c.name === 'POSITION').values;
   const n = channels.find(c => c.name === 'NORMAL').values;
-  const uv = channels.find(c => c.name === `TEXCOORD_${uvIndex}`).values;
+  const sourceUV = channels.find(c => c.name === `TEXCOORD_${coordinates.texCoord}`).values;
+  const uv = [];
+  for (let i = 0; i < sourceUV.length; i += 2) {
+    uv.push(...transformTextureUV(coordinates, sourceUV[i], sourceUV[i + 1]));
+  }
   const tan = new Float32Array(p.length);
   const bitan = new Float32Array(p.length);
   for (let i = 0; i < indices.length; i += 3) {
@@ -69991,6 +70025,8 @@ function tangents(channels, indices, uvIndex) {
   return out;
 }
 
+const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive']];
+const UV_UNIFORMS = UV_SLOTS.map(([,, prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([,, prefix]) => `${prefix}UV1`));
 function gltfEffect() {
   const name = 'air-gltf-standard';
   const existing = EffectAsset.get(name);
@@ -70005,6 +70041,19 @@ function gltfEffect() {
   effect.techniques = JSON.parse(JSON.stringify(standard.techniques));
   for (const technique of effect.techniques) {
     for (const pass of technique.passes) {
+      if (!pass.properties) {
+        continue;
+      }
+      for (const name of UV_UNIFORMS) {
+        pass.properties[name] = {
+          type: Type.FLOAT4,
+          value: name.endsWith('0') ? [1, 0, 0, 0] : [0, 1, 0, 0]
+        };
+      }
+    }
+  }
+  for (const technique of effect.techniques) {
+    for (const pass of technique.passes) {
       for (const property of Object.values(pass.properties || {})) {
         delete property.linear;
       }
@@ -70013,7 +70062,21 @@ function gltfEffect() {
   for (const shader of effect.shaders) {
     const oldName = shader.name;
     shader.name = `${name}|${oldName}`;
-    shader.hash = (shader.hash ^ 0x5a17c001) >>> 0;
+    shader.hash = (shader.hash ^ 0x5a17c002) >>> 0;
+    const blocks = shader.blocks.slice();
+    for (const descriptor of shader.descriptors || []) {
+      blocks.push(...(descriptor.blocks || []));
+    }
+    for (const block of blocks) {
+      if (block.name !== 'Constants') {
+        continue;
+      }
+      for (const name of UV_UNIFORMS) {
+        if (!block.members.some(member => member.name === name)) {
+          block.members.push(new Uniform(name, Type.FLOAT4, 1));
+        }
+      }
+    }
     for (const technique of effect.techniques) {
       for (const pass of technique.passes) {
         if (pass.program === oldName) {
@@ -70036,6 +70099,13 @@ function gltfEffect() {
       if (!shader[language]) {
         continue;
       }
+      for (const stage of ['vert', 'frag']) {
+        if (language === 'glsl1') {
+          shader[language][stage] = `${UV_UNIFORMS.map(name => `uniform highp vec4 ${name};`).join('\n')}\n${shader[language][stage]}`;
+        } else {
+          shader[language][stage] = shader[language][stage].replace(/(uniform Constants\s*\{)([^}]*)(\})/g, (_match, start, body, end) => `${start}${body}${UV_UNIFORMS.map(name => `vec4 ${name};`).join('\n')}\n${end}`);
+        }
+      }
       shader[language].vert = shader[language].vert.replace('v_tangent.w = In.tangent.w;', 'v_tangent.w = In.tangent.w * sign(dot(cross(matWorld[0].xyz, matWorld[1].xyz), matWorld[2].xyz));');
       if (language === 'glsl3') {
         shader[language].vert = shader[language].vert.replace(/\bgl_VertexIndex\b/g, 'gl_VertexID');
@@ -70046,6 +70116,10 @@ function gltfEffect() {
         }
       }
       shader[language].frag = shader[language].frag.replace('baseColor.rgb *= SRGBToLinear(v_color.rgb);', 'baseColor.rgb *= v_color.rgb;').replace(/pbr.x \*= (texture2D|texture)\(occlusionMap, PBR_UV\).r;/g, 'pbr.x = mix(1.0, $1(occlusionMap, OCCLUSION_UV).r, pbrParams.x);').replace('s.occlusion = pbr.x;', '#if !USE_OCCLUSION_MAP\npbr.x = 1.0;\n#endif\ns.occlusion = pbr.x;').replace('s.albedo = baseColor;', '#if AIR_GLTF_OPAQUE\nbaseColor.a = 1.0;\n#endif\ns.albedo = baseColor;').replace('vec4 color = CCStandardShadingBase(s, v_shadowPos);', '#if AIR_GLTF_UNLIT\nvec4 color = s.albedo;\n#else\nvec4 color = CCStandardShadingBase(s, v_shadowPos);\n#endif').replace(/return gamma \* gamma;/g, 'return mix(gamma / 12.92, pow((gamma + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), gamma));');
+      for (const [sampler, uv, prefix] of UV_SLOTS) {
+        const expression = `vec2(dot(${prefix}UV0.xyz, vec3(${uv}, 1.0)), dot(${prefix}UV1.xyz, vec3(${uv}, 1.0)))`;
+        shader[language].frag = shader[language].frag.replace(new RegExp(`((?:texture|texture2D)\\(\\s*${sampler}\\s*,\\s*)${uv}(?=\\s*\\))`, 'g'), `$1${expression}`);
+      }
     }
   }
   effect.onLoaded();
@@ -70133,9 +70207,11 @@ function createGLTFMaterial(source, textures, vertexColor) {
   for (const [info,, macro, uv] of maps) {
     defines[macro] = !!info;
     if (info) {
-      check(info.texCoord === undefined || info.texCoord === 0 || info.texCoord === 1, 'only UV0/UV1 are supported');
-      defines[uv] = info.texCoord === 1 ? 'v_uv1' : 'v_uv';
-      if (info.texCoord === 1) {
+      const {
+        texCoord
+      } = textureCoordinates(info);
+      defines[uv] = texCoord === 1 ? 'v_uv1' : 'v_uv';
+      if (texCoord === 1) {
         defines.HAS_SECOND_UV = true;
       }
     }
@@ -70192,6 +70268,12 @@ function createGLTFMaterial(source, textures, vertexColor) {
         material.setProperty(property, item(textures, info.index, 'texture'));
       }
     }
+    maps.forEach(([info], index) => {
+      const coordinates = textureCoordinates(info);
+      const prefix = UV_SLOTS[index][2];
+      material.setProperty(`${prefix}UV0`, coordinates.row0);
+      material.setProperty(`${prefix}UV1`, coordinates.row1);
+    });
     return material;
   } catch (error) {
     material.destroy();

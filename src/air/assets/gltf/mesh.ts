@@ -3,6 +3,7 @@ import { Attribute, AttributeName, deviceManager, Feature, Format, PrimitiveMode
 import { Vec3 } from '../../../cocos/core/math';
 import { GLTFContext } from './context';
 import { check, item } from './schema';
+import { textureCoordinates, transformTextureUV, TextureCoordinates } from './texture-transform';
 
 const ATTRIBUTES: Record<string, [AttributeName, number]> = {
     POSITION: [AttributeName.ATTR_POSITION, 3], NORMAL: [AttributeName.ATTR_NORMAL, 3],
@@ -120,11 +121,11 @@ export function createGLTFMesh (context: GLTFContext, meshIndex: number): Mesh {
         const material = primitive.material === undefined ? undefined : item(context.json.materials, primitive.material, 'material');
         for (const info of [material?.pbrMetallicRoughness?.baseColorTexture, material?.pbrMetallicRoughness?.metallicRoughnessTexture,
             material?.normalTexture, material?.occlusionTexture, material?.emissiveTexture]) {
-            if (info) { check(channels.some((c) => c.name === `TEXCOORD_${info.texCoord || 0}`), 'material references missing UV set'); }
+            if (info) { check(channels.some((c) => c.name === `TEXCOORD_${textureCoordinates(info).texCoord}`), 'material references missing UV set'); }
         }
         if (material?.normalTexture && !channels.some((c) => c.name === 'TANGENT')) {
             check(topology.mode === PrimitiveMode.TRIANGLE_LIST, 'normal mapping requires triangles');
-            channels.push({ name: 'TANGENT', width: 4, values: tangents(channels, indices, material.normalTexture.texCoord || 0) });
+            channels.push({ name: 'TANGENT', width: 4, values: tangents(channels, indices, textureCoordinates(material.normalTexture)) });
         }
         // Standard shaders declare these inputs even when their feature macro is disabled.
         for (const [name, width, defaults] of [['NORMAL', 3, [0, 0, 1]], ['TANGENT', 4, [1, 0, 0, 1]],
@@ -189,10 +190,12 @@ function triangleNormal (p: number[], a: number, b: number, c: number): number[]
     const ac = new Vec3(p[c * 3] - p[a * 3], p[c * 3 + 1] - p[a * 3 + 1], p[c * 3 + 2] - p[a * 3 + 2]);
     Vec3.cross(ab, ab, ac); ab.normalize(); return [ab.x, ab.y, ab.z];
 }
-function tangents (channels: Channel[], indices: number[], uvIndex: number): number[] {
+function tangents (channels: Channel[], indices: number[], coordinates: TextureCoordinates): number[] {
     const p = channels.find((c) => c.name === 'POSITION')!.values;
     const n = channels.find((c) => c.name === 'NORMAL')!.values;
-    const uv = channels.find((c) => c.name === `TEXCOORD_${uvIndex}`)!.values;
+    const sourceUV = channels.find((c) => c.name === `TEXCOORD_${coordinates.texCoord}`)!.values;
+    const uv: number[] = [];
+    for (let i = 0; i < sourceUV.length; i += 2) { uv.push(...transformTextureUV(coordinates, sourceUV[i], sourceUV[i + 1])); }
     const tan = new Float32Array(p.length); const bitan = new Float32Array(p.length);
     for (let i = 0; i < indices.length; i += 3) {
         const [a, b, c] = indices.slice(i, i + 3);

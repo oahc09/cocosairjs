@@ -2,6 +2,7 @@ import { Accessor, check, GLTFDocument, integer, item } from './schema';
 
 const COMPONENTS: Record<string, number> = { SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4, MAT2: 4, MAT3: 9, MAT4: 16 };
 const SIZES: Record<number, number> = { 5120: 1, 5121: 1, 5122: 2, 5123: 2, 5125: 4, 5126: 4 };
+const SUPPORTED_EXTENSIONS = new Set(['KHR_materials_unlit', 'KHR_texture_transform']);
 export interface AccessorData { values: number[]; components: number; count: number; source: Accessor; }
 
 export function decodeContainer (data: string | ArrayBuffer): { json: GLTFDocument; bin?: ArrayBuffer } {
@@ -34,7 +35,7 @@ export function decodeContainer (data: string | ArrayBuffer): { json: GLTFDocume
     check(json && json.asset && json.asset.version === '2.0', 'only glTF 2.0 is supported');
     check(!json.asset.minVersion || json.asset.minVersion === '2.0', 'unsupported asset.minVersion');
     for (const extension of json.extensionsRequired || []) {
-        check(extension === 'KHR_materials_unlit', `unsupported required extension: ${extension}`);
+        check(SUPPORTED_EXTENSIONS.has(extension), `unsupported required extension: ${extension}`);
     }
     return { json, bin };
 }
@@ -67,7 +68,7 @@ export class GLTFContext {
     }
     public async loadBuffers (bin?: ArrayBuffer): Promise<void> {
         for (const extension of this.json.extensionsUsed || []) {
-            if (extension !== 'KHR_materials_unlit') { this.warn(`optional extension ${extension}: using core fallback where available`); }
+            if (!SUPPORTED_EXTENSIONS.has(extension)) { this.warn(`optional extension ${extension}: using core fallback where available`); }
         }
         // Sequential ownership makes failure cleanup deterministic; requests are deduplicated within a load.
         for (const [i, buffer] of (this.json.buffers || []).entries()) {

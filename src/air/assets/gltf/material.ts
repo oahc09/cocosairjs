@@ -2,11 +2,19 @@ import { Material } from '../../../cocos/asset/assets/material';
 import { EffectAsset } from '../../../cocos/asset/assets/effect-asset';
 import { ImageAsset } from '../../../cocos/asset/assets/image-asset';
 import { Texture2D } from '../../../cocos/asset/assets/texture-2d';
-import { API, BlendFactor, CullMode, deviceManager } from '../../../cocos/gfx';
+import { API, BlendFactor, CullMode, deviceManager, Type, Uniform } from '../../../cocos/gfx';
 import { Vec4 } from '../../../cocos/core/math';
 import { MacroRecord } from '../../../cocos/render-scene/core/pass-utils';
 import { GLTFContext } from './context';
 import { check, GLTFMaterial, item } from './schema';
+import { textureCoordinates } from './texture-transform';
+
+const UV_SLOTS = [
+    ['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'],
+    ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'],
+    ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'],
+] as const;
+const UV_UNIFORMS = UV_SLOTS.map(([, , prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([, , prefix]) => `${prefix}UV1`));
 
 /** Isolated standard effect variant: glTF vertex colors, AO strength, UV sets and unlit semantics. */
 export function gltfEffect (): EffectAsset {
@@ -18,6 +26,12 @@ export function gltfEffect (): EffectAsset {
     const effect = new EffectAsset(); effect.name = name;
     effect.shaders = JSON.parse(JSON.stringify(standard.shaders));
     effect.techniques = JSON.parse(JSON.stringify(standard.techniques));
+    for (const technique of effect.techniques) {
+        for (const pass of technique.passes) {
+            if (!pass.properties) { continue; }
+            for (const name of UV_UNIFORMS) { pass.properties[name] = { type: Type.FLOAT4, value: name.endsWith('0') ? [1, 0, 0, 0] : [0, 1, 0, 0] }; }
+        }
+    }
     // glTF factors are already linear; Cocos's authored material colors are normally sRGB.
     for (const technique of effect.techniques) {
         for (const pass of technique.passes) {
@@ -27,7 +41,16 @@ export function gltfEffect (): EffectAsset {
     for (const shader of effect.shaders) {
         const oldName = shader.name;
         shader.name = `${name}|${oldName}`;
-        shader.hash = (shader.hash ^ 0x5a17c001) >>> 0;
+        shader.hash = (shader.hash ^ 0x5a17c002) >>> 0;
+        // Extend the existing material block, preserving its binding and std140 vec4 alignment.
+        const blocks = shader.blocks.slice();
+        for (const descriptor of shader.descriptors || []) { blocks.push(...(descriptor.blocks || [])); }
+        for (const block of blocks) {
+            if (block.name !== 'Constants') { continue; }
+            for (const name of UV_UNIFORMS) {
+                if (!block.members.some((member) => member.name === name)) { block.members.push(new Uniform(name, Type.FLOAT4, 1)); }
+            }
+        }
         for (const technique of effect.techniques) {
             for (const pass of technique.passes) { if (pass.program === oldName) { pass.program = shader.name; } }
         }
@@ -35,6 +58,14 @@ export function gltfEffect (): EffectAsset {
             { name: 'OCCLUSION_UV', type: 'string', options: ['v_uv', 'v_uv1'] });
         for (const language of ['glsl1', 'glsl3', 'glsl4'] as const) {
             if (!shader[language]) { continue; }
+            for (const stage of ['vert', 'frag'] as const) {
+                if (language === 'glsl1') {
+                    shader[language][stage] = `${UV_UNIFORMS.map((name) => `uniform highp vec4 ${name};`).join('\n')}\n${shader[language][stage]}`;
+                } else {
+                    shader[language][stage] = shader[language][stage].replace(/(uniform Constants\s*\{)([^}]*)(\})/g,
+                        (_match, start, body, end) => `${start}${body}${UV_UNIFORMS.map((name) => `vec4 ${name};`).join('\n')}\n${end}`);
+                }
+            }
             shader[language].vert = shader[language].vert.replace('v_tangent.w = In.tangent.w;',
                 'v_tangent.w = In.tangent.w * sign(dot(cross(matWorld[0].xyz, matWorld[1].xyz), matWorld[2].xyz));');
             if (language === 'glsl3') {
@@ -62,6 +93,11 @@ export function gltfEffect (): EffectAsset {
                     '#if AIR_GLTF_UNLIT\nvec4 color = s.albedo;\n#else\nvec4 color = CCStandardShadingBase(s, v_shadowPos);\n#endif')
                 .replace(/return gamma \* gamma;/g,
                     'return mix(gamma / 12.92, pow((gamma + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), gamma));');
+            // Apply independently at each textureInfo sampling site, including alpha-tested shadows.
+            for (const [sampler, uv, prefix] of UV_SLOTS) {
+                const expression = `vec2(dot(${prefix}UV0.xyz, vec3(${uv}, 1.0)), dot(${prefix}UV1.xyz, vec3(${uv}, 1.0)))`;
+                shader[language].frag = shader[language].frag.replace(new RegExp(`((?:texture|texture2D)\\(\\s*${sampler}\\s*,\\s*)${uv}(?=\\s*\\))`, 'g'), `$1${expression}`);
+            }
         }
     }
     // Unlit must not accumulate additional lighting passes. The primary pass still handles skin and morph.
@@ -140,9 +176,9 @@ export function createGLTFMaterial (source: GLTFMaterial, textures: readonly Tex
     for (const [info, , macro, uv] of maps) {
         defines[macro] = !!info;
         if (info) {
-            check(info.texCoord === undefined || info.texCoord === 0 || info.texCoord === 1, 'only UV0/UV1 are supported');
-            defines[uv] = info.texCoord === 1 ? 'v_uv1' : 'v_uv';
-            if (info.texCoord === 1) { defines.HAS_SECOND_UV = true; }
+            const { texCoord } = textureCoordinates(info);
+            defines[uv] = texCoord === 1 ? 'v_uv1' : 'v_uv';
+            if (texCoord === 1) { defines.HAS_SECOND_UV = true; }
         }
     }
     const material = new Material();
@@ -174,6 +210,12 @@ export function createGLTFMaterial (source: GLTFMaterial, textures: readonly Tex
         check(Number.isFinite(source.normalTexture?.scale ?? 1), 'invalid normal scale');
         material.setProperty('emissiveScaleParam', new Vec4(1, 1, 1, source.normalTexture?.scale ?? 1));
         for (const [info, property] of maps) { if (info) { material.setProperty(property, item(textures, info.index, 'texture')); } }
+        maps.forEach(([info], index) => {
+            const coordinates = textureCoordinates(info);
+            const prefix = UV_SLOTS[index][2];
+            material.setProperty(`${prefix}UV0`, coordinates.row0);
+            material.setProperty(`${prefix}UV1`, coordinates.row1);
+        });
         return material;
     } catch (error) { material.destroy(); throw error; }
 }

@@ -32871,11 +32871,12 @@ export namespace utils {
      * @zh 沿相机当前视线方向调整距离与朝向，使目标节点居中完整显示。
      *     距离优先按目标渲染包围盒估算（MeshRenderer.model.worldBounds 并集）；
      *     无可用包围盒时使用 fallbackDistance。
+     *     取景考虑 fovAxis、视口宽高比及相机父节点的世界变换。
      *
      * @example
      * ```ts
      * frameObject(camera, modelRoot);        // 按包围盒自动取景
-     * frameObject(camera, modelRoot, 8);     // 显式距离
+     * frameObject(camera, modelRoot, 8);     // 无包围盒时的回退距离
      * ```
      */
     export function frameObject(camera: Camera, target: Node, fallbackDistance?: number): void;
