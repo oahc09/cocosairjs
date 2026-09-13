@@ -25,7 +25,7 @@
 import { Device, BufferUsageBit, MemoryUsageBit, BufferInfo, Filter, Address, Sampler, DescriptorSet,
     DescriptorSetInfo, Buffer, Texture, DescriptorSetLayoutInfo, DescriptorSetLayout, SamplerInfo } from '../gfx';
 import { Light } from '../render-scene/scene/light';
-import { UBOShadow, globalDescriptorSetLayout, PipelineGlobalBindings, UBOShadowEnum } from './define';
+import { UBOShadow, globalDescriptorSetLayout, PipelineGlobalBindings } from './define';
 
 const _samplerLinearInfo = new SamplerInfo(
     Filter.LINEAR,
@@ -187,11 +187,16 @@ export class GlobalDSManager {
                 descriptorSet.bindTexture(i, globalDescriptorSet.getTexture(i));
             }
 
+            // AIR(2026-09-13): the CCShadow block in builtin effects expands CSM arrays
+            // to 1248B (std140); UBOShadowEnum.SIZE (256B) triggers
+            // "uniform buffer too small" on WebGL2. Keep in sync with the PipelineUBO
+            // expansion in pipeline-ubo.ts (see docs/upstream-file-map.json Modified record).
+            const AIR_SHADOW_UBO_SIZE = 2048;
             const shadowUBO = device.createBuffer(new BufferInfo(
                 BufferUsageBit.UNIFORM | BufferUsageBit.TRANSFER_DST,
                 MemoryUsageBit.HOST | MemoryUsageBit.DEVICE,
-                UBOShadowEnum.SIZE,
-                UBOShadowEnum.SIZE,
+                AIR_SHADOW_UBO_SIZE,
+                AIR_SHADOW_UBO_SIZE,
             ));
             descriptorSet.bindBuffer(UBOShadow.BINDING, shadowUBO);
 

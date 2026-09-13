@@ -14,7 +14,6 @@ export function prepareNodes (context: GLTFParserContext): NodeLayout {
     for (const [i, node] of nodes.entries()) {
         for (const child of node.children || []) { item(nodes, child, 'child'); check(child !== i && parents[child] === -1, 'node cycle/multiple parents'); parents[child] = i; }
         if (node.camera !== undefined) { item(context.json.cameras, node.camera, 'camera'); context.warn(`node ${i}: camera metadata retained, camera not instantiated`); }
-        if (node.extensions?.KHR_lights_punctual) { context.warn(`node ${i}: light metadata retained, light not instantiated`); }
     }
     const paths: string[] = [];
     const visiting = new Set<number>();
@@ -53,13 +52,37 @@ export function prepareNodes (context: GLTFParserContext): NodeLayout {
     if (context.json.scene !== undefined) { item(context.json.scenes, context.json.scene, 'default scene'); }
     return { names, paths, parents, transforms };
 }
-export function makeNodes (layout: NodeLayout, included: Set<number>, root: Node): Map<number, Node> {
+/**
+ * Builds the node tree. `replace` may swap a freshly created node for derived nodes
+ * (extension buildNode hook); replacements reparent children and inherit placement.
+ */
+export function makeNodes (layout: NodeLayout, included: Set<number>, root: Node,
+    replace?: (index: number, node: Node) => Node | Node[] | null): Map<number, Node> {
     const nodes = new Map<number, Node>();
     for (const i of included) {
         const node = new Node(layout.names[i]); nodes.set(i, node);
         const { p, q, s } = layout.transforms[i]; node.setRTS(q, p, s);
     }
-    for (const [i, node] of nodes) { (nodes.get(layout.parents[i]) || root).addChild(node); }
+    // Pass 1: let handlers replace nodes before any mounting, so children reparent onto
+    // the first replacement node (original stays an unmounted anchor afterwards).
+    const mounts = new Map<number, Node[]>();
+    for (const [i, node] of nodes) {
+        let effective: Node[] = [node];
+        if (replace) {
+            const replaced = replace(i, node);
+            if (replaced) { effective = Array.isArray(replaced) ? replaced : [replaced]; }
+        }
+        mounts.set(i, effective);
+    }
+    // Pass 2: mount; a replacement list nests as a subtree (first element at the original
+    // position, remaining elements as its children) so handlers return flat node lists.
+    const anchor = (index: number): Node => mounts.get(index)?.[0] ?? root;
+    for (const [i, effective] of mounts) {
+        const parent = layout.parents[i] === -1 ? root : anchor(layout.parents[i]);
+        const head = effective[0];
+        parent.addChild(head);
+        for (let k = 1; k < effective.length; ++k) { head.addChild(effective[k]); }
+    }
     return nodes;
 }
 export function createSkeletons (context: GLTFParserContext, layout: NodeLayout, skeletons: Skeleton[]): void {

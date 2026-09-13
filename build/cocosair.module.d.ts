@@ -32952,7 +32952,20 @@ export namespace utils {
         loadPrimitive?(primitiveIndex: number, meshIndex: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<DecodedPrimitive | null>;
         resolveTextureSource?(textureIndex: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<DecodedTextureSource | null>;
         extendMaterial?(materialIndex: number, features: GLTFMaterialFeatures, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<void> | void;
+        /**
+         * Binary snapshot point: runs during parse after buffers/accessors are loaded and
+         * before releaseDecodedData() drops them. Handlers that need accessor values at
+         * instantiate() time (scene extensions) must copy what they need here.
+         */
+        resolveData?(context: __private._air_assets_gltf_parser_context__GLTFParserContext): void;
         createNode?(nodeIndex: number, node: Node, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<void> | void;
+        /**
+         * Per-instance node build hook; may replace the freshly created node with one or more
+         * derived nodes (e.g. EXT_mesh_gpu_instancing expansion). The first returned node
+         * occupies the original position (children and renderers default to it); further
+         * elements are nested under it. Ownership of the discarded original stays with the engine.
+         */
+        buildNode?(nodeIndex: number, node: Node, context: GLTFInstantiationContext): Node | Node[] | null;
         instantiate?(nodeIndex: number, node: Node, context: GLTFInstantiationContext): Promise<void> | void;
         dispose?(): void;
     }
@@ -32960,6 +32973,15 @@ export namespace utils {
     /** Node-scoped state passed to handlers during instantiate(); extended by scene extensions. */
     export interface GLTFInstantiationContext {
         readonly json: __private._air_assets_gltf_parser_context__GLTFParserContext["json"];
+        /** Parse-time node map (index -> original node) before per-instance replacement. */
+        readonly nodes: ReadonlyMap<number, Node>;
+        /** Accessor data resolved through the shared dependency cache. */
+        accessor(index: number): __private._air_assets_gltf_parser_context__AccessorData;
+        /**
+         * A handler that returns an anchor plus derived nodes declares which of them carry
+         * renderers (e.g. GPU instancing attaches renderers to instances, not the anchor).
+         */
+        readonly renderTargets: Map<Node, Node[]>;
     }
     /**
      * Ordered extension registry. Registration order defines hook execution order;

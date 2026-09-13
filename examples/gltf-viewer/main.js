@@ -77,6 +77,7 @@ async function load (name, sourceURL) {
             'AnimatedMorphCube.glb': [[3, 2, 4], [0, 0, 0]],
             'diagnostics.glb': [[-1.2, 0, 7.5], [-1.2, 0, 0]],
             'combined.glb': [[4, 1.5, 6], [4, 1, 0]],
+            'scene.glb': [[0, 1.6, 6], [0, 0.8, -0.5]],
         };
         resetCamera = () => {
             if (positions[name] && !embedded) {

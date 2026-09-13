@@ -17,6 +17,8 @@ import { textureTransformFactory } from './extensions/texture/transform';
 import { meshQuantizationFactory } from './extensions/geometry/quantization';
 import { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION, EXT_MESHOPT_COMPRESSION } from './extensions/geometry/meshopt';
 import { dracoCompressionFactory } from './extensions/geometry/draco';
+import { punctualLightsFactory } from './extensions/scene/lights';
+import { meshGPUInstancingFactory } from './extensions/scene/instancing';
 import { check, item } from './schema';
 
 export function gltfExtension (url: string): string | undefined {
@@ -37,8 +39,6 @@ const KNOWN_UNIMPLEMENTED: readonly GLTFExtensionSupport[] = [
     { name: 'EXT_texture_webp', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
     { name: 'EXT_texture_avif', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
     { name: 'KHR_texture_basisu', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
-    { name: 'KHR_lights_punctual', status: 'unsupported', reason: 'planned in V0.5 scene phase' },
-    { name: 'EXT_mesh_gpu_instancing', status: 'unsupported', reason: 'planned in V0.5 scene phase' },
 ];
 
 export class GLTFLoader {
@@ -48,7 +48,9 @@ export class GLTFLoader {
         .register(meshQuantizationFactory)
         .register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION))
         .register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION))
-        .register(dracoCompressionFactory);
+        .register(dracoCompressionFactory)
+        .register(punctualLightsFactory)
+        .register(meshGPUInstancingFactory);
     private options: GLTFLoaderOptions;
 
     constructor (options?: GLTFLoaderOptions) {
@@ -110,6 +112,8 @@ export class GLTFLoader {
             await context.loadBuffers(bin);
             // Validate all accessors before decoding images or allocating GPU resources.
             (json.accessors || []).forEach((_, i) => context.accessor(i));
+            // Scene extensions snapshot accessor binary before releaseDecodedData().
+            for (const handler of handlers) { handler.resolveData?.(context); }
             report('decode', json.accessors?.length || 0, json.accessors?.length || 0);
             context.throwIfAborted();
 

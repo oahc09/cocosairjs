@@ -58,4 +58,57 @@ for (let i=0;i<6;i++) {
 json.buffers[0].byteLength = size;
 const bytes = Buffer.concat(binary); const buffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
 fs.writeFileSync(path.join(out,'diagnostics.glb'),Buffer.from(mod.exports.toGLB(json,buffer)));
-console.log('Generated combined.glb and diagnostics.glb');
+
+// --- scene.glb: KHR_lights_punctual + EXT_mesh_gpu_instancing coverage fixtures ---
+const sceneDoc = { asset: { version: '2.0', generator: 'cocosair scene fixtures (MIT)' },
+    extensionsUsed: ['KHR_lights_punctual', 'EXT_mesh_gpu_instancing'], extensionsRequired: [],
+    buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [], meshes: [], nodes: [],
+    scenes: [{ nodes: [] }], scene: 0,
+    materials: [{ name: 'sand pbr', pbrMetallicRoughness: { baseColorFactor: [0.85, 0.55, 0.2, 1], metallicFactor: 0.1, roughnessFactor: 0.6 } }] };
+const sceneChunks = []; let sceneSize = 0;
+function sceneView(data) {
+    while (sceneSize % 4) { sceneChunks.push(Buffer.alloc(1)); sceneSize++; }
+    const i = sceneDoc.bufferViews.length;
+    sceneDoc.bufferViews.push({ buffer: 0, byteOffset: sceneSize, byteLength: data.byteLength ?? data.length });
+    sceneChunks.push(Buffer.from(data.buffer ?? data)); sceneSize += data.byteLength ?? data.length; return i;
+}
+function floatAcc(values, width) { const a = new Float32Array(values);
+    sceneDoc.accessors.push({ bufferView: sceneView(a), componentType: 5126, count: values.length / width, type: `VEC${width}` });
+    return sceneDoc.accessors.length - 1; }
+function ushortAcc(values) { const a = new Uint16Array(values);
+    sceneDoc.accessors.push({ bufferView: sceneView(a), componentType: 5123, count: values.length, type: 'SCALAR' });
+    return sceneDoc.accessors.length - 1; }
+// cube: 8 shared vertices, 36 indices (flat per-face winding requires split verts; keep a simple
+// 8-vertex cube with indices for the instancing expansion path)
+const cubePos = floatAcc([-0.4,-0.4,-0.4, 0.4,-0.4,-0.4, 0.4,0.4,-0.4, -0.4,0.4,-0.4,
+    -0.4,-0.4,0.4, 0.4,-0.4,0.4, 0.4,0.4,0.4, -0.4,0.4,0.4], 3);
+// averaged per-vertex normals (8 cube corners), unit length
+const k = 1 / Math.sqrt(3);
+const cubeNrm = floatAcc([-k,-k,-k, k,-k,-k, k,k,-k, -k,k,-k,
+    -k,-k,k, k,-k,k, k,k,k, -k,k,k], 3);
+const cubeIdx = ushortAcc([0,2,1, 0,3,2, 4,5,6, 4,6,7, 0,1,5, 0,5,4, 2,3,7, 2,7,6, 1,2,6, 1,6,5, 0,4,7, 0,7,3]);
+sceneDoc.meshes.push({ primitives: [{ attributes: { POSITION: cubePos, NORMAL: cubeNrm }, indices: cubeIdx, material: 0 }] });
+// node 0: instanced cube (4 instances with rotation variety and one negative-scale instance)
+sceneDoc.nodes.push({ name: 'instanced cubes', mesh: 0, translation: [0, 0.5, -1],
+    extensions: { EXT_mesh_gpu_instancing: { attributes: {
+        TRANSLATION: floatAcc([-1.5,0,0, -0.5,0,0, 0.5,0,0, 1.5,0,0], 3),
+        ROTATION: floatAcc([0,0,0,1, 0,0.259,0,0.966, 0,0.5,0,0.866, 0,0.707,0,0.707], 4),
+        SCALE: floatAcc([1,1,1, 1,1,1, 1.4,1.4,1.4, -1,1,1], 3),
+    } } } });
+// nodes 1..4: one per light kind; spot references an extra shared point-light definition below
+sceneDoc.nodes.push({ name: 'key light', extensions: { KHR_lights_punctual: { light: 0 } } });
+sceneDoc.nodes.push({ name: 'bulb', translation: [-1.5, 1.1, 2.2], extensions: { KHR_lights_punctual: { light: 1 } } });
+sceneDoc.nodes.push({ name: 'torch', translation: [1.5, 1.6, 2.4], rotation: [0.383, 0, 0, 0.924],
+    extensions: { KHR_lights_punctual: { light: 2 } } });
+sceneDoc.nodes.push({ name: 'bulb again', translation: [0, 1.1, 1.4], extensions: { KHR_lights_punctual: { light: 1 } } });
+sceneDoc.scenes[0].nodes = [0, 1, 2, 3, 4];
+sceneDoc.extensions = { KHR_lights_punctual: { lights: [
+    { name: 'key', type: 'directional', color: [1, 0.95, 0.85], intensity: 40000 },
+    { name: 'bulb', type: 'point', color: [0.3, 0.6, 1], intensity: 3000, range: 5 },
+    { name: 'torch', type: 'spot', color: [1, 0.4, 0.2], intensity: 9000, range: 9, innerConeAngle: 0.1, outerConeAngle: 0.5 },
+] } };
+sceneDoc.buffers[0].byteLength = sceneSize;
+const sceneBin = Buffer.concat(sceneChunks);
+const sceneArrayBuf = sceneBin.buffer.slice(sceneBin.byteOffset, sceneBin.byteOffset + sceneBin.byteLength);
+fs.writeFileSync(path.join(out, 'scene.glb'), Buffer.from(mod.exports.toGLB(sceneDoc, sceneArrayBuf)));
+console.log('Generated combined.glb, diagnostics.glb and scene.glb');

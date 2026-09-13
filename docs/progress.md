@@ -114,3 +114,22 @@
   对本机 safe-delete shim 的批量删除拦截做降级（唯一 tmp 目录 / rename 移出 / finally 拷贝产物）。
 - **文档**：docs/05–09 连续编号 + `docs/acceptance-report-v02.md` + README Quick Start 增补。
 - **V0.2 RC 标记**（package.json 版本号保持 0.1.0 未变；commit 后本地 tag `v0.2.0-rc.1`，不 push）。
+
+## V0.5 T4 — 灯光与 GPU instancing（2026-09-13）
+- registry 新增 `resolveData`（parse 期二进制快照点，releaseDecodedData 前）与 `buildNode`
+  （实例级节点替换 + `renderTargets` 锚点/渲染目标分离合同）；`GLTFInstantiationContext`
+  扩展 nodes/accessor；asset.instantiate 分发 buildNode（makeNodes 双 pass 嵌套挂载）与
+  per-node `instantiate` hook。
+- KHR_lights_punctual handler：directional -Z 约定与 Cocos 原生一致无需修正；lux→illuminance、
+  cd→luminousFlux（point 4πI / spot 均匀锥 2π(1−cos outer)I，经 HDR/LDR 一致的 flux setter 路径）、
+  spotAngle=2·outer 度数、range 直传、缺省大有限值近似无限、innerConeAngle 元数据+告警、
+  一 light 多节点=独立组件；validate 全量 GLTFError（GLTF_EXTENSION_INVALID 稳定 code）。
+- EXT_mesh_gpu_instancing handler：正确性路径（anchor+共享 Mesh 实例、TRS 快照校验、
+  四元数 parse 期 fail-fast、负缩放交给 GLTFWinding；support.reason 声明 fast path 未实现）。
+- 上游修改登记：global-descriptor-set-manager.ts shadow UBO 256B→2048B（WebGL2 下
+  CCShadow 1248B 触发 'uniform buffer too small'；与 pipeline-ubo.ts 既有扩容同步）。
+- fixture：scene.glb（3 类灯 + 4 实例含负缩放/大缩放；8 顶点平均法线；PBR 材质）+ viewer
+  入口与相机位；tools/verify/gltf-scene-browser.js A/B 帧差验证 ok:true（glError 0、
+  changedPixels>5%、光度断言全过）；gltf-ubo-diag.js / gltf-render-diag.js 保留为诊断工具。
+- 测试：smoke-12-gltf-scene 7 tests；全量 jest 12 suites / 66 tests PASS；typecheck 0；
+  verify:web-only PASSED；build/min/dts 重跑通过。

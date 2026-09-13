@@ -7,6 +7,7 @@ import { Skeleton } from '../../../cocos/3d/assets/skeleton';
 import { AnimationClip } from '../../../cocos/animation/animation-clip';
 import { Animation } from '../../../cocos/animation/animation-component';
 import { Node } from '../../../cocos/scene-graph/node';
+import { Vec3 } from '../../../cocos/core/math';
 import { MeshRenderer } from '../../../cocos/3d/framework/mesh-renderer';
 import { SkinnedMeshRenderer } from '../../../cocos/3d/skinned-mesh-renderer/skinned-mesh-renderer';
 import { AttributeName } from '../../../cocos/gfx';
@@ -15,6 +16,7 @@ import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
 import { makeNodes, NodeLayout } from './nodes';
 import { GLTFWinding } from './winding';
+import type { GLTFInstantiationContext } from './extension-registry';
 
 let parsedAssetId = 0;
 
@@ -79,33 +81,60 @@ export class GLTFAsset extends Asset {
             this.sceneClips.set(sceneIndex, clips);
         }
         const root = new Node(this.sceneNames[sceneIndex]);
+        const mounts = new Map<number, Node[]>();
+        let instCtx: GLTFInstantiationContext = {
+            json,
+            nodes: new Map<number, Node>(),
+            accessor: (index: number) => this.context.accessor(index),
+            renderTargets: new Map<Node, Node[]>(),
+        };
         try {
-            const nodes = makeNodes(this.layout, included, root);
+            const nodes = makeNodes(this.layout, included, root, (i, node) => {
+                for (const handler of this.context.handlers) {
+                    const result = handler.buildNode?.(i, node, instCtx);
+                    if (result) {
+                        mounts.set(i, Array.isArray(result) ? result : [result]);
+                        return result;
+                    }
+                }
+                return null;
+            });
+            instCtx = { ...instCtx, nodes };
+            const rendererTargets = (i: number): Node[] => {
+                const original = nodes.get(i)!;
+                return instCtx.renderTargets.get(original) ?? mounts.get(i) ?? [original];
+            };
             const winding = root.addComponent(GLTFWinding);
             for (const i of visible) {
                 const source = json.nodes![i];
                 if (source.mesh === undefined) { check(source.skin === undefined, 'skin node must reference a mesh'); continue; }
-                const node = nodes.get(i)!;
                 const mesh = item(this.meshes, source.mesh, 'mesh');
-                let renderer: MeshRenderer;
-                if (source.skin !== undefined) {
-                    const skin = item(this.skeletons, source.skin, 'skin');
-                    for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
-                        const joints = mesh.readAttribute(sub, AttributeName.ATTR_JOINTS);
-                        check(joints && Array.from(joints).every((j) => j < skin.joints.length), 'mesh has missing/out-of-range skin joints');
+                for (const node of rendererTargets(i)) {
+                    let renderer: MeshRenderer;
+                    if (source.skin !== undefined) {
+                        const skin = item(this.skeletons, source.skin, 'skin');
+                        for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
+                            const joints = mesh.readAttribute(sub, AttributeName.ATTR_JOINTS);
+                            check(joints && Array.from(joints).every((j) => j < skin.joints.length), 'mesh has missing/out-of-range skin joints');
+                        }
+                        const skinned = node.addComponent(SkinnedMeshRenderer);
+                        skinned.setUseBakedAnimation(false);
+                        skinned.skinningRoot = root; skinned.skeleton = skin;
+                        renderer = skinned;
+                    } else { renderer = node.addComponent(MeshRenderer); }
+                    renderer.mesh = mesh;
+                    winding.renderers.push(renderer);
+                    this.meshMaterials[source.mesh].forEach((material, slot) => renderer.setSharedMaterial(material, slot));
+                    const weights = source.weights || json.meshes![source.mesh].weights;
+                    if (weights) {
+                        check(weights.length === (json.meshes![source.mesh].primitives[0].targets?.length || 0) && weights.every(Number.isFinite), 'invalid node morph weights');
+                        for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) { renderer.setWeights(weights.slice(), sub); }
                     }
-                    const skinned = node.addComponent(SkinnedMeshRenderer);
-                    skinned.setUseBakedAnimation(false);
-                    skinned.skinningRoot = root; skinned.skeleton = skin;
-                    renderer = skinned;
-                } else { renderer = node.addComponent(MeshRenderer); }
-                renderer.mesh = mesh;
-                winding.renderers.push(renderer);
-                this.meshMaterials[source.mesh].forEach((material, slot) => renderer.setSharedMaterial(material, slot));
-                const weights = source.weights || json.meshes![source.mesh].weights;
-                if (weights) {
-                    check(weights.length === (json.meshes![source.mesh].primitives[0].targets?.length || 0) && weights.every(Number.isFinite), 'invalid node morph weights');
-                    for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) { renderer.setWeights(weights.slice(), sub); }
+                }
+            }
+            for (const i of visible) {
+                for (const handler of this.context.handlers) {
+                    handler.instantiate?.(i, mounts.get(i)?.[0] ?? nodes.get(i)!, instCtx);
                 }
             }
             const animation = root.addComponent(Animation);

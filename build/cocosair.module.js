@@ -69088,7 +69088,6 @@ function prepareNodes(context) {
   const parents = nodes.map(() => -1);
   const names = nodes.map((n, i) => `${(n.name || 'node').replace(/[\\/]/g, '_')}__${i}`);
   for (const [i, node] of nodes.entries()) {
-    var _node$extensions;
     for (const child of node.children || []) {
       item(nodes, child, 'child');
       check(child !== i && parents[child] === -1, 'node cycle/multiple parents');
@@ -69097,9 +69096,6 @@ function prepareNodes(context) {
     if (node.camera !== undefined) {
       item(context.json.cameras, node.camera, 'camera');
       context.warn(`node ${i}: camera metadata retained, camera not instantiated`);
-    }
-    if ((_node$extensions = node.extensions) != null && _node$extensions.KHR_lights_punctual) {
-      context.warn(`node ${i}: light metadata retained, light not instantiated`);
     }
   }
   const paths = [];
@@ -69172,7 +69168,7 @@ function prepareNodes(context) {
     transforms
   };
 }
-function makeNodes(layout, included, root) {
+function makeNodes(layout, included, root, replace) {
   const nodes = new Map();
   for (const i of included) {
     const node = new Node$1(layout.names[i]);
@@ -69184,8 +69180,28 @@ function makeNodes(layout, included, root) {
     } = layout.transforms[i];
     node.setRTS(q, p, s);
   }
+  const mounts = new Map();
   for (const [i, node] of nodes) {
-    (nodes.get(layout.parents[i]) || root).addChild(node);
+    let effective = [node];
+    {
+      const replaced = replace(i, node);
+      if (replaced) {
+        effective = Array.isArray(replaced) ? replaced : [replaced];
+      }
+    }
+    mounts.set(i, effective);
+  }
+  const anchor = index => {
+    var _mounts$get$, _mounts$get;
+    return (_mounts$get$ = (_mounts$get = mounts.get(index)) == null ? void 0 : _mounts$get[0]) !== null && _mounts$get$ !== void 0 ? _mounts$get$ : root;
+  };
+  for (const [i, effective] of mounts) {
+    const parent = layout.parents[i] === -1 ? root : anchor(layout.parents[i]);
+    const head = effective[0];
+    parent.addChild(head);
+    for (let k = 1; k < effective.length; ++k) {
+      head.addChild(effective[k]);
+    }
   }
   return nodes;
 }
@@ -69341,8 +69357,33 @@ class GLTFAsset extends Asset {
       this.sceneClips.set(sceneIndex, clips);
     }
     const root = new Node$1(this.sceneNames[sceneIndex]);
+    const mounts = new Map();
+    let instCtx = {
+      json,
+      nodes: new Map(),
+      accessor: index => this.context.accessor(index),
+      renderTargets: new Map()
+    };
     try {
-      const nodes = makeNodes(this.layout, included, root);
+      const nodes = makeNodes(this.layout, included, root, (i, node) => {
+        for (const handler of this.context.handlers) {
+          const result = handler.buildNode == null ? void 0 : handler.buildNode(i, node, instCtx);
+          if (result) {
+            mounts.set(i, Array.isArray(result) ? result : [result]);
+            return result;
+          }
+        }
+        return null;
+      });
+      instCtx = {
+        ...instCtx,
+        nodes
+      };
+      const rendererTargets = i => {
+        var _ref, _instCtx$renderTarget;
+        const original = nodes.get(i);
+        return (_ref = (_instCtx$renderTarget = instCtx.renderTargets.get(original)) !== null && _instCtx$renderTarget !== void 0 ? _instCtx$renderTarget : mounts.get(i)) !== null && _ref !== void 0 ? _ref : [original];
+      };
       const winding = root.addComponent(GLTFWinding);
       for (const i of visible) {
         const source = json.nodes[i];
@@ -69350,33 +69391,40 @@ class GLTFAsset extends Asset {
           check(source.skin === undefined, 'skin node must reference a mesh');
           continue;
         }
-        const node = nodes.get(i);
         const mesh = item(this.meshes, source.mesh, 'mesh');
-        let renderer;
-        if (source.skin !== undefined) {
-          const skin = item(this.skeletons, source.skin, 'skin');
-          for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
-            const joints = mesh.readAttribute(sub, AttributeName.ATTR_JOINTS);
-            check(joints && Array.from(joints).every(j => j < skin.joints.length), 'mesh has missing/out-of-range skin joints');
+        for (const node of rendererTargets(i)) {
+          let renderer;
+          if (source.skin !== undefined) {
+            const skin = item(this.skeletons, source.skin, 'skin');
+            for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
+              const joints = mesh.readAttribute(sub, AttributeName.ATTR_JOINTS);
+              check(joints && Array.from(joints).every(j => j < skin.joints.length), 'mesh has missing/out-of-range skin joints');
+            }
+            const skinned = node.addComponent(SkinnedMeshRenderer);
+            skinned.setUseBakedAnimation(false);
+            skinned.skinningRoot = root;
+            skinned.skeleton = skin;
+            renderer = skinned;
+          } else {
+            renderer = node.addComponent(MeshRenderer);
           }
-          const skinned = node.addComponent(SkinnedMeshRenderer);
-          skinned.setUseBakedAnimation(false);
-          skinned.skinningRoot = root;
-          skinned.skeleton = skin;
-          renderer = skinned;
-        } else {
-          renderer = node.addComponent(MeshRenderer);
+          renderer.mesh = mesh;
+          winding.renderers.push(renderer);
+          this.meshMaterials[source.mesh].forEach((material, slot) => renderer.setSharedMaterial(material, slot));
+          const weights = source.weights || json.meshes[source.mesh].weights;
+          if (weights) {
+            var _source$mesh$primitiv;
+            check(weights.length === (((_source$mesh$primitiv = json.meshes[source.mesh].primitives[0].targets) == null ? void 0 : _source$mesh$primitiv.length) || 0) && weights.every(Number.isFinite), 'invalid node morph weights');
+            for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
+              renderer.setWeights(weights.slice(), sub);
+            }
+          }
         }
-        renderer.mesh = mesh;
-        winding.renderers.push(renderer);
-        this.meshMaterials[source.mesh].forEach((material, slot) => renderer.setSharedMaterial(material, slot));
-        const weights = source.weights || json.meshes[source.mesh].weights;
-        if (weights) {
-          var _source$mesh$primitiv;
-          check(weights.length === (((_source$mesh$primitiv = json.meshes[source.mesh].primitives[0].targets) == null ? void 0 : _source$mesh$primitiv.length) || 0) && weights.every(Number.isFinite), 'invalid node morph weights');
-          for (let sub = 0; sub < mesh.struct.primitives.length; ++sub) {
-            renderer.setWeights(weights.slice(), sub);
-          }
+      }
+      for (const i of visible) {
+        for (const handler of this.context.handlers) {
+          var _mounts$get$, _mounts$get;
+          handler.instantiate == null ? void 0 : handler.instantiate(i, (_mounts$get$ = (_mounts$get = mounts.get(i)) == null ? void 0 : _mounts$get[0]) !== null && _mounts$get$ !== void 0 ? _mounts$get$ : nodes.get(i), instCtx);
         }
       }
       const animation = root.addComponent(Animation);
@@ -71062,6 +71110,212 @@ const dracoCompressionFactory = context => {
   };
 };
 
+const KHR_LIGHTS_PUNCTUAL = 'KHR_lights_punctual';
+const INFINITE_RANGE = 100000;
+function lightDefsOf(json) {
+  var _json$extensions, _json$extensions$KHR_;
+  return (_json$extensions = json.extensions) == null ? void 0 : (_json$extensions$KHR_ = _json$extensions[KHR_LIGHTS_PUNCTUAL]) == null ? void 0 : _json$extensions$KHR_.lights;
+}
+function invalid$1(message) {
+  return new GLTFError('GLTF_EXTENSION_INVALID', message, KHR_LIGHTS_PUNCTUAL);
+}
+function validateDef$1(def, index) {
+  var _def$innerConeAngle, _def$outerConeAngle;
+  const at = `KHR_lights_punctual light ${index}`;
+  if (def.type !== 'directional' && def.type !== 'point' && def.type !== 'spot') {
+    throw invalid$1(`${at}: invalid type`);
+  }
+  if (def.color !== undefined) {
+    if (!(def.color.length === 3 && def.color.every(v => Number.isFinite(v) && v >= 0 && v <= 1))) {
+      throw invalid$1(`${at}: color must be linear [0,1]^3`);
+    }
+  }
+  if (def.intensity !== undefined && !(Number.isFinite(def.intensity) && def.intensity >= 0)) {
+    throw invalid$1(`${at}: intensity must be finite and non-negative`);
+  }
+  if (def.range !== undefined && !(Number.isFinite(def.range) && def.range > 0)) {
+    throw invalid$1(`${at}: range must be positive when present`);
+  }
+  const inner = (_def$innerConeAngle = def.innerConeAngle) !== null && _def$innerConeAngle !== void 0 ? _def$innerConeAngle : 0;
+  const outer = (_def$outerConeAngle = def.outerConeAngle) !== null && _def$outerConeAngle !== void 0 ? _def$outerConeAngle : Math.PI / 4;
+  if (def.type === 'spot') {
+    if (!(Number.isFinite(inner) && inner >= 0 && Number.isFinite(outer) && outer > inner && outer < Math.PI / 2)) {
+      throw invalid$1(`${at}: cone angles require 0 <= inner < outer < PI/2`);
+    }
+  }
+}
+function punctualLightsFactory(context) {
+  return {
+    name: KHR_LIGHTS_PUNCTUAL,
+    support: () => ({
+      name: KHR_LIGHTS_PUNCTUAL,
+      status: 'supported'
+    }),
+    validate(ctx) {
+      const defs = lightDefsOf(ctx.json);
+      check(!defs || Array.isArray(defs), 'KHR_lights_punctual.lights must be an array');
+      (defs || []).forEach(validateDef$1);
+      for (const [nodeIndex, node] of (ctx.json.nodes || []).entries()) {
+        var _node$extensions;
+        const ext = (_node$extensions = node.extensions) == null ? void 0 : _node$extensions[KHR_LIGHTS_PUNCTUAL];
+        if ((ext == null ? void 0 : ext.light) === undefined) {
+          continue;
+        }
+        item(defs || [], ext.light, `node ${nodeIndex} light reference`);
+      }
+    },
+    instantiate(nodeIndex, node, ctx) {
+      var _nodeIndex$extensions, _def$color$, _def$color, _def$color$2, _def$color2, _def$color$3, _def$color3, _def$intensity;
+      const ext = (_nodeIndex$extensions = ctx.json.nodes[nodeIndex].extensions) == null ? void 0 : _nodeIndex$extensions[KHR_LIGHTS_PUNCTUAL];
+      if ((ext == null ? void 0 : ext.light) === undefined) {
+        return;
+      }
+      const def = item(lightDefsOf(ctx.json) || [], ext.light, 'light');
+      validateDef$1(def, ext.light);
+      const color = new Color(((_def$color$ = (_def$color = def.color) == null ? void 0 : _def$color[0]) !== null && _def$color$ !== void 0 ? _def$color$ : 1) * 255, ((_def$color$2 = (_def$color2 = def.color) == null ? void 0 : _def$color2[1]) !== null && _def$color$2 !== void 0 ? _def$color$2 : 1) * 255, ((_def$color$3 = (_def$color3 = def.color) == null ? void 0 : _def$color3[2]) !== null && _def$color$3 !== void 0 ? _def$color$3 : 1) * 255, 255);
+      const intensity = (_def$intensity = def.intensity) !== null && _def$intensity !== void 0 ? _def$intensity : 1;
+      if (def.type === 'directional') {
+        const light = node.addComponent(DirectionalLight);
+        light.illuminance = intensity;
+        light.color = color;
+        if (def.range !== undefined) {
+          context.warn(`node ${nodeIndex}: directional lights ignore range`);
+        }
+      } else if (def.type === 'point') {
+        var _def$range;
+        const light = node.addComponent(PointLight);
+        light.luminousFlux = 4 * Math.PI * intensity;
+        light.color = color;
+        light.range = (_def$range = def.range) !== null && _def$range !== void 0 ? _def$range : INFINITE_RANGE;
+      } else {
+        var _def$outerConeAngle2, _def$range2, _def$innerConeAngle2;
+        const outer = (_def$outerConeAngle2 = def.outerConeAngle) !== null && _def$outerConeAngle2 !== void 0 ? _def$outerConeAngle2 : Math.PI / 4;
+        const light = node.addComponent(SpotLight);
+        light.spotAngle = outer * 2 * 180 / Math.PI;
+        light.luminousFlux = 2 * Math.PI * (1 - Math.cos(outer)) * intensity;
+        light.color = color;
+        light.range = (_def$range2 = def.range) !== null && _def$range2 !== void 0 ? _def$range2 : INFINITE_RANGE;
+        if (((_def$innerConeAngle2 = def.innerConeAngle) !== null && _def$innerConeAngle2 !== void 0 ? _def$innerConeAngle2 : 0) > 0) {
+          context.warn(`node ${nodeIndex}: innerConeAngle has no engine plateau input, retained as metadata`);
+        }
+      }
+    }
+  };
+}
+
+const EXT_MESH_GPU_INSTANCING = 'EXT_mesh_gpu_instancing';
+const CHANNELS = {
+  TRANSLATION: {
+    components: 3,
+    type: 'VEC3'
+  },
+  ROTATION: {
+    components: 4,
+    type: 'VEC4'
+  },
+  SCALE: {
+    components: 3,
+    type: 'VEC3'
+  }
+};
+function invalid(message) {
+  return new GLTFError('GLTF_EXTENSION_INVALID', message, EXT_MESH_GPU_INSTANCING);
+}
+function defOf(json, nodeIndex) {
+  var _nodeIndex$extensions;
+  return (_nodeIndex$extensions = json.nodes[nodeIndex].extensions) == null ? void 0 : _nodeIndex$extensions[EXT_MESH_GPU_INSTANCING];
+}
+function validateDef(ctx, def) {
+  const entries = Object.entries(def.attributes || {});
+  if (!entries.length) {
+    throw invalid(`${EXT_MESH_GPU_INSTANCING}: attributes must be a non-empty map`);
+  }
+  let count = -1;
+  for (const [channel, accessorIndex] of entries) {
+    const expected = CHANNELS[channel];
+    if (!expected) {
+      throw invalid(`${EXT_MESH_GPU_INSTANCING}: unsupported channel ${channel}`);
+    }
+    const source = item(ctx.json.accessors, accessorIndex, `accessor for ${channel}`);
+    if (source.type !== expected.type || source.componentType !== 5126 || source.normalized) {
+      throw invalid(`${EXT_MESH_GPU_INSTANCING}: channel ${channel} must be a non-normalized float ${expected.type}`);
+    }
+    if (count === -1) {
+      count = source.count;
+    }
+    if (source.count !== count) {
+      throw invalid(`${EXT_MESH_GPU_INSTANCING}: channels must share the instance count`);
+    }
+  }
+  check(count > 0, `${EXT_MESH_GPU_INSTANCING}: zero instance count`);
+  return count;
+}
+function meshGPUInstancingFactory(context) {
+  const parsed = new Map();
+  const snapshots = new Map();
+  return {
+    name: EXT_MESH_GPU_INSTANCING,
+    support: () => ({
+      name: EXT_MESH_GPU_INSTANCING,
+      status: 'supported',
+      reason: 'correctness path: expansion to shared-asset child nodes'
+    }),
+    validate(ctx) {
+      for (const nodeIndex of (ctx.json.nodes || []).keys()) {
+        const def = defOf(ctx.json, nodeIndex);
+        if (!def) {
+          continue;
+        }
+        check(ctx.json.nodes[nodeIndex].skin === undefined, `${EXT_MESH_GPU_INSTANCING} nodes must not be skin nodes`);
+        parsed.set(nodeIndex, validateDef(ctx, def));
+      }
+    },
+    resolveData(ctx) {
+      for (const [nodeIndex, count] of parsed) {
+        const def = defOf(ctx.json, nodeIndex);
+        const snapshot = {
+          count
+        };
+        for (const [channel, accessorIndex] of Object.entries(def.attributes)) {
+          const data = ctx.accessor(accessorIndex);
+          check(data.components === CHANNELS[channel].components, `${EXT_MESH_GPU_INSTANCING}: ${channel} width`);
+          const values = Array.from(data.values);
+          if (channel === 'ROTATION') {
+            for (let instance = 0; instance < count; ++instance) {
+              const length = Math.hypot(values[instance * 4], values[instance * 4 + 1], values[instance * 4 + 2], values[instance * 4 + 3]);
+              if (!(Number.isFinite(length) && length > 1e-6)) {
+                throw invalid(`${EXT_MESH_GPU_INSTANCING}: zero/invalid instance quaternion`);
+              }
+            }
+          }
+          snapshot[channel.toLowerCase()] = values;
+        }
+        snapshots.set(nodeIndex, snapshot);
+      }
+    },
+    buildNode(nodeIndex, node, ctx) {
+      const snapshot = snapshots.get(nodeIndex);
+      if (!snapshot) {
+        return null;
+      }
+      const instances = [];
+      for (let instance = 0; instance < snapshot.count; ++instance) {
+        const child = new Node$1(`${node.name}__inst_${instance}`);
+        const p = snapshot.translation ? new Vec3(snapshot.translation[instance * 3], snapshot.translation[instance * 3 + 1], snapshot.translation[instance * 3 + 2]) : new Vec3();
+        const q = snapshot.rotation ? new Quat(snapshot.rotation[instance * 4], snapshot.rotation[instance * 4 + 1], snapshot.rotation[instance * 4 + 2], snapshot.rotation[instance * 4 + 3]) : new Quat();
+        if (snapshot.rotation) {
+          Quat.normalize(q, q);
+        }
+        const s = snapshot.scale ? new Vec3(snapshot.scale[instance * 3], snapshot.scale[instance * 3 + 1], snapshot.scale[instance * 3 + 2]) : new Vec3(1, 1, 1);
+        child.setRTS(q, p, s);
+        instances.push(child);
+      }
+      ctx.renderTargets.set(node, instances);
+      return [node, ...instances];
+    }
+  };
+}
+
 function gltfExtension(url) {
   var _exec;
   return (_exec = /\.(gltf|glb)$/i.exec(url.split(/[?#]/, 1)[0])) == null ? void 0 : _exec[0].toLowerCase();
@@ -71088,18 +71342,10 @@ const KNOWN_UNIMPLEMENTED = [{
   name: 'KHR_texture_basisu',
   status: 'unsupported',
   reason: 'planned in V0.5 texture phase'
-}, {
-  name: 'KHR_lights_punctual',
-  status: 'unsupported',
-  reason: 'planned in V0.5 scene phase'
-}, {
-  name: 'EXT_mesh_gpu_instancing',
-  status: 'unsupported',
-  reason: 'planned in V0.5 scene phase'
 }];
 class GLTFLoader {
   constructor(options) {
-    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory);
+    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(punctualLightsFactory).register(meshGPUInstancingFactory);
     this.options = void 0;
     this.options = {
       ...options
@@ -71211,6 +71457,9 @@ class GLTFLoader {
       report('container', 1, 1);
       await context.loadBuffers(bin);
       (json.accessors || []).forEach((_, i) => context.accessor(i));
+      for (const handler of handlers) {
+        handler.resolveData == null ? void 0 : handler.resolveData(context);
+      }
       report('decode', ((_json$accessors = json.accessors) == null ? void 0 : _json$accessors.length) || 0, ((_json$accessors2 = json.accessors) == null ? void 0 : _json$accessors2.length) || 0);
       context.throwIfAborted();
       const features = [];
@@ -91887,7 +92136,8 @@ class GlobalDSManager {
         descriptorSet.bindSampler(i, globalDescriptorSet.getSampler(i));
         descriptorSet.bindTexture(i, globalDescriptorSet.getTexture(i));
       }
-      const shadowUBO = device.createBuffer(new BufferInfo(BufferUsageBit.UNIFORM | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.HOST | MemoryUsageBit.DEVICE, UBOShadowEnum.SIZE, UBOShadowEnum.SIZE));
+      const AIR_SHADOW_UBO_SIZE = 2048;
+      const shadowUBO = device.createBuffer(new BufferInfo(BufferUsageBit.UNIFORM | BufferUsageBit.TRANSFER_DST, MemoryUsageBit.HOST | MemoryUsageBit.DEVICE, AIR_SHADOW_UBO_SIZE, AIR_SHADOW_UBO_SIZE));
       descriptorSet.bindBuffer(UBOShadow.BINDING, shadowUBO);
       descriptorSet.update();
     }
