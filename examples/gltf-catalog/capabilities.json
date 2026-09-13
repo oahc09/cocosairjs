@@ -1,9 +1,10 @@
 {
   "engine": "cocosair",
   "engineVersion": "0.1.0",
-  "generatedAt": "2026-09-13T14:54:31.112Z",
+  "generatedAt": "2026-09-13T20:11:11.920Z",
   "catalogRevision": "90d7ede14c7e280af263824604b427a1ca02cb66",
   "decoderManifest": "build/gltf-decoders/MANIFEST.md",
+  "performanceBaseline": "docs/gltf-performance-baseline.md",
   "errorCodes": [
     "GLTF_EXTENSION_UNSUPPORTED",
     "GLTF_DECODER_MISSING",
@@ -16,6 +17,7 @@
       "name": "KHR_materials_unlit",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-07/10",
@@ -28,6 +30,7 @@
       "name": "KHR_texture_transform",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-07",
@@ -40,6 +43,7 @@
       "name": "KHR_mesh_quantization",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "smoke",
         "smoke": "smoke-11",
@@ -52,6 +56,7 @@
       "name": "EXT_meshopt_compression",
       "status": "decoder-required",
       "reason": "configure a decoder with setMeshoptDecoder()",
+      "execution": "main-thread (no worker integration in this version)",
       "verified": {
         "level": "smoke",
         "smoke": "smoke-11",
@@ -64,6 +69,7 @@
       "name": "KHR_meshopt_compression",
       "status": "decoder-required",
       "reason": "configure a decoder with setMeshoptDecoder()",
+      "execution": "main-thread (no worker integration in this version)",
       "verified": {
         "level": "smoke",
         "smoke": "smoke-11",
@@ -76,6 +82,7 @@
       "name": "KHR_draco_mesh_compression",
       "status": "decoder-required",
       "reason": "configure a decoder with setDRACODecoder()",
+      "execution": "main-thread (no worker integration in this version)",
       "verified": {
         "level": "smoke",
         "smoke": "smoke-11",
@@ -88,6 +95,7 @@
       "name": "KHR_materials_emissive_strength",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-15",
@@ -104,6 +112,7 @@
       "name": "KHR_materials_ior",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-15",
@@ -120,6 +129,7 @@
       "name": "KHR_materials_specular",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-15",
@@ -136,6 +146,7 @@
       "name": "KHR_materials_clearcoat",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-16",
@@ -152,6 +163,7 @@
       "name": "KHR_materials_anisotropy",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-17",
@@ -168,6 +180,7 @@
       "name": "KHR_materials_iridescence",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-18",
@@ -184,6 +197,7 @@
       "name": "EXT_materials_bump",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-19",
@@ -196,6 +210,7 @@
       "name": "KHR_materials_transmission",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-20",
@@ -212,6 +227,7 @@
       "name": "KHR_materials_volume",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-20",
@@ -228,6 +244,7 @@
       "name": "KHR_materials_dispersion",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-20",
@@ -244,6 +261,7 @@
       "name": "KHR_texture_basisu",
       "status": "decoder-required",
       "reason": "configure setKTX2Transcoder / createKTX2Transcoder",
+      "execution": "main-thread (no worker integration in this version)",
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-14",
@@ -260,6 +278,7 @@
       "name": "EXT_texture_webp",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-13",
@@ -276,6 +295,7 @@
       "name": "EXT_texture_avif",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-13",
@@ -292,6 +312,7 @@
       "name": "KHR_lights_punctual",
       "status": "supported",
       "reason": null,
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-12",
@@ -308,6 +329,7 @@
       "name": "EXT_mesh_gpu_instancing",
       "status": "supported",
       "reason": "correctness path: expansion to shared-asset child nodes",
+      "execution": null,
       "verified": {
         "level": "browser-evidence",
         "smoke": "smoke-12",

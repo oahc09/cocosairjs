@@ -22,6 +22,9 @@ export interface BasisTranscoderModule {
     KTX2_KHR_DF_TRANSFER_SRGB?: number;
 }
 
+/** Per-side texture dimension ceiling for transcoder output (plan §10 allocation limits). */
+export const MAX_KTX2_DIMENSION = 16384;
+
 interface BasisLevelInfo { width: number; height: number; origWidth: number; origHeight: number; }
 
 interface BasisKTX2File {
@@ -108,6 +111,11 @@ export function createKTX2Transcoder (factory: BasisModuleFactory): GLTFKTX2Tran
                 if (!file.isValid()) { throw new GLTFError('GLTF_DECODE_FAILED', 'invalid or unsupported .ktx2 payload'); }
                 const width = file.getWidth(); const height = file.getHeight(); const levels = file.getLevels();
                 if (!width || !height || !levels) { throw new GLTFError('GLTF_DECODE_FAILED', 'ktx2: zero dimensions or levels'); }
+                // §10 allocation ceilings: reject absurd dimensions before transcoding so a
+                // hostile archive cannot request terabyte-sized output buffers.
+                if (width > MAX_KTX2_DIMENSION || height > MAX_KTX2_DIMENSION) {
+                    throw new GLTFError('GLTF_DECODE_FAILED', `ktx2: dimensions ${width}x${height} exceed the ${MAX_KTX2_DIMENSION} ceiling`);
+                }
                 if (file.getFaces() !== 1 || (file.getLayers() || 1) !== 1) {
                     throw new GLTFError('GLTF_DECODE_FAILED', 'ktx2: only single-face non-array images are supported');
                 }

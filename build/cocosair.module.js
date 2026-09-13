@@ -73247,6 +73247,7 @@ const TF = {
   RGBA32: 13
 };
 
+const MAX_KTX2_DIMENSION = 16384;
 const UASTC_RANKED = ['ASTC_4x4', 'BC7', 'ETC2_RGBA8'];
 const ETC1S_RANKED = ['ETC2_RGBA8', 'ASTC_4x4', 'BC7'];
 const FORMAT_BY_TARGET = {
@@ -73359,6 +73360,9 @@ function createKTX2Transcoder(factory) {
         const levels = file.getLevels();
         if (!width || !height || !levels) {
           throw new GLTFError('GLTF_DECODE_FAILED', 'ktx2: zero dimensions or levels');
+        }
+        if (width > MAX_KTX2_DIMENSION || height > MAX_KTX2_DIMENSION) {
+          throw new GLTFError('GLTF_DECODE_FAILED', `ktx2: dimensions ${width}x${height} exceed the ${MAX_KTX2_DIMENSION} ceiling`);
         }
         if (file.getFaces() !== 1 || (file.getLayers() || 1) !== 1) {
           throw new GLTFError('GLTF_DECODE_FAILED', 'ktx2: only single-face non-array images are supported');

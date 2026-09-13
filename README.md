@@ -85,6 +85,9 @@ cocosair.js/
 - [V0.2 审查与 V0.3 验收](docs/11-v03-verification.md) — 修复证据、验证矩阵与限制
 - [直接加载 glTF / GLB](docs/gltf-runtime.md) — 运行时模型加载、PBR、骨骼动画与 Morph；完整示例见 `examples/gltf-viewer/`
 - [V0.5 验收与 V0.5.1 移交](docs/acceptance-v0.5.md) — 扩展支持矩阵、Gate 证据链、已知限制与消费合同
+- [glTF 扩展参考](docs/gltf-extension-reference.md) — 逐扩展实现映射、通道语义、错误码与限制
+- [glTF decoder 部署](docs/gltf-decoder-deployment.md) — 注入 API、MIME/CORS/缓存/worker、离线验收
+- [glTF 验证记录](docs/gltf-validation.md) · [性能/包体/稳定性基线](docs/gltf-performance-baseline.md) · [官方模型目录](docs/gltf-catalog.md)
 - [官方模型目录与对照预览](docs/gltf-catalog.md) — 150 个官方模型、格式选择、AIR 预览与 Khronos Viewer 对照
 - `docs/06-code-first-getting-started.md` — 最小入门（createAirApp / GameCanvas 约束）
 - `docs/07-asset-loading.md` — Promise Asset Helper

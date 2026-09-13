@@ -108,3 +108,22 @@ npx --yes --package @playwright/cli playwright-cli -s=gltf run-code --filename=t
 证据：[WebGL2](../output/playwright/texture-transform-webgl2.json)、[WebGL1](../output/playwright/texture-transform-webgl1.json)、[旧模型回归](../output/playwright/texture-transform-regression.json)、[箭头测试截图](../output/playwright/TextureTransformTest-webgl2.png)、[多贴图测试截图](../output/playwright/TextureTransformMultiTest-webgl2.png)。
 
 复现脚本为 [texture-transform-browser.js](../tools/verify/texture-transform-browser.js)。两种 API 应分别使用新的 Playwright 会话，WebGL1 会话先打开带 `?webgl=1` 的查看器，再运行脚本；脚本会在导航前设置 WebGL1 context 限制。官方案例通过模型目录按固定版本 URL 在线加载，没有改写其文件。
+
+
+## V0.5 扩展验收记录（2026-09-14）
+
+> 上表为 2026-09-12（V0.2 期，7 套件/25 测试）历史结果，保留测量日期；以下为 V0.5 终态增量。
+
+| 检查 | 结果与依据 |
+|---|---|
+| 全量测试 | 20 套件 / 119 测试通过（`npm run test`） |
+| typecheck / verify:web-only / esm / min / dts / NodeNext 消费 | 全绿 |
+| G3 permutation | kitchen-sink 七扩展全绑定 + 九材质矩阵，真机零 GL 错误（`gltf-permutation-browser`） |
+| 扩展浏览器证据链 | 12 脚本 ok:true（physical/clearcoat/anisotropy/iridescence/bump/transmission/scene/webp/ktx2/performance/stability/official-materials），`tools/verify/gltf-*.js` |
+| 官方样本 | 10 个 Khronos 样本（pin `90d7ede` + SHA-256 manifest + LICENSE 随录）真机加载渲染零错误；`docs/evidence/v05-*.raw.json` |
+| G5-build 包审计 | `npm run verify:decoders` ok（清单双向核对、许可、零内嵌、pack 离线 require） |
+| 性能/稳定性 | BoxTextured 30 次中位 2.2ms；未压缩加载 WASM/Worker=0；12 轮加载/销毁零泄漏趋势（`docs/gltf-performance-baseline.md`） |
+| 支持矩阵 | `examples/gltf-catalog/capabilities.json`：21 扩展、运行时 registry 生成、9 项 verified-official-load |
+
+已知限制口径与 V0.2 节一致：不宣称所有设备无条件支持；decoder-required/device-dependent/fallback
+以 capabilities 与 [扩展参考](gltf-extension-reference.md)、[decoder 部署](gltf-decoder-deployment.md) 为准。

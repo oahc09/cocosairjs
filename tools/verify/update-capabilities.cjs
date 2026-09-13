@@ -99,10 +99,14 @@ const matrix = liveMatrix().map((entry) => {
     const v = VERIFIED[entry.name];
     const model = OFFICIAL_MODELS[entry.name];
     const inCatalog = model ? catalog.models.some((m) => m.name === model) : false;
+    // §10: this build has no worker integration; injected decoders execute on the main thread.
+    const threaded = /^(KHR_draco|EXT_meshopt|KHR_meshopt|KHR_texture_basisu)/.test(entry.name)
+        ? 'main-thread (no worker integration in this version)' : null;
     return {
         name: entry.name,
         status: entry.status,
         reason: entry.reason ?? null,
+        execution: threaded,
         verified: v ? { level: v.level, smoke: v.smoke ?? null, evidence: v.evidence ?? null, decoder: v.decoder ?? null } : { level: 'cataloged' },
         officialComparison: model ? { model, available: inCatalog,
             comparison: ACCEPTED[entry.name] ? 'verified-official-load' : 'pending-T8' }
@@ -116,6 +120,7 @@ const capabilities = {
     generatedAt: new Date().toISOString(),
     catalogRevision: catalog.revision,
     decoderManifest: 'build/gltf-decoders/MANIFEST.md',
+    performanceBaseline: 'docs/gltf-performance-baseline.md',
     errorCodes: [
         'GLTF_EXTENSION_UNSUPPORTED', 'GLTF_DECODER_MISSING', 'GLTF_DEVICE_UNSUPPORTED',
         'GLTF_EXTENSION_INVALID', 'GLTF_DECODE_FAILED',
