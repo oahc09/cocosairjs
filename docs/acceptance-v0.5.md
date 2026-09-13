@@ -78,4 +78,4 @@ node tools/verify/gltf-stability-browser.js           # §10：12 轮加载/销�
 | 上游基线 | cocos-creator/engine cocos4 @ 4.0.0-alpha.33（snapshot 2026-09-12，见 docs/00、docs/12） |
 | 官方样本 revision | glTF-Sample-Assets `90d7ede14c7e280af263824604b427a1ca02cb66`（与 catalog/manifest 同源）；Asset-Generator `3d99767e9a67fbfe109f0d298c1e8d909bcac9db`（AlphaBlend） |
 | decoder 清单 | build/gltf-decoders/MANIFEST.md（meshoptimizer 1.2.0 / draco3d 1.5.7 / three r168 basis，逐文件 SHA-256） |
-| G5 收尾 commit | `V05_G5_CLOSURE_COMMIT`（由收尾流程回填真实 hash；该 commit 即 V0.5.1 T0 交接 revision） |
+| G5 收尾 commit | `badf241`（G5 收尾提交；本文档回填记录提交后，V0.5 最终 revision 以 main HEAD 为准——V0.5.1 T0 交接 revision） |

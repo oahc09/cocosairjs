@@ -29,7 +29,7 @@ function ktx2Bytes (width: number, height: number): Uint8Array {
 }
 
 /** A Basis module mock that transcodes any KTX2 to a single-level RGBA8 buffer. */
-function fakeBasisModule (options?: { srgb?: boolean; uastc?: boolean; failFirstFormat?: number }) {
+function fakeBasisModule (options?: { srgb?: boolean; uastc?: boolean; failFirstFormat?: number; width?: number; height?: number }) {
     const requests: number[] = [];
     const module = {
         initializeBasis () { /* no-op */ },
@@ -39,8 +39,8 @@ function fakeBasisModule (options?: { srgb?: boolean; uastc?: boolean; failFirst
             constructor (data: Uint8Array) { this.data = data; }
             isValid () { return isKTX2(this.data); }
             isUASTC () { return !!options?.uastc; }
-            getWidth () { return 2; }
-            getHeight () { return 2; }
+            getWidth () { return options?.width ?? 2; }
+            getHeight () { return options?.height ?? 2; }
             getLayers () { return 1; }
             getLevels () { return 1; }
             getFaces () { return 1; }
@@ -111,6 +111,13 @@ describe('KHR_texture_basisu transcoder', () => {
         const { module } = fakeBasisModule();
         const transcoder = createKTX2Transcoder(() => module as never);
         await expect(transcoder.transcode(new Uint8Array(64).buffer)).rejects.toMatchObject({ code: 'GLTF_DECODE_FAILED' });
+    });
+
+    test('absurd dimensions fail the allocation ceiling before any transcode', async () => {
+        const { module } = fakeBasisModule({ width: 17000 });
+        const transcoder = createKTX2Transcoder(() => module);
+        await expect(transcoder.transcode(ktx2Bytes(2, 2) as unknown as Uint8Array))
+            .rejects.toMatchObject({ code: 'GLTF_DECODE_FAILED' });
     });
 
     test('adapter surfaces missing module surface as GLTF_DECODER_MISSING', async () => {
