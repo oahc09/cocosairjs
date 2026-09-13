@@ -257,3 +257,16 @@
   dts/NodeNext 全绿；五浏览器证据（physical/clearcoat/anisotropy/iridescence/bump）ok:true
   —— T5 七扩展的 shader permutation 在真实 WebGL2 驱动全部编译链接零 GL 错误。
 - T5.2 收口：clearcoat/anisotropy/iridescence/bump 全部交付；G3 的官方材质对照归 T8。
+
+
+## V0.5 T5 门控收口 — G3 permutation 扫描（2026-09-13）
+- physical.glb 新增 kitchen-sink 材质：**7 个物理扩展同开 + 全部 10 个扩展纹理槽同时绑定**
+  （emissive_strength/ior/specular×2 纹理/clearcoat×3 纹理/anisotropy 纹理/iridescence×3
+  纹理/bump），为宏、采样器（binding 15-24）与 UBO superset 的最坏组合。
+- 证据 gltf-permutation-browser.js：9 材质 effect 选择矩阵（5 physical + 2 standard +
+  kitchen-sink physical + …）逐一断言 + 真实 WebGL2 编译链接零 GL 错误 + 零 shader console
+  错误 + 场景渲染正常；七证据全回归（physical/clearcoat/anisotropy/iridescence/bump/
+  permutation/scene）ok:true。
+- T5 退出条件判定：**shader permutation 全绿达成**；“现有 standard/unlit 模型无回归”达成
+  （全量 jest + diagnostics/webp/ktx2/scene 证据）；**官方材质测试格子的像素对照归 T8
+  矩阵**（需下载 Khronos glTF-Sample-Models 材质套件对照）。
