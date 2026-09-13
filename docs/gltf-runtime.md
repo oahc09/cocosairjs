@@ -83,13 +83,15 @@ asset.decRef(); // 业务不再持有
 | 蒙皮 | 多 skin、共享 skin、非关节祖先、任意 joint 顺序、有/无 inverseBindMatrices、JOINTS_0/WEIGHTS_0 四权重、原生实时蒙皮 |
 | 动画 | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化 |
 | Morph | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重 |
-| 扩展 | KHR_materials_unlit、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing |
+| 扩展 | KHR_materials_unlit、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif |
 
 `KHR_texture_transform` 支持每个 textureInfo 独立的 `offset`、`rotation`（弧度）、`scale` 和 `texCoord` 覆盖，作用于 baseColor、metallicRoughness、normal、occlusion、emissive。变换围绕 UV 原点应用，支持负缩放；UV 通道仍限于 UV0/UV1。共享纹理可以在不同材质槽使用不同变换，网格 UV 不会被改写。缺少切线时，法线贴图使用有效 UV 通道及其变换生成切线。
 
-Draco、Meshopt 需要注入 decoder（未配置时可选扩展回退核心数据、必需扩展报 `GLTF_DECODER_MISSING`）；KTX2/BasisU、额外权重集、UV2 及以上、高级材质扩展不在当前范围。未支持的必需扩展报错；可选扩展仅使用有效核心回退并告警，不把缺失数据冒充加载成功。
+Draco、Meshopt 需要注入 decoder（未配置时可选扩展回退核心数据、必需扩展报 `GLTF_DECODER_MISSING`）；KTX2/BasisU（KHR_texture_basisu）、额外权重集、UV2 及以上、高级材质扩展不在当前范围。未支持的必需扩展报错；可选扩展仅使用有效核心回退并告警，不把缺失数据冒充加载成功。
 
 `KHR_lights_punctual` 实例化原生灯光组件，光度映射：directional `intensity` → `illuminance`（lux），directional 光沿节点局部 -Z 传播（与 glTF 一致）；point/spot `intensity`（cd）→ 引擎 luminousFlux（lm，point = 4π·I，spot = 2π(1−cos outerConeAngle)·I 均匀锥近似），`range` 原样、缺省用大有限值近似无限范围；`color` 线性值按 0–255 通道承载。引擎无 inner 锥平台输入，`innerConeAngle` 保留为 metadata 并告警。`EXT_mesh_gpu_instancing` 当前为正确性路径：校验 TRANSLATION/ROTATION/SCALE 的 VEC3/VEC4 float、count 一致与四元数有效后，展开为共享同一 Mesh/Material 的子节点；负缩放实例的卷绕由 GLTFWinding 自动修正，原生 instanced-draw 快路径为后续显式步骤。相机仍只保留描述并告警，不自动创建组件。
+
+`EXT_texture_webp` / `EXT_texture_avif` 使用浏览器原生解码：能力探测（1x1 data URI，单页缓存）通过时优先取扩展 image，失败或无扩展时回退核心 `source`；探测未就绪时 `getExtensionSupport()` 乐观报告 `supported`，解析期做权威判定（可选扩展回退并告警；列入 `extensionsRequired` 时抛 `GLTF_DEVICE_UNSUPPORTED`）。扩展 image 的魔数与 `mimeType` 声明按规范强校验（不匹配为 `GLTF_EXTENSION_INVALID`）。
 
 矩阵包含 shear 或无法可靠分解时失败。关节数量受原生 uniform/纹理 palette 容量约束；32 位索引需要设备支持。WebGL1 的 NPOT 纹理按设备限制降级为 clamp/no-mipmap 并告警。PBR 的最终亮度由场景光照、环境和色调映射决定；完全金属材质需要合适的照明。
 

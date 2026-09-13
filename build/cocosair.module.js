@@ -70125,7 +70125,7 @@ function meshQuantizationFactory(context) {
   };
 }
 
-const FORMATS = [Format.UNKNOWN, Format.R32F, Format.RG32F, Format.RGB32F, Format.RGBA32F];
+const FORMATS$1 = [Format.UNKNOWN, Format.R32F, Format.RG32F, Format.RGB32F, Format.RGBA32F];
 class BinaryBuilder {
   constructor() {
     this.chunks = [];
@@ -70362,7 +70362,7 @@ function createGLTFMesh(context, meshIndex) {
     const vertexIndex = struct.vertexBundles.length;
     struct.vertexBundles.push({
       view: binary.append(vertices, count, stride * 4),
-      attributes: channels.map(c => new Attribute(ATTRIBUTES[c.name][0], FORMATS[c.width]))
+      attributes: channels.map(c => new Attribute(ATTRIBUTES[c.name][0], FORMATS$1[c.width]))
     });
     const useUint32 = indices.some(i => i >= 65535);
     check(!useUint32 || deviceManager.gfxDevice.hasFeature(Feature.ELEMENT_INDEX_UINT), 'device does not support 32-bit indices');
@@ -70480,6 +70480,120 @@ function tangents(channels, indices, coordinates) {
   return out;
 }
 
+const SUPPORTED_IMAGE_MIMES = ['image/png', 'image/jpeg', 'image/webp', 'image/avif'];
+function detectImageMime(bytes) {
+  if (bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71) {
+    return 'image/png';
+  }
+  if (bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255) {
+    return 'image/jpeg';
+  }
+  if (bytes.length >= 12 && bytes[0] === 82 && bytes[1] === 73 && bytes[2] === 70 && bytes[3] === 70 && bytes[8] === 87 && bytes[9] === 69 && bytes[10] === 66 && bytes[11] === 80) {
+    return 'image/webp';
+  }
+  if (bytes.length >= 12 && bytes[4] === 102 && bytes[5] === 116 && bytes[6] === 121 && bytes[7] === 112 && bytes[8] === 97 && bytes[9] === 118 && bytes[10] === 105 && (bytes[11] === 102 || bytes[11] === 115)) {
+    return 'image/avif';
+  }
+  return null;
+}
+const FORMATS = {
+  EXT_texture_webp: {
+    mime: 'image/webp',
+    decoder: 'webp'
+  },
+  EXT_texture_avif: {
+    mime: 'image/avif',
+    decoder: 'avif'
+  }
+};
+const supportPromises = new Map();
+const probeResults = new Map();
+function probeSupport(mime) {
+  let promise = supportPromises.get(mime);
+  if (!promise) {
+    const data = mime === 'image/webp' ? 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==' : 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRzYwAAAAAAAAAAAAAAAAAAAAAAAAA=';
+    promise = new Promise(resolve => {
+      const image = new Image();
+      image.onload = () => resolve(image.width === 1 && image.height === 1);
+      image.onerror = () => resolve(false);
+      image.src = data;
+    });
+    supportPromises.set(mime, promise);
+    void promise.then(value => probeResults.set(mime, value));
+  }
+  return promise;
+}
+function setTextureSupportForTesting(mime, supported) {
+  if (supported === null) {
+    supportPromises.delete(mime);
+    probeResults.delete(mime);
+    return;
+  }
+  supportPromises.set(mime, Promise.resolve(supported));
+  probeResults.set(mime, supported);
+}
+function imageExtensionFactory(name) {
+  return () => ({
+    name,
+    support() {
+      const format = FORMATS[name];
+      void probeSupport(format.mime);
+      if (probeResults.get(format.mime) === false) {
+        return {
+          name,
+          status: 'device-dependent',
+          reason: `${format.decoder} decoding is unavailable in this browser`
+        };
+      }
+      return {
+        name,
+        status: 'supported'
+      };
+    },
+    validate(ctx) {
+      for (const [index, texture] of (ctx.json.textures || []).entries()) {
+        var _texture$extensions;
+        const ext = (_texture$extensions = texture.extensions) == null ? void 0 : _texture$extensions[name];
+        if (ext) {
+          item(ctx.json.images, ext.source, `image for texture ${index} (${name})`);
+        }
+      }
+    },
+    async resolveTextureSource(textureIndex, ctx) {
+      var _texture$extensions2;
+      const texture = ctx.json.textures[textureIndex];
+      const ext = (_texture$extensions2 = texture.extensions) == null ? void 0 : _texture$extensions2[name];
+      if (!ext) {
+        return null;
+      }
+      const format = FORMATS[name];
+      if (!(await probeSupport(format.mime))) {
+        var _ctx$json$extensionsR;
+        if ((_ctx$json$extensionsR = ctx.json.extensionsRequired) != null && _ctx$json$extensionsR.includes(name)) {
+          throw new GLTFError('GLTF_DEVICE_UNSUPPORTED', `${name} required but ${format.decoder} decoding is unavailable in this browser`, name);
+        }
+        ctx.warn(`texture ${textureIndex}: ${name} ${format.decoder} unavailable, using core image fallback`);
+        return null;
+      }
+      const image = item(ctx.json.images, ext.source, 'extension image source');
+      const bytes = image.uri !== undefined ? new Uint8Array(await ctx.request(image.uri)) : image.bufferView !== undefined ? ctx.bufferView(image.bufferView) : null;
+      if (!bytes) {
+        return null;
+      }
+      if (detectImageMime(bytes) !== format.mime) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `texture ${textureIndex}: ${name} image is not valid ${format.decoder}`, name);
+      }
+      if (image.mimeType && image.mimeType !== format.mime) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `texture ${textureIndex}: ${name} declared ${image.mimeType}, expected ${format.mime}`, name);
+      }
+      return {
+        data: bytes,
+        mimeType: format.mime
+      };
+    }
+  });
+}
+
 const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive']];
 const UV_UNIFORMS = UV_SLOTS.map(([,, prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([,, prefix]) => `${prefix}UV1`));
 function gltfEffect() {
@@ -70591,12 +70705,15 @@ async function loadGLTFTextures(context, textures, images) {
       type: mime
     }));
     try {
-      const element = await new Promise((resolve, reject) => {
+      const element = await new Promise(resolve => {
         const img = new Image();
         img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error(`[glTF] image ${key}: decode failed`));
+        img.onerror = () => resolve(null);
         img.src = url;
       });
+      if (!element) {
+        return null;
+      }
       const image = new ImageAsset(element);
       images.push(image);
       imageCache.set(key, image);
@@ -70605,6 +70722,7 @@ async function loadGLTFTextures(context, textures, images) {
       URL.revokeObjectURL(url);
     }
   };
+  const brokenMimes = new Set();
   for (const [index, source] of (context.json.textures || []).entries()) {
     var _sampler$minFilter, _sampler$magFilter, _sampler$wrapS, _sampler$wrapT;
     let image;
@@ -70616,23 +70734,69 @@ async function loadGLTFTextures(context, textures, images) {
         break;
       }
     }
+    const candidates = [];
     if (decoded) {
-      check(decoded.mimeType === 'image/png' || decoded.mimeType === 'image/jpeg', `texture ${index}: decoded source must be PNG/JPEG`);
-      image = await decodeImage(-1 - index, decoded.data, decoded.mimeType);
-    } else {
-      check(source.source !== undefined, `texture ${index}: no core image fallback`);
-      const imageSource = item(context.json.images, source.source, 'image');
-      image = imageCache.get(source.source);
-      if (!image) {
-        check(imageSource.uri !== undefined !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
-        const bytes = imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView);
-        const png = bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71;
-        const jpeg = bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
-        check(png || jpeg, 'only PNG and JPEG images are supported');
-        const mime = png ? 'image/png' : 'image/jpeg';
-        check(!imageSource.mimeType || imageSource.mimeType === mime, 'image MIME mismatch');
-        image = await decodeImage(source.source, bytes, mime);
+      const mime = decoded.mimeType;
+      if (SUPPORTED_IMAGE_MIMES.includes(mime)) {
+        candidates.push({
+          label: 'extension',
+          cacheKey: -1 - index,
+          mime,
+          bytes: async () => decoded.data
+        });
+      } else {
+        throw new Error(`[glTF] texture ${index}: unsupported decoded source '${mime}'`);
       }
+    }
+    if (source.source !== undefined) {
+      const imageSource = item(context.json.images, source.source, 'image');
+      candidates.push({
+        label: 'core',
+        cacheKey: source.source,
+        mime: '',
+        declaredMime: imageSource.mimeType,
+        bytes: async () => {
+          if (imageCache.has(source.source)) {
+            return null;
+          }
+          check(imageSource.uri !== undefined !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
+          return imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView);
+        }
+      });
+    }
+    if (!candidates.length) {
+      throw new Error(`[glTF] texture ${index}: no image source`);
+    }
+    for (const candidate of candidates) {
+      if (imageCache.has(candidate.cacheKey)) {
+        image = imageCache.get(candidate.cacheKey);
+        break;
+      }
+      let bytes = await candidate.bytes();
+      if (!bytes) {
+        continue;
+      }
+      let mime = candidate.mime;
+      if (!mime) {
+        mime = detectImageMime(bytes) || '';
+        check(!!mime, `texture ${index}: unsupported core image encoding (only PNG/JPEG/WebP/AVIF)`);
+        check(!candidate.declaredMime || candidate.declaredMime === mime, 'image MIME mismatch');
+      } else {
+        check(detectImageMime(bytes) === mime, `texture ${index}: ${mime} magic mismatch`);
+      }
+      if (brokenMimes.has(mime)) {
+        context.warn(`texture ${index}: ${candidate.label} ${mime} previously failed to decode, skipping`);
+        continue;
+      }
+      image = (await decodeImage(candidate.cacheKey, bytes, mime)) || undefined;
+      if (image) {
+        break;
+      }
+      brokenMimes.add(mime);
+      context.warn(`texture ${index}: ${candidate.label} ${mime} failed to decode${candidate === candidates[candidates.length - 1] ? '' : ', trying fallback source'}`);
+    }
+    if (!image) {
+      throw new Error(`[glTF] texture ${index}: all image sources failed to decode`);
     }
     const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
     const texture = new Texture2D();
@@ -71331,21 +71495,13 @@ function configureGLTFLoaderDefaults(options) {
   };
 }
 const KNOWN_UNIMPLEMENTED = [{
-  name: 'EXT_texture_webp',
-  status: 'unsupported',
-  reason: 'planned in V0.5 texture phase'
-}, {
-  name: 'EXT_texture_avif',
-  status: 'unsupported',
-  reason: 'planned in V0.5 texture phase'
-}, {
   name: 'KHR_texture_basisu',
   status: 'unsupported',
-  reason: 'planned in V0.5 texture phase'
+  reason: 'planned in V0.5 texture phase (KTX2 transcoder)'
 }];
 class GLTFLoader {
   constructor(options) {
-    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(punctualLightsFactory).register(meshGPUInstancingFactory);
+    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
     this.options = void 0;
     this.options = {
       ...options
@@ -96306,5 +96462,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { Acceleration, AirAppImpl, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createMeshoptDecoder, debug, debugID, deprecateModuleExportedName, deserialize, deserializeTag, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
+export { Acceleration, AirAppImpl, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, SUPPORTED_IMAGE_MIMES, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createMeshoptDecoder, debug, debugID, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
 //# sourceMappingURL=cocosair.module.js.map

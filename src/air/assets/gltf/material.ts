@@ -10,6 +10,7 @@ import { check, item } from './schema';
 import { GLTFMaterialFeatures, TEXTURE_SLOTS, TextureSlotName } from './material/features';
 import { coreTextureCoordinates } from './material/texture-slots';
 import type { DecodedTextureSource } from './decoder/types';
+import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/image-formats';
 
 const UV_SLOTS = [
     ['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'],
@@ -109,47 +110,72 @@ export function gltfEffect (): EffectAsset {
 
 export async function loadGLTFTextures (context: GLTFParserContext, textures: Texture2D[], images: ImageAsset[]): Promise<void> {
     const imageCache = new Map<number, ImageAsset>();
-    const decodeImage = async (key: number, bytes: Uint8Array, mime: string): Promise<ImageAsset> => {
+    const decodeImage = async (key: number, bytes: Uint8Array, mime: string): Promise<ImageAsset | null> => {
         const cached = imageCache.get(key);
         if (cached) { return cached; }
         const url = URL.createObjectURL(new Blob([bytes], { type: mime }));
         try {
-            const element = await new Promise<HTMLImageElement>((resolve, reject) => {
+            const element = await new Promise<HTMLImageElement | null>((resolve) => {
                 const img = new Image();
-                img.onload = () => resolve(img);
-                img.onerror = () => reject(new Error(`[glTF] image ${key}: decode failed`));
+                img.onload = (): void => resolve(img);
+                img.onerror = (): void => resolve(null);
                 img.src = url;
             });
+            if (!element) { return null; }
             const image = new ImageAsset(element); images.push(image); imageCache.set(key, image);
             return image;
         } finally { URL.revokeObjectURL(url); }
     };
+    // Mimes whose native decoding failed this parse; later textures fall back immediately.
+    const brokenMimes = new Set<string>();
     for (const [index, source] of (context.json.textures || []).entries()) {
         let image: ImageAsset | undefined;
-        // Extension handlers decode first (KTX2/WebP/AVIF later phases); null falls back to the core image.
+        // Candidate order: extension sources (handler-provided, e.g. WebP/AVIF) before core.
         let decoded: DecodedTextureSource | undefined;
         for (const handler of context.handlers) {
             decoded = await handler.resolveTextureSource?.(index, context) ?? undefined;
             if (decoded) { break; }
         }
+        const candidates: Array<{ label: string; cacheKey: number; mime: string; declaredMime?: string; bytes: () => Promise<Uint8Array | null> }> = [];
         if (decoded) {
-            check(decoded.mimeType === 'image/png' || decoded.mimeType === 'image/jpeg', `texture ${index}: decoded source must be PNG/JPEG`);
-            image = await decodeImage(-1 - index, decoded.data, decoded.mimeType);
-        } else {
-            check(source.source !== undefined, `texture ${index}: no core image fallback`);
-            const imageSource = item(context.json.images, source.source, 'image');
-            image = imageCache.get(source.source);
-            if (!image) {
-                check((imageSource.uri !== undefined) !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
-                const bytes = imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView!);
-                const png = bytes.length >= 8 && bytes[0] === 137 && bytes[1] === 80 && bytes[2] === 78 && bytes[3] === 71;
-                const jpeg = bytes.length >= 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
-                check(png || jpeg, 'only PNG and JPEG images are supported');
-                const mime = png ? 'image/png' : 'image/jpeg';
-                check(!imageSource.mimeType || imageSource.mimeType === mime, 'image MIME mismatch');
-                image = await decodeImage(source.source, bytes, mime);
+            const mime = decoded.mimeType;
+            if (SUPPORTED_IMAGE_MIMES.includes(mime)) {
+                candidates.push({ label: 'extension', cacheKey: -1 - index, mime, bytes: async () => decoded!.data });
+            } else {
+                throw new Error(`[glTF] texture ${index}: unsupported decoded source '${mime}'`);
             }
         }
+        if (source.source !== undefined) {
+            const imageSource = item(context.json.images, source.source, 'image');
+            candidates.push({ label: 'core', cacheKey: source.source, mime: '', declaredMime: imageSource.mimeType, bytes: async () => {
+                if (imageCache.has(source.source!)) { return null; }
+                check((imageSource.uri !== undefined) !== (imageSource.bufferView !== undefined), 'image requires exactly one URI/bufferView');
+                return imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView!);
+            } });
+        }
+        if (!candidates.length) { throw new Error(`[glTF] texture ${index}: no image source`); }
+        for (const candidate of candidates) {
+            if (imageCache.has(candidate.cacheKey)) { image = imageCache.get(candidate.cacheKey); break; }
+            let bytes: Uint8Array | null = await candidate.bytes();
+            if (!bytes) { continue; } // core source already cached
+            let mime = candidate.mime;
+            if (!mime) {
+                mime = detectImageMime(bytes) || '';
+                check(!!mime, `texture ${index}: unsupported core image encoding (only PNG/JPEG/WebP/AVIF)`);
+                check(!candidate.declaredMime || candidate.declaredMime === mime, 'image MIME mismatch');
+            } else {
+                check(detectImageMime(bytes) === mime, `texture ${index}: ${mime} magic mismatch`);
+            }
+            if (brokenMimes.has(mime)) {
+                context.warn(`texture ${index}: ${candidate.label} ${mime} previously failed to decode, skipping`);
+                continue;
+            }
+            image = await decodeImage(candidate.cacheKey, bytes, mime) || undefined;
+            if (image) { break; }
+            brokenMimes.add(mime);
+            context.warn(`texture ${index}: ${candidate.label} ${mime} failed to decode${candidate === candidates[candidates.length - 1] ? '' : ', trying fallback source'}`);
+        }
+        if (!image) { throw new Error(`[glTF] texture ${index}: all image sources failed to decode`); }
         const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
         const texture = new Texture2D(); textures.push(texture); texture.name = source.name || `texture_${index}`;
         const min = sampler.minFilter ?? 9987; const mag = sampler.magFilter ?? 9729;

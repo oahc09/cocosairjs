@@ -6,6 +6,7 @@ export type { GLTFExtensionHandler, GLTFExtensionFactory, GLTFInstantiationConte
 export { GLTFExtensionRegistry } from './extension-registry';
 export type { GLTFExtensionStatus, GLTFExtensionSupport } from './support';
 export { GLTFError } from './diagnostics';
+export { detectImageMime, setTextureSupportForTesting, SUPPORTED_IMAGE_MIMES } from './extensions/texture/image-formats';
 export type { GLTFErrorCode, GLTFExtensionReportEntry } from './diagnostics';
 export type { GLTFDracoDecoder, GLTFMeshoptDecoder, GLTFKTX2Transcoder, DecodedPrimitive, DecodedTextureSource, DracoAttributeInfo } from './decoder/types';
 export { createMeshoptDecoder, isMeshoptAvailable } from './decoder/meshopt';

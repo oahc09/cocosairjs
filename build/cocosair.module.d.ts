@@ -33012,6 +33012,11 @@ export namespace utils {
         readonly extension?: string;
         constructor(code: GLTFErrorCode, message: string, extension?: string);
     }
+    /** Magic-number detection for raster image payloads; null when the encoding is unknown. */
+    export function detectImageMime(bytes: Uint8Array): string | null;
+    /** Test seam: preset the probe result for a mime (null clears the cached probe). */
+    export function setTextureSupportForTesting(mime: string, supported: boolean | null): void;
+    export const SUPPORTED_IMAGE_MIMES: readonly string[];
     /** Stable glTF error codes shared by the loader, registry and extension handlers. */
     export type GLTFErrorCode = "GLTF_EXTENSION_UNSUPPORTED" | "GLTF_DECODER_MISSING" | "GLTF_DEVICE_UNSUPPORTED" | "GLTF_EXTENSION_INVALID" | "GLTF_DECODE_FAILED";
     export interface GLTFExtensionReportEntry {

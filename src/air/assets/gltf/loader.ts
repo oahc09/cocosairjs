@@ -17,6 +17,7 @@ import { textureTransformFactory } from './extensions/texture/transform';
 import { meshQuantizationFactory } from './extensions/geometry/quantization';
 import { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION, EXT_MESHOPT_COMPRESSION } from './extensions/geometry/meshopt';
 import { dracoCompressionFactory } from './extensions/geometry/draco';
+import { imageExtensionFactory } from './extensions/texture/image-formats';
 import { punctualLightsFactory } from './extensions/scene/lights';
 import { meshGPUInstancingFactory } from './extensions/scene/instancing';
 import { check, item } from './schema';
@@ -36,9 +37,7 @@ export function configureGLTFLoaderDefaults (options: GLTFLoaderOptions): void {
 
 /** Extensions known to the version matrix but not yet implemented by a registered handler. */
 const KNOWN_UNIMPLEMENTED: readonly GLTFExtensionSupport[] = [
-    { name: 'EXT_texture_webp', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
-    { name: 'EXT_texture_avif', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
-    { name: 'KHR_texture_basisu', status: 'unsupported', reason: 'planned in V0.5 texture phase' },
+    { name: 'KHR_texture_basisu', status: 'unsupported', reason: 'planned in V0.5 texture phase (KTX2 transcoder)' },
 ];
 
 export class GLTFLoader {
@@ -49,6 +48,8 @@ export class GLTFLoader {
         .register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION))
         .register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION))
         .register(dracoCompressionFactory)
+        .register(imageExtensionFactory('EXT_texture_webp'))
+        .register(imageExtensionFactory('EXT_texture_avif'))
         .register(punctualLightsFactory)
         .register(meshGPUInstancingFactory);
     private options: GLTFLoaderOptions;

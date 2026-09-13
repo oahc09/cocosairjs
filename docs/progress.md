@@ -133,3 +133,20 @@
   changedPixels>5%、光度断言全过）；gltf-ubo-diag.js / gltf-render-diag.js 保留为诊断工具。
 - 测试：smoke-12-gltf-scene 7 tests；全量 jest 12 suites / 66 tests PASS；typecheck 0；
   verify:web-only PASSED；build/min/dts 重跑通过。
+
+
+## V0.5 T3（上）— WebP/AVIF 纹理扩展（2026-09-13）
+- 新增 `extensions/texture/image-formats.ts`：EXT_texture_webp/avif handler +
+  `detectImageMime`（PNG/JPEG/WebP/AVIF 魔数）+ 浏览器解码能力探测（1x1 data URI、
+  单页缓存、`setTextureSupportForTesting` 测试缝）。
+- 解码编排重写（loadGLTFTextures）：extension 源优先、core source 回退；解码失败
+  per-mime 熔断缓存（同格式后续直接回退）；required + 设备不支持 → GLTF_DEVICE_UNSUPPORTED；
+  魔数/声明 mimeType 不符 → GLTF_EXTENSION_INVALID。
+- loader 注册两 handler；KNOWN_UNIMPLEMENTED 只剩 KHR_texture_basisu；
+  gltf/index 公开 detectImageMime/setTextureSupportForTesting/SUPPORTED_IMAGE_MIMES。
+- 测试：smoke-13（10：magic、handler 矩阵、fallback 编排、StubImage 集成）；
+  smoke-11 能力矩阵断言更新（webp/avif 已注册，basisu 保持 unsupported）；
+  全量 13 suites / 76 tests PASS；typecheck 0；verify:web-only PASSED；esm/min/dts 通过。
+- 浏览器证据（tools/verify/gltf-webp-browser.js）：真实浏览器解码 webp 纹理 glb
+  （texture 1 张、宽 1px）、probe unsupported + 无核心源干净失败，`ok:true`。
+- 下一步：KTX2/BasisU（transcoder 资产固定 + 容器解析 + ImageSource raw 上传路径）。
