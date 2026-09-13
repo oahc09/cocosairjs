@@ -351,3 +351,30 @@
   verify:decoders ok；浏览器证据 12 个（10 扩展 + permutation + official-materials）全 ok。
 - 终验收报告：`docs/acceptance-v0.5.md`（交付矩阵、可重复证据链、7 条已知限制、
   V0.5.1 消费合同与所有权移交清单）；README 挂索引。
+
+
+## V0.5 Code Review 修复（2026-09-14）
+
+外部审查发现 10 项规范语义缺陷（8 P1 + 2 P2），全部逐条对照 Khronos 规范原文确认后修复：
+
+- **材质语义**：specular 采 **A 通道**（弃 .g×2）、仅介电 BRDF、diffuse 按 (1−F0) 能量守恒；
+  dispersion 字段改 **`dispersion`**（=20/Abbe，官方样本值不再被静默忽略），shader 用规范
+  halfSpread=(ior−1)·0.025·d；anisotropyTexture **B 通道**（不重映射）乘入逐纹素强度。
+- **几何/管线**：KHR_mesh_quantization 类型表按规范矩阵重写（POSITION/TEXCOORD 允许
+  非归一化整数；NORMAL/TANGENT 仅归一化有符号）；meshopt **placeholder buffer**（无 URI，
+  `providesPlaceholders` 声明 + 空缓冲跳过）；Draco **可选性回退**（optional+核心属性→
+  告警走普通 accessor；无核心→GLTF_DECODER_MISSING）；Draco 分支**合并额外 attributes +
+  morph targets 按核心 accessor 读取**（顺序不对应为文档化限制）。
+- **透射管线**：scene color 改绑 **渲染材质实例**（renderer.getMaterialInstance(0)），
+  所有权 WeakMap<renderer,capture> 防多 capture 覆写，disable/destroy 释放全部引用（审查
+  #1/#9 的根因——此前把纹理写到共享模板材质，实例永远采样默认纹理）。
+- **边界**：spot `outerConeAngle == PI/2` 合法（smoke-12 加 180° 全锥 e2e）。
+
+**验证升级（根因治理）**：新增 smoke-21（通道/字段/类型矩阵/能力翻转断言 7 项）、smoke-11
+placeholder 规范布局 e2e（重排 buffers + fetch 断言）、smoke-10 optional 回退三分支、
+transmission 证据加 **instance 级纹理/尺寸绑定断言**。性能基线复测重冻结（median 4.1ms，
+与首轮 2.2ms 同数量级，差异为环境噪声，两轮均记录）；稳定性 12 轮复测 leaked=0、URL 平衡。
+
+门控：typecheck 0；**21 套件 / 127 测试**；verify:web-only；verify:decoders；esm/min/dts +
+NodeNext 消费；**15 浏览器证据全 ok**（含 performance/stability）。acceptance §4.5 Deviations
+记录修复全表。

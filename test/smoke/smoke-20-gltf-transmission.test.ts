@@ -41,15 +41,15 @@ describe('glTF T6 transmission/volume/dispersion', () => {
         expect(() => validate(volumeFactory, [{ extensions: { KHR_materials_volume: { thicknessFactor: 0.5, attenuationDistance: 2, attenuationColor: [1, 0.5, 0] } } }])).not.toThrow();
         expect(() => validate(volumeFactory, [{ extensions: { KHR_materials_volume: { attenuationDistance: 0 } } }])).toThrow(/attenuationDistance/);
         expect(() => validate(volumeFactory, [{ extensions: { KHR_materials_volume: { attenuationColor: [1, 1] } } }])).toThrow(/attenuationColor/);
-        expect(() => validate(dispersionFactory, [{ extensions: { KHR_materials_dispersion: { dispersionFactor: 0.1 } } }])).not.toThrow();
-        expect(() => validate(dispersionFactory, [{ extensions: { KHR_materials_dispersion: { dispersionFactor: -1 } } }])).toThrow(/dispersionFactor/);
+        expect(() => validate(dispersionFactory, [{ extensions: { KHR_materials_dispersion: { dispersion: 0.1 } } }])).not.toThrow();
+        expect(() => validate(dispersionFactory, [{ extensions: { KHR_materials_dispersion: { dispersion: -1 } } }])).toThrow(/dispersion/);
     });
 
     test('defaults normalize per spec', () => {
         expect(extend(transmissionFactory, { extensions: { KHR_materials_transmission: {} } } as never).transmission).toEqual({ factor: 0 });
         expect(extend(volumeFactory, { extensions: { KHR_materials_volume: {} } } as never).volume)
             .toEqual({ thicknessFactor: 0, attenuationDistance: Infinity, attenuationColor: [1, 1, 1] });
-        expect(extend(dispersionFactory, { extensions: { KHR_materials_dispersion: {} } } as never).dispersion).toEqual({ factor: 0 });
+        expect(extend(dispersionFactory, { extensions: { KHR_materials_dispersion: { dispersion: 4.0 } } } as never).dispersion).toEqual({ factor: 4.0 });
     });
 
     test('report device-dependent while the pipeline is unarmed, supported when armed', () => {

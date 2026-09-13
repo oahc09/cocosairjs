@@ -168,7 +168,7 @@ phys.materials = [
         alphaMode: 'BLEND',
         extensions: { KHR_materials_transmission: { transmissionFactor: 1 },
             KHR_materials_volume: { thicknessFactor: 0.6, attenuationColor: [0.2, 0.6, 0.9], attenuationDistance: 1.2 },
-            KHR_materials_dispersion: { dispersionFactor: 0.05 } } },
+            KHR_materials_dispersion: { dispersion: 5.0 } } },
 ];
 const offsets = [[-1.2, 0, 0], [0, 0, 0], [1.2, 0, 0], [-1.7, -1.15, 0], [-0.5, -1.15, 0], [0.7, -1.15, 0], [1.8, -1.15, 0], [2.9, -1.15, 0], [0, -2.3, 0], [0, -1.15, 0.55]];
 for (let i = 0; i < phys.materials.length; i++) {

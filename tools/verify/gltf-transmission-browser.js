@@ -44,12 +44,20 @@ async (page) => {
         let glassNode = null;
         const walk = (node) => { if (node.name.startsWith('transmissive glass')) { glassNode = node; } node.children.forEach(walk); };
         walk(viewer.instance.root);
+        // Review fix #1/#9 assertion: the scene color must be bound on the *rendered* material
+        // instance (renderer.getMaterialInstance), not only on the shared template material.
+        const renderer = glassNode ? glassNode.getComponent('cc.MeshRenderer') : null;
+        const instance = renderer ? renderer.getMaterialInstance(0) : null;
+        const instanceTexture = instance && instance.getProperty ? instance.getProperty('cc_sceneColorTex') : null;
+        const infoValue = instance ? read(instance, 'airSceneColorInfo') : null;
         return {
             effect: glass.effectAsset.name,
             armed: (() => { for (const pass of glass.passes) { if (pass.getHandle('airTransmission') !== 0) { return true; } } return false; })(),
             transmission: read(glass, 'airTransmission'),
             attenuation: read(glass, 'airAttenuation'),
             sceneColorBound: glass.passes.some((p) => { const h = p.getHandle('cc_sceneColorTex'); return h !== 0; }),
+            instanceSceneColorBound: !!(instanceTexture && instanceTexture.width > 1 && instanceTexture.height > 1),
+            instanceInfoMatchesViewport: !!infoValue && Math.abs(infoValue[0] - canvas.width) < 2 && Math.abs(infoValue[1] - canvas.height) < 2,
             transmissionLayer: glassNode ? (glassNode.layer & (1 << 26)) !== 0 : false,
             glassRGB, lit: lit > 10000, glError: gl.getError(),
         };
@@ -64,6 +72,8 @@ async (page) => {
     }
     if (!result.attenuation || Math.abs(result.attenuation[2] - 0.9) > 1e-4) { failures.push('airAttenuation: ' + JSON.stringify(result.attenuation)); }
     if (!result.sceneColorBound) { failures.push('cc_sceneColorTex not bound'); }
+    if (!result.instanceSceneColorBound) { failures.push('scene color not bound on the rendered material instance'); }
+    if (!result.instanceInfoMatchesViewport) { failures.push('airSceneColorInfo on the instance does not match the viewport'); }
     if (!result.transmissionLayer) { failures.push('glass node missing TRANSMISSION layer bit'); }
     if (!result.lit) { failures.push('scene did not render'); }
     // Refracted through the blue attenuated glass the center must read bluish-bright,

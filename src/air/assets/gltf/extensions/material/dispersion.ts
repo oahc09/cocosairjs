@@ -1,6 +1,6 @@
 /**
  * KHR_materials_dispersion: splits refractive samples by wavelength (Abbe-style).
- * dispersionFactor >= 0 (default 0). Green is the reference channel; R and B refract
+ * dispersion (spec field, = 20/Abbe number) >= 0 (default 0). Green is the reference channel; R and B refract
  * with scaled IOR offsets derived from it. Requires the scene-color refraction pipeline
  * (needs volume/transmission geometry), so it reports the same capability gate.
  */
@@ -23,18 +23,19 @@ export function dispersionFactory (context: GLTFParserContext): GLTFExtensionHan
         },
         validate (ctx): void {
             for (const [index, material] of (ctx.json.materials || []).entries()) {
-                const ext = material.extensions?.[name] as { dispersionFactor?: number } | undefined;
+                const ext = material.extensions?.[name] as { dispersion?: number } | undefined;
                 if (!ext) { continue; }
-                const factor = ext.dispersionFactor ?? 0;
+                // Spec field name is `dispersion` (= 20 / Abbe number); there is no dispersionFactor.
+                const factor = ext.dispersion ?? 0;
                 if (typeof factor !== 'number' || !Number.isFinite(factor) || factor < 0) {
-                    throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: dispersionFactor must be finite >= 0`, name);
+                    throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: dispersion must be finite >= 0`, name);
                 }
             }
         },
         extendMaterial (_index, features): void {
-            const ext = features.source.extensions?.[name] as { dispersionFactor?: number } | undefined;
+            const ext = features.source.extensions?.[name] as { dispersion?: number } | undefined;
             if (!ext) { return; }
-            physicalScalars(features).dispersion = { factor: ext.dispersionFactor ?? 0 };
+            physicalScalars(features).dispersion = { factor: ext.dispersion ?? 0 };
         },
     };
 }

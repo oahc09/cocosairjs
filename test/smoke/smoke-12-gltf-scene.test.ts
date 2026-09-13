@@ -106,7 +106,8 @@ describe('glTF scene extensions', () => {
             [{ type: 'omni', intensity: 1 }],
             [{ type: 'point', intensity: -1 }],
             [{ type: 'point', color: [2, 0, 0] }],
-            [{ type: 'spot', outerConeAngle: Math.PI / 2 }],
+            // outerConeAngle = PI/2 is legal per spec; only values strictly beyond it are invalid.
+            [{ type: 'spot', outerConeAngle: Math.PI / 2 + 0.01 }],
             [{ type: 'spot', innerConeAngle: 0.9, outerConeAngle: 0.5 }],
             [{ type: 'point', range: 0 }],
         ];
@@ -114,6 +115,12 @@ describe('glTF scene extensions', () => {
             await expect(loader.parseAsync(lightsGLB(defs, [0]).glb)).rejects
                 .toMatchObject({ code: 'GLTF_EXTENSION_INVALID' });
         }
+        // Spec boundary: a 90-degree outer cone (PI/2) must load; spotAngle is the full cone (180).
+        const edge = lightsGLB([{ type: 'spot', intensity: 1, outerConeAngle: Math.PI / 2 }], [0]).glb;
+        const asset = await loader.parseAsync(edge);
+        const instance = asset.instantiate();
+        expect(findDeep(instance.root, 'sceneHost').getComponent(SpotLight)!.spotAngle).toBeCloseTo(180, 3);
+        instance.dispose(); asset.destroy();
     });
 
     test('EXT_mesh_gpu_instancing expands to shared-mesh instances and reports fast-path status', async () => {

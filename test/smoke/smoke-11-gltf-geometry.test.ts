@@ -153,6 +153,46 @@ describe('glTF geometry and compression extensions', () => {
         asset.destroy();
     });
 
+    // meshopt fallback-buffer rule: a required-compression file may reference a placeholder
+    // buffer with no URI; the parent views live there and decompression provides the data.
+    test('KHR_meshopt_compression decodes with a no-URI placeholder parent buffer', async () => {
+        const source = fixtureGLB('meshopt-ext.glb');
+        // Recover the original document to re-shard buffers into the spec placeholder layout.
+        const header = new DataView(source);
+        const jsonLength = header.getUint32(12, true);
+        const json = JSON.parse(new TextDecoder().decode(new Uint8Array(source, 20, jsonLength)));
+        const bin = new Uint8Array(source, 20 + jsonLength + 8);
+        const compressed = [
+            bin.slice(json.bufferViews[0].extensions.EXT_meshopt_compression.byteOffset,
+                json.bufferViews[0].extensions.EXT_meshopt_compression.byteOffset + json.bufferViews[0].extensions.EXT_meshopt_compression.byteLength),
+            bin.slice(json.bufferViews[1].extensions.EXT_meshopt_compression.byteOffset,
+                json.bufferViews[1].extensions.EXT_meshopt_compression.byteOffset + json.bufferViews[1].extensions.EXT_meshopt_compression.byteLength),
+        ];
+        const payload = new Uint8Array(compressed[0].length + compressed[1].length);
+        payload.set(compressed[0], 0); payload.set(compressed[1], compressed[0].length);
+        json.buffers = [
+            { byteLength: 140 }, // placeholder: no uri, not GLB-backed; sized for all uncompressed views
+            { uri: 'payload.bin', byteLength: payload.byteLength },
+        ];
+        json.bufferViews[0].extensions.EXT_meshopt_compression = { ...json.bufferViews[0].extensions.EXT_meshopt_compression, buffer: 1, byteOffset: 0 };
+        json.bufferViews[1].extensions.EXT_meshopt_compression = { ...json.bufferViews[1].extensions.EXT_meshopt_compression, buffer: 1, byteOffset: compressed[0].length };
+        const fetchMock = jest.fn().mockResolvedValue({ ok: true, arrayBuffer: async () => payload.buffer });
+        const originalFetch = (globalThis as { fetch: unknown }).fetch;
+        Object.assign(globalThis, { fetch: fetchMock });
+        // GLB buffer 0 must not be read; pass JSON + an EMPTY binary chunk (placeholder has no data).
+        const glb = toGLB(json, new ArrayBuffer(0));
+        try {
+            const asset = await new GLTFLoader({ meshoptDecoder: realMeshopt() }).parseAsync(glb, 'https://example.test/models/');
+            const geometry = geometryOf(asset);
+            closeTo(geometry.positions, POSITIONS, 1e-6);
+            expect(geometry.indices).toBe(INDICES.length);
+            expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining('payload.bin'), expect.anything());
+            asset.destroy();
+        } finally {
+            (globalThis as { fetch: unknown }).fetch = originalFetch; // later Draco tests need the real fetch for wasm
+        }
+    });
+
     test('KHR_meshopt_compression decodes to the baseline geometry', async () => {
         const decoder = realMeshopt();
         const asset = await new GLTFLoader({ meshoptDecoder: decoder }).parseAsync(fixtureGLB('meshopt-khr.glb'));
@@ -281,12 +321,9 @@ describe('glTF geometry and compression extensions', () => {
         asset.destroy();
     });
 
-    test('Draco combo keeps two primitives with skin channels and reports unsupported morphs', async () => {
+    test('Draco combo keeps two primitives with skin channels and core morph accessors', async () => {
         const loader = new GLTFLoader({ dracoDecoder: realDraco() });
-        const warnings: string[] = [];
-        const spy = jest.spyOn(console, 'warn').mockImplementation((message: unknown) => { warnings.push(String(message)); });
         const asset = await loader.parseAsync(fixtureGLB('draco-combo.glb'));
-        spy.mockRestore();
         const mesh = asset.meshes[0] as Mesh;
         const struct = mesh.struct;
         expect(struct.primitives.length).toBe(2);
@@ -298,9 +335,16 @@ describe('glTF geometry and compression extensions', () => {
             sortedPoints([0, 1, 0, 0, 0, 1, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0], 4), 0);
         closeTo(sortedPoints(mesh.readAttribute(0, AttributeName.ATTR_WEIGHTS)!, 4),
             sortedPoints([0.6, 0.4, 0, 0, 0.7, 0.3, 0, 0, 0.5, 0.5, 0, 0, 0.8, 0.2, 0, 0], 4), 1e-6);
-        // Draco payloads carry no morph displacements: the warning is emitted and morph is dropped.
-        expect(warnings.some((message) => /morph targets are not supported with Draco compression/.test(message))).toBe(true);
-        expect(struct.morph).toBeUndefined();
+        // KHR_draco_mesh_compression spec: morph target accessors are core glTF data, NOT part of
+        // the Draco payload; they must be read, not dropped. (Vertex-order correspondence between
+        // the reordered Draco output and separately-stored morph arrays is a documented caveat.)
+        expect(struct.morph).toBeDefined();
+        expect(struct.morph!.subMeshMorphs[0]!.targets.length).toBe(1);
+        // The morph POSITION accessor is read as a core channel (4 source vertices, expanded to the
+        // split-vertex layout like the base attributes); the point is it is present, not dropped.
+        const displacement = struct.morph!.subMeshMorphs[0]!.targets[0].displacements[0];
+        expect(displacement.count).toBeGreaterThan(0);
+        expect(displacement.count % 3).toBe(0); // multiple of the 4-vertex source after 1x-per-triangle split
         asset.destroy();
     });
 

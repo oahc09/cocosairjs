@@ -39,7 +39,7 @@ describe('glTF extension registry and parser context', () => {
         await expect(new GLTFLoader().parseAsync(toGLB(f.json, f.bin))).rejects.toBeInstanceOf(GLTFError);
     });
 
-    test('decoder-backed extensions fail with GLTF_DECODER_MISSING without a decoder', async () => {
+    test('decoder-backed extensions: required fails, optional falls back to core attributes', async () => {
         const f = fixture();
         f.json.extensionsUsed = ['KHR_draco_mesh_compression'];
         // A required declaration is rejected while validating extensionsRequired.
@@ -47,10 +47,21 @@ describe('glTF extension registry and parser context', () => {
         await expect(new GLTFLoader().parseAsync(toGLB(f.json, f.bin))).rejects.toMatchObject({
             code: 'GLTF_DECODER_MISSING', extension: 'KHR_draco_mesh_compression',
         });
-        // An optional declaration is rejected when the compressed primitive is decoded.
+        // Optional with no decoder: the primitive keeps its core accessors, so the loader must
+        // fall through to them (not silently drop geometry, not hard-fail).
         f.json.extensionsRequired = undefined;
         f.json.meshes![0].primitives[0].extensions = { KHR_draco_mesh_compression: { bufferView: 0, attributes: { POSITION: 0 } } };
-        await expect(new GLTFLoader().parseAsync(toGLB(f.json, f.bin))).rejects.toMatchObject({
+        const fallback = await new GLTFLoader().parseAsync(toGLB(f.json, f.bin));
+        expect(fallback.warnings.join(' ')).toMatch(/no decoder configured.*core fallback/);
+        expect(Array.from((fallback.meshes[0] as any).readAttribute(0, 'a_position')!).length).toBeGreaterThan(0);
+        fallback.destroy();
+        // Optional but WITHOUT core POSITION: no fallback exists, so fail cleanly rather than
+        // render an empty mesh as if supported.
+        const g = fixture();
+        g.json.extensionsUsed = ['KHR_draco_mesh_compression'];
+        delete (g.json.meshes![0].primitives[0].attributes as { POSITION?: number }).POSITION;
+        g.json.meshes![0].primitives[0].extensions = { KHR_draco_mesh_compression: { bufferView: 0, attributes: { POSITION: 0 } } };
+        await expect(new GLTFLoader().parseAsync(toGLB(g.json, g.bin))).rejects.toMatchObject({
             code: 'GLTF_DECODER_MISSING', extension: 'KHR_draco_mesh_compression',
         });
     });

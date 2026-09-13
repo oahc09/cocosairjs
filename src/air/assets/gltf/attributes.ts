@@ -42,15 +42,21 @@ const CORE_RULES: Record<string, AttributeTypeRule> = {
     WEIGHTS: { types: [FLOAT], normalizedTypes: [UNSIGNED_BYTE, UNSIGNED_SHORT] },
 };
 
-/** `KHR_mesh_quantization` widens every float semantic to normalized 8/16-bit integers. */
+/**
+ * `KHR_mesh_quantization` allowed types, per the spec table:
+ *  - POSITION / TEXCOORD_n: signed *or* unsigned 8/16-bit ints, normalized *or* unnormalized (plus float).
+ *  - NORMAL / TANGENT: normalized BYTE or SHORT only (unnormalized float allowed); unsigned and
+ *    non-normalized ints are rejected because they cannot represent a unit vector.
+ *  - COLOR/WEIGHTS/JOINTS: unchanged by this extension (core rules govern; JOINTS stay raw unsigned).
+ */
 const QUANTIZED_RULES: Record<string, AttributeTypeRule> = {
-    POSITION: { types: [FLOAT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
-    NORMAL: { types: [FLOAT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
-    TANGENT: { types: [FLOAT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
+    POSITION: { types: [FLOAT, BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
+    NORMAL: { types: [FLOAT], normalizedTypes: [BYTE, SHORT] },
+    TANGENT: { types: [FLOAT], normalizedTypes: [BYTE, SHORT] },
     JOINTS: { types: [UNSIGNED_BYTE, UNSIGNED_SHORT] },
-    TEXCOORD: { types: [FLOAT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
+    TEXCOORD: { types: [FLOAT, BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
     COLOR: { types: [FLOAT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
-    WEIGHTS: { types: [FLOAT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] },
+    WEIGHTS: { types: [FLOAT], normalizedTypes: [UNSIGNED_BYTE, UNSIGNED_SHORT] },
 };
 
 /** Strips the set index from a semantic: `TEXCOORD_1` → `TEXCOORD`. */

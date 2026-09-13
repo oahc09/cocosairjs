@@ -13,7 +13,6 @@ import { coreTextureCoordinates } from './material/texture-slots';
 import type { PhysicalScalars } from './material/features';
 import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT, CLEARCOAT_CONSTANT, ANISO_CONSTANT, IRIDESCENCE_CONSTANT, BUMP_CONSTANT, TRANSMISSION_CONSTANT, ATTENUATION_CONSTANT } from './material/physical-effect';
 import { transmissionPipelineAvailable } from './material/transmission-capability';
-import { registerTransmissionMaterial } from '../../rendering/transmission-capture';
 import type { DecodedTextureSource } from './decoder/types';
 import { KTX2_RAW_MIME } from './decoder/types';
 import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/image-formats';
@@ -358,7 +357,6 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
                 material.setProperty(TRANSMISSION_CONSTANT, new Vec4(transmission.factor, ior, volume?.thicknessFactor ?? 0, dispersion?.factor ?? 0));
                 material.setProperty(ATTENUATION_CONSTANT, new Vec4(volume?.attenuationColor?.[0] ?? 1, volume?.attenuationColor?.[1] ?? 1,
                     volume?.attenuationColor?.[2] ?? 1, Number.isFinite(volume?.attenuationDistance ?? Infinity) ? volume!.attenuationDistance : 1e6));
-                registerTransmissionMaterial(material);
             }
             if (colorActive) { material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor![0], specularColor![1], specularColor![2], 1)); }
         }

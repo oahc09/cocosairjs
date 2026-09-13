@@ -147,10 +147,22 @@ export class GLTFParserContext {
         for (const [i, buffer] of (this.json.buffers || []).entries()) {
             this.throwIfAborted();
             integer(buffer.byteLength, `buffer ${i} length`);
+            // meshopt fallback-buffer rule: a buffer with no uri and no GLB chunk is a valid
+            // placeholder when a registered compression extension supplies the referenced views
+            // (resolveBufferViews fills them before any raw read). Keep it empty; a view that is
+            // never decompressed still fails honestly with a named out-of-bounds error.
+            // placeholder: no uri, and either not the GLB chunk or an empty/absent chunk.
+            const placeholder = buffer.uri === undefined && (i !== 0 || !bin?.byteLength)
+                && this.handlers.some((handler) => handler.providesPlaceholders);
+            if (placeholder) {
+                this.buffers.push(new ArrayBuffer(0));
+                this.report('dependencies', i + 1, total);
+                continue;
+            }
             const data = buffer.uri !== undefined
                 ? await this.dependency(DependencyKeys.buffer(i), () => this.request(buffer.uri!))
                 : (i === 0 ? bin : undefined);
-            check(data, `buffer ${i}: missing URI/BIN (compressed-only buffers are unsupported)`);
+            check(data, `buffer ${i}: missing URI/BIN (no compression extension provides these views)`);
             check(data.byteLength >= buffer.byteLength && (buffer.uri !== undefined || data.byteLength <= buffer.byteLength + 3), `buffer ${i}: length mismatch`);
             this.buffers.push(data.slice(0, buffer.byteLength));
             this.report('dependencies', i + 1, total);

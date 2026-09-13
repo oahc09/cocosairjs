@@ -69673,8 +69673,14 @@ class GLTFParserContext {
     for (const [i, buffer] of (this.json.buffers || []).entries()) {
       this.throwIfAborted();
       integer(buffer.byteLength, `buffer ${i} length`);
+      const placeholder = buffer.uri === undefined && (i !== 0 || !(bin != null && bin.byteLength)) && this.handlers.some(handler => handler.providesPlaceholders);
+      if (placeholder) {
+        this.buffers.push(new ArrayBuffer(0));
+        this.report('dependencies', i + 1, total);
+        continue;
+      }
       const data = buffer.uri !== undefined ? await this.dependency(DependencyKeys.buffer(i), () => this.request(buffer.uri)) : i === 0 ? bin : undefined;
-      check(data, `buffer ${i}: missing URI/BIN (compressed-only buffers are unsupported)`);
+      check(data, `buffer ${i}: missing URI/BIN (no compression extension provides these views)`);
       check(data.byteLength >= buffer.byteLength && (buffer.uri !== undefined || data.byteLength <= buffer.byteLength + 3), `buffer ${i}: length mismatch`);
       this.buffers.push(data.slice(0, buffer.byteLength));
       this.report('dependencies', i + 1, total);
@@ -69970,22 +69976,22 @@ const CORE_RULES = {
 };
 const QUANTIZED_RULES = {
   POSITION: {
-    types: [FLOAT],
+    types: [FLOAT, BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT],
     normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
   },
   NORMAL: {
     types: [FLOAT],
-    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+    normalizedTypes: [BYTE, SHORT]
   },
   TANGENT: {
     types: [FLOAT],
-    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+    normalizedTypes: [BYTE, SHORT]
   },
   JOINTS: {
     types: [UNSIGNED_BYTE, UNSIGNED_SHORT]
   },
   TEXCOORD: {
-    types: [FLOAT],
+    types: [FLOAT, BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT],
     normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
   },
   COLOR: {
@@ -69994,7 +70000,7 @@ const QUANTIZED_RULES = {
   },
   WEIGHTS: {
     types: [FLOAT],
-    normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT]
+    normalizedTypes: [UNSIGNED_BYTE, UNSIGNED_SHORT]
   }
 };
 function attributeSemantic(name) {
@@ -70215,11 +70221,35 @@ function createGLTFMesh(context, meshIndex) {
     let count;
     const channels = [];
     let decodedIndices;
+    const addAccessorChannel = (name, index, vertexCount) => {
+      if (!(name in ATTRIBUTES)) {
+        check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
+        check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
+        context.warn(`mesh ${meshIndex}: unused attribute ${name}`);
+        return;
+      }
+      const accessor = context.accessor(index);
+      const width = ATTRIBUTES[name][1];
+      check(accessor.count === vertexCount && (accessor.components === width || name === 'COLOR_0' && accessor.components === 3), `invalid ${name} shape`);
+      checkAttributeType(name, accessor.source.componentType, !!accessor.source.normalized, quantized);
+      const values = accessor.values.slice();
+      if (name === 'COLOR_0' && accessor.components === 3) {
+        values.length = 0;
+        for (let i = 0; i < vertexCount; ++i) {
+          values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1);
+        }
+      }
+      channels.push({
+        name,
+        width,
+        values
+      });
+    };
     if (decoded) {
-      var _primitive$targets2;
       const position = decoded.attributes.POSITION;
       check(position && position.length % 3 === 0, `mesh ${meshIndex}: decoded POSITION is missing or invalid`);
       count = position.length / 3;
+      const decodedNames = new Set();
       for (const [name, values] of Object.entries(decoded.attributes)) {
         const mapping = ATTRIBUTES[name];
         if (!mapping) {
@@ -70234,13 +70264,16 @@ function createGLTFMesh(context, meshIndex) {
           width: mapping[1],
           values: Array.from(values)
         });
+        decodedNames.add(name);
+      }
+      for (const [name, index] of Object.entries(primitive.attributes || {})) {
+        if (decodedNames.has(name)) {
+          continue;
+        }
+        addAccessorChannel(name, index, count);
       }
       if (decoded.indices) {
         decodedIndices = Array.from(decoded.indices);
-      }
-      if ((_primitive$targets2 = primitive.targets) != null && _primitive$targets2.length) {
-        context.warn(`mesh ${meshIndex}: morph targets are not supported with Draco compression`);
-        morphCount = 0;
       }
     } else {
       const position = context.accessor(primitive.attributes.POSITION);
@@ -70248,28 +70281,7 @@ function createGLTFMesh(context, meshIndex) {
       checkAttributeType('POSITION', position.source.componentType, !!position.source.normalized, quantized);
       count = position.count;
       for (const [name, index] of Object.entries(primitive.attributes)) {
-        if (!(name in ATTRIBUTES)) {
-          check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
-          check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
-          context.warn(`mesh ${meshIndex}: unused attribute ${name}`);
-          continue;
-        }
-        const accessor = context.accessor(index);
-        const width = ATTRIBUTES[name][1];
-        check(accessor.count === count && (accessor.components === width || name === 'COLOR_0' && accessor.components === 3), `invalid ${name} shape`);
-        checkAttributeType(name, accessor.source.componentType, !!accessor.source.normalized, quantized);
-        const values = accessor.values.slice();
-        if (name === 'COLOR_0' && accessor.components === 3) {
-          values.length = 0;
-          for (let i = 0; i < count; ++i) {
-            values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1);
-          }
-        }
-        channels.push({
-          name,
-          width,
-          values
-        });
+        addAccessorChannel(name, index, count);
       }
     }
     const weights = channels.find(c => c.name === 'WEIGHTS_0');
@@ -70298,7 +70310,7 @@ function createGLTFMesh(context, meshIndex) {
     }
     const topology = convertTopology(indices, (_primitive$mode = primitive.mode) !== null && _primitive$mode !== void 0 ? _primitive$mode : 4);
     indices = topology.indices;
-    const targets = decoded ? [] : (primitive.targets || []).map(target => {
+    const targets = (primitive.targets || []).map(target => {
       const entries = {};
       for (const [name, index] of Object.entries(target)) {
         check(['POSITION', 'NORMAL', 'TANGENT'].includes(name), `unsupported morph attribute ${name}`);
@@ -70757,7 +70769,7 @@ function gltfPhysicalEffect() {
       let frag = stage.frag;
       const nl = String.fromCharCode(10);
       const samplerDecls = PHYSICAL_SAMPLERS.map(s => `#if ${s.macro}\nuniform lowp sampler2D ${s.name};\n#endif`).join(nl);
-      const texVar = `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecTex = vec3(1.0);\n#endif\n` + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\n#endif\n` + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n` + `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
+      const texVar = `#if USE_AIR_SPECULAR_MAP\nfloat airSpecScale = 1.0;\n#endif\n` + `#if USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecColor = vec3(1.0);\n#endif\n` + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\nfloat airAnisoStrength = 0.0;\n#endif\n` + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n` + `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
       const prependAfterPrecision = source => {
         const insert = samplerDecls + nl + texVar;
         const m = /^(\s*precision\s+\w+\s+\w+;)/.exec(source);
@@ -70771,7 +70783,7 @@ function gltfPhysicalEffect() {
         stage.vert = grow(stage.vert);
         frag = prependAfterPrecision(grow(frag));
       }
-      const specularMix = 'vec3 specular = mix(vec3(0.08 * s.specularIntensity), s.albedo.rgb, s.metallic);';
+      const specularMix = 'vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);\nvec3 specular = mix(vec3(0.08 * s.specularIntensity), s.albedo.rgb, s.metallic);';
       if (!frag.includes(specularMix)) {
         stage.frag = frag;
         continue;
@@ -70780,7 +70792,8 @@ function gltfPhysicalEffect() {
       frag = frag.replace(/s\.specularIntensity = 0\.5;/g, `s.specularIntensity = ${PHYSICAL_CONSTANT}.y * 0.5;`);
       const tex = (sampler, uv, prefix) => textureTransform(language, sampler, uv, prefix);
       const iriFn = ['#if USE_AIR_IRIDESCENCE', 'vec3 airIridescenceF0 (float NV) {', 'float filmIor = clamp(airIriIorTex, 1.3, 2.33334);', `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`, 'float cosT1 = clamp(NV, 0.0, 1.0);', 'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);', 'float cosT2 = sqrt(max(0.0, 1.0 - sinT2sq));', `vec3 lambda = vec3(680.0, 550.0, 450.0);`, `vec3 phase = 4.0 * PI * filmIor * max(airIriThickTex, 0.0) * cosT2 / lambda;`, 'vec3 f01 = vec3(((1.0 - filmIor) / (1.0 + filmIor)) * ((1.0 - filmIor) / (1.0 + filmIor)));', 'vec3 r12 = (filmIor - vec3(n0)) / (filmIor + vec3(n0));', 'vec3 f12 = r12 * r12;', 'vec3 cross12 = sqrt(f01 * f12);', 'vec3 airy = (f01 + f12 + 2.0 * cross12 * cos(phase)) / (vec3(1.0) + f01 * f12 + 2.0 * cross12 * cos(phase));', 'return clamp(airy, vec3(0.0), vec3(1.0));', '}', '#endif'].join(nl);
-      const airSpec = [`vec3 airBase = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`, '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airBase = mix(airBase, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`, `}`, `#endif`, `vec3 airSpec = mix(airBase, s.albedo.rgb, s.metallic);`, `#if USE_AIR_SPECULAR_COLOR\nairSpec *= ${PHYSICAL_COLOR_CONSTANT}.rgb;\n#endif`, `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nairSpec *= airSpecTex;\n#endif`, 'vec3 specular = airSpec;'].join('\n');
+      const airSpec = [`vec3 airDielectric = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`, '#if USE_AIR_SPECULAR_COLOR', `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`, '#endif', '#if USE_AIR_SPECULAR_MAP', 'airDielectric *= airSpecScale;', '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', 'airDielectric *= airSpecColor;', '#endif', '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`, `}`, `#endif`, `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
+      `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric * (1.0 - s.metallic));`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
       frag = frag.replace(specularMix, airSpec);
       const ccDirect = ['{', 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);', 'float ccRough = clamp(airCCRoughTex, 0.002, 1.0);', 'float ccNL = max(dot(airCCNormal, L), 0.0);', 'float ccNH = max(dot(airCCNormal, H), 0.0);', 'float ccNV = max(dot(airCCNormal, V), 0.0);', 'vec3 ccSpec = vec3(0.04) * CalcSpecular(ccRough, ccNH, H, airCCNormal);', '#if CC_RECEIVE_SHADOW', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * shadow * ccNL * ccF * ccSpec;', '#else', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * ccNL * ccF * ccSpec;', '#endif', '}'].join(nl);
       const ccAnchor = 'finalColor *= dirlightContrib;';
@@ -70789,12 +70802,12 @@ function gltfPhysicalEffect() {
       }
       frag = frag.replace(ccAnchor, `#if USE_AIR_CLEARCOAT\n${ccDirect}\n#endif\n${ccAnchor}`);
       const ccIBL = ['#if USE_AIR_CLEARCOAT && CC_USE_IBL', '{', 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);', 'float ccRough = clamp(airCCRoughTex, 0.002, 1.0);', 'float ccNV = max(dot(airCCNormal, V), 0.0);', 'vec3 ccR = normalize(reflect(-V, airCCNormal));', 'vec4 ccEnv4 = fragTextureLod(cc_environment, ccR, ccRough * cc_ambientGround.w);', '#if CC_USE_IBL == 2', 'vec3 ccEnv = unpackRGBE(ccEnv4);', '#else', 'vec3 ccEnv = SRGBToLinear(ccEnv4.rgb);', '#endif', 'float ccFres = 0.04 + 0.96 * pow(1.0 - ccNV, 5.0);', 'finalColor += ccEnv * cc_ambientSky.w * ccF * ccFres;', '}', '#endif'].join(nl);
-      const anisoFn = ['#if USE_AIR_ANISOTROPY', 'float airAnisoVisibility (float roughness, vec3 N, vec3 H, vec3 V, vec3 L) {', `float anS = clamp(${ANISO_CONSTANT}.x, 0.0, 1.0);`, 'float alpha = max(roughness * roughness, 0.002);', 'float at = max(alpha * (1.0 + anS), 0.002);', 'float ab = max(alpha / (1.0 + anS), 0.002);', 'vec3 aT = normalize(airAnisoT); vec3 aB = normalize(airAnisoB);', 'float tNH = dot(aT, H); float bNH = dot(aB, H); float nNH = max(dot(N, H), 0.0);', 'float tNV = dot(aT, V); float bNV = dot(aB, V); float nNV = max(dot(N, V), 1e-4);', 'float tNL = dot(aT, L); float bNL = dot(aB, L); float nNL = max(dot(N, L), 0.0);', 'float d2 = (bNH * bNH) / (at * at) + (tNH * tNH) / (ab * ab) + nNH * nNH;', 'float D = 1.0 / (PI * at * ab * d2 * d2);', 'float v2 = nNV * nNV * ((tNV * tNV) / (at * at) + (bNV * bNV) / (ab * ab) + 1.0);', 'float vl = nNL * nNL * ((tNL * tNL) / (at * at) + (bNL * bNL) / (ab * ab) + 1.0);', 'float G = 0.5 / (nNV * sqrt(vl) + nNL * sqrt(v2) + 1e-6);', 'return D * G * PI * 0.25;', '}', '#endif'].join(nl);
+      const anisoFn = ['#if USE_AIR_ANISOTROPY', 'float airAnisoVisibility (float roughness, vec3 N, vec3 H, vec3 V, vec3 L) {', 'float anS = clamp(airAnisoStrength, 0.0, 1.0);', 'float alpha = max(roughness * roughness, 0.002);', 'float at = max(alpha * (1.0 + anS), 0.002);', 'float ab = max(alpha / (1.0 + anS), 0.002);', 'vec3 aT = normalize(airAnisoT); vec3 aB = normalize(airAnisoB);', 'float tNH = dot(aT, H); float bNH = dot(aB, H); float nNH = max(dot(N, H), 0.0);', 'float tNV = dot(aT, V); float bNV = dot(aB, V); float nNV = max(dot(N, V), 1e-4);', 'float tNL = dot(aT, L); float bNL = dot(aB, L); float nNL = max(dot(N, L), 0.0);', 'float d2 = (bNH * bNH) / (at * at) + (tNH * tNH) / (ab * ab) + nNH * nNH;', 'float D = 1.0 / (PI * at * ab * d2 * d2);', 'float v2 = nNV * nNV * ((tNV * tNV) / (at * at) + (bNV * bNV) / (ab * ab) + 1.0);', 'float vl = nNL * nNL * ((tNL * tNL) / (at * at) + (bNL * bNL) / (ab * ab) + 1.0);', 'float G = 0.5 / (nNV * sqrt(vl) + nNL * sqrt(v2) + 1e-6);', 'return D * G * PI * 0.25;', '}', '#endif'].join(nl);
       const specLine = 'vec3 specularContrib = specular * CalcSpecular(s.roughness, NH, H, N);';
       if (!frag.includes(specLine)) {
         throw new Error(`physical effect: specularContrib missing in ${shader.name} [${language}]`);
       }
-      frag = frag.replace(specLine, '#if USE_AIR_ANISOTROPY\n' + `vec3 specularContrib = specular * mix(CalcSpecular(s.roughness, NH, H, N), airAnisoVisibility(s.roughness, N, H, V, L), clamp(${ANISO_CONSTANT}.x, 0.0, 1.0));\n` + '#else\n' + specLine + '\n#endif');
+      frag = frag.replace(specLine, '#if USE_AIR_ANISOTROPY\n' + `vec3 specularContrib = specular * mix(CalcSpecular(s.roughness, NH, H, N), airAnisoVisibility(s.roughness, N, H, V, L), clamp(airAnisoStrength, 0.0, 1.0));\n` + '#else\n' + specLine + '\n#endif');
       const shadingDecl = 'vec4 CCStandardShadingBase (StandardSurface s, vec4 shadowPos) {';
       if (!frag.includes(shadingDecl)) {
         throw new Error(`physical effect: shading fn missing in ${shader.name} [${language}]`);
@@ -70807,14 +70820,16 @@ function gltfPhysicalEffect() {
       frag = frag.replace(emissiveAnchor, `${ccIBL}\n#if USE_AIR_CLEARCOAT\nfinalColor += s.emissive * (1.0 - clamp(airCCFactorTex, 0.0, 1.0) * (0.04 + 0.96 * pow(1.0 - max(dot(airCCNormal, V), 0.0), 5.0)));\n#else\n${emissiveAnchor}\n#endif`);
       const transmission = ['#if USE_AIR_TRANSMISSION', '{', 'float trF = clamp(airTrFactorTex, 0.0, 1.0);', 'if (trF > 0.0) {', `float trIor = max(${TRANSMISSION_CONSTANT}.y, 1.0);`, 'vec3 trN = normalize(N);', 'vec3 trV = normalize(V);', 'float trThick = max(airThickTex, 1e-4);', 'vec3 trView = (cc_matView * vec4(s.position, 1.0)).xyz;', 'vec3 trBaseView = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIor));', 'vec2 trOffset = trBaseView.xy / max(abs(trView.z), 1.0) * trThick * 0.5;',
       'vec4 trClip0 = cc_matViewProj * vec4(s.position, 1.0);', 'vec2 trScreen = trClip0.xy / max(abs(trClip0.w), 1e-4) * 0.5 + 0.5;', 'float trFlip = cc_cameraPos.w > 0.0 ? -1.0 : 1.0;', 'vec2 trUv = clamp(trScreen + trOffset * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
-      'vec3 trAtten = exp(-(vec3(1.0) - clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0))) * trThick / max(' + ATTENUATION_CONSTANT + '.w, 1.0));', 'vec3 trColor = texture(cc_sceneColorTex, trUv).rgb * trAtten;', '#if USE_AIR_DISPERSION', `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`, 'if (trDisp > 0.0) {', 'float trIorR = max(trIor - trDisp, 1.001);', 'float trIorB = trIor + trDisp;', 'vec2 trRV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorR)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 trBV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorB)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 uvR = clamp(trScreen + trRV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'vec2 uvB = clamp(trScreen + trBV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'trColor.r = texture(cc_sceneColorTex, uvR).r * trAtten.r;', 'trColor.b = texture(cc_sceneColorTex, uvB).b * trAtten.b;', '}', '#endif',
+      'vec3 trAtten = exp(-(vec3(1.0) - clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0))) * trThick / max(' + ATTENUATION_CONSTANT + '.w, 1.0));', 'vec3 trColor = texture(cc_sceneColorTex, trUv).rgb * trAtten;', '#if USE_AIR_DISPERSION', `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`, 'if (trDisp > 0.0) {',
+      'float trHalf = (trIor - 1.0) * 0.025 * trDisp;', 'float trIorR = max(trIor - trHalf, 1.0001);', 'float trIorB = trIor + trHalf;', 'vec2 trRV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorR)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 trBV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorB)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 uvR = clamp(trScreen + trRV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'vec2 uvB = clamp(trScreen + trBV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'trColor.r = texture(cc_sceneColorTex, uvR).r * trAtten.r;', 'trColor.b = texture(cc_sceneColorTex, uvB).b * trAtten.b;', '}', '#endif',
       'finalColor = mix(finalColor, trColor, trF * (1.0 - s.metallic));', '}', '}', '#endif', 'return vec4(finalColor, s.albedo.a);'].join(nl);
       const returnAnchor = 'return vec4(finalColor, s.albedo.a);';
       if (!frag.includes(returnAnchor)) {
         throw new Error(`physical effect: return missing in ${shader.name} [${language}]`);
       }
       frag = frag.replace(returnAnchor, transmission);
-      const modulate = ['#if USE_AIR_SPECULAR_MAP', `airSpecTex *= 2.0 * ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.g;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecTex *= ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`, `vec3 aDir = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz * 2.0 - 1.0;`, 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
+      const modulate = ['#if USE_AIR_SPECULAR_MAP', `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecColor = ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', `airAnisoStrength = ${ANISO_CONSTANT}.x;`, 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`,
+      `vec3 aTex = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz;`, 'vec2 aDir = vec2(aTex.x, aTex.y) * 2.0 - 1.0;', 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', 'airAnisoStrength *= aTex.z;', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
       `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
       `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif', '#if USE_AIR_BUMP', '{',
       "float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;", "vec2 buv = " + "${textureUVExpression('BUMP_UV', 'airBump')};", 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));', 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));', 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));', 'vec3 dPdx = dFdx(s.position);', 'vec3 dPdy = dFdy(s.position);', 'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;', 'if (abs(bdet) > 1e-8) {', 'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;', 'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;', 's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));', '}', '}', '#endif'].join(nl);
@@ -70920,157 +70935,6 @@ function transmissionPipelineAvailable() {
     detail
   };
 }
-
-var _dec$h, _class$h;
-const TRANSMISSION_LAYER = 1 << 26;
-const active = new Set();
-const tracking = new Set();
-function registerTransmissionMaterial(material) {
-  tracking.add(material);
-}
-function webgl2Capable() {
-  const device = deviceManager.gfxDevice;
-  return !!device && device.gfxAPI === API.WEBGL2;
-}
-let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), _dec$h(_class$h = class AirTransmissionCapture extends Component {
-  constructor(...args) {
-    super(...args);
-    this._main = null;
-    this._off = null;
-    this._offNode = null;
-    this._rt = null;
-    this._w = 0;
-    this._h = 0;
-    this._scanTick = 0;
-  }
-  get mainCamera() {
-    return this._main;
-  }
-  set mainCamera(value) {
-    this._main = value;
-    if (value && this.enabledInHierarchy && !this._off) {
-      this._ensure();
-      if (webgl2Capable()) {
-        setTransmissionPipelineAvailable(true, 'scene-color capture active');
-      }
-    }
-  }
-  get sceneColor() {
-    return this._rt;
-  }
-  onEnable() {
-    active.add(this);
-    this._ensure();
-    if (webgl2Capable()) {
-      setTransmissionPipelineAvailable(true, 'scene-color capture active');
-    }
-  }
-  onDisable() {
-    active.delete(this);
-    if (active.size === 0) {
-      setTransmissionPipelineAvailable(false, 'no active transmission capture');
-    }
-  }
-  onDestroy() {
-    this._teardown();
-  }
-  lateUpdate() {
-    const main = this.mainCamera;
-    if (!main || !this._off || !this._rt) {
-      return;
-    }
-    {
-      const scene = this.node && this.node.scene;
-      const meshes = scene && scene.getComponentsInChildren ? scene.getComponentsInChildren('cc.MeshRenderer') : null;
-      if (meshes) {
-        for (const renderer of meshes) {
-          const material = renderer.getMaterialInstance ? renderer.getMaterialInstance(0) : renderer.sharedMaterial;
-          if (!material) {
-            continue;
-          }
-          for (const pass of material.passes) {
-            if (pass.getHandle('airTransmission') !== 0) {
-              renderer.node.layer |= TRANSMISSION_LAYER;
-              main.visibility |= TRANSMISSION_LAYER;
-              break;
-            }
-          }
-        }
-      }
-    }
-    const mw = main.camera.window;
-    const w = mw ? mw.width : 0;
-    const h = mw ? mw.height : 0;
-    if (w > 0 && h > 0 && (w !== this._w || h !== this._h)) {
-      this._rt.resize(w, h);
-      this._w = w;
-      this._h = h;
-    }
-    const offNode = this._offNode;
-    const mainNode = main.node;
-    if (offNode && mainNode) {
-      offNode.setWorldPosition(mainNode.worldPosition);
-      offNode.setWorldRotation(mainNode.worldRotation);
-    }
-    this._off.fov = main.fov;
-    this._off.near = main.near;
-    this._off.far = main.far;
-    this._off.visibility = main.visibility & ~TRANSMISSION_LAYER;
-    const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
-    for (const material of tracking) {
-      material.setProperty('cc_sceneColorTex', this._rt);
-      material.setProperty('airSceneColorInfo', info);
-    }
-  }
-  _ensure() {
-    if (this._off) {
-      return;
-    }
-    const scene = this.node && this.node.scene;
-    const main = this._main;
-    if (!scene || !main) {
-      return;
-    }
-    const node = new Node$1('AirTransmissionCapture');
-    scene.addChild(node);
-    this._offNode = node;
-    const rt = new RenderTexture();
-    const mw = main.camera.window;
-    rt.initialize({
-      width: Math.max(mw ? mw.width : 1, 1),
-      height: Math.max(mw ? mw.height : 1, 1)
-    });
-    this._rt = rt;
-    this._w = rt.width;
-    this._h = rt.height;
-    const off = node.addComponent(Camera);
-    off.targetTexture = rt;
-    off.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-    off.priority = main.priority - 1;
-    off.visibility = main.visibility & ~TRANSMISSION_LAYER;
-    off.projection = Camera.ProjectionType.PERSPECTIVE;
-    this._off = off;
-    if (webgl2Capable()) {
-      setTransmissionPipelineAvailable(true, 'scene-color capture active');
-    }
-  }
-  _teardown() {
-    const off = this._off;
-    if (off) {
-      off.targetTexture = null;
-    }
-    this._off = null;
-    if (this._offNode && this._offNode.isValid) {
-      this._offNode.destroy();
-    }
-    this._offNode = null;
-    if (this._rt && this._rt.isValid) {
-      this._rt.destroy();
-    }
-    this._rt = null;
-  }
-}) || _class$h);
-const defaultTransmissionVisibility = Layers.Enum.ALL;
 
 const KTX2_RAW_MIME = 'image/ktx2-decoded';
 
@@ -71581,7 +71445,6 @@ function createGLTFMaterial(features, textures, vertexColor) {
         var _volume$thicknessFact, _dispersion$factor, _volume$attenuationCo, _volume$attenuationCo2, _volume$attenuationCo3, _volume$attenuationCo4, _volume$attenuationCo5, _volume$attenuationCo6, _volume$attenuationDi;
         material.setProperty(TRANSMISSION_CONSTANT, new Vec4(transmission.factor, ior, (_volume$thicknessFact = volume == null ? void 0 : volume.thicknessFactor) !== null && _volume$thicknessFact !== void 0 ? _volume$thicknessFact : 0, (_dispersion$factor = dispersion == null ? void 0 : dispersion.factor) !== null && _dispersion$factor !== void 0 ? _dispersion$factor : 0));
         material.setProperty(ATTENUATION_CONSTANT, new Vec4((_volume$attenuationCo = volume == null ? void 0 : (_volume$attenuationCo2 = volume.attenuationColor) == null ? void 0 : _volume$attenuationCo2[0]) !== null && _volume$attenuationCo !== void 0 ? _volume$attenuationCo : 1, (_volume$attenuationCo3 = volume == null ? void 0 : (_volume$attenuationCo4 = volume.attenuationColor) == null ? void 0 : _volume$attenuationCo4[1]) !== null && _volume$attenuationCo3 !== void 0 ? _volume$attenuationCo3 : 1, (_volume$attenuationCo5 = volume == null ? void 0 : (_volume$attenuationCo6 = volume.attenuationColor) == null ? void 0 : _volume$attenuationCo6[2]) !== null && _volume$attenuationCo5 !== void 0 ? _volume$attenuationCo5 : 1, Number.isFinite((_volume$attenuationDi = volume == null ? void 0 : volume.attenuationDistance) !== null && _volume$attenuationDi !== void 0 ? _volume$attenuationDi : Infinity) ? volume.attenuationDistance : 1e6));
-        registerTransmissionMaterial(material);
       }
       if (colorActive) {
         material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor[0], specularColor[1], specularColor[2], 1));
@@ -72194,25 +72057,25 @@ function dispersionFactory(context) {
     },
     validate(ctx) {
       for (const [index, material] of (ctx.json.materials || []).entries()) {
-        var _material$extensions, _ext$dispersionFactor;
+        var _material$extensions, _ext$dispersion;
         const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
         if (!ext) {
           continue;
         }
-        const factor = (_ext$dispersionFactor = ext.dispersionFactor) !== null && _ext$dispersionFactor !== void 0 ? _ext$dispersionFactor : 0;
+        const factor = (_ext$dispersion = ext.dispersion) !== null && _ext$dispersion !== void 0 ? _ext$dispersion : 0;
         if (typeof factor !== 'number' || !Number.isFinite(factor) || factor < 0) {
-          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: dispersionFactor must be finite >= 0`, name);
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: dispersion must be finite >= 0`, name);
         }
       }
     },
     extendMaterial(_index, features) {
-      var _features$source$exte, _ext$dispersionFactor2;
+      var _features$source$exte, _ext$dispersion2;
       const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
       if (!ext) {
         return;
       }
       physicalScalars(features).dispersion = {
-        factor: (_ext$dispersionFactor2 = ext.dispersionFactor) !== null && _ext$dispersionFactor2 !== void 0 ? _ext$dispersionFactor2 : 0
+        factor: (_ext$dispersion2 = ext.dispersion) !== null && _ext$dispersion2 !== void 0 ? _ext$dispersion2 : 0
       };
     }
   };
@@ -72298,6 +72161,7 @@ async function decodeBufferView(context, index, definition, extension) {
 function meshoptCompressionFactory(extension) {
   return context => ({
     name: extension,
+    providesPlaceholders: true,
     support: () => context.options.meshoptDecoder ? {
       name: extension,
       status: 'supported'
@@ -72384,7 +72248,15 @@ const dracoCompressionFactory = context => {
         return Promise.resolve(null);
       }
       if (!decoder) {
-        throw new GLTFError('GLTF_DECODER_MISSING', `${KHR_DRACO_MESH_COMPRESSION}: configure a decoder with setDRACODecoder()`, KHR_DRACO_MESH_COMPRESSION);
+        var _ctx$json$extensionsR;
+        if ((_ctx$json$extensionsR = ctx.json.extensionsRequired) != null && _ctx$json$extensionsR.includes(KHR_DRACO_MESH_COMPRESSION)) {
+          throw new GLTFError('GLTF_DECODER_MISSING', `${KHR_DRACO_MESH_COMPRESSION}: configure a decoder with setDRACODecoder()`, KHR_DRACO_MESH_COMPRESSION);
+        }
+        if (!primitive.attributes || primitive.attributes.POSITION === undefined) {
+          throw new GLTFError('GLTF_DECODER_MISSING', `${KHR_DRACO_MESH_COMPRESSION}: optional extension has no core fallback attribute and no decoder`, KHR_DRACO_MESH_COMPRESSION);
+        }
+        ctx.warn(`extension ${KHR_DRACO_MESH_COMPRESSION}: no decoder configured, loading core fallback attributes`);
+        return Promise.resolve(null);
       }
       return ctx.dependency(DependencyKeys.primitive(meshIndex, primitiveIndex), () => decodePrimitive(ctx, meshIndex, primitiveIndex, definition, decoder));
     }
@@ -72508,8 +72380,8 @@ function validateDef$1(def, index) {
   const inner = (_def$innerConeAngle = def.innerConeAngle) !== null && _def$innerConeAngle !== void 0 ? _def$innerConeAngle : 0;
   const outer = (_def$outerConeAngle = def.outerConeAngle) !== null && _def$outerConeAngle !== void 0 ? _def$outerConeAngle : Math.PI / 4;
   if (def.type === 'spot') {
-    if (!(Number.isFinite(inner) && inner >= 0 && Number.isFinite(outer) && outer > inner && outer < Math.PI / 2)) {
-      throw invalid$1(`${at}: cone angles require 0 <= inner < outer < PI/2`);
+    if (!(Number.isFinite(inner) && inner >= 0 && Number.isFinite(outer) && outer > inner && outer <= Math.PI / 2)) {
+      throw invalid$1(`${at}: cone angles require 0 <= inner < outer <= PI/2`);
     }
   }
 }
@@ -73437,6 +73309,191 @@ function transcodeAll(file, width, height, levels, candidate) {
 }
 
 registerGLTFLoader();
+
+var _dec$h, _class$h;
+const TRANSMISSION_LAYER = 1 << 26;
+const active = new Set();
+const owned = new WeakMap();
+function isTransmissionMaterial(material) {
+  if (!material) {
+    return false;
+  }
+  for (const pass of material.passes) {
+    if (pass.getHandle('airTransmission') !== 0) {
+      return true;
+    }
+  }
+  return false;
+}
+function webgl2Capable() {
+  const device = deviceManager.gfxDevice;
+  return !!device && device.gfxAPI === API.WEBGL2;
+}
+let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), _dec$h(_class$h = class AirTransmissionCapture extends Component {
+  constructor(...args) {
+    super(...args);
+    this._main = null;
+    this._off = null;
+    this._offNode = null;
+    this._rt = null;
+    this._w = 0;
+    this._h = 0;
+    this._bound = [];
+  }
+  get mainCamera() {
+    return this._main;
+  }
+  set mainCamera(value) {
+    this._main = value;
+    if (value && this.enabledInHierarchy && !this._off) {
+      this._ensure();
+      if (webgl2Capable()) {
+        setTransmissionPipelineAvailable(true, 'scene-color capture active');
+      }
+    }
+  }
+  get sceneColor() {
+    return this._rt;
+  }
+  onEnable() {
+    active.add(this);
+    this._ensure();
+    if (webgl2Capable()) {
+      setTransmissionPipelineAvailable(true, 'scene-color capture active');
+    }
+  }
+  onDisable() {
+    active.delete(this);
+    this._releaseBindings();
+    if (active.size === 0) {
+      setTransmissionPipelineAvailable(false, 'no active transmission capture');
+    }
+  }
+  onDestroy() {
+    this._releaseBindings();
+    this._teardown();
+  }
+  lateUpdate() {
+    const main = this.mainCamera;
+    if (!main || !this._off || !this._rt) {
+      return;
+    }
+    const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
+    for (const renderer of this._bound) {
+      if (!renderer.isValid) {
+        continue;
+      }
+      const material = renderer.getMaterialInstance(0);
+      if (!material) {
+        continue;
+      }
+      material.setProperty('cc_sceneColorTex', this._rt);
+      material.setProperty('airSceneColorInfo', info);
+    }
+    this._bound = this._bound.filter(renderer => renderer.isValid);
+    this._rescan(main);
+    const mw = main.camera.window;
+    const w = mw ? mw.width : 0;
+    const h = mw ? mw.height : 0;
+    if (w > 0 && h > 0 && (w !== this._w || h !== this._h)) {
+      this._rt.resize(w, h);
+      this._w = w;
+      this._h = h;
+    }
+    const offNode = this._offNode;
+    const mainNode = main.node;
+    if (offNode && mainNode) {
+      offNode.setWorldPosition(mainNode.worldPosition);
+      offNode.setWorldRotation(mainNode.worldRotation);
+    }
+    this._off.fov = main.fov;
+    this._off.near = main.near;
+    this._off.far = main.far;
+    this._off.visibility = main.visibility & ~TRANSMISSION_LAYER;
+  }
+  _rescan(main) {
+    const scene = this.node && this.node.scene;
+    if (!scene) {
+      return;
+    }
+    for (const renderer of scene.getComponentsInChildren(MeshRenderer)) {
+      const node = renderer.node;
+      if (!node || !isTransmissionMaterial(renderer.getMaterial(0))) {
+        continue;
+      }
+      if (!(node.layer & TRANSMISSION_LAYER)) {
+        node.layer |= TRANSMISSION_LAYER;
+      }
+      main.visibility |= TRANSMISSION_LAYER;
+      const owner = owned.get(renderer);
+      if (owner === this) {
+        if (this._bound.indexOf(renderer) < 0) {
+          this._bound.push(renderer);
+        }
+        continue;
+      }
+      if (owner) {
+        continue;
+      }
+      owned.set(renderer, this);
+      this._bound.push(renderer);
+    }
+  }
+  _releaseBindings() {
+    for (const renderer of this._bound) {
+      owned.delete(renderer);
+    }
+    this._bound.length = 0;
+  }
+  _ensure() {
+    if (this._off) {
+      return;
+    }
+    const scene = this.node && this.node.scene;
+    const main = this._main;
+    if (!scene || !main) {
+      return;
+    }
+    const node = new Node$1('AirTransmissionCapture');
+    scene.addChild(node);
+    this._offNode = node;
+    const rt = new RenderTexture();
+    const mw = main.camera.window;
+    rt.initialize({
+      width: Math.max(mw ? mw.width : 1, 1),
+      height: Math.max(mw ? mw.height : 1, 1)
+    });
+    this._rt = rt;
+    this._w = rt.width;
+    this._h = rt.height;
+    const off = node.addComponent(Camera);
+    off.targetTexture = rt;
+    off.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+    off.priority = main.priority - 1;
+    off.visibility = main.visibility & ~TRANSMISSION_LAYER;
+    off.projection = Camera.ProjectionType.PERSPECTIVE;
+    this._off = off;
+    if (webgl2Capable()) {
+      setTransmissionPipelineAvailable(true, 'scene-color capture active');
+    }
+  }
+  _teardown() {
+    const off = this._off;
+    if (off) {
+      off.targetTexture = null;
+    }
+    this._off = null;
+    if (this._offNode && this._offNode.isValid) {
+      this._offNode.destroy();
+    }
+    this._offNode = null;
+    if (this._rt && this._rt.isValid) {
+      this._rt.destroy();
+    }
+    this._rt = null;
+  }
+}) || _class$h);
+const defaultTransmissionVisibility = Layers.Enum.ALL;
 
 class WebGLDescriptorSet extends DescriptorSet {
   get gpuDescriptorSet() {
@@ -97859,5 +97916,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, SUPPORTED_IMAGE_MIMES, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isKTX2, isKTX2Available, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, registerTransmissionMaterial, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
+export { Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, SUPPORTED_IMAGE_MIMES, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isKTX2, isKTX2Available, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
 //# sourceMappingURL=cocosair.module.js.map

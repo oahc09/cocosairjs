@@ -13,6 +13,8 @@ export interface GLTFExtensionHandler {
     support?(): GLTFExtensionSupport;
     validate?(context: GLTFParserContext): void;
     loadBufferView?(index: number, context: GLTFParserContext): Promise<Uint8Array | null>;
+    /** Declares it can decompress views whose parent buffer is a no-URI placeholder (meshopt). */
+    readonly providesPlaceholders?: boolean;
     loadPrimitive?(primitiveIndex: number, meshIndex: number, context: GLTFParserContext): Promise<DecodedPrimitive | null>;
     resolveTextureSource?(textureIndex: number, context: GLTFParserContext): Promise<DecodedTextureSource | null>;
     extendMaterial?(materialIndex: number, features: GLTFMaterialFeatures, context: GLTFParserContext): Promise<void> | void;

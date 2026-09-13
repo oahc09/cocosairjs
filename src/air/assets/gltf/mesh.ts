@@ -45,10 +45,29 @@ export function createGLTFMesh (context: GLTFParserContext, meshIndex: number): 
         let count: number;
         const channels: Channel[] = [];
         let decodedIndices: number[] | undefined;
+        // Read one attribute from a core accessor into a channel (shared by both branches).
+        const addAccessorChannel = (name: string, index: number, vertexCount: number): void => {
+            if (!(name in ATTRIBUTES)) {
+                check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
+                check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
+                context.warn(`mesh ${meshIndex}: unused attribute ${name}`); return;
+            }
+            const accessor = context.accessor(index);
+            const width = ATTRIBUTES[name][1];
+            check(accessor.count === vertexCount && (accessor.components === width || (name === 'COLOR_0' && accessor.components === 3)), `invalid ${name} shape`);
+            checkAttributeType(name, accessor.source.componentType, !!accessor.source.normalized, quantized);
+            const values = accessor.values.slice();
+            if (name === 'COLOR_0' && accessor.components === 3) {
+                values.length = 0;
+                for (let i = 0; i < vertexCount; ++i) { values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1); }
+            }
+            channels.push({ name, width, values });
+        };
         if (decoded) {
             const position = decoded.attributes.POSITION;
             check(position && position.length % 3 === 0, `mesh ${meshIndex}: decoded POSITION is missing or invalid`);
             count = position.length / 3;
+            const decodedNames = new Set<string>();
             for (const [name, values] of Object.entries(decoded.attributes)) {
                 const mapping = ATTRIBUTES[name];
                 if (!mapping) {
@@ -59,34 +78,22 @@ export function createGLTFMesh (context: GLTFParserContext, meshIndex: number): 
                 check(values.length === count * mapping[1],
                     `mesh ${meshIndex}: decoded ${name} has ${values.length} components, expected ${count * mapping[1]}`);
                 channels.push({ name, width: mapping[1], values: Array.from(values) });
+                decodedNames.add(name);
+            }
+            // Attributes present in the primitive but NOT in the Draco payload are ordinary accessors
+            // (KHR_draco_mesh_compression spec) — merge them instead of dropping them.
+            for (const [name, index] of Object.entries(primitive.attributes || {})) {
+                if (decodedNames.has(name)) { continue; }
+                addAccessorChannel(name, index, count);
             }
             if (decoded.indices) { decodedIndices = Array.from(decoded.indices); }
-            if (primitive.targets?.length) {
-                // Draco payloads carry no morph displacements; the declared accessors are placeholders.
-                context.warn(`mesh ${meshIndex}: morph targets are not supported with Draco compression`);
-                morphCount = 0;
-            }
         } else {
             const position = context.accessor(primitive.attributes.POSITION);
             check(position.source.type === 'VEC3', 'POSITION must be VEC3');
             checkAttributeType('POSITION', position.source.componentType, !!position.source.normalized, quantized);
             count = position.count;
             for (const [name, index] of Object.entries(primitive.attributes)) {
-                if (!(name in ATTRIBUTES)) {
-                    check(!/^(JOINTS|WEIGHTS)_/.test(name), 'only JOINTS_0/WEIGHTS_0 (four influences) are supported');
-                    check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
-                    context.warn(`mesh ${meshIndex}: unused attribute ${name}`); continue;
-                }
-                const accessor = context.accessor(index);
-                const width = ATTRIBUTES[name][1];
-                check(accessor.count === count && (accessor.components === width || (name === 'COLOR_0' && accessor.components === 3)), `invalid ${name} shape`);
-                checkAttributeType(name, accessor.source.componentType, !!accessor.source.normalized, quantized);
-                const values = accessor.values.slice();
-                if (name === 'COLOR_0' && accessor.components === 3) {
-                    values.length = 0;
-                    for (let i = 0; i < count; ++i) { values.push(...accessor.values.slice(i * 3, i * 3 + 3), 1); }
-                }
-                channels.push({ name, width, values });
+                addAccessorChannel(name, index, count);
             }
         }
         const weights = channels.find((c) => c.name === 'WEIGHTS_0');
@@ -111,8 +118,8 @@ export function createGLTFMesh (context: GLTFParserContext, meshIndex: number): 
         }
         const topology = convertTopology(indices, primitive.mode ?? 4);
         indices = topology.indices;
-        // Draco payloads carry no morph targets; the declared accessors are index placeholders.
-        const targets = decoded ? [] : (primitive.targets || []).map((target) => {
+        // Morph target accessors are core glTF data, not part of the Draco payload; always read them.
+        const targets = (primitive.targets || []).map((target) => {
             const entries: Record<string, number[]> = {};
             for (const [name, index] of Object.entries(target)) {
                 check(['POSITION', 'NORMAL', 'TANGENT'].includes(name), `unsupported morph attribute ${name}`);

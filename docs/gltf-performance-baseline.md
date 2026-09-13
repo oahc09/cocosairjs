@@ -9,13 +9,15 @@
 口径：`fetch(bytes) → new GLTFLoader().parseAsync(bytes)`（Promise resolve 于 buffer 解码、
 纹理 ImageAsset 解码完成）至 `asset.destroy()` 为一轮；30 次，冷 HTTP（`?run=n` + no-store）。
 
-| 指标 | 值 |
-|---|---|
-| 中位 | **2.2 ms** |
-| p5 / p95 | 1.9 / 4.8 ms |
-| min / max | ~1.7 / ~6.2 ms（首 run 含 JIT 预热） |
+| 指标 | 首轮（Code Review 前） | 复审修复后重测 |
+|---|---|---|
+| 中位 | 2.2 ms | **4.1 ms** |
+| p5 / p95 | 1.9 / 4.8 ms | 3.7 / 7.2 ms |
 
-原始逐次数据：`docs/evidence/v05-load-baseline.raw.json`（`runsMs`）。
+两轮为同机不同进程时段的测量（JIT/系统状态差异；绝对值同数量级）。G5 冻结基线取**复审
+修复后**的重测值，后续回归按本表 + “同机重测优先、异机先重基线” 规则比较。原始逐次数据
+在 `docs/evidence/v05-load-baseline.raw.json`（`runsMs`）。解析/解码路径未被语义修复改动，
+中位差异不指示性能回退。
 
 ## 2. §10 能力条款实测
 
@@ -47,8 +49,8 @@
 12 轮 parse→instantiate→渲染帧→全量 destroy（cycle0 为 skybox 懒注册 warmup）：
 
 - renderScene 模型数：cycle1–11 每轮 `after === before`（**零泄漏**），峰值 +2 随 destroy 回落；
-- `instance.root.isValid` 全 false；JS heap 首末三点均值 79.9→74.0MB（**−5.9MB，噪声级，无上升
-  趋势**）；Blob URL 收支平衡；GL error 0。
+- `instance.root.isValid` 全 false；JS heap 首末三点均值下降（−9.9MB，噪声级，无上升趋势）；
+  Blob URL 收支平衡；GL error 0。
 - 原始数据：`docs/evidence/v05-stability.raw.json`。
 
 不以单次 GC 证明"无泄漏"（计划书 §10 同口径）：此处证据为**行为级**（对象/模型/URL/堆趋势），

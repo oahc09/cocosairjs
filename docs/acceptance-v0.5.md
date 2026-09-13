@@ -71,6 +71,28 @@ node tools/verify/gltf-stability-browser.js           # §10：12 轮加载/销�
 - 所有权移交：本文件所述模块（extensions/material/*、material/physical-effect、
   rendering/transmission-capture、tools/verify/*）在 V0.5 收尾后归 V0.5.1 计划管辖。
 
+## 4.5 Code Review 修复记录（2026-09-14，Deviations）
+
+外部审查发现 10 项**规范语义缺陷**（根因：验收只看"能加载/无 GL 错误"，未核对参数解析与通道语义）。
+全部确认属实并修复，验证同步升级：
+
+| # | 缺陷 | 修复 | 回归保护 |
+|---|---|---|---|
+| 1 | transmission 把 scene color 绑到**共享模板材质**，渲染中的实例收不到更新 | capture 改绑 `renderer.getMaterialInstance(0)` | 证据断言 instance 级纹理/尺寸 |
+| 2 | dispersion 读 `dispersionFactor`（规范字段是 `dispersion`）→ 官方样本值被静默忽略 | 改读 `dispersion`；shader 按规范 `(ior−1)·0.025·d` halfSpread | smoke-20/21 |
+| 3 | specularTexture 采样 G×2（规范：**A 通道**）；且作用于金属、无能量守恒 | 采 `.a`；仅 dielectric；diffuse×(1−F0) | smoke-21 源码断言 |
+| 4 | anisotropyTexture 的 B 通道（逐纹素强度）被丢弃 | RG→方向、B 不重映射乘入 strength | smoke-21 |
+| 5 | quantization 类型矩阵两处反向（拒合法 unnormalized POSITION/TEXCOORD；收非法 unsigned NORMAL/TANGENT） | 按规范表重写 + 类型化 `types/normalizedTypes` | smoke-21 逐类型 |
+| 6 | required meshopt 的**规范 placeholder buffer（无 URI）**被提前拒绝 | handler 声明 `providesPlaceholders`，loadBuffers 允许空占位 | smoke-11 规范布局 e2e（重排 buffers + fetch 校验） |
+| 7 | optional Draco 无解码器时无条件报错（规范要求忽略扩展走核心 attributes） | required→失败；optional+有核心属性→告警回退；无核心→仍失败 | smoke-10 三分支 |
+| 8 | Draco 分支丢弃额外 attributes 与全部 morph targets | 非 payload 属性按普通 accessor 合并；morph 恒为核心 accessor 读取 | smoke-11 |
+| 9 | 全局强引用 `Set<Material>` 无注销 + 多 capture 互相覆写 | 改 `WeakMap<renderer,capture>` 所有权表 + 每 capture 独立 bound 列表 + disable/destroy 释放 | 设计入档 + 证据 |
+| 10 | `outerConeAngle = PI/2` 被拒（规范允许 ≤） | 改 `<=` 并加边界 e2e | smoke-12（180° 全锥断言） |
+
+**验证升级（根因治理）**：新增 `smoke-21-gltf-review-regression`（通道/字段/类型矩阵/能力翻转等
+规范语义断言）、`smoke-11` placeholder 规范布局端到端、`smoke-10` optional 回退三分支、
+`smoke-12` PI/2 边界、transmission 证据 instance 级绑定断言。全部门控重跑通过。
+
 ## 5. 最终 revision 记录
 
 | 项 | 值 |

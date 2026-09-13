@@ -19,6 +19,7 @@ import { Camera } from '../../cocos/misc/camera-component';
 import { API, deviceManager } from '../../cocos/gfx';
 import { RenderTexture } from '../../cocos/asset/assets/render-texture';
 import { Material } from '../../cocos/asset/assets/material';
+import { MeshRenderer } from '../../cocos/3d/framework/mesh-renderer';
 import { Vec4 } from '../../cocos/core/math';
 import { setTransmissionPipelineAvailable } from '../assets/gltf/material/transmission-capability';
 
@@ -26,11 +27,15 @@ import { setTransmissionPipelineAvailable } from '../assets/gltf/material/transm
 export const TRANSMISSION_LAYER = 1 << 26;
 
 const active = new Set<AirTransmissionCapture>();
-/** Transmission materials; the capture binds the live scene color and size into each per frame. */
-const tracking = new Set<Material>();
+/** renderer -> owning capture; a capture never overwrites a renderer bound by another. */
+const owned = new WeakMap<MeshRenderer, AirTransmissionCapture>();
 
-/** Called by the glTF material builder for transmission/volume/dispersion materials. */
-export function registerTransmissionMaterial (material: Material): void { tracking.add(material); }
+/** True when a material carries the compiled transmission UBO member (a transmission material). */
+function isTransmissionMaterial (material: Material | null): boolean {
+    if (!material) { return false; }
+    for (const pass of material.passes) { if (pass.getHandle('airTransmission') !== 0) { return true; } }
+    return false;
+}
 
 function webgl2Capable (): boolean {
     const device = deviceManager.gfxDevice;
@@ -61,7 +66,7 @@ export class AirTransmissionCapture extends Component {
     private _rt: RenderTexture | null = null;
     private _w = 0;
     private _h = 0;
-    private _scanTick = 0;
+    private _bound: MeshRenderer[] = [];
 
     get sceneColor (): RenderTexture | null { return this._rt; }
 
@@ -73,35 +78,33 @@ export class AirTransmissionCapture extends Component {
 
     public onDisable (): void {
         active.delete(this);
+        this._releaseBindings();
         if (active.size === 0) { setTransmissionPipelineAvailable(false, 'no active transmission capture'); }
     }
 
     public onDestroy (): void {
+        this._releaseBindings();
         this._teardown();
     }
 
     public lateUpdate (): void {
         const main = this.mainCamera;
         if (!main || !this._off || !this._rt) { return; }
-        // Periodically adopt transmission meshes: mark their nodes with the layer bit the
-        // scene-color pass excludes, and widen the main camera so the glass itself is drawn.
-        if (true) {
-            const scene = this.node && this.node.scene;
-            const meshes = scene && (scene as any).getComponentsInChildren ? (scene as any).getComponentsInChildren('cc.MeshRenderer') : null;
-            if (meshes) {
-                for (const renderer of meshes) {
-                    const material = renderer.getMaterialInstance ? renderer.getMaterialInstance(0) : renderer.sharedMaterial;
-                    if (!material) { continue; }
-                    for (const pass of material.passes) {
-                        if (pass.getHandle('airTransmission') !== 0) {
-                            renderer.node.layer |= TRANSMISSION_LAYER;
-                            main.visibility |= TRANSMISSION_LAYER;
-                            break;
-                        }
-                    }
-                }
-            }
+        // Bind the live scene color + inverse dimensions into every transmission renderer's
+        // *rendered* material instance (renderer.getMaterialInstance) — the object actually
+        // drawn — for the renderers this capture owns. Ownership prevents another capture from
+        // clobbering the same renderer's texture, and the rendered instance (not the shared
+        // template) is what the model bound, so the update is observable.
+        const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
+        for (const renderer of this._bound) {
+            if (!renderer.isValid) { continue; }
+            const material = renderer.getMaterialInstance(0);
+            if (!material) { continue; }
+            material.setProperty('cc_sceneColorTex', this._rt);
+            material.setProperty('airSceneColorInfo', info);
         }
+        this._bound = this._bound.filter((renderer) => renderer.isValid);
+        this._rescan(main);
         const mw = main.camera.window;
         const w = mw ? mw.width : 0;
         const h = mw ? mw.height : 0;
@@ -119,13 +122,30 @@ export class AirTransmissionCapture extends Component {
         this._off.near = main.near;
         this._off.far = main.far;
         this._off.visibility = main.visibility & ~TRANSMISSION_LAYER;
-        // Bind the live scene color + inverse dimensions into every tracked material so the
-        // refractive shader converts a view-space offset into texture coordinates.
-        const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
-        for (const material of tracking) {
-            material.setProperty('cc_sceneColorTex', this._rt);
-            material.setProperty('airSceneColorInfo', info);
+    }
+
+    /** Adopt any transmission renderer in the scene not already owned by another capture. */
+    private _rescan (main: Camera): void {
+        const scene = this.node && this.node.scene;
+        if (!scene) { return; }
+        for (const renderer of scene.getComponentsInChildren(MeshRenderer)) {
+            const node = renderer.node;
+            if (!node || !isTransmissionMaterial(renderer.getMaterial(0))) { continue; }
+            // Move to the transmission layer (offscreen scene-color pass skips it, main draws it).
+            if (!(node.layer & TRANSMISSION_LAYER)) { node.layer |= TRANSMISSION_LAYER; }
+            main.visibility |= TRANSMISSION_LAYER;
+            const owner = owned.get(renderer);
+            if (owner === this) { if (this._bound.indexOf(renderer) < 0) { this._bound.push(renderer); } continue; }
+            if (owner) { continue; } // owned by another capture — never steal it
+            owned.set(renderer, this);
+            this._bound.push(renderer);
         }
+    }
+
+    /** Release every renderer this capture owns so teardown/deregister drops references. */
+    private _releaseBindings (): void {
+        for (const renderer of this._bound) { owned.delete(renderer); }
+        this._bound.length = 0;
     }
 
     private _ensure (): void {

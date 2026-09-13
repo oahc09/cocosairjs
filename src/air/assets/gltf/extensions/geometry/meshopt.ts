@@ -81,6 +81,7 @@ async function decodeBufferView (context: GLTFParserContext, index: number, defi
 export function meshoptCompressionFactory (extension: string): GLTFExtensionFactory {
     return (context: GLTFParserContext): GLTFExtensionHandler => ({
         name: extension,
+        providesPlaceholders: true, // decompresses views whose parent buffer is a no-URI placeholder
         support: () => (context.options.meshoptDecoder
             ? { name: extension, status: 'supported' as const }
             : { name: extension, status: 'decoder-required' as const, reason: 'configure a decoder with setMeshoptDecoder()' }),

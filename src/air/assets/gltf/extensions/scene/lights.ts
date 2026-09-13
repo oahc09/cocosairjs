@@ -68,8 +68,8 @@ function validateDef (def: PunctualLightDef, index: number): void {
     const inner = def.innerConeAngle ?? 0;
     const outer = def.outerConeAngle ?? Math.PI / 4;
     if (def.type === 'spot') {
-        if (!(Number.isFinite(inner) && inner >= 0 && Number.isFinite(outer) && outer > inner && outer < Math.PI / 2)) {
-            throw invalid(`${at}: cone angles require 0 <= inner < outer < PI/2`);
+        if (!(Number.isFinite(inner) && inner >= 0 && Number.isFinite(outer) && outer > inner && outer <= Math.PI / 2)) {
+            throw invalid(`${at}: cone angles require 0 <= inner < outer <= PI/2`);
         }
     }
 }

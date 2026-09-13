@@ -26,7 +26,9 @@
 
 ### KHR_mesh_quantization
 解码后按 componentType/normalized 反量化到 float32 语义；不改变 accessor 上限（16M 分量）。
-证据：smoke-11。
+类型矩阵严格按规范表：POSITION/TEXCOORD_n 允许 8/16 位有/无符号 int 的 **normalized 与 unnormalized**；
+NORMAL/TANGENT 仅允许 **normalized BYTE/SHORT**（拒绝无符号与非归一化）。
+证据：smoke-11 + smoke-21（矩阵逐条）。
 
 ### EXT_meshopt_compression / KHR_meshopt_compression（同一 handler 双名注册）
 bufferView 级 `decoder.decodeGltfBuffer`（mode/filter/byteAlignment 全类型校验，非法 →
@@ -36,8 +38,13 @@ bufferView 级 `decoder.decodeGltfBuffer`（mode/filter/byteAlignment 全类型�
 
 ### KHR_draco_mesh_compression
 `loadPrimitive` 路径：decoder 由 provider 注入（Node 构建随包；浏览器构建由应用自备，MANIFEST
-决策记录）；解压直写目标 TypedArray；索引 65536 上限沿用；`quantization` 属性全支持。
-证据：smoke-11。
+决策记录）；解压直写目标 TypedArray；索引 65536 上限沿用。
+**可选性回退（规范符合性）**：扩展不在 `extensionsRequired` 且无 decoder 时，若 primitive 仍有核心
+attributes 则告警并走普通 accessor 路径；required 或无核心 POSITION 时 `GLTF_DECODER_MISSING`。
+**额外属性与 morph**：Draco payload 之外的 primitive.attributes（额外 UV/颜色/蒙皮）与
+primitive.targets（morph accessor 属核心数据）按普通 accessor 读取合并。
+已知限制：Draco 解码重排顶点后，morph accessor 顺序与解码输出顺序的对应关系不作保证（如实记录）。
+证据：smoke-11（含 draco-combo 与 placeholder 布局）。
 
 ## 纹理编码
 
@@ -82,17 +89,19 @@ metadata+告警。同一 light def 多节点=独立组件。相机仅保留描�
 | unlit | — | AIR_GLTF_UNLIT 单 pass | — |
 | emissive_strength | ≥1 线性 | `s.emissive×strength` | — |
 | ior | ≥1 | F0=0.04→((η−1)/(η+1))²（specularIntensity 通道） | 掠射角 Fresnel，平面对照弱 |
-| specular | factor 标量 [0,2]（vec4 草案兼容）；**color ≥0（规范允许 HDR>1）** | F0 mix 调制 ×G(2×)×RGB | 纹理槽 6/7 binding 15/16 |
+| specular | `specularFactor` 标量 [0,2] + `specularColorFactor` **≥0（规范允许 HDR>1）**；vec4 草案兼容 | **仅介电 BRDF**：F0 = 0.08·specularIntensity·factor·**texture.a**（alpha 通道，无 2×），金属不受影响；漫反射按 (1−F0) 衰减保证能量守恒 | 纹理槽 6/7 binding 15/16 |
 | clearcoat | factor/roughness [0,1]、scale [0,1]；R/G/XYZ | 独立 GGX 层 F0=0.04+Schlick（direct 主光 + emissive 吸收 + IBL 仅启用时） | 无切线时规范基近似；主光单光源近似 |
-| anisotropy | strength [0,1]、rotation rad；方向纹 RGB(−1..1) | Kulla-Conty 替换基底 GGX 可见项；rotation 存 cos/sin | 同上切线近似 |
+| anisotropy | strength [0,1]、rotation rad；方向纹 **RG→[−1,1] 方向、B 不重映射 [0,1] 逐纹素强度（×strength）** | Kulla-Conty 替换基底 GGX 可见项；rotation 存 cos/sin | 同上切线近似 |
 | iridescence | factor [0,1]、ior [1.3,2.3333]、厚度 nm min≤max；R/G/G | 逐波长非相干 Airy F0（680/550/450nm）替换介电基底 F0 | 无 volume 时厚度=max（规范回退） |
 | EXT_bump | bumpTexture 必填 R、factor ≥0 | 屏幕导数解 UV Jacobian → 法线扰动 | 有 normalTexture 时告警跳过；WebGL1 依赖 derivatives 扩展 |
 | transmission | factor [0,1]；R 通道 | 两相机 scene-color 折射（UV 偏移） | 需 `AirTransmissionCapture` 先于解析启用，否则按 required/optional 报 unsupported/fallback |
 | volume | thickness ≥0（G 缩放）、attenuationDistance>0、color [0,1] | Beer-Lambert exp(−(1−color)·d/dist) 于透射光 | 与 transmission 组合生效 |
-| dispersion | factor ≥0 | R/B 按 IOR±disp 三采样，绿为基准 | 同上 |
+| dispersion | **`dispersion` 字段（=20/Abbe，非 dispersionFactor）** ≥0 | halfSpread=(ior−1)·0.025·dispersion，R/G/B 三 IOR 三采样（红最低、蓝最高，绿基准） | 需 transmission 生效 |
 
-**T5/T6 材质统一限制**：材质实例运行时 `setProperty` 不作用于已绑定 model 的渲染 pass
-（构造期值正常）；透射排序按透明队列 BACK_TO_FRONT，相交玻璃体次序不保证；折射为当前帧
+**T6 透射管线**：scene color 绑定目标是 renderer 的**渲染材质实例**
+（`renderer.getMaterialInstance(0)`，非共享模板材质）；renderer 归属由 capture 所有权表管理
+（多 capture 不互相覆写；destroy/disable 释放引用）。
+**T5/T6 材质统一限制**：透射排序按透明队列 BACK_TO_FRONT，相交玻璃体次序不保证；折射为当前帧
 scene color 单采样（无逐物体递归、无 roughness mip 链）。
 
 ## 官方对照

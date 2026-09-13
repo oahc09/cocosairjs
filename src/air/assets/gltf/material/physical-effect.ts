@@ -161,9 +161,10 @@ export function gltfPhysicalEffect (): EffectAsset {
             // Texture modulation happens where v_uv is in scope: inside main, below the
             // in-variable declarations. A file-global carries the product into the shading
             // function, which only references it (declaration before the function is legal).
-            const texVar = `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecTex = vec3(1.0);\n#endif\n`
+            const texVar = `#if USE_AIR_SPECULAR_MAP\nfloat airSpecScale = 1.0;\n#endif\n`
+                + `#if USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecColor = vec3(1.0);\n#endif\n`
                 + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n`
-                + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\n#endif\n`
+                + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\nfloat airAnisoStrength = 0.0;\n#endif\n`
                 + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n`
                 + `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
             // Insert after the leading `precision` statement: float types need a precision
@@ -193,7 +194,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             }
             // 2. shading injections apply only to shaders carrying the standard body;
             // shadow-caster variants share the grown declarations but no specular math.
-            const specularMix = 'vec3 specular = mix(vec3(0.08 * s.specularIntensity), s.albedo.rgb, s.metallic);';
+            const specularMix = 'vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);\nvec3 specular = mix(vec3(0.08 * s.specularIntensity), s.albedo.rgb, s.metallic);';
             if (!frag.includes(specularMix)) { stage.frag = frag; continue; }
             //    emissive strength
             frag = frag.replace('s.emissive = emissive.rgb * emissiveScaleParam.xyz',
@@ -225,18 +226,30 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '}',
                 '#endif',
             ].join(nl);
+            // KHR_materials_specular is a DIELECTRIC-only adjustment: the factor/color/texture
+            // scale the dielectric F0 base (texture.a per spec), metal F0 (albedo) is untouched,
+            // and the Fresnel remainder attenuates diffuse so energy is conserved.
             const airSpec = [
-                `vec3 airBase = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`,
+                `vec3 airDielectric = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`,
+                '#if USE_AIR_SPECULAR_COLOR',
+                `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`,
+                '#endif',
+                '#if USE_AIR_SPECULAR_MAP',
+                'airDielectric *= airSpecScale;',
+                '#endif',
+                '#if USE_AIR_SPECULAR_COLOR_MAP',
+                'airDielectric *= airSpecColor;',
+                '#endif',
                 '#if USE_AIR_IRIDESCENCE',
                 `{`,
                 `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`,
-                `if (iriF > 0.0) { airBase = mix(airBase, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`,
+                `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`,
                 `}`,
                 `#endif`,
-                `vec3 airSpec = mix(airBase, s.albedo.rgb, s.metallic);`,
-                `#if USE_AIR_SPECULAR_COLOR\nairSpec *= ${PHYSICAL_COLOR_CONSTANT}.rgb;\n#endif`,
-                `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nairSpec *= airSpecTex;\n#endif`,
-                'vec3 specular = airSpec;',
+                `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
+                // diffuse stays metal-gated; dielectric diffuse loses the reflected fraction (energy).
+                `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric * (1.0 - s.metallic));`,
+                `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`,
             ].join('\n');
             frag = frag.replace(specularMix, airSpec);
             // Clearcoat second-lobe direct term (layer F0 0.04, Schlick, GGX via engine helper).
@@ -283,7 +296,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             const anisoFn = [
                 '#if USE_AIR_ANISOTROPY',
                 'float airAnisoVisibility (float roughness, vec3 N, vec3 H, vec3 V, vec3 L) {',
-                `float anS = clamp(${ANISO_CONSTANT}.x, 0.0, 1.0);`,
+                'float anS = clamp(airAnisoStrength, 0.0, 1.0);',
                 'float alpha = max(roughness * roughness, 0.002);',
                 'float at = max(alpha * (1.0 + anS), 0.002);',
                 'float ab = max(alpha / (1.0 + anS), 0.002);',
@@ -304,7 +317,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             if (!frag.includes(specLine)) { throw new Error(`physical effect: specularContrib missing in ${shader.name} [${language}]`); }
             frag = frag.replace(specLine,
                 '#if USE_AIR_ANISOTROPY\n'
-                + `vec3 specularContrib = specular * mix(CalcSpecular(s.roughness, NH, H, N), airAnisoVisibility(s.roughness, N, H, V, L), clamp(${ANISO_CONSTANT}.x, 0.0, 1.0));\n`
+                + `vec3 specularContrib = specular * mix(CalcSpecular(s.roughness, NH, H, N), airAnisoVisibility(s.roughness, N, H, V, L), clamp(airAnisoStrength, 0.0, 1.0));\n`
                 + '#else\n' + specLine + '\n#endif');
             // Define the helper above the shading function that uses it.
             const shadingDecl = 'vec4 CCStandardShadingBase (StandardSurface s, vec4 shadowPos) {';
@@ -339,8 +352,11 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '#if USE_AIR_DISPERSION',
                 `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`,
                 'if (trDisp > 0.0) {',
-                'float trIorR = max(trIor - trDisp, 1.001);',
-                'float trIorB = trIor + trDisp;',
+                // Spec: stored dispersion = 20/Abbe; halfSpread = (ior - 1) * 0.025 * dispersion,
+                // giving iors = vec3(ior - halfSpread, ior, ior + halfSpread) (red lowest, blue highest).
+                'float trHalf = (trIor - 1.0) * 0.025 * trDisp;',
+                'float trIorR = max(trIor - trHalf, 1.0001);',
+                'float trIorB = trIor + trHalf;',
                 'vec2 trRV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorR)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;',
                 'vec2 trBV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorB)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;',
                 'vec2 uvR = clamp(trScreen + trRV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
@@ -361,10 +377,10 @@ export function gltfPhysicalEffect (): EffectAsset {
             frag = frag.replace(returnAnchor, transmission);
             const modulate = [
                 '#if USE_AIR_SPECULAR_MAP',
-                `airSpecTex *= 2.0 * ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.g;`,
+                `airSpecScale = ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.a;`, // spec: strength is the ALPHA channel, no 2x
                 '#endif',
                 '#if USE_AIR_SPECULAR_COLOR_MAP',
-                `airSpecTex *= ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`,
+                `airSpecColor = ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`,
                 '#endif',
                 '#if USE_AIR_CLEARCOAT',
                 `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`,
@@ -394,6 +410,7 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '#endif',
                 '#if USE_AIR_ANISOTROPY',
                 '{',
+                `airAnisoStrength = ${ANISO_CONSTANT}.x;`,
                 'vec3 aN0 = normalize(v_normal);',
                 '#if USE_NORMAL_MAP',
                 'vec3 aT = normalize(v_tangent.xyz);',
@@ -404,9 +421,13 @@ export function gltfPhysicalEffect (): EffectAsset {
                 'vec3 aB = cross(aN0, aT);',
                 '#endif',
                 `#if USE_AIR_ANISOTROPY_MAP`,
-                `vec3 aDir = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz * 2.0 - 1.0;`,
+                // Spec: R,G in [-1,1] tangent/bitangent encode the anisotropic direction;
+                // B is unremapped [0,1] strength multiplied into anisotropyStrength.
+                `vec3 aTex = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz;`,
+                'vec2 aDir = vec2(aTex.x, aTex.y) * 2.0 - 1.0;',
                 'vec3 aNewT = aDir.x * aT + aDir.y * aB;',
                 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }',
+                'airAnisoStrength *= aTex.z;',
                 '#endif',
                 `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`,
                 'airAnisoT = aT * aRotC + aB * aRotS;',

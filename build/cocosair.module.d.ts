@@ -32949,6 +32949,8 @@ export namespace utils {
         support?(): GLTFExtensionSupport;
         validate?(context: __private._air_assets_gltf_parser_context__GLTFParserContext): void;
         loadBufferView?(index: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<Uint8Array | null>;
+        /** Declares it can decompress views whose parent buffer is a no-URI placeholder (meshopt). */
+        readonly providesPlaceholders?: boolean;
         loadPrimitive?(primitiveIndex: number, meshIndex: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<DecodedPrimitive | null>;
         resolveTextureSource?(textureIndex: number, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<DecodedTextureSource | null>;
         extendMaterial?(materialIndex: number, features: GLTFMaterialFeatures, context: __private._air_assets_gltf_parser_context__GLTFParserContext): Promise<void> | void;
@@ -33140,8 +33142,6 @@ export namespace utils {
         readonly physical: Record<string, unknown>;
         unlit: boolean;
     }
-    /** Called by the glTF material builder for transmission/volume/dispersion materials. */
-    export function registerTransmissionMaterial(material: Material): void;
     /** Transmission meshes move to this layer so the scene-color pass skips them. */
     export const TRANSMISSION_LAYER: number;
     /**

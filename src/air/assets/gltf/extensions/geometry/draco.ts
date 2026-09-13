@@ -65,8 +65,18 @@ export const dracoCompressionFactory: GLTFExtensionFactory = (context: GLTFParse
             const definition = primitive.extensions?.[KHR_DRACO_MESH_COMPRESSION] as DracoCompressionDef | undefined;
             if (!definition) { return Promise.resolve(null); }
             if (!decoder) {
-                throw new GLTFError('GLTF_DECODER_MISSING',
-                    `${KHR_DRACO_MESH_COMPRESSION}: configure a decoder with setDRACODecoder()`, KHR_DRACO_MESH_COMPRESSION);
+                // Optional extension without a decoder: skip Draco and fall through to the
+                // primitive's core accessors. Required: fail cleanly (never opaque-as-supported).
+                if (ctx.json.extensionsRequired?.includes(KHR_DRACO_MESH_COMPRESSION)) {
+                    throw new GLTFError('GLTF_DECODER_MISSING',
+                        `${KHR_DRACO_MESH_COMPRESSION}: configure a decoder with setDRACODecoder()`, KHR_DRACO_MESH_COMPRESSION);
+                }
+                if (!primitive.attributes || primitive.attributes.POSITION === undefined) {
+                    throw new GLTFError('GLTF_DECODER_MISSING',
+                        `${KHR_DRACO_MESH_COMPRESSION}: optional extension has no core fallback attribute and no decoder`, KHR_DRACO_MESH_COMPRESSION);
+                }
+                ctx.warn(`extension ${KHR_DRACO_MESH_COMPRESSION}: no decoder configured, loading core fallback attributes`);
+                return Promise.resolve(null);
             }
             return ctx.dependency(DependencyKeys.primitive(meshIndex, primitiveIndex),
                 () => decodePrimitive(ctx, meshIndex, primitiveIndex, definition, decoder));
