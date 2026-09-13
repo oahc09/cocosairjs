@@ -11,7 +11,7 @@ import type { TextureInfo } from './schema';
 import { GLTFMaterialFeatures, TEXTURE_SLOTS, TextureSlotName } from './material/features';
 import { coreTextureCoordinates } from './material/texture-slots';
 import type { PhysicalScalars } from './material/features';
-import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT } from './material/physical-effect';
+import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT, CLEARCOAT_CONSTANT } from './material/physical-effect';
 import type { DecodedTextureSource } from './decoder/types';
 import { KTX2_RAW_MIME } from './decoder/types';
 import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/image-formats';
@@ -21,6 +21,8 @@ const UV_SLOTS = [
     ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'],
     ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'],
     ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'],
+    ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'],
+    ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'],
 ] as const;
 const UV_UNIFORMS = UV_SLOTS.map(([, , prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([, , prefix]) => `${prefix}UV1`));
 
@@ -234,6 +236,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         CC_FORCE_FORWARD_SHADING: true };
     const slots: TextureSlotName[] = [...TEXTURE_SLOTS];
     const specExt = source.extensions?.KHR_materials_specular as { specularTexture?: TextureInfo; specularColorTexture?: TextureInfo } | undefined;
+    const ccExt = source.extensions?.KHR_materials_clearcoat as { clearcoatTexture?: TextureInfo; clearcoatRoughnessTexture?: TextureInfo; clearcoatNormalTexture?: TextureInfo } | undefined;
     const maps = [
         [pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'],
         [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'],
@@ -242,6 +245,9 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'],
         [specExt?.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'],
         [specExt?.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'],
+        [ccExt?.clearcoatTexture, 'clearcoatMap', 'USE_AIR_CLEARCOAT_MAP', 'CLEARCOAT_UV'],
+        [ccExt?.clearcoatRoughnessTexture, 'clearcoatRoughnessMap', 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP', 'CLEARCOATROUGHNESS_UV'],
+        [ccExt?.clearcoatNormalTexture, 'clearcoatNormalMap', 'USE_AIR_CLEARCOAT_NORMAL_MAP', 'CLEARCOATNORMAL_UV'],
     ] as const;
     for (const [index, [info, , macro, uv]] of maps.entries()) {
         defines[macro] = !!info;
@@ -259,10 +265,17 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
     const specularColor = physical.specular?.color;
     const colorActive = !!specularColor && specularColor.some((v) => Math.abs(v - 1) > 1e-6);
     const physicalScalar = !unlit && (needsPhysicalEffect(ior, specularFactor0, emissiveStrength) || colorActive);
-    const physicalMaps = !!specExt?.specularTexture || !!specExt?.specularColorTexture;
-    const usePhysical = physicalScalar || (!unlit && physicalMaps);
+    const clearcoat = physical.clearcoat;
+    const clearcoatScalar = !unlit && !!clearcoat && clearcoat.factor > 0;
+    const physicalMaps = !!specExt?.specularTexture || !!specExt?.specularColorTexture
+        || !!ccExt?.clearcoatTexture || !!ccExt?.clearcoatRoughnessTexture || !!ccExt?.clearcoatNormalTexture;
+    const usePhysical = physicalScalar || clearcoatScalar || (!unlit && physicalMaps);
     const definesForPhysical: MacroRecord = {};
     if (physicalScalar) { definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive; }
+    if (!unlit && clearcoat) {
+        definesForPhysical.USE_AIR_CLEARCOAT = clearcoat.factor > 0 || defines.USE_AIR_CLEARCOAT_MAP === true
+            || defines.USE_AIR_CLEARCOAT_ROUGHNESS_MAP === true || defines.USE_AIR_CLEARCOAT_NORMAL_MAP === true;
+    }
     const material = new Material();
     try {
         const effect = usePhysical ? gltfPhysicalEffect() : gltfEffect();
@@ -292,6 +305,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         check(Number.isFinite(source.normalTexture?.scale ?? 1), 'invalid normal scale');
         if (usePhysical) {
             material.setProperty(PHYSICAL_CONSTANT, physicalParams(ior, specularFactor0, emissiveStrength));
+            if (clearcoat) { material.setProperty(CLEARCOAT_CONSTANT, new Vec4(clearcoat.factor, clearcoat.roughness, clearcoat.normalScale, 1)); }
             if (colorActive) { material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor![0], specularColor![1], specularColor![2], 1)); }
         }
         material.setProperty('emissiveScaleParam', new Vec4(1, 1, 1, source.normalTexture?.scale ?? 1));

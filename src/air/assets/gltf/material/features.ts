@@ -3,7 +3,7 @@ import { coreTextureCoordinates, TextureCoordinates } from './texture-slots';
 
 /** Texture slot names shared by feature population and material construction. */
 export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive',
-    'specular', 'specularColor'] as const;
+    'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal'] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
 /**
@@ -28,6 +28,8 @@ export interface PhysicalScalars {
     ior?: number;
     /** KHR_materials_specular: strength factor (2x) + optional per-channel RGB color. */
     specular?: { factor0: number; factor1: number; color?: number[] };
+    /** KHR_materials_clearcoat: second GGX layer ([0,1] scalars, layer F0 fixed 0.04). */
+    clearcoat?: { factor: number; roughness: number; normalScale: number };
 }
 
 /** Type-narrowing helper for the shared physical record. */
@@ -47,6 +49,12 @@ export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): T
         { specularTexture?: TextureInfo } | undefined)?.specularTexture;
     case 'specularColor': return (source.extensions?.KHR_materials_specular as
         { specularColorTexture?: TextureInfo } | undefined)?.specularColorTexture;
+    case 'clearcoat': return (source.extensions?.KHR_materials_clearcoat as
+        { clearcoatTexture?: TextureInfo } | undefined)?.clearcoatTexture;
+    case 'clearcoatRoughness': return (source.extensions?.KHR_materials_clearcoat as
+        { clearcoatRoughnessTexture?: TextureInfo } | undefined)?.clearcoatRoughnessTexture;
+    case 'clearcoatNormal': return (source.extensions?.KHR_materials_clearcoat as
+        { clearcoatNormalTexture?: TextureInfo } | undefined)?.clearcoatNormalTexture;
     }
 }
 

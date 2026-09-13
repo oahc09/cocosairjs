@@ -195,3 +195,25 @@
 - 如实记录：ior 单独作用为掠射角 Fresnel 效应，平面对置相机时像素差低于量化阈值，
   渲染端强信号由 emissive strength 承担（帧差断言）；官方 Khronos specular 样例的
   像素级对照归 T8 矩阵。
+
+
+## V0.5 T5.2（一）— KHR_materials_clearcoat（2026-09-13）
+- 同一 air-gltf-physical effect 叠加 clearcoat 层：UBO 追加 `airClearcoat=(factor,roughness,
+  normalScale,1)`（稳定 superset，偏移不扰动 T5.1 字段）、宏 USE_AIR_CLEARCOAT* + CLEARCOAT*_UV、
+  采样器 17/18/19；direct 第二 GGX 瓣（层 F0 0.04 + Schlick，主光近似）、IBL 层反射（仅启用
+  IBL 时）、emissive 层吸收 (1-factor·Fresnel)。
+- 纹理槽 8-10（clearcoat/Roughness/Normal，规范通道 R/G/XYZ，支持 texCoord+transform）；
+  切线路径有 normal 贴图用 TBN、无切线用规范正交基近似（如实记录，官方对照归 T8）。
+- handler 校验 [0,1] 全域 + scale 合法；factor=0 回退标准 effect（clearcoatScalar 规则）。
+- 修复过程三个真实驱动问题：UBO 跨阶段字段数（vert+frag 同步生长）、glsl3 拒绝显式 layout
+  （改按名绑定）、airSpecTex/高光纹理采样前向引用 in 变量（全局+main 赋值模式，纹理通道
+  调制与 clearcoat 法线同路径）。
+- 测试：smoke-16 6 项；全量 16 suites / 99 tests PASS；typecheck/verify:web-only/esm/min/dts/
+  NodeNext 消费全绿。
+- 浏览器证据：gltf-clearcoat-browser.js（真实 WebGL2：air-gltf-physical+clearcoat 瓣编译零
+  GL 错误、选择/uniform/采样器断言 ok:true）；gltf-physical-browser.js 帧指标改为
+  strength4-vs-identity 同材料对照（604 vs 420，emissive_strength 直接因果）。
+- 如实记录（两项）：① 材质实例运行时 setProperty 物理 uniform 不作用于已绑定 model 的
+  渲染 pass（构造期上传正常，证据均依赖构造期值）——渲染器级问题，非扩展解析问题；
+  ② 平面对照面的固定框亮度差受阴影遮挡污染，clearcoat/ior 的像素级外观对照归 T8 官方
+  场景矩阵。

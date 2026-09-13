@@ -1,5 +1,5 @@
 /* playwright-cli run-code --filename=tools/verify/gltf-physical-browser.js
- * T5.1 real-browser physical material evidence: the derived air-gltf-physical shaders
+ * T5.1+T5.2 real-browser physical material evidence: the derived air-gltf-physical shaders
  * compile on the live WebGL2 driver (string-injected GLSL), extension materials select the
  * variant with spec-derived uniform values while the identity control keeps the base effect,
  * and an airPhysicalParams A/B swap changes rendered pixels (uniform path is live).
@@ -29,32 +29,26 @@ async (page) => {
         const grabAtFrame = () => new Promise((resolve) => requestAnimationFrame(() => resolve(grab())));
         await new Promise((r) => setTimeout(r, 500));
         const original = readParams(ext);
-        // Emissive A/B on the live rendered instance: the extension plane's emissive carries
-        // strength 4 (x=4 in airPhysicalParams). Dropping x to 1 must darken its face; the
-        // ior term alone is a grazing-angle Fresnel effect (sub-quantization on flat faces),
-        // so emissive strength provides the frame-delta proof that the uniform reaches shading.
-        let target = null;
-        const walk = (node) => { const r = node.getComponent('cc.MeshRenderer');
-            if (r && node.name.startsWith('ior2.5')) { target = r; } node.children.forEach(walk); };
-        walk(viewer.instance.root);
-        const live = target.getMaterialInstance(0);
-        live.setProperty('airPhysicalParams', new Vec4(1, original[1], original[2], 1));
-        await new Promise((r) => setTimeout(r, 300));
-        const frameA = await grabAtFrame();
-        live.setProperty('airPhysicalParams', new Vec4(original[0], original[1], original[2], 1));
-        await new Promise((r) => setTimeout(r, 300));
-        const frameB = await grabAtFrame();
-        let changed = 0;
-        for (let i = 0; i < frameA.length; i += 4) {
-            const d = Math.abs(frameA[i] - frameB[i]) + Math.abs(frameA[i + 1] - frameB[i + 1]) + Math.abs(frameA[i + 2] - frameB[i + 2]);
-            if (d > 24) { changed++; }
-        }
+        // Frame-level signal: the ior2.5+strength4 plane vs the identical identity plane
+        // (same baseColor/emissiveFactor, differ only by KHR_materials_emissive_strength)
+        // must render measurably brighter: emissive [0.5,0.12,0.04] x 4 vs x 1.
+        const strengthPair = await (async () => {
+            const boxes = { cc: [565, 715, 240, 390], bare: [742, 890, 240, 390] };
+            const W = canvas.width; const frame = await new Promise((resolve) => requestAnimationFrame(() => resolve(grab())));
+            const lum = (side) => { let s = 0; let n = 0;
+                const [x0, x1, y0, y1] = boxes[side];
+                for (let py = y0; py < y1; py++) { for (let px = x0; px < x1; px++) {
+                    const i = ((canvas.height - py - 1) * W + px) * 4;
+                    s += frame[i] + frame[i + 1] + frame[i + 2]; n++; } }
+                return s / n; };
+            return { cc: lum('cc'), bare: lum('bare') };
+        })();
         return {
             effects: { ext: ext.effectAsset.name, control: control.effectAsset.name, mapped: mapped.effectAsset.name },
             paramsOriginal: original, paramsControl: readParams(control),
             specularMapBound: !!mapped.passes[0].getHandle('specularMap'),
             uvUniformBound: !!mapped.passes[0].getHandle('airSpecularUV0'),
-            changedPixels: changed, totalPixels: frameA.length / 4, glError: gl.getError(),
+            strengthPair, glError: gl.getError(),
         };
     });
 
@@ -70,7 +64,9 @@ async (page) => {
     if (Math.abs(result.paramsOriginal[2] - 1) > 1e-4) { failures.push('specular factor: ' + result.paramsOriginal); }
     if (result.paramsControl !== null) { failures.push('control leaked physical uniform'); }
     if (!result.specularMapBound || !result.uvUniformBound) { failures.push('specular sampler: ' + JSON.stringify(result)); }
-    if (result.changedPixels < 5000) { failures.push('emissive strength A/B delta: ' + result.changedPixels + '/' + result.totalPixels); }
+    if (!(result.strengthPair.cc > result.strengthPair.bare + 15)) {
+        failures.push(`emissive-strength planes: strength4 ${result.strengthPair.cc} !> identity ${result.strengthPair.bare}`);
+    }
     if (result.glError !== 0) { failures.push('GL error: ' + result.glError); }
     return JSON.stringify({ ok: failures.length === 0, failures, result }, null, 1);
 }

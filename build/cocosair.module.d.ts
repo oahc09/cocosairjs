@@ -46557,7 +46557,10 @@ export namespace utils {
             "occlusion",
             "emissive",
             "specular",
-            "specularColor"
+            "specularColor",
+            "clearcoat",
+            "clearcoatRoughness",
+            "clearcoatNormal"
         ];
         export type _air_assets_gltf_material_features__TextureSlotName = (typeof _air_assets_gltf_material_features__TEXTURE_SLOTS)[number];
         export interface _air_assets_gltf_material_texture_slots__TextureCoordinates {

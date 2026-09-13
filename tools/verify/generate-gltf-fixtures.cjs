@@ -114,7 +114,7 @@ fs.writeFileSync(path.join(out, 'scene.glb'), Buffer.from(mod.exports.toGLB(scen
 
 // --- physical.glb: T5.1 KHR_materials_ior / specular / emissive_strength fixtures ---
 const phys = { asset: { version: '2.0', generator: 'cocosair physical fixtures (MIT)' },
-    extensionsUsed: ['KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_emissive_strength'], extensionsRequired: [],
+    extensionsUsed: ['KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_emissive_strength', 'KHR_materials_clearcoat', 'KHR_lights_punctual'], extensionsRequired: [],
     buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [], images: [], textures: [],
     samplers: [{ magFilter: 9729, minFilter: 9729, wrapS: 10497, wrapT: 10497 }],
     meshes: [], nodes: [], scenes: [{ nodes: [] }], scene: 0 };
@@ -143,12 +143,21 @@ phys.materials = [
         emissiveFactor: [0.5, 0.12, 0.04] },
     { name: 'specular map', pbrMetallicRoughness: { baseColorFactor: [0.8, 0.8, 0.85, 1], metallicFactor: 0.2, roughnessFactor: 0.25 },
         extensions: { KHR_materials_specular: { specularTexture: { index: 0 } } } },
+    { name: 'clearcoat red', pbrMetallicRoughness: { baseColorFactor: [0.7, 0.04, 0.04, 1], metallicFactor: 0, roughnessFactor: 0.25 },
+        extensions: { KHR_materials_clearcoat: { clearcoatFactor: 1, clearcoatRoughnessFactor: 0.15 } } },
+    { name: 'bare red', pbrMetallicRoughness: { baseColorFactor: [0.7, 0.04, 0.04, 1], metallicFactor: 0, roughnessFactor: 0.25 } },
 ];
-for (let i = 0; i < 3; i++) {
+const offsets = [[-1.2, 0, 0], [0, 0, 0], [1.2, 0, 0], [-0.6, -1.15, 0], [0.6, -1.15, 0]];
+for (let i = 0; i < 5; i++) {
     phys.meshes.push({ primitives: [{ attributes: { POSITION: physPos, NORMAL: physNrm, TEXCOORD_0: physUv }, material: i }] });
-    phys.nodes.push({ mesh: i, name: phys.materials[i].name, translation: [(i - 1) * 1.2, 0, 0] });
+    phys.nodes.push({ mesh: i, name: phys.materials[i].name, translation: offsets[i] });
     phys.scenes[0].nodes.push(i);
 }
+phys.nodes.push({ name: 'gloss', translation: [0, 0.4, 3.2], extensions: { KHR_lights_punctual: { light: 0 } } });
+phys.scenes[0].nodes.push(5);
+phys.extensions = { KHR_lights_punctual: { lights: [
+    { name: 'gloss', type: 'directional', color: [1, 1, 1], intensity: 2000 },
+] } };
 phys.buffers[0].byteLength = physSize;
 const physBin = Buffer.concat(physChunks);
 const physBuf = physBin.buffer.slice(physBin.byteOffset, physBin.byteOffset + physBin.byteLength);
