@@ -49,7 +49,11 @@
             <section class="details">
                 <div id="load-status" role="status" aria-live="polite">目录就绪后会加载本地纹理立方体。</div>
                 <div class="detail-links"><a id="official-link" target="_blank" rel="noopener noreferrer">官方预览 ↗</a><a id="model-source" target="_blank" rel="noopener noreferrer">模型说明 / 许可 ↗</a><a id="asset-link" target="_blank" rel="noopener noreferrer">源文件 ↗</a></div>
-                <p>目录收录不等于引擎已支持。压缩与高级扩展以实际加载结果为准；相机、环境和曝光差异也会影响两侧观感。</p>
+                <details id="capabilities"><summary>扩展支持矩阵（由 capabilities.json 生成）</summary>
+                <div id="capability-rows"></div>
+                <p id="capability-meta"></p>
+            </details>
+            <p>目录收录不等于引擎已支持。压缩与高级扩展以实际加载结果为准；相机、环境和曝光差异也会影响两侧观感。</p>
                 <button id="retry" hidden>重新加载 AIR</button>
             </section>
         </main>

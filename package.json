@@ -30,6 +30,7 @@
     "analyze": "node tools/analyze/dep-graph.cjs",
     "typecheck": "tsc -p tsconfig.json",
     "verify:decoders": "node tools/verify/decoder-audit.cjs",
+    "capabilities": "node tools/verify/update-capabilities.cjs",
     "verify:web-only": "node tools/verify/verify-web-only.cjs",
     "test": "jest",
     "dev": "node tools/dev/dev-server.cjs"

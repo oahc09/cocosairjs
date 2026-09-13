@@ -290,3 +290,16 @@
   （实测命中 key-mismatch→重建→hit 链路）。
 - 门控：typecheck 0；19 suites / 114 tests PASS；verify:web-only PASSED；esm（缓存 hit）/min/dts +
   NodeNext 消费全绿；verify:decoders ok:true。
+
+
+## V0.5 T8（部分）— capabilities 机读矩阵（2026-09-13）
+- `examples/gltf-catalog/capabilities.json`（`npm run capabilities` 重生成，两段式：
+  `capabilities-runtime-browser.js` 取 registry+设备+默认配置的**实时** status →
+  `update-capabilities.cjs` 合并证据表并落盘；missing-handler 直接失败退出）。
+- 契约内容：engineVersion、catalogRevision（与目录同源）、decoderManifest 指针、5 个稳定
+  GLTFError 码、18 项扩展（status/reason + verified{level,smoke,evidence,decoder} +
+  officialComparison{model,available,comparison:pending-T8}）。当前 14 项 browser-evidence、
+  4 项 smoke-only、0 项仅目录收录；未实现的 transmission/volume/dispersion 不在矩阵中
+  （registry 只报已注册 handler——诚实源）。
+- 目录页新增"扩展支持矩阵"折叠区（capabilities.json 直接渲染）；gltf-catalog-browser.js
+  扩展断言：行数=JSON 条目、errorCodes=5、revision=40 位——证据链闭环。

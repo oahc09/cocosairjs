@@ -1,0 +1,276 @@
+{
+  "engine": "cocosair",
+  "engineVersion": "0.1.0",
+  "generatedAt": "2026-09-13T10:50:02.490Z",
+  "catalogRevision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+  "decoderManifest": "build/gltf-decoders/MANIFEST.md",
+  "errorCodes": [
+    "GLTF_EXTENSION_UNSUPPORTED",
+    "GLTF_DECODER_MISSING",
+    "GLTF_DEVICE_UNSUPPORTED",
+    "GLTF_EXTENSION_INVALID",
+    "GLTF_DECODE_FAILED"
+  ],
+  "extensions": [
+    {
+      "name": "KHR_materials_unlit",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-07/10",
+        "evidence": "gltf-browser.js",
+        "decoder": null
+      },
+      "officialComparison": null
+    },
+    {
+      "name": "KHR_texture_transform",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-07",
+        "evidence": "texture-transform-browser.js",
+        "decoder": null
+      },
+      "officialComparison": null
+    },
+    {
+      "name": "KHR_mesh_quantization",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "smoke",
+        "smoke": "smoke-11",
+        "evidence": null,
+        "decoder": null
+      },
+      "officialComparison": null
+    },
+    {
+      "name": "EXT_meshopt_compression",
+      "status": "decoder-required",
+      "reason": "configure a decoder with setMeshoptDecoder()",
+      "verified": {
+        "level": "smoke",
+        "smoke": "smoke-11",
+        "evidence": null,
+        "decoder": "meshopt/meshopt_decoder.cjs"
+      },
+      "officialComparison": null
+    },
+    {
+      "name": "KHR_meshopt_compression",
+      "status": "decoder-required",
+      "reason": "configure a decoder with setMeshoptDecoder()",
+      "verified": {
+        "level": "smoke",
+        "smoke": "smoke-11",
+        "evidence": null,
+        "decoder": "meshopt/meshopt_decoder.cjs"
+      },
+      "officialComparison": null
+    },
+    {
+      "name": "KHR_draco_mesh_compression",
+      "status": "decoder-required",
+      "reason": "configure a decoder with setDRACODecoder()",
+      "verified": {
+        "level": "smoke",
+        "smoke": "smoke-11",
+        "evidence": null,
+        "decoder": "draco/draco3d.js"
+      },
+      "officialComparison": null
+    },
+    {
+      "name": "KHR_materials_emissive_strength",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-15",
+        "evidence": "gltf-physical-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "MaterialEmissiveStrengthTest",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_materials_ior",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-15",
+        "evidence": "gltf-physical-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "MaterialIORTest",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_materials_specular",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-15",
+        "evidence": "gltf-physical-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "MaterialsVariantsShading",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_materials_clearcoat",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-16",
+        "evidence": "gltf-clearcoat-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "MaterialsVariantsShading",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_materials_anisotropy",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-17",
+        "evidence": "gltf-anisotropy-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "AnisotropyPlane",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_materials_iridescence",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-18",
+        "evidence": "gltf-iridescence-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "IridescenceDielectricSpheres",
+        "available": true,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "EXT_materials_bump",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-19",
+        "evidence": "gltf-bump-browser.js",
+        "decoder": null
+      },
+      "officialComparison": null
+    },
+    {
+      "name": "KHR_texture_basisu",
+      "status": "decoder-required",
+      "reason": "configure setKTX2Transcoder / createKTX2Transcoder",
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-14",
+        "evidence": "gltf-ktx2-browser.js",
+        "decoder": "basis/basis_transcoder.js"
+      },
+      "officialComparison": {
+        "model": "KhronosBasisuSampleSet",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "EXT_texture_webp",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-13",
+        "evidence": "gltf-webp-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "WebpTest",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "EXT_texture_avif",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-13",
+        "evidence": "gltf-webp-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "AvifTest",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_lights_punctual",
+      "status": "supported",
+      "reason": null,
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-12",
+        "evidence": "gltf-scene-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "LightingPunctualLights",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "EXT_mesh_gpu_instancing",
+      "status": "supported",
+      "reason": "correctness path: expansion to shared-asset child nodes",
+      "verified": {
+        "level": "browser-evidence",
+        "smoke": "smoke-12",
+        "evidence": "gltf-scene-browser.js",
+        "decoder": null
+      },
+      "officialComparison": {
+        "model": "SimpleInstancing",
+        "available": true,
+        "comparison": "pending-T8"
+      }
+    }
+  ]
+}

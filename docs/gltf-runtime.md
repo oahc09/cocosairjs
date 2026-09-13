@@ -83,6 +83,10 @@ asset.decRef(); // 业务不再持有
 | 蒙皮 | 多 skin、共享 skin、非关节祖先、任意 joint 顺序、有/无 inverseBindMatrices、JOINTS_0/WEIGHTS_0 四权重、原生实时蒙皮 |
 | 动画 | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化 |
 | Morph | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重 |
+> 机器可读支持矩阵：`examples/gltf-catalog/capabilities.json`（`npm run capabilities` 重新生成）。
+> 每个扩展携带 registry 实时 status、decoder/设备要求、自动化证据（smoke / 真机浏览器脚本）、
+> 计划对照的官方模型与 catalog revision；稳定错误码清单在 `errorCodes`。V0.5.1 直接消费本文件。
+
 | 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_anisotropy、KHR_materials_iridescence、EXT_materials_bump、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
 
 `KHR_texture_transform` 支持每个 textureInfo 独立的 `offset`、`rotation`（弧度）、`scale` 和 `texCoord` 覆盖，作用于 baseColor、metallicRoughness、normal、occlusion、emissive。变换围绕 UV 原点应用，支持负缩放；UV 通道仍限于 UV0/UV1。共享纹理可以在不同材质槽使用不同变换，网格 UV 不会被改写。缺少切线时，法线贴图使用有效 UV 通道及其变换生成切线。
