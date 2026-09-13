@@ -23,8 +23,15 @@ const catalog = JSON.parse(fs.readFileSync(path.join(root, 'examples/gltf-catalo
 const PW = process.env.PWCLI || 'C:/Users/caosh/.agents/skills/playwright/scripts/playwright_cli.sh';
 
 function liveMatrix () {
-    const out = execSync(`bash "${PW}" run-code --filename=tools/verify/capabilities-runtime-browser.js`,
-        { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    const command = `bash "${PW}" run-code --filename=tools/verify/capabilities-runtime-browser.js`;
+    let out;
+    try {
+        out = execSync(command, { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    } catch (error) {
+        if (!/is not open/.test(String(error.stdout) + String(error.stderr) + error.message)) { throw error; }
+        execSync(`bash "${PW}" open about:blank`, { cwd: root, stdio: 'ignore' });
+        out = execSync(command, { cwd: root, encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+    }
     const line = out.split('\n').find((l) => l.trim().startsWith('"{'));
     if (!line) { throw new Error('no ### Result payload from the browser script'); }
     const payload = JSON.parse(JSON.parse(line.trim()));

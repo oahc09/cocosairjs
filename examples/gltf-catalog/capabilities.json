@@ -1,7 +1,7 @@
 {
   "engine": "cocosair",
   "engineVersion": "0.1.0",
-  "generatedAt": "2026-09-13T10:50:02.490Z",
+  "generatedAt": "2026-09-13T12:56:35.782Z",
   "catalogRevision": "90d7ede14c7e280af263824604b427a1ca02cb66",
   "decoderManifest": "build/gltf-decoders/MANIFEST.md",
   "errorCodes": [
@@ -191,6 +191,45 @@
         "decoder": null
       },
       "officialComparison": null
+    },
+    {
+      "name": "KHR_materials_transmission",
+      "status": "device-dependent",
+      "reason": "requires the scene-color transmission pipeline (transmission pipeline not armed)",
+      "verified": {
+        "level": "cataloged"
+      },
+      "officialComparison": {
+        "model": "TransmissionTest",
+        "available": true,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_materials_volume",
+      "status": "device-dependent",
+      "reason": "requires the scene-color transmission pipeline (transmission pipeline not armed)",
+      "verified": {
+        "level": "cataloged"
+      },
+      "officialComparison": {
+        "model": "Volka",
+        "available": false,
+        "comparison": "pending-T8"
+      }
+    },
+    {
+      "name": "KHR_materials_dispersion",
+      "status": "device-dependent",
+      "reason": "requires the scene-color transmission pipeline (transmission pipeline not armed)",
+      "verified": {
+        "level": "cataloged"
+      },
+      "officialComparison": {
+        "model": "DispersionTest",
+        "available": true,
+        "comparison": "pending-T8"
+      }
     },
     {
       "name": "KHR_texture_basisu",

@@ -4,7 +4,7 @@ import { coreTextureCoordinates, TextureCoordinates } from './texture-slots';
 /** Texture slot names shared by feature population and material construction. */
 export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive',
     'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy',
-    'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump'] as const;
+    'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump', 'transmission', 'volumeThickness'] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
 /**
@@ -37,6 +37,12 @@ export interface PhysicalScalars {
     iridescence?: { factor: number; ior: number; thicknessMin: number; thicknessMax: number };
     /** EXT_materials_bump: derivative-based height perturbation (factor >= 0). */
     bump?: { factor: number };
+    /** KHR_materials_transmission: light passing through the opaque background ([0,1], R texture channel). */
+    transmission?: { factor: number };
+    /** KHR_materials_volume: medium thickness (texture scales [0, max] via G) + attenuation. */
+    volume?: { thicknessFactor: number; attenuationDistance: number; attenuationColor: number[] };
+    /** KHR_materials_dispersion: Abbe-like dispersion strength (>= 0), refractive splitting. */
+    dispersion?: { factor: number };
 }
 
 /** Type-narrowing helper for the shared physical record. */
@@ -72,6 +78,10 @@ export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): T
         { iridescenceThicknessTexture?: TextureInfo } | undefined)?.iridescenceThicknessTexture;
     case 'bump': return (source.extensions?.EXT_materials_bump as
         { bumpTexture?: TextureInfo } | undefined)?.bumpTexture;
+    case 'transmission': return (source.extensions?.KHR_materials_transmission as
+        { transmissionTexture?: TextureInfo } | undefined)?.transmissionTexture;
+    case 'volumeThickness': return (source.extensions?.KHR_materials_volume as
+        { thicknessTexture?: TextureInfo } | undefined)?.thicknessTexture;
     }
 }
 

@@ -70057,12 +70057,12 @@ function textureTransform(language, sampler, uv, prefix) {
   return `${language === 'glsl1' ? 'texture2D' : 'texture'}(${sampler}, ${expr})`;
 }
 
-const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive', 'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy', 'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump'];
+const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive', 'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy', 'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump', 'transmission', 'volumeThickness'];
 function physicalScalars(features) {
   return features.physical;
 }
 function slotTextureInfo(source, slot) {
-  var _source$pbrMetallicRo, _source$pbrMetallicRo2, _source$extensions, _source$extensions$KH, _source$extensions2, _source$extensions2$K, _source$extensions3, _source$extensions3$K, _source$extensions4, _source$extensions4$K, _source$extensions5, _source$extensions5$K, _source$extensions6, _source$extensions6$K, _source$extensions7, _source$extensions7$K, _source$extensions8, _source$extensions8$K, _source$extensions9, _source$extensions9$K, _source$extensions10, _source$extensions10$;
+  var _source$pbrMetallicRo, _source$pbrMetallicRo2, _source$extensions, _source$extensions$KH, _source$extensions2, _source$extensions2$K, _source$extensions3, _source$extensions3$K, _source$extensions4, _source$extensions4$K, _source$extensions5, _source$extensions5$K, _source$extensions6, _source$extensions6$K, _source$extensions7, _source$extensions7$K, _source$extensions8, _source$extensions8$K, _source$extensions9, _source$extensions9$K, _source$extensions10, _source$extensions10$, _source$extensions11, _source$extensions11$, _source$extensions12, _source$extensions12$;
   switch (slot) {
     case 'baseColor':
       return (_source$pbrMetallicRo = source.pbrMetallicRoughness) == null ? void 0 : _source$pbrMetallicRo.baseColorTexture;
@@ -70094,6 +70094,10 @@ function slotTextureInfo(source, slot) {
       return (_source$extensions9 = source.extensions) == null ? void 0 : (_source$extensions9$K = _source$extensions9.KHR_materials_iridescence) == null ? void 0 : _source$extensions9$K.iridescenceThicknessTexture;
     case 'bump':
       return (_source$extensions10 = source.extensions) == null ? void 0 : (_source$extensions10$ = _source$extensions10.EXT_materials_bump) == null ? void 0 : _source$extensions10$.bumpTexture;
+    case 'transmission':
+      return (_source$extensions11 = source.extensions) == null ? void 0 : (_source$extensions11$ = _source$extensions11.KHR_materials_transmission) == null ? void 0 : _source$extensions11$.transmissionTexture;
+    case 'volumeThickness':
+      return (_source$extensions12 = source.extensions) == null ? void 0 : (_source$extensions12$ = _source$extensions12.KHR_materials_volume) == null ? void 0 : _source$extensions12$.thicknessTexture;
   }
 }
 function createMaterialFeatures(index, source) {
@@ -71825,6 +71829,148 @@ function bumpFactory(context) {
   };
 }
 
+let available = false;
+let detail = 'transmission pipeline not armed';
+function transmissionPipelineAvailable() {
+  return {
+    available,
+    detail
+  };
+}
+
+function transmissionFactory(context) {
+  const name = 'KHR_materials_transmission';
+  return {
+    name,
+    support() {
+      const cap = transmissionPipelineAvailable();
+      return cap.available ? {
+        name,
+        status: 'supported'
+      } : {
+        name,
+        status: 'device-dependent',
+        reason: `requires the scene-color transmission pipeline (${cap.detail})`
+      };
+    },
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions, _ext$transmissionFact;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        const factor = (_ext$transmissionFact = ext.transmissionFactor) !== null && _ext$transmissionFact !== void 0 ? _ext$transmissionFact : 0;
+        if (typeof factor !== 'number' || !Number.isFinite(factor) || factor < 0 || factor > 1) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: transmissionFactor must be [0,1]`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features) {
+      var _features$source$exte, _ext$transmissionFact2;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (!ext) {
+        return;
+      }
+      physicalScalars(features).transmission = {
+        factor: (_ext$transmissionFact2 = ext.transmissionFactor) !== null && _ext$transmissionFact2 !== void 0 ? _ext$transmissionFact2 : 0
+      };
+    }
+  };
+}
+
+function volumeFactory(context) {
+  const name = 'KHR_materials_volume';
+  return {
+    name,
+    support() {
+      const cap = transmissionPipelineAvailable();
+      return cap.available ? {
+        name,
+        status: 'supported'
+      } : {
+        name,
+        status: 'device-dependent',
+        reason: `requires the scene-color transmission pipeline (${cap.detail})`
+      };
+    },
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions, _ext$thicknessFactor, _ext$attenuationDista, _ext$attenuationColor;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        const thickness = (_ext$thicknessFactor = ext.thicknessFactor) !== null && _ext$thicknessFactor !== void 0 ? _ext$thicknessFactor : 0;
+        if (typeof thickness !== 'number' || !Number.isFinite(thickness) || thickness < 0) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: thicknessFactor must be finite >= 0`, name);
+        }
+        const distance = (_ext$attenuationDista = ext.attenuationDistance) !== null && _ext$attenuationDista !== void 0 ? _ext$attenuationDista : Infinity;
+        if (distance !== Infinity && (typeof distance !== 'number' || !Number.isFinite(distance) || distance <= 0)) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: attenuationDistance must be > 0 or omitted (inf)`, name);
+        }
+        const color = (_ext$attenuationColor = ext.attenuationColor) !== null && _ext$attenuationColor !== void 0 ? _ext$attenuationColor : [1, 1, 1];
+        if (color.length !== 3 || !color.every(v => typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= 1)) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: attenuationColor must be rgb in [0,1]`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features) {
+      var _features$source$exte, _ext$thicknessFactor2, _ext$attenuationDista2, _ext$attenuationColor2;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (!ext) {
+        return;
+      }
+      physicalScalars(features).volume = {
+        thicknessFactor: (_ext$thicknessFactor2 = ext.thicknessFactor) !== null && _ext$thicknessFactor2 !== void 0 ? _ext$thicknessFactor2 : 0,
+        attenuationDistance: (_ext$attenuationDista2 = ext.attenuationDistance) !== null && _ext$attenuationDista2 !== void 0 ? _ext$attenuationDista2 : Infinity,
+        attenuationColor: (_ext$attenuationColor2 = ext.attenuationColor) !== null && _ext$attenuationColor2 !== void 0 ? _ext$attenuationColor2 : [1, 1, 1]
+      };
+    }
+  };
+}
+
+function dispersionFactory(context) {
+  const name = 'KHR_materials_dispersion';
+  return {
+    name,
+    support() {
+      const cap = transmissionPipelineAvailable();
+      return cap.available ? {
+        name,
+        status: 'supported'
+      } : {
+        name,
+        status: 'device-dependent',
+        reason: `requires the scene-color transmission pipeline (${cap.detail})`
+      };
+    },
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions, _ext$dispersionFactor;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        const factor = (_ext$dispersionFactor = ext.dispersionFactor) !== null && _ext$dispersionFactor !== void 0 ? _ext$dispersionFactor : 0;
+        if (typeof factor !== 'number' || !Number.isFinite(factor) || factor < 0) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: dispersionFactor must be finite >= 0`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features) {
+      var _features$source$exte, _ext$dispersionFactor2;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (!ext) {
+        return;
+      }
+      physicalScalars(features).dispersion = {
+        factor: (_ext$dispersionFactor2 = ext.dispersionFactor) !== null && _ext$dispersionFactor2 !== void 0 ? _ext$dispersionFactor2 : 0
+      };
+    }
+  };
+}
+
 function textureTransformFactory(context) {
   return {
     name: 'KHR_texture_transform',
@@ -72309,7 +72455,7 @@ function configureGLTFLoaderDefaults(options) {
 const KNOWN_UNIMPLEMENTED = [];
 class GLTFLoader {
   constructor(options) {
-    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(clearcoatFactory).register(anisotropyFactory).register(iridescenceFactory).register(bumpFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
+    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(clearcoatFactory).register(anisotropyFactory).register(iridescenceFactory).register(bumpFactory).register(transmissionFactory).register(volumeFactory).register(dispersionFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
     this.options = void 0;
     this.options = {
       ...options

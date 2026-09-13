@@ -20,6 +20,9 @@ import { clearcoatFactory } from './extensions/material/clearcoat';
 import { anisotropyFactory } from './extensions/material/anisotropy';
 import { iridescenceFactory } from './extensions/material/iridescence';
 import { bumpFactory } from './extensions/material/bump';
+import { transmissionFactory } from './extensions/material/transmission';
+import { volumeFactory } from './extensions/material/volume';
+import { dispersionFactory } from './extensions/material/dispersion';
 import { textureTransformFactory } from './extensions/texture/transform';
 import { meshQuantizationFactory } from './extensions/geometry/quantization';
 import { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION, EXT_MESHOPT_COMPRESSION } from './extensions/geometry/meshopt';
@@ -62,6 +65,9 @@ export class GLTFLoader {
         .register(anisotropyFactory)
         .register(iridescenceFactory)
         .register(bumpFactory)
+        .register(transmissionFactory)
+        .register(volumeFactory)
+        .register(dispersionFactory)
         .register(basisuFactory)
         .register(imageExtensionFactory('EXT_texture_webp'))
         .register(imageExtensionFactory('EXT_texture_avif'))
