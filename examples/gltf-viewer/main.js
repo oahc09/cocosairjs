@@ -1,4 +1,4 @@
-import { createAirApp, Scene, Vec3, Animation, AnimationClip, GLTFLoader, MeshRenderer } from 'cocosair';
+import { createAirApp, Scene, Vec3, Node, Animation, AnimationClip, GLTFLoader, MeshRenderer, AirTransmissionCapture } from 'cocosair';
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 const parameters = new URLSearchParams(location.search);
@@ -12,6 +12,12 @@ const app = await createAirApp({ canvas: '#GameCanvas' });
 const scene = new Scene('glTF viewer');
 const camera = setupCamera(scene, { position: [3, 2, 4], clearColor: [24, 33, 50, 255] });
 setupDirectionalLight(scene, { rotationEuler: [-35, -25, 0], illuminance: 20000 });
+// KHR_materials_transmission refracts the opaque scene color: arm the two-camera capture at
+// startup so the capability is live before assets parse (materials read it at build time).
+const captureNode = new Node('transmission-capture');
+scene.addChild(captureNode);
+const capture = captureNode.addComponent(AirTransmissionCapture);
+capture.mainCamera = camera;
 app.run(scene);
 const loader = new GLTFLoader();
 const modelSelect = document.querySelector('#model');

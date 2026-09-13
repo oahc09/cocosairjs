@@ -16550,7 +16550,7 @@ var _decorator = /*#__PURE__*/Object.freeze({
     visible: visible$4
 });
 
-var _dec$1j, _class$1k, _class2$14, _initializer$11, _initializer2$L, _initializer3$y, _initializer4$r, _CompactValueTypeArray;
+var _dec$1k, _class$1l, _class2$14, _initializer$11, _initializer2$L, _initializer3$y, _initializer4$r, _CompactValueTypeArray;
 let StorageUnit;
 (function (StorageUnit) {
   StorageUnit[StorageUnit["Uint8"] = 0] = "Uint8";
@@ -16581,7 +16581,7 @@ function extractStorageUnitElementType(combined) {
     elementType: combined >> elementTypeBits
   };
 }
-let CompactValueTypeArray = (_dec$1j = ccclass$9('cc.CompactValueTypeArray'), _dec$1j(_class$1k = (_class2$14 = (_CompactValueTypeArray = class CompactValueTypeArray {
+let CompactValueTypeArray = (_dec$1k = ccclass$9('cc.CompactValueTypeArray'), _dec$1k(_class$1l = (_class2$14 = (_CompactValueTypeArray = class CompactValueTypeArray {
   constructor() {
     this._byteOffset = _initializer$11 && _initializer$11();
     this._unitCount = _initializer2$L && _initializer2$L();
@@ -16629,7 +16629,7 @@ let CompactValueTypeArray = (_dec$1j = ccclass$9('cc.CompactValueTypeArray'), _d
   return combineStorageUnitElementType(StorageUnit.Uint8, ElementType.Scalar);
 }), _initializer4$r = applyDecoratedInitializer(_class2$14.prototype, "_length", [serializable$8], function () {
   return 0;
-})), _class2$14)) || _class$1k);
+})), _class2$14)) || _class$1l);
 function getElementTraits(elementType) {
   return BuiltinElementTypeTraits[elementType];
 }
@@ -17700,13 +17700,13 @@ function bezierByTime(controlPoints, x) {
 }
 legacyCC.bezierByTime = bezierByTime;
 
-var _dec$1i, _class$1j, _class2$13, _initializer$10, _initializer2$K, _initializer3$x, _dec2$H, _class3$g, _class4$f, _initializer4$q, _initializer5$k;
+var _dec$1j, _class$1k, _class2$13, _initializer$10, _initializer2$K, _initializer3$x, _dec2$H, _class3$g, _class4$f, _initializer4$q, _initializer5$k;
 let QuatInterpolationMode;
 (function (QuatInterpolationMode) {
   QuatInterpolationMode[QuatInterpolationMode["SLERP"] = 0] = "SLERP";
   QuatInterpolationMode[QuatInterpolationMode["CONSTANT"] = 1] = "CONSTANT";
 })(QuatInterpolationMode || (QuatInterpolationMode = {}));
-let QuatKeyframeValue = (_dec$1i = ccclass$9('cc.QuatKeyframeValue'), _dec$1i(_class$1j = uniquelyReferenced(_class$1j = (_class2$13 = class QuatKeyframeValue {
+let QuatKeyframeValue = (_dec$1j = ccclass$9('cc.QuatKeyframeValue'), _dec$1j(_class$1k = uniquelyReferenced(_class$1k = (_class2$13 = class QuatKeyframeValue {
   constructor({
     value,
     interpolationMode,
@@ -17725,7 +17725,7 @@ let QuatKeyframeValue = (_dec$1i = ccclass$9('cc.QuatKeyframeValue'), _dec$1i(_c
   return Quat.clone(Quat.IDENTITY);
 }), _initializer3$x = applyDecoratedInitializer(_class2$13.prototype, "easingMethod", [serializable$8], function () {
   return EasingMethod.LINEAR;
-})), _class2$13)) || _class$1j) || _class$1j);
+})), _class2$13)) || _class$1k) || _class$1k);
 function createQuatKeyframeValue(params) {
   return new QuatKeyframeValue(params);
 }
@@ -17979,8 +17979,8 @@ const EASING_METHOD_BYTES = 1;
 const EASING_METHOD_BEZIER_TAG = 255;
 const EASING_METHOD_BEZIER_COMPONENT_BYTES = 4;
 
-var _dec$1h, _class$1i;
-let ObjectCurve = (_dec$1h = ccclass$9('cc.ObjectCurve'), _dec$1h(_class$1i = class ObjectCurve extends KeyframeCurve {
+var _dec$1i, _class$1j;
+let ObjectCurve = (_dec$1i = ccclass$9('cc.ObjectCurve'), _dec$1i(_class$1j = class ObjectCurve extends KeyframeCurve {
   evaluate(time) {
     const iSearch = this.searchKeyframe(time);
     if (iSearch >= 0) {
@@ -17989,7 +17989,7 @@ let ObjectCurve = (_dec$1h = ccclass$9('cc.ObjectCurve'), _dec$1h(_class$1i = cl
     const iPrev = clamp(~iSearch - 1, 0, this._values.length - 1);
     return this._values[iPrev];
   }
-}) || _class$1i);
+}) || _class$1j);
 
 var GradientMode;
 (function (GradientMode) {
@@ -21995,13 +21995,13 @@ var helper = /*#__PURE__*/Object.freeze({
     transform: transform
 });
 
-var _dec$1g, _class$1h, _class2$12, _initializer$$;
+var _dec$1h, _class$1i, _class2$12, _initializer$$;
 const {
   ccclass: ccclass$8,
   serializable: serializable$7,
   property: property$2
 } = _decorator;
-let Asset = (_dec$1g = ccclass$8('cc.Asset'), _dec$1g(_class$1h = (_class2$12 = class Asset extends Eventify(CCObject) {
+let Asset = (_dec$1h = ccclass$8('cc.Asset'), _dec$1h(_class$1i = (_class2$12 = class Asset extends Eventify(CCObject) {
   static deserialize(data) {
     return cclegacy.deserialize(data);
   }
@@ -22106,7 +22106,7 @@ let Asset = (_dec$1g = ccclass$8('cc.Asset'), _dec$1g(_class$1h = (_class2$12 = 
   }
 }, (_initializer$$ = applyDecoratedInitializer(_class2$12.prototype, "_native", [serializable$7], function () {
   return '';
-}), _applyDecoratedDescriptor(_class2$12.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$12.prototype, "_nativeAsset"), _class2$12.prototype)), _class2$12)) || _class$1h);
+}), _applyDecoratedDescriptor(_class2$12.prototype, "_nativeAsset", [property$2], Object.getOwnPropertyDescriptor(_class2$12.prototype, "_nativeAsset"), _class2$12.prototype)), _class2$12)) || _class$1i);
 
 Asset.prototype.createNode = null;
 cclegacy.Asset = Asset;
@@ -22167,7 +22167,7 @@ let TextureFilter;
   TextureFilter[TextureFilter["NEAREST"] = Filter.POINT] = "NEAREST";
 })(TextureFilter || (TextureFilter = {}));
 
-var _dec$1f, _class$1g, _class2$11, _ImageAsset;
+var _dec$1g, _class$1h, _class2$11, _ImageAsset;
 const COMPRESSED_HEADER_LENGTH = 4;
 const COMPRESSED_MIPMAP_DATA_SIZE_LENGTH = 4;
 const COMPRESSED_MIPMAP_LEVEL_COUNT_LENGTH = 4;
@@ -22247,7 +22247,7 @@ function isImageBitmap(imageSource) {
 function isNativeImage(imageSource) {
   return imageSource instanceof HTMLImageElement || imageSource instanceof HTMLCanvasElement || isImageBitmap(imageSource);
 }
-let ImageAsset = (_dec$1f = ccclass$9('cc.ImageAsset'), _dec$1f(_class$1g = (_class2$11 = (_ImageAsset = class ImageAsset extends Asset {
+let ImageAsset = (_dec$1g = ccclass$9('cc.ImageAsset'), _dec$1g(_class$1h = (_class2$11 = (_ImageAsset = class ImageAsset extends Asset {
   static mergeCompressedTextureMips(files) {
     let out = new Uint8Array(0);
     let err = null;
@@ -22595,16 +22595,16 @@ let ImageAsset = (_dec$1f = ccclass$9('cc.ImageAsset'), _dec$1f(_class$1g = (_cl
   validate() {
     return !!this.data;
   }
-}, _ImageAsset.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _ImageAsset._sharedPlaceHolderCanvas = null, _ImageAsset), (_applyDecoratedDescriptor(_class2$11.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$11.prototype, "_nativeAsset"), _class2$11.prototype)), _class2$11)) || _class$1g);
+}, _ImageAsset.extnames = ['.png', '.jpg', '.jpeg', '.bmp', '.webp', '.pvr', '.pkm', '.astc'], _ImageAsset._sharedPlaceHolderCanvas = null, _ImageAsset), (_applyDecoratedDescriptor(_class2$11.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$11.prototype, "_nativeAsset"), _class2$11.prototype)), _class2$11)) || _class$1h);
 function _getGlobalDevice() {
   return deviceManager.gfxDevice;
 }
 cclegacy.ImageAsset = ImageAsset;
 
-var _dec$1e, _class$1f, _class2$10, _initializer$_, _initializer2$J, _initializer3$w, _initializer4$p, _initializer5$j, _initializer6$f, _initializer7$d, _initializer8$d, _TextureBase;
+var _dec$1f, _class$1g, _class2$10, _initializer$_, _initializer2$J, _initializer3$w, _initializer4$p, _initializer5$j, _initializer6$f, _initializer7$d, _initializer8$d, _TextureBase;
 ccenum(Format);
 const idGenerator$2 = new IDGenerator('Tex');
-let TextureBase = (_dec$1e = ccclass$9('cc.TextureBase'), _dec$1e(_class$1f = (_class2$10 = (_TextureBase = class TextureBase extends Asset {
+let TextureBase = (_dec$1f = ccclass$9('cc.TextureBase'), _dec$1f(_class$1g = (_class2$10 = (_TextureBase = class TextureBase extends Asset {
   get isCompressed() {
     return this._format >= PixelFormat.RGB_ETC1 && this._format <= PixelFormat.RGBA_ASTC_12x12 || this._format >= PixelFormat.RGB_A_PVRTC_2BPPV1 && this._format <= PixelFormat.RGBA_ETC1;
   }
@@ -22761,15 +22761,15 @@ let TextureBase = (_dec$1e = ccclass$9('cc.TextureBase'), _dec$1e(_class$1f = (_
   return WrapMode$1.REPEAT;
 }), _initializer8$d = applyDecoratedInitializer(_class2$10.prototype, "_anisotropy", [serializable$8], function () {
   return 0;
-})), _class2$10)) || _class$1f);
+})), _class2$10)) || _class$1g);
 cclegacy.TextureBase = TextureBase;
 
-var _dec$1d, _class$1e, _dec2$G, _class2$$, _dec3$p, _class3$f;
-let Script = (_dec$1d = ccclass$9('cc.Script'), _dec$1d(_class$1e = class Script extends Asset {
+var _dec$1e, _class$1f, _dec2$G, _class2$$, _dec3$p, _class3$f;
+let Script = (_dec$1e = ccclass$9('cc.Script'), _dec$1e(_class$1f = class Script extends Asset {
   constructor(name) {
     super(name);
   }
-}) || _class$1e);
+}) || _class$1f);
 cclegacy._Script = Script;
 let JavaScript = (_dec2$G = ccclass$9('cc.JavaScript'), _dec2$G(_class2$$ = class JavaScript extends Script {
   constructor(name) {
@@ -22784,8 +22784,8 @@ let TypeScript = (_dec3$p = ccclass$9('cc.TypeScript'), _dec3$p(_class3$f = clas
 }) || _class3$f);
 cclegacy._TypeScript = TypeScript;
 
-var _dec$1c, _class$1d, _class2$_, _initializer$Z, _initializer2$I, _initializer3$v, _initializer4$o, _initializer5$i;
-let EventHandler = (_dec$1c = ccclass$9('cc.ClickEvent'), _dec$1c(_class$1d = (_class2$_ = class EventHandler {
+var _dec$1d, _class$1e, _class2$_, _initializer$Z, _initializer2$I, _initializer3$v, _initializer4$o, _initializer5$i;
+let EventHandler = (_dec$1d = ccclass$9('cc.ClickEvent'), _dec$1d(_class$1e = (_class2$_ = class EventHandler {
   constructor() {
     this.target = _initializer$Z && _initializer$Z();
     this.component = _initializer2$I && _initializer2$I();
@@ -22855,13 +22855,13 @@ let EventHandler = (_dec$1c = ccclass$9('cc.ClickEvent'), _dec$1c(_class$1d = (_
   return '';
 }), _initializer5$i = applyDecoratedInitializer(_class2$_.prototype, "customEventData", [serializable$8], function () {
   return '';
-})), _class2$_)) || _class$1d);
+})), _class2$_)) || _class$1e);
 
-var _dec$1b, _dec2$F, _class$1c, _class2$Z, _initializer$Y, _initializer2$H, _initializer3$u, _Component;
+var _dec$1c, _dec2$F, _class$1d, _class2$Z, _initializer$Y, _initializer2$H, _initializer3$u, _Component;
 const idGenerator$1 = new IDGenerator('Comp');
 const IsOnLoadCalled$1 = CCObjectFlags.IsOnLoadCalled;
 const NullNode = null;
-let Component = (_dec$1b = ccclass$9('cc.Component'), _dec2$F = type$5(Script), _dec$1b(_class$1c = (_class2$Z = (_Component = class Component extends CCObject {
+let Component = (_dec$1c = ccclass$9('cc.Component'), _dec2$F = type$5(Script), _dec$1c(_class$1d = (_class2$Z = (_Component = class Component extends CCObject {
   constructor() {
     super();
     this.node = _initializer$Y && _initializer$Y();
@@ -23025,7 +23025,7 @@ let Component = (_dec$1b = ccclass$9('cc.Component'), _dec2$F = type$5(Script), 
   return true;
 }), _initializer3$u = applyDecoratedInitializer(_class2$Z.prototype, "__prefab", [serializable$8], function () {
   return null;
-})), _class2$Z)) || _class$1c);
+})), _class2$Z)) || _class$1d);
 value(Component, '_registerEditorProps', (cls, props) => {
   let reqComp = props.requireComponent;
   if (reqComp) {
@@ -23041,8 +23041,8 @@ value(Component, '_registerEditorProps', (cls, props) => {
 });
 legacyCC.Component = Component;
 
-var _dec$1a, _class$1b, _class2$Y, _initializer$X;
-let MissingScript = (_dec$1a = ccclass$9('cc.MissingScript'), _dec$1a(_class$1b = (_class2$Y = class MissingScript extends Component {
+var _dec$1b, _class$1c, _class2$Y, _initializer$X;
+let MissingScript = (_dec$1b = ccclass$9('cc.MissingScript'), _dec$1b(_class$1c = (_class2$Y = class MissingScript extends Component {
   static safeFindClass(id) {
     const cls = getClassById(id);
     if (cls) {
@@ -23061,7 +23061,7 @@ let MissingScript = (_dec$1a = ccclass$9('cc.MissingScript'), _dec$1a(_class$1b 
   }
 }, (_initializer$X = applyDecoratedInitializer(_class2$Y.prototype, "_$erialized", [serializable$8, editorOnly], function () {
   return null;
-})), _class2$Y)) || _class$1b);
+})), _class2$Y)) || _class$1c);
 cclegacy._MissingScript = MissingScript;
 try {
   const props = MissingScript.__values__;
@@ -24849,7 +24849,7 @@ class DependUtil {
 DependUtil._instance = void 0;
 var dependUtil = DependUtil.instance;
 
-var _dec$19, _class$1a;
+var _dec$1a, _class$1b;
 const _regions = [new BufferTextureCopy()];
 function getMipLevel(width, height) {
   let size = Math.max(width, height);
@@ -24870,7 +24870,7 @@ function canGenerateMipmap(device, w, h) {
   }
   return true;
 }
-let SimpleTexture = (_dec$19 = ccclass$9('cc.SimpleTexture'), _dec$19(_class$1a = class SimpleTexture extends TextureBase {
+let SimpleTexture = (_dec$1a = ccclass$9('cc.SimpleTexture'), _dec$1a(_class$1b = class SimpleTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._gfxTexture = null;
@@ -25033,12 +25033,12 @@ let SimpleTexture = (_dec$19 = ccclass$9('cc.SimpleTexture'), _dec$19(_class$1a 
       this._gfxTextureView = null;
     }
   }
-}) || _class$1a);
+}) || _class$1b);
 cclegacy.SimpleTexture = SimpleTexture;
 
-var _dec$18, _dec2$E, _class$19, _class2$X, _initializer$W;
+var _dec$19, _dec2$E, _class$1a, _class2$X, _initializer$W;
 
-let Texture2D = (_dec$18 = ccclass$9('cc.Texture2D'), _dec2$E = type$5([ImageAsset]), _dec$18(_class$19 = (_class2$X = class Texture2D extends SimpleTexture {
+let Texture2D = (_dec$19 = ccclass$9('cc.Texture2D'), _dec2$E = type$5([ImageAsset]), _dec$19(_class$1a = (_class2$X = class Texture2D extends SimpleTexture {
   constructor(name) {
     super(name);
     this._mipmaps = _initializer$W && _initializer$W();
@@ -25189,10 +25189,10 @@ let Texture2D = (_dec$18 = ccclass$9('cc.Texture2D'), _dec2$E = type$5([ImageAss
   }
 }, (_initializer$W = applyDecoratedInitializer(_class2$X.prototype, "_mipmaps", [_dec2$E], function () {
   return [];
-})), _class2$X)) || _class$19);
+})), _class2$X)) || _class$1a);
 cclegacy.Texture2D = Texture2D;
 
-var _dec$17, _class$18, _class2$W, _initializer$V, _initializer2$G, _initializer3$t, _initializer4$n, _TextureCube;
+var _dec$18, _class$19, _class2$W, _initializer$V, _initializer2$G, _initializer3$t, _initializer4$n, _TextureCube;
 var FaceIndex;
 (function (FaceIndex) {
   FaceIndex[FaceIndex["right"] = 0] = "right";
@@ -25208,7 +25208,7 @@ let MipmapMode;
   MipmapMode[MipmapMode["AUTO"] = 1] = "AUTO";
   MipmapMode[MipmapMode["BAKED_CONVOLUTION_MAP"] = 2] = "BAKED_CONVOLUTION_MAP";
 })(MipmapMode || (MipmapMode = {}));
-let TextureCube = (_dec$17 = ccclass$9('cc.TextureCube'), _dec$17(_class$18 = (_class2$W = (_TextureCube = class TextureCube extends SimpleTexture {
+let TextureCube = (_dec$18 = ccclass$9('cc.TextureCube'), _dec$18(_class$19 = (_class2$W = (_TextureCube = class TextureCube extends SimpleTexture {
   constructor(name) {
     super(name);
     this.isRGBE = _initializer$V && _initializer$V();
@@ -25545,7 +25545,7 @@ let TextureCube = (_dec$17 = ccclass$9('cc.TextureCube'), _dec$17(_class$18 = (_
   return MipmapMode.NONE;
 }), _initializer4$n = applyDecoratedInitializer(_class2$W.prototype, "_mipmaps", [serializable$8], function () {
   return [];
-})), _class2$W)) || _class$18);
+})), _class2$W)) || _class$19);
 legacyCC.TextureCube = TextureCube;
 function _forEachFace(mipmap, callback) {
   callback(mipmap.front, FaceIndex.front);
@@ -26859,19 +26859,19 @@ Downloader._instance = void 0;
 const downloader = Downloader.instance;
 var downloader$1 = Downloader.instance;
 
-var _dec$16, _class$17, _class2$V, _initializer$U;
-let JsonAsset = (_dec$16 = ccclass$9('cc.JsonAsset'), _dec$16(_class$17 = (_class2$V = class JsonAsset extends Asset {
+var _dec$17, _class$18, _class2$V, _initializer$U;
+let JsonAsset = (_dec$17 = ccclass$9('cc.JsonAsset'), _dec$17(_class$18 = (_class2$V = class JsonAsset extends Asset {
   constructor(name) {
     super(name);
     this.json = _initializer$U && _initializer$U();
   }
 }, (_initializer$U = applyDecoratedInitializer(_class2$V.prototype, "json", [serializable$8], function () {
   return null;
-})), _class2$V)) || _class$17);
+})), _class2$V)) || _class$18);
 cclegacy.JsonAsset = JsonAsset;
 
-var _dec$15, _class$16, _class2$U, _initializer$T;
-let TextAsset = (_dec$15 = ccclass$9('cc.TextAsset'), _dec$15(_class$16 = (_class2$U = class TextAsset extends Asset {
+var _dec$16, _class$17, _class2$U, _initializer$T;
+let TextAsset = (_dec$16 = ccclass$9('cc.TextAsset'), _dec$16(_class$17 = (_class2$U = class TextAsset extends Asset {
   toString() {
     return this.text;
   }
@@ -26881,11 +26881,11 @@ let TextAsset = (_dec$15 = ccclass$9('cc.TextAsset'), _dec$15(_class$16 = (_clas
   }
 }, (_initializer$T = applyDecoratedInitializer(_class2$U.prototype, "text", [serializable$8], function () {
   return '';
-})), _class2$U)) || _class$16);
+})), _class2$U)) || _class$17);
 cclegacy.TextAsset = TextAsset;
 
-var _dec$14, _class$15, _class2$T;
-let BufferAsset = (_dec$14 = ccclass$9('cc.BufferAsset'), _dec$14(_class$15 = (_class2$T = class BufferAsset extends Asset {
+var _dec$15, _class$16, _class2$T;
+let BufferAsset = (_dec$15 = ccclass$9('cc.BufferAsset'), _dec$15(_class$16 = (_class2$T = class BufferAsset extends Asset {
   constructor(name) {
     super(name);
     this._buffer = null;
@@ -26907,7 +26907,7 @@ let BufferAsset = (_dec$14 = ccclass$9('cc.BufferAsset'), _dec$14(_class$15 = (_
   validate() {
     return !!this._buffer;
   }
-}, (_applyDecoratedDescriptor(_class2$T.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$T.prototype, "_nativeAsset"), _class2$T.prototype)), _class2$T)) || _class$15);
+}, (_applyDecoratedDescriptor(_class2$T.prototype, "_nativeAsset", [override], Object.getOwnPropertyDescriptor(_class2$T.prototype, "_nativeAsset"), _class2$T.prototype)), _class2$T)) || _class$16);
 cclegacy.BufferAsset = BufferAsset;
 
 function createImageAsset(id, data, options, onComplete) {
@@ -30169,9 +30169,9 @@ class SubModel {
   }
 }
 
-var _dec$13, _class$14, _class2$S, _initializer$S, _initializer2$F, _initializer3$s, _initializer4$m, _EffectAsset;
+var _dec$14, _class$15, _class2$S, _initializer$S, _initializer2$F, _initializer3$s, _initializer4$m, _EffectAsset;
 const legacyBuiltinEffectNames = ['planar-shadow', 'skybox', 'deferred-lighting', 'bloom', 'hbao', 'copy-pass', 'post-process', 'profiler', 'splash-screen', 'unlit', 'sprite', 'particle', 'particle-gpu', 'particle-trail', 'billboard', 'terrain', 'graphics', 'clear-stencil', 'spine', 'occlusion-query', 'geometry-renderer', 'debug-renderer', 'ssss-blur', 'float-output-process'];
-let EffectAsset = (_dec$13 = ccclass$9('cc.EffectAsset'), _dec$13(_class$14 = (_class2$S = (_EffectAsset = class EffectAsset extends Asset {
+let EffectAsset = (_dec$14 = ccclass$9('cc.EffectAsset'), _dec$14(_class$15 = (_class2$S = (_EffectAsset = class EffectAsset extends Asset {
   static register(asset) {
     EffectAsset._effects[asset.name] = asset;
     EffectAsset._layoutValid = false;
@@ -30279,7 +30279,7 @@ let EffectAsset = (_dec$13 = ccclass$9('cc.EffectAsset'), _dec$13(_class$14 = (_
   return [];
 }), _initializer4$m = applyDecoratedInitializer(_class2$S.prototype, "hideInEditor", [serializable$8, editorOnly], function () {
   return false;
-})), _class2$S)) || _class$14);
+})), _class2$S)) || _class$15);
 cclegacy.EffectAsset = EffectAsset;
 
 class PipelineStateManager {
@@ -30364,10 +30364,10 @@ function renderProfiler(device, renderPass, cmdBuff, profiler, camera) {
   cmdBuff.draw(inputAssembler);
 }
 
-var _dec$12, _dec2$D, _class$13, _class2$R, _initializer$R, _initializer2$E, _initializer3$r, _initializer4$l, _initializer5$h;
+var _dec$13, _dec2$D, _class$14, _class2$R, _initializer$R, _initializer2$E, _initializer3$r, _initializer4$l, _initializer5$h;
 const v4_1 = new Vec4();
 
-let Material = (_dec$12 = ccclass$9('cc.Material'), _dec2$D = type$5(EffectAsset), _dec$12(_class$13 = (_class2$R = class Material extends Asset {
+let Material = (_dec$13 = ccclass$9('cc.Material'), _dec2$D = type$5(EffectAsset), _dec$13(_class$14 = (_class2$R = class Material extends Asset {
   static getHash(material) {
     let hash = 0;
     for (const pass of material.passes) {
@@ -30681,7 +30681,7 @@ let Material = (_dec$12 = ccclass$9('cc.Material'), _dec2$D = type$5(EffectAsset
   return [];
 }), _initializer5$h = applyDecoratedInitializer(_class2$R.prototype, "_props", [serializable$8], function () {
   return [];
-})), _class2$R)) || _class$13);
+})), _class2$R)) || _class$14);
 cclegacy.Material = Material;
 
 const ShadowSize = Enum({
@@ -32093,7 +32093,7 @@ NodeEventProcessor._maskComp = null;
 NodeEventProcessor.callbacksInvoker = globalCallbacksInvoker;
 cclegacy.NodeEventProcessor = NodeEventProcessor;
 
-var _dec$11, _dec2$C, _dec3$o, _class$12, _class2$Q, _initializer$Q, _initializer2$D, _initializer3$q, _initializer4$k, _initializer5$g, _initializer6$e, _initializer7$c, _initializer8$c, _initializer9$b, _initializer10$a, _initializer11$9, _Node;
+var _dec$12, _dec2$C, _dec3$o, _class$13, _class2$Q, _initializer$Q, _initializer2$D, _initializer3$q, _initializer4$k, _initializer5$g, _initializer6$e, _initializer7$c, _initializer8$c, _initializer9$b, _initializer10$a, _initializer11$9, _Node;
 const Destroying = CCObjectFlags.Destroying;
 const DontDestroy = CCObjectFlags.DontDestroy;
 const Deactivating$1 = CCObjectFlags.Deactivating;
@@ -32123,7 +32123,7 @@ const m4_2$3 = mat4();
 const dirtyNodes = [];
 const reserveContentsForAllSyncablePrefabTag = Symbol('ReserveContentsForAllSyncablePrefab');
 let globalFlagChangeVersion = 0;
-let Node$1 = (_dec$11 = ccclass$9('cc.Node'), _dec2$C = type$5(Vec3), _dec3$o = type$5(MobilityMode), _dec$11(_class$12 = (_class2$Q = (_Node = class Node extends CCObject {
+let Node$1 = (_dec$12 = ccclass$9('cc.Node'), _dec2$C = type$5(Vec3), _dec3$o = type$5(MobilityMode), _dec$12(_class$13 = (_class2$Q = (_Node = class Node extends CCObject {
   get components() {
     return this._components;
   }
@@ -33480,10 +33480,10 @@ let Node$1 = (_dec$11 = ccclass$9('cc.Node'), _dec2$C = type$5(Vec3), _dec3$o = 
   return Layers.Enum.DEFAULT;
 }), _initializer11$9 = applyDecoratedInitializer(_class2$Q.prototype, "_euler", [serializable$8], function () {
   return new Vec3();
-}), _applyDecoratedDescriptor(_class2$Q.prototype, "eulerAngles", [_dec2$C], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "eulerAngles"), _class2$Q.prototype), _applyDecoratedDescriptor(_class2$Q.prototype, "mobility", [_dec3$o], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "mobility"), _class2$Q.prototype)), _class2$Q)) || _class$12);
+}), _applyDecoratedDescriptor(_class2$Q.prototype, "eulerAngles", [_dec2$C], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "eulerAngles"), _class2$Q.prototype), _applyDecoratedDescriptor(_class2$Q.prototype, "mobility", [_dec3$o], Object.getOwnPropertyDescriptor(_class2$Q.prototype, "mobility"), _class2$Q.prototype)), _class2$Q)) || _class$13);
 cclegacy.Node = Node$1;
 
-var _dec$10, _class$11;
+var _dec$11, _class$12;
 const _colorAttachment = new ColorAttachment();
 _colorAttachment.format = Format.RGBA8;
 const _depthStencilAttachment = new DepthStencilAttachment();
@@ -33494,7 +33494,7 @@ const _windowInfo = {
   height: 1,
   renderPassInfo: passInfo
 };
-let RenderTexture = (_dec$10 = ccclass$9('cc.RenderTexture'), _dec$10(_class$11 = class RenderTexture extends TextureBase {
+let RenderTexture = (_dec$11 = ccclass$9('cc.RenderTexture'), _dec$11(_class$12 = class RenderTexture extends TextureBase {
   constructor(name) {
     super(name);
     this._window = null;
@@ -33601,7 +33601,7 @@ let RenderTexture = (_dec$10 = ccclass$9('cc.RenderTexture'), _dec$10(_class$11 
     gfxDevice == null ? void 0 : gfxDevice.copyTextureToBuffers(gfxTexture, bufferViews, regions);
     return buffer;
   }
-}) || _class$11);
+}) || _class$12);
 cclegacy.RenderTexture = RenderTexture;
 
 let ProbeClearFlag;
@@ -37843,7 +37843,7 @@ class RenderingSubMesh {
   }
 }
 
-var _dec$$, _dec2$B, _dec3$n, _dec4$h, _dec5$g, _class$10, _class2$P, _initializer$P, _initializer2$C, _initializer3$p, _initializer4$j, _initializer5$f, _initializer6$d, _dec6$e, _dec7$b, _dec8$9, _dec9$8, _dec10$7, _dec11$5, _dec12$5, _dec13$4, _dec14$4, _dec15$4, _dec16$3, _dec17$3, _dec18$3, _dec19$3, _dec20$3, _class3$e, _class4$e, _initializer7$b, _initializer8$b, _initializer9$a, _initializer10$9, _initializer11$8, _initializer12$7, _initializer13$7, _initializer14$6, _initializer15$5, _initializer16$5, _initializer17$5, _dec21$3, _dec22$3, _dec23$3, _dec24$3, _dec25$3, _dec26$3, _dec27$3, _dec28$3, _class5$5, _class6$4, _initializer18$5, _initializer19$5, _initializer20$4, _initializer21$4, _initializer22$3, _initializer23$2, _initializer24$2, _initializer25$2, _initializer26$2, _initializer27$1, _FogInfo, _dec29$2, _dec30$2, _dec31$2, _dec32$1, _dec33$1, _dec34$1, _class7$4, _class8$4, _initializer28$1, _initializer29$1, _initializer30$1, _initializer31$1, _initializer32$1, _initializer33$1, _initializer34$1, _initializer35$1, _dec35$1, _dec36$1, _class9$4, _class10$4, _initializer36, _initializer37, _initializer38, _initializer39, _dec37$1, _dec38$1, _dec39$1, _class11$3, _class12$3, _initializer40, _initializer41, _initializer42, _dec40, _dec41, _class13$2, _class14$2, _initializer43, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _class15$2, _class16$2, _initializer44, _initializer45, _initializer46, _initializer47, _initializer48, _initializer49, _initializer50, _initializer51, _initializer52, _dec48, _dec49, _class17, _class18, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60, _initializer61, _initializer62;
+var _dec$10, _dec2$B, _dec3$n, _dec4$h, _dec5$g, _class$11, _class2$P, _initializer$P, _initializer2$C, _initializer3$p, _initializer4$j, _initializer5$f, _initializer6$d, _dec6$e, _dec7$b, _dec8$9, _dec9$8, _dec10$7, _dec11$5, _dec12$5, _dec13$4, _dec14$4, _dec15$4, _dec16$3, _dec17$3, _dec18$3, _dec19$3, _dec20$3, _class3$e, _class4$e, _initializer7$b, _initializer8$b, _initializer9$a, _initializer10$9, _initializer11$8, _initializer12$7, _initializer13$7, _initializer14$6, _initializer15$5, _initializer16$5, _initializer17$5, _dec21$3, _dec22$3, _dec23$3, _dec24$3, _dec25$3, _dec26$3, _dec27$3, _dec28$3, _class5$5, _class6$4, _initializer18$5, _initializer19$5, _initializer20$4, _initializer21$4, _initializer22$3, _initializer23$2, _initializer24$2, _initializer25$2, _initializer26$2, _initializer27$1, _FogInfo, _dec29$2, _dec30$2, _dec31$2, _dec32$1, _dec33$1, _dec34$1, _class7$4, _class8$4, _initializer28$1, _initializer29$1, _initializer30$1, _initializer31$1, _initializer32$1, _initializer33$1, _initializer34$1, _initializer35$1, _dec35$1, _dec36$1, _class9$4, _class10$4, _initializer36, _initializer37, _initializer38, _initializer39, _dec37$1, _dec38$1, _dec39$1, _class11$3, _class12$3, _initializer40, _initializer41, _initializer42, _dec40, _dec41, _class13$2, _class14$2, _initializer43, _dec42, _dec43, _dec44, _dec45, _dec46, _dec47, _class15$2, _class16$2, _initializer44, _initializer45, _initializer46, _initializer47, _initializer48, _initializer49, _initializer50, _initializer51, _initializer52, _dec48, _dec49, _class17, _class18, _initializer53, _initializer54, _initializer55, _initializer56, _initializer57, _initializer58, _initializer59, _initializer60, _initializer61, _initializer62;
 const _up = new Vec3(0, 1, 0);
 const _v3$2 = new Vec3();
 const _v4 = new Vec4();
@@ -37857,7 +37857,7 @@ const normalizeHDRColor = color => {
     color.z *= intensity;
   }
 };
-let AmbientInfo = (_dec$$ = ccclass$9('cc.AmbientInfo'), _dec2$B = type$5(CCFloat), _dec3$n = formerlySerializedAs$3('_skyColor'), _dec4$h = formerlySerializedAs$3('_skyIllum'), _dec5$g = formerlySerializedAs$3('_groundAlbedo'), _dec$$(_class$10 = (_class2$P = class AmbientInfo {
+let AmbientInfo = (_dec$10 = ccclass$9('cc.AmbientInfo'), _dec2$B = type$5(CCFloat), _dec3$n = formerlySerializedAs$3('_skyColor'), _dec4$h = formerlySerializedAs$3('_skyIllum'), _dec5$g = formerlySerializedAs$3('_groundAlbedo'), _dec$10(_class$11 = (_class2$P = class AmbientInfo {
   constructor() {
     this._skyColorHDR = _initializer$P && _initializer$P();
     this._skyIllumHDR = _initializer2$C && _initializer2$C();
@@ -37972,7 +37972,7 @@ let AmbientInfo = (_dec$$ = ccclass$9('cc.AmbientInfo'), _dec2$B = type$5(CCFloa
   return Ambient.SKY_ILLUM;
 }), _initializer6$d = applyDecoratedInitializer(_class2$P.prototype, "_groundAlbedoLDR", [serializable$8], function () {
   return new Vec4(0.2, 0.2, 0.2, 1.0);
-})), _class2$P)) || _class$10);
+})), _class2$P)) || _class$11);
 legacyCC.AmbientInfo = AmbientInfo;
 let SkyboxInfo = (_dec6$e = ccclass$9('cc.SkyboxInfo'), _dec7$b = type$5(EnvironmentLightingType), _dec8$9 = type$5(TextureCube), _dec9$8 = type$5(CCFloat), _dec10$7 = type$5(TextureCube), _dec11$5 = type$5(TextureCube), _dec12$5 = type$5(Material), _dec13$4 = type$5(TextureCube), _dec14$4 = formerlySerializedAs$3('_envmap'), _dec15$4 = type$5(TextureCube), _dec16$3 = type$5(TextureCube), _dec17$3 = type$5(TextureCube), _dec18$3 = type$5(Material), _dec19$3 = type$5(TextureCube), _dec20$3 = type$5(TextureCube), _dec6$e(_class3$e = (_class4$e = class SkyboxInfo {
   constructor() {
@@ -38927,14 +38927,14 @@ let SceneGlobals = (_dec48 = ccclass$9('cc.SceneGlobals'), _dec49 = type$5(Skybo
 })), _class18)) || _class17);
 legacyCC.SceneGlobals = SceneGlobals;
 
-var _dec$_, _dec2$A, _class$$, _class2$O, _initializer$O, _dec3$m, _dec4$g, _dec5$f, _dec6$d, _dec7$a, _dec8$8, _class3$d, _class4$d, _initializer2$B, _initializer3$o, _initializer4$i, _initializer5$e, _initializer6$c, _dec9$7, _class5$4, _class6$3, _initializer7$a, _dec10$6, _dec11$4, _dec12$4, _class7$3, _class8$3, _initializer8$a, _initializer9$9, _initializer10$8, _dec13$3, _dec14$3, _dec15$3, _class9$3, _class10$3, _initializer11$7, _initializer12$6, _dec16$2, _dec17$2, _dec18$2, _class11$2, _class12$2, _initializer13$6, _initializer14$5, _dec19$2, _dec20$2, _dec21$2, _dec22$2, _dec23$2, _dec24$2, _class13$1, _class14$1, _initializer15$4, _initializer16$4, _initializer17$4, _initializer18$4, _initializer19$4, _initializer20$3, _dec25$2, _dec26$2, _dec27$2, _dec28$2, _class15$1, _class16$1, _initializer21$3, _initializer22$2, _initializer23$1, _initializer24$1, _initializer25$1, _initializer26$1;
-let TargetInfo = (_dec$_ = ccclass$9('cc.TargetInfo'), _dec2$A = type$5([CCString]), _dec$_(_class$$ = (_class2$O = class TargetInfo {
+var _dec$$, _dec2$A, _class$10, _class2$O, _initializer$O, _dec3$m, _dec4$g, _dec5$f, _dec6$d, _dec7$a, _dec8$8, _class3$d, _class4$d, _initializer2$B, _initializer3$o, _initializer4$i, _initializer5$e, _initializer6$c, _dec9$7, _class5$4, _class6$3, _initializer7$a, _dec10$6, _dec11$4, _dec12$4, _class7$3, _class8$3, _initializer8$a, _initializer9$9, _initializer10$8, _dec13$3, _dec14$3, _dec15$3, _class9$3, _class10$3, _initializer11$7, _initializer12$6, _dec16$2, _dec17$2, _dec18$2, _class11$2, _class12$2, _initializer13$6, _initializer14$5, _dec19$2, _dec20$2, _dec21$2, _dec22$2, _dec23$2, _dec24$2, _class13$1, _class14$1, _initializer15$4, _initializer16$4, _initializer17$4, _initializer18$4, _initializer19$4, _initializer20$3, _dec25$2, _dec26$2, _dec27$2, _dec28$2, _class15$1, _class16$1, _initializer21$3, _initializer22$2, _initializer23$1, _initializer24$1, _initializer25$1, _initializer26$1;
+let TargetInfo = (_dec$$ = ccclass$9('cc.TargetInfo'), _dec2$A = type$5([CCString]), _dec$$(_class$10 = (_class2$O = class TargetInfo {
   constructor() {
     this.localID = _initializer$O && _initializer$O();
   }
 }, (_initializer$O = applyDecoratedInitializer(_class2$O.prototype, "localID", [serializable$8, _dec2$A], function () {
   return [];
-})), _class2$O)) || _class$$);
+})), _class2$O)) || _class$10);
 let TargetOverrideInfo = (_dec3$m = ccclass$9('cc.TargetOverrideInfo'), _dec4$g = type$5(CCObject), _dec5$f = type$5(TargetInfo), _dec6$d = type$5([CCString]), _dec7$a = type$5(Node$1), _dec8$8 = type$5(TargetInfo), _dec3$m(_class3$d = (_class4$d = class TargetOverrideInfo {
   constructor() {
     this.source = _initializer2$B && _initializer2$B();
@@ -39376,8 +39376,8 @@ var utils$1 = /*#__PURE__*/Object.freeze({
     getTarget: getTarget
 });
 
-var _dec$Z, _class$_, _class2$N, _initializer$N, _initializer2$A;
-let Scene = (_dec$Z = ccclass$9('cc.Scene'), _dec$Z(_class$_ = (_class2$N = class Scene extends Node$1 {
+var _dec$_, _class$$, _class2$N, _initializer$N, _initializer2$A;
+let Scene = (_dec$_ = ccclass$9('cc.Scene'), _dec$_(_class$$ = (_class2$N = class Scene extends Node$1 {
   get renderScene() {
     return this._renderScene;
   }
@@ -39453,11 +39453,11 @@ let Scene = (_dec$Z = ccclass$9('cc.Scene'), _dec$Z(_class$_ = (_class2$N = clas
   return false;
 }), _initializer2$A = applyDecoratedInitializer(_class2$N.prototype, "_globals", [serializable$8], function () {
   return new SceneGlobals();
-})), _class2$N)) || _class$_);
+})), _class2$N)) || _class$$);
 legacyCC.Scene = Scene;
 
-var _dec$Y, _class$Z, _class2$M, _initializer$M;
-let SceneAsset = (_dec$Y = ccclass$9('cc.SceneAsset'), _dec$Y(_class$Z = (_class2$M = class SceneAsset extends Asset {
+var _dec$Z, _class$_, _class2$M, _initializer$M;
+let SceneAsset = (_dec$Z = ccclass$9('cc.SceneAsset'), _dec$Z(_class$_ = (_class2$M = class SceneAsset extends Asset {
   constructor(name) {
     super(name);
     this.scene = _initializer$M && _initializer$M();
@@ -39471,7 +39471,7 @@ let SceneAsset = (_dec$Y = ccclass$9('cc.SceneAsset'), _dec$Y(_class$Z = (_class
   }
 }, (_initializer$M = applyDecoratedInitializer(_class2$M.prototype, "scene", [serializable$8], function () {
   return null;
-})), _class2$M)) || _class$Z);
+})), _class2$M)) || _class$_);
 cclegacy.SceneAsset = SceneAsset;
 
 const _mat4Trans = new Mat4();
@@ -42448,7 +42448,7 @@ markAsWarning(macro, 'macro', [{
   suggest: 'please use KeyCode instead'
 }]);
 
-var _dec$X, _class$Y;
+var _dec$Y, _class$Z;
 replaceProperty(Node$1.prototype, 'Node', [{
   name: 'childrenCount',
   newName: 'children.length',
@@ -42645,13 +42645,13 @@ removeProperty(Layers.BitMask, 'Layers.BitMask', [{
 }]);
 const HideInHierarchy = CCObjectFlags.HideInHierarchy;
 const DontSave = CCObjectFlags.DontSave;
-let PrivateNode = (_dec$X = ccclass$9('cc.PrivateNode'), _dec$X(_class$Y = class PrivateNode extends Node$1 {
+let PrivateNode = (_dec$Y = ccclass$9('cc.PrivateNode'), _dec$Y(_class$Z = class PrivateNode extends Node$1 {
   constructor(name) {
     super(name);
     warnID(12003, this.name);
     this.hideFlags |= DontSave | HideInHierarchy;
   }
-}) || _class$Y);
+}) || _class$Z);
 replaceProperty(SystemEventType, 'SystemEventType', ['MOUSE_ENTER', 'MOUSE_LEAVE', 'TRANSFORM_CHANGED', 'SCENE_CHANGED_FOR_PERSISTS', 'SIZE_CHANGED', 'ANCHOR_CHANGED', 'COLOR_CHANGED', 'CHILD_ADDED', 'CHILD_REMOVED', 'PARENT_CHANGED', 'NODE_DESTROYED', 'LAYER_CHANGED', 'SIBLING_ORDER_CHANGED'].map(name => ({
   name,
   target: Node$1.EventType,
@@ -43516,13 +43516,13 @@ function compile(node) {
   return parser.result;
 }
 
-var _dec$W, _class$X, _class2$L, _initializer$L, _initializer2$z, _initializer3$n, _Prefab;
+var _dec$X, _class$Y, _class2$L, _initializer$L, _initializer2$z, _initializer3$n, _Prefab;
 const OptimizationPolicy = Enum({
   AUTO: 0,
   SINGLE_INSTANCE: 1,
   MULTI_INSTANCE: 2
 });
-let Prefab = (_dec$W = ccclass$9('cc.Prefab'), _dec$W(_class$X = (_class2$L = (_Prefab = class Prefab extends Asset {
+let Prefab = (_dec$X = ccclass$9('cc.Prefab'), _dec$X(_class$Y = (_class2$L = (_Prefab = class Prefab extends Asset {
   constructor() {
     super();
     this.data = _initializer$L && _initializer$L();
@@ -43594,7 +43594,7 @@ let Prefab = (_dec$W = ccclass$9('cc.Prefab'), _dec$W(_class$X = (_class2$L = (_
   return OptimizationPolicy.AUTO;
 }), _initializer3$n = applyDecoratedInitializer(_class2$L.prototype, "persistent", [serializable$8], function () {
   return false;
-})), _class2$L)) || _class$X);
+})), _class2$L)) || _class$Y);
 value(Prefab, '_utils', utils$1);
 legacyCC.Prefab = Prefab;
 {
@@ -43818,8 +43818,8 @@ intersect.rayModel = rayModel;
 intersect.raySubMesh = raySubMesh;
 intersect.rayMesh = rayMesh;
 
-var _dec$V, _class$W, _class2$K, _initializer$K, _initializer2$y, _initializer3$m, _PostProcess;
-let PostProcess = (_dec$V = ccclass$9('cc.PostProcess'), _dec$V(_class$W = disallowMultiple$1(_class$W = (_class2$K = (_PostProcess = class PostProcess extends Component {
+var _dec$W, _class$X, _class2$K, _initializer$K, _initializer2$y, _initializer3$m, _PostProcess;
+let PostProcess = (_dec$W = ccclass$9('cc.PostProcess'), _dec$W(_class$X = disallowMultiple$1(_class$X = (_class2$K = (_PostProcess = class PostProcess extends Component {
   constructor() {
     super();
     this.global = _initializer$K && _initializer$K();
@@ -43857,9 +43857,9 @@ let PostProcess = (_dec$V = ccclass$9('cc.PostProcess'), _dec$V(_class$W = disal
   return 1;
 }), _applyDecoratedDescriptor(_class2$K.prototype, "shadingScale", [property$3], Object.getOwnPropertyDescriptor(_class2$K.prototype, "shadingScale"), _class2$K.prototype), _initializer3$m = applyDecoratedInitializer(_class2$K.prototype, "enableShadingScaleInEditor", [property$3, serializable$8], function () {
   return false;
-})), _class2$K)) || _class$W) || _class$W);
+})), _class2$K)) || _class$X) || _class$X);
 
-var _dec$U, _dec2$z, _dec3$l, _dec4$f, _dec5$e, _dec6$c, _dec7$9, _dec8$7, _dec9$6, _dec10$5, _class$V, _class2$J, _initializer$J, _initializer2$x, _initializer3$l, _initializer4$h, _initializer5$d, _initializer6$b, _initializer7$9, _initializer8$9, _initializer9$8, _initializer10$7, _initializer11$6, _initializer12$5, _initializer13$5, _initializer14$4, _initializer15$3, _initializer16$3, _initializer17$3, _initializer18$3, _initializer19$3, _initializer20$2, _initializer21$2, _initializer22$1, _Camera;
+var _dec$V, _dec2$z, _dec3$l, _dec4$f, _dec5$e, _dec6$c, _dec7$9, _dec8$7, _dec9$6, _dec10$5, _class$W, _class2$J, _initializer$J, _initializer2$x, _initializer3$l, _initializer4$h, _initializer5$d, _initializer6$b, _initializer7$9, _initializer8$9, _initializer9$8, _initializer10$7, _initializer11$6, _initializer12$5, _initializer13$5, _initializer14$4, _initializer15$3, _initializer16$3, _initializer17$3, _initializer18$3, _initializer19$3, _initializer20$2, _initializer21$2, _initializer22$1, _Camera;
 const _temp_vec3_1 = new Vec3();
 const ProjectionType = Enum(CameraProjection);
 const FOVAxis = Enum(CameraFOVAxis);
@@ -43877,7 +43877,7 @@ let CameraEvent;
 (function (CameraEvent) {
   CameraEvent["TARGET_TEXTURE_CHANGE"] = "tex-change";
 })(CameraEvent || (CameraEvent = {}));
-let Camera = (_dec$U = ccclass$9('cc.Camera'), _dec2$z = type$5(Layers.BitMask), _dec3$l = type$5(ClearFlag), _dec4$f = type$5(ProjectionType), _dec5$e = type$5(FOVAxis), _dec6$c = type$5(Aperture), _dec7$9 = type$5(Shutter), _dec8$7 = type$5(ISO), _dec9$6 = type$5(RenderTexture), _dec10$5 = type$5(PostProcess), _dec$U(_class$V = (_class2$J = (_Camera = class Camera extends Component {
+let Camera = (_dec$V = ccclass$9('cc.Camera'), _dec2$z = type$5(Layers.BitMask), _dec3$l = type$5(ClearFlag), _dec4$f = type$5(ProjectionType), _dec5$e = type$5(FOVAxis), _dec6$c = type$5(Aperture), _dec7$9 = type$5(Shutter), _dec8$7 = type$5(ISO), _dec9$6 = type$5(RenderTexture), _dec10$5 = type$5(PostProcess), _dec$V(_class$W = (_class2$J = (_Camera = class Camera extends Component {
   constructor() {
     super();
     this._projection = _initializer$J && _initializer$J();
@@ -44322,10 +44322,10 @@ let Camera = (_dec$U = ccclass$9('cc.Camera'), _dec2$z = type$5(Layers.BitMask),
   return CameraType.DEFAULT;
 }), _initializer22$1 = applyDecoratedInitializer(_class2$J.prototype, "_trackingType", [serializable$8], function () {
   return TrackingType.NO_TRACKING;
-}), _applyDecoratedDescriptor(_class2$J.prototype, "visibility", [_dec2$z], Object.getOwnPropertyDescriptor(_class2$J.prototype, "visibility"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "clearFlags", [_dec3$l], Object.getOwnPropertyDescriptor(_class2$J.prototype, "clearFlags"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "projection", [_dec4$f], Object.getOwnPropertyDescriptor(_class2$J.prototype, "projection"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "fovAxis", [_dec5$e], Object.getOwnPropertyDescriptor(_class2$J.prototype, "fovAxis"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "aperture", [_dec6$c], Object.getOwnPropertyDescriptor(_class2$J.prototype, "aperture"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "shutter", [_dec7$9], Object.getOwnPropertyDescriptor(_class2$J.prototype, "shutter"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "iso", [_dec8$7], Object.getOwnPropertyDescriptor(_class2$J.prototype, "iso"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "targetTexture", [_dec9$6], Object.getOwnPropertyDescriptor(_class2$J.prototype, "targetTexture"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$J.prototype, "usePostProcess"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "postProcess", [_dec10$5], Object.getOwnPropertyDescriptor(_class2$J.prototype, "postProcess"), _class2$J.prototype)), _class2$J)) || _class$V);
+}), _applyDecoratedDescriptor(_class2$J.prototype, "visibility", [_dec2$z], Object.getOwnPropertyDescriptor(_class2$J.prototype, "visibility"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "clearFlags", [_dec3$l], Object.getOwnPropertyDescriptor(_class2$J.prototype, "clearFlags"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "projection", [_dec4$f], Object.getOwnPropertyDescriptor(_class2$J.prototype, "projection"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "fovAxis", [_dec5$e], Object.getOwnPropertyDescriptor(_class2$J.prototype, "fovAxis"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "aperture", [_dec6$c], Object.getOwnPropertyDescriptor(_class2$J.prototype, "aperture"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "shutter", [_dec7$9], Object.getOwnPropertyDescriptor(_class2$J.prototype, "shutter"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "iso", [_dec8$7], Object.getOwnPropertyDescriptor(_class2$J.prototype, "iso"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "targetTexture", [_dec9$6], Object.getOwnPropertyDescriptor(_class2$J.prototype, "targetTexture"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "usePostProcess", [property$3], Object.getOwnPropertyDescriptor(_class2$J.prototype, "usePostProcess"), _class2$J.prototype), _applyDecoratedDescriptor(_class2$J.prototype, "postProcess", [_dec10$5], Object.getOwnPropertyDescriptor(_class2$J.prototype, "postProcess"), _class2$J.prototype)), _class2$J)) || _class$W);
 cclegacy.Camera = Camera;
 
-var _dec$T, _dec2$y, _dec3$k, _class$U, _class2$I, _initializer$I;
+var _dec$U, _dec2$y, _dec3$k, _class$V, _class2$I, _initializer$I;
 const _matInsInfo = {
   parent: null,
   owner: null,
@@ -44339,7 +44339,7 @@ const {
   displayOrder: displayOrder$1,
   displayName
 } = _decorator;
-let Renderer = (_dec$T = ccclass$7('cc.Renderer'), _dec2$y = type$4(Material), _dec3$k = type$4([Material]), _dec$T(_class$U = disallowMultiple(_class$U = (_class2$I = class Renderer extends Component {
+let Renderer = (_dec$U = ccclass$7('cc.Renderer'), _dec2$y = type$4(Material), _dec3$k = type$4([Material]), _dec$U(_class$V = disallowMultiple(_class$V = (_class2$I = class Renderer extends Component {
   constructor() {
     super();
     this._materials = _initializer$I && _initializer$I();
@@ -44466,11 +44466,11 @@ let Renderer = (_dec$T = ccclass$7('cc.Renderer'), _dec2$y = type$4(Material), _
   }
 }, (_applyDecoratedDescriptor(_class2$I.prototype, "sharedMaterials", [_dec2$y], Object.getOwnPropertyDescriptor(_class2$I.prototype, "sharedMaterials"), _class2$I.prototype), _initializer$I = applyDecoratedInitializer(_class2$I.prototype, "_materials", [_dec3$k], function () {
   return [];
-})), _class2$I)) || _class$U) || _class$U);
+})), _class2$I)) || _class$V) || _class$V);
 
-var _dec$S, _class$T, _class2$H, _initializer$H;
+var _dec$T, _class$U, _class2$H, _initializer$H;
 getPhaseID$1('specular-pass');
-let ModelRenderer = (_dec$S = ccclass$9('cc.ModelRenderer'), _dec$S(_class$T = (_class2$H = class ModelRenderer extends Renderer {
+let ModelRenderer = (_dec$T = ccclass$9('cc.ModelRenderer'), _dec$T(_class$U = (_class2$H = class ModelRenderer extends Renderer {
   constructor() {
     super();
     this._visFlags = _initializer$H && _initializer$H();
@@ -44510,31 +44510,31 @@ let ModelRenderer = (_dec$S = ccclass$9('cc.ModelRenderer'), _dec$S(_class$T = (
   }
 }, (_initializer$H = applyDecoratedInitializer(_class2$H.prototype, "_visFlags", [serializable$8], function () {
   return Layers.Enum.NONE;
-})), _class2$H)) || _class$T);
+})), _class2$H)) || _class$U);
 
-var _dec$R, _dec2$x, _class$S, _class2$G, _initializer$G;
+var _dec$S, _dec2$x, _class$T, _class2$G, _initializer$G;
 const {
   ccclass: ccclass$6,
   serializable: serializable$5,
   type: type$3,
   visible: visible$3
 } = _decorator;
-let PrefabLink = (_dec$R = ccclass$6('cc.PrefabLink'), _dec2$x = type$3(Prefab), _dec$R(_class$S = (_class2$G = class PrefabLink extends Component {
+let PrefabLink = (_dec$S = ccclass$6('cc.PrefabLink'), _dec2$x = type$3(Prefab), _dec$S(_class$T = (_class2$G = class PrefabLink extends Component {
   constructor() {
     super();
     this.prefab = _initializer$G && _initializer$G();
   }
 }, (_initializer$G = applyDecoratedInitializer(_class2$G.prototype, "prefab", [_dec2$x, serializable$5], function () {
   return null;
-})), _class2$G)) || _class$S);
+})), _class2$G)) || _class$T);
 
-var _dec$Q, _dec2$w, _class$R;
+var _dec$R, _dec2$w, _class$S;
 const {
   ccclass: ccclass$5,
   menu: menu$3,
   executionOrder: executionOrder$1
 } = _decorator;
-let FeedStatusController = (_dec$Q = ccclass$5('FeedStatusController'), _dec2$w = executionOrder$1(90), _dec$Q(_class$R = _dec2$w(_class$R = class FeedStatusController extends Component {
+let FeedStatusController = (_dec$R = ccclass$5('FeedStatusController'), _dec2$w = executionOrder$1(90), _dec$R(_class$S = _dec2$w(_class$S = class FeedStatusController extends Component {
   constructor() {
     super();
   }
@@ -44549,7 +44549,7 @@ let FeedStatusController = (_dec$Q = ccclass$5('FeedStatusController'), _dec2$w 
       minigame.offFeedStatusChange(this.feedStatusChangeCallBack);
     }
   }
-}) || _class$R) || _class$R);
+}) || _class$S) || _class$S);
 
 replaceProperty(Camera, 'Camera', [{
   name: 'CameraClearFlag',
@@ -48604,7 +48604,7 @@ _p.Inflate = _p["Inflate"];
 _p.Inflate.BufferType = _p.Inflate["BufferType"];
 _p.Inflate.prototype.decompress = _p.Inflate.prototype["decompress"];
 
-var _dec$P, _class$Q, _class2$F, _initializer$F, _initializer2$w, _initializer3$k;
+var _dec$Q, _class$R, _class2$F, _initializer$F, _initializer2$w, _initializer3$k;
 const vec3Add = Vec3.add;
 const vec3MultiplyScalar = Vec3.multiplyScalar;
 const vec3Subtract = Vec3.subtract;
@@ -48629,7 +48629,7 @@ function getIndexStrideCtor(stride) {
 const v3_1$3 = new Vec3();
 const v3_2$1 = new Vec3();
 const globalEmptyMeshBuffer = new Uint8Array();
-let Mesh = (_dec$P = ccclass$9('cc.Mesh'), _dec$P(_class$Q = (_class2$F = class Mesh extends Asset {
+let Mesh = (_dec$Q = ccclass$9('cc.Mesh'), _dec$Q(_class$R = (_class2$F = class Mesh extends Asset {
   get _nativeAsset() {
     return this._data.buffer;
   }
@@ -49424,7 +49424,7 @@ let Mesh = (_dec$P = ccclass$9('cc.Mesh'), _dec$P(_class$Q = (_class2$F = class 
   return 0;
 }), _initializer3$k = applyDecoratedInitializer(_class2$F.prototype, "_allowDataAccess", [serializable$8], function () {
   return true;
-})), _class2$F)) || _class$Q);
+})), _class2$F)) || _class$R);
 cclegacy.Mesh = Mesh;
 function getOffset(attributes, attributeIndex) {
   let result = 0;
@@ -50113,7 +50113,7 @@ class MorphModel extends Model {
   }
 }
 
-var _dec$O, _dec2$v, _dec3$j, _dec4$e, _dec5$d, _dec6$b, _dec7$8, _class$P, _class2$E, _initializer$E, _initializer2$v, _initializer3$j, _initializer4$g, _initializer5$c, _initializer6$a, _initializer7$8, _initializer8$8, _initializer9$7, _initializer10$6, _ModelBakeSettings, _dec8$6, _dec9$5, _dec10$4, _dec11$3, _dec12$3, _dec13$2, _dec14$2, _dec15$2, _class3$c, _class4$c, _initializer11$5, _initializer12$4, _initializer13$4, _initializer14$3, _initializer15$2, _initializer16$2, _initializer17$2, _initializer18$2, _initializer19$2, _initializer20$1, _initializer21$1, _MeshRenderer;
+var _dec$P, _dec2$v, _dec3$j, _dec4$e, _dec5$d, _dec6$b, _dec7$8, _class$Q, _class2$E, _initializer$E, _initializer2$v, _initializer3$j, _initializer4$g, _initializer5$c, _initializer6$a, _initializer7$8, _initializer8$8, _initializer9$7, _initializer10$6, _ModelBakeSettings, _dec8$6, _dec9$5, _dec10$4, _dec11$3, _dec12$3, _dec13$2, _dec14$2, _dec15$2, _class3$c, _class4$c, _initializer11$5, _initializer12$4, _initializer13$4, _initializer14$3, _initializer15$2, _initializer16$2, _initializer17$2, _initializer18$2, _initializer19$2, _initializer20$1, _initializer21$1, _MeshRenderer;
 const {
   ccclass: ccclass$4,
   help: help$2,
@@ -50153,7 +50153,7 @@ var ModelBakeSettingsEvent;
   ModelBakeSettingsEvent["REFLECTION_PROBE_CHANGED"] = "reflection_probe_changed";
   ModelBakeSettingsEvent["BAKE_TO_REFLECTION_PROBE_CHANGED"] = "bake_to_reflection_probe_changed";
 })(ModelBakeSettingsEvent || (ModelBakeSettingsEvent = {}));
-let ModelBakeSettings = (_dec$O = ccclass$4('cc.ModelBakeSettings'), _dec2$v = formerlySerializedAs$2('_recieveShadow'), _dec3$j = type$2(CCInteger), _dec4$e = type$2(CCBoolean), _dec5$d = type$2(CCBoolean), _dec6$b = type$2(Enum(ReflectionProbeType)), _dec7$8 = type$2(CCBoolean), _dec$O(_class$P = (_class2$E = (_ModelBakeSettings = class ModelBakeSettings extends EventTarget {
+let ModelBakeSettings = (_dec$P = ccclass$4('cc.ModelBakeSettings'), _dec2$v = formerlySerializedAs$2('_recieveShadow'), _dec3$j = type$2(CCInteger), _dec4$e = type$2(CCBoolean), _dec5$d = type$2(CCBoolean), _dec6$b = type$2(Enum(ReflectionProbeType)), _dec7$8 = type$2(CCBoolean), _dec$P(_class$Q = (_class2$E = (_ModelBakeSettings = class ModelBakeSettings extends EventTarget {
   constructor() {
     super();
     this.texture = _initializer$E && _initializer$E();
@@ -50241,7 +50241,7 @@ let ModelBakeSettings = (_dec$O = ccclass$4('cc.ModelBakeSettings'), _dec2$v = f
   return ReflectionProbeType.NONE;
 }), _initializer10$6 = applyDecoratedInitializer(_class2$E.prototype, "_bakeToReflectionProbe", [serializable$4], function () {
   return true;
-}), _applyDecoratedDescriptor(_class2$E.prototype, "lightmapSize", [_dec3$j], Object.getOwnPropertyDescriptor(_class2$E.prototype, "lightmapSize"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "useLightProbe", [_dec4$e], Object.getOwnPropertyDescriptor(_class2$E.prototype, "useLightProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "bakeToLightProbe", [_dec5$d], Object.getOwnPropertyDescriptor(_class2$E.prototype, "bakeToLightProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "reflectionProbe", [_dec6$b], Object.getOwnPropertyDescriptor(_class2$E.prototype, "reflectionProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "bakeToReflectionProbe", [_dec7$8], Object.getOwnPropertyDescriptor(_class2$E.prototype, "bakeToReflectionProbe"), _class2$E.prototype)), _class2$E)) || _class$P);
+}), _applyDecoratedDescriptor(_class2$E.prototype, "lightmapSize", [_dec3$j], Object.getOwnPropertyDescriptor(_class2$E.prototype, "lightmapSize"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "useLightProbe", [_dec4$e], Object.getOwnPropertyDescriptor(_class2$E.prototype, "useLightProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "bakeToLightProbe", [_dec5$d], Object.getOwnPropertyDescriptor(_class2$E.prototype, "bakeToLightProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "reflectionProbe", [_dec6$b], Object.getOwnPropertyDescriptor(_class2$E.prototype, "reflectionProbe"), _class2$E.prototype), _applyDecoratedDescriptor(_class2$E.prototype, "bakeToReflectionProbe", [_dec7$8], Object.getOwnPropertyDescriptor(_class2$E.prototype, "bakeToReflectionProbe"), _class2$E.prototype)), _class2$E)) || _class$Q);
 let MeshRenderer = (_dec8$6 = ccclass$4('cc.MeshRenderer'), _dec9$5 = executionOrder(100), _dec10$4 = type$2(CCFloat), _dec11$3 = type$2(CCFloat), _dec12$3 = type$2(ModelShadowCastingMode), _dec13$2 = type$2(ModelShadowReceivingMode), _dec14$2 = type$2(Mesh), _dec15$2 = type$2(CCBoolean), _dec8$6(_class3$c = _dec9$5(_class3$c = (_class4$c = (_MeshRenderer = class MeshRenderer extends ModelRenderer {
   get shadowBias() {
     return this._shadowBias;
@@ -51063,8 +51063,8 @@ removeProperty(Mesh.prototype, 'Mesh.prototype', [{
   name: 'destroyFlatBuffers'
 }]);
 
-var _dec$N, _dec2$u, _dec3$i, _class$O, _class2$D, _initializer$D, _initializer2$u, _initializer3$i;
-let Skeleton = (_dec$N = ccclass$9('cc.Skeleton'), _dec2$u = type$5([CCString]), _dec3$i = type$5([Mat4]), _dec$N(_class$O = (_class2$D = class Skeleton extends Asset {
+var _dec$O, _dec2$u, _dec3$i, _class$P, _class2$D, _initializer$D, _initializer2$u, _initializer3$i;
+let Skeleton = (_dec$O = ccclass$9('cc.Skeleton'), _dec2$u = type$5([CCString]), _dec3$i = type$5([Mat4]), _dec$O(_class$P = (_class2$D = class Skeleton extends Asset {
   constructor(name) {
     super(name);
     this._joints = _initializer$D && _initializer$D();
@@ -51120,7 +51120,7 @@ let Skeleton = (_dec$N = ccclass$9('cc.Skeleton'), _dec2$u = type$5([CCString]),
   return [];
 }), _initializer3$i = applyDecoratedInitializer(_class2$D.prototype, "_hash", [serializable$8], function () {
   return 0;
-})), _class2$D)) || _class$O);
+})), _class2$D)) || _class$P);
 cclegacy.Skeleton = Skeleton;
 
 removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
@@ -51131,13 +51131,13 @@ removeProperty(MeshRenderer.prototype, 'MeshRenderer.prototype', [{
 cclegacy.ModelComponent = MeshRenderer;
 setClassAlias(MeshRenderer, 'cc.ModelComponent');
 
-var _dec$M, _class$N, _class2$C, _initializer$C, _initializer2$t, _initializer3$h, _dec2$t, _dec3$h, _dec4$d, _class3$b, _class4$b, _initializer4$f, _initializer5$b, _initializer6$9, _initializer7$7, _initializer8$7, _Light;
+var _dec$N, _class$O, _class2$C, _initializer$C, _initializer2$t, _initializer3$h, _dec2$t, _dec3$h, _dec4$d, _class3$b, _class4$b, _initializer4$f, _initializer5$b, _initializer6$9, _initializer7$7, _initializer8$7, _Light;
 const _color_tmp = new Vec3();
 const PhotometricTerm = Enum({
   LUMINOUS_FLUX: 0,
   LUMINANCE: 1
 });
-let StaticLightSettings = (_dec$M = ccclass$9('cc.StaticLightSettings'), _dec$M(_class$N = (_class2$C = class StaticLightSettings {
+let StaticLightSettings = (_dec$N = ccclass$9('cc.StaticLightSettings'), _dec$N(_class$O = (_class2$C = class StaticLightSettings {
   constructor() {
     this._baked = _initializer$C && _initializer$C();
     this._editorOnly = _initializer2$t && _initializer2$t();
@@ -51167,7 +51167,7 @@ let StaticLightSettings = (_dec$M = ccclass$9('cc.StaticLightSettings'), _dec$M(
   return false;
 }), _initializer3$h = applyDecoratedInitializer(_class2$C.prototype, "_castShadow", [serializable$8], function () {
   return false;
-})), _class2$C)) || _class$N);
+})), _class2$C)) || _class$O);
 let Light = (_dec2$t = ccclass$9('cc.Light'), _dec3$h = type$5(StaticLightSettings), _dec4$d = type$5(Layers.BitMask), _dec2$t(_class3$b = (_class4$b = (_Light = class Light extends Component {
   get color() {
     return this._color;
@@ -51329,7 +51329,7 @@ let Light = (_dec2$t = ccclass$9('cc.Light'), _dec3$h = type$5(StaticLightSettin
   return CAMERA_DEFAULT_MASK;
 }), _applyDecoratedDescriptor(_class4$b.prototype, "staticSettings", [_dec3$h], Object.getOwnPropertyDescriptor(_class4$b.prototype, "staticSettings"), _class4$b.prototype), _applyDecoratedDescriptor(_class4$b.prototype, "visibility", [_dec4$d], Object.getOwnPropertyDescriptor(_class4$b.prototype, "visibility"), _class4$b.prototype)), _class4$b)) || _class3$b);
 
-var _dec$L, _dec2$s, _dec3$g, _dec4$c, _dec5$c, _dec6$a, _dec7$7, _dec8$5, _dec9$4, _dec10$3, _dec11$2, _dec12$2, _dec13$1, _dec14$1, _dec15$1, _dec16$1, _dec17$1, _dec18$1, _dec19$1, _dec20$1, _dec21$1, _dec22$1, _dec23$1, _dec24$1, _dec25$1, _dec26$1, _dec27$1, _dec28$1, _dec29$1, _dec30$1, _dec31$1, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _class$M, _class2$B, _initializer$B, _initializer2$s, _initializer3$g, _initializer4$e, _initializer5$a, _initializer6$8, _initializer7$6, _initializer8$6, _initializer9$6, _initializer10$5, _initializer11$4, _initializer12$3, _initializer13$3, _initializer14$2, _initializer15$1, _initializer16$1, _initializer17$1, _initializer18$1, _initializer19$1;
+var _dec$M, _dec2$s, _dec3$g, _dec4$c, _dec5$c, _dec6$a, _dec7$7, _dec8$5, _dec9$4, _dec10$3, _dec11$2, _dec12$2, _dec13$1, _dec14$1, _dec15$1, _dec16$1, _dec17$1, _dec18$1, _dec19$1, _dec20$1, _dec21$1, _dec22$1, _dec23$1, _dec24$1, _dec25$1, _dec26$1, _dec27$1, _dec28$1, _dec29$1, _dec30$1, _dec31$1, _dec32, _dec33, _dec34, _dec35, _dec36, _dec37, _dec38, _dec39, _class$N, _class2$B, _initializer$B, _initializer2$s, _initializer3$g, _initializer4$e, _initializer5$a, _initializer6$8, _initializer7$6, _initializer8$6, _initializer9$6, _initializer10$5, _initializer11$4, _initializer12$3, _initializer13$3, _initializer14$2, _initializer15$1, _initializer16$1, _initializer17$1, _initializer18$1, _initializer19$1;
 const {
   ccclass: ccclass$3,
   menu: menu$1,
@@ -51345,7 +51345,7 @@ const {
   slide: slide$1,
   range: range$1
 } = _decorator;
-let DirectionalLight = (_dec$L = ccclass$3('cc.DirectionalLight'), _dec2$s = formerlySerializedAs$1('_illuminance'), _dec3$g = type$1(CCInteger), _dec4$c = property$1({
+let DirectionalLight = (_dec$M = ccclass$3('cc.DirectionalLight'), _dec2$s = formerlySerializedAs$1('_illuminance'), _dec3$g = type$1(CCInteger), _dec4$c = property$1({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -51435,7 +51435,7 @@ let DirectionalLight = (_dec$L = ccclass$3('cc.DirectionalLight'), _dec2$s = for
     name: 'DynamicShadowSettings',
     displayOrder: 21
   }
-}), _dec39 = type$1(CCFloat), _dec$L(_class$M = (_class2$B = class DirectionalLight extends Light {
+}), _dec39 = type$1(CCFloat), _dec$M(_class$N = (_class2$B = class DirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51734,10 +51734,10 @@ let DirectionalLight = (_dec$L = ccclass$3('cc.DirectionalLight'), _dec2$s = for
   return 10.0;
 }), _initializer19$1 = applyDecoratedInitializer(_class2$B.prototype, "_shadowOrthoSize", [serializable$3], function () {
   return 5;
-}), _applyDecoratedDescriptor(_class2$B.prototype, "illuminance", [_dec3$g], Object.getOwnPropertyDescriptor(_class2$B.prototype, "illuminance"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowEnabled", [_dec4$c, _dec5$c], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowEnabled"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowPcf", [_dec6$a, _dec7$7], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowPcf"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowBias", [_dec8$5, _dec9$4], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowBias"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowNormalBias", [_dec10$3, _dec11$2], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowNormalBias"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowSaturation", [_dec12$2, _dec13$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowSaturation"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowDistance", [_dec14$1, _dec15$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowDistance"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowInvisibleOcclusionRange", [_dec16$1, _dec17$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowInvisibleOcclusionRange"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLevel", [_dec18$1, _dec19$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLevel"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "enableCSM", [_dec20$1, _dec21$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "enableCSM"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLayerLambda", [_dec22$1, _dec23$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLayerLambda"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmOptimizationMode", [_dec24$1, _dec25$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmOptimizationMode"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowFixedArea", [_dec26$1, _dec27$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowFixedArea"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowNear", [_dec28$1, _dec29$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowNear"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowFar", [_dec30$1, _dec31$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowFar"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowOrthoSize", [_dec32, _dec33], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowOrthoSize"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmAdvancedOptions", [_dec34, _dec35], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmAdvancedOptions"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLayersTransition", [_dec36, _dec37], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLayersTransition"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmTransitionRange", [_dec38, _dec39], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmTransitionRange"), _class2$B.prototype)), _class2$B)) || _class$M);
+}), _applyDecoratedDescriptor(_class2$B.prototype, "illuminance", [_dec3$g], Object.getOwnPropertyDescriptor(_class2$B.prototype, "illuminance"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowEnabled", [_dec4$c, _dec5$c], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowEnabled"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowPcf", [_dec6$a, _dec7$7], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowPcf"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowBias", [_dec8$5, _dec9$4], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowBias"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowNormalBias", [_dec10$3, _dec11$2], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowNormalBias"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowSaturation", [_dec12$2, _dec13$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowSaturation"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowDistance", [_dec14$1, _dec15$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowDistance"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowInvisibleOcclusionRange", [_dec16$1, _dec17$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowInvisibleOcclusionRange"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLevel", [_dec18$1, _dec19$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLevel"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "enableCSM", [_dec20$1, _dec21$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "enableCSM"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLayerLambda", [_dec22$1, _dec23$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLayerLambda"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmOptimizationMode", [_dec24$1, _dec25$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmOptimizationMode"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowFixedArea", [_dec26$1, _dec27$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowFixedArea"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowNear", [_dec28$1, _dec29$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowNear"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowFar", [_dec30$1, _dec31$1], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowFar"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "shadowOrthoSize", [_dec32, _dec33], Object.getOwnPropertyDescriptor(_class2$B.prototype, "shadowOrthoSize"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmAdvancedOptions", [_dec34, _dec35], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmAdvancedOptions"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmLayersTransition", [_dec36, _dec37], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmLayersTransition"), _class2$B.prototype), _applyDecoratedDescriptor(_class2$B.prototype, "csmTransitionRange", [_dec38, _dec39], Object.getOwnPropertyDescriptor(_class2$B.prototype, "csmTransitionRange"), _class2$B.prototype)), _class2$B)) || _class$N);
 
-var _dec$K, _dec2$r, _dec3$f, _dec4$b, _dec5$b, _dec6$9, _dec7$6, _class$L, _class2$A, _initializer$A, _initializer2$r, _initializer3$f, _initializer4$d, _initializer5$9;
-let SphereLight = (_dec$K = ccclass$9('cc.SphereLight'), _dec2$r = formerlySerializedAs$3('_luminance'), _dec3$f = type$5(CCInteger), _dec4$b = type$5(CCInteger), _dec5$b = type$5(PhotometricTerm), _dec6$9 = type$5(CCFloat), _dec7$6 = type$5(CCFloat), _dec$K(_class$L = (_class2$A = class SphereLight extends Light {
+var _dec$L, _dec2$r, _dec3$f, _dec4$b, _dec5$b, _dec6$9, _dec7$6, _class$M, _class2$A, _initializer$A, _initializer2$r, _initializer3$f, _initializer4$d, _initializer5$9;
+let SphereLight = (_dec$L = ccclass$9('cc.SphereLight'), _dec2$r = formerlySerializedAs$3('_luminance'), _dec3$f = type$5(CCInteger), _dec4$b = type$5(CCInteger), _dec5$b = type$5(PhotometricTerm), _dec6$9 = type$5(CCFloat), _dec7$6 = type$5(CCFloat), _dec$L(_class$M = (_class2$A = class SphereLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -51829,9 +51829,9 @@ let SphereLight = (_dec$K = ccclass$9('cc.SphereLight'), _dec2$r = formerlySeria
   return PhotometricTerm.LUMINOUS_FLUX;
 }), _initializer5$9 = applyDecoratedInitializer(_class2$A.prototype, "_range", [serializable$8], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$A.prototype, "luminousFlux", [_dec3$f], Object.getOwnPropertyDescriptor(_class2$A.prototype, "luminousFlux"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "luminance", [_dec4$b], Object.getOwnPropertyDescriptor(_class2$A.prototype, "luminance"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "term", [_dec5$b], Object.getOwnPropertyDescriptor(_class2$A.prototype, "term"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "size", [_dec6$9], Object.getOwnPropertyDescriptor(_class2$A.prototype, "size"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "range", [_dec7$6], Object.getOwnPropertyDescriptor(_class2$A.prototype, "range"), _class2$A.prototype)), _class2$A)) || _class$L);
+}), _applyDecoratedDescriptor(_class2$A.prototype, "luminousFlux", [_dec3$f], Object.getOwnPropertyDescriptor(_class2$A.prototype, "luminousFlux"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "luminance", [_dec4$b], Object.getOwnPropertyDescriptor(_class2$A.prototype, "luminance"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "term", [_dec5$b], Object.getOwnPropertyDescriptor(_class2$A.prototype, "term"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "size", [_dec6$9], Object.getOwnPropertyDescriptor(_class2$A.prototype, "size"), _class2$A.prototype), _applyDecoratedDescriptor(_class2$A.prototype, "range", [_dec7$6], Object.getOwnPropertyDescriptor(_class2$A.prototype, "range"), _class2$A.prototype)), _class2$A)) || _class$M);
 
-var _dec$J, _dec2$q, _dec3$e, _dec4$a, _dec5$a, _dec6$8, _dec7$5, _dec8$4, _dec9$3, _dec10$2, _dec11$1, _dec12$1, _class$K, _class2$z, _initializer$z, _initializer2$q, _initializer3$e, _initializer4$c, _initializer5$8, _initializer6$7, _initializer7$5, _initializer8$5, _initializer9$5, _initializer10$4, _initializer11$3;
+var _dec$K, _dec2$q, _dec3$e, _dec4$a, _dec5$a, _dec6$8, _dec7$5, _dec8$4, _dec9$3, _dec10$2, _dec11$1, _dec12$1, _class$L, _class2$z, _initializer$z, _initializer2$q, _initializer3$e, _initializer4$c, _initializer5$8, _initializer6$7, _initializer7$5, _initializer8$5, _initializer9$5, _initializer10$4, _initializer11$3;
 const {
   ccclass: ccclass$2,
   range,
@@ -51848,7 +51848,7 @@ const {
   visible,
   property
 } = _decorator;
-let SpotLight = (_dec$J = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerializedAs('_luminance'), _dec3$e = type(PhotometricTerm), _dec4$a = type(CCFloat), _dec5$a = property({
+let SpotLight = (_dec$K = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerializedAs('_luminance'), _dec3$e = type(PhotometricTerm), _dec4$a = type(CCFloat), _dec5$a = property({
   group: {
     name: 'DynamicShadowSettings',
     displayOrder: 1
@@ -51868,7 +51868,7 @@ let SpotLight = (_dec$J = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerialize
     name: 'DynamicShadowSettings',
     displayOrder: 4
   }
-}), _dec12$1 = type(CCFloat), _dec$J(_class$K = (_class2$z = class SpotLight extends Light {
+}), _dec12$1 = type(CCFloat), _dec$K(_class$L = (_class2$z = class SpotLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -52039,10 +52039,10 @@ let SpotLight = (_dec$J = ccclass$2('cc.SpotLight'), _dec2$q = formerlySerialize
   return 0.00001;
 }), _initializer11$3 = applyDecoratedInitializer(_class2$z.prototype, "_shadowNormalBias", [serializable$2], function () {
   return 0.0;
-}), _applyDecoratedDescriptor(_class2$z.prototype, "term", [_dec3$e], Object.getOwnPropertyDescriptor(_class2$z.prototype, "term"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "size", [_dec4$a], Object.getOwnPropertyDescriptor(_class2$z.prototype, "size"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowEnabled", [_dec5$a, _dec6$8], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowEnabled"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowPcf", [_dec7$5, _dec8$4], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowPcf"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowBias", [_dec9$3, _dec10$2], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowBias"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowNormalBias", [_dec11$1, _dec12$1], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowNormalBias"), _class2$z.prototype)), _class2$z)) || _class$K);
+}), _applyDecoratedDescriptor(_class2$z.prototype, "term", [_dec3$e], Object.getOwnPropertyDescriptor(_class2$z.prototype, "term"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "size", [_dec4$a], Object.getOwnPropertyDescriptor(_class2$z.prototype, "size"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowEnabled", [_dec5$a, _dec6$8], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowEnabled"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowPcf", [_dec7$5, _dec8$4], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowPcf"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowBias", [_dec9$3, _dec10$2], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowBias"), _class2$z.prototype), _applyDecoratedDescriptor(_class2$z.prototype, "shadowNormalBias", [_dec11$1, _dec12$1], Object.getOwnPropertyDescriptor(_class2$z.prototype, "shadowNormalBias"), _class2$z.prototype)), _class2$z)) || _class$L);
 
-var _dec$I, _dec2$p, _dec3$d, _dec4$9, _dec5$9, _dec6$7, _class$J, _class2$y, _initializer$y, _initializer2$p, _initializer3$d, _initializer4$b;
-let PointLight = (_dec$I = ccclass$9('cc.PointLight'), _dec2$p = formerlySerializedAs$3('_luminance'), _dec3$d = type$5(CCInteger), _dec4$9 = type$5(CCInteger), _dec5$9 = type$5(PhotometricTerm), _dec6$7 = type$5(CCFloat), _dec$I(_class$J = (_class2$y = class PointLight extends Light {
+var _dec$J, _dec2$p, _dec3$d, _dec4$9, _dec5$9, _dec6$7, _class$K, _class2$y, _initializer$y, _initializer2$p, _initializer3$d, _initializer4$b;
+let PointLight = (_dec$J = ccclass$9('cc.PointLight'), _dec2$p = formerlySerializedAs$3('_luminance'), _dec3$d = type$5(CCInteger), _dec4$9 = type$5(CCInteger), _dec5$9 = type$5(PhotometricTerm), _dec6$7 = type$5(CCFloat), _dec$J(_class$K = (_class2$y = class PointLight extends Light {
   get luminousFlux() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -52121,10 +52121,10 @@ let PointLight = (_dec$I = ccclass$9('cc.PointLight'), _dec2$p = formerlySeriali
   return PhotometricTerm.LUMINOUS_FLUX;
 }), _initializer4$b = applyDecoratedInitializer(_class2$y.prototype, "_range", [serializable$8], function () {
   return 1;
-}), _applyDecoratedDescriptor(_class2$y.prototype, "luminousFlux", [_dec3$d], Object.getOwnPropertyDescriptor(_class2$y.prototype, "luminousFlux"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "luminance", [_dec4$9], Object.getOwnPropertyDescriptor(_class2$y.prototype, "luminance"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "term", [_dec5$9], Object.getOwnPropertyDescriptor(_class2$y.prototype, "term"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "range", [_dec6$7], Object.getOwnPropertyDescriptor(_class2$y.prototype, "range"), _class2$y.prototype)), _class2$y)) || _class$J);
+}), _applyDecoratedDescriptor(_class2$y.prototype, "luminousFlux", [_dec3$d], Object.getOwnPropertyDescriptor(_class2$y.prototype, "luminousFlux"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "luminance", [_dec4$9], Object.getOwnPropertyDescriptor(_class2$y.prototype, "luminance"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "term", [_dec5$9], Object.getOwnPropertyDescriptor(_class2$y.prototype, "term"), _class2$y.prototype), _applyDecoratedDescriptor(_class2$y.prototype, "range", [_dec6$7], Object.getOwnPropertyDescriptor(_class2$y.prototype, "range"), _class2$y.prototype)), _class2$y)) || _class$K);
 
-var _dec$H, _dec2$o, _dec3$c, _class$I, _class2$x, _initializer$x, _initializer2$o;
-let RangedDirectionalLight = (_dec$H = ccclass$9('cc.RangedDirectionalLight'), _dec2$o = formerlySerializedAs$3('_illuminance'), _dec3$c = type$5(CCInteger), _dec$H(_class$I = (_class2$x = class RangedDirectionalLight extends Light {
+var _dec$I, _dec2$o, _dec3$c, _class$J, _class2$x, _initializer$x, _initializer2$o;
+let RangedDirectionalLight = (_dec$I = ccclass$9('cc.RangedDirectionalLight'), _dec2$o = formerlySerializedAs$3('_illuminance'), _dec3$c = type$5(CCInteger), _dec$I(_class$J = (_class2$x = class RangedDirectionalLight extends Light {
   get illuminance() {
     const isHDR = getPipelineSceneData().isHDR;
     if (isHDR) {
@@ -52161,7 +52161,7 @@ let RangedDirectionalLight = (_dec$H = ccclass$9('cc.RangedDirectionalLight'), _
   return 65000;
 }), _initializer2$o = applyDecoratedInitializer(_class2$x.prototype, "_illuminanceLDR", [serializable$8], function () {
   return 65000 * Camera$1.standardExposureValue;
-}), _applyDecoratedDescriptor(_class2$x.prototype, "illuminance", [_dec3$c], Object.getOwnPropertyDescriptor(_class2$x.prototype, "illuminance"), _class2$x.prototype)), _class2$x)) || _class$I);
+}), _applyDecoratedDescriptor(_class2$x.prototype, "illuminance", [_dec3$c], Object.getOwnPropertyDescriptor(_class2$x.prototype, "illuminance"), _class2$x.prototype)), _class2$x)) || _class$J);
 
 cclegacy.LightComponent = Light;
 setClassAlias(Light, 'cc.LightComponent');
@@ -53179,8 +53179,8 @@ class BakedSkinningModel extends MorphModel {
   }
 }
 
-var _dec$G, _dec2$n, _dec3$b, _dec4$8, _dec5$8, _dec6$6, _class$H, _class2$w, _initializer$w, _initializer2$n;
-let SkinnedMeshRenderer = (_dec$G = ccclass$9('cc.SkinnedMeshRenderer'), _dec2$n = executionOrder$2(100), _dec3$b = type$5(Skeleton), _dec4$8 = type$5(Node$1), _dec5$8 = type$5(Skeleton), _dec6$6 = type$5(Node$1), _dec$G(_class$H = _dec2$n(_class$H = (_class2$w = class SkinnedMeshRenderer extends MeshRenderer {
+var _dec$H, _dec2$n, _dec3$b, _dec4$8, _dec5$8, _dec6$6, _class$I, _class2$w, _initializer$w, _initializer2$n;
+let SkinnedMeshRenderer = (_dec$H = ccclass$9('cc.SkinnedMeshRenderer'), _dec2$n = executionOrder$2(100), _dec3$b = type$5(Skeleton), _dec4$8 = type$5(Node$1), _dec5$8 = type$5(Skeleton), _dec6$6 = type$5(Node$1), _dec$H(_class$I = _dec2$n(_class$I = (_class2$w = class SkinnedMeshRenderer extends MeshRenderer {
   get skeleton() {
     return this._skeleton;
   }
@@ -53296,14 +53296,14 @@ let SkinnedMeshRenderer = (_dec$G = ccclass$9('cc.SkinnedMeshRenderer'), _dec2$n
   return null;
 }), _initializer2$n = applyDecoratedInitializer(_class2$w.prototype, "_skinningRoot", [_dec4$8], function () {
   return null;
-}), _applyDecoratedDescriptor(_class2$w.prototype, "skeleton", [_dec5$8], Object.getOwnPropertyDescriptor(_class2$w.prototype, "skeleton"), _class2$w.prototype), _applyDecoratedDescriptor(_class2$w.prototype, "skinningRoot", [_dec6$6], Object.getOwnPropertyDescriptor(_class2$w.prototype, "skinningRoot"), _class2$w.prototype)), _class2$w)) || _class$H) || _class$H);
+}), _applyDecoratedDescriptor(_class2$w.prototype, "skeleton", [_dec5$8], Object.getOwnPropertyDescriptor(_class2$w.prototype, "skeleton"), _class2$w.prototype), _applyDecoratedDescriptor(_class2$w.prototype, "skinningRoot", [_dec6$6], Object.getOwnPropertyDescriptor(_class2$w.prototype, "skinningRoot"), _class2$w.prototype)), _class2$w)) || _class$I) || _class$I);
 
-var _dec$F, _dec2$m, _dec3$a, _dec4$7, _dec5$7, _class$G, _class2$v, _initializer$v, _initializer2$m, _initializer3$c, _initializer4$a, _initializer5$7, _initializer6$6, _dec6$5, _dec7$4, _dec8$3, _dec9$2, _class3$a, _class4$a, _initializer7$4, _initializer8$4, _initializer9$4;
+var _dec$G, _dec2$m, _dec3$a, _dec4$7, _dec5$7, _class$H, _class2$v, _initializer$v, _initializer2$m, _initializer3$c, _initializer4$a, _initializer5$7, _initializer6$6, _dec6$5, _dec7$4, _dec8$3, _dec9$2, _class3$a, _class4$a, _initializer7$4, _initializer8$4, _initializer9$4;
 const repeat$1 = n => n - Math.floor(n);
 const batch_id = new Attribute(AttributeName.ATTR_BATCH_ID, Format.R32F);
 const batch_uv = new Attribute(AttributeName.ATTR_BATCH_UV, Format.RG32F);
 const batch_extras_size = FormatInfos[batch_id.format].size + FormatInfos[batch_uv.format].size;
-let SkinnedMeshUnit = (_dec$F = ccclass$9('cc.SkinnedMeshUnit'), _dec2$m = type$5(Mesh), _dec3$a = type$5(Skeleton), _dec4$7 = type$5(Material), _dec5$7 = type$5(SkinnedMeshRenderer), _dec$F(_class$G = (_class2$v = class SkinnedMeshUnit {
+let SkinnedMeshUnit = (_dec$G = ccclass$9('cc.SkinnedMeshUnit'), _dec2$m = type$5(Mesh), _dec3$a = type$5(Skeleton), _dec4$7 = type$5(Material), _dec5$7 = type$5(SkinnedMeshRenderer), _dec$G(_class$H = (_class2$v = class SkinnedMeshUnit {
   constructor() {
     this.mesh = _initializer$v && _initializer$v();
     this.skeleton = _initializer2$m && _initializer2$m();
@@ -53350,7 +53350,7 @@ let SkinnedMeshUnit = (_dec$F = ccclass$9('cc.SkinnedMeshUnit'), _dec2$m = type$
   return new Vec2(0, 0);
 }), _initializer6$6 = applyDecoratedInitializer(_class2$v.prototype, "_size", [serializable$8], function () {
   return new Vec2(1, 1);
-}), _applyDecoratedDescriptor(_class2$v.prototype, "copyFrom", [_dec5$7], Object.getOwnPropertyDescriptor(_class2$v.prototype, "copyFrom"), _class2$v.prototype)), _class2$v)) || _class$G);
+}), _applyDecoratedDescriptor(_class2$v.prototype, "copyFrom", [_dec5$7], Object.getOwnPropertyDescriptor(_class2$v.prototype, "copyFrom"), _class2$v.prototype)), _class2$v)) || _class$H);
 const m4_local$1 = new Mat4();
 new Mat4();
 const v3_1 = new Vec3();
@@ -53810,9 +53810,9 @@ setClassAlias(SkinnedMeshUnit, 'cc.SkinningModelUnit');
 cclegacy.BatchedSkinningModelComponent = SkinnedMeshBatchRenderer;
 setClassAlias(SkinnedMeshBatchRenderer, 'cc.BatchedSkinningModelComponent');
 
-var _dec$E, _dec2$l, _dec3$9, _dec4$6, _dec5$6, _class$F, _class2$u, _initializer$u, _initializer2$l, _dec6$4, _dec7$3, _dec8$2, _class3$9, _class4$9, _initializer3$b, _initializer4$9, _initializer5$6;
+var _dec$F, _dec2$l, _dec3$9, _dec4$6, _dec5$6, _class$G, _class2$u, _initializer$u, _initializer2$l, _dec6$4, _dec7$3, _dec8$2, _class3$9, _class4$9, _initializer3$b, _initializer4$9, _initializer5$6;
 const DEFAULT_SCREEN_OCCUPATION = [0.25, 0.125, 0.01];
-let LOD = (_dec$E = ccclass$9('cc.LOD'), _dec2$l = type$5([MeshRenderer]), _dec3$9 = type$5(CCFloat), _dec4$6 = type$5([MeshRenderer]), _dec5$6 = type$5([CCInteger]), _dec$E(_class$F = (_class2$u = class LOD {
+let LOD = (_dec$F = ccclass$9('cc.LOD'), _dec2$l = type$5([MeshRenderer]), _dec3$9 = type$5(CCFloat), _dec4$6 = type$5([MeshRenderer]), _dec5$6 = type$5([CCInteger]), _dec$F(_class$G = (_class2$u = class LOD {
   constructor() {
     this._screenUsagePercentage = _initializer$u && _initializer$u();
     this._renderers = _initializer2$l && _initializer2$l();
@@ -53913,7 +53913,7 @@ let LOD = (_dec$E = ccclass$9('cc.LOD'), _dec2$l = type$5([MeshRenderer]), _dec3
   return 1.0;
 }), _initializer2$l = applyDecoratedInitializer(_class2$u.prototype, "_renderers", [_dec2$l, serializable$8], function () {
   return [];
-}), _applyDecoratedDescriptor(_class2$u.prototype, "screenUsagePercentage", [_dec3$9], Object.getOwnPropertyDescriptor(_class2$u.prototype, "screenUsagePercentage"), _class2$u.prototype), _applyDecoratedDescriptor(_class2$u.prototype, "renderers", [_dec4$6], Object.getOwnPropertyDescriptor(_class2$u.prototype, "renderers"), _class2$u.prototype), _applyDecoratedDescriptor(_class2$u.prototype, "triangleCount", [_dec5$6], Object.getOwnPropertyDescriptor(_class2$u.prototype, "triangleCount"), _class2$u.prototype)), _class2$u)) || _class$F);
+}), _applyDecoratedDescriptor(_class2$u.prototype, "screenUsagePercentage", [_dec3$9], Object.getOwnPropertyDescriptor(_class2$u.prototype, "screenUsagePercentage"), _class2$u.prototype), _applyDecoratedDescriptor(_class2$u.prototype, "renderers", [_dec4$6], Object.getOwnPropertyDescriptor(_class2$u.prototype, "renderers"), _class2$u.prototype), _applyDecoratedDescriptor(_class2$u.prototype, "triangleCount", [_dec5$6], Object.getOwnPropertyDescriptor(_class2$u.prototype, "triangleCount"), _class2$u.prototype)), _class2$u)) || _class$G);
 let LODGroup = (_dec6$4 = ccclass$9('cc.LODGroup'), _dec7$3 = type$5(CCFloat), _dec8$2 = type$5([LOD]), _dec6$4(_class3$9 = (_class4$9 = class LODGroup extends Component {
   constructor() {
     super();
@@ -55569,7 +55569,7 @@ function absolute(v) {
   return v;
 }
 
-var _dec$D, _dec2$k, _dec3$8, _dec4$5, _dec5$5, _dec6$3, _dec7$2, _dec8$1, _dec9$1, _dec10$1, _class$E, _class2$t, _initializer$t, _initializer2$k, _initializer3$a, _initializer4$8, _initializer5$5, _initializer6$5, _initializer7$3, _initializer8$3, _initializer9$3, _initializer10$3, _ReflectionProbe;
+var _dec$E, _dec2$k, _dec3$8, _dec4$5, _dec5$5, _dec6$3, _dec7$2, _dec8$1, _dec9$1, _dec10$1, _class$F, _class2$t, _initializer$t, _initializer2$k, _initializer3$a, _initializer4$8, _initializer5$5, _initializer6$5, _initializer7$3, _initializer8$3, _initializer9$3, _initializer10$3, _ReflectionProbe;
 const tmpVec3 = v3();
 let ProbeResolution;
 (function (ProbeResolution) {
@@ -55577,7 +55577,7 @@ let ProbeResolution;
   ProbeResolution[ProbeResolution["Medium_512x512"] = 512] = "Medium_512x512";
   ProbeResolution[ProbeResolution["High_768x768"] = 768] = "High_768x768";
 })(ProbeResolution || (ProbeResolution = {}));
-let ReflectionProbe = (_dec$D = ccclass$9('cc.ReflectionProbe'), _dec2$k = type$5(Vec3), _dec3$8 = type$5(Enum(ProbeType)), _dec4$5 = type$5(Enum(ProbeResolution)), _dec5$5 = type$5(Enum(ProbeClearFlag)), _dec6$3 = type$5(Color), _dec7$2 = type$5(Layers.BitMask), _dec8$1 = type$5(Camera), _dec9$1 = type$5(CCBoolean), _dec10$1 = type$5(TextureCube), _dec$D(_class$E = (_class2$t = (_ReflectionProbe = class ReflectionProbe extends Component {
+let ReflectionProbe = (_dec$E = ccclass$9('cc.ReflectionProbe'), _dec2$k = type$5(Vec3), _dec3$8 = type$5(Enum(ProbeType)), _dec4$5 = type$5(Enum(ProbeResolution)), _dec5$5 = type$5(Enum(ProbeClearFlag)), _dec6$3 = type$5(Color), _dec7$2 = type$5(Layers.BitMask), _dec8$1 = type$5(Camera), _dec9$1 = type$5(CCBoolean), _dec10$1 = type$5(TextureCube), _dec$E(_class$F = (_class2$t = (_ReflectionProbe = class ReflectionProbe extends Component {
   constructor(...args) {
     super(...args);
     this._lastSize = v3();
@@ -55839,15 +55839,15 @@ let ReflectionProbe = (_dec$D = ccclass$9('cc.ReflectionProbe'), _dec2$k = type$
   return -1;
 }), _initializer10$3 = applyDecoratedInitializer(_class2$t.prototype, "_fastBake", [serializable$8], function () {
   return false;
-}), _applyDecoratedDescriptor(_class2$t.prototype, "size", [_dec2$k], Object.getOwnPropertyDescriptor(_class2$t.prototype, "size"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "probeType", [_dec3$8], Object.getOwnPropertyDescriptor(_class2$t.prototype, "probeType"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "resolution", [_dec4$5], Object.getOwnPropertyDescriptor(_class2$t.prototype, "resolution"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "clearFlag", [_dec5$5], Object.getOwnPropertyDescriptor(_class2$t.prototype, "clearFlag"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "backgroundColor", [_dec6$3], Object.getOwnPropertyDescriptor(_class2$t.prototype, "backgroundColor"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "visibility", [_dec7$2], Object.getOwnPropertyDescriptor(_class2$t.prototype, "visibility"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "sourceCamera", [_dec8$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "sourceCamera"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "fastBake", [_dec9$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "fastBake"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "cubemap", [_dec10$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "cubemap"), _class2$t.prototype)), _class2$t)) || _class$E);
+}), _applyDecoratedDescriptor(_class2$t.prototype, "size", [_dec2$k], Object.getOwnPropertyDescriptor(_class2$t.prototype, "size"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "probeType", [_dec3$8], Object.getOwnPropertyDescriptor(_class2$t.prototype, "probeType"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "resolution", [_dec4$5], Object.getOwnPropertyDescriptor(_class2$t.prototype, "resolution"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "clearFlag", [_dec5$5], Object.getOwnPropertyDescriptor(_class2$t.prototype, "clearFlag"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "backgroundColor", [_dec6$3], Object.getOwnPropertyDescriptor(_class2$t.prototype, "backgroundColor"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "visibility", [_dec7$2], Object.getOwnPropertyDescriptor(_class2$t.prototype, "visibility"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "sourceCamera", [_dec8$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "sourceCamera"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "fastBake", [_dec9$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "fastBake"), _class2$t.prototype), _applyDecoratedDescriptor(_class2$t.prototype, "cubemap", [_dec10$1], Object.getOwnPropertyDescriptor(_class2$t.prototype, "cubemap"), _class2$t.prototype)), _class2$t)) || _class$F);
 
 legacyCC.utils = utils;
 
 const CLASS_NAME_PREFIX_ANIM = 'cc.animation.';
 const createEvalSymbol = Symbol('CreateEval');
 
-var _dec$C, _class$D, _class2$s, _initializer$s, _initializer2$j, _initializer3$9, _initializer4$7;
-(_dec$C = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$C(_class$D = (_class2$s = class EmbeddedPlayer extends EditorExtendable {
+var _dec$D, _class$E, _class2$s, _initializer$s, _initializer2$j, _initializer3$9, _initializer4$7;
+(_dec$D = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedPlayer`), _dec$D(_class$E = (_class2$s = class EmbeddedPlayer extends EditorExtendable {
   constructor(...args) {
     super(...args);
     this.begin = _initializer$s && _initializer$s();
@@ -55863,7 +55863,7 @@ var _dec$C, _class$D, _class2$s, _initializer$s, _initializer2$j, _initializer3$
   return false;
 }), _initializer4$7 = applyDecoratedInitializer(_class2$s.prototype, "playable", [serializable$8], function () {
   return null;
-})), _class2$s)) || _class$D);
+})), _class2$s)) || _class$E);
 class EmbeddedPlayable {}
 class EmbeddedPlayableState {
   constructor(randomAccess) {
@@ -56457,8 +56457,8 @@ class AnimationState extends Playable {
 }
 cclegacy.AnimationState = AnimationState;
 
-var _dec$B, _class$C, _class2$r, _initializer$r, _initializer2$i;
-(_dec$B = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$B(_class$C = (_class2$r = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
+var _dec$C, _class$D, _class2$r, _initializer$r, _initializer2$i;
+(_dec$C = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedAnimationClipPlayable`), _dec$C(_class$D = (_class2$r = class EmbeddedAnimationClipPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
     this.path = _initializer$r && _initializer$r();
@@ -56485,7 +56485,7 @@ var _dec$B, _class$C, _class2$r, _initializer$r, _initializer2$i;
   return '';
 }), _initializer2$i = applyDecoratedInitializer(_class2$r.prototype, "clip", [serializable$8], function () {
   return null;
-})), _class2$r)) || _class$C);
+})), _class2$r)) || _class$D);
 class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   constructor(animationState) {
     super(true);
@@ -56512,8 +56512,8 @@ class EmbeddedAnimationClipPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$A, _class$B, _class2$q, _initializer$q;
-(_dec$A = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$A(_class$B = (_class2$q = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
+var _dec$B, _class$C, _class2$q, _initializer$q;
+(_dec$B = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}EmbeddedParticleSystemPlayable`), _dec$B(_class$C = (_class2$q = class EmbeddedParticleSystemPlayable extends EmbeddedPlayable {
   constructor(...args) {
     super(...args);
     this.path = _initializer$q && _initializer$q();
@@ -56538,7 +56538,7 @@ var _dec$A, _class$B, _class2$q, _initializer$q;
   }
 }, (_initializer$q = applyDecoratedInitializer(_class2$q.prototype, "path", [serializable$8], function () {
   return '';
-})), _class2$q)) || _class$B);
+})), _class2$q)) || _class$C);
 class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   constructor(particleSystem) {
     super(false);
@@ -56561,14 +56561,14 @@ class EmbeddedParticleSystemPlayableState extends EmbeddedPlayableState {
   }
 }
 
-var _dec$z, _class$A, _class2$p, _initializer$p, _dec2$j, _class3$8, _class4$8, _initializer2$h;
+var _dec$A, _class$B, _class2$p, _initializer$p, _dec2$j, _class3$8, _class4$8, _initializer2$h;
 function isPropertyPath(path) {
   return typeof path === 'string' || typeof path === 'number';
 }
 function isCustomPath(path, constructor) {
   return path instanceof constructor;
 }
-let HierarchyPath = (_dec$z = ccclass$9('cc.animation.HierarchyPath'), _dec$z(_class$A = (_class2$p = class HierarchyPath {
+let HierarchyPath = (_dec$A = ccclass$9('cc.animation.HierarchyPath'), _dec$A(_class$B = (_class2$p = class HierarchyPath {
   constructor(path) {
     this.path = _initializer$p && _initializer$p();
     this.path = path || '';
@@ -56587,7 +56587,7 @@ let HierarchyPath = (_dec$z = ccclass$9('cc.animation.HierarchyPath'), _dec$z(_c
   }
 }, (_initializer$p = applyDecoratedInitializer(_class2$p.prototype, "path", [serializable$8], function () {
   return '';
-})), _class2$p)) || _class$A);
+})), _class2$p)) || _class$B);
 let ComponentPath = (_dec2$j = ccclass$9('cc.animation.ComponentPath'), _dec2$j(_class3$8 = (_class4$8 = class ComponentPath {
   constructor(component) {
     this.component = _initializer2$h && _initializer2$h();
@@ -56609,11 +56609,11 @@ let ComponentPath = (_dec2$j = ccclass$9('cc.animation.ComponentPath'), _dec2$j(
   return '';
 })), _class4$8)) || _class3$8);
 
-var _dec$y, _class$z, _class2$o, _initializer$o, _dec2$i, _class3$7, _class4$7, _initializer2$g, _initializer3$8, _TrackBinding, _dec3$7, _class5$3, _class6$2, _initializer4$6, _dec4$4, _class7$2, _class8$2, _initializer5$4, _dec5$4, _class9$2, _class10$2, _initializer6$4;
+var _dec$z, _class$A, _class2$o, _initializer$o, _dec2$i, _class3$7, _class4$7, _initializer2$g, _initializer3$8, _TrackBinding, _dec3$7, _class5$3, _class6$2, _initializer4$6, _dec4$4, _class7$2, _class8$2, _initializer5$4, _dec5$4, _class9$2, _class10$2, _initializer6$4;
 const normalizedFollowTag = Symbol('NormalizedFollow');
 const parseTrsPathTag = Symbol('ConvertAsTrsPath');
 const trackBindingTag = Symbol('TrackBinding');
-let TrackPath = (_dec$y = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$y(_class$z = (_class2$o = class TrackPath {
+let TrackPath = (_dec$z = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$z(_class$A = (_class2$o = class TrackPath {
   constructor() {
     this._paths = _initializer$o && _initializer$o();
   }
@@ -56749,7 +56749,7 @@ let TrackPath = (_dec$y = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackPath`), _dec$
   }
 }, (_initializer$o = applyDecoratedInitializer(_class2$o.prototype, "_paths", [serializable$8], function () {
   return [];
-})), _class2$o)) || _class$z);
+})), _class2$o)) || _class$A);
 let TrackBinding = (_dec2$i = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`), _dec2$i(_class3$7 = uniquelyReferenced(_class3$7 = (_class4$7 = (_TrackBinding = class TrackBinding {
   constructor() {
     this.path = _initializer2$g && _initializer2$g();
@@ -56931,12 +56931,12 @@ class SingleChannelTrackEval {
   }
 }
 
-var _dec$x, _class$y, _class2$n, _initializer$n;
+var _dec$y, _class$z, _class2$n, _initializer$n;
 const {
   ccclass: ccclass$1,
   serializable: serializable$1
 } = _decorator;
-(_dec$x = ccclass$1(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$x(_class$y = (_class2$n = class RealArrayTrack extends Track {
+(_dec$y = ccclass$1(`${CLASS_NAME_PREFIX_ANIM}RealArrayTrack`), _dec$y(_class$z = (_class2$n = class RealArrayTrack extends Track {
   constructor(...args) {
     super(...args);
     this._channels = _initializer$n && _initializer$n();
@@ -56967,7 +56967,7 @@ const {
   }
 }, (_initializer$n = applyDecoratedInitializer(_class2$n.prototype, "_channels", [serializable$1], function () {
   return [];
-})), _class2$n)) || _class$y);
+})), _class2$n)) || _class$z);
 class RealArrayTrackEval {
   constructor(_curves) {
     this._curves = _curves;
@@ -56988,8 +56988,8 @@ class RealArrayTrackEval {
   }
 }
 
-var _dec$w, _class$x, _class2$m, _initializer$m, _initializer2$f, _descriptor;
-let UniformProxyFactory = (_dec$w = ccclass$9('cc.animation.UniformProxyFactory'), _dec$w(_class$x = (_class2$m = class UniformProxyFactory {
+var _dec$x, _class$y, _class2$m, _initializer$m, _initializer2$f, _descriptor;
+let UniformProxyFactory = (_dec$x = ccclass$9('cc.animation.UniformProxyFactory'), _dec$x(_class$y = (_class2$m = class UniformProxyFactory {
   constructor(uniformName, passIndex) {
     this.passIndex = _initializer$m && _initializer$m();
     this.uniformName = _initializer2$f && _initializer2$f();
@@ -57073,7 +57073,7 @@ let UniformProxyFactory = (_dec$w = ccclass$9('cc.animation.UniformProxyFactory'
   initializer: function () {
     return undefined;
   }
-})), _class2$m)) || _class$x);
+})), _class2$m)) || _class$y);
 function isUniformArray(pass, name) {
   for (const block of pass.shaderInfo.blocks) {
     for (const uniform of block.members) {
@@ -57085,8 +57085,8 @@ function isUniformArray(pass, name) {
   return false;
 }
 
-var _dec$v, _class$w, _class2$l, _initializer$l, _initializer2$e, _dec2$h, _class3$6, _class4$6, _initializer3$7, _dec3$6, _class5$2;
-let MorphWeightValueProxy = (_dec$v = ccclass$9('cc.animation.MorphWeightValueProxy'), _dec$v(_class$w = (_class2$l = class MorphWeightValueProxy {
+var _dec$w, _class$x, _class2$l, _initializer$l, _initializer2$e, _dec2$h, _class3$6, _class4$6, _initializer3$7, _dec3$6, _class5$2;
+let MorphWeightValueProxy = (_dec$w = ccclass$9('cc.animation.MorphWeightValueProxy'), _dec$w(_class$x = (_class2$l = class MorphWeightValueProxy {
   constructor() {
     this.subMeshIndex = _initializer$l && _initializer$l();
     this.shapeIndex = _initializer2$e && _initializer2$e();
@@ -57102,7 +57102,7 @@ let MorphWeightValueProxy = (_dec$v = ccclass$9('cc.animation.MorphWeightValuePr
   return 0;
 }), _initializer2$e = applyDecoratedInitializer(_class2$l.prototype, "shapeIndex", [serializable$8], function () {
   return 0;
-})), _class2$l)) || _class$w);
+})), _class2$l)) || _class$x);
 let MorphWeightsValueProxy = (_dec2$h = ccclass$9('cc.animation.MorphWeightsValueProxy'), _dec2$h(_class3$6 = (_class4$6 = class MorphWeightsValueProxy {
   constructor() {
     this.subMeshIndex = _initializer3$7 && _initializer3$7();
@@ -57223,20 +57223,20 @@ let CubicSplineNumberValue = (_dec2$g = ccclass$9('cc.CubicSplineNumberValue'), 
   return 0;
 })), _class4$5)) || _class3$5);
 
-var _dec$u, _class$v;
-let RealTrack = (_dec$u = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$u(_class$v = class RealTrack extends SingleChannelTrack {
+var _dec$v, _class$w;
+let RealTrack = (_dec$v = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}RealTrack`), _dec$v(_class$w = class RealTrack extends SingleChannelTrack {
   createCurve() {
     return new RealCurve();
   }
-}) || _class$v);
+}) || _class$w);
 
 function maskIfEmpty(curve) {
   return curve.keyFramesCount === 0 ? undefined : curve;
 }
 
-var _dec$t, _class$u, _class2$k, _initializer$k, _initializer2$d;
+var _dec$u, _class$v, _class2$k, _initializer$k, _initializer2$d;
 const CHANNEL_NAMES$2 = ['X', 'Y', 'Z', 'W'];
-let VectorTrack = (_dec$t = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$t(_class$u = (_class2$k = class VectorTrack extends Track {
+let VectorTrack = (_dec$u = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _dec$u(_class$v = (_class2$k = class VectorTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$k && _initializer$k();
@@ -57270,7 +57270,7 @@ let VectorTrack = (_dec$t = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}VectorTrack`), _
   }
 }, (_initializer$k = applyDecoratedInitializer(_class2$k.prototype, "_channels", [serializable$8], null), _initializer2$d = applyDecoratedInitializer(_class2$k.prototype, "_nComponents", [serializable$8], function () {
   return 4;
-})), _class2$k)) || _class$u);
+})), _class2$k)) || _class$v);
 class Vec2TrackEval {
   constructor(_x, _y) {
     this._result = new Vec2();
@@ -57356,15 +57356,15 @@ class Vec4TrackEval {
   }
 }
 
-var _dec$s, _class$t;
-let QuatTrack = (_dec$s = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$s(_class$t = class QuatTrack extends SingleChannelTrack {
+var _dec$t, _class$u;
+let QuatTrack = (_dec$t = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}QuatTrack`), _dec$t(_class$u = class QuatTrack extends SingleChannelTrack {
   createCurve() {
     return new QuatCurve();
   }
   [createEvalSymbol]() {
     return new QuatTrackEval(this.channels()[0].curve);
   }
-}) || _class$t);
+}) || _class$u);
 class QuatTrackEval {
   constructor(_curve) {
     this._result = new Quat();
@@ -57379,9 +57379,9 @@ class QuatTrackEval {
   }
 }
 
-var _dec$r, _class$s, _class2$j, _initializer$j;
+var _dec$s, _class$t, _class2$j, _initializer$j;
 const CHANNEL_NAMES$1 = ['Red', 'Green', 'Blue', 'Alpha'];
-let ColorTrack = (_dec$r = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$r(_class$s = (_class2$j = class ColorTrack extends Track {
+let ColorTrack = (_dec$s = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _dec$s(_class$t = (_class2$j = class ColorTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$j && _initializer$j();
@@ -57398,7 +57398,7 @@ let ColorTrack = (_dec$r = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ColorTrack`), _de
   [createEvalSymbol]() {
     return new ColorTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve), maskIfEmpty(this._channels[2].curve), maskIfEmpty(this._channels[3].curve));
   }
-}, (_initializer$j = applyDecoratedInitializer(_class2$j.prototype, "_channels", [serializable$8], null)), _class2$j)) || _class$s);
+}, (_initializer$j = applyDecoratedInitializer(_class2$j.prototype, "_channels", [serializable$8], null)), _class2$j)) || _class$t);
 class ColorTrackEval {
   constructor(_x, _y, _z, _w) {
     this._result = new Color();
@@ -57430,9 +57430,9 @@ class ColorTrackEval {
   }
 }
 
-var _dec$q, _class$r, _class2$i, _initializer$i;
+var _dec$r, _class$s, _class2$i, _initializer$i;
 const CHANNEL_NAMES = ['Width', 'Height'];
-let SizeTrack = (_dec$q = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$q(_class$r = (_class2$i = class SizeTrack extends Track {
+let SizeTrack = (_dec$r = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$r(_class$s = (_class2$i = class SizeTrack extends Track {
   constructor() {
     super();
     this._channels = _initializer$i && _initializer$i();
@@ -57449,7 +57449,7 @@ let SizeTrack = (_dec$q = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}SizeTrack`), _dec$
   [createEvalSymbol]() {
     return new SizeTrackEval(maskIfEmpty(this._channels[0].curve), maskIfEmpty(this._channels[1].curve));
   }
-}, (_initializer$i = applyDecoratedInitializer(_class2$i.prototype, "_channels", [serializable$8], null)), _class2$i)) || _class$r);
+}, (_initializer$i = applyDecoratedInitializer(_class2$i.prototype, "_channels", [serializable$8], null)), _class2$i)) || _class$s);
 class SizeTrackEval {
   constructor(_width, _height) {
     this._result = new Size();
@@ -57474,12 +57474,12 @@ class SizeTrackEval {
   }
 }
 
-var _dec$p, _class$q;
-let ObjectTrack = (_dec$p = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$p(_class$q = class ObjectTrack extends SingleChannelTrack {
+var _dec$q, _class$r;
+let ObjectTrack = (_dec$q = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}ObjectTrack`), _dec$q(_class$r = class ObjectTrack extends SingleChannelTrack {
   createCurve() {
     return new ObjectCurve();
   }
-}) || _class$q);
+}) || _class$r);
 
 var animation = /*#__PURE__*/Object.freeze({
     __proto__: null,
@@ -57735,15 +57735,15 @@ const selectLerpFx = (() => {
   };
 })();
 
-var _dec$o, _class$p, _class2$h, _initializer$h, _dec2$f, _class3$4, _class4$4, _initializer2$c;
-let UntypedTrackChannel = (_dec$o = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$o(_class$p = (_class2$h = class UntypedTrackChannel extends Channel {
+var _dec$p, _class$q, _class2$h, _initializer$h, _dec2$f, _class3$4, _class4$4, _initializer2$c;
+let UntypedTrackChannel = (_dec$p = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrackChannel`), _dec$p(_class$q = (_class2$h = class UntypedTrackChannel extends Channel {
   constructor() {
     super(new RealCurve());
     this.property = _initializer$h && _initializer$h();
   }
 }, (_initializer$h = applyDecoratedInitializer(_class2$h.prototype, "property", [serializable$8], function () {
   return '';
-})), _class2$h)) || _class$p);
+})), _class2$h)) || _class$q);
 let UntypedTrack = (_dec2$f = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}UntypedTrack`), _dec2$f(_class3$4 = (_class4$4 = class UntypedTrack extends Track {
   constructor(...args) {
     super(...args);
@@ -58339,7 +58339,7 @@ function ensureRightTangentWeightMode(tangentWeightMode) {
   }
 }
 
-var _dec$n, _class$o, _class2$g, _initializer$g, _dec2$e, _class3$3, _class4$3, _initializer2$b, _initializer3$6, _initializer4$4, _initializer5$2, _dec3$5, _class5$1, _class6$1, _initializer6$2, _initializer7$2, _dec4$3, _class7$1, _dec5$3, _class8$1, _dec6$2, _class9$1, _class10$1, _initializer8$2, _initializer9$2, _dec7$1, _class11$1, _class12$1, _initializer10$2, _initializer11$2, _initializer12$2, _initializer13$2;
+var _dec$o, _class$p, _class2$g, _initializer$g, _dec2$e, _class3$3, _class4$3, _initializer2$b, _initializer3$6, _initializer4$4, _initializer5$2, _dec3$5, _class5$1, _class6$1, _initializer6$2, _initializer7$2, _dec4$3, _class7$1, _dec5$3, _class8$1, _dec6$2, _class9$1, _class10$1, _initializer8$2, _initializer9$2, _dec7$1, _class11$1, _class12$1, _initializer10$2, _initializer11$2, _initializer12$2, _initializer13$2;
 const {
   ccclass,
   serializable
@@ -58347,7 +58347,7 @@ const {
 function throwIfSplitMethodIsNotValid() {
   throw new Error(`split() only valid in Editor.`);
 }
-(_dec$n = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$n(_class$o = (_class2$g = class ExoticAnimation {
+(_dec$o = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticAnimation`), _dec$o(_class$p = (_class2$g = class ExoticAnimation {
   constructor() {
     this._nodeAnimations = _initializer$g && _initializer$g();
   }
@@ -58377,7 +58377,7 @@ function throwIfSplitMethodIsNotValid() {
   }
 }, (_initializer$g = applyDecoratedInitializer(_class2$g.prototype, "_nodeAnimations", [serializable], function () {
   return [];
-})), _class2$g)) || _class$o);
+})), _class2$g)) || _class$p);
 let ExoticNodeAnimation = (_dec2$e = ccclass(`${CLASS_NAME_PREFIX_ANIM}ExoticNodeAnimation`), _dec2$e(_class3$3 = (_class4$3 = class ExoticNodeAnimation {
   constructor(path) {
     this._path = _initializer2$b && _initializer2$b();
@@ -58806,8 +58806,8 @@ function loadQuatFromQuantized(values, index, out) {
   Quat.set(out, indexQuantized(values, 4 * index + 0), indexQuantized(values, 4 * index + 1), indexQuantized(values, 4 * index + 2), indexQuantized(values, 4 * index + 3));
 }
 
-var _dec$m, _class$n, _class2$f, _initializer$f, _initializer2$a;
-let AuxiliaryCurveEntry = (_dec$m = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$m(_class$n = (_class2$f = class AuxiliaryCurveEntry {
+var _dec$n, _class$o, _class2$f, _initializer$f, _initializer2$a;
+let AuxiliaryCurveEntry = (_dec$n = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}AuxiliaryCurveEntry`), _dec$n(_class$o = (_class2$f = class AuxiliaryCurveEntry {
   constructor() {
     this.name = _initializer$f && _initializer$f();
     this.curve = _initializer2$a && _initializer2$a();
@@ -58816,7 +58816,7 @@ let AuxiliaryCurveEntry = (_dec$m = ccclass$9(`${CLASS_NAME_PREFIX_ANIM}Auxiliar
   return '';
 }), _initializer2$a = applyDecoratedInitializer(_class2$f.prototype, "curve", [serializable$8], function () {
   return new RealCurve();
-})), _class2$f)) || _class$n);
+})), _class2$f)) || _class$o);
 
 function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   const components = node.components;
@@ -58830,7 +58830,7 @@ function invokeComponentMethodsEngagedInAnimationEvent(node, methodName, args) {
   }
 }
 
-var _dec$l, _class$m, _class2$e, _initializer$e, _initializer2$9, _initializer3$5, _initializer4$3, _initializer5$1, _initializer6$1, _initializer7$1, _initializer8$1, _initializer9$1, _initializer10$1, _initializer11$1, _initializer12$1, _AnimationClip, _dec2$d, _class3$2, _class4$2, _initializer13$1, _initializer14$1;
+var _dec$m, _class$n, _class2$e, _initializer$e, _initializer2$9, _initializer3$5, _initializer4$3, _initializer5$1, _initializer6$1, _initializer7$1, _initializer8$1, _initializer9$1, _initializer10$1, _initializer11$1, _initializer12$1, _AnimationClip, _dec2$d, _class3$2, _class4$2, _initializer13$1, _initializer14$1;
 const searchForRootBonePathSymbol = Symbol('SearchForRootBonePath');
 
 const exoticAnimationTag = Symbol('ExoticAnimation');
@@ -58840,7 +58840,7 @@ const addEmbeddedPlayerTag = Symbol('[[AddEmbeddedPlayer]]');
 const removeEmbeddedPlayerTag = Symbol('[[RemoveEmbeddedPlayer]]');
 const clearEmbeddedPlayersTag = Symbol('[[ClearEmbeddedPlayers]]');
 const additiveSettingsTag = Symbol('[[Additive Settings]]');
-let AnimationClip = (_dec$l = ccclass$9('cc.AnimationClip'), _dec$l(_class$m = (_class2$e = (_AnimationClip = class AnimationClip extends Asset {
+let AnimationClip = (_dec$m = ccclass$9('cc.AnimationClip'), _dec$m(_class$n = (_class2$e = (_AnimationClip = class AnimationClip extends Asset {
   static createWithSpriteFrames(spriteFrames, sample) {
     const clip = new AnimationClip();
     clip.sample = sample || clip.sample;
@@ -59396,7 +59396,7 @@ let AnimationClip = (_dec$l = ccclass$9('cc.AnimationClip'), _dec$l(_class$m = (
   return new AdditiveSettings();
 }), _initializer12$1 = applyDecoratedInitializer(_class2$e.prototype, "_auxiliaryCurveEntries", [serializable$8], function () {
   return [];
-})), _class2$e)) || _class$m);
+})), _class2$e)) || _class$n);
 let AdditiveSettings = (_dec2$d = ccclass$9('cc.AnimationClipAdditiveSettings'), _dec2$d(_class3$2 = (_class4$2 = class AdditiveSettings {
   constructor() {
     this.enabled = _initializer13$1 && _initializer13$1();
@@ -60162,8 +60162,8 @@ function mixAveragedQuat(result, previous, accumulatedWeight, input, weight) {
   return newSum;
 }
 
-var _class$l, _AnimationManager;
-let AnimationManager = ccclass$9(_class$l = (_AnimationManager = class AnimationManager extends System {
+var _class$m, _AnimationManager;
+let AnimationManager = ccclass$9(_class$m = (_AnimationManager = class AnimationManager extends System {
   constructor(...args) {
     super(...args);
     this._anims = new MutableForwardIterator([]);
@@ -60280,7 +60280,7 @@ let AnimationManager = ccclass$9(_class$l = (_AnimationManager = class Animation
       }
     }
   }
-}, _AnimationManager.ID = 'animation', _AnimationManager)) || _class$l;
+}, _AnimationManager.ID = 'animation', _AnimationManager)) || _class$m;
 director.on(DirectorEvent.INIT, () => {
   const animationManager = new AnimationManager();
   director.registerSystem(AnimationManager.ID, animationManager, SystemPriority.HIGH);
@@ -60436,8 +60436,8 @@ class CrossFade extends Playable {
   }
 }
 
-var _dec$k, _dec2$c, _dec3$4, _dec4$2, _dec5$2, _class$k, _class2$d, _initializer$d, _initializer2$8, _initializer3$4, _Animation;
-let Animation = (_dec$k = ccclass$9('cc.Animation'), _dec2$c = executionOrder$2(99), _dec3$4 = type$5([AnimationClip]), _dec4$2 = type$5(AnimationClip), _dec5$2 = type$5([AnimationClip]), _dec$k(_class$k = _dec2$c(_class$k = (_class2$d = (_Animation = class Animation extends Eventify(Component) {
+var _dec$l, _dec2$c, _dec3$4, _dec4$2, _dec5$2, _class$l, _class2$d, _initializer$d, _initializer2$8, _initializer3$4, _Animation;
+let Animation = (_dec$l = ccclass$9('cc.Animation'), _dec2$c = executionOrder$2(99), _dec3$4 = type$5([AnimationClip]), _dec4$2 = type$5(AnimationClip), _dec5$2 = type$5([AnimationClip]), _dec$l(_class$l = _dec2$c(_class$l = (_class2$d = (_Animation = class Animation extends Eventify(Component) {
   constructor(...args) {
     super(...args);
     this.playOnLoad = _initializer$d && _initializer$d();
@@ -60665,7 +60665,7 @@ let Animation = (_dec$k = ccclass$9('cc.Animation'), _dec2$c = executionOrder$2(
   return [];
 }), _initializer3$4 = applyDecoratedInitializer(_class2$d.prototype, "_defaultClip", [serializable$8], function () {
   return null;
-})), _class2$d)) || _class$k) || _class$k);
+})), _class2$d)) || _class$l) || _class$l);
 function equalClips(clip1, clip2) {
   if (clip1 === clip2) {
     return true;
@@ -60850,8 +60850,8 @@ class SkeletalAnimationState extends AnimationState {
   }
 }
 
-var _dec$j, _dec2$b, _class$j, _class2$c, _initializer$c, _initializer2$7, _dec3$3, _dec4$1, _dec5$1, _dec6$1, _class3$1, _class4$1, _initializer3$3, _initializer4$2, _SkeletalAnimation;
-let Socket = (_dec$j = ccclass$9('cc.SkeletalAnimation.Socket'), _dec2$b = type$5(Node$1), _dec$j(_class$j = (_class2$c = class Socket {
+var _dec$k, _dec2$b, _class$k, _class2$c, _initializer$c, _initializer2$7, _dec3$3, _dec4$1, _dec5$1, _dec6$1, _class3$1, _class4$1, _initializer3$3, _initializer4$2, _SkeletalAnimation;
+let Socket = (_dec$k = ccclass$9('cc.SkeletalAnimation.Socket'), _dec2$b = type$5(Node$1), _dec$k(_class$k = (_class2$c = class Socket {
   constructor(path = '', target = null) {
     this.path = _initializer$c && _initializer$c();
     this.target = _initializer2$7 && _initializer2$7();
@@ -60862,7 +60862,7 @@ let Socket = (_dec$j = ccclass$9('cc.SkeletalAnimation.Socket'), _dec2$b = type$
   return '';
 }), _initializer2$7 = applyDecoratedInitializer(_class2$c.prototype, "target", [_dec2$b], function () {
   return null;
-})), _class2$c)) || _class$j);
+})), _class2$c)) || _class$k);
 setClassAlias(Socket, 'cc.SkeletalAnimationComponent.Socket');
 const m4_1 = new Mat4();
 const m4_2 = new Mat4();
@@ -61106,7 +61106,7 @@ let SkeletalAnimation = (_dec3$3 = ccclass$9('cc.SkeletalAnimation'), _dec4$1 = 
 cclegacy.SkeletalAnimationComponent = SkeletalAnimation;
 setClassAlias(SkeletalAnimation, 'cc.SkeletalAnimationComponent');
 
-var _dec$i, _dec2$a, _class$i, _class2$b, _initializer$b, _initializer2$6, _Primitive;
+var _dec$j, _dec2$a, _class$j, _class2$b, _initializer$b, _initializer2$6, _Primitive;
 var PrimitiveType;
 (function (PrimitiveType) {
   PrimitiveType[PrimitiveType["BOX"] = 0] = "BOX";
@@ -61119,7 +61119,7 @@ var PrimitiveType;
   PrimitiveType[PrimitiveType["QUAD"] = 7] = "QUAD";
 })(PrimitiveType || (PrimitiveType = {}));
 Enum(PrimitiveType);
-let Primitive = (_dec$i = ccclass$9('cc.Primitive'), _dec2$a = type$5(PrimitiveType), _dec$i(_class$i = (_class2$b = (_Primitive = class Primitive extends Mesh {
+let Primitive = (_dec$j = ccclass$9('cc.Primitive'), _dec2$a = type$5(PrimitiveType), _dec$j(_class$j = (_class2$b = (_Primitive = class Primitive extends Mesh {
   constructor(type = PrimitiveType.BOX) {
     super();
     this.type = _initializer$b && _initializer$b();
@@ -61134,7 +61134,7 @@ let Primitive = (_dec$i = ccclass$9('cc.Primitive'), _dec2$a = type$5(PrimitiveT
   return PrimitiveType.BOX;
 }), _initializer2$6 = applyDecoratedInitializer(_class2$b.prototype, "info", [serializable$8], function () {
   return {};
-})), _class2$b)) || _class$i);
+})), _class2$b)) || _class$j);
 cclegacy.Primitive = Primitive;
 
 legacyCC.primitives = primitives;
@@ -69233,8 +69233,8 @@ function createSkeletons(context, layout, skeletons) {
   }
 }
 
-var _dec$h, _class$h;
-let GLTFWinding = (_dec$h = ccclass$9('air.GLTFWinding'), _dec$h(_class$h = class GLTFWinding extends Component {
+var _dec$i, _class$i;
+let GLTFWinding = (_dec$i = ccclass$9('air.GLTFWinding'), _dec$i(_class$i = class GLTFWinding extends Component {
   constructor(...args) {
     super(...args);
     this.renderers = [];
@@ -69259,7 +69259,7 @@ let GLTFWinding = (_dec$h = ccclass$9('air.GLTFWinding'), _dec$h(_class$h = clas
       }
     }
   }
-}) || _class$h);
+}) || _class$i);
 
 let parsedAssetId = 0;
 class GLTFAsset extends Asset {
@@ -70517,6 +70517,9 @@ const CLEARCOAT_CONSTANT = 'airClearcoat';
 const ANISO_CONSTANT = 'airAnisotropy';
 const IRIDESCENCE_CONSTANT = 'airIridescence';
 const BUMP_CONSTANT = 'airBump';
+const TRANSMISSION_CONSTANT = 'airTransmission';
+const ATTENUATION_CONSTANT = 'airAttenuation';
+const SCENE_INFO_CONSTANT = 'airSceneColorInfo';
 const PHYSICAL_SAMPLERS = [{
   name: 'specularMap',
   binding: 15,
@@ -70557,6 +70560,18 @@ const PHYSICAL_SAMPLERS = [{
   name: 'bumpMap',
   binding: 24,
   macro: 'USE_AIR_BUMP'
+}, {
+  name: 'transmissionMap',
+  binding: 25,
+  macro: 'USE_AIR_TRANSMISSION_MAP'
+}, {
+  name: 'volumeThicknessMap',
+  binding: 26,
+  macro: 'USE_AIR_VOLUME_THICKNESS_MAP'
+}, {
+  name: 'cc_sceneColorTex',
+  binding: 27,
+  macro: 'USE_AIR_TRANSMISSION'
 }];
 function physicalParams(ior, specularFactor0, emissiveStrength) {
   check(ior >= 1 && Number.isFinite(ior), 'KHR_materials_ior.ior must be finite and >= 1');
@@ -70665,6 +70680,29 @@ function gltfPhysicalEffect() {
       name: 'BUMP_UV',
       type: 'string',
       options: ['v_uv', 'v_uv1']
+    }, {
+      name: 'USE_AIR_TRANSMISSION',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_TRANSMISSION_MAP',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_VOLUME',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_VOLUME_THICKNESS_MAP',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_DISPERSION',
+      type: 'boolean'
+    }, {
+      name: 'TRANSMISSION_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
+    }, {
+      name: 'VOLUMETHICKNESS_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
     }];
     const blocks = shader.blocks.slice();
     for (const descriptor of shader.descriptors || []) {
@@ -70692,6 +70730,11 @@ function gltfPhysicalEffect() {
       if (!block.members.some(m => m.name === BUMP_CONSTANT)) {
         block.members.push(new Uniform(BUMP_CONSTANT, Type.FLOAT4, 1));
       }
+      for (const member of [TRANSMISSION_CONSTANT, ATTENUATION_CONSTANT, SCENE_INFO_CONSTANT]) {
+        if (!block.members.some(m => m.name === member)) {
+          block.members.push(new Uniform(member, Type.FLOAT4, 1));
+        }
+      }
     }
     const samplers = shader.samplerTextures || [];
     for (const sampler of PHYSICAL_SAMPLERS) {
@@ -70714,17 +70757,17 @@ function gltfPhysicalEffect() {
       let frag = stage.frag;
       const nl = String.fromCharCode(10);
       const samplerDecls = PHYSICAL_SAMPLERS.map(s => `#if ${s.macro}\nuniform lowp sampler2D ${s.name};\n#endif`).join(nl);
-      const texVar = `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecTex = vec3(1.0);\n#endif\n` + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\n#endif\n` + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n`;
+      const texVar = `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecTex = vec3(1.0);\n#endif\n` + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n` + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\n#endif\n` + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n` + `#if USE_AIR_TRANSMISSION\nfloat airTrFactorTex = 0.0;\nfloat airThickTex = 0.0;\n#endif\n`;
       const prependAfterPrecision = source => {
         const insert = samplerDecls + nl + texVar;
         const m = /^(\s*precision\s+\w+\s+\w+;)/.exec(source);
         return m ? source.slice(0, m[1].length) + nl + insert + source.slice(m[1].length) : insert + nl + source;
       };
       if (language === 'glsl1') {
-        frag = prependAfterPrecision(`uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `uniform highp vec4 ${CLEARCOAT_CONSTANT};` + nl + `uniform highp vec4 ${ANISO_CONSTANT};` + nl + frag);
+        frag = prependAfterPrecision(`uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `uniform highp vec4 ${CLEARCOAT_CONSTANT};` + nl + `uniform highp vec4 ${ANISO_CONSTANT};` + nl + `uniform highp vec4 ${IRIDESCENCE_CONSTANT};` + nl + `uniform highp vec4 ${BUMP_CONSTANT};` + nl + `uniform highp vec4 ${TRANSMISSION_CONSTANT};` + nl + `uniform highp vec4 ${ATTENUATION_CONSTANT};` + nl + `uniform highp vec4 ${SCENE_INFO_CONSTANT};` + nl + frag);
       } else {
         const blockAppendRe = /(uniform\s+\w*\s*Constants\s*\{[^}]*)(\})/;
-        const grow = source => source.replace(blockAppendRe, (_m, head, tail) => head + nl + `vec4 ${PHYSICAL_CONSTANT};` + nl + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `vec4 ${CLEARCOAT_CONSTANT};` + nl + `vec4 ${ANISO_CONSTANT};` + nl + tail);
+        const grow = source => source.replace(blockAppendRe, (_m, head, tail) => head + nl + `vec4 ${PHYSICAL_CONSTANT};` + nl + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `vec4 ${CLEARCOAT_CONSTANT};` + nl + `vec4 ${ANISO_CONSTANT};` + nl + `vec4 ${IRIDESCENCE_CONSTANT};` + nl + `vec4 ${BUMP_CONSTANT};` + nl + `vec4 ${TRANSMISSION_CONSTANT};` + nl + `vec4 ${ATTENUATION_CONSTANT};` + nl + `vec4 ${SCENE_INFO_CONSTANT};` + nl + tail);
         stage.vert = grow(stage.vert);
         frag = prependAfterPrecision(grow(frag));
       }
@@ -70762,6 +70805,15 @@ function gltfPhysicalEffect() {
         throw new Error(`physical effect: '${emissiveAnchor}' missing in ${shader.name} [${language}]`);
       }
       frag = frag.replace(emissiveAnchor, `${ccIBL}\n#if USE_AIR_CLEARCOAT\nfinalColor += s.emissive * (1.0 - clamp(airCCFactorTex, 0.0, 1.0) * (0.04 + 0.96 * pow(1.0 - max(dot(airCCNormal, V), 0.0), 5.0)));\n#else\n${emissiveAnchor}\n#endif`);
+      const transmission = ['#if USE_AIR_TRANSMISSION', '{', 'float trF = clamp(airTrFactorTex, 0.0, 1.0);', 'if (trF > 0.0) {', `float trIor = max(${TRANSMISSION_CONSTANT}.y, 1.0);`, 'vec3 trN = normalize(N);', 'vec3 trV = normalize(V);', 'float trThick = max(airThickTex, 1e-4);', 'vec3 trView = (cc_matView * vec4(s.position, 1.0)).xyz;', 'vec3 trBaseView = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIor));', 'vec2 trOffset = trBaseView.xy / max(abs(trView.z), 1.0) * trThick * 0.5;',
+      'vec4 trClip0 = cc_matViewProj * vec4(s.position, 1.0);', 'vec2 trScreen = trClip0.xy / max(abs(trClip0.w), 1e-4) * 0.5 + 0.5;', 'float trFlip = cc_cameraPos.w > 0.0 ? -1.0 : 1.0;', 'vec2 trUv = clamp(trScreen + trOffset * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
+      'vec3 trAtten = exp(-(vec3(1.0) - clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0))) * trThick / max(' + ATTENUATION_CONSTANT + '.w, 1.0));', 'vec3 trColor = texture(cc_sceneColorTex, trUv).rgb * trAtten;', '#if USE_AIR_DISPERSION', `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`, 'if (trDisp > 0.0) {', 'float trIorR = max(trIor - trDisp, 1.001);', 'float trIorB = trIor + trDisp;', 'vec2 trRV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorR)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 trBV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorB)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 uvR = clamp(trScreen + trRV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'vec2 uvB = clamp(trScreen + trBV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'trColor.r = texture(cc_sceneColorTex, uvR).r * trAtten.r;', 'trColor.b = texture(cc_sceneColorTex, uvB).b * trAtten.b;', '}', '#endif',
+      'finalColor = mix(finalColor, trColor, trF * (1.0 - s.metallic));', '}', '}', '#endif', 'return vec4(finalColor, s.albedo.a);'].join(nl);
+      const returnAnchor = 'return vec4(finalColor, s.albedo.a);';
+      if (!frag.includes(returnAnchor)) {
+        throw new Error(`physical effect: return missing in ${shader.name} [${language}]`);
+      }
+      frag = frag.replace(returnAnchor, transmission);
       const modulate = ['#if USE_AIR_SPECULAR_MAP', `airSpecTex *= 2.0 * ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.g;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecTex *= ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`, `vec3 aDir = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz * 2.0 - 1.0;`, 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
       `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
       `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif', '#if USE_AIR_BUMP', '{',
@@ -70855,6 +70907,155 @@ function gltfPhysicalEffect() {
   effect.onLoaded();
   return effect;
 }
+
+let available = false;
+let detail = 'transmission pipeline not armed';
+function setTransmissionPipelineAvailable(ok, why) {
+  available = ok;
+  detail = why !== null && why !== void 0 ? why : ok ? 'scene-color pass available' : 'transmission pipeline not armed';
+}
+function transmissionPipelineAvailable() {
+  return {
+    available,
+    detail
+  };
+}
+
+var _dec$h, _class$h;
+const TRANSMISSION_LAYER = 1 << 26;
+const active = new Set();
+const tracking = new Set();
+function registerTransmissionMaterial(material) {
+  tracking.add(material);
+}
+function webgl2Capable() {
+  const device = deviceManager.gfxDevice;
+  return !!device && device.gfxAPI === API.WEBGL2;
+}
+let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), _dec$h(_class$h = class AirTransmissionCapture extends Component {
+  constructor(...args) {
+    super(...args);
+    this.mainCamera = null;
+    this._off = null;
+    this._offNode = null;
+    this._rt = null;
+    this._w = 0;
+    this._h = 0;
+    this._scanTick = 0;
+  }
+  get sceneColor() {
+    return this._rt;
+  }
+  onEnable() {
+    active.add(this);
+    this._ensure();
+    if (webgl2Capable()) {
+      setTransmissionPipelineAvailable(true, 'scene-color capture active');
+    }
+  }
+  onDisable() {
+    active.delete(this);
+    if (active.size === 0) {
+      setTransmissionPipelineAvailable(false, 'no active transmission capture');
+    }
+  }
+  onDestroy() {
+    this._teardown();
+  }
+  lateUpdate() {
+    const main = this.mainCamera;
+    if (!main || !this._off || !this._rt) {
+      return;
+    }
+    {
+      const scene = this.node && this.node.scene;
+      const meshes = scene && scene.getComponentsInChildren ? scene.getComponentsInChildren('cc.MeshRenderer') : null;
+      if (meshes) {
+        for (const renderer of meshes) {
+          const material = renderer.getMaterialInstance ? renderer.getMaterialInstance(0) : renderer.sharedMaterial;
+          if (!material) {
+            continue;
+          }
+          for (const pass of material.passes) {
+            if (pass.getHandle('airTransmission') !== 0) {
+              renderer.node.layer |= TRANSMISSION_LAYER;
+              main.visibility |= TRANSMISSION_LAYER;
+              break;
+            }
+          }
+        }
+      }
+    }
+    const mw = main.camera.window;
+    const w = mw ? mw.width : 0;
+    const h = mw ? mw.height : 0;
+    if (w > 0 && h > 0 && (w !== this._w || h !== this._h)) {
+      this._rt.resize(w, h);
+      this._w = w;
+      this._h = h;
+    }
+    const offNode = this._offNode;
+    const mainNode = main.node;
+    if (offNode && mainNode) {
+      offNode.setWorldPosition(mainNode.worldPosition);
+      offNode.setWorldRotation(mainNode.worldRotation);
+    }
+    this._off.fov = main.fov;
+    this._off.near = main.near;
+    this._off.far = main.far;
+    this._off.visibility = main.visibility & ~TRANSMISSION_LAYER;
+    const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
+    for (const material of tracking) {
+      material.setProperty('cc_sceneColorTex', this._rt);
+      material.setProperty('airSceneColorInfo', info);
+    }
+  }
+  _ensure() {
+    if (this._off) {
+      return;
+    }
+    const scene = this.node && this.node.scene;
+    const main = this.mainCamera;
+    if (!scene || !main) {
+      return;
+    }
+    const node = new Node$1('AirTransmissionCapture');
+    scene.addChild(node);
+    this._offNode = node;
+    const rt = new RenderTexture();
+    const mw = main.camera.window;
+    rt.initialize({
+      width: Math.max(mw ? mw.width : 1, 1),
+      height: Math.max(mw ? mw.height : 1, 1)
+    });
+    this._rt = rt;
+    this._w = rt.width;
+    this._h = rt.height;
+    const off = node.addComponent(Camera);
+    off.targetTexture = rt;
+    off.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+    off.priority = main.priority - 1;
+    off.visibility = main.visibility & ~TRANSMISSION_LAYER;
+    off.projection = Camera.ProjectionType.PERSPECTIVE;
+    this._off = off;
+  }
+  _teardown() {
+    const off = this._off;
+    if (off) {
+      off.targetTexture = null;
+    }
+    this._off = null;
+    if (this._offNode && this._offNode.isValid) {
+      this._offNode.destroy();
+    }
+    this._offNode = null;
+    if (this._rt && this._rt.isValid) {
+      this._rt.destroy();
+    }
+    this._rt = null;
+  }
+}) || _class$h);
+const defaultTransmissionVisibility = Layers.Enum.ALL;
 
 const KTX2_RAW_MIME = 'image/ktx2-decoded';
 
@@ -70972,7 +71173,7 @@ function imageExtensionFactory(name) {
   });
 }
 
-const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'], ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'], ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'], ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'], ['anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy'], ['iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence'], ['iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor'], ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness'], ['bumpMap', 'BUMP_UV', 'airBump']];
+const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'], ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'], ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'], ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'], ['anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy'], ['iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence'], ['iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor'], ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness'], ['bumpMap', 'BUMP_UV', 'airBump'], ['transmissionMap', 'TRANSMISSION_UV', 'airTransmission'], ['volumeThicknessMap', 'VOLUMETHICKNESS_UV', 'airVolumeThickness']];
 const UV_UNIFORMS = UV_SLOTS.map(([,, prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([,, prefix]) => `${prefix}UV1`));
 function gltfEffect() {
   const name = 'air-gltf-standard';
@@ -71214,7 +71415,7 @@ async function loadGLTFTextures(context, textures, images) {
   }
 }
 function createGLTFMaterial(features, textures, vertexColor) {
-  var _source$extensions, _source$extensions2, _source$extensions3, _source$extensions4, _source$extensions5, _physical$ior, _physical$specular$fa, _physical$specular, _physical$emissiveStr, _physical$specular2;
+  var _source$extensions, _source$extensions2, _source$extensions3, _source$extensions4, _source$extensions5, _source$extensions6, _source$extensions7, _physical$ior, _physical$specular$fa, _physical$specular, _physical$emissiveStr, _physical$specular2;
   const source = features.source;
   const pbr = source.pbrMetallicRoughness || {};
   const unlit = features.unlit;
@@ -71243,7 +71444,9 @@ function createGLTFMaterial(features, textures, vertexColor) {
   const anisoExt = (_source$extensions3 = source.extensions) == null ? void 0 : _source$extensions3.KHR_materials_anisotropy;
   const iriExt = (_source$extensions4 = source.extensions) == null ? void 0 : _source$extensions4.KHR_materials_iridescence;
   const bumpExt = (_source$extensions5 = source.extensions) == null ? void 0 : _source$extensions5.EXT_materials_bump;
-  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'], [specExt == null ? void 0 : specExt.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'], [specExt == null ? void 0 : specExt.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'], [ccExt == null ? void 0 : ccExt.clearcoatTexture, 'clearcoatMap', 'USE_AIR_CLEARCOAT_MAP', 'CLEARCOAT_UV'], [ccExt == null ? void 0 : ccExt.clearcoatRoughnessTexture, 'clearcoatRoughnessMap', 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP', 'CLEARCOATROUGHNESS_UV'], [ccExt == null ? void 0 : ccExt.clearcoatNormalTexture, 'clearcoatNormalMap', 'USE_AIR_CLEARCOAT_NORMAL_MAP', 'CLEARCOATNORMAL_UV'], [anisoExt == null ? void 0 : anisoExt.anisotropyTexture, 'anisotropyMap', 'USE_AIR_ANISOTROPY_MAP', 'ANISOTROPY_UV'], [iriExt == null ? void 0 : iriExt.iridescenceTexture, 'iridescenceMap', 'USE_AIR_IRIDESCENCE_MAP', 'IRIDESCENCE_UV'], [iriExt == null ? void 0 : iriExt.iridescenceIorTexture, 'iridescenceIorMap', 'USE_AIR_IRIDESCENCE_IOR_MAP', 'IRIDESCENCEIOR_UV'], [iriExt == null ? void 0 : iriExt.iridescenceThicknessTexture, 'iridescenceThicknessMap', 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', 'IRIDESCENCETHICKNESS_UV'], [bumpExt == null ? void 0 : bumpExt.bumpTexture, 'bumpMap', 'USE_AIR_BUMP', 'BUMP_UV']];
+  const transmissionExt = (_source$extensions6 = source.extensions) == null ? void 0 : _source$extensions6.KHR_materials_transmission;
+  const volumeExt = (_source$extensions7 = source.extensions) == null ? void 0 : _source$extensions7.KHR_materials_volume;
+  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'], [specExt == null ? void 0 : specExt.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'], [specExt == null ? void 0 : specExt.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'], [ccExt == null ? void 0 : ccExt.clearcoatTexture, 'clearcoatMap', 'USE_AIR_CLEARCOAT_MAP', 'CLEARCOAT_UV'], [ccExt == null ? void 0 : ccExt.clearcoatRoughnessTexture, 'clearcoatRoughnessMap', 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP', 'CLEARCOATROUGHNESS_UV'], [ccExt == null ? void 0 : ccExt.clearcoatNormalTexture, 'clearcoatNormalMap', 'USE_AIR_CLEARCOAT_NORMAL_MAP', 'CLEARCOATNORMAL_UV'], [anisoExt == null ? void 0 : anisoExt.anisotropyTexture, 'anisotropyMap', 'USE_AIR_ANISOTROPY_MAP', 'ANISOTROPY_UV'], [iriExt == null ? void 0 : iriExt.iridescenceTexture, 'iridescenceMap', 'USE_AIR_IRIDESCENCE_MAP', 'IRIDESCENCE_UV'], [iriExt == null ? void 0 : iriExt.iridescenceIorTexture, 'iridescenceIorMap', 'USE_AIR_IRIDESCENCE_IOR_MAP', 'IRIDESCENCEIOR_UV'], [iriExt == null ? void 0 : iriExt.iridescenceThicknessTexture, 'iridescenceThicknessMap', 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', 'IRIDESCENCETHICKNESS_UV'], [bumpExt == null ? void 0 : bumpExt.bumpTexture, 'bumpMap', 'USE_AIR_BUMP', 'BUMP_UV'], [transmissionExt == null ? void 0 : transmissionExt.transmissionTexture, 'transmissionMap', 'USE_AIR_TRANSMISSION_MAP', 'TRANSMISSION_UV'], [volumeExt == null ? void 0 : volumeExt.thicknessTexture, 'volumeThicknessMap', 'USE_AIR_VOLUME_THICKNESS_MAP', 'VOLUMETHICKNESS_UV']];
   for (const [index, [info,, macro, uv]] of maps.entries()) {
     defines[macro] = !!info;
     if (info) {
@@ -71271,8 +71474,13 @@ function createGLTFMaterial(features, textures, vertexColor) {
   const iridescenceScalar = !unlit && !!iridescence && iridescence.factor > 0;
   const bump = physical.bump;
   !unlit && !!bump && !!(bumpExt != null && bumpExt.bumpTexture);
-  const physicalMaps = !!(specExt != null && specExt.specularTexture) || !!(specExt != null && specExt.specularColorTexture) || !!(ccExt != null && ccExt.clearcoatTexture) || !!(ccExt != null && ccExt.clearcoatRoughnessTexture) || !!(ccExt != null && ccExt.clearcoatNormalTexture) || !!(anisoExt != null && anisoExt.anisotropyTexture) || !!(bumpExt != null && bumpExt.bumpTexture);
-  const usePhysical = physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || !unlit && physicalMaps;
+  const transmission = physical.transmission;
+  const volume = physical.volume;
+  const dispersion = physical.dispersion;
+  const transmissionArmed = !unlit && transmissionPipelineAvailable().available;
+  const transmissionScalar = transmissionArmed && !!transmission && transmission.factor > 0;
+  const physicalMaps = !!(specExt != null && specExt.specularTexture) || !!(specExt != null && specExt.specularColorTexture) || !!(ccExt != null && ccExt.clearcoatTexture) || !!(ccExt != null && ccExt.clearcoatRoughnessTexture) || !!(ccExt != null && ccExt.clearcoatNormalTexture) || !!(anisoExt != null && anisoExt.anisotropyTexture) || !!(bumpExt != null && bumpExt.bumpTexture) || transmissionArmed && (!!(transmissionExt != null && transmissionExt.transmissionTexture) || !!(volumeExt != null && volumeExt.thicknessTexture));
+  const usePhysical = physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || transmissionScalar || !unlit && physicalMaps;
   const definesForPhysical = {};
   if (physicalScalar) {
     definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive;
@@ -71285,6 +71493,11 @@ function createGLTFMaterial(features, textures, vertexColor) {
   }
   if (!unlit && iridescence) {
     definesForPhysical.USE_AIR_IRIDESCENCE = iridescence.factor > 0 || defines.USE_AIR_IRIDESCENCE_MAP === true;
+  }
+  if (transmissionArmed && transmission) {
+    definesForPhysical.USE_AIR_TRANSMISSION = transmission.factor > 0 || defines.USE_AIR_TRANSMISSION_MAP === true;
+    definesForPhysical.USE_AIR_VOLUME = !!volume && transmission.factor > 0;
+    definesForPhysical.USE_AIR_DISPERSION = !!dispersion && dispersion.factor > 0 && !!volume && transmission.factor > 0;
   }
   const material = new Material();
   try {
@@ -71348,6 +71561,12 @@ function createGLTFMaterial(features, textures, vertexColor) {
       }
       if (bump) {
         material.setProperty(BUMP_CONSTANT, new Vec4(bump.factor, 0, 0, 1));
+      }
+      if (definesForPhysical.USE_AIR_TRANSMISSION && transmission) {
+        var _volume$thicknessFact, _dispersion$factor, _volume$attenuationCo, _volume$attenuationCo2, _volume$attenuationCo3, _volume$attenuationCo4, _volume$attenuationCo5, _volume$attenuationCo6, _volume$attenuationDi;
+        material.setProperty(TRANSMISSION_CONSTANT, new Vec4(transmission.factor, ior, (_volume$thicknessFact = volume == null ? void 0 : volume.thicknessFactor) !== null && _volume$thicknessFact !== void 0 ? _volume$thicknessFact : 0, (_dispersion$factor = dispersion == null ? void 0 : dispersion.factor) !== null && _dispersion$factor !== void 0 ? _dispersion$factor : 0));
+        material.setProperty(ATTENUATION_CONSTANT, new Vec4((_volume$attenuationCo = volume == null ? void 0 : (_volume$attenuationCo2 = volume.attenuationColor) == null ? void 0 : _volume$attenuationCo2[0]) !== null && _volume$attenuationCo !== void 0 ? _volume$attenuationCo : 1, (_volume$attenuationCo3 = volume == null ? void 0 : (_volume$attenuationCo4 = volume.attenuationColor) == null ? void 0 : _volume$attenuationCo4[1]) !== null && _volume$attenuationCo3 !== void 0 ? _volume$attenuationCo3 : 1, (_volume$attenuationCo5 = volume == null ? void 0 : (_volume$attenuationCo6 = volume.attenuationColor) == null ? void 0 : _volume$attenuationCo6[2]) !== null && _volume$attenuationCo5 !== void 0 ? _volume$attenuationCo5 : 1, Number.isFinite((_volume$attenuationDi = volume == null ? void 0 : volume.attenuationDistance) !== null && _volume$attenuationDi !== void 0 ? _volume$attenuationDi : Infinity) ? volume.attenuationDistance : 1e6));
+        registerTransmissionMaterial(material);
       }
       if (colorActive) {
         material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor[0], specularColor[1], specularColor[2], 1));
@@ -71826,15 +72045,6 @@ function bumpFactory(context) {
         factor: (_ext$bumpFactor2 = ext.bumpFactor) !== null && _ext$bumpFactor2 !== void 0 ? _ext$bumpFactor2 : 1
       };
     }
-  };
-}
-
-let available = false;
-let detail = 'transmission pipeline not armed';
-function transmissionPipelineAvailable() {
-  return {
-    available,
-    detail
   };
 }
 
@@ -97608,5 +97818,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { Acceleration, AirAppImpl, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, SUPPORTED_IMAGE_MIMES, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, debug, debugID, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isKTX2, isKTX2Available, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
+export { Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, SUPPORTED_IMAGE_MIMES, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isKTX2, isKTX2Available, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, registerTransmissionMaterial, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
 //# sourceMappingURL=cocosair.module.js.map

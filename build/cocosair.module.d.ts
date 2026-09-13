@@ -33140,6 +33140,24 @@ export namespace utils {
         readonly physical: Record<string, unknown>;
         unlit: boolean;
     }
+    /** Called by the glTF material builder for transmission/volume/dispersion materials. */
+    export function registerTransmissionMaterial(material: Material): void;
+    /** Transmission meshes move to this layer so the scene-color pass skips them. */
+    export const TRANSMISSION_LAYER: number;
+    /**
+     * Add to a node in the scene (one per main camera) and assign `mainCamera` before enabling.
+     * While enabled on a capable device, transmission/volume/dispersion report 'supported'.
+     */
+    export class AirTransmissionCapture extends Component {
+        /** The on-screen camera that draws the transmission meshes. */
+        mainCamera: Camera | null;
+        get sceneColor(): RenderTexture | null;
+        onEnable(): void;
+        onDisable(): void;
+        onDestroy(): void;
+        lateUpdate(): void;
+    }
+    export const defaultTransmissionVisibility: number;
     export namespace rendering {
         export function createCustomPipeline(): BasicPipeline;
         export function setCustomPipeline(name: string, builder: PipelineBuilder): void;
@@ -46565,7 +46583,9 @@ export namespace utils {
             "iridescence",
             "iridescenceIor",
             "iridescenceThickness",
-            "bump"
+            "bump",
+            "transmission",
+            "volumeThickness"
         ];
         export type _air_assets_gltf_material_features__TextureSlotName = (typeof _air_assets_gltf_material_features__TEXTURE_SLOTS)[number];
         export interface _air_assets_gltf_material_texture_slots__TextureCoordinates {

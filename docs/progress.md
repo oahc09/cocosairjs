@@ -303,3 +303,30 @@
   （registry 只报已注册 handler——诚实源）。
 - 目录页新增"扩展支持矩阵"折叠区（capabilities.json 直接渲染）；gltf-catalog-browser.js
   扩展断言：行数=JSON 条目、errorCodes=5、revision=40 位——证据链闭环。
+
+
+## V0.5 T6 — transmission/volume/dispersion 折射管线（2026-09-13）
+- **两相机 scene-color 方案（不改共享 forward 循环，零回归）**：新增 `src/air/rendering/
+  transmission-capture.ts` 组件；低优先级离屏相机把非 transmission 层物体渲进 RenderTexture，
+  主相机绘制玻璃并按世界法线/IOR 对 scene-color 做屏幕空间 UV 偏移折射采样。能力点亮
+  （`setTransmissionPipelineAvailable`，WebGL2）前扩展报告 `device-dependent`，杜绝“静默
+  alpha 混合冒充支持”。
+- 物理 effect 追加 `airTransmission(=factor,ior,thickness,dispersion)`、
+  `airAttenuation(=rgb,distance)`、`airSceneColorInfo(=尺寸,倒数)` UBO 成员（序 7-9）与
+  transmissionMap/volumeThicknessMap/cc_sceneColorTex 采样器（binding 25-27）；折射块在
+  CCStandardShadingBase 末端按 `trF·(1-metallic)` mix 背景；volume 施加 Beer-Lambert
+  `exp(-k·thickness)`；dispersion 绿基准 R/B 三采样。
+- 关键修复：① 玻璃网格须每帧扫描打标 `TRANSMISSION_LAYER`（1<<26）并从离屏相机剔除，否则
+  离屏相机首帧把“正写入的 RT”当作纹理采样 → GL 反馈环 INVALID_OPERATION；② dispersion 的
+  refract(...).xy 误声明 vec3 赋 vec2 → 维度链接错误。
+- viewer 在资源解析前于场景挂 AirTransmissionCapture（能力需先于材质构建点亮）。
+- 测试：smoke-20（能力/校验/required 干净失败/optional 告警）；全量 20 suites / 118 tests；
+  typecheck 0；verify:web-only PASSED；verify:decoders ok；esm/min/dts + NodeNext 消费全绿。
+- 浏览器证据：新增 gltf-transmission-browser.js——真实 WebGL2 中玻璃选择 air-gltf-physical、
+  airTransmission=(1,1.5,0.6,0.05)/airAttenuation=(0.2,0.6,0.9,1.2) 精确、cc_sceneColorTex
+  绑定、玻璃网格带 transmission 层位、折射后玻璃中心呈蓝化透射色（非未点亮白基色亦非黑洞）、
+  零 GL 错误；其余 9 证据（含 20 平面 permutation/physical/clearcoat/aniso/iri/bump/scene/
+  webp/ktx2）全回归 ok:true。capabilities 21 项（17 browser-evidence）。
+- 如实记录（G4 已知限制）：透射网格按透明队列 BACK_TO_FRONT 排序，相交玻璃体相对次序不保证；
+  折射取当前帧 scene color（无逐物体递归透射）；rough transmission 用单采样近似，未做 mip
+  粗糙度链（官方像素级对照归 T8）。

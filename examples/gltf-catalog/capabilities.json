@@ -1,7 +1,7 @@
 {
   "engine": "cocosair",
   "engineVersion": "0.1.0",
-  "generatedAt": "2026-09-13T12:56:35.782Z",
+  "generatedAt": "2026-09-13T14:16:01.428Z",
   "catalogRevision": "90d7ede14c7e280af263824604b427a1ca02cb66",
   "decoderManifest": "build/gltf-decoders/MANIFEST.md",
   "errorCodes": [
@@ -194,10 +194,13 @@
     },
     {
       "name": "KHR_materials_transmission",
-      "status": "device-dependent",
-      "reason": "requires the scene-color transmission pipeline (transmission pipeline not armed)",
+      "status": "supported",
+      "reason": null,
       "verified": {
-        "level": "cataloged"
+        "level": "browser-evidence",
+        "smoke": "smoke-20",
+        "evidence": "gltf-transmission-browser.js",
+        "decoder": null
       },
       "officialComparison": {
         "model": "TransmissionTest",
@@ -207,10 +210,13 @@
     },
     {
       "name": "KHR_materials_volume",
-      "status": "device-dependent",
-      "reason": "requires the scene-color transmission pipeline (transmission pipeline not armed)",
+      "status": "supported",
+      "reason": null,
       "verified": {
-        "level": "cataloged"
+        "level": "browser-evidence",
+        "smoke": "smoke-20",
+        "evidence": "gltf-transmission-browser.js",
+        "decoder": null
       },
       "officialComparison": {
         "model": "Volka",
@@ -220,10 +226,13 @@
     },
     {
       "name": "KHR_materials_dispersion",
-      "status": "device-dependent",
-      "reason": "requires the scene-color transmission pipeline (transmission pipeline not armed)",
+      "status": "supported",
+      "reason": null,
       "verified": {
-        "level": "cataloged"
+        "level": "browser-evidence",
+        "smoke": "smoke-20",
+        "evidence": "gltf-transmission-browser.js",
+        "decoder": null
       },
       "officialComparison": {
         "model": "DispersionTest",

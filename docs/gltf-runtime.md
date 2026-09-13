@@ -87,7 +87,7 @@ asset.decRef(); // 业务不再持有
 > 每个扩展携带 registry 实时 status、decoder/设备要求、自动化证据（smoke / 真机浏览器脚本）、
 > 计划对照的官方模型与 catalog revision；稳定错误码清单在 `errorCodes`。V0.5.1 直接消费本文件。
 
-| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_anisotropy、KHR_materials_iridescence、EXT_materials_bump、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
+| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_anisotropy、KHR_materials_iridescence、EXT_materials_bump、KHR_materials_transmission、KHR_materials_volume、KHR_materials_dispersion、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
 
 `KHR_texture_transform` 支持每个 textureInfo 独立的 `offset`、`rotation`（弧度）、`scale` 和 `texCoord` 覆盖，作用于 baseColor、metallicRoughness、normal、occlusion、emissive。变换围绕 UV 原点应用，支持负缩放；UV 通道仍限于 UV0/UV1。共享纹理可以在不同材质槽使用不同变换，网格 UV 不会被改写。缺少切线时，法线贴图使用有效 UV 通道及其变换生成切线。
 
@@ -128,6 +128,19 @@ Airy 公式）：`airIridescence = (factor, filmIor, thicknessMin_nm, thicknessM
 `dFdx(height)/dFdx(uv)/dFdx(position)` 解 UV 平面梯度后 `normalize(N - grad)`，`bumpFactor`（>=0，
 默认 1）缩放量纲；`bumpTexture` 为必填（R 通道），支持 texCoord/KHR_texture_transform。与
 `normalTexture` 共存时按提案可选项跳过扰动并告警。WebGL1 依赖 OES_standard_derivatives。
+
+> **传输管线（T6）**：`KHR_materials_transmission/volume/dispersion` 折射的是不透明背景，
+> 需要 scene-color 离屏渲染。运行时通过 `AirTransmissionCapture` 组件（两相机方案，
+> **零改动共享 forward 渲染循环**）实现：一架低优先级相机把 transmission 层之外的所有不透明
+> 物体渲进一张 RenderTexture；主相机（高优先级）再绘制玻璃网格，其着色器按世界法线与 IOR
+> 对 scene-color 做屏幕空间 UV 偏移采样（折射），`KHR_materials_volume` 沿路径长度施加
+> Beer-Lambert 吸收（attenuationColor/distance），`KHR_materials_dispersion` 以绿通道为基准
+> 对 R/B 用不同 IOR 三次采样合成色散。能力仅在一架已启用的 capture 运行于 WebGL2 时点亮
+> （`setTransmissionPipelineAvailable`）；未点亮时三扩展报告 `device-dependent`——required
+> 文件干净失败、optional 告警并回退为不透明，**绝不退化成普通 alpha 混合还声称支持**。
+> 玻璃网格由 capture 每帧扫描自动打上 `TRANSMISSION_LAYER`（1<<26）并从离屏相机剔除，避免
+> framebuffer↔texture 反馈环。已知限制：透射排序按透明队列 BACK_TO_FRONT，相交玻璃体的相对
+> 顺序不保证（glTF 通用近似）；折射使用当前帧 scene color（无逐物体递归）。
 
 `KHR_texture_basisu`（KTX2）通过注入的 BasisU 转码器工作：`new GLTFLoader({ ktx2Transcoder })`
 或 `setKTX2Transcoder(createKTX2Transcoder(() => BASIS({ locateFile })))`。转码器（`build/gltf-decoders/basis/`，

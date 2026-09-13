@@ -9,3 +9,4 @@ export * from './app';
 export * from './bootstrap';
 export * from './utils';
 export * from './assets/gltf';
+export * from './rendering/transmission-capture';

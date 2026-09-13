@@ -59,6 +59,9 @@ const VERIFIED = {
     'KHR_materials_anisotropy': { level: 'browser-evidence', smoke: 'smoke-17', evidence: 'gltf-anisotropy-browser.js' },
     'KHR_materials_iridescence': { level: 'browser-evidence', smoke: 'smoke-18', evidence: 'gltf-iridescence-browser.js' },
     'EXT_materials_bump': { level: 'browser-evidence', smoke: 'smoke-19', evidence: 'gltf-bump-browser.js' },
+    'KHR_materials_transmission': { level: 'browser-evidence', smoke: 'smoke-20', evidence: 'gltf-transmission-browser.js' },
+    'KHR_materials_volume': { level: 'browser-evidence', smoke: 'smoke-20', evidence: 'gltf-transmission-browser.js' },
+    'KHR_materials_dispersion': { level: 'browser-evidence', smoke: 'smoke-20', evidence: 'gltf-transmission-browser.js' },
 };
 
 // Official model to pixel-compare against during T8 (from the pinned catalog where present).

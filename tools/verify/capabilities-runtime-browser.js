@@ -14,7 +14,8 @@ async (page) => {
         'KHR_meshopt_compression', 'KHR_draco_mesh_compression', 'KHR_lights_punctual', 'EXT_mesh_gpu_instancing',
         'EXT_texture_webp', 'EXT_texture_avif', 'KHR_texture_basisu', 'KHR_materials_emissive_strength',
         'KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_clearcoat', 'KHR_materials_anisotropy',
-        'KHR_materials_iridescence', 'EXT_materials_bump'];
+        'KHR_materials_iridescence', 'EXT_materials_bump',
+        'KHR_materials_transmission', 'KHR_materials_volume', 'KHR_materials_dispersion'];
     const missing = EXPECT.filter((name) => !matrix.some((m) => m.name === name));
     return JSON.stringify({ missing, matrix });
 }

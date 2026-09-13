@@ -114,7 +114,7 @@ fs.writeFileSync(path.join(out, 'scene.glb'), Buffer.from(mod.exports.toGLB(scen
 
 // --- physical.glb: T5.1 KHR_materials_ior / specular / emissive_strength fixtures ---
 const phys = { asset: { version: '2.0', generator: 'cocosair physical fixtures (MIT)' },
-    extensionsUsed: ['KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_emissive_strength', 'KHR_materials_clearcoat', 'KHR_materials_anisotropy', 'KHR_materials_iridescence', 'EXT_materials_bump', 'KHR_lights_punctual'], extensionsRequired: [], // kitchen sink exercises all of the above at once
+    extensionsUsed: ['KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_emissive_strength', 'KHR_materials_clearcoat', 'KHR_materials_anisotropy', 'KHR_materials_iridescence', 'EXT_materials_bump', 'KHR_materials_transmission', 'KHR_materials_volume', 'KHR_materials_dispersion', 'KHR_lights_punctual'], extensionsRequired: [], // kitchen sink exercises all of the above at once
     buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [], images: [], textures: [],
     samplers: [{ magFilter: 9729, minFilter: 9729, wrapS: 10497, wrapT: 10497 }],
     meshes: [], nodes: [], scenes: [{ nodes: [] }], scene: 0 };
@@ -164,15 +164,20 @@ phys.materials = [
             KHR_materials_iridescence: { iridescenceFactor: 0.9, iridescenceIor: 1.5, iridescenceThicknessMinimum: 100, iridescenceThicknessMaximum: 400,
                 iridescenceTexture: { index: 0 }, iridescenceIorTexture: { index: 0 }, iridescenceThicknessTexture: { index: 0 } },
             EXT_materials_bump: { bumpTexture: { index: 0 }, bumpFactor: 1.5 } } },
+    { name: 'transmissive glass', pbrMetallicRoughness: { baseColorFactor: [1, 1, 1, 1], metallicFactor: 0, roughnessFactor: 0.1 },
+        alphaMode: 'BLEND',
+        extensions: { KHR_materials_transmission: { transmissionFactor: 1 },
+            KHR_materials_volume: { thicknessFactor: 0.6, attenuationColor: [0.2, 0.6, 0.9], attenuationDistance: 1.2 },
+            KHR_materials_dispersion: { dispersionFactor: 0.05 } } },
 ];
-const offsets = [[-1.2, 0, 0], [0, 0, 0], [1.2, 0, 0], [-1.7, -1.15, 0], [-0.5, -1.15, 0], [0.7, -1.15, 0], [1.8, -1.15, 0], [2.9, -1.15, 0], [0, -2.3, 0]];
-for (let i = 0; i < 9; i++) {
+const offsets = [[-1.2, 0, 0], [0, 0, 0], [1.2, 0, 0], [-1.7, -1.15, 0], [-0.5, -1.15, 0], [0.7, -1.15, 0], [1.8, -1.15, 0], [2.9, -1.15, 0], [0, -2.3, 0], [0, -1.15, 0.55]];
+for (let i = 0; i < phys.materials.length; i++) {
     phys.meshes.push({ primitives: [{ attributes: { POSITION: physPos, NORMAL: physNrm, TEXCOORD_0: physUv }, material: i }] });
-    phys.nodes.push({ mesh: i, name: phys.materials[i].name, translation: offsets[i] });
+    phys.nodes.push({ mesh: i, name: phys.materials[i].name, translation: offsets[i] || [i * 1.3 - 1.3, -2.3, 0] });
     phys.scenes[0].nodes.push(i);
 }
 phys.nodes.push({ name: 'gloss', translation: [0, 0.4, 3.2], extensions: { KHR_lights_punctual: { light: 0 } } });
-phys.scenes[0].nodes.push(9);
+phys.scenes[0].nodes.push(phys.nodes.length - 1);
 phys.extensions = { KHR_lights_punctual: { lights: [
     { name: 'gloss', type: 'directional', color: [1, 1, 1], intensity: 2000 },
 ] } };
