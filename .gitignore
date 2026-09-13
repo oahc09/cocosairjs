@@ -12,3 +12,4 @@ build/.tmp-*/
 output/
 build/.dts-*/
 build/.dev-log.txt
+.tmp-basis\n
