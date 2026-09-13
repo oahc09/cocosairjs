@@ -230,3 +230,16 @@
 - 测试：smoke-17 5 项；全量 17 suites / 104 tests PASS；typecheck/verify:web-only/
   esm/min/dts/NodeNext 消费全绿；三浏览器证据（physical/clearcoat/anisotropy）ok:true
   （真机编译零 GL 错误、uniform (0.9, cos, sin)、effect 选择、采样器绑定）。
+
+
+## V0.5 T5.2（三）— KHR_materials_iridescence（2026-09-13）
+- `airIridescence=(factor, filmIor, thicknessMin, thicknessMax)` UBO 追加（成员序 5）；
+  `airIridescenceF0(NV)` 逐 RGB（680/550/450nm）非相干 Airy 薄膜 F0，mix 替换非金属基底
+  F0（factor 调制、metallic 门控）；基底 IOR 从 airPhysicalParams.y 反推。
+- 纹理槽 11-13（iridescenceTexture.R / IorTexture.G→[1.3,2.3333] / ThicknessTexture.G→
+  [min,max]，绑定 21/22/23）；无 volume 时厚度取 max（规范回退）。
+- handler 校验 factor [0,1]、ior [1.3,2.3333]、0<=min<=max；GLSL ES pow(vec3,float) 重载
+  不支持 → 显式乘法。
+- 测试：smoke-18 5 项；全量 18 suites / 109 tests PASS；typecheck/verify:web-only/esm/min/
+  dts/NodeNext 全绿；四浏览器证据（physical/clearcoat/anisotropy/iridescence）ok:true——
+  真实 WebGL2 编译全部物理 permutation 零 GL 错误。

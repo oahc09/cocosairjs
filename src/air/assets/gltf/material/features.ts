@@ -3,7 +3,8 @@ import { coreTextureCoordinates, TextureCoordinates } from './texture-slots';
 
 /** Texture slot names shared by feature population and material construction. */
 export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive',
-    'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy'] as const;
+    'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy',
+    'iridescence', 'iridescenceIor', 'iridescenceThickness'] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
 /**
@@ -32,6 +33,8 @@ export interface PhysicalScalars {
     clearcoat?: { factor: number; roughness: number; normalScale: number };
     /** KHR_materials_anisotropy: tangent-aligned anisotropic specular ([0,1] strength). */
     anisotropy?: { strength: number; rotation: number };
+    /** KHR_materials_iridescence: thin-film layer (factor [0,1], ior [1.3,2.3333], nm range). */
+    iridescence?: { factor: number; ior: number; thicknessMin: number; thicknessMax: number };
 }
 
 /** Type-narrowing helper for the shared physical record. */
@@ -59,6 +62,12 @@ export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): T
         { clearcoatNormalTexture?: TextureInfo } | undefined)?.clearcoatNormalTexture;
     case 'anisotropy': return (source.extensions?.KHR_materials_anisotropy as
         { anisotropyTexture?: TextureInfo } | undefined)?.anisotropyTexture;
+    case 'iridescence': return (source.extensions?.KHR_materials_iridescence as
+        { iridescenceTexture?: TextureInfo } | undefined)?.iridescenceTexture;
+    case 'iridescenceIor': return (source.extensions?.KHR_materials_iridescence as
+        { iridescenceIorTexture?: TextureInfo } | undefined)?.iridescenceIorTexture;
+    case 'iridescenceThickness': return (source.extensions?.KHR_materials_iridescence as
+        { iridescenceThicknessTexture?: TextureInfo } | undefined)?.iridescenceThicknessTexture;
     }
 }
 

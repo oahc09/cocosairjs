@@ -30,6 +30,8 @@ export const PHYSICAL_COLOR_CONSTANT = 'airSpecularColorFactor';
 export const CLEARCOAT_CONSTANT = 'airClearcoat';
 /** (strength, cos(rotation), sin(rotation), 1) for the KHR_materials_anisotropy lobe. */
 export const ANISO_CONSTANT = 'airAnisotropy';
+/** (factor, filmIor, thicknessMax_nm, substrateIor) for KHR_materials_iridescence thin-film. */
+export const IRIDESCENCE_CONSTANT = 'airIridescence';
 
 /** Physical samplers appended after the base standard's bindings 0..14. */
 export const PHYSICAL_SAMPLERS = [
@@ -39,6 +41,9 @@ export const PHYSICAL_SAMPLERS = [
     { name: 'clearcoatRoughnessMap', binding: 18, macro: 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP' },
     { name: 'clearcoatNormalMap', binding: 19, macro: 'USE_AIR_CLEARCOAT_NORMAL_MAP' },
     { name: 'anisotropyMap', binding: 20, macro: 'USE_AIR_ANISOTROPY_MAP' },
+    { name: 'iridescenceMap', binding: 21, macro: 'USE_AIR_IRIDESCENCE_MAP' },
+    { name: 'iridescenceIorMap', binding: 22, macro: 'USE_AIR_IRIDESCENCE_IOR_MAP' },
+    { name: 'iridescenceThicknessMap', binding: 23, macro: 'USE_AIR_IRIDESCENCE_THICKNESS_MAP' },
 ] as const;
 
 /** Normalized scalars for the physical uniform (identity when all defaults hold). */
@@ -85,7 +90,14 @@ export function gltfPhysicalEffect (): EffectAsset {
             { name: 'CLEARCOATNORMAL_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
             { name: 'USE_AIR_ANISOTROPY', type: 'boolean' },
             { name: 'USE_AIR_ANISOTROPY_MAP', type: 'boolean' },
-            { name: 'ANISOTROPY_UV', type: 'string', options: ['v_uv', 'v_uv1'] }];
+            { name: 'ANISOTROPY_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+            { name: 'USE_AIR_IRIDESCENCE', type: 'boolean' },
+            { name: 'USE_AIR_IRIDESCENCE_MAP', type: 'boolean' },
+            { name: 'USE_AIR_IRIDESCENCE_IOR_MAP', type: 'boolean' },
+            { name: 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', type: 'boolean' },
+            { name: 'IRIDESCENCE_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+            { name: 'IRIDESCENCEIOR_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+            { name: 'IRIDESCENCETHICKNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] }];
 
         // One extra material-block member holding the four physical scalars (vec4, std140-safe).
         const blocks = (shader.blocks as Array<{ name: string; members: Uniform[] }>).slice();
@@ -98,6 +110,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             if (!block.members.some((m) => m.name === PHYSICAL_COLOR_CONSTANT)) { block.members.push(new Uniform(PHYSICAL_COLOR_CONSTANT, Type.FLOAT4, 1)); }
             if (!block.members.some((m) => m.name === CLEARCOAT_CONSTANT)) { block.members.push(new Uniform(CLEARCOAT_CONSTANT, Type.FLOAT4, 1)); }
             if (!block.members.some((m) => m.name === ANISO_CONSTANT)) { block.members.push(new Uniform(ANISO_CONSTANT, Type.FLOAT4, 1)); }
+            if (!block.members.some((m) => m.name === IRIDESCENCE_CONSTANT)) { block.members.push(new Uniform(IRIDESCENCE_CONSTANT, Type.FLOAT4, 1)); }
         }
 
         // Register the two physical samplers (binding 15/16, fragment stage).
@@ -124,7 +137,8 @@ export function gltfPhysicalEffect (): EffectAsset {
             // function, which only references it (declaration before the function is legal).
             const texVar = `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecTex = vec3(1.0);\n#endif\n`
                 + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n`
-                + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\n#endif\n`;
+                + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\n#endif\n`
+                + `#if USE_AIR_IRIDESCENCE\nfloat airIriFactorTex = 1.0;\nfloat airIriIorTex = 1.3;\nfloat airIriThickTex = 400.0;\n#endif\n`;
             // Insert after the leading `precision` statement: float types need a precision
             // qualifier and the raw shader source starts with one.
             const prependAfterPrecision = (source: string): string => {
@@ -158,8 +172,37 @@ export function gltfPhysicalEffect (): EffectAsset {
             // 4. specular factor: scalars inside the shading function, texture product applied
             // in main (see texVar), with per-slot UV transforms.
             const tex = (sampler: string, uv: string, prefix: string): string => textureTransform(language, sampler, uv, prefix);
+            // Thin-film interference (incoherent Airy, per-RGB spectral): modulates the dielectric
+            // F0 base when iridescence is active. Substrate IOR derives from the ior scalar
+            // (airPhysicalParams.y = iorF0/0.04), film IOR and thickness come from airIridescence.
+            const iriFn = [
+                '#if USE_AIR_IRIDESCENCE',
+                'vec3 airIridescenceF0 (float NV) {',
+                'float filmIor = clamp(airIriIorTex, 1.3, 2.33334);',
+                `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`,
+                'float cosT1 = clamp(NV, 0.0, 1.0);',
+                'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);',
+                'float cosT2 = sqrt(max(0.0, 1.0 - sinT2sq));',
+                `vec3 lambda = vec3(680.0, 550.0, 450.0);`,
+                `vec3 phase = 4.0 * PI * filmIor * max(airIriThickTex, 0.0) * cosT2 / lambda;`,
+                'vec3 f01 = vec3(((1.0 - filmIor) / (1.0 + filmIor)) * ((1.0 - filmIor) / (1.0 + filmIor)));',
+                'vec3 r12 = (filmIor - vec3(n0)) / (filmIor + vec3(n0));',
+                'vec3 f12 = r12 * r12;',
+                'vec3 cross12 = sqrt(f01 * f12);',
+                'vec3 airy = (f01 + f12 + 2.0 * cross12 * cos(phase)) / (vec3(1.0) + f01 * f12 + 2.0 * cross12 * cos(phase));',
+                'return clamp(airy, vec3(0.0), vec3(1.0));',
+                '}',
+                '#endif',
+            ].join(nl);
             const airSpec = [
-                `vec3 airSpec = mix(vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), s.albedo.rgb, s.metallic);`,
+                `vec3 airBase = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`,
+                '#if USE_AIR_IRIDESCENCE',
+                `{`,
+                `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`,
+                `if (iriF > 0.0) { airBase = mix(airBase, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`,
+                `}`,
+                `#endif`,
+                `vec3 airSpec = mix(airBase, s.albedo.rgb, s.metallic);`,
                 `#if USE_AIR_SPECULAR_COLOR\nairSpec *= ${PHYSICAL_COLOR_CONSTANT}.rgb;\n#endif`,
                 `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nairSpec *= airSpecTex;\n#endif`,
                 'vec3 specular = airSpec;',
@@ -235,7 +278,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             // Define the helper above the shading function that uses it.
             const shadingDecl = 'vec4 CCStandardShadingBase (StandardSurface s, vec4 shadowPos) {';
             if (!frag.includes(shadingDecl)) { throw new Error(`physical effect: shading fn missing in ${shader.name} [${language}]`); }
-            frag = frag.replace(shadingDecl, `${anisoFn}\n${shadingDecl}`);
+            frag = frag.replace(shadingDecl, `${anisoFn}\n${iriFn}\n${shadingDecl}`);
             const emissiveAnchor = 'finalColor += s.emissive;';
             if (!frag.includes(emissiveAnchor)) { throw new Error(`physical effect: '${emissiveAnchor}' missing in ${shader.name} [${language}]`); }
             frag = frag.replace(emissiveAnchor,
@@ -293,6 +336,23 @@ export function gltfPhysicalEffect (): EffectAsset {
                 'airAnisoT = aT * aRotC + aB * aRotS;',
                 'airAnisoB = aB * aRotC - aT * aRotS;',
                 '}',
+                '#endif',
+                '#if USE_AIR_IRIDESCENCE',
+                `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`,
+                `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
+                // No texture: thickness factor 1 -> maximum (the spec default without volume).
+                `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`,
+                '#endif',
+                '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP',
+                `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`,
+                '#endif',
+                '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP',
+                `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`,
+                '#endif',
+                '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
+                // Without KHR_materials_volume the effective thickness is the maximum (spec fallback);
+                // the texture lerps [min,max] over that range.
+                `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`,
                 '#endif',
             ].join(nl);
             const mainAnchor = 'StandardSurface s; surf(s);';

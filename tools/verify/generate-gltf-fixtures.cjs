@@ -114,7 +114,7 @@ fs.writeFileSync(path.join(out, 'scene.glb'), Buffer.from(mod.exports.toGLB(scen
 
 // --- physical.glb: T5.1 KHR_materials_ior / specular / emissive_strength fixtures ---
 const phys = { asset: { version: '2.0', generator: 'cocosair physical fixtures (MIT)' },
-    extensionsUsed: ['KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_emissive_strength', 'KHR_materials_clearcoat', 'KHR_materials_anisotropy', 'KHR_lights_punctual'], extensionsRequired: [],
+    extensionsUsed: ['KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_emissive_strength', 'KHR_materials_clearcoat', 'KHR_materials_anisotropy', 'KHR_materials_iridescence', 'KHR_lights_punctual'], extensionsRequired: [],
     buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [], images: [], textures: [],
     samplers: [{ magFilter: 9729, minFilter: 9729, wrapS: 10497, wrapT: 10497 }],
     meshes: [], nodes: [], scenes: [{ nodes: [] }], scene: 0 };
@@ -148,15 +148,17 @@ phys.materials = [
     { name: 'bare red', pbrMetallicRoughness: { baseColorFactor: [0.7, 0.04, 0.04, 1], metallicFactor: 0, roughnessFactor: 0.25 } },
     { name: 'brushed gold', pbrMetallicRoughness: { baseColorFactor: [0.95, 0.65, 0.25, 1], metallicFactor: 1, roughnessFactor: 0.3 },
         extensions: { KHR_materials_anisotropy: { anisotropyStrength: 0.9, anisotropyRotation: 1.57 } } },
+    { name: 'iridescent film', pbrMetallicRoughness: { baseColorFactor: [0.3, 0.3, 0.32, 1], metallicFactor: 0, roughnessFactor: 0.2 },
+        extensions: { KHR_materials_iridescence: { iridescenceFactor: 1, iridescenceIor: 1.8, iridescenceThicknessMinimum: 200, iridescenceThicknessMaximum: 450 } } },
 ];
-const offsets = [[-1.2, 0, 0], [0, 0, 0], [1.2, 0, 0], [-1.1, -1.15, 0], [0.1, -1.15, 0], [1.2, -1.15, 0]];
-for (let i = 0; i < 6; i++) {
+const offsets = [[-1.2, 0, 0], [0, 0, 0], [1.2, 0, 0], [-1.7, -1.15, 0], [-0.5, -1.15, 0], [0.7, -1.15, 0], [1.8, -1.15, 0]];
+for (let i = 0; i < 7; i++) {
     phys.meshes.push({ primitives: [{ attributes: { POSITION: physPos, NORMAL: physNrm, TEXCOORD_0: physUv }, material: i }] });
     phys.nodes.push({ mesh: i, name: phys.materials[i].name, translation: offsets[i] });
     phys.scenes[0].nodes.push(i);
 }
 phys.nodes.push({ name: 'gloss', translation: [0, 0.4, 3.2], extensions: { KHR_lights_punctual: { light: 0 } } });
-phys.scenes[0].nodes.push(6);
+phys.scenes[0].nodes.push(7);
 phys.extensions = { KHR_lights_punctual: { lights: [
     { name: 'gloss', type: 'directional', color: [1, 1, 1], intensity: 2000 },
 ] } };
