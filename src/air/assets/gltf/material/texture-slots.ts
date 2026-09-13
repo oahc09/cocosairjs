@@ -13,6 +13,11 @@ export function coreTextureCoordinates (info?: TextureInfo): TextureCoordinates 
     return { texCoord, row0: new Vec4(1, 0, 0, 0), row1: new Vec4(0, 1, 0, 0) };
 }
 
+/** The transformed-UV GLSL expression a slot samples with (shared with the sampler declaration). */
+export function textureUVExpression (uv: string, prefix: string): string {
+    return `vec2(dot(${prefix}UV0.xyz, vec3(${uv}, 1.0)), dot(${prefix}UV1.xyz, vec3(${uv}, 1.0)))`;
+}
+
 /** T * R * S around the top-left UV origin, matching Khronos Sample Renderer's UV rotation convention. */
 export function textureCoordinates (info?: TextureInfo): TextureCoordinates {
     const extension = info?.extensions?.KHR_texture_transform;

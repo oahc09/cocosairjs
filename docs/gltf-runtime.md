@@ -83,7 +83,7 @@ asset.decRef(); // 业务不再持有
 | 蒙皮 | 多 skin、共享 skin、非关节祖先、任意 joint 顺序、有/无 inverseBindMatrices、JOINTS_0/WEIGHTS_0 四权重、原生实时蒙皮 |
 | 动画 | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化 |
 | Morph | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重 |
-| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_anisotropy、KHR_materials_iridescence、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
+| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_anisotropy、KHR_materials_iridescence、EXT_materials_bump、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
 
 `KHR_texture_transform` 支持每个 textureInfo 独立的 `offset`、`rotation`（弧度）、`scale` 和 `texCoord` 覆盖，作用于 baseColor、metallicRoughness、normal、occlusion、emissive。变换围绕 UV 原点应用，支持负缩放；UV 通道仍限于 UV0/UV1。共享纹理可以在不同材质槽使用不同变换，网格 UV 不会被改写。缺少切线时，法线贴图使用有效 UV 通道及其变换生成切线。
 
@@ -119,6 +119,11 @@ Airy 公式）：`airIridescence = (factor, filmIor, thicknessMin_nm, thicknessM
 `airPhysicalParams.y`（iorF0/0.04）反推；`iridescenceTexture.R`、`iridescenceIorTexture.G`
 （映射 [1.3, 2.3333]）、`iridescenceThicknessTexture.G`（映射 [min,max]）按规范通道调制；无体积
 扩展时厚度取最大值（规范回退）。factor=0 回退标准 effect。
+
+`EXT_materials_bump`（three.js 提案扩展）用屏幕空间导数把高度图扰动为法线：片元内
+`dFdx(height)/dFdx(uv)/dFdx(position)` 解 UV 平面梯度后 `normalize(N - grad)`，`bumpFactor`（>=0，
+默认 1）缩放量纲；`bumpTexture` 为必填（R 通道），支持 texCoord/KHR_texture_transform。与
+`normalTexture` 共存时按提案可选项跳过扰动并告警。WebGL1 依赖 OES_standard_derivatives。
 
 `KHR_texture_basisu`（KTX2）通过注入的 BasisU 转码器工作：`new GLTFLoader({ ktx2Transcoder })`
 或 `setKTX2Transcoder(createKTX2Transcoder(() => BASIS({ locateFile })))`。转码器（`build/gltf-decoders/basis/`，

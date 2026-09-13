@@ -46564,7 +46564,8 @@ export namespace utils {
             "anisotropy",
             "iridescence",
             "iridescenceIor",
-            "iridescenceThickness"
+            "iridescenceThickness",
+            "bump"
         ];
         export type _air_assets_gltf_material_features__TextureSlotName = (typeof _air_assets_gltf_material_features__TEXTURE_SLOTS)[number];
         export interface _air_assets_gltf_material_texture_slots__TextureCoordinates {

@@ -70057,12 +70057,12 @@ function textureTransform(language, sampler, uv, prefix) {
   return `${language === 'glsl1' ? 'texture2D' : 'texture'}(${sampler}, ${expr})`;
 }
 
-const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive', 'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy', 'iridescence', 'iridescenceIor', 'iridescenceThickness'];
+const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive', 'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy', 'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump'];
 function physicalScalars(features) {
   return features.physical;
 }
 function slotTextureInfo(source, slot) {
-  var _source$pbrMetallicRo, _source$pbrMetallicRo2, _source$extensions, _source$extensions$KH, _source$extensions2, _source$extensions2$K, _source$extensions3, _source$extensions3$K, _source$extensions4, _source$extensions4$K, _source$extensions5, _source$extensions5$K, _source$extensions6, _source$extensions6$K, _source$extensions7, _source$extensions7$K, _source$extensions8, _source$extensions8$K, _source$extensions9, _source$extensions9$K;
+  var _source$pbrMetallicRo, _source$pbrMetallicRo2, _source$extensions, _source$extensions$KH, _source$extensions2, _source$extensions2$K, _source$extensions3, _source$extensions3$K, _source$extensions4, _source$extensions4$K, _source$extensions5, _source$extensions5$K, _source$extensions6, _source$extensions6$K, _source$extensions7, _source$extensions7$K, _source$extensions8, _source$extensions8$K, _source$extensions9, _source$extensions9$K, _source$extensions10, _source$extensions10$;
   switch (slot) {
     case 'baseColor':
       return (_source$pbrMetallicRo = source.pbrMetallicRoughness) == null ? void 0 : _source$pbrMetallicRo.baseColorTexture;
@@ -70092,6 +70092,8 @@ function slotTextureInfo(source, slot) {
       return (_source$extensions8 = source.extensions) == null ? void 0 : (_source$extensions8$K = _source$extensions8.KHR_materials_iridescence) == null ? void 0 : _source$extensions8$K.iridescenceIorTexture;
     case 'iridescenceThickness':
       return (_source$extensions9 = source.extensions) == null ? void 0 : (_source$extensions9$K = _source$extensions9.KHR_materials_iridescence) == null ? void 0 : _source$extensions9$K.iridescenceThicknessTexture;
+    case 'bump':
+      return (_source$extensions10 = source.extensions) == null ? void 0 : (_source$extensions10$ = _source$extensions10.EXT_materials_bump) == null ? void 0 : _source$extensions10$.bumpTexture;
   }
 }
 function createMaterialFeatures(index, source) {
@@ -70510,6 +70512,7 @@ const PHYSICAL_COLOR_CONSTANT = 'airSpecularColorFactor';
 const CLEARCOAT_CONSTANT = 'airClearcoat';
 const ANISO_CONSTANT = 'airAnisotropy';
 const IRIDESCENCE_CONSTANT = 'airIridescence';
+const BUMP_CONSTANT = 'airBump';
 const PHYSICAL_SAMPLERS = [{
   name: 'specularMap',
   binding: 15,
@@ -70546,6 +70549,10 @@ const PHYSICAL_SAMPLERS = [{
   name: 'iridescenceThicknessMap',
   binding: 23,
   macro: 'USE_AIR_IRIDESCENCE_THICKNESS_MAP'
+}, {
+  name: 'bumpMap',
+  binding: 24,
+  macro: 'USE_AIR_BUMP'
 }];
 function physicalParams(ior, specularFactor0, emissiveStrength) {
   check(ior >= 1 && Number.isFinite(ior), 'KHR_materials_ior.ior must be finite and >= 1');
@@ -70647,6 +70654,13 @@ function gltfPhysicalEffect() {
       name: 'IRIDESCENCETHICKNESS_UV',
       type: 'string',
       options: ['v_uv', 'v_uv1']
+    }, {
+      name: 'USE_AIR_BUMP',
+      type: 'boolean'
+    }, {
+      name: 'BUMP_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
     }];
     const blocks = shader.blocks.slice();
     for (const descriptor of shader.descriptors || []) {
@@ -70670,6 +70684,9 @@ function gltfPhysicalEffect() {
       }
       if (!block.members.some(m => m.name === IRIDESCENCE_CONSTANT)) {
         block.members.push(new Uniform(IRIDESCENCE_CONSTANT, Type.FLOAT4, 1));
+      }
+      if (!block.members.some(m => m.name === BUMP_CONSTANT)) {
+        block.members.push(new Uniform(BUMP_CONSTANT, Type.FLOAT4, 1));
       }
     }
     const samplers = shader.samplerTextures || [];
@@ -70743,7 +70760,8 @@ function gltfPhysicalEffect() {
       frag = frag.replace(emissiveAnchor, `${ccIBL}\n#if USE_AIR_CLEARCOAT\nfinalColor += s.emissive * (1.0 - clamp(airCCFactorTex, 0.0, 1.0) * (0.04 + 0.96 * pow(1.0 - max(dot(airCCNormal, V), 0.0), 5.0)));\n#else\n${emissiveAnchor}\n#endif`);
       const modulate = ['#if USE_AIR_SPECULAR_MAP', `airSpecTex *= 2.0 * ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.g;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecTex *= ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`, '#endif', '#if USE_AIR_CLEARCOAT', `airCCFactorTex = ${CLEARCOAT_CONSTANT}.x;`, `airCCRoughTex = ${CLEARCOAT_CONSTANT}.y;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_MAP', `airCCFactorTex *= ${tex('clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat')}.r;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_ROUGHNESS_MAP', `airCCRoughTex *= ${tex('clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness')}.g;`, '#endif', '#if USE_AIR_CLEARCOAT && USE_AIR_CLEARCOAT_NORMAL_MAP', '{', `vec3 ccT = ${tex('clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal')}.xyz * 2.0 - 1.0;`, `ccT.xy *= ${CLEARCOAT_CONSTANT}.z;`, '#if USE_NORMAL_MAP', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccB0 = normalize(cross(v_tangent.xyz, ccN0)) * v_tangent.w;', 'airCCNormal = normalize(ccT.x * normalize(v_tangent.xyz) + ccT.y * ccB0 + ccT.z * ccN0);', '#else', 'vec3 ccN0 = normalize(v_normal);', 'vec3 ccUp = abs(ccN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 ccTg = normalize(cross(ccUp, ccN0));', 'airCCNormal = normalize(ccT.x * ccTg + ccT.y * cross(ccN0, ccTg) + ccT.z * ccN0);', '#endif', '}', '#endif', '#if USE_AIR_ANISOTROPY', '{', 'vec3 aN0 = normalize(v_normal);', '#if USE_NORMAL_MAP', 'vec3 aT = normalize(v_tangent.xyz);', 'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;', '#else', 'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);', 'vec3 aT = normalize(cross(aUp, aN0));', 'vec3 aB = cross(aN0, aT);', '#endif', `#if USE_AIR_ANISOTROPY_MAP`, `vec3 aDir = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz * 2.0 - 1.0;`, 'vec3 aNewT = aDir.x * aT + aDir.y * aB;', 'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }', '#endif', `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`, 'airAnisoT = aT * aRotC + aB * aRotS;', 'airAnisoB = aB * aRotC - aT * aRotS;', '}', '#endif', '#if USE_AIR_IRIDESCENCE', `airIriFactorTex = ${IRIDESCENCE_CONSTANT}.x;`, `airIriIorTex = ${IRIDESCENCE_CONSTANT}.y;`,
       `airIriThickTex = ${IRIDESCENCE_CONSTANT}.w;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_MAP', `airIriFactorTex *= ${tex('iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence')}.r;`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_IOR_MAP', `airIriIorTex = mix(${IRIDESCENCE_CONSTANT}.y, 2.33334, ${tex('iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor')}.g);`, '#endif', '#if USE_AIR_IRIDESCENCE && USE_AIR_IRIDESCENCE_THICKNESS_MAP',
-      `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif'].join(nl);
+      `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`, '#endif', '#if USE_AIR_BUMP', '{',
+      "float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;", "vec2 buv = " + "${textureUVExpression('BUMP_UV', 'airBump')};", 'vec2 dbh = vec2(dFdx(bh), dFdy(bh));', 'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));', 'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));', 'vec3 dPdx = dFdx(s.position);', 'vec3 dPdy = dFdy(s.position);', 'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;', 'if (abs(bdet) > 1e-8) {', 'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;', 'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;', 's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));', '}', '}', '#endif'].join(nl);
       const mainAnchor = 'StandardSurface s; surf(s);';
       if (!frag.includes(mainAnchor)) {
         throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`);
@@ -70780,6 +70798,14 @@ function gltfPhysicalEffect() {
         type: Type.FLOAT4,
         value: [0, 1, 0, 1]
       };
+      pass.properties[IRIDESCENCE_CONSTANT] = {
+        type: Type.FLOAT4,
+        value: [0, 1.3, 100, 400]
+      };
+      pass.properties[BUMP_CONSTANT] = {
+        type: Type.FLOAT4,
+        value: [1, 0, 0, 1]
+      };
       pass.properties.specularMap = {
         value: 'white',
         type: Type.SAMPLER2D
@@ -70801,6 +70827,22 @@ function gltfPhysicalEffect() {
         type: Type.SAMPLER2D
       };
       pass.properties.anisotropyMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
+      pass.properties.iridescenceMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
+      pass.properties.iridescenceIorMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
+      pass.properties.iridescenceThicknessMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
+      pass.properties.bumpMap = {
         value: 'white',
         type: Type.SAMPLER2D
       };
@@ -70926,7 +70968,7 @@ function imageExtensionFactory(name) {
   });
 }
 
-const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'], ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'], ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'], ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'], ['anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy'], ['iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence'], ['iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor'], ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness']];
+const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'], ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'], ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'], ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'], ['anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy'], ['iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence'], ['iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor'], ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness'], ['bumpMap', 'BUMP_UV', 'airBump']];
 const UV_UNIFORMS = UV_SLOTS.map(([,, prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([,, prefix]) => `${prefix}UV1`));
 function gltfEffect() {
   const name = 'air-gltf-standard';
@@ -71168,7 +71210,7 @@ async function loadGLTFTextures(context, textures, images) {
   }
 }
 function createGLTFMaterial(features, textures, vertexColor) {
-  var _source$extensions, _source$extensions2, _source$extensions3, _source$extensions4, _physical$ior, _physical$specular$fa, _physical$specular, _physical$emissiveStr, _physical$specular2;
+  var _source$extensions, _source$extensions2, _source$extensions3, _source$extensions4, _source$extensions5, _physical$ior, _physical$specular$fa, _physical$specular, _physical$emissiveStr, _physical$specular2;
   const source = features.source;
   const pbr = source.pbrMetallicRoughness || {};
   const unlit = features.unlit;
@@ -71196,7 +71238,8 @@ function createGLTFMaterial(features, textures, vertexColor) {
   const ccExt = (_source$extensions2 = source.extensions) == null ? void 0 : _source$extensions2.KHR_materials_clearcoat;
   const anisoExt = (_source$extensions3 = source.extensions) == null ? void 0 : _source$extensions3.KHR_materials_anisotropy;
   const iriExt = (_source$extensions4 = source.extensions) == null ? void 0 : _source$extensions4.KHR_materials_iridescence;
-  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'], [specExt == null ? void 0 : specExt.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'], [specExt == null ? void 0 : specExt.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'], [ccExt == null ? void 0 : ccExt.clearcoatTexture, 'clearcoatMap', 'USE_AIR_CLEARCOAT_MAP', 'CLEARCOAT_UV'], [ccExt == null ? void 0 : ccExt.clearcoatRoughnessTexture, 'clearcoatRoughnessMap', 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP', 'CLEARCOATROUGHNESS_UV'], [ccExt == null ? void 0 : ccExt.clearcoatNormalTexture, 'clearcoatNormalMap', 'USE_AIR_CLEARCOAT_NORMAL_MAP', 'CLEARCOATNORMAL_UV'], [anisoExt == null ? void 0 : anisoExt.anisotropyTexture, 'anisotropyMap', 'USE_AIR_ANISOTROPY_MAP', 'ANISOTROPY_UV'], [iriExt == null ? void 0 : iriExt.iridescenceTexture, 'iridescenceMap', 'USE_AIR_IRIDESCENCE_MAP', 'IRIDESCENCE_UV'], [iriExt == null ? void 0 : iriExt.iridescenceIorTexture, 'iridescenceIorMap', 'USE_AIR_IRIDESCENCE_IOR_MAP', 'IRIDESCENCEIOR_UV'], [iriExt == null ? void 0 : iriExt.iridescenceThicknessTexture, 'iridescenceThicknessMap', 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', 'IRIDESCENCETHICKNESS_UV']];
+  const bumpExt = (_source$extensions5 = source.extensions) == null ? void 0 : _source$extensions5.EXT_materials_bump;
+  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'], [specExt == null ? void 0 : specExt.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'], [specExt == null ? void 0 : specExt.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'], [ccExt == null ? void 0 : ccExt.clearcoatTexture, 'clearcoatMap', 'USE_AIR_CLEARCOAT_MAP', 'CLEARCOAT_UV'], [ccExt == null ? void 0 : ccExt.clearcoatRoughnessTexture, 'clearcoatRoughnessMap', 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP', 'CLEARCOATROUGHNESS_UV'], [ccExt == null ? void 0 : ccExt.clearcoatNormalTexture, 'clearcoatNormalMap', 'USE_AIR_CLEARCOAT_NORMAL_MAP', 'CLEARCOATNORMAL_UV'], [anisoExt == null ? void 0 : anisoExt.anisotropyTexture, 'anisotropyMap', 'USE_AIR_ANISOTROPY_MAP', 'ANISOTROPY_UV'], [iriExt == null ? void 0 : iriExt.iridescenceTexture, 'iridescenceMap', 'USE_AIR_IRIDESCENCE_MAP', 'IRIDESCENCE_UV'], [iriExt == null ? void 0 : iriExt.iridescenceIorTexture, 'iridescenceIorMap', 'USE_AIR_IRIDESCENCE_IOR_MAP', 'IRIDESCENCEIOR_UV'], [iriExt == null ? void 0 : iriExt.iridescenceThicknessTexture, 'iridescenceThicknessMap', 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', 'IRIDESCENCETHICKNESS_UV'], [bumpExt == null ? void 0 : bumpExt.bumpTexture, 'bumpMap', 'USE_AIR_BUMP', 'BUMP_UV']];
   for (const [index, [info,, macro, uv]] of maps.entries()) {
     defines[macro] = !!info;
     if (info) {
@@ -71222,7 +71265,9 @@ function createGLTFMaterial(features, textures, vertexColor) {
   const anisotropyScalar = !unlit && !!anisotropy && anisotropy.strength > 0;
   const iridescence = physical.iridescence;
   const iridescenceScalar = !unlit && !!iridescence && iridescence.factor > 0;
-  const physicalMaps = !!(specExt != null && specExt.specularTexture) || !!(specExt != null && specExt.specularColorTexture) || !!(ccExt != null && ccExt.clearcoatTexture) || !!(ccExt != null && ccExt.clearcoatRoughnessTexture) || !!(ccExt != null && ccExt.clearcoatNormalTexture) || !!(anisoExt != null && anisoExt.anisotropyTexture);
+  const bump = physical.bump;
+  !unlit && !!bump && !!(bumpExt != null && bumpExt.bumpTexture);
+  const physicalMaps = !!(specExt != null && specExt.specularTexture) || !!(specExt != null && specExt.specularColorTexture) || !!(ccExt != null && ccExt.clearcoatTexture) || !!(ccExt != null && ccExt.clearcoatRoughnessTexture) || !!(ccExt != null && ccExt.clearcoatNormalTexture) || !!(anisoExt != null && anisoExt.anisotropyTexture) || !!(bumpExt != null && bumpExt.bumpTexture);
   const usePhysical = physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || !unlit && physicalMaps;
   const definesForPhysical = {};
   if (physicalScalar) {
@@ -71296,6 +71341,9 @@ function createGLTFMaterial(features, textures, vertexColor) {
       }
       if (iridescence) {
         material.setProperty(IRIDESCENCE_CONSTANT, new Vec4(iridescence.factor, iridescence.ior, iridescence.thicknessMin, iridescence.thicknessMax));
+      }
+      if (bump) {
+        material.setProperty(BUMP_CONSTANT, new Vec4(bump.factor, 0, 0, 1));
       }
       if (colorActive) {
         material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor[0], specularColor[1], specularColor[2], 1));
@@ -71731,6 +71779,47 @@ function iridescenceFactory(context) {
         ior: (_ext$iridescenceIor2 = ext.iridescenceIor) !== null && _ext$iridescenceIor2 !== void 0 ? _ext$iridescenceIor2 : 1.3,
         thicknessMin: (_ext$iridescenceThick3 = ext.iridescenceThicknessMinimum) !== null && _ext$iridescenceThick3 !== void 0 ? _ext$iridescenceThick3 : 100,
         thicknessMax: (_ext$iridescenceThick4 = ext.iridescenceThicknessMaximum) !== null && _ext$iridescenceThick4 !== void 0 ? _ext$iridescenceThick4 : 400
+      };
+    }
+  };
+}
+
+function bumpFactory(context) {
+  const name = 'EXT_materials_bump';
+  return {
+    name,
+    support: () => ({
+      name,
+      status: 'supported'
+    }),
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions, _ext$bumpFactor;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        if (!ext.bumpTexture || typeof ext.bumpTexture.index !== 'number' || !Number.isSafeInteger(ext.bumpTexture.index) || ext.bumpTexture.index < 0) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: bumpTexture is required with a valid texture index`, name);
+        }
+        const factor = (_ext$bumpFactor = ext.bumpFactor) !== null && _ext$bumpFactor !== void 0 ? _ext$bumpFactor : 1;
+        if (typeof factor !== 'number' || !Number.isFinite(factor) || factor < 0) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: bumpFactor must be a finite >= 0`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features, ctx) {
+      var _features$source$exte, _ext$bumpFactor2;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (!ext) {
+        return;
+      }
+      if (features.uv.normal) {
+        ctx == null ? void 0 : ctx.warn(`material ${_index}: ${name} combined with a normal texture - bump is skipped`);
+        return;
+      }
+      physicalScalars(features).bump = {
+        factor: (_ext$bumpFactor2 = ext.bumpFactor) !== null && _ext$bumpFactor2 !== void 0 ? _ext$bumpFactor2 : 1
       };
     }
   };
@@ -72220,7 +72309,7 @@ function configureGLTFLoaderDefaults(options) {
 const KNOWN_UNIMPLEMENTED = [];
 class GLTFLoader {
   constructor(options) {
-    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(clearcoatFactory).register(anisotropyFactory).register(iridescenceFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
+    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(clearcoatFactory).register(anisotropyFactory).register(iridescenceFactory).register(bumpFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
     this.options = void 0;
     this.options = {
       ...options

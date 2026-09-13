@@ -20,7 +20,7 @@ import { Type, Uniform } from '../../../../cocos/gfx';
 import { Vec4 } from '../../../../cocos/core/math';
 import { check } from '../schema';
 import { gltfEffect } from '../material';
-import { textureTransform } from './texture-slots';
+import { textureTransform, textureUVExpression } from './texture-slots';
 
 export const PHYSICAL_CONSTANT = 'airPhysicalParams';
 
@@ -32,6 +32,8 @@ export const CLEARCOAT_CONSTANT = 'airClearcoat';
 export const ANISO_CONSTANT = 'airAnisotropy';
 /** (factor, filmIor, thicknessMax_nm, substrateIor) for KHR_materials_iridescence thin-film. */
 export const IRIDESCENCE_CONSTANT = 'airIridescence';
+/** (bumpFactor, 0, 0, 1) for EXT_materials_bump derivative perturbation. */
+export const BUMP_CONSTANT = 'airBump';
 
 /** Physical samplers appended after the base standard's bindings 0..14. */
 export const PHYSICAL_SAMPLERS = [
@@ -44,6 +46,7 @@ export const PHYSICAL_SAMPLERS = [
     { name: 'iridescenceMap', binding: 21, macro: 'USE_AIR_IRIDESCENCE_MAP' },
     { name: 'iridescenceIorMap', binding: 22, macro: 'USE_AIR_IRIDESCENCE_IOR_MAP' },
     { name: 'iridescenceThicknessMap', binding: 23, macro: 'USE_AIR_IRIDESCENCE_THICKNESS_MAP' },
+    { name: 'bumpMap', binding: 24, macro: 'USE_AIR_BUMP' },
 ] as const;
 
 /** Normalized scalars for the physical uniform (identity when all defaults hold). */
@@ -97,7 +100,9 @@ export function gltfPhysicalEffect (): EffectAsset {
             { name: 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', type: 'boolean' },
             { name: 'IRIDESCENCE_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
             { name: 'IRIDESCENCEIOR_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
-            { name: 'IRIDESCENCETHICKNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] }];
+            { name: 'IRIDESCENCETHICKNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+            { name: 'USE_AIR_BUMP', type: 'boolean' },
+            { name: 'BUMP_UV', type: 'string', options: ['v_uv', 'v_uv1'] }];
 
         // One extra material-block member holding the four physical scalars (vec4, std140-safe).
         const blocks = (shader.blocks as Array<{ name: string; members: Uniform[] }>).slice();
@@ -111,6 +116,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             if (!block.members.some((m) => m.name === CLEARCOAT_CONSTANT)) { block.members.push(new Uniform(CLEARCOAT_CONSTANT, Type.FLOAT4, 1)); }
             if (!block.members.some((m) => m.name === ANISO_CONSTANT)) { block.members.push(new Uniform(ANISO_CONSTANT, Type.FLOAT4, 1)); }
             if (!block.members.some((m) => m.name === IRIDESCENCE_CONSTANT)) { block.members.push(new Uniform(IRIDESCENCE_CONSTANT, Type.FLOAT4, 1)); }
+            if (!block.members.some((m) => m.name === BUMP_CONSTANT)) { block.members.push(new Uniform(BUMP_CONSTANT, Type.FLOAT4, 1)); }
         }
 
         // Register the two physical samplers (binding 15/16, fragment stage).
@@ -354,6 +360,25 @@ export function gltfPhysicalEffect (): EffectAsset {
                 // the texture lerps [min,max] over that range.
                 `airIriThickTex = mix(${IRIDESCENCE_CONSTANT}.z, ${IRIDESCENCE_CONSTANT}.w, ${tex('iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness')}.g);`,
                 '#endif',
+                '#if USE_AIR_BUMP',
+                '{',
+                // Height->normal via screen-space derivatives: solve the world position gradient
+                // with the UV Jacobian, then push the surface normal against it (bumpFactor scales h).
+                "float bh = ${tex('bumpMap', 'BUMP_UV', 'airBump')}.r * ${BUMP_CONSTANT}.x;",
+                "vec2 buv = " + "${textureUVExpression('BUMP_UV', 'airBump')};",
+                'vec2 dbh = vec2(dFdx(bh), dFdy(bh));',
+                'vec2 duvdx = vec2(dFdx(buv.x), dFdy(buv.x));',
+                'vec2 duvdy = vec2(dFdx(buv.y), dFdy(buv.y));',
+                'vec3 dPdx = dFdx(s.position);',
+                'vec3 dPdy = dFdy(s.position);',
+                'float bdet = duvdx.x * duvdy.y - duvdx.y * duvdy.x;',
+                'if (abs(bdet) > 1e-8) {',
+                'float ga = ( dbh.x * duvdy.y - dbh.y * duvdy.x) / bdet;',
+                'float gb = (-dbh.x * duvdx.y + dbh.y * duvdx.x) / bdet;',
+                's.normal = normalize(s.normal - (ga * dPdx + gb * dPdy));',
+                '}',
+                '}',
+                '#endif',
             ].join(nl);
             const mainAnchor = 'StandardSurface s; surf(s);';
             if (!frag.includes(mainAnchor)) { throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`); }
@@ -374,12 +399,18 @@ export function gltfPhysicalEffect (): EffectAsset {
             pass.properties[PHYSICAL_COLOR_CONSTANT] = { type: Type.FLOAT4, value: [1, 1, 1, 1] };
             pass.properties[CLEARCOAT_CONSTANT] = { type: Type.FLOAT4, value: [1, 0, 1, 1] };
             pass.properties[ANISO_CONSTANT] = { type: Type.FLOAT4, value: [0, 1, 0, 1] };
+            pass.properties[IRIDESCENCE_CONSTANT] = { type: Type.FLOAT4, value: [0, 1.3, 100, 400] };
+            pass.properties[BUMP_CONSTANT] = { type: Type.FLOAT4, value: [1, 0, 0, 1] };
             pass.properties.specularMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.specularColorMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.clearcoatMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.clearcoatRoughnessMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.clearcoatNormalMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.anisotropyMap = { value: 'white', type: Type.SAMPLER2D };
+            pass.properties.iridescenceMap = { value: 'white', type: Type.SAMPLER2D };
+            pass.properties.iridescenceIorMap = { value: 'white', type: Type.SAMPLER2D };
+            pass.properties.iridescenceThicknessMap = { value: 'white', type: Type.SAMPLER2D };
+            pass.properties.bumpMap = { value: 'white', type: Type.SAMPLER2D };
 
         }
     }

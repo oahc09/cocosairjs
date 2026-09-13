@@ -11,7 +11,7 @@ import type { TextureInfo } from './schema';
 import { GLTFMaterialFeatures, TEXTURE_SLOTS, TextureSlotName } from './material/features';
 import { coreTextureCoordinates } from './material/texture-slots';
 import type { PhysicalScalars } from './material/features';
-import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT, CLEARCOAT_CONSTANT, ANISO_CONSTANT, IRIDESCENCE_CONSTANT } from './material/physical-effect';
+import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT, CLEARCOAT_CONSTANT, ANISO_CONSTANT, IRIDESCENCE_CONSTANT, BUMP_CONSTANT } from './material/physical-effect';
 import type { DecodedTextureSource } from './decoder/types';
 import { KTX2_RAW_MIME } from './decoder/types';
 import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/image-formats';
@@ -24,7 +24,7 @@ const UV_SLOTS = [
     ['clearcoatMap', 'CLEARCOAT_UV', 'airClearcoat'], ['clearcoatRoughnessMap', 'CLEARCOATROUGHNESS_UV', 'airClearcoatRoughness'],
     ['clearcoatNormalMap', 'CLEARCOATNORMAL_UV', 'airClearcoatNormal'], ['anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy'],
     ['iridescenceMap', 'IRIDESCENCE_UV', 'airIridescence'], ['iridescenceIorMap', 'IRIDESCENCEIOR_UV', 'airIridescenceIor'],
-    ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness'],
+    ['iridescenceThicknessMap', 'IRIDESCENCETHICKNESS_UV', 'airIridescenceThickness'], ['bumpMap', 'BUMP_UV', 'airBump'],
 ] as const;
 const UV_UNIFORMS = UV_SLOTS.map(([, , prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([, , prefix]) => `${prefix}UV1`));
 
@@ -241,6 +241,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
     const ccExt = source.extensions?.KHR_materials_clearcoat as { clearcoatTexture?: TextureInfo; clearcoatRoughnessTexture?: TextureInfo; clearcoatNormalTexture?: TextureInfo } | undefined;
     const anisoExt = source.extensions?.KHR_materials_anisotropy as { anisotropyTexture?: TextureInfo } | undefined;
     const iriExt = source.extensions?.KHR_materials_iridescence as { iridescenceTexture?: TextureInfo; iridescenceIorTexture?: TextureInfo; iridescenceThicknessTexture?: TextureInfo } | undefined;
+    const bumpExt = source.extensions?.EXT_materials_bump as { bumpTexture?: TextureInfo } | undefined;
     const maps = [
         [pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'],
         [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'],
@@ -256,6 +257,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         [iriExt?.iridescenceTexture, 'iridescenceMap', 'USE_AIR_IRIDESCENCE_MAP', 'IRIDESCENCE_UV'],
         [iriExt?.iridescenceIorTexture, 'iridescenceIorMap', 'USE_AIR_IRIDESCENCE_IOR_MAP', 'IRIDESCENCEIOR_UV'],
         [iriExt?.iridescenceThicknessTexture, 'iridescenceThicknessMap', 'USE_AIR_IRIDESCENCE_THICKNESS_MAP', 'IRIDESCENCETHICKNESS_UV'],
+        [bumpExt?.bumpTexture, 'bumpMap', 'USE_AIR_BUMP', 'BUMP_UV'],
     ] as const;
     for (const [index, [info, , macro, uv]] of maps.entries()) {
         defines[macro] = !!info;
@@ -279,9 +281,11 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
     const anisotropyScalar = !unlit && !!anisotropy && anisotropy.strength > 0;
     const iridescence = physical.iridescence;
     const iridescenceScalar = !unlit && !!iridescence && iridescence.factor > 0;
+    const bump = physical.bump;
+    const bumpActive = !unlit && !!bump && !!bumpExt?.bumpTexture;
     const physicalMaps = !!specExt?.specularTexture || !!specExt?.specularColorTexture
         || !!ccExt?.clearcoatTexture || !!ccExt?.clearcoatRoughnessTexture || !!ccExt?.clearcoatNormalTexture
-        || !!anisoExt?.anisotropyTexture;
+        || !!anisoExt?.anisotropyTexture || !!bumpExt?.bumpTexture;
     const usePhysical = physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || (!unlit && physicalMaps);
     const definesForPhysical: MacroRecord = {};
     if (physicalScalar) { definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive; }
@@ -328,6 +332,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
             if (clearcoat) { material.setProperty(CLEARCOAT_CONSTANT, new Vec4(clearcoat.factor, clearcoat.roughness, clearcoat.normalScale, 1)); }
             if (anisotropy) { material.setProperty(ANISO_CONSTANT, new Vec4(anisotropy.strength, Math.cos(anisotropy.rotation), Math.sin(anisotropy.rotation), 1)); }
             if (iridescence) { material.setProperty(IRIDESCENCE_CONSTANT, new Vec4(iridescence.factor, iridescence.ior, iridescence.thicknessMin, iridescence.thicknessMax)); }
+            if (bump) { material.setProperty(BUMP_CONSTANT, new Vec4(bump.factor, 0, 0, 1)); }
             if (colorActive) { material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor![0], specularColor![1], specularColor![2], 1)); }
         }
         material.setProperty('emissiveScaleParam', new Vec4(1, 1, 1, source.normalTexture?.scale ?? 1));

@@ -4,7 +4,7 @@ import { coreTextureCoordinates, TextureCoordinates } from './texture-slots';
 /** Texture slot names shared by feature population and material construction. */
 export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive',
     'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy',
-    'iridescence', 'iridescenceIor', 'iridescenceThickness'] as const;
+    'iridescence', 'iridescenceIor', 'iridescenceThickness', 'bump'] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
 /**
@@ -35,6 +35,8 @@ export interface PhysicalScalars {
     anisotropy?: { strength: number; rotation: number };
     /** KHR_materials_iridescence: thin-film layer (factor [0,1], ior [1.3,2.3333], nm range). */
     iridescence?: { factor: number; ior: number; thicknessMin: number; thicknessMax: number };
+    /** EXT_materials_bump: derivative-based height perturbation (factor >= 0). */
+    bump?: { factor: number };
 }
 
 /** Type-narrowing helper for the shared physical record. */
@@ -68,6 +70,8 @@ export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): T
         { iridescenceIorTexture?: TextureInfo } | undefined)?.iridescenceIorTexture;
     case 'iridescenceThickness': return (source.extensions?.KHR_materials_iridescence as
         { iridescenceThicknessTexture?: TextureInfo } | undefined)?.iridescenceThicknessTexture;
+    case 'bump': return (source.extensions?.EXT_materials_bump as
+        { bumpTexture?: TextureInfo } | undefined)?.bumpTexture;
     }
 }
 

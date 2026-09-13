@@ -243,3 +243,17 @@
 - 测试：smoke-18 5 项；全量 18 suites / 109 tests PASS；typecheck/verify:web-only/esm/min/
   dts/NodeNext 全绿；四浏览器证据（physical/clearcoat/anisotropy/iridescence）ok:true——
   真实 WebGL2 编译全部物理 permutation 零 GL 错误。
+
+
+## V0.5 T5.2（四）— EXT_materials_bump（2026-09-13）
+- 导数高度扰动：main 内 `dFdx(bh)/dFdx(buv)/dFdx(s.position)` 解 UV Jacobian，
+  `s.normal = normalize(N - grad)`；`airBump=(factor,0,0,1)` UBO 追加（成员序 6），
+  `bumpMap` 绑定 24、texCoord/transform 全支持。
+- handler：bumpTexture 必填（缺失/非法 index → GLTF_EXTENSION_INVALID）、bumpFactor >= 0；
+  与 normalTexture 共存时告警跳过（提案可选项）；WebGL1 依赖 OES_standard_derivatives（记录）。
+- 修复：`USE_AIR_BUMP` 漏注册 shader.defines → 预处理器置空 `#if ` 编译失败
+  （clearcoat/iridescence 注册齐全，仅 bump 疏漏；证据脚本抓到）。
+- 测试：smoke-19 5 项；全量 19 suites / 114 tests PASS；typecheck/verify:web-only/esm/min/
+  dts/NodeNext 全绿；五浏览器证据（physical/clearcoat/anisotropy/iridescence/bump）ok:true
+  —— T5 七扩展的 shader permutation 在真实 WebGL2 驱动全部编译链接零 GL 错误。
+- T5.2 收口：clearcoat/anisotropy/iridescence/bump 全部交付；G3 的官方材质对照归 T8。
