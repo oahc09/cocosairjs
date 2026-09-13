@@ -270,3 +270,23 @@
 - T5 退出条件判定：**shader permutation 全绿达成**；“现有 standard/unlit 模型无回归”达成
   （全量 jest + diagnostics/webp/ktx2/scene 证据）；**官方材质测试格子的像素对照归 T8
   矩阵**（需下载 Khronos glTF-Sample-Models 材质套件对照）。
+
+
+## V0.5 T7 — decoder 发布 / 构建 / 许可收口（2026-09-13）
+- **Gate G5-build 工具化**：新增 `tools/verify/decoder-audit.cjs`（`npm run verify:decoders`，
+  机读 JSON、漂移退出 1）：① MANIFEST 逐文件 bytes/SHA-256 双向核对；② 每个 decoder 目录
+  LICENSE.md 存在 + 版本/来源固定；③ 主 bundle/min/两 map 零 WASM 魔数、JS 零 `gltf-decoders/`
+  路径（map 允许上游源引用——mesh-codec 的 external import 字符串为既有折叠死代码）；
+  ④ `npm pack` → 解包 → 断言全部资产在场 → `require` 解包后的 meshopt decoder 并校验
+  `decodeGltfBuffer/ready` + 解包哈希不漂移（离线加载证明）。审计当场抓出并修复 6 处真实缺口
+  （3 个文件缺清单行、map 检查语义过宽、导出名臆断、tar/npm Windows spawn）。
+- 许可补全：`draco/LICENSE.md`、`basis/LICENSE.md` 由短提示升级为**归属说明 + Apache-2.0 全文**；
+  THIRD_PARTY_LICENSES.md 新增 V0.5 解码器资产表（版本/来源/许可/权威清单指针）。
+- 分发链修复：`prepare-static.cjs` 离线静态 staging 现在复制 `build/gltf-decoders/`（此前缺失
+  → 静态站 decoder 404）；`serve-gltf.cjs` 补 `.mjs/.cjs` MIME。
+- 浏览器 Draco 决策入档：`draco3dgltf@1.5.7` 仅 Node 构建、浏览器 wrapper 无 hash-pin npm 源，
+  按“引擎永不内嵌 decoder”原则由应用注入自有浏览器资产——MANIFEST 记为刻意取舍，非遗留任务。
+- 构建缓存诊断机读化：`incremental.cjs` stats 增加 `reason: hit|cold|key-mismatch|read-failure|build-error[:msg]`
+  （实测命中 key-mismatch→重建→hit 链路）。
+- 门控：typecheck 0；19 suites / 114 tests PASS；verify:web-only PASSED；esm（缓存 hit）/min/dts +
+  NodeNext 消费全绿；verify:decoders ok:true。

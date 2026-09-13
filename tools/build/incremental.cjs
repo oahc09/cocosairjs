@@ -21,9 +21,14 @@ async function withIncrementalCache (root, build) {
     const dir = path.join(root, 'build', '.tmp-rollup-cache');
     const filename = path.join(dir, 'cache.json');
     let cache;
-    try { const saved = JSON.parse(fs.readFileSync(filename, 'utf8')); if (saved.key === key) cache = saved.cache; }
-    catch (error) { if (error.code !== 'ENOENT') console.warn('[cache] unreadable cache; rebuilding cold'); }
-    const stats = { reused: !!cache, transformed: 0, modules: 0, elapsedMs: 0 };
+    let reason = 'cold';
+    if (fs.existsSync(filename)) {
+        try {
+            const saved = JSON.parse(fs.readFileSync(filename, 'utf8'));
+            if (saved.key === key) { cache = saved.cache; reason = 'hit'; } else { reason = 'key-mismatch'; }
+        } catch (error) { reason = 'read-failure: ' + error.message; console.warn('[cache]', reason + '; rebuilding cold'); }
+    }
+    const stats = { reused: !!cache, reason, transformed: 0, modules: 0, elapsedMs: 0 };
     let next;
     rollup.rollup = async (options) => {
         const result = await original({ ...options, cache: cache || undefined,
@@ -48,6 +53,7 @@ async function withIncrementalCache (root, build) {
         return stats;
     } catch (error) {
         // A failed transform must never become the baseline for the next build.
+        stats.reason = 'build-error: ' + error.message;
         try { fs.unlinkSync(filename); } catch (cleanup) { if (cleanup.code !== 'ENOENT') console.warn(cleanup.message); }
         throw error;
     } finally { rollup.rollup = original; }

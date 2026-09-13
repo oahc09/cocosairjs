@@ -53,3 +53,15 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 - [ ] 复核 `src/air/builtin/*` fixtures 与上游 LICENSE 头的归档一致性（当前 fixture 文件未携带
       上游版权头，属上游 tests/ 的派生数据；公开发布前补充声明或改用程序化生成）。
 - [ ] 如启用 `licenses/` 目录中列出的第三方组件（本快照未包含对应实现），逐项补齐声明。
+
+## glTF 解码器资产（V0.5 T7，`build/gltf-decoders/`，随 npm 包发布但**永不**内嵌进引擎 bundle）
+
+| 组件 | 版本/来源 | 许可 | 归属说明 |
+|---|---|---|---|
+| `meshopt/` | meshoptimizer **1.2.0**（`npm pack meshoptimizer@1.2.0`，github.com/zeux/meshoptimizer） | MIT | `meshopt/LICENSE.md`（上游原文照录） |
+| `draco/` | draco3d **1.5.7**（`npm pack draco3d@1.5.7`，github.com/google/draco） | Apache-2.0 | npm 包不含 license 文件；`draco/LICENSE.md` = 归属说明 + Apache-2.0 全文 |
+| `basis/` | Basis Universal 转码器，three **r168** 构建（`npm pack three@0.168.0` → `examples/jsm/libs/basis/`） | Apache-2.0 | Binomial LLC 授权；`basis/LICENSE.md` = 归属说明 + Apache-2.0 全文 |
+
+逐文件 bytes/SHA-256 与注入方式（provider API、浏览器 Draco 决策、MIME/静态服务策略）以
+`build/gltf-decoders/MANIFEST.md` 为权威记录；可重复审计工具：`node tools/verify/decoder-audit.cjs`
+（Gate G5-build：包内离线加载三类 decoder + 清单哈希漂移 + 主 bundle/地图零内嵌）。

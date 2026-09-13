@@ -30,6 +30,9 @@ for (const variant of ['normal', 'minified']) {
     fs.copyFileSync(path.join(root, 'build', file), path.join(base, 'build', 'cocosair.module.js'));
     fs.copyFileSync(path.join(root, 'build', file + '.map'), path.join(base, 'build', file + '.map'));
     for (const example of examples) copyExample(path.join(root, 'examples', example), path.join(base, example));
+    // Decoders are standalone assets (never bundled into the engine module); the static
+    // site must ship them so gltf-viewer can load KHR_draco/meshopt/basisu offline.
+    copyExample(path.join(root, 'build', 'gltf-decoders'), path.join(base, 'build', 'gltf-decoders'));
     fs.mkdirSync(path.join(base, 'verify'));
     fs.copyFileSync(path.join(__dirname, 'runtime-assets.js'), path.join(base, 'verify', 'runtime-assets.js'));
 }
