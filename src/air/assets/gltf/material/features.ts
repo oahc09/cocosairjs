@@ -3,7 +3,7 @@ import { coreTextureCoordinates, TextureCoordinates } from './texture-slots';
 
 /** Texture slot names shared by feature population and material construction. */
 export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive',
-    'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal'] as const;
+    'specular', 'specularColor', 'clearcoat', 'clearcoatRoughness', 'clearcoatNormal', 'anisotropy'] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
 /**
@@ -30,6 +30,8 @@ export interface PhysicalScalars {
     specular?: { factor0: number; factor1: number; color?: number[] };
     /** KHR_materials_clearcoat: second GGX layer ([0,1] scalars, layer F0 fixed 0.04). */
     clearcoat?: { factor: number; roughness: number; normalScale: number };
+    /** KHR_materials_anisotropy: tangent-aligned anisotropic specular ([0,1] strength). */
+    anisotropy?: { strength: number; rotation: number };
 }
 
 /** Type-narrowing helper for the shared physical record. */
@@ -55,6 +57,8 @@ export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): T
         { clearcoatRoughnessTexture?: TextureInfo } | undefined)?.clearcoatRoughnessTexture;
     case 'clearcoatNormal': return (source.extensions?.KHR_materials_clearcoat as
         { clearcoatNormalTexture?: TextureInfo } | undefined)?.clearcoatNormalTexture;
+    case 'anisotropy': return (source.extensions?.KHR_materials_anisotropy as
+        { anisotropyTexture?: TextureInfo } | undefined)?.anisotropyTexture;
     }
 }
 

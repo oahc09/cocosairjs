@@ -28,6 +28,8 @@ export const PHYSICAL_CONSTANT = 'airPhysicalParams';
 export const PHYSICAL_COLOR_CONSTANT = 'airSpecularColorFactor';
 /** (factor, roughness, normalScale, 1) for the KHR_materials_clearcoat second GGX layer. */
 export const CLEARCOAT_CONSTANT = 'airClearcoat';
+/** (strength, cos(rotation), sin(rotation), 1) for the KHR_materials_anisotropy lobe. */
+export const ANISO_CONSTANT = 'airAnisotropy';
 
 /** Physical samplers appended after the base standard's bindings 0..14. */
 export const PHYSICAL_SAMPLERS = [
@@ -36,6 +38,7 @@ export const PHYSICAL_SAMPLERS = [
     { name: 'clearcoatMap', binding: 17, macro: 'USE_AIR_CLEARCOAT_MAP' },
     { name: 'clearcoatRoughnessMap', binding: 18, macro: 'USE_AIR_CLEARCOAT_ROUGHNESS_MAP' },
     { name: 'clearcoatNormalMap', binding: 19, macro: 'USE_AIR_CLEARCOAT_NORMAL_MAP' },
+    { name: 'anisotropyMap', binding: 20, macro: 'USE_AIR_ANISOTROPY_MAP' },
 ] as const;
 
 /** Normalized scalars for the physical uniform (identity when all defaults hold). */
@@ -79,7 +82,10 @@ export function gltfPhysicalEffect (): EffectAsset {
             { name: 'USE_AIR_CLEARCOAT_NORMAL_MAP', type: 'boolean' },
             { name: 'CLEARCOAT_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
             { name: 'CLEARCOATROUGHNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
-            { name: 'CLEARCOATNORMAL_UV', type: 'string', options: ['v_uv', 'v_uv1'] }];
+            { name: 'CLEARCOATNORMAL_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+            { name: 'USE_AIR_ANISOTROPY', type: 'boolean' },
+            { name: 'USE_AIR_ANISOTROPY_MAP', type: 'boolean' },
+            { name: 'ANISOTROPY_UV', type: 'string', options: ['v_uv', 'v_uv1'] }];
 
         // One extra material-block member holding the four physical scalars (vec4, std140-safe).
         const blocks = (shader.blocks as Array<{ name: string; members: Uniform[] }>).slice();
@@ -91,6 +97,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             if (!block.members.some((m) => m.name === PHYSICAL_CONSTANT)) { block.members.push(new Uniform(PHYSICAL_CONSTANT, Type.FLOAT4, 1)); }
             if (!block.members.some((m) => m.name === PHYSICAL_COLOR_CONSTANT)) { block.members.push(new Uniform(PHYSICAL_COLOR_CONSTANT, Type.FLOAT4, 1)); }
             if (!block.members.some((m) => m.name === CLEARCOAT_CONSTANT)) { block.members.push(new Uniform(CLEARCOAT_CONSTANT, Type.FLOAT4, 1)); }
+            if (!block.members.some((m) => m.name === ANISO_CONSTANT)) { block.members.push(new Uniform(ANISO_CONSTANT, Type.FLOAT4, 1)); }
         }
 
         // Register the two physical samplers (binding 15/16, fragment stage).
@@ -116,7 +123,8 @@ export function gltfPhysicalEffect (): EffectAsset {
             // in-variable declarations. A file-global carries the product into the shading
             // function, which only references it (declaration before the function is legal).
             const texVar = `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecTex = vec3(1.0);\n#endif\n`
-                + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n`;
+                + `#if USE_AIR_CLEARCOAT\nfloat airCCFactorTex = 1.0;\nfloat airCCRoughTex = 0.0;\nvec3 airCCNormal = vec3(0.0, 0.0, 1.0);\n#endif\n`
+                + `#if USE_AIR_ANISOTROPY\nvec3 airAnisoT = vec3(1.0, 0.0, 0.0);\nvec3 airAnisoB = vec3(0.0, 1.0, 0.0);\n#endif\n`;
             // Insert after the leading `precision` statement: float types need a precision
             // qualifier and the raw shader source starts with one.
             const prependAfterPrecision = (source: string): string => {
@@ -127,12 +135,14 @@ export function gltfPhysicalEffect (): EffectAsset {
             };
             if (language === 'glsl1') {
                 frag = prependAfterPrecision(`uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl
-                    + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `uniform highp vec4 ${CLEARCOAT_CONSTANT};` + nl + frag);
+                    + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `uniform highp vec4 ${CLEARCOAT_CONSTANT};` + nl
+                    + `uniform highp vec4 ${ANISO_CONSTANT};` + nl + frag);
             } else {
                 const blockAppendRe = /(uniform\s+\w*\s*Constants\s*\{[^}]*)(\})/;
                 const grow = (source: string): string => source.replace(blockAppendRe,
                     (_m, head, tail) => head + nl + `vec4 ${PHYSICAL_CONSTANT};` + nl
-                        + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `vec4 ${CLEARCOAT_CONSTANT};` + nl + tail);
+                        + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + `vec4 ${CLEARCOAT_CONSTANT};` + nl
+                        + `vec4 ${ANISO_CONSTANT};` + nl + tail);
                 stage.vert = grow(stage.vert as string);
                 frag = prependAfterPrecision(grow(frag));
             }
@@ -193,6 +203,39 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '}',
                 '#endif',
             ].join(nl);
+            // Anisotropic specular: replace the isotropic visibility term with the
+            // Kulla-Conty anisotropic GGX when strength > 0 (tangents are world-space,
+            // rotated by airAnisoT/airAnisoB built in main).
+            const anisoFn = [
+                '#if USE_AIR_ANISOTROPY',
+                'float airAnisoVisibility (float roughness, vec3 N, vec3 H, vec3 V, vec3 L) {',
+                `float anS = clamp(${ANISO_CONSTANT}.x, 0.0, 1.0);`,
+                'float alpha = max(roughness * roughness, 0.002);',
+                'float at = max(alpha * (1.0 + anS), 0.002);',
+                'float ab = max(alpha / (1.0 + anS), 0.002);',
+                'vec3 aT = normalize(airAnisoT); vec3 aB = normalize(airAnisoB);',
+                'float tNH = dot(aT, H); float bNH = dot(aB, H); float nNH = max(dot(N, H), 0.0);',
+                'float tNV = dot(aT, V); float bNV = dot(aB, V); float nNV = max(dot(N, V), 1e-4);',
+                'float tNL = dot(aT, L); float bNL = dot(aB, L); float nNL = max(dot(N, L), 0.0);',
+                'float d2 = (bNH * bNH) / (at * at) + (tNH * tNH) / (ab * ab) + nNH * nNH;',
+                'float D = 1.0 / (PI * at * ab * d2 * d2);',
+                'float v2 = nNV * nNV * ((tNV * tNV) / (at * at) + (bNV * bNV) / (ab * ab) + 1.0);',
+                'float vl = nNL * nNL * ((tNL * tNL) / (at * at) + (bNL * bNL) / (ab * ab) + 1.0);',
+                'float G = 0.5 / (nNV * sqrt(vl) + nNL * sqrt(v2) + 1e-6);',
+                'return D * G * PI * 0.25;',
+                '}',
+                '#endif',
+            ].join(nl);
+            const specLine = 'vec3 specularContrib = specular * CalcSpecular(s.roughness, NH, H, N);';
+            if (!frag.includes(specLine)) { throw new Error(`physical effect: specularContrib missing in ${shader.name} [${language}]`); }
+            frag = frag.replace(specLine,
+                '#if USE_AIR_ANISOTROPY\n'
+                + `vec3 specularContrib = specular * mix(CalcSpecular(s.roughness, NH, H, N), airAnisoVisibility(s.roughness, N, H, V, L), clamp(${ANISO_CONSTANT}.x, 0.0, 1.0));\n`
+                + '#else\n' + specLine + '\n#endif');
+            // Define the helper above the shading function that uses it.
+            const shadingDecl = 'vec4 CCStandardShadingBase (StandardSurface s, vec4 shadowPos) {';
+            if (!frag.includes(shadingDecl)) { throw new Error(`physical effect: shading fn missing in ${shader.name} [${language}]`); }
+            frag = frag.replace(shadingDecl, `${anisoFn}\n${shadingDecl}`);
             const emissiveAnchor = 'finalColor += s.emissive;';
             if (!frag.includes(emissiveAnchor)) { throw new Error(`physical effect: '${emissiveAnchor}' missing in ${shader.name} [${language}]`); }
             frag = frag.replace(emissiveAnchor,
@@ -230,6 +273,27 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '#endif',
                 '}',
                 '#endif',
+                '#if USE_AIR_ANISOTROPY',
+                '{',
+                'vec3 aN0 = normalize(v_normal);',
+                '#if USE_NORMAL_MAP',
+                'vec3 aT = normalize(v_tangent.xyz);',
+                'vec3 aB = normalize(cross(aT, aN0)) * v_tangent.w;',
+                '#else',
+                'vec3 aUp = abs(aN0.z) < 0.9 ? vec3(0.0, 0.0, 1.0) : vec3(1.0, 0.0, 0.0);',
+                'vec3 aT = normalize(cross(aUp, aN0));',
+                'vec3 aB = cross(aN0, aT);',
+                '#endif',
+                `#if USE_AIR_ANISOTROPY_MAP`,
+                `vec3 aDir = ${tex('anisotropyMap', 'ANISOTROPY_UV', 'airAnisotropy')}.xyz * 2.0 - 1.0;`,
+                'vec3 aNewT = aDir.x * aT + aDir.y * aB;',
+                'if (dot(aNewT, aNewT) > 1e-8) { aT = normalize(aNewT); aB = cross(aN0, aT); }',
+                '#endif',
+                `float aRotC = ${ANISO_CONSTANT}.y; float aRotS = ${ANISO_CONSTANT}.z;`,
+                'airAnisoT = aT * aRotC + aB * aRotS;',
+                'airAnisoB = aB * aRotC - aT * aRotS;',
+                '}',
+                '#endif',
             ].join(nl);
             const mainAnchor = 'StandardSurface s; surf(s);';
             if (!frag.includes(mainAnchor)) { throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`); }
@@ -249,11 +313,13 @@ export function gltfPhysicalEffect (): EffectAsset {
             pass.properties[PHYSICAL_CONSTANT] = { type: Type.FLOAT4, value: [1, 1, 1, 1] };
             pass.properties[PHYSICAL_COLOR_CONSTANT] = { type: Type.FLOAT4, value: [1, 1, 1, 1] };
             pass.properties[CLEARCOAT_CONSTANT] = { type: Type.FLOAT4, value: [1, 0, 1, 1] };
+            pass.properties[ANISO_CONSTANT] = { type: Type.FLOAT4, value: [0, 1, 0, 1] };
             pass.properties.specularMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.specularColorMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.clearcoatMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.clearcoatRoughnessMap = { value: 'white', type: Type.SAMPLER2D };
             pass.properties.clearcoatNormalMap = { value: 'white', type: Type.SAMPLER2D };
+            pass.properties.anisotropyMap = { value: 'white', type: Type.SAMPLER2D };
 
         }
     }

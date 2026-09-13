@@ -217,3 +217,16 @@
   渲染 pass（构造期上传正常，证据均依赖构造期值）——渲染器级问题，非扩展解析问题；
   ② 平面对照面的固定框亮度差受阴影遮挡污染，clearcoat/ior 的像素级外观对照归 T8 官方
   场景矩阵。
+
+
+## V0.5 T5.2（二）— KHR_materials_anisotropy（2026-09-13）
+- `airAnisotropy=(strength,cos,sin,1)` UBO 追加（成员序 4）；`airAnisoVisibility`
+  （Kulla-Conty D 各向异性 GGX + Smith）在 USE_AIR_ANISOTROPY 时 **mix 替换**基底
+  CalcSpecular 项（strength=0 恒等回退，无双重高光）。
+- 世界空间切线框架：normal 贴图路径用 TBN、否则规范正交基（与 clearcoat 法线同策略，
+  官方对照归 T8）；`anisotropyTexture.RGB` 方向重投影；rotation→cos/sin 构造期编码。
+- handler 校验 strength [0,1]、rotation 有限；有贴图时 strength 缺省 1（Khronos）。
+- 修复：scene 节点索引碰撞（光节点 scenes.push 与平面 i 重复 → unique roots 报错）。
+- 测试：smoke-17 5 项；全量 17 suites / 104 tests PASS；typecheck/verify:web-only/
+  esm/min/dts/NodeNext 消费全绿；三浏览器证据（physical/clearcoat/anisotropy）ok:true
+  （真机编译零 GL 错误、uniform (0.9, cos, sin)、effect 选择、采样器绑定）。

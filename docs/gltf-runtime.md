@@ -83,7 +83,7 @@ asset.decRef(); // 业务不再持有
 | 蒙皮 | 多 skin、共享 skin、非关节祖先、任意 joint 顺序、有/无 inverseBindMatrices、JOINTS_0/WEIGHTS_0 四权重、原生实时蒙皮 |
 | 动画 | 多 clip、TRS 和 Morph weights、STEP/LINEAR/CUBICSPLINE、原生播放/暂停/切换；四元数 Hermite 求值后归一化 |
 | Morph | POSITION/NORMAL/TANGENT 位移、mesh/node 初始权重、独立实例权重 |
-| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
+| 扩展 | KHR_materials_unlit、KHR_materials_emissive_strength、KHR_materials_ior、KHR_materials_specular、KHR_materials_clearcoat、KHR_materials_anisotropy、KHR_texture_transform、KHR_mesh_quantization、KHR/EXT_meshopt_compression、KHR_draco_mesh_compression、KHR_lights_punctual、EXT_mesh_gpu_instancing、EXT_texture_webp、EXT_texture_avif、KHR_texture_basisu |
 
 `KHR_texture_transform` 支持每个 textureInfo 独立的 `offset`、`rotation`（弧度）、`scale` 和 `texCoord` 覆盖，作用于 baseColor、metallicRoughness、normal、occlusion、emissive。变换围绕 UV 原点应用，支持负缩放；UV 通道仍限于 UV0/UV1。共享纹理可以在不同材质槽使用不同变换，网格 UV 不会被改写。缺少切线时，法线贴图使用有效 UV 通道及其变换生成切线。
 
@@ -107,6 +107,12 @@ T5.1 字段）；`clearcoatTexture.R`、`clearcoatRoughnessTexture.G`、`clearco
 通道调制（绑定 17/18/19，支持 texCoord/KHR_texture_transform）。基底方向光为单主光近似（与
 CCStandardShadingBase 相同），环境层贡献仅在启用 IBL 时叠加。切线来源：有 normal 贴图或顶点切线时用
 TBN；否则以法线构造正交规范基近似（官方画面对照归 T8）。factor=0 材质回退标准 effect（层关闭）。
+
+`KHR_materials_anisotropy` 将基底 GGX 高光替换为各向异性项（Kulla-Conty：alphaT=α(1+s)、
+alphaB=α/(1+s)，Smith 可见项），`airAnisotropy = (strength, cos(rotation), sin(rotation), 1)`；
+切线框架为世界空间：有顶点切线/normal 贴图用 TBN，否则规范正交基近似；`anisotropyTexture.RGB`
+（[-1,1] 切线空间方向）重投影切线轴，strength 缺省在有贴图时为 1。rotation 以 cos/sin 编码避免
+运行时三角函数。各向异性 lobes 仅替换主光高光项（漫反射与环境项不变）。
 
 `KHR_texture_basisu`（KTX2）通过注入的 BasisU 转码器工作：`new GLTFLoader({ ktx2Transcoder })`
 或 `setKTX2Transcoder(createKTX2Transcoder(() => BASIS({ locateFile })))`。转码器（`build/gltf-decoders/basis/`，
