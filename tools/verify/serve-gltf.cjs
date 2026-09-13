@@ -5,7 +5,7 @@ const path = require('path');
 const root = path.resolve(__dirname, '../..');
 const port = Number(process.env.GLTF_PORT || 7462);
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
-    '.gltf': 'model/gltf+json', '.glb': 'model/gltf-binary', '.png': 'image/png', '.jpg': 'image/jpeg', '.md': 'text/plain; charset=utf-8' };
+    '.gltf': 'model/gltf+json', '.glb': 'model/gltf-binary', '.png': 'image/png', '.jpg': 'image/jpeg', '.md': 'text/plain; charset=utf-8', '.wasm': 'application/wasm' };
 http.createServer((request, response) => {
     try {
         const url = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);

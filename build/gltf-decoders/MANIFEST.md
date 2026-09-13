@@ -51,3 +51,14 @@ file; Draco is distributed under the Apache License 2.0 — see `draco/LICENSE.m
   from `draco3dgltf`) so web applications do not need the Node build.
 - Add the full Apache-2.0 licence text for Draco (currently the short notice + canonical URL).
 - Wire decoder loading (dynamic import URL / worker pool) into `decoder/draco.ts`.
+
+## basis — Basis Universal transcoder (three r168 build, Apache-2.0)
+
+Source: `npm pack three@0.168.0` -> `examples/jsm/libs/basis/` (three.js ships the Binomial
+LLC Basis Universal transcoder build; Apache License 2.0 — see `basis/LICENSE.md`).
+Injected via `createKTX2Transcoder`; never bundled into `cocosair.module.js`.
+
+| file | bytes | sha256 |
+|---|---|---|
+| basis/basis_transcoder.js | 62337 | 48a0ef319a28bf0224ee88ded34f74eaf97c175bba9eb18b47fb9720510ad6c4 |
+| basis/basis_transcoder.wasm | 499935 | 79ae97d781e10a566659c689b7bb1de91726453f55f9f5e3bcc07a4e3904070f |

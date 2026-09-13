@@ -150,3 +150,24 @@
 - 浏览器证据（tools/verify/gltf-webp-browser.js）：真实浏览器解码 webp 纹理 glb
   （texture 1 张、宽 1px）、probe unsupported + 无核心源干净失败，`ok:true`。
 - 下一步：KTX2/BasisU（transcoder 资产固定 + 容器解析 + ImageSource raw 上传路径）。
+
+
+## V0.5 T3（下）— KHR_texture_basisu / KTX2（2026-09-13）
+- provider 合同扩展：`DecodedTextureSource` 支持 raw 形态（width/height/format/compressed/
+  mipmapLevelDataSize，KTX2_RAW_MIME 哨兵）；`KTX2TargetFormat` 逻辑名与 engine Format 解耦。
+- `createKTX2Transcoder(factory)` adapter（decoder/ktx2.ts）：包装 three r168 vendored
+  Basis `KTX2File`；ranked 目标（ETC1S: ETC2>ASTC>BC7；UASTC: ASTC>BC7>ETC2）、显式设备顺序
+  优先、hasAlpha/sRGB(DFD transfer) 变体映射、逐候选失败降级、RGBA8 兜底；cubemap/array、
+  零维、非法容器 → GLTF_DECODE_FAILED；模块缺 initializeBasis/KTX2File → GLTF_DECODER_MISSING。
+- `deviceKTX2Formats()`：BC7(+SRGB)/ASTC_RGBA_4X4/ETC2( RGBA8+SRGB_A8) 按 getFormatFeatures 探测。
+- handler（extensions/texture/basisu.ts）：KTX2 魔数强校验（GLTF_EXTENSION_INVALID）、
+  decoder-required 状态机、optional 回退告警、无转码器+无核心源 → GLTF_DECODER_MISSING、
+  raw→IMemoryImageSource 逐 mip 上传（material 编排 raw 分支，不经浏览器解码）。
+- 资产：build/gltf-decoders/basis/{js,wasm}（three@0.168.0 vendored，Apache-2.0 LICENSE.md，
+  sha256 入 MANIFEST）；serve-gltf 补 .wasm MIME（T7 移交条款）。
+- 测试：smoke-14 10 项（fake Basis module 覆盖 ranked/sRGB/回退/错误码/端到端）；
+  浏览器证据 gltf-ktx2-browser.js（真实 wasm：initializeBasis+KTX2File 原生路径、矩阵状态、
+  core PNG 回退解码）`ok:true`；全量 14 suites / 86 tests PASS；typecheck 0；verify PASSED；
+  esm/min/dts 重建。
+- 如实记录：真实 BasisU 压缩样本的端到端像素级验证归 T8 官方模型矩阵（需下载
+  glTF-Sample-Asset-Generator KTX-BasisU variants）。

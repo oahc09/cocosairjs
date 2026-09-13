@@ -33017,6 +33017,10 @@ export namespace utils {
     /** Test seam: preset the probe result for a mime (null clears the cached probe). */
     export function setTextureSupportForTesting(mime: string, supported: boolean | null): void;
     export const SUPPORTED_IMAGE_MIMES: readonly string[];
+    /** KTX2 file identifier: 0xAB 'KTX 20' 0xBB 0x0D 0x0A 0x1A 0x0A. */
+    export function isKTX2(bytes: Uint8Array): boolean;
+    /** Raw-image sentinel returned by KTX2 transcoding (not a browser-decodable raster). */
+    export const KTX2_RAW_MIME = "image/ktx2-decoded";
     /** Stable glTF error codes shared by the loader, registry and extension handlers. */
     export type GLTFErrorCode = "GLTF_EXTENSION_UNSUPPORTED" | "GLTF_DECODER_MISSING" | "GLTF_DEVICE_UNSUPPORTED" | "GLTF_EXTENSION_INVALID" | "GLTF_DECODE_FAILED";
     export interface GLTFExtensionReportEntry {
@@ -33039,8 +33043,9 @@ export namespace utils {
         dispose?(): void | Promise<void>;
     }
     export interface GLTFKTX2Transcoder {
-        /** Transcoder selects among device-supported compressed formats and falls back to RGBA8. */
-        transcode(data: ArrayBuffer, supportedFormats?: readonly string[]): Promise<DecodedTextureSource>;
+        /** Transcode a full KTX2 payload (zstd supercompression handled inside the provider).
+         *  Choose among supportedFormats (device priority order) and fall back to RGBA8. */
+        transcode(data: ArrayBuffer, supportedFormats?: readonly __private._air_assets_gltf_decoder_types__KTX2TargetFormat[]): Promise<DecodedTextureSource>;
         dispose?(): void | Promise<void>;
     }
     /** Decode result consumed by the shared mesh construction path (float components). */
@@ -33051,7 +33056,17 @@ export namespace utils {
     /** Texture payload produced by KTX2 transcoding; consumed like a core image source. */
     export interface DecodedTextureSource {
         data: Uint8Array;
+        /** Encoded raster mime (png/jpeg/webp/avif) OR the raw sentinel 'image/ktx2-decoded'. */
         mimeType: string;
+        /** Required when mimeType === 'image/ktx2-decoded': raw memory image source geometry. */
+        width?: number;
+        height?: number;
+        /** GFX Format numeric enum value for the transcoded pixels. */
+        format?: number;
+        /** True for compressed block formats, false for raw RGBA. Only meaningful with the raw sentinel. */
+        compressed?: boolean;
+        /** Concatenated per-mip byte lengths (level 0 first). Empty/undefined means single level. */
+        mipmapLevelDataSize?: number[];
     }
     /** Draco attribute description from the glTF JSON (compressed attribute ids). */
     export interface DracoAttributeInfo {
@@ -33078,6 +33093,17 @@ export namespace utils {
      * created on the first Draco primitive and released by `dispose()`.
      */
     export function createDracoDecoder(provider: DracoDecoderProvider): GLTFDracoDecoder;
+    export function createKTX2Transcoder(factory: BasisModuleFactory): GLTFKTX2Transcoder;
+    /** True when the module exposes the KTX2File surface used by this adapter. */
+    export function isKTX2Available(module: BasisTranscoderModule | undefined): boolean;
+    /** Structural subset of the Basis module surfaced by the UMD factory. */
+    export interface BasisTranscoderModule {
+        initializeBasis(): void;
+        KTX2File: new (data: Uint8Array) => __private._air_assets_gltf_decoder_ktx2__BasisKTX2File;
+        KTX2_KHR_DF_TRANSFER_SRGB?: number;
+    }
+    /** Mirrors createDracoDecoder: returns (or lazily produces) the initialized Basis module. */
+    export type BasisModuleFactory = () => BasisTranscoderModule | Promise<BasisTranscoderModule>;
     /** Structural type of the official decoder module (subset actually used). */
     export interface DracoDecoderModule {
         Decoder: new () => __private._air_assets_gltf_decoder_draco__DracoDecoderLike;
@@ -46470,6 +46496,31 @@ export namespace utils {
                 q: math.Quat;
                 s: math.Vec3;
             }[];
+        }
+        /** Logical transcode targets, decoupled from any single engine/wasm enum. */
+        export type _air_assets_gltf_decoder_types__KTX2TargetFormat = "BC7_SRGB" | "BC7" | "ETC2_SRGB8_ALPHA8" | "ETC2_RGBA8" | "ETC2_SRGB8" | "ETC2_RGB8" | "ASTC_4x4_SRGB" | "ASTC_4x4" | "RGBA8_SRGB" | "RGBA8";
+        export interface _air_assets_gltf_decoder_ktx2__BasisLevelInfo {
+            width: number;
+            height: number;
+            origWidth: number;
+            origHeight: number;
+        }
+        export interface _air_assets_gltf_decoder_ktx2__BasisKTX2File {
+            isValid(): boolean;
+            isUASTC(): boolean;
+            getWidth(): number;
+            getHeight(): number;
+            getLayers(): number;
+            getLevels(): number;
+            getFaces(): number;
+            getHasAlpha(): boolean;
+            getDFDFlags(): number;
+            startTranscoding(): boolean;
+            getImageLevelInfo(mip: number, layer: number, face: number): _air_assets_gltf_decoder_ktx2__BasisLevelInfo;
+            getImageTranscodedSizeInBytes(mip: number, layer: number, face: number, format: number): number;
+            transcodeImage(dst: Uint8Array, mip: number, layer: number, face: number, format: number, decodeFlags: number, x: number, y: number): boolean;
+            close(): void;
+            delete(): void;
         }
         export interface _air_assets_gltf_decoder_draco__DracoBufferLike {
             Init(data: Int8Array | Uint8Array, length: number): void;

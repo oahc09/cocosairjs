@@ -10,6 +10,7 @@ import { check, item } from './schema';
 import { GLTFMaterialFeatures, TEXTURE_SLOTS, TextureSlotName } from './material/features';
 import { coreTextureCoordinates } from './material/texture-slots';
 import type { DecodedTextureSource } from './decoder/types';
+import { KTX2_RAW_MIME } from './decoder/types';
 import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/image-formats';
 
 const UV_SLOTS = [
@@ -138,11 +139,23 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
         }
         const candidates: Array<{ label: string; cacheKey: number; mime: string; declaredMime?: string; bytes: () => Promise<Uint8Array | null> }> = [];
         if (decoded) {
-            const mime = decoded.mimeType;
-            if (SUPPORTED_IMAGE_MIMES.includes(mime)) {
-                candidates.push({ label: 'extension', cacheKey: -1 - index, mime, bytes: async () => decoded!.data });
+            if (decoded.mimeType === KTX2_RAW_MIME) {
+                // Raw transcode result: build the memory image source directly (no browser decode).
+                const imageAsset = new ImageAsset({
+                    _data: decoded.data,
+                    _compressed: decoded.compressed ?? false,
+                    width: decoded.width!,
+                    height: decoded.height!,
+                    format: decoded.format!,
+                    mipmapLevelDataSize: decoded.mipmapLevelDataSize ?? [],
+                });
+                imageAsset._uuid = `air-gltf-ktx2-${index}`;
+                images.push(imageAsset);
+                image = imageAsset;
+            } else if (SUPPORTED_IMAGE_MIMES.includes(decoded.mimeType)) {
+                candidates.push({ label: 'extension', cacheKey: -1 - index, mime: decoded.mimeType, bytes: async () => decoded!.data });
             } else {
-                throw new Error(`[glTF] texture ${index}: unsupported decoded source '${mime}'`);
+                throw new Error(`[glTF] texture ${index}: unsupported decoded source '${decoded.mimeType}'`);
             }
         }
         if (source.source !== undefined) {
@@ -153,6 +166,7 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
                 return imageSource.uri !== undefined ? new Uint8Array(await context.request(imageSource.uri)) : context.bufferView(imageSource.bufferView!);
             } });
         }
+        if (!image) {
         if (!candidates.length) { throw new Error(`[glTF] texture ${index}: no image source`); }
         for (const candidate of candidates) {
             if (imageCache.has(candidate.cacheKey)) { image = imageCache.get(candidate.cacheKey); break; }
@@ -176,6 +190,7 @@ export async function loadGLTFTextures (context: GLTFParserContext, textures: Te
             context.warn(`texture ${index}: ${candidate.label} ${mime} failed to decode${candidate === candidates[candidates.length - 1] ? '' : ', trying fallback source'}`);
         }
         if (!image) { throw new Error(`[glTF] texture ${index}: all image sources failed to decode`); }
+        }
         const sampler = source.sampler === undefined ? {} : item(context.json.samplers, source.sampler, 'sampler');
         const texture = new Texture2D(); textures.push(texture); texture.name = source.name || `texture_${index}`;
         const min = sampler.minFilter ?? 9987; const mag = sampler.magFilter ?? 9729;

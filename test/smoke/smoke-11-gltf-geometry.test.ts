@@ -333,6 +333,8 @@ describe('glTF geometry and compression extensions', () => {
         expect(statuses.KHR_meshopt_compression).toBe('supported');
         // webp/avif handlers are registered since T3 (device-dependent status is
         // probe-async); the matrix keeps basisu unimplemented until the KTX2 phase.
-        expect(statuses).toMatchObject({ KHR_texture_basisu: 'unsupported' });
+        // basisu is a registered handler since T3: without a provider it reports the
+        // machine-readable 'decoder-required' state instead of 'unsupported'.
+        expect(statuses).toMatchObject({ KHR_texture_basisu: 'decoder-required' });
     });
 });
