@@ -43,8 +43,18 @@ function webgl2Capable (): boolean {
  */
 @ccclass('air.AirTransmissionCapture')
 export class AirTransmissionCapture extends Component {
-    /** The on-screen camera that draws the transmission meshes. */
-    public mainCamera: Camera | null = null;
+    private _main: Camera | null = null;
+
+    /** The on-screen camera that draws the transmission meshes. Assigning arms the capture
+     * even when the component enabled earlier (node activation ordering in Code First apps). */
+    public get mainCamera (): Camera | null { return this._main; }
+    public set mainCamera (value: Camera | null) {
+        this._main = value;
+        if (value && this.enabledInHierarchy && !this._off) {
+            this._ensure();
+            if (webgl2Capable()) { setTransmissionPipelineAvailable(true, 'scene-color capture active'); }
+        }
+    }
 
     private _off: Camera | null = null;
     private _offNode: Node | null = null;
@@ -121,7 +131,7 @@ export class AirTransmissionCapture extends Component {
     private _ensure (): void {
         if (this._off) { return; }
         const scene = this.node && this.node.scene;
-        const main = this.mainCamera;
+        const main = this._main;
         if (!scene || !main) { return; }
         const node = new Node('AirTransmissionCapture');
         scene.addChild(node);
@@ -138,6 +148,9 @@ export class AirTransmissionCapture extends Component {
         off.visibility = main.visibility & ~TRANSMISSION_LAYER;
         off.projection = Camera.ProjectionType.PERSPECTIVE;
         this._off = off;
+        // Arm immediately once the offscreen target exists; material builders read the
+        // capability at parse time (before any lateUpdate has run).
+        if (webgl2Capable()) { setTransmissionPipelineAvailable(true, 'scene-color capture active'); }
     }
 
     private _teardown (): void {

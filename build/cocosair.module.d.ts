@@ -33149,8 +33149,10 @@ export namespace utils {
      * While enabled on a capable device, transmission/volume/dispersion report 'supported'.
      */
     export class AirTransmissionCapture extends Component {
-        /** The on-screen camera that draws the transmission meshes. */
-        mainCamera: Camera | null;
+        /** The on-screen camera that draws the transmission meshes. Assigning arms the capture
+         * even when the component enabled earlier (node activation ordering in Code First apps). */
+        get mainCamera(): Camera | null;
+        set mainCamera(value: Camera | null);
         get sceneColor(): RenderTexture | null;
         onEnable(): void;
         onDisable(): void;

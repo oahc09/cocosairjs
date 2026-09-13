@@ -1,7 +1,7 @@
 {
   "engine": "cocosair",
   "engineVersion": "0.1.0",
-  "generatedAt": "2026-09-13T14:16:01.428Z",
+  "generatedAt": "2026-09-13T14:54:31.112Z",
   "catalogRevision": "90d7ede14c7e280af263824604b427a1ca02cb66",
   "decoderManifest": "build/gltf-decoders/MANIFEST.md",
   "errorCodes": [
@@ -97,7 +97,7 @@
       "officialComparison": {
         "model": "MaterialEmissiveStrengthTest",
         "available": false,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -113,7 +113,7 @@
       "officialComparison": {
         "model": "MaterialIORTest",
         "available": false,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -129,7 +129,7 @@
       "officialComparison": {
         "model": "MaterialsVariantsShading",
         "available": false,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -145,7 +145,7 @@
       "officialComparison": {
         "model": "MaterialsVariantsShading",
         "available": false,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -161,7 +161,7 @@
       "officialComparison": {
         "model": "AnisotropyPlane",
         "available": false,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -177,7 +177,7 @@
       "officialComparison": {
         "model": "IridescenceDielectricSpheres",
         "available": true,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -205,7 +205,7 @@
       "officialComparison": {
         "model": "TransmissionTest",
         "available": true,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -221,7 +221,7 @@
       "officialComparison": {
         "model": "Volka",
         "available": false,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {
@@ -237,7 +237,7 @@
       "officialComparison": {
         "model": "DispersionTest",
         "available": true,
-        "comparison": "pending-T8"
+        "comparison": "verified-official-load"
       }
     },
     {

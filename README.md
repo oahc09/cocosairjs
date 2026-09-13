@@ -84,6 +84,7 @@ cocosair.js/
 - [资源集成与运行时检查](docs/10-v03-runtime-integration.md) — 资源关系、Code First 组装、Inspect/Validate、生命周期与静态复现
 - [V0.2 审查与 V0.3 验收](docs/11-v03-verification.md) — 修复证据、验证矩阵与限制
 - [直接加载 glTF / GLB](docs/gltf-runtime.md) — 运行时模型加载、PBR、骨骼动画与 Morph；完整示例见 `examples/gltf-viewer/`
+- [V0.5 验收与 V0.5.1 移交](docs/acceptance-v0.5.md) — 扩展支持矩阵、Gate 证据链、已知限制与消费合同
 - [官方模型目录与对照预览](docs/gltf-catalog.md) — 150 个官方模型、格式选择、AIR 预览与 Khronos Viewer 对照
 - `docs/06-code-first-getting-started.md` — 最小入门（createAirApp / GameCanvas 约束）
 - `docs/07-asset-loading.md` — Promise Asset Helper

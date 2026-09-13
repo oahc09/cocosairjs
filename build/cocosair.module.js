@@ -70935,13 +70935,25 @@ function webgl2Capable() {
 let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), _dec$h(_class$h = class AirTransmissionCapture extends Component {
   constructor(...args) {
     super(...args);
-    this.mainCamera = null;
+    this._main = null;
     this._off = null;
     this._offNode = null;
     this._rt = null;
     this._w = 0;
     this._h = 0;
     this._scanTick = 0;
+  }
+  get mainCamera() {
+    return this._main;
+  }
+  set mainCamera(value) {
+    this._main = value;
+    if (value && this.enabledInHierarchy && !this._off) {
+      this._ensure();
+      if (webgl2Capable()) {
+        setTransmissionPipelineAvailable(true, 'scene-color capture active');
+      }
+    }
   }
   get sceneColor() {
     return this._rt;
@@ -71015,7 +71027,7 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
       return;
     }
     const scene = this.node && this.node.scene;
-    const main = this.mainCamera;
+    const main = this._main;
     if (!scene || !main) {
       return;
     }
@@ -71038,6 +71050,9 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     off.visibility = main.visibility & ~TRANSMISSION_LAYER;
     off.projection = Camera.ProjectionType.PERSPECTIVE;
     this._off = off;
+    if (webgl2Capable()) {
+      setTransmissionPipelineAvailable(true, 'scene-color capture active');
+    }
   }
   _teardown() {
     const off = this._off;
@@ -71846,30 +71861,52 @@ function specularFactory(context) {
     }),
     validate(ctx) {
       for (const [index, material] of (ctx.json.materials || []).entries()) {
-        var _material$extensions, _ext$specularFactor;
+        var _material$extensions, _ext$specularFactor, _ext$specularColorFac;
         const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
         if (!ext) {
           continue;
         }
-        const factor = (_ext$specularFactor = ext.specularFactor) !== null && _ext$specularFactor !== void 0 ? _ext$specularFactor : [1, 1, 1, 1];
-        if (factor.length !== 4 || !factor.every(Number.isFinite) || factor[0] < 0 || factor[0] > 2 || factor.slice(1).some(v => v < 0 || v > 1)) {
-          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: specularFactor must be [0,2] followed by rgb in [0,1]`, name);
+        const sf = (_ext$specularFactor = ext.specularFactor) !== null && _ext$specularFactor !== void 0 ? _ext$specularFactor : 1;
+        const rgb = (_ext$specularColorFac = ext.specularColorFactor) !== null && _ext$specularColorFac !== void 0 ? _ext$specularColorFac : [1, 1, 1];
+        if (typeof sf === 'number') {
+          if (!Number.isFinite(sf) || sf < 0 || sf > 2) {
+            throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: specularFactor must be [0,2]`, name);
+          }
+          if (rgb.length !== 3 || !rgb.every(v => typeof v === 'number' && Number.isFinite(v) && v >= 0)) {
+            throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: specularColorFactor must be rgb >= 0`, name);
+          }
+        } else {
+          const factor = sf;
+          if (!Array.isArray(factor) || factor.length !== 4 || !factor.every(Number.isFinite) || factor[0] < 0 || factor[0] > 2 || factor.slice(1).some(v => v < 0 || v > 1)) {
+            throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: specularFactor must be [0,2] followed by rgb in [0,1]`, name);
+          }
         }
       }
     },
     extendMaterial(_index, features) {
-      var _features$source$exte, _ext$specularFactor2;
+      var _features$source$exte;
       const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
       if (!ext) {
         return;
       }
-      const factor = (_ext$specularFactor2 = ext.specularFactor) !== null && _ext$specularFactor2 !== void 0 ? _ext$specularFactor2 : [1, 1, 1, 1];
       const physical = physicalScalars(features);
-      physical.specular = {
-        factor0: factor[0],
-        factor1: factor[1],
-        color: [factor[1], factor[2], factor[3]]
-      };
+      if (typeof ext.specularFactor === 'number') {
+        var _ext$specularColorFac2;
+        const rgb = (_ext$specularColorFac2 = ext.specularColorFactor) !== null && _ext$specularColorFac2 !== void 0 ? _ext$specularColorFac2 : [1, 1, 1];
+        physical.specular = {
+          factor0: ext.specularFactor,
+          factor1: rgb[0],
+          color: [rgb[0], rgb[1], rgb[2]]
+        };
+      } else {
+        var _ext$specularFactor2;
+        const factor = (_ext$specularFactor2 = ext.specularFactor) !== null && _ext$specularFactor2 !== void 0 ? _ext$specularFactor2 : [1, 1, 1, 1];
+        physical.specular = {
+          factor0: factor[0],
+          factor1: factor[1],
+          color: [factor[1], factor[2], factor[3]]
+        };
+      }
     }
   };
 }

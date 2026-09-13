@@ -24,6 +24,86 @@
     "bytes": 26220
   },
   {
+    "name": "EmissiveStrengthTest",
+    "file": "EmissiveStrengthTest.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/EmissiveStrengthTest/glTF-Binary/EmissiveStrengthTest.glb",
+    "sha256": "074898ec4c3636230faffe0cacac7403c3f6135db61f943da28ffaa88ca2a39f",
+    "bytes": 10668
+  },
+  {
+    "name": "IORTestGrid",
+    "file": "IORTestGrid.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/IORTestGrid/glTF-Binary/IORTestGrid.glb",
+    "sha256": "863cf24d0e48892ec830a7c712e4eb8bf5c0fd6cc2ae2f34d213b216f0bd6c12",
+    "bytes": 2628524
+  },
+  {
+    "name": "SpecularTest",
+    "file": "SpecularTest.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/SpecularTest/glTF-Binary/SpecularTest.glb",
+    "sha256": "cf789c68c3ab4b74877da3c5992c612c213f9c901ed4fafbf9be362f434e48d9",
+    "bytes": 223376
+  },
+  {
+    "name": "ClearCoatTest",
+    "file": "ClearCoatTest.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/ClearCoatTest/glTF-Binary/ClearCoatTest.glb",
+    "sha256": "c3a1cbe318cd043b937130af4eb83ec2ea0b03613387b1b7d769dfab4ac15948",
+    "bytes": 258048
+  },
+  {
+    "name": "AnisotropyStrengthTest",
+    "file": "AnisotropyStrengthTest.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/AnisotropyStrengthTest/glTF-Binary/AnisotropyStrengthTest.glb",
+    "sha256": "306321ff8214727b145188ceb56d96d2882b393d0b596fa089fd20b07e959834",
+    "bytes": 94444
+  },
+  {
+    "name": "AnisotropyRotationTest",
+    "file": "AnisotropyRotationTest.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/AnisotropyRotationTest/glTF-Binary/AnisotropyRotationTest.glb",
+    "sha256": "8f6a45e69b1304cde2eb55edfd700cb3e73692be38d6f0ae146c41029a907e90",
+    "bytes": 832340
+  },
+  {
+    "name": "CompareIridescence",
+    "file": "CompareIridescence.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/CompareIridescence/glTF-Binary/CompareIridescence.glb",
+    "sha256": "abda6e8bcb13ad04534c90bc4ce9b21e80f2d8b74ac4d911800269f0009ff073",
+    "bytes": 214756
+  },
+  {
+    "name": "CompareTransmission",
+    "file": "CompareTransmission.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/CompareTransmission/glTF-Binary/CompareTransmission.glb",
+    "sha256": "012a3ace61050f4aef77b416c56b3f8f313e1fa68c9040ce3d5037f67eea484f",
+    "bytes": 357024
+  },
+  {
+    "name": "CompareVolume",
+    "file": "CompareVolume.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/CompareVolume/glTF-Binary/CompareVolume.glb",
+    "sha256": "cb88f5dd70c1c2700e2a28caa5b612f4b6e8c34183d6261c681727d8bafdf7d2",
+    "bytes": 399760
+  },
+  {
+    "name": "CompareDispersion",
+    "file": "CompareDispersion.glb",
+    "revision": "90d7ede14c7e280af263824604b427a1ca02cb66",
+    "url": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/CompareDispersion/glTF-Binary/CompareDispersion.glb",
+    "sha256": "1c3eff819615d7e6d06e605f728907006eb6c36ef2ead53cc328e65d38a215c4",
+    "bytes": 60432
+  },
+  {
     "name": "Material_AlphaBlend_00",
     "file": "Material_AlphaBlend_00.gltf",
     "revision": "3d99767e9a67fbfe109f0d298c1e8d909bcac9db",

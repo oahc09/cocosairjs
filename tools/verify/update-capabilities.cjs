@@ -64,6 +64,19 @@ const VERIFIED = {
     'KHR_materials_dispersion': { level: 'browser-evidence', smoke: 'smoke-20', evidence: 'gltf-transmission-browser.js' },
 };
 
+// Official model each extension was loaded against in T8 acceptance (pinned revision,
+// gltf-official-materials-browser.js). Absent entries remain 'pending-T8'.
+const ACCEPTED = {
+    'KHR_materials_emissive_strength': 'EmissiveStrengthTest',
+    'KHR_materials_ior': 'IORTestGrid',
+    'KHR_materials_specular': 'SpecularTest',
+    'KHR_materials_clearcoat': 'ClearCoatTest',
+    'KHR_materials_anisotropy': 'AnisotropyStrengthTest + AnisotropyRotationTest',
+    'KHR_materials_iridescence': 'CompareIridescence',
+    'KHR_materials_transmission': 'CompareTransmission + IORTestGrid',
+    'KHR_materials_volume': 'CompareVolume',
+    'KHR_materials_dispersion': 'CompareDispersion',
+};
 // Official model to pixel-compare against during T8 (from the pinned catalog where present).
 const OFFICIAL_MODELS = {
     'KHR_materials_clearcoat': 'MaterialsVariantsShading',
@@ -91,7 +104,9 @@ const matrix = liveMatrix().map((entry) => {
         status: entry.status,
         reason: entry.reason ?? null,
         verified: v ? { level: v.level, smoke: v.smoke ?? null, evidence: v.evidence ?? null, decoder: v.decoder ?? null } : { level: 'cataloged' },
-        officialComparison: model ? { model, available: inCatalog, comparison: 'pending-T8' } : null,
+        officialComparison: model ? { model, available: inCatalog,
+            comparison: ACCEPTED[entry.name] ? 'verified-official-load' : 'pending-T8' }
+            : (ACCEPTED[entry.name] ? { model: ACCEPTED[entry.name], available: true, comparison: 'verified-official-load' } : null),
     };
 });
 

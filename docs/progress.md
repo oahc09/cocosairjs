@@ -330,3 +330,24 @@
 - 如实记录（G4 已知限制）：透射网格按透明队列 BACK_TO_FRONT 排序，相交玻璃体相对次序不保证；
   折射取当前帧 scene color（无逐物体递归透射）；rough transmission 用单采样近似，未做 mip
   粗糙度链（官方像素级对照归 T8）。
+
+
+## V0.5 T8 — 官方样本验收与移交（2026-09-13）
+- **官方样本下载入库**（`tools/verify/fetch-official-gltf.cjs`，pin `90d7ede` 与 catalog 同
+  revision、sha256 manifest、README 许可随录、幂等本地复用/重试——GitHub 限流下可续传）：
+  EmissiveStrengthTest / IORTestGrid / SpecularTest / ClearCoatTest / AnisotropyStrength+
+  Rotation / CompareIridescence / CompareTransmission / CompareVolume / CompareDispersion。
+- **验收脚本** `tools/verify/gltf-official-materials-browser.js`：10 官方样本逐一经真机
+  WebGL2 parse→instantiate→渲染帧→断言（选择矩阵、零 console/GL 错误、transmission 变体
+  active）——全绿。
+- 官方样本暴露两处**校验语义 bug 并修复**：
+  ① `KHR_materials_specular` 官方字段是 `specularFactor` 标量 [0,2] + `specularColorFactor`
+    vec3（**规范明文允许 >1 的 HDR 值**，早期草案 vec4 亦兼容）；原实现强制 vec4/[0,1] 误拒
+    IORTestGrid/SpecularTest。
+  ② 验收检测法（getShader 变体名未渲染为 null）→ 改用材质 uniform 状态判定。
+- capabilities 新增 `verified-official-load` 状态（9 扩展对官方样本完成加载级验证）；
+  viewer 挂 capture 后 T6 三项在运行时矩阵中正确翻为 `supported`。
+- 全门控：typecheck 0；20 suites / 118 tests；verify:web-only；esm/min/dts + NodeNext 消费；
+  verify:decoders ok；浏览器证据 12 个（10 扩展 + permutation + official-materials）全 ok。
+- 终验收报告：`docs/acceptance-v0.5.md`（交付矩阵、可重复证据链、7 条已知限制、
+  V0.5.1 消费合同与所有权移交清单）；README 挂索引。
