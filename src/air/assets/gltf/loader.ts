@@ -13,6 +13,9 @@ import { createGLTFMaterial, loadGLTFTextures } from './material';
 import { createGLTFAnimations } from './animation';
 import { createMaterialFeatures, GLTFMaterialFeatures } from './material/features';
 import { unlitFactory } from './extensions/material/unlit';
+import { emissiveStrengthFactory } from './extensions/material/emissive-strength';
+import { iorFactory } from './extensions/material/ior';
+import { specularFactory } from './extensions/material/specular';
 import { textureTransformFactory } from './extensions/texture/transform';
 import { meshQuantizationFactory } from './extensions/geometry/quantization';
 import { meshoptCompressionFactory, KHR_MESHOPT_COMPRESSION, EXT_MESHOPT_COMPRESSION } from './extensions/geometry/meshopt';
@@ -48,6 +51,9 @@ export class GLTFLoader {
         .register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION))
         .register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION))
         .register(dracoCompressionFactory)
+        .register(emissiveStrengthFactory)
+        .register(iorFactory)
+        .register(specularFactory)
         .register(basisuFactory)
         .register(imageExtensionFactory('EXT_texture_webp'))
         .register(imageExtensionFactory('EXT_texture_avif'))

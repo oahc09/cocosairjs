@@ -7,8 +7,11 @@ import { Vec4 } from '../../../cocos/core/math';
 import { MacroRecord } from '../../../cocos/render-scene/core/pass-utils';
 import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
+import type { TextureInfo } from './schema';
 import { GLTFMaterialFeatures, TEXTURE_SLOTS, TextureSlotName } from './material/features';
 import { coreTextureCoordinates } from './material/texture-slots';
+import type { PhysicalScalars } from './material/features';
+import { gltfPhysicalEffect, needsPhysicalEffect, physicalParams, PHYSICAL_CONSTANT, PHYSICAL_COLOR_CONSTANT } from './material/physical-effect';
 import type { DecodedTextureSource } from './decoder/types';
 import { KTX2_RAW_MIME } from './decoder/types';
 import { SUPPORTED_IMAGE_MIMES, detectImageMime } from './extensions/texture/image-formats';
@@ -17,6 +20,7 @@ const UV_SLOTS = [
     ['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'],
     ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'],
     ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'],
+    ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor'],
 ] as const;
 const UV_UNIFORMS = UV_SLOTS.map(([, , prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([, , prefix]) => `${prefix}UV1`));
 
@@ -229,12 +233,15 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
         USE_ALPHA_TEST: alpha === 'MASK', ALPHA_TEST_CHANNEL: 'a', AIR_GLTF_OPAQUE: alpha === 'OPAQUE', AIR_GLTF_UNLIT: unlit,
         CC_FORCE_FORWARD_SHADING: true };
     const slots: TextureSlotName[] = [...TEXTURE_SLOTS];
+    const specExt = source.extensions?.KHR_materials_specular as { specularTexture?: TextureInfo; specularColorTexture?: TextureInfo } | undefined;
     const maps = [
         [pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'],
         [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'],
         [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'],
         [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'],
         [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'],
+        [specExt?.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'],
+        [specExt?.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV'],
     ] as const;
     for (const [index, [info, , macro, uv]] of maps.entries()) {
         defines[macro] = !!info;
@@ -244,13 +251,25 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
             if (texCoord === 1) { defines.HAS_SECOND_UV = true; }
         }
     }
+    // Physical material surface (KHR_materials_* scalars); unlit ignores BRDF modifiers.
+    const physical = features.physical as PhysicalScalars;
+    const ior = physical.ior ?? 1.5;
+    const specularFactor0 = physical.specular?.factor0 ?? 1;
+    const emissiveStrength = physical.emissiveStrength ?? 1;
+    const specularColor = physical.specular?.color;
+    const colorActive = !!specularColor && specularColor.some((v) => Math.abs(v - 1) > 1e-6);
+    const physicalScalar = !unlit && (needsPhysicalEffect(ior, specularFactor0, emissiveStrength) || colorActive);
+    const physicalMaps = !!specExt?.specularTexture || !!specExt?.specularColorTexture;
+    const usePhysical = physicalScalar || (!unlit && physicalMaps);
+    const definesForPhysical: MacroRecord = {};
+    if (physicalScalar) { definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive; }
     const material = new Material();
     try {
-        const effect = gltfEffect();
+        const effect = usePhysical ? gltfPhysicalEffect() : gltfEffect();
         // Use a single forward base pass for BLEND/unlit, avoiding opaque additive/shadow passes.
         let selectedEffect = effect;
         if (alpha === 'BLEND' || unlit) {
-            const variantName = 'air-gltf-standard-single-pass';
+            const variantName = `${effect.name}-single-pass`;
             selectedEffect = EffectAsset.get(variantName)!;
             if (!selectedEffect) {
                 selectedEffect = new EffectAsset(); selectedEffect.name = variantName;
@@ -259,7 +278,7 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
                 selectedEffect.onLoaded();
             }
         }
-        material.initialize({ effectAsset: selectedEffect, defines,
+        material.initialize({ effectAsset: selectedEffect, defines: { ...defines, ...definesForPhysical },
             states: { rasterizerState: { cullMode: source.doubleSided ? CullMode.NONE : CullMode.BACK },
                 depthStencilState: { depthTest: true, depthWrite: alpha !== 'BLEND' },
                 blendState: { targets: [{ blend: alpha === 'BLEND', blendSrc: BlendFactor.SRC_ALPHA,
@@ -271,6 +290,10 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
             scalar(pbr.roughnessFactor ?? 1, 'roughness'), scalar(pbr.metallicFactor ?? 1, 'metallic'), 0.5));
         material.setProperty('emissive', new Vec4(emissive[0], emissive[1], emissive[2], 1));
         check(Number.isFinite(source.normalTexture?.scale ?? 1), 'invalid normal scale');
+        if (usePhysical) {
+            material.setProperty(PHYSICAL_CONSTANT, physicalParams(ior, specularFactor0, emissiveStrength));
+            if (colorActive) { material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor![0], specularColor![1], specularColor![2], 1)); }
+        }
         material.setProperty('emissiveScaleParam', new Vec4(1, 1, 1, source.normalTexture?.scale ?? 1));
         for (const [info, property] of maps) { if (info) { material.setProperty(property, item(textures, info.index, 'texture')); } }
         maps.forEach((_, index) => {

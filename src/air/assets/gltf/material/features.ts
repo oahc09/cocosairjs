@@ -2,7 +2,8 @@ import type { GLTFMaterial, TextureInfo } from '../schema';
 import { coreTextureCoordinates, TextureCoordinates } from './texture-slots';
 
 /** Texture slot names shared by feature population and material construction. */
-export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive'] as const;
+export const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive',
+    'specular', 'specularColor'] as const;
 export type TextureSlotName = (typeof TEXTURE_SLOTS)[number];
 
 /**
@@ -19,6 +20,21 @@ export interface GLTFMaterialFeatures {
     unlit: boolean;
 }
 
+/** Normalized scalar features populated by KHR_materials_* handlers. */
+export interface PhysicalScalars {
+    /** KHR_materials_emissive_strength: linear multiplier >= 1 applied to emissive. */
+    emissiveStrength?: number;
+    /** KHR_materials_ior: index of refraction >= 1 (drives dielectric F0). */
+    ior?: number;
+    /** KHR_materials_specular: strength factor (2x) + optional per-channel RGB color. */
+    specular?: { factor0: number; factor1: number; color?: number[] };
+}
+
+/** Type-narrowing helper for the shared physical record. */
+export function physicalScalars (features: GLTFMaterialFeatures): PhysicalScalars {
+    return features.physical as PhysicalScalars;
+}
+
 /** Slot → TextureInfo mapping shared by feature population, mesh UV checks and material build. */
 export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): TextureInfo | undefined {
     switch (slot) {
@@ -27,6 +43,10 @@ export function slotTextureInfo (source: GLTFMaterial, slot: TextureSlotName): T
     case 'normal': return source.normalTexture;
     case 'occlusion': return source.occlusionTexture;
     case 'emissive': return source.emissiveTexture;
+    case 'specular': return (source.extensions?.KHR_materials_specular as
+        { specularTexture?: TextureInfo } | undefined)?.specularTexture;
+    case 'specularColor': return (source.extensions?.KHR_materials_specular as
+        { specularColorTexture?: TextureInfo } | undefined)?.specularColorTexture;
     }
 }
 

@@ -171,3 +171,27 @@
   esm/min/dts 重建。
 - 如实记录：真实 BasisU 压缩样本的端到端像素级验证归 T8 官方模型矩阵（需下载
   glTF-Sample-Asset-Generator KTX-BasisU variants）。
+
+
+## V0.5 T5（上）— 物理材质基础：emissive_strength / ior / specular（2026-09-13）
+- effect 派生 `air-gltf-physical`（material/physical-effect.ts）：在 gltfEffect 基础上向
+  共享 Constants UBO 追加 `airPhysicalParams`/`airSpecularColorFactor`（vert+frag 同序生长，
+  驱动按字段数链接块）、绑定 15/16 两物理采样器、新增 5 个宏；emissive×strength、
+  ior→specularIntensity（F0/0.04 归一，1.5 恒等）、specular factor/color 注入 shading，
+  纹理调制放 main（v_uv 声明后），经全局 `airSpecTex` 传入——修复了三处真实驱动问题：
+  UBO 跨阶段字段数、glsl3 不支持显式 layout、函数体内前向引用 in 变量。
+- 扩展 handler（emissive-strength/ior/specular）：validate（GLTF_EXTENSION_INVALID 稳定码、
+  缺省体走 spec 默认）+ extendMaterial 填充 PhysicalScalars；specular 纹理 info 走
+  TEXTURE_SLOTS 第 6/7 槽（specularTexture/specularColorTexture）。
+- 选择规则（material.ts）：非恒等标量或 color 或任一纹理 → physical effect；unlit 忽略并
+  告警；identity 材质保持原 effect（零回归面）。
+- 测试：smoke-15 7 项（校验矩阵/归一化/params 换算/effect 选择/纹理槽/派生幂等/端到端）；
+  全量 15 suites / 93 tests PASS；typecheck 0；verify:web-only PASSED；esm/min/dts 重建 +
+  NodeNext 消费检查 EXIT:0。
+- 浏览器证据（tools/verify/gltf-physical-browser.js，physical.glb fixture）：真实 WebGL2
+  驱动编译 air-gltf-physical 无 GL 错误；三材质 effect 选择正确；airPhysicalParams
+  (4, 4.5918, 1) 与 ior 2.5 换算一致；identity 对照无物理 uniform；specularMap/UV uniform
+  绑定；emissive strength A/B 帧差 28223 px，`ok:true`。
+- 如实记录：ior 单独作用为掠射角 Fresnel 效应，平面对置相机时像素差低于量化阈值，
+  渲染端强信号由 emissive strength 承担（帧差断言）；官方 Khronos specular 样例的
+  像素级对照归 T8 矩阵。

@@ -111,4 +111,46 @@ sceneDoc.buffers[0].byteLength = sceneSize;
 const sceneBin = Buffer.concat(sceneChunks);
 const sceneArrayBuf = sceneBin.buffer.slice(sceneBin.byteOffset, sceneBin.byteOffset + sceneBin.byteLength);
 fs.writeFileSync(path.join(out, 'scene.glb'), Buffer.from(mod.exports.toGLB(sceneDoc, sceneArrayBuf)));
-console.log('Generated combined.glb, diagnostics.glb and scene.glb');
+
+// --- physical.glb: T5.1 KHR_materials_ior / specular / emissive_strength fixtures ---
+const phys = { asset: { version: '2.0', generator: 'cocosair physical fixtures (MIT)' },
+    extensionsUsed: ['KHR_materials_ior', 'KHR_materials_specular', 'KHR_materials_emissive_strength'], extensionsRequired: [],
+    buffers: [{ byteLength: 0 }], bufferViews: [], accessors: [], images: [], textures: [],
+    samplers: [{ magFilter: 9729, minFilter: 9729, wrapS: 10497, wrapT: 10497 }],
+    meshes: [], nodes: [], scenes: [{ nodes: [] }], scene: 0 };
+const physChunks = []; let physSize = 0;
+function physView(bytes) {
+    while (physSize % 4) { physChunks.push(Buffer.alloc(1)); physSize++; }
+    const i = phys.bufferViews.length;
+    phys.bufferViews.push({ buffer: 0, byteOffset: physSize, byteLength: bytes.length });
+    physChunks.push(Buffer.from(bytes)); physSize += bytes.length; return i;
+}
+function physAcc(values, width) { const a = new Float32Array(values);
+    phys.accessors.push({ bufferView: physView(Buffer.from(a.buffer)), componentType: 5126, count: values.length / width, type: `VEC${width}` });
+    return phys.accessors.length - 1; }
+const physPos = physAcc([-0.5,-0.5,0, 0.5,-0.5,0, 0.5,0.5,0, -0.5,-0.5,0, 0.5,0.5,0, -0.5,0.5,0], 3);
+const physNrm = physAcc([0,0,1, 0,0,1, 0,0,1, 0,0,1, 0,0,1, 0,0,1], 3);
+const physUv = physAcc([0,1,1,1,1,0,0,1,1,0,0,0], 2);
+// 8x8 checker: left half green channel 255, right half 0 (specularTexture G path -> x2)
+const specPng = png((x) => [128, x < 4 ? 255 : 0, 128, 255]);
+phys.images.push({ bufferView: physView(specPng), mimeType: 'image/png' });
+phys.textures.push({ source: 0, sampler: 0 });
+phys.materials = [
+    { name: 'ior2.5 + strength4', pbrMetallicRoughness: { baseColorFactor: [0.2, 0.2, 0.22, 1], metallicFactor: 0, roughnessFactor: 0.4 },
+        emissiveFactor: [0.5, 0.12, 0.04], extensions: { KHR_materials_ior: { ior: 2.5 },
+            KHR_materials_specular: { specularFactor: [1, 1, 1, 1] }, KHR_materials_emissive_strength: { emissiveStrength: 4 } } },
+    { name: 'identity pbr', pbrMetallicRoughness: { baseColorFactor: [0.2, 0.2, 0.22, 1], metallicFactor: 0, roughnessFactor: 0.4 },
+        emissiveFactor: [0.5, 0.12, 0.04] },
+    { name: 'specular map', pbrMetallicRoughness: { baseColorFactor: [0.8, 0.8, 0.85, 1], metallicFactor: 0.2, roughnessFactor: 0.25 },
+        extensions: { KHR_materials_specular: { specularTexture: { index: 0 } } } },
+];
+for (let i = 0; i < 3; i++) {
+    phys.meshes.push({ primitives: [{ attributes: { POSITION: physPos, NORMAL: physNrm, TEXCOORD_0: physUv }, material: i }] });
+    phys.nodes.push({ mesh: i, name: phys.materials[i].name, translation: [(i - 1) * 1.2, 0, 0] });
+    phys.scenes[0].nodes.push(i);
+}
+phys.buffers[0].byteLength = physSize;
+const physBin = Buffer.concat(physChunks);
+const physBuf = physBin.buffer.slice(physBin.byteOffset, physBin.byteOffset + physBin.byteLength);
+fs.writeFileSync(path.join(out, 'physical.glb'), Buffer.from(mod.exports.toGLB(phys, physBuf)));
+console.log('Generated combined.glb, diagnostics.glb, scene.glb and physical.glb');

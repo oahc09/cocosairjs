@@ -35,3 +35,12 @@ export function transformTextureUV (coordinates: TextureCoordinates, u: number, 
     const { row0, row1 } = coordinates;
     return [row0.x * u + row0.y * v + row0.z, row1.x * u + row1.y * v + row1.z];
 }
+
+/**
+ * Source-level sampling expression that applies a texture slot's UV transform matrix, mirroring
+ * the string-injection form used by the glTF standard effect (language-aware texture() call).
+ */
+export function textureTransform (language: 'glsl1' | 'glsl3' | 'glsl4', sampler: string, uv: string, prefix: string): string {
+    const expr = `vec2(dot(${prefix}UV0.xyz, vec3(${uv}, 1.0)), dot(${prefix}UV1.xyz, vec3(${uv}, 1.0)))`;
+    return `${language === 'glsl1' ? 'texture2D' : 'texture'}(${sampler}, ${expr})`;
+}

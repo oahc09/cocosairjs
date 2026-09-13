@@ -70052,10 +70052,17 @@ function transformTextureUV(coordinates, u, v) {
   } = coordinates;
   return [row0.x * u + row0.y * v + row0.z, row1.x * u + row1.y * v + row1.z];
 }
+function textureTransform(language, sampler, uv, prefix) {
+  const expr = `vec2(dot(${prefix}UV0.xyz, vec3(${uv}, 1.0)), dot(${prefix}UV1.xyz, vec3(${uv}, 1.0)))`;
+  return `${language === 'glsl1' ? 'texture2D' : 'texture'}(${sampler}, ${expr})`;
+}
 
-const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive'];
+const TEXTURE_SLOTS = ['baseColor', 'metallicRoughness', 'normal', 'occlusion', 'emissive', 'specular', 'specularColor'];
+function physicalScalars(features) {
+  return features.physical;
+}
 function slotTextureInfo(source, slot) {
-  var _source$pbrMetallicRo, _source$pbrMetallicRo2;
+  var _source$pbrMetallicRo, _source$pbrMetallicRo2, _source$extensions, _source$extensions$KH, _source$extensions2, _source$extensions2$K;
   switch (slot) {
     case 'baseColor':
       return (_source$pbrMetallicRo = source.pbrMetallicRoughness) == null ? void 0 : _source$pbrMetallicRo.baseColorTexture;
@@ -70067,6 +70074,10 @@ function slotTextureInfo(source, slot) {
       return source.occlusionTexture;
     case 'emissive':
       return source.emissiveTexture;
+    case 'specular':
+      return (_source$extensions = source.extensions) == null ? void 0 : (_source$extensions$KH = _source$extensions.KHR_materials_specular) == null ? void 0 : _source$extensions$KH.specularTexture;
+    case 'specularColor':
+      return (_source$extensions2 = source.extensions) == null ? void 0 : (_source$extensions2$K = _source$extensions2.KHR_materials_specular) == null ? void 0 : _source$extensions2$K.specularColorTexture;
   }
 }
 function createMaterialFeatures(index, source) {
@@ -70480,6 +70491,163 @@ function tangents(channels, indices, coordinates) {
   return out;
 }
 
+const PHYSICAL_CONSTANT = 'airPhysicalParams';
+const PHYSICAL_COLOR_CONSTANT = 'airSpecularColorFactor';
+const PHYSICAL_SAMPLERS = [{
+  name: 'specularMap',
+  binding: 15,
+  macro: 'USE_AIR_SPECULAR_MAP'
+}, {
+  name: 'specularColorMap',
+  binding: 16,
+  macro: 'USE_AIR_SPECULAR_COLOR_MAP'
+}];
+function physicalParams(ior, specularFactor0, emissiveStrength) {
+  check(ior >= 1 && Number.isFinite(ior), 'KHR_materials_ior.ior must be finite and >= 1');
+  check(specularFactor0 >= 0 && specularFactor0 <= 2, 'KHR_materials_specular.specularFactor[0] must be [0,2]');
+  check(emissiveStrength >= 1 && Number.isFinite(emissiveStrength), 'KHR_materials_emissive_strength must be finite and >= 1');
+  const iorF0 = Math.pow((ior - 1) / (ior + 1), 2);
+  return new Vec4(emissiveStrength, iorF0 / 0.04, specularFactor0, 1);
+}
+function needsPhysicalEffect(ior, factor0, strength) {
+  return Math.abs(ior - 1.5) > 1e-6 || Math.abs(factor0 - 1) > 1e-6 || Math.abs(strength - 1) > 1e-6;
+}
+function gltfPhysicalEffect() {
+  const name = 'air-gltf-physical';
+  const existing = EffectAsset.get(name);
+  if (existing) {
+    return existing;
+  }
+  const base = gltfEffect();
+  const effect = new EffectAsset();
+  effect.name = name;
+  effect.shaders = JSON.parse(JSON.stringify(base.shaders));
+  effect.techniques = JSON.parse(JSON.stringify(base.techniques));
+  for (const shader of effect.shaders) {
+    const oldName = shader.name;
+    shader.name = `${name}|${oldName.split('|').slice(1).join('|')}`;
+    shader.hash = (shader.hash ^ 0x2f6a19d4) >>> 0;
+    shader.defines = [...(shader.defines || []), {
+      name: 'USE_AIR_SPECULAR_COLOR',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_SPECULAR_MAP',
+      type: 'boolean'
+    }, {
+      name: 'USE_AIR_SPECULAR_COLOR_MAP',
+      type: 'boolean'
+    }, {
+      name: 'SPECULAR_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
+    }, {
+      name: 'SPECULARCOLOR_UV',
+      type: 'string',
+      options: ['v_uv', 'v_uv1']
+    }];
+    const blocks = shader.blocks.slice();
+    for (const descriptor of shader.descriptors || []) {
+      blocks.push(...(descriptor.blocks || []));
+    }
+    for (const block of blocks) {
+      if (block.name !== 'Constants') {
+        continue;
+      }
+      if (!block.members.some(m => m.name === PHYSICAL_CONSTANT)) {
+        block.members.push(new Uniform(PHYSICAL_CONSTANT, Type.FLOAT4, 1));
+      }
+      if (!block.members.some(m => m.name === PHYSICAL_COLOR_CONSTANT)) {
+        block.members.push(new Uniform(PHYSICAL_COLOR_CONSTANT, Type.FLOAT4, 1));
+      }
+    }
+    const samplers = shader.samplerTextures || [];
+    for (const sampler of PHYSICAL_SAMPLERS) {
+      if (!samplers.some(s => s.name === sampler.name)) {
+        shader.samplerTextures.push({
+          name: sampler.name,
+          type: Type.SAMPLER2D,
+          count: 1,
+          defines: [sampler.macro],
+          stageFlags: 16,
+          binding: sampler.binding
+        });
+      }
+    }
+    for (const language of ['glsl1', 'glsl3', 'glsl4']) {
+      const stage = shader[language];
+      if (!stage) {
+        continue;
+      }
+      let frag = stage.frag;
+      const nl = String.fromCharCode(10);
+      const samplerDecls = PHYSICAL_SAMPLERS.map(s => `#if ${s.macro}\nuniform lowp sampler2D ${s.name};\n#endif`).join(nl);
+      const texVar = `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nvec3 airSpecTex = vec3(1.0);\n#endif\n`;
+      const prependAfterPrecision = source => {
+        const insert = samplerDecls + nl + texVar;
+        const m = /^(\s*precision\s+\w+\s+\w+;)/.exec(source);
+        return m ? source.slice(0, m[1].length) + nl + insert + source.slice(m[1].length) : insert + nl + source;
+      };
+      if (language === 'glsl1') {
+        frag = prependAfterPrecision(`uniform highp vec4 ${PHYSICAL_CONSTANT};` + nl + `uniform highp vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + frag);
+      } else {
+        const blockAppendRe = /(uniform\s+\w*\s*Constants\s*\{[^}]*)(\})/;
+        const grow = source => source.replace(blockAppendRe, (_m, head, tail) => head + nl + `vec4 ${PHYSICAL_CONSTANT};` + nl + `vec4 ${PHYSICAL_COLOR_CONSTANT};` + nl + tail);
+        stage.vert = grow(stage.vert);
+        frag = prependAfterPrecision(grow(frag));
+      }
+      const specularMix = 'vec3 specular = mix(vec3(0.08 * s.specularIntensity), s.albedo.rgb, s.metallic);';
+      if (!frag.includes(specularMix)) {
+        stage.frag = frag;
+        continue;
+      }
+      frag = frag.replace('s.emissive = emissive.rgb * emissiveScaleParam.xyz', `s.emissive = emissive.rgb * emissiveScaleParam.xyz * ${PHYSICAL_CONSTANT}.x`);
+      frag = frag.replace(/s\.specularIntensity = 0\.5;/g, `s.specularIntensity = ${PHYSICAL_CONSTANT}.y * 0.5;`);
+      const tex = (sampler, uv, prefix) => textureTransform(language, sampler, uv, prefix);
+      const airSpec = [`vec3 airSpec = mix(vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), s.albedo.rgb, s.metallic);`, `#if USE_AIR_SPECULAR_COLOR\nairSpec *= ${PHYSICAL_COLOR_CONSTANT}.rgb;\n#endif`, `#if USE_AIR_SPECULAR_MAP || USE_AIR_SPECULAR_COLOR_MAP\nairSpec *= airSpecTex;\n#endif`, 'vec3 specular = airSpec;'].join('\n');
+      frag = frag.replace(specularMix, airSpec);
+      const modulate = ['#if USE_AIR_SPECULAR_MAP', `airSpecTex *= 2.0 * ${tex('specularMap', 'SPECULAR_UV', 'airSpecular')}.g;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', `airSpecTex *= ${tex('specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor')}.rgb;`, '#endif'].join(nl);
+      const mainAnchor = 'StandardSurface s; surf(s);';
+      if (!frag.includes(mainAnchor)) {
+        throw new Error(`physical effect: '${mainAnchor}' missing in ${shader.name} [${language}]`);
+      }
+      frag = frag.replace(mainAnchor, `${mainAnchor}\n${modulate}`);
+      stage.frag = frag;
+    }
+    for (const technique of effect.techniques) {
+      for (const pass of technique.passes) {
+        if (pass.program === oldName) {
+          pass.program = shader.name;
+        }
+      }
+    }
+  }
+  for (const technique of effect.techniques) {
+    for (const pass of technique.passes) {
+      if (!pass.properties) {
+        continue;
+      }
+      pass.properties[PHYSICAL_CONSTANT] = {
+        type: Type.FLOAT4,
+        value: [1, 1, 1, 1]
+      };
+      pass.properties[PHYSICAL_COLOR_CONSTANT] = {
+        type: Type.FLOAT4,
+        value: [1, 1, 1, 1]
+      };
+      pass.properties.specularMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
+      pass.properties.specularColorMap = {
+        value: 'white',
+        type: Type.SAMPLER2D
+      };
+    }
+  }
+  effect.onLoaded();
+  return effect;
+}
+
 const KTX2_RAW_MIME = 'image/ktx2-decoded';
 
 const SUPPORTED_IMAGE_MIMES = ['image/png', 'image/jpeg', 'image/webp', 'image/avif'];
@@ -70596,7 +70764,7 @@ function imageExtensionFactory(name) {
   });
 }
 
-const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive']];
+const UV_SLOTS = [['albedoMap', 'ALBEDO_UV', 'airAlbedo'], ['metallicRoughnessMap', 'PBR_UV', 'airMetallicRoughness'], ['normalMap', 'NORMAL_UV', 'airNormal'], ['occlusionMap', 'OCCLUSION_UV', 'airOcclusion'], ['emissiveMap', 'EMISSIVE_UV', 'airEmissive'], ['specularMap', 'SPECULAR_UV', 'airSpecular'], ['specularColorMap', 'SPECULARCOLOR_UV', 'airSpecularColor']];
 const UV_UNIFORMS = UV_SLOTS.map(([,, prefix]) => `${prefix}UV0`).concat(UV_SLOTS.map(([,, prefix]) => `${prefix}UV1`));
 function gltfEffect() {
   const name = 'air-gltf-standard';
@@ -70838,6 +71006,7 @@ async function loadGLTFTextures(context, textures, images) {
   }
 }
 function createGLTFMaterial(features, textures, vertexColor) {
+  var _source$extensions, _physical$ior, _physical$specular$fa, _physical$specular, _physical$emissiveStr, _physical$specular2;
   const source = features.source;
   const pbr = source.pbrMetallicRoughness || {};
   const unlit = features.unlit;
@@ -70861,7 +71030,8 @@ function createGLTFMaterial(features, textures, vertexColor) {
     CC_FORCE_FORWARD_SHADING: true
   };
   const slots = [...TEXTURE_SLOTS];
-  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV']];
+  const specExt = (_source$extensions = source.extensions) == null ? void 0 : _source$extensions.KHR_materials_specular;
+  const maps = [[pbr.baseColorTexture, 'mainTexture', 'USE_ALBEDO_MAP', 'ALBEDO_UV'], [pbr.metallicRoughnessTexture, 'metallicRoughnessMap', 'USE_METALLIC_ROUGHNESS_MAP', 'PBR_UV'], [source.normalTexture, 'normalMap', 'USE_NORMAL_MAP', 'NORMAL_UV'], [source.occlusionTexture, 'occlusionMap', 'USE_OCCLUSION_MAP', 'OCCLUSION_UV'], [source.emissiveTexture, 'emissiveMap', 'USE_EMISSIVE_MAP', 'EMISSIVE_UV'], [specExt == null ? void 0 : specExt.specularTexture, 'specularMap', 'USE_AIR_SPECULAR_MAP', 'SPECULAR_UV'], [specExt == null ? void 0 : specExt.specularColorTexture, 'specularColorMap', 'USE_AIR_SPECULAR_COLOR_MAP', 'SPECULARCOLOR_UV']];
   for (const [index, [info,, macro, uv]] of maps.entries()) {
     defines[macro] = !!info;
     if (info) {
@@ -70874,13 +71044,26 @@ function createGLTFMaterial(features, textures, vertexColor) {
       }
     }
   }
+  const physical = features.physical;
+  const ior = (_physical$ior = physical.ior) !== null && _physical$ior !== void 0 ? _physical$ior : 1.5;
+  const specularFactor0 = (_physical$specular$fa = (_physical$specular = physical.specular) == null ? void 0 : _physical$specular.factor0) !== null && _physical$specular$fa !== void 0 ? _physical$specular$fa : 1;
+  const emissiveStrength = (_physical$emissiveStr = physical.emissiveStrength) !== null && _physical$emissiveStr !== void 0 ? _physical$emissiveStr : 1;
+  const specularColor = (_physical$specular2 = physical.specular) == null ? void 0 : _physical$specular2.color;
+  const colorActive = !!specularColor && specularColor.some(v => Math.abs(v - 1) > 1e-6);
+  const physicalScalar = !unlit && (needsPhysicalEffect(ior, specularFactor0, emissiveStrength) || colorActive);
+  const physicalMaps = !!(specExt != null && specExt.specularTexture) || !!(specExt != null && specExt.specularColorTexture);
+  const usePhysical = physicalScalar || !unlit && physicalMaps;
+  const definesForPhysical = {};
+  if (physicalScalar) {
+    definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive;
+  }
   const material = new Material();
   try {
     var _source$alphaCutoff, _source$occlusionText, _source$occlusionText2, _pbr$roughnessFactor, _pbr$metallicFactor, _source$normalTexture, _source$normalTexture2, _source$normalTexture3, _source$normalTexture4;
-    const effect = gltfEffect();
+    const effect = usePhysical ? gltfPhysicalEffect() : gltfEffect();
     let selectedEffect = effect;
     if (alpha === 'BLEND' || unlit) {
-      const variantName = 'air-gltf-standard-single-pass';
+      const variantName = `${effect.name}-single-pass`;
       selectedEffect = EffectAsset.get(variantName);
       if (!selectedEffect) {
         selectedEffect = new EffectAsset();
@@ -70894,7 +71077,10 @@ function createGLTFMaterial(features, textures, vertexColor) {
     }
     material.initialize({
       effectAsset: selectedEffect,
-      defines,
+      defines: {
+        ...defines,
+        ...definesForPhysical
+      },
       states: {
         rasterizerState: {
           cullMode: source.doubleSided ? CullMode.NONE : CullMode.BACK
@@ -70920,6 +71106,12 @@ function createGLTFMaterial(features, textures, vertexColor) {
     material.setProperty('pbrParams', new Vec4(scalar((_source$occlusionText = (_source$occlusionText2 = source.occlusionTexture) == null ? void 0 : _source$occlusionText2.strength) !== null && _source$occlusionText !== void 0 ? _source$occlusionText : 1, 'occlusion strength'), scalar((_pbr$roughnessFactor = pbr.roughnessFactor) !== null && _pbr$roughnessFactor !== void 0 ? _pbr$roughnessFactor : 1, 'roughness'), scalar((_pbr$metallicFactor = pbr.metallicFactor) !== null && _pbr$metallicFactor !== void 0 ? _pbr$metallicFactor : 1, 'metallic'), 0.5));
     material.setProperty('emissive', new Vec4(emissive[0], emissive[1], emissive[2], 1));
     check(Number.isFinite((_source$normalTexture = (_source$normalTexture2 = source.normalTexture) == null ? void 0 : _source$normalTexture2.scale) !== null && _source$normalTexture !== void 0 ? _source$normalTexture : 1), 'invalid normal scale');
+    if (usePhysical) {
+      material.setProperty(PHYSICAL_CONSTANT, physicalParams(ior, specularFactor0, emissiveStrength));
+      if (colorActive) {
+        material.setProperty(PHYSICAL_COLOR_CONSTANT, new Vec4(specularColor[0], specularColor[1], specularColor[2], 1));
+      }
+    }
     material.setProperty('emissiveScaleParam', new Vec4(1, 1, 1, (_source$normalTexture3 = (_source$normalTexture4 = source.normalTexture) == null ? void 0 : _source$normalTexture4.scale) !== null && _source$normalTexture3 !== void 0 ? _source$normalTexture3 : 1));
     for (const [info, property] of maps) {
       if (info) {
@@ -71113,6 +71305,111 @@ function unlitFactory(context) {
       if ((_features$source$exte = features.source.extensions) != null && _features$source$exte.KHR_materials_unlit) {
         features.unlit = true;
       }
+    }
+  };
+}
+
+function emissiveStrengthFactory(context) {
+  const name = 'KHR_materials_emissive_strength';
+  return {
+    name,
+    support: () => ({
+      name,
+      status: 'supported'
+    }),
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        const value = ext.emissiveStrength;
+        if (value === undefined) {
+          continue;
+        }
+        if (typeof value !== 'number' || !Number.isFinite(value) || value < 1) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: emissiveStrength must be finite and >= 1`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features) {
+      var _features$source$exte;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (ext && ext.emissiveStrength !== undefined) {
+        physicalScalars(features).emissiveStrength = ext.emissiveStrength;
+      }
+    }
+  };
+}
+
+function iorFactory(context) {
+  const name = 'KHR_materials_ior';
+  return {
+    name,
+    support: () => ({
+      name,
+      status: 'supported'
+    }),
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        if (ext.ior === undefined) {
+          continue;
+        }
+        if (typeof ext.ior !== 'number' || !Number.isFinite(ext.ior) || ext.ior < 1) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: ior must be finite and >= 1`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features) {
+      var _features$source$exte;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (ext && ext.ior !== undefined) {
+        physicalScalars(features).ior = ext.ior;
+      }
+    }
+  };
+}
+
+function specularFactory(context) {
+  const name = 'KHR_materials_specular';
+  return {
+    name,
+    support: () => ({
+      name,
+      status: 'supported'
+    }),
+    validate(ctx) {
+      for (const [index, material] of (ctx.json.materials || []).entries()) {
+        var _material$extensions, _ext$specularFactor;
+        const ext = (_material$extensions = material.extensions) == null ? void 0 : _material$extensions[name];
+        if (!ext) {
+          continue;
+        }
+        const factor = (_ext$specularFactor = ext.specularFactor) !== null && _ext$specularFactor !== void 0 ? _ext$specularFactor : [1, 1, 1, 1];
+        if (factor.length !== 4 || !factor.every(Number.isFinite) || factor[0] < 0 || factor[0] > 2 || factor.slice(1).some(v => v < 0 || v > 1)) {
+          throw new GLTFError('GLTF_EXTENSION_INVALID', `material ${index}: specularFactor must be [0,2] followed by rgb in [0,1]`, name);
+        }
+      }
+    },
+    extendMaterial(_index, features) {
+      var _features$source$exte, _ext$specularFactor2;
+      const ext = (_features$source$exte = features.source.extensions) == null ? void 0 : _features$source$exte[name];
+      if (!ext) {
+        return;
+      }
+      const factor = (_ext$specularFactor2 = ext.specularFactor) !== null && _ext$specularFactor2 !== void 0 ? _ext$specularFactor2 : [1, 1, 1, 1];
+      const physical = physicalScalars(features);
+      physical.specular = {
+        factor0: factor[0],
+        factor1: factor[1],
+        color: [factor[1], factor[2], factor[3]]
+      };
     }
   };
 }
@@ -71601,7 +71898,7 @@ function configureGLTFLoaderDefaults(options) {
 const KNOWN_UNIMPLEMENTED = [];
 class GLTFLoader {
   constructor(options) {
-    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
+    this.registry = new GLTFExtensionRegistry().register(unlitFactory).register(textureTransformFactory).register(meshQuantizationFactory).register(meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)).register(meshoptCompressionFactory(KHR_MESHOPT_COMPRESSION)).register(dracoCompressionFactory).register(emissiveStrengthFactory).register(iorFactory).register(specularFactory).register(basisuFactory).register(imageExtensionFactory('EXT_texture_webp')).register(imageExtensionFactory('EXT_texture_avif')).register(punctualLightsFactory).register(meshGPUInstancingFactory);
     this.options = void 0;
     this.options = {
       ...options
