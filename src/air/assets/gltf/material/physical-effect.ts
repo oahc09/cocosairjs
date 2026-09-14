@@ -248,7 +248,7 @@ export function gltfPhysicalEffect (): EffectAsset {
                 `#endif`,
                 `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
                 // diffuse stays metal-gated; dielectric diffuse loses the reflected fraction (energy).
-                `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric * (1.0 - s.metallic));`,
+                `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric);`,
                 `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`,
             ].join('\n');
             frag = frag.replace(specularMix, airSpec);
@@ -347,7 +347,9 @@ export function gltfPhysicalEffect (): EffectAsset {
                 'float trFlip = cc_cameraPos.w > 0.0 ? -1.0 : 1.0;',
                 'vec2 trUv = clamp(trScreen + trOffset * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
                 // Absorption over the path length, then refracted background sample (single tap).
-                'vec3 trAtten = exp(-(vec3(1.0) - clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0))) * trThick / max(' + ATTENUATION_CONSTANT + '.w, 1.0));',
+                // Beer-Lambert per spec: transmittance = attenuationColor ^ (d / attenuationDistance)
+                // (equivalently exp(-(-ln color) * d / dist); exact for dark media unlike the 1-color approximation).
+                'vec3 trAtten = pow(clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0)), vec3(trThick / max(' + ATTENUATION_CONSTANT + '.w, 1e-4)));',
                 'vec3 trColor = texture(cc_sceneColorTex, trUv).rgb * trAtten;',
                 '#if USE_AIR_DISPERSION',
                 `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`,

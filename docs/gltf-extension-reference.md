@@ -89,13 +89,13 @@ metadata+告警。同一 light def 多节点=独立组件。相机仅保留描�
 | unlit | — | AIR_GLTF_UNLIT 单 pass | — |
 | emissive_strength | ≥1 线性 | `s.emissive×strength` | — |
 | ior | ≥1 | F0=0.04→((η−1)/(η+1))²（specularIntensity 通道） | 掠射角 Fresnel，平面对照弱 |
-| specular | `specularFactor` 标量 [0,2] + `specularColorFactor` **≥0（规范允许 HDR>1）**；vec4 草案兼容 | **仅介电 BRDF**：F0 = 0.08·specularIntensity·factor·**texture.a**（alpha 通道，无 2×），金属不受影响；漫反射按 (1−F0) 衰减保证能量守恒 | 纹理槽 6/7 binding 15/16 |
+| specular | `specularFactor` 标量 [0,2] + `specularColorFactor` **≥0（规范允许 HDR>1）**；vec4 草案兼容 | **仅介电 BRDF**：F0 = 0.08·specularIntensity·factor·**texture.a**（alpha 通道，无 2×），金属不受影响；介电漫反射按 (1−F0) 衰减（能量守恒，金属项不重复加权） | 纹理槽 6/7 binding 15/16 |
 | clearcoat | factor/roughness [0,1]、scale [0,1]；R/G/XYZ | 独立 GGX 层 F0=0.04+Schlick（direct 主光 + emissive 吸收 + IBL 仅启用时） | 无切线时规范基近似；主光单光源近似 |
-| anisotropy | strength [0,1]、rotation rad；方向纹 **RG→[−1,1] 方向、B 不重映射 [0,1] 逐纹素强度（×strength）** | Kulla-Conty 替换基底 GGX 可见项；rotation 存 cos/sin | 同上切线近似 |
+| anisotropy | strength [0,1]、rotation rad；方向纹 **RG→[−1,1] 方向、B 不重映射 [0,1] 逐纹素强度（×strength）** | Kulla-Conty 替换基底 GGX 可见项（强度取宏×纹素乘积）；rotation 存 cos/sin | 同上切线近似 |
 | iridescence | factor [0,1]、ior [1.3,2.3333]、厚度 nm min≤max；R/G/G | 逐波长非相干 Airy F0（680/550/450nm）替换介电基底 F0 | 无 volume 时厚度=max（规范回退） |
 | EXT_bump | bumpTexture 必填 R、factor ≥0 | 屏幕导数解 UV Jacobian → 法线扰动 | 有 normalTexture 时告警跳过；WebGL1 依赖 derivatives 扩展 |
 | transmission | factor [0,1]；R 通道 | 两相机 scene-color 折射（UV 偏移） | 需 `AirTransmissionCapture` 先于解析启用，否则按 required/optional 报 unsupported/fallback |
-| volume | thickness ≥0（G 缩放）、attenuationDistance>0、color [0,1] | Beer-Lambert exp(−(1−color)·d/dist) 于透射光 | 与 transmission 组合生效 |
+| volume | thickness ≥0（G 缩放）、attenuationDistance>0、color [0,1] | 规范 Beer-Lambert：透射率 = attenuationColor^(d/attenuationDistance)（pow 形式，深色介质精确） | 与 transmission 组合生效 |
 | dispersion | **`dispersion` 字段（=20/Abbe，非 dispersionFactor）** ≥0 | halfSpread=(ior−1)·0.025·dispersion，R/G/B 三 IOR 三采样（红最低、蓝最高，绿基准） | 需 transmission 生效 |
 
 **T6 透射管线**：scene color 绑定目标是 renderer 的**渲染材质实例**

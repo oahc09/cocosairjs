@@ -3,7 +3,7 @@ import { Attribute, deviceManager, Feature, Format, PrimitiveMode } from '../../
 import { Vec3 } from '../../../cocos/core/math';
 import { GLTFParserContext } from './parser-context';
 import { check, item } from './schema';
-import { ATTRIBUTES, checkAttributeType } from './attributes';
+import { ATTRIBUTES, attributeTypeRule, checkAttributeType } from './attributes';
 import { TEXTURE_SLOTS, slotTextureInfo, TextureSlotName } from './material/features';
 import { coreTextureCoordinates, TextureCoordinates, transformTextureUV } from './material/texture-slots';
 import { KHR_MESH_QUANTIZATION } from './extensions/geometry/quantization';
@@ -75,9 +75,21 @@ export function createGLTFMesh (context: GLTFParserContext, meshIndex: number): 
                     check(!/^TEXCOORD_/.test(name), 'only UV0 and UV1 are supported');
                     context.warn(`mesh ${meshIndex}: unused attribute ${name}`); continue;
                 }
-                check(values.length === count * mapping[1],
+                // COLOR_0 may be VEC3 in the Draco payload: pad to vec4 (alpha=1) exactly like
+                // the accessor path, instead of rejecting legal vec3 vertex colors.
+                const isVec3Color = name === 'COLOR_0' && values.length === count * 3;
+                check(values.length === count * mapping[1] || isVec3Color,
                     `mesh ${meshIndex}: decoded ${name} has ${values.length} components, expected ${count * mapping[1]}`);
-                channels.push({ name, width: mapping[1], values: Array.from(values) });
+                if (isVec3Color) {
+                    const padded = new Array(count * 4).fill(0);
+                    for (let i = 0; i < count; ++i) {
+                        padded[i * 4] = values[i * 3]; padded[i * 4 + 1] = values[i * 3 + 1];
+                        padded[i * 4 + 2] = values[i * 3 + 2]; padded[i * 4 + 3] = 1;
+                    }
+                    channels.push({ name, width: 4, values: padded });
+                } else {
+                    channels.push({ name, width: mapping[1], values: Array.from(values) });
+                }
                 decodedNames.add(name);
             }
             // Attributes present in the primitive but NOT in the Draco payload are ordinary accessors
@@ -124,7 +136,13 @@ export function createGLTFMesh (context: GLTFParserContext, meshIndex: number): 
             for (const [name, index] of Object.entries(target)) {
                 check(['POSITION', 'NORMAL', 'TANGENT'].includes(name), `unsupported morph attribute ${name}`);
                 const accessor = context.accessor(index);
-                check(accessor.count === count && accessor.components === 3 && accessor.source.componentType === 5126, 'invalid morph accessor');
+                // KHR_mesh_quantization: morph accessors may use signed 8/16-bit types
+                // (values are already dequantized to float by the accessor read path).
+                const morphRule = attributeTypeRule(name, quantized, true);
+                const morphTypeOK = accessor.source.componentType === 5126
+                    || (quantized && (morphRule.types.includes(accessor.source.componentType)
+                        || (accessor.source.normalized === true && morphRule.normalizedTypes!.includes(accessor.source.componentType))));
+                check(accessor.count === count && accessor.components === 3 && morphTypeOK, 'invalid morph accessor');
                 entries[name] = accessor.values.slice();
             }
             return entries;

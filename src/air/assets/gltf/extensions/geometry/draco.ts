@@ -40,12 +40,17 @@ async function decodePrimitive (context: GLTFParserContext, meshIndex: number, p
     if (!position) { fail('decoded primitive has no POSITION'); }
     const count = position.length / 3;
     for (const [semantic, values] of Object.entries(result.attributes)) {
-        const width = semantic === 'POSITION' || semantic === 'NORMAL' ? 3 : /^TEXCOORD_\d+$/.test(semantic) ? 2 : 4;
-        if (values.length !== count * width) { fail(`decoded ${semantic} has ${values.length} components, expected ${count * width}`); }
+        // Component width comes from the declared accessor type (COLOR_0 may be VEC3 or VEC4);
+        // semantic guessing would reject legal vec3 vertex colors.
         const accessorIndex = primitive.attributes[semantic];
-        if (accessorIndex !== undefined) {
-            const accessor = item(context.json.accessors, accessorIndex, `accessor for ${semantic}`);
-            if (accessor.count !== count) { fail(`decoded ${semantic} count ${count} does not match accessor count ${accessor.count}`); }
+        const declared = accessorIndex !== undefined
+            ? item(context.json.accessors, accessorIndex, `accessor for ${semantic}`) : undefined;
+        const width = declared
+            ? ({ SCALAR: 1, VEC2: 2, VEC3: 3, VEC4: 4 } as Record<string, number>)[declared.type] ?? 4
+            : semantic === 'POSITION' || semantic === 'NORMAL' ? 3 : /^TEXCOORD_\d+$/.test(semantic) ? 2 : 4;
+        if (values.length !== count * width) { fail(`decoded ${semantic} has ${values.length} components, expected ${count * width}`); }
+        if (declared) {
+            if (declared.count !== count) { fail(`decoded ${semantic} count ${count} does not match accessor count ${declared.count}`); }
         }
     }
     if (result.indices && !result.indices.every((index) => index < count)) { fail('index exceeds decoded vertex count'); }

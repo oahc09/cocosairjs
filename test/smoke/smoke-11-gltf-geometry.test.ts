@@ -381,4 +381,138 @@ describe('glTF geometry and compression extensions', () => {
         // machine-readable 'decoder-required' state instead of 'unsupported'.
         expect(statuses).toMatchObject({ KHR_texture_basisu: 'decoder-required' });
     });
+
+    // ---- Review round 2 regression: spec semantics the original suite did not cover ----
+
+    test('quantized morph accessors (signed SHORT) load under KHR_mesh_quantization', async () => {
+        // Morph POSITION may be signed BYTE/SHORT (normalized or not); before the fix the mesh
+        // builder demanded FLOAT and rejected legal quantized morphs at build time.
+        const positions = new Float32Array(POSITIONS);
+        const normals = new Float32Array(NORMALS);
+        const indices = new Uint16Array(INDICES);
+        const morph = new Int16Array([0, 2000, 0, 0, -2000, 0, 0, 0, 0, 0, 1000, 0]); // unnormalized SHORT, 4 verts
+        const bin = new Uint8Array(positions.byteLength + normals.byteLength + indices.byteLength + morph.byteLength);
+        bin.set(new Uint8Array(positions.buffer), 0);
+        bin.set(new Uint8Array(normals.buffer), positions.byteLength);
+        bin.set(new Uint8Array(indices.buffer), positions.byteLength + normals.byteLength);
+        bin.set(new Uint8Array(morph.buffer), positions.byteLength + normals.byteLength + indices.byteLength);
+        const json = {
+            asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0 }],
+            extensionsUsed: ['KHR_mesh_quantization'], extensionsRequired: ['KHR_mesh_quantization'],
+            buffers: [{ byteLength: bin.byteLength }],
+            bufferViews: [
+                { buffer: 0, byteOffset: 0, byteLength: positions.byteLength },
+                { buffer: 0, byteOffset: positions.byteLength, byteLength: normals.byteLength },
+                { buffer: 0, byteOffset: positions.byteLength + normals.byteLength, byteLength: indices.byteLength },
+                { buffer: 0, byteOffset: positions.byteLength + normals.byteLength + indices.byteLength, byteLength: morph.byteLength },
+            ],
+            accessors: [
+                { bufferView: 0, componentType: 5126, count: 4, type: 'VEC3' },
+                { bufferView: 1, componentType: 5126, count: 4, type: 'VEC3' },
+                { bufferView: 2, componentType: 5123, count: 6, type: 'SCALAR' },
+                { bufferView: 3, componentType: 5122, count: 4, type: 'VEC3' },
+            ],
+            meshes: [{ primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, targets: [{ POSITION: 3 }] }] }],
+        };
+        const asset = await new GLTFLoader().parseAsync(toGLB(json, bin.buffer));
+        const struct = (asset.meshes[0] as Mesh).struct;
+        expect(struct.morph).toBeDefined();
+        const displacement = struct.morph!.subMeshMorphs[0]!.targets[0]!.displacements[0];
+        // displacement.count is in float components: 4 vertices x VEC3 = 12, matching POSITION.
+        const positionFloats = (asset.meshes[0] as Mesh).readAttribute(0, AttributeName.ATTR_POSITION)!.length;
+        expect(displacement.count).toBe(positionFloats);
+        asset.destroy();
+    });
+
+    test('meshopt KHR accepts the COLOR filter and 256-byte stride; EXT still rejects both', async () => {
+        const count = 1;
+        const stride = 256; // KHR allows up to 256 (the review flagged our 252 cap)
+        // COLOR-filtered payload: 4 bytes per vertex (rgb + exponent); the wasm decoder applies
+        // the transform, so arbitrary bytes decode without an encoder on the test side.
+        const compressed = new Uint8Array([200, 100, 50, 128]);
+
+        const build = (extension, filter, strideValue) => {
+            const json = {
+                asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0 }],
+                extensionsUsed: [extension], extensionsRequired: [extension],
+                buffers: [{ byteLength: stride }, { uri: 'payload.bin', byteLength: compressed.byteLength }],
+                bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: stride, byteStride: stride }],
+                accessors: [{ bufferView: 0, componentType: 5126, count: 1, type: 'VEC3' }],
+                meshes: [{ primitives: [{ attributes: { POSITION: 0 } }] }],
+            };
+            (json.bufferViews[0] as unknown as { extensions: unknown }).extensions = { [extension]: {
+                buffer: 1, byteOffset: 0, byteLength: compressed.byteLength, byteStride: strideValue, count: 1, mode: 'ATTRIBUTES', filter,
+            } };
+            const fetchMock = jest.fn().mockResolvedValue({ ok: true, arrayBuffer: async () => compressed.buffer.slice(compressed.byteOffset, compressed.byteOffset + compressed.byteLength) });
+            const originalFetch = globalThis.fetch;
+            globalThis.fetch = fetchMock;
+            return { json, compressed, restore: () => { globalThis.fetch = originalFetch; } };
+        };
+
+        // KHR: COLOR filter + 256-byte stride both accepted end to end.
+        const khr = build('KHR_meshopt_compression', 'COLOR', 256);
+        try {
+            const loader = new GLTFLoader({ meshoptDecoder: realMeshopt() });
+            try {
+                await loader.parseAsync(
+                    toGLB(khr.json, khr.compressed.buffer.slice(khr.compressed.byteOffset, khr.compressed.byteOffset + khr.compressed.byteLength)),
+                    'https://example.test/models/');
+            } catch (error) {
+                return { khrError: String(error).slice(0, 160),
+                    flags: JSON.stringify((loader as unknown as { registry?: unknown }) && 'n/a') };
+            }
+            return { khrError: null };
+        } finally { khr.restore(); }
+
+        // EXT draft: the COLOR filter is not part of that schema.
+        const ext = build('EXT_meshopt_compression', 'COLOR', 256);
+        try {
+            await expect(new GLTFLoader({ meshoptDecoder: realMeshopt() })
+                .parseAsync(toGLB(ext.json, ext.compressed.buffer.slice(ext.compressed.byteOffset, ext.compressed.byteOffset + ext.compressed.byteLength)), 'https://example.test/models/'))
+                .rejects.toMatchObject({ code: 'GLTF_EXTENSION_INVALID' });
+        } finally { ext.restore(); }
+    });
+
+    test('Draco-decoded COLOR_0 may be VEC3 (width comes from the accessor, not the semantic)', async () => {
+        const draco3d = require('../../build/gltf-decoders/draco/draco3d.js');
+        const module = await draco3d.createEncoderModule({});
+        const encoder = new module.Encoder();
+        const builder = new module.MeshBuilder();
+        const mesh = new module.Mesh();
+        const count = 3;
+        builder.AddFacesToMesh(mesh, 1, new Uint32Array([0, 1, 2]));
+        const posId = builder.AddFloatAttributeToMesh(mesh, module.POSITION, count, 3,
+            new Float32Array([0, 0, 0, 1, 0, 0, 0, 1, 0]));
+        const colorId = builder.AddFloatAttributeToMesh(mesh, module.GENERIC, count, 3,
+            new Float32Array([1, 0, 0, 0, 1, 0, 0, 0, 1])); // VEC3 vertex color
+        encoder.SetSpeedOptions(5, 5);
+        encoder.SetAttributeQuantization(module.POSITION, 14);
+        encoder.SetAttributeQuantization(module.GENERIC, 12);
+        encoder.SetEncodingMethod(module.MESH_EDGEBREAKER_ENCODING);
+        const encoded = new module.DracoInt8Array();
+        const length = encoder.EncodeMeshToDracoBuffer(mesh, encoded);
+        expect(length).toBeGreaterThan(0);
+        module.destroy(encoder); module.destroy(builder); module.destroy(mesh);
+        const payload = new Uint8Array(length);
+        for (let i = 0; i < length; ++i) { payload[i] = encoded.GetValue(i) & 0xff; }
+
+        const json = {
+            asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0 }],
+            extensionsUsed: ['KHR_draco_mesh_compression'], extensionsRequired: ['KHR_draco_mesh_compression'],
+            buffers: [{ byteLength: payload.byteLength }],
+            bufferViews: [{ buffer: 0, byteOffset: 0, byteLength: payload.byteLength }],
+            accessors: [
+                { componentType: 5126, count, type: 'VEC3' },
+                { componentType: 5126, count, type: 'VEC3' }, // VEC3 color: legal, previously rejected
+            ],
+            meshes: [{ primitives: [{ attributes: { POSITION: 0, COLOR_0: 1 },
+                extensions: { KHR_draco_mesh_compression: { bufferView: 0, attributes: { POSITION: posId, COLOR_0: colorId } } } }] }],
+        };
+        const asset = await new GLTFLoader({ dracoDecoder: createDracoDecoder(() => draco3d.createDecoderModule({})) })
+            .parseAsync(toGLB(json, payload.buffer));
+        const colors = (asset.meshes[0] as Mesh).readAttribute(0, AttributeName.ATTR_COLOR)!;
+        expect(colors.length).toBe(count * 4); // expanded to vec4 with alpha
+        expect(colors[3]).toBe(1);
+        asset.destroy();
+    });
 });

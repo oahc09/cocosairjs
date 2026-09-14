@@ -70006,8 +70006,31 @@ const QUANTIZED_RULES = {
 function attributeSemantic(name) {
   return name.replace(/_\d+$/, '');
 }
-function attributeTypeRule(name, quantized) {
+const MORPH_QUANTIZED_RULES = {
+  POSITION: {
+    types: [FLOAT, BYTE, SHORT],
+    normalizedTypes: [BYTE, SHORT]
+  },
+  NORMAL: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, SHORT]
+  },
+  TANGENT: {
+    types: [FLOAT],
+    normalizedTypes: [BYTE, SHORT]
+  },
+  TEXCOORD: {
+    types: [FLOAT, BYTE, SHORT]
+  }
+};
+function attributeTypeRule(name, quantized, morph = false) {
   var _table$attributeSeman;
+  if (morph && quantized) {
+    const morphTable = MORPH_QUANTIZED_RULES[attributeSemantic(name)];
+    if (morphTable) {
+      return morphTable;
+    }
+  }
   const table = quantized ? QUANTIZED_RULES : CORE_RULES;
   return (_table$attributeSeman = table[attributeSemantic(name)]) !== null && _table$attributeSeman !== void 0 ? _table$attributeSeman : {
     types: [FLOAT],
@@ -70123,10 +70146,10 @@ function createMaterialFeatures(index, source) {
 
 const KHR_MESH_QUANTIZATION = 'KHR_mesh_quantization';
 function validateQuantizedAccessors(context) {
-  const checkAccessor = (index, semantic) => {
+  const checkAccessor = (index, semantic, isMorph = false) => {
     var _rule$normalizedTypes, _rule$normalizedTypes2;
     const accessor = item(context.json.accessors, index, `accessor for ${semantic}`);
-    const rule = attributeTypeRule(semantic, true);
+    const rule = attributeTypeRule(semantic, true, isMorph);
     const normalized = !!accessor.normalized;
     if (!rule.types.includes(accessor.componentType) && !(normalized && ((_rule$normalizedTypes = (_rule$normalizedTypes2 = rule.normalizedTypes) == null ? void 0 : _rule$normalizedTypes2.includes(accessor.componentType)) !== null && _rule$normalizedTypes !== void 0 ? _rule$normalizedTypes : false))) {
       throw new GLTFError('GLTF_EXTENSION_INVALID', `accessor ${index} (${semantic}): componentType ` + `${accessor.componentType}${normalized ? ' normalized' : ''} is invalid for ${KHR_MESH_QUANTIZATION}`, KHR_MESH_QUANTIZATION);
@@ -70145,7 +70168,7 @@ function validateQuantizedAccessors(context) {
       }
       for (const target of primitive.targets || []) {
         for (const [semantic, index] of Object.entries(target)) {
-          checkAccessor(index, semantic);
+          checkAccessor(index, semantic, true);
         }
       }
     }
@@ -70258,12 +70281,28 @@ function createGLTFMesh(context, meshIndex) {
           context.warn(`mesh ${meshIndex}: unused attribute ${name}`);
           continue;
         }
-        check(values.length === count * mapping[1], `mesh ${meshIndex}: decoded ${name} has ${values.length} components, expected ${count * mapping[1]}`);
-        channels.push({
-          name,
-          width: mapping[1],
-          values: Array.from(values)
-        });
+        const isVec3Color = name === 'COLOR_0' && values.length === count * 3;
+        check(values.length === count * mapping[1] || isVec3Color, `mesh ${meshIndex}: decoded ${name} has ${values.length} components, expected ${count * mapping[1]}`);
+        if (isVec3Color) {
+          const padded = new Array(count * 4).fill(0);
+          for (let i = 0; i < count; ++i) {
+            padded[i * 4] = values[i * 3];
+            padded[i * 4 + 1] = values[i * 3 + 1];
+            padded[i * 4 + 2] = values[i * 3 + 2];
+            padded[i * 4 + 3] = 1;
+          }
+          channels.push({
+            name,
+            width: 4,
+            values: padded
+          });
+        } else {
+          channels.push({
+            name,
+            width: mapping[1],
+            values: Array.from(values)
+          });
+        }
         decodedNames.add(name);
       }
       for (const [name, index] of Object.entries(primitive.attributes || {})) {
@@ -70315,7 +70354,9 @@ function createGLTFMesh(context, meshIndex) {
       for (const [name, index] of Object.entries(target)) {
         check(['POSITION', 'NORMAL', 'TANGENT'].includes(name), `unsupported morph attribute ${name}`);
         const accessor = context.accessor(index);
-        check(accessor.count === count && accessor.components === 3 && accessor.source.componentType === 5126, 'invalid morph accessor');
+        const morphRule = attributeTypeRule(name, quantized, true);
+        const morphTypeOK = accessor.source.componentType === 5126 || quantized && (morphRule.types.includes(accessor.source.componentType) || accessor.source.normalized === true && morphRule.normalizedTypes.includes(accessor.source.componentType));
+        check(accessor.count === count && accessor.components === 3 && morphTypeOK, 'invalid morph accessor');
         entries[name] = accessor.values.slice();
       }
       return entries;
@@ -70793,7 +70834,7 @@ function gltfPhysicalEffect() {
       const tex = (sampler, uv, prefix) => textureTransform(language, sampler, uv, prefix);
       const iriFn = ['#if USE_AIR_IRIDESCENCE', 'vec3 airIridescenceF0 (float NV) {', 'float filmIor = clamp(airIriIorTex, 1.3, 2.33334);', `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`, 'float cosT1 = clamp(NV, 0.0, 1.0);', 'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);', 'float cosT2 = sqrt(max(0.0, 1.0 - sinT2sq));', `vec3 lambda = vec3(680.0, 550.0, 450.0);`, `vec3 phase = 4.0 * PI * filmIor * max(airIriThickTex, 0.0) * cosT2 / lambda;`, 'vec3 f01 = vec3(((1.0 - filmIor) / (1.0 + filmIor)) * ((1.0 - filmIor) / (1.0 + filmIor)));', 'vec3 r12 = (filmIor - vec3(n0)) / (filmIor + vec3(n0));', 'vec3 f12 = r12 * r12;', 'vec3 cross12 = sqrt(f01 * f12);', 'vec3 airy = (f01 + f12 + 2.0 * cross12 * cos(phase)) / (vec3(1.0) + f01 * f12 + 2.0 * cross12 * cos(phase));', 'return clamp(airy, vec3(0.0), vec3(1.0));', '}', '#endif'].join(nl);
       const airSpec = [`vec3 airDielectric = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`, '#if USE_AIR_SPECULAR_COLOR', `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`, '#endif', '#if USE_AIR_SPECULAR_MAP', 'airDielectric *= airSpecScale;', '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', 'airDielectric *= airSpecColor;', '#endif', '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`, `}`, `#endif`, `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
-      `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric * (1.0 - s.metallic));`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
+      `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric);`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
       frag = frag.replace(specularMix, airSpec);
       const ccDirect = ['{', 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);', 'float ccRough = clamp(airCCRoughTex, 0.002, 1.0);', 'float ccNL = max(dot(airCCNormal, L), 0.0);', 'float ccNH = max(dot(airCCNormal, H), 0.0);', 'float ccNV = max(dot(airCCNormal, V), 0.0);', 'vec3 ccSpec = vec3(0.04) * CalcSpecular(ccRough, ccNH, H, airCCNormal);', '#if CC_RECEIVE_SHADOW', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * shadow * ccNL * ccF * ccSpec;', '#else', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * ccNL * ccF * ccSpec;', '#endif', '}'].join(nl);
       const ccAnchor = 'finalColor *= dirlightContrib;';
@@ -70820,7 +70861,7 @@ function gltfPhysicalEffect() {
       frag = frag.replace(emissiveAnchor, `${ccIBL}\n#if USE_AIR_CLEARCOAT\nfinalColor += s.emissive * (1.0 - clamp(airCCFactorTex, 0.0, 1.0) * (0.04 + 0.96 * pow(1.0 - max(dot(airCCNormal, V), 0.0), 5.0)));\n#else\n${emissiveAnchor}\n#endif`);
       const transmission = ['#if USE_AIR_TRANSMISSION', '{', 'float trF = clamp(airTrFactorTex, 0.0, 1.0);', 'if (trF > 0.0) {', `float trIor = max(${TRANSMISSION_CONSTANT}.y, 1.0);`, 'vec3 trN = normalize(N);', 'vec3 trV = normalize(V);', 'float trThick = max(airThickTex, 1e-4);', 'vec3 trView = (cc_matView * vec4(s.position, 1.0)).xyz;', 'vec3 trBaseView = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIor));', 'vec2 trOffset = trBaseView.xy / max(abs(trView.z), 1.0) * trThick * 0.5;',
       'vec4 trClip0 = cc_matViewProj * vec4(s.position, 1.0);', 'vec2 trScreen = trClip0.xy / max(abs(trClip0.w), 1e-4) * 0.5 + 0.5;', 'float trFlip = cc_cameraPos.w > 0.0 ? -1.0 : 1.0;', 'vec2 trUv = clamp(trScreen + trOffset * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);',
-      'vec3 trAtten = exp(-(vec3(1.0) - clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0))) * trThick / max(' + ATTENUATION_CONSTANT + '.w, 1.0));', 'vec3 trColor = texture(cc_sceneColorTex, trUv).rgb * trAtten;', '#if USE_AIR_DISPERSION', `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`, 'if (trDisp > 0.0) {',
+      'vec3 trAtten = pow(clamp(' + ATTENUATION_CONSTANT + '.rgb, vec3(0.0), vec3(1.0)), vec3(trThick / max(' + ATTENUATION_CONSTANT + '.w, 1e-4)));', 'vec3 trColor = texture(cc_sceneColorTex, trUv).rgb * trAtten;', '#if USE_AIR_DISPERSION', `float trDisp = max(${TRANSMISSION_CONSTANT}.w, 0.0);`, 'if (trDisp > 0.0) {',
       'float trHalf = (trIor - 1.0) * 0.025 * trDisp;', 'float trIorR = max(trIor - trHalf, 1.0001);', 'float trIorB = trIor + trHalf;', 'vec2 trRV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorR)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 trBV = (mat3(cc_matView) * refract(-trV, trN, 1.0 / trIorB)).xy / max(abs(trView.z), 1.0) * trThick * 0.5;', 'vec2 uvR = clamp(trScreen + trRV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'vec2 uvB = clamp(trScreen + trBV * trFlip, ' + SCENE_INFO_CONSTANT + '.zw, vec2(1.0) - ' + SCENE_INFO_CONSTANT + '.zw);', 'trColor.r = texture(cc_sceneColorTex, uvR).r * trAtten.r;', 'trColor.b = texture(cc_sceneColorTex, uvB).b * trAtten.b;', '}', '#endif',
       'finalColor = mix(finalColor, trColor, trF * (1.0 - s.metallic));', '}', '}', '#endif', 'return vec4(finalColor, s.albedo.a);'].join(nl);
       const returnAnchor = 'return vec4(finalColor, s.albedo.a);';
@@ -72111,8 +72152,9 @@ function normalizeFilter(value, extension) {
   if (value === undefined) {
     return 'NONE';
   }
-  const filter = typeof value === 'number' ? FILTERS[value] : typeof value === 'string' ? value : undefined;
-  if (!filter || !FILTERS.includes(filter)) {
+  const filters = extension === KHR_MESHOPT_COMPRESSION ? [...FILTERS, 'COLOR'] : FILTERS;
+  const filter = typeof value === 'number' ? filters[value] : typeof value === 'string' ? value : undefined;
+  if (!filter || !filters.includes(filter)) {
     throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension}: invalid filter ${String(value)}`, extension);
   }
   return filter;
@@ -72132,7 +72174,8 @@ async function decodeBufferView(context, index, definition, extension) {
   if (mode !== 'ATTRIBUTES' && filter !== 'NONE') {
     throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter ${filter} requires ATTRIBUTES mode`, extension);
   }
-  if (mode === 'ATTRIBUTES' && (stride % 4 !== 0 || stride < 4 || stride > 252)) {
+  const maxStride = extension === KHR_MESHOPT_COMPRESSION ? 256 : 252;
+  if (mode === 'ATTRIBUTES' && (stride % 4 !== 0 || stride < 4 || stride > maxStride)) {
     throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: invalid byteStride ${stride}`, extension);
   }
   const decoder = context.options.meshoptDecoder;
@@ -72210,15 +72253,21 @@ async function decodePrimitive(context, meshIndex, primitiveIndex, definition, d
   }
   const count = position.length / 3;
   for (const [semantic, values] of Object.entries(result.attributes)) {
-    const width = semantic === 'POSITION' || semantic === 'NORMAL' ? 3 : /^TEXCOORD_\d+$/.test(semantic) ? 2 : 4;
+    var _declared$type;
+    const accessorIndex = primitive.attributes[semantic];
+    const declared = accessorIndex !== undefined ? item(context.json.accessors, accessorIndex, `accessor for ${semantic}`) : undefined;
+    const width = declared ? (_declared$type = {
+      SCALAR: 1,
+      VEC2: 2,
+      VEC3: 3,
+      VEC4: 4
+    }[declared.type]) !== null && _declared$type !== void 0 ? _declared$type : 4 : semantic === 'POSITION' || semantic === 'NORMAL' ? 3 : /^TEXCOORD_\d+$/.test(semantic) ? 2 : 4;
     if (values.length !== count * width) {
       fail(`decoded ${semantic} has ${values.length} components, expected ${count * width}`);
     }
-    const accessorIndex = primitive.attributes[semantic];
-    if (accessorIndex !== undefined) {
-      const accessor = item(context.json.accessors, accessorIndex, `accessor for ${semantic}`);
-      if (accessor.count !== count) {
-        fail(`decoded ${semantic} count ${count} does not match accessor count ${accessor.count}`);
+    if (declared) {
+      if (declared.count !== count) {
+        fail(`decoded ${semantic} count ${count} does not match accessor count ${declared.count}`);
       }
     }
   }
@@ -73319,7 +73368,20 @@ function isTransmissionMaterial(material) {
     return false;
   }
   for (const pass of material.passes) {
-    if (pass.getHandle('airTransmission') !== 0) {
+    const defines = pass.defines;
+    if (defines && defines.USE_AIR_TRANSMISSION) {
+      return true;
+    }
+  }
+  return false;
+}
+function isTransmissionRenderer(renderer) {
+  for (let i = 0; i < 8; i++) {
+    const material = renderer.getMaterial(i);
+    if (!material) {
+      break;
+    }
+    if (isTransmissionMaterial(material)) {
       return true;
     }
   }
@@ -73339,6 +73401,7 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     this._w = 0;
     this._h = 0;
     this._bound = [];
+    this._prevVisibility = null;
   }
   get mainCamera() {
     return this._main;
@@ -73358,19 +73421,29 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
   onEnable() {
     active.add(this);
     this._ensure();
+    if (this._off) {
+      this._off.enabled = true;
+    }
     if (webgl2Capable()) {
       setTransmissionPipelineAvailable(true, 'scene-color capture active');
     }
   }
   onDisable() {
     active.delete(this);
-    this._releaseBindings();
+    if (this._off) {
+      this._off.enabled = false;
+    }
+    this._releaseBindings(true);
+    if (this._main && this._prevVisibility !== null) {
+      this._main.visibility = this._prevVisibility;
+      this._prevVisibility = null;
+    }
     if (active.size === 0) {
       setTransmissionPipelineAvailable(false, 'no active transmission capture');
     }
   }
   onDestroy() {
-    this._releaseBindings();
+    this._releaseBindings(true);
     this._teardown();
   }
   lateUpdate() {
@@ -73383,12 +73456,14 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
       if (!renderer.isValid) {
         continue;
       }
-      const material = renderer.getMaterialInstance(0);
-      if (!material) {
-        continue;
+      for (let slot = 0; slot < 8; slot++) {
+        const material = renderer.getMaterialInstance(slot);
+        if (!material) {
+          break;
+        }
+        material.setProperty('cc_sceneColorTex', this._rt);
+        material.setProperty('airSceneColorInfo', info);
       }
-      material.setProperty('cc_sceneColorTex', this._rt);
-      material.setProperty('airSceneColorInfo', info);
     }
     this._bound = this._bound.filter(renderer => renderer.isValid);
     this._rescan(main);
@@ -73418,30 +73493,49 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     }
     for (const renderer of scene.getComponentsInChildren(MeshRenderer)) {
       const node = renderer.node;
-      if (!node || !isTransmissionMaterial(renderer.getMaterial(0))) {
+      if (!node || !isTransmissionRenderer(renderer)) {
         continue;
+      }
+      if (this._prevVisibility === null) {
+        this._prevVisibility = main.visibility;
       }
       if (!(node.layer & TRANSMISSION_LAYER)) {
         node.layer |= TRANSMISSION_LAYER;
       }
       main.visibility |= TRANSMISSION_LAYER;
       const owner = owned.get(renderer);
-      if (owner === this) {
-        if (this._bound.indexOf(renderer) < 0) {
-          this._bound.push(renderer);
-        }
+      if (owner && owner.capture !== this) {
         continue;
       }
-      if (owner) {
-        continue;
+      if (!owner) {
+        owned.set(renderer, {
+          capture: this,
+          originalLayer: node.layer & ~TRANSMISSION_LAYER
+        });
       }
-      owned.set(renderer, this);
-      this._bound.push(renderer);
+      if (this._bound.indexOf(renderer) < 0) {
+        this._bound.push(renderer);
+      }
     }
   }
-  _releaseBindings() {
+  _releaseBindings(restore) {
     for (const renderer of this._bound) {
+      const record = owned.get(renderer);
       owned.delete(renderer);
+      if (!restore || !record || !renderer.isValid) {
+        continue;
+      }
+      if (renderer.node) {
+        renderer.node.layer = record.originalLayer;
+      }
+      const template = renderer.getMaterial(0);
+      const fallback = template && template.getProperty ? template.getProperty('cc_sceneColorTex') : null;
+      const instance = renderer.getMaterialInstance(0);
+      if (instance && fallback) {
+        var _value;
+        const value = (_value = fallback.value) !== null && _value !== void 0 ? _value : fallback;
+        instance.setProperty('cc_sceneColorTex', value);
+      }
     }
     this._bound.length = 0;
   }
@@ -97916,5 +98010,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, SUPPORTED_IMAGE_MIMES, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isKTX2, isKTX2Available, isMeshoptAvailable, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
+export { Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation, AnimationClip, Animation as AnimationComponent, AnimationManager, AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, BITMASK_TAG, Node$1 as BaseNode, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BloomStage, BufferAsset, BuiltinResMgr, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Color, ColorKey, CompactValueTypeArray, Component, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, ENUM_TAG, EPSILON$1 as EPSILON, EXT_MESHOPT_COMPRESSION, EasingMethod, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FogInfo, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, Gradient, HALF_PI, ImageAsset, Input, InstancedBuffer, JavaScript, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, Layers, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MainFlow, Mat3, Mat4, Material, MathBase, Mesh, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PointLight, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RenderFlow, RenderPipeline, RenderStage, RenderTexture, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, Root, SUPPORTED_IMAGE_MIMES, Scene, SceneAsset, SceneGlobals, Scheduler, Script, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Socket, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TWO_PI, TangentWeightMode, TextAsset, Texture2D, TextureCube, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, WebGL2Device, WebGLDevice, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$1 as displayName, displayOrder$2 as displayOrder, dracoCompressionFactory, easing, editable$3 as editable, editorExtrasTag, enumerableProps, equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, frameObject, game, garbageCollectionManager, geometry, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getWorldTransformUntilRoot, index$1 as gfx, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isValid, js$1 as js, lerp, loadAssetAsync, loader, log, logID, macro, markAsWarning, mat4, math, index$2 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override, path, pingPong, define as pipeline, preTransforms, primitives, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, sampleAnimationCurve, screen$1 as screen, serializable$8 as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, sys, systemEvent, toDegree, toRadian, tooltip$2 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, visible$4 as visible, visibleRect, warn, warnID };
 //# sourceMappingURL=cocosair.module.js.map

@@ -16,6 +16,8 @@ import { anisotropyFactory } from '../../src/air/assets/gltf/extensions/material
 import { createMaterialFeatures, physicalScalars } from '../../src/air/assets/gltf/material/features';
 import { setTransmissionPipelineAvailable, transmissionPipelineAvailable } from '../../src/air/assets/gltf/material/transmission-capability';
 import { gltfPhysicalEffect } from '../../src/air/assets/gltf/material/physical-effect';
+import { isTransmissionMaterial, TRANSMISSION_LAYER } from '../../src/air/rendering/transmission-capture';
+import { Material } from '../../src/cocos/asset/assets/material';
 import type { GLTFExtensionHandler } from '../../src/air/assets/gltf/extension-registry';
 import { CCObject } from '../../src/cocos/core/data/object';
 
@@ -99,6 +101,50 @@ describe('V0.5 review regression', () => {
         expect(transmissionFactory(null as never).support!().status).toBe('supported');
         expect(transmissionPipelineAvailable().available).toBe(true);
         setTransmissionPipelineAvailable(false);
+    });
+
+    // Review round 2 — R5: volume uses the exact Beer-Lambert form (no 1-color approximation).
+    test('volume attenuation uses pow(color, d/dist), not the 1-color approximation', () => {
+        const frag = sourceOf();
+        expect(frag).toMatch(/trAtten = pow\(clamp\(airAttenuation\.rgb, vec3\(0\.0\), vec3\(1\.0\)\), vec3\(trThick \/ max\(airAttenuation\.w, 1e-4\)\)\)/);
+        expect(frag).not.toContain('vec3(1.0) - clamp('); // the old linear approximation is gone
+    });
+
+    // Review round 2 — R6: dielectric diffuse loses exactly (1 - F0); no double metallic factor.
+    test('specular diffuse energy term carries no duplicate metallic factor', () => {
+        const frag = sourceOf();
+        expect(frag).toContain('vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric);');
+        expect(frag).not.toContain('airDielectric * (1.0 - s.metallic)');
+    });
+
+    // Review round 2 — R1/#9: detection is macro-level (physical UBO handle would flag every
+    // physical material) and the layer/texture wiring is scoped to actual transmission materials.
+    test('transmission detection is define-based, not UBO-handle-based', () => {
+        const physical = new Material();
+        physical.initialize({ effectAsset: gltfPhysicalEffect(), defines: {} });
+        const transmitting = new Material();
+        transmitting.initialize({ effectAsset: gltfPhysicalEffect(), defines: { USE_AIR_TRANSMISSION: true } });
+        // Old detection (handle !== 0) wrongly flagged `physical` too; the define does not.
+        expect(physical.passes.every((p) => p.getHandle('airTransmission') !== 0)).toBe(true);
+        expect(isTransmissionMaterial(physical)).toBe(false);
+        expect(isTransmissionMaterial(transmitting)).toBe(true);
+        physical.destroy(); transmitting.destroy();
+        void TRANSMISSION_LAYER;
+    });
+
+    // Review round 2 — R2: the morph quantization table is stricter than the base table.
+    test('morph quantization table forbids unsigned and unnormalized-int morph attributes', () => {
+        const position = attributeTypeRule('POSITION', true, true);
+        expect(position.types).toContain(5120); // signed BYTE allowed (normalized or not)
+        expect(position.types).toContain(5122); // signed SHORT allowed
+        expect(position.types).not.toContain(5121); // unsigned BYTE rejected on morph POSITION
+        expect(position.types).not.toContain(5123); // unsigned SHORT rejected
+        expect(position.normalizedTypes).toEqual([5120, 5122]);
+        const texcoord = attributeTypeRule('TEXCOORD', true, true);
+        expect(texcoord.types).toEqual([5126, 5120, 5122]); // morph TEXCOORD: unnormalized only
+        expect(texcoord.normalizedTypes).toBeUndefined();
+        // base attribute table is untouched by the morph table
+        expect(attributeTypeRule('POSITION', true, false).types).toContain(5121);
     });
 
     // #6 — the meshopt handler declares it provides placeholder-buffer decompression.

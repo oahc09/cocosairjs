@@ -27,13 +27,30 @@ import { setTransmissionPipelineAvailable } from '../assets/gltf/material/transm
 export const TRANSMISSION_LAYER = 1 << 26;
 
 const active = new Set<AirTransmissionCapture>();
-/** renderer -> owning capture; a capture never overwrites a renderer bound by another. */
-const owned = new WeakMap<MeshRenderer, AirTransmissionCapture>();
+/** renderer -> { owning capture, node layer before the transmission bit was added }. */
+const owned = new WeakMap<MeshRenderer, { capture: AirTransmissionCapture; originalLayer: number }>();
 
-/** True when a material carries the compiled transmission UBO member (a transmission material). */
-function isTransmissionMaterial (material: Material | null): boolean {
+/**
+ * True when a material's compiled variant actually enables USE_AIR_TRANSMISSION. The
+ * `airTransmission` UBO member exists on EVERY physical material (stable superset layout), so a
+ * non-zero handle cannot distinguish transmission — the pass define is the reliable signal.
+ */
+export function isTransmissionMaterial (material: Material | null): boolean {
     if (!material) { return false; }
-    for (const pass of material.passes) { if (pass.getHandle('airTransmission') !== 0) { return true; } }
+    for (const pass of material.passes) {
+        const defines = (pass as unknown as { defines?: Record<string, unknown> }).defines;
+        if (defines && defines.USE_AIR_TRANSMISSION) { return true; }
+    }
+    return false;
+}
+
+/** True when ANY material slot of the renderer is transmission-active (multi-primitive meshes). */
+function isTransmissionRenderer (renderer: MeshRenderer): boolean {
+    for (let i = 0; i < 8; i++) {
+        const material = renderer.getMaterial(i);
+        if (!material) { break; }
+        if (isTransmissionMaterial(material)) { return true; }
+    }
     return false;
 }
 
@@ -67,23 +84,32 @@ export class AirTransmissionCapture extends Component {
     private _w = 0;
     private _h = 0;
     private _bound: MeshRenderer[] = [];
+    private _prevVisibility: number | null = null;
 
     get sceneColor (): RenderTexture | null { return this._rt; }
 
     public onEnable (): void {
         active.add(this);
         this._ensure();
+        if (this._off) { this._off.enabled = true; } // resume offscreen rendering on re-enable
         if (webgl2Capable()) { setTransmissionPipelineAvailable(true, 'scene-color capture active'); }
     }
 
     public onDisable (): void {
         active.delete(this);
-        this._releaseBindings();
+        // Stop the offscreen pass and put every mutated piece of appearance state back exactly
+        // as found: node layers, main-camera visibility, and the rendered instances' textures.
+        if (this._off) { this._off.enabled = false; }
+        this._releaseBindings(true);
+        if (this._main && this._prevVisibility !== null) {
+            this._main.visibility = this._prevVisibility;
+            this._prevVisibility = null;
+        }
         if (active.size === 0) { setTransmissionPipelineAvailable(false, 'no active transmission capture'); }
     }
 
     public onDestroy (): void {
-        this._releaseBindings();
+        this._releaseBindings(true); // restore textures BEFORE the RenderTexture is destroyed
         this._teardown();
     }
 
@@ -98,10 +124,13 @@ export class AirTransmissionCapture extends Component {
         const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
         for (const renderer of this._bound) {
             if (!renderer.isValid) { continue; }
-            const material = renderer.getMaterialInstance(0);
-            if (!material) { continue; }
-            material.setProperty('cc_sceneColorTex', this._rt);
-            material.setProperty('airSceneColorInfo', info);
+            // Bind every material slot: the transmission material may sit on any primitive slot.
+            for (let slot = 0; slot < 8; slot++) {
+                const material = renderer.getMaterialInstance(slot);
+                if (!material) { break; }
+                material.setProperty('cc_sceneColorTex', this._rt);
+                material.setProperty('airSceneColorInfo', info);
+            }
         }
         this._bound = this._bound.filter((renderer) => renderer.isValid);
         this._rescan(main);
@@ -130,21 +159,39 @@ export class AirTransmissionCapture extends Component {
         if (!scene) { return; }
         for (const renderer of scene.getComponentsInChildren(MeshRenderer)) {
             const node = renderer.node;
-            if (!node || !isTransmissionMaterial(renderer.getMaterial(0))) { continue; }
-            // Move to the transmission layer (offscreen scene-color pass skips it, main draws it).
+            if (!node || !isTransmissionRenderer(renderer)) { continue; }
+            // Move to the transmission layer (offscreen scene-color pass skips it, main draws it),
+            // remembering the pre-scan layer so disable/teardown can restore it exactly.
+            if (this._prevVisibility === null) { this._prevVisibility = main.visibility; }
             if (!(node.layer & TRANSMISSION_LAYER)) { node.layer |= TRANSMISSION_LAYER; }
             main.visibility |= TRANSMISSION_LAYER;
             const owner = owned.get(renderer);
-            if (owner === this) { if (this._bound.indexOf(renderer) < 0) { this._bound.push(renderer); } continue; }
-            if (owner) { continue; } // owned by another capture — never steal it
-            owned.set(renderer, this);
-            this._bound.push(renderer);
+            if (owner && owner.capture !== this) { continue; } // owned by another capture — never steal it
+            if (!owner) { owned.set(renderer, { capture: this, originalLayer: node.layer & ~TRANSMISSION_LAYER }); }
+            if (this._bound.indexOf(renderer) < 0) { this._bound.push(renderer); }
         }
     }
 
-    /** Release every renderer this capture owns so teardown/deregister drops references. */
-    private _releaseBindings (): void {
-        for (const renderer of this._bound) { owned.delete(renderer); }
+    /**
+     * Release every renderer this capture owns. With `restore`, the node layer, main-camera
+     * visibility and rendered-instance textures are put back to their pre-capture state.
+     */
+    private _releaseBindings (restore: boolean): void {
+        for (const renderer of this._bound) {
+            const record = owned.get(renderer);
+            owned.delete(renderer);
+            if (!restore || !record || !renderer.isValid) { continue; }
+            if (renderer.node) { renderer.node.layer = record.originalLayer; }
+            // Point the rendered instance's scene color back at the template default (white) so a
+            // destroyed RenderTexture is never sampled after teardown.
+            const template = renderer.getMaterial(0);
+            const fallback = template && template.getProperty ? template.getProperty('cc_sceneColorTex') : null;
+            const instance = renderer.getMaterialInstance(0);
+            if (instance && fallback) {
+                const value = (fallback as { value?: unknown }).value ?? fallback;
+                instance.setProperty('cc_sceneColorTex', value as never);
+            }
+        }
         this._bound.length = 0;
     }
 

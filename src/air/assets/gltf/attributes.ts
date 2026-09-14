@@ -64,7 +64,21 @@ export function attributeSemantic (name: string): string {
     return name.replace(/_\d+$/, '');
 }
 
-export function attributeTypeRule (name: string, quantized: boolean): AttributeTypeRule {
+/** Morph-target quantization table (KHR_mesh_quantization): POSITION/NORMAL/TANGENT/TEXCOORD
+ * allow signed 8/16-bit only — unsigned ints are NOT allowed on morph attributes, and morph
+ * TEXCOORD must stay unnormalized. */
+const MORPH_QUANTIZED_RULES: Record<string, AttributeTypeRule> = {
+    POSITION: { types: [FLOAT, BYTE, SHORT], normalizedTypes: [BYTE, SHORT] },
+    NORMAL: { types: [FLOAT], normalizedTypes: [BYTE, SHORT] },
+    TANGENT: { types: [FLOAT], normalizedTypes: [BYTE, SHORT] },
+    TEXCOORD: { types: [FLOAT, BYTE, SHORT] },
+};
+
+export function attributeTypeRule (name: string, quantized: boolean, morph = false): AttributeTypeRule {
+    if (morph && quantized) {
+        const morphTable = MORPH_QUANTIZED_RULES[attributeSemantic(name)];
+        if (morphTable) { return morphTable; }
+    }
     const table = quantized ? QUANTIZED_RULES : CORE_RULES;
     return table[attributeSemantic(name)] ?? { types: [FLOAT], normalizedTypes: [BYTE, UNSIGNED_BYTE, SHORT, UNSIGNED_SHORT] };
 }

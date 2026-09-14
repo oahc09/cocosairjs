@@ -26,8 +26,10 @@ export function normalizeMode (value: unknown, extension: string): string {
 }
 export function normalizeFilter (value: unknown, extension: string): string {
     if (value === undefined) { return 'NONE'; }
-    const filter = typeof value === 'number' ? FILTERS[value] : typeof value === 'string' ? value : undefined;
-    if (!filter || !FILTERS.includes(filter)) {
+    // KHR_meshopt_compression adds the COLOR filter (value 4); the earlier EXT draft stops at EXPONENTIAL.
+    const filters = extension === KHR_MESHOPT_COMPRESSION ? [...FILTERS, 'COLOR'] : FILTERS;
+    const filter = typeof value === 'number' ? filters[value] : typeof value === 'string' ? value : undefined;
+    if (!filter || !filters.includes(filter)) {
         throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension}: invalid filter ${String(value)}`, extension);
     }
     return filter;
@@ -50,7 +52,9 @@ async function decodeBufferView (context: GLTFParserContext, index: number, defi
     if (mode !== 'ATTRIBUTES' && filter !== 'NONE') {
         throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter ${filter} requires ATTRIBUTES mode`, extension);
     }
-    if (mode === 'ATTRIBUTES' && (stride % 4 !== 0 || stride < 4 || stride > 252)) {
+    // KHR allows byteStride up to 256; the EXT draft capped at 252.
+    const maxStride = extension === KHR_MESHOPT_COMPRESSION ? 256 : 252;
+    if (mode === 'ATTRIBUTES' && (stride % 4 !== 0 || stride < 4 || stride > maxStride)) {
         throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: invalid byteStride ${stride}`, extension);
     }
     const decoder = context.options.meshoptDecoder;

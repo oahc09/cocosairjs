@@ -13,9 +13,9 @@ export const KHR_MESH_QUANTIZATION = 'KHR_mesh_quantization';
 
 /** Validates every accessor reachable from a mesh (attributes, indices, morph targets). */
 export function validateQuantizedAccessors (context: GLTFParserContext): void {
-    const checkAccessor = (index: number, semantic: string): void => {
+    const checkAccessor = (index: number, semantic: string, isMorph = false): void => {
         const accessor = item(context.json.accessors, index, `accessor for ${semantic}`);
-        const rule = attributeTypeRule(semantic, true);
+        const rule = attributeTypeRule(semantic, true, isMorph);
         const normalized = !!accessor.normalized;
         if (!rule.types.includes(accessor.componentType)
             && !(normalized && (rule.normalizedTypes?.includes(accessor.componentType) ?? false))) {
@@ -39,7 +39,9 @@ export function validateQuantizedAccessors (context: GLTFParserContext): void {
             }
             for (const target of primitive.targets || []) {
                 for (const [semantic, index] of Object.entries(target)) {
-                    checkAccessor(index, semantic);
+                    // Morph targets use their own (stricter) type table: no unsigned, and
+                    // morph TEXCOORD stays unnormalized.
+                    checkAccessor(index, semantic, true);
                 }
             }
             void primitiveIndex;

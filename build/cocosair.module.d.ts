@@ -33142,6 +33142,12 @@ export namespace utils {
         readonly physical: Record<string, unknown>;
         unlit: boolean;
     }
+    /**
+     * True when a material's compiled variant actually enables USE_AIR_TRANSMISSION. The
+     * `airTransmission` UBO member exists on EVERY physical material (stable superset layout), so a
+     * non-zero handle cannot distinguish transmission — the pass define is the reliable signal.
+     */
+    export function isTransmissionMaterial(material: Material | null): boolean;
     /** Transmission meshes move to this layer so the scene-color pass skips them. */
     export const TRANSMISSION_LAYER: number;
     /**
