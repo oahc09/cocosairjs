@@ -70836,10 +70836,10 @@ function gltfPhysicalEffect() {
       frag = frag.replace(/s\.specularIntensity = 0\.5;/g, `s.specularIntensity = ${PHYSICAL_CONSTANT}.y * 0.5;`);
       const tex = (sampler, uv, prefix) => textureTransform(language, sampler, uv, prefix);
       const iriFn = ['#if USE_AIR_IRIDESCENCE', 'vec3 airIridescenceF0 (float NV) {', 'float filmIor = clamp(airIriIorTex, 1.3, 2.33334);', `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`, 'float cosT1 = clamp(NV, 0.0, 1.0);', 'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);', 'float cosT2 = sqrt(max(0.0, 1.0 - sinT2sq));', `vec3 lambda = vec3(680.0, 550.0, 450.0);`, `vec3 phase = 4.0 * PI * filmIor * max(airIriThickTex, 0.0) * cosT2 / lambda;`, 'vec3 f01 = vec3(((1.0 - filmIor) / (1.0 + filmIor)) * ((1.0 - filmIor) / (1.0 + filmIor)));', 'vec3 r12 = (filmIor - vec3(n0)) / (filmIor + vec3(n0));', 'vec3 f12 = r12 * r12;', 'vec3 cross12 = sqrt(f01 * f12);', 'vec3 airy = (f01 + f12 + 2.0 * cross12 * cos(phase)) / (vec3(1.0) + f01 * f12 + 2.0 * cross12 * cos(phase));', 'return clamp(airy, vec3(0.0), vec3(1.0));', '}', '#endif'].join(nl);
-      const airSpec = [`vec3 airDielectric = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`, '#if USE_AIR_SPECULAR_COLOR', `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`, '#endif', '#if USE_AIR_SPECULAR_MAP', 'airDielectric *= airSpecScale;', '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', 'airDielectric *= airSpecColor;', '#endif', '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`, `}`, `#endif`, `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
+      const airSpec = [`float airSpecularWeight = clamp(${PHYSICAL_CONSTANT}.z, 0.0, 1.0);`, '#if USE_AIR_SPECULAR_MAP', 'airSpecularWeight *= airSpecScale;', '#endif', `vec3 airDielectric = vec3(0.08 * s.specularIntensity);`, '#if USE_AIR_SPECULAR_COLOR', `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`, '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', 'airDielectric *= airSpecColor;', '#endif', '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)), iriF); }`, `}`, `#endif`, `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`, `airDielectric *= airSpecularWeight;`,
       `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
       frag = frag.replace(specularMix, airSpec);
-      frag = frag.replace('specular = BRDFApprox(specular, s.roughness, NV);', 'specular = BRDFApprox(specular, s.roughness, NV);\n' + '#if USE_AIR_SPECULAR\n' + 'vec3 airFresnel = clamp(airDielectric, vec3(0.0), vec3(1.0)) + (vec3(1.0) - clamp(airDielectric, vec3(0.0), vec3(1.0))) * pow(1.0 - NV, 5.0);\n' + 'diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic);\n' + '#endif');
+      frag = frag.replace('specular = BRDFApprox(specular, s.roughness, NV);', 'specular = BRDFApprox(specular, s.roughness, NV);\n' + '#if USE_AIR_SPECULAR\n' + 'vec3 airFresnel = airDielectric + (vec3(airSpecularWeight) - airDielectric) * pow(1.0 - NV, 5.0);\n' + 'float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));\n' + 'diffuse *= 1.0 - airFresnelMax;\n' + '#endif');
       const ccDirect = ['{', 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);', 'float ccRough = clamp(airCCRoughTex, 0.002, 1.0);', 'float ccNL = max(dot(airCCNormal, L), 0.0);', 'float ccNH = max(dot(airCCNormal, H), 0.0);', 'float ccNV = max(dot(airCCNormal, V), 0.0);', 'vec3 ccSpec = vec3(0.04) * CalcSpecular(ccRough, ccNH, H, airCCNormal);', '#if CC_RECEIVE_SHADOW', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * shadow * ccNL * ccF * ccSpec;', '#else', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * ccNL * ccF * ccSpec;', '#endif', '}'].join(nl);
       const ccAnchor = 'finalColor *= dirlightContrib;';
       if (!frag.includes(ccAnchor)) {
@@ -71409,6 +71409,7 @@ function createGLTFMaterial(features, textures, vertexColor) {
   if (physicalScalar) {
     definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive;
   }
+  definesForPhysical.USE_AIR_SPECULAR = !!specExt;
   if (!unlit && clearcoat) {
     definesForPhysical.USE_AIR_CLEARCOAT = clearcoat.factor > 0 || defines.USE_AIR_CLEARCOAT_MAP === true || defines.USE_AIR_CLEARCOAT_ROUGHNESS_MAP === true || defines.USE_AIR_CLEARCOAT_NORMAL_MAP === true;
   }
@@ -72181,6 +72182,24 @@ async function decodeBufferView(context, index, definition, extension) {
   const maxStride = extension === KHR_MESHOPT_COMPRESSION ? 256 : 252;
   if (mode === 'ATTRIBUTES' && (stride % 4 !== 0 || stride < 4 || stride > maxStride)) {
     throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: invalid byteStride ${stride}`, extension);
+  }
+  if ((filter === 'OCTAHEDRAL' || filter === 'COLOR') && stride !== 4 && stride !== 8) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter ${filter} requires byteStride 4 or 8`, extension);
+  }
+  if (filter === 'QUATERNION' && stride !== 8) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter QUATERNION requires byteStride 8`, extension);
+  }
+  if (filter === 'EXPONENTIAL' && stride % 4 !== 0) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter EXPONENTIAL requires byteStride divisible by 4`, extension);
+  }
+  if ((mode === 'TRIANGLES' || mode === 'INDICES') && stride !== 2 && stride !== 4) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: mode ${mode} requires byteStride 2 or 4`, extension);
+  }
+  if (mode === 'TRIANGLES' && count % 3 !== 0) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: TRIANGLES count must be divisible by 3`, extension);
+  }
+  if (view.byteLength !== count * stride) {
+    throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: byteLength must equal count * byteStride`, extension);
   }
   const decoder = context.options.meshoptDecoder;
   if (!decoder) {
@@ -73379,6 +73398,16 @@ function isTransmissionMaterial(material) {
   }
   return false;
 }
+function transmissionMaterialSlots(renderer) {
+  const result = [];
+  const materials = renderer.sharedMaterials;
+  for (let slot = 0; slot < materials.length; ++slot) {
+    if (isTransmissionMaterial(materials[slot])) {
+      result.push(slot);
+    }
+  }
+  return result;
+}
 function webgl2Capable() {
   const device = deviceManager.gfxDevice;
   return !!device && device.gfxAPI === API.WEBGL2;
@@ -73402,7 +73431,7 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     this._main = value;
     if (value && this.enabledInHierarchy && !this._off) {
       this._ensure();
-      if (webgl2Capable()) {
+      if (this._off && webgl2Capable()) {
         setTransmissionPipelineAvailable(true, 'scene-color capture active');
       }
     }
@@ -73411,12 +73440,17 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     return this._rt;
   }
   onEnable() {
+    for (const capture of active) {
+      if (capture !== this && capture.node.scene === this.node.scene) {
+        throw new Error('AirTransmissionCapture: only one capture per scene is supported ' + '(material instances carry a single scene-color binding; multi-camera is not yet implemented).');
+      }
+    }
     active.add(this);
     this._ensure();
     if (this._off) {
       this._off.enabled = true;
     }
-    if (webgl2Capable()) {
+    if (this._off && webgl2Capable()) {
       setTransmissionPipelineAvailable(true, 'scene-color capture active');
     }
   }
@@ -73435,8 +73469,16 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     }
   }
   onDestroy() {
+    active.delete(this);
     this._releaseBindings(true);
+    if (this._main && this._prevVisibility !== null) {
+      this._main.visibility = this._prevVisibility;
+      this._prevVisibility = null;
+    }
     this._teardown();
+    if (active.size === 0) {
+      setTransmissionPipelineAvailable(false, 'no active transmission capture');
+    }
   }
   lateUpdate() {
     const main = this.mainCamera;
@@ -73448,20 +73490,21 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
       if (!renderer.isValid) {
         continue;
       }
-      for (let slot = 0; slot < 8; slot++) {
-        const shared = renderer.getMaterial(slot);
-        if (!shared) {
-          break;
-        }
-        if (!shared.passes.some(p => {
-          const d = p.defines;
-          return d && d.USE_AIR_TRANSMISSION;
-        })) {
-          continue;
-        }
+      const record = owned.get(renderer);
+      if (!record || record.capture !== this) {
+        continue;
+      }
+      for (const slot of transmissionMaterialSlots(renderer)) {
         const material = renderer.getMaterialInstance(slot);
         if (!material) {
           continue;
+        }
+        if (!record.slots.has(slot)) {
+          record.slots.set(slot, {
+            material,
+            sceneColor: material.getProperty('cc_sceneColorTex'),
+            sceneInfo: material.getProperty('airSceneColorInfo')
+          });
         }
         material.setProperty('cc_sceneColorTex', this._rt);
         material.setProperty('airSceneColorInfo', info);
@@ -73498,30 +73541,9 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
       if (!node) {
         continue;
       }
-      let hasTransmission = false;
-      for (let slot = 0; slot < 8; slot++) {
-        const shared = renderer.getMaterial(slot);
-        if (!shared) {
-          break;
-        }
-        if (shared.passes.some(p => {
-          const d = p.defines;
-          return d && d.USE_AIR_TRANSMISSION;
-        })) {
-          hasTransmission = true;
-          break;
-        }
-      }
-      if (!hasTransmission) {
+      if (transmissionMaterialSlots(renderer).length === 0) {
         continue;
       }
-      if (this._prevVisibility === null) {
-        this._prevVisibility = main.visibility;
-      }
-      if (!(node.layer & TRANSMISSION_LAYER)) {
-        node.layer |= TRANSMISSION_LAYER;
-      }
-      main.visibility |= TRANSMISSION_LAYER;
       const owner = owned.get(renderer);
       if (owner && owner.capture !== this) {
         continue;
@@ -73529,20 +73551,38 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
       if (!owner) {
         owned.set(renderer, {
           capture: this,
-          originalLayer: node.layer & ~TRANSMISSION_LAYER
+          originalLayer: node.layer,
+          slots: new Map()
         });
       }
+      if (this._prevVisibility === null) {
+        this._prevVisibility = main.visibility;
+      }
+      node.layer |= TRANSMISSION_LAYER;
+      main.visibility |= TRANSMISSION_LAYER;
       if (this._bound.indexOf(renderer) < 0) {
         this._bound.push(renderer);
       }
     }
   }
   _releaseBindings(restore) {
+    const defaultTex = builtinResMgr.get('default-texture');
     for (const renderer of this._bound) {
       const record = owned.get(renderer);
       owned.delete(renderer);
-      if (restore && record && renderer.isValid && renderer.node) {
+      if (!renderer.isValid) {
+        continue;
+      }
+      if (restore && record && renderer.node) {
         renderer.node.layer = record.originalLayer;
+      }
+      for (const state of (_record$slots$values = record == null ? void 0 : record.slots.values()) !== null && _record$slots$values !== void 0 ? _record$slots$values : []) {
+        var _record$slots$values, _state$sceneColor, _state$sceneInfo;
+        if (!state.material.isValid) {
+          continue;
+        }
+        state.material.setProperty('cc_sceneColorTex', (_state$sceneColor = state.sceneColor) !== null && _state$sceneColor !== void 0 ? _state$sceneColor : defaultTex);
+        state.material.setProperty('airSceneColorInfo', (_state$sceneInfo = state.sceneInfo) !== null && _state$sceneInfo !== void 0 ? _state$sceneInfo : new Vec4(1, 1, 1, 1));
       }
     }
     this._bound.length = 0;

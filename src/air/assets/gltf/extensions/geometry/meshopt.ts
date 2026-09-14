@@ -57,6 +57,24 @@ async function decodeBufferView (context: GLTFParserContext, index: number, defi
     if (mode === 'ATTRIBUTES' && (stride % 4 !== 0 || stride < 4 || stride > maxStride)) {
         throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: invalid byteStride ${stride}`, extension);
     }
+    if ((filter === 'OCTAHEDRAL' || filter === 'COLOR') && stride !== 4 && stride !== 8) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter ${filter} requires byteStride 4 or 8`, extension);
+    }
+    if (filter === 'QUATERNION' && stride !== 8) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter QUATERNION requires byteStride 8`, extension);
+    }
+    if (filter === 'EXPONENTIAL' && stride % 4 !== 0) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: filter EXPONENTIAL requires byteStride divisible by 4`, extension);
+    }
+    if ((mode === 'TRIANGLES' || mode === 'INDICES') && stride !== 2 && stride !== 4) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: mode ${mode} requires byteStride 2 or 4`, extension);
+    }
+    if (mode === 'TRIANGLES' && count % 3 !== 0) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: TRIANGLES count must be divisible by 3`, extension);
+    }
+    if (view.byteLength !== count * stride) {
+        throw new GLTFError('GLTF_EXTENSION_INVALID', `${extension} on bufferView ${index}: byteLength must equal count * byteStride`, extension);
+    }
     const decoder = context.options.meshoptDecoder;
     if (!decoder) {
         if (context.json.extensionsRequired?.includes(extension)) {

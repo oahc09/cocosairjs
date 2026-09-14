@@ -14,6 +14,7 @@ import { dispersionFactory } from '../../src/air/assets/gltf/extensions/material
 import { specularFactory } from '../../src/air/assets/gltf/extensions/material/specular';
 import { anisotropyFactory } from '../../src/air/assets/gltf/extensions/material/anisotropy';
 import { createMaterialFeatures, physicalScalars } from '../../src/air/assets/gltf/material/features';
+import { createGLTFMaterial } from '../../src/air/assets/gltf/material';
 import { setTransmissionPipelineAvailable, transmissionPipelineAvailable } from '../../src/air/assets/gltf/material/transmission-capability';
 import { gltfPhysicalEffect } from '../../src/air/assets/gltf/material/physical-effect';
 import { isTransmissionMaterial, TRANSMISSION_LAYER } from '../../src/air/rendering/transmission-capture';
@@ -75,12 +76,12 @@ describe('V0.5 review regression', () => {
         const frag = sourceOf();
         // diagnostic
         expect(frag).toContain('float NV = max(abs(dot(N, V)), 0.0);');
-        expect(frag).toContain('diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel');
+        expect(frag).toContain('float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));');
         expect(frag).toMatch(/airSpecScale = texture\(specularMap[^\n]*\)\.a;/); // alpha channel per spec
         expect(frag).not.toMatch(/airSpecScale = [^\n]*\.g;/); // the old green*2 form is gone
         // energy conservation: diffuse is plain base; airDielectric Fresnel attenuation is post-NV
         expect(frag).toMatch(/vec3 diffuse = s\.albedo\.rgb \* \(1\.0 - s\.metallic\);/);
-        expect(frag).toMatch(/diffuse \*= mix\(vec3\(1\.0\), vec3\(1\.0\) - airFresnel/);
+        expect(frag).toContain('diffuse *= 1.0 - airFresnelMax;');
         // HDR color factors are permitted (the reviewer flagged the old [0,1] rejection)
         expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularColorFactor: [5.441, 5.441, 5.441] } } }])).not.toThrow();
         expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularColorFactor: [-0.1, 1, 1] } } }])).toThrow(/specularColorFactor/);
@@ -120,9 +121,14 @@ describe('V0.5 review regression', () => {
     test('specular diffuse energy term carries no duplicate metallic factor', () => {
         const frag = sourceOf();
         expect(frag).toContain('vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);');
-        // the Fresnel attenuation must NOT carry its own (1 - metallic) — the mix already gates
-        expect(frag).toContain('diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic);');
-        expect(frag).not.toContain('airFresnel * (1.0 - s.metallic)');
+        expect(frag).toContain('float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));');
+        expect(frag).toContain('diffuse *= 1.0 - airFresnelMax;');
+        expect(frag).not.toContain('mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic)');
+        const features = createMaterialFeatures(-1, { extensions: { KHR_materials_specular: { specularFactor: 0.5 } } } as never);
+        specularFactory(null as never).extendMaterial?.(-1, features, null as never);
+        const material = createGLTFMaterial(features, [], false);
+        expect(material.passes.some((pass) => pass.defines.USE_AIR_SPECULAR === true)).toBe(true);
+        material.destroy();
     });
 
     // Review round 2 — R1/#9: detection is macro-level (physical UBO handle would flag every

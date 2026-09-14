@@ -69,6 +69,15 @@ function realMeshopt (): GLTFMeshoptDecoder {
     }
     return createMeshoptDecoder(module);
 }
+/** Loads the vendored ESM encoder in Jest's CJS VM without requiring experimental VM modules. */
+function realMeshoptEncoder (): any {
+    const fs = require('fs'); const path = require('path');
+    const file = path.resolve(__dirname, '../../build/gltf-decoders/meshopt/meshopt_encoder.js');
+    const source = fs.readFileSync(file, 'utf8').replace(/export\s*\{\s*MeshoptEncoder\s*\};?\s*$/, 'module.exports = MeshoptEncoder;');
+    const loaded = { exports: {} as any };
+    new Function('module', 'exports', source)(loaded, loaded.exports);
+    return loaded.exports;
+}
 function realDraco (): GLTFDracoDecoder {
     const draco3d = require('../../build/gltf-decoders/draco/draco3d.js');
     if (typeof WebAssembly === 'undefined') { throw new Error('draco decoder unavailable in this environment'); }
@@ -424,16 +433,81 @@ describe('glTF geometry and compression extensions', () => {
         asset.destroy();
     });
 
-    test('meshopt KHR stride-256 byteStride is accepted at validate time', async () => {
-        // Review: the 252 cap was wrong; KHR allows up to 256. This tests that a bufferView
-        // with byteStride 256 passes validation (the actual decode is covered by other tests).
-        const meshoptModule = require('../../src/air/assets/gltf/extensions/geometry/meshopt');
-        expect(meshoptModule).toBeDefined();
-        // The stride fix is in the code (maxStride = 256 for KHR); validated by the code path.
-        // This unit test confirms the fix exists and the constant is correct.
-        const source = require('fs').readFileSync('src/air/assets/gltf/extensions/geometry/meshopt.ts', 'utf8');
-        expect(source).toContain('256 : 252'); // KHR max 256, EXT max 252
-        expect(source).toContain("'COLOR'"); // COLOR filter is in the KHR filter table
+    test('meshopt KHR COLOR filter decodes a real encoder payload', async () => {
+        const encoder = realMeshoptEncoder();
+        await encoder.ready;
+
+        const count = 3;
+        const positions = new Float32Array([0, 0, 0, 1, 0, 0, 0, 1, 0]);
+        const colors = new Float32Array([1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1]);
+        const filtered = encoder.encodeFilterColor(colors, count, 4, 8) as Uint8Array;
+        const compressed = encoder.encodeGltfBuffer(filtered, count, 4, 'ATTRIBUTES') as Uint8Array;
+        const positionBytes = new Uint8Array(positions.buffer);
+        const bin = new Uint8Array(positionBytes.byteLength + compressed.byteLength);
+        bin.set(positionBytes); bin.set(compressed, positionBytes.byteLength);
+        const json = {
+            asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0 }],
+            extensionsUsed: ['KHR_meshopt_compression'], extensionsRequired: ['KHR_meshopt_compression'],
+            buffers: [{ byteLength: bin.byteLength }, { byteLength: count * 4 }],
+            bufferViews: [
+                { buffer: 0, byteOffset: 0, byteLength: positionBytes.byteLength },
+                { buffer: 1, byteOffset: 0, byteLength: count * 4, byteStride: 4,
+                    extensions: { KHR_meshopt_compression: { buffer: 0, byteOffset: positionBytes.byteLength,
+                        byteLength: compressed.byteLength, byteStride: 4, count, mode: 'ATTRIBUTES', filter: 'COLOR' } } },
+            ],
+            accessors: [
+                { bufferView: 0, componentType: 5126, count, type: 'VEC3' },
+                { bufferView: 1, componentType: 5121, normalized: true, count, type: 'VEC4' },
+            ],
+            meshes: [{ primitives: [{ attributes: { POSITION: 0, COLOR_0: 1 } }] }],
+        };
+        const asset = await new GLTFLoader({ meshoptDecoder: realMeshopt() }).parseAsync(toGLB(json, bin.buffer));
+        const decoded = (asset.meshes[0] as Mesh).readAttribute(0, AttributeName.ATTR_COLOR)!;
+        expect(decoded.length).toBe(count * 4);
+        expect(decoded[0]).toBeGreaterThan(0.98); expect(decoded[1]).toBeLessThan(0.02);
+        expect(decoded[5]).toBeGreaterThan(0.98); expect(decoded[10]).toBeGreaterThan(0.98);
+        asset.destroy();
+    });
+
+    test('meshopt KHR accepts stride 256 with NONE and rejects invalid COLOR stride 256', async () => {
+        const encoder = realMeshoptEncoder();
+        await encoder.ready;
+        const count = 3; const stride = 256;
+        const raw = new Uint8Array(count * stride);
+        const view = new DataView(raw.buffer);
+        [[0, 0, 0], [1, 0, 0], [0, 1, 0]].forEach((p, i) => p.forEach((v, c) => view.setFloat32(i * stride + c * 4, v, true)));
+        const compressed = encoder.encodeGltfBuffer(raw, count, stride, 'ATTRIBUTES') as Uint8Array;
+        const positions = new Float32Array([0, 0, 0, 1, 0, 0, 0, 1, 0]);
+        const positionBytes = new Uint8Array(positions.buffer);
+        const positionOffset = Math.ceil(compressed.byteLength / 4) * 4;
+        const bin = new Uint8Array(positionOffset + positionBytes.byteLength);
+        bin.set(compressed); bin.set(positionBytes, positionOffset);
+        const make = (filter: string) => ({
+            asset: { version: '2.0' }, scene: 0, scenes: [{ nodes: [0] }], nodes: [{ mesh: 0 }],
+            extensionsUsed: ['KHR_meshopt_compression'], extensionsRequired: ['KHR_meshopt_compression'],
+            buffers: [{ byteLength: bin.byteLength }, { byteLength: raw.byteLength }],
+            bufferViews: [{ buffer: 1, byteOffset: 0, byteLength: raw.byteLength,
+                extensions: { KHR_meshopt_compression: { buffer: 0, byteOffset: 0, byteLength: compressed.byteLength,
+                    byteStride: stride, count, mode: 'ATTRIBUTES', filter } } },
+                { buffer: 0, byteOffset: positionOffset, byteLength: positionBytes.byteLength }],
+            accessors: [{ bufferView: 1, componentType: 5126, count, type: 'VEC3' }],
+            meshes: [{ primitives: [{ attributes: { POSITION: 0 } }] }],
+        });
+        const decoder = realMeshopt(); let decodedStride256: Uint8Array | undefined;
+        const recordingDecoder: GLTFMeshoptDecoder = {
+            async decodeGltfBufferAsync (...args) {
+                const result = await decoder.decodeGltfBufferAsync(...args);
+                decodedStride256 = result instanceof Uint8Array ? result : new Uint8Array(result);
+                return result;
+            },
+        };
+        const asset = await new GLTFLoader({ meshoptDecoder: recordingDecoder }).parseAsync(toGLB(make('NONE'), bin.buffer));
+        closeTo((asset.meshes[0] as Mesh).readAttribute(0, AttributeName.ATTR_POSITION), [0, 0, 0, 1, 0, 0, 0, 1, 0], 0);
+        expect(decodedStride256).toBeDefined();
+        expect(Array.from(decodedStride256!)).toEqual(Array.from(raw));
+        asset.destroy();
+        await expect(new GLTFLoader({ meshoptDecoder: realMeshopt() })
+            .parseAsync(toGLB(make('COLOR'), bin.buffer))).rejects.toMatchObject({ code: 'GLTF_EXTENSION_INVALID' });
     });
 
     test('Draco-decoded COLOR_0 may be VEC3 (width comes from the accessor, not the semantic)', async () => {

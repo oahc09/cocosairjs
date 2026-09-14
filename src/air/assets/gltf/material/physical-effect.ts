@@ -231,12 +231,13 @@ export function gltfPhysicalEffect (): EffectAsset {
             // scale the dielectric F0 base (texture.a per spec), metal F0 (albedo) is untouched,
             // and the Fresnel remainder attenuates diffuse so energy is conserved.
             const airSpec = [
-                `vec3 airDielectric = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`,
+                `float airSpecularWeight = clamp(${PHYSICAL_CONSTANT}.z, 0.0, 1.0);`,
+                '#if USE_AIR_SPECULAR_MAP',
+                'airSpecularWeight *= airSpecScale;',
+                '#endif',
+                `vec3 airDielectric = vec3(0.08 * s.specularIntensity);`,
                 '#if USE_AIR_SPECULAR_COLOR',
                 `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`,
-                '#endif',
-                '#if USE_AIR_SPECULAR_MAP',
-                'airDielectric *= airSpecScale;',
                 '#endif',
                 '#if USE_AIR_SPECULAR_COLOR_MAP',
                 'airDielectric *= airSpecColor;',
@@ -244,10 +245,11 @@ export function gltfPhysicalEffect (): EffectAsset {
                 '#if USE_AIR_IRIDESCENCE',
                 `{`,
                 `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`,
-                `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`,
+                `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)), iriF); }`,
                 `}`,
                 `#endif`,
                 `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
+                `airDielectric *= airSpecularWeight;`,
                 // diffuse stays metal-gated; dielectric diffuse loses the reflected fraction (energy).
                 `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);`,
                 `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`,
@@ -259,8 +261,9 @@ export function gltfPhysicalEffect (): EffectAsset {
             frag = frag.replace('specular = BRDFApprox(specular, s.roughness, NV);',
                 'specular = BRDFApprox(specular, s.roughness, NV);\n'
                 + '#if USE_AIR_SPECULAR\n'
-                + 'vec3 airFresnel = clamp(airDielectric, vec3(0.0), vec3(1.0)) + (vec3(1.0) - clamp(airDielectric, vec3(0.0), vec3(1.0))) * pow(1.0 - NV, 5.0);\n'
-                + 'diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic);\n'
+                + 'vec3 airFresnel = airDielectric + (vec3(airSpecularWeight) - airDielectric) * pow(1.0 - NV, 5.0);\n'
+                + 'float airFresnelMax = max(airFresnel.r, max(airFresnel.g, airFresnel.b));\n'
+                + 'diffuse *= 1.0 - airFresnelMax;\n'
                 + '#endif');
             // Clearcoat second-lobe direct term (layer F0 0.04, Schlick, GGX via engine helper).
             const ccDirect = [
