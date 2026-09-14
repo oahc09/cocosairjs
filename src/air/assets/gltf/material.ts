@@ -304,6 +304,9 @@ export function createGLTFMaterial (features: GLTFMaterialFeatures, textures: re
     const usePhysical = physicalScalar || clearcoatScalar || anisotropyScalar || iridescenceScalar || transmissionScalar || (!unlit && physicalMaps);
     const definesForPhysical: MacroRecord = {};
     if (physicalScalar) { definesForPhysical.USE_AIR_SPECULAR_COLOR = colorActive; }
+    // Specular extension presence gates the energy-conservation diffuse attenuation (the
+    // airDielectric Fresnel term), separate from USE_AIR_SPECULAR_COLOR which gates the color mix.
+    definesForPhysical.USE_AIR_SPECULAR = !!specExt;
     if (!unlit && clearcoat) {
         definesForPhysical.USE_AIR_CLEARCOAT = clearcoat.factor > 0 || defines.USE_AIR_CLEARCOAT_MAP === true
             || defines.USE_AIR_CLEARCOAT_ROUGHNESS_MAP === true || defines.USE_AIR_CLEARCOAT_NORMAL_MAP === true;

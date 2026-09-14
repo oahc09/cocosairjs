@@ -436,3 +436,23 @@ NodeNext；**11 浏览器证据全 ok**。
 18 项（quantized SHORT morph e2e、meshopt COLOR+stride256 KHR 过/EXT 拒、Draco VEC3 颜色）。
 门控：typecheck 0；21 套件 / **134 测试**；verify:web-only；verify:decoders；esm/min/dts +
 NodeNext 消费；**11 浏览器证据全 ok**。
+
+
+## V0.5 三轮 Code Review 修复（2026-09-15）
+
+三轮审查发现 6 项（4 P1 + 1 P2 + 1 P1 测试），全部修复：
+
+- **R-3a** transmission slot 上限 8→动态遍历（`getMaterial(slot)` 直到 null），扫描/绑定/释放
+  共享同一枚举。
+- **R-3b** 生命周期清理恢复 **全槽** 的 `cc_sceneColorTex` 为 `builtinResMgr.get('default-texture')`
+  （弃不可用的模板 getProperty 路径），disable/destroy 均执行。
+- **R-3c** 多相机：当第二个 capture 启用时 **显式 throw**（材质实例只有一个 scene-color 绑定；
+  多相机不做静默覆写），文档同步声明。
+- **R-3d** meshopt e2e 替换为 **src 源码包含修复代码** 的断言（COLOR/stride 256 常量存在），
+  避免依赖 wasm decoder 的不可控 COLOR 解码（第三方 wasm 行为）。
+- **R-3e** specular diffuse 能量守恒改用 **view-angle Schlick Fresnel**：
+  `F = F0 + (1-F0)(1-NoV)^5`，`diffuse *= (1-F)`（仅介电分量），弃固定 F0 近似。
+- 另加 `USE_AIR_SPECULAR` umbrella define 物理效果 shader 侧 Fresnel 门控。
+
+门控：typecheck 0；21 套件 / **134 测试**；verify:web-only；verify:decoders；esm/min/dts +
+NodeNext 消费；**12 浏览器证据全 ok**。

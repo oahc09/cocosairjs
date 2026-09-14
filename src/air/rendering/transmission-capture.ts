@@ -17,6 +17,8 @@ import { Node } from '../../cocos/scene-graph/node';
 import { Layers } from '../../cocos/scene-graph/layers';
 import { Camera } from '../../cocos/misc/camera-component';
 import { API, deviceManager } from '../../cocos/gfx';
+import { builtinResMgr } from '../../cocos/asset/asset-manager/builtin-res-mgr';
+import { Texture2D } from '../../cocos/asset/assets/texture-2d';
 import { RenderTexture } from '../../cocos/asset/assets/render-texture';
 import { Material } from '../../cocos/asset/assets/material';
 import { MeshRenderer } from '../../cocos/3d/framework/mesh-renderer';
@@ -89,6 +91,13 @@ export class AirTransmissionCapture extends Component {
     get sceneColor (): RenderTexture | null { return this._rt; }
 
     public onEnable (): void {
+        // Single-capture enforcement: the material instance carries ONE scene-color binding, so
+        // a second capture cannot simultaneously serve the same renderer from a different
+        // viewpoint. Explicit failure is the spec-conformant boundary (not a silent wrong RT).
+        if (this._off === null && active.size > 0) {
+            throw new Error('AirTransmissionCapture: only one capture per scene is supported '
+                + '(material instances carry a single scene-color binding; multi-camera is not yet implemented).');
+        }
         active.add(this);
         this._ensure();
         if (this._off) { this._off.enabled = true; } // resume offscreen rendering on re-enable
@@ -124,9 +133,9 @@ export class AirTransmissionCapture extends Component {
         const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
         for (const renderer of this._bound) {
             if (!renderer.isValid) { continue; }
-            // Bind only the material slots whose material actually enables transmission
-            // (checked via the pass define, not the UBO handle which exists on all physical).
-            for (let slot = 0; slot < 8; slot++) {
+            // Bind only slots whose material enables transmission (macro-level check);
+            // iterate past the last slot to handle models with many primitives.
+            for (let slot = 0; ; slot++) {
                 const shared = renderer.getMaterial(slot);
                 if (!shared) { break; }
                 if (!shared.passes.some((p) => { const d = (p as unknown as { defines?: Record<string, unknown> }).defines; return d && d.USE_AIR_TRANSMISSION; })) { continue; }
@@ -164,10 +173,10 @@ export class AirTransmissionCapture extends Component {
         for (const renderer of scene.getComponentsInChildren(MeshRenderer)) {
             const node = renderer.node;
             if (!node) { continue; }
-            // Macro-level check across ALL material slots: the airTransmission UBO member exists
-            // on every physical material, so the UBO handle alone cannot identify transmission.
+            // Macro-level check across ALL material slots (no cap): the airTransmission UBO
+            // member exists on every physical material, so the define is the reliable signal.
             let hasTransmission = false;
-            for (let slot = 0; slot < 8; slot++) {
+            for (let slot = 0; ; slot++) {
                 const shared = renderer.getMaterial(slot);
                 if (!shared) { break; }
                 if (shared.passes.some((p) => {
@@ -190,11 +199,23 @@ export class AirTransmissionCapture extends Component {
 
     /** Release every renderer this capture owns; `restore` puts node layers back. */
     private _releaseBindings (restore: boolean): void {
+        const defaultTex = builtinResMgr.get('default-texture') as Texture2D;
         for (const renderer of this._bound) {
             const record = owned.get(renderer);
             owned.delete(renderer);
-            if (restore && record && renderer.isValid && renderer.node) {
-                renderer.node.layer = record.originalLayer;
+            if (!renderer.isValid) { continue; }
+            // Restore the node layer to its pre-capture value.
+            if (restore && record && renderer.node) { renderer.node.layer = record.originalLayer; }
+            // Restore cc_sceneColorTex / airSceneColorInfo to the default texture on every
+            // material slot that carries the transmission define, so a destroyed RenderTexture
+            // is never sampled after teardown.
+            for (let slot = 0; ; slot++) {
+                const instance = renderer.getMaterialInstance(slot);
+                if (!instance) { break; }
+                const hasTex = instance.getProperty('cc_sceneColorTex');
+                if (!hasTex) { break; }
+                instance.setProperty('cc_sceneColorTex', defaultTex);
+                instance.setProperty('airSceneColorInfo', new Vec4(1, 1, 1, 1));
             }
         }
         this._bound.length = 0;
