@@ -124,10 +124,14 @@ export class AirTransmissionCapture extends Component {
         const info = new Vec4(this._w, this._h, 1 / Math.max(this._w, 1), 1 / Math.max(this._h, 1));
         for (const renderer of this._bound) {
             if (!renderer.isValid) { continue; }
-            // Bind every material slot: the transmission material may sit on any primitive slot.
+            // Bind only the material slots whose material actually enables transmission
+            // (checked via the pass define, not the UBO handle which exists on all physical).
             for (let slot = 0; slot < 8; slot++) {
+                const shared = renderer.getMaterial(slot);
+                if (!shared) { break; }
+                if (!shared.passes.some((p) => { const d = (p as unknown as { defines?: Record<string, unknown> }).defines; return d && d.USE_AIR_TRANSMISSION; })) { continue; }
                 const material = renderer.getMaterialInstance(slot);
-                if (!material) { break; }
+                if (!material) { continue; }
                 material.setProperty('cc_sceneColorTex', this._rt);
                 material.setProperty('airSceneColorInfo', info);
             }
@@ -159,7 +163,19 @@ export class AirTransmissionCapture extends Component {
         if (!scene) { return; }
         for (const renderer of scene.getComponentsInChildren(MeshRenderer)) {
             const node = renderer.node;
-            if (!node || !isTransmissionRenderer(renderer)) { continue; }
+            if (!node) { continue; }
+            // Macro-level check across ALL material slots: the airTransmission UBO member exists
+            // on every physical material, so the UBO handle alone cannot identify transmission.
+            let hasTransmission = false;
+            for (let slot = 0; slot < 8; slot++) {
+                const shared = renderer.getMaterial(slot);
+                if (!shared) { break; }
+                if (shared.passes.some((p) => {
+                    const d = (p as unknown as { defines?: Record<string, unknown> }).defines;
+                    return d && d.USE_AIR_TRANSMISSION;
+                })) { hasTransmission = true; break; }
+            }
+            if (!hasTransmission) { continue; }
             // Move to the transmission layer (offscreen scene-color pass skips it, main draws it),
             // remembering the pre-scan layer so disable/teardown can restore it exactly.
             if (this._prevVisibility === null) { this._prevVisibility = main.visibility; }
@@ -172,24 +188,13 @@ export class AirTransmissionCapture extends Component {
         }
     }
 
-    /**
-     * Release every renderer this capture owns. With `restore`, the node layer, main-camera
-     * visibility and rendered-instance textures are put back to their pre-capture state.
-     */
+    /** Release every renderer this capture owns; `restore` puts node layers back. */
     private _releaseBindings (restore: boolean): void {
         for (const renderer of this._bound) {
             const record = owned.get(renderer);
             owned.delete(renderer);
-            if (!restore || !record || !renderer.isValid) { continue; }
-            if (renderer.node) { renderer.node.layer = record.originalLayer; }
-            // Point the rendered instance's scene color back at the template default (white) so a
-            // destroyed RenderTexture is never sampled after teardown.
-            const template = renderer.getMaterial(0);
-            const fallback = template && template.getProperty ? template.getProperty('cc_sceneColorTex') : null;
-            const instance = renderer.getMaterialInstance(0);
-            if (instance && fallback) {
-                const value = (fallback as { value?: unknown }).value ?? fallback;
-                instance.setProperty('cc_sceneColorTex', value as never);
+            if (restore && record && renderer.isValid && renderer.node) {
+                renderer.node.layer = record.originalLayer;
             }
         }
         this._bound.length = 0;

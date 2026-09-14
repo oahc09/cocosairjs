@@ -113,6 +113,7 @@ export function gltfPhysicalEffect (): EffectAsset {
             { name: 'IRIDESCENCETHICKNESS_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
             { name: 'USE_AIR_BUMP', type: 'boolean' },
             { name: 'BUMP_UV', type: 'string', options: ['v_uv', 'v_uv1'] },
+            { name: 'USE_AIR_SPECULAR', type: 'boolean' },
             { name: 'USE_AIR_TRANSMISSION', type: 'boolean' },
             { name: 'USE_AIR_TRANSMISSION_MAP', type: 'boolean' },
             { name: 'USE_AIR_VOLUME', type: 'boolean' },
@@ -248,10 +249,19 @@ export function gltfPhysicalEffect (): EffectAsset {
                 `#endif`,
                 `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
                 // diffuse stays metal-gated; dielectric diffuse loses the reflected fraction (energy).
-                `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric);`,
+                `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);`,
                 `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`,
             ].join('\n');
             frag = frag.replace(specularMix, airSpec);
+            // KHR_materials_specular energy conservation: dielectric diffuse is attenuated by
+            // the view-angle Fresnel (Schlick from F0); grazing angles keep less diffuse. The
+            // code goes after BRDFApprox where NV is already on the stack.
+            frag = frag.replace('specular = BRDFApprox(specular, s.roughness, NV);',
+                'specular = BRDFApprox(specular, s.roughness, NV);\n'
+                + '#if USE_AIR_SPECULAR\n'
+                + 'vec3 airFresnel = clamp(airDielectric, vec3(0.0), vec3(1.0)) + (vec3(1.0) - clamp(airDielectric, vec3(0.0), vec3(1.0))) * pow(1.0 - NV, 5.0);\n'
+                + 'diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic);\n'
+                + '#endif');
             // Clearcoat second-lobe direct term (layer F0 0.04, Schlick, GGX via engine helper).
             const ccDirect = [
                 '{',

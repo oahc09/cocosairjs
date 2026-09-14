@@ -70734,6 +70734,9 @@ function gltfPhysicalEffect() {
       type: 'string',
       options: ['v_uv', 'v_uv1']
     }, {
+      name: 'USE_AIR_SPECULAR',
+      type: 'boolean'
+    }, {
       name: 'USE_AIR_TRANSMISSION',
       type: 'boolean'
     }, {
@@ -70834,8 +70837,9 @@ function gltfPhysicalEffect() {
       const tex = (sampler, uv, prefix) => textureTransform(language, sampler, uv, prefix);
       const iriFn = ['#if USE_AIR_IRIDESCENCE', 'vec3 airIridescenceF0 (float NV) {', 'float filmIor = clamp(airIriIorTex, 1.3, 2.33334);', `float n0 = (1.0 + sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0))) / (1.0 - sqrt(clamp(${PHYSICAL_CONSTANT}.y * 0.04, 0.0, 1.0)) + 1e-6);`, 'float cosT1 = clamp(NV, 0.0, 1.0);', 'float sinT2sq = (1.0 - cosT1 * cosT1) / (filmIor * filmIor);', 'float cosT2 = sqrt(max(0.0, 1.0 - sinT2sq));', `vec3 lambda = vec3(680.0, 550.0, 450.0);`, `vec3 phase = 4.0 * PI * filmIor * max(airIriThickTex, 0.0) * cosT2 / lambda;`, 'vec3 f01 = vec3(((1.0 - filmIor) / (1.0 + filmIor)) * ((1.0 - filmIor) / (1.0 + filmIor)));', 'vec3 r12 = (filmIor - vec3(n0)) / (filmIor + vec3(n0));', 'vec3 f12 = r12 * r12;', 'vec3 cross12 = sqrt(f01 * f12);', 'vec3 airy = (f01 + f12 + 2.0 * cross12 * cos(phase)) / (vec3(1.0) + f01 * f12 + 2.0 * cross12 * cos(phase));', 'return clamp(airy, vec3(0.0), vec3(1.0));', '}', '#endif'].join(nl);
       const airSpec = [`vec3 airDielectric = vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z);`, '#if USE_AIR_SPECULAR_COLOR', `airDielectric *= ${PHYSICAL_COLOR_CONSTANT}.rgb;`, '#endif', '#if USE_AIR_SPECULAR_MAP', 'airDielectric *= airSpecScale;', '#endif', '#if USE_AIR_SPECULAR_COLOR_MAP', 'airDielectric *= airSpecColor;', '#endif', '#if USE_AIR_IRIDESCENCE', `{`, `float iriF = clamp(airIriFactorTex, 0.0, 1.0);`, `if (iriF > 0.0) { airDielectric = mix(airDielectric, airIridescenceF0(max(dot(s.normal, normalize(cc_cameraPos.xyz - s.position)), 0.0)) * vec3(0.08 * s.specularIntensity * ${PHYSICAL_CONSTANT}.z), iriF); }`, `}`, `#endif`, `airDielectric = clamp(airDielectric, vec3(0.0), vec3(1.0));`,
-      `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric);`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
+      `vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);`, `vec3 specular = mix(airDielectric, s.albedo.rgb, s.metallic);`].join('\n');
       frag = frag.replace(specularMix, airSpec);
+      frag = frag.replace('specular = BRDFApprox(specular, s.roughness, NV);', 'specular = BRDFApprox(specular, s.roughness, NV);\n' + '#if USE_AIR_SPECULAR\n' + 'vec3 airFresnel = clamp(airDielectric, vec3(0.0), vec3(1.0)) + (vec3(1.0) - clamp(airDielectric, vec3(0.0), vec3(1.0))) * pow(1.0 - NV, 5.0);\n' + 'diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic);\n' + '#endif');
       const ccDirect = ['{', 'float ccF = clamp(airCCFactorTex, 0.0, 1.0);', 'float ccRough = clamp(airCCRoughTex, 0.002, 1.0);', 'float ccNL = max(dot(airCCNormal, L), 0.0);', 'float ccNH = max(dot(airCCNormal, H), 0.0);', 'float ccNV = max(dot(airCCNormal, V), 0.0);', 'vec3 ccSpec = vec3(0.04) * CalcSpecular(ccRough, ccNH, H, airCCNormal);', '#if CC_RECEIVE_SHADOW', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * shadow * ccNL * ccF * ccSpec;', '#else', 'finalColor += cc_mainLitColor.rgb * cc_mainLitColor.w * ccNL * ccF * ccSpec;', '#endif', '}'].join(nl);
       const ccAnchor = 'finalColor *= dirlightContrib;';
       if (!frag.includes(ccAnchor)) {
@@ -73375,18 +73379,6 @@ function isTransmissionMaterial(material) {
   }
   return false;
 }
-function isTransmissionRenderer(renderer) {
-  for (let i = 0; i < 8; i++) {
-    const material = renderer.getMaterial(i);
-    if (!material) {
-      break;
-    }
-    if (isTransmissionMaterial(material)) {
-      return true;
-    }
-  }
-  return false;
-}
 function webgl2Capable() {
   const device = deviceManager.gfxDevice;
   return !!device && device.gfxAPI === API.WEBGL2;
@@ -73457,9 +73449,19 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
         continue;
       }
       for (let slot = 0; slot < 8; slot++) {
+        const shared = renderer.getMaterial(slot);
+        if (!shared) {
+          break;
+        }
+        if (!shared.passes.some(p => {
+          const d = p.defines;
+          return d && d.USE_AIR_TRANSMISSION;
+        })) {
+          continue;
+        }
         const material = renderer.getMaterialInstance(slot);
         if (!material) {
-          break;
+          continue;
         }
         material.setProperty('cc_sceneColorTex', this._rt);
         material.setProperty('airSceneColorInfo', info);
@@ -73493,7 +73495,24 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     }
     for (const renderer of scene.getComponentsInChildren(MeshRenderer)) {
       const node = renderer.node;
-      if (!node || !isTransmissionRenderer(renderer)) {
+      if (!node) {
+        continue;
+      }
+      let hasTransmission = false;
+      for (let slot = 0; slot < 8; slot++) {
+        const shared = renderer.getMaterial(slot);
+        if (!shared) {
+          break;
+        }
+        if (shared.passes.some(p => {
+          const d = p.defines;
+          return d && d.USE_AIR_TRANSMISSION;
+        })) {
+          hasTransmission = true;
+          break;
+        }
+      }
+      if (!hasTransmission) {
         continue;
       }
       if (this._prevVisibility === null) {
@@ -73522,19 +73541,8 @@ let AirTransmissionCapture = (_dec$h = ccclass$9('air.AirTransmissionCapture'), 
     for (const renderer of this._bound) {
       const record = owned.get(renderer);
       owned.delete(renderer);
-      if (!restore || !record || !renderer.isValid) {
-        continue;
-      }
-      if (renderer.node) {
+      if (restore && record && renderer.isValid && renderer.node) {
         renderer.node.layer = record.originalLayer;
-      }
-      const template = renderer.getMaterial(0);
-      const fallback = template && template.getProperty ? template.getProperty('cc_sceneColorTex') : null;
-      const instance = renderer.getMaterialInstance(0);
-      if (instance && fallback) {
-        var _value;
-        const value = (_value = fallback.value) !== null && _value !== void 0 ? _value : fallback;
-        instance.setProperty('cc_sceneColorTex', value);
       }
     }
     this._bound.length = 0;

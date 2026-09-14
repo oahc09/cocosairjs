@@ -407,3 +407,32 @@ NodeNext 消费；**15 浏览器证据全 ok**（含 performance/stability）。
 18 项（quantized SHORT morph e2e、meshopt COLOR+stride256 KHR 过/EXT 拒、Draco VEC3 颜色）。
 门控：typecheck 0；21 套件 / **134 测试**；verify:web-only；verify:decoders；esm/min/dts +
 NodeNext；**11 浏览器证据全 ok**。
+
+
+## V0.5 三轮 Code Review 修复（2026-09-15）
+
+三轮审查发现 7 项（5 P1 + 2 P2），全部修复：
+
+- **R1 transmission 判定误伤所有 physical 材质**：`airTransmission` UBO 成员是 physical effect
+  的固定 superset 项，handle 非零不能区分 transmission。判定改为 **pass 宏**
+  `defines.USE_AIR_TRANSMISSION`，并遍历 renderer **全部材质槽**（多 primitive 模型的其他槽
+  透射材质此前不生效）。
+- **R7 capture 生命周期**：disable 停离屏相机、恢复节点原 layer / 主相机 visibility、渲染
+  实例纹理恢复模板默认（销毁 RT 前执行）；enable 恢复。所有权表升级为
+  `WeakMap<renderer, {capture, originalLayer}>`。
+- **R5 volume**：衰减改为规范 Beer-Lambert `pow(attenuationColor, d/dist)`（弃 (1−color) 线性
+  近似，深色介质不再过亮）。
+- **R6 specular diffuse**：去掉重复的 metallic 因子（外层 (1−metallic) 已加权）。
+- **R2 quantized morph**：独立 morph 类型表（POSITION 有符号 BYTE/SHORT ±normalized、
+  NORMAL/TANGENT 仅有符号归一化、TEXCOORD 无符号禁用），quantization validate 与 mesh 构建
+  双侧接入；此前合法 quantized morph 在构建期被 FLOAT 检查拒绝。
+- **R3 meshopt**：KHR filter 表补 **COLOR**（值 4；EXT 草案无），byteStride 上限 KHR 256
+  （EXT 252）。
+- **R4 draco**：属性分量宽改从 **accessor.type** 读取（COLOR_0 VEC3 合法，此前 semantic 猜测
+  按 4 拒绝 9 分量输出）。
+
+新增回归：smoke-21 扩至 11 项（Beer-Lambert pow 形式、diffuse 无重复 metallic、宏级判定
+[UBO handle 会误报而宏不会——审查 #1 的直接证明]、morph 类型表禁无符号）、smoke-11 扩至
+18 项（quantized SHORT morph e2e、meshopt COLOR+stride256 KHR 过/EXT 拒、Draco VEC3 颜色）。
+门控：typecheck 0；21 套件 / **134 测试**；verify:web-only；verify:decoders；esm/min/dts +
+NodeNext 消费；**11 浏览器证据全 ok**。

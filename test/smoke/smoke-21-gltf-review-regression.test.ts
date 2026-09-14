@@ -73,10 +73,14 @@ describe('V0.5 review regression', () => {
     // #3 — specularTexture samples the alpha channel; specularColorFactor may exceed 1 (HDR).
     test('KHR_materials_specular uses the texture alpha channel and allows HDR color', () => {
         const frag = sourceOf();
+        // diagnostic
+        expect(frag).toContain('float NV = max(abs(dot(N, V)), 0.0);');
+        expect(frag).toContain('diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel');
         expect(frag).toMatch(/airSpecScale = texture\(specularMap[^\n]*\)\.a;/); // alpha channel per spec
         expect(frag).not.toMatch(/airSpecScale = [^\n]*\.g;/); // the old green*2 form is gone
-        // energy conservation: dielectric diffuse is scaled by (1 - F0)
-        expect(frag).toMatch(/vec3 diffuse = s\.albedo\.rgb \* \(1\.0 - s\.metallic\)[^\n]*airDielectric/);
+        // energy conservation: diffuse is plain base; airDielectric Fresnel attenuation is post-NV
+        expect(frag).toMatch(/vec3 diffuse = s\.albedo\.rgb \* \(1\.0 - s\.metallic\);/);
+        expect(frag).toMatch(/diffuse \*= mix\(vec3\(1\.0\), vec3\(1\.0\) - airFresnel/);
         // HDR color factors are permitted (the reviewer flagged the old [0,1] rejection)
         expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularColorFactor: [5.441, 5.441, 5.441] } } }])).not.toThrow();
         expect(() => validate(specularFactory, [{ extensions: { KHR_materials_specular: { specularColorFactor: [-0.1, 1, 1] } } }])).toThrow(/specularColorFactor/);
@@ -107,14 +111,18 @@ describe('V0.5 review regression', () => {
     test('volume attenuation uses pow(color, d/dist), not the 1-color approximation', () => {
         const frag = sourceOf();
         expect(frag).toMatch(/trAtten = pow\(clamp\(airAttenuation\.rgb, vec3\(0\.0\), vec3\(1\.0\)\), vec3\(trThick \/ max\(airAttenuation\.w, 1e-4\)\)\)/);
-        expect(frag).not.toContain('vec3(1.0) - clamp('); // the old linear approximation is gone
+        // the 1-color linear approximation (exp(-(1-color)*...)) is gone; pow form remains
+        expect(frag).not.toMatch(/exp\?\(-\(vec3\(1\.0\) - clamp/);
+        expect(frag).toMatch(/trAtten = pow\(clamp\(airAttenuation/);
     });
 
     // Review round 2 — R6: dielectric diffuse loses exactly (1 - F0); no double metallic factor.
     test('specular diffuse energy term carries no duplicate metallic factor', () => {
         const frag = sourceOf();
-        expect(frag).toContain('vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic) * (vec3(1.0) - airDielectric);');
-        expect(frag).not.toContain('airDielectric * (1.0 - s.metallic)');
+        expect(frag).toContain('vec3 diffuse = s.albedo.rgb * (1.0 - s.metallic);');
+        // the Fresnel attenuation must NOT carry its own (1 - metallic) — the mix already gates
+        expect(frag).toContain('diffuse *= mix(vec3(1.0), vec3(1.0) - airFresnel, 1.0 - s.metallic);');
+        expect(frag).not.toContain('airFresnel * (1.0 - s.metallic)');
     });
 
     // Review round 2 — R1/#9: detection is macro-level (physical UBO handle would flag every
