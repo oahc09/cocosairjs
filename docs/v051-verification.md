@@ -19,7 +19,7 @@ smoke-22-agent-session、smoke-23-debug-isolation），全部位于既有发现�
 | `npm run build:dts` | ✅（pal/input 符号解析告警为 V0.5 起既有上游噪音，exit 0） |
 | `npm run typecheck` | ✅ 0 错误 |
 | `npm run verify:web-only` | ✅ PASSED（797 files reachable） |
-| `npm test` | ✅ **23 套件 / 155 测试** |
+| `npm test` | ✅ **23 套件 / 161 测试**（含第二轮 Review 修复的 6 条回归，见 progress.md） |
 
 按变动补跑：
 
