@@ -14,6 +14,7 @@ module.exports = {
         "^.+\\.js$": "babel-jest"
     },
     "moduleNameMapper": {
+        "^cocosair$": "<rootDir>/src/index.ts",
         "^internal:constants$": "<rootDir>/test/stubs/internal-constants.ts",
         "^internal:native$": "<rootDir>/src/cocos/native-binding/impl.ts",
         "^cc.decorator$": "<rootDir>/src/cocos/core/data/decorators/index.ts",

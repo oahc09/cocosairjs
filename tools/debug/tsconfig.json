@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "../../src",
+    "paths": {
+      "cocosair": ["./index.ts"],
+      "pal/*": ["pal/*"],
+      "cc.decorator": ["cocos/core/data/decorators/index.ts"],
+      "@cocos/engine/*": ["*"]
+    },
+    "noEmit": true
+  },
+  "include": [
+    "./*.ts",
+    "../../src/**/*.ts"
+  ],
+  "exclude": [
+    "../../src/editor"
+  ]
+}

@@ -17,6 +17,8 @@ export interface AirAppOptions {
 }
 
 export interface AirApp {
+    /** @en The canvas this app renders into. @zh 本应用渲染目标画布（构造时传入）。 */
+    readonly canvas: HTMLCanvasElement;
     /** @en Run the given scene and start the main loop. @zh 运行场景并启动主循环（幂等）。 */
     run(scene: Scene): void;
     /** @en Current running scene, or null before run(). @zh 当前运行中的场景；run() 之前为 null。 */

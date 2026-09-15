@@ -15,6 +15,9 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
     "paths": {
+        "cocosair": [
+            "./index.ts"
+        ],
         "pal/*": [
             "pal/*"
         ],

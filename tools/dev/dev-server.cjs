@@ -118,18 +118,20 @@ try {
     console.warn('[dev] fs.watch(recursive) 不可用，仅单次构建:', e.message);
 }
 
-// ---- Watch 频道 3: examples/** → 仅 bump reload token（绝不触发 engine build） ----
+// ---- Watch 频道 3: examples/** + tools/debug/** → 仅 bump reload token（绝不触发 engine build） ----
 try {
-    fs.watch(EXAMPLES_DIR, { recursive: true }, (_evt, file) => {
+    const onExampleChange = (label) => (_evt, file) => {
         if (!file) return;
         const f = String(file).replace(/\\/g, '/');
         if (!/\.(ts|js|json|html|css)$/.test(f)) return;
         if (f.includes('.tmp')) return;
         devStats.exampleReloads += 1;
         reloadToken = Date.now();
-        console.log(`[dev] example change (${f}) → reload only (no engine build)`);
-    });
-    console.log('[dev] watching examples/** (reload only)');
+        console.log(`[dev] ${label} change (${f}) → reload only (no engine build)`);
+    };
+    fs.watch(EXAMPLES_DIR, { recursive: true }, onExampleChange('example'));
+    fs.watch(path.join(ROOT, 'tools', 'debug'), { recursive: true }, onExampleChange('debug-tool'));
+    console.log('[dev] watching examples/** + tools/debug/** (reload only)');
 } catch (e) {
     console.warn('[dev] fs.watch(examples) 不可用:', e.message);
 }
@@ -169,9 +171,41 @@ function serveFile (res, file) {
     }
 }
 
+// ---- V0.5.1 T3/T4：tools/debug 入口按需 bundle（mtime 缓存，dev-only） ----
+const debugBundleCache = new Map();
+function serveDebugBundle (res, file) {
+    try {
+        const st = fs.statSync(file);
+        let entry = debugBundleCache.get(file);
+        if (!entry || entry.mtime !== st.mtimeMs) {
+            const result = esbuild.buildSync({
+                entryPoints: [file],
+                bundle: true,
+                format: 'esm',
+                target: 'es2022',
+                platform: 'browser',
+                sourcemap: 'inline',
+                // 'cocosair' 必须留给页面 importmap 解析到 /build/cocosair.module.js：
+                // session 与页面共享同一引擎实例（绝不能再打包第二份引擎）。
+                external: ['cocosair'],
+                outfile: file.replace(/\.ts$/, '.js'),
+                write: false,
+            });
+            entry = { mtime: st.mtimeMs, data: Buffer.from(result.outputFiles[0].contents) };
+            debugBundleCache.set(file, entry);
+            console.log(`[dev] debug bundle: ${path.relative(ROOT, file)} (${(entry.data.length / 1024).toFixed(0)}KB)`);
+        }
+        res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': MIME['.js'] });
+        res.end(entry.data);
+    } catch (e) {
+        console.error(`[dev] debug bundle FAILED for ${path.relative(ROOT, file)}:\n${e.message}`);
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('debug bundle error: ' + e.message);
+    }
+}
+
 // ---- example .ts 即时编译（esbuild transform + mtime 缓存） ----
-const tsCache = new Map();
-function serveExampleTs (res, file) {
+const tsCache = new Map();function serveExampleTs (res, file) {
     try {
         const source = fs.readFileSync(file, 'utf8');
         let entry = tsCache.get(file);
@@ -205,7 +239,8 @@ const IMPORT_MAP = JSON.stringify({
 });
 
 const server = http.createServer((req, res) => {
-    const url = new URL(req.url, `http://127.0.0.1:${port}`);
+    // 防御 '//'（协议相对形态会让 new URL 抛 Invalid URL 并打死 server）
+    const url = new URL(String(req.url || '/').replace(/^\/{2,}/, '/'), `http://127.0.0.1:${port}`);
     const p = decodeURIComponent(url.pathname);
 
     if (p === '/favicon.ico') { res.writeHead(204); res.end(); return; }
@@ -261,6 +296,16 @@ setTimeout(poll,1000);})();`);
         res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/javascript; charset=utf-8' });
         res.end(fs.readFileSync(path.join(__dirname, 'air-prelude.js'), 'utf8'));
         return;
+    }
+    if (p.startsWith('/__debug/')) {
+        // V0.5.1 T3/T4：开发期 agent session / debug 面板入口。
+        // 按需 esbuild bundle（mtime 缓存）——这些文件不在默认 runtime bundle 内，
+        // 仅 dev 页面显式 import('/__debug/...') 时加载。
+        const rel = p.slice('/__debug/'.length).replace(/\\/g, '/');
+        if (!/^[\w.-]+(\.ts|\.js)$/.test(rel)) { res.writeHead(404); res.end('not found (debug?)'); return; }
+        const file = path.join(ROOT, 'tools', 'debug', rel.replace(/\.js$/, '.ts'));
+        if (!fs.existsSync(file)) { res.writeHead(404); res.end('not found (debug entry?)'); return; }
+        return serveDebugBundle(res, file);
     }
     if (p.startsWith('/build/')) {
         const file = path.join(ROOT, p);
