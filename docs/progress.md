@@ -481,3 +481,31 @@ NodeNext 消费；**12 浏览器证据全 ok**。
   文档 `v051-*` 五篇；V0.5 四份 glTF 文档移交沿用。
 
 边界：未授权不做 npm publish；glTF 引擎路径零改动（smoke-07..21 全量回归）。
+
+## V0.5.1 第二轮 Code Review 修复（2026-09-16）
+
+7 项（5 P1 + 2 P2）全部修复：
+
+- **R1** tarball ESM 入口：`build/package.json {"type":"module"}` 随构建发出
+  （Node 按最近 package.json 定格式）；consumer 验收删除 `type:module` 补丁步骤，
+  对安装后原始包真实 `import()`（jsdom 提供引擎求值所需浏览器全局），
+  `exportCount` 从假 0 变为实测 368；`files` 白名单从 `build/` 收紧为逐项精确
+  列表（tarball 从 206MB/1211 文件降到 6.2MB/59 文件，剔除 `.dts-before-bundle`
+  等临时目录被打包的问题）；consumer 临时目录移出 build/。
+- **R2** 共享资产安全：loadAsset 走的 asset-manager 按 URL 缓存，session 改为
+  独立 `addRef`/`decRef` 引用，close 不再 `destroy()` 缓存中可能被共享的资产；
+  新增"两 session 同 URL 关闭其一 + 业务重载"回归。
+- **R3** setTransform 原子性：先验证全部参数再统一应用（合法 position + 非法
+  rotation 时节点完全不变，回归覆盖）；world scale 改 `setWorldScale`
+  （2x 父级下 world scale 3 → local 1.5，回归覆盖）。
+- **R4** captureFrame 生命周期：pending capture 登记进 session，close 取消监听/
+  定时器并拒绝 SESSION_CLOSED；绘制回调比对请求时场景快照，替换 → CAPTURE_FAILED；
+  sceneId 用快照值（回归覆盖两条路径）。
+- **R5** close 清空全部强引用映射（componentIds/assetIds/assetsById）。
+- **R6** prelude hub 存在时只订阅（不装自有 window 监听、不二次包裹 WebGL），
+  `unhandled-rejection` 类别经 hub 保留；子元素派发探测单条记录（回归覆盖）。
+- **R7** README 相对链接治理：docs/*.md|json 纳入 files 白名单；consumer 新增
+  README 链接解析校验。
+
+门禁：typecheck 0；23 套件 / **161 测试**；verify:consumer ok（exportCount 368）；
+examples 浏览器 7/7；panel 浏览器 7/7。

@@ -203,29 +203,30 @@ class Collector {
         const push = (category: RuntimeErrorMessage['category'], message: string, source?: string, requestId?: string): void => {
             this.emit({ seq: ++this.seq, time: new Date().toISOString(), category, message, source, requestId });
         };
-        const onError = ((event: ErrorEvent) => {
-            const isResource = event.target && (event.target as HTMLElement).tagName;
-            push('window-error', isResource
-                ? `RESOURCE: ${(event.target as HTMLImageElement).src || (event.target as HTMLElement).tagName}`
-                : String(event.error && (event.error as Error).stack || event.message).slice(0, 600));
-        }) as EventListener;
-        const onRejection = ((event: PromiseRejectionEvent) => {
-            push('unhandled-rejection', String(event.reason && ((event.reason as Error).stack || event.reason) || event.reason).slice(0, 600));
-        }) as EventListener;
-        window.addEventListener('error', onError, true);
-        window.addEventListener('unhandledrejection', onRejection);
-        ownership.ownedListeners.push({ target: window, type: 'error', fn: onError, capture: true });
-        ownership.ownedListeners.push({ target: window, type: 'unhandledrejection', fn: onRejection, capture: false });
-
-        // 共享 air-prelude hub：只订阅/分发（合同：不各自包裹同一 WebGL 函数）。
+        // 共享 air-prelude hub：只订阅/分发——同一事件绝不能被 hub 与自有监听各记一次
+        //（合同：不各自包裹同一 WebGL 函数、不重复安装 window 监听）。
         if (window.__airErrorHub) {
             const unsubscribe = window.__airErrorHub.subscribe((entry) => {
-                const category = entry.category === 'shader' || entry.category === 'link' ? entry.category : 'window-error';
-                push(category as RuntimeErrorMessage['category'], entry.message, entry.source);
+                const known = entry.category as RuntimeErrorMessage['category'];
+                const category = known === 'shader' || known === 'link' || known === 'unhandled-rejection' ? known : 'window-error';
+                push(category, entry.message, entry.source);
             });
             ownership.subscribers.add(unsubscribe);
         } else {
-            // 无 hub 时才安装自有 getContext 包裹（shader/link 观察）；detach 恢复原函数。
+            // 无 hub 才安装自有 window 监听与 getContext 包裹（shader/link 观察）；detach 恢复原函数。
+            const onError = ((event: ErrorEvent) => {
+                const isResource = event.target && (event.target as HTMLElement).tagName;
+                push('window-error', isResource
+                    ? `RESOURCE: ${(event.target as HTMLImageElement).src || (event.target as HTMLElement).tagName}`
+                    : String(event.error && (event.error as Error).stack || event.message).slice(0, 600));
+            }) as EventListener;
+            const onRejection = ((event: PromiseRejectionEvent) => {
+                push('unhandled-rejection', String(event.reason && ((event.reason as Error).stack || event.reason) || event.reason).slice(0, 600));
+            }) as EventListener;
+            window.addEventListener('error', onError, true);
+            window.addEventListener('unhandledrejection', onRejection);
+            ownership.ownedListeners.push({ target: window, type: 'error', fn: onError, capture: true });
+            ownership.ownedListeners.push({ target: window, type: 'unhandledrejection', fn: onRejection, capture: false });
             const original = HTMLCanvasElement.prototype.getContext;
             HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, type: string, ...rest: unknown[]) {
                 const gl = original.apply(this, [type, ...rest] as Parameters<typeof original>) as (WebGLRenderingContext & { __agentObserved?: boolean }) | null;
@@ -314,6 +315,8 @@ export class AgentSessionImpl {
     private readonly requestLog = new Map<string, RequestRecord>();
     private queue: Promise<unknown> = Promise.resolve();
     private captureSeq = 0;
+    /** 进行中的 captureFrame：close 时取消监听/定时器并拒绝（§6.3 生命周期）。 */
+    private readonly pendingCaptures = new Set<{ cancel (): void; reject (error: AgentSessionError): void }>();
     private readonly collector: Collector;
 
     constructor (private readonly options: AgentSessionOptions) {
@@ -522,18 +525,37 @@ export class AgentSessionImpl {
 
     captureFrame (): Promise<FrameCapture> {
         this.requireOpen();
-        const scene = this.currentScene();
+        // 请求时的场景快照：绘制回调里场景若已替换，必须报错而不是返回另一场景的画面。
+        const sceneAtRequest = this.currentScene();
         const canvas = this.options.app.canvas;
         return new Promise<FrameCapture>((resolve, reject) => {
-            const timeout = setTimeout(() => {
-                cc.director.off(cc.Director.EVENT_AFTER_DRAW, onDraw);
-                reject(new AgentSessionError('CAPTURE_FAILED', `no rendered frame within ${this.options.captureTimeoutMs ?? DEFAULT_CAPTURE_TIMEOUT}ms`));
+            const pending = {
+                cancel: () => {
+                    this.pendingCaptures.delete(pending);
+                    cc.director.off(cc.Director.EVENT_AFTER_DRAW, onDraw);
+                    clearTimeout(timer);
+                },
+                reject: (error: AgentSessionError) => {
+                    pending.cancel();
+                    reject(error);
+                },
+            };
+            const timer = setTimeout(() => {
+                pending.reject(new AgentSessionError('CAPTURE_FAILED',
+                    `no rendered frame within ${this.options.captureTimeoutMs ?? DEFAULT_CAPTURE_TIMEOUT}ms`));
             }, this.options.captureTimeoutMs ?? DEFAULT_CAPTURE_TIMEOUT);
             const onDraw = (): void => {
-                cc.director.off(cc.Director.EVENT_AFTER_DRAW, onDraw);
-                clearTimeout(timeout);
                 try {
-                    const sceneId = sceneIds.get(this.currentScene()) ?? `scene:${this.currentScene().name}`;
+                    if (this.closed) {
+                        pending.reject(new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`));
+                        return;
+                    }
+                    if (this.currentScene() !== sceneAtRequest) {
+                        pending.reject(new AgentSessionError('CAPTURE_FAILED', 'scene replaced between request and draw'));
+                        return;
+                    }
+                    pending.cancel();
+                    const sceneId = sceneIds.get(sceneAtRequest) ?? `scene:${sceneAtRequest.name}`;
                     const png = canvas.toDataURL('image/png');
                     if (!png || !png.startsWith('data:image/png')) {
                         throw new Error('canvas produced no PNG data');
@@ -547,10 +569,12 @@ export class AgentSessionImpl {
                         sampledAt: new Date().toISOString(),
                     });
                 } catch (error) {
+                    pending.cancel();
                     reject(new AgentSessionError('CAPTURE_FAILED',
                         `frame capture failed: ${error instanceof Error ? error.message : String(error)}`));
                 }
             };
+            this.pendingCaptures.add(pending);
             cc.director.on(cc.Director.EVENT_AFTER_DRAW, onDraw);
         });
     }
@@ -693,37 +717,45 @@ export class AgentSessionImpl {
         if (!space) {
             throw new AgentSessionError('INVALID_ARGUMENT', "params.space must be 'local' or 'world'");
         }
-        const applied: string[] = [];
+        // 先验证全部参数、再统一应用：任何一步失败都不得留下部分修改（非法请求无副作用）。
+        const plan: { kind: 'position' | 'rotationEuler' | 'scale'; value: [number, number, number] }[] = [];
         if (params.position !== undefined) {
-            const [x, y, z] = AgentSessionImpl.number3(params.position, 'params.position');
-            if (space === 'local') { node.setPosition(x, y, z); } else { node.setWorldPosition(x, y, z); }
-            applied.push('position');
+            plan.push({ kind: 'position', value: AgentSessionImpl.number3(params.position, 'params.position') });
         }
         if (params.rotationEuler !== undefined) {
-            const [x, y, z] = AgentSessionImpl.number3(params.rotationEuler, 'params.rotationEuler');
-            if (space === 'local') {
-                node.setRotationFromEuler(x, y, z);
-            } else {
-                // world 欧拉角：先把节点置为单位旋转，再按世界轴复合（本版仅覆盖父级无旋转的常见情况；
-                // 父级有旋转时用 local 写入，此限制写入文档）。
+            const value = AgentSessionImpl.number3(params.rotationEuler, 'params.rotationEuler');
+            if (space === 'world') {
+                // world 欧拉角本版仅覆盖父级无旋转的常见情况（限制写入文档）；该检查属于验证，必须
+                // 发生在任何应用之前。
                 const parentEuler = node.parent ? node.parent.eulerAngles : null;
                 if (parentEuler && (parentEuler.x || parentEuler.y || parentEuler.z)) {
                     throw new AgentSessionError('INVALID_ARGUMENT', 'world rotationEuler requires an unrotated parent in this version');
                 }
-                node.setRotationFromEuler(x, y, z);
             }
-            applied.push('rotationEuler');
+            plan.push({ kind: 'rotationEuler', value });
         }
         if (params.scale !== undefined) {
-            const [x, y, z] = AgentSessionImpl.number3(params.scale, 'params.scale');
-            if (x === 0 || y === 0 || z === 0) {
+            const value = AgentSessionImpl.number3(params.scale, 'params.scale');
+            if (value.some((v) => v === 0)) {
                 throw new AgentSessionError('INVALID_ARGUMENT', 'scale components must be non-zero');
             }
-            node.setScale(x, y, z);
-            applied.push('scale');
+            plan.push({ kind: 'scale', value });
         }
-        if (applied.length === 0) {
+        if (plan.length === 0) {
             throw new AgentSessionError('INVALID_ARGUMENT', 'setTransform requires at least one of position / rotationEuler / scale');
+        }
+        const applied: string[] = [];
+        for (const step of plan) {
+            const [x, y, z] = step.value;
+            if (step.kind === 'position') {
+                if (space === 'local') { node.setPosition(x, y, z); } else { node.setWorldPosition(x, y, z); }
+            } else if (step.kind === 'rotationEuler') {
+                // world 的父级无旋转约束已在验证期成立：此时 world 欧拉角 == local 欧拉角。
+                node.setRotationFromEuler(x, y, z);
+            } else {
+                if (space === 'local') { node.setScale(x, y, z); } else { node.setWorldScale(x, y, z); }
+            }
+            applied.push(step.kind);
         }
         return { applied };
     }
@@ -739,10 +771,13 @@ export class AgentSessionImpl {
         const loader = new cc.GLTFLoader();
         return loader.loadAsync(url).then((asset) => {
             if (this.closed) {
-                // 关闭后完成的加载：立即释放本 session 的引用，不挂载任何对象。
-                if (cc.isValid(asset, true)) { asset.destroy(); }
-                throw new AgentSessionError('SESSION_CLOSED', `session ${this.id} closed while loading; loaded asset released`);
+                // 关闭后完成的加载：本 session 从未持有引用（addRef 尚未发生），
+                // 资产归 asset-manager 缓存所有——不得销毁可能被其他消费者共享的对象。
+                throw new AgentSessionError('SESSION_CLOSED', `session ${this.id} closed while loading; asset left to its owner`);
             }
+            // session 明式持有一份引用：close 只 decRef 自己这份，绝不 destroy 缓存中
+            // 可能被其他 session/业务共享的资产（§6.2 "不销毁已有共享资产"）。
+            asset.addRef();
             this.ownedAssets.add(asset);
             const summary: Record<string, unknown> = {
                 url,
@@ -797,28 +832,37 @@ export class AgentSessionImpl {
     // ---- 生命周期 ----
 
     /**
-     * 关闭 session：移除监听器与观察 hook，销毁 session 自有节点/实例/资产；
+     * 关闭 session：移除监听器与观察 hook，取消进行中的 capture，销毁 session 自有
+     * 节点/实例，并只释放自己持有的资产引用（decRef——不销毁可能被共享的资产）；
      * 已有节点的显式编辑不自动撤销。之后所有请求返回 SESSION_CLOSED。
      */
     close (): void {
         if (this.closed) { return; }
         this.closed = true;
         this.collector.detach(this);
-        // 关闭中完成的异步加载也会走 destroy（见 opLoadAsset 的 finally 分支）。
+        // 进行中的 captureFrame：取消监听与定时器，以 SESSION_CLOSED 拒绝。
+        for (const pending of Array.from(this.pendingCaptures)) {
+            pending.reject(new AgentSessionError('SESSION_CLOSED', `session ${this.id} is closed`));
+        }
+        this.pendingCaptures.clear();
         for (const instance of this.ownedInstances) {
             try { instance.instance.dispose(); } catch { /* 引擎已回收 */ }
         }
         this.ownedInstances.length = 0;
         for (const asset of this.ownedAssets) {
-            if (cc.isValid(asset, true)) { asset.destroy(); }
+            if (cc.isValid(asset, true)) { asset.decRef(); }
         }
         this.ownedAssets.clear();
         for (const node of this.ownedNodes) {
             if (cc.isValid(node, true)) { node.destroy(); }
         }
         this.ownedNodes.clear();
+        // 释放全部强引用映射（componentIds/assetIds/assetsById 也持有 Component/Asset）。
         this.nodesById.clear();
         this.nodeIds.clear();
+        this.componentIds.clear();
+        this.assetIds.clear();
+        this.assetsById.clear();
         this.requestLog.clear();
     }
 }

@@ -100,6 +100,11 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         }
     }
     console.log('[build] output: build/' + bundleName);
+    // R1（v051 review）：根 package.json 是 type:commonjs（构建工具链需要），
+    // 而 build/ 产物是 ESM。随包在 build/ 内发出 {"type":"module"}，
+    // Node 按最近 package.json 解析模块格式，tarball 才能真实 import。
+    fs.writeFileSync(join(ROOT, 'build', 'package.json'), JSON.stringify({ type: 'module' }, null, 2) + '\n');
+    console.log('[build] output: build/package.json (type: module)');
     } finally { release(); }
 })().catch((e) => {
     console.error('[build] FAILED:', e && e.message ? e.message : e);

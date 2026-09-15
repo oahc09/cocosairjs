@@ -15,7 +15,15 @@
 		}
 	},
 	"files": [
-		"build/",
+		"build/package.json",
+		"build/cocosair.module.js",
+		"build/cocosair.module.js.map",
+		"build/cocosair.module.min.js",
+		"build/cocosair.module.min.js.map",
+		"build/cocosair.module.d.ts",
+		"build/gltf-decoders/",
+		"docs/*.md",
+		"docs/*.json",
 		"README.md",
 		"LICENSE",
 		"UPSTREAM.md",

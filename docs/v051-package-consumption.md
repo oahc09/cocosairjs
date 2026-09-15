@@ -15,7 +15,9 @@
 
 | 审计项 | 结果 |
 |---|---|
-| `npm pack` 文件清单 = `files` 白名单（build/ + LICENSE/README/THIRD_PARTY/UPSTREAM） | ✅ |
+| `npm pack` 文件清单 = `files` 精确白名单（build 产物逐项 + build/gltf-decoders/ + docs/*.md|json + 许可文件） | ✅ |
+| tarball 真实可导入：`build/package.json` 声明 `{"type":"module"}`（Node 按最近 package.json 解析 ESM），根包 `type:commonjs` 不影响产物 | ✅ |
+| 随包 README 相对链接全部可解析（docs 纳入 files，consumer 校验 md 链接与反引号路径） | ✅ |
 | 包内无 `src/` `test/` `tools/` `output/` 泄漏 | ✅（consumer-acceptance 文件树断言） |
 | `build/` 内含 module.js / module.min.js / module.d.ts / gltf-decoders/ | ✅ |
 | decoder 审计（MANIFEST 双向 SHA-256、许可、bundle 隔离、离线 require） | ✅ `tools/verify/decoder-audit.cjs` ok（15 个 manifest 文件） |
@@ -23,13 +25,17 @@
 
 ## 3. Consumer 验收（独立临时目录）
 
-`tools/verify/consumer-acceptance.cjs`：pack → 解包 → 临时目录 `npm install` tarball →
+`tools/verify/consumer-acceptance.cjs`：pack → 解包 → 临时目录（系统 tmp，不污染 build/）`npm install` tarball →
 
-- 文件树审计（必需产物存在、源码目录不泄漏）；
-- 动态 `import()` ESM 入口，校验 `createAirApp / GLTFLoader / GLTFAsset / Node / Scene / Vec3 / MeshRenderer` 导出；
-- TypeScript bundler 解析下的严格类型消费。
+- 文件树审计（必需产物存在、源码目录不泄漏、`build/package.json` type 声明）；
+- **对安装后的原始包内容**（不修改任何字段）执行真实动态 `import()`：引擎求值期需要
+  浏览器全局（浏览器引擎特性），用仓库 jsdom 提供 window/navigator/document/GameCanvas
+  后 import，断言 `createAirApp / GLTFLoader / GLTFAsset / Node / Scene / Vec3 /
+  MeshRenderer` 等 14 个关键导出与总导出数（368）；
+- README 相对链接解析校验（目标必须存在于包内）；
+- TypeScript bundler 解析下的严格类型消费（仓库内 typescript，避免 npx 假 tsc）。
 
-结果：`ok: true, failures: []`（本版复跑，2026-09-15）。
+结果：`ok: true, failures: [], exportCount: 368`（2026-09-16 复测）。
 
 ## 4. 正式发布边界（§9.3）
 

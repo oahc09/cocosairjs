@@ -41,11 +41,15 @@
 |---|---|---|
 | createNode | 在许可父节点下创建原 Node | 不生成场景 DSL |
 | addComponent | 白名单：MeshRenderer/Camera/DirectionalLight/PointLight/SphereLight/SpotLight/Animation | 白名单外 → `INVALID_ARGUMENT`；不动态 import |
-| setTransform | `space: local/world` × position/rotationEuler/scale | 数值先行验证；world 欧拉角本版要求父级无旋转 |
-| loadAsset | `GLTFLoader.loadAsync(url)` | glTF 稳定错误码保留在 `error.cause.code`；失败记入错误缓冲 |
+| setTransform | `space: local/world` × position/rotationEuler/scale | **先验证全部参数再统一应用**（失败请求零副作用）；scale 支持 world 语义（`setWorldScale`）；world 欧拉角本版要求父级无旋转 |
+| loadAsset | `GLTFLoader.loadAsync(url)` | glTF 稳定错误码保留在 `error.cause.code`；失败记入错误缓冲；session 明式 `addRef` 持有一份引用 |
 | instantiateAsset | 资产现有 `instantiate()`；`params.parentId` 需可写 | 实例生命周期沿用 GLTFInstance.dispose |
 
 - 同步变更串行执行；无事务/跨命令回滚承诺。
+- **共享资产所有权**：加载走的 asset-manager 按 URL 缓存，同 URL 可能返回被其他
+  session/业务共享的同一 `GLTFAsset`。session 对加载结果持有独立引用计数
+  （`addRef`/`decRef`），close 只释放自己这份，**绝不 `destroy()`**——两个 session
+  加载同 URL 后关闭其一，另一方的资产与业务侧缓存均不受影响（回归测试覆盖）。
 - requestId：执行中或保留窗口内（60s，FIFO 上限 512）重复 → `INVALID_ARGUMENT`
   （**不要盲目重试 create/addComponent**）；重启 dev server 或页面后不跨实例去重。
 - close() 清理 session 自有节点/实例/资产；**对已有节点的显式编辑不自动撤销**；
@@ -57,12 +61,17 @@
   `{ png(dataURL), width, height, sceneId, frameIndex, sampledAt }`；
 - 默认不改变播放状态；超时（默认 5s）、canvas 不可读/跨域污染 → 结构化
   `CAPTURE_FAILED`，**不交付旧截图冒充新帧**；空场景合法。
+- 生命周期：进行中的 capture 登记在 session 内——`close()` 取消监听与定时器并以
+  `SESSION_CLOSED` 拒绝；绘制回调发现场景已替换（与请求时快照不同）→ `CAPTURE_FAILED`，
+  不返回另一场景的画面；`sceneId` 取请求时快照。
 
 ## 5. 错误收集（§6.4）
 
-- 复用 `tools/dev/air-prelude.js` 的分发 hub（`window.__airErrorHub.subscribe`）；
-  **不二次包裹 WebGL 函数**；无 hub 时安装自有 hook（含 getContext 包裹），
-  最后一个 session detach 时按 capture 标志精确恢复原函数。
+- 复用 `tools/dev/air-prelude.js` 的分发 hub（`window.__airErrorHub.subscribe`）：
+  **hub 存在时只订阅**（不安装自有 window error/unhandledrejection 监听、不包裹
+  WebGL 函数），同一事件只产生一条记录，`unhandled-rejection` 类别经 hub 原样保留；
+  无 hub 时才安装自有 hook（window 监听 + getContext 包裹），最后一个 session
+  detach 时按 capture 标志精确恢复原函数。
 - `getRuntimeErrors({ since?, limit? })` → `{ errors, dropped }`；条目含
   seq/time/category（window-error/unhandled-rejection/shader/link/session-load）/
   message/requestId；环形缓冲默认 200 条（首个 session 固定），暴露 dropped 与
@@ -80,9 +89,11 @@
 
 ## 7. 门禁结果
 
-- G3/G4 单测：`test/smoke/smoke-22-agent-session.test.ts`（17 用例：ID 稳定性、
+- G3/G4 单测：`test/smoke/smoke-22-agent-session.test.ts`（23 用例：ID 稳定性、
   STALE_TARGET、OUT_OF_SCOPE、requestId 窗口、关闭中异步、CAPTURE_FAILED、
-  环形缓冲上限、hook 恢复、监听器泄漏回归）。
+  环形缓冲上限、hook 恢复、监听器泄漏回归、共享缓存资产关闭安全、
+  setTransform 原子性与 setWorldScale、pending capture 生命周期、
+  close 全映射清理、hub 去重与类别保留）。
 - G4 浏览器闭环：automation 示例 13 pass / 0 fail（真实 WebGL 截图 + 新帧差异）。
 - G5 面板浏览器验证：`tools/verify/v051-panel-browser.cjs` 7/7
   （显式启用、树+详情、错误定位、截图、性能、Alt+D、关闭无残留）。

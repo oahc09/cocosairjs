@@ -1,9 +1,13 @@
 /* V0.5.1 T1 Gate G1: tarball consumer acceptance (async, real import()).
  * 1. `npm pack` the engine
  * 2. Create a standalone consumer package in a temp dir
- * 3. `npm install` the tarball (alias: cocosair), then patch type:module for ESM
- * 4. Dynamic import() the installed module and verify the frozen §3 API surface
- * 5. Assert build/gltf-decoders/{draco,meshopt,basis} are present with valid entry files
+ * 3. `npm install` the tarball (alias: cocosair) — the installed package is NOT modified
+ * 4. Dynamic import() the installed module for real. The engine is browser-first: module
+ *    evaluation needs window/navigator/document, so the import runs against a jsdom global
+ *    scope (jsdom comes from THIS repo's devDependencies; the consumer tree stays untouched).
+ * 5. Assert the exported API surface (createAirApp/GLTFLoader/... and total export count)
+ * 6. Assert build/gltf-decoders/{draco,meshopt,basis} + build/package.json are present
+ * 7. Validate every relative link in the packaged README resolves inside the package
  * Exit code 0 = pass. Machine-readable JSON on stdout.
  */
 const fs = require('fs');
@@ -23,8 +27,8 @@ const tarball = JSON.parse(run('npm pack --json', { cwd: root }))[0].filename;
 const tarballPath = path.join(root, tarball);
 console.log(`[t1] tarball: ${tarball} (${fs.statSync(tarballPath).size} bytes)`);
 
-// 2. Extract to a clean consumer dir
-const packDir = fs.mkdtempSync(path.join(root, 'build', '.tmp-t1-'));
+// 2. Extract to a clean consumer dir (type: module — the consumer is a real ESM project)
+const packDir = fs.mkdtempSync(path.join(require('os').tmpdir(), 'cocosair-t1-')); // 不进 build/，避免被打入 tarball
 const consumerDir = path.join(packDir, 'consumer');
 fs.mkdirSync(consumerDir, { recursive: true });
 fs.writeFileSync(path.join(consumerDir, 'package.json'), JSON.stringify({
@@ -34,19 +38,13 @@ fs.writeFileSync(path.join(consumerDir, 'package.json'), JSON.stringify({
 }, null, 2));
 run('npm install --no-audit --no-fund', { cwd: consumerDir, stdio: 'pipe' });
 
-// 2.5. The engine module is ESM but the root package declares type:commonjs (build toolchain
-// constraint). The staged package.json (what goes to npm) must add type:module so the ESM
-// module resolves correctly for consumers. This simulates the final published package.json.
+// The installed package is used exactly as npm unpacked it (no type/field patching).
 const nodeModules = path.join(consumerDir, 'node_modules', 'cocosair');
-const installedPkgPath = path.join(nodeModules, 'package.json');
-if (fs.existsSync(installedPkgPath)) {
-    const pkg = JSON.parse(fs.readFileSync(installedPkgPath, 'utf8'));
-    pkg.type = 'module';
-    fs.writeFileSync(installedPkgPath, JSON.stringify(pkg, null, '\t'));
-}
 
 // 3. Verify installed tree
 const requiredFiles = [
+    'package.json',
+    'build/package.json', // {"type":"module"} — makes the ESM .js entries resolvable
     'build/cocosair.module.js',
     'build/cocosair.module.min.js',
     'build/cocosair.module.d.ts',
@@ -56,6 +54,7 @@ const requiredFiles = [
     'build/gltf-decoders/draco/draco_decoder.wasm',
     'build/gltf-decoders/basis/basis_transcoder.js',
     'build/gltf-decoders/basis/basis_transcoder.wasm',
+    'README.md',
     'LICENSE',
     'THIRD_PARTY_LICENSES.md',
 ];
@@ -66,13 +65,44 @@ for (const file of requiredFiles) {
 for (const dir of ['src', 'test', 'tools', 'output']) {
     if (fs.existsSync(path.join(nodeModules, dir))) { failures.push(`installed package should not contain ${dir}/`); }
 }
+// build/package.json must really declare the module type (R1)
+if (fs.existsSync(path.join(nodeModules, 'build', 'package.json'))) {
+    const buildPkg = JSON.parse(fs.readFileSync(path.join(nodeModules, 'build', 'package.json'), 'utf8'));
+    if (buildPkg.type !== 'module') { failures.push(`build/package.json must declare {"type":"module"}, got ${JSON.stringify(buildPkg)}`); }
+}
 
-// 4. Module load test requires a browser DOM (createAirApp uses canvas/window); verified by
-// the browser evidence scripts instead. Here we only verify file integrity and type consumption.
+// 4. Real dynamic import() of the installed entry, with browser globals from jsdom.
+// The engine evaluates browser globals at module scope (SystemInfo reads window.navigator);
+// that is a documented runtime characteristic — the consumer gate must still perform the
+// actual import instead of patching or skipping it.
 let exportCount = 0;
-void exportCount;
+const entryPath = path.join(nodeModules, 'build', 'cocosair.module.js');
+try {
+    const { JSDOM } = require(path.join(root, 'node_modules', 'jsdom'));
+    // 引擎 ScreenAdapter 约束：模块求值期即按 id 查找 GameCanvas（docs/06）。
+    const dom = new JSDOM('<!DOCTYPE html><html><head></head><body><canvas id="GameCanvas"></canvas></body></html>', { url: 'http://localhost/validate/' });
+    globalThis.window = dom.window;
+    for (const key of ['document', 'navigator', 'location', 'CustomEvent', 'Event', 'HTMLElement', 'HTMLCanvasElement', 'HTMLImageElement', 'HTMLVideoElement', 'MutationObserver', 'requestAnimationFrame', 'cancelAnimationFrame', 'getComputedStyle', 'matchMedia']) {
+        if (dom.window[key] !== undefined && globalThis[key] === undefined) {
+            Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true });
+        }
+    }
+    // jsdom 无 canvas 实现：引擎模块求值（SystemInfo 字节序探测）只调用不消费结果。
+    dom.window.HTMLCanvasElement.prototype.getContext = function () { return null; };
+    dom.window.HTMLCanvasElement.prototype.toDataURL = function () { return 'data:image/png;base64,'; };
+    const mod = await import(pathToFileURL(entryPath).href);
+    exportCount = Object.keys(mod).length;
+    const expected = ['createAirApp', 'GLTFLoader', 'GLTFAsset', 'Node', 'Scene', 'Vec3', 'MeshRenderer',
+        'Camera', 'DirectionalLight', 'Animation', 'AnimationClip', 'Layers', 'Material', 'Texture2D'];
+    for (const name of expected) {
+        if (typeof mod[name] === 'undefined') { failures.push(`cocosair.${name} is missing from the installed module`); }
+    }
+    if (exportCount < 100) { failures.push(`implausibly low export count: ${exportCount}`); }
+} catch (error) {
+    failures.push(`dynamic import of installed module failed: ${String(error && error.stack ? error.stack.split('\n').slice(0, 3).join(' | ') : error).slice(0, 400)}`);
+}
 
-// 5. TypeScript type consumption
+// 5. TypeScript type consumption (bundler resolution, strict)
 const tsOut = path.join(consumerDir, 'type-test.ts');
 fs.writeFileSync(tsOut, [
     "import { createAirApp, GLTFLoader, GLTFAsset, Node, Scene, Vec3, MeshRenderer,",
@@ -104,12 +134,27 @@ fs.writeFileSync(consumerTsconfig, JSON.stringify({
     }, include: ['type-test.ts'],
 }, null, 2));
 try {
-    run(`npx tsc -p ${consumerTsconfig}`, { cwd: consumerDir });
+    // 临时目录已移到系统 tmp：不能用 npx（会拉到假 tsc 包），直接用仓库内的 typescript。
+    run(`node ${path.join(root, 'node_modules', 'typescript', 'bin', 'tsc')} -p ${consumerTsconfig}`, { cwd: consumerDir });
 } catch (error) {
     failures.push(`consumer typecheck failed: ${String(error.stdout || error.message).slice(0, 300)}`);
 }
 
-// 6. Cleanup
+// 6. README relative links must resolve inside the package (R7)
+const readme = fs.readFileSync(path.join(nodeModules, 'README.md'), 'utf8');
+const linkTargets = new Set();
+for (const match of readme.matchAll(/\]\(([^)\s]+)\)/g)) { linkTargets.add(match[1]); }
+for (const match of readme.matchAll(/`(docs\/[^`\s]+)`/g)) { linkTargets.add(match[1]); }
+for (const target of linkTargets) {
+    if (/^[a-z]+:|^\/|^#/i.test(target)) { continue; } // absolute URL / root / anchor — out of scope
+    const clean = target.split('#')[0];
+    if (!clean) { continue; }
+    if (!fs.existsSync(path.join(nodeModules, clean))) {
+        failures.push(`README links to missing packaged file: ${target}`);
+    }
+}
+
+// 7. Cleanup
 fs.rmSync(packDir, { recursive: true, force: true });
 fs.rmSync(tarballPath, { force: true });
 
