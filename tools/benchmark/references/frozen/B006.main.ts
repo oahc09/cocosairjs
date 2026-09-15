@@ -1,6 +1,7 @@
 import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, Material, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B006');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -22,4 +23,5 @@ material.initialize({ effectName: 'builtin-standard', defines: { USE_BASE_COLOR:
 renderer.material = material;
 renderer.material = builtinResMgr.get('builtin-standard-material');
 void Color;
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);

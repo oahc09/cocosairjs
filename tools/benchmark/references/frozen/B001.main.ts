@@ -1,6 +1,7 @@
 import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B001');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -21,4 +22,5 @@ root.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 renderer.material = builtinResMgr.get('builtin-standard-material');
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);

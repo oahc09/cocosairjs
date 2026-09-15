@@ -1,6 +1,7 @@
 import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B002');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -27,4 +28,5 @@ for (let i = 0; i < 2; i++) {
         : Camera.ProjectionType.ORTHO;
     if (camera.projection === Camera.ProjectionType.ORTHO) { camera.orthoHeight = 4; }
 };
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);

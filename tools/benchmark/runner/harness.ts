@@ -18,6 +18,8 @@ export interface RuntimeChannel {
     inspect (query: Record<string, unknown>): Promise<unknown>;
     captureFrame (): Promise<{ png: string; width: number; height: number; sceneId: string; frameIndex: number }>;
     errorReport (query: { since?: number; limit?: number }): Promise<{ errors: unknown[]; dropped: number }>;
+    /** runtime-control：执行冻结参考操作（Runner 以 Reference 身份调用）。 */
+    executeReference? (op: Record<string, unknown>): Promise<unknown>;
 }
 
 export interface ActionOutcome {

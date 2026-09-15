@@ -105,6 +105,10 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     // Node 按最近 package.json 解析模块格式，tarball 才能真实 import。
     fs.writeFileSync(join(ROOT, 'build', 'package.json'), JSON.stringify({ type: 'module' }, null, 2) + '\n');
     console.log('[build] output: build/package.json (type: module)');
+    // gltf-decoders 内是 CommonJS .js（draco3d 等）：最近 package.json 必须翻回 commonjs
+    fs.mkdirSync(join(ROOT, 'build', 'gltf-decoders'), { recursive: true });
+    fs.writeFileSync(join(ROOT, 'build', 'gltf-decoders', 'package.json'), JSON.stringify({ type: 'commonjs' }, null, 2) + '\n');
+    console.log('[build] output: build/gltf-decoders/package.json (type: commonjs)');
     } finally { release(); }
 })().catch((e) => {
     console.error('[build] FAILED:', e && e.message ? e.message : e);

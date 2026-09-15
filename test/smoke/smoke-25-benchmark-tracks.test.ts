@@ -98,6 +98,7 @@ function makeRuntime (state: FakeState, render: { png: string; center: [number, 
         inspect: async () => fakeSnapshot(),
         captureFrame: async () => ({ png: render.png, width: 64, height: 64, sceneId: 'scene-1', frameIndex: 1 }),
         errorReport: async () => ({ errors: state.errors, dropped: 0 }),
+        executeReference: async () => undefined, // 冻结操作在本假 Runtime 中无副作用
         snapshot: async () => fakeSnapshot(),
     };
     return {

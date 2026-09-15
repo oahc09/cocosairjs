@@ -1,0 +1,244 @@
+/* V0.6 T7c — BrowserRuntime：真实浏览器 Trial 通道。
+ *
+ * start(workspace, benchmark):
+ *  1. Fresh Build：esbuild transform src/main.ts（语法/编译错误 → 抛出带 diagnostics）
+ *  2. 每 Trial 独立静态服务（随机端口）：workspace 文件 + /build/cocosair.module.js（仓库构建产物）
+ *     + /__debug/agent-session.js（tools/debug 会话，cocosair external 走 importmap 共享引擎实例）
+ *  3. Fresh Browser Context（Playwright chromium）+ 页面等待 __benchReady
+ *  4. channel：inspect/captureFrame/errorReport/executeReference 经 page.evaluate 桥接
+ *
+ * 执行：node 侧脚本使用（playwright 从 NODE_PATH 提供）。
+ */
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const REPO = path.resolve(__dirname, '..', '..', '..');
+const DEBUG_BUNDLE_CACHE = new Map();
+// esbuild 由调用方注入（本文件会被打包到临时目录，彼处 require 无法解析仓库依赖）。
+
+const BENCH_PRELUDE = `(async function(){
+  const cc = await import('/build/cocosair.module.js');
+  const deadline = Date.now() + 30000;
+  while (!window.__airApp && Date.now() < deadline) { await new Promise(r => setTimeout(r, 50)); }
+  if (!window.__airApp) { throw new Error('window.__airApp not set by main.ts (benchmark contract)'); }
+  const { createAgentSession } = await import('/__debug/agent-session.js');
+  const sceneNow = window.__airApp.getScene ? window.__airApp.getScene() : null;
+  const session = createAgentSession({ app: window.__airApp, writableScenes: sceneNow ? [sceneNow] : [] });
+  const canvas = document.getElementById('GameCanvas');
+  window.__benchSession = {
+    inspectScene: () => session.inspectScene(),
+    inspectNode: (id) => session.inspectNode(id),
+    inspectAsset: () => session.inspectAsset(),
+    getRuntimeErrors: (q) => session.getRuntimeErrors(q),
+    dispatch: (req) => session.dispatch(req),
+    canvasSize: () => ({ width: canvas.width, height: canvas.height }),
+    capture: () => new Promise((resolve, reject) => {
+      const timer = setTimeout(() => { cc.director.off(cc.Director.EVENT_AFTER_DRAW, onDraw); reject(new Error('no rendered frame')); }, 8000);
+      function onDraw() {
+        cc.director.off(cc.Director.EVENT_AFTER_DRAW, onDraw); clearTimeout(timer);
+        try {
+          const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+          const px = new Uint8Array(4);
+          gl.readPixels(Math.floor(canvas.width / 2), Math.floor(canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+          resolve({ png: canvas.toDataURL('image/png'), center: [px[0], px[1], px[2]] });
+        } catch (e) { reject(e); }
+      }
+      cc.director.on(cc.Director.EVENT_AFTER_DRAW, onDraw);
+    }),
+  };
+  window.__benchReady = true;
+})().catch(e => { window.__benchError = String(e && e.stack || e); });`;
+
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.ts': 'text/javascript', '.json': 'application/json', '.glb': 'model/gltf-binary', '.png': 'image/png', '.txt': 'text/plain', '.wasm': 'application/wasm', '.bin': 'application/octet-stream' };
+
+function serveTs (esbuild, res, file) {
+  try {
+    const out = esbuild.transformSync(fs.readFileSync(file, 'utf8'), { loader: 'ts', format: 'esm', target: 'es2022', sourcefile: file });
+    res.writeHead(200, { 'Content-Type': MIME['.js'], 'Cache-Control': 'no-store' });
+    res.end(out.code);
+  } catch (error) {
+    const err = new Error(`compile failed for ${path.basename(file)}: ${error.message.split('\n')[0]}`);
+    err.diagnostics = [String(error.message).slice(0, 500)];
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end(err.message);
+    throw err;
+  }
+}
+
+function bundleDebugSession (esbuild) {
+  const file = path.join(REPO, 'tools', 'debug', 'agent-session.ts');
+  const st = fs.statSync(file);
+  let entry = DEBUG_BUNDLE_CACHE.get(file);
+  if (!entry || entry.mtime !== st.mtimeMs) {
+    const result = esbuild.buildSync({
+      entryPoints: [file], bundle: true, format: 'esm', target: 'es2022', platform: 'browser',
+      sourcemap: 'inline', external: ['cocosair'], outfile: file.replace(/\.ts$/, '.js'), write: false,
+    });
+    entry = { mtime: st.mtimeMs, data: Buffer.from(result.outputFiles[0].contents) };
+    DEBUG_BUNDLE_CACHE.set(file, entry);
+  }
+  return entry.data;
+}
+
+class BrowserRuntime {
+  constructor ({ viewport = { width: 480, height: 360 }, esbuild } = {}) {
+    if (!esbuild) { throw new Error('BrowserRuntime requires esbuild injection'); }
+    this.esbuild = esbuild;
+    this.viewport = viewport;
+    this.server = null;
+    this.browser = null;
+    this.context = null;
+    this.page = null;
+    this.port = 0;
+  }
+
+  async start (workspace) {
+    try { return await this._start(workspace); } catch (error) { error.message = "[browser-runtime] " + error.message; throw error; }
+  }
+  async _start (workspace) {
+    // 1) Fresh Build：真实 esbuild 编译检查
+    const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
+    if (!entry) { throw new Error('main.ts missing after submission'); }
+    try {
+      this.esbuild.transformSync(fs.readFileSync(entry, 'utf8'), { loader: 'ts', format: 'esm', target: 'es2022', sourcefile: entry });
+    } catch (error) {
+      const err = new Error(`compile failed: ${String(error.message).split('\n').slice(0, 4).join(' | ').slice(0, 400)}`);
+      err.diagnostics = [String(error.message).slice(0, 400)];
+      throw err;
+    }
+    // 2) 静态服务
+    const workspaceDir = workspace.paths.workspace;
+    this.server = http.createServer((req, res) => {
+      try {
+        const p = decodeURIComponent((req.url || '/').split('?')[0]);
+        if (p === '/__bench-prelude.js') {
+          res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(BENCH_PRELUDE); return;
+        }
+        if (p === '/__debug/agent-session.js') {
+          res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(bundleDebugSession(this.esbuild)); return;
+        }
+        if (p.startsWith('/build/')) {
+          const buildFile = path.join(REPO, p);
+          if (fs.existsSync(buildFile)) {
+            res.writeHead(200, { 'Content-Type': MIME[path.extname(buildFile)] || 'application/octet-stream' });
+            res.end(fs.readFileSync(buildFile)); return;
+          }
+          console.error('[bench-404]', p); res.writeHead(404); res.end('not found'); return;
+        }
+        let rel = p === '/' ? 'index.html' : p.replace(/^\/+/, '');
+        let file = path.join(workspaceDir, rel);
+        if (!fs.existsSync(file) && !path.extname(rel)) { file = path.join(workspaceDir, rel, 'index.html'); }
+        if (!fs.existsSync(file) || !file.startsWith(workspaceDir)) { console.error('[bench-404]', p, file); res.writeHead(404); res.end('not found'); return; }
+        if (/\.ts$/.test(file)) { serveTs(this.esbuild, res, file); return; }
+        res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
+        res.end(fs.readFileSync(file));
+      } catch (error) {
+        console.error('[bench-serve]', req && req.url, '→', String(error.message || error).slice(0, 200));
+        if (!res.headersSent) { res.writeHead(500); res.end(String(error.message || error)); }
+      }
+    });
+    await new Promise((resolve) => { this.server.listen(0, '127.0.0.1', resolve); });
+    this.port = this.server.address().port;
+    // 3) Fresh Browser Context
+    const { chromium } = require('playwright');
+    this.browser = await chromium.launch({
+      executablePath: process.env.AIR_CHROMIUM
+        || ['C:', 'Users', 'caosh', 'AppData', 'Local', 'ms-playwright', 'chromium-1234', 'chrome-win64', 'chrome.exe'].join('\\'),
+      args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'],
+    });
+    this.context = await this.browser.newContext({ viewport: this.viewport });
+    this.page = await this.context.newPage();
+    // 页面错误可见性（dev server Task 13 同语义）：诊断 Benchmark 页面加载失败
+    this.page.on('console', (m) => { if (m.type() === 'error') { console.error('[bench-page]', m.text().slice(0, 300)); } });
+    this.page.on('pageerror', (e) => { console.error('[bench-pageerror]', String(e).slice(0, 300)); });
+    await this.page.goto(`http://127.0.0.1:${this.port}/index.html`, { waitUntil: 'load', timeout: 30000 });
+    await this.page.waitForFunction(() => window.__benchReady === true || !!window.__benchError, undefined, { timeout: 45000 });
+    const benchError = await this.page.evaluate(() => window.__benchError || null);
+    if (benchError) { throw new Error(`bench prelude failed: ${benchError.slice(0, 300)}`); }
+    return this.channel();
+  }
+
+  channel () {
+    const page = this.page;
+    const channel = {
+      inspect: async (query) => page.evaluate(async (q) => {
+        const s = window.__benchSession;
+        if (q.kind === 'inspectNode') { return s.inspectNode(q.id); }
+        return s.inspectAsset();
+      }, query),
+      captureFrame: async () => {
+        const cap = await page.evaluate(() => window.__benchSession.capture());
+        const size = await page.evaluate(() => window.__benchSession.canvasSize());
+        return { png: cap.png, width: size.width, height: size.height, sceneId: 'page', frameIndex: 0 };
+      },
+      errorReport: async (query) => page.evaluate((q) => window.__benchSession.getRuntimeErrors(q), query ?? {}),
+      executeReference: async (op) => page.evaluate(async (operation) => {
+        const s = window.__benchSession;
+        if (operation.op === 'inspectScene') {
+          const summary = s.inspectScene();
+          if (operation.expect) {
+            for (const [type, count] of Object.entries(operation.expect.componentsByType || {})) {
+              if ((summary.componentsByType[type] || 0) < count) { throw new Error(`expect ${type}>=${count}, got ${summary.componentsByType[type] || 0}`); }
+            }
+          }
+          return summary;
+        }
+        if (operation.op === 'inspectNode') {
+          const summary = s.inspectScene();
+          const hit = summary.nodes.find((n) => n.name === operation.name);
+          if (!hit) { throw new Error(`node ${operation.name} not found`); }
+          const view = s.inspectNode(hit.id);
+          if (operation.expect && operation.expect.position) {
+            const p = view.local.position;
+            operation.expect.position.forEach((v, i) => { if (Math.abs(p[i] - v) > 1e-3) { throw new Error(`position ${JSON.stringify(p)} != ${JSON.stringify(operation.expect.position)}`); } });
+          }
+          return view;
+        }
+        if (operation.op === 'dispatch') {
+          const response = await s.dispatch(operation);
+          if (!response.ok) { throw new Error(operation.action + ' failed: ' + response.error.code + ' ' + response.error.message); }
+          return response.result;
+        }
+        if (operation.op === 'captureFrame') { return s.capture(); }
+        throw new Error(`unknown reference op: ${operation.op}`);
+      }, op),
+      snapshot: async () => {
+        const data = await page.evaluate(async () => {
+          const s = window.__benchSession;
+          const scene = s.inspectScene();
+          const nodes = {};
+          for (const entry of scene.nodes.slice(0, 100)) { nodes[entry.id] = s.inspectNode(entry.id); }
+          const assets = s.inspectAsset();
+          const errors = s.getRuntimeErrors({ limit: 50 });
+          const cap = await s.capture();
+          return { scene, nodes, assets, errors, cap };
+        });
+        const size = await page.evaluate(() => window.__benchSession.canvasSize());
+        // 能力合同：页面出现稳定错误码 decoder-required → 该环境缺对应 decoder 配置
+        const decoderRequired = data.errors.errors.some((e) => /decoder-required/.test(e.message));
+        return {
+          capability: decoderRequired
+            ? { name: 'draco-decoder', status: 'unsupported' }
+            : { name: 'webgl2', status: 'supported' },
+          scene: data.scene,
+          nodes: data.nodes,
+          assets: data.assets,
+          capture: { png: data.cap.png, width: size.width, height: size.height, sceneId: data.scene.sceneId, frameIndex: 1 },
+          centerPixel: data.cap.center,
+          runtimeErrors: data.errors.errors,
+        };
+      },
+    };
+    return channel;
+  }
+
+  async stop () {
+    try { if (this.context) { await this.context.close(); } } catch { /* 已关闭 */ }
+    try { if (this.browser) { await this.browser.close(); } } catch { /* 已关闭 */ }
+    await new Promise((resolve) => { if (this.server) { this.server.close(resolve); } else { resolve(); } });
+    this.context = this.browser = this.page = this.server = null;
+  }
+}
+
+module.exports = { BrowserRuntime };

@@ -82,16 +82,45 @@ export class TrialRunner {
             policyConfig,
         });
         try {
+            // Type B（source-create/repair）：冻结参考实现替换 Agent 源码位（Fresh Source）
+            if (benchmark.benchmarkType !== 'runtime-control' && benchmark.referenceImplementation && options.referenceDir) {
+                const refFile = path.join(options.referenceDir, benchmark.referenceImplementation);
+                if (!existsSync(refFile)) {
+                    return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', 'reference implementation missing', 0, false, []);
+                }
+                fs.copyFileSync(refFile, path.join(workspace.paths.workspace, 'src', 'main.ts'));
+            }
             // 冻结操作脚本：由 Runner 以 Reference 身份执行（不经 Agent/Harness 策略——Reference 本身受 hash 保护）
             const channel = await this.safeStart(workspace, benchmark, options);
             if (!channel) {
-                return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', 'runtime start failed', 0, false, []);
+                return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', this.lastStartError || 'runtime start failed', 0, false, []);
+            }
+            // 冻结操作脚本：由 Runner 以 Reference 身份执行（§7——Agent 代码绝不参与 Engine Gate）
+            if (benchmark.referenceOperations?.length) {
+                if (!channel.executeReference) {
+                    return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', 'runtime lacks executeReference', 0, false, []);
+                }
+                for (const op of benchmark.referenceOperations) {
+                    await channel.executeReference(op as Record<string, unknown>);
+                }
             }
             const snapshot = await channel.snapshot();
             const results = runValidators([...benchmark.validators, ...(benchmark.visualValidators ?? [])], snapshot, benchmark.validatorParams);
-            const allPass = results.every((r) => r.state === 'PASS' || r.state === 'EXPECTED_UNSUPPORTED' || r.state === 'EXPECTED_FALLBACK');
+            // 能力合同（§9）：环境确实缺能力（capability unsupported）时，与该能力对应的
+            // 稳定错误码（如 decoder-required）属预期表现，不再计为运行时错误失败。
+            const capUnsupported = snapshot.capability?.status === 'unsupported';
+            const stableCode = snapshot.capability?.name === 'draco-decoder' ? /decoder-required/ : null;
+            const effective = results.map((r) => {
+                if (capUnsupported && stableCode && r.validatorId === 'no-runtime-error' && r.state === 'FAIL') {
+                    const offending = snapshot.runtimeErrors.filter((e) => !stableCode.test(e.message));
+                    if (offending.length === 0) { return { ...r, state: 'EXPECTED_UNSUPPORTED' as const, detail: 'stable decoder-required error verified' }; }
+                }
+                return r;
+            });
+            const allPass = effective.every((r) => r.state === 'PASS' || r.state === 'EXPECTED_UNSUPPORTED' || r.state === 'EXPECTED_FALLBACK');
             const engineResult: EngineResult = allPass
-                ? (results.some((r) => r.state === 'EXPECTED_FALLBACK' || r.state === 'EXPECTED_UNSUPPORTED') ? 'EXPECTED_FALLBACK' : 'PASS')
+                ? (results.some((r) => r.state === 'EXPECTED_UNSUPPORTED') ? 'EXPECTED_UNSUPPORTED'
+                    : results.some((r) => r.state === 'EXPECTED_FALLBACK') ? 'EXPECTED_FALLBACK' : 'PASS')
                 : 'FAIL';
             await this.runtime.stop();
             return this.outcome(workspace, options, 'VALID', engineResult, 'NOT_EVALUATED',
@@ -249,11 +278,15 @@ export class TrialRunner {
         };
     }
 
+    private lastStartError: string | null = null;
+
     private async safeStart (workspace: TrialWorkspace, benchmark: BenchmarkDefinition, options: TrialOptions): Promise<(RuntimeChannel & { snapshot (): Promise<RuntimeSnapshot> }) | null> {
         try {
             void benchmark; void options;
+            this.lastStartError = null;
             return await this.runtime.start(workspace, benchmark);
-        } catch {
+        } catch (error) {
+            this.lastStartError = String(error instanceof Error ? error.message : error);
             return null;
         }
     }

@@ -1,6 +1,7 @@
 import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, GLTFLoader, frameObject } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B004');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -16,4 +17,5 @@ const asset = await new GLTFLoader().parseAsync(bytes, '/');
 const instance = asset.instantiate();
 scene.addChild(instance.root);
 frameObject(camera, instance.root);
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);

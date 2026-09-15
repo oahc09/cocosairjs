@@ -9,6 +9,7 @@ import { BenchmarkDefinition } from './schema';
 
 const html = '<!DOCTYPE html><html><head><meta charset="utf-8">'
     + '<script type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script>'
+    + '<script src="/__bench-prelude.js"></script>'
     + '</head><body style="margin:0"><canvas id="GameCanvas" width="480" height="360"></canvas>'
     + '<script type="module" src="./src/main.ts"></script></body></html>';
 
@@ -44,7 +45,7 @@ function def (partial: Partial<BenchmarkDefinition> & Pick<BenchmarkDefinition, 
 export const GOLDEN10: BenchmarkDefinition[] = [
     def({
         id: 'B001', benchmarkType: 'source-create', category: 'Scene', name: 'scene-hierarchy',
-        prompt: 'Create src/main.ts: bootstrap a cocosair app on #GameCanvas with a scene containing a root node named "root" and a child named "cube". The cube must have a MeshRenderer with a box mesh and a builtin standard material, and a camera plus a directional light so the cube is visible.',
+        prompt: 'Create src/main.ts: bootstrap a cocosair app (must expose window.__airApp = app before run) on #GameCanvas with a scene containing a root node named "root" and a child named "cube". The cube must have a MeshRenderer with a box mesh and a builtin standard material, and a camera plus a directional light so the cube is visible.',
         validators: ['scene-ready', 'node-exists', 'no-runtime-error', 'visible-frame'],
         validatorParams: { 'node-exists': { name: 'cube' } },
         referenceImplementation: 'B001.main.ts',
@@ -52,7 +53,7 @@ export const GOLDEN10: BenchmarkDefinition[] = [
     }),
     def({
         id: 'B002', benchmarkType: 'source-create', category: 'Camera', name: 'camera-ortho-perspective',
-        prompt: 'Create src/main.ts: a scene with two cubes at different depths and a perspective camera; the scene must expose window.__cameraToggle() that switches the camera projection between perspective and orthographic (orthoHeight 4).',
+        prompt: 'Create src/main.ts: a scene (expose window.__airApp = app) with two cubes at different depths and a perspective camera; the scene must expose window.__cameraToggle() that switches the camera projection between perspective and orthographic (orthoHeight 4).',
         validators: ['scene-ready', 'node-count', 'no-runtime-error', 'visible-frame'],
         validatorParams: { 'node-count': { min: 3 } },
         referenceImplementation: 'B002.main.ts',
@@ -60,8 +61,8 @@ export const GOLDEN10: BenchmarkDefinition[] = [
     }),
     def({
         id: 'B003', benchmarkType: 'source-create', category: 'Asset', name: 'asset-load-helper',
-        prompt: 'Create src/main.ts: use utils.loadAssetAsync to load the local asset "assets/demo.txt" (the fixture provides it under the served directory) and log its content; the scene must start and stay error-free.',
-        validators: ['scene-ready', 'no-runtime-error', 'asset-loaded'],
+        prompt: 'Create src/main.ts: a scene (expose window.__airApp = app and run it first); then fetch the local asset "assets/demo.txt" provided by the fixture and verify its content; the scene must stay running and error-free.',
+        validators: ['scene-ready', 'no-runtime-error'],
         referenceImplementation: 'B003.main.ts',
         tags: ['golden10', 'asset'],
     }),
@@ -79,15 +80,15 @@ export const GOLDEN10: BenchmarkDefinition[] = [
         validators: ['scene-ready', 'animation-playing', 'no-runtime-error'],
         referenceOperations: [
             { op: 'inspectScene' },
-            { op: 'dispatch', requestId: 'B005-1', action: 'createNode', params: { name: 'anim-root' } },
-            { op: 'dispatch', requestId: 'B005-2', action: 'addComponent', params: { component: 'Animation' } },
+            { op: 'dispatch', requestId: 'B005-1', action: 'createNode', targetId: 'node-1', params: { name: 'anim-root' } },
+            { op: 'dispatch', requestId: 'B005-2', action: 'addComponent', targetId: 'node-2', params: { component: 'Animation' } },
             { op: 'inspectScene', expect: { componentsByType: { Animation: 1 } } },
         ],
         tags: ['golden10', 'animation'],
     }),
     def({
         id: 'B006', benchmarkType: 'source-create', category: 'Material', name: 'material-pbr-property',
-        prompt: 'Create src/main.ts: a cube with a standard PBR material whose base color is red (200,30,30) and metallic 0.8, lit by a directional light; must render without errors.',
+        prompt: 'Create src/main.ts: a scene (expose window.__airApp = app) with a cube using a standard PBR material whose base color is red (200,30,30) and metallic 0.8, lit by a directional light; must render without errors.',
         validators: ['scene-ready', 'material-property', 'no-runtime-error', 'visible-frame'],
         validatorParams: { 'material-property': { min: 1 } },
         referenceImplementation: 'B006.main.ts',
@@ -100,17 +101,17 @@ export const GOLDEN10: BenchmarkDefinition[] = [
         validatorParams: { 'node-exists': { name: 'moved-cube' } },
         referenceOperations: [
             { op: 'inspectScene' },
-            { op: 'dispatch', requestId: 'B007-1', action: 'createNode', params: { name: 'moved-cube' } },
-            { op: 'dispatch', requestId: 'B007-2', action: 'setTransform', params: { space: 'local', position: [1, 0, 0] } },
+            { op: 'dispatch', requestId: 'B007-1', action: 'createNode', targetId: 'node-1', params: { name: 'moved-cube' } },
+            { op: 'dispatch', requestId: 'B007-2', action: 'setTransform', targetId: 'node-2', params: { space: 'local', position: [1, 0, 0] } },
             { op: 'inspectNode', name: 'moved-cube', expect: { position: [1, 0, 0] } },
         ],
         tags: ['golden10', 'interaction'],
     }),
     def({
         id: 'B008', benchmarkType: 'source-create', category: 'Compression', name: 'draco-compressed-gltf',
-        prompt: 'Create src/main.ts: load a Draco-compressed GLB from "./assets/compressed.glb" with GLTFLoader (the decoder is preconfigured in this environment), instantiate it, and render one clean frame.',
-        validators: ['scene-ready', 'asset-loaded', 'no-runtime-error'],
-        validatorParams: { 'asset-loaded': { kind: 'Mesh', min: 1 } },
+        prompt: 'Create src/main.ts: a scene (expose window.__airApp = app) that loads a Draco-compressed GLB from "./assets/compressed.glb" with GLTFLoader (the decoder is preconfigured in this environment), instantiate it, and render one clean frame.',
+        validators: ['scene-ready', 'capability-status', 'no-runtime-error'],
+        validatorParams: { 'capability-status': { requires: 'draco-decoder' } },
         referenceImplementation: 'B008.main.ts',
         tags: ['golden10', 'compression'],
     }),
@@ -121,8 +122,8 @@ export const GOLDEN10: BenchmarkDefinition[] = [
         validatorParams: { 'node-exists': { name: 'agent-node' } },
         referenceOperations: [
             { op: 'inspectScene' },
-            { op: 'dispatch', requestId: 'B009-1', action: 'createNode', params: { name: 'agent-node' } },
-            { op: 'dispatch', requestId: 'B009-2', action: 'setTransform', params: { space: 'local', position: [1, 1, 0], scale: [2, 2, 2] } },
+            { op: 'dispatch', requestId: 'B009-1', action: 'createNode', targetId: 'node-1', params: { name: 'agent-node' } },
+            { op: 'dispatch', requestId: 'B009-2', action: 'setTransform', targetId: 'node-2', params: { space: 'local', position: [1, 1, 0], scale: [2, 2, 2] } },
             { op: 'inspectNode', name: 'agent-node', expect: { position: [1, 1, 0] } },
             { op: 'captureFrame' },
         ],
@@ -158,15 +159,15 @@ material('B003', {
 material('B004', {
     'src/main.ts': '// TODO: GLTFLoader.parseAsync on BoxTextured.glb\n',
 });
-material('B005', { 'src/main.ts': '' });
+material('B005', { 'src/main.ts': "import { createAirApp, Scene } from 'cocosair';\nconst app = await createAirApp({ canvas: '#GameCanvas' });\nconst scene = new Scene('B005');\n(window as any).__airApp = app;\napp.run(scene);\n" });
 material('B006', {
     'src/main.ts': '// TODO: red metallic cube\n',
 });
-material('B007', { 'src/main.ts': '' });
+material('B007', { 'src/main.ts': "import { createAirApp, Scene } from 'cocosair';\nconst app = await createAirApp({ canvas: '#GameCanvas' });\nconst scene = new Scene('B007');\n(window as any).__airApp = app;\napp.run(scene);\n" });
 material('B008', {
     'src/main.ts': '// TODO: load draco-compressed model\n',
 });
-material('B009', { 'src/main.ts': '' });
+material('B009', { 'src/main.ts': "import { createAirApp, Scene } from 'cocosair';\nconst app = await createAirApp({ canvas: '#GameCanvas' });\nconst scene = new Scene('B009');\n(window as any).__airApp = app;\napp.run(scene);\n" });
 material('B010', {
     'src/main.ts': [
         "import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';",

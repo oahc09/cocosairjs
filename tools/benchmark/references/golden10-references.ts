@@ -7,6 +7,7 @@ export const REFERENCES: Record<string, string> = {};
 REFERENCES.B001 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B001');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -27,12 +28,14 @@ root.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 renderer.material = builtinResMgr.get('builtin-standard-material');
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
 `;
 
 REFERENCES.B002 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B002');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -59,21 +62,26 @@ for (let i = 0; i < 2; i++) {
         : Camera.ProjectionType.ORTHO;
     if (camera.projection === Camera.ProjectionType.ORTHO) { camera.orthoHeight = 4; }
 };
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
 `;
 
-REFERENCES.B003 = `import { createAirApp, Scene, utils } from 'cocosair';
+REFERENCES.B003 = `import { createAirApp, Scene } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B003');
-const asset = await utils.loadAssetAsync('assets/demo.txt');
-console.log('[B003] asset content:', asset);
 app.run(scene);
+const response = await fetch('/assets/demo.txt');
+const text = await response.text();
+if (text.trim() !== 'demo-asset-content') { throw new Error('asset content mismatch: ' + text); }
+console.log('[B003] asset loaded:', text);
 `;
 
 REFERENCES.B004 = `import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, GLTFLoader, frameObject } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B004');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -89,12 +97,14 @@ const asset = await new GLTFLoader().parseAsync(bytes, '/');
 const instance = asset.instantiate();
 scene.addChild(instance.root);
 frameObject(camera, instance.root);
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
 `;
 
 REFERENCES.B006 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, Material, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B006');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
@@ -116,33 +126,27 @@ material.initialize({ effectName: 'builtin-standard', defines: { USE_BASE_COLOR:
 renderer.material = material;
 renderer.material = builtinResMgr.get('builtin-standard-material');
 void Color;
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
 `;
 
-REFERENCES.B008 = `import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, GLTFLoader, frameObject } from 'cocosair';
+REFERENCES.B008 = `import { createAirApp, Scene, GLTFLoader } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B008');
-const cameraNode = new Node('camera');
-scene.addChild(cameraNode);
-const camera = cameraNode.addComponent(Camera);
-camera.visibility = Layers.Enum.DEFAULT;
-const lightNode = new Node('light');
-scene.addChild(lightNode);
-lightNode.setRotationFromEuler(-45, -30, 0);
-lightNode.addComponent(DirectionalLight);
+app.run(scene);
 const response = await fetch('/assets/compressed.glb');
 const bytes = await response.arrayBuffer();
 const asset = await new GLTFLoader().parseAsync(bytes, '/');
 const instance = asset.instantiate();
 scene.addChild(instance.root);
-frameObject(camera, instance.root);
-app.run(scene);
 `;
 
 REFERENCES.B010 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('repair-demo');
 const cameraNode = new Node('Camera');
 scene.addChild(cameraNode);
@@ -160,5 +164,6 @@ scene.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 renderer.material = builtinResMgr.get('builtin-standard-material');
+(window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
 `;

@@ -1,21 +1,28 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "../../src",
-    "paths": {
-      "cocosair": ["./index.ts"],
-      "pal/*": ["pal/*"],
-      "cc.decorator": ["cocos/core/data/decorators/index.ts"],
-      "@cocos/engine/*": ["*"]
-    },
-    "noEmit": true
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "types": [
+      "node",
+      "jest"
+    ],
+    "lib": [
+      "es2020",
+      "dom"
+    ]
   },
   "include": [
-    "./**/*.ts",
-    "../../src/**/*.ts"
+    "**/*.ts"
   ],
   "exclude": [
-    "../../src/editor",
-    "./work/**"
+    "work/**",
+    "fixtures/**",
+    "references/frozen/**"
   ]
 }
