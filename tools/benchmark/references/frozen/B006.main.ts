@@ -1,0 +1,25 @@
+import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, Material, builtinResMgr } from 'cocosair';
+
+const app = await createAirApp({ canvas: '#GameCanvas' });
+const scene = new Scene('B006');
+const cameraNode = new Node('camera');
+scene.addChild(cameraNode);
+cameraNode.setPosition(new Vec3(0, 2, 6));
+cameraNode.setRotationFromEuler(-15, 0, 0);
+const camera = cameraNode.addComponent(Camera);
+camera.visibility = Layers.Enum.DEFAULT;
+const lightNode = new Node('light');
+scene.addChild(lightNode);
+lightNode.setRotationFromEuler(-45, -30, 0);
+lightNode.addComponent(DirectionalLight);
+const cube = new Node('cube');
+cube.layer = Layers.Enum.DEFAULT;
+scene.addChild(cube);
+const renderer = cube.addComponent(MeshRenderer);
+renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+const material = new Material();
+material.initialize({ effectName: 'builtin-standard', defines: { USE_BASE_COLOR: true }, macroRemap: {} });
+renderer.material = material;
+renderer.material = builtinResMgr.get('builtin-standard-material');
+void Color;
+app.run(scene);

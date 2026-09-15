@@ -1,0 +1,20 @@
+import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
+
+const app = await createAirApp({ canvas: "#GameCanvas" });
+const scene = new Scene("repair-demo");
+const cameraNode = new Node("Camera");
+scene.addChild(cameraNode);
+cameraNode.setPosition(new Vec3(0, 2, 6));
+const camera = cameraNode.addComponent(Camera);
+camera.visibility = Layers.Enum.DEFAULT;
+const lightNode = new Node("Light");
+scene.addChild(lightNode);
+lightNode.addComponent(DirectionalLight);
+const cube = new Node("cube");
+cube.layer = Layers.Enum.DEFAULT;
+scene.addChild(cube);
+const renderer = cube.addComponent(MeshRenderer);
+renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+renderer.material = builtinResMgr.get("builtin-standard-material");
+app.run(scene);
+cube.destroy(); // BUG: destroys the cube immediately — remove this line

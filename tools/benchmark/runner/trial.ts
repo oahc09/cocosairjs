@@ -85,7 +85,7 @@ export class TrialRunner {
             // 冻结操作脚本：由 Runner 以 Reference 身份执行（不经 Agent/Harness 策略——Reference 本身受 hash 保护）
             const channel = await this.safeStart(workspace, benchmark, options);
             if (!channel) {
-                return this.outcome(workspace, options, 'INFRA_FAILURE', 'SKIP', 'NOT_EVALUATED', 'INFRASTRUCTURE', 'runtime start failed', 0, false, []);
+                return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', 'runtime start failed', 0, false, []);
             }
             const snapshot = await channel.snapshot();
             const results = runValidators([...benchmark.validators, ...(benchmark.visualValidators ?? [])], snapshot, benchmark.validatorParams);
@@ -98,7 +98,7 @@ export class TrialRunner {
                 engineResult === 'FAIL' ? 'ENGINE' : 'NONE', undefined, 0, false, [], results);
         } catch (error) {
             await this.runtime.stop().catch(() => undefined);
-            return this.outcome(workspace, options, 'INFRA_FAILURE', 'SKIP', 'NOT_EVALUATED', 'INFRASTRUCTURE', `reference harness: ${String(error)}`, 0, false, []);
+            return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', `reference harness: ${String(error)}`, 0, false, []);
         }
     }
 

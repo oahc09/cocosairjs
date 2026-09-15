@@ -1,0 +1,1 @@
+See docs/06-code-first-getting-started.md semantics: createAirApp({canvas:"#GameCanvas"}).
