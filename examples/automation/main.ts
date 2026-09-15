@@ -37,6 +37,7 @@ const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 renderer.material = builtinResMgr.get('builtin-standard-material');
 
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 app.run(scene);
 
 // ---- 页面日志区（画布之外的普通 DOM）----

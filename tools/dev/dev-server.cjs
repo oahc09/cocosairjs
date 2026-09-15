@@ -297,6 +297,26 @@ setTimeout(poll,1000);})();`);
         res.end(fs.readFileSync(path.join(__dirname, 'air-prelude.js'), 'utf8'));
         return;
     }
+    if (p === '/__debug-button.js') {
+        // V0.5.1 T5：dev 页面的显式启用入口 —— 仅一个悬浮按钮；点击才动态 import
+        // /__debug/panel.js（默认页面加载请求中不含任何 debug/agent 模块）。
+        res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/javascript; charset=utf-8' });
+        res.end(`(function(){
+if (document.getElementById('__air-debug-btn')) return;
+var b=document.createElement('button');
+b.id='__air-debug-btn'; b.title='cocosair debug panel (Alt+D)';
+b.textContent='debug';
+b.style.cssText='position:fixed;right:10px;bottom:10px;z-index:99997;background:#1c2b4a;color:#9cf;'
+ +'border:1px solid #345;border-radius:8px;padding:4px 10px;font:12px system-ui;cursor:pointer;opacity:.75';
+b.onclick=function(){
+  import('/__debug/panel.js').then(function(m){
+    if(!window.__airPanel || !document.querySelector('[data-air-debug-panel]')){ window.__airPanel=m.createDebugPanel({}); }
+  }).catch(function(e){ alert('debug panel load failed: '+e.message); });
+};
+(document.body||document.documentElement).appendChild(b);
+})();`);
+        return;
+    }
     if (p.startsWith('/__debug/')) {
         // V0.5.1 T3/T4：开发期 agent session / debug 面板入口。
         // 按需 esbuild bundle（mtime 缓存）——这些文件不在默认 runtime bundle 内，
@@ -337,11 +357,11 @@ setTimeout(poll,1000);})();`);
         if (finalFile.endsWith('index.html')) {
             const html = fs.readFileSync(finalFile, 'utf8');
             res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/html; charset=utf-8' });
-            // importmap 必须先于任何 module script；再注入 prelude（诊断）与 reload 轮询
+            // importmap 必须先于任何 module script；再注入 prelude（诊断）、reload 轮询与 debug 入口按钮
             const importMap = /<script\b[^>]*type=["']importmap["']/i.test(html)
                 ? '' : `<script type="importmap">${IMPORT_MAP}</script>`;
             res.end(html.replace('</head>',
-                `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script></head>`));
+                `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script><script src="/__debug-button.js"></script></head>`));
             return;
         }
         if (/\.m?ts$/.test(finalFile)) return serveExampleTs(res, finalFile);

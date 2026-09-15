@@ -88,5 +88,6 @@ addCube(grandchild, 'grandchild-cube', 0.25);
 root.addComponent(HierarchyAnimator);
 root.addComponent(Reporter);
 
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 app.run(scene);
 console.log('[transform] running — 打开控制台观察 local vs world position');

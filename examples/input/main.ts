@@ -91,5 +91,6 @@ input.on(Input.EventType.TOUCH_MOVE, (event) => {
 input.on(Input.EventType.TOUCH_END, () => { dragging = false; });
 input.on(Input.EventType.TOUCH_CANCEL, () => { dragging = false; });
 
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 app.run(scene);
 console.log('[input] running — WASD 平移 / 滚轮推拉 / 拖拽旋转');

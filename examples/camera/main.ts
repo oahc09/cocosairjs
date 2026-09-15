@@ -42,6 +42,7 @@ for (let i = 0; i < 5; i++) {
     renderer.material = builtinResMgr.get('builtin-standard-material');
 }
 
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 app.run(scene);
 
 // ---- DOM 控制条（v051 面板之外的普通页面元素）----
