@@ -456,3 +456,28 @@ NodeNext 消费；**11 浏览器证据全 ok**。
 
 门控：typecheck 0；21 套件 / **134 测试**；verify:web-only；verify:decoders；esm/min/dts +
 NodeNext 消费；**12 浏览器证据全 ok**。
+
+## V0.5.1 Developer Ecosystem & Agent Ready Runtime（2026-09-15）
+
+按计划书 T0→T7 顺序完成；起点为 V0.5 G5 冻结交接（`534f2bb`）。
+
+- **T0/T1** 冻结交接 + 可安装包与 Consumer 审计（consumer-acceptance ok）。
+- **T2** 示例导航页（`/index.html`，旧 URL 不变）+ 4 新学习示例
+  （transform/camera/input/automation，main.ts + README 三件套）；
+  G2 浏览器 7/7（含旧示例回归）。
+- **T3/T4** `tools/debug/agent-session.ts`：inspectScene/inspectNode/inspectAsset
+  （复用 runtime-assets 报告）、createNode/addComponent(白名单)/setTransform/
+  loadAsset/instantiateAsset、captureFrame（AFTER_DRAW）、错误收集
+  （prelude hub 订阅分发，环形缓冲）；G4 浏览器闭环 13 pass / 0 fail；
+  smoke-22 共 17 用例。
+- **T5** 最小 Debug 面板（Scene Tree/节点详情/Asset/错误/截图/性能摘要，
+  Alt+D + 显式按钮启用）；G5 浏览器 7/7；smoke-23 依赖图守卫
+  （默认 bundle 零 debug 标识）。
+- **T6** Runtime Baseline：BoxTextured 30 轮回归 0.512（无回退）；
+  startup/scene ready/first visible frame/asset load/debug overhead/memory
+  指标落盘 `v051-runtime-baseline.md` + evidence。
+- **T7** 强制命令全绿（build/min/dts/typecheck/verify:web-only/jest 23 套件
+  155 测试）+ source-maps/build-cache/dev-loop/decoder/consumer + 浏览器回归；
+  文档 `v051-*` 五篇；V0.5 四份 glTF 文档移交沿用。
+
+边界：未授权不做 npm publish；glTF 引擎路径零改动（smoke-07..21 全量回归）。

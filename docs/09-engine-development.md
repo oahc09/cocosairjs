@@ -58,3 +58,11 @@ NODE_PATH=<playwright 所在目录> node tools/verify/v02-examples.cjs
 1. 画布 id 必须是 `GameCanvas`（引擎 import 阶段即查找，见 `06-code-first-getting-started.md`）。
 2. `fs.watch` 只响应内容变化；仅 mtime 的 touch 不触发事件（实际编辑器保存无影响）。
 3. Windows 下 recursive watch 可用；其他平台若不可用则退化为无 watch（终端有告警）。
+
+## V0.5.1 增量
+
+- dev 页面注入右下角 `debug` 按钮（`/__debug-button.js`，点击才加载
+  `tools/debug/panel.ts` 面板）；agent session 合同见 `v051-agent-development.md`。
+- `tools/debug/**` 变更与 examples 同频道：仅浏览器 reload，不触发引擎构建。
+- 开发期性能测量页：`examples/shared/bench.html`（示例发现排除 shared/），
+  口径与结果见 `v051-runtime-baseline.md`。

@@ -57,6 +57,8 @@ npm run dev -- --example starter
 
 ## 下一步
 
+- 示例导航（transform/camera/input 等学习示例）：见 `v051-examples.md`，
+  dev server 下打开 `/index.html`
 - 资产加载：见 `07-asset-loading.md`
 - 蒙皮模型：见 `08-skinned-model.md`
 - 引擎开发循环：见 `09-engine-development.md`
