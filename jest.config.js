@@ -8,7 +8,9 @@ module.exports = {
         "^.+\\.tsx?$": [
             "ts-jest",
             {
-                "diagnostics": false
+                "diagnostics": false,
+                "isolatedModules": true,
+                "tsconfig": "<rootDir>/test/tsconfig.jest.json"
             }
         ],
         "^.+\\.js$": "babel-jest"
@@ -29,7 +31,12 @@ module.exports = {
         "^pal/minigame$": "<rootDir>/src/pal/minigame/non-minigame.js"
     },
     "globals": {
-        "CC_TEST": true
+        "CC_TEST": true,
+        "ts-jest": {
+            "tsconfig": "<rootDir>/test/tsconfig.jest.json",
+            "diagnostics": false,
+            "isolatedModules": true
+        }
     },
     "testTimeout": 30000
 };
