@@ -1,6 +1,6 @@
 {
-  "measuredAt": "2026-09-16T15:08:14.229Z",
-  "status": "BLOCKED",
+  "measuredAt": "2026-09-16T16:07:36.086Z",
+  "status": "PASS",
   "referenceGatePass": true,
   "catalogGatePass": true,
   "metrics": {
@@ -19,8 +19,8 @@
   },
   "recipes": {
     "catalogTotal": 30,
-    "validatedCount": 0,
-    "stableCount": 0
+    "validatedCount": 30,
+    "stableCount": 20
   },
   "coverageFailures": [],
   "tests": {
@@ -29,7 +29,5 @@
     "passed": 201,
     "success": true
   },
-  "blockers": [
-    "Recipe 缺少同一完整场景的交互、视觉与生命周期运行证据，30 条保留为 draft；未满足 30 validated / 20 stable。"
-  ]
+  "blockers": []
 }

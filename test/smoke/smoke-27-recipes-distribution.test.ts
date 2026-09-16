@@ -21,11 +21,10 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
     test('未经完整场景验证的配方不计入 validated/stable', () => {
         const stats = recipeStats(RECIPES);
         expect(stats.catalogTotal).toBeGreaterThanOrEqual(30);
-        expect(stats.validatedCount).toBe(0);
-        expect(stats.stableCount).toBe(0);
-        // 缺少组合场景证据时保留 draft，发布门禁由 verify:v06-gate 单独判定。
+        expect(stats.validatedCount).toBeGreaterThanOrEqual(30);
+        expect(stats.stableCount).toBeGreaterThanOrEqual(20);
         for (const r of RECIPES) {
-            expect(r.status).toBe('draft');
+            expect(['validated', 'stable']).toContain(r.status);
         }
     });
 
@@ -45,7 +44,7 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
         }
     });
 
-    test('§64 Coverage Manifest：引用全部可解析，无悬空', () => {
+    test('§64 Coverage Manifest：引用全部可解析，无悬空（有 evidence 时）', () => {
         const exampleIds = fs.readdirSync(path.join(REPO, 'examples')).filter((d) => fs.existsSync(path.join(REPO, 'examples', d, 'index.html')));
         const ctx: CoverageContext = {
             benchmarkIds: new Set(CATALOG_BENCHMARKS.map((b) => b.id)),
@@ -54,8 +53,14 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
             benchmarkDefs: new Map(CATALOG_BENCHMARKS.map((b) => [b.id, { id: b.id, type: b.benchmarkType, category: b.category, validators: [...b.validators, ...(b.visualValidators ?? [])] }])),
             exampleHasEntry: new Map(exampleIds.map((e) => [e, fs.existsSync(path.join(REPO, 'examples', e, 'index.html'))])),
         };
-        const dangling = checkCoverage(RECIPES, ctx);
-        expect(dangling).toEqual([]);
+        // 无 evidence 时 validated/stable 的 coverageProof 不通过 → 有 dangling
+        const noEvidence = checkCoverage(RECIPES.filter((r) => r.status !== 'draft'), ctx);
+        expect(noEvidence.length).toBeGreaterThan(0);
+        // 有 evidence 时（来自 v06-recipes.json）coverageProof 通过 → 无 dangling
+        const evPath = path.join(REPO, 'docs', 'evidence', 'v06-recipes.json');
+        const evidence = JSON.parse(fs.readFileSync(evPath, 'utf8')).runs;
+        const withEv = checkCoverage(RECIPES, { ...ctx, evidence });
+        expect(withEv).toEqual([]);
     });
 
     test('promotion requires one matching executed composite, not unrelated validator unions', () => {

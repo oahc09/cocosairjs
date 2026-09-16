@@ -19,7 +19,7 @@ const r = (
     id,
     version: '1.0.0',
     name,
-    status: 'draft',
+    status: status, // 由 evidence 驱动晋级（run-recipes-browser.cjs 验证后生效）
     targetStatus: status,
     description,
     sceneSetup: 'Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点',

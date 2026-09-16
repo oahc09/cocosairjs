@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-09-16T15:04:04.933Z",
+  "measuredAt": "2026-09-16T15:59:53.245Z",
   "source": {
-    "baseRevision": "c626a4de2db842135c04a6c31e0c8b0cc984c02f",
+    "baseRevision": "81223e80f2feb56697352c793dee2346b501c7c8",
     "workingTree": true,
-    "sourceHash": "4b2a74d2233ccd9a001a13c0205df5853cb6bbef3564632e23e232cf9fbe29cb"
+    "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578"
   },
   "profile": "A001",
   "gate": {

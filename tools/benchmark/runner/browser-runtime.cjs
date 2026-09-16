@@ -142,6 +142,7 @@ class BrowserRuntime {
     try { return await this._start(workspace); } catch (error) { error.message = "[browser-runtime] " + error.message; throw error; }
   }
   async _start (workspace) {
+    void this.page;
     const generation = this.generation;
     const check = await this.build(workspace);
     if (!check.success) {
@@ -217,6 +218,10 @@ class BrowserRuntime {
         const s = window.__benchSession;
         if (q.kind === 'inspectNode') { return s.inspectNode(q.id); }
         if (q.kind === 'inspectScene') { return s.inspectScene(); }
+        if (q.kind === 'custom') {
+          const fn = window[q.query];
+          return fn ? fn() : null;
+        }
         if (q.kind === 'dispatch') {
           const response = await s.dispatch({ requestId: q.requestId, action: q.action, targetId: q.targetId, params: q.params });
           if (!response.ok) { throw new Error(q.action + ' failed: ' + response.error.code); }

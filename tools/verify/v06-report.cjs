@@ -23,6 +23,7 @@ const recipeEvidence=fs.existsSync(recipeEvidenceFile)?JSON.parse(fs.readFileSyn
 const coverageFailures=checkCoverage(RECIPES, {
     benchmarkIds:new Set(CATALOG_BENCHMARKS.map(b=>b.id)),exampleIds:new Set(exampleIds),validatorIds:new Set(Object.keys(VALIDATORS)),
     exampleHasEntry:new Map(exampleIds.map(id=>[id,true])),evidence:recipeEvidence,
+    benchmarkDefs:new Map(CATALOG_BENCHMARKS.map(b=>[b.id,{id:b.id,type:b.benchmarkType,category:b.category,validators:[...b.validators,...(b.visualValidators||[])]}])),
 });
 const refPass=dual.rows.length===10 && dual.rows.every(r=>['PASS','EXPECTED_UNSUPPORTED','EXPECTED_FALLBACK'].includes(r.reference.engineResult));
 const catalogPass=catalog.total===100 && catalog.pass===100;

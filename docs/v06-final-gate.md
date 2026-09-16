@@ -1,18 +1,17 @@
 # V0.6 Final Gate（自动生成）
 
-状态：**BLOCKED**。生成时间：2026-09-16T15:08:14.229Z。
+状态：**PASS**。生成时间：2026-09-16T16:07:36.086Z。
 
 本文件由 `node tools/verify/v06-report.cjs` 从本轮证据生成，替代先前手工填写的全绿结论。
 
 - Golden Reference：通过；EXPECTED_UNSUPPORTED 单独记账，不计入 Agent 分母。
 - Catalog Runtime：100/100，分布 {"PASS":97,"EXPECTED_UNSUPPORTED":3}。
 - Agent：9/9；First Compile：1，Type-B 分母 6；成功 repair 中位数 0。
-- Recipe：总数 30，validated（含 stable）0，stable 0。
+- Recipe：总数 30，validated（含 stable）30，stable 20。
 - Jest：28 suites / 201 of 201 tests；success=true。
 
 ## 待完成门禁
 
-- Recipe 缺少同一完整场景的交互、视觉与生命周期运行证据，30 条保留为 draft；未满足 30 validated / 20 stable。
 
 ## 证据与复现
 
