@@ -5,12 +5,13 @@
  *  - Reference Track：冻结操作脚本（runtime-control）或冻结参考实现（Type B），
  *    Fresh Build + Fresh Runtime + Validators → engineResult。Agent 代码绝不参与。
  *  - Agent Track：仅在 Reference PASS/EXPECTED_FALLBACK 后启动；Driver 动作经
- *    Harness（策略拒绝计入 FeedbackPackage），每轮修改后 Fresh Build + Fresh
- *    Runtime → agentResult。
+ *    Harness（策略拒绝计入 FeedbackPackage）。源码类 benchmark 每次提交后：
+ *    停旧 Runtime → 真实 build（esbuild）→ Fresh Browser Context 验证新源码；
+ *    runtime-control 类预启动并复用通道（session 状态即被试对象）。
  *
- * Runtime 抽象：browser=true 走 Playwright Fresh Context；测试内用 InProcessRuntime。
- *Trial 顶层状态（§14）：
- *  VALID / INFRA_FAILURE（基础设施坏）/ INVALID_RUN（隔离突破，§32）。
+ * Trial 顶层状态（§14）：VALID / INFRA_FAILURE / INVALID_RUN（隔离突破，§32）。
+ * 时间预算（§13 TIMEOUT）：startTask/submitTask/nextAction/provideFeedback/finish
+ * 与 Runtime 操作全部受 timeBudget deadline 约束，超时 → TIMEOUT + AGENT。
  */
 import { existsSync } from 'fs';
 import * as fs from 'fs';
@@ -23,11 +24,20 @@ import { TrialWorkspace } from './workspace';
 import { RuntimeSnapshot, runValidators, ValidatorResult } from '../validators';
 import { BenchmarkDefinition } from '../catalog/schema';
 
+export type ChannelWithSnapshot = RuntimeChannel & { snapshot (): Promise<RuntimeSnapshot> };
+
 /** Trial 运行时通道工厂：browser / in-process 由宿主注入（本模块不做 IO 假设）。 */
 export interface TrialRuntime {
-    /** 启动 Fresh Runtime（Fresh Browser Context + Fresh Scene + Fresh Session）。 */
-    start (workspace: TrialWorkspace, benchmark: BenchmarkDefinition): Promise<RuntimeChannel & { snapshot (): Promise<RuntimeSnapshot> }>;
+    /** 启动 Fresh Runtime；实现内部必须先做真实构建检查（失败抛错并带 diagnostics）。 */
+    start (workspace: TrialWorkspace, benchmark: BenchmarkDefinition): Promise<ChannelWithSnapshot>;
+    /** §20 Fresh Build：对当前 workspace 源码执行真实构建检查（不经 Runtime 启动）。 */
+    build (workspace: TrialWorkspace): Promise<{ success: boolean; diagnostics: string[] }>;
     stop (): Promise<void>;
+}
+
+/** §13：TIMEOUT 内部信号。 */
+class AgentTimeoutError extends Error {
+    constructor (public readonly phase: string) { super(`time budget exceeded during: ${phase}`); }
 }
 
 export interface TrialOptions {
@@ -59,6 +69,9 @@ export interface TrackOutcome {
 }
 
 export class TrialRunner {
+    private lastStartError: string | null = null;
+    private activeChannel: ChannelWithSnapshot | null = null;
+
     constructor (private readonly runtime: TrialRuntime) {}
 
     /** Reference Track（§7/§9/§11）。 */
@@ -90,11 +103,11 @@ export class TrialRunner {
                 }
                 fs.copyFileSync(refFile, path.join(workspace.paths.workspace, 'src', 'main.ts'));
             }
-            // 冻结操作脚本：由 Runner 以 Reference 身份执行（不经 Agent/Harness 策略——Reference 本身受 hash 保护）
-            const channel = await this.safeStart(workspace, benchmark, options);
-            if (!channel) {
-                return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', this.lastStartError || 'runtime start failed', 0, false, []);
+            const started = await this.safeStart(workspace, benchmark, options);
+            if (typeof started === 'string') {
+                return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', started, 0, false, []);
             }
+            const channel = started;
             // 冻结操作脚本：由 Runner 以 Reference 身份执行（§7——Agent 代码绝不参与 Engine Gate）
             if (benchmark.referenceOperations?.length) {
                 if (!channel.executeReference) {
@@ -106,34 +119,31 @@ export class TrialRunner {
             }
             const snapshot = await channel.snapshot();
             const results = runValidators([...benchmark.validators, ...(benchmark.visualValidators ?? [])], snapshot, benchmark.validatorParams);
-            // 能力合同（§9）：环境确实缺能力（capability unsupported）时，与该能力对应的
-            // 稳定错误码（如 decoder-required）属预期表现，不再计为运行时错误失败。
-            const capUnsupported = snapshot.capability?.status === 'unsupported';
-            const stableCode = snapshot.capability?.name === 'draco-decoder' ? /decoder-required/ : null;
-            const effective = results.map((r) => {
-                if (capUnsupported && stableCode && r.validatorId === 'no-runtime-error' && r.state === 'FAIL') {
-                    const offending = snapshot.runtimeErrors.filter((e) => !stableCode.test(e.message));
-                    if (offending.length === 0) { return { ...r, state: 'EXPECTED_UNSUPPORTED' as const, detail: 'stable decoder-required error verified' }; }
-                }
-                return r;
-            });
+            const effective = this.applyCapabilityContract(results, snapshot, benchmark);
             const allPass = effective.every((r) => r.state === 'PASS' || r.state === 'EXPECTED_UNSUPPORTED' || r.state === 'EXPECTED_FALLBACK');
             const engineResult: EngineResult = allPass
-                ? (results.some((r) => r.state === 'EXPECTED_UNSUPPORTED') ? 'EXPECTED_UNSUPPORTED'
-                    : results.some((r) => r.state === 'EXPECTED_FALLBACK') ? 'EXPECTED_FALLBACK' : 'PASS')
+                ? (effective.some((r) => r.state === 'EXPECTED_UNSUPPORTED') ? 'EXPECTED_UNSUPPORTED'
+                    : effective.some((r) => r.state === 'EXPECTED_FALLBACK') ? 'EXPECTED_FALLBACK' : 'PASS')
                 : 'FAIL';
             await this.runtime.stop();
             return this.outcome(workspace, options, 'VALID', engineResult, 'NOT_EVALUATED',
-                engineResult === 'FAIL' ? 'ENGINE' : 'NONE', undefined, 0, false, [], results);
+                engineResult === 'FAIL' ? 'ENGINE' : 'NONE', undefined, 0, false, [], effective);
         } catch (error) {
             await this.runtime.stop().catch(() => undefined);
             return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', `reference harness: ${String(error)}`, 0, false, []);
         }
     }
 
-    /** Agent Track（§12/§13/§20-22）：仅在 Reference PASS 后由调用方启动。 */
+    /**
+     * Agent Track（§12/§13/§20-22）：仅在 Reference PASS 后由调用方启动。
+     *
+     * - runtime-control：预启动 Fresh Runtime 并复用通道（session 状态即被试对象）；
+     * - source-create/repair：Agent 提交源码后【停旧 Runtime → 真实 build →
+     *   Fresh Browser Context】再验证——绝不让提交前的页面冒充 Fresh Runtime。
+     */
     async runAgent (options: TrialOptions, driver: AgentDriver): Promise<TrackOutcome> {
         const benchmark = options.benchmark;
+        const isRuntimeControl = benchmark.benchmarkType === 'runtime-control';
         const policyConfig = this.policyConfig(benchmark);
         const workspace = TrialWorkspace.create({
             workRoot: options.workRoot,
@@ -145,15 +155,35 @@ export class TrialRunner {
         let firstSubmissionCompilePass = false;
         let submitted = false;
         let feedback: FeedbackPackage | null = null;
-        // runtime-control 类 Agent 解需要立即与运行时交互：预启动 Fresh Runtime 并挂接通道
-        const started = await this.safeStart(workspace, benchmark, options);
-        if (typeof started === 'string') {
-            throw new Error(started);
-        }
-        this.activeChannel = started;
-        harness.attachRuntime(started);
+        // §13：Trial 级时间预算——覆盖 Driver 交互与 Runtime 操作全程
+        const deadline = Date.now() + benchmark.timeBudgetMs;
+        const remaining = (): number => deadline - Date.now();
+        const guard = async <T>(p: Promise<T> | ((...a: never[]) => Promise<T>), phase: string): Promise<T> => {
+            const left = remaining();
+            if (left <= 0) { throw new AgentTimeoutError(phase); }
+            const promise = (typeof p === 'function' ? (p as () => Promise<T>)() : p);
+            let timer: ReturnType<typeof setTimeout> | undefined;
+            const timeout = new Promise<never>((_, reject) => {
+                timer = setTimeout(() => reject(new AgentTimeoutError(phase)), left);
+            });
+            try { return await Promise.race([promise, timeout]); } finally { if (timer) { clearTimeout(timer); } }
+        };
+        const teardown = async (): Promise<void> => {
+            this.activeChannel = null;
+            await this.runtime.stop().catch(() => undefined);
+            await harness.dispose();
+        };
+
         try {
-            const run = await driver.startTask({
+            // 仅 runtime-control 预启动（session 状态即被试对象）；源码类提交后才启 Fresh Runtime
+            if (isRuntimeControl) {
+                const started = await guard(this.safeStart(workspace, benchmark, options), 'runtime.start (rc prestart)');
+                if (typeof started === 'string') { throw new Error(started); }
+                this.activeChannel = started;
+                harness.attachRuntime(started);
+            }
+
+            const run = await guard(driver.startTask({
                 requestNext: async () => ({ remainingRepairs: benchmark.repairBudget - repairs }),
                 task: {
                     benchmarkId: benchmark.id,
@@ -164,8 +194,8 @@ export class TrialRunner {
                     repairBudget: benchmark.repairBudget,
                     timeBudgetMs: benchmark.timeBudgetMs,
                 },
-            });
-            await run.submitTask({
+            }), 'driver.startTask');
+            await guard(run.submitTask({
                 benchmarkId: benchmark.id,
                 prompt: benchmark.prompt,
                 writablePaths: benchmark.writablePaths,
@@ -173,19 +203,19 @@ export class TrialRunner {
                 knowledgePaths: this.knowledgePaths(benchmark),
                 repairBudget: benchmark.repairBudget,
                 timeBudgetMs: benchmark.timeBudgetMs,
-            });
+            }), 'driver.submitTask');
 
             // eslint-disable-next-line no-constant-condition
             while (true) {
-                const action: AgentAction = await run.nextAction({
+                const action: AgentAction = await guard(run.nextAction({
                     feedback: feedback ?? undefined,
                     remainingRepairs: benchmark.repairBudget - repairs,
-                });
+                }), 'driver.nextAction');
                 if (action.type === 'finish') {
-                    await run.finish();
-                    if (!submitted) {
+                    await guard(run.finish(), 'driver.finish');
+                    if (!submitted && isRuntimeControl) {
                         // runtime-control 解：无源码提交，按当前运行时状态评定
-                        feedback = await this.evaluate(workspace, benchmark, options, { success: true, diagnostics: [] }, harness);
+                        feedback = await guard(this.evaluateViaChannel(benchmark, harness), 'evaluate (rc finish)');
                     }
                     break;
                 }
@@ -193,111 +223,90 @@ export class TrialRunner {
                 const outcome = await harness.execute(action);
                 // 源码修改类动作 = 一次提交（首轮提交统计 First Compile Success）
                 if (action.type === 'write-file' || action.type === 'patch-file') {
-                    if (!submitted) {
-                        submitted = true;
-                        // Fresh Build：提交后重建（本抽象内由 Runtime.start 代表 Fresh Runtime 周期）
-                        const compile = await this.freshBuild(workspace);
-                        firstSubmissionCompilePass = compile.success;
-                        feedback = await this.evaluate(workspace, benchmark, options, compile, harness);
-                        feedback.policy.denied = [...harness.denials];
-                        await run.provideFeedback(feedback);
-                        if (feedback.compile.success && feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED')) {
-                            await this.runtime.stop().catch(() => undefined);
-                            await harness.dispose();
-                            return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'PASS', 'NONE', undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback.validation as ValidatorResult[]);
+                    const isFirstSubmission = !submitted;
+                    if (isFirstSubmission) { submitted = true; } else {
+                        // 后续提交 = 一次 Repair
+                        repairs += 1;
+                        if (repairs > benchmark.repairBudget) {
+                            await teardown();
+                            return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'BUDGET_EXHAUSTED', 'AGENT', 'repair budget exhausted', repairs - 1, firstSubmissionCompilePass, harness.denials);
                         }
-                        continue; // 等待下一动作（repair 或 finish）
                     }
-                    // 后续提交 = 一次 Repair
-                    repairs += 1;
-                    if (repairs > benchmark.repairBudget) {
-                        await run.provideFeedback(await this.evaluate(workspace, benchmark, options, { success: false, diagnostics: ['repair budget exhausted'] }, harness));
-                        await this.runtime.stop().catch(() => undefined);
-                        await harness.dispose();
-                        return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'BUDGET_EXHAUSTED', 'AGENT', 'repair budget exhausted', repairs - 1, firstSubmissionCompilePass, harness.denials);
+                    // §20 Fresh 周期：停旧 Runtime → 真实 build → Fresh Browser Context
+                    this.activeChannel = null;
+                    await this.runtime.stop().catch(() => undefined);
+                    const build = await guard(this.runtime.build(workspace), `build (submission ${submitted ? 'repair ' + repairs : 'first'})`);
+                    if (isFirstSubmission) { firstSubmissionCompilePass = build.success; }
+                    if (!build.success) {
+                        feedback = {
+                            compile: build, runtime: { errors: [] }, inspection: { scene: null, nodes: [], assets: null },
+                            validation: [{ validatorId: 'compile', state: 'FAIL', detail: build.diagnostics.join(';') }],
+                            visual: {}, policy: { denied: [...harness.denials] },
+                        };
+                        await guard(run.provideFeedback(feedback), 'driver.provideFeedback (compile fail)');
+                        continue;
                     }
-                    const compile = await this.freshBuild(workspace);
-                    feedback = await this.evaluate(workspace, benchmark, options, compile, harness);
-                    feedback.policy.denied = [...harness.denials];
-                    await run.provideFeedback(feedback);
-                    if (feedback.compile.success && feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED')) {
-                        await this.runtime.stop().catch(() => undefined);
-                        await harness.dispose();
+                    const started = await guard(this.safeStart(workspace, benchmark, options), 'runtime.start (fresh after submission)');
+                    if (typeof started === 'string') { throw new Error(started); }
+                    this.activeChannel = started;
+                    harness.attachRuntime(started);
+                    feedback = await guard(this.evaluateViaChannel(benchmark, harness), 'evaluate (post submission)');
+                    await guard(run.provideFeedback(feedback), 'driver.provideFeedback');
+                    if (feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED')) {
+                        await teardown();
                         return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'PASS', 'NONE', undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback.validation as ValidatorResult[]);
                     }
                     continue;
                 }
                 void outcome; // 观察类动作结果由 Driver 通过 runtime 通道直接读取（此处仅执行）
             }
-            await this.runtime.stop().catch(() => undefined);
-            await harness.dispose();
+            await teardown();
             const stillFailing = feedback ? !feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED') : true;
-            const gaveUpSummary = 'agent finished';
-            return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', stillFailing ? 'FAIL' : 'PASS', stillFailing ? 'AGENT' : 'NONE', stillFailing ? gaveUpSummary : undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback?.validation as ValidatorResult[]);
+            return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', stillFailing ? 'FAIL' : 'PASS', stillFailing ? 'AGENT' : 'NONE', stillFailing ? 'agent finished without a passing submission' : undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback?.validation as ValidatorResult[]);
         } catch (error) {
-            await this.runtime.stop().catch(() => undefined);
-            await harness.dispose();
+            await teardown();
+            if (error instanceof AgentTimeoutError) {
+                // §13：TIMEOUT 是结构化 Agent 失败（计入分母，§34）
+                return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'TIMEOUT', 'AGENT', `time budget exceeded during: ${error.phase}`, repairs, firstSubmissionCompilePass, harness.denials);
+            }
             return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'FAIL', 'AGENT', String(error instanceof Error ? error.message : error), repairs, firstSubmissionCompilePass, harness.denials);
         }
     }
 
-    /** Fresh Build 占位：源码级 TypeScript 语法校验（真实管线由 Browser Runtime 注入）。 */
-    private async freshBuild (workspace: TrialWorkspace): Promise<{ success: boolean; diagnostics: string[] }> {
-        // 标准 fixture 布局：src/main.ts（索引入口）；兼容根 main.ts
-        const candidates = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel));
-        const entry = candidates.find((p) => existsSync(p));
-        if (!entry) { return { success: false, diagnostics: ['main.ts missing after submission'] }; }
-        const source = fs.readFileSync(entry, 'utf8');
-        // 括号/引号平衡的轻量语法探针：完整 tsc 由 BrowserRuntime 编译期完成
-        const pairs: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
-        const stack: string[] = [];
-        let inStr: string | null = null;
-        for (let i = 0; i < source.length; i++) {
-            const ch = source[i];
-            if (inStr) { if (ch === inStr && source[i - 1] !== '\\') { inStr = null; } continue; }
-            if (ch === '"' || ch === "'" || ch === '`') { inStr = ch; continue; }
-            if (ch === '(' || ch === '[' || ch === '{') { stack.push(ch); } else if (pairs[ch]) {
-                if (stack.pop() !== pairs[ch]) { return { success: false, diagnostics: [`unbalanced '${ch}' at offset ${i}`] }; }
+    /** 能力合同（§9）：环境确实缺能力时，对应稳定错误码属预期表现。 */
+    private applyCapabilityContract (results: ValidatorResult[], snapshot: RuntimeSnapshot, benchmark: BenchmarkDefinition): ValidatorResult[] {
+        const cap = snapshot.capability;
+        if (!cap || cap.status !== 'unsupported') { return results; }
+        // 能力必须与 benchmark 声明的 capabilityRequirements 匹配（§45：不能把任意
+        // decoder-required 归入无关 benchmark 的能力合同）
+        const declared = benchmark.capabilityRequirements.some((req) => cap.name.includes(req.split('-')[0]));
+        if (!declared) { return results; }
+        const stableCode = new RegExp(cap.name.split('-')[0], 'i'); // 如 'draco' → /draco/i
+        return results.map((r) => {
+            if (r.validatorId === 'no-runtime-error' && r.state === 'FAIL') {
+                const offending = snapshot.runtimeErrors.filter((e) => !stableCode.test(e.message));
+                if (offending.length === 0) { return { ...r, state: 'EXPECTED_UNSUPPORTED' as const, detail: `stable ${cap.name} error verified` }; }
             }
-        }
-        if (stack.length > 0) { return { success: false, diagnostics: [`unclosed '${stack[stack.length - 1]}'`] }; }
-        return { success: true, diagnostics: [] };
+            return r;
+        });
     }
 
-    private async evaluate (workspace: TrialWorkspace, benchmark: BenchmarkDefinition, options: TrialOptions,
-        compile: { success: boolean; diagnostics: string[] }, harness: Harness): Promise<FeedbackPackage> {
-        if (!compile.success) {
-            return {
-                compile, runtime: { errors: [] }, inspection: { scene: null, nodes: [], assets: null },
-                validation: [{ validatorId: 'compile', state: 'FAIL', detail: compile.diagnostics.join(';') }],
-                visual: {}, policy: { denied: [...harness.denials] },
-            };
-        }
-        // runAgent 预启动过则复用（Agent 的运行时修改必须可见）；否则新启
-        const channel = this.activeChannel ?? await this.safeStart(workspace, benchmark, options);
-        if (!channel) {
-            return {
-                compile: { success: false, diagnostics: [this.lastStartError || 'runtime failed to start'] }, runtime: { errors: [] },
-                inspection: { scene: null, nodes: [], assets: null }, validation: [], visual: {}, policy: { denied: [...harness.denials] },
-            };
-        }
-        const snapshot = await channel.snapshot();
-        const validation = runValidators([...benchmark.validators, ...(benchmark.visualValidators ?? [])], snapshot, benchmark.validatorParams);
+    private async evaluateViaChannel (benchmark: BenchmarkDefinition, harness: Harness): Promise<FeedbackPackage> {
+        if (!this.activeChannel) { throw new Error('evaluate called without an attached runtime channel'); }
+        const snapshot = await this.activeChannel.snapshot();
+        const results = runValidators([...benchmark.validators, ...(benchmark.visualValidators ?? [])], snapshot, benchmark.validatorParams);
+        const effective = this.applyCapabilityContract(results, snapshot, benchmark);
         return {
             compile: { success: true, diagnostics: [] },
             runtime: { errors: snapshot.runtimeErrors },
             inspection: { scene: snapshot.scene, nodes: Object.values(snapshot.nodes), assets: snapshot.assets },
-            validation,
+            validation: effective,
             visual: snapshot.capture ? { screenshot: snapshot.capture.png } : {},
             policy: { denied: [...harness.denials] },
         };
     }
 
-    private lastStartError: string | null = null;
-    /** runAgent 预启动的通道：evaluate 复用（避免二次 Fresh Runtime 丢失 Agent 已创建的状态）。 */
-    private activeChannel: (RuntimeChannel & { snapshot (): Promise<RuntimeSnapshot> }) | null = null;
-
-    private async safeStart (workspace: TrialWorkspace, benchmark: BenchmarkDefinition, options: TrialOptions): Promise<(RuntimeChannel & { snapshot (): Promise<RuntimeSnapshot> }) | null> {
+    private async safeStart (workspace: TrialWorkspace, benchmark: BenchmarkDefinition, options: TrialOptions): Promise<ChannelWithSnapshot | string> {
         try {
             void benchmark; void options;
             this.lastStartError = null;

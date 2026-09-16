@@ -56,8 +56,25 @@ function makeRuntime (state: Parameters<typeof snap>[0], failStart = false): Tri
         errorReport: async () => ({ errors: state.errors ?? [], dropped: 0 }),
         snapshot: async () => snap(state),
     };
+    // build：与真实 esbuild 语义一致的括号平衡检查（破碎提交必须 FAIL）
+    const buildCheck = async (workspace: { paths: { workspace: string } }) => {
+        const fsp = nodeRequire('fs');
+        const entry = ['src/main.ts', 'main.ts'].map((rel: string) => path.join(workspace.paths.workspace, rel)).find((p: string) => fsp.existsSync(p));
+        if (!entry) { return { success: false, diagnostics: ['main.ts missing'] }; }
+        const src = fsp.readFileSync(entry, 'utf8') as string;
+        const pairs: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+        const stack: string[] = [];
+        for (const ch of src) {
+            if (ch === '(' || ch === '[' || ch === '{') { stack.push(ch); } else if (pairs[ch]) {
+                if (stack.pop() !== pairs[ch]) { return { success: false, diagnostics: ['unbalanced ' + ch] }; }
+            }
+        }
+        if (stack.length > 0) { return { success: false, diagnostics: ['unclosed'] }; }
+        return { success: true, diagnostics: [] };
+    };
     return {
         start: async () => { if (failStart) { throw new Error('browser launch failed (simulated)'); } return channel; },
+        build: buildCheck,
         stop: async () => undefined,
     };
 }
@@ -162,9 +179,9 @@ test('场景5：Policy Denied → VALID + POLICY 事件（非 INVALID_RUN，仍�
     const result = await runner.runAgent(opts(workRoot, rt, benchmark), driver);
     expect(result.trialResult).toBe('VALID');
     expect(result.policyDenials.length).toBeGreaterThan(0);
-    // 被拒后 agent 直接 finish：评估通过 → 结果 PASS（NONE）；§31 语义为 VALID + POLICY 事件
-    expect(result.failureDomain).toBe('NONE');
-    expect(result.agentResult).toBe('PASS');
+    // 源码类 benchmark：被拒后无任何提交即 finish → FAIL/AGENT（§34 计入分母）
+    expect(result.failureDomain).toBe('AGENT');
+    expect(result.agentResult).toBe('FAIL');
 });
 
 test('场景6：真实 Protected Resource Escape → ISOLATION/INVALID_RUN（台账）', async () => {

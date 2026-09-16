@@ -46,10 +46,13 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
     });
 
     test('§64 Coverage Manifest：引用全部可解析，无悬空', () => {
+        const exampleIds = fs.readdirSync(path.join(REPO, 'examples')).filter((d) => fs.existsSync(path.join(REPO, 'examples', d, 'index.html')));
         const ctx: CoverageContext = {
             benchmarkIds: new Set(CATALOG_BENCHMARKS.map((b) => b.id)),
-            exampleIds: new Set(fs.readdirSync(path.join(REPO, 'examples')).filter((d) => fs.existsSync(path.join(REPO, 'examples', d, 'index.html')))),
+            exampleIds: new Set(exampleIds),
             validatorIds: new Set(Object.keys(VALIDATORS)),
+            benchmarkDefs: new Map(CATALOG_BENCHMARKS.map((b) => [b.id, { id: b.id, type: b.benchmarkType, category: b.category, validators: [...b.validators, ...(b.visualValidators ?? [])] }])),
+            exampleHasEntry: new Map(exampleIds.map((e) => [e, fs.existsSync(path.join(REPO, 'examples', e, 'index.html'))])),
         };
         const dangling = checkCoverage(RECIPES, ctx);
         expect(dangling).toEqual([]);

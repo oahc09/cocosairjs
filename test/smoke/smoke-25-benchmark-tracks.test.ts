@@ -101,8 +101,24 @@ function makeRuntime (state: FakeState, render: { png: string; center: [number, 
         executeReference: async () => undefined, // 冻结操作在本假 Runtime 中无副作用
         snapshot: async () => fakeSnapshot(),
     };
+    const buildCheck = (workspace: { paths: { workspace: string } }): { success: boolean; diagnostics: string[] } => {
+        const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
+        if (!entry) { return { success: false, diagnostics: ['main.ts missing'] }; }
+        const source = fs.readFileSync(entry, 'utf8');
+        const pairs: Record<string, string> = { ')': '(', ']': '[', '}': '{' };
+        const stack: string[] = [];
+        for (let i = 0; i < source.length; i++) {
+            const ch = source[i];
+            if (ch === '(' || ch === '[' || ch === '{') { stack.push(ch); } else if (pairs[ch]) {
+                if (stack.pop() !== pairs[ch]) { return { success: false, diagnostics: ['unbalanced ' + ch] }; }
+            }
+        }
+        if (stack.length > 0) { return { success: false, diagnostics: ['unclosed'] }; }
+        return { success: true, diagnostics: [] };
+    };
     return {
         start: async () => channel,
+        build: async (workspace: { paths: { workspace: string } }) => buildCheck(workspace),
         stop: async () => undefined,
     };
 }

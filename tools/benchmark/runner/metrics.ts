@@ -100,9 +100,30 @@ export function aggregate (trials: TrialRecord[]): AggregatedMetrics {
     };
 }
 
+/** §43：对 fixtureRoot 建立排序稳定的递归 manifest，整体員希作为 startingFixtureHash。 */
+export function computeFixtureManifestHash (fixtureRoot: string): string {
+    const fs = require('fs') as typeof import('fs');
+    const pathMod = require('path') as typeof import('path');
+    const cryptoMod = require('crypto') as typeof import('crypto');
+    const entries: string[] = [];
+    const walk = (dir: string, prefix: string): void => {
+        if (!fs.existsSync(dir)) { return; }
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+            const rel = prefix ? prefix + '/' + entry.name : entry.name;
+            if (entry.isDirectory()) { walk(pathMod.join(dir, entry.name), rel); } else {
+                entries.push(rel + ':' + cryptoMod.createHash('sha256').update(fs.readFileSync(pathMod.join(dir, entry.name))).digest('hex'));
+            }
+        }
+    };
+    walk(fixtureRoot, '');
+    entries.sort();
+    return cryptoMod.createHash('sha256').update(entries.join('|') || '<empty>').digest('hex');
+}
+
 export function writeManifest (file: string, manifest: RunManifest, fixtureRoot: string): void {
     const fs = require('fs') as typeof import('fs');
-    const withHash = { ...manifest, startingFixtureHash: sha256(Buffer.from(manifest.startingFixtureHash)) };
+    // §43：startingFixtureHash 必频来自真实 fixture 内容
+    const withHash = { ...manifest, startingFixtureHash: computeFixtureManifestHash(fixtureRoot) };
     fs.writeFileSync(file, JSON.stringify(withHash, null, 2) + '\n', 'utf8');
     void fixtureRoot;
 }

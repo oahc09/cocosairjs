@@ -45,7 +45,7 @@ A002+ Profile 后运行，属 V0.6 后续增量，不影响本版 Gate 机制成
 
 - 100 项 Benchmark Reference Track 全部执行：**100 PASS**（含 B051 系按
   decoder-required 稳定错误码判 EXPECTED_UNSUPPORTED 能力合同）。
-- 逐项结果：`docs/evidence/v06-catalog-runtime-gate.json`（+ raw log）。
+- 逐项结果：`docs/evidence/v06-catalog-runtime-gate.json`（结构化 JSON，可 JSON.parse/schema 校验，无主机路径；诊断日志分离为 .log）。
 - 无 FAIL / 无 INFRA_FAILURE / 无 blocking SKIP。
 
 ## 4. Deviations（如实声明）

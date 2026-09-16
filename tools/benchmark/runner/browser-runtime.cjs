@@ -95,6 +95,19 @@ class BrowserRuntime {
     this.port = 0;
   }
 
+  /** Fresh Build：真实 esbuild 编译检查（失败抛错并带 diagnostics）。 */
+  build (workspace) {
+    const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
+    if (!entry) { return Promise.resolve({ success: false, diagnostics: ['main.ts missing'] }); }
+    try {
+      this.esbuild.transformSync(fs.readFileSync(entry, 'utf8'), { loader: 'ts', format: 'esm', target: 'es2022', sourcefile: entry });
+      return Promise.resolve({ success: true, diagnostics: [] });
+    } catch (error) {
+      const diag = String(error.message).split('\n').slice(0, 4).join(' | ').slice(0, 400);
+      return Promise.resolve({ success: false, diagnostics: [diag] });
+    }
+  }
+
   async start (workspace) {
     try { return await this._start(workspace); } catch (error) { error.message = "[browser-runtime] " + error.message; throw error; }
   }

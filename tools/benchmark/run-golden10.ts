@@ -6,7 +6,7 @@ import { TrialRunner, TrialOptions } from './runner/trial';
 import { BrowserRuntime } from './runner/browser-runtime.cjs';
 import { CATALOG_BENCHMARKS } from './catalog/catalog100';
 
-export async function runGolden10 ({ ids, workRoot, repo, esbuild }: { ids: string[] | null; workRoot: string; repo: string; esbuild: unknown }): Promise<{ id: string; engineResult: string; failureDomain: string; failureReason?: string }[]> {
+export async function runGolden10 ({ ids, workRoot, repo, esbuild, onTrial }: { ids: string[] | null; workRoot: string; repo: string; esbuild: unknown; onTrial?: (row: unknown) => void }): Promise<{ id: string; engineResult: string; failureDomain: string; failureReason?: string }[]> {
   const results: { id: string; engineResult: string; failureDomain: string; failureReason?: string }[] = [];
   for (const benchmark of CATALOG_BENCHMARKS) {
     if (ids && !ids.includes(benchmark.id)) { continue; }
@@ -26,12 +26,14 @@ export async function runGolden10 ({ ids, workRoot, repo, esbuild }: { ids: stri
       runtime,
     };
     const outcome = await runner.runReference(options);
-    results.push({
+    const row = {
       id: benchmark.id,
       engineResult: outcome.engineResult,
       failureDomain: outcome.failureDomain,
       failureReason: outcome.failureReason,
-    });
+    };
+    results.push(row);
+    if (onTrial) { onTrial(row); }
     console.log(`[${benchmark.id}] ${outcome.engineResult}${outcome.failureReason ? ' — ' + outcome.failureReason.slice(0, 200) : ''}`);
     await runtime.stop();
   }
