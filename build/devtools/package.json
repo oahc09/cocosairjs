@@ -1,0 +1,7 @@
+{
+  "name": "cocosair-devtools",
+  "version": "0.6.0",
+  "type": "module",
+  "description": "Cocos AIR DevTools artifact: agent development session + debug panel (requires cocosair runtime via importmap).",
+  "main": "agent-session.js"
+}

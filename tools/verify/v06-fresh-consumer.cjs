@@ -67,17 +67,21 @@ function run (cmd, opts) {
         return dir;
     };
 
-    // ---- 2) Runtime Only Consumer：普通应用可用；默认入口无 debug/agent 依赖 ----
-    try {
-        const rtDir = makeConsumer('runtime-only', false);
-        const jsdom = require(path.join(REPO, 'node_modules', 'jsdom'));
+    const setupBrowserEnv = () => {
+        const { JSDOM } = require(path.join(REPO, 'node_modules', 'jsdom'));
         const dom = new JSDOM('<!DOCTYPE html><html><body><canvas id="GameCanvas"></canvas></body></html>', { url: 'http://localhost/validate/' });
         globalThis.window = dom.window;
         for (const key of ['document', 'navigator', 'location', 'CustomEvent', 'Event', 'HTMLElement', 'HTMLCanvasElement', 'HTMLImageElement', 'HTMLVideoElement', 'MutationObserver', 'requestAnimationFrame', 'cancelAnimationFrame', 'getComputedStyle', 'matchMedia']) {
             if (dom.window[key] !== undefined && globalThis[key] === undefined) { Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true }); }
         }
         dom.window.HTMLCanvasElement.prototype.getContext = function () { return null; };
-        dom.window.HTMLCanvasElement.prototype.toDataURL = function () { return 'data:image/png;base64,'; };
+        return dom;
+    };
+
+    // ---- 2) Runtime Only Consumer：普通应用可用；默认入口无 debug/agent 依赖 ----
+    try {
+        const rtDir = makeConsumer('runtime-only', false);
+        setupBrowserEnv();
         const mod = await import(pathToFileURL(path.join(rtDir, 'node_modules', 'cocosair', 'build', 'cocosair.module.js')).href);
         const okExports = ['createAirApp', 'GLTFLoader', 'Scene', 'Node', 'MeshRenderer'].every((k) => typeof mod[k] !== 'undefined');
         // 默认入口不得包含 debug/agent 模块
@@ -91,17 +95,10 @@ function run (cmd, opts) {
     }
 
     // ---- 3) Runtime + DevTools Consumer：inspection / session / capture / error 可用 ----
-    try {
         const dtDir = makeConsumer('runtime-devtools', true);
+    try {
+        const dom = setupBrowserEnv();
         const devtools = await import(pathToFileURL(path.join(dtDir, 'devtools', 'agent-session.js')).href);
-        const { JSDOM } = require(path.join(REPO, 'node_modules', 'jsdom'));
-        const dom = new JSDOM('<!DOCTYPE html><html><body><canvas id="GameCanvas"></canvas></body></html>', { url: 'http://localhost/validate/' });
-        globalThis.window = dom.window;
-        for (const key of ['document', 'navigator', 'location', 'CustomEvent', 'Event', 'HTMLElement', 'HTMLCanvasElement', 'HTMLImageElement', 'HTMLVideoElement', 'MutationObserver', 'requestAnimationFrame', 'cancelAnimationFrame', 'getComputedStyle', 'matchMedia']) {
-            if (dom.window[key] !== undefined && globalThis[key] === undefined) { Object.defineProperty(globalThis, key, { value: dom.window[key], configurable: true }); }
-        }
-        dom.window.HTMLCanvasElement.prototype.getContext = function () { return null; };
-        dom.window.HTMLCanvasElement.prototype.toDataURL = function () { return 'data:image/png;base64,'; };
         // 合同四能力（§70）在工件上可调用：
         const session = devtools.createAgentSession({
             app: {
