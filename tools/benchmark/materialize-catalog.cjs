@@ -87,8 +87,8 @@ function scaffold (spec) {
     : meshKind === 'mixed-plane' && false ? '' : 'utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }))';
   const planeSpawn = meshKind === 'mixed-plane'
     ? `spawnCube('ground', [0, -0.5, 0]);
-const groundRenderer = scene.getChildByName('ground').getComponent(MeshRenderer);
-groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 8, height: 8 }));
+const groundRenderer = scene.getChildByName('ground')!.getComponent(MeshRenderer)!;
+groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 8, length: 8, widthSegments: 1, lengthSegments: 1 }));
 groundRenderer.node.setRotationFromEuler(-90, 0, 0);`
     : '';
   const material = p.material === 'builtin-unlit-material' ? 'builtin-unlit-material'
@@ -96,7 +96,7 @@ groundRenderer.node.setRotationFromEuler(-90, 0, 0);`
     : 'builtin-standard-material';
   const materialAssign = p.independentMaterials
     ? `    const material = new Material();\n    material.initialize({ effectName: 'builtin-standard' });\n    renderer.material = material;`
-    : `    renderer.material = builtinResMgr.get('${material}');`;
+    : `    renderer.material = builtinResMgr.get<import('cocosair').Material>('${material}');`;
   const cubeFn = [
     'function spawnCube (name: string, pos: number[], scale?: number[]): void {',
     '    const node = new Node(name);',
@@ -130,8 +130,8 @@ groundRenderer.node.setRotationFromEuler(-90, 0, 0);`
 }
 
 const manifestPath = path.join(DIR, 'references', 'frozen', 'MANIFEST.json');
-const manifest = { revision: 'catalog100-r1', fixtures: {}, references: {} };
-try { manifest = { ...JSON.parse(fs.readFileSync(manifestPath, 'utf8')), revision: 'catalog100-r1' }; } catch { }
+let manifest = { revision: 'catalog100-r2-typechecked', fixtures: {}, references: {} };
+try { manifest = { ...JSON.parse(fs.readFileSync(manifestPath, 'utf8')), revision: 'catalog100-r2-typechecked' }; } catch { }
 let refCount = 0;
 for (const def of CATALOG_BENCHMARKS) {
   const spec = SPECS.get(def.id);

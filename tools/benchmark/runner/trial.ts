@@ -16,7 +16,7 @@
 import { existsSync } from 'fs';
 import * as fs from 'fs';
 import * as path from 'path';
-import { AgentAction, AgentDriver, FeedbackPackage } from '../driver/driver';
+import { AgentAction, AgentDriver, AgentRun, FeedbackPackage } from '../driver/driver';
 import { Harness, RuntimeChannel } from './harness';
 import { FailureDomain, TrialRecord, RunManifest, AgentResult, EngineResult } from './metrics';
 import { PolicyConfig } from './policy';
@@ -52,6 +52,7 @@ export interface TrialOptions {
     fixtureDir: string;
     referenceDir?: string; // protected 挂载（Agent 不可见）
     runtime: TrialRuntime;
+    cleanupTimeoutMs?: number;
 }
 
 export interface TrackOutcome {
@@ -127,7 +128,7 @@ export class TrialRunner {
                 : 'FAIL';
             await this.runtime.stop();
             return this.outcome(workspace, options, 'VALID', engineResult, 'NOT_EVALUATED',
-                engineResult === 'FAIL' ? 'ENGINE' : 'NONE', undefined, 0, false, [], effective);
+                engineResult === 'FAIL' ? 'ENGINE' : engineResult === 'EXPECTED_UNSUPPORTED' ? 'DEVICE' : 'NONE', undefined, 0, false, [], effective);
         } catch (error) {
             await this.runtime.stop().catch(() => undefined);
             return this.outcome(workspace, options, 'INFRA_FAILURE', 'NOT_EVALUATED', 'NOT_EVALUATED', 'INFRASTRUCTURE', `reference harness: ${String(error)}`, 0, false, []);
@@ -168,26 +169,39 @@ export class TrialRunner {
             });
             try { return await Promise.race([promise, timeout]); } finally { if (timer) { clearTimeout(timer); } }
         };
-        const teardown = async (): Promise<void> => {
+        let run: AgentRun | undefined;
+        let driverFinished = false;
+        let cleanup: Promise<void> | undefined;
+        const finishDriver = async (): Promise<void> => {
+            if (!run || driverFinished) { return; }
+            driverFinished = true;
+            await run.finish();
+        };
+        const teardown = (): Promise<void> => {
+            if (cleanup) { return cleanup; }
             this.activeChannel = null;
-            // teardown 自身带硬超时，保证 Trial 不因清理挂起而永久不结束
-            const hardStop = setTimeout(() => undefined, 15_000);
-            try {
-                await this.runtime.stop().catch(() => undefined);
-                await harness.dispose();
-            } finally { clearTimeout(hardStop); }
+            cleanup = (async () => {
+                let timer: ReturnType<typeof setTimeout> | undefined;
+                const timeout = new Promise<never>((_, reject) => {
+                    timer = setTimeout(() => reject(new Error('cleanup deadline exceeded; runtime isolation is unconfirmed')), options.cleanupTimeoutMs ?? 15000);
+                });
+                try {
+                    await Promise.race([Promise.all([this.runtime.stop(), harness.dispose(), finishDriver()]), timeout]);
+                } finally { if (timer) { clearTimeout(timer); } }
+            })();
+            return cleanup;
         };
 
         try {
             // 仅 runtime-control 预启动（session 状态即被试对象）；源码类提交后才启 Fresh Runtime
             if (isRuntimeControl) {
-                const started = await guard(this.safeStart(workspace, benchmark, options), 'runtime.start (rc prestart)');
+                const started = await guard(() => this.safeStart(workspace, benchmark, options), 'runtime.start (rc prestart)');
                 if (typeof started === 'string') { throw new Error(started); }
                 this.activeChannel = started;
                 harness.attachRuntime(started);
             }
 
-            const run = await guard(driver.startTask({
+            run = await guard(driver.startTask({
                 requestNext: async () => ({ remainingRepairs: benchmark.repairBudget - repairs }),
                 task: {
                     benchmarkId: benchmark.id,
@@ -216,17 +230,18 @@ export class TrialRunner {
                     remainingRepairs: benchmark.repairBudget - repairs,
                 }), 'driver.nextAction');
                 if (action.type === 'finish') {
-                    await guard(run.finish(), 'driver.finish');
+                    await guard(finishDriver(), 'driver.finish');
                     if (!submitted && isRuntimeControl) {
                         // runtime-control 解：无源码提交，按当前运行时状态评定
-                        feedback = await guard(this.evaluateViaChannel(benchmark, harness), 'evaluate (rc finish)');
+                        feedback = await guard(() => this.evaluateViaChannel(benchmark, harness), 'evaluate (rc finish)');
                     }
                     break;
                 }
 
-                const outcome = await guard(harness.execute(action), 'harness.execute');
+                const outcome = await guard(() => harness.execute(action), 'harness.execute');
                 // 源码修改类动作 = 一次提交（首轮提交统计 First Compile Success）
                 if (action.type === 'write-file' || action.type === 'patch-file') {
+                    if (!outcome.ok) { continue; }
                     const isFirstSubmission = !submitted;
                     if (isFirstSubmission) { submitted = true; } else {
                         // 后续提交 = 一次 Repair
@@ -238,8 +253,8 @@ export class TrialRunner {
                     }
                     // §20 Fresh 周期：停旧 Runtime → 真实 build → Fresh Browser Context
                     this.activeChannel = null;
-                    await this.runtime.stop().catch(() => undefined);
-                    const build = await guard(this.runtime.build(workspace), `build (submission ${submitted ? 'repair ' + repairs : 'first'})`);
+                    await guard(() => this.runtime.stop(), 'runtime.stop before build');
+                    const build = await guard(() => this.runtime.build(workspace), `build (submission ${submitted ? 'repair ' + repairs : 'first'})`);
                     if (isFirstSubmission) { firstSubmissionCompilePass = build.success; }
                     if (!build.success) {
                         feedback = {
@@ -250,14 +265,14 @@ export class TrialRunner {
                         await guard(run.provideFeedback(feedback), 'driver.provideFeedback (compile fail)');
                         continue;
                     }
-                    const started = await guard(this.safeStart(workspace, benchmark, options), 'runtime.start (fresh after submission)');
+                    const started = await guard(() => this.safeStart(workspace, benchmark, options), 'runtime.start (fresh after submission)');
                     if (typeof started === 'string') { throw new Error(started); }
                     this.activeChannel = started;
                     harness.attachRuntime(started);
-                    feedback = await guard(this.evaluateViaChannel(benchmark, harness), 'evaluate (post submission)');
+                    feedback = await guard(() => this.evaluateViaChannel(benchmark, harness), 'evaluate (post submission)');
                     await guard(run.provideFeedback(feedback), 'driver.provideFeedback');
                     if (feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED')) {
-                        await guard(run.finish(), 'driver.finish (early success)');
+                        await guard(finishDriver(), 'driver.finish (early success)');
                         await teardown();
                         return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'PASS', 'NONE', undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback.validation as ValidatorResult[]);
                     }
@@ -269,7 +284,9 @@ export class TrialRunner {
             const stillFailing = feedback ? !feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED') : true;
             return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', stillFailing ? 'FAIL' : 'PASS', stillFailing ? 'AGENT' : 'NONE', stillFailing ? 'agent finished without a passing submission' : undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback?.validation as ValidatorResult[]);
         } catch (error) {
-            await teardown();
+            try { await teardown(); } catch (cleanupError) {
+                return this.outcome(workspace, options, 'INVALID_RUN', 'NOT_EVALUATED', 'NOT_EVALUATED', 'ISOLATION', String(cleanupError), repairs, firstSubmissionCompilePass, harness.denials);
+            }
             if (error instanceof AgentTimeoutError) {
                 // §13：TIMEOUT 是结构化 Agent 失败（计入分母，§34）
                 return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'TIMEOUT', 'AGENT', `time budget exceeded during: ${error.phase}`, repairs, firstSubmissionCompilePass, harness.denials);
@@ -284,9 +301,10 @@ export class TrialRunner {
         if (!cap || cap.status !== 'unsupported') { return results; }
         // 能力必须与 benchmark 声明的 capabilityRequirements 匹配（§45：不能把任意
         // decoder-required 归入无关 benchmark 的能力合同）
-        const declared = benchmark.capabilityRequirements.some((req) => cap.name.includes(req.split('-')[0]));
+        const declared = benchmark.capabilityRequirements.includes(cap.name);
         if (!declared) { return results; }
-        const stableCode = new RegExp(cap.name.split('-')[0], 'i'); // 如 'draco' → /draco/i
+        const stableCode = cap.name === 'draco-decoder' ? /(?:KHR_draco_mesh_compression.*(?:decoder-required|GLTF_DECODER_MISSING))/i : null;
+        if (!stableCode) { return results; }
         return results.map((r) => {
             if (r.validatorId === 'no-runtime-error' && r.state === 'FAIL') {
                 const offending = snapshot.runtimeErrors.filter((e) => !stableCode.test(e.message));

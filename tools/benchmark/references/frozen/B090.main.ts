@@ -17,7 +17,7 @@ cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 let dragging = false;
 input.on(Input.EventType.TOUCH_START, () => { dragging = true; });
 input.on(Input.EventType.TOUCH_MOVE, () => { if (dragging) { cube.setRotationFromEuler(0, 1, 0); } });

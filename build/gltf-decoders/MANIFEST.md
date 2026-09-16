@@ -75,3 +75,12 @@ LLC Basis Universal transcoder build; Apache License 2.0 - full text vendored in
   `.wasm -> application/wasm`.
 - The offline static staging (`tools/verify/prepare-static.cjs`) copies this directory next
   to the bundle so a plain static server can load every decoder offline.
+
+## Package module scope
+
+Local packaging metadata (MIT, cocosair.js V0.6): keeps vendored CommonJS decoders
+loadable inside the ESM build directory. It is not a third-party decoder binary.
+
+| file | bytes | sha256 |
+|---|---|---|
+| package.json | 25 | 8005a3491db7d92f36ac66369861589f9c47123d3a7c71e643fc2c06168cd45a |

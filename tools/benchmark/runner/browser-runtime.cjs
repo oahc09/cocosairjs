@@ -88,6 +88,8 @@ class BrowserRuntime {
     this.esbuild = esbuild;
     this.REPO = repo;
     this.viewport = viewport;
+    this.generation = 0;
+    this.pageErrors = [];
     this.server = null;
     this.browser = null;
     this.context = null;
@@ -100,7 +102,23 @@ class BrowserRuntime {
     const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
     if (!entry) { return Promise.resolve({ success: false, diagnostics: ['main.ts missing'] }); }
     try {
-      this.esbuild.buildSync({
+      const ts = require(require.resolve('typescript', { paths: [this.REPO] }));
+      const program = ts.createProgram([entry], {
+        target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
+        moduleResolution: ts.ModuleResolutionKind.NodeJs, strict: true,
+        noEmit: true, skipLibCheck: true, types: [],
+        lib: ['lib.es2022.d.ts', 'lib.dom.d.ts'],
+        baseUrl: workspace.paths.workspace,
+        paths: { cocosair: [path.join(this.REPO, 'build/cocosair.module.d.ts')] },
+      });
+      const diagnostics = ts.getPreEmitDiagnostics(program);
+      if (diagnostics.length) {
+        return Promise.resolve({ success: false, diagnostics: diagnostics.map((d) => {
+          const pos = d.file && d.start !== undefined ? d.file.getLineAndCharacterOfPosition(d.start) : null;
+          return `${d.file ? path.relative(workspace.paths.workspace, d.file.fileName) : ''}${pos ? ':' + (pos.line + 1) : ''} TS${d.code}: ${ts.flattenDiagnosticMessageText(d.messageText, ' ')}`;
+        }) });
+      }
+      const built = this.esbuild.buildSync({
         entryPoints: [entry],
         bundle: true,
         write: false,
@@ -112,6 +130,7 @@ class BrowserRuntime {
         sourcemap: false,
         logLevel: 'silent',
       });
+      this.compiledEntry = { path: entry, code: built.outputFiles[0].text };
       return Promise.resolve({ success: true, diagnostics: [] });
     } catch (error) {
       const diag = String(error.message).split('\n').slice(0, 4).join(' | ').slice(0, 400);
@@ -123,16 +142,15 @@ class BrowserRuntime {
     try { return await this._start(workspace); } catch (error) { error.message = "[browser-runtime] " + error.message; throw error; }
   }
   async _start (workspace) {
-    // 1) Fresh Build：真实 esbuild 编译检查
-    const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
-    if (!entry) { throw new Error('main.ts missing after submission'); }
-    try {
-      this.esbuild.transformSync(fs.readFileSync(entry, 'utf8'), { loader: 'ts', format: 'esm', target: 'es2022', sourcefile: entry });
-    } catch (error) {
-      const err = new Error(`compile failed: ${String(error.message).split('\n').slice(0, 4).join(' | ').slice(0, 400)}`);
-      err.diagnostics = [String(error.message).slice(0, 400)];
-      throw err;
+    const generation = this.generation;
+    const check = await this.build(workspace);
+    if (!check.success) {
+      const error = new Error(check.diagnostics.join('\n'));
+      error.diagnostics = check.diagnostics;
+      throw error;
     }
+    const assertActive = () => { if (generation !== this.generation) { throw new Error('runtime start cancelled'); } };
+    assertActive();
     // 2) 静态服务
     const workspaceDir = workspace.paths.workspace;
     this.server = http.createServer((req, res) => {
@@ -156,6 +174,7 @@ class BrowserRuntime {
         let file = path.join(workspaceDir, rel);
         if (!fs.existsSync(file) && !path.extname(rel)) { file = path.join(workspaceDir, rel, 'index.html'); }
         if (!fs.existsSync(file) || !file.startsWith(workspaceDir)) { console.error('[bench-404]', p, file); res.writeHead(404); res.end('not found'); return; }
+        if (file === this.compiledEntry.path) { res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(this.compiledEntry.code); return; }
         if (/\.ts$/.test(file)) { serveTs(this.esbuild, res, file); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(file)] || 'application/octet-stream', 'Cache-Control': 'no-store' });
         res.end(fs.readFileSync(file));
@@ -168,20 +187,26 @@ class BrowserRuntime {
     this.port = this.server.address().port;
     // 3) Fresh Browser Context
     const { chromium } = require('playwright');
-    this.browser = await chromium.launch({
+    const browser = await chromium.launch({
       executablePath: process.env.AIR_CHROMIUM
         || ['C:', 'Users', 'caosh', 'AppData', 'Local', 'ms-playwright', 'chromium-1234', 'chrome-win64', 'chrome.exe'].join('\\'),
       args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'],
     });
-    this.context = await this.browser.newContext({ viewport: this.viewport });
+    if (generation !== this.generation) { await browser.close(); throw new Error('runtime start cancelled'); }
+    this.browser = browser;
+    const context = await browser.newContext({ viewport: this.viewport });
+    if (generation !== this.generation) { await context.close(); await browser.close(); throw new Error('runtime start cancelled'); }
+    this.context = context;
+    this.pageErrors = [];
     this.page = await this.context.newPage();
     // 页面错误可见性（dev server Task 13 同语义）：诊断 Benchmark 页面加载失败
     this.page.on('console', (m) => { if (m.type() === 'error') { console.error('[bench-page]', m.text().slice(0, 300)); } });
-    this.page.on('pageerror', (e) => { console.error('[bench-pageerror]', String(e).slice(0, 300)); });
+    this.page.on('pageerror', (e) => { this.pageErrors.push({ seq: this.pageErrors.length + 1, category: 'window-error', message: String(e).slice(0, 1000) }); });
     await this.page.goto(`http://127.0.0.1:${this.port}/index.html`, { waitUntil: 'load', timeout: 30000 });
     await this.page.waitForFunction(() => window.__benchReady === true || !!window.__benchError, undefined, { timeout: 45000 });
     const benchError = await this.page.evaluate(() => window.__benchError || null);
     if (benchError) { throw new Error(`bench prelude failed: ${benchError.slice(0, 300)}`); }
+    assertActive();
     return this.channel();
   }
 
@@ -248,7 +273,8 @@ class BrowserRuntime {
         });
         const size = await page.evaluate(() => window.__benchSession.canvasSize());
         // 能力合同：页面出现稳定错误码 decoder-required → 该环境缺对应 decoder 配置
-        const decoderRequired = data.errors.errors.some((e) => /decoder-required/.test(e.message));
+        const runtimeErrors = [...data.errors.errors, ...this.pageErrors.filter((e) => !data.errors.errors.some((x) => x.message.includes(e.message)))];
+        const decoderRequired = runtimeErrors.some((e) => /decoder-required/.test(e.message));
         return {
           capability: decoderRequired
             ? { name: 'draco-decoder', status: 'unsupported' }
@@ -258,7 +284,7 @@ class BrowserRuntime {
           assets: data.assets,
           capture: { png: data.cap.png, width: size.width, height: size.height, sceneId: data.scene.sceneId, frameIndex: 1 },
           centerPixel: data.cap.center,
-          runtimeErrors: data.errors.errors,
+          runtimeErrors,
         };
       },
     };
@@ -266,9 +292,10 @@ class BrowserRuntime {
   }
 
   async stop () {
+    ++this.generation;
     try { if (this.context) { await this.context.close(); } } catch { /* 已关闭 */ }
     try { if (this.browser) { await this.browser.close(); } } catch { /* 已关闭 */ }
-    await new Promise((resolve) => { if (this.server) { this.server.close(resolve); } else { resolve(); } });
+    await new Promise((resolve) => { if (this.server) { this.server.close(resolve); this.server.closeAllConnections?.(); } else { resolve(); } });
     this.context = this.browser = this.page = this.server = null;
   }
 }

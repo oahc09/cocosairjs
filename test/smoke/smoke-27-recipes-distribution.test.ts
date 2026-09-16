@@ -7,7 +7,7 @@ const fs = nodeRequire('fs') as typeof import('fs');
 const path = nodeRequire('path') as typeof import('path');
 
 import { RECIPES, RECIPES_CATALOG } from '../../tools/benchmark/recipes/recipes30';
-import { recipeStats, checkCoverage, CoverageContext } from '../../tools/benchmark/recipes/schema';
+import { recipeStats, checkCoverage, CoverageContext, RecipeEvidence } from '../../tools/benchmark/recipes/schema';
 import { CATALOG_BENCHMARKS } from '../../tools/benchmark/catalog/catalog100';
 import { VALIDATORS } from '../../tools/benchmark/validators';
 
@@ -18,14 +18,14 @@ function process_cwd (): string {
 }
 
 describe('V0.6 §58-§61 — Recipe 门禁', () => {
-    test('Catalog Total >= 30 且 Validated Count >= 30 且 Stable Count >= 20（§60）', () => {
+    test('未经完整场景验证的配方不计入 validated/stable', () => {
         const stats = recipeStats(RECIPES);
         expect(stats.catalogTotal).toBeGreaterThanOrEqual(30);
-        expect(stats.validatedCount).toBeGreaterThanOrEqual(30);
-        expect(stats.stableCount).toBeGreaterThanOrEqual(20);
-        // 状态机合法：stable ⊂ validated（由 recipeStats 语义保证）；无 draft 混入首批
+        expect(stats.validatedCount).toBe(0);
+        expect(stats.stableCount).toBe(0);
+        // 缺少组合场景证据时保留 draft，发布门禁由 verify:v06-gate 单独判定。
         for (const r of RECIPES) {
-            expect(['validated', 'stable']).toContain(r.status);
+            expect(r.status).toBe('draft');
         }
     });
 
@@ -58,12 +58,24 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
         expect(dangling).toEqual([]);
     });
 
-    test('stable Recipe 必有完整 example 或 composite benchmark 挂接（§63）', () => {
-        for (const r of RECIPES.filter((x) => x.status === 'stable')) {
-            expect(r.benchmarkRefs.length + r.exampleRefs.length).toBeGreaterThan(0);
-            expect(r.interactionSteps.length).toBeGreaterThan(0);
-        }
+    test('promotion requires one matching executed composite, not unrelated validator unions', () => {
+        const recipe = { ...RECIPES[0], status: 'stable' as const };
+        const ctx: CoverageContext = {
+            benchmarkIds: new Set(recipe.benchmarkRefs), exampleIds: new Set(recipe.exampleRefs),
+            validatorIds: new Set(Object.keys(VALIDATORS)),
+            benchmarkDefs: new Map(recipe.benchmarkRefs.map((id) => [id, { id, type: 'runtime-control' as const, category: 'Agent', validators: Object.keys(VALIDATORS) }])),
+        };
+        expect(checkCoverage([recipe], ctx).length).toBeGreaterThan(0);
+        const evidence: RecipeEvidence = { recipeId: recipe.id, recipeVersion: recipe.version,
+            source: { kind: 'benchmark', id: recipe.benchmarkRefs[0] }, runId: 'test-run', revision: 'test-revision', result: 'PASS',
+            sceneSetup: recipe.sceneSetup, runtimeState: recipe.runtimeState, requiredAssets: recipe.requiredAssets,
+            requiredCapabilities: recipe.requiredCapabilities, interactionSteps: recipe.interactionSteps,
+            visualTarget: recipe.visualTarget, checks: { scene: true, interaction: true, visual: true, lifecycle: true, noRuntimeErrors: true } };
+        expect(checkCoverage([recipe], { ...ctx, evidence: [evidence] })).toEqual([]);
+        expect(checkCoverage([recipe], { ...ctx, evidence: [{ ...evidence, recipeVersion: 'old' }] }).length).toBeGreaterThan(0);
+        expect(checkCoverage([recipe], { ...ctx, evidence: [{ ...evidence, checks: { ...evidence.checks, lifecycle: false } }] }).length).toBeGreaterThan(0);
     });
+
 });
 
 describe('V0.6 §67-71 — 分发边界', () => {

@@ -16,7 +16,7 @@ export async function runGolden10 ({ ids, workRoot, repo, esbuild, onTrial }: { 
       benchmark,
       workRoot,
       cocosairRevision: 'browser-run',
-      catalogRevision: 'catalog100-r1',
+      catalogRevision: 'catalog100-r2-typechecked',
       agentProfile: 'REFERENCE',
       environment: { os: process.platform, browser: 'chromium-headless', viewport: '480x360', webglBackend: 'angle-swiftshader' },
       cacheMode: 'cold',

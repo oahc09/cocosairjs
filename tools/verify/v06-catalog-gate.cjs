@@ -15,7 +15,6 @@ esbuild.buildSync({
   external: ['playwright', 'esbuild'],
   outfile: path.join(os.tmpdir(), 'cocosair-v06-catalog.cjs'), write: true,
 });
-const { runGoldenDualTrack: _unused } = { runGoldenDualTrack: null };
 const { runGolden10 } = require(path.join(os.tmpdir(), 'cocosair-v06-catalog.cjs'));
 
 (async () => {
@@ -34,11 +33,12 @@ const { runGolden10 } = require(path.join(os.tmpdir(), 'cocosair-v06-catalog.cjs
     id: r.id,
     engineResult: r.engineResult,
     failureDomain: r.failureDomain,
-    ...(r.failureReason ? { failureReason: r.failureReason } : {}),
+    ...(r.failureReason ? { failureReason: r.failureReason.replaceAll(REPO, '<repo>').replaceAll(os.tmpdir(), '<temp>') } : {}),
   }));
   const pass = results.filter((r) => ['PASS', 'EXPECTED_UNSUPPORTED', 'EXPECTED_FALLBACK'].includes(r.engineResult)).length;
   const evidence = {
     measuredAt: new Date().toISOString(),
+    source: require('./benchmark-evidence.cjs').metadata(REPO),
     gate: '§51 Runtime Gate',
     total: results.length,
     pass,
@@ -50,5 +50,5 @@ const { runGolden10 } = require(path.join(os.tmpdir(), 'cocosair-v06-catalog.cjs
   fs.writeFileSync(path.join(REPO, 'docs', 'evidence', 'v06-catalog-runtime-gate.log'), log.join('\n') + '\n');
   JSON.parse(fs.readFileSync(path.join(REPO, 'docs', 'evidence', 'v06-catalog-runtime-gate.json'), 'utf8')); // CI 级自校验
   console.log(`§51 Runtime Gate: ${pass}/${results.length} PASS`);
-  process.exit(pass === results.length ? 0 : 1);
+  process.exit(results.length === 100 && pass === results.length ? 0 : 1);
 })().catch((e) => { console.error(e); process.exit(1); });

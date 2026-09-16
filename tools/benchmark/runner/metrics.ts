@@ -63,7 +63,8 @@ export interface TrialRecord {
 export function isEligible (trial: TrialRecord): boolean {
     if (trial.trialResult !== 'VALID') { return false; }
     if (trial.approvedNonBlockingSkip) { return false; }
-    if (trial.contractualUnsupported) { return false; }
+    if (trial.contractualUnsupported || trial.engineResult === 'EXPECTED_UNSUPPORTED') { return false; }
+    if (trial.agentResult === 'NOT_EVALUATED') { return false; }
     return true;
 }
 
@@ -93,7 +94,7 @@ export function aggregate (trials: TrialRecord[]): AggregatedMetrics {
     const pass = agentTrials.filter((t) => t.agentResult === 'PASS');
     const budgetExhausted = agentTrials.filter((t) => t.agentResult === 'BUDGET_EXHAUSTED');
     // §36：First Compile 只统计 Type-B（source-create/repair），分母 = eligible Type-B trials
-    const typeB = eligible.filter((t) => t.benchmarkType !== 'runtime-control');
+    const typeB = eligible.filter((t) => t.benchmarkType === 'source-create' || t.benchmarkType === 'source-repair');
     const firstCompile = typeB.filter((t) => t.firstSubmissionCompilePass);
     const byDomain: Record<string, number> = {};
     for (const trial of trials) {

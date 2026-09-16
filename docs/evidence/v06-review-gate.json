@@ -1,0 +1,35 @@
+{
+  "measuredAt": "2026-09-16T15:08:14.229Z",
+  "status": "BLOCKED",
+  "referenceGatePass": true,
+  "catalogGatePass": true,
+  "metrics": {
+    "eligibleTrials": 9,
+    "eligibleTypeBTrials": 6,
+    "agentPass": 9,
+    "agentFinalSuccessRate": 1,
+    "firstCompileSuccessRate": 1,
+    "medianRepairSuccessful": 0,
+    "meanRepairAllEligible": 0,
+    "budgetExhaustionRate": 0,
+    "byDomain": {
+      "NONE": 9,
+      "DEVICE": 1
+    }
+  },
+  "recipes": {
+    "catalogTotal": 30,
+    "validatedCount": 0,
+    "stableCount": 0
+  },
+  "coverageFailures": [],
+  "tests": {
+    "suites": 28,
+    "tests": 201,
+    "passed": 201,
+    "success": true
+  },
+  "blockers": [
+    "Recipe 缺少同一完整场景的交互、视觉与生命周期运行证据，30 条保留为 draft；未满足 30 validated / 20 stable。"
+  ]
+}

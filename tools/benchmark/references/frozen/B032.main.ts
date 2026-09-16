@@ -16,6 +16,6 @@ const ball = new Node('ball');
 ball.layer = Layers.Enum.DEFAULT;
 scene.addChild(ball);
 const renderer = ball.addComponent(MeshRenderer);
-renderer.mesh = utils.createMesh(primitives.sphere({ radius: 0.8 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.mesh = utils.createMesh(primitives.sphere(0.8));
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 app.run(scene);

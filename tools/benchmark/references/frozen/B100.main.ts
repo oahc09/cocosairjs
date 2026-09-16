@@ -18,6 +18,6 @@ cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 (window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);

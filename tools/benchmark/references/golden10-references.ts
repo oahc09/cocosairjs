@@ -27,7 +27,7 @@ cube.layer = Layers.Enum.DEFAULT;
 root.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 (window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
 `;
@@ -54,7 +54,7 @@ for (let i = 0; i < 2; i++) {
     scene.addChild(cube);
     const renderer = cube.addComponent(MeshRenderer);
     renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-    renderer.material = builtinResMgr.get('builtin-standard-material');
+    renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 }
 (window as unknown as { __cameraToggle: () => void }).__cameraToggle = () => {
     camera.projection = camera.projection === Camera.ProjectionType.ORTHO
@@ -122,9 +122,9 @@ scene.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 const material = new Material();
-material.initialize({ effectName: 'builtin-standard', defines: { USE_BASE_COLOR: true }, macroRemap: {} });
+material.initialize({ effectName: 'builtin-standard', defines: { USE_BASE_COLOR: true } });
 renderer.material = material;
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 void Color;
 (window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
@@ -163,7 +163,7 @@ cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 (window as unknown as { __airApp: unknown }).__airApp = app;
 app.run(scene);
 `;

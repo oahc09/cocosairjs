@@ -13,6 +13,7 @@ export interface RecipeDefinition {
     version: string;
     name: string;
     status: RecipeStatus;
+    targetStatus?: RecipeStatus;
     description: string;
 
     /** §62：进入 validated 必须覆盖的六要素。 */
@@ -58,6 +59,7 @@ export interface BenchmarkCoverageInfo {
 }
 
 export interface CoverageContext {
+    evidence?: RecipeEvidence[];
     benchmarkIds: Set<string>;
     exampleIds: Set<string>;
     validatorIds: Set<string>;
@@ -67,27 +69,38 @@ export interface CoverageContext {
     exampleHasEntry?: Map<string, boolean>;
 }
 
-/** Recipe 四要素覆盖证明（§63 完整场景/关键交互/关键视觉/资源生命周期）：
- *  仅由 benchmarkDefs 的实际 validators 并集机器推导——recipe 自声明的
- *  validatorRefs/visualRefs 不算证据（防自证循环）。example 仅当可运行入口存在。 */
-function coverageProof (recipe: RecipeDefinition, ctx: CoverageContext): { scene: boolean; interaction: boolean; visual: boolean; lifecycle: boolean; detail: string } {
-    const validatorUnion = new Set<string>();
-    let hasInteractionBench = false;
-    for (const ref of recipe.benchmarkRefs) {
-        const def = ctx.benchmarkDefs?.get(ref);
-        if (!def) { continue; }
-        for (const v of def.validators) { validatorUnion.add(v); }
-        if (def.type === 'runtime-control' || def.category === 'Interaction' || def.category === 'Agent') { hasInteractionBench = true; }
-    }
-    const exampleOk = recipe.exampleRefs.some((e) => ctx.exampleHasEntry?.get(e) === true);
-    const detail = `benchValidators=[${[...validatorUnion].join(',')}] interactionBench=${hasInteractionBench} exampleOk=${exampleOk}`;
-    return {
-        scene: validatorUnion.has('scene-ready'),
-        interaction: recipe.interactionSteps.length > 0 && hasInteractionBench,
-        visual: validatorUnion.has('visible-frame'),
-        lifecycle: validatorUnion.has('no-runtime-error'),
-        detail,
-    };
+/** A single executed composite scenario, tied to the exact recipe version and requirements. */
+export interface RecipeEvidence {
+    recipeId: string;
+    recipeVersion: string;
+    source: { kind: 'benchmark' | 'example'; id: string };
+    runId: string;
+    revision: string;
+    result: 'PASS' | 'FAIL';
+    sceneSetup: string;
+    requiredAssets: string[];
+    requiredCapabilities: string[];
+    runtimeState: string;
+    interactionSteps: string[];
+    visualTarget: string;
+    checks: { scene: boolean; interaction: boolean; visual: boolean; lifecycle: boolean; noRuntimeErrors: boolean };
+}
+
+function coverageProof (recipe: RecipeDefinition, ctx: CoverageContext): boolean {
+    return (ctx.evidence ?? []).some((e) => {
+        const referenced = e.source.kind === 'benchmark'
+            ? recipe.benchmarkRefs.includes(e.source.id) && ctx.benchmarkIds.has(e.source.id)
+            : recipe.exampleRefs.includes(e.source.id) && ctx.exampleHasEntry?.get(e.source.id) === true;
+        return referenced && e.recipeId === recipe.id && e.recipeVersion === recipe.version
+            && !!e.runId && !!e.revision && e.result === 'PASS'
+            && e.sceneSetup === recipe.sceneSetup && e.runtimeState === recipe.runtimeState
+            && e.visualTarget === recipe.visualTarget
+            && recipe.requiredAssets.every((x) => e.requiredAssets.includes(x))
+            && recipe.requiredCapabilities.every((x) => e.requiredCapabilities.includes(x))
+            && recipe.interactionSteps.every((x) => e.interactionSteps.includes(x))
+            && e.checks.scene && e.checks.interaction && e.checks.visual
+            && e.checks.noRuntimeErrors && (recipe.status !== 'stable' || e.checks.lifecycle);
+    });
 }
 
 /** §64：悬空引用 + §62/§63 状态机器可读校验——返回违规列表（空 = 通过）。 */
@@ -116,9 +129,8 @@ export function checkCoverage (recipes: RecipeDefinition[], ctx: CoverageContext
         }
         // §63：validated/stable 必须有四要素覆盖证明（机器推导，非手工声明）
         if (recipe.status === 'validated' || recipe.status === 'stable') {
-            const proof = coverageProof(recipe, ctx);
-            for (const [elem, ok] of Object.entries(proof)) {
-                if (!ok) { dangling.push(`${recipe.id}: ${recipe.status} missing coverage proof for ${elem}`); }
+            if (!coverageProof(recipe, ctx)) {
+                dangling.push(`${recipe.id}: ${recipe.status} requires passing version-matched composite evidence`);
             }
         }
     }

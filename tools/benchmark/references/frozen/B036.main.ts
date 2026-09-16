@@ -25,13 +25,13 @@ function spawnCube (name: string, pos: number[], scale?: number[]): void {
     scene.addChild(node);
     const renderer = node.addComponent(MeshRenderer);
     renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-    renderer.material = builtinResMgr.get('builtin-standard-material');
+    renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 }
 spawnCube("ground", [0, -0.5, 0]);
 spawnCube("cube", [0, 0.2, 0]);
 spawnCube('ground', [0, -0.5, 0]);
-const groundRenderer = scene.getChildByName('ground').getComponent(MeshRenderer);
-groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 8, height: 8 }));
+const groundRenderer = scene.getChildByName('ground')!.getComponent(MeshRenderer)!;
+groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 8, length: 8, widthSegments: 1, lengthSegments: 1 }));
 groundRenderer.node.setRotationFromEuler(-90, 0, 0);
 
 

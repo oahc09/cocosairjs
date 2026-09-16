@@ -1,12 +1,18 @@
 {
-  "measuredAt": "2026-09-16T13:35:42.142Z",
+  "measuredAt": "2026-09-16T15:08:02.741Z",
+  "source": {
+    "baseRevision": "c626a4de2db842135c04a6c31e0c8b0cc984c02f",
+    "workingTree": true,
+    "sourceHash": "4b2a74d2233ccd9a001a13c0205df5853cb6bbef3564632e23e232cf9fbe29cb"
+  },
   "gate": "§51 Runtime Gate",
   "total": 100,
   "pass": 100,
   "counts": {
-    "PASS": 100
+    "PASS": 97,
+    "EXPECTED_UNSUPPORTED": 3
   },
-  "cocosairRevision": "5f3afa0",
+  "cocosairRevision": "c626a4d",
   "trials": [
     {
       "id": "B001",
@@ -45,8 +51,8 @@
     },
     {
       "id": "B051",
-      "engineResult": "PASS",
-      "failureDomain": "NONE"
+      "engineResult": "EXPECTED_UNSUPPORTED",
+      "failureDomain": "DEVICE"
     },
     {
       "id": "B091",
@@ -315,8 +321,8 @@
     },
     {
       "id": "B052",
-      "engineResult": "PASS",
-      "failureDomain": "NONE"
+      "engineResult": "EXPECTED_UNSUPPORTED",
+      "failureDomain": "DEVICE"
     },
     {
       "id": "B053",
@@ -340,8 +346,8 @@
     },
     {
       "id": "B057",
-      "engineResult": "PASS",
-      "failureDomain": "NONE"
+      "engineResult": "EXPECTED_UNSUPPORTED",
+      "failureDomain": "DEVICE"
     },
     {
       "id": "B058",

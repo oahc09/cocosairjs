@@ -32,6 +32,7 @@ export interface ActionOutcome {
 
 export class Harness {
     readonly sandbox: CommandSandbox;
+    private closed = false;
     private runtimeChannel: RuntimeChannel | null = null;
     readonly denials: { action: string; code: string; message: string }[] = [];
 
@@ -45,6 +46,7 @@ export class Harness {
 
     async execute (action: AgentAction): Promise<ActionOutcome> {
         try {
+            if (this.closed) { throw new PolicyDeniedError('POLICY_DENIED', 'Harness is closed'); }
             const payload = await this.dispatch(action);
             return { action, ok: true, payload };
         } catch (error) {
@@ -107,6 +109,7 @@ export class Harness {
     }
 
     async dispose (): Promise<void> {
+        this.closed = true;
         await this.sandbox.dispose();
     }
 }

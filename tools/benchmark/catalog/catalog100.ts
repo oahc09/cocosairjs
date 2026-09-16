@@ -51,7 +51,7 @@ function spawnCube (name: string, pos: number[], scale?: number[]): void {
     scene.addChild(node);
     const renderer = node.addComponent(MeshRenderer);
     renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-    renderer.material = builtinResMgr.get('builtin-standard-material');
+    renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 }
 
 ${cubeCode}
@@ -220,8 +220,8 @@ const ball = new Node('ball');
 ball.layer = Layers.Enum.DEFAULT;
 scene.addChild(ball);
 const renderer = ball.addComponent(MeshRenderer);
-renderer.mesh = utils.createMesh(primitives.sphere({ radius: 0.8 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.mesh = utils.createMesh(primitives.sphere(0.8));
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 app.run(scene);
 `,
     },
@@ -440,14 +440,14 @@ scene.addChild(asset.instantiate().root);
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B055');
-console.log('[B055] meshopt available:', isMeshoptAvailable());
+console.log('[B055] meshopt available:', isMeshoptAvailable(undefined));
 app.run(scene);
 ` },
-    { id: 'B056', type: 'source-create', category: 'Compression', name: 'ktx2-availability-guard', prompt: 'Create src/main.ts: log isKTX2Available() capability check using the exported helper; scene runs error-free.', validators: ['scene-ready', 'no-runtime-error'], template: 'custom', params: { ref: 'B056' }, refCode: `import { createAirApp, Scene, isKTX2Available } from 'cocosair';
+    { id: 'B056', type: 'source-create', category: 'Compression', name: 'ktx2-availability-guard', prompt: 'Create src/main.ts: log isKTX2Available(undefined) capability check using the exported helper; scene runs error-free.', validators: ['scene-ready', 'no-runtime-error'], template: 'custom', params: { ref: 'B056' }, refCode: `import { createAirApp, Scene, isKTX2Available } from 'cocosair';
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
 const scene = new Scene('B056');
-console.log('[B056] ktx2 available:', isKTX2Available());
+console.log('[B056] ktx2 available:', isKTX2Available(undefined));
 app.run(scene);
 ` },
     { id: 'B057', type: 'source-create', category: 'Compression', name: 'draco-reload-twice', prompt: 'Create src/main.ts: load "/assets/compressed.glb" twice sequentially (destroy between) with the configured draco decoder; no errors.', validators: ['scene-ready', 'no-runtime-error', 'resource-released'], template: 'custom', params: { ref: 'B057' }, refCode: `import { createAirApp, Scene, GLTFLoader } from 'cocosair';
@@ -622,7 +622,7 @@ cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
 const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-renderer.material = builtinResMgr.get('builtin-standard-material');
+renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 let dragging = false;
 input.on(Input.EventType.TOUCH_START, () => { dragging = true; });
 input.on(Input.EventType.TOUCH_MOVE, () => { if (dragging) { cube.setRotationFromEuler(0, 1, 0); } });
@@ -673,7 +673,7 @@ function buildCatalog (): { benchmarks: BenchmarkDefinition[]; specs: Map<string
             validators: row.validators,
             validatorParams: row.validatorParams ?? {},
             visualValidators: [],
-            capabilityRequirements: ['webgl2'],
+            capabilityRequirements: ['B052', 'B057'].includes(row.id) ? ['draco-decoder'] : ['webgl2'],
             browserRequirements: 'chromium>=100',
             repairBudget: 5,
             timeBudgetMs: 20 * 60_000,
@@ -730,5 +730,5 @@ export function deriveRcOps (def: BenchmarkDefinition): Record<string, unknown>[
 export const CATALOG_BENCHMARKS: BenchmarkDefinition[] = built.benchmarks;
 export const SPECS: Map<string, Spec> = built.specs;
 export const REF_CODES: Map<string, string> = built.refCodes;
-export const CATALOG100 = { revision: 'catalog100-r1', benchmarks: CATALOG_BENCHMARKS };
+export const CATALOG100 = { revision: 'catalog100-r2-typechecked', benchmarks: CATALOG_BENCHMARKS };
 export { GOLDEN_REVISION };

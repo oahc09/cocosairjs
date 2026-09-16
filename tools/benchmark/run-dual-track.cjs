@@ -10,7 +10,7 @@ const esbuild = require('esbuild');
 esbuild.buildSync({
   entryPoints: [path.join(__dirname, 'run-golden-dual.ts')],
   bundle: true, format: 'cjs', platform: 'node', target: 'node18',
-  external: ['playwright', 'esbuild'],
+  external: ['playwright', 'esbuild', 'typescript'],
   outfile: path.join(os.tmpdir(), 'cocosair-v06-dual.cjs'), write: true,
 });
 const { runGoldenDualTrack } = require(path.join(os.tmpdir(), 'cocosair-v06-dual.cjs'));
@@ -24,12 +24,15 @@ const { runGoldenDualTrack } = require(path.join(os.tmpdir(), 'cocosair-v06-dual
   });
   const evidence = {
     measuredAt: new Date().toISOString(),
+    source: require('../verify/benchmark-evidence.cjs').metadata(REPO),
     profile: metrics.profile,
     gate: {
       finalSuccessRate: metrics.finalSuccessRate,
       firstCompileSuccessRate: metrics.firstCompileSuccessRate,
       medianRepairSuccessful: metrics.medianRepairSuccessful,
       eligibleTrials: metrics.eligibleTrials,
+      eligibleTypeBTrials: metrics.eligibleTypeBTrials,
+      referenceGatePass: metrics.referenceGatePass,
       thresholds: { finalSuccess: 0.8, firstCompile: 0.6, medianRepairMax: 3 },
     },
     rows,
@@ -38,6 +41,6 @@ const { runGoldenDualTrack } = require(path.join(os.tmpdir(), 'cocosair-v06-dual
   fs.writeFileSync(out, JSON.stringify(evidence, null, 2));
   console.log('metrics:', JSON.stringify(metrics));
   console.log('evidence →', out);
-  const ok = metrics.finalSuccessRate >= 0.8 && metrics.firstCompileSuccessRate >= 0.6 && metrics.medianRepairSuccessful <= 3;
+  const ok = metrics.referenceGatePass && metrics.eligibleTypeBTrials > 0 && metrics.finalSuccessRate >= 0.8 && metrics.firstCompileSuccessRate >= 0.6 && metrics.medianRepairSuccessful <= 3;
   process.exit(ok ? 0 : 1);
 })().catch((e) => { console.error(e); process.exit(1); });

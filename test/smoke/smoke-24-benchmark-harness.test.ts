@@ -190,7 +190,7 @@ describe('V0.6 §17 — Harness 动作执行与策略拒绝', () => {
 
 describe('V0.6 §33-35 — eligible_trials 唯一语义', () => {
     const base = (): TrialRecord => ({
-        manifest: manifestStub(), trialResult: 'VALID', engineResult: 'PASS', agentResult: 'FAIL',
+        manifest: manifestStub(), benchmarkType: 'source-create', trialResult: 'VALID', engineResult: 'PASS', agentResult: 'FAIL',
         failureDomain: 'AGENT', repairs: 2, firstSubmissionCompilePass: false, policyDenials: [],
     });
 

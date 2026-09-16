@@ -4,9 +4,11 @@
  */
 import * as path from 'path';
 import * as fs from 'fs';
-import { TrialRunner, TrialOptions } from './runner/trial';
+import { TrialRunner, TrialOptions, buildManifest } from './runner/trial';
 import { BrowserRuntime } from './runner/browser-runtime.cjs';
 import { CATALOG_BENCHMARKS, deriveRcOps } from './catalog/catalog100';
+import { aggregate, isEligible, TrialRecord, computeFixtureManifestHash } from './runner/metrics';
+import { sha256 } from './runner/policy';
 import { AgentAction } from './driver/driver';
 import { AgentDriver } from './driver/driver';
 import { createA001Driver, PROFILE_A001 } from './driver/profile-a001';
@@ -16,20 +18,21 @@ export async function runGoldenDualTrack ({ ids, workRoot, repo, esbuild }: {
     workRoot: string;
     repo: string;
     esbuild: unknown;
-}): Promise<{ rows: unknown[]; metrics: unknown }> {
-    void ids;
+}): Promise<{ rows: unknown[]; metrics: ReturnType<typeof aggregate> & { finalSuccessRate: number; referenceGatePass: boolean; profile: string } }> {
+
     const GOLDEN_IDS = ['B001', 'B011', 'B031', 'B041', 'B042', 'B051', 'B061', 'B081', 'B091', 'B100'];
     const rows: unknown[] = [];
-    const eligible: { id: string; agentPass: boolean; repairs: number; firstCompile: boolean; budgetExhausted: boolean }[] = [];
+    const records: TrialRecord[] = [];
 
     for (const id of GOLDEN_IDS) {
+        if (ids && !ids.includes(id)) { continue; }
         const benchmark = CATALOG_BENCHMARKS.find((b) => b.id === id)!;
 
         // ---- Reference Track ----
         const refRuntime = new BrowserRuntime({ esbuild, repo });
         const refRunner = new TrialRunner(refRuntime);
         const refOutcome = await refRunner.runReference({
-            benchmark, workRoot, cocosairRevision: 'browser-run', catalogRevision: 'catalog100-r1',
+            benchmark, workRoot, cocosairRevision: 'browser-run', catalogRevision: 'catalog100-r2-typechecked',
             agentProfile: 'REFERENCE', environment: { os: process.platform, browser: 'chromium-headless', viewport: '480x360', webglBackend: 'angle-swiftshader' },
             cacheMode: 'cold', randomSeed: 0,
             fixtureDir: path.join(repo, 'tools', 'benchmark', 'fixtures', id),
@@ -38,9 +41,9 @@ export async function runGoldenDualTrack ({ ids, workRoot, repo, esbuild }: {
         });
         await refRuntime.stop();
         console.log(`[ref][${id}] ${refOutcome.engineResult}`);
-        const refOk = refOutcome.engineResult === 'PASS' || refOutcome.engineResult === 'EXPECTED_FALLBACK' || refOutcome.engineResult === 'EXPECTED_UNSUPPORTED';
+        const refOk = refOutcome.engineResult === 'PASS' || refOutcome.engineResult === 'EXPECTED_FALLBACK';
 
-        let agentOutcome = null as null | ReturnType<TrialRunner['runReference']> extends never ? never : Awaited<ReturnType<TrialRunner['runAgent']>>;
+        let agentOutcome: Awaited<ReturnType<TrialRunner['runAgent']>> | null = null;
         let agentPass = false;
         let repairs = 0;
         let firstCompile = false;
@@ -53,7 +56,7 @@ export async function runGoldenDualTrack ({ ids, workRoot, repo, esbuild }: {
             const agentRunner = new TrialRunner(agentRuntime);
             const driver = createA001Driver(id, () => solution.actions);
             const outcome = await agentRunner.runAgent({
-                benchmark, workRoot, cocosairRevision: 'browser-run', catalogRevision: 'catalog100-r1',
+                benchmark, workRoot, cocosairRevision: 'browser-run', catalogRevision: 'catalog100-r2-typechecked',
                 agentProfile: PROFILE_A001.profileId, environment: { os: process.platform, browser: 'chromium-headless', viewport: '480x360', webglBackend: 'angle-swiftshader' },
                 cacheMode: 'cold', randomSeed: 0,
                 fixtureDir: path.join(repo, 'tools', 'benchmark', 'fixtures', id),
@@ -69,25 +72,33 @@ export async function runGoldenDualTrack ({ ids, workRoot, repo, esbuild }: {
             console.log(`[agent][${id}] ${outcome.agentResult} repairs=${repairs} firstCompile=${firstCompile} denials=${JSON.stringify(outcome.policyDenials)} fails=${JSON.stringify((outcome.validators || []).filter(v => v.state === 'FAIL'))}`);
         }
 
-        rows.push({
-            id,
-            reference: { engineResult: refOutcome.engineResult, failureDomain: refOutcome.failureDomain, reason: refOutcome.failureReason },
-            agent: refOk ? { agentResult: agentOutcome ? (agentOutcome as { agentResult: string }).agentResult : 'FAIL', pass: agentPass, repairs, firstCompile, budgetExhausted } : { skipped: true },
-            eligible: refOk,
-        });
-        if (refOk) { eligible.push({ id, agentPass, repairs, firstCompile, budgetExhausted }); }
+        const record: TrialRecord = {
+            manifest: buildManifest({
+                benchmark, workRoot, cocosairRevision: 'working-tree', catalogRevision: 'catalog100-r2-typechecked',
+                agentProfile: PROFILE_A001.profileId, environment: { os: process.platform, browser: 'chromium-headless', viewport: '480x360', webglBackend: 'angle-swiftshader' },
+                cacheMode: 'cold', randomSeed: 0, fixtureDir: path.join(repo, 'tools/benchmark/fixtures', id), runtime: refRuntime,
+            }, benchmark, computeFixtureManifestHash(path.join(repo, 'tools/benchmark/fixtures', id)),
+            benchmark.referenceImplementation ? sha256(path.join(repo, 'tools/benchmark/references/frozen', benchmark.referenceImplementation)) : sha256(Buffer.from(JSON.stringify(benchmark.referenceOperations)))),
+            benchmarkType: benchmark.benchmarkType,
+            trialResult: agentOutcome?.trialResult ?? refOutcome.trialResult,
+            engineResult: refOutcome.engineResult,
+            agentResult: agentOutcome?.agentResult ?? 'NOT_EVALUATED',
+            failureDomain: agentOutcome?.failureDomain ?? refOutcome.failureDomain,
+            failureReason: agentOutcome?.failureReason ?? refOutcome.failureReason,
+            contractualUnsupported: refOutcome.engineResult === 'EXPECTED_UNSUPPORTED',
+            repairs, firstSubmissionCompilePass: firstCompile,
+            policyDenials: agentOutcome?.policyDenials ?? [],
+        };
+        records.push(record);
+        rows.push({ id, reference: { engineResult: refOutcome.engineResult, failureDomain: refOutcome.failureDomain },
+            agent: agentOutcome ? { agentResult: agentOutcome.agentResult, pass: agentPass, repairs, firstCompile, budgetExhausted } : { skipped: true },
+            eligible: isEligible(record), record });
     }
+    const metrics = aggregate(records);
+    const referenceGatePass = records.length > 0 && records.every((r) =>
+        r.trialResult === 'VALID' && ['PASS', 'EXPECTED_FALLBACK', 'EXPECTED_UNSUPPORTED'].includes(r.engineResult));
+    return { rows, metrics: { ...metrics, finalSuccessRate: metrics.agentFinalSuccessRate, referenceGatePass, profile: PROFILE_A001.profileId } };
 
-    const passCount = eligible.filter((e) => e.agentPass).length;
-    const metrics = {
-        eligibleTrials: eligible.length,
-        finalSuccessRate: eligible.length ? passCount / eligible.length : 0,
-        firstCompileSuccessRate: eligible.length ? eligible.filter((e) => e.firstCompile).length / eligible.length : 0,
-        medianRepairSuccessful: median(eligible.filter((e) => e.agentPass).map((e) => e.repairs)),
-        budgetExhaustionRate: eligible.length ? eligible.filter((e) => e.budgetExhausted).length / eligible.length : 0,
-        profile: PROFILE_A001.profileId,
-    };
-    return { rows, metrics };
 }
 
 /** A001 求解器：按 benchmark 类型给出确定性正确解。 */

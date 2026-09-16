@@ -20,7 +20,7 @@ for (let i = 0; i < 2; i++) {
     scene.addChild(cube);
     const renderer = cube.addComponent(MeshRenderer);
     renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-    renderer.material = builtinResMgr.get('builtin-standard-material');
+    renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 }
 (window as unknown as { __cameraToggle: () => void }).__cameraToggle = () => {
     camera.projection = camera.projection === Camera.ProjectionType.ORTHO

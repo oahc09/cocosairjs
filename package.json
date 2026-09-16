@@ -46,7 +46,9 @@
   "verify:web-only": "node tools/verify/verify-web-only.cjs",
   "test": "jest",
   "dev": "node tools/dev/dev-server.cjs",
-  "verify:consumer": "node tools/verify/consumer-acceptance.cjs"
+  "verify:consumer": "node tools/verify/consumer-acceptance.cjs",
+  "verify:benchmark": "tsc -p tools/benchmark/tsconfig.json && node tools/verify/benchmark-regression.cjs",
+  "verify:v06-gate": "node tools/verify/v06-report.cjs"
  },
  "devDependencies": {
   "@babel/preset-env": "^7.29.7",

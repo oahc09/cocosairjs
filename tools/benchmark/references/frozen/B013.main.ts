@@ -25,7 +25,7 @@ function spawnCube (name: string, pos: number[], scale?: number[]): void {
     scene.addChild(node);
     const renderer = node.addComponent(MeshRenderer);
     renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-    renderer.material = builtinResMgr.get('builtin-standard-material');
+    renderer.material = builtinResMgr.get<import('cocosair').Material>('builtin-standard-material');
 }
 spawnCube("near-cube", [0, 0, -2]);
 spawnCube("far-cube", [0, 0, -6]);

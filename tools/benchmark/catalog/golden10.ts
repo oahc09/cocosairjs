@@ -108,6 +108,7 @@ export const GOLDEN10: BenchmarkDefinition[] = [
         tags: ['golden10', 'interaction'],
     }),
     def({
+        capabilityRequirements: ['draco-decoder'],
         id: 'B051', benchmarkType: 'source-create', category: 'Compression', name: 'draco-compressed-gltf',
         prompt: 'Create src/main.ts: a scene (expose window.__airApp = app) that loads a Draco-compressed GLB from "./assets/compressed.glb" with GLTFLoader (the decoder is preconfigured in this environment), instantiate it, and render one clean frame.',
         validators: ['scene-ready', 'capability-status', 'no-runtime-error'],
