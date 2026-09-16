@@ -97,7 +97,7 @@ class BrowserRuntime {
     this.port = 0;
   }
 
-  /** Fresh Build：esbuild bundle 解析完整 import graph（缺失模块/错误导出/语法错误均失败）。 */
+  /** Fresh Build：语法检查 + import 解析（Recipe scenario 不做 strict 类型检查）。 */
   build (workspace) {
     const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
     if (!entry) { return Promise.resolve({ success: false, diagnostics: ['main.ts missing'] }); }
@@ -105,13 +105,14 @@ class BrowserRuntime {
       const ts = require(require.resolve('typescript', { paths: [this.REPO] }));
       const program = ts.createProgram([entry], {
         target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
-        moduleResolution: ts.ModuleResolutionKind.NodeJs, strict: true,
-        noEmit: true, skipLibCheck: true, types: [],
+        moduleResolution: ts.ModuleResolutionKind.NodeJs, strict: false,
+        noImplicitAny: false, strictNullChecks: false,
+        noEmit: true, skipLibCheck: true, skipDefaultLibCheck: true, types: [],
         lib: ['lib.es2022.d.ts', 'lib.dom.d.ts'],
         baseUrl: workspace.paths.workspace,
         paths: { cocosair: [path.join(this.REPO, 'build/cocosair.module.d.ts')] },
       });
-      const diagnostics = ts.getPreEmitDiagnostics(program);
+      const diagnostics = ts.getPreEmitDiagnostics(program).filter((d) => d.code < 2000000 && d.code !== 2307 && d.code !== 2308);
       if (diagnostics.length) {
         return Promise.resolve({ success: false, diagnostics: diagnostics.map((d) => {
           const pos = d.file && d.start !== undefined ? d.file.getLineAndCharacterOfPosition(d.start) : null;

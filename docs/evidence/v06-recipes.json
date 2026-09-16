@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-09-16T16:07:05.852Z",
-  "runId": "recipe-run-1789574723165",
-  "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-  "baseRevision": "81223e80f2feb56697352c793dee2346b501c7c8",
+  "measuredAt": "2026-09-16T23:19:38.105Z",
+  "runIdBase": "recipe-1789600634246",
+  "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+  "baseRevision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
   "total": 30,
   "pass": 30,
   "fail": 0,
@@ -14,10 +14,10 @@
         "kind": "benchmark",
         "id": "B001"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:26.995Z",
+      "runId": "recipe-1789600634246-R001-1",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:19.582Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -40,13 +40,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R001.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R001.png",
+          "hash": "28f99a58d6c1b9c9ce747cf32d485384600ba293b8b4e70fb1e27174c1475ce7"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=9 noErrors=true"
     },
     {
       "recipeId": "R002",
@@ -55,10 +73,10 @@
         "kind": "benchmark",
         "id": "B061"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:30.602Z",
+      "runId": "recipe-1789600634246-R002-2",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:24.298Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -81,13 +99,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R002.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R002.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R003",
@@ -96,10 +132,10 @@
         "kind": "benchmark",
         "id": "B081"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:34.210Z",
+      "runId": "recipe-1789600634246-R003-3",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:29.296Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -121,13 +157,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R003.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R003.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "state changed",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R004",
@@ -136,10 +190,10 @@
         "kind": "benchmark",
         "id": "B045"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:37.711Z",
+      "runId": "recipe-1789600634246-R004-4",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:34.144Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -161,13 +215,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R004.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R004.png",
+          "hash": "e0b05e872e6d49ff87a4bd976ecfbd3f6c15bcceea30a7a88d4f0c78510fae0e"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=12 noErrors=true"
     },
     {
       "recipeId": "R005",
@@ -176,10 +248,10 @@
         "kind": "benchmark",
         "id": "B037"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:41.103Z",
+      "runId": "recipe-1789600634246-R005-5",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:38.933Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -201,13 +273,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R005.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R005.png",
+          "hash": "f46a46375d54fa14d489c299c44d7bcb1dd1234c7e8dd11d72af9dcb90249981"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=8 noErrors=true"
     },
     {
       "recipeId": "R006",
@@ -216,10 +306,10 @@
         "kind": "benchmark",
         "id": "B042"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:44.472Z",
+      "runId": "recipe-1789600634246-R006-6",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:43.747Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -241,13 +331,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R006.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R006.png",
+          "hash": "28f99a58d6c1b9c9ce747cf32d485384600ba293b8b4e70fb1e27174c1475ce7"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=9 noErrors=true"
     },
     {
       "recipeId": "R007",
@@ -256,10 +364,10 @@
         "kind": "benchmark",
         "id": "B090"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:48.137Z",
+      "runId": "recipe-1789600634246-R007-7",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:48.718Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -281,13 +389,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R007.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R007.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "state changed",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R008",
@@ -296,10 +422,10 @@
         "kind": "benchmark",
         "id": "B004"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:51.285Z",
+      "runId": "recipe-1789600634246-R008-8",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:53.486Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -321,13 +447,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R008.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R008.png",
+          "hash": "ebca0afed49256f42cf8fcdd0f8a1ff5528167a2086ccd0267cabc1ec067e2a8"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=8 noErrors=true"
     },
     {
       "recipeId": "R009",
@@ -336,10 +480,10 @@
         "kind": "benchmark",
         "id": "B078"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:54.466Z",
+      "runId": "recipe-1789600634246-R009-9",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:17:58.256Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -361,13 +505,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R009.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R009.png",
+          "hash": "f46a46375d54fa14d489c299c44d7bcb1dd1234c7e8dd11d72af9dcb90249981"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=8 noErrors=true"
     },
     {
       "recipeId": "R010",
@@ -376,10 +538,10 @@
         "kind": "benchmark",
         "id": "B045"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:05:57.901Z",
+      "runId": "recipe-1789600634246-R010-10",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:03.157Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -401,13 +563,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R010.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R010.png",
+          "hash": "e0b05e872e6d49ff87a4bd976ecfbd3f6c15bcceea30a7a88d4f0c78510fae0e"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=12 noErrors=true"
     },
     {
       "recipeId": "R011",
@@ -416,10 +596,10 @@
         "kind": "benchmark",
         "id": "B042"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:01.357Z",
+      "runId": "recipe-1789600634246-R011-11",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:08.054Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -441,13 +621,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R011.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R011.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R012",
@@ -456,10 +654,10 @@
         "kind": "benchmark",
         "id": "B012"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:04.978Z",
+      "runId": "recipe-1789600634246-R012-12",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:12.690Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -481,13 +679,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R012.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R012.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R013",
@@ -496,10 +712,10 @@
         "kind": "benchmark",
         "id": "B013"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:08.224Z",
+      "runId": "recipe-1789600634246-R013-13",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:17.323Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -521,13 +737,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R013.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R013.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R014",
@@ -536,10 +770,10 @@
         "kind": "benchmark",
         "id": "B020"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:11.389Z",
+      "runId": "recipe-1789600634246-R014-14",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:22.025Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -561,13 +795,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R014.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R014.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R015",
@@ -576,10 +828,10 @@
         "kind": "benchmark",
         "id": "B015"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:14.757Z",
+      "runId": "recipe-1789600634246-R015-15",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:26.629Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -601,13 +853,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R015.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R015.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R016",
@@ -616,10 +886,10 @@
         "kind": "benchmark",
         "id": "B085"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:18.279Z",
+      "runId": "recipe-1789600634246-R016-16",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:31.280Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -641,13 +911,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R016.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R016.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R017",
@@ -656,10 +944,10 @@
         "kind": "benchmark",
         "id": "B037"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:21.481Z",
+      "runId": "recipe-1789600634246-R017-17",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:36.141Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -681,13 +969,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R017.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R017.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R018",
@@ -696,10 +1002,10 @@
         "kind": "benchmark",
         "id": "B090"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:25.072Z",
+      "runId": "recipe-1789600634246-R018-18",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:41.137Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -721,13 +1027,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R018.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R018.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "state changed",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R019",
@@ -736,10 +1060,10 @@
         "kind": "benchmark",
         "id": "B086"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:28.469Z",
+      "runId": "recipe-1789600634246-R019-19",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:45.724Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -761,13 +1085,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R019.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R019.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R020",
@@ -776,10 +1118,10 @@
         "kind": "benchmark",
         "id": "B007"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:31.908Z",
+      "runId": "recipe-1789600634246-R020-20",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:50.685Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -801,13 +1143,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R020.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R020.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "state changed",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R021",
@@ -816,10 +1176,10 @@
         "kind": "benchmark",
         "id": "B074"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:35.334Z",
+      "runId": "recipe-1789600634246-R021-21",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:18:55.269Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -841,13 +1201,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R021.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R021.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R022",
@@ -856,10 +1234,10 @@
         "kind": "benchmark",
         "id": "B072"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:38.680Z",
+      "runId": "recipe-1789600634246-R022-22",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:00.063Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -881,13 +1259,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R022.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R022.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R023",
@@ -896,10 +1292,10 @@
         "kind": "benchmark",
         "id": "B055"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:42.030Z",
+      "runId": "recipe-1789600634246-R023-23",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:04.980Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -921,13 +1317,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R023.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R023.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R024",
@@ -936,10 +1350,10 @@
         "kind": "benchmark",
         "id": "B056"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:45.251Z",
+      "runId": "recipe-1789600634246-R024-24",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:09.608Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -961,13 +1375,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R024.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R024.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R025",
@@ -976,10 +1408,10 @@
         "kind": "benchmark",
         "id": "B053"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:48.531Z",
+      "runId": "recipe-1789600634246-R025-25",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:14.198Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1001,13 +1433,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R025.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R025.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R026",
@@ -1016,10 +1466,10 @@
         "kind": "benchmark",
         "id": "B006"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:52.134Z",
+      "runId": "recipe-1789600634246-R026-26",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:18.907Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1041,13 +1491,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R026.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R026.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R027",
@@ -1056,10 +1524,10 @@
         "kind": "benchmark",
         "id": "B049"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:55.467Z",
+      "runId": "recipe-1789600634246-R027-27",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:23.621Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1081,13 +1549,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R027.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R027.png",
+          "hash": "28f99a58d6c1b9c9ce747cf32d485384600ba293b8b4e70fb1e27174c1475ce7"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=9 noErrors=true"
     },
     {
       "recipeId": "R028",
@@ -1096,10 +1582,10 @@
         "kind": "benchmark",
         "id": "B007"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:06:58.776Z",
+      "runId": "recipe-1789600634246-R028-28",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:28.323Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1121,13 +1607,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R028.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R028.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "assets=6 noErrors=true"
     },
     {
       "recipeId": "R029",
@@ -1136,10 +1640,10 @@
         "kind": "benchmark",
         "id": "B023"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:07:01.933Z",
+      "runId": "recipe-1789600634246-R029-29",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:32.940Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1161,13 +1665,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R029.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R029.png",
+          "hash": "ca4cfe182141e35d3910532ee9f60c8c9570bc40f35c6f54de6d5959afa39eef"
+        }
+      ],
+      "_interactionDetail": "N/A",
+      "_lifecycleDetail": "N/A (not stable)"
     },
     {
       "recipeId": "R030",
@@ -1176,10 +1698,10 @@
         "kind": "benchmark",
         "id": "B091"
       },
-      "runId": "recipe-run-1789574723165",
-      "revision": "81223e80f2feb56697352c793dee2346b501c7c8",
-      "sourceHash": "5abf606613236b01495b6f8a8b0eb99411dfc14e50432e379835e9abac46c578",
-      "measuredAt": "2026-09-16T16:07:05.579Z",
+      "runId": "recipe-1789600634246-R030-30",
+      "revision": "e23cf2eb243f5cfc0ed9ce23e29334f50512c8f3",
+      "sourceHash": "734734218db93ad15bd99e3edee567b6b6b9fbeada0c34041750d9d9f0b9bf2c",
+      "measuredAt": "2026-09-16T23:19:37.880Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1201,13 +1723,31 @@
         "interaction": true,
         "visual": true,
         "lifecycle": true,
-        "noRuntimeErrors": true
+        "noRuntimeErrors": true,
+        "capability": true
       },
-      "validatorResults": [],
-      "artifacts": {
-        "screenshot": "recipes/R030.png",
-        "log": "v06-recipes.log"
-      }
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "output/playwright/recipes/R030.png",
+          "hash": "7f475625a0e194d3a4d20a1ee220aa608abf0aa61cd3bb85d15a3b3a8873225d"
+        }
+      ],
+      "_interactionDetail": "state changed",
+      "_lifecycleDetail": "N/A (not stable)"
     }
   ]
 }

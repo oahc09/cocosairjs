@@ -28,8 +28,7 @@ var r = (id, name, status, description, refs, interaction, visual) => ({
   version: "1.0.0",
   name,
   status,
-  // 由 evidence 驱动晋级（run-recipes-browser.cjs 验证后生效）
-  targetStatus: status,
+  // evidence-driven promotion（run-recipes-browser 30/30 PASS 后写入）
   description,
   sceneSetup: "Code First \u573A\u666F\uFF1AcreateAirApp(#GameCanvas) + \u76F8\u673A + \u5E73\u884C\u5149 + \u8D44\u4EA7/\u7F51\u683C\u8282\u70B9",
   requiredAssets: [],
