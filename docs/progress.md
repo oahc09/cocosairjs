@@ -509,3 +509,25 @@ NodeNext 消费；**12 浏览器证据全 ok**。
 
 门禁：typecheck 0；23 套件 / **161 测试**；verify:consumer ok（exportCount 368）；
 examples 浏览器 7/7；panel 浏览器 7/7。
+
+## V0.6 Agent Creation Workflow（2026-09-16，§77 执行序全序完成）
+
+- **G0** 前置交接（cc6a55a）：V0.5 aec5882 + V0.5.1 f519d86 全部交付物在场。
+- **T1-T6** Benchmark 框架（50bf22d）：Driver 合同/Manual Driver/策略稳定拒绝码/
+  Command Sandbox/Trial 隔离台账/eligible_trials 唯一实现/双 Track Runner/12 Validator/Schema。
+- **T7b+T8** Golden 10 + G1 归因八场景（833a748）。
+- **T7c** BrowserRuntime 真实浏览器通道（9549b9e）：每 Trial Fresh Context + 静态服务 +
+  agent-session 桥接；连带修复 gltf-decoders CJS 加载回归。
+- **T9** catalog100（56dc0eb）：B001-B100 十段位独立目标，53 冻结参考实现；
+  §51 Runtime Gate 真实浏览器 **100/100 PASS**（evidence 落盘）。
+- **T9d** Profile A001 冻结（bdd6d9c）：Golden 10 双轨 **10/10**，
+  finalSuccess=1.0 / firstCompile=0.7 / medianRepair=0，超 §52 阈值。
+- **T10** Recipe 30 条（954764e）：§60 门禁 30/30/20，§64 Coverage 无悬空。
+- **T11** DevTools 工件 + Fresh Consumer Gate 两路（954764e + 修复后全绿）。
+- **T12** §73 性能 0.585（无回退）；§74 Lifecycle 50 轮 heap growth 0.1MB；
+  Final Gate 对账 `docs/v06-final-gate.md`（20/20 DoD ✅）。
+
+门禁终态：jest **27 套件 / 200 测试**；§51 Runtime Gate 100/100；双轨 10/10；
+Fresh Consumer ok；性能/生命周期 PASS。
+Deviations：A001 为脚本化求解档（LLM Provider 接入后以 A002+ 测量，不混算）；
+draco 系浏览器 EXPECTED_UNSUPPORTED 按稳定错误码判。

@@ -77,7 +77,7 @@ describe('V0.6 §54 — 首批 Validator', () => {
         const bad = snapshot({ assets: { ok: false, counts: {}, diagnostics: [{ code: 'MISSING_DEPENDENCY', location: 'x', message: 'm' }], unchecked: [] } });
         expect(runValidators(['asset-loaded'], bad, {})[0].state).toBe('FAIL');
         expect(runValidators(['no-runtime-error'], snapshot({ runtimeErrors: [{ seq: 1, category: 'shader', message: 'boom' }] }), {})[0].state).toBe('FAIL');
-        expect(runValidators(['visible-frame'], snapshot({ centerPixel: [10, 20, 40] }), {})[0].state).toBe('FAIL');
+        expect(runValidators(['visible-frame'], snapshot({ centerPixel: [30, 40, 60] }), {})[0].state).toBe('FAIL');
     });
 
     test('能力合同：unsupported/fallback 状态映射', () => {
@@ -154,8 +154,8 @@ describe('V0.6 §6-15 — 双 Track 状态机', () => {
 
     test('Reference FAIL → failureDomain=ENGINE；Fixture 缺失 → INFRA_FAILURE', async () => {
         const workRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'v06-run2-'));
-        const runner = new TrialRunner(makeRuntime({ errors: [{ seq: 1, category: 'shader', message: 'compile failed' }] }, { png: PNG_A, center: [10, 20, 40] }));
-        const failing = await runner.runReference(options(workRoot, makeRuntime({ errors: [{ seq: 1, category: 'shader', message: 'x' }] }, { png: PNG_A, center: [10, 20, 40] })));
+        const runner = new TrialRunner(makeRuntime({ errors: [{ seq: 1, category: 'shader', message: 'compile failed' }] }, { png: PNG_A, center: [30, 40, 60] }));
+        const failing = await runner.runReference(options(workRoot, makeRuntime({ errors: [{ seq: 1, category: 'shader', message: 'x' }] }, { png: PNG_A, center: [30, 40, 60] })));
         expect(failing.engineResult).toBe('FAIL');
         expect(failing.failureDomain).toBe('ENGINE');
 

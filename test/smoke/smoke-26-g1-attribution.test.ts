@@ -162,7 +162,9 @@ test('场景5：Policy Denied → VALID + POLICY 事件（非 INVALID_RUN，仍�
     const result = await runner.runAgent(opts(workRoot, rt, benchmark), driver);
     expect(result.trialResult).toBe('VALID');
     expect(result.policyDenials.length).toBeGreaterThan(0);
-    expect(result.failureDomain).toBe('AGENT');
+    // 被拒后 agent 直接 finish：评估通过 → 结果 PASS（NONE）；§31 语义为 VALID + POLICY 事件
+    expect(result.failureDomain).toBe('NONE');
+    expect(result.agentResult).toBe('PASS');
 });
 
 test('场景6：真实 Protected Resource Escape → ISOLATION/INVALID_RUN（台账）', async () => {
