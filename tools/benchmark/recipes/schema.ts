@@ -68,9 +68,10 @@ export interface CoverageContext {
 }
 
 /** Recipe 四要素覆盖证明（§63 完整场景/关键交互/关键视觉/资源生命周期）：
- *  由 benchmarkRefs 的 validators 并集 + validatorRefs + example 存在性机器推导。 */
-function coverageProof (recipe: RecipeDefinition, ctx: CoverageContext): { scene: boolean; interaction: boolean; visual: boolean; lifecycle: boolean } {
-    const validatorUnion = new Set<string>([...recipe.validatorRefs, ...recipe.visualRefs]);
+ *  仅由 benchmarkDefs 的实际 validators 并集机器推导——recipe 自声明的
+ *  validatorRefs/visualRefs 不算证据（防自证循环）。example 仅当可运行入口存在。 */
+function coverageProof (recipe: RecipeDefinition, ctx: CoverageContext): { scene: boolean; interaction: boolean; visual: boolean; lifecycle: boolean; detail: string } {
+    const validatorUnion = new Set<string>();
     let hasInteractionBench = false;
     for (const ref of recipe.benchmarkRefs) {
         const def = ctx.benchmarkDefs?.get(ref);
@@ -79,11 +80,13 @@ function coverageProof (recipe: RecipeDefinition, ctx: CoverageContext): { scene
         if (def.type === 'runtime-control' || def.category === 'Interaction' || def.category === 'Agent') { hasInteractionBench = true; }
     }
     const exampleOk = recipe.exampleRefs.some((e) => ctx.exampleHasEntry?.get(e) === true);
+    const detail = `benchValidators=[${[...validatorUnion].join(',')}] interactionBench=${hasInteractionBench} exampleOk=${exampleOk}`;
     return {
-        scene: validatorUnion.has('scene-ready') || exampleOk,
-        interaction: recipe.interactionSteps.length > 0 && (hasInteractionBench || recipe.exampleRefs.length > 0),
-        visual: validatorUnion.has('visible-frame') || recipe.visualRefs.includes('visible-frame') || recipe.exampleRefs.length > 0,
-        lifecycle: validatorUnion.has('resource-released') || validatorUnion.has('no-runtime-error'),
+        scene: validatorUnion.has('scene-ready'),
+        interaction: recipe.interactionSteps.length > 0 && hasInteractionBench,
+        visual: validatorUnion.has('visible-frame'),
+        lifecycle: validatorUnion.has('no-runtime-error'),
+        detail,
     };
 }
 

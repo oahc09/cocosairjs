@@ -211,6 +211,10 @@ export const capabilityStatus: Validator = {
         const required = String(params.requires ?? '');
         const capability = snapshot.capability;
         if (!capability) { return fail('capability-status', `capability '${required}' not reported`); }
+        // 能力名必须匹配：snapshot 报告的 capability.name 必须覆盖 params.requires 所指的能力
+        if (!capability.name.includes(required.split('-')[0]) && !required.includes(capability.name.split('-')[0])) {
+            return fail('capability-status', `capability name mismatch: expected '${required}', got '${capability.name}'`);
+        }
         if (capability.status === 'unsupported') { return { validatorId: 'capability-status', state: 'EXPECTED_UNSUPPORTED', detail: required }; }
         if (capability.status === 'fallback') { return { validatorId: 'capability-status', state: 'EXPECTED_FALLBACK', detail: required }; }
         return pass('capability-status', `${required}=${capability.status}`);

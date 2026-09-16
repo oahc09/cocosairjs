@@ -1,11 +1,11 @@
 {
-  "measuredAt": "2026-09-16T13:36:27.109Z",
+  "measuredAt": "2026-09-16T14:38:56.242Z",
   "profile": "A001",
   "gate": {
     "finalSuccessRate": 1,
-    "firstCompileSuccessRate": 0.7,
+    "firstCompileSuccessRate": 0.6666666666666666,
     "medianRepairSuccessful": 0,
-    "eligibleTrials": 10,
+    "eligibleTrials": 9,
     "thresholds": {
       "finalSuccess": 0.8,
       "firstCompile": 0.6,
@@ -91,17 +91,13 @@
     {
       "id": "B051",
       "reference": {
-        "engineResult": "PASS",
-        "failureDomain": "NONE"
+        "engineResult": "FAIL",
+        "failureDomain": "ENGINE"
       },
       "agent": {
-        "agentResult": "PASS",
-        "pass": true,
-        "repairs": 0,
-        "firstCompile": true,
-        "budgetExhausted": false
+        "skipped": true
       },
-      "eligible": true
+      "eligible": false
     },
     {
       "id": "B061",

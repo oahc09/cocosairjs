@@ -95,12 +95,23 @@ class BrowserRuntime {
     this.port = 0;
   }
 
-  /** Fresh Build：真实 esbuild 编译检查（失败抛错并带 diagnostics）。 */
+  /** Fresh Build：esbuild bundle 解析完整 import graph（缺失模块/错误导出/语法错误均失败）。 */
   build (workspace) {
     const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
     if (!entry) { return Promise.resolve({ success: false, diagnostics: ['main.ts missing'] }); }
     try {
-      this.esbuild.transformSync(fs.readFileSync(entry, 'utf8'), { loader: 'ts', format: 'esm', target: 'es2022', sourcefile: entry });
+      this.esbuild.buildSync({
+        entryPoints: [entry],
+        bundle: true,
+        write: false,
+        format: 'esm',
+        target: 'es2022',
+        platform: 'browser',
+        loader: { '.ts': 'ts' },
+        external: ['cocosair'],
+        sourcemap: false,
+        logLevel: 'silent',
+      });
       return Promise.resolve({ success: true, diagnostics: [] });
     } catch (error) {
       const diag = String(error.message).split('\n').slice(0, 4).join(' | ').slice(0, 400);

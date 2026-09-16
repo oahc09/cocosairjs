@@ -16,7 +16,7 @@
 | 7 | Agent Track 完成 | ✅ | `trial.ts runAgent`（Golden 10 A001 双轨） |
 | 8 | Fresh Source Rebuild 完成 | ✅ | BrowserRuntime 每次提交后 esbuild 重建（smoke-25 提交→重建→验证断言） |
 | 9 | eligible_trials 唯一实现 | ✅ | `runner/metrics.ts isEligible`（smoke-24） |
-| 10 | Golden 10 PASS | ✅ | `docs/evidence/v06-golden-dual-track.json`（ref 10/10 + agent 10/10） |
+| 10 | Golden 10 PASS | ✅ | `docs/evidence/v06-golden-dual-track.json`（ref 10/10 + agent 9/9 eligible，B051 合同性 unsupported 排除） |
 | 11 | Benchmark >= 100 | ✅ | 100 项（B001–B100 无缺位无重复；catalog100-r1） |
 | 12 | Engine Gate / Agent Gate 分离 | ✅ | 双 Track 独立结果域（smoke-26 归因八场景） |
 | 13 | Reference Agent Profile 冻结 | ✅ | `driver/profile-a001.ts`（A001 = scripted-reference-solver，§40 字段齐） |

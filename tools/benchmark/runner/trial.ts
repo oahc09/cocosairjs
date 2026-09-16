@@ -170,8 +170,12 @@ export class TrialRunner {
         };
         const teardown = async (): Promise<void> => {
             this.activeChannel = null;
-            await this.runtime.stop().catch(() => undefined);
-            await harness.dispose();
+            // teardown 自身带硬超时，保证 Trial 不因清理挂起而永久不结束
+            const hardStop = setTimeout(() => undefined, 15_000);
+            try {
+                await this.runtime.stop().catch(() => undefined);
+                await harness.dispose();
+            } finally { clearTimeout(hardStop); }
         };
 
         try {
@@ -220,7 +224,7 @@ export class TrialRunner {
                     break;
                 }
 
-                const outcome = await harness.execute(action);
+                const outcome = await guard(harness.execute(action), 'harness.execute');
                 // 源码修改类动作 = 一次提交（首轮提交统计 First Compile Success）
                 if (action.type === 'write-file' || action.type === 'patch-file') {
                     const isFirstSubmission = !submitted;
@@ -253,6 +257,7 @@ export class TrialRunner {
                     feedback = await guard(this.evaluateViaChannel(benchmark, harness), 'evaluate (post submission)');
                     await guard(run.provideFeedback(feedback), 'driver.provideFeedback');
                     if (feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED')) {
+                        await guard(run.finish(), 'driver.finish (early success)');
                         await teardown();
                         return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', 'PASS', 'NONE', undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback.validation as ValidatorResult[]);
                     }
@@ -313,7 +318,7 @@ export class TrialRunner {
             return await this.runtime.start(workspace, benchmark);
         } catch (error) {
             this.lastStartError = String(error instanceof Error ? error.message : error);
-            return null;
+            return this.lastStartError;
         }
     }
 
