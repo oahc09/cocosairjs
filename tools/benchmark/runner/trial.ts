@@ -144,6 +144,14 @@ export class TrialRunner {
         let repairs = 0;
         let firstSubmissionCompilePass = false;
         let submitted = false;
+        let feedback: FeedbackPackage | null = null;
+        // runtime-control 类 Agent 解需要立即与运行时交互：预启动 Fresh Runtime 并挂接通道
+        const started = await this.safeStart(workspace, benchmark, options);
+        if (typeof started === 'string') {
+            throw new Error(started);
+        }
+        this.activeChannel = started;
+        harness.attachRuntime(started);
         try {
             const run = await driver.startTask({
                 requestNext: async () => ({ remainingRepairs: benchmark.repairBudget - repairs }),
@@ -167,14 +175,20 @@ export class TrialRunner {
                 timeBudgetMs: benchmark.timeBudgetMs,
             });
 
-            let feedback: FeedbackPackage | null = null;
             // eslint-disable-next-line no-constant-condition
             while (true) {
                 const action: AgentAction = await run.nextAction({
                     feedback: feedback ?? undefined,
                     remainingRepairs: benchmark.repairBudget - repairs,
                 });
-                if (action.type === 'finish') { await run.finish(); break; }
+                if (action.type === 'finish') {
+                    await run.finish();
+                    if (!submitted) {
+                        // runtime-control 解：无源码提交，按当前运行时状态评定
+                        feedback = await this.evaluate(workspace, benchmark, options, { success: true, diagnostics: [] }, harness);
+                    }
+                    break;
+                }
 
                 const outcome = await harness.execute(action);
                 // 源码修改类动作 = 一次提交（首轮提交统计 First Compile Success）
@@ -217,8 +231,8 @@ export class TrialRunner {
             }
             await this.runtime.stop().catch(() => undefined);
             await harness.dispose();
+            const stillFailing = feedback ? !feedback.validation.every((v) => v.state === 'PASS' || v.state === 'EXPECTED_FALLBACK' || v.state === 'EXPECTED_UNSUPPORTED') : true;
             const gaveUpSummary = 'agent finished';
-            const stillFailing = feedback ? !feedback.validation.every((v) => v.state === 'PASS') : true;
             return this.outcome(workspace, options, 'VALID', 'NOT_EVALUATED', stillFailing ? 'FAIL' : 'PASS', stillFailing ? 'AGENT' : 'NONE', stillFailing ? gaveUpSummary : undefined, repairs, firstSubmissionCompilePass, harness.denials, feedback?.validation as ValidatorResult[]);
         } catch (error) {
             await this.runtime.stop().catch(() => undefined);
@@ -259,10 +273,11 @@ export class TrialRunner {
                 visual: {}, policy: { denied: [...harness.denials] },
             };
         }
-        const channel = await this.safeStart(workspace, benchmark, options);
+        // runAgent 预启动过则复用（Agent 的运行时修改必须可见）；否则新启
+        const channel = this.activeChannel ?? await this.safeStart(workspace, benchmark, options);
         if (!channel) {
             return {
-                compile: { success: false, diagnostics: ['runtime failed to start'] }, runtime: { errors: [] },
+                compile: { success: false, diagnostics: [this.lastStartError || 'runtime failed to start'] }, runtime: { errors: [] },
                 inspection: { scene: null, nodes: [], assets: null }, validation: [], visual: {}, policy: { denied: [...harness.denials] },
             };
         }
@@ -279,6 +294,8 @@ export class TrialRunner {
     }
 
     private lastStartError: string | null = null;
+    /** runAgent 预启动的通道：evaluate 复用（避免二次 Fresh Runtime 丢失 Agent 已创建的状态）。 */
+    private activeChannel: (RuntimeChannel & { snapshot (): Promise<RuntimeSnapshot> }) | null = null;
 
     private async safeStart (workspace: TrialWorkspace, benchmark: BenchmarkDefinition, options: TrialOptions): Promise<(RuntimeChannel & { snapshot (): Promise<RuntimeSnapshot> }) | null> {
         try {

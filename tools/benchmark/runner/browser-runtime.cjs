@@ -167,6 +167,12 @@ class BrowserRuntime {
       inspect: async (query) => page.evaluate(async (q) => {
         const s = window.__benchSession;
         if (q.kind === 'inspectNode') { return s.inspectNode(q.id); }
+        if (q.kind === 'inspectScene') { return s.inspectScene(); }
+        if (q.kind === 'dispatch') {
+          const response = await s.dispatch({ requestId: q.requestId, action: q.action, targetId: q.targetId, params: q.params });
+          if (!response.ok) { throw new Error(q.action + ' failed: ' + response.error.code); }
+          return response.result;
+        }
         return s.inspectAsset();
       }, query),
       captureFrame: async () => {

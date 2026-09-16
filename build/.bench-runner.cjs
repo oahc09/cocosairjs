@@ -764,6 +764,8 @@ var TrialRunner = class {
   constructor(runtime) {
     this.runtime = runtime;
     this.lastStartError = null;
+    /** runAgent 预启动的通道：evaluate 复用（避免二次 Fresh Runtime 丢失 Agent 已创建的状态）。 */
+    this.activeChannel = null;
   }
   /** Reference Track（§7/§9/§11）。 */
   async runReference(options) {
@@ -850,6 +852,13 @@ var TrialRunner = class {
     let repairs = 0;
     let firstSubmissionCompilePass = false;
     let submitted = false;
+    let feedback = null;
+    const started = await this.safeStart(workspace, benchmark, options);
+    if (typeof started === "string") {
+      throw new Error(started);
+    }
+    this.activeChannel = started;
+    harness.attachRuntime(started);
     try {
       const run = await driver.startTask({
         requestNext: async () => ({ remainingRepairs: benchmark.repairBudget - repairs }),
@@ -872,7 +881,6 @@ var TrialRunner = class {
         repairBudget: benchmark.repairBudget,
         timeBudgetMs: benchmark.timeBudgetMs
       });
-      let feedback = null;
       while (true) {
         const action = await run.nextAction({
           feedback: feedback ?? void 0,
@@ -880,6 +888,9 @@ var TrialRunner = class {
         });
         if (action.type === "finish") {
           await run.finish();
+          if (!submitted) {
+            feedback = await this.evaluate(workspace, benchmark, options, { success: true, diagnostics: [] }, harness);
+          }
           break;
         }
         const outcome = await harness.execute(action);
@@ -920,8 +931,8 @@ var TrialRunner = class {
       }
       await this.runtime.stop().catch(() => void 0);
       await harness.dispose();
+      const stillFailing = feedback ? !feedback.validation.every((v) => v.state === "PASS" || v.state === "EXPECTED_FALLBACK" || v.state === "EXPECTED_UNSUPPORTED") : true;
       const gaveUpSummary = "agent finished";
-      const stillFailing = feedback ? !feedback.validation.every((v) => v.state === "PASS") : true;
       return this.outcome(workspace, options, "VALID", "NOT_EVALUATED", stillFailing ? "FAIL" : "PASS", stillFailing ? "AGENT" : "NONE", stillFailing ? gaveUpSummary : void 0, repairs, firstSubmissionCompilePass, harness.denials, feedback?.validation);
     } catch (error) {
       await this.runtime.stop().catch(() => void 0);
@@ -976,10 +987,10 @@ var TrialRunner = class {
         policy: { denied: [...harness.denials] }
       };
     }
-    const channel = await this.safeStart(workspace, benchmark, options);
+    const channel = this.activeChannel ?? await this.safeStart(workspace, benchmark, options);
     if (!channel) {
       return {
-        compile: { success: false, diagnostics: ["runtime failed to start"] },
+        compile: { success: false, diagnostics: [this.lastStartError || "runtime failed to start"] },
         runtime: { errors: [] },
         inspection: { scene: null, nodes: [], assets: null },
         validation: [],

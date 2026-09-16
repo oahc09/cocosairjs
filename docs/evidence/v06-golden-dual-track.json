@@ -1,0 +1,167 @@
+{
+  "measuredAt": "2026-09-16T02:49:23.411Z",
+  "profile": "A001",
+  "gate": {
+    "finalSuccessRate": 1,
+    "firstCompileSuccessRate": 0.7,
+    "medianRepairSuccessful": 0,
+    "eligibleTrials": 10,
+    "thresholds": {
+      "finalSuccess": 0.8,
+      "firstCompile": 0.6,
+      "medianRepairMax": 3
+    }
+  },
+  "rows": [
+    {
+      "id": "B001",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": true,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B011",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": true,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B031",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": true,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B041",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": true,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B042",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": true,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B051",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": true,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B061",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": false,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B081",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": false,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B091",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": false,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    },
+    {
+      "id": "B100",
+      "reference": {
+        "engineResult": "PASS",
+        "failureDomain": "NONE"
+      },
+      "agent": {
+        "agentResult": "PASS",
+        "pass": true,
+        "repairs": 0,
+        "firstCompile": true,
+        "budgetExhausted": false
+      },
+      "eligible": true
+    }
+  ]
+}
