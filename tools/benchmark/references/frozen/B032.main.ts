@@ -1,0 +1,21 @@
+import { createAirApp, Scene, Node, MeshRenderer, Animation, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
+
+const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
+const scene = new Scene('B032');
+const cameraNode = new Node('camera');
+scene.addChild(cameraNode);
+cameraNode.setPosition(new Vec3(0, 2, 6));
+cameraNode.setRotationFromEuler(-15, 0, 0);
+cameraNode.addComponent(Camera).visibility = Layers.Enum.DEFAULT;
+const lightNode = new Node('light');
+scene.addChild(lightNode);
+lightNode.setRotationFromEuler(-45, -30, 0);
+lightNode.addComponent(DirectionalLight);
+const ball = new Node('ball');
+ball.layer = Layers.Enum.DEFAULT;
+scene.addChild(ball);
+const renderer = ball.addComponent(MeshRenderer);
+renderer.mesh = utils.createMesh(primitives.sphere({ radius: 0.8 }));
+renderer.material = builtinResMgr.get('builtin-standard-material');
+app.run(scene);

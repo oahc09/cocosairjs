@@ -1,27 +1,37 @@
-import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, Material, builtinResMgr } from 'cocosair';
+import { createAirApp, Scene, Node, MeshRenderer, Material, Animation, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
-const scene = new Scene('B006');
+const scene = new Scene('catalog');
 const cameraNode = new Node('camera');
 scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 2, 6));
-cameraNode.setRotationFromEuler(-15, 0, 0);
+cameraNode.setPosition(new Vec3(0, 3, 9));
+cameraNode.setRotationFromEuler(-18, 0, 0);
 const camera = cameraNode.addComponent(Camera);
 camera.visibility = Layers.Enum.DEFAULT;
+camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+camera.clearColor = new Color(30, 40, 60, 255);
 const lightNode = new Node('light');
 scene.addChild(lightNode);
+lightNode.setPosition(new Vec3(0, 8, 0));
 lightNode.setRotationFromEuler(-45, -30, 0);
-lightNode.addComponent(DirectionalLight);
-const cube = new Node('cube');
-cube.layer = Layers.Enum.DEFAULT;
-scene.addChild(cube);
-const renderer = cube.addComponent(MeshRenderer);
-renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-const material = new Material();
-material.initialize({ effectName: 'builtin-standard', defines: { USE_BASE_COLOR: true }, macroRemap: {} });
-renderer.material = material;
-renderer.material = builtinResMgr.get('builtin-standard-material');
-void Color;
-(window as unknown as { __airApp: unknown }).__airApp = app;
+const light = lightNode.addComponent(DirectionalLight);
+light.illuminance = 2;
+function spawnCube (name: string, pos: number[], scale?: number[]): void {
+    const node = new Node(name);
+    node.layer = Layers.Enum.DEFAULT;
+    node.setPosition(new Vec3(pos[0], pos[1], pos[2]));
+    if (scale) { node.setScale(new Vec3(scale[0], scale[1], scale[2])); }
+    scene.addChild(node);
+    const renderer = node.addComponent(MeshRenderer);
+    renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+    renderer.material = builtinResMgr.get('builtin-standard-material');
+}
+spawnCube("g0", [-1.5, 0, -1.5]);
+spawnCube("g1", [1.5, 0, -1.5]);
+spawnCube("g2", [-1.5, 0, 1.5]);
+spawnCube("g3", [1.5, 0, 1.5]);
+
+
+
 app.run(scene);

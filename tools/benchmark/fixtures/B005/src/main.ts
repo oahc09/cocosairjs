@@ -1,5 +1,1 @@
-import { createAirApp, Scene } from 'cocosair';
-const app = await createAirApp({ canvas: '#GameCanvas' });
-const scene = new Scene('B005');
-(window as any).__airApp = app;
-app.run(scene);
+// TODO (B005): Create src/main.ts: a cube "moved" whose WORLD position is (2, 3, -1) (set via setWorldPosition; the scene has no transf

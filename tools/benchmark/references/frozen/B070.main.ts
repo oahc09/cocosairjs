@@ -1,0 +1,17 @@
+import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, SkinnedMeshRenderer, GLTFLoader } from 'cocosair';
+const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
+const scene = new Scene('B070');
+const cameraNode = new Node('camera');
+scene.addChild(cameraNode);
+cameraNode.addComponent(Camera).visibility = Layers.Enum.DEFAULT;
+const lightNode = new Node('light');
+scene.addChild(lightNode);
+lightNode.setRotationFromEuler(-45, -30, 0);
+lightNode.addComponent(DirectionalLight);
+app.run(scene);
+const asset = await new GLTFLoader().parseAsync(await (await fetch('/assets/SimpleSkin.gltf')).text(), '/assets/');
+const instance = asset.instantiate();
+scene.addChild(instance.root);
+const skinned = instance.root.getComponentsInChildren(SkinnedMeshRenderer);
+console.log('[B070] skinned renderers:', skinned.length);

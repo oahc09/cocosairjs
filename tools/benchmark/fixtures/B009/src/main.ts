@@ -1,5 +1,1 @@
-import { createAirApp, Scene } from 'cocosair';
-const app = await createAirApp({ canvas: '#GameCanvas' });
-const scene = new Scene('B009');
-(window as any).__airApp = app;
-app.run(scene);
+// TODO (B009): Create src/main.ts: a chain "l1" → "l2" → "l3" where l2 is child of l1 and l3 is child of l2; l3 sits at local (0, 1, 0)

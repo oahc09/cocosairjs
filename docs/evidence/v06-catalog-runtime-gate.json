@@ -1,0 +1,303 @@
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-62f84236-531a-4ef1-a480-a81328e9d521\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B001] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-7957a2e1-ae0f-4671-8ff8-18124290ba06\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B011] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-4c4dae43-7721-4bff-ae02-3cd234aa8b2e\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B041] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-971d70ea-4c46-46e2-8583-d01a8c505f96\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B042] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-cf6310b9-752c-40ea-b13a-b0e8083c9a1d\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B061] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-133ddd2e-d9d7-4739-931c-ef9cc0730a47\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B031] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-2fe2bf1b-f26e-4478-873c-d2b686b64e10\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B081] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-36d904e7-265a-4ec6-90ac-53196d8c41cd\workspace\favicon.ico
+[bench-pageerror] GLTFError: [glTF] required extension KHR_draco_mesh_compression: decoder-required (configure a decoder with setDRACODecoder())
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B051] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-e16ded07-c00a-4748-81d0-c82835682cc4\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B091] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-514c60c6-0f57-4db4-9870-019598ab14fb\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B100] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-134dd5c9-8b18-449f-aca1-834667ed70f0\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B002] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-a64bd273-20eb-42c9-9bfb-126814d2ed36\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B003] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-6ede509d-4505-48a6-8a86-e77501f17ccd\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B004] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-310c333c-36c4-4b13-89ce-01d3bdc7c615\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B005] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-e510810b-cad5-492b-baff-6c9bab951f9d\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B006] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-825790ae-a62f-43b3-8174-88eb75010b1f\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B007] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-ff381b22-f738-4f97-9652-8251b8c6a80f\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B008] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-936cd067-c83b-498f-a0e4-88d0d7fa23c0\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B009] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-f534260e-30f1-45de-82fb-56cec7366acc\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B010] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-b4451c00-fa6b-4153-accd-193b1aff95d5\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B012] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-c91a9a2a-8dc7-415c-8fc9-deeb22993ed4\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B013] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-ce52f8c3-99e6-4f3d-bb81-391acd9aebb5\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B014] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-760a7feb-7ff7-4452-9545-a94d94c6ba88\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B015] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-3e504ad7-691b-49d8-831f-6c8e1ac0074c\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B032] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-3c788a5d-a5e2-4f70-a8a3-b2fade1d9079\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B033] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-610eda72-4356-4931-a2c8-3d6dbb71e363\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B043] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-b4ab6f33-26b8-46c0-b7b1-f1f110f0b507\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B044] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-ae7dc9bd-9841-4d34-be78-11d1fb5422c6\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B062] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-15116e32-ec75-4486-8e3f-da66dfc4fa91\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B082] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-bfcdc3e4-00e3-45d4-ab36-8f37c9032eb6\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B092] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-fada3e06-9298-41f7-a48c-024bb037e64e\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B093] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-d9b99b4a-5c4f-4a97-b94f-bdea9e12bde6\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B094] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-bec5961a-3b7e-4525-8f71-f866931c7e98\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B095] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-8a199afe-1552-4df9-8415-0bdcc515737c\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B016] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-9891ec0f-ad02-4215-b65b-2b66630eea39\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B017] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-1586c161-5a41-4c82-af7a-c62102243155\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B018] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-894f7563-a790-46ea-bb82-57f1410fb988\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B019] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-dd05dc85-5600-4231-ab9e-f6cad41bf5a8\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B020] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-2c00bd2c-ef50-4f67-a20b-38763629bf05\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B021] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-10074cb9-7f71-4a4d-9f82-388be1059f18\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B022] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-7f2ab93a-3d3b-42ad-9d91-f2219ad49d07\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B023] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-9fdc01b7-756a-4eff-b101-08f58e5c89e1\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B024] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-1d2b8560-ca59-495c-a180-81156882a4ca\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B025] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-b3750859-b6c2-4ed9-8443-857eee83bc20\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B026] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-7a22f340-e22a-4bd3-b43d-7a43acbc5ff4\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B027] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-89d69ca2-93b0-4758-9d70-f17f471c98ed\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B028] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-67cdd379-b6d7-4e27-8f38-f4ef1bbd90d2\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B029] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-9032870e-bf0b-4d8b-a549-3e1da1d53b8e\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B030] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-c6c10337-e715-48b5-9cbe-b4de12cb7cb2\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B034] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-1f224981-986c-457d-bb53-1b65ac834418\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B035] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-aa8a46b8-87c4-4621-b541-5edc2b067ff2\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B036] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-bb68ef65-a049-47a7-8eb2-b3ed077badf9\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B037] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-ad4f7b84-79e4-41d8-93b7-d3fcea8c5a02\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B038] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-25aecf2d-fb1e-4e4f-a86e-9dbf0fceee17\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B039] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-0284a59c-b7ec-4257-b612-3a813bdac0a5\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B040] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-7f0050a1-c704-46b9-a7f6-3596e615ccf7\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B045] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-b2c597de-9f6c-4f6e-b2d2-0c060ff0397f\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B046] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-c53b40bd-a698-4b47-9250-79edf7be0059\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B047] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-9c83cab9-022f-40f7-ab6d-e862bd307f22\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B048] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-32540570-c6ec-4f07-aa63-b0dcb5f9ae7e\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B049] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-cf20495e-83e7-480f-a30f-2e3fd97a0a8c\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B050] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-e57da2d3-fbfe-4874-b715-79b14a7b7038\workspace\favicon.ico
+[bench-pageerror] GLTFError: [glTF] required extension KHR_draco_mesh_compression: decoder-required (configure a decoder with setDRACODecoder())
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B052] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-2560e4cb-3ddd-414e-90c0-88b1a56f6e95\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B053] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-27b49220-db64-4ad6-b7f3-e5e3abc0a103\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B054] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-f533042c-d3eb-40ca-b2e2-fd145b7cb008\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B055] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-1ce69b69-d0cd-4216-9984-75e511c32f18\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B056] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-d0900672-bbe5-4ca3-8fd1-a03c7d9e97da\workspace\favicon.ico
+[bench-pageerror] GLTFError: [glTF] required extension KHR_draco_mesh_compression: decoder-required (configure a decoder with setDRACODecoder())
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B057] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-5c13fabd-e6a1-4683-802e-847d15188f6b\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B058] PASS
+[B059] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-0376fab5-d7de-40d6-8089-3bd5bdaaa2ef\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B060] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-8734b938-1a82-42ed-8e8a-f3f6908e8fc1\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B063] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-f067184e-c48f-4d3c-8bfa-f5fc68a9bb96\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B064] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-c53cc758-16be-4d50-a6c4-7233aa8734be\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B065] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-b43608d8-f72b-4edd-8c2e-03853ffbd439\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B066] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-c41f0dcc-16d9-4da6-8bf3-5dc73030a675\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B067] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-5a44c6d5-a534-45b0-8e39-bae2c47f1ca8\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B068] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-f47ea7b8-1936-4a1a-9997-732a8943882f\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B069] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-539591f9-285f-4e31-96c3-bb98552a2c90\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B070] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-afb3bfef-d3d7-4679-99a9-1bea136e7755\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B071] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-e06e8c80-d26d-4f04-8ee3-75461bc6fde9\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B072] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-0f0a089b-8517-4c35-99e0-fe82a78268b8\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B073] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-89125a0f-f1bf-4f03-8e92-a7d432c05675\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B074] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-0dbda600-557c-4e32-acee-b54d7a6445ce\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B075] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-d4edb127-5b30-4a71-8f06-0592cc5065cf\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B076] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-03be7a0e-c1bd-499b-b440-e147284af0cf\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B077] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-202143ec-4a48-4e47-8da8-748995a3612d\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B078] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-59086184-f728-4d02-854c-b344c9a8e611\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B079] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-a671e74e-7759-4e49-beea-dc5d2bfa55e0\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B080] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-d06ab966-0809-4db3-ba49-0cca9744bce7\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B083] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-b38ad050-0c47-4f15-8881-64b463fa79eb\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B084] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-8b996e09-f160-4dad-aad5-2cdf0e8cb916\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B085] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-426b2029-0330-4106-8f1c-197b5fe2aedb\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B086] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-1ac9660b-7502-4b69-baa8-0657cea005eb\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B087] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-cd527dc3-aa3e-42b7-9b7d-b0da51be9cce\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B088] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-4705adcc-161d-40db-be3e-0dda3574cc58\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B089] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-60a32bf6-d8c0-44e2-b249-7fbf26862cf5\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B090] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-5fa35c1f-a6e9-4abd-89ec-429082da0c90\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B096] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-3494a106-c212-4731-9516-ef58b1f71592\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B097] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-74e165e8-e9e0-400c-88e8-07eb2331264f\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B098] PASS
+[bench-404] /favicon.ico C:\Users\caosh\AppData\Local\Temp\v06-golden-hVDX9q\run-7d61ecb5-9830-4c5f-9659-d48807796ea1\workspace\favicon.ico
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+[B099] PASS
+
+== golden10 browser reference: 100/100 PASS ==

@@ -1,0 +1,16 @@
+import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, GLTFLoader, frameObject } from 'cocosair';
+const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
+const scene = new Scene('B060');
+const cameraNode = new Node('camera');
+scene.addChild(cameraNode);
+const camera = cameraNode.addComponent(Camera);
+camera.visibility = Layers.Enum.DEFAULT;
+const lightNode = new Node('light');
+scene.addChild(lightNode);
+lightNode.setRotationFromEuler(-45, -30, 0);
+lightNode.addComponent(DirectionalLight);
+app.run(scene);
+const asset = await new GLTFLoader().parseAsync(await (await fetch('/assets/BoxTextured.glb')).arrayBuffer(), '/');
+scene.addChild(asset.instantiate().root);
+frameObject(camera, scene);

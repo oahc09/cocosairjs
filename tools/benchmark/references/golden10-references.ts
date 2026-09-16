@@ -32,7 +32,7 @@ renderer.material = builtinResMgr.get('builtin-standard-material');
 app.run(scene);
 `;
 
-REFERENCES.B002 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
+REFERENCES.B011 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
@@ -66,7 +66,7 @@ for (let i = 0; i < 2; i++) {
 app.run(scene);
 `;
 
-REFERENCES.B003 = `import { createAirApp, Scene } from 'cocosair';
+REFERENCES.B041 = `import { createAirApp, Scene } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
@@ -78,7 +78,7 @@ if (text.trim() !== 'demo-asset-content') { throw new Error('asset content misma
 console.log('[B003] asset loaded:', text);
 `;
 
-REFERENCES.B004 = `import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, GLTFLoader, frameObject } from 'cocosair';
+REFERENCES.B042 = `import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, GLTFLoader, frameObject } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
@@ -101,7 +101,7 @@ frameObject(camera, instance.root);
 app.run(scene);
 `;
 
-REFERENCES.B006 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, Material, builtinResMgr } from 'cocosair';
+REFERENCES.B031 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, Material, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
@@ -130,7 +130,7 @@ void Color;
 app.run(scene);
 `;
 
-REFERENCES.B008 = `import { createAirApp, Scene, GLTFLoader } from 'cocosair';
+REFERENCES.B051 = `import { createAirApp, Scene, GLTFLoader } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;
@@ -143,7 +143,7 @@ const instance = asset.instantiate();
 scene.addChild(instance.root);
 `;
 
-REFERENCES.B010 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
+REFERENCES.B100 = `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 (window as unknown as { __airApp: unknown }).__airApp = app;

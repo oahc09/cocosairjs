@@ -184,9 +184,10 @@ export const visibleFrame: Validator = {
         if (!snapshot.capture) { return fail('visible-frame', 'no frame captured'); }
         if (!snapshot.centerPixel) { return fail('visible-frame', 'no pixel sample'); }
         const [r, g, b] = snapshot.centerPixel;
-        // 默认清屏色族（深蓝底）：中心像素必须显著偏离
-        const isBackground = r < 60 && g < 80 && b < 110;
-        if (isBackground) { return fail('visible-frame', `center pixel ${r},${g},${b} looks like clear color`); }
+        // 背景判定：接近清屏色(30,40,60) 或近黑；否则视为前景（暗灰 lit 表面属于前景）
+        const nearClear = Math.abs(r - 30) < 12 && Math.abs(g - 40) < 12 && Math.abs(b - 60) < 12;
+        const nearBlack = r + g + b < 45;
+        if (nearClear || nearBlack) { return fail('visible-frame', `center pixel ${r},${g},${b} looks like clear color`); }
         return pass('visible-frame', `center=${r},${g},${b}`);
     },
 };

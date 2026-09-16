@@ -1,0 +1,10 @@
+import { createAirApp, Scene, GLTFLoader } from 'cocosair';
+const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
+const scene = new Scene('B057');
+app.run(scene);
+const load = async () => new GLTFLoader().parseAsync(await (await fetch('/assets/compressed.glb')).arrayBuffer(), '/');
+const a = await load();
+a.destroy();
+const b = await load();
+b.destroy();

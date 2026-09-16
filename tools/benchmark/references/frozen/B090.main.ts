@@ -1,0 +1,25 @@
+import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, input, Input, Vec3, utils, primitives, builtinResMgr } from 'cocosair';
+
+const app = await createAirApp({ canvas: '#GameCanvas' });
+(window as unknown as { __airApp: unknown }).__airApp = app;
+const scene = new Scene('B090');
+const cameraNode = new Node('camera');
+scene.addChild(cameraNode);
+cameraNode.setPosition(new Vec3(0, 2, 6));
+cameraNode.setRotationFromEuler(-15, 0, 0);
+cameraNode.addComponent(Camera).visibility = Layers.Enum.DEFAULT;
+const lightNode = new Node('light');
+scene.addChild(lightNode);
+lightNode.setRotationFromEuler(-45, -30, 0);
+lightNode.addComponent(DirectionalLight);
+const cube = new Node('cube');
+cube.layer = Layers.Enum.DEFAULT;
+scene.addChild(cube);
+const renderer = cube.addComponent(MeshRenderer);
+renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+renderer.material = builtinResMgr.get('builtin-standard-material');
+let dragging = false;
+input.on(Input.EventType.TOUCH_START, () => { dragging = true; });
+input.on(Input.EventType.TOUCH_MOVE, () => { if (dragging) { cube.setRotationFromEuler(0, 1, 0); } });
+input.on(Input.EventType.TOUCH_END, () => { dragging = false; });
+app.run(scene);

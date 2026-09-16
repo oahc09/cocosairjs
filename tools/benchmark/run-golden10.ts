@@ -4,19 +4,19 @@
 import * as path from 'path';
 import { TrialRunner, TrialOptions } from './runner/trial';
 import { BrowserRuntime } from './runner/browser-runtime.cjs';
-import { GOLDEN10, CATALOG_REVISION } from './catalog/golden10';
+import { CATALOG_BENCHMARKS } from './catalog/catalog100';
 
 export async function runGolden10 ({ ids, workRoot, repo, esbuild }: { ids: string[] | null; workRoot: string; repo: string; esbuild: unknown }): Promise<{ id: string; engineResult: string; failureDomain: string; failureReason?: string }[]> {
   const results: { id: string; engineResult: string; failureDomain: string; failureReason?: string }[] = [];
-  for (const benchmark of GOLDEN10) {
+  for (const benchmark of CATALOG_BENCHMARKS) {
     if (ids && !ids.includes(benchmark.id)) { continue; }
-    const runtime = new BrowserRuntime({ esbuild });
+    const runtime = new BrowserRuntime({ esbuild, repo });
     const runner = new TrialRunner(runtime);
     const options: TrialOptions = {
       benchmark,
       workRoot,
       cocosairRevision: 'browser-run',
-      catalogRevision: CATALOG_REVISION,
+      catalogRevision: 'catalog100-r1',
       agentProfile: 'REFERENCE',
       environment: { os: process.platform, browser: 'chromium-headless', viewport: '480x360', webglBackend: 'angle-swiftshader' },
       cacheMode: 'cold',

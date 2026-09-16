@@ -1,13 +1,6 @@
 {
-  "revision": "golden10-r1",
+  "revision": "catalog100-r1",
   "fixtures": {
-    "B001": {
-      "files": [
-        "index.html",
-        "src/main.ts",
-        "docs-agent/getting-started.md"
-      ]
-    },
     "B002": {
       "files": [
         "index.html",
@@ -17,8 +10,7 @@
     "B003": {
       "files": [
         "index.html",
-        "src/main.ts",
-        "assets/demo.txt"
+        "src/main.ts"
       ]
     },
     "B004": {
@@ -62,15 +54,547 @@
         "index.html",
         "src/main.ts"
       ]
+    },
+    "B012": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B013": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B014": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B015": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B032": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B033": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B043": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B044": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B062": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B082": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B092": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B093": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B094": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B095": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B016": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B017": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B018": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B019": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B020": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B021": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B022": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B023": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B024": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B025": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B026": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B027": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B028": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B029": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B030": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B034": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B035": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B036": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B037": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B038": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B039": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B040": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B045": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B046": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B047": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B048": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B049": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B050": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B052": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B053": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B054": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B055": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B056": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B057": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B058": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B059": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B060": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B063": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B064": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B065": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B066": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B067": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B068": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B069": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B070": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B071": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B072": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B073": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B074": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B075": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B076": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B077": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B078": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B079": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B080": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B083": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B084": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B085": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B086": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B087": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B088": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B089": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B090": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B096": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B097": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B098": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
+    },
+    "B099": {
+      "files": [
+        "index.html",
+        "src/main.ts"
+      ]
     }
   },
   "references": {
-    "B001": "c3531e0dbff9e7db8612d2280219974c99142964256a54a95e98d4b11a1f5180",
-    "B002": "7be22f9257857cf2f55fce8875e88286c16f16c1ec5db4067acabc72cfa5c4ba",
-    "B003": "bfdc84374e90206a074cceb504a8a45d8986d121dff9752ef5e7c1767e8ff8d4",
-    "B004": "4a1801b712a6304930fffa7adbf020f1dc292ca8265e2875431ec411049c57b7",
-    "B006": "ef58ac61c5718b3711ebb74740022f19890a7d57c0c47f3a29424fba635c56b1",
-    "B008": "28189ebb70c602c867712506b059e25b10a09f2937dde99daf06adcb83009391",
-    "B010": "bc167ce4059311e1cab0492f724b5a197ad3f5bac3e771abc8b84586c9c66294"
+    "B003": "aa0c84ba6a637573c0c00bdfb6c5f5b8fef8a67c38608630884124cfb4c30ead",
+    "B004": "159d441dea452840a35090f29433f3b484130ca46fd33f01345ca8f7baf776d9",
+    "B005": "4df2dfc54f439231d1975daa135ee9b06e652c8e60e32cbfe7deb67fd3e3570c",
+    "B006": "11f22f5cae1926e8222ca7aa461be2856339d25fbe72d7a7315752f271a6bc27",
+    "B007": "507764d8a904ba5c7938cd2056d979c685d00b185c8956116129286733d76ce6",
+    "B008": "c32a8ec5bb07a31066fb151fba0adee0001e92b83324ecff96dfc20e67de877c",
+    "B009": "aa05788d7d87eecc7145ae12da276a319fa1cb1c37983b91ec24af2a4b1195d5",
+    "B012": "3270204232c892897e6f9e3eaf386cb40ad23bc36e3dde8c65178c58b68ed4c9",
+    "B013": "bb4975c844ccece9bba7391e3f17b944c320586c6f5d137c9b9331fe6658cc75",
+    "B015": "29c06e63ffbddc958b6d1b9207fb866f167b32e511a1c81b8316e80c2e6643e8",
+    "B032": "bcbe507226fe84ab6b2be2c1814067468fde806dbf46208368f3573bdbdc21a6",
+    "B043": "b7513822e127a80e771757290671e8e11ed4d3d849b7fa4ec6754ac7a8101776",
+    "B016": "d883cfdc56aba2e7cfe227697ac2f93d8a1190320eb109c4ccedcb18aebb4fd6",
+    "B017": "c571de2c45ffc90fd4c5e64473aaadc2337fc1aa5cce8c37d82dc9c87c15c11b",
+    "B019": "6ccaf25b737cd221d18e81ecd4cad2482a47f38c12220320566ec58943180096",
+    "B020": "9cc652b341ddf9ff60838dcb14186ce5a1257bccc9b273387719a03b5cae17f9",
+    "B021": "3c11861e30a435a5fef552e6bf04494ac33bbb97af817fda53fc059b0496251f",
+    "B022": "8f78623a3417e97870c0becf885ed881a13b8305619a6a1d51e2ed80b87766bd",
+    "B023": "56ae403ef972945cdcbb99e94b40ba8894b19c1235ea86b449f9e65eaf2ed9f3",
+    "B024": "1bd7170afe79985dd70f4145babbd8f205332c88f56662e3bbe7ff1f16019c92",
+    "B025": "e839c216c94159e09ee0bc393dcb5a19f19c23d3e390c66f24df221f554eb320",
+    "B028": "bf6989b326b3afb77d8c40d93e191a6be3ae9787a29095e1fab807219063dbb9",
+    "B030": "857dd3cbb2c876319f5ae547729c24e55a0bc2e7e35461e8ff7763dce2f27dfe",
+    "B034": "ef13dce433d5129be395e82d3c3656902587dd824062a06a80debd0434c883f4",
+    "B035": "341fb2072109c35ce1525dee671d076a921d42a28393ab60955f3e546518a999",
+    "B036": "d46107d84b8102bf46a6e08948c5fae201c78235cb920ccf4ab14104fa7afdf6",
+    "B037": "ed4900bef3fca50b76d2f88e59d409a258c8ebdc2342e2030b66d1a02e84d081",
+    "B038": "d268a63524253fd97835dc0b022c27306b1a2d734a64e9338c41275da2778607",
+    "B045": "3436fc71e441f6c552ec752ac8d27661113b5d8b438ff3c1e329210487b6a111",
+    "B047": "042b58e5164ab18dbbac233440ae40114b343e4b7c59a2a0747757b43901ecb3",
+    "B049": "4e1b94a0a59c18d2bc8391230aa07a4f5c75183b3ffc028084318fe539bd4c46",
+    "B052": "bb5f577115d4dce96fa0cfd22e611a5418cc67f2c0a95debfb2851260faddb5d",
+    "B055": "ea9a00792161f38035cfab58f5069c00cfd46c2530fe4fb5ba3b525f31db6396",
+    "B056": "4f223cea5783d188eedf8e6b7e134961bca41f03b83f042d5252fac77a641db2",
+    "B057": "405d09a3f48e63f911a64779e364f00c78745061cb96e4b9fd48a2dde02c4a63",
+    "B060": "8491a5e4b556f4e83b9722f3bb7ee171e208e5ea59a2621d6bcad8e70e92daf1",
+    "B063": "09822078ae45a1b0d0305fcc8412387fc1d4c3355f11db88ed2371cb5c83fa9b",
+    "B064": "3168ef8d7a14d40adc22cfcdf23a63d477b9f3c68b008e84f6477a1372de51db",
+    "B065": "c56645818549ae9459b8fc36c118f718653bb41fa88fead491267b5364966829",
+    "B068": "d1d7f9c66fb4d644fa3a5a6a59276ef5d7c746a09fad78f6f1860ee99023d455",
+    "B070": "cce9a162d3ffde0dc0abdda6e2e8ac7b43cbaefeb8fdf02180ae2b2a4b6db87c",
+    "B071": "b0a04cadcb51ac70b374983dde11cc36dc911d88ed7688831ae44043c4e1a439",
+    "B072": "481e2834f24ecf078dca990a6d0caf6b11ed4f72ab7b7b9d88f2793be7c7403c",
+    "B073": "12048247ad0479db9811224b9940c2f13058311ae56fe43b184ff25924017c56",
+    "B074": "16a8b73d832d0815eee7c268ea77982ee39ad0489fca1233173e3b58ce07fbf6",
+    "B076": "3ee7d3f396e0a7a2bb1cb2b3c93197b2ac337b43b37ec9d053ddae3229e8964b",
+    "B078": "654861886c2efd448d3ca16da35a602ccc18e7445280e4d75550378a3961cbc4",
+    "B079": "6b83eefe559efb71bf613d272bf81361b380fcd2368fedd159a7cd87bcdc5cb1",
+    "B085": "7a8fc3a06ec13f65e9dc7ff89216dc975e5bbd4548633aa62b445b70fca61ce0",
+    "B086": "ee88eb04e6b511bc660b3646b6f91a3a5de91856bfc86d82fc8537a1eead40b3",
+    "B089": "89a2ff747cae52d16a67f4cb2222b7539ec78d95fe679360818666cb52e3b984",
+    "B090": "c0ba11e68ffd87733ebc417cfe4404376bcc4f2720ecc16b27caa509a571a895",
+    "B099": "33d7efc7eeb039fcdcac313d5e293891d6fdd624996c272b979e784f4d80b732"
   }
 }

@@ -48,8 +48,8 @@ const draco = require(path.join(REPO, 'build', 'gltf-decoders', 'draco', 'draco3
   const binHead = Buffer.alloc(8);
   binHead.writeUInt32LE(totalBin.length, 0); binHead.writeUInt32LE(0x004E4942, 4);
   const glb = Buffer.concat([head, jsonHead, jsonBuf, jsonPad, binHead, totalBin]);
-  const outDir = path.join(REPO, 'tools', 'benchmark', 'fixtures', 'B008', 'assets');
+  const outDir = path.join(REPO, 'tools', 'benchmark', 'fixtures', 'B051', 'assets');
   fs.mkdirSync(outDir, { recursive: true });
   fs.writeFileSync(path.join(outDir, 'compressed.glb'), glb);
-  console.log('[B008] compressed.glb:', glb.length, 'bytes (drc', len + ')');
+  console.log('[B051] compressed.glb:', glb.length, 'bytes (drc', len + ')');
 })();

@@ -66,8 +66,8 @@ function serveTs (esbuild, res, file) {
   }
 }
 
-function bundleDebugSession (esbuild) {
-  const file = path.join(REPO, 'tools', 'debug', 'agent-session.ts');
+function bundleDebugSession (repo, esbuild) {
+  const file = path.join(repo, 'tools', 'debug', 'agent-session.ts');
   const st = fs.statSync(file);
   let entry = DEBUG_BUNDLE_CACHE.get(file);
   if (!entry || entry.mtime !== st.mtimeMs) {
@@ -82,9 +82,11 @@ function bundleDebugSession (esbuild) {
 }
 
 class BrowserRuntime {
-  constructor ({ viewport = { width: 480, height: 360 }, esbuild } = {}) {
+  constructor ({ viewport = { width: 480, height: 360 }, esbuild, repo } = {}) {
     if (!esbuild) { throw new Error('BrowserRuntime requires esbuild injection'); }
+    if (!repo) { throw new Error('BrowserRuntime requires repo injection'); }
     this.esbuild = esbuild;
+    this.REPO = repo;
     this.viewport = viewport;
     this.server = null;
     this.browser = null;
@@ -116,10 +118,10 @@ class BrowserRuntime {
           res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(BENCH_PRELUDE); return;
         }
         if (p === '/__debug/agent-session.js') {
-          res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(bundleDebugSession(this.esbuild)); return;
+          res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(bundleDebugSession(this.REPO, this.esbuild)); return;
         }
         if (p.startsWith('/build/')) {
-          const buildFile = path.join(REPO, p);
+          const buildFile = path.join(this.REPO, p);
           if (fs.existsSync(buildFile)) {
             res.writeHead(200, { 'Content-Type': MIME[path.extname(buildFile)] || 'application/octet-stream' });
             res.end(fs.readFileSync(buildFile)); return;
