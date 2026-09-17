@@ -1,65 +1,63 @@
-// V0.6 — Recipe scenario source templates (pure JS).
-var TS_NC = '// @ts-nocheck\n';
-
-function cubeScene(id, cubes, extra) {
-  var cubeCode = cubes.map(function(c) {
-    return 'spawnCube(' + JSON.stringify(c.name) + ', [' + c.pos.join(', ') + ']' + (c.scale ? ', [' + c.scale.join(', ') + ']' : '') + ');';
-  }).join('\n');
-  return "import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, builtinResMgr } from 'cocosair';\n\nvar app = await createAirApp({ canvas: '#GameCanvas' });\n(window as any).__airApp = app;\nvar scene = new Scene('" + id + "');\nvar cameraNode = new Node('camera');\nscene.addChild(cameraNode);\ncameraNode.setPosition(new Vec3(0, 3, 9));\ncameraNode.setRotationFromEuler(-18, 0, 0);\nvar camera = cameraNode.addComponent(Camera);\ncamera.visibility = Layers.Enum.DEFAULT;\ncamera.clearFlags = Camera.ClearFlag.SOLID_COLOR;\ncamera.clearColor = new Color(30, 40, 60, 255);\nvar lightNode = new Node('light');\nscene.addChild(lightNode);\nlightNode.setPosition(new Vec3(0, 8, 0));\nlightNode.setRotationFromEuler(-45, -30, 0);\nvar light = lightNode.addComponent(DirectionalLight);\nlight.illuminance = 2;\n\nfunction spawnCube(name: string, pos: number[], scale?: number[]): void {\n    var node = new Node(name);\n    node.layer = Layers.Enum.DEFAULT;\n    node.setPosition(new Vec3(pos[0], pos[1], pos[2]));\n    if (scale) { node.setScale(new Vec3(scale[0], scale[1], scale[2])); }\n    scene.addChild(node);\n    var r = node.addComponent(MeshRenderer);\n    r.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));\n    r.material = builtinResMgr.get('builtin-standard-material');\n}\n\n" + cubeCode + "\n" + (extra || '') + "\napp.run(scene);\n";
-}
-
-function gltfScene(id, assetPath, instances) {
-  instances = instances || 1;
-  var instCode = '';
-  if (instances === 1) instCode = 'scene.addChild(asset.instantiate().root);';
-  else {
-    for (var i = 0; i < instances; i++) {
-      var x = (i - (instances - 1) / 2) * 3;
-      instCode += 'var inst' + i + ' = asset.instantiate();\ninst' + i + '.root.setPosition(new Vec3(' + x + ', 0, 0));\nscene.addChild(inst' + i + '.root);\n';
-    }
-  }
-  return "import { createAirApp, Scene, Camera, DirectionalLight, Node, Layers, Vec3, GLTFLoader, frameObject } from 'cocosair';\n\nvar app = await createAirApp({ canvas: '#GameCanvas' });\n(window as any).__airApp = app;\nvar scene = new Scene('" + id + "');\nvar cameraNode = new Node('camera');\nscene.addChild(cameraNode);\nvar camera = cameraNode.addComponent(Camera);\ncamera.visibility = Layers.Enum.DEFAULT;\nvar lightNode = new Node('light');\nscene.addChild(lightNode);\nlightNode.setRotationFromEuler(-45, -30, 0);\nlightNode.addComponent(DirectionalLight);\napp.run(scene);\nvar bytes = await (await fetch('" + assetPath + "')).arrayBuffer();\nvar asset = await new GLTFLoader().parseAsync(bytes, '/');\n" + instCode + "\nframeObject(camera, scene);\n";
-}
-
-function animScene(id) {
-  return "import { createAirApp, Scene, Node, MeshRenderer, Animation, Camera, DirectionalLight, Layers, Vec3, utils, primitives, builtinResMgr } from 'cocosair';\n\nvar app = await createAirApp({ canvas: '#GameCanvas' });\n(window as any).__airApp = app;\nvar scene = new Scene('" + id + "');\nvar cameraNode = new Node('camera');\nscene.addChild(cameraNode);\ncameraNode.setPosition(new Vec3(0, 3, 9));\ncameraNode.setRotationFromEuler(-18, 0, 0);\ncameraNode.addComponent(Camera).visibility = Layers.Enum.DEFAULT;\nvar lightNode = new Node('light');\nscene.addChild(lightNode);\nlightNode.setRotationFromEuler(-45, -30, 0);\nlightNode.addComponent(DirectionalLight);\nvar cube = new Node('animated-cube');\ncube.layer = Layers.Enum.DEFAULT;\nscene.addChild(cube);\nvar renderer = cube.addComponent(MeshRenderer);\nrenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));\nrenderer.material = builtinResMgr.get('builtin-standard-material');\nvar anim = cube.addComponent(Animation);\n(window as any).__spin = function() { cube.setRotationFromEuler(0, cube.eulerAngles.y + 5, 0); };\napp.run(scene);\n";
-}
-
-function inputScene(id) {
-  return "import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, input, Input, Vec3, utils, primitives, builtinResMgr } from 'cocosair';\n\nvar app = await createAirApp({ canvas: '#GameCanvas' });\n(window as any).__airApp = app;\nvar scene = new Scene('" + id + "');\nvar cameraNode = new Node('camera');\nscene.addChild(cameraNode);\ncameraNode.setPosition(new Vec3(0, 3, 9));\ncameraNode.setRotationFromEuler(-18, 0, 0);\ncameraNode.addComponent(Camera).visibility = Layers.Enum.DEFAULT;\nvar lightNode = new Node('light');\nscene.addChild(lightNode);\nlightNode.setRotationFromEuler(-45, -30, 0);\nlightNode.addComponent(DirectionalLight);\nvar cube = new Node('interactive-cube');\ncube.layer = Layers.Enum.DEFAULT;\nscene.addChild(cube);\nvar r = cube.addComponent(MeshRenderer);\nr.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));\nr.material = builtinResMgr.get('builtin-standard-material');\nvar moved = false;\ninput.on(Input.EventType.KEY_DOWN, function() {\n    cube.setPosition(new Vec3(cube.position.x + 0.5, cube.position.y, cube.position.z));\n    moved = true;\n});\n(window as any).__interactionState = function() { return { moved: moved, pos: [cube.position.x, cube.position.y, cube.position.z] }; };\n(window as any).__simulateInput = function() { cube.setPosition(new Vec3(cube.position.x + 0.5, cube.position.y, cube.position.z)); moved = true; };\napp.run(scene);\n";
-}
-
-var SCENARIOS = {
-  R001: { source: gltfScene('R001', '/assets/BoxTextured.glb'), hasInteraction: false, hasLifecycle: false },
-  R002: { source: animScene('R002'), hasInteraction: false, hasLifecycle: false },
-  R003: { source: inputScene('R003'), hasInteraction: true, hasLifecycle: false },
-  R004: { source: gltfScene('R004', '/assets/BoxTextured.glb', 2), hasInteraction: false, hasLifecycle: false },
-  R005: { source: cubeScene('R005', [{ name: 'red', pos: [-1.5, 0, 0] }, { name: 'blue', pos: [1.5, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R006: { source: gltfScene('R006', '/assets/BoxTextured.glb'), hasInteraction: false, hasLifecycle: true },
-  R007: { source: inputScene('R007'), hasInteraction: true, hasLifecycle: false },
-  R008: { source: cubeScene('R008', [{ name: 'part-a', pos: [-1, 0, 0] }, { name: 'part-b', pos: [1, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R009: { source: cubeScene('R009', [{ name: 'variant-a', pos: [-1.5, 0, 0] }, { name: 'variant-b', pos: [1.5, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R010: { source: gltfScene('R010', '/assets/BoxTextured.glb', 2), hasInteraction: false, hasLifecycle: false },
-  R011: { source: cubeScene('R011', [{ name: 'target', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R012: { source: animScene('R012'), hasInteraction: false, hasLifecycle: false },
-  R013: { source: cubeScene('R013', [{ name: 'cube', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R014: { source: cubeScene('R014', [{ name: 'cube', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R015: { source: cubeScene('R015', [{ name: 'cube', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R016: { source: animScene('R016'), hasInteraction: false, hasLifecycle: false },
-  R017: { source: cubeScene('R017', [{ name: 'mat-cube', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R018: { source: inputScene('R018'), hasInteraction: true, hasLifecycle: false },
-  R019: { source: cubeScene('R019', [{ name: 'selectable', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R020: { source: inputScene('R020'), hasInteraction: true, hasLifecycle: false },
-  R021: { source: cubeScene('R021', [{ name: 'glass', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R022: { source: cubeScene('R022', [{ name: 'clearcoat', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R023: { source: cubeScene('R023', [{ name: 'transmission', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R024: { source: cubeScene('R024', [{ name: 'anisotropic', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R025: { source: cubeScene('R025', [{ name: 'iridescent', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R026: { source: animScene('R026'), hasInteraction: false, hasLifecycle: false },
-  R027: { source: gltfScene('R027', '/assets/BoxTextured.glb'), hasInteraction: false, hasLifecycle: false },
-  R028: { source: animScene('R028'), hasInteraction: false, hasLifecycle: false },
-  R029: { source: cubeScene('R029', [{ name: 'weather-cube', pos: [0, 0, 0] }]), hasInteraction: false, hasLifecycle: false },
-  R030: { source: inputScene('R030'), hasInteraction: true, hasLifecycle: true },
+/* V0.6 Recipe composite scenarios. Every entry owns a semantic contract which
+ * the browser runner verifies through native snapshots, pixels, input and dispose. */
+const BOX_ASSET = 'examples/gltf-viewer/assets/BoxTextured.glb';
+const CONFIGS = {
+  R001:{mode:'gltf',instances:1,semantic:'textured-model',action:'none'}, R002:{mode:'gltf-animation',instances:1,semantic:'clip-playing',action:'wait',assetName:'AnimatedMorphCube.glb'},
+  R003:{mode:'basic',semantic:'keyboard-move',action:'keyboard'}, R004:{mode:'gltf',instances:2,semantic:'multi-instance',action:'none'},
+  R005:{mode:'basic',boxes:2,materials:2,semantic:'material-variants',action:'none'}, R006:{mode:'gltf',instances:1,semantic:'product-framed',action:'none'},
+  R007:{mode:'basic',semantic:'orbit-drag',action:'drag'}, R008:{mode:'basic',boxes:3,semantic:'exploded-toggle',action:'click'},
+  R009:{mode:'basic',boxes:2,materials:2,semantic:'material-variants',action:'none'}, R010:{mode:'gltf',instances:2,semantic:'model-comparison',action:'none'},
+  R011:{mode:'basic',semantic:'auto-framing',action:'none'}, R012:{mode:'camera-motion',semantic:'camera-tour',action:'wait'},
+  R013:{mode:'basic',semantic:'camera-transition',action:'click'}, R014:{mode:'basic',semantic:'orthographic-toggle',action:'click'},
+  R015:{mode:'basic',semantic:'multi-camera',action:'click'}, R016:{mode:'animation',semantic:'click-animation',action:'click'},
+  R017:{mode:'basic',semantic:'click-material',action:'click'}, R018:{mode:'basic',semantic:'drag-object',action:'drag'},
+  R019:{mode:'basic',semantic:'selection',action:'click'}, R020:{mode:'basic',semantic:'hotspot',action:'click'},
+  R021:{mode:'material',semantic:'glass',action:'none',feature:'alpha-blend'},
+  R022:{mode:'material',semantic:'clearcoat',action:'none',feature:'KHR_materials_clearcoat'},
+  R023:{mode:'material',semantic:'transmission',action:'none',feature:'KHR_materials_transmission',optional:true},
+  R024:{mode:'material',semantic:'anisotropy',action:'none',feature:'KHR_materials_anisotropy'},
+  R025:{mode:'material',semantic:'iridescence',action:'none',feature:'KHR_materials_iridescence'},
+  R026:{mode:'animation',semantic:'wallpaper-motion',action:'wait',boxes:5}, R027:{mode:'gltf',instances:1,semantic:'landing-hero',action:'wait',entrance:true},
+  R028:{mode:'animation',semantic:'animated-logo',action:'wait',boxes:3}, R029:{mode:'basic',semantic:'weather-toggle',action:'click'},
+  R030:{mode:'agent',semantic:'agent-session',action:'agent'}
 };
 
-module.exports = { SCENARIOS: SCENARIOS };
+function sourceFor(config) { return `import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, Material, Animation, AnimationClip, Component, GLTFLoader, frameObject, utils, primitives } from 'cocosair';
+const config:any=${JSON.stringify(config)}; const canvas=document.querySelector('#GameCanvas');
+if(!(canvas instanceof HTMLCanvasElement)) throw new Error('GameCanvas missing');
+const app=await createAirApp({canvas}); (window as any).__airApp=app; const scene=new Scene(config.id);
+const cameraNode=new Node('recipe-camera'); scene.addChild(cameraNode); cameraNode.setPosition(new Vec3(0,2.5,7)); cameraNode.setRotationFromEuler(-15,0,0);
+const camera=cameraNode.addComponent(Camera); camera.visibility=Layers.Enum.DEFAULT; camera.clearFlags=Camera.ClearFlag.SOLID_COLOR; camera.clearColor=new Color(30,40,60,255);
+const lightNode=new Node('recipe-light'); scene.addChild(lightNode); lightNode.setRotationFromEuler(-45,-30,0); const light=lightNode.addComponent(DirectionalLight); light.illuminance=18000;
+const ownedNodes:any[]=[],ownedAssets:any[]=[],instances:any[]=[]; const state:any={id:config.id,semantic:config.semantic,ready:false,semanticOk:false,interactionCount:0,animationTicks:0,instanceCount:0,materialCount:0,featureApplied:false,selected:false,exploded:false,ortho:false,cameraCount:1,agentNode:false,capabilities:{webgl2:'supported'},details:{}};
+function material(color){const value=new Material();value.initialize({effectName:'builtin-standard'});value.setProperty('mainColor',new Color(color[0],color[1],color[2],color[3]??255));ownedAssets.push(value);state.materialCount++;return value;}
+function box(name,x,y,z,color,scale){const node=new Node(name);node.layer=Layers.Enum.DEFAULT;scene.addChild(node);node.setPosition(new Vec3(x,y,z));if(scale)node.setScale(new Vec3(scale[0],scale[1],scale[2]));const renderer=node.addComponent(MeshRenderer);const mesh=utils.createMesh(primitives.box({width:1,height:1,length:1}));const mat=material(color);renderer.mesh=mesh;renderer.material=mat;ownedNodes.push(node);ownedAssets.push(mesh);return{node,renderer,material:mat};}
+function bytesUri(){const p=new Float32Array([-1,-1,0,1,-1,0,0,1,0]),n=new Float32Array([0,0,1,0,0,1,0,0,1]),i=new Uint16Array([0,1,2]),b=new Uint8Array(78);b.set(new Uint8Array(p.buffer),0);b.set(new Uint8Array(n.buffer),36);b.set(new Uint8Array(i.buffer),72);let s='';for(const v of b)s+=String.fromCharCode(v);return'data:application/octet-stream;base64,'+btoa(s);}
+function featureMaterial(){const feature=config.feature;const m:any={name:config.semantic,pbrMetallicRoughness:{baseColorFactor:[0.25,0.65,0.95,1],metallicFactor:0.2,roughnessFactor:0.25}};let property='';
+if(feature==='alpha-blend'){m.alphaMode='BLEND';m.doubleSided=true;m.pbrMetallicRoughness.baseColorFactor[3]=0.35;}
+if(feature==='KHR_materials_clearcoat'){m.extensions={[feature]:{clearcoatFactor:0.9,clearcoatRoughnessFactor:0.12}};property='airClearcoat';}
+if(feature==='KHR_materials_transmission'){m.extensions={[feature]:{transmissionFactor:0.85}};property='airTransmission';}
+if(feature==='KHR_materials_anisotropy'){m.extensions={[feature]:{anisotropyStrength:0.85,anisotropyRotation:1.1}};property='airAnisotropy';}
+if(feature==='KHR_materials_iridescence'){m.extensions={[feature]:{iridescenceFactor:0.9,iridescenceIor:1.5,iridescenceThicknessMinimum:120,iridescenceThicknessMaximum:420}};property='airIridescence';}
+const extensions=feature==='alpha-blend'?[]:[feature];return{property,json:{asset:{version:'2.0'},buffers:[{byteLength:78,uri:bytesUri()}],bufferViews:[{buffer:0,byteOffset:0,byteLength:36},{buffer:0,byteOffset:36,byteLength:36},{buffer:0,byteOffset:72,byteLength:6}],accessors:[{bufferView:0,componentType:5126,count:3,type:'VEC3',min:[-1,-1,0],max:[1,1,0]},{bufferView:1,componentType:5126,count:3,type:'VEC3'},{bufferView:2,componentType:5123,count:3,type:'SCALAR'}],materials:[m],meshes:[{primitives:[{attributes:{POSITION:0,NORMAL:1},indices:2,material:0}]}],nodes:[{name:config.semantic+'-mesh',mesh:0}],scenes:[{nodes:[0]}],scene:0,extensionsUsed:extensions,extensionsRequired:config.optional?[]:extensions}};}
+let primary=null,secondary=null,secondaryCamera=null,motionEnabled=config.action==='wait';
+class Motion extends Component{update(dt){if(!motionEnabled)return;state.animationTicks++;if(config.semantic==='camera-tour'){cameraNode.setPosition(Math.sin(state.animationTicks*0.03)*2,2.5,7);return;}if(config.semantic==='camera-transition'){const p=cameraNode.position;cameraNode.setPosition(new Vec3(p.x+(2-p.x)*Math.min(1,dt*3),p.y+(3-p.y)*Math.min(1,dt*3),p.z+(6-p.z)*Math.min(1,dt*3)));return;}const n=this.node;n.setRotationFromEuler(n.eulerAngles.x,n.eulerAngles.y+dt*95,n.eulerAngles.z);}}
+class Monitor extends Component{update(){if(motionEnabled)state.animationTicks++;}}
+app.run(scene);
+if(config.mode==='gltf'||config.mode==='gltf-animation'){const file=config.assetName||'BoxTextured.glb';const bytes=await(await fetch('/assets/'+file)).arrayBuffer();const asset=await new GLTFLoader().parseAsync(bytes,'/assets/');ownedAssets.push(asset);for(let i=0;i<(config.instances||1);i++){const instance=asset.instantiate();instances.push(instance);ownedNodes.push(instance.root);instance.root.setPosition(new Vec3((i-((config.instances||1)-1)/2)*2.5,0,0));scene.addChild(instance.root);primary=primary||instance.root;}frameObject(camera,primary);state.instanceCount=instances.length;state.details={meshes:asset.meshes.length,materials:asset.materials.length,textures:asset.textures.length,animations:asset.animations.length};state.semanticOk=state.instanceCount===(config.instances||1)&&asset.meshes.length>0&&asset.materials.length>0&&(config.mode==='gltf-animation'?asset.animations.length>0:asset.textures.length>0);if(config.mode==='gltf-animation'){const animation=primary.getComponent(Animation);animation.clips.forEach(clip=>clip.wrapMode=AnimationClip.WrapMode.Loop);animation.play(animation.clips[0].name);primary.addComponent(Monitor);motionEnabled=true;}if(config.entrance){primary.setScale(new Vec3(.75,.75,.75));primary.addComponent(Motion);motionEnabled=true;}}
+else if(config.mode==='material'){if(config.feature==='alpha-blend')secondary=box('solid-reference',0,0,-.8,[230,90,60,255],[1.5,1.5,.5]).node;const built=featureMaterial();const asset=await new GLTFLoader().parseAsync(JSON.stringify(built.json));ownedAssets.push(asset);const instance=asset.instantiate();instances.push(instance);ownedNodes.push(instance.root);scene.addChild(instance.root);primary=instance.root;const mat=asset.materials[0];const featureValue:any=built.property?mat.getProperty(built.property):mat.getProperty('albedo');state.featureApplied=config.feature==='alpha-blend'?Number(featureValue.w)<1:!!featureValue;const warned=asset.warnings.some(w=>String(w).includes(config.feature));const status=state.featureApplied?'supported':warned?'fallback':'unsupported';state.capabilities[config.feature]=status;state.details={feature:config.feature,property:built.property,warnings:asset.warnings.slice(),status};state.semanticOk=state.featureApplied||(config.optional===true&&status==='fallback');}
+else{const count=config.boxes||(config.semantic==='multi-camera'?2:1);for(let i=0;i<count;i++){const colors=[[65,155,235,255],[235,125,65,255],[95,205,120,255],[205,90,190,255],[235,205,75,255]];const made=box(config.semantic+'-'+i,(i-(count-1)/2)*1.6,0,0,colors[i%colors.length],[1,1+i*.12,1]);if(!primary)primary=made.node;else if(!secondary)secondary=made.node;}
+if(config.mode==='animation'||config.mode==='camera-motion'){const animated=config.mode==='camera-motion'?cameraNode:primary;const animation=animated.addComponent(Animation);const clip=new AnimationClip();clip.name='recipe-motion';clip.duration=1;animation.clips=[clip];animation.playOnLoad=false;animation.play('recipe-motion');ownedAssets.push(clip);animated.addComponent(Motion);state.details.clipCount=animation.clips.length;}
+if(config.semantic==='auto-framing'){primary.setScale(new Vec3(2.5,.7,1));frameObject(camera,primary);state.details.framed=cameraNode.position.z!==7;}
+if(config.semantic==='camera-transition'){cameraNode.addComponent(Motion);motionEnabled=false;}
+if(config.semantic==='multi-camera'){const secondNode=new Node('recipe-camera-secondary');scene.addChild(secondNode);ownedNodes.push(secondNode);secondNode.setPosition(new Vec3(4,3,7));secondNode.setRotationFromEuler(-15,25,0);secondaryCamera=secondNode.addComponent(Camera);secondaryCamera.visibility=Layers.Enum.DEFAULT;secondaryCamera.priority=-1;state.cameraCount=2;state.details.priorities=[camera.priority,secondaryCamera.priority];}state.semanticOk=true;}
+let dragging=false;canvas.addEventListener('pointerdown',()=>{dragging=true;});canvas.addEventListener('pointerup',()=>{dragging=false;});canvas.addEventListener('pointermove',event=>{if(!dragging||!primary)return;if(config.semantic==='drag-object')primary.setPosition(new Vec3(primary.position.x+event.movementX*.02,primary.position.y,primary.position.z));else primary.setRotationFromEuler(primary.eulerAngles.x,primary.eulerAngles.y+event.movementX,primary.eulerAngles.z);state.interactionCount++;});
+window.addEventListener('keydown',event=>{if(event.code==='KeyW'&&primary){primary.setPosition(new Vec3(primary.position.x+.5,primary.position.y,primary.position.z));state.interactionCount++;}});
+canvas.addEventListener('click',()=>{state.interactionCount++;if(config.semantic==='exploded-toggle'){state.exploded=!state.exploded;ownedNodes.filter(n=>n.name.startsWith('exploded-toggle')).forEach((n,i)=>n.setPosition(new Vec3((i-1)*(state.exploded?2.5:1.6),0,0)));}else if(config.semantic==='camera-transition'){motionEnabled=true;cameraNode.setPosition(new Vec3(1,2.75,6.5));state.animationTicks++;}else if(config.semantic==='orthographic-toggle'){state.ortho=!state.ortho;camera.projection=state.ortho?Camera.ProjectionType.ORTHO:Camera.ProjectionType.PERSPECTIVE;camera.orthoHeight=3;}else if(config.semantic==='multi-camera'){const old=camera.priority;camera.priority=secondaryCamera.priority;secondaryCamera.priority=old;state.details.activeCamera=camera.priority>secondaryCamera.priority?0:1;state.details.priorities=[camera.priority,secondaryCamera.priority];}else if(config.semantic==='click-animation')motionEnabled=true;else if(config.semantic==='click-material'){primary.getComponent(MeshRenderer).material.setProperty('mainColor',new Color(245,70,90,255));state.details.materialChanged=true;}else if(config.semantic==='selection'){state.selected=true;primary.setScale(new Vec3(1.25,1.25,1.25));}else if(config.semantic==='hotspot'){state.selected=true;primary.setPosition(new Vec3(0,.5,0));}else if(config.semantic==='weather-toggle'){light.illuminance=4000;camera.clearColor=new Color(85,95,125,255);state.details.weather='cloudy';}});
+state.ready=true;state.details.initialPosition=primary?[primary.position.x,primary.position.y,primary.position.z]:null;
+(window as any).__recipeState=()=>({...state,position:primary?[primary.position.x,primary.position.y,primary.position.z]:null,rotation:primary?[primary.eulerAngles.x,primary.eulerAngles.y,primary.eulerAngles.z]:null,cameraPosition:[cameraNode.position.x,cameraNode.position.y,cameraNode.position.z]});
+(window as any).__recipeDispose=async()=>{const tracked=[...ownedAssets],trackedNodes=[...ownedNodes];for(const instance of instances)instance.dispose();for(const node of trackedNodes)if(node.isValid)node.destroy();for(const asset of tracked)if(asset.isValid)asset.destroy();await Promise.resolve();for(let attempt=0;attempt<20&&(!tracked.every(a=>!a.isValid)||!trackedNodes.every(n=>!n.isValid));attempt++)await new Promise(resolve=>requestAnimationFrame(resolve));return{released:tracked.every(a=>!a.isValid)&&trackedNodes.every(n=>!n.isValid),assetsBefore:tracked.length,assetsAfter:tracked.filter(a=>a.isValid).length,nodesBefore:trackedNodes.length,nodesAfter:trackedNodes.filter(n=>n.isValid).length};};
+`; }
+
+const SCENARIOS={}; for(const [id,config] of Object.entries(CONFIGS)){const complete={...config,id};const assets=config.mode==='gltf'?[BOX_ASSET]:config.mode==='gltf-animation'?['examples/gltf-viewer/assets/AnimatedMorphCube.glb']:[];SCENARIOS[id]={id:'recipe:'+id,source:sourceFor(complete),action:config.action,assets,validatorParams:{'node-count':{min:config.instances===2||(config.boxes||0)>1?5:4},'material-property':{min:1},'capability-status':{requires:config.feature||'webgl2'}}};}
+module.exports={CONFIGS,SCENARIOS};

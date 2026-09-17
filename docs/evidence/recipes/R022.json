@@ -1,0 +1,146 @@
+{
+  "before": {
+    "id": "R022",
+    "semantic": "clearcoat",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 0,
+    "featureApplied": true,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported",
+      "KHR_materials_clearcoat": "supported"
+    },
+    "details": {
+      "feature": "KHR_materials_clearcoat",
+      "property": "airClearcoat",
+      "warnings": [],
+      "status": "supported",
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "after": {
+    "id": "R022",
+    "semantic": "clearcoat",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 0,
+    "featureApplied": true,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported",
+      "KHR_materials_clearcoat": "supported"
+    },
+    "details": {
+      "feature": "KHR_materials_clearcoat",
+      "property": "airClearcoat",
+      "warnings": [],
+      "status": "supported",
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "scene": {
+    "sceneId": "scene-1",
+    "name": "R022",
+    "nodeCount": 5,
+    "componentCount": 5,
+    "componentsByType": {
+      "Camera": 1,
+      "DirectionalLight": 1,
+      "GLTFWinding": 1,
+      "Animation": 1,
+      "MeshRenderer": 1
+    },
+    "cameraCount": 1,
+    "lightCount": 1,
+    "rendererCount": 1,
+    "uniqueAssetCount": {
+      "total": 7,
+      "byKind": {
+        "Node": 5,
+        "Mesh": 1,
+        "Material": 1
+      }
+    },
+    "nodes": [
+      {
+        "id": "node-1",
+        "name": "R022",
+        "parentId": null
+      },
+      {
+        "id": "node-2",
+        "name": "recipe-camera",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-3",
+        "name": "recipe-light",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-4",
+        "name": "scene_0",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-5",
+        "name": "clearcoat-mesh__0",
+        "parentId": "node-4"
+      }
+    ],
+    "truncated": false
+  }
+}

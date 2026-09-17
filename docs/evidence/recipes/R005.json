@@ -1,0 +1,134 @@
+{
+  "before": {
+    "id": "R005",
+    "semantic": "material-variants",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 2,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "initialPosition": [
+        -0.8,
+        0,
+        0
+      ]
+    },
+    "position": [
+      -0.8,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "after": {
+    "id": "R005",
+    "semantic": "material-variants",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 2,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "initialPosition": [
+        -0.8,
+        0,
+        0
+      ]
+    },
+    "position": [
+      -0.8,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "scene": {
+    "sceneId": "scene-1",
+    "name": "R005",
+    "nodeCount": 5,
+    "componentCount": 4,
+    "componentsByType": {
+      "Camera": 1,
+      "DirectionalLight": 1,
+      "MeshRenderer": 2
+    },
+    "cameraCount": 1,
+    "lightCount": 1,
+    "rendererCount": 2,
+    "uniqueAssetCount": {
+      "total": 9,
+      "byKind": {
+        "Node": 5,
+        "Mesh": 2,
+        "Material": 2
+      }
+    },
+    "nodes": [
+      {
+        "id": "node-1",
+        "name": "R005",
+        "parentId": null
+      },
+      {
+        "id": "node-2",
+        "name": "recipe-camera",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-3",
+        "name": "recipe-light",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-4",
+        "name": "material-variants-0",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-5",
+        "name": "material-variants-1",
+        "parentId": "node-1"
+      }
+    ],
+    "truncated": false
+  }
+}

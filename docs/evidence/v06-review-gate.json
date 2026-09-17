@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-16T23:23:24.572Z",
+  "measuredAt": "2026-09-17T14:09:10.653Z",
   "status": "PASS",
   "referenceGatePass": true,
   "catalogGatePass": true,
@@ -20,13 +20,14 @@
   "recipes": {
     "catalogTotal": 30,
     "validatedCount": 30,
-    "stableCount": 20
+    "stableCount": 30
   },
+  "evidenceFailures": [],
   "coverageFailures": [],
   "tests": {
     "suites": 28,
-    "tests": 201,
-    "passed": 201,
+    "tests": 202,
+    "passed": 202,
     "success": true
   },
   "blockers": []

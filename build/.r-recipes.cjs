@@ -23,16 +23,31 @@ __export(recipes30_exports, {
   RECIPES_CATALOG: () => RECIPES_CATALOG
 });
 module.exports = __toCommonJS(recipes30_exports);
-var r = (id, name, status, description, refs, interaction, visual) => ({
+var RECIPE_ASSETS = {
+  R001: ["examples/gltf-viewer/assets/BoxTextured.glb"],
+  R002: ["examples/gltf-viewer/assets/AnimatedMorphCube.glb"],
+  R004: ["examples/gltf-viewer/assets/BoxTextured.glb"],
+  R006: ["examples/gltf-viewer/assets/BoxTextured.glb"],
+  R010: ["examples/gltf-viewer/assets/BoxTextured.glb"],
+  R027: ["examples/gltf-viewer/assets/BoxTextured.glb"]
+};
+var FEATURE_CAPABILITIES = {
+  R022: "KHR_materials_clearcoat",
+  R023: "KHR_materials_transmission",
+  R024: "KHR_materials_anisotropy",
+  R025: "KHR_materials_iridescence"
+};
+var r = (id, name, targetStatus, description, refs, interaction, visual) => ({
   id,
   version: "1.0.0",
   name,
-  status,
-  // evidence-driven promotion（run-recipes-browser 30/30 PASS 后写入）
+  status: "draft",
+  targetStatus,
+  compositeBenchmarkId: `recipe:${id}`,
   description,
   sceneSetup: "Code First \u573A\u666F\uFF1AcreateAirApp(#GameCanvas) + \u76F8\u673A + \u5E73\u884C\u5149 + \u8D44\u4EA7/\u7F51\u683C\u8282\u70B9",
-  requiredAssets: [],
-  requiredCapabilities: ["webgl2"],
+  requiredAssets: RECIPE_ASSETS[id] ?? [],
+  requiredCapabilities: ["webgl2", ...FEATURE_CAPABILITIES[id] ? [FEATURE_CAPABILITIES[id]] : []],
   runtimeState: "\u573A\u666F\u8FD0\u884C\u4E2D\uFF1Brenderer \u5C31\u7EEA\uFF1B\u65E0\u963B\u585E\u8FD0\u884C\u65F6\u9519\u8BEF",
   interactionSteps: interaction,
   visualTarget: visual,
@@ -59,7 +74,7 @@ var RECIPES = [
     "Character Animation Viewer",
     "stable",
     "\u9AA8\u9ABC/\u53D8\u5F62\u52A8\u753B\u64AD\u653E\u67E5\u770B\u5668\uFF1A\u5B9E\u4F8B\u5316\u540E\u542F\u52A8\u9996\u4E2A AnimationClip \u5E76\u6301\u7EED\u6E32\u67D3\u3002",
-    { benchmarks: ["B061", "B064"], examples: ["skinned-animation"], validators: [...baseValidators, "animation-playing"] },
+    { benchmarks: ["B061", "B064", "B091"], examples: ["skinned-animation"], validators: [...baseValidators, "animation-playing"] },
     ["\u9875\u9762\u52A0\u8F7D\u540E\u81EA\u52A8\u64AD\u653E\u52A8\u753B", "\u5E27\u95F4\u753B\u9762\u5DEE\u5F02\u9A8C\u8BC1\u52A8\u753B\u786E\u5B9E\u5728\u64AD"],
     "\u52A8\u753B\u5E27\u95F4\u753B\u9762\u53D8\u5316\uFF08frame-diff \u901A\u8FC7\uFF09"
   ),

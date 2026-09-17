@@ -1,0 +1,134 @@
+{
+  "before": {
+    "id": "R012",
+    "semantic": "camera-tour",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 57,
+    "instanceCount": 0,
+    "materialCount": 1,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "clipCount": 1,
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      1.980653608312316,
+      2.5,
+      7
+    ]
+  },
+  "after": {
+    "id": "R012",
+    "semantic": "camera-tour",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 98,
+    "instanceCount": 0,
+    "materialCount": 1,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "clipCount": 1,
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0.40045996944354106,
+      2.5,
+      7
+    ]
+  },
+  "scene": {
+    "sceneId": "scene-1",
+    "name": "R012",
+    "nodeCount": 4,
+    "componentCount": 5,
+    "componentsByType": {
+      "Camera": 1,
+      "Animation": 1,
+      "Motion": 1,
+      "DirectionalLight": 1,
+      "MeshRenderer": 1
+    },
+    "cameraCount": 1,
+    "lightCount": 1,
+    "rendererCount": 1,
+    "uniqueAssetCount": {
+      "total": 7,
+      "byKind": {
+        "Node": 4,
+        "AnimationClip": 1,
+        "Mesh": 1,
+        "Material": 1
+      }
+    },
+    "nodes": [
+      {
+        "id": "node-1",
+        "name": "R012",
+        "parentId": null
+      },
+      {
+        "id": "node-2",
+        "name": "recipe-camera",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-3",
+        "name": "recipe-light",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-4",
+        "name": "camera-tour-0",
+        "parentId": "node-1"
+      }
+    ],
+    "truncated": false
+  }
+}

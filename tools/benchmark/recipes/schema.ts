@@ -14,6 +14,8 @@ export interface RecipeDefinition {
     name: string;
     status: RecipeStatus;
     targetStatus?: RecipeStatus;
+    /** 由 Recipe runner 实际执行的完整组合场景标识。 */
+    compositeBenchmarkId: string;
     description: string;
 
     /** §62：进入 validated 必须覆盖的六要素。 */
@@ -73,9 +75,13 @@ export interface CoverageContext {
 export interface RecipeEvidence {
     recipeId: string;
     recipeVersion: string;
-    source: { kind: 'benchmark' | 'example'; id: string };
+    source: { kind: 'benchmark' | 'example'; id: string; composite?: boolean };
     runId: string;
     revision: string;
+    sourceHash: string;
+    scenarioHash: string;
+    measuredAt: string;
+    environment: { browser: string; viewport: string; webglBackend: string };
     result: 'PASS' | 'FAIL';
     sceneSetup: string;
     requiredAssets: string[];
@@ -83,13 +89,81 @@ export interface RecipeEvidence {
     runtimeState: string;
     interactionSteps: string[];
     visualTarget: string;
-    checks: { scene: boolean; interaction: boolean; visual: boolean; lifecycle: boolean; noRuntimeErrors: boolean };
+    checks: { scene: boolean; interaction: boolean; visual: boolean; lifecycle: boolean; noRuntimeErrors: boolean; capability: boolean; semantic: boolean };
+    validatorResults: { validatorId: string; state: string; detail?: string }[];
+    artifacts: { path: string; hash: string; bytes: number }[];
+}
+
+export interface EvidenceValidationOptions {
+    sourceHash?: string;
+    scenarioHashes?: Map<string, string>;
+    artifactExists?: (path: string, hash: string, bytes: number) => boolean;
+}
+
+const allowedValidatorStates = new Set(['PASS', 'EXPECTED_UNSUPPORTED', 'EXPECTED_FALLBACK']);
+
+export function validateEvidenceSet (
+    recipes: RecipeDefinition[],
+    evidence: RecipeEvidence[],
+    options: EvidenceValidationOptions = {},
+): string[] {
+    const failures: string[] = [];
+    const recipesById = new Map(recipes.map((recipe) => [recipe.id, recipe]));
+    const runIds = new Set<string>();
+    for (const entry of evidence) {
+        const prefix = entry?.recipeId || '<missing recipeId>';
+        const required: (keyof RecipeEvidence)[] = ['recipeId', 'recipeVersion', 'source', 'runId', 'revision',
+            'sourceHash', 'scenarioHash', 'measuredAt', 'environment', 'result', 'sceneSetup', 'requiredAssets',
+            'requiredCapabilities', 'runtimeState', 'interactionSteps', 'visualTarget', 'checks', 'validatorResults', 'artifacts'];
+        for (const field of required) {
+            if (entry?.[field] === undefined || entry?.[field] === null || entry?.[field] === '') {
+                failures.push(`${prefix}: evidence.${field} is required`);
+            }
+        }
+        const recipe = recipesById.get(entry?.recipeId);
+        if (!recipe) { failures.push(`${prefix}: unknown recipe`); continue; }
+        if (entry.recipeVersion !== recipe.version) { failures.push(`${prefix}: recipeVersion mismatch`); }
+        if (entry.source?.kind !== 'benchmark' || entry.source?.composite !== true
+            || entry.source?.id !== recipe.compositeBenchmarkId) {
+            failures.push(`${prefix}: source must be the executed composite benchmark ${recipe.compositeBenchmarkId}`);
+        }
+        if (!entry.runId) { failures.push(`${prefix}: missing runId`); }
+        else if (runIds.has(entry.runId)) { failures.push(`${prefix}: duplicate runId ${entry.runId}`); }
+        else { runIds.add(entry.runId); }
+        if (options.sourceHash && entry.sourceHash !== options.sourceHash) { failures.push(`${prefix}: sourceHash mismatch`); }
+        const expectedScenarioHash = options.scenarioHashes?.get(recipe.id);
+        if (expectedScenarioHash && entry.scenarioHash !== expectedScenarioHash) { failures.push(`${prefix}: scenarioHash mismatch`); }
+        if (!entry.environment?.browser || !entry.environment?.viewport || !entry.environment?.webglBackend) {
+            failures.push(`${prefix}: incomplete environment`);
+        }
+        if (!Array.isArray(entry.validatorResults) || entry.validatorResults.length === 0) {
+            failures.push(`${prefix}: validatorResults required`);
+        } else {
+            const states = new Map(entry.validatorResults.map((result) => [result.validatorId, result.state]));
+            const requiredValidators = [...recipe.validatorRefs, ...recipe.visualRefs, 'recipe-semantic', 'recipe-capabilities', 'recipe-assets', 'recipe-interaction'];
+            if (recipe.targetStatus === 'stable') { requiredValidators.push('resource-released'); }
+            for (const id of requiredValidators) {
+                if (!allowedValidatorStates.has(states.get(id) ?? '')) { failures.push(`${prefix}: validator ${id} did not pass`); }
+            }
+        }
+        if (!Array.isArray(entry.artifacts) || entry.artifacts.length === 0) {
+            failures.push(`${prefix}: artifacts required`);
+        } else if (options.artifactExists) {
+            for (const artifact of entry.artifacts) {
+                if (!artifact?.path || !artifact?.hash || !Number.isFinite(artifact?.bytes)
+                    || !options.artifactExists(artifact.path, artifact.hash, artifact.bytes)) {
+                    failures.push(`${prefix}: artifact missing or hash mismatch (${artifact?.path ?? '<missing>'})`);
+                }
+            }
+        }
+    }
+    return failures;
 }
 
 function coverageProof (recipe: RecipeDefinition, ctx: CoverageContext): boolean {
     return (ctx.evidence ?? []).some((e) => {
         const referenced = e.source.kind === 'benchmark'
-            ? recipe.benchmarkRefs.includes(e.source.id) && ctx.benchmarkIds.has(e.source.id)
+            ? e.source.composite === true && e.source.id === recipe.compositeBenchmarkId
             : recipe.exampleRefs.includes(e.source.id) && ctx.exampleHasEntry?.get(e.source.id) === true;
         return referenced && e.recipeId === recipe.id && e.recipeVersion === recipe.version
             && !!e.runId && !!e.revision && e.result === 'PASS'
@@ -98,8 +172,8 @@ function coverageProof (recipe: RecipeDefinition, ctx: CoverageContext): boolean
             && recipe.requiredAssets.every((x) => e.requiredAssets.includes(x))
             && recipe.requiredCapabilities.every((x) => e.requiredCapabilities.includes(x))
             && recipe.interactionSteps.every((x) => e.interactionSteps.includes(x))
-            && e.checks.scene && e.checks.interaction && e.checks.visual
-            && e.checks.noRuntimeErrors && (recipe.status !== 'stable' || e.checks.lifecycle);
+            && e.checks.scene && e.checks.interaction && e.checks.visual && e.checks.semantic && e.checks.capability
+            && e.checks.noRuntimeErrors && (recipe.targetStatus !== 'stable' || e.checks.lifecycle);
     });
 }
 
@@ -135,4 +209,12 @@ export function checkCoverage (recipes: RecipeDefinition[], ctx: CoverageContext
         }
     }
     return dangling;
+}
+
+/** Evidence is the sole authority for moving draft recipes to their target state. */
+export function promoteRecipes (recipes: RecipeDefinition[], ctx: CoverageContext): RecipeDefinition[] {
+    return recipes.map((recipe) => {
+        const candidate = { ...recipe, status: recipe.targetStatus ?? 'validated' } as RecipeDefinition;
+        return coverageProof(candidate, ctx) ? candidate : { ...recipe, status: 'draft' };
+    });
 }

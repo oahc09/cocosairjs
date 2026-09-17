@@ -1,0 +1,150 @@
+{
+  "before": {
+    "id": "R006",
+    "semantic": "product-framed",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 1,
+    "materialCount": 0,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "meshes": 1,
+      "materials": 1,
+      "textures": 1,
+      "animations": 0,
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      0.8753115899222519,
+      2.4508724517823053
+    ]
+  },
+  "after": {
+    "id": "R006",
+    "semantic": "product-framed",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 1,
+    "materialCount": 0,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "meshes": 1,
+      "materials": 1,
+      "textures": 1,
+      "animations": 0,
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      0.8753115899222519,
+      2.4508724517823053
+    ]
+  },
+  "scene": {
+    "sceneId": "scene-1",
+    "name": "R006",
+    "nodeCount": 6,
+    "componentCount": 5,
+    "componentsByType": {
+      "Camera": 1,
+      "DirectionalLight": 1,
+      "GLTFWinding": 1,
+      "Animation": 1,
+      "MeshRenderer": 1
+    },
+    "cameraCount": 1,
+    "lightCount": 1,
+    "rendererCount": 1,
+    "uniqueAssetCount": {
+      "total": 9,
+      "byKind": {
+        "Node": 6,
+        "Mesh": 1,
+        "Material": 1,
+        "Texture2D": 1
+      }
+    },
+    "nodes": [
+      {
+        "id": "node-1",
+        "name": "R006",
+        "parentId": null
+      },
+      {
+        "id": "node-2",
+        "name": "recipe-camera",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-3",
+        "name": "recipe-light",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-4",
+        "name": "scene_0",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-5",
+        "name": "node__0",
+        "parentId": "node-4"
+      },
+      {
+        "id": "node-6",
+        "name": "node__1",
+        "parentId": "node-5"
+      }
+    ],
+    "truncated": false
+  }
+}

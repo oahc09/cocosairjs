@@ -7,7 +7,7 @@ const fs = nodeRequire('fs') as typeof import('fs');
 const path = nodeRequire('path') as typeof import('path');
 
 import { RECIPES, RECIPES_CATALOG } from '../../tools/benchmark/recipes/recipes30';
-import { recipeStats, checkCoverage, CoverageContext, RecipeEvidence } from '../../tools/benchmark/recipes/schema';
+import { recipeStats, checkCoverage, validateEvidenceSet, promoteRecipes, CoverageContext, RecipeEvidence } from '../../tools/benchmark/recipes/schema';
 import { CATALOG_BENCHMARKS } from '../../tools/benchmark/catalog/catalog100';
 import { VALIDATORS } from '../../tools/benchmark/validators';
 
@@ -18,14 +18,17 @@ function process_cwd (): string {
 }
 
 describe('V0.6 §58-§61 — Recipe 门禁', () => {
-    test('未经完整场景验证的配方不计入 validated/stable', () => {
+    test('源码目录保持 draft，目标分布为 30 validated / 20 stable', () => {
         const stats = recipeStats(RECIPES);
         expect(stats.catalogTotal).toBeGreaterThanOrEqual(30);
-        expect(stats.validatedCount).toBeGreaterThanOrEqual(30);
-        expect(stats.stableCount).toBeGreaterThanOrEqual(20);
+        expect(stats.validatedCount).toBe(0);
+        expect(stats.stableCount).toBe(0);
         for (const r of RECIPES) {
-            expect(['validated', 'stable']).toContain(r.status);
+            expect(r.status).toBe('draft');
+            expect(['validated', 'stable']).toContain(r.targetStatus);
+            expect(r.compositeBenchmarkId).toBe(`recipe:${r.id}`);
         }
+        expect(RECIPES.filter((r) => r.targetStatus === 'stable')).toHaveLength(30); // V0.9: 30 stable
     });
 
     test('§65 首批命名与分组（Character/Product/Camera/Interaction/Material/Experience 各 5）', () => {
@@ -54,13 +57,17 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
             exampleHasEntry: new Map(exampleIds.map((e) => [e, fs.existsSync(path.join(REPO, 'examples', e, 'index.html'))])),
         };
         // 无 evidence 时 validated/stable 的 coverageProof 不通过 → 有 dangling
-        const noEvidence = checkCoverage(RECIPES.filter((r) => r.status !== 'draft'), ctx);
+        const requested = RECIPES.map((r) => ({ ...r, status: r.targetStatus! }));
+        const noEvidence = checkCoverage(requested, ctx);
         expect(noEvidence.length).toBeGreaterThan(0);
         // 有 evidence 时（来自 v06-recipes.json）coverageProof 通过 → 无 dangling
         const evPath = path.join(REPO, 'docs', 'evidence', 'v06-recipes.json');
         const evidence = JSON.parse(fs.readFileSync(evPath, 'utf8')).runs;
-        const withEv = checkCoverage(RECIPES, { ...ctx, evidence });
+        const promoted = promoteRecipes(RECIPES, { ...ctx, evidence });
+        const withEv = checkCoverage(promoted, { ...ctx, evidence });
         expect(withEv).toEqual([]);
+        expect(recipeStats(promoted).catalogTotal).toBe(30);
+        expect(recipeStats(promoted).stableCount).toBeGreaterThanOrEqual(30);
     });
 
     test('promotion requires one matching executed composite, not unrelated validator unions', () => {
@@ -72,13 +79,35 @@ describe('V0.6 §58-§61 — Recipe 门禁', () => {
         };
         expect(checkCoverage([recipe], ctx).length).toBeGreaterThan(0);
         const evidence: RecipeEvidence = { recipeId: recipe.id, recipeVersion: recipe.version,
-            source: { kind: 'benchmark', id: recipe.benchmarkRefs[0] }, runId: 'test-run', revision: 'test-revision', result: 'PASS',
+            source: { kind: 'benchmark', id: recipe.compositeBenchmarkId, composite: true }, runId: 'test-run', revision: 'test-revision',
+            sourceHash: 'source', scenarioHash: 'scenario', measuredAt: new Date(0).toISOString(),
+            environment: { browser: 'chromium', viewport: '480x360', webglBackend: 'webgl2' }, result: 'PASS',
             sceneSetup: recipe.sceneSetup, runtimeState: recipe.runtimeState, requiredAssets: recipe.requiredAssets,
             requiredCapabilities: recipe.requiredCapabilities, interactionSteps: recipe.interactionSteps,
-            visualTarget: recipe.visualTarget, checks: { scene: true, interaction: true, visual: true, lifecycle: true, noRuntimeErrors: true } };
+            visualTarget: recipe.visualTarget, checks: { scene: true, interaction: true, visual: true, lifecycle: true, noRuntimeErrors: true, capability: true, semantic: true },
+            validatorResults: [...new Set([...recipe.validatorRefs, ...recipe.visualRefs, 'recipe-semantic', 'recipe-capabilities', 'recipe-assets', 'recipe-interaction', 'resource-released'])].map((validatorId) => ({ validatorId, state: 'PASS' })),
+            artifacts: [{ path: 'docs/evidence/recipes/test.png', hash: 'hash', bytes: 1 }] };
         expect(checkCoverage([recipe], { ...ctx, evidence: [evidence] })).toEqual([]);
         expect(checkCoverage([recipe], { ...ctx, evidence: [{ ...evidence, recipeVersion: 'old' }] }).length).toBeGreaterThan(0);
         expect(checkCoverage([recipe], { ...ctx, evidence: [{ ...evidence, checks: { ...evidence.checks, lifecycle: false } }] }).length).toBeGreaterThan(0);
+    });
+
+    test('evidence schema rejects missing fields, stale hashes, duplicate runs and missing artifacts', () => {
+        const recipe = RECIPES[0];
+        const base = { recipeId: recipe.id, recipeVersion: recipe.version,
+            source: { kind: 'benchmark' as const, id: recipe.compositeBenchmarkId, composite: true }, runId: 'same', revision: 'rev',
+            sourceHash: 'current', scenarioHash: 'scenario', measuredAt: new Date(0).toISOString(),
+            environment: { browser: 'chromium', viewport: '480x360', webglBackend: 'webgl2' }, result: 'PASS' as const,
+            sceneSetup: recipe.sceneSetup, runtimeState: recipe.runtimeState, requiredAssets: recipe.requiredAssets,
+            requiredCapabilities: recipe.requiredCapabilities, interactionSteps: recipe.interactionSteps, visualTarget: recipe.visualTarget,
+            checks: { scene: true, interaction: true, visual: true, lifecycle: true, noRuntimeErrors: true, capability: true, semantic: true },
+            validatorResults: [...new Set([...recipe.validatorRefs, ...recipe.visualRefs, 'recipe-semantic', 'recipe-capabilities', 'recipe-assets', 'recipe-interaction', 'resource-released'])].map((validatorId) => ({ validatorId, state: 'PASS' })),
+            artifacts: [{ path: 'docs/evidence/recipes/test.png', hash: 'hash', bytes: 1 }] } satisfies RecipeEvidence;
+        expect(validateEvidenceSet([recipe], [base], { sourceHash: 'current', scenarioHashes: new Map([[recipe.id, 'scenario']]), artifactExists: () => true })).toEqual([]);
+        expect(validateEvidenceSet([recipe], [{ ...base, sourceHash: 'stale' }], { sourceHash: 'current' })).toContain(`${recipe.id}: sourceHash mismatch`);
+        expect(validateEvidenceSet([recipe], [base, base])).toContain(`${recipe.id}: duplicate runId same`);
+        expect(validateEvidenceSet([recipe], [{ ...base, artifacts: [] }])).toContain(`${recipe.id}: artifacts required`);
+        expect(validateEvidenceSet([recipe], [base], { artifactExists: () => false }).some((value) => value.includes('artifact missing'))).toBe(true);
     });
 
 });

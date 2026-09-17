@@ -12,6 +12,10 @@ function sourceHash(root) {
     }
   }
   walk(path.join(root,'tools/benchmark'));
+  // Recipe browser scenarios consume this local glTF fixture. Evidence becomes stale
+  // when the fixture changes even if the TypeScript sources do not.
+  const recipeAssets=[path.join(root,'examples/gltf-viewer/assets/BoxTextured.glb'),path.join(root,'examples/gltf-viewer/assets/AnimatedMorphCube.glb')];
+  for(const asset of recipeAssets){if(fs.existsSync(asset))entries.push([path.relative(root,asset).replace(/\\/g,'/'),crypto.createHash('sha256').update(fs.readFileSync(asset)).digest('hex')]);}
   entries.push(['build/cocosair.module.js',crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'build/cocosair.module.js'))).digest('hex')]);
   entries.push(['build/cocosair.module.d.ts',crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'build/cocosair.module.d.ts'))).digest('hex')]);
   return crypto.createHash('sha256').update(JSON.stringify(entries.sort((a,b)=>a[0].localeCompare(b[0])))).digest('hex');

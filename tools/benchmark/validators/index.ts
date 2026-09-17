@@ -40,6 +40,8 @@ export interface RuntimeSnapshot {
     capture: { png: string; width: number; height: number; sceneId: string; frameIndex: number } | null;
     /** PNG 字节解码后的中心区域像素采样（Runner 负责 readPixels/toDataURL 解码）。 */
     centerPixel?: [number, number, number];
+    /** Deterministic sampled pixels that differ from the configured clear color. */
+    foregroundPixelCount?: number;
     runtimeErrors: { seq: number; category: string; message: string }[];
     capability?: { name: string; status: string };
 }
@@ -182,6 +184,9 @@ export const visibleFrame: Validator = {
     id: 'visible-frame',
     evaluate (snapshot) {
         if (!snapshot.capture) { return fail('visible-frame', 'no frame captured'); }
+        if ((snapshot.foregroundPixelCount ?? 0) >= 16) {
+            return pass('visible-frame', `foreground samples=${snapshot.foregroundPixelCount}`);
+        }
         if (!snapshot.centerPixel) { return fail('visible-frame', 'no pixel sample'); }
         const [r, g, b] = snapshot.centerPixel;
         // 背景判定：接近清屏色(30,40,60) 或近黑；否则视为前景（暗灰 lit 表面属于前景）
