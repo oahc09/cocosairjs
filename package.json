@@ -1,7 +1,7 @@
 {
  "name": "cocosair.js",
  "version": "0.1.0",
- "description": "Cocos AIR \u2014 Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
+ "description": "Cocos AIR — Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
  "license": "MIT",
  "type": "commonjs",
  "main": "build/cocosair.module.js",
@@ -48,7 +48,9 @@
   "dev": "node tools/dev/dev-server.cjs",
   "verify:consumer": "node tools/verify/consumer-acceptance.cjs",
   "verify:benchmark": "tsc -p tools/benchmark/tsconfig.json && node tools/verify/benchmark-regression.cjs",
-  "verify:v06-gate": "node tools/verify/v06-report.cjs"
+  "verify:v06-gate": "node tools/verify/v06-report.cjs",
+  "gallery:manifest": "node tools/examples/generate-manifest.cjs",
+  "gallery:api": "node tools/examples/api-inventory.cjs"
  },
  "devDependencies": {
   "@babel/preset-env": "^7.29.7",

@@ -1,0 +1,22 @@
+{
+  "id": "starter",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Starter",
+  "category": "basics",
+  "apiClaims": [
+    "createAirApp",
+    "Scene"
+  ],
+  "capabilities": [
+    "basics"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready"
+    ]
+  }
+}

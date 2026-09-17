@@ -1,0 +1,6869 @@
+{
+  "generatedAt": "2026-09-17T15:28:59.553Z",
+  "source": "build/cocosair.module.d.ts",
+  "summary": {
+    "classes": 477,
+    "functions": 319,
+    "constants": 207,
+    "totalMethods": 2417,
+    "totalCoverageUnits": 3420
+  },
+  "classes": {
+    "MeshUtils": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "createMesh",
+        "createDynamicMesh"
+      ]
+    },
+    "BatchingUtility": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "batchStaticModel",
+        "unbatchStaticModel"
+      ]
+    },
+    "Mesh": {
+      "methods": [
+        "onLoaded",
+        "initialize",
+        "updateSubMesh",
+        "destroy",
+        "destroyRenderingMesh",
+        "assign",
+        "reset",
+        "getBoneSpaceBounds",
+        "merge",
+        "validateMergingMesh",
+        "readAttribute",
+        "copyAttribute",
+        "readIndices",
+        "copyIndices",
+        "readAttributeFormat",
+        "initDefault"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Skeleton": {
+      "methods": [
+        "destroy",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "MeshRenderer": {
+      "methods": [
+        "onUpdateReceiveDirLight",
+        "onLoad",
+        "onRestore",
+        "onEnable",
+        "onDisable",
+        "onDestroy",
+        "onGeometryChanged",
+        "getWeight",
+        "setWeights",
+        "setWeight",
+        "setInstancedAttribute",
+        "_updateLightmap",
+        "updateProbeCubemap",
+        "updateProbeBlendCubemap",
+        "updateProbePlanarMap",
+        "updateReflectionProbeDataMap",
+        "updateReflectionProbeId",
+        "updateReflectionProbeBlendId",
+        "updateReflectionProbeBlendWeight",
+        "_updateReflectionProbeTexture",
+        "_updateModels",
+        "_updateReceiveDirLight",
+        "_createModel",
+        "_attachToScene",
+        "_updateModelParams",
+        "_onUpdateLightingmap",
+        "_onUpdateLocalShadowBiasAndProbeId",
+        "_onUpdateLocalReflectionProbeData",
+        "_onUpdateReflectionProbeDataMap",
+        "_onMaterialModified",
+        "_onMeshChanged",
+        "_clearMaterials",
+        "_getBuiltinMaterial",
+        "_onVisibilityChange",
+        "_updateShadowBias",
+        "_updateShadowNormalBias",
+        "_updateCastShadow",
+        "_updateReceiveShadow",
+        "onMobilityChanged",
+        "onLightProbeBakingChanged",
+        "onUseLightProbeChanged",
+        "onReflectionProbeChanged",
+        "onBakeToReflectionProbeChanged",
+        "_updateUseLightProbe",
+        "_isBatchingEnabled",
+        "_updateUseReflectionProbe",
+        "_updateUseReflectionProbeType",
+        "_updateBakeToReflectionProbe"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DirectionalLight": {
+      "methods": [
+        "initialize",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Light": {
+      "methods": [
+        "initialize",
+        "attachToScene",
+        "detachFromScene",
+        "destroy",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SphereLight": {
+      "methods": [
+        "initialize",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SpotLight": {
+      "methods": [
+        "initialize",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PointLight": {
+      "methods": [
+        "initialize",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RangedDirectionalLight": {
+      "methods": [
+        "initialize",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SkinnedMeshRenderer": {
+      "methods": [
+        "onLoad",
+        "onDestroy",
+        "uploadAnimation",
+        "setUseBakedAnimation",
+        "setSharedMaterial",
+        "_updateModelParams"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SkinnedMeshBatchRenderer": {
+      "methods": [
+        "onLoad",
+        "onDestroy",
+        "_onMaterialModified",
+        "cook",
+        "cookMaterials",
+        "cookSkeletons",
+        "cookMeshes",
+        "cookTextures",
+        "createTexture",
+        "resizeAtlases"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SkinnedMeshUnit": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "LOD": {
+      "methods": [
+        "insertRenderer",
+        "deleteRenderer",
+        "getRenderer",
+        "setRenderer"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "LODGroup": {
+      "methods": [
+        "insertLOD",
+        "eraseLOD",
+        "getLOD",
+        "setLOD",
+        "recalculateBounds",
+        "resetObjectSize",
+        "forceLOD",
+        "forceLODs",
+        "onLoad",
+        "_onRemove",
+        "onRestore",
+        "onEnable",
+        "onDisable"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ReflectionProbe": {
+      "methods": [
+        "initialize",
+        "initBakedTextures",
+        "captureCubemap",
+        "renderPlanarReflection",
+        "switchProbeType",
+        "getProbeId",
+        "updateProbeId",
+        "renderArea",
+        "isFinishedRendering",
+        "validate",
+        "destroy",
+        "enable",
+        "disable",
+        "updateCameraDir",
+        "updateBoundingBox",
+        "hasFrameBuffer",
+        "isRGBE"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ReflectionProbeManager": {
+      "methods": [
+        "onUpdateProbes",
+        "filterModelsForPlanarReflection",
+        "getProbes",
+        "getProbeById",
+        "updateBakedCubemap",
+        "updatePlanarMap",
+        "selectReflectionProbe",
+        "updatePreviewSphere",
+        "updatePreviewPlane",
+        "updateProbeData",
+        "getMaxProbeId",
+        "getUsedReflectionProbe",
+        "setReflectionProbe"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Root": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "resize",
+        "setRenderPipeline",
+        "onGlobalPipelineStateChanged",
+        "activeWindow",
+        "resetCumulativeTime",
+        "frameMove",
+        "createWindow",
+        "destroyWindow",
+        "destroyWindows",
+        "createScene",
+        "destroyScene",
+        "destroyScenes",
+        "destroyModel",
+        "createCamera",
+        "destroyLight",
+        "recycleLight"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Size": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DeviceCaps": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DeviceOptions": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Offset": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Rect": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Extent": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureSubresLayers": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureSubresRange": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureCopy": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureBlit": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BufferTextureCopy": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Viewport": {
+      "methods": [
+        "copy",
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Color": {
+      "methods": [
+        "copy",
+        "set",
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "MarkerInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BindingMappingInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SwapchainInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DeviceInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BufferInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BufferViewInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DrawInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DispatchInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "IndirectBuffer": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureViewInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SamplerInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Uniform": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UniformBlock": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UniformSamplerTexture": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UniformSampler": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UniformTexture": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UniformStorageImage": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UniformStorageBuffer": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UniformInputAttachment": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ShaderStage": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Attribute": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ShaderInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "InputAssemblerInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ColorAttachment": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DepthStencilAttachment": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SubpassInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SubpassDependency": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RenderPassInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ResourceRange": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "GeneralBarrierInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureBarrierInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BufferBarrierInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "FramebufferInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DescriptorSetLayoutBinding": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DescriptorSetLayoutInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DescriptorSetInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PipelineLayoutInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "InputState": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "CommandBufferInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "QueueInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "QueryPoolInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "FormatInfo": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "MemoryStatus": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DynamicStencilStates": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DynamicStates": {
+      "methods": [
+        "copy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "GFXObject": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DefaultResource": {
+      "methods": [
+        "getTexture"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BlendState": {
+      "methods": [
+        "setTarget",
+        "reset",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BlendTarget": {
+      "methods": [
+        "reset",
+        "assign",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RasterizerState": {
+      "methods": [
+        "reset",
+        "assign",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DepthStencilState": {
+      "methods": [
+        "reset",
+        "assign",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PipelineStateInfo": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Sampler": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "computeHash",
+        "unpackFromHash"
+      ]
+    },
+    "GeneralBarrier": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "computeHash"
+      ]
+    },
+    "TextureBarrier": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "computeHash"
+      ]
+    },
+    "DeviceManager": {
+      "methods": [
+        "init"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RenderWindow": {
+      "methods": [
+        "isRenderWindowResized",
+        "setRenderWindowResizeHandled",
+        "initialize",
+        "destroy",
+        "resize",
+        "extractRenderCameras",
+        "attachCamera",
+        "detachCamera",
+        "clearCameras",
+        "sortCameras"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "registerCreateFunc"
+      ]
+    },
+    "Camera": {
+      "methods": [
+        "onLoad",
+        "onEnable",
+        "onDisable",
+        "onDestroy",
+        "screenPointToRay",
+        "worldToScreen",
+        "screenToWorld",
+        "convertToUINode",
+        "_createCamera",
+        "_attachToScene",
+        "_detachFromScene",
+        "_checkTargetTextureEvent",
+        "_updateTargetTexture"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Model": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "attachToScene",
+        "detachFromScene",
+        "updateTransform",
+        "updateWorldBound",
+        "updateUBOs",
+        "showTetrahedron",
+        "clearSHUBOs",
+        "updateSHUBOs",
+        "createBoundingShape",
+        "initSubModel",
+        "setSubModelMesh",
+        "setSubModelMaterial",
+        "onGlobalPipelineStateChanged",
+        "onMacroPatchesStateChanged",
+        "onGeometryChanged",
+        "initLightingmap",
+        "updateLightingmap",
+        "updateReflectionProbeCubemap",
+        "updateReflectionProbeBlendCubemap",
+        "updateReflectionProbePlanarMap",
+        "updateReflectionProbeDataMap",
+        "updateLocalShadowBias",
+        "updateReflectionProbeId",
+        "getMacroPatches",
+        "_updateAttributesAndBinding",
+        "_updateInstancedAttributes",
+        "_initLocalDescriptors",
+        "_initLocalSHDescriptors",
+        "_initWorldBoundDescriptors",
+        "_updateLocalDescriptors",
+        "_updateLocalSHDescriptors",
+        "_updateWorldBoundDescriptors"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SubModel": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "update",
+        "onPipelineStateChanged",
+        "onMacroPatchesStateChanged",
+        "onGeometryChanged",
+        "getInstancedAttributeIndex",
+        "updateInstancedWorldMatrix",
+        "updateInstancedSH",
+        "UpdateInstancedAttributes",
+        "_flushPassInfo"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Ambient": {
+      "methods": [
+        "initialize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Skybox": {
+      "methods": [
+        "initialize",
+        "setEnvMaps",
+        "setDiffuseMaps",
+        "setSkyboxMaterial",
+        "setReflectionMaps",
+        "setRotationAngle",
+        "getRotationAngle",
+        "updateMaterialRenderInfo",
+        "activate",
+        "_updatePipeline",
+        "_updateGlobalBinding",
+        "_updateSubModes"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Shadows": {
+      "methods": [
+        "getPlanarShader",
+        "initialize",
+        "activate",
+        "_updatePlanarInfo",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Fog": {
+      "methods": [
+        "initialize",
+        "activate",
+        "_updatePipeline"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Octree": {
+      "methods": [
+        "initialize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Skin": {
+      "methods": [
+        "initialize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PostSettings": {
+      "methods": [
+        "initialize",
+        "activate",
+        "_updatePipeline"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Pass": {
+      "methods": [
+        "initialize",
+        "getHandle",
+        "getBinding",
+        "setUniform",
+        "setUniformArray",
+        "bindTexture",
+        "bindSampler",
+        "setDynamicState",
+        "overridePipelineStates",
+        "update",
+        "getInstancedBuffer",
+        "destroy",
+        "resetUniform",
+        "resetTexture",
+        "resetUBOs",
+        "resetTextures",
+        "tryCompile",
+        "getShaderVariant",
+        "beginChangeStatesSilently",
+        "endChangeStatesSilently",
+        "_doInit",
+        "_syncBatchingScheme"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "fillPipelineInfo",
+        "getPassHash"
+      ]
+    },
+    "TextureBufferPool": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "alloc",
+        "free",
+        "createChunk",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "MaterialInstance": {
+      "methods": [
+        "recompileShaders",
+        "overridePipelineStates",
+        "destroy",
+        "onPassStateChange",
+        "_createPasses"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PassInstance": {
+      "methods": [
+        "overridePipelineStates",
+        "tryCompile",
+        "beginChangeStatesSilently",
+        "endChangeStatesSilently",
+        "_syncBatchingScheme",
+        "_onStateChange"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RenderScene": {
+      "methods": [
+        "initialize",
+        "update",
+        "destroy",
+        "isCulledByLod",
+        "addCamera",
+        "removeCamera",
+        "removeCameras",
+        "setMainLight",
+        "unsetMainLight",
+        "addDirectionalLight",
+        "removeDirectionalLight",
+        "addSphereLight",
+        "removeSphereLight",
+        "addSpotLight",
+        "removeSpotLight",
+        "removeSphereLights",
+        "removeSpotLights",
+        "addPointLight",
+        "removePointLight",
+        "removePointLights",
+        "addRangedDirLight",
+        "removeRangedDirLight",
+        "removeRangedDirLights",
+        "addModel",
+        "removeModel",
+        "removeModels",
+        "addBatch",
+        "removeBatch",
+        "removeBatches",
+        "onGlobalPipelineStateChanged",
+        "generateModelId"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "registerCreateFunc"
+      ]
+    },
+    "math.Vec2": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "equals2f",
+        "strictEquals",
+        "strictEquals2f",
+        "toString",
+        "lerp",
+        "clampf",
+        "add",
+        "add2f",
+        "subtract",
+        "subtract2f",
+        "multiplyScalar",
+        "multiply",
+        "multiply2f",
+        "divide",
+        "divide2f",
+        "negative",
+        "dot",
+        "cross",
+        "length",
+        "lengthSqr",
+        "normalize",
+        "angle",
+        "signAngle",
+        "rotate",
+        "project",
+        "transformMat4",
+        "toVec3"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "cross"
+      ]
+    },
+    "math.Vec3": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "equals3f",
+        "strictEquals",
+        "strictEquals3f",
+        "toString",
+        "lerp",
+        "add",
+        "add3f",
+        "subtract",
+        "subtract3f",
+        "multiplyScalar",
+        "multiply",
+        "multiply3f",
+        "divide",
+        "divide3f",
+        "negative",
+        "clampf",
+        "dot",
+        "cross",
+        "length",
+        "lengthSqr",
+        "normalize",
+        "transformMat4",
+        "toVec2"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "distance",
+        "squaredDistance",
+        "len",
+        "lengthSqr",
+        "strictEquals",
+        "equals",
+        "angle"
+      ]
+    },
+    "math.Vec4": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "equals4f",
+        "strictEquals",
+        "strictEquals4f",
+        "lerp",
+        "toString",
+        "clampf",
+        "add",
+        "add4f",
+        "subtract",
+        "subtract4f",
+        "multiplyScalar",
+        "multiply",
+        "multiply4f",
+        "divide",
+        "divide4f",
+        "negative",
+        "dot",
+        "cross",
+        "length",
+        "lengthSqr",
+        "normalize",
+        "scale",
+        "transformMat4"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "math.Quat": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "strictEquals",
+        "getEulerAngles",
+        "lerp",
+        "slerp",
+        "length",
+        "lengthSqr",
+        "toString"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "toAxisX",
+        "toAxisY",
+        "toAxisZ",
+        "toEuler",
+        "toEulerInYXZOrder",
+        "fromArray",
+        "strictEquals",
+        "equals",
+        "angle",
+        "rotateTowards"
+      ]
+    },
+    "math.Mat3": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "strictEquals",
+        "toString",
+        "identity",
+        "transpose",
+        "invert",
+        "determinant",
+        "add",
+        "subtract",
+        "multiply",
+        "multiplyScalar",
+        "scale",
+        "rotate",
+        "fromQuat"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "math.Mat4": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "strictEquals",
+        "toString",
+        "identity",
+        "zero",
+        "transpose",
+        "invert",
+        "determinant",
+        "add",
+        "subtract",
+        "multiply",
+        "multiplyScalar",
+        "translate",
+        "transform",
+        "scale",
+        "rotate",
+        "getTranslation",
+        "getScale",
+        "getRotation",
+        "fromRTS",
+        "fromSRT",
+        "fromQuat"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "clone"
+      ]
+    },
+    "math.Size": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "lerp",
+        "toString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "math.Rect": {
+      "methods": [
+        "clone",
+        "set",
+        "set",
+        "equals",
+        "lerp",
+        "toString",
+        "intersects",
+        "contains",
+        "containsRect",
+        "transformMat4",
+        "transformMat4ToPoints"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "math.Color": {
+      "methods": [
+        "clone",
+        "equals",
+        "lerp",
+        "toString",
+        "toCSS",
+        "fromHEX",
+        "toHEX",
+        "toRGBValue",
+        "fromHSV",
+        "toHSV",
+        "set",
+        "set",
+        "multiply",
+        "getModifiableProperties"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "toVec4",
+        "fromVec4",
+        "toUint32"
+      ]
+    },
+    "MathBase": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "createFloatArray"
+      ]
+    },
+    "memop.Pool": {
+      "methods": [
+        "alloc",
+        "free",
+        "freeArray",
+        "tryShrink",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "memop.RecyclePool": {
+      "methods": [
+        "reset",
+        "resize",
+        "add",
+        "destroy",
+        "tryShrink",
+        "removeAt"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "memop.CachedArray": {
+      "methods": [
+        "push",
+        "pop",
+        "get",
+        "clear",
+        "destroy",
+        "tryShrink",
+        "sort",
+        "concat",
+        "fastRemove",
+        "indexOf"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Line": {
+      "methods": [
+        "length"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy",
+        "fromPoints",
+        "set",
+        "len"
+      ]
+    },
+    "Plane": {
+      "methods": [
+        "transform"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy",
+        "fromPoints",
+        "set",
+        "fromNormalAndPoint",
+        "normalize"
+      ]
+    },
+    "Ray": {
+      "methods": [
+        "computeHit"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy",
+        "fromPoints",
+        "set"
+      ]
+    },
+    "Triangle": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy",
+        "fromPoints",
+        "set"
+      ]
+    },
+    "Sphere": {
+      "methods": [
+        "destroy",
+        "clone",
+        "copy",
+        "getBoundary",
+        "transform",
+        "translateAndRotate",
+        "setScale",
+        "mergePoint",
+        "mergePoints",
+        "mergeAABB"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy",
+        "fromPoints",
+        "set"
+      ]
+    },
+    "AABB": {
+      "methods": [
+        "getBoundary",
+        "transform",
+        "clone",
+        "copy",
+        "mergePoint",
+        "mergePoints",
+        "mergeFrustum"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy",
+        "fromPoints",
+        "set",
+        "merge",
+        "toBoundingSphere",
+        "transform"
+      ]
+    },
+    "OBB": {
+      "methods": [
+        "getBoundary",
+        "transform",
+        "translateAndRotate",
+        "setScale"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy",
+        "fromPoints",
+        "set"
+      ]
+    },
+    "Capsule": {
+      "methods": [
+        "transform",
+        "updateCache",
+        "updateLocalCenter"
+      ],
+      "properties": [
+        "center",
+        "rotation",
+        "ellipseCenter0",
+        "ellipseCenter1"
+      ],
+      "staticMethods": []
+    },
+    "Frustum": {
+      "methods": [
+        "split",
+        "update",
+        "transform",
+        "zero",
+        "updatePlanes"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "createOrthographic",
+        "createOrtho",
+        "createPerspective",
+        "createFromAABB",
+        "create",
+        "clone",
+        "copy"
+      ]
+    },
+    "Keyframe": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AnimationCurve": {
+      "methods": [
+        "addKey",
+        "evaluate_slow",
+        "evaluate",
+        "calcOptimizedKey"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Spline": {
+      "methods": [
+        "setModeAndKnots",
+        "clearKnots",
+        "getKnotCount",
+        "addKnot",
+        "insertKnot",
+        "removeKnot",
+        "setKnot",
+        "getKnot",
+        "getPoint",
+        "getPoints"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create",
+        "clone",
+        "copy"
+      ]
+    },
+    "line": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "plane": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ray": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "triangle": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "sphere": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "aabb": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "obb": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "capsule": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "frustum": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ValueType": {
+      "methods": [
+        "clone",
+        "equals",
+        "set",
+        "toString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "js.IDGenerator": {
+      "methods": [
+        "getNewId"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "js.Pool": {
+      "methods": [
+        "get",
+        "_get",
+        "put",
+        "resize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "js.array.MutableForwardIterator": {
+      "methods": [
+        "remove",
+        "removeAt",
+        "fastRemove",
+        "fastRemoveAt",
+        "push"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "CCObject": {
+      "methods": [
+        "destroy",
+        "_destruct",
+        "_destroyImmediate"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "_deferredDestroy"
+      ]
+    },
+    "CompactValueTypeArray": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "lengthFor",
+        "compress"
+      ]
+    },
+    "AsyncDelegate": {
+      "methods": [
+        "add",
+        "hasListener",
+        "remove",
+        "dispatch"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Screen": {
+      "methods": [
+        "init",
+        "fullScreen",
+        "requestFullScreen",
+        "requestFullScreen",
+        "exitFullScreen",
+        "autoFullScreen",
+        "disableAutoFullScreen",
+        "on",
+        "once",
+        "off"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Scheduler": {
+      "methods": [
+        "setTimeScale",
+        "getTimeScale",
+        "update",
+        "schedule",
+        "schedule",
+        "scheduleUpdate",
+        "unschedule",
+        "unscheduleUpdate",
+        "unscheduleAllForTarget",
+        "unscheduleAll",
+        "unscheduleAllWithMinPriority",
+        "isScheduled",
+        "pauseAllTargets",
+        "pauseAllTargetsWithMinPriority",
+        "resumeTargets",
+        "pauseTarget",
+        "resumeTarget",
+        "isTargetPaused"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "enableForTarget"
+      ]
+    },
+    "RealCurve": {
+      "methods": [
+        "evaluate",
+        "addKeyFrame",
+        "assignSorted",
+        "assignSorted",
+        "isConstant"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RealKeyframeValue": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "QuatCurve": {
+      "methods": [
+        "evaluate",
+        "addKeyFrame",
+        "assignSorted",
+        "assignSorted"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "QuatKeyframeValue": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ObjectCurve": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ColorKey": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AlphaKey": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Gradient": {
+      "methods": [
+        "setKeys",
+        "sortKeys",
+        "evaluate",
+        "evaluateFast",
+        "randomColor",
+        "getRandomColor"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Settings": {
+      "methods": [
+        "init"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "System": {
+      "methods": [
+        "init",
+        "update",
+        "postUpdate",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "sortByPriority"
+      ]
+    },
+    "UBOGlobal": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOCamera": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOShadow": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOCSM": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOLocal": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOWorldBound": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOLocalBatched": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOForwardLight": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBODeferredLight": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOSkinningTexture": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOSkinningAnimation": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOSkinning": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "initLayout"
+      ]
+    },
+    "UBOMorph": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOUILocal": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UBOSH": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PipelineSceneData": {
+      "methods": [
+        "activate",
+        "initGeometryRendererMaterials",
+        "initOcclusionQuery",
+        "getOcclusionQueryPass",
+        "updatePipelineSceneData",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "InstancedBuffer": {
+      "methods": [
+        "destroy",
+        "merge",
+        "uploadBuffers",
+        "clear"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PipelineStateManager": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "getOrCreatePipelineState",
+        "getOrCreateComputePipelineState"
+      ]
+    },
+    "PipelineEventProcessor": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DebugView": {
+      "methods": [
+        "isCompositeModeEnabled",
+        "enableCompositeMode",
+        "enableAllCompositeMode",
+        "isEnabled",
+        "reset",
+        "_activate",
+        "_updatePipeline"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PipelineInputAssemblerData": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Node": {
+      "methods": [
+        "_updateScene",
+        "attr",
+        "getParent",
+        "setParent",
+        "getChildByUuid",
+        "getChildByName",
+        "getChildByPath",
+        "addChild",
+        "insertChild",
+        "getSiblingIndex",
+        "setSiblingIndex",
+        "walk",
+        "removeFromParent",
+        "removeChild",
+        "removeAllChildren",
+        "isChildOf",
+        "getComponent",
+        "getComponents",
+        "getComponentInChildren",
+        "getComponentsInChildren",
+        "addComponent",
+        "removeComponent",
+        "on",
+        "off",
+        "once",
+        "emit",
+        "dispatchEvent",
+        "hasEventListener",
+        "targetOff",
+        "destroy",
+        "destroyAllChildren",
+        "_removeComponent",
+        "_updateSiblingIndex",
+        "_instantiate",
+        "_onHierarchyChangedBase",
+        "_onPreDestroyBase",
+        "_onPreDestroy",
+        "_onSetParent",
+        "_onHierarchyChanged",
+        "_onBatchCreated",
+        "_onBeforeSerialize",
+        "_onPostActivated",
+        "translate",
+        "rotate",
+        "lookAt",
+        "invalidateChildren",
+        "updateWorldTransform",
+        "setPosition",
+        "setPosition",
+        "getPosition",
+        "setRotation",
+        "setRotation",
+        "setRotationFromEuler",
+        "setRotationFromEuler",
+        "getRotation",
+        "setScale",
+        "setScale",
+        "getScale",
+        "inverseTransformPoint",
+        "setWorldPosition",
+        "setWorldPosition",
+        "getWorldPosition",
+        "setWorldRotation",
+        "setWorldRotation",
+        "setWorldRotationFromEuler",
+        "getWorldRotation",
+        "setWorldScale",
+        "setWorldScale",
+        "getWorldScale",
+        "getWorldMatrix",
+        "getWorldRS",
+        "getWorldRT",
+        "setRTS",
+        "isTransformDirty",
+        "pauseSystemEvents",
+        "resumeSystemEvents",
+        "getPathInHierarchy"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "_setScene",
+        "isNode",
+        "resetHasChangedFlags",
+        "clearNodeArray"
+      ]
+    },
+    "Scene": {
+      "methods": [
+        "_updateScene",
+        "destroy",
+        "addComponent",
+        "_onHierarchyChanged",
+        "_onPostActivated",
+        "_onBatchCreated",
+        "updateWorldTransform",
+        "_instantiate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Layers": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "init",
+        "makeMaskInclude",
+        "makeMaskExclude",
+        "addLayer",
+        "deleteLayer",
+        "nameToLayer",
+        "layerToName"
+      ]
+    },
+    "EventHandler": {
+      "methods": [
+        "emit"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "emitEvents"
+      ]
+    },
+    "Component": {
+      "methods": [
+        "_getRenderScene",
+        "addComponent",
+        "getComponent",
+        "getComponents",
+        "getComponentInChildren",
+        "getComponentsInChildren",
+        "destroy",
+        "_onPreDestroy",
+        "_instantiate",
+        "schedule",
+        "scheduleOnce",
+        "unschedule",
+        "unscheduleAllCallbacks"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "NodeActivator": {
+      "methods": [
+        "reset",
+        "activateNode",
+        "activateComp",
+        "destroyComp",
+        "_activateNodeRecursively",
+        "_deactivateNodeRecursively"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab": {
+      "methods": [
+        "createNode",
+        "compileCreateFunction",
+        "_instantiate",
+        "initDefault",
+        "validate",
+        "onLoaded"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab._utils.TargetInfo": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab._utils.TargetOverrideInfo": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab._utils.CompPrefabInfo": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab._utils.PropertyOverrideInfo": {
+      "methods": [
+        "isTarget"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab._utils.MountedChildrenInfo": {
+      "methods": [
+        "isTarget"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab._utils.MountedComponentsInfo": {
+      "methods": [
+        "isTarget"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab._utils.PrefabInstance": {
+      "methods": [
+        "findPropertyOverride",
+        "removePropertyOverride"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Prefab.PrefabInfo": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AmbientInfo": {
+      "methods": [
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SkyboxInfo": {
+      "methods": [
+        "activate",
+        "updateEnvMap",
+        "setMaterialProperty"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "FogInfo": {
+      "methods": [
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ShadowsInfo": {
+      "methods": [
+        "setPlaneFromNode",
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "OctreeInfo": {
+      "methods": [
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SkinInfo": {
+      "methods": [
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PostSettingsInfo": {
+      "methods": [
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "LightProbeInfo": {
+      "methods": [
+        "activate",
+        "onProbeBakeFinished",
+        "onProbeBakeCleared",
+        "clearSHCoefficients",
+        "isUniqueNode",
+        "addNode",
+        "removeNode",
+        "syncData",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SceneGlobals": {
+      "methods": [
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PrivateNode": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ModelRenderer": {
+      "methods": [
+        "_collectModels",
+        "onEnable",
+        "_attachToScene",
+        "_onVisibilityChange",
+        "_updatePriority"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Renderer": {
+      "methods": [
+        "getMaterial",
+        "setMaterial",
+        "getSharedMaterial",
+        "setSharedMaterial",
+        "getMaterialInstance",
+        "setMaterialInstance",
+        "getRenderMaterial",
+        "_onMaterialModified",
+        "_clearMaterials"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "MissingScript": {
+      "methods": [
+        "onLoad"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "safeFindClass"
+      ]
+    },
+    "PrefabLink": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "FeedStatusController": {
+      "methods": [
+        "start",
+        "feedStatusChangeCallBack",
+        "onDestroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Director": {
+      "methods": [
+        "end",
+        "pause",
+        "purgeDirector",
+        "reset",
+        "runSceneImmediate",
+        "runScene",
+        "loadScene",
+        "preloadScene",
+        "preloadScene",
+        "resume",
+        "getScene",
+        "getDeltaTime",
+        "getTotalTime",
+        "getCurrentTime",
+        "getTotalFrames",
+        "isPaused",
+        "getScheduler",
+        "setScheduler",
+        "registerSystem",
+        "unregisterSystem",
+        "getSystem",
+        "getAnimationManager",
+        "startAnimation",
+        "stopAnimation",
+        "mainLoop",
+        "tick",
+        "init",
+        "addPersistRootNode",
+        "removePersistRootNode",
+        "isPersistRootNode"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Game": {
+      "methods": [
+        "setFrameRate",
+        "getFrameRate",
+        "step",
+        "pause",
+        "resume",
+        "isPaused",
+        "restart",
+        "end",
+        "on",
+        "once",
+        "init",
+        "_loadProjectBundles",
+        "run",
+        "addPersistRootNode",
+        "removePersistRootNode",
+        "isPersistRootNode"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Details": {
+      "methods": [
+        "init",
+        "reset",
+        "push"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Asset": {
+      "methods": [
+        "toString",
+        "serialize",
+        "_setRawAsset",
+        "addRef",
+        "decRef",
+        "onLoaded",
+        "initDefault",
+        "validate",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "deserialize"
+      ]
+    },
+    "BufferAsset": {
+      "methods": [
+        "buffer",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RenderingSubMesh": {
+      "methods": [
+        "invalidateGeometricInfo",
+        "genFlatBuffers",
+        "destroy",
+        "enableVertexIdChannel"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SceneAsset": {
+      "methods": [
+        "initDefault",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextAsset": {
+      "methods": [
+        "toString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "JsonAsset": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ImageAsset": {
+      "methods": [
+        "reset",
+        "destroy",
+        "initDefault",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "mergeCompressedTextureMips"
+      ]
+    },
+    "Texture2D": {
+      "methods": [
+        "onLoaded",
+        "reset",
+        "create",
+        "toString",
+        "updateMipmaps",
+        "getHtmlElementObj",
+        "destroy",
+        "description",
+        "releaseTexture",
+        "_serialize",
+        "_deserialize",
+        "initDefault",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TextureCube": {
+      "methods": [
+        "isUsingOfflineMipmaps",
+        "onLoaded",
+        "reset",
+        "updateMipmaps",
+        "destroy",
+        "releaseTexture",
+        "_serialize",
+        "_deserialize",
+        "_getGfxTextureCreateInfo",
+        "_getGfxTextureViewCreateInfo",
+        "_uploadAtlas",
+        "initDefault",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "fromTexture2DArray"
+      ]
+    },
+    "EffectAsset": {
+      "methods": [
+        "onLoaded",
+        "destroy",
+        "initDefault",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "register",
+        "remove",
+        "get",
+        "getAll"
+      ]
+    },
+    "Material": {
+      "methods": [
+        "initialize",
+        "reset",
+        "destroy",
+        "recompileShaders",
+        "overridePipelineStates",
+        "onLoaded",
+        "resetUniforms",
+        "setProperty",
+        "getProperty",
+        "copy",
+        "initDefault",
+        "validate"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "getHash"
+      ]
+    },
+    "RenderTexture": {
+      "methods": [
+        "initialize",
+        "reset",
+        "destroy",
+        "resize",
+        "_serialize",
+        "_deserialize",
+        "getGFXTexture",
+        "onLoaded",
+        "initDefault",
+        "validate",
+        "readPixels"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Script": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "JavaScript": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TypeScript": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AssetManager": {
+      "methods": [
+        "init",
+        "getBundle",
+        "removeBundle",
+        "loadAny",
+        "loadAny",
+        "loadAny",
+        "loadAny",
+        "preloadAny",
+        "preloadAny",
+        "preloadAny",
+        "preloadAny",
+        "loadBundle",
+        "loadBundle",
+        "releaseAsset",
+        "releaseAll"
+      ],
+      "properties": [
+        "assetsOverrideMap"
+      ],
+      "staticMethods": []
+    },
+    "AssetManager.Pipeline": {
+      "methods": [
+        "insert",
+        "append",
+        "remove",
+        "sync",
+        "async"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AssetManager.Task": {
+      "methods": [
+        "set",
+        "dispatch",
+        "recycle"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create"
+      ]
+    },
+    "AssetManager.Cache": {
+      "methods": [
+        "add",
+        "get",
+        "has",
+        "remove",
+        "clear",
+        "forEach",
+        "find",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AssetManager.RequestItem": {
+      "methods": [
+        "recycle"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create"
+      ]
+    },
+    "AssetManager.Bundle": {
+      "methods": [
+        "getInfoWithPath",
+        "getDirWithPath",
+        "getAssetInfo",
+        "getSceneInfo",
+        "init",
+        "preload",
+        "preload",
+        "preload",
+        "preload",
+        "preloadDir",
+        "preloadDir",
+        "preloadDir",
+        "preloadDir",
+        "loadScene",
+        "loadScene",
+        "loadScene",
+        "loadScene",
+        "preloadScene",
+        "preloadScene",
+        "preloadScene",
+        "preloadScene",
+        "release",
+        "releaseAll",
+        "_destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DependUtil": {
+      "methods": [
+        "getNativeDep",
+        "getDeps",
+        "getDepsRecursively"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Downloader": {
+      "methods": [
+        "abort",
+        "createDownloadTask",
+        "createDownloadFileTask",
+        "setOnFileTaskSuccess",
+        "setOnTaskProgress",
+        "setOnTaskError"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Parser": {
+      "methods": [
+        "register",
+        "register",
+        "parse"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "CCLoader": {
+      "methods": [
+        "load",
+        "getXMLHttpRequest",
+        "getItem",
+        "getResCount",
+        "getDependsRecursively",
+        "transformURL",
+        "addDownloadHandlers",
+        "addLoadHandlers",
+        "release",
+        "releaseAsset",
+        "releaseRes",
+        "releaseAll",
+        "removeItem",
+        "setAutoRelease",
+        "setAutoReleaseRecursively",
+        "isAutoRelease"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BuiltinResMgr": {
+      "methods": [
+        "init",
+        "addAsset",
+        "loadBuiltinAssets",
+        "compileBuiltinMaterial"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "NodePool": {
+      "methods": [
+        "size",
+        "clear",
+        "put",
+        "get"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Event": {
+      "methods": [
+        "unuse",
+        "reuse",
+        "isStopped",
+        "getCurrentTarget",
+        "getType"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventAcceleration": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventKeyboard": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventMouse": {
+      "methods": [
+        "setScrollData",
+        "getScrollX",
+        "getScrollY",
+        "setLocation",
+        "getLocation",
+        "getLocationInView",
+        "getUILocation",
+        "getPreviousLocation",
+        "getUIPreviousLocation",
+        "getDelta",
+        "getDeltaX",
+        "getDeltaY",
+        "getUIDelta",
+        "getUIDeltaX",
+        "getUIDeltaY",
+        "setButton",
+        "getButton",
+        "getLocationX",
+        "getLocationY",
+        "getUILocationX",
+        "getUILocationY"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventTouch": {
+      "methods": [
+        "getEventCode",
+        "getTouches",
+        "getAllTouches",
+        "setLocation",
+        "getLocation",
+        "getUILocation",
+        "getLocationInView",
+        "getPreviousLocation",
+        "getStartLocation",
+        "getUIStartLocation",
+        "getID",
+        "getDelta",
+        "getUIDelta",
+        "getDeltaX",
+        "getDeltaY",
+        "getLocationX",
+        "getLocationY"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventGamepad": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventHandle": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventHMD": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EventHandheld": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Acceleration": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Touch": {
+      "methods": [
+        "getLocation",
+        "getLocationX",
+        "getLocationY",
+        "getUILocation",
+        "getUILocationX",
+        "getUILocationY",
+        "getPreviousLocation",
+        "getUIPreviousLocation",
+        "getStartLocation",
+        "getUIStartLocation",
+        "getDelta",
+        "getUIDelta",
+        "getLocationInView",
+        "getPreviousLocationInView",
+        "getStartLocationInView",
+        "getID",
+        "setTouchInfo",
+        "setPoint",
+        "setPoint",
+        "setPrevPoint",
+        "setPrevPoint",
+        "clone"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Input": {
+      "methods": [
+        "getTouch",
+        "getAllTouches",
+        "getTouchCount",
+        "setAccelerometerEnabled",
+        "setAccelerometerInterval"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SystemEvent": {
+      "methods": [
+        "setAccelerometerEnabled",
+        "setAccelerometerInterval"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "native.EventAssetsManager": {
+      "methods": [
+        "getEventCode",
+        "getCURLECode",
+        "getCURLMCode",
+        "getMessage",
+        "getAssetId",
+        "getAssetsManagerEx",
+        "isResuming",
+        "getPercent",
+        "getPercentByFile",
+        "getDownloadedBytes",
+        "getTotalBytes",
+        "getDownloadedFiles",
+        "getTotalFiles"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Manifest": {
+      "methods": [
+        "isVersionLoaded",
+        "isLoaded",
+        "getPackageUrl",
+        "getManifestFileUrl",
+        "getVersionFileUrl",
+        "getVersion",
+        "getSearchPaths",
+        "getManifestRoot",
+        "parseFile",
+        "parseJSONString",
+        "isUpdating",
+        "setUpdating"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AssetsManager": {
+      "methods": [
+        "checkUpdate",
+        "prepareUpdate",
+        "update",
+        "downloadFailedAssets",
+        "getState",
+        "getStoragePath",
+        "getLocalManifest",
+        "loadLocalManifest",
+        "loadLocalManifest",
+        "getRemoteManifest",
+        "loadRemoteManifest",
+        "isResuming",
+        "getTotalBytes",
+        "getDownloadedBytes",
+        "getTotalFiles",
+        "getDownloadedFiles",
+        "getMaxConcurrentTask",
+        "setMaxConcurrentTask",
+        "setVersionCompareHandle",
+        "setVerifyCallback",
+        "setEventCallback"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "create"
+      ]
+    },
+    "DebugRenderer": {
+      "methods": [
+        "addText"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "getInstance"
+      ]
+    },
+    "AnimationClip": {
+      "methods": [
+        "onLoaded",
+        "range",
+        "getTrack",
+        "addTrack",
+        "removeTrack",
+        "clearTracks",
+        "containsAnyEvent",
+        "createEventEvaluator",
+        "containsAnyEmbeddedPlayer",
+        "createEmbeddedPlayerEvaluator",
+        "createEvaluator",
+        "destroy",
+        "upgradeUntypedTracks",
+        "getPropertyCurves",
+        "updateEventDatas",
+        "hasEvents",
+        "syncLegacyData",
+        "getAuxiliaryCurveNames_experimental",
+        "hasAuxiliaryCurve_experimental",
+        "addAuxiliaryCurve_experimental",
+        "getAuxiliaryCurve_experimental",
+        "renameAuxiliaryCurve_experimental",
+        "removeAuxiliaryCurve_experimental",
+        "_trySyncLegacyData"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "createWithSpriteFrames"
+      ]
+    },
+    "AnimationClipLegacyData": {
+      "methods": [
+        "getPropertyCurves",
+        "toTracks",
+        "_createPropertyCurves"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AnimationState": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "emit",
+        "on",
+        "once",
+        "off",
+        "allowLastFrameEvent",
+        "_setEventTarget",
+        "setTime",
+        "update",
+        "sample",
+        "onPlay",
+        "onStop",
+        "onResume",
+        "onPause",
+        "_sampleCurves"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Animation": {
+      "methods": [
+        "onLoad",
+        "start",
+        "onEnable",
+        "onDisable",
+        "onDestroy",
+        "play",
+        "crossFade",
+        "pause",
+        "resume",
+        "stop",
+        "getState",
+        "createState",
+        "removeState",
+        "addClip",
+        "removeClip",
+        "off",
+        "_createState",
+        "_doCreateState",
+        "doPlayOrCrossFade"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "animation.UniformProxyFactory": {
+      "methods": [
+        "forTarget"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "animation.MorphWeightValueProxy": {
+      "methods": [
+        "forTarget"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "animation.MorphWeightsValueProxy": {
+      "methods": [
+        "forTarget"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "animation.MorphWeightsAllValueProxy": {
+      "methods": [
+        "forTarget"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TrackPath": {
+      "methods": [
+        "toProperty",
+        "toElement",
+        "toHierarchy",
+        "toCustomized",
+        "append",
+        "isPropertyAt",
+        "parsePropertyAt",
+        "isElementAt",
+        "parseElementAt",
+        "isHierarchyAt",
+        "parseHierarchyAt",
+        "isComponentAt",
+        "parseComponentAt",
+        "slice",
+        "trace"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RealTrack": {
+      "methods": [
+        "createCurve"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "VectorTrack": {
+      "methods": [
+        "channels"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "QuatTrack": {
+      "methods": [
+        "createCurve"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ColorTrack": {
+      "methods": [
+        "channels"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SizeTrack": {
+      "methods": [
+        "channels"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ObjectTrack": {
+      "methods": [
+        "createCurve"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "HierarchyPath": {
+      "methods": [
+        "get"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ComponentPath": {
+      "methods": [
+        "get"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "CubicSplineNumberValue": {
+      "methods": [
+        "lerp",
+        "getNoLerp"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AnimationController": {
+      "methods": [
+        "__preload",
+        "onDestroy",
+        "update",
+        "getVariables",
+        "setValue",
+        "setValue_experimental",
+        "getValue",
+        "getValue_experimental",
+        "getCurrentStateStatus",
+        "getCurrentClipStatuses",
+        "getCurrentTransition",
+        "getNextStateStatus",
+        "getNextClipStatuses",
+        "getLayerWeight",
+        "setLayerWeight",
+        "overrideClips_experimental",
+        "getAuxiliaryCurveValue_experimental"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "StateMachineComponent": {
+      "methods": [
+        "onMotionStateEnter",
+        "onMotionStateExit",
+        "onMotionStateUpdate",
+        "onStateMachineEnter",
+        "onStateMachineExit"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RatioSampler": {
+      "methods": [
+        "sample"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AnimCurve": {
+      "methods": [
+        "hasLerp",
+        "valueAt",
+        "valueBetween",
+        "empty",
+        "constant"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "Bezier"
+      ]
+    },
+    "EventInfo": {
+      "methods": [
+        "add"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "AnimationManager": {
+      "methods": [
+        "addCrossFade",
+        "removeCrossFade",
+        "update",
+        "destruct",
+        "addAnimation",
+        "removeAnimation",
+        "pushDelayEvent",
+        "addSockets",
+        "removeSockets"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SkelAnimDataHub": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "getOrExtract",
+        "destroy"
+      ]
+    },
+    "SkeletalAnimationState": {
+      "methods": [
+        "initialize",
+        "onPlay",
+        "setUseBaked",
+        "rebuildSocketCurves"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Socket": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "SkeletalAnimation": {
+      "methods": [
+        "onLoad",
+        "onDestroy",
+        "onEnable",
+        "onDisable",
+        "start",
+        "pause",
+        "resume",
+        "stop",
+        "querySockets",
+        "rebuildSocketAnimations",
+        "createSocket",
+        "notifySkinnedMeshAdded",
+        "notifySkinnedMeshRemoved",
+        "getUsers",
+        "_createState",
+        "_doCreateState",
+        "doPlayOrCrossFade"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Primitive": {
+      "methods": [
+        "onLoaded"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TweenSystem": {
+      "methods": [
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "TweenAction": {
+      "methods": [
+        "clone",
+        "reverse",
+        "stop",
+        "update",
+        "progress",
+        "isUnknownDuration"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "Tween": {
+      "methods": [
+        "bindNodeState",
+        "tag",
+        "id",
+        "reverse",
+        "reverse",
+        "getTarget",
+        "start",
+        "stop",
+        "pause",
+        "resume",
+        "clone",
+        "union",
+        "to",
+        "by",
+        "set",
+        "delay",
+        "sequence",
+        "parallel",
+        "timeScale",
+        "getTimeScale",
+        "repeat",
+        "repeatForever",
+        "reverseTime",
+        "hide",
+        "show",
+        "removeSelf",
+        "destroySelf"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "stopAll"
+      ]
+    },
+    "AirAppImpl": {
+      "methods": [
+        "run",
+        "getScene"
+      ],
+      "properties": [
+        "canvas"
+      ],
+      "staticMethods": []
+    },
+    "GLTFAsset": {
+      "methods": [
+        "instantiate",
+        "destroy"
+      ],
+      "properties": [
+        "owned",
+        "sceneNames",
+        "images",
+        "meshMaterials"
+      ],
+      "staticMethods": []
+    },
+    "GLTFLoader": {
+      "methods": [
+        "setDRACODecoder",
+        "setMeshoptDecoder",
+        "setKTX2Transcoder",
+        "register",
+        "unregister",
+        "getExtensionSupport",
+        "loadAsync",
+        "parseAsync"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "GLTFExtensionRegistry": {
+      "methods": [
+        "register",
+        "unregister",
+        "createHandlers",
+        "validateRequired"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "GLTFError": {
+      "methods": [],
+      "properties": [
+        "code"
+      ],
+      "staticMethods": []
+    },
+    "AirTransmissionCapture": {
+      "methods": [
+        "onEnable",
+        "onDisable",
+        "onDestroy",
+        "lateUpdate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "LightInfo": {
+      "methods": [
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ResolvePair": {
+      "methods": [
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "CopyPair": {
+      "methods": [
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "UploadPair": {
+      "methods": [
+        "reset"
+      ],
+      "properties": [
+        "source"
+      ],
+      "staticMethods": []
+    },
+    "MovePair": {
+      "methods": [
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PipelineStatistics": {
+      "methods": [
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "RenderCommonObjectPool": {
+      "methods": [
+        "reset",
+        "createLightInfo",
+        "createResolvePair",
+        "createCopyPair",
+        "createUploadPair",
+        "createMovePair",
+        "createPipelineStatistics"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PipelineCapabilities": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "EmptyDevice": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "flushCommands",
+        "acquire",
+        "present",
+        "createCommandBuffer",
+        "createSwapchain",
+        "createBuffer",
+        "createTexture",
+        "createDescriptorSet",
+        "createShader",
+        "createInputAssembler",
+        "createRenderPass",
+        "createFramebuffer",
+        "createDescriptorSetLayout",
+        "createPipelineLayout",
+        "createPipelineState",
+        "createQueue",
+        "getSampler",
+        "getSwapchains",
+        "getGeneralBarrier",
+        "getTextureBarrier",
+        "getBufferBarrier",
+        "copyBuffersToTexture",
+        "copyTextureToBuffers",
+        "copyTexImagesToTexture"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "WebGLDevice": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "flushCommands",
+        "acquire",
+        "present",
+        "initFormatFeatures",
+        "createCommandBuffer",
+        "createSwapchain",
+        "createBuffer",
+        "createTexture",
+        "createDescriptorSet",
+        "createShader",
+        "createInputAssembler",
+        "createRenderPass",
+        "createFramebuffer",
+        "createDescriptorSetLayout",
+        "createPipelineLayout",
+        "createPipelineState",
+        "createQueue",
+        "getSampler",
+        "getSwapchains",
+        "getGeneralBarrier",
+        "getTextureBarrier",
+        "getBufferBarrier",
+        "copyBuffersToTexture",
+        "copyTextureToBuffers",
+        "copyTexImagesToTexture"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "WebGL2Device": {
+      "methods": [
+        "getStateCache",
+        "initialize",
+        "destroy",
+        "flushCommands",
+        "acquire",
+        "present",
+        "initFormatFeatures",
+        "createCommandBuffer",
+        "createSwapchain",
+        "createBuffer",
+        "createTexture",
+        "createDescriptorSet",
+        "createShader",
+        "createInputAssembler",
+        "createRenderPass",
+        "createFramebuffer",
+        "createDescriptorSetLayout",
+        "createPipelineLayout",
+        "createPipelineState",
+        "createQueue",
+        "getSampler",
+        "getSwapchains",
+        "getGeneralBarrier",
+        "getTextureBarrier",
+        "getBufferBarrier",
+        "copyBuffersToTexture",
+        "copyTextureToBuffers",
+        "copyTexImagesToTexture"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ForwardPipeline": {
+      "methods": [
+        "initialize",
+        "activate",
+        "_ensureEnoughSize",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ForwardFlow": {
+      "methods": [
+        "initialize",
+        "activate",
+        "render",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ForwardStage": {
+      "methods": [
+        "addRenderInstancedQueue",
+        "removeRenderInstancedQueue",
+        "initialize",
+        "activate",
+        "destroy",
+        "render"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "DeferredPipeline": {
+      "methods": [
+        "initialize",
+        "activate",
+        "destroy",
+        "onGlobalPipelineStateChanged",
+        "getPipelineRenderData",
+        "_ensureEnoughSize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "MainFlow": {
+      "methods": [
+        "initialize",
+        "activate",
+        "render",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "GbufferStage": {
+      "methods": [
+        "initialize",
+        "activate",
+        "destroy",
+        "render"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "LightingStage": {
+      "methods": [
+        "initialize",
+        "gatherLights",
+        "_createStageDescriptor",
+        "activate",
+        "destroy",
+        "render"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "BloomStage": {
+      "methods": [
+        "initialize",
+        "activate",
+        "destroy",
+        "render"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PostProcessStage": {
+      "methods": [
+        "initialize",
+        "activate",
+        "destroy",
+        "render"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ShadowFlow": {
+      "methods": [
+        "initialize",
+        "activate",
+        "render",
+        "destroy",
+        "_initShadowFrameBuffer"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ShadowStage": {
+      "methods": [
+        "setUsage",
+        "destroy",
+        "clearFramebuffer",
+        "render",
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ReflectionProbeFlow": {
+      "methods": [
+        "initialize",
+        "activate",
+        "render",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "ReflectionProbeStage": {
+      "methods": [
+        "setUsageInfo",
+        "destroy",
+        "clearFramebuffer",
+        "render",
+        "activate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.PhysicsSystem": {
+      "methods": [
+        "setDefaultPhysicsMaterial",
+        "postUpdate",
+        "resetConfiguration",
+        "resetAccumulator",
+        "step",
+        "syncSceneToPhysics",
+        "emitEvents",
+        "raycast",
+        "raycastClosest",
+        "lineStripCast",
+        "lineStripCastClosest",
+        "sweepBox",
+        "sweepBoxClosest",
+        "sweepSphere",
+        "sweepSphereClosest",
+        "sweepCapsule",
+        "sweepCapsuleClosest"
+      ],
+      "properties": [
+        "raycastClosestResult",
+        "raycastResults",
+        "sweepCastClosestResult",
+        "sweepCastResults",
+        "collisionMatrix",
+        "useNodeChains"
+      ],
+      "staticMethods": [
+        "constructAndRegister",
+        "constructAndRegisterManually"
+      ]
+    },
+    "physics.PhysicsRayResult": {
+      "methods": [
+        "_assign",
+        "clone"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.PhysicsLineStripCastResult": {
+      "methods": [
+        "clone"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.Collider": {
+      "methods": [
+        "off",
+        "removeAll",
+        "getGroup",
+        "setGroup",
+        "addGroup",
+        "removeGroup",
+        "getMask",
+        "setMask",
+        "addMask",
+        "removeMask",
+        "onLoad",
+        "onEnable",
+        "onDisable",
+        "onDestroy"
+      ],
+      "properties": [
+        "type"
+      ],
+      "staticMethods": []
+    },
+    "physics.BoxCollider": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.SphereCollider": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.CapsuleCollider": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.MeshCollider": {
+      "methods": [
+        "onEnable"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.CylinderCollider": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.ConeCollider": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.TerrainCollider": {
+      "methods": [
+        "onEnable"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.SimplexCollider": {
+      "methods": [
+        "updateVertices"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.PlaneCollider": {
+      "methods": [
+        "onEnable"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.Constraint": {
+      "methods": [
+        "onLoad",
+        "onEnable",
+        "onDisable",
+        "onDestroy"
+      ],
+      "properties": [
+        "TYPE"
+      ],
+      "staticMethods": []
+    },
+    "physics.HingeConstraint": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.FixedConstraint": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.PointToPointConstraint": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.ConfigurableConstraint": {
+      "methods": [
+        "onLoad"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.RigidBody": {
+      "methods": [
+        "onLoad",
+        "onEnable",
+        "onDisable",
+        "onDestroy",
+        "applyForce",
+        "applyLocalForce",
+        "applyImpulse",
+        "applyLocalImpulse",
+        "applyTorque",
+        "applyLocalTorque",
+        "wakeUp",
+        "sleep",
+        "clearState",
+        "clearForces",
+        "clearVelocity",
+        "getLinearVelocity",
+        "setLinearVelocity",
+        "getAngularVelocity",
+        "setAngularVelocity",
+        "getGroup",
+        "setGroup",
+        "addGroup",
+        "removeGroup",
+        "getMask",
+        "setMask",
+        "addMask",
+        "removeMask"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.PhysicsMaterial": {
+      "methods": [
+        "clone",
+        "destroy",
+        "setValues"
+      ],
+      "properties": [
+        "id"
+      ],
+      "staticMethods": []
+    },
+    "physics.ConstantForce": {
+      "methods": [
+        "onLoad",
+        "lateUpdate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.CharacterController": {
+      "methods": [
+        "onLoad",
+        "onEnable",
+        "onDisable",
+        "onDestroy",
+        "move",
+        "off",
+        "getGroup",
+        "setGroup",
+        "addGroup",
+        "removeGroup",
+        "getMask",
+        "setMask",
+        "addMask",
+        "removeMask"
+      ],
+      "properties": [
+        "type"
+      ],
+      "staticMethods": []
+    },
+    "physics.BoxCharacterController": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "physics.CapsuleCharacterController": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "CharacterControllerContact": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_framework_mesh_renderer__ModelBakeSettings": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_lights_light_component__StaticLightSettings": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_models_morph_model__MorphModel": {
+      "methods": [
+        "getMacroPatches",
+        "initSubModel",
+        "destroy",
+        "setSubModelMaterial",
+        "setMorphRendering",
+        "_updateLocalDescriptors"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_models_skinning_model__SkinningModel": {
+      "methods": [
+        "destroy",
+        "uploadAnimation",
+        "bindSkeleton",
+        "updateTransform",
+        "updateUBOs",
+        "initSubModel",
+        "getMacroPatches",
+        "_updateLocalDescriptors",
+        "_updateInstancedAttributes"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_models_baked_skinning_model__BakedSkinningModel": {
+      "methods": [
+        "destroy",
+        "bindSkeleton",
+        "updateTransform",
+        "updateUBOs",
+        "getMacroPatches",
+        "uploadAnimation",
+        "_applyJointTexture",
+        "_updateLocalDescriptors",
+        "_updateInstancedAttributes"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_global_descriptor_set_manager__GlobalDSManager": {
+      "methods": [
+        "regenLayout",
+        "bindBuffer",
+        "bindSampler",
+        "bindTexture",
+        "update",
+        "getOrCreateDescriptorSet",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_geometry_renderer__GeometryRenderer": {
+      "methods": [
+        "activate",
+        "render",
+        "destroy",
+        "empty",
+        "update",
+        "reset",
+        "addDashedLine",
+        "addLine",
+        "addTriangle",
+        "addQuad",
+        "addBoundingBox",
+        "addCross",
+        "addFrustum",
+        "addCapsule",
+        "addCylinder",
+        "addCone",
+        "addCircle",
+        "addArc",
+        "addPolygon",
+        "addDisc",
+        "addSector",
+        "addSphere",
+        "addTorus",
+        "addOctahedron",
+        "addBezier",
+        "addSpline",
+        "addMesh",
+        "addIndexedMesh"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_native_2d__NativeUIMeshBuffer": {
+      "methods": [
+        "syncSharedBufferToNative",
+        "initialize",
+        "reset",
+        "destroy",
+        "setDirty",
+        "recycleIA",
+        "uploadBuffers"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_native_2d__NativeBatcher2d": {
+      "methods": [
+        "syncMeshBuffersToNative",
+        "update",
+        "uploadBuffers",
+        "setSorting2DCount",
+        "reset",
+        "syncRootNodesToNative",
+        "releaseDescriptorSetCache"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_mesh_buffer__MeshBuffer": {
+      "methods": [
+        "initSharedBuffer",
+        "syncSharedBufferToNative",
+        "initialize",
+        "reset",
+        "destroy",
+        "setDirty",
+        "request",
+        "requireFreeIA",
+        "recycleIA",
+        "checkCapacity",
+        "uploadBuffers"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_static_vb_accessor__StaticVBChunk": {
+      "methods": [
+        "setIndexBuffer"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_buffer_accessor__BufferAccessor": {
+      "methods": [
+        "initialize",
+        "reset",
+        "request",
+        "appendBuffers",
+        "uploadBuffers",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_static_vb_accessor__StaticVBAccessor": {
+      "methods": [
+        "destroy",
+        "reset",
+        "getVertexBuffer",
+        "getIndexBuffer",
+        "getMeshBuffer",
+        "uploadBuffers",
+        "appendIndices",
+        "allocateChunk",
+        "recycleChunk"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "generateID"
+      ]
+    },
+    "_cocos_2d_renderer_native_2d__NativeRenderDrawInfo": {
+      "methods": [
+        "changeMeshBuffer",
+        "setRender2dBufferToNative",
+        "syncSharedBufferToNative",
+        "getAttrSharedBufferForJS"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_render_draw_info__RenderDrawInfo": {
+      "methods": [
+        "clear",
+        "setAccId",
+        "setBufferId",
+        "setAccAndBuffer",
+        "setVertexOffset",
+        "setIndexOffset",
+        "setVB",
+        "setIB",
+        "setVData",
+        "setIData",
+        "setVBCount",
+        "setIBCount",
+        "setVertDirty",
+        "setDataHash",
+        "setIsMeshBuffer",
+        "setVertexPositionInWorld",
+        "setMaterial",
+        "setTexture",
+        "setSampler",
+        "setModel",
+        "setDrawInfoType",
+        "setSubNode",
+        "setStride",
+        "initRender2dBuffer",
+        "fillRender2dBuffer"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_render_data__BaseRenderData": {
+      "methods": [
+        "isValid",
+        "initRenderDrawInfo",
+        "removeRenderDrawInfo"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_asset_assets_texture_base__TextureBase": {
+      "methods": [
+        "getId",
+        "getPixelFormat",
+        "getAnisotropy",
+        "setWrapMode",
+        "setFilters",
+        "setMipFilter",
+        "setAnisotropy",
+        "destroy",
+        "getHash",
+        "getGFXTexture",
+        "getSamplerInfo",
+        "getGFXSampler",
+        "_serialize",
+        "_deserialize",
+        "_getGFXDevice",
+        "_getGFXFormat",
+        "_setGFXFormat",
+        "_getGFXPixelFormat"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_assets_sprite_frame__SpriteFrame": {
+      "methods": [
+        "textureLoaded",
+        "isRotated",
+        "setRotated",
+        "getRect",
+        "setRect",
+        "getOriginalSize",
+        "setOriginalSize",
+        "getOffset",
+        "setOffset",
+        "getGFXTexture",
+        "getGFXSampler",
+        "getHash",
+        "getSamplerInfo",
+        "reset",
+        "checkRect",
+        "ensureMeshData",
+        "destroy",
+        "_serialize",
+        "_deserialize",
+        "clone",
+        "_refreshTexture",
+        "onLoaded",
+        "initDefault",
+        "validate",
+        "_initVertices",
+        "_updateMeshVertices",
+        "_createMesh",
+        "_updateMesh"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "createWithImage"
+      ]
+    },
+    "_cocos_2d_renderer_render_data__RenderData": {
+      "methods": [
+        "resize",
+        "updateSize",
+        "setRenderDrawInfoAttributes",
+        "fillDrawInfoAttributes",
+        "syncRender2dBuffer",
+        "resizeAndCopy",
+        "getMeshBuffer",
+        "updateNode",
+        "updatePass",
+        "updateTexture",
+        "updateHash",
+        "updateRenderData",
+        "clear"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "add",
+        "remove",
+        "createStaticVBAccessor"
+      ]
+    },
+    "_cocos_2d_renderer_native_2d__NativeRenderEntity": {
+      "methods": [
+        "addDynamicRenderDrawInfo",
+        "setDynamicRenderDrawInfo",
+        "removeDynamicRenderDrawInfo",
+        "clearDynamicRenderDrawInfos",
+        "clearStaticRenderDrawInfos",
+        "getStaticRenderDrawInfo",
+        "getEntitySharedBufferForJS"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_render_entity__RenderEntity": {
+      "methods": [
+        "setPriority",
+        "setUseLocal",
+        "addDynamicRenderDrawInfo",
+        "removeDynamicRenderDrawInfo",
+        "clearDynamicRenderDrawInfos",
+        "clearStaticRenderDrawInfos",
+        "clearRenderDrawInfos",
+        "setDynamicRenderDrawInfo",
+        "setMaskMode",
+        "setFillColorType",
+        "getStaticRenderDrawInfo",
+        "setNode",
+        "setRenderTransform",
+        "setStencilStage"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_framework_ui_renderer__UIRenderer": {
+      "methods": [
+        "onLoad",
+        "__preload",
+        "onEnable",
+        "onRestore",
+        "onDisable",
+        "onDestroy",
+        "markForUpdateRenderData",
+        "requestRenderData",
+        "destroyRenderData",
+        "updateRenderer",
+        "fillBuffers",
+        "postUpdateAssembler",
+        "_render",
+        "_postRender",
+        "_canRender",
+        "_postCanRender",
+        "_updateColor",
+        "setEntityColor",
+        "setEntityOpacity",
+        "setEntityEnabled",
+        "_updateBlendFunc",
+        "_nodeStateChange",
+        "_colorDirty",
+        "_onMaterialModified",
+        "_updateBuiltinMaterial",
+        "setNodeDirty",
+        "setTextureDirty",
+        "createRenderEntity"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_components_ui_static_batch__UIStaticBatch": {
+      "methods": [
+        "postUpdateAssembler",
+        "markAsDirty",
+        "_requireDrawBatch",
+        "_clearData",
+        "_getBatcher"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_framework_render_root_2d__RenderRoot2D": {
+      "methods": [
+        "onEnable",
+        "onDisable",
+        "onDestroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_components_ui_mesh_renderer__UIMeshRenderer": {
+      "methods": [
+        "__preload",
+        "onEnable",
+        "onDisable",
+        "onLoad",
+        "onDestroy",
+        "_render",
+        "fillBuffers",
+        "updateRenderer",
+        "postUpdateAssembler",
+        "update",
+        "markForUpdateRenderData",
+        "setNodeDirty",
+        "setTextureDirty",
+        "_canRender"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_draw_batch__DrawBatch2D": {
+      "methods": [
+        "destroy",
+        "clear",
+        "fillPasses"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_renderer_batcher_2d__Batcher2D": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "addScreen",
+        "removeScreen",
+        "sortScreens",
+        "getFirstRenderCamera",
+        "update",
+        "uploadBuffers",
+        "reset",
+        "switchBufferAccessor",
+        "registerBufferAccessor",
+        "updateBuffer",
+        "commitComp",
+        "commitIA",
+        "commitMiddleware",
+        "commitModel",
+        "setupStaticBatch",
+        "endStaticBatch",
+        "commitStaticBatch",
+        "autoMergeBatches",
+        "forceMergeBatches",
+        "resetRenderStates",
+        "finishMergeBatches",
+        "flushMaterial",
+        "walk",
+        "syncMeshBuffersToNative"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_skeletal_animation_utils__JointTexturePool": {
+      "methods": [
+        "clear",
+        "registerCustomTextureLayouts",
+        "getDefaultPoseTexture",
+        "getSequencePoseTexture",
+        "releaseHandle",
+        "releaseSkeleton",
+        "releaseAnimationClip"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_skeletal_animation_utils__JointAnimationInfo": {
+      "methods": [
+        "getData",
+        "destroy",
+        "switchClip",
+        "clear"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_data_pool_manager__DataPoolManager": {
+      "methods": [
+        "releaseSkeleton",
+        "releaseAnimationClip",
+        "clear"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gfx_base_states_buffer_barrier__BufferBarrier": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "computeHash"
+      ]
+    },
+    "_cocos_core_data_gc_object__GCObject": {
+      "methods": [
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_render_scene_core_program_lib__ProgramLib": {
+      "methods": [
+        "register",
+        "define",
+        "getTemplate",
+        "getTemplateInfo",
+        "getDescriptorSetLayout",
+        "hasProgram",
+        "getKey",
+        "destroyShaderByDefines",
+        "getGFXShader"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_post_process_components_post_process_setting__PostProcessSetting": {
+      "methods": [
+        "onEnable",
+        "onDisable"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_post_process_components_post_process__PostProcess": {
+      "methods": [
+        "addSetting",
+        "removeSetting",
+        "getSetting",
+        "onEnable",
+        "onDisable"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_render_scene_core_memory_pools__BufferPool": {
+      "methods": [
+        "alloc",
+        "getBuffer",
+        "free"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_core_geometry_curve__OptimizedKey": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_core_data_utils_attribute__PrimitiveType": {
+      "methods": [
+        "toString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "PrimitiveType": {
+      "methods": [
+        "toString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_core_event_event_target__Empty": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_core_curves_keyframe_curve__KeyframeCurve": {
+      "methods": [
+        "keyframes",
+        "times",
+        "values",
+        "getKeyframeTime",
+        "getKeyframeValue",
+        "addKeyFrame",
+        "removeKeyframe",
+        "indexOfKeyframe",
+        "updateTime",
+        "assignSorted",
+        "assignSorted",
+        "clear",
+        "searchKeyframe",
+        "setKeyframes"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_shadow_csm_layers__ShadowLayerVolume": {
+      "methods": [
+        "copyToValidFrustum",
+        "calculateValidFrustumOrtho",
+        "calculateSplitFrustum",
+        "destroy",
+        "createMatrix"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_shadow_csm_layers__CSMShadowLayer": {
+      "methods": [
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_shadow_csm_layers__CSMLayers": {
+      "methods": [
+        "update",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gi_light_probe_delaunay__Vertex": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gi_light_probe_delaunay__CircumSphere": {
+      "methods": [
+        "init"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gi_light_probe_delaunay__Delaunay": {
+      "methods": [
+        "build"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gi_light_probe_delaunay__Tetrahedron": {
+      "methods": [
+        "isInCircumSphere",
+        "contain",
+        "isInnerTetrahedron",
+        "isOuterCell"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gi_light_probe_light_probe__LightProbesData": {
+      "methods": [
+        "empty",
+        "reset",
+        "updateProbes",
+        "updateTetrahedrons",
+        "getInterpolationSHCoefficients",
+        "getInterpolationWeights",
+        "hasCoefficients"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gi_light_probe_light_probe__LightProbes": {
+      "methods": [
+        "initialize",
+        "empty"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_core_event_callbacks_invoker__CallbackInfo": {
+      "methods": [
+        "set",
+        "reset",
+        "check"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_core_event_callbacks_invoker__CallbackList": {
+      "methods": [
+        "removeByCallback",
+        "removeByTarget",
+        "cancel",
+        "cancelAll",
+        "purgeCanceled",
+        "clear"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_core_event_callbacks_invoker__CallbacksInvoker": {
+      "methods": [
+        "on",
+        "hasEventListener",
+        "removeAll",
+        "off",
+        "emit",
+        "clear"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_scene_graph_node_event_processor__NodeEventProcessor": {
+      "methods": [
+        "setEnabled",
+        "reattach",
+        "destroy",
+        "on",
+        "once",
+        "off",
+        "targetOff",
+        "emit",
+        "dispatchEvent",
+        "hasEventListener",
+        "getCapturingTargets",
+        "getBubblingTargets",
+        "onUpdatingSiblingIndex"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_2d_framework_ui_transform__UITransform": {
+      "methods": [
+        "__preload",
+        "onLoad",
+        "onEnable",
+        "onDisable",
+        "onDestroy",
+        "setContentSize",
+        "setContentSize",
+        "setAnchorPoint",
+        "isHit",
+        "hitTest",
+        "convertToNodeSpaceAR",
+        "convertToWorldSpaceAR",
+        "getBoundingBox",
+        "getBoundingBoxToWorld",
+        "getBoundingBoxTo",
+        "getComputeAABB",
+        "_selfBoundingBox",
+        "_parentChanged"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_scene_graph_node_ui_properties__NodeUIProperties": {
+      "methods": [
+        "applyOpacity"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "markOpacityTree"
+      ]
+    },
+    "_cocos_scene_graph_component_scheduler__LifeCycleInvoker": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_scene_graph_node_activator__UnsortedInvoker": {
+      "methods": [
+        "add",
+        "remove",
+        "cancelInactive",
+        "invoke"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_scene_graph_component_scheduler__OneOffInvoker": {
+      "methods": [
+        "add",
+        "remove",
+        "cancelInactive",
+        "invoke"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_scene_graph_component_scheduler__ReusableInvoker": {
+      "methods": [
+        "add",
+        "remove",
+        "invoke"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_scene_graph_component_scheduler__ComponentScheduler": {
+      "methods": [
+        "unscheduleAll",
+        "_onEnabled",
+        "_onDisabled",
+        "enableComp",
+        "disableComp",
+        "startPhase",
+        "updatePhase",
+        "lateUpdatePhase"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_serialization_deserialize_dynamic__DeserializerPool": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_serialization_ccon__CCON": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_serialization_deserialize_dynamic___Deserializer": {
+      "methods": [
+        "reset",
+        "clear",
+        "deserialize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_serialization_deserialize__FileInfo": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_asset_assets_simple_texture__SimpleTexture": {
+      "methods": [
+        "getGFXTexture",
+        "destroy",
+        "updateImage",
+        "updateMipmaps",
+        "uploadData",
+        "setMipRange",
+        "isUsingOfflineMipmaps"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_asset_asset_manager_pack_manager__PackManager": {
+      "methods": [
+        "unpackJson",
+        "unpackBin",
+        "init",
+        "register",
+        "register",
+        "unpack",
+        "load"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_asset_asset_manager_factory__Factory": {
+      "methods": [
+        "register",
+        "create"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_pal_input__GamepadInputDevice": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_pal_input__HandleInputDevice": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_pal_input__HMDInputDevice": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_pal_input__HandheldInputDevice": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_skeletal_animation_blending__BlendStateWriterInternal": {
+      "methods": [
+        "getValue",
+        "setValue"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_pose_output__PoseOutput": {
+      "methods": [
+        "destroy",
+        "createPoseWriter"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_marionette_animation_mask__AnimationMask": {
+      "methods": [
+        "addJoint",
+        "removeJoint",
+        "clear",
+        "filterDisabledNodes",
+        "isExcluded"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_track__TrackBinding": {
+      "methods": [
+        "parseTrsPath",
+        "createRuntimeBinding",
+        "isMaskedOff"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__QuantizedFloatArray": {
+      "methods": [
+        "toHashString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticVectorLikeTrackValues": {
+      "methods": [
+        "quantize",
+        "toHashString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticVec3TrackValues": {
+      "methods": [
+        "get",
+        "lerp"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "imitate"
+      ]
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticTrack": {
+      "methods": [
+        "toHashString",
+        "toHashString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticQuatTrackValues": {
+      "methods": [
+        "get",
+        "lerp"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "imitate"
+      ]
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticNodeAnimationEvaluator": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_core_transform__Transform": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": [
+        "clone",
+        "setIdentity",
+        "copy",
+        "equals",
+        "strictEquals",
+        "lerp",
+        "multiply",
+        "invert",
+        "fromMatrix",
+        "toMatrix"
+      ]
+    },
+    "_cocos_animation_core_transform_array__TransformArray": {
+      "methods": [
+        "getTransform",
+        "getPosition",
+        "getRotation",
+        "getScale",
+        "setTransform",
+        "setPosition",
+        "setRotation",
+        "setScale",
+        "copyWithin",
+        "fill",
+        "fillZero",
+        "set",
+        "slice",
+        "copyRange"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_core_pose__Pose": {
+      "methods": [],
+      "properties": [
+        "transforms",
+        "auxiliaryCurves"
+      ],
+      "staticMethods": [
+        "_create"
+      ]
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticNodeAnimationAGEvaluation": {
+      "methods": [
+        "destroy",
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__SplitInfo": {
+      "methods": [
+        "calculate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticNodeAnimation": {
+      "methods": [
+        "createPosition",
+        "createRotation",
+        "createScale",
+        "createEvaluator",
+        "createEvaluatorForAnimationGraph",
+        "split",
+        "toHashString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticTrsAnimationEvaluator": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticTrsAGEvaluation": {
+      "methods": [
+        "destroy",
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_exotic_animation_exotic_animation__ExoticAnimation": {
+      "methods": [
+        "createEvaluator",
+        "createEvaluatorForAnimationGraph",
+        "addNodeAnimation",
+        "collectAnimatedJoints",
+        "split",
+        "toHashString"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_animation_clip__AdditiveSettings": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_animation_clip__EventEvaluator": {
+      "methods": [
+        "setWrapMode",
+        "ignore",
+        "reset",
+        "sample"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_embedded_player_embedded_player__EmbeddedPlayer": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_animation_clip__EmbeddedPlayerEvaluation": {
+      "methods": [
+        "destroy",
+        "evaluate",
+        "notifyHostSpeedChanged",
+        "notifyHostPlay",
+        "notifyHostPause",
+        "notifyHostStop"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_animation_clip__TrackEvalStatus": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_animation_clip__BoneTransform": {
+      "methods": [
+        "getTransform"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_animation_clip__RootMotionEvaluation": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_animation_clip__AnimationClipEvaluation": {
+      "methods": [
+        "evaluate",
+        "evaluateRootMotion"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_types__WrappedInfo": {
+      "methods": [
+        "set"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_playable__Playable": {
+      "methods": [
+        "play",
+        "stop",
+        "pause",
+        "resume",
+        "step",
+        "update",
+        "onPlay",
+        "onPause",
+        "onResume",
+        "onStop",
+        "onError"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_cross_fade__CrossFade": {
+      "methods": [
+        "update",
+        "crossFade",
+        "clear",
+        "onPlay",
+        "onPause",
+        "onResume",
+        "onStop"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_track__Channel": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_vector_track__Vec2TrackEval": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_vector_track__Vec3TrackEval": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_vector_track__Vec4TrackEval": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_quat_track__QuatTrackEval": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_color_track__ColorTrackEval": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_animation_tracks_size_track__SizeTrackEval": {
+      "methods": [
+        "evaluate"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_skeletal_animation_blending__LegacyVec3PropertyBlendState": {
+      "methods": [
+        "blend",
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_skeletal_animation_blending__LegacyQuatPropertyBlendState": {
+      "methods": [
+        "blend",
+        "reset"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_skeletal_animation_blending__LegacyNodeBlendState": {
+      "methods": [
+        "apply",
+        "_createVec3BlendState",
+        "_createQuatBlendState"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_3d_skeletal_animation_skeletal_animation_blending__LegacyBlendStateBuffer": {
+      "methods": [
+        "createNodeBlendState"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_tween_actions_action_manager__HashElement": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_tween_actions_action_manager__ActionManager": {
+      "methods": [
+        "removeAllActions",
+        "removeAction",
+        "pauseAllRunningActions",
+        "isActionRunning",
+        "update"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_air_assets_gltf_parser_context__GLTFParserContext": {
+      "methods": [
+        "extensionActive",
+        "throwIfAborted",
+        "report",
+        "warn",
+        "addCleanup",
+        "dispose",
+        "releaseDecodedData",
+        "resolve",
+        "request",
+        "loadBuffers",
+        "resolveBufferViews",
+        "resolvePrimitives",
+        "decodedPrimitive",
+        "bufferView",
+        "accessor"
+      ],
+      "properties": [
+        "json",
+        "options",
+        "warnings",
+        "buffers"
+      ],
+      "staticMethods": []
+    },
+    "_cocos_gfx_webgl_webgl_state_cache__WebGLStateCache": {
+      "methods": [
+        "initialize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gfx_webgl_webgl_texture__WebGLTexture": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "getTextureHandle",
+        "resize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gfx_webgl_webgl_gpu_objects__IWebGLBlitManager": {
+      "methods": [
+        "destroy",
+        "draw"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gfx_webgl2_webgl2_state_cache__WebGL2StateCache": {
+      "methods": [
+        "initialize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gfx_webgl2_webgl2_texture__WebGL2Texture": {
+      "methods": [
+        "initialize",
+        "destroy",
+        "getTextureHandle",
+        "resize"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2BlitManager": {
+      "methods": [
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_pipeline_serialization__RenderTextureConfig": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_pipeline_serialization__RenderQueueDesc": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_render_queue__RenderQueue": {
+      "methods": [
+        "clear",
+        "insertRenderPass",
+        "sort",
+        "recordCommandBuffer"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_render_instanced_queue__RenderInstancedQueue": {
+      "methods": [
+        "clear",
+        "sort",
+        "uploadBuffers",
+        "recordCommandBuffer"
+      ],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_render_pipeline__BloomRenderData": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_render_pipeline__PipelineRenderData": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_deferred_deferred_pipeline__DeferredRenderData": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_rendering_pipeline_ubo__PipelineUBO": {
+      "methods": [
+        "activate",
+        "updateGlobalUBO",
+        "updateCameraUBO",
+        "updateShadowUBO",
+        "updateShadowUBOLight",
+        "updateShadowUBORange",
+        "destroy"
+      ],
+      "properties": [],
+      "staticMethods": [
+        "updateGlobalUBOView",
+        "updateCameraUBOView",
+        "getPCFRadius",
+        "updatePlanarNormalAndDistance",
+        "updateShadowUBOView",
+        "updateShadowUBOLightView",
+        "getCombineSignY"
+      ]
+    },
+    "_cocos_physics_framework_components_constraints_configurable_constraint__LinearLimitSettings": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_physics_framework_components_constraints_configurable_constraint__AngularLimitSettings": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_physics_framework_components_constraints_configurable_constraint__LinearDriverSettings": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    },
+    "_cocos_physics_framework_components_constraints_configurable_constraint__AngularDriverSettings": {
+      "methods": [],
+      "properties": [],
+      "staticMethods": []
+    }
+  },
+  "functions": {
+    "utils.find": {
+      "kind": "function"
+    },
+    "utils.toPPM": {
+      "kind": "function"
+    },
+    "utils.readMesh": {
+      "kind": "function"
+    },
+    "utils.createMesh": {
+      "kind": "function"
+    },
+    "readBuffer": {
+      "kind": "function"
+    },
+    "writeBuffer": {
+      "kind": "function"
+    },
+    "mapBuffer": {
+      "kind": "function"
+    },
+    "IsPowerOf2": {
+      "kind": "function"
+    },
+    "FormatSize": {
+      "kind": "function"
+    },
+    "FormatSurfaceSize": {
+      "kind": "function"
+    },
+    "GetTypeSize": {
+      "kind": "function"
+    },
+    "getTypedArrayConstructor": {
+      "kind": "function"
+    },
+    "formatAlignment": {
+      "kind": "function"
+    },
+    "alignTo": {
+      "kind": "function"
+    },
+    "renderer.createIA": {
+      "kind": "function"
+    },
+    "getDeviceShaderVersion": {
+      "kind": "function"
+    },
+    "ColorTemperatureToRGB": {
+      "kind": "function"
+    },
+    "getDefaultFromType": {
+      "kind": "function"
+    },
+    "getStringFromType": {
+      "kind": "function"
+    },
+    "overrideMacros": {
+      "kind": "function"
+    },
+    "nearestPOT": {
+      "kind": "function"
+    },
+    "math.bits.sign": {
+      "kind": "function"
+    },
+    "math.bits.abs": {
+      "kind": "function"
+    },
+    "math.bits.min": {
+      "kind": "function"
+    },
+    "math.bits.max": {
+      "kind": "function"
+    },
+    "math.bits.isPow2": {
+      "kind": "function"
+    },
+    "math.bits.log2": {
+      "kind": "function"
+    },
+    "math.bits.log10": {
+      "kind": "function"
+    },
+    "math.bits.popCount": {
+      "kind": "function"
+    },
+    "math.bits.countTrailingZeros": {
+      "kind": "function"
+    },
+    "math.bits.nextPow2": {
+      "kind": "function"
+    },
+    "math.bits.prevPow2": {
+      "kind": "function"
+    },
+    "math.bits.parity": {
+      "kind": "function"
+    },
+    "math.bits.reverse": {
+      "kind": "function"
+    },
+    "math.bits.interleave2": {
+      "kind": "function"
+    },
+    "math.bits.deinterleave2": {
+      "kind": "function"
+    },
+    "math.bits.interleave3": {
+      "kind": "function"
+    },
+    "math.bits.deinterleave3": {
+      "kind": "function"
+    },
+    "math.bits.nextCombination": {
+      "kind": "function"
+    },
+    "math.v2": {
+      "kind": "function"
+    },
+    "math.v3": {
+      "kind": "function"
+    },
+    "math.v4": {
+      "kind": "function"
+    },
+    "math.quat": {
+      "kind": "function"
+    },
+    "math.mat4": {
+      "kind": "function"
+    },
+    "math.size": {
+      "kind": "function"
+    },
+    "math.rect": {
+      "kind": "function"
+    },
+    "math.color": {
+      "kind": "function"
+    },
+    "math.equals": {
+      "kind": "function"
+    },
+    "math.approx": {
+      "kind": "function"
+    },
+    "math.approxGE": {
+      "kind": "function"
+    },
+    "math.approxLE": {
+      "kind": "function"
+    },
+    "math.approxGT": {
+      "kind": "function"
+    },
+    "math.approxLT": {
+      "kind": "function"
+    },
+    "math.clamp": {
+      "kind": "function"
+    },
+    "math.clamp01": {
+      "kind": "function"
+    },
+    "math.lerp": {
+      "kind": "function"
+    },
+    "math.toRadian": {
+      "kind": "function"
+    },
+    "math.toDegree": {
+      "kind": "function"
+    },
+    "math.random": {
+      "kind": "function"
+    },
+    "math.setRandGenerator": {
+      "kind": "function"
+    },
+    "math.randomRange": {
+      "kind": "function"
+    },
+    "math.randomRangeInt": {
+      "kind": "function"
+    },
+    "math.pseudoRandom": {
+      "kind": "function"
+    },
+    "math.pseudoRandomRange": {
+      "kind": "function"
+    },
+    "math.pseudoRandomRangeInt": {
+      "kind": "function"
+    },
+    "math.nextPow2": {
+      "kind": "function"
+    },
+    "math.repeat": {
+      "kind": "function"
+    },
+    "math.pingPong": {
+      "kind": "function"
+    },
+    "math.inverseLerp": {
+      "kind": "function"
+    },
+    "math.absMaxComponent": {
+      "kind": "function"
+    },
+    "math.absMax": {
+      "kind": "function"
+    },
+    "math.enumerableProps": {
+      "kind": "function"
+    },
+    "math.floatToHalf": {
+      "kind": "function"
+    },
+    "math.halfToFloat": {
+      "kind": "function"
+    },
+    "distance.point_plane": {
+      "kind": "function"
+    },
+    "distance.pt_point_plane": {
+      "kind": "function"
+    },
+    "distance.pt_point_aabb": {
+      "kind": "function"
+    },
+    "distance.pt_point_obb": {
+      "kind": "function"
+    },
+    "distance.pt_point_line": {
+      "kind": "function"
+    },
+    "BitMask": {
+      "kind": "function"
+    },
+    "Enum": {
+      "kind": "function"
+    },
+    "ccenum": {
+      "kind": "function"
+    },
+    "js.array.removeAt": {
+      "kind": "function"
+    },
+    "js.array.fastRemoveAt": {
+      "kind": "function"
+    },
+    "js.array.remove": {
+      "kind": "function"
+    },
+    "js.array.fastRemove": {
+      "kind": "function"
+    },
+    "js.array.removeIf": {
+      "kind": "function"
+    },
+    "js.array.verifyType": {
+      "kind": "function"
+    },
+    "js.array.removeArray": {
+      "kind": "function"
+    },
+    "js.array.appendObjectsAt": {
+      "kind": "function"
+    },
+    "js.array.contains": {
+      "kind": "function"
+    },
+    "js.array.copy": {
+      "kind": "function"
+    },
+    "js.array.fillItems": {
+      "kind": "function"
+    },
+    "js.isNumber": {
+      "kind": "function"
+    },
+    "js.isString": {
+      "kind": "function"
+    },
+    "js.isEmptyObject": {
+      "kind": "function"
+    },
+    "js.createMap": {
+      "kind": "function"
+    },
+    "js.getClassName": {
+      "kind": "function"
+    },
+    "js.obsolete": {
+      "kind": "function"
+    },
+    "js.obsoletes": {
+      "kind": "function"
+    },
+    "js.formatStr": {
+      "kind": "function"
+    },
+    "js.shiftArguments": {
+      "kind": "function"
+    },
+    "js.getPropertyDescriptor": {
+      "kind": "function"
+    },
+    "js.copyAllProperties": {
+      "kind": "function"
+    },
+    "js.addon": {
+      "kind": "function"
+    },
+    "js.mixin": {
+      "kind": "function"
+    },
+    "js.extend": {
+      "kind": "function"
+    },
+    "js.getSuper": {
+      "kind": "function"
+    },
+    "js.isChildClassOf": {
+      "kind": "function"
+    },
+    "js.clear": {
+      "kind": "function"
+    },
+    "js.setClassName": {
+      "kind": "function"
+    },
+    "js.setClassAlias": {
+      "kind": "function"
+    },
+    "js.unregisterClass": {
+      "kind": "function"
+    },
+    "js._getClassById": {
+      "kind": "function"
+    },
+    "js.getClassById": {
+      "kind": "function"
+    },
+    "js.getClassByName": {
+      "kind": "function"
+    },
+    "js._getClassId": {
+      "kind": "function"
+    },
+    "js.getClassId": {
+      "kind": "function"
+    },
+    "misc.pushToMap": {
+      "kind": "function"
+    },
+    "misc.contains": {
+      "kind": "function"
+    },
+    "misc.isDomNode": {
+      "kind": "function"
+    },
+    "misc.callInNextTick": {
+      "kind": "function"
+    },
+    "misc.tryCatchFunctor_EDITOR": {
+      "kind": "function"
+    },
+    "misc.isPlainEmptyObj_DEV": {
+      "kind": "function"
+    },
+    "misc.clampf": {
+      "kind": "function"
+    },
+    "misc.degreesToRadians": {
+      "kind": "function"
+    },
+    "misc.radiansToDegrees": {
+      "kind": "function"
+    },
+    "path.join": {
+      "kind": "function"
+    },
+    "path.extname": {
+      "kind": "function"
+    },
+    "path.mainFileName": {
+      "kind": "function"
+    },
+    "path.basename": {
+      "kind": "function"
+    },
+    "path.dirname": {
+      "kind": "function"
+    },
+    "path.changeExtname": {
+      "kind": "function"
+    },
+    "path.changeBasename": {
+      "kind": "function"
+    },
+    "path._normalize": {
+      "kind": "function"
+    },
+    "path.stripSep": {
+      "kind": "function"
+    },
+    "path.getSeperator": {
+      "kind": "function"
+    },
+    "setDefaultLogTimes": {
+      "kind": "function"
+    },
+    "WorldNode3DToLocalNodeUI": {
+      "kind": "function"
+    },
+    "WorldNode3DToWorldNodeUI": {
+      "kind": "function"
+    },
+    "_decorator.property": {
+      "kind": "function"
+    },
+    "_decorator.type": {
+      "kind": "function"
+    },
+    "CCClass": {
+      "kind": "function"
+    },
+    "getSerializationMetadata": {
+      "kind": "function"
+    },
+    "Eventify": {
+      "kind": "function"
+    },
+    "debug": {
+      "kind": "function"
+    },
+    "log": {
+      "kind": "function"
+    },
+    "error": {
+      "kind": "function"
+    },
+    "warn": {
+      "kind": "function"
+    },
+    "assert": {
+      "kind": "function"
+    },
+    "debugID": {
+      "kind": "function"
+    },
+    "logID": {
+      "kind": "function"
+    },
+    "errorID": {
+      "kind": "function"
+    },
+    "warnID": {
+      "kind": "function"
+    },
+    "assertID": {
+      "kind": "function"
+    },
+    "isDisplayStats": {
+      "kind": "function"
+    },
+    "setDisplayStats": {
+      "kind": "function"
+    },
+    "getError": {
+      "kind": "function"
+    },
+    "easing.constant": {
+      "kind": "function"
+    },
+    "easing.linear": {
+      "kind": "function"
+    },
+    "easing.quadIn": {
+      "kind": "function"
+    },
+    "easing.quadOut": {
+      "kind": "function"
+    },
+    "easing.quadInOut": {
+      "kind": "function"
+    },
+    "easing.cubicIn": {
+      "kind": "function"
+    },
+    "easing.cubicOut": {
+      "kind": "function"
+    },
+    "easing.cubicInOut": {
+      "kind": "function"
+    },
+    "easing.quartIn": {
+      "kind": "function"
+    },
+    "easing.quartOut": {
+      "kind": "function"
+    },
+    "easing.quartInOut": {
+      "kind": "function"
+    },
+    "easing.quintIn": {
+      "kind": "function"
+    },
+    "easing.quintOut": {
+      "kind": "function"
+    },
+    "easing.quintInOut": {
+      "kind": "function"
+    },
+    "easing.sineIn": {
+      "kind": "function"
+    },
+    "easing.sineOut": {
+      "kind": "function"
+    },
+    "easing.sineInOut": {
+      "kind": "function"
+    },
+    "easing.expoIn": {
+      "kind": "function"
+    },
+    "easing.expoOut": {
+      "kind": "function"
+    },
+    "easing.expoInOut": {
+      "kind": "function"
+    },
+    "easing.circIn": {
+      "kind": "function"
+    },
+    "easing.circOut": {
+      "kind": "function"
+    },
+    "easing.circInOut": {
+      "kind": "function"
+    },
+    "easing.elasticIn": {
+      "kind": "function"
+    },
+    "easing.elasticOut": {
+      "kind": "function"
+    },
+    "easing.elasticInOut": {
+      "kind": "function"
+    },
+    "easing.backIn": {
+      "kind": "function"
+    },
+    "easing.backOut": {
+      "kind": "function"
+    },
+    "easing.backInOut": {
+      "kind": "function"
+    },
+    "easing.bounceIn": {
+      "kind": "function"
+    },
+    "easing.bounceOut": {
+      "kind": "function"
+    },
+    "easing.bounceInOut": {
+      "kind": "function"
+    },
+    "easing.smooth": {
+      "kind": "function"
+    },
+    "easing.fade": {
+      "kind": "function"
+    },
+    "murmurhash2_32_gc": {
+      "kind": "function"
+    },
+    "bezier": {
+      "kind": "function"
+    },
+    "bezierByTime": {
+      "kind": "function"
+    },
+    "setPropertyEnumType": {
+      "kind": "function"
+    },
+    "setPropertyEnumTypeOnAttrs": {
+      "kind": "function"
+    },
+    "isCCObject": {
+      "kind": "function"
+    },
+    "isValid": {
+      "kind": "function"
+    },
+    "pipeline.supportsR16HalfFloatTexture": {
+      "kind": "function"
+    },
+    "pipeline.getDefaultShadowTexture": {
+      "kind": "function"
+    },
+    "pipeline.supportsR32FloatTexture": {
+      "kind": "function"
+    },
+    "pipeline.supportsRGBA16HalfFloatTexture": {
+      "kind": "function"
+    },
+    "pipeline.supportsRGBA32FloatTexture": {
+      "kind": "function"
+    },
+    "pipeline.isEnableEffect": {
+      "kind": "function"
+    },
+    "pipeline.getPassPool": {
+      "kind": "function"
+    },
+    "Prefab._utils.createNodeWithPrefab": {
+      "kind": "function"
+    },
+    "Prefab._utils.generateTargetMap": {
+      "kind": "function"
+    },
+    "Prefab._utils.getTarget": {
+      "kind": "function"
+    },
+    "Prefab._utils.applyMountedChildren": {
+      "kind": "function"
+    },
+    "Prefab._utils.applyMountedComponents": {
+      "kind": "function"
+    },
+    "Prefab._utils.applyRemovedComponents": {
+      "kind": "function"
+    },
+    "Prefab._utils.applyPropertyOverrides": {
+      "kind": "function"
+    },
+    "Prefab._utils.applyTargetOverrides": {
+      "kind": "function"
+    },
+    "Prefab._utils.expandPrefabInstanceNode": {
+      "kind": "function"
+    },
+    "Prefab._utils.expandNestedPrefabInstanceNode": {
+      "kind": "function"
+    },
+    "Prefab._utils.applyNodeAndComponentId": {
+      "kind": "function"
+    },
+    "deserialize": {
+      "kind": "function"
+    },
+    "instantiate": {
+      "kind": "function"
+    },
+    "_legacy.timeBezierToTangents": {
+      "kind": "function"
+    },
+    "isPropertyPath": {
+      "kind": "function"
+    },
+    "isCustomPath": {
+      "kind": "function"
+    },
+    "sampleAnimationCurve": {
+      "kind": "function"
+    },
+    "computeRatioByType": {
+      "kind": "function"
+    },
+    "getPathFromRoot": {
+      "kind": "function"
+    },
+    "getWorldTransformUntilRoot": {
+      "kind": "function"
+    },
+    "primitives.box": {
+      "kind": "function"
+    },
+    "primitives.cone": {
+      "kind": "function"
+    },
+    "primitives.cylinder": {
+      "kind": "function"
+    },
+    "primitives.plane": {
+      "kind": "function"
+    },
+    "primitives.quad": {
+      "kind": "function"
+    },
+    "primitives.sphere": {
+      "kind": "function"
+    },
+    "primitives.torus": {
+      "kind": "function"
+    },
+    "primitives.capsule": {
+      "kind": "function"
+    },
+    "primitives.circle": {
+      "kind": "function"
+    },
+    "primitives.translate": {
+      "kind": "function"
+    },
+    "primitives.scale": {
+      "kind": "function"
+    },
+    "primitives.wireframed": {
+      "kind": "function"
+    },
+    "primitives.wireframe": {
+      "kind": "function"
+    },
+    "primitives.invWinding": {
+      "kind": "function"
+    },
+    "primitives.toWavefrontOBJ": {
+      "kind": "function"
+    },
+    "primitives.normals": {
+      "kind": "function"
+    },
+    "primitives.applyDefaultGeometryOptions": {
+      "kind": "function"
+    },
+    "tweenProgress.bezier": {
+      "kind": "function"
+    },
+    "tweenProgress.catmullRom": {
+      "kind": "function"
+    },
+    "tween": {
+      "kind": "function"
+    },
+    "tweenUtil": {
+      "kind": "function"
+    },
+    "createAirApp": {
+      "kind": "function"
+    },
+    "loadAssetAsync": {
+      "kind": "function"
+    },
+    "buildSkeletonTree": {
+      "kind": "function"
+    },
+    "restoreBindPose": {
+      "kind": "function"
+    },
+    "frameObject": {
+      "kind": "function"
+    },
+    "registerGLTFLoader": {
+      "kind": "function"
+    },
+    "configureGLTFLoaderDefaults": {
+      "kind": "function"
+    },
+    "detectImageMime": {
+      "kind": "function"
+    },
+    "setTextureSupportForTesting": {
+      "kind": "function"
+    },
+    "isKTX2": {
+      "kind": "function"
+    },
+    "createMeshoptDecoder": {
+      "kind": "function"
+    },
+    "isMeshoptAvailable": {
+      "kind": "function"
+    },
+    "createDracoDecoder": {
+      "kind": "function"
+    },
+    "createKTX2Transcoder": {
+      "kind": "function"
+    },
+    "isKTX2Available": {
+      "kind": "function"
+    },
+    "meshQuantizationFactory": {
+      "kind": "function"
+    },
+    "meshoptCompressionFactory": {
+      "kind": "function"
+    },
+    "isTransmissionMaterial": {
+      "kind": "function"
+    },
+    "rendering.createCustomPipeline": {
+      "kind": "function"
+    },
+    "rendering.setCustomPipeline": {
+      "kind": "function"
+    },
+    "rendering.getCustomPipeline": {
+      "kind": "function"
+    },
+    "rendering.init": {
+      "kind": "function"
+    },
+    "rendering.destroy": {
+      "kind": "function"
+    },
+    "rendering.getPassID": {
+      "kind": "function"
+    },
+    "rendering.getSubpassID": {
+      "kind": "function"
+    },
+    "rendering.getPhaseID": {
+      "kind": "function"
+    },
+    "rendering.completePhaseName": {
+      "kind": "function"
+    },
+    "rendering.saveLightInfo": {
+      "kind": "function"
+    },
+    "rendering.loadLightInfo": {
+      "kind": "function"
+    },
+    "rendering.saveResolvePair": {
+      "kind": "function"
+    },
+    "rendering.loadResolvePair": {
+      "kind": "function"
+    },
+    "rendering.saveCopyPair": {
+      "kind": "function"
+    },
+    "rendering.loadCopyPair": {
+      "kind": "function"
+    },
+    "rendering.saveMovePair": {
+      "kind": "function"
+    },
+    "rendering.loadMovePair": {
+      "kind": "function"
+    },
+    "rendering.savePipelineStatistics": {
+      "kind": "function"
+    },
+    "rendering.loadPipelineStatistics": {
+      "kind": "function"
+    },
+    "setEditorPipelineSettings": {
+      "kind": "function"
+    },
+    "getEditorPipelineSettings": {
+      "kind": "function"
+    },
+    "forceResizeAllWindows": {
+      "kind": "function"
+    },
+    "defaultWindowResize": {
+      "kind": "function"
+    },
+    "dispatchResizeEvents": {
+      "kind": "function"
+    },
+    "packRGBE": {
+      "kind": "function"
+    },
+    "createDefaultPipeline": {
+      "kind": "function"
+    },
+    "physics.utils.setWrap": {
+      "kind": "function"
+    },
+    "physics.utils.getWrap": {
+      "kind": "function"
+    },
+    "physics.utils.maxComponent": {
+      "kind": "function"
+    },
+    "physics.utils.shrinkPositions": {
+      "kind": "function"
+    },
+    "physics.utils.absolute": {
+      "kind": "function"
+    },
+    "_cocos_core_value_types_enum__Enum": {
+      "kind": "function"
+    },
+    "createAttrsSingle": {
+      "kind": "function"
+    },
+    "createAttrs": {
+      "kind": "function"
+    },
+    "attr": {
+      "kind": "function"
+    },
+    "getClassAttrs": {
+      "kind": "function"
+    },
+    "setClassAttr": {
+      "kind": "function"
+    },
+    "getTypeChecker_ET": {
+      "kind": "function"
+    },
+    "getObjTypeChecker_ET": {
+      "kind": "function"
+    },
+    "_cocos_core_data_utils_attribute__attr": {
+      "kind": "function"
+    },
+    "_cocos_core_data_class__isCCClassOrFastDefined": {
+      "kind": "function"
+    },
+    "_cocos_serialization_report_missing_class__reportMissingClass": {
+      "kind": "function"
+    },
+    "_cocos_serialization_deserialize__isCompiledJson": {
+      "kind": "function"
+    },
+    "getUuidFromURL": {
+      "kind": "function"
+    },
+    "getUrlWithUuid": {
+      "kind": "function"
+    },
+    "isScene": {
+      "kind": "function"
+    },
+    "normalize": {
+      "kind": "function"
+    },
+    "transform": {
+      "kind": "function"
+    },
+    "_cocos_asset_asset_manager_preprocess__default": {
+      "kind": "function"
+    },
+    "_cocos_asset_asset_manager_fetch__default": {
+      "kind": "function"
+    },
+    "_cocos_asset_asset_manager_load__default": {
+      "kind": "function"
+    },
+    "_cocos_asset_asset_manager_download_dom_image__default": {
+      "kind": "function"
+    },
+    "_cocos_asset_asset_manager_download_file__default": {
+      "kind": "function"
+    },
+    "_cocos_asset_asset_manager_download_script__default": {
+      "kind": "function"
+    }
+  },
+  "constants": {
+    "FormatInfos": {
+      "kind": "constant"
+    },
+    "DESCRIPTOR_BUFFER_TYPE": {
+      "kind": "constant"
+    },
+    "DESCRIPTOR_SAMPLER_TYPE": {
+      "kind": "constant"
+    },
+    "DESCRIPTOR_DYNAMIC_TYPE": {
+      "kind": "constant"
+    },
+    "DESCRIPTOR_STORAGE_BUFFER_TYPE": {
+      "kind": "constant"
+    },
+    "DRAW_INFO_SIZE": {
+      "kind": "constant"
+    },
+    "deviceManager": {
+      "kind": "constant"
+    },
+    "programLib": {
+      "kind": "constant"
+    },
+    "SKYBOX_FLAG": {
+      "kind": "constant"
+    },
+    "ShadowSize": {
+      "kind": "constant"
+    },
+    "ShadowType": {
+      "kind": "constant"
+    },
+    "PCFType": {
+      "kind": "constant"
+    },
+    "CSMLevel": {
+      "kind": "constant"
+    },
+    "CSMOptimizationMode": {
+      "kind": "constant"
+    },
+    "FogType": {
+      "kind": "constant"
+    },
+    "FOG_TYPE_NONE": {
+      "kind": "constant"
+    },
+    "nt2lm": {
+      "kind": "constant"
+    },
+    "ToneMappingType": {
+      "kind": "constant"
+    },
+    "genHandle": {
+      "kind": "constant"
+    },
+    "getTypeFromHandle": {
+      "kind": "constant"
+    },
+    "getBindingFromHandle": {
+      "kind": "constant"
+    },
+    "getCountFromHandle": {
+      "kind": "constant"
+    },
+    "getOffsetFromHandle": {
+      "kind": "constant"
+    },
+    "customizeType": {
+      "kind": "constant"
+    },
+    "type2reader": {
+      "kind": "constant"
+    },
+    "type2writer": {
+      "kind": "constant"
+    },
+    "type2validator": {
+      "kind": "constant"
+    },
+    "NULL_HANDLE": {
+      "kind": "constant"
+    },
+    "Render2dPool": {
+      "kind": "constant"
+    },
+    "NodePool": {
+      "kind": "constant"
+    },
+    "PassPool": {
+      "kind": "constant"
+    },
+    "AABBPool": {
+      "kind": "constant"
+    },
+    "CameraVisFlags": {
+      "kind": "constant"
+    },
+    "VisibilityFlags": {
+      "kind": "constant"
+    },
+    "math.bits.INT_BITS": {
+      "kind": "constant"
+    },
+    "math.bits.INT_MAX": {
+      "kind": "constant"
+    },
+    "math.bits.INT_MIN": {
+      "kind": "constant"
+    },
+    "math.HALF_PI": {
+      "kind": "constant"
+    },
+    "math.TWO_PI": {
+      "kind": "constant"
+    },
+    "math.EPSILON": {
+      "kind": "constant"
+    },
+    "MATH_FLOAT_ARRAY": {
+      "kind": "constant"
+    },
+    "intersect": {
+      "kind": "constant"
+    },
+    "VERSION": {
+      "kind": "constant"
+    },
+    "cclegacy": {
+      "kind": "constant"
+    },
+    "js.js": {
+      "kind": "constant"
+    },
+    "js.value": {
+      "kind": "constant"
+    },
+    "js.getset": {
+      "kind": "constant"
+    },
+    "js.get": {
+      "kind": "constant"
+    },
+    "js.set": {
+      "kind": "constant"
+    },
+    "js._idToClass": {
+      "kind": "constant"
+    },
+    "js._nameToClass": {
+      "kind": "constant"
+    },
+    "js._setClassId": {
+      "kind": "constant"
+    },
+    "misc.BUILTIN_CLASSID_RE": {
+      "kind": "constant"
+    },
+    "BASE64_VALUES": {
+      "kind": "constant"
+    },
+    "convertUtils": {
+      "kind": "constant"
+    },
+    "_decorator.uniquelyReferenced": {
+      "kind": "constant"
+    },
+    "_decorator.ccclass": {
+      "kind": "constant"
+    },
+    "_decorator.requireComponent": {
+      "kind": "constant"
+    },
+    "_decorator.executionOrder": {
+      "kind": "constant"
+    },
+    "_decorator.disallowMultiple": {
+      "kind": "constant"
+    },
+    "_decorator.executeInEditMode": {
+      "kind": "constant"
+    },
+    "_decorator.menu": {
+      "kind": "constant"
+    },
+    "_decorator.playOnFocus": {
+      "kind": "constant"
+    },
+    "_decorator.inspector": {
+      "kind": "constant"
+    },
+    "_decorator.icon": {
+      "kind": "constant"
+    },
+    "_decorator.help": {
+      "kind": "constant"
+    },
+    "_decorator.integer": {
+      "kind": "constant"
+    },
+    "_decorator.float": {
+      "kind": "constant"
+    },
+    "_decorator.boolean": {
+      "kind": "constant"
+    },
+    "_decorator.string": {
+      "kind": "constant"
+    },
+    "CCInteger": {
+      "kind": "constant"
+    },
+    "CCFloat": {
+      "kind": "constant"
+    },
+    "CCBoolean": {
+      "kind": "constant"
+    },
+    "CCString": {
+      "kind": "constant"
+    },
+    "editorExtrasTag": {
+      "kind": "constant"
+    },
+    "deserializeTag": {
+      "kind": "constant"
+    },
+    "serializeTag": {
+      "kind": "constant"
+    },
+    "EventTarget": {
+      "kind": "constant"
+    },
+    "screen": {
+      "kind": "constant"
+    },
+    "sys": {
+      "kind": "constant"
+    },
+    "macro": {
+      "kind": "constant"
+    },
+    "settings": {
+      "kind": "constant"
+    },
+    "easing.quadOutIn": {
+      "kind": "constant"
+    },
+    "easing.cubicOutIn": {
+      "kind": "constant"
+    },
+    "easing.quartOutIn": {
+      "kind": "constant"
+    },
+    "easing.quintOutIn": {
+      "kind": "constant"
+    },
+    "easing.sineOutIn": {
+      "kind": "constant"
+    },
+    "easing.expoOutIn": {
+      "kind": "constant"
+    },
+    "easing.circOutIn": {
+      "kind": "constant"
+    },
+    "easing.elasticOutIn": {
+      "kind": "constant"
+    },
+    "easing.backOutIn": {
+      "kind": "constant"
+    },
+    "easing.bounceOutIn": {
+      "kind": "constant"
+    },
+    "pipeline.PIPELINE_FLOW_MAIN": {
+      "kind": "constant"
+    },
+    "pipeline.PIPELINE_FLOW_FORWARD": {
+      "kind": "constant"
+    },
+    "pipeline.PIPELINE_FLOW_SHADOW": {
+      "kind": "constant"
+    },
+    "pipeline.PIPELINE_FLOW_SMAA": {
+      "kind": "constant"
+    },
+    "pipeline.PIPELINE_FLOW_TONEMAP": {
+      "kind": "constant"
+    },
+    "globalDescriptorSetLayout": {
+      "kind": "constant"
+    },
+    "localDescriptorSetLayout": {
+      "kind": "constant"
+    },
+    "bindingMappingInfo": {
+      "kind": "constant"
+    },
+    "UNIFORM_SHADOWMAP_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_ENVIRONMENT_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_DIFFUSEMAP_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_SPOT_SHADOW_MAP_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "INST_MAT_WORLD": {
+      "kind": "constant"
+    },
+    "INST_SH": {
+      "kind": "constant"
+    },
+    "JOINT_UNIFORM_CAPACITY": {
+      "kind": "constant"
+    },
+    "INST_JOINT_ANIM_INFO": {
+      "kind": "constant"
+    },
+    "UNIFORM_JOINT_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_REALTIME_JOINT_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_POSITION_MORPH_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_NORMAL_MORPH_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_TANGENT_MORPH_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_LIGHTMAP_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_SPRITE_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_REFLECTION_PROBE_CUBEMAP_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_REFLECTION_PROBE_TEXTURE_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_REFLECTION_PROBE_DATA_MAP_BINDING": {
+      "kind": "constant"
+    },
+    "UNIFORM_REFLECTION_PROBE_BLEND_CUBEMAP_BINDING": {
+      "kind": "constant"
+    },
+    "CAMERA_DEFAULT_MASK": {
+      "kind": "constant"
+    },
+    "CAMERA_EDITOR_MASK": {
+      "kind": "constant"
+    },
+    "MODEL_ALWAYS_MASK": {
+      "kind": "constant"
+    },
+    "getPhaseID": {
+      "kind": "constant"
+    },
+    "MobilityMode": {
+      "kind": "constant"
+    },
+    "DEFAULT_WORLD_MIN_POS": {
+      "kind": "constant"
+    },
+    "DEFAULT_WORLD_MAX_POS": {
+      "kind": "constant"
+    },
+    "DEFAULT_OCTREE_DEPTH": {
+      "kind": "constant"
+    },
+    "director": {
+      "kind": "constant"
+    },
+    "game": {
+      "kind": "constant"
+    },
+    "assetManager": {
+      "kind": "constant"
+    },
+    "resources": {
+      "kind": "constant"
+    },
+    "loader": {
+      "kind": "constant"
+    },
+    "AssetLibrary": {
+      "kind": "constant"
+    },
+    "url": {
+      "kind": "constant"
+    },
+    "builtinResMgr": {
+      "kind": "constant"
+    },
+    "input": {
+      "kind": "constant"
+    },
+    "systemEvent": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.ERROR_NO_LOCAL_MANIFEST": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.ERROR_DOWNLOAD_MANIFEST": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.ERROR_PARSE_MANIFEST": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.NEW_VERSION_FOUND": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.ALREADY_UP_TO_DATE": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.UPDATE_PROGRESSION": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.ASSET_UPDATED": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.ERROR_UPDATING": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.UPDATE_FINISHED": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.UPDATE_FAILED": {
+      "kind": "constant"
+    },
+    "native.EventAssetsManager.ERROR_DECOMPRESS": {
+      "kind": "constant"
+    },
+    "process.argv": {
+      "kind": "constant"
+    },
+    "adpf": {
+      "kind": "constant"
+    },
+    "CubicSplineVec2Value": {
+      "kind": "constant"
+    },
+    "CubicSplineVec3Value": {
+      "kind": "constant"
+    },
+    "CubicSplineVec4Value": {
+      "kind": "constant"
+    },
+    "CubicSplineQuatValue": {
+      "kind": "constant"
+    },
+    "SUPPORTED_IMAGE_MIMES": {
+      "kind": "constant"
+    },
+    "KTX2_RAW_MIME": {
+      "kind": "constant"
+    },
+    "KHR_MESH_QUANTIZATION": {
+      "kind": "constant"
+    },
+    "KHR_MESHOPT_COMPRESSION": {
+      "kind": "constant"
+    },
+    "EXT_MESHOPT_COMPRESSION": {
+      "kind": "constant"
+    },
+    "dracoCompressionFactory": {
+      "kind": "constant"
+    },
+    "KHR_DRACO_MESH_COMPRESSION": {
+      "kind": "constant"
+    },
+    "TRANSMISSION_LAYER": {
+      "kind": "constant"
+    },
+    "defaultTransmissionVisibility": {
+      "kind": "constant"
+    },
+    "rendering.INVALID_ID": {
+      "kind": "constant"
+    },
+    "rendering.enableEffectImport": {
+      "kind": "constant"
+    },
+    "rendering.programLib": {
+      "kind": "constant"
+    },
+    "rendering.customPipelineBuilderMap": {
+      "kind": "constant"
+    },
+    "physics.selector": {
+      "kind": "constant"
+    },
+    "physics.utils.VEC3_0": {
+      "kind": "constant"
+    },
+    "physics.utils.TriggerEventObject": {
+      "kind": "constant"
+    },
+    "physics.utils.CharacterTriggerEventObject": {
+      "kind": "constant"
+    },
+    "physics.utils.CollisionEventObject": {
+      "kind": "constant"
+    },
+    "_cocos_3d_framework_mesh_renderer__ModelShadowCastingMode": {
+      "kind": "constant"
+    },
+    "_cocos_3d_framework_mesh_renderer__ModelShadowReceivingMode": {
+      "kind": "constant"
+    },
+    "_cocos_3d_lights_light_component__PhotometricTerm": {
+      "kind": "constant"
+    },
+    "DELIMETER": {
+      "kind": "constant"
+    },
+    "_cocos_core_platform_macro__KEY": {
+      "kind": "constant"
+    },
+    "_cocos_core_data_editor_extendable__EditorExtendable": {
+      "kind": "constant"
+    },
+    "_cocos_misc_camera_component__ProjectionType": {
+      "kind": "constant"
+    },
+    "_cocos_misc_camera_component__FOVAxis": {
+      "kind": "constant"
+    },
+    "_cocos_misc_camera_component__ClearFlag": {
+      "kind": "constant"
+    },
+    "_cocos_misc_camera_component__Aperture": {
+      "kind": "constant"
+    },
+    "_cocos_misc_camera_component__Shutter": {
+      "kind": "constant"
+    },
+    "_cocos_misc_camera_component__ISO": {
+      "kind": "constant"
+    },
+    "_cocos_serialization_deserialize__EMPTY_PLACEHOLDER": {
+      "kind": "constant"
+    },
+    "_cocos_serialization_deserialize__CUSTOM_OBJ_DATA_CLASS": {
+      "kind": "constant"
+    },
+    "_cocos_serialization_deserialize__CUSTOM_OBJ_DATA_CONTENT": {
+      "kind": "constant"
+    },
+    "_cocos_serialization_deserialize__DICT_JSON_LAYOUT": {
+      "kind": "constant"
+    },
+    "_cocos_asset_assets_asset__Asset_base": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__exoticAnimationTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__additiveSettingsTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_internal_symbols__BAKE_SKELETON_CURVE_SYMBOL": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__searchForRootBonePathSymbol": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__embeddedPlayerCountTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__getEmbeddedPlayersTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__addEmbeddedPlayerTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__removeEmbeddedPlayerTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_clip__clearEmbeddedPlayersTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_animation_component__Animation_base": {
+      "kind": "constant"
+    },
+    "_cocos_animation_tracks_track__trackBindingTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_define__createEvalSymbol": {
+      "kind": "constant"
+    },
+    "_cocos_animation_tracks_track__parseTrsPathTag": {
+      "kind": "constant"
+    },
+    "_cocos_animation_tracks_track__normalizedFollowTag": {
+      "kind": "constant"
+    },
+    "_air_assets_gltf_material_features__TEXTURE_SLOTS": {
+      "kind": "constant"
+    },
+    "_cocos_physics_framework_components_colliders_collider__Collider_base": {
+      "kind": "constant"
+    },
+    "_cocos_physics_framework_components_constraints_constraint__Constraint_base": {
+      "kind": "constant"
+    },
+    "_cocos_physics_framework_components_character_controllers_character_controller__CharacterController_base": {
+      "kind": "constant"
+    }
+  },
+  "interfaces": {}
+}

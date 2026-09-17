@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cocos Air Examples Gallery</title>
+<style>
+* { box-sizing: border-box; margin: 0; }
+body { font: 14px system-ui,sans-serif; background: #1a1a2e; color: #ccc; display: flex; height: 100vh; overflow: hidden; }
+#sidebar { width: 280px; min-width: 220px; background: #12121e; border-right: 1px solid #2a2a4e; padding: 16px; overflow-y: auto; flex-shrink: 0; }
+#sidebar h1 { font-size: 18px; color: #7eb8ff; margin-bottom: 12px; }
+#search { width: 100%; padding: 8px; background: #1e1e3e; border: 1px solid #3a3a5e; color: #ccc; border-radius: 6px; margin-bottom: 12px; font-size: 13px; }
+.cat-header { color: #7eb8ff; font-size: 12px; text-transform: uppercase; margin: 14px 0 4px; letter-spacing: 1px; }
+.example-link { display: block; padding: 6px 8px; color: #aab; text-decoration: none; border-radius: 4px; cursor: pointer; }
+.example-link:hover { background: #2a2a4e; color: #fff; }
+.example-link.active { background: #3a3a6e; color: #7eb8ff; }
+.example-link .tags { font-size: 10px; color: #666; margin-top: 2px; }
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+#toolbar { padding: 8px 16px; background: #12121e; border-bottom: 1px solid #2a2a4e; display: flex; gap: 8px; align-items: center; }
+#toolbar button { padding: 6px 14px; background: #2a2a4e; color: #ccc; border: 1px solid #3a3a5e; border-radius: 4px; cursor: pointer; font-size: 13px; }
+#toolbar button:hover { background: #3a3a6e; }
+#toolbar button.active { background: #4a4a7e; color: #fff; }
+#toolbar .title { color: #7eb8ff; font-weight: bold; margin-right: auto; }
+#content { flex: 1; overflow: hidden; }
+#preview-frame { width: 100%; height: 100%; border: none; background: #000; }
+#source-view { display: none; width: 100%; height: 100%; overflow: auto; padding: 16px; background: #0d0d1a; }
+#source-view pre { color: #9cd; font: 13px/1.5 monospace; white-space: pre-wrap; }
+#api-tags { padding: 4px 16px; display: flex; gap: 6px; flex-wrap: wrap; background: #0d0d1a; }
+#api-tags span { background: #2a2a4e; color: #8ab; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
+#cap-tags span { background: #2a4a2e; color: #8c8; }
+</style>
+</head>
+<body>
+<div id="sidebar">
+  <h1>Cocos Air Examples</h1>
+  <input id="search" placeholder="Search examples…" oninput="filterList(this.value)">
+  <div id="example-list"></div>
+</div>
+<div id="main">
+  <div id="toolbar">
+    <span class="title" id="current-title">Select an example</span>
+    <button id="btn-preview" class="active" onclick="showPreview()">Preview</button>
+    <button id="btn-source" onclick="showSource()">Source</button>
+    <button onclick="toggleFullscreen()">Fullscreen</button>
+    <button onclick="history.back()">←</button>
+    <button onclick="history.forward()">→</button>
+  </div>
+  <div id="api-tags"></div>
+  <div id="content">
+    <iframe id="preview-frame" src="about:blank"></iframe>
+    <div id="source-view"><pre id="source-code"></pre></div>
+  </div>
+</div>
+<script>
+var MANIFEST, EXAMPLES_BY_ID = {}, currentExample = null;
+
+fetch('/files.json').then(r => r.json()).then(m => {
+  MANIFEST = m;
+  buildList();
+  // Deep link: #example-id
+  var hash = location.hash.slice(1);
+  if (hash && EXAMPLES_BY_ID[hash]) selectExample(hash);
+});
+
+function buildList() {
+  var listEl = document.getElementById('example-list');
+  var cats = {};
+  MANIFEST.examples.forEach(ex => {
+    if (!cats[ex.category]) cats[ex.category] = [];
+    cats[ex.category].push(ex);
+    EXAMPLES_BY_ID[ex.id] = ex;
+  });
+  listEl.innerHTML = '';
+  for (var cat in cats) {
+    var header = document.createElement('div');
+    header.className = 'cat-header'; header.textContent = cat;
+    listEl.appendChild(header);
+    cats[cat].forEach(ex => {
+      var a = document.createElement('a');
+      a.className = 'example-link'; a.id = 'link-' + ex.id;
+      a.innerHTML = '<b>' + ex.title + '</b>' +
+        (ex.apiClaims ? '<div class="tags">' + ex.apiClaims.slice(0,3).join(' · ') + '</div>' : '');
+      a.onclick = function() { selectExample(ex.id); };
+      a.dataset.search = (ex.title + ' ' + ex.id + ' ' + (ex.apiClaims || []).join(' ')).toLowerCase();
+      listEl.appendChild(a);
+    });
+  }
+}
+
+function filterList(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.example-link').forEach(function(a) {
+    a.style.display = a.dataset.search.includes(q) ? '' : 'none';
+  });
+}
+
+function selectExample(id) {
+  var ex = EXAMPLES_BY_ID[id];
+  if (!ex) return;
+  currentExample = ex;
+  document.querySelectorAll('.example-link').forEach(function(a) { a.classList.remove('active'); });
+  var link = document.getElementById('link-' + id);
+  if (link) { link.classList.add('active'); link.scrollIntoView({ block: 'nearest' }); }
+  document.getElementById('current-title').textContent = ex.title + ' (' + ex.id + ')';
+  document.getElementById('preview-frame').src = '/' + ex.dir + '/';
+  showPreview();
+  // API tags
+  var tagsEl = document.getElementById('api-tags');
+  tagsEl.innerHTML = '';
+  (ex.apiClaims || []).forEach(function(t) {
+    var s = document.createElement('span'); s.textContent = t; tagsEl.appendChild(s);
+  });
+  (ex.capabilities || []).forEach(function(t) {
+    var s = document.createElement('span'); s.textContent = 'cap:' + t; s.style.background = '#2a4a2e'; tagsEl.appendChild(s);
+  });
+  location.hash = id;
+}
+
+function showPreview() {
+  document.getElementById('preview-frame').style.display = '';
+  document.getElementById('source-view').style.display = 'none';
+  document.getElementById('btn-preview').classList.add('active');
+  document.getElementById('btn-source').classList.remove('active');
+}
+
+function showSource() {
+  if (!currentExample) return;
+  var srcPath = '/' + currentExample.dir + '/src/main.ts';
+  fetch(srcPath).then(r => r.text()).then(code => {
+    document.getElementById('source-code').textContent = code;
+    document.getElementById('preview-frame').style.display = 'none';
+    var sv = document.getElementById('source-view');
+    sv.style.display = '';
+    document.getElementById('btn-source').classList.add('active');
+    document.getElementById('btn-preview').classList.remove('active');
+  });
+}
+
+function toggleFullscreen() {
+  var el = document.getElementById('content');
+  if (document.fullscreenElement) document.exitFullscreen();
+  else el.requestFullscreen();
+}
+
+window.addEventListener('hashchange', function() {
+  var id = location.hash.slice(1);
+  if (id && EXAMPLES_BY_ID[id] && id !== (currentExample && currentExample.id)) selectExample(id);
+});
+</script>
+</body>
+</html>

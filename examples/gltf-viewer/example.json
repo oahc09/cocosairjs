@@ -1,0 +1,24 @@
+{
+  "id": "gltf-viewer",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "glTF Viewer",
+  "category": "gltf",
+  "apiClaims": [
+    "GLTFLoader.parseAsync",
+    "GLTFAsset.instantiate",
+    "GLTFInstance"
+  ],
+  "capabilities": [
+    "gltf"
+  ],
+  "validation": {
+    "validators": [
+      "asset-loaded",
+      "visible-frame"
+    ]
+  }
+}

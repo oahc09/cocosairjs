@@ -1,0 +1,24 @@
+{
+  "id": "camera",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Camera Controls",
+  "category": "camera",
+  "apiClaims": [
+    "Camera.projection",
+    "Camera.orthoHeight",
+    "frameObject"
+  ],
+  "capabilities": [
+    "camera"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "visible-frame"
+    ]
+  }
+}

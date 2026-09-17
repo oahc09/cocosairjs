@@ -1,0 +1,29 @@
+{
+  "id": "hello-cube",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Hello Cube",
+  "category": "basics",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "MeshRenderer",
+    "Camera",
+    "DirectionalLight",
+    "utils.createMesh",
+    "primitives.box"
+  ],
+  "capabilities": [
+    "basics"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "visible-frame"
+    ]
+  }
+}

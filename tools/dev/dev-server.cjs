@@ -327,6 +327,14 @@ b.onclick=function(){
         if (!fs.existsSync(file)) { res.writeHead(404); res.end('not found (debug entry?)'); return; }
         return serveDebugBundle(res, file);
     }
+    if (p.startsWith('/source/') && p.endsWith('.ts')) {
+      var rawFile = path.join(ROOT, p.replace('/source/', 'examples/'));
+      if (fs.existsSync(rawFile)) {
+        res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+        res.end(fs.readFileSync(rawFile));
+      } else { res.writeHead(404); res.end('not found'); }
+      return;
+    }
     if (p.startsWith('/build/')) {
         const file = path.join(ROOT, p);
         if (fs.existsSync(file)) return serveFile(res, file);

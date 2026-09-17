@@ -1,0 +1,25 @@
+{
+  "id": "static-model",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Static Model",
+  "category": "mesh",
+  "apiClaims": [
+    "MeshRenderer",
+    "Material",
+    "Texture2D"
+  ],
+  "capabilities": [
+    "basics",
+    "material"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "visible-frame"
+    ]
+  }
+}

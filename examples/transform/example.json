@@ -1,0 +1,24 @@
+{
+  "id": "transform",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Transform Hierarchy",
+  "category": "basics",
+  "apiClaims": [
+    "Node.addChild",
+    "Node.setPosition",
+    "Node.setRotationFromEuler"
+  ],
+  "capabilities": [
+    "basics"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "transform-equals"
+    ]
+  }
+}

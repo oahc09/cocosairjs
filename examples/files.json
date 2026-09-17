@@ -1,0 +1,284 @@
+{
+  "generatedAt": "2026-09-17T15:28:59.724Z",
+  "revision": "6731f34",
+  "examples": [
+    {
+      "id": "automation",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": true,
+      "title": "Agent Automation",
+      "category": "devtools",
+      "apiClaims": [
+        "createAgentSession",
+        "dispatch"
+      ],
+      "capabilities": [
+        "devtools",
+        "agent"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "automation"
+    },
+    {
+      "id": "camera",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "Camera Controls",
+      "category": "camera",
+      "apiClaims": [
+        "Camera.projection",
+        "Camera.orthoHeight",
+        "frameObject"
+      ],
+      "capabilities": [
+        "camera"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "visible-frame"
+        ]
+      },
+      "dir": "camera"
+    },
+    {
+      "id": "gltf-catalog",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "glTF Catalog",
+      "category": "gltf",
+      "apiClaims": [
+        "GLTFLoader"
+      ],
+      "capabilities": [
+        "gltf"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "dir": "gltf-catalog"
+    },
+    {
+      "id": "gltf-viewer",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "glTF Viewer",
+      "category": "gltf",
+      "apiClaims": [
+        "GLTFLoader.parseAsync",
+        "GLTFAsset.instantiate",
+        "GLTFInstance"
+      ],
+      "capabilities": [
+        "gltf"
+      ],
+      "validation": {
+        "validators": [
+          "asset-loaded",
+          "visible-frame"
+        ]
+      },
+      "dir": "gltf-viewer"
+    },
+    {
+      "id": "hello-cube",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "Hello Cube",
+      "category": "basics",
+      "apiClaims": [
+        "createAirApp",
+        "Scene",
+        "Node",
+        "MeshRenderer",
+        "Camera",
+        "DirectionalLight",
+        "utils.createMesh",
+        "primitives.box"
+      ],
+      "capabilities": [
+        "basics"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "visible-frame"
+        ]
+      },
+      "dir": "hello-cube"
+    },
+    {
+      "id": "input",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "Input Events",
+      "category": "interaction",
+      "apiClaims": [
+        "input.on",
+        "Input.EventType.KEY_DOWN",
+        "Input.EventType.TOUCH_MOVE"
+      ],
+      "capabilities": [
+        "input"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "input"
+    },
+    {
+      "id": "skinned-animation",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "Skinned Animation",
+      "category": "animation",
+      "apiClaims": [
+        "SkinnedMeshRenderer",
+        "SkeletalAnimation",
+        "AnimationClip"
+      ],
+      "capabilities": [
+        "animation",
+        "skeleton"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "animation-playing"
+        ]
+      },
+      "dir": "skinned-animation"
+    },
+    {
+      "id": "starter",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "Starter",
+      "category": "basics",
+      "apiClaims": [
+        "createAirApp",
+        "Scene"
+      ],
+      "capabilities": [
+        "basics"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "dir": "starter"
+    },
+    {
+      "id": "static-model",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "Static Model",
+      "category": "mesh",
+      "apiClaims": [
+        "MeshRenderer",
+        "Material",
+        "Texture2D"
+      ],
+      "capabilities": [
+        "basics",
+        "material"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "visible-frame"
+        ]
+      },
+      "dir": "static-model"
+    },
+    {
+      "id": "transform",
+      "version": "1.0.0",
+      "status": "stable",
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "title": "Transform Hierarchy",
+      "category": "basics",
+      "apiClaims": [
+        "Node.addChild",
+        "Node.setPosition",
+        "Node.setRotationFromEuler"
+      ],
+      "capabilities": [
+        "basics"
+      ],
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "transform-equals"
+        ]
+      },
+      "dir": "transform"
+    }
+  ],
+  "categories": {
+    "basics": [
+      "hello-cube",
+      "starter",
+      "transform"
+    ],
+    "mesh": [
+      "static-model"
+    ],
+    "animation": [
+      "skinned-animation"
+    ],
+    "gltf": [
+      "gltf-viewer",
+      "gltf-catalog"
+    ],
+    "camera": [
+      "camera"
+    ],
+    "interaction": [
+      "input"
+    ],
+    "devtools": [
+      "automation"
+    ]
+  }
+}

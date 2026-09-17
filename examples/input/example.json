@@ -1,0 +1,24 @@
+{
+  "id": "input",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Input Events",
+  "category": "interaction",
+  "apiClaims": [
+    "input.on",
+    "Input.EventType.KEY_DOWN",
+    "Input.EventType.TOUCH_MOVE"
+  ],
+  "capabilities": [
+    "input"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

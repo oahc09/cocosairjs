@@ -1,0 +1,25 @@
+{
+  "id": "skinned-animation",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Skinned Animation",
+  "category": "animation",
+  "apiClaims": [
+    "SkinnedMeshRenderer",
+    "SkeletalAnimation",
+    "AnimationClip"
+  ],
+  "capabilities": [
+    "animation",
+    "skeleton"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "animation-playing"
+    ]
+  }
+}

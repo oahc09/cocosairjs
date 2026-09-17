@@ -1,0 +1,24 @@
+{
+  "id": "automation",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": true,
+  "title": "Agent Automation",
+  "category": "devtools",
+  "apiClaims": [
+    "createAgentSession",
+    "dispatch"
+  ],
+  "capabilities": [
+    "devtools",
+    "agent"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

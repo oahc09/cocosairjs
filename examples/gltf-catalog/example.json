@@ -1,0 +1,21 @@
+{
+  "id": "gltf-catalog",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "glTF Catalog",
+  "category": "gltf",
+  "apiClaims": [
+    "GLTFLoader"
+  ],
+  "capabilities": [
+    "gltf"
+  ],
+  "validation": {
+    "validators": [
+      "scene-ready"
+    ]
+  }
+}
