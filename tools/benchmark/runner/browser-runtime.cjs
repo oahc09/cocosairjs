@@ -82,11 +82,12 @@ function bundleDebugSession (repo, esbuild) {
 }
 
 class BrowserRuntime {
-  constructor ({ viewport = { width: 480, height: 360 }, esbuild, repo } = {}) {
+  constructor ({ viewport = { width: 480, height: 360 }, esbuild, repo, browserType } = {}) {
     if (!esbuild) { throw new Error('BrowserRuntime requires esbuild injection'); }
     if (!repo) { throw new Error('BrowserRuntime requires repo injection'); }
     this.esbuild = esbuild;
     this.REPO = repo;
+    this.browserType = browserType || 'chromium';
     this.viewport = viewport;
     this.generation = 0;
     this.pageErrors = [];
@@ -188,12 +189,15 @@ class BrowserRuntime {
     await new Promise((resolve) => { this.server.listen(0, '127.0.0.1', resolve); });
     this.port = this.server.address().port;
     // 3) Fresh Browser Context
-    const { chromium } = require('playwright');
-    const browser = await chromium.launch({
-      executablePath: process.env.AIR_CHROMIUM
-        || ['C:', 'Users', 'caosh', 'AppData', 'Local', 'ms-playwright', 'chromium-1234', 'chrome-win64', 'chrome.exe'].join('\\'),
-      args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'],
-    });
+    var pw = require('playwright');
+    var launcher = pw[this.browserType] || pw.chromium;
+    var launchOpts = { headless: true };
+    if (this.browserType === 'chromium') {
+      // chromium-1228 是已安装的旧版但可与当前 Playwright 版本配合使用
+      launchOpts.executablePath = ['C:', 'Users', 'caosh', 'AppData', 'Local', 'ms-playwright', 'chromium-1228', 'chrome-win64', 'chrome.exe'].join('\\');
+      launchOpts.args = ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'];
+    }
+    const browser = await launcher.launch(launchOpts);
     if (generation !== this.generation) { await browser.close(); throw new Error('runtime start cancelled'); }
     this.browser = browser;
     const context = await browser.newContext({ viewport: this.viewport });
