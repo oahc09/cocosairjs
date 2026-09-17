@@ -1,0 +1,49 @@
+{
+  "measuredAt": "2026-09-17T14:59:57.267Z",
+  "gate": "V0.8 §84 Browser Matrix",
+  "browsersTested": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "passCount": 0,
+  "total": 3,
+  "results": [
+    {
+      "browser": "chromium",
+      "engineBoot": false,
+      "webgl2": false,
+      "sceneVisible": false,
+      "noErrors": true,
+      "error": "Error: browserType.launch: Executable doesn't exist at C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\chromium_headless_shell-1244\\chrome-headless-shell-win64\\chrome-headless-shell.exe\n╔══════════════════"
+    },
+    {
+      "browser": "firefox",
+      "engineBoot": true,
+      "webgl2": true,
+      "sceneVisible": false,
+      "noErrors": true,
+      "webglVersion": "WebGL 2.0",
+      "centerPixel": [
+        0,
+        0,
+        0
+      ],
+      "pageErrorCount": 0
+    },
+    {
+      "browser": "webkit",
+      "engineBoot": true,
+      "webgl2": true,
+      "sceneVisible": false,
+      "noErrors": true,
+      "webglVersion": "WebGL 2.0",
+      "centerPixel": [
+        0,
+        0,
+        0
+      ],
+      "pageErrorCount": 0
+    }
+  ]
+}
