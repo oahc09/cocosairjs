@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-17T23:05:34.646Z",
-  "revision": "a07c4b7",
+  "generatedAt": "2026-09-17T23:21:55.971Z",
+  "revision": "2666b56",
   "examples": [
     {
       "id": "automation",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": true,
@@ -25,12 +25,13 @@
           "no-runtime-error"
         ]
       },
+      "promotionEvidence": null,
       "dir": "automation"
     },
     {
       "id": "camera",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -50,12 +51,13 @@
           "visible-frame"
         ]
       },
+      "promotionEvidence": null,
       "dir": "camera"
     },
     {
       "id": "gltf-catalog",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -72,12 +74,13 @@
           "scene-ready"
         ]
       },
+      "promotionEvidence": null,
       "dir": "gltf-catalog"
     },
     {
       "id": "gltf-viewer",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -97,12 +100,13 @@
           "visible-frame"
         ]
       },
+      "promotionEvidence": null,
       "dir": "gltf-viewer"
     },
     {
       "id": "hello-cube",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -127,12 +131,13 @@
           "visible-frame"
         ]
       },
+      "promotionEvidence": null,
       "dir": "hello-cube"
     },
     {
       "id": "input",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -152,6 +157,7 @@
           "no-runtime-error"
         ]
       },
+      "promotionEvidence": null,
       "dir": "input"
     },
     {
@@ -159,7 +165,7 @@
       "version": "1.0.0",
       "title": "Material Basic",
       "category": "material",
-      "status": "stable",
+      "status": "draft",
       "apiClaims": [
         "MeshRenderer",
         "builtinResMgr.get",
@@ -180,12 +186,13 @@
           "visible-frame"
         ]
       },
+      "promotionEvidence": null,
       "dir": "material-basic"
     },
     {
       "id": "skinned-animation",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -206,12 +213,13 @@
           "animation-playing"
         ]
       },
+      "promotionEvidence": null,
       "dir": "skinned-animation"
     },
     {
       "id": "starter",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -229,12 +237,13 @@
           "scene-ready"
         ]
       },
+      "promotionEvidence": null,
       "dir": "starter"
     },
     {
       "id": "static-model",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -255,12 +264,13 @@
           "visible-frame"
         ]
       },
+      "promotionEvidence": null,
       "dir": "static-model"
     },
     {
       "id": "transform",
       "version": "1.0.0",
-      "status": "stable",
+      "status": "draft",
       "benchmarkRefs": [],
       "recipeRefs": [],
       "requiresDevTools": false,
@@ -280,6 +290,7 @@
           "transform-equals"
         ]
       },
+      "promotionEvidence": null,
       "dir": "transform"
     },
     {
@@ -287,7 +298,7 @@
       "version": "1.0.0",
       "title": "Tween Basic",
       "category": "animation",
-      "status": "stable",
+      "status": "draft",
       "apiClaims": [
         "Node.setPosition",
         "Scene",
@@ -305,6 +316,7 @@
           "visible-frame"
         ]
       },
+      "promotionEvidence": null,
       "dir": "tween-basic"
     }
   ],

@@ -32,8 +32,19 @@ function argOf (name, def) {
 }
 
 const EXAMPLES_DIR = path.join(ROOT, 'examples');
-const examples = fs.readdirSync(EXAMPLES_DIR)
-    .filter((d) => fs.existsSync(path.join(EXAMPLES_DIR, d, 'index.html')));
+// V1.1 §28：Manifest 是 example 枚举的唯一事实源
+const MANIFEST_PATH = path.join(EXAMPLES_DIR, 'files.json');
+var examples = [];
+if (fs.existsSync(MANIFEST_PATH)) {
+  try {
+    var manifestData = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
+    examples = manifestData.examples.map(function(e) { return e.dir; });
+  } catch(e) { /* fallback below */ }
+}
+if (!examples.length) {
+  examples = fs.readdirSync(EXAMPLES_DIR)
+    .filter(function(d) { return fs.existsSync(path.join(EXAMPLES_DIR, d, 'index.html')); });
+}
 const example = argOf('--example', 'starter');
 const port = Number(argOf('--port', '7454'));
 

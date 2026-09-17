@@ -124,14 +124,28 @@ function showPreview() {
 
 function showSource() {
   if (!currentExample) return;
-  var srcPath = '/' + currentExample.dir + '/src/main.ts';
-  fetch(srcPath).then(r => r.text()).then(code => {
-    document.getElementById('source-code').textContent = code;
+  // 尝试 .ts → .js → main.js（兼容旧示例）
+  var entryCandidates = [
+    '/' + currentExample.dir + '/src/main.ts',
+    '/' + currentExample.dir + '/src/main.js',
+    '/' + currentExample.dir + '/main.js',
+    '/' + currentExample.dir + '/main.ts'
+  ];
+  Promise.any(entryCandidates.map(function(p) {
+    return fetch(p).then(function(r) {
+      if (!r.ok) throw new Error('404');
+      return r.text().then(function(t) { return { path: p, text: t }; });
+    });
+  })).then(function(result) {
+    document.getElementById('source-code').textContent = result.text;
     document.getElementById('preview-frame').style.display = 'none';
     var sv = document.getElementById('source-view');
     sv.style.display = '';
     document.getElementById('btn-source').classList.add('active');
     document.getElementById('btn-preview').classList.remove('active');
+    }).catch(function() {
+      document.getElementById('source-code').textContent = '// source not available';
+    });
   });
 }
 

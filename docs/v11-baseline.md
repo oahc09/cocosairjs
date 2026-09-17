@@ -105,14 +105,24 @@
 
 ---
 
-## V1.1 目标
+## 历史快照（G0 记录时刻，V0.6 阶段末）
 
-| 目标 | 当前 | V1.1 目标 |
-|---|---|---|
-| Example 数量 | 10 | ≥ 40 |
-| validated Recipe | 0 | ≥ 30 |
-| stable Recipe | 0 | ≥ 20 |
-| API Coverage (Core) | 0% | ≥ 80% |
-| API Coverage (Important) | 0% | ≥ 60% |
-| API Coverage (Advanced) | 0% | ≥ 30% |
-| Gallery | 导航页 | 完整 Gallery（Search/Category/iframe/Source） |
+以下为 V1.1 开工时的**历史快照**，不代表当前执行目标：
+
+| 项 | G0 快照值 |
+|---|---|
+| Example 数量 | 10 |
+| Recipe validated/stable | 0 / 0（draft 待 evidence 晋级） |
+| API Coverage | 未建立 |
+| Gallery | 导航页（无 search/category/iframe） |
+
+## 当前执行目标（V1.1 §98 DoD）
+
+| 目标 | 说明 |
+|---|---|
+| Example ≥ 40（Pilot 12 → Wave 1 → Wave 2 → Wave 3） | 含 example.json + Gallery manifest |
+| API Coverage Core ≥ 80% verified | 冻结清单 100% 验证 |
+| API Coverage Important ≥ 60% claimed | |
+| API Coverage Advanced ≥ 30% claimed | |
+| Gallery（Search/Category/iframe/Source） | |
+| 30 stable Recipe（V0.9 需求，V1.1 继承） |

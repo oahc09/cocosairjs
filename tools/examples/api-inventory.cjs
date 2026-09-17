@@ -1,12 +1,26 @@
-/* V1.1 §14 — Public API Inventory Tool（namespace-aware parser）。
+/* V1.1 F1 — Public API Inventory（tier 分类 + 仅 public + 含 constructor/property）。
  * 执行：node tools/examples/api-inventory.cjs
  * 产出：docs/example-api-inventory.json
+ *
+ * tier 分类规则：
+ *   core     — Runtime / glTF / Camera / Input / Material 的导出类和顶层函数
+ *   important — Animation / Skeleton / Tween / Primitive / Texture / Skeleton
+ *   advanced  — 其余（Physics / Particle / Legacy / 内部模块等）
  */
-const fs = require('fs');
-const path = require('path');
-const REPO = path.resolve(__dirname, '..', '..');
-const DTS = path.join(REPO, 'build', 'cocosair.module.d.ts');
-const OUT = path.join(REPO, 'docs', 'example-api-inventory.json');
+var fs = require('fs');
+var path = require('path');
+var REPO = path.resolve(__dirname, '..', '..');
+var DTS = path.join(REPO, 'build', 'cocosair.module.d.ts');
+var OUT = path.join(REPO, 'docs', 'example-api-inventory.json');
+
+var CORE_NS = /^((utils|geometry|math|gfx)\.|(Scene|Node|MeshRenderer|Camera|DirectionalLight|Light|SpotLight|PointLight|SphereLight|AmbientLight|ModelRenderer|Layers|Color|Vec3|Mesh|Material|Texture2D|GLTFLoader|GLTFAsset|GLTFInstance|GLTFExtensionRegistry|input|Input|createAirApp|frameObject|createMesh|builtinResMgr|primitives|MeshUtils|BatchingUtility|director|game|isValid|instantiate))/;
+var IMPORTANT_NS = /((Animation|AnimationClip|SkeletalAnimation|Skeleton|SkinnedMeshRenderer|SkinnedMeshUnit|tween|TweenSystem|primitives|Texture2D|TextureCube|Material|EffectAsset|MeshUtils|Particle|Billboard|Line|Circle|Ellipse|Filled|Graphics|UIRenderer|widget|label|sprite))/i;
+
+function classifyTier(fqName, kind) {
+  if (CORE_NS.test(fqName)) return 'core';
+  if (IMPORTANT_NS.test(fqName)) return 'important';
+  return 'advanced';
+}
 
 (function main() {
   if (!fs.existsSync(DTS)) {
@@ -15,130 +29,107 @@ const OUT = path.join(REPO, 'docs', 'example-api-inventory.json');
   }
   var source = fs.readFileSync(DTS, 'utf8');
   var lines = source.split('\n');
-
-  var classes = {};   // fqName -> { methods:[], properties:[], staticMethods:[], namespace:'' }
-  var functions = {}; // fqName -> { kind:'function', namespace:'' }
-  var constants = {}; // fqName -> { kind:'constant' }
   var nsStack = [];
   var classStack = [];
-  var depth = 0;
+  var units = {};
+  var order = [];
+
+  function addUnit(fqName, kind, tier, parent) {
+    if (units[fqName]) return;
+    units[fqName] = { kind: kind, tier: tier, coverageRequired: tier !== 'advanced', parent: parent || null };
+    order.push(fqName);
+  }
 
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i];
     var trimmed = line.trim();
     var nsPath = nsStack.join('.');
+    var fqPrefix = nsPath ? nsPath + '.' : '';
 
-    // --- namespace / class / function / const declarations ---
+    // Namespace open
     var ns = trimmed.match(/^export (?:declare )?namespace (\w+)/);
+    if (ns) { nsStack.push(ns[1]); continue; }
+
+    // Class open
     var cls = trimmed.match(/^export (?:declare )?class (\w+)/);
-    var fn = trimmed.match(/^export (?:declare )?function (\w+)/);
-    var cn = trimmed.match(/^export (?:declare )?const (\w+)\s*[:=]/);
-    var iface = trimmed.match(/^export (?:declare )?interface (\w+)/);
-
-    if (ns) {
-      nsStack.push(ns[1]);
-      depth++;
-      // count opening braces on this line after the declaration
-      var open = (line.match(/\{/g) || []).length;
-      var close = (line.match(/\}/g) || []).length;
-      depth += open - close - 1; // -1 for the declaration brace itself
-      continue;
-    }
     if (cls) {
-      var clsFq = (nsPath ? nsPath + '.' : '') + cls[1];
+      var clsFq = fqPrefix + cls[1];
       classStack.push(clsFq);
-      classes[clsFq] = { methods: [], properties: [], staticMethods: [], namespace: nsPath };
-      // count braces
-      var openBr = (line.match(/\{/g) || []).length;
-      var closeBr = (line.match(/\}/g) || []).length;
-      if (openBr > closeBr) { depth += openBr - closeBr; }
-      continue;
-    }
-    if (iface) {
-      // Track interface body to skip its contents
-      var io = (line.match(/\{/g) || []).length;
-      var ic = (line.match(/\}/g) || []).length;
-      depth += io - ic;
-      continue;
-    }
-    if (fn && !classStack.length) {
-      var fnFq = (nsPath ? nsPath + '.' : '') + fn[1];
-      functions[fnFq] = { kind: 'function', namespace: nsPath };
-      // single-line function might close itself
-      var fo = (line.match(/\{/g) || []).length;
-      var fc = (line.match(/\}/g) || []).length;
-      depth += fo - fc;
-      continue;
-    }
-    if (cn && !classStack.length) {
-      var cFq = (nsPath ? nsPath + '.' : '') + cn[1];
-      constants[cFq] = { kind: 'constant' };
-      var co = (line.match(/\{/g) || []).length;
-      var cc = (line.match(/\}/g) || []).length;
-      depth += co - cc;
+      var tier = classifyTier(clsFq, 'class');
+      addUnit(clsFq, 'class', tier);
+      // Constructor as coverage unit
+      addUnit(clsFq + '.constructor', 'constructor', tier, clsFq);
       continue;
     }
 
-    // --- inside class: methods & properties ---
-    if (classStack.length && trimmed && trimmed !== '}') {
-      var fq = classStack[classStack.length - 1];
-      if (!classes[fq]) { classes[fq] = { methods: [], properties: [], staticMethods: [] }; }
-      var mm = trimmed.match(/^(?:(?:public|private|protected|static|override|abstract|async)\s+)*(\w+)\s*\(/);
-      if (mm && mm[1] !== 'constructor' && !trimmed.startsWith('*') && !trimmed.startsWith('/')) {
-        if (/\bstatic\b/.test(trimmed)) {
-          classes[fq].staticMethods.push(mm[1]);
-        } else if (!/\bprivate\b/.test(trimmed)) {
-          classes[fq].methods.push(mm[1]);
-        }
-        // count braces in method body declaration line
-        var mo = (line.match(/\{/g) || []).length;
-        var mc = (line.match(/\}/g) || []).length;
-        depth += mo - mc;
+    // Close brace: pop class or namespace
+    if (trimmed === '}') {
+      if (classStack.length) { classStack.pop(); continue; }
+      if (nsStack.length) { nsStack.pop(); continue; }
+      continue;
+    }
+
+    // Skip private/protected
+    if (/^\s*(private|protected)\s/.test(line)) continue;
+
+    // Inside class: methods, properties
+    if (classStack.length) {
+      var curFq = classStack[classStack.length - 1];
+      var curTier = units[curFq] ? units[curFq].tier : 'advanced';
+      // Method
+      var mm = trimmed.match(/^(?:(?:public|static|override|async|abstract)\s+)*(\w+)\s*\(/);
+      if (mm && mm[1] !== 'constructor' && !trimmed.startsWith('*') && !trimmed.startsWith('/') && !trimmed.startsWith('#')) {
+        var mFq = curFq + '.' + mm[1];
+        var mKind = /\bstatic\b/.test(trimmed) ? 'static' : 'method';
+        addUnit(mFq, mKind, curTier, curFq);
         continue;
       }
-      var pm = trimmed.match(/^(?:public\s+|readonly\s+)?(\w+)\s*:/);
-      if (pm && !trimmed.includes('(') && !trimmed.startsWith('*') && !trimmed.startsWith('/') &&
-          !trimmed.startsWith('import') && pm[1] !== 'if' && pm[1] !== 'for') {
-        if (classes[fq] && classes[fq].properties.indexOf(pm[1]) === -1) {
-          classes[fq].properties.push(pm[1]);
-        }
+      // Constructor
+      if (/constructor\s*\(/.test(trimmed)) {
+        addUnit(curFq + '.constructor', 'constructor', curTier, curFq);
+        continue;
       }
+      // Property (public or readonly, no parens)
+      var pm = trimmed.match(/^(?:(?:public|readonly|get\s|set\s)\s+)?(\w+)\s*[:;]/);
+      if (pm && !trimmed.includes('(') && !trimmed.startsWith('*') && !trimmed.startsWith('/') &&
+          !trimmed.startsWith('import') && !trimmed.startsWith('export') &&
+          pm[1] !== 'if' && pm[1] !== 'for' && pm[1] !== 'while' && pm[1] !== 'return') {
+        var pFq = curFq + '.' + pm[1];
+        addUnit(pFq, 'property', curTier, curFq);
+        continue;
+      }
+      continue;
     }
 
-    // --- brace tracking (general) ---
-    var opens = (line.match(/\{/g) || []).length;
-    var closes = (line.match(/\}/g) || []).length;
-    if (opens > 0 || closes > 0) { depth += opens - closes; }
-
-    // --- pop namespace/class on closing brace ---
-    if (trimmed === '}' && depth <= nsStack.length && nsStack.length > 0 && classStack.length === 0) {
-      nsStack.pop();
+    // Top-level / namespace-level: functions and constants
+    var fn = trimmed.match(/^export (?:declare )?function (\w+)/);
+    if (fn) {
+      var fnFq = fqPrefix + fn[1];
+      addUnit(fnFq, 'function', classifyTier(fnFq, 'function'));
+      continue;
     }
-    if (trimmed === '}' && classStack.length > 0 && depth < nsStack.length) {
-      classStack.pop();
+    var cst = trimmed.match(/^export (?:declare )?const (\w+)\s*[:=]/);
+    if (cst) {
+      var cstFq = fqPrefix + cst[1];
+      addUnit(cstFq, 'constant', classifyTier(cstFq, 'constant'));
+      continue;
     }
   }
 
-  var classCount = Object.keys(classes).length;
-  var funcCount = Object.keys(functions).length;
-  var constCount = Object.keys(constants).length;
-  var methodCount = 0;
-  for (var c in classes) { methodCount += classes[c].methods.length + classes[c].staticMethods.length; }
+  // Build output
+  var tierCounts = { core: 0, important: 0, advanced: 0 };
+  var output = { generatedAt: new Date().toISOString(), source: 'build/cocosair.module.d.ts', units: {}, tierSummary: {} };
+  for (var j = 0; j < order.length; j++) {
+    var fq = order[j];
+    output.units[fq] = units[fq];
+    tierCounts[units[fq].tier] = (tierCounts[units[fq].tier] || 0) + 1;
+  }
+  output.tierSummary = tierCounts;
+  output.totalUnits = order.length;
+  output.coverageRequiredUnits = order.filter(function(fq) { return units[fq].coverageRequired; }).length;
 
-  var output = {
-    generatedAt: new Date().toISOString(),
-    source: 'build/cocosair.module.d.ts',
-    summary: {
-      classes: classCount,
-      functions: funcCount,
-      constants: constCount,
-      totalMethods: methodCount,
-      totalCoverageUnits: classCount + funcCount + constCount + methodCount,
-    },
-    classes: classes,
-    functions: functions,
-    constants: constants,
-  };
   fs.writeFileSync(OUT, JSON.stringify(output, null, 2) + '\n');
-  console.log('[api-inventory] classes=' + classCount + ' functions=' + funcCount + ' constants=' + constCount + ' methods=' + methodCount);
+  console.log('[api-inventory] total=' + order.length +
+    ' core=' + tierCounts.core + ' important=' + tierCounts.important + ' advanced=' + tierCounts.advanced +
+    ' coverageRequired=' + output.coverageRequiredUnits);
 })();

@@ -1,7 +1,7 @@
 {
   "id": "static-model",
   "version": "1.0.0",
-  "status": "stable",
+  "status": "draft",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -21,5 +21,6 @@
       "scene-ready",
       "visible-frame"
     ]
-  }
+  },
+  "promotionEvidence": null
 }

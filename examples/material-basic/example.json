@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Material Basic",
   "category": "material",
-  "status": "stable",
+  "status": "draft",
   "apiClaims": [
     "MeshRenderer",
     "builtinResMgr.get",
@@ -23,5 +23,6 @@
       "material-property",
       "visible-frame"
     ]
-  }
+  },
+  "promotionEvidence": null
 }

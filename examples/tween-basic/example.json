@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Tween Basic",
   "category": "animation",
-  "status": "stable",
+  "status": "draft",
   "apiClaims": [
     "Node.setPosition",
     "Scene",
@@ -20,5 +20,6 @@
       "scene-ready",
       "visible-frame"
     ]
-  }
+  },
+  "promotionEvidence": null
 }

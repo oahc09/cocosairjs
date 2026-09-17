@@ -1,7 +1,7 @@
 {
   "id": "gltf-viewer",
   "version": "1.0.0",
-  "status": "stable",
+  "status": "draft",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -20,5 +20,6 @@
       "asset-loaded",
       "visible-frame"
     ]
-  }
+  },
+  "promotionEvidence": null
 }

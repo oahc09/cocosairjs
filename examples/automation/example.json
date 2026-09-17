@@ -1,7 +1,7 @@
 {
   "id": "automation",
   "version": "1.0.0",
-  "status": "stable",
+  "status": "draft",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": true,
@@ -20,5 +20,6 @@
       "scene-ready",
       "no-runtime-error"
     ]
-  }
+  },
+  "promotionEvidence": null
 }

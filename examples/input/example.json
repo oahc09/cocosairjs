@@ -1,7 +1,7 @@
 {
   "id": "input",
   "version": "1.0.0",
-  "status": "stable",
+  "status": "draft",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -20,5 +20,6 @@
       "scene-ready",
       "no-runtime-error"
     ]
-  }
+  },
+  "promotionEvidence": null
 }
