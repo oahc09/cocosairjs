@@ -1,0 +1,22 @@
+{
+  "id": "light-sphere",
+  "version": "1.0.0",
+  "title": "Sphere Light",
+  "category": "lighting",
+  "status": "draft",
+  "apiClaims": [
+    "SphereLight"
+  ],
+  "capabilities": [
+    "lighting"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

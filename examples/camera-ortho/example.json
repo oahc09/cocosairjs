@@ -1,0 +1,23 @@
+{
+  "id": "camera-ortho",
+  "version": "1.0.0",
+  "title": "Orthographic Camera",
+  "category": "camera",
+  "status": "draft",
+  "apiClaims": [
+    "Camera.ProjectionType.ORTHO",
+    "Camera.orthoHeight"
+  ],
+  "capabilities": [
+    "camera"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

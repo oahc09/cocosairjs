@@ -1,0 +1,23 @@
+{
+  "id": "anim-position",
+  "version": "1.0.0",
+  "title": "Position Animation",
+  "category": "animation",
+  "status": "draft",
+  "apiClaims": [
+    "Component.update",
+    "Vec3"
+  ],
+  "capabilities": [
+    "animation"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

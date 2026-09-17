@@ -1,0 +1,22 @@
+{
+  "id": "node-active",
+  "version": "1.0.0",
+  "title": "Node Active Toggle",
+  "category": "basics",
+  "status": "draft",
+  "apiClaims": [
+    "Node.active"
+  ],
+  "capabilities": [
+    "basics"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "rc-error-report",
+  "version": "1.0.0",
+  "title": "Runtime Error Report",
+  "category": "devtools",
+  "status": "draft",
+  "apiClaims": [
+    "createAgentSession",
+    "getRuntimeErrors"
+  ],
+  "capabilities": [
+    "devtools"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": true,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

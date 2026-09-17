@@ -1,0 +1,23 @@
+{
+  "id": "rc-capture-frame",
+  "version": "1.0.0",
+  "title": "Capture Frame",
+  "category": "devtools",
+  "status": "draft",
+  "apiClaims": [
+    "createAgentSession",
+    "captureFrame"
+  ],
+  "capabilities": [
+    "devtools"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": true,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

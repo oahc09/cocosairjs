@@ -1,0 +1,22 @@
+{
+  "id": "mesh-torus",
+  "version": "1.0.0",
+  "title": "Torus Mesh",
+  "category": "mesh",
+  "status": "draft",
+  "apiClaims": [
+    "primitives.torus"
+  ],
+  "capabilities": [
+    "mesh"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

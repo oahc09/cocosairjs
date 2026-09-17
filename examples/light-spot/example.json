@@ -1,0 +1,23 @@
+{
+  "id": "light-spot",
+  "version": "1.0.0",
+  "title": "Spot Light",
+  "category": "lighting",
+  "status": "draft",
+  "apiClaims": [
+    "SpotLight",
+    "Light"
+  ],
+  "capabilities": [
+    "lighting"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

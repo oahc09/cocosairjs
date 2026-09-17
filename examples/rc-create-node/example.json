@@ -1,0 +1,23 @@
+{
+  "id": "rc-create-node",
+  "version": "1.0.0",
+  "title": "Create Node via Session",
+  "category": "devtools",
+  "status": "draft",
+  "apiClaims": [
+    "createAgentSession",
+    "dispatch"
+  ],
+  "capabilities": [
+    "devtools"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": true,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

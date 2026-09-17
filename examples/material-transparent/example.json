@@ -1,0 +1,22 @@
+{
+  "id": "material-transparent",
+  "version": "1.0.0",
+  "title": "Transparent Cube",
+  "category": "material",
+  "status": "draft",
+  "apiClaims": [
+    "builtin-transparent-material"
+  ],
+  "capabilities": [
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

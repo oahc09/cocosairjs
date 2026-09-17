@@ -1,0 +1,22 @@
+{
+  "id": "mesh-cylinder",
+  "version": "1.0.0",
+  "title": "Cylinder Mesh",
+  "category": "mesh",
+  "status": "draft",
+  "apiClaims": [
+    "primitives.cylinder"
+  ],
+  "capabilities": [
+    "mesh"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

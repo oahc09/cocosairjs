@@ -1,0 +1,23 @@
+{
+  "id": "camera-lookat",
+  "version": "1.0.0",
+  "title": "Camera LookAt",
+  "category": "camera",
+  "status": "draft",
+  "apiClaims": [
+    "Node.setPosition",
+    "Node.setRotationFromEuler"
+  ],
+  "capabilities": [
+    "camera"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "mesh-sphere",
+  "version": "1.0.0",
+  "title": "Sphere Mesh",
+  "category": "mesh",
+  "status": "draft",
+  "apiClaims": [
+    "primitives.sphere"
+  ],
+  "capabilities": [
+    "mesh"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

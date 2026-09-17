@@ -1,0 +1,22 @@
+{
+  "id": "anim-rotation",
+  "version": "1.0.0",
+  "title": "Rotation Animation",
+  "category": "animation",
+  "status": "draft",
+  "apiClaims": [
+    "Component.update"
+  ],
+  "capabilities": [
+    "animation"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

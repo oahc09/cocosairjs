@@ -1,0 +1,23 @@
+{
+  "id": "texture-basic",
+  "version": "1.0.0",
+  "title": "Textured Cube",
+  "category": "texture",
+  "status": "draft",
+  "apiClaims": [
+    "Texture2D",
+    "builtinResMgr.get"
+  ],
+  "capabilities": [
+    "texture"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

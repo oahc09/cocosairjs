@@ -1,0 +1,22 @@
+{
+  "id": "node-scale",
+  "version": "1.0.0",
+  "title": "Node Scale",
+  "category": "basics",
+  "status": "draft",
+  "apiClaims": [
+    "Node.setScale"
+  ],
+  "capabilities": [
+    "basics"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

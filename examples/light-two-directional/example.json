@@ -1,0 +1,22 @@
+{
+  "id": "light-two-directional",
+  "version": "1.0.0",
+  "title": "Two Directional Lights",
+  "category": "lighting",
+  "status": "draft",
+  "apiClaims": [
+    "DirectionalLight"
+  ],
+  "capabilities": [
+    "lighting"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

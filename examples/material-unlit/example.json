@@ -1,0 +1,22 @@
+{
+  "id": "material-unlit",
+  "version": "1.0.0",
+  "title": "Unlit Cube",
+  "category": "material",
+  "status": "draft",
+  "apiClaims": [
+    "builtin-unlit-material"
+  ],
+  "capabilities": [
+    "material"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

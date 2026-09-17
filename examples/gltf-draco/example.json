@@ -1,0 +1,23 @@
+{
+  "id": "gltf-draco",
+  "version": "1.0.0",
+  "title": "Draco Compressed",
+  "category": "gltf",
+  "status": "draft",
+  "apiClaims": [
+    "GLTFLoader.parseAsync",
+    "setDRACODecoder"
+  ],
+  "capabilities": [
+    "gltf"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

@@ -1,7 +1,54 @@
 {
-  "generatedAt": "2026-09-17T23:21:55.971Z",
-  "revision": "2666b56",
+  "generatedAt": "2026-09-17T23:39:47.509Z",
+  "revision": "d0ddbc9",
   "examples": [
+    {
+      "id": "anim-position",
+      "version": "1.0.0",
+      "title": "Position Animation",
+      "category": "animation",
+      "status": "draft",
+      "apiClaims": [
+        "Component.update",
+        "Vec3"
+      ],
+      "capabilities": [
+        "animation"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "anim-position"
+    },
+    {
+      "id": "anim-rotation",
+      "version": "1.0.0",
+      "title": "Rotation Animation",
+      "category": "animation",
+      "status": "draft",
+      "apiClaims": [
+        "Component.update"
+      ],
+      "capabilities": [
+        "animation"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "anim-rotation"
+    },
     {
       "id": "automation",
       "version": "1.0.0",
@@ -55,6 +102,77 @@
       "dir": "camera"
     },
     {
+      "id": "camera-lookat",
+      "version": "1.0.0",
+      "title": "Camera LookAt",
+      "category": "camera",
+      "status": "draft",
+      "apiClaims": [
+        "Node.setPosition",
+        "Node.setRotationFromEuler"
+      ],
+      "capabilities": [
+        "camera"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "camera-lookat"
+    },
+    {
+      "id": "camera-multi",
+      "version": "1.0.0",
+      "title": "Multi Camera",
+      "category": "camera",
+      "status": "draft",
+      "apiClaims": [
+        "Camera.priority"
+      ],
+      "capabilities": [
+        "camera"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "camera-multi"
+    },
+    {
+      "id": "camera-ortho",
+      "version": "1.0.0",
+      "title": "Orthographic Camera",
+      "category": "camera",
+      "status": "draft",
+      "apiClaims": [
+        "Camera.ProjectionType.ORTHO",
+        "Camera.orthoHeight"
+      ],
+      "capabilities": [
+        "camera"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "camera-ortho"
+    },
+    {
       "id": "gltf-catalog",
       "version": "1.0.0",
       "status": "draft",
@@ -76,6 +194,102 @@
       },
       "promotionEvidence": null,
       "dir": "gltf-catalog"
+    },
+    {
+      "id": "gltf-draco",
+      "version": "1.0.0",
+      "title": "Draco Compressed",
+      "category": "gltf",
+      "status": "draft",
+      "apiClaims": [
+        "GLTFLoader.parseAsync",
+        "setDRACODecoder"
+      ],
+      "capabilities": [
+        "gltf"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "gltf-draco"
+    },
+    {
+      "id": "gltf-meshopt",
+      "version": "1.0.0",
+      "title": "Meshopt Compressed",
+      "category": "gltf",
+      "status": "draft",
+      "apiClaims": [
+        "GLTFLoader.parseAsync",
+        "setMeshoptDecoder"
+      ],
+      "capabilities": [
+        "gltf"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "gltf-meshopt"
+    },
+    {
+      "id": "gltf-morph",
+      "version": "1.0.0",
+      "title": "Morph Cube",
+      "category": "gltf",
+      "status": "draft",
+      "apiClaims": [
+        "GLTFLoader",
+        "Animation"
+      ],
+      "capabilities": [
+        "gltf"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "gltf-morph"
+    },
+    {
+      "id": "gltf-skin",
+      "version": "1.0.0",
+      "title": "Simple Skin",
+      "category": "gltf",
+      "status": "draft",
+      "apiClaims": [
+        "GLTFLoader",
+        "SkinnedMeshRenderer"
+      ],
+      "capabilities": [
+        "gltf"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "gltf-skin"
     },
     {
       "id": "gltf-viewer",
@@ -161,6 +375,99 @@
       "dir": "input"
     },
     {
+      "id": "light-point",
+      "version": "1.0.0",
+      "title": "Point Light",
+      "category": "lighting",
+      "status": "draft",
+      "apiClaims": [
+        "PointLight"
+      ],
+      "capabilities": [
+        "lighting"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "light-point"
+    },
+    {
+      "id": "light-sphere",
+      "version": "1.0.0",
+      "title": "Sphere Light",
+      "category": "lighting",
+      "status": "draft",
+      "apiClaims": [
+        "SphereLight"
+      ],
+      "capabilities": [
+        "lighting"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "light-sphere"
+    },
+    {
+      "id": "light-spot",
+      "version": "1.0.0",
+      "title": "Spot Light",
+      "category": "lighting",
+      "status": "draft",
+      "apiClaims": [
+        "SpotLight",
+        "Light"
+      ],
+      "capabilities": [
+        "lighting"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "light-spot"
+    },
+    {
+      "id": "light-two-directional",
+      "version": "1.0.0",
+      "title": "Two Directional Lights",
+      "category": "lighting",
+      "status": "draft",
+      "apiClaims": [
+        "DirectionalLight"
+      ],
+      "capabilities": [
+        "lighting"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "light-two-directional"
+    },
+    {
       "id": "material-basic",
       "version": "1.0.0",
       "title": "Material Basic",
@@ -188,6 +495,333 @@
       },
       "promotionEvidence": null,
       "dir": "material-basic"
+    },
+    {
+      "id": "material-color",
+      "version": "1.0.0",
+      "title": "Color Cubes",
+      "category": "material",
+      "status": "draft",
+      "apiClaims": [
+        "builtinResMgr.get"
+      ],
+      "capabilities": [
+        "material"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "material-color"
+    },
+    {
+      "id": "material-transparent",
+      "version": "1.0.0",
+      "title": "Transparent Cube",
+      "category": "material",
+      "status": "draft",
+      "apiClaims": [
+        "builtin-transparent-material"
+      ],
+      "capabilities": [
+        "material"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "material-transparent"
+    },
+    {
+      "id": "material-unlit",
+      "version": "1.0.0",
+      "title": "Unlit Cube",
+      "category": "material",
+      "status": "draft",
+      "apiClaims": [
+        "builtin-unlit-material"
+      ],
+      "capabilities": [
+        "material"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "material-unlit"
+    },
+    {
+      "id": "mesh-cylinder",
+      "version": "1.0.0",
+      "title": "Cylinder Mesh",
+      "category": "mesh",
+      "status": "draft",
+      "apiClaims": [
+        "primitives.cylinder"
+      ],
+      "capabilities": [
+        "mesh"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "mesh-cylinder"
+    },
+    {
+      "id": "mesh-plane",
+      "version": "1.0.0",
+      "title": "Ground Plane",
+      "category": "mesh",
+      "status": "draft",
+      "apiClaims": [
+        "primitives.plane"
+      ],
+      "capabilities": [
+        "mesh"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "mesh-plane"
+    },
+    {
+      "id": "mesh-sphere",
+      "version": "1.0.0",
+      "title": "Sphere Mesh",
+      "category": "mesh",
+      "status": "draft",
+      "apiClaims": [
+        "primitives.sphere"
+      ],
+      "capabilities": [
+        "mesh"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "mesh-sphere"
+    },
+    {
+      "id": "mesh-torus",
+      "version": "1.0.0",
+      "title": "Torus Mesh",
+      "category": "mesh",
+      "status": "draft",
+      "apiClaims": [
+        "primitives.torus"
+      ],
+      "capabilities": [
+        "mesh"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "mesh-torus"
+    },
+    {
+      "id": "node-active",
+      "version": "1.0.0",
+      "title": "Node Active Toggle",
+      "category": "basics",
+      "status": "draft",
+      "apiClaims": [
+        "Node.active"
+      ],
+      "capabilities": [
+        "basics"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "node-active"
+    },
+    {
+      "id": "node-hierarchy",
+      "version": "1.0.0",
+      "title": "Node Hierarchy",
+      "category": "basics",
+      "status": "draft",
+      "apiClaims": [
+        "Node.addChild",
+        "Node.getChildByName"
+      ],
+      "capabilities": [
+        "basics"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "node-hierarchy"
+    },
+    {
+      "id": "node-scale",
+      "version": "1.0.0",
+      "title": "Node Scale",
+      "category": "basics",
+      "status": "draft",
+      "apiClaims": [
+        "Node.setScale"
+      ],
+      "capabilities": [
+        "basics"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "node-scale"
+    },
+    {
+      "id": "rc-capture-frame",
+      "version": "1.0.0",
+      "title": "Capture Frame",
+      "category": "devtools",
+      "status": "draft",
+      "apiClaims": [
+        "createAgentSession",
+        "captureFrame"
+      ],
+      "capabilities": [
+        "devtools"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": true,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "rc-capture-frame"
+    },
+    {
+      "id": "rc-create-node",
+      "version": "1.0.0",
+      "title": "Create Node via Session",
+      "category": "devtools",
+      "status": "draft",
+      "apiClaims": [
+        "createAgentSession",
+        "dispatch"
+      ],
+      "capabilities": [
+        "devtools"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": true,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "rc-create-node"
+    },
+    {
+      "id": "rc-error-report",
+      "version": "1.0.0",
+      "title": "Runtime Error Report",
+      "category": "devtools",
+      "status": "draft",
+      "apiClaims": [
+        "createAgentSession",
+        "getRuntimeErrors"
+      ],
+      "capabilities": [
+        "devtools"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": true,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "rc-error-report"
+    },
+    {
+      "id": "rc-inspect-scene",
+      "version": "1.0.0",
+      "title": "Inspect Scene",
+      "category": "devtools",
+      "status": "draft",
+      "apiClaims": [
+        "createAgentSession",
+        "inspectScene"
+      ],
+      "capabilities": [
+        "devtools"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": true,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "rc-inspect-scene"
     },
     {
       "id": "skinned-animation",
@@ -268,6 +902,30 @@
       "dir": "static-model"
     },
     {
+      "id": "texture-basic",
+      "version": "1.0.0",
+      "title": "Textured Cube",
+      "category": "texture",
+      "status": "draft",
+      "apiClaims": [
+        "Texture2D",
+        "builtinResMgr.get"
+      ],
+      "capabilities": [
+        "texture"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "no-runtime-error"
+        ]
+      },
+      "dir": "texture-basic"
+    },
+    {
       "id": "transform",
       "version": "1.0.0",
       "status": "draft",
@@ -324,30 +982,62 @@
     "basics": [
       "hello-cube",
       "starter",
-      "transform"
+      "transform",
+      "node-hierarchy",
+      "node-active",
+      "node-scale"
     ],
     "mesh": [
-      "static-model"
+      "static-model",
+      "mesh-sphere",
+      "mesh-cylinder",
+      "mesh-torus",
+      "mesh-plane"
     ],
     "animation": [
       "skinned-animation",
-      "tween-basic"
+      "tween-basic",
+      "anim-rotation",
+      "anim-position"
     ],
     "gltf": [
       "gltf-viewer",
-      "gltf-catalog"
+      "gltf-catalog",
+      "gltf-draco",
+      "gltf-meshopt",
+      "gltf-morph",
+      "gltf-skin"
     ],
     "camera": [
-      "camera"
+      "camera",
+      "camera-lookat",
+      "camera-ortho",
+      "camera-multi"
     ],
     "interaction": [
       "input"
     ],
     "devtools": [
-      "automation"
+      "automation",
+      "rc-inspect-scene",
+      "rc-create-node",
+      "rc-capture-frame",
+      "rc-error-report"
     ],
     "material": [
-      "material-basic"
+      "material-basic",
+      "material-color",
+      "material-transparent",
+      "material-unlit"
+    ],
+    "lighting": [
+      "light-spot",
+      "light-sphere",
+      "light-point",
+      "light-two-directional"
+    ],
+    "texture": [
+      "texture-basic"
     ]
   }
 }

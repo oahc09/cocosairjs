@@ -1,0 +1,22 @@
+{
+  "id": "light-point",
+  "version": "1.0.0",
+  "title": "Point Light",
+  "category": "lighting",
+  "status": "draft",
+  "apiClaims": [
+    "PointLight"
+  ],
+  "capabilities": [
+    "lighting"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

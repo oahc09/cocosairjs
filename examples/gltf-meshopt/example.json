@@ -1,0 +1,23 @@
+{
+  "id": "gltf-meshopt",
+  "version": "1.0.0",
+  "title": "Meshopt Compressed",
+  "category": "gltf",
+  "status": "draft",
+  "apiClaims": [
+    "GLTFLoader.parseAsync",
+    "setMeshoptDecoder"
+  ],
+  "capabilities": [
+    "gltf"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

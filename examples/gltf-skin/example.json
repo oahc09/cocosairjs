@@ -1,0 +1,23 @@
+{
+  "id": "gltf-skin",
+  "version": "1.0.0",
+  "title": "Simple Skin",
+  "category": "gltf",
+  "status": "draft",
+  "apiClaims": [
+    "GLTFLoader",
+    "SkinnedMeshRenderer"
+  ],
+  "capabilities": [
+    "gltf"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

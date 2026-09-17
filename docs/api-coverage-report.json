@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-17T23:21:19.051Z",
+  "generatedAt": "2026-09-17T23:39:47.777Z",
   "totalUnits": 4729,
-  "totalClaimed": 20,
+  "totalClaimed": 31,
   "tiers": {
     "core": {
       "total": 717,
-      "claimed": 17,
-      "rate": 0.024,
+      "claimed": 27,
+      "rate": 0.038,
       "gate": "100% verified",
       "threshold": 1,
       "pass": false
     },
     "important": {
       "total": 793,
-      "claimed": 3,
-      "rate": 0.004,
+      "claimed": 4,
+      "rate": 0.005,
       "gate": "≥ 60% claimed",
       "threshold": 0.6,
       "pass": false
@@ -49,13 +49,43 @@
       "unit": "DirectionalLight",
       "tier": "core",
       "examples": [
-        "hello-cube"
+        "hello-cube",
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "Light",
+      "tier": "core",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SphereLight",
+      "tier": "core",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
+      "unit": "SpotLight",
+      "tier": "core",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "PointLight",
+      "tier": "core",
+      "examples": [
+        "light-point"
       ]
     },
     {
       "unit": "SkinnedMeshRenderer",
       "tier": "important",
       "examples": [
+        "gltf-skin",
         "skinned-animation"
       ]
     },
@@ -75,9 +105,17 @@
       ]
     },
     {
+      "unit": "Node.getChildByName",
+      "tier": "core",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
       "unit": "Node.addChild",
       "tier": "core",
       "examples": [
+        "node-hierarchy",
         "transform"
       ]
     },
@@ -85,6 +123,7 @@
       "unit": "Node.setPosition",
       "tier": "core",
       "examples": [
+        "camera-lookat",
         "transform",
         "tween-basic"
       ]
@@ -93,7 +132,15 @@
       "unit": "Node.setRotationFromEuler",
       "tier": "core",
       "examples": [
+        "camera-lookat",
         "transform"
+      ]
+    },
+    {
+      "unit": "Node.setScale",
+      "tier": "core",
+      "examples": [
+        "node-scale"
       ]
     },
     {
@@ -109,7 +156,8 @@
       "unit": "Texture2D",
       "tier": "core",
       "examples": [
-        "static-model"
+        "static-model",
+        "texture-basic"
       ]
     },
     {
@@ -127,6 +175,13 @@
       ]
     },
     {
+      "unit": "Animation",
+      "tier": "important",
+      "examples": [
+        "gltf-morph"
+      ]
+    },
+    {
       "unit": "SkeletalAnimation",
       "tier": "important",
       "examples": [
@@ -138,6 +193,34 @@
       "tier": "core",
       "examples": [
         "hello-cube"
+      ]
+    },
+    {
+      "unit": "primitives.cylinder",
+      "tier": "core",
+      "examples": [
+        "mesh-cylinder"
+      ]
+    },
+    {
+      "unit": "primitives.plane",
+      "tier": "core",
+      "examples": [
+        "mesh-plane"
+      ]
+    },
+    {
+      "unit": "primitives.sphere",
+      "tier": "core",
+      "examples": [
+        "mesh-sphere"
+      ]
+    },
+    {
+      "unit": "primitives.torus",
+      "tier": "core",
+      "examples": [
+        "mesh-torus"
       ]
     },
     {
@@ -166,13 +249,17 @@
       "unit": "GLTFLoader",
       "tier": "core",
       "examples": [
-        "gltf-catalog"
+        "gltf-catalog",
+        "gltf-morph",
+        "gltf-skin"
       ]
     },
     {
       "unit": "GLTFLoader.parseAsync",
       "tier": "core",
       "examples": [
+        "gltf-draco",
+        "gltf-meshopt",
         "gltf-viewer"
       ]
     }
@@ -232,7 +319,6 @@
     "MeshRenderer.updateReflectionProbeBlendId",
     "MeshRenderer.updateReflectionProbeBlendWeight",
     "DirectionalLight.constructor",
-    "Light",
     "Light.constructor",
     "Light.LUMINOUS_FLUX",
     "Light.LUMINANCE",
@@ -240,11 +326,8 @@
     "Light.onEnable",
     "Light.onDisable",
     "Light.onDestroy",
-    "SphereLight",
     "SphereLight.constructor",
-    "SpotLight",
     "SpotLight.constructor",
-    "PointLight",
     "PointLight.constructor",
     "Color",
     "Color.constructor",
@@ -631,7 +714,6 @@
     "Node.getParent",
     "Node.setParent",
     "Node.getChildByUuid",
-    "Node.getChildByName",
     "Node.getChildByPath",
     "Node.insertChild",
     "Node.getSiblingIndex",
@@ -673,7 +755,6 @@
     "Node.getPosition",
     "Node.setRotation",
     "Node.getRotation",
-    "Node.setScale",
     "Node.getScale",
     "Node.inverseTransformPoint",
     "Node.setWorldPosition",
@@ -822,11 +903,7 @@
     "ColorTrack.constructor",
     "ColorTrack.channels",
     "primitives.cone",
-    "primitives.cylinder",
-    "primitives.plane",
     "primitives.quad",
-    "primitives.sphere",
-    "primitives.torus",
     "primitives.capsule",
     "primitives.circle",
     "primitives.translate",

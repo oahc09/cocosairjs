@@ -1,0 +1,23 @@
+{
+  "id": "gltf-morph",
+  "version": "1.0.0",
+  "title": "Morph Cube",
+  "category": "gltf",
+  "status": "draft",
+  "apiClaims": [
+    "GLTFLoader",
+    "Animation"
+  ],
+  "capabilities": [
+    "gltf"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

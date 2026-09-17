@@ -1,0 +1,22 @@
+{
+  "id": "mesh-plane",
+  "version": "1.0.0",
+  "title": "Ground Plane",
+  "category": "mesh",
+  "status": "draft",
+  "apiClaims": [
+    "primitives.plane"
+  ],
+  "capabilities": [
+    "mesh"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

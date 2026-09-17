@@ -1,0 +1,22 @@
+{
+  "id": "camera-multi",
+  "version": "1.0.0",
+  "title": "Multi Camera",
+  "category": "camera",
+  "status": "draft",
+  "apiClaims": [
+    "Camera.priority"
+  ],
+  "capabilities": [
+    "camera"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

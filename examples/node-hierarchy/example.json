@@ -1,0 +1,23 @@
+{
+  "id": "node-hierarchy",
+  "version": "1.0.0",
+  "title": "Node Hierarchy",
+  "category": "basics",
+  "status": "draft",
+  "apiClaims": [
+    "Node.addChild",
+    "Node.getChildByName"
+  ],
+  "capabilities": [
+    "basics"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}

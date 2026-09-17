@@ -1,0 +1,23 @@
+{
+  "id": "rc-inspect-scene",
+  "version": "1.0.0",
+  "title": "Inspect Scene",
+  "category": "devtools",
+  "status": "draft",
+  "apiClaims": [
+    "createAgentSession",
+    "inspectScene"
+  ],
+  "capabilities": [
+    "devtools"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": true,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "no-runtime-error"
+    ]
+  }
+}
