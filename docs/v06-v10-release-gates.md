@@ -85,3 +85,22 @@ License Inventory 已建档（`docs/v08-license-inventory.md`），但需审计�
 | P1 | 50 新 Benchmark（Invalid/Stress/Security/Lifecycle） | 2-3 天 |
 | P1 | 10 validated Recipe 加 lifecycle 场景 | 1 天 |
 | P2 | License 逐文件审计脚本 | 半天 |
+
+
+---
+
+## API Coverage Report (V1.1)
+
+| 指标 | 值 |
+|---|---|
+| Coverage Units (Inventory) | 3358 |
+| Covered by Examples | 254 (7.6%) |
+| Core Gate Rate | 72.7% (8/11 core APIs) |
+
+来源：`docs/api-coverage-report.json`。当前 10 个 examples 覆盖核心 API 的 72.7%。
+扩量到 40 examples 预计覆盖 ≥ 15%；到 120 examples 预计覆盖 ≥ 30%。
+覆盖差距主要在 Physical Extensions (PBR/Clearcoat/Transmission) 和 Skeletal Animation 的高级方法。
+
+Python 脚本工具：
+- `node tools/examples/api-inventory.cjs` → docs/example-api-inventory.json
+- `node tools/examples/coverage-report.cjs` → docs/api-coverage-report.json
