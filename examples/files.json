@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-17T15:28:59.724Z",
-  "revision": "6731f34",
+  "generatedAt": "2026-09-17T23:05:34.646Z",
+  "revision": "a07c4b7",
   "examples": [
     {
       "id": "automation",
@@ -155,6 +155,34 @@
       "dir": "input"
     },
     {
+      "id": "material-basic",
+      "version": "1.0.0",
+      "title": "Material Basic",
+      "category": "material",
+      "status": "stable",
+      "apiClaims": [
+        "MeshRenderer",
+        "builtinResMgr.get",
+        "builtin-standard-material"
+      ],
+      "capabilities": [
+        "material"
+      ],
+      "benchmarkRefs": [
+        "B031"
+      ],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "material-property",
+          "visible-frame"
+        ]
+      },
+      "dir": "material-basic"
+    },
+    {
       "id": "skinned-animation",
       "version": "1.0.0",
       "status": "stable",
@@ -253,6 +281,31 @@
         ]
       },
       "dir": "transform"
+    },
+    {
+      "id": "tween-basic",
+      "version": "1.0.0",
+      "title": "Tween Basic",
+      "category": "animation",
+      "status": "stable",
+      "apiClaims": [
+        "Node.setPosition",
+        "Scene",
+        "Camera"
+      ],
+      "capabilities": [
+        "animation"
+      ],
+      "benchmarkRefs": [],
+      "recipeRefs": [],
+      "requiresDevTools": false,
+      "validation": {
+        "validators": [
+          "scene-ready",
+          "visible-frame"
+        ]
+      },
+      "dir": "tween-basic"
     }
   ],
   "categories": {
@@ -265,7 +318,8 @@
       "static-model"
     ],
     "animation": [
-      "skinned-animation"
+      "skinned-animation",
+      "tween-basic"
     ],
     "gltf": [
       "gltf-viewer",
@@ -279,6 +333,9 @@
     ],
     "devtools": [
       "automation"
+    ],
+    "material": [
+      "material-basic"
     ]
   }
 }

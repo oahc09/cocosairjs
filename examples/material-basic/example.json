@@ -1,0 +1,27 @@
+{
+  "id": "material-basic",
+  "version": "1.0.0",
+  "title": "Material Basic",
+  "category": "material",
+  "status": "stable",
+  "apiClaims": [
+    "MeshRenderer",
+    "builtinResMgr.get",
+    "builtin-standard-material"
+  ],
+  "capabilities": [
+    "material"
+  ],
+  "benchmarkRefs": [
+    "B031"
+  ],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "material-property",
+      "visible-frame"
+    ]
+  }
+}

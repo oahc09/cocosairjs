@@ -1,0 +1,24 @@
+{
+  "id": "tween-basic",
+  "version": "1.0.0",
+  "title": "Tween Basic",
+  "category": "animation",
+  "status": "stable",
+  "apiClaims": [
+    "Node.setPosition",
+    "Scene",
+    "Camera"
+  ],
+  "capabilities": [
+    "animation"
+  ],
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "validation": {
+    "validators": [
+      "scene-ready",
+      "visible-frame"
+    ]
+  }
+}
