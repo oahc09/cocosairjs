@@ -1,6 +1,6 @@
 {
-  "measuredAt": "2026-09-17T22:55:44.748Z",
-  "status": "BLOCKED",
+  "measuredAt": "2026-09-17T23:53:37.904Z",
+  "status": "PASS",
   "referenceGatePass": true,
   "catalogGatePass": true,
   "metrics": {
@@ -22,38 +22,7 @@
     "validatedCount": 30,
     "stableCount": 30
   },
-  "evidenceFailures": [
-    "R001: sourceHash mismatch",
-    "R002: sourceHash mismatch",
-    "R003: sourceHash mismatch",
-    "R004: sourceHash mismatch",
-    "R005: sourceHash mismatch",
-    "R006: sourceHash mismatch",
-    "R007: sourceHash mismatch",
-    "R008: sourceHash mismatch",
-    "R009: sourceHash mismatch",
-    "R010: sourceHash mismatch",
-    "R011: sourceHash mismatch",
-    "R012: sourceHash mismatch",
-    "R013: sourceHash mismatch",
-    "R014: sourceHash mismatch",
-    "R015: sourceHash mismatch",
-    "R016: sourceHash mismatch",
-    "R017: sourceHash mismatch",
-    "R018: sourceHash mismatch",
-    "R019: sourceHash mismatch",
-    "R020: sourceHash mismatch",
-    "R021: sourceHash mismatch",
-    "R022: sourceHash mismatch",
-    "R023: sourceHash mismatch",
-    "R024: sourceHash mismatch",
-    "R025: sourceHash mismatch",
-    "R026: sourceHash mismatch",
-    "R027: sourceHash mismatch",
-    "R028: sourceHash mismatch",
-    "R029: sourceHash mismatch",
-    "R030: sourceHash mismatch"
-  ],
+  "evidenceFailures": [],
   "coverageFailures": [],
   "tests": {
     "suites": 28,
@@ -61,8 +30,5 @@
     "passed": 202,
     "success": true
   },
-  "blockers": [
-    "运行证据与当前源码哈希不一致，需要重跑。",
-    "Recipe 完整场景证据未通过：R001: sourceHash mismatch；R002: sourceHash mismatch；R003: sourceHash mismatch；R004: sourceHash mismatch；R005: sourceHash mismatch；R006: sourceHash mismatch；R007: sourceHash mismatch；R008: sourceHash mismatch"
-  ]
+  "blockers": []
 }
