@@ -1,0 +1,14 @@
+{
+  "scanned": 22,
+  "issues": [],
+  "issueCount": 0,
+  "pass": true,
+  "licenses": {
+    "LICENSE": 1060,
+    "THIRD_PARTY_LICENSES.md": 4242,
+    "UPSTREAM.md": 1658,
+    "gltf-decoders/draco/LICENSE.md": 12203,
+    "gltf-decoders/meshopt/LICENSE.md": 1079,
+    "gltf-decoders/basis/LICENSE.md": 12400
+  }
+}
