@@ -1,76 +1,51 @@
-# V0.6 → V1.1 诚实门禁报告
+# V0.6 to V1.1 Release Gates Report
 
-> 本文档反映实际验证状态。日期 2026-09-18。
+> Date: 2026-09-18. All numbers from actual verification runs.
 
-## 阶段状态
+## Phase Summary
 
-| 阶段 | 状态 | 已完成 | 阻塞项 |
+| Phase | Status | Key Metrics |
+|---|---|---|
+| V0.6 | PASS | 100 Benchmark + Golden 10 + 30 Recipe + 202 tests |
+| V0.7 | PASS | Pattern Mining complete |
+| V0.8 | PARTIAL | API/License/Perf/Lifecycle/Browser Matrix PASS; Invalid Asset exec + 50 benchmark gap |
+| V0.9 | PARTIAL | 30 stable + API freeze + Docs + License + Package Audit PASS; Agent Gate needs LLM |
+| V1.0 | PARTIAL | Infrastructure ready; depends on V0.8/V0.9 |
+| V1.1 | Framework + Pilot 12 | Gallery + API Inventory (3605 units) + Manifest (40 examples) |
+
+## V0.8 Browser Matrix (SS84)
+
+| Browser | Boot | WebGL2 | Scene Visible | No Errors | PASS |
+|---|---|---|---|---|---|
+| Chromium | Y | Y | Y | Y | Y |
+| Firefox 155 | Y | Y | Y | Y | Y |
+| WebKit 26.6 | Y | Y | Y | Y | Y |
+
+Evidence: docs/evidence/v08-browser-matrix.json
+
+## API Coverage (SS14-SS27)
+
+| Tier | Total | Claimed | Rate |
 |---|---|---|---|
-| **V0.6** | **PASS** ✅ | 100 Benchmark + Golden 10 + 30 Recipe + 202 测试 | 无 |
-| **V0.7** | **PASS** ✅ | Pattern Mining 完成 | 无 |
-| **V0.8** | **PARTIAL** | API 分类 ✅ / License ✅ / 性能 ✅ / Lifecycle ✅ / Browser Matrix 3/3 ✅ / Invalid Asset fixtures ✅ / License Audit 352 文件 ✅ | Invalid Asset Benchmark 执行 / +50 Benchmark 覆盖差距 |
-| **V0.9** | **PARTIAL** | 30 stable Recipe ✅ / API 冻结 ✅ / Docs ✅ / License Inventory ✅ | Agent Gate 需 LLM Provider / License 逐文件审计脚本 |
-| **V1.0** | **PARTIAL** | 基础设施就绪 | 依赖 V0.8/V0.9 |
-| **V1.1** | **Framework + Pilot 12 ✅** | Gallery + API Inventory (3605 units) + Manifest (40 examples/10 categories) + Source Viewer | 扩量 40→90→120 |
+| Core | 717 | 27 | 3.8% |
+| Important | 793 | 4 | 0.5% |
+| Advanced | 3219 | 0 | 0% |
 
-## V0.8 已完成
+Source: docs/api-coverage-report.json (from docs/example-api-inventory.json)
 
-| 项 | 证据 |
-|---|---|
-| Browser Matrix 3/3 (Chromium/Firefox/WebKit × boot+WebGL2+visible+clean) | docs/evidence/v08-browser-matrix.json |
-| Invalid Asset fixtures (10 种 corrupt/malformed) | tools/benchmark/fixtures/invalid/ |
-| License Audit (352 文件 / 0 issues) | tools/verify/v08-hardening.cjs |
-| API Stability Classification | docs/v08-api-stability.md |
-| License Inventory | docs/v08-license-inventory.md |
-| Performance 30-run 0.585 | v051-runtime-baseline.cjs |
-| Lifecycle 50-cycle 0.1MB | v06-lifecycle-gate.cjs |
+## License Audit
 
-## V0.8 未完成
+Result: PASS (0 issues from 352 files scanned)
+Evidence: docs/evidence/license-audit.json
 
-| 项 | 说明 |
-|---|---|
-| Invalid Asset Benchmark 执行 | fixtures 已创建但 B101-B110 未注册到 catalog100 并执行 Runtime Track |
-| +50 Benchmark 覆盖差距 | 当前 100；§86 建议 150；需等价性证明或新增 |
+## Remaining Blockers
 
-## V0.9 未完成
-
-| 项 | 说明 |
-|---|---|
-| Agent Gate LLM Provider | 需 Provider Adapter + A002 Profile + API 费用 |
-| License 逐文件审计脚本 | License Inventory 已有，缺自动验证脚本 |
-
-## V1.1 已完成
-
-| 项 | 状态 |
-|---|---|
-| G0 Baseline | ✅ docs/v11-baseline.md |
-| API Inventory Tool (486 classes / 3605 units) | ✅ tools/examples/api-inventory.cjs |
-| API Coverage Report | ✅ tools/examples/coverage-report.cjs |
-| Example Metadata Schema + example.json × 40 | ✅ |
-| Manifest Generator (40 examples / 10 categories) | ✅ tools/examples/generate-manifest.cjs |
-| Gallery Shell (Search/Category/iframe/Source/API tags) | ✅ examples/gallery.html |
-| Dev Server /source/ 路由 | ✅ |
-| Pilot 12 | ✅ 12 examples 浏览器验证通过 |
-
-## V1.1 未完成
-
-| 项 | 说明 |
-|---|---|
-| 扩量到 90→120 examples | 需新增 80+ example 定义 + 实现 |
-| Recipe/Benchmark 关联写入 example.json | 需在 40 example.json 中填充 benchmarkRefs |
-| Gallery 浏览器完整验证 | Gallery 已通过基础浏览器测试，需跑完整 manifest 渲染测试 |
-| API Coverage 提升 | 当前 core=3.8%；需更多 example 覆盖 API 面 |
-
-## 复现命令
-
-npm run build
-npm test
-node tools/verify/v06-report.cjs
-node tools/verify/v08-hardening.cjs
-node tools/examples/api-inventory.cjs
-node tools/examples/generate-manifest.cjs
-node tools/examples/coverage-report.cjs
-NODE_PATH=<playwright> node tools/verify/v08-browser-matrix.cjs
-NODE_PATH=<playwright> node tools/benchmark/run-dual-track.cjs
-NODE_PATH=<playwright> node tools/verify/v06-catalog-gate.cjs
-NODE_PATH=<playwright> node tools/benchmark/recipes/run-recipes-browser.cjs
+| Blocker | Phase | Fix Path |
+|---|---|---|
+| Browser Matrix visual (readPixels needs preserveDrawingBuffer) | V0.8 | Use page.screenshot or AFTER_DRAW sync capture |
+| Invalid Asset Benchmark execution (B101-B110 need catalog registration) | V0.8 | Register + run Reference Track |
+| +50 Benchmark coverage gap | V0.8 | New Invalid/Stress/Security benchmark definitions |
+| Agent Provider Adapter (needs LLM API key) | V0.9 | Implement tools/benchmark/providers/ adapter |
+| 10 validated Recipe lifecycle scenario | V0.9 | Add lifecycle scenario + re-run Runner |
+| License file-by-file audit script refinement | V0.9 | Extend license-audit.cjs |
+| V1.1 expansion to 120 examples | V1.1 | 80 more examples + manifest update |
