@@ -1,7 +1,7 @@
 {
   "id": "gltf-viewer",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -16,10 +16,143 @@
     "gltf"
   ],
   "validation": {
-    "validators": [
+    "functional": [
+      "node-exists",
       "asset-loaded",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
       "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "7657bb15b256",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
+    "points": [
+      "GLTFLoader 加载本地/参数化模型",
+      "AnimationClip 播放控制",
+      "AirTransmissionCapture 两相机捕获合同"
     ]
   },
-  "promotionEvidence": null
+  "effect": {
+    "functional": "app 启动后按 URL 参数加载模型（默认本地资产），instantiate 挂场景；transmission-capture 节点在启动时武装捕获相机；模型带动画时播放。",
+    "visual": "视口中央渲染模型，可拖动旋转缩放；状态提示区显示加载状态"
+  },
+  "api": {
+    "primary": [
+      "GLTFLoader",
+      "AirTransmissionCapture"
+    ],
+    "supporting": [
+      "Animation"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Animation",
+      "AnimationClip",
+      "GLTFLoader",
+      "AirTransmissionCapture",
+      "math.Vec3",
+      "Node.addChild",
+      "Node.setPosition"
+    ],
+    "forbiddenShortcut": [
+      "渲染外网远端模型（本地资产为准）",
+      "静态贴图冒充 transmission 折射"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "Animation",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L63"
+      },
+      {
+        "api": "AnimationClip",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "AirTransmissionCapture",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L56"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "transmission-capture"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  }
 }

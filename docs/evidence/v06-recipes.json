@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-09-18T15:20:08.673Z",
-  "runIdBase": "recipe-1789744671134",
-  "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
-  "baseRevision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
+  "measuredAt": "2026-09-18T17:43:27.180Z",
+  "runIdBase": "recipe-1789753299700",
+  "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+  "baseRevision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
   "total": 30,
   "pass": 30,
   "fail": 0,
@@ -15,11 +15,11 @@
         "id": "recipe:R001",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R001-1",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R001-1",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "1eb560e95b92d011c2eb3ee65c8fbdac8badf6c617415fcf96907726787e88fd",
-      "measuredAt": "2026-09-18T15:17:59.851Z",
+      "measuredAt": "2026-09-18T17:41:43.616Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -115,11 +115,11 @@
         "id": "recipe:R002",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R002-2",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R002-2",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "1de1077319fdc8981f4ab09e4ffec94681a6dff472a0b624cf6dc56589b0cacc",
-      "measuredAt": "2026-09-18T15:18:07.049Z",
+      "measuredAt": "2026-09-18T17:41:47.482Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -171,7 +171,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "foreground samples=433"
+          "detail": "foreground samples=326"
         },
         {
           "validatorId": "frame-diff",
@@ -206,12 +206,12 @@
       "artifacts": [
         {
           "path": "docs/evidence/recipes/R002.png",
-          "hash": "c0e5172240a887bb0aff32f68d8f922c2cf59bee2f393590529dbe987e740f8c",
-          "bytes": 12114
+          "hash": "0019012b892e0f00c3657a3fd9a0fb77924043898fefbda8db8b84bb780a47da",
+          "bytes": 5746
         },
         {
           "path": "docs/evidence/recipes/R002.json",
-          "hash": "76ca4f4d6689b42d966dac526e119bd4d449ec8775826a7f80595f7e8a570c92",
+          "hash": "eae5535cd6819a9d579d13e93106d698c628ecd50bb532471642c49a8209ffd2",
           "bytes": 2656
         }
       ]
@@ -224,11 +224,11 @@
         "id": "recipe:R003",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R003-3",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R003-3",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "7e03f9ea205805d7f6719ad5900dcff41d65728c5a1dac0c7139d877bcaa8965",
-      "measuredAt": "2026-09-18T15:18:13.749Z",
+      "measuredAt": "2026-09-18T17:41:51.182Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -321,11 +321,11 @@
         "id": "recipe:R004",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R004-4",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R004-4",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "9b957b0c4c4b91b6a44ab0f24aab4abb4cf811d9032f820cf22241fbf9a25c41",
-      "measuredAt": "2026-09-18T15:18:20.516Z",
+      "measuredAt": "2026-09-18T17:41:54.483Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -425,11 +425,11 @@
         "id": "recipe:R005",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R005-5",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R005-5",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "f9029956991805c85bd84dca2c25abf7de967987d2ba2c18965037321e0b6175",
-      "measuredAt": "2026-09-18T15:18:27.383Z",
+      "measuredAt": "2026-09-18T17:41:58.132Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -526,11 +526,11 @@
         "id": "recipe:R006",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R006-6",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R006-6",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "56c5a4420d1592ef5918f544cfe8b9f23ecfe760cfb5e1d77ada079ffd45eec6",
-      "measuredAt": "2026-09-18T15:18:34.149Z",
+      "measuredAt": "2026-09-18T17:42:01.598Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -625,11 +625,11 @@
         "id": "recipe:R007",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R007-7",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R007-7",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "57cffd0519245f54e67208b2c8664f21c415ddd186b5c667b72a747e8c35dce9",
-      "measuredAt": "2026-09-18T15:18:41.014Z",
+      "measuredAt": "2026-09-18T17:42:05.052Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -722,11 +722,11 @@
         "id": "recipe:R008",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R008-8",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R008-8",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "edaca14c0f8ac11adf947bb53eb7dc978631bbfdd5e64b077db215092e8d9e52",
-      "measuredAt": "2026-09-18T15:18:47.994Z",
+      "measuredAt": "2026-09-18T17:42:08.966Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -824,11 +824,11 @@
         "id": "recipe:R009",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R009-9",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R009-9",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "2dd4af303414311f5f79727d7786946ed6f11f6775dff4ebec2eff6949049281",
-      "measuredAt": "2026-09-18T15:18:51.428Z",
+      "measuredAt": "2026-09-18T17:42:12.249Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -925,11 +925,11 @@
         "id": "recipe:R010",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R010-10",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R010-10",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "043dc84a8787437d0550dd52941db260b2c83fd8e095c17655a42808862e95ba",
-      "measuredAt": "2026-09-18T15:18:54.943Z",
+      "measuredAt": "2026-09-18T17:42:15.731Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1029,11 +1029,11 @@
         "id": "recipe:R011",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R011-11",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R011-11",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "43ea40e834dafc7c470f4d312dc8093af0a36cb0841029afac3172d2695c8a2a",
-      "measuredAt": "2026-09-18T15:18:58.376Z",
+      "measuredAt": "2026-09-18T17:42:18.968Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1126,11 +1126,11 @@
         "id": "recipe:R012",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R012-12",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R012-12",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "78b505fd8e13c84e73f54cf625c901dc5651eada69f3ba9207bb6ae7504414c8",
-      "measuredAt": "2026-09-18T15:19:02.261Z",
+      "measuredAt": "2026-09-18T17:42:22.798Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1214,7 +1214,7 @@
         },
         {
           "path": "docs/evidence/recipes/R012.json",
-          "hash": "a6e05014f512fcaac8f8b296ad261c9ddf1e6b592ab79cea04ce96df2a0c5c22",
+          "hash": "79077bc2b7c4c9f366b8437daa4eba66dcf92bf7ec07e0a45f35dd7d6141fa34",
           "bytes": 2330
         }
       ]
@@ -1227,11 +1227,11 @@
         "id": "recipe:R013",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R013-13",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R013-13",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "b85573f45bd70bd31bdbbc0080319287d4e0c2006bf1382ec5876f59703deee7",
-      "measuredAt": "2026-09-18T15:19:05.928Z",
+      "measuredAt": "2026-09-18T17:42:26.598Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1306,13 +1306,13 @@
       "artifacts": [
         {
           "path": "docs/evidence/recipes/R013.png",
-          "hash": "c6aad533e47e40eab83593b223fb5f4f8d043b3e2048e0dd24d034c656eaa756",
-          "bytes": 5964
+          "hash": "3ab66d1bd75202e6171d1083a30af47cdd9945ceaa72dd082cbc54f168ad7a81",
+          "bytes": 5971
         },
         {
           "path": "docs/evidence/recipes/R013.json",
-          "hash": "569ad28f495d20a5d711db012d32ec4c5d8dd20096ae3723a2a41f6bb807b19e",
-          "bytes": 2266
+          "hash": "17568468f7f5b088cee37401d3593bd93bfbf38ae8a3408458c3b64a9dcf702a",
+          "bytes": 2265
         }
       ]
     },
@@ -1324,11 +1324,11 @@
         "id": "recipe:R014",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R014-14",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R014-14",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "1ee7a56d6d8919b06de664362d2bb46b46de4f507239e7464e4c13b8cd86686c",
-      "measuredAt": "2026-09-18T15:19:09.827Z",
+      "measuredAt": "2026-09-18T17:42:30.115Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1421,11 +1421,11 @@
         "id": "recipe:R015",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R015-15",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R015-15",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "2fb30b4a4d42c2c846eebf7d8907841d9eb193d68dea92d5c2f41ea67ed140f8",
-      "measuredAt": "2026-09-18T15:19:13.610Z",
+      "measuredAt": "2026-09-18T17:42:33.648Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1518,11 +1518,11 @@
         "id": "recipe:R016",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R016-16",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R016-16",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "a710c8c523cd9487fa6d5536f1a63c1a8f68a0135273b99c5590dc936ff4ff19",
-      "measuredAt": "2026-09-18T15:19:17.160Z",
+      "measuredAt": "2026-09-18T17:42:37.414Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1607,8 +1607,8 @@
         },
         {
           "path": "docs/evidence/recipes/R016.json",
-          "hash": "81c96696be14f22c4be5e2dae1f8f835bd4a516161a5dbc76d3df9241d53c70f",
-          "bytes": 2324
+          "hash": "28edb7648537c4b3857dd64534fa67ee173f30daffc652dcd410c321995b1ce4",
+          "bytes": 2325
         }
       ]
     },
@@ -1620,11 +1620,11 @@
         "id": "recipe:R017",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R017-17",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R017-17",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "2179cc3478a1b7cf3cd01604a7b9eef1d188fe6965fcb22b33aa417e68afcc41",
-      "measuredAt": "2026-09-18T15:19:21.043Z",
+      "measuredAt": "2026-09-18T17:42:41.230Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1721,11 +1721,11 @@
         "id": "recipe:R018",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R018-18",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R018-18",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "db6c0b08fe3960e68c284bf48340ac00e716f4781af439577d963f7e5ce0f8d5",
-      "measuredAt": "2026-09-18T15:19:24.659Z",
+      "measuredAt": "2026-09-18T17:42:44.666Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1818,11 +1818,11 @@
         "id": "recipe:R019",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R019-19",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R019-19",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "e5449149c4ab53dfce38d0b3c2506139c0b770949f3c69f2e4f279fb62855581",
-      "measuredAt": "2026-09-18T15:19:28.644Z",
+      "measuredAt": "2026-09-18T17:42:48.431Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -1915,11 +1915,11 @@
         "id": "recipe:R020",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R020-20",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R020-20",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "6a4a46a273f8e4dad9f822767783f256bb71c44f570aae47ffc5e9824b4cdbf9",
-      "measuredAt": "2026-09-18T15:19:32.261Z",
+      "measuredAt": "2026-09-18T17:42:52.047Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2012,11 +2012,11 @@
         "id": "recipe:R021",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R021-21",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R021-21",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "0015269e90d67e1900919bc70afe12c83d69818800e490280bada2ac335fbf6a",
-      "measuredAt": "2026-09-18T15:19:35.991Z",
+      "measuredAt": "2026-09-18T17:42:55.648Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2109,11 +2109,11 @@
         "id": "recipe:R022",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R022-22",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R022-22",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "08b4b23155da89baf64fc493b12f0c303e2f399d206c2ebbffbab929a741451f",
-      "measuredAt": "2026-09-18T15:19:39.609Z",
+      "measuredAt": "2026-09-18T17:42:58.965Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2211,11 +2211,11 @@
         "id": "recipe:R023",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R023-23",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R023-23",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "3b2b13979b38e2722c3b5ee15707c8ae1b6a14a309cd9460751adeb722246434",
-      "measuredAt": "2026-09-18T15:19:43.058Z",
+      "measuredAt": "2026-09-18T17:43:02.396Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2314,11 +2314,11 @@
         "id": "recipe:R024",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R024-24",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R024-24",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "292cfe47e90a57a7322775b77f996bfd89f47aee0278688d1a24f044e1db47bd",
-      "measuredAt": "2026-09-18T15:19:46.493Z",
+      "measuredAt": "2026-09-18T17:43:05.798Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2417,11 +2417,11 @@
         "id": "recipe:R025",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R025-25",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R025-25",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "613eeedd7b5f32a8ba0291b1776f0511554502a81c9b4a2f6593eaf4e79b1ed2",
-      "measuredAt": "2026-09-18T15:19:50.225Z",
+      "measuredAt": "2026-09-18T17:43:09.283Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2520,11 +2520,11 @@
         "id": "recipe:R026",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R026-26",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R026-26",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "499e38ee35bb4502ee41df79587b0e65008d5815d404df3a5efd319b4ce13664",
-      "measuredAt": "2026-09-18T15:19:53.993Z",
+      "measuredAt": "2026-09-18T17:43:12.814Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2568,7 +2568,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "foreground samples=489"
+          "detail": "foreground samples=503"
         },
         {
           "validatorId": "frame-diff",
@@ -2603,12 +2603,12 @@
       "artifacts": [
         {
           "path": "docs/evidence/recipes/R026.png",
-          "hash": "708fff74dd11b80dd6de6056a3a3eb5606696d01ab22a6521aaac259915a91d2",
-          "bytes": 11295
+          "hash": "510e09cbda9b5eb7a013b5f023660ea8284b50a68a43e6b417f320a41961864b",
+          "bytes": 10971
         },
         {
           "path": "docs/evidence/recipes/R026.json",
-          "hash": "0fedb5163434bc331f8da9771b508592dcc9aeedbc3a776edf3b5de31c19ab94",
+          "hash": "7d457b8aa0a2a12941e17e6479c5cc9c87be07cabd5063874475b0159d9abe76",
           "bytes": 2791
         }
       ]
@@ -2621,11 +2621,11 @@
         "id": "recipe:R027",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R027-27",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R027-27",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "d9d5cd658e71bfb26c6b7cea3782a7a03a242ec77b2d24eaedd53823881fee1a",
-      "measuredAt": "2026-09-18T15:19:57.725Z",
+      "measuredAt": "2026-09-18T17:43:16.664Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2671,7 +2671,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "foreground samples=364"
+          "detail": "foreground samples=401"
         },
         {
           "validatorId": "frame-diff",
@@ -2706,12 +2706,12 @@
       "artifacts": [
         {
           "path": "docs/evidence/recipes/R027.png",
-          "hash": "6ad72a260f0a5817c7a3cb762a26608af5ed2b3ef5bbf41a0b5eede94f63c966",
-          "bytes": 17142
+          "hash": "d0b845db53b4164a9e3348f64925de3c5c833ce49f7a379186c972dda32e17f0",
+          "bytes": 22469
         },
         {
           "path": "docs/evidence/recipes/R027.json",
-          "hash": "09e4bb3e344e461f2bac42d37b4d5b46b5d93b591a7908eb550bac50e26ce395",
+          "hash": "0b92f3ae65dba94db643b8912e0342faa8459778834269591af0e21736b01fbf",
           "bytes": 2731
         }
       ]
@@ -2724,11 +2724,11 @@
         "id": "recipe:R028",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R028-28",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R028-28",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "f0e0d42c04fb4610bd6bb12e35138f78648d255346babf15e2a593d18016b457",
-      "measuredAt": "2026-09-18T15:20:01.309Z",
+      "measuredAt": "2026-09-18T17:43:20.064Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2807,13 +2807,13 @@
       "artifacts": [
         {
           "path": "docs/evidence/recipes/R028.png",
-          "hash": "53aec73817612dbedfc7e454a5739237e3333ba2d631b4f153c3584176654e69",
-          "bytes": 8367
+          "hash": "5d1f27cafa7d99572b1394558a22afcd5649bc94b183f3242ebfe558ed219b1f",
+          "bytes": 8254
         },
         {
           "path": "docs/evidence/recipes/R028.json",
-          "hash": "27c27cd4fd106ff5c1ec81e1bed114cdcf88024a781f0cb4b7bc813f8ef62304",
-          "bytes": 2559
+          "hash": "6591a108d3f80a492c94972fd25129d4c111e60c7c6f08c2fff46ff58802b687",
+          "bytes": 2560
         }
       ]
     },
@@ -2825,11 +2825,11 @@
         "id": "recipe:R029",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R029-29",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R029-29",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "23cf197268ae13483ca1c6bc8baf72e6bf8a8337bf75103a011263b5be8b4ae2",
-      "measuredAt": "2026-09-18T15:20:04.975Z",
+      "measuredAt": "2026-09-18T17:43:23.464Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",
@@ -2922,11 +2922,11 @@
         "id": "recipe:R030",
         "composite": true
       },
-      "runId": "recipe-1789744671134-R030-30",
-      "revision": "e3bfd9519731364653aa36dedf7a8a487db392bb",
-      "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3",
+      "runId": "recipe-1789753299700-R030-30",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
       "scenarioHash": "0c6c3bd87f01df7a7736abea0c14c6026894985e54ccddad7f75e0e0792be62b",
-      "measuredAt": "2026-09-18T15:20:08.358Z",
+      "measuredAt": "2026-09-18T17:43:26.881Z",
       "environment": {
         "browser": "chromium-headless",
         "viewport": "480x360",

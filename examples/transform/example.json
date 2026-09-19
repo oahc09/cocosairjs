@@ -1,7 +1,7 @@
 {
   "id": "transform",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -16,10 +16,174 @@
     "basics"
   ],
   "validation": {
-    "validators": [
-      "scene-ready",
-      "transform-equals"
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "3bc9ad990363",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "层级变换组合：root 旋转带动 child/grandchild，各层再叠加自身摆动",
+    "points": [
+      "三层嵌套的 parent × local 合成",
+      "Component.update 中分层动画",
+      "setScale 非均匀缩放与层级叠加"
     ]
   },
-  "promotionEvidence": null
+  "effect": {
+    "functional": "root 每帧旋转带动整条链；child/grandchild 各自叠加摆动相位；层级世界变换持续变化。",
+    "visual": "三节链式结构做蛇形摆动，越往末端摆幅越大"
+  },
+  "api": {
+    "primary": [
+      "Node",
+      "Component"
+    ],
+    "supporting": [
+      "Node.setScale",
+      "utils.createMesh"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Component",
+      "Layers",
+      "math.Vec3",
+      "builtinResMgr",
+      "utils.createMesh",
+      "primitives.box",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setScale",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "每帧手动计算 world 变换冒充层级合成"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "Scene",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node",
+        "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L5"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Component",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "Layers",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "builtinResMgr",
+        "source": "main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "primitives.box",
+        "source": "main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L59"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Node.setScale",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L31"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "root",
+        "child",
+        "grandchild"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  }
 }

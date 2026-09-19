@@ -7,7 +7,7 @@
 | Browser Matrix PASS | ✅ 3/3 | `docs/evidence/v08-browser-matrix.json`（Chromium + Firefox 155 + WebKit 26.6 × boot+WebGL2+visible+clean） |
 | Lifecycle PASS | ✅ | 50 轮 heap growth 0.1MB（`docs/evidence/v06-lifecycle-gate.json`） |
 | Invalid Asset PASS | ✅ | 10 种 corrupt/malformed fixtures 创建（`tools/benchmark/fixtures/invalid/`）；B101-B110 定义完成；运行时错误均返回稳定错误码 |
-| Benchmark ≥ 150 | ⚠️ 100 | §86 建议 150；等价覆盖证明待补（当前 100 项已覆盖十个能力域） |
+| Benchmark ≥ 150 | ✅ 150 | 100（十能力域）+ 50（V0.8 BLOCK-2：Invalid 18 / Stress 16 / Security 16，`docs/evidence/v08-iss-runtime-gate.json` 50/50 PASS） |
 | Recipe ≥ 30 | ✅ | 30/30（validated 10 + stable 20 → V0.9 全 stable） |
 | Performance Baseline | ✅ | BoxTextured 30 轮中位 2.4ms / 冻结基线比 0.585 |
 | License Inventory 第一版 | ✅ | `docs/v08-license-inventory.md` + `tools/verify/license-audit.cjs`（352 文件 0 issues） |

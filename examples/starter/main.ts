@@ -21,4 +21,6 @@ const scene = new Scene('Main');
 
 app.run(scene);
 
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
+
 console.log('[starter] running — minimal Code First scene; app.getScene() =', app.getScene()?.name);

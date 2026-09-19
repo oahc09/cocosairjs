@@ -3,21 +3,223 @@
   "version": "1.0.0",
   "title": "Node Hierarchy",
   "category": "basics",
-  "status": "draft",
-  "apiClaims": [
-    "Node.addChild",
-    "Node.getChildByName"
-  ],
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "理解 Node 父子层级：旋转父节点时整条子链一起运动（world = parent world × local）",
+    "points": [
+      "用 addChild 组装 Root → Arm → Hand 层级",
+      "理解 local transform 与 world transform 的叠加关系",
+      "用 getChildByName 按名称解析节点"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 中 Root(Arm(Hand)) 三层嵌套；Root 每帧绕 Y 旋转；Hand 的世界位置随 Root 旋转持续变化；getChildByName 链式解析命中同一 Hand 实例。",
+    "visual": "机械臂式三节结构（蓝根/绿臂/橙手）绕中心缓慢旋转，子节点的位移轨迹随父节点转动"
+  },
+  "api": {
+    "primary": [
+      "Node.addChild",
+      "Node.getChildByName"
+    ],
+    "supporting": [
+      "Node.setScale",
+      "Component"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Component",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Node.addChild",
+      "Node.getChildByName",
+      "Node.setPosition",
+      "Node.setScale",
+      "Node.setRotationFromEuler",
+      "Node.getChildByName"
+    ],
+    "forbiddenShortcut": [
+      "用三个平级独立节点冒充父子层级",
+      "直接设置 world 变换绕过 parent × local 合成"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L2"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L46"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L53"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Node.getChildByName",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "Node.setScale",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L38"
+      }
+    ]
+  },
   "capabilities": [
     "basics"
   ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
-  "requiresDevTools": false,
-  "validation": {
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Root",
+        "Arm",
+        "Hand"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
     "validators": [
-      "scene-ready",
-      "no-runtime-error"
+      "scene-ready"
     ]
-  }
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "promotionEvidence": "32782a6cbc5c"
 }

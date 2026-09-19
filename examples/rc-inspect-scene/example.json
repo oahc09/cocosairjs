@@ -1,23 +1,214 @@
 {
   "id": "rc-inspect-scene",
   "version": "1.0.0",
-  "title": "Inspect Scene",
-  "category": "devtools",
-  "status": "draft",
-  "apiClaims": [
-    "createAgentSession",
-    "inspectScene"
-  ],
-  "capabilities": [
-    "devtools"
-  ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
-  "requiresDevTools": true,
-  "validation": {
-    "validators": [
-      "scene-ready",
-      "no-runtime-error"
+  "title": "RC — Inspect Scene",
+  "category": "runtime-control",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握 DevTools/Agent Session 合同的只读观察：inspectScene 场景快照与 inspectNode 节点详情",
+    "points": [
+      "inspectScene 返回 sceneId/nodeCount/componentsByType",
+      "inspectNode(id) 读取 local transform",
+      "session 挂接入口（__benchSession / createAgentSession）"
     ]
-  }
+  },
+  "effect": {
+    "functional": "getSession 后 inspectScene().nodeCount > 0 且能按名称命中 DemoCube 并 inspectNode 读取 transform；__rcState.inspected === true。",
+    "visual": "左上角面板展示场景快照字段与 DemoCube 的位置/缩放；画布内为相机/灯光/方块骨架场景"
+  },
+  "api": {
+    "primary": [
+      "DevToolsSession.inspectScene",
+      "DevToolsSession.inspectNode"
+    ],
+    "supporting": [
+      "Scene",
+      "Node"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "DevToolsSession.inspectScene",
+      "DevToolsSession.inspectNode",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "绕过 session 直接遍历 window.__airApp 内部字段（必须走冻结合同）",
+      "手写 JSON 冒充 inspectScene 输出"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L9"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "DevToolsSession.inspectScene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "DevToolsSession.inspectNode",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L21"
+      }
+    ]
+  },
+  "capabilities": [
+    "runtime-control"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "DemoCube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "promotionEvidence": "4f5fd42a5165"
 }

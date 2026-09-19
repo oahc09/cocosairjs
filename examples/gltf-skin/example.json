@@ -1,23 +1,212 @@
 {
   "id": "gltf-skin",
   "version": "1.0.0",
-  "title": "Simple Skin",
+  "title": "glTF Skin",
   "category": "gltf",
-  "status": "draft",
-  "apiClaims": [
-    "GLTFLoader",
-    "SkinnedMeshRenderer"
-  ],
-  "capabilities": [
-    "gltf"
-  ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
-  "validation": {
-    "validators": [
-      "scene-ready",
-      "no-runtime-error"
+  "learning": {
+    "goal": "掌握 glTF 蒙皮模型的加载与蒙皮动画播放（skins + joints + 动画剪辑）",
+    "points": [
+      "parseAsync 加载 .gltf JSON + 外部 bin（baseUrl 解析）",
+      "GLTFAsset.skeletons 蒙皮数据",
+      "Animation.play 循环播放骨骼动画"
     ]
-  }
+  },
+  "effect": {
+    "functional": "SimpleSkin.gltf 经 parseAsync(jsonText, \"./assets/\") 加载；skeletons.length ≥ 1；动画剪辑进入 playing 状态；frameObject 取景。",
+    "visual": "双骨骼蒙皮方块随动画绕关节弯曲摆动，网格顶点逐帧变形"
+  },
+  "api": {
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "Animation.play"
+    ],
+    "supporting": [
+      "GLTFAsset.instantiate",
+      "Animation"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "Animation",
+      "Animation.play",
+      "AnimationClip",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "frameObject",
+      "GLTFLoader",
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "用 morph 变形冒充骨骼蒙皮",
+      "用整体旋转冒充关节弯曲"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "Animation",
+        "source": "src/main.ts",
+        "validator": "animation-playing",
+        "sourceLocation": "L44"
+      },
+      {
+        "api": "Animation.play",
+        "source": "src/main.ts",
+        "validator": "animation-playing",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "AnimationClip",
+        "source": "src/main.ts",
+        "validator": "animation-playing",
+        "sourceLocation": "L47"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "frameObject",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      }
+    ]
+  },
+  "capabilities": [
+    "gltf",
+    "animation"
+  ],
+  "assets": [
+    "assets/SimpleSkin.gltf"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "animation-playing",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "assets/SimpleSkin.* — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/SimpleSkin.LICENSE.md"
+  },
+  "promotionEvidence": "b19c2b9d02ff"
 }

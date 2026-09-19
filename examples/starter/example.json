@@ -1,7 +1,7 @@
 {
   "id": "starter",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -15,9 +15,79 @@
     "basics"
   ],
   "validation": {
+    "functional": [
+      "scene-ready",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "f8997d457804",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "跑通最小 Code First 场景：createAirApp + 空 Scene + app.run",
+    "points": [
+      "createAirApp 绑定 canvas 选择器",
+      "Scene 的创建与运行",
+      "app.getScene 查询运行中场景"
+    ]
+  },
+  "effect": {
+    "functional": "createAirApp 以 \"#GameCanvas\" 选择器启动；Scene(\"Main\") 经 app.run 进入运行；getScene() 返回该场景。",
+    "visual": "纯清屏色的空白画布（无节点），控制台输出运行日志"
+  },
+  "api": {
+    "primary": [
+      "createAirApp",
+      "Scene"
+    ],
+    "supporting": [],
+    "claims": [
+      "createAirApp",
+      "Scene"
+    ],
+    "forbiddenShortcut": [
+      "用 DOM 手绘背景冒充引擎清屏",
+      "省略 app.run 直接操作 Scene"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Scene",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L5"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [],
+      "allowEmpty": true
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
     "validators": [
       "scene-ready"
     ]
   },
-  "promotionEvidence": null
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  }
 }

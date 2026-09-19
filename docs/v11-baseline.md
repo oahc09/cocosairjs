@@ -55,7 +55,7 @@
 | API Inventory | **not-delivered** | V1.1 新增 |
 | API Coverage Matrix | **not-delivered** | V1.1 新增 |
 | Browser Matrix (Firefox/WebKit) | **in-progress** | 已安装，可见性验证待修复 |
-| 50 Invalid/Stress/Security Benchmark | **not-delivered** | V0.8 BLOCK-2 |
+| 50 Invalid/Stress/Security Benchmark | **delivered** | V0.8 BLOCK-2 已交付（B101-B150，`docs/evidence/v08-iss-runtime-gate.json`） |
 
 ### License
 

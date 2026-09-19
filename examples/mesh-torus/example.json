@@ -1,22 +1,206 @@
 {
   "id": "mesh-torus",
   "version": "1.0.0",
-  "title": "Torus Mesh",
-  "category": "mesh",
-  "status": "draft",
-  "apiClaims": [
-    "primitives.torus"
-  ],
-  "capabilities": [
-    "mesh"
-  ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
+  "title": "Mesh — Torus",
+  "category": "meshes",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
-  "validation": {
-    "validators": [
-      "scene-ready",
-      "no-runtime-error"
+  "learning": {
+    "goal": "学会用 primitives.torus 创建圆环图元并组合欧拉角倾斜",
+    "points": [
+      "primitives.torus 的主半径/管径参数",
+      "setRotationFromEuler 组合多轴姿态",
+      "utils.createMesh → MeshRenderer 接线"
     ]
-  }
+  },
+  "effect": {
+    "functional": "名为 torus 的 Node 使用 primitives.torus 生成的 Mesh；每帧更新欧拉角（Y 增加且保持 Z 倾斜）。",
+    "visual": "画面中央橙色圆环带 12° 侧倾持续旋转，环面内外侧明暗交替清晰可辨。"
+  },
+  "api": {
+    "primary": [
+      "primitives.torus",
+      "utils.createMesh"
+    ],
+    "supporting": [
+      "Node.setRotationFromEuler",
+      "Component"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Component",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.torus",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "用旋转的 plane 贴图冒充 torus 几何"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "primitives.torus",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L21"
+      }
+    ]
+  },
+  "capabilities": [
+    "basics"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "torus"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "promotionEvidence": "8bf66f5d500f"
 }

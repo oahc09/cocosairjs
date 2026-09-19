@@ -1,7 +1,7 @@
 {
   "id": "gltf-catalog",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -14,9 +14,65 @@
     "gltf"
   ],
   "validation": {
+    "functional": [
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "fe5b5218178e",
+  "bench": {
+    "mode": "ui-shell",
+    "uiSelector": "#model-list .model-row"
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "官方模型目录页（UI Shell）：目录数据驱动 DOM 列表 + iframe 嵌入 gltf-viewer",
+    "points": [
+      "fetch catalog.json 渲染可搜索/过滤的模型目录",
+      "iframe 以 URL 参数驱动 gltf-viewer 加载对应模型",
+      "ui-shell 示例的验收合同（DOM 选择器 + 零页面错误）"
+    ]
+  },
+  "effect": {
+    "functional": "页面加载后 fetch catalog.json 并渲染 #model-list .model-row 列表；选择模型后在 #air-preview iframe 内加载 gltf-viewer。",
+    "visual": "左侧目录列表（可搜索/分类过滤），右侧 AIR 预览舞台与官方对照舞台"
+  },
+  "api": {
+    "primary": [],
+    "supporting": [],
+    "claims": [],
+    "forbiddenShortcut": [
+      "把 Khronos 在线 viewer 结果冒充引擎渲染",
+      "目录页直接内嵌引擎（必须经 iframe + URL 参数）"
+    ],
+    "evidence": []
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "#model-list .model-row"
+      ],
+      "dom": true
+    }
+  },
+  "ready": {
     "validators": [
       "scene-ready"
     ]
   },
-  "promotionEvidence": null
+  "assets": [],
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "目录数据 catalog.json/capabilities.json 为仓库自生成快照"
+  },
+  "interaction": {
+    "steps": []
+  }
 }

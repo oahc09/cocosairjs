@@ -1,0 +1,188 @@
+{
+  "id": "gltf-basic",
+  "version": "1.0.0",
+  "title": "glTF Basic",
+  "category": "gltf",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握最简 glTF 正向加载链：loadAsync(url) → GLTFAsset → instantiate → 场景渲染（E007）",
+    "points": [
+      "GLTFLoader.loadAsync 从 URL 加载真实 GLB",
+      "GLTFAsset.instantiate 实例化挂场景",
+      "frameObject 按包围盒取景"
+    ]
+  },
+  "effect": {
+    "functional": "BoxTextured.glb 经 loadAsync 成功解析（GLTFAsset，warnings 记录），instantiate 后根节点挂入场景，frameObject 使模型完整可见。",
+    "visual": "带纹理的立方体模型完整居中显示，纹理清晰可辨，无裁切"
+  },
+  "api": {
+    "primary": [
+      "GLTFLoader.loadAsync",
+      "GLTFAsset.instantiate"
+    ],
+    "supporting": [
+      "frameObject",
+      "GLTFLoader"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "frameObject",
+      "GLTFLoader",
+      "GLTFLoader.loadAsync",
+      "GLTFAsset.instantiate",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "用程序化 Mesh 冒充 glTF 加载",
+      "用 parseAsync 绕开 URL 加载路径（本示例教 loadAsync 正向链）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L9"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "frameObject",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L4"
+      },
+      {
+        "api": "GLTFLoader.loadAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L14"
+      }
+    ]
+  },
+  "capabilities": [
+    "gltf"
+  ],
+  "assets": [
+    "assets/BoxTextured.glb"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "assets/BoxTextured.glb — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/BoxTextured.LICENSE.md"
+  },
+  "promotionEvidence": "a1036ddc3ba7"
+}

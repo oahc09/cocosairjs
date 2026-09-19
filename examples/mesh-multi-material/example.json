@@ -1,0 +1,181 @@
+{
+  "id": "mesh-multi-material",
+  "version": "1.0.0",
+  "title": "Mesh Multi Material",
+  "category": "meshes",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握一个 Mesh 多个 SubMesh 各用不同材质的公开合同（E005）",
+    "points": [
+      "glTF mesh.primitives 多子网格结构",
+      "实例化后 MeshRenderer 的多材质槽（sharedMaterials.length ≥ 2）",
+      "同一物体上呈现两个明显不同的材质区域"
+    ]
+  },
+  "effect": {
+    "functional": "MultiMaterialCube 来自单 mesh 双 primitives 的 GLB；MeshRenderer.sharedMaterials.length === 2；__multiState.materialSlots === 2。",
+    "visual": "一个物体左半红色粗糙、右半蓝色金属，两个材质区域属于同一 MeshRenderer"
+  },
+  "api": {
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Node.getComponentInChildren"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "GLTFLoader",
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Node.addChild",
+      "Node.getComponentInChildren"
+    ],
+    "forbiddenShortcut": [
+      "用两个完全独立 Mesh 冒充 multiple material",
+      "用两台 MeshRenderer 挂同一节点伪装"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L5"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L86"
+      },
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L86"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.getComponentInChildren",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L93"
+      }
+    ]
+  },
+  "capabilities": [
+    "materials"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "MultiMaterialCube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "material-property",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  },
+  "promotionEvidence": "ccec47df8da2"
+}

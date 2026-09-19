@@ -9,6 +9,7 @@ function report(state, message) {
 window.addEventListener('error', (event) => report('error', event.message));
 window.addEventListener('unhandledrejection', (event) => report('error', event.reason?.message || String(event.reason)));
 const app = await createAirApp({ canvas: '#GameCanvas' });
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 const scene = new Scene('glTF viewer');
 const camera = setupCamera(scene, { position: [3, 2, 4], clearColor: [24, 33, 50, 255] });
 setupDirectionalLight(scene, { rotationEuler: [-35, -25, 0], illuminance: 20000 });

@@ -5,7 +5,7 @@
     "ready": true,
     "semanticOk": true,
     "interactionCount": 0,
-    "animationTicks": 57,
+    "animationTicks": 56,
     "instanceCount": 0,
     "materialCount": 1,
     "featureApplied": false,
@@ -36,7 +36,7 @@
       0
     ],
     "cameraPosition": [
-      1.980653608312316,
+      1.988086404396152,
       2.5,
       7
     ]

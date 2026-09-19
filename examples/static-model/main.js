@@ -29,6 +29,7 @@ import {
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 
 // ---------- 1. 程序化 checkerboard 纹理（Texture Reference） ----------
 const SIZE = 64;

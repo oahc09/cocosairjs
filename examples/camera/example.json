@@ -1,7 +1,7 @@
 {
   "id": "camera",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -16,10 +16,163 @@
     "camera"
   ],
   "validation": {
-    "validators": [
-      "scene-ready",
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
       "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "e3b6b7627fd3",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "相机控制与取景：PERSPECTIVE/ORTHO 切换 + frameObject 自动取景（E003）",
+    "points": [
+      "Camera.ProjectionType 切换",
+      "orthoHeight 与 fov 的语义差异",
+      "utils.frameObject 按包围盒自动取景"
     ]
   },
-  "promotionEvidence": null
+  "effect": {
+    "functional": "场景 group 含多个方块；按钮切换 camera.projection；frameObject 使相机完整包围 group 包围盒；切换后画面明显变化。",
+    "visual": "整组方块完整居中显示（无裁切）；切到正交后近大远小消失"
+  },
+  "api": {
+    "primary": [
+      "Camera",
+      "frameObject"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "primitives.box"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "Layers",
+      "math.Vec3",
+      "builtinResMgr",
+      "utils.createMesh",
+      "primitives.box",
+      "frameObject",
+      "Node.addChild",
+      "Node.setPosition"
+    ],
+    "forbiddenShortcut": [
+      "手动试凑相机位置冒充 frameObject 自动取景"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Scene",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node",
+        "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Camera",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "Layers",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "builtinResMgr",
+        "source": "main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "primitives.box",
+        "source": "main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "frameObject",
+        "source": "main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L68"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L38"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "group"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  }
 }

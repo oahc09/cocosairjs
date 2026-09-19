@@ -1,22 +1,214 @@
 {
   "id": "mesh-plane",
   "version": "1.0.0",
-  "title": "Ground Plane",
-  "category": "mesh",
-  "status": "draft",
-  "apiClaims": [
-    "primitives.plane"
-  ],
-  "capabilities": [
-    "mesh"
-  ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
+  "title": "Mesh — Plane",
+  "category": "meshes",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
-  "validation": {
-    "validators": [
-      "scene-ready",
-      "no-runtime-error"
+  "learning": {
+    "goal": "学会用 primitives.plane 创建平面并理解平面图元的朝向与地面摆放",
+    "points": [
+      "用 primitives.plane 生成平面几何",
+      "理解 plane 默认朝向并通过 setRotationFromEuler 调整",
+      "Mesh 与 Material 的组合方式"
     ]
-  }
+  },
+  "effect": {
+    "functional": "Scene 含名为 floor 的 Node（primitives.plane → utils.createMesh）与 marker 球体；marker 自转；两对象均可被 Camera 观察。",
+    "visual": "绿色平面铺在画面下方作为地板，黄色小球悬浮在平面上方缓慢自转，整体构成可辨识的地面场景。"
+  },
+  "api": {
+    "primary": [
+      "primitives.plane",
+      "utils.createMesh"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Node.setRotationFromEuler"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Component",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.plane",
+      "primitives.sphere",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "用缩放的 box 冒充 plane 图元"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "primitives.plane",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "primitives.sphere",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L44"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L21"
+      }
+    ]
+  },
+  "capabilities": [
+    "basics"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "floor",
+        "marker"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "promotionEvidence": "c88c117ab794"
 }

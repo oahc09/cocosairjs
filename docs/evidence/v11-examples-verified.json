@@ -1,0 +1,2381 @@
+{
+  "measuredAt": "2026-09-18T23:08:28.566Z",
+  "runner": "tools/verify/v11-examples-verify.cjs",
+  "mode": "spec-driven-v2",
+  "total": 44,
+  "pass": 44,
+  "fail": 0,
+  "partial": false,
+  "results": [
+    {
+      "id": "anim-position",
+      "result": "PASS",
+      "specFingerprint": "ae4b573dcb68",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "3 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0619"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/anim-position.png",
+        "bytes": 5111,
+        "hash": "030b03d3bb71460a"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "anim-rotation",
+      "result": "PASS",
+      "specFingerprint": "297e971102ce",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "3 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0351"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/anim-rotation.png",
+        "bytes": 5968,
+        "hash": "07cc83887b966118"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "camera",
+      "result": "PASS",
+      "specFingerprint": "e3b6b7627fd3",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=9"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0386"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/camera.png",
+        "bytes": 5867,
+        "hash": "d1668303d6e0fd47"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "camera-lookat",
+      "result": "PASS",
+      "specFingerprint": "31f5996ea1d5",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "4 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0275"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/camera-lookat.png",
+        "bytes": 9462,
+        "hash": "d9315d1960e3e595"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "camera-multi",
+      "result": "PASS",
+      "specFingerprint": "e281f8acab1b",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "node-count",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=7"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "6 expected nodes present"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=7 min=6"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.6911"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/camera-multi.png",
+        "bytes": 14612,
+        "hash": "a06351dd91d57017"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "camera-ortho",
+      "result": "PASS",
+      "specFingerprint": "5e8de7c072d6",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "5 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0400"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/camera-ortho.png",
+        "bytes": 4929,
+        "hash": "2bae7e8a13a34593"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "gltf-basic",
+      "result": "PASS",
+      "specFingerprint": "a1036ddc3ba7",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "2 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=1 runtime asset units=9"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0418"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-basic.png",
+        "bytes": 10866,
+        "hash": "db3e3b4a6d13b8f7"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "gltf-catalog",
+      "result": "PASS",
+      "specFingerprint": "fe5b5218178e",
+      "validatorResults": [
+        {
+          "validatorId": "ui-selector",
+          "state": "PASS",
+          "detail": "150 matches for #model-list .model-row"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "0 errors"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-catalog.png",
+        "bytes": 45640,
+        "hash": "4350ffbbced2e9e8"
+      },
+      "errors": []
+    },
+    {
+      "id": "gltf-clearcoat",
+      "result": "PASS",
+      "specFingerprint": "51cf31986156",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "material-property",
+          "capability-status",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=8"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=0 runtime asset units=14"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=3"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.9987"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-clearcoat.png",
+        "bytes": 34002,
+        "hash": "fa548c9b5bfec344"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "gltf-draco",
+      "result": "PASS",
+      "specFingerprint": "49c9746a8bf3",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "capability-status",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=3"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "2 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-draco.png",
+        "bytes": 0
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "gltf-meshopt",
+      "result": "PASS",
+      "specFingerprint": "2068703052a3",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "capability-status",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "2 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=1 runtime asset units=7"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.1632"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-meshopt.png",
+        "bytes": 5099,
+        "hash": "e79587f7495c7635"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "gltf-morph",
+      "result": "PASS",
+      "specFingerprint": "aae455c64f95",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "2 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=1 runtime asset units=8"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "animation-playing",
+          "state": "PASS",
+          "detail": "animated frames differ"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.1748"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-morph.png",
+        "bytes": 5614,
+        "hash": "52e7d4bccaf3aad3"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "gltf-skin",
+      "result": "PASS",
+      "specFingerprint": "b19c2b9d02ff",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=7"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "2 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=1 runtime asset units=11"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "animation-playing",
+          "state": "PASS",
+          "detail": "animated frames differ"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.1951"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-skin.png",
+        "bytes": 6950,
+        "hash": "e8a1c2b45e29496a"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "gltf-viewer",
+      "result": "PASS",
+      "specFingerprint": "7657bb15b256",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=8"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=0 runtime asset units=11"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=1.0000"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/gltf-viewer.png",
+        "bytes": 18330,
+        "hash": "873e0e395bd29f6e"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "hello-cube",
+      "result": "PASS",
+      "specFingerprint": "20b9fa1229ed",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0464"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/hello-cube.png",
+        "bytes": 5905,
+        "hash": "effaae63db17ee89"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "input",
+      "result": "PASS",
+      "specFingerprint": "3413b43c8405",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "3 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0419"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/input.png",
+        "bytes": 6775,
+        "hash": "636432f29b2ff12c"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "interaction-click",
+      "result": "PASS",
+      "specFingerprint": "75a0e49d906c",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "3 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0872"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/interaction-click.png",
+        "bytes": 5497,
+        "hash": "647ee853dd02d670"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "light-point",
+      "result": "PASS",
+      "specFingerprint": "d0f2836abd8d",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=7"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "6 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.6636"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/light-point.png",
+        "bytes": 6699,
+        "hash": "80c353eb48c13253"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "light-sphere",
+      "result": "PASS",
+      "specFingerprint": "a21fe570d906",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.1197"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/light-sphere.png",
+        "bytes": 16792,
+        "hash": "429240dddd78811b"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "light-spot",
+      "result": "PASS",
+      "specFingerprint": "d3193a1d48c9",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.6652"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/light-spot.png",
+        "bytes": 5727,
+        "hash": "051bdfb8aaf7855e"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "light-two-directional",
+      "result": "PASS",
+      "specFingerprint": "688b33f386d3",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0416"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/light-two-directional.png",
+        "bytes": 5137,
+        "hash": "6557e1bc47cd16e8"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "material-basic",
+      "result": "PASS",
+      "specFingerprint": "7d483e078413",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "5 expected nodes present"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=1.0000"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/material-basic.png",
+        "bytes": 5963,
+        "hash": "3ea0be6251e38e5e"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "material-color",
+      "result": "PASS",
+      "specFingerprint": "a94ed612b535",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "5 expected nodes present"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=3"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0794"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/material-color.png",
+        "bytes": 6258,
+        "hash": "27e1c686e45ba723"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "material-transparent",
+      "result": "PASS",
+      "specFingerprint": "d5a470fe626f",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "material-property",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=0 runtime asset units=10"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=2"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.2244"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/material-transparent.png",
+        "bytes": 5769,
+        "hash": "9cd3e9e5d38daa8b"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "material-unlit",
+      "result": "PASS",
+      "specFingerprint": "e5e60981a98d",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.1131"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/material-unlit.png",
+        "bytes": 7053,
+        "hash": "687bdfb8f718b5d8"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "mesh-cylinder",
+      "result": "PASS",
+      "specFingerprint": "19e33f77386d",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0604"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/mesh-cylinder.png",
+        "bytes": 5629,
+        "hash": "9e36e5efc86ac90e"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "mesh-multi-material",
+      "result": "PASS",
+      "specFingerprint": "ccec47df8da2",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=0 runtime asset units=8"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=2"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.2728"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/mesh-multi-material.png",
+        "bytes": 5458,
+        "hash": "955d1d61ef8537a1"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "mesh-plane",
+      "result": "PASS",
+      "specFingerprint": "c88c117ab794",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.4009"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/mesh-plane.png",
+        "bytes": 9136,
+        "hash": "5357ec5f91ef51d7"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "mesh-sphere",
+      "result": "PASS",
+      "specFingerprint": "5367471651db",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0496"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/mesh-sphere.png",
+        "bytes": 11505,
+        "hash": "a7c7c92ac2fbf7b6"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "mesh-torus",
+      "result": "PASS",
+      "specFingerprint": "8bf66f5d500f",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0562"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/mesh-torus.png",
+        "bytes": 12215,
+        "hash": "5f465418b8031a3a"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "node-active",
+      "result": "PASS",
+      "specFingerprint": "f5a49a3d20f4",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0843"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/node-active.png",
+        "bytes": 5259,
+        "hash": "b3487d6dd3556208"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "node-hierarchy",
+      "result": "PASS",
+      "specFingerprint": "32782a6cbc5c",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "5 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0120"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/node-hierarchy.png",
+        "bytes": 5404,
+        "hash": "5939e70068b47d4c"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "node-scale",
+      "result": "PASS",
+      "specFingerprint": "f5beb93055a6",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "5 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0638"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/node-scale.png",
+        "bytes": 5512,
+        "hash": "abf1fdf67ee186bc"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "rc-capture-frame",
+      "result": "PASS",
+      "specFingerprint": "29ba7a25535d",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0789"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-capture-frame.png",
+        "bytes": 6337,
+        "hash": "f27e7c41239b9f21"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "rc-create-node",
+      "result": "PASS",
+      "specFingerprint": "64dcd5a6f77a",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "node-count",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=5 min=4"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "4 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0656"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-create-node.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "rc-error-report",
+      "result": "PASS",
+      "specFingerprint": "689ec9ee0ad1",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0656"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-error-report.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "rc-inspect-scene",
+      "result": "PASS",
+      "specFingerprint": "4f5fd42a5165",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0656"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-inspect-scene.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "runtime-asset-release",
+      "result": "PASS",
+      "specFingerprint": "768a60271098",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "resource-released",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ]
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=9"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "2 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=1 runtime asset units=15"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0563"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"disposed\":true,\"reloaded\":true,\"cycles\":2}"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/runtime-asset-release.png",
+        "bytes": 12480,
+        "hash": "dcf3468c2effa3d2"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "skinned-animation",
+      "result": "PASS",
+      "specFingerprint": "658cfe0e7638",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=7"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "animation-playing",
+          "state": "PASS",
+          "detail": "animated frames differ"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0480"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/skinned-animation.png",
+        "bytes": 5671,
+        "hash": "2b7e47141beb95f2"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "starter",
+      "result": "PASS",
+      "specFingerprint": "f8997d457804",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "scene-ready",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/starter.png",
+        "bytes": 0
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "static-model",
+      "result": "PASS",
+      "specFingerprint": "ba8939b200a4",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "4 expected nodes present"
+        },
+        {
+          "validatorId": "asset-loaded",
+          "state": "PASS",
+          "detail": "spec assets=0 runtime asset units=10"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=2"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.6812"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/static-model.png",
+        "bytes": 12124,
+        "hash": "c30b172a11904d44"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "texture-basic",
+      "result": "PASS",
+      "specFingerprint": "deea61359713",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "materials=1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0872"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/texture-basic.png",
+        "bytes": 22017,
+        "hash": "7e5893dd0ac9b90c"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "transform",
+      "result": "PASS",
+      "specFingerprint": "3bc9ad990363",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=9"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "5 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0184"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/transform.png",
+        "bytes": 5967,
+        "hash": "8d727c7ea9caa85c"
+      },
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "tween-basic",
+      "result": "PASS",
+      "specFingerprint": "9603bbb34f33",
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "3 node transforms readable"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=1.0000"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/tween-basic.png",
+        "bytes": 5006,
+        "hash": "bedf877ae36b9524"
+      },
+      "nodeCount": 0,
+      "errors": []
+    }
+  ]
+}

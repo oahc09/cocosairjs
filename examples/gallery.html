@@ -27,6 +27,18 @@ body { font: 14px system-ui,sans-serif; background: #1a1a2e; color: #ccc; displa
 #api-tags { padding: 4px 16px; display: flex; gap: 6px; flex-wrap: wrap; background: #0d0d1a; }
 #api-tags span { background: #2a2a4e; color: #8ab; padding: 2px 8px; border-radius: 3px; font-size: 11px; }
 #cap-tags span { background: #2a4a2e; color: #8c8; }
+#spec-panel { background: #10101c; border-top: 1px solid #2a2a4e; border-bottom: 1px solid #2a2a4e; padding: 10px 16px; display: none; max-height: 200px; overflow-y: auto; }
+#spec-panel.open { display: block; }
+#spec-panel h3 { font-size: 11px; color: #7eb8ff; text-transform: uppercase; letter-spacing: 1px; margin: 8px 0 4px; }
+#spec-panel h3:first-child { margin-top: 0; }
+#spec-panel ul { margin: 0 0 4px 16px; padding: 0; }
+#spec-panel li { font-size: 12px; color: #aab; line-height: 1.5; }
+#spec-panel .expected { font-size: 12px; color: #bcc; line-height: 1.5; }
+#spec-panel .status-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 2px; }
+#spec-panel .status-item { font-size: 11px; color: #99a; }
+#spec-panel .status-item b { color: #8c8; font-weight: normal; }
+#spec-toggle { padding: 6px 14px; background: #2a2a4e; color: #ccc; border: 1px solid #3a3a5e; border-radius: 4px; cursor: pointer; font-size: 13px; }
+#spec-toggle:hover { background: #3a3a6e; }
 </style>
 </head>
 <body>
@@ -41,10 +53,19 @@ body { font: 14px system-ui,sans-serif; background: #1a1a2e; color: #ccc; displa
     <button id="btn-preview" class="active" onclick="showPreview()">Preview</button>
     <button id="btn-source" onclick="showSource()">Source</button>
     <button onclick="toggleFullscreen()">Fullscreen</button>
+    <button id="spec-toggle" onclick="toggleSpecPanel()">Spec ℹ</button>
     <button onclick="history.back()">←</button>
     <button onclick="history.forward()">→</button>
   </div>
   <div id="api-tags"></div>
+  <div id="spec-panel">
+    <h3>What you'll learn</h3>
+    <ul id="spec-learn"></ul>
+    <h3>Expected Result</h3>
+    <div class="expected" id="spec-expected"></div>
+    <h3>Validation Status</h3>
+    <div class="status-row" id="spec-status"></div>
+  </div>
   <div id="content">
     <iframe id="preview-frame" src="about:blank"></iframe>
     <div id="source-view"><pre id="source-code"></pre></div>
@@ -78,9 +99,9 @@ function buildList() {
       var a = document.createElement('a');
       a.className = 'example-link'; a.id = 'link-' + ex.id;
       a.innerHTML = '<b>' + ex.title + '</b>' +
-        (ex.apiClaims ? '<div class="tags">' + ex.apiClaims.slice(0,3).join(' · ') + '</div>' : '');
+        '<div class="tags">' + apiClaimsOf(ex).slice(0,3).join(' · ') + '</div>';
       a.onclick = function() { selectExample(ex.id); };
-      a.dataset.search = (ex.title + ' ' + ex.id + ' ' + (ex.apiClaims || []).join(' ')).toLowerCase();
+      a.dataset.search = (ex.title + ' ' + ex.id + ' ' + apiClaimsOf(ex).join(' ')).toLowerCase();
       listEl.appendChild(a);
     });
   }
@@ -93,6 +114,14 @@ function filterList(q) {
   });
 }
 
+function apiClaimsOf(ex) {
+  return (ex.api && ex.api.claims) || ex.apiClaims || [];
+}
+
+function toggleSpecPanel() {
+  document.getElementById('spec-panel').classList.toggle('open');
+}
+
 function selectExample(id) {
   var ex = EXAMPLES_BY_ID[id];
   if (!ex) return;
@@ -103,15 +132,51 @@ function selectExample(id) {
   document.getElementById('current-title').textContent = ex.title + ' (' + ex.id + ')';
   document.getElementById('preview-frame').src = '/' + ex.dir + '/';
   showPreview();
-  // API tags
+  // §20 APIs Used
   var tagsEl = document.getElementById('api-tags');
   tagsEl.innerHTML = '';
-  (ex.apiClaims || []).forEach(function(t) {
+  apiClaimsOf(ex).forEach(function(t) {
     var s = document.createElement('span'); s.textContent = t; tagsEl.appendChild(s);
   });
   (ex.capabilities || []).forEach(function(t) {
     var s = document.createElement('span'); s.textContent = 'cap:' + t; s.style.background = '#2a4a2e'; tagsEl.appendChild(s);
   });
+  // §19 What you'll learn / §21 Expected Result / §22 Validation Status
+  var learnEl = document.getElementById('spec-learn');
+  learnEl.innerHTML = '';
+  var goal = ex.learning && ex.learning.goal;
+  var points = (ex.learning && ex.learning.points) || [];
+  if (goal) { var gi = document.createElement('li'); gi.textContent = goal; learnEl.appendChild(gi); }
+  points.forEach(function(p) {
+    var li = document.createElement('li'); li.textContent = p; learnEl.appendChild(li);
+  });
+  if (!goal && points.length === 0) {
+    document.getElementById('spec-panel').classList.remove('open');
+  }
+  document.getElementById('spec-expected').textContent =
+    (ex.effect && (ex.effect.visual || ex.effect.functional)) || '—';
+  var statusEl = document.getElementById('spec-status');
+  statusEl.innerHTML = '';
+  var dims = [
+    ['Ready', ex.ready && ex.ready.validators],
+    ['Functional', ex.validation && ex.validation.functional],
+    ['Visual', ex.validation && ex.validation.visual],
+    ['Interaction', ex.validation && ex.validation.interaction],
+    ['Lifecycle', ex.validation && ex.validation.lifecycle],
+    ['Capability', ex.validation && ex.validation.capability],
+  ];
+  dims.forEach(function(pair) {
+    var d = document.createElement('span');
+    d.className = 'status-item';
+    var validators = pair[1] || [];
+    d.innerHTML = pair[0] + ': <b>' + (validators.length ? validators.join(', ') : 'N/A') + '</b>';
+    statusEl.appendChild(d);
+  });
+  var meta = document.createElement('span');
+  meta.className = 'status-item';
+  meta.innerHTML = 'status: <b>' + (ex.status || 'draft') + '</b> · spec: <b>' + (ex.specStatus || '—') + '</b>' +
+    (ex.promotionEvidence ? ' · verified: <b>' + ex.promotionEvidence + '</b>' : '');
+  statusEl.appendChild(meta);
   location.hash = id;
 }
 
@@ -146,7 +211,6 @@ function showSource() {
     }).catch(function() {
       document.getElementById('source-code').textContent = '// source not available';
     });
-  });
 }
 
 function toggleFullscreen() {

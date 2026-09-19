@@ -1,7 +1,7 @@
 {
   "id": "skinned-animation",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -17,10 +17,193 @@
     "skeleton"
   ],
   "validation": {
-    "validators": [
-      "scene-ready",
-      "animation-playing"
+    "functional": [
+      "node-exists",
+      "animation-playing",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "658cfe0e7638",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "最高复杂度回归：程序化蒙皮网格 + 骨骼树 + 刚性绑定 + 骨骼动画（E009）",
+    "points": [
+      "buildSkeletonTree 构建 Skeleton（joints + bindposes）",
+      "restoreBindPose 静止姿势复位",
+      "骨骼旋转驱动蒙皮变形 + frameObject 取景"
     ]
   },
-  "promotionEvidence": null
+  "effect": {
+    "functional": "Armature 骨骼链（bone0/1/2）经 buildSkeletonTree 建立绑定；update 中旋转骨骼 → SkinnedMeshRenderer 网格逐帧变形；restoreBindPose 可复位。",
+    "visual": "程序化\"触手\"网格随骨骼摆动弯曲变形，顶点位置逐帧变化（帧差可测）"
+  },
+  "api": {
+    "primary": [
+      "buildSkeletonTree",
+      "SkinnedMeshRenderer"
+    ],
+    "supporting": [
+      "restoreBindPose",
+      "Component"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "SkinnedMeshRenderer",
+      "Mesh",
+      "Material",
+      "Component",
+      "buildSkeletonTree",
+      "restoreBindPose",
+      "frameObject",
+      "math.Vec3",
+      "math.Color",
+      "Material.initialize",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "用整体旋转网格冒充蒙皮变形（顶点必须随关节移动）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "SkinnedMeshRenderer",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "Mesh",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Material",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "buildSkeletonTree",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L5"
+      },
+      {
+        "api": "restoreBindPose",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L6"
+      },
+      {
+        "api": "frameObject",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L7"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "math.Color",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L176"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L144"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L160"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Armature"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  }
 }

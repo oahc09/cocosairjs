@@ -2,21 +2,215 @@
   "id": "light-point",
   "version": "1.0.0",
   "title": "Point Light",
-  "category": "lighting",
-  "status": "draft",
-  "apiClaims": [
-    "PointLight"
-  ],
-  "capabilities": [
-    "lighting"
-  ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
+  "category": "lights",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
-  "validation": {
-    "validators": [
-      "scene-ready",
-      "no-runtime-error"
+  "learning": {
+    "goal": "掌握 PointLight 的 illuminance/range 语义：点光源向四周发光，亮度随距离衰减",
+    "points": [
+      "PointLight 组件的 luminance（亮度）与 range（衰减半径）",
+      "光源节点移动时受光面实时变化",
+      "Component.update 驱动光源轨道运动"
     ]
-  }
+  },
+  "effect": {
+    "functional": "名为 PointLightNode 的节点挂 PointLight（illuminance=40, range=8），每帧绕场景中心轨道运动；三块板与地板受单一点光源照明。",
+    "visual": "三块彩色板与灰地板仅被一个游走的点光源照亮，板上明暗随光源靠近/远离实时流动，形成明显距离衰减"
+  },
+  "api": {
+    "primary": [
+      "PointLight"
+    ],
+    "supporting": [
+      "Component",
+      "Node.setPosition"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "PointLight",
+      "Component",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "primitives.plane",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "用贴图烘焙的假光斑冒充动态点光源",
+      "保留场景默认灯光参与照明（会掩盖单光源语义）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "PointLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L2"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L54"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "primitives.plane",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L20"
+      }
+    ]
+  },
+  "capabilities": [
+    "lights"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "PointLightNode",
+        "Floor",
+        "Left",
+        "Center",
+        "Right"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元/贴图）"
+  },
+  "promotionEvidence": "d0f2836abd8d"
 }

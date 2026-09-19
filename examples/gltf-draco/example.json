@@ -1,23 +1,195 @@
 {
   "id": "gltf-draco",
   "version": "1.0.0",
-  "title": "Draco Compressed",
+  "title": "glTF Draco",
   "category": "gltf",
-  "status": "draft",
-  "apiClaims": [
-    "GLTFLoader.parseAsync",
-    "setDRACODecoder"
-  ],
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握 Draco 压缩的公开合同：扩展支持查询 + 缺失 Decoder 时的稳定错误码 GLTF_DECODER_MISSING",
+    "points": [
+      "GLTFLoader.getExtensionSupport 查询扩展状态",
+      "缺 Decoder 的加载产生稳定错误码而非崩溃（教学错误示例同样 Ready）",
+      "宿主接入合同：setDRACODecoder(createDracoDecoder(() => draco3d.createDecoderModule({})))"
+    ]
+  },
+  "effect": {
+    "functional": "getExtensionSupport 报告 KHR_draco_mesh_compression 状态；无 decoder 加载 draco.glb 被拒绝，__decoderState === \"decoder-missing-observed\"，无泄漏实例、无 uncaught error。",
+    "visual": "画面为相机/灯光骨架 + 左上角状态面板，面板展示扩展状态、稳定错误码与宿主接入示例代码"
+  },
+  "api": {
+    "primary": [
+      "GLTFLoader.getExtensionSupport",
+      "GLTFLoader.setDRACODecoder",
+      "createDracoDecoder"
+    ],
+    "supporting": [
+      "GLTFLoader.parseAsync"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "GLTFLoader",
+      "GLTFLoader.getExtensionSupport",
+      "GLTFLoader.setDRACODecoder",
+      "GLTFLoader.parseAsync",
+      "createDracoDecoder",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "catch 崩溃并吞掉错误冒充稳定错误码（必须校验 error.code）",
+      "为通过验证把 draco 模型悄悄换成未压缩模型"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "GLTFLoader.getExtensionSupport",
+        "source": "src/main.ts",
+        "validator": "capability-status",
+        "sourceLocation": "L6"
+      },
+      {
+        "api": "GLTFLoader.setDRACODecoder",
+        "source": "src/main.ts",
+        "validator": "capability-status",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L44"
+      },
+      {
+        "api": "createDracoDecoder",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L18"
+      }
+    ]
+  },
   "capabilities": [
     "gltf"
   ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
-  "requiresDevTools": false,
-  "validation": {
+  "assets": [
+    "assets/draco.glb"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
     "validators": [
-      "scene-ready",
-      "no-runtime-error"
+      "scene-ready"
     ]
-  }
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "capability-status",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [],
+    "lifecycle": [],
+    "capability": [
+      "capability-status"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "assets/draco.glb — 仓库自生成 fixture（tools/fixtures/gen-geometry-fixtures.cjs，draco3d 官方编码器），draco 许可见 licenses/"
+  },
+  "promotionEvidence": "49c9746a8bf3"
 }

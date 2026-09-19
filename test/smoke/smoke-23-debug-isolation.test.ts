@@ -41,21 +41,23 @@ describe('debug/agent 模块与默认 runtime 隔离', () => {
         expect(fs.existsSync(path.join(ROOT, 'tools', 'debug', 'agent-session.ts'))).toBe(true);
     });
 
-    test('examples 不静态引用 /__debug/（automation 示例仅动态 import 且有降级路径）', () => {
+    test('examples 不静态引用 /__debug/（仅动态 import，路径可为表达式以避免 bundler 解析）', () => {
         const walk = (dir: string): string[] => {
             const out: string[] = [];
             for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
                 const full = path.join(dir, entry.name);
-                if (entry.isDirectory()) { out.push(...walk(full)); } else if (entry.name === 'main.ts') { out.push(full); }
+                if (entry.isDirectory()) { out.push(...walk(full)); } else if (entry.name === 'main.ts' || entry.name === 'main.js') { out.push(full); }
             }
             return out;
         };
         for (const file of walk(path.join(ROOT, 'examples'))) {
             const source = fs.readFileSync(file, 'utf8');
             if (source.includes('__debug')) {
-                // 仅允许动态 import('/__debug/...') 形态（dev server 专属、显式启用）
-                expect(source).toMatch(/import\(['"`]\/__debug\//);
-                expect(source).not.toMatch(/from\s+['"`]\/__debug\//);
+                // 仅允许动态 import 形态（dev server 专属、显式启用）；
+                // 路径可用运行时表达式拼接（esbuild 不可静态折叠），静态 from/require 引用一律禁止。
+                expect(source).toMatch(/import\(/);
+                expect(source).not.toMatch(/from\s+['"`][^'"`]*__debug/);
+                expect(source).not.toMatch(/require\(\s*['"`][^'"`]*__debug/);
             }
         }
     });

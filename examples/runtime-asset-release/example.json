@@ -1,0 +1,190 @@
+{
+  "id": "runtime-asset-release",
+  "version": "1.0.0",
+  "title": "Runtime Asset Release",
+  "category": "runtime",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握 Runtime 资产生命周期：GLTFAsset/instance 的加载、释放与重载全链路（E011）",
+    "points": [
+      "GLTFLoader.parseAsync + instantiate 的资源所有权",
+      "instance.dispose() + asset.destroy() 释放",
+      "isValid 核对无残留节点/泄漏资产，reload 可重复"
+    ]
+  },
+  "effect": {
+    "functional": "启动后自动跑 2 轮 load→dispose→reload；每轮 dispose 后 asset 与 instance.root 均 invalid（assetsAfter=0, nodesAfter=0），reload 后再次 valid；__releaseState 记录结果。",
+    "visual": "面板输出每轮 cycle 的 load/dispose/reload 状态行；场景中模型随 dispose 消失、随 reload 重新出现"
+  },
+  "api": {
+    "primary": [
+      "GLTFAsset.instantiate",
+      "isValid"
+    ],
+    "supporting": [
+      "GLTFLoader.parseAsync"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "isValid",
+      "GLTFLoader",
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "只把节点 removeFromParent 不释放资产冒充 dispose",
+      "统计 no-runtime-error 冒充生命周期验证"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "isValid",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L16"
+      }
+    ]
+  },
+  "capabilities": [
+    "lifecycle"
+  ],
+  "assets": [
+    "assets/BoxTextured.glb"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "resource-released",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "assets/BoxTextured.glb — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/BoxTextured.LICENSE.md"
+  },
+  "promotionEvidence": "768a60271098"
+}

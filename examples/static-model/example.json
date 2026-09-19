@@ -1,7 +1,7 @@
 {
   "id": "static-model",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -13,14 +13,206 @@
     "Texture2D"
   ],
   "capabilities": [
-    "basics",
-    "material"
+    "gltf",
+    "assets"
   ],
   "validation": {
-    "validators": [
-      "scene-ready",
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "material-property",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
       "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "ba8939b200a4",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "Runtime 资产链路：程序化 Mesh 入库 → loadAssetAsync 取回 → 贴图材质渲染（E007 gltf-basic 的资产形态）",
+    "points": [
+      "assetManager.assets 注册与 loadAssetAsync Promise 加载",
+      "ImageAsset/Texture2D 程序化贴图",
+      "USE_ALBEDO_MAP define + mainTexture 接线"
     ]
   },
-  "promotionEvidence": null
+  "effect": {
+    "functional": "checkerboard 源 Mesh 经 assetManager.assets.add 注册后由 loadAssetAsync 取回同一实例（console.assert 相等）；StaticBox 材质带 USE_ALBEDO_MAP 与 mainTexture；frameObject 取景。",
+    "visual": "棋盘格贴图的金字塔/方块置于绿色地面上，纹理随视角变化清晰可辨"
+  },
+  "api": {
+    "primary": [
+      "loadAssetAsync",
+      "assetManager"
+    ],
+    "supporting": [
+      "Texture2D",
+      "ImageAsset"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "MeshRenderer",
+      "Material",
+      "Texture2D",
+      "ImageAsset",
+      "Mesh",
+      "utils.createMesh",
+      "primitives.plane",
+      "assetManager",
+      "loadAssetAsync",
+      "frameObject",
+      "math.Vec3",
+      "math.Color",
+      "Node.addChild",
+      "Node.setPosition"
+    ],
+    "forbiddenShortcut": [
+      "从外网 URL 加载模型（示例必须离线可跑）",
+      "绕过 assetManager 直接引用 Mesh 变量冒充资产链路"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "Material",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L7"
+      },
+      {
+        "api": "Texture2D",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L5"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Mesh",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "primitives.plane",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L93"
+      },
+      {
+        "api": "assetManager",
+        "source": "main.js",
+        "validator": "asset-loaded",
+        "sourceLocation": "L6"
+      },
+      {
+        "api": "loadAssetAsync",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L6"
+      },
+      {
+        "api": "frameObject",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.Color",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L83"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "StaticBox",
+        "Ground"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  }
 }

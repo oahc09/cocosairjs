@@ -3,20 +3,204 @@
   "version": "1.0.0",
   "title": "Multi Camera",
   "category": "camera",
-  "status": "draft",
-  "apiClaims": [
-    "Camera.priority"
-  ],
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握多相机：viewport 矩形切分屏幕、priority 控制渲染顺序",
+    "points": [
+      "用 camera.visibility + Layers 控制每台相机的可见层级",
+      "用 priority 决定相机渲染次序",
+      "用 ClearFlag.DEPTH_ONLY 保留颜色缓冲叠加渲染"
+    ]
+  },
+  "effect": {
+    "functional": "BaseCamera（priority 0）只渲染 DEFAULT 层（Floor+BlueSphere，SOLID_COLOR 清屏）；OverlayCamera（priority 1）只渲染 UI_2D 层的 OrangeSphere，clearFlags=DEPTH_ONLY 保留底层颜色实现叠加。",
+    "visual": "地面与蓝球由基础相机呈现，橙球由叠加相机画在同一画面上（两层内容同屏可见，且橙球位置正确遮挡/被遮挡于空间中）"
+  },
+  "api": {
+    "primary": [
+      "Camera",
+      "Layers"
+    ],
+    "supporting": [
+      "Layers.makeMaskInclude",
+      "Node.setPosition"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Layers.makeMaskInclude",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.sphere",
+      "primitives.plane",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": [
+      "用两份 canvas 冒充分屏",
+      "把另一台相机 viewport 设为全屏互相覆盖"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L50"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "primitives.sphere",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L24"
+      }
+    ]
+  },
   "capabilities": [
     "camera"
   ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
-  "requiresDevTools": false,
-  "validation": {
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Light",
+        "Floor",
+        "BlueSphere",
+        "OrangeSphere",
+        "BaseCamera",
+        "OverlayCamera"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
     "validators": [
-      "scene-ready",
-      "no-runtime-error"
+      "scene-ready"
     ]
-  }
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "node-count",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "promotionEvidence": "e281f8acab1b"
 }

@@ -1,0 +1,74 @@
+{
+  "measuredAt": "2026-09-18T23:10:26.921Z",
+  "mount": "/apps/gallery",
+  "base": "<self-hosted>",
+  "total": 13,
+  "pass": 13,
+  "results": [
+    {
+      "id": "static:index.html",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "static:gallery.html",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "static:files.json",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "static:cocosair.module.js",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "thumbnail:anim-position",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "thumbnail:anim-rotation",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "thumbnail:camera",
+      "ok": true,
+      "detail": "status=200"
+    },
+    {
+      "id": "gallery:list-rendered",
+      "ok": true,
+      "detail": "links=45 expected=45"
+    },
+    {
+      "id": "gallery:deep-link",
+      "ok": true,
+      "detail": "iframe src=http://127.0.0.1:58255/apps/gallery/mesh-sphere/"
+    },
+    {
+      "id": "example-boot:anim-position",
+      "ok": true,
+      "detail": "booted"
+    },
+    {
+      "id": "example-boot:anim-rotation",
+      "ok": true,
+      "detail": "booted"
+    },
+    {
+      "id": "example-boot:camera",
+      "ok": true,
+      "detail": "booted"
+    },
+    {
+      "id": "gallery:no-page-errors",
+      "ok": true,
+      "detail": "0 page errors"
+    }
+  ]
+}

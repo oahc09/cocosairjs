@@ -1,22 +1,217 @@
 {
   "id": "material-transparent",
   "version": "1.0.0",
-  "title": "Transparent Cube",
-  "category": "material",
-  "status": "draft",
-  "apiClaims": [
-    "builtin-transparent-material"
-  ],
-  "capabilities": [
-    "material"
-  ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
+  "title": "Material Transparent",
+  "category": "materials",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
-  "validation": {
-    "validators": [
-      "scene-ready",
-      "no-runtime-error"
+  "learning": {
+    "goal": "掌握引擎公开的透明合同：glTF alphaMode=BLEND 材质的加载与半透明渲染",
+    "points": [
+      "glTF material.alphaMode=\"BLEND\" 与 baseColorFactor 的 alpha 通道",
+      "GLTFLoader.parseAsync + GLTFAsset.instantiate 的加载流程",
+      "半透明面板透见后方不透明物体的混合效果"
     ]
-  }
+  },
+  "effect": {
+    "functional": "BlendPanel 来自 GLTFLoader.parseAsync(inline glTF JSON)，其材质 alphaMode=BLEND、baseColorFactor alpha=0.45；instantiate 后挂到场景；SolidReference 为不透明参考方块。",
+    "visual": "半透明青色面板悬浮在红色实心立方体前，透过面板可隐约看到后方立方体的轮廓与颜色"
+  },
+  "api": {
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate"
+    ],
+    "supporting": [
+      "Material",
+      "MeshRenderer"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "GLTFLoader",
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Node.addChild",
+      "Node.setPosition"
+    ],
+    "forbiddenShortcut": [
+      "用 opacity 贴图外挂冒充 alphaMode BLEND",
+      "把面板放到方块后方伪造遮挡关系"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L4"
+      },
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L79"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L22"
+      }
+    ]
+  },
+  "capabilities": [
+    "materials"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "SolidReference",
+        "BlendPanel"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "material-property",
+      "asset-loaded",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（inline glTF JSON 程序化生成）"
+  },
+  "promotionEvidence": "d5a470fe626f"
 }

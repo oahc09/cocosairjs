@@ -13,3 +13,6 @@ output/
 build/.dts-*/
 build/.dev-log.txt
 .tmp-basis\n
+
+# V1.1 Gallery 发布 Artifact（可再生，tools/verify/v11-gallery-artifact.cjs build）
+build/examples/

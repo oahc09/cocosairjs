@@ -1,7 +1,7 @@
 {
   "id": "hello-cube",
   "version": "1.0.0",
-  "status": "draft",
+  "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -21,10 +21,201 @@
     "basics"
   ],
   "validation": {
-    "validators": [
-      "scene-ready",
-      "visible-frame"
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "promotionEvidence": "20b9fa1229ed",
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "第一个完整 3D 场景：相机 + 平行光 + 旋转立方体（E001 basic-cube）",
+    "points": [
+      "Camera 组件与投影参数",
+      "DirectionalLight 照明",
+      "Component.update 驱动自转"
     ]
   },
-  "promotionEvidence": null
+  "effect": {
+    "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=2）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*45。",
+    "visual": "画面中央立方体持续缓慢自转，三个可见面呈现不同明暗，背景深蓝"
+  },
+  "api": {
+    "primary": [
+      "createAirApp",
+      "MeshRenderer",
+      "Component"
+    ],
+    "supporting": [
+      "Camera",
+      "DirectionalLight"
+    ],
+    "claims": [
+      "Layers",
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "MeshRenderer",
+      "Component",
+      "Material",
+      "builtinResMgr",
+      "utils.createMesh",
+      "primitives.box",
+      "math.Vec3",
+      "math.Color",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Node.addComponent"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene 文件冒充 Code First",
+      "用贴图立方体图片冒充实时渲染"
+    ],
+    "evidence": [
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L9"
+      },
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L5"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L5"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "Material",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L17"
+      },
+      {
+        "api": "builtinResMgr",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "primitives.box",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "math.Color",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L42"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  }
 }

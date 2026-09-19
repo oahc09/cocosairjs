@@ -2,21 +2,211 @@
   "id": "light-two-directional",
   "version": "1.0.0",
   "title": "Two Directional Lights",
-  "category": "lighting",
-  "status": "draft",
-  "apiClaims": [
-    "DirectionalLight"
-  ],
-  "capabilities": [
-    "lighting"
-  ],
-  "benchmarkRefs": [],
-  "recipeRefs": [],
+  "category": "lights",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
-  "validation": {
-    "validators": [
-      "scene-ready",
-      "no-runtime-error"
+  "learning": {
+    "goal": "组合主光与补光两盏平行光，并用 illuminance 三态切换理解光照强度对画面的影响",
+    "points": [
+      "两盏 DirectionalLight 的主/补配合",
+      "illuminance OFF/LOW/NORMAL 三态",
+      "input.on 真实点击驱动状态切换"
     ]
-  }
+  },
+  "effect": {
+    "functional": "Key Light（illuminance=2）+ Fill Light（0.4）同时存在；点击画面后 keyLight.luminance 依次 2→0.5→0 循环，__lightState 记录当前档位。",
+    "visual": "点击画面时黄色方块从正常照明变暗直至只剩补光的蓝色微光，左上角状态文字同步显示当前档位"
+  },
+  "api": {
+    "primary": [
+      "DirectionalLight"
+    ],
+    "supporting": [
+      "input",
+      "Input"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "input",
+      "Input"
+    ],
+    "forbiddenShortcut": [
+      "用修改材质颜色冒充灯光强度变化"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L4"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L20"
+      }
+    ]
+  },
+  "capabilities": [
+    "lights"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Key Light",
+        "Fill Light",
+        "Subject"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）画面任意处一次",
+        "expected": "keyLight.luminance 变为 0.5（LOW 档），__lightState === \"LOW\"，画面亮度明显下降（frame-diff 可测）"
+      },
+      {
+        "action": "再点击两次",
+        "expected": "依次进入 OFF（0，仅剩补光）→ NORMAL（2，恢复初始亮度）"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元/贴图）"
+  },
+  "promotionEvidence": "688b33f386d3"
 }

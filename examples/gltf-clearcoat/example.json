@@ -1,0 +1,175 @@
+{
+  "id": "gltf-clearcoat",
+  "version": "1.0.0",
+  "title": "glTF Clearcoat",
+  "category": "materials",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握清漆层的视觉语义：KHR_materials_clearcoat 三档 clearcoatFactor 对照（E006）",
+    "points": [
+      "KHR_materials_clearcoat 扩展经 glTF 材质公开（引擎无独立 Clearcoat Material API）",
+      "clearcoatFactor 0/0.5/1.0 的第二层高光梯度",
+      "共享相机/灯光/基础参数的对照实验设计"
+    ]
+  },
+  "effect": {
+    "functional": "三个球体来自同一 GLTF，仅 clearcoatFactor 不同（0/0.5/1.0），扩展被解析且 materials 数量为 3；__clearcoatState 记录。",
+    "visual": "从左到右三个球体表面第二层镜面高光逐渐增强，基础色与光照完全一致"
+  },
+  "api": {
+    "primary": [
+      "GLTFLoader.parseAsync"
+    ],
+    "supporting": [
+      "GLTFAsset.instantiate"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "frameObject",
+      "GLTFLoader",
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Node.addChild"
+    ],
+    "forbiddenShortcut": [
+      "用贴图/环境球伪造清漆高光",
+      "三球使用不同 baseColor 使对照失效"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L4"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L20"
+      },
+      {
+        "api": "frameObject",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L95"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L93"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L15"
+      }
+    ]
+  },
+  "capabilities": [
+    "materials"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Fill Light"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "material-property",
+      "capability-status",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [],
+    "capability": [
+      "capability-status"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  },
+  "promotionEvidence": "51cf31986156"
+}

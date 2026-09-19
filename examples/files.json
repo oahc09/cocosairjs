@@ -1,981 +1,3852 @@
 {
-  "generatedAt": "2026-09-17T23:39:47.509Z",
-  "revision": "d0ddbc9",
+  "generatedAt": "2026-09-18T23:08:28.650Z",
+  "revision": "30e97e3",
   "examples": [
     {
+      "dir": "anim-position",
       "id": "anim-position",
       "version": "1.0.0",
       "title": "Position Animation",
       "category": "animation",
-      "status": "draft",
-      "apiClaims": [
-        "Component.update",
-        "Vec3"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握程序化动画的最小骨架：Component.update(dt) 中推进时间并改写位置",
+        "points": [
+          "update 的 dt 增量语义（与帧率无关的推进）",
+          "Math.sin 生成往复轨迹",
+          "setPosition 每帧覆盖位置"
+        ]
+      },
+      "effect": {
+        "functional": "Mover 的 X 坐标按 sin(t*2)*2.2 持续变化；动画相位由 dt 累加驱动；position(t1) != position(t0)。",
+        "visual": "蓝色方块在画面中左右匀速往复滑动，路径为水平直线"
+      },
+      "api": {
+        "primary": [
+          "Component",
+          "Node.setPosition"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "primitives.box"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition"
+        ]
+      },
       "capabilities": [
         "animation"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Mover"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "no-runtime-error"
+          "scene-ready"
         ]
       },
-      "dir": "anim-position"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "ae4b573dcb68"
     },
     {
+      "dir": "anim-rotation",
       "id": "anim-rotation",
       "version": "1.0.0",
       "title": "Rotation Animation",
       "category": "animation",
-      "status": "draft",
-      "apiClaims": [
-        "Component.update"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握欧拉角逐帧累加的标准自转写法：读取当前 eulerAngles.y 后按 dt 增量写回",
+        "points": [
+          "eulerAngles.y 读取当前朝向",
+          "setRotationFromEuler 写回累加结果",
+          "90°/s 匀速旋转的 dt 无关性"
+        ]
+      },
+      "effect": {
+        "functional": "Spinner 的 Y 轴欧拉角每帧增加 dt*90；rotation(t1) != rotation(t0)；转轴恒为 Y。",
+        "visual": "橙色立方体绕竖直轴匀速自转，可依次看到四个侧面"
+      },
+      "api": {
+        "primary": [
+          "Component",
+          "Node.setRotationFromEuler"
+        ],
+        "supporting": [
+          "Node.setPosition",
+          "MeshRenderer"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "animation"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Spinner"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "no-runtime-error"
+          "scene-ready"
         ]
       },
-      "dir": "anim-rotation"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "297e971102ce"
     },
     {
+      "dir": "automation",
       "id": "automation",
       "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": true,
       "title": "Agent Automation",
       "category": "devtools",
-      "apiClaims": [
-        "createAgentSession",
-        "dispatch"
-      ],
-      "capabilities": [
-        "devtools",
-        "agent"
-      ],
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": true,
+      "learning": {
+        "goal": "Agent/DevTools 会话闭环（E012）：显式绑定 __airApp 后 session 观察 + 受控修改",
+        "points": [
+          "window.__airApp 显式绑定入口",
+          "DevToolsSession.inspectScene / dispatch 冻结合同",
+          "Runtime-only bundle 不含 DevTools、显式 attach 才生效"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "automation"
+      "effect": {
+        "functional": "session 经 inspectScene 读取场景计数；dispatch createNode/setTransform 受控修改；detach 后监听清理、主循环不受影响。",
+        "visual": "基础场景 + agent 生成的节点；面板/工具侧展示会话观察数据"
+      },
+      "api": {
+        "primary": [
+          "DevToolsSession.inspectScene",
+          "DevToolsSession.dispatch"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Layers",
+          "utils.createMesh",
+          "primitives.box",
+          "builtinResMgr",
+          "DevToolsSession.inspectScene",
+          "DevToolsSession.dispatch",
+          "Node.addChild"
+        ]
+      },
+      "capabilities": [
+        "runtime-control"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "5079d45cff66"
     },
     {
+      "dir": "camera",
       "id": "camera",
       "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
       "title": "Camera Controls",
       "category": "camera",
-      "apiClaims": [
-        "Camera.projection",
-        "Camera.orthoHeight",
-        "frameObject"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "相机控制与取景：PERSPECTIVE/ORTHO 切换 + frameObject 自动取景（E003）",
+        "points": [
+          "Camera.ProjectionType 切换",
+          "orthoHeight 与 fov 的语义差异",
+          "utils.frameObject 按包围盒自动取景"
+        ]
+      },
+      "effect": {
+        "functional": "场景 group 含多个方块；按钮切换 camera.projection；frameObject 使相机完整包围 group 包围盒；切换后画面明显变化。",
+        "visual": "整组方块完整居中显示（无裁切）；切到正交后近大远小消失"
+      },
+      "api": {
+        "primary": [
+          "Camera",
+          "frameObject"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "primitives.box"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "Layers",
+          "math.Vec3",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "frameObject",
+          "Node.addChild",
+          "Node.setPosition"
+        ]
+      },
       "capabilities": [
         "camera"
       ],
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "group"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "visible-frame"
+          "scene-ready"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "camera"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "e3b6b7627fd3"
     },
     {
+      "dir": "camera-lookat",
       "id": "camera-lookat",
       "version": "1.0.0",
       "title": "Camera LookAt",
       "category": "camera",
-      "status": "draft",
-      "apiClaims": [
-        "Node.setPosition",
-        "Node.setRotationFromEuler"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "理解相机瞄准目标的数学：由方向向量求 pitch/yaw 欧拉角并施加 setRotationFromEuler",
+        "points": [
+          "相机默认朝向 -Z 的欧拉角语义",
+          "pitch = atan2(dy, len(dxz))，yaw = atan2(-dx, -dz)",
+          "点击切换目标后相机朝向即时变化"
+        ]
+      },
+      "effect": {
+        "functional": "相机初始瞄准 TargetLeft；点击后用 aimAt 重算欧拉角瞄准 TargetRight；cameraNode.eulerAngles 随目标切换改变。",
+        "visual": "初始画面以蓝色球为中心，点击后取景中心跳到橙色球，相机角度切换干脆无插值"
+      },
+      "api": {
+        "primary": [
+          "Camera",
+          "Node.setRotationFromEuler"
+        ],
+        "supporting": [
+          "input",
+          "Input"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "input",
+          "Input",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.sphere",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "camera"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "TargetLeft",
+            "TargetRight"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）一次",
+            "expected": "瞄准目标切换到 TargetRight：cameraNode 的 yaw 从约 -37° 变为约 +37°，画面中心从蓝球变为橙球（frame-diff 可测）"
+          }
         ]
       },
-      "dir": "camera-lookat"
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "31f5996ea1d5"
     },
     {
+      "dir": "camera-multi",
       "id": "camera-multi",
       "version": "1.0.0",
       "title": "Multi Camera",
       "category": "camera",
-      "status": "draft",
-      "apiClaims": [
-        "Camera.priority"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握多相机：viewport 矩形切分屏幕、priority 控制渲染顺序",
+        "points": [
+          "用 camera.visibility + Layers 控制每台相机的可见层级",
+          "用 priority 决定相机渲染次序",
+          "用 ClearFlag.DEPTH_ONLY 保留颜色缓冲叠加渲染"
+        ]
+      },
+      "effect": {
+        "functional": "BaseCamera（priority 0）只渲染 DEFAULT 层（Floor+BlueSphere，SOLID_COLOR 清屏）；OverlayCamera（priority 1）只渲染 UI_2D 层的 OrangeSphere，clearFlags=DEPTH_ONLY 保留底层颜色实现叠加。",
+        "visual": "地面与蓝球由基础相机呈现，橙球由叠加相机画在同一画面上（两层内容同屏可见，且橙球位置正确遮挡/被遮挡于空间中）"
+      },
+      "api": {
+        "primary": [
+          "Camera",
+          "Layers"
+        ],
+        "supporting": [
+          "Layers.makeMaskInclude",
+          "Node.setPosition"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "Layers.makeMaskInclude",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.sphere",
+          "primitives.plane",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "camera"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Light",
+            "Floor",
+            "BlueSphere",
+            "OrangeSphere",
+            "BaseCamera",
+            "OverlayCamera"
+          ]
+        }
       },
-      "dir": "camera-multi"
-    },
-    {
-      "id": "camera-ortho",
-      "version": "1.0.0",
-      "title": "Orthographic Camera",
-      "category": "camera",
-      "status": "draft",
-      "apiClaims": [
-        "Camera.ProjectionType.ORTHO",
-        "Camera.orthoHeight"
-      ],
-      "capabilities": [
-        "camera"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
+      "interaction": {
+        "steps": []
       },
-      "dir": "camera-ortho"
-    },
-    {
-      "id": "gltf-catalog",
-      "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "title": "glTF Catalog",
-      "category": "gltf",
-      "apiClaims": [
-        "GLTFLoader"
-      ],
-      "capabilities": [
-        "gltf"
-      ],
-      "validation": {
+      "ready": {
         "validators": [
           "scene-ready"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "gltf-catalog"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "node-count",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "e281f8acab1b"
     },
     {
+      "dir": "camera-ortho",
+      "id": "camera-ortho",
+      "version": "1.0.0",
+      "title": "Ortho Camera",
+      "category": "camera",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 PERSPECTIVE/ORTHO 投影切换与 orthoHeight 正交取景高度",
+        "points": [
+          "Camera.ProjectionType 两种投影",
+          "orthoHeight 与 fov 的对应关系（正交无近大远小）",
+          "同一场景在两种投影下的观感差异"
+        ]
+      },
+      "effect": {
+        "functional": "camera.projection 初始 PERSPECTIVE，点击后在 ORTHO（orthoHeight=2.2）间切换；__projection 记录当前模式；场景含三个深度排列的方块。",
+        "visual": "透视模式下三个方块近大远小；切到正交后三者等大、仅被相互遮挡，画面顶部状态文字同步"
+      },
+      "api": {
+        "primary": [
+          "Camera"
+        ],
+        "supporting": [
+          "input",
+          "Input"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "input",
+          "Input",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "camera"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "DepthCube-0",
+            "DepthCube-1",
+            "DepthCube-2"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）一次",
+            "expected": "projection 切为 ORTHO：三个方块变为等大呈现，__projection === \"ORTHO\"，画面像素分布变化（frame-diff 可测）"
+          },
+          {
+            "action": "再点击一次",
+            "expected": "切回 PERSPECTIVE，恢复近大远小"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "5e8de7c072d6"
+    },
+    {
+      "dir": "gltf-basic",
+      "id": "gltf-basic",
+      "version": "1.0.0",
+      "title": "glTF Basic",
+      "category": "gltf",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握最简 glTF 正向加载链：loadAsync(url) → GLTFAsset → instantiate → 场景渲染（E007）",
+        "points": [
+          "GLTFLoader.loadAsync 从 URL 加载真实 GLB",
+          "GLTFAsset.instantiate 实例化挂场景",
+          "frameObject 按包围盒取景"
+        ]
+      },
+      "effect": {
+        "functional": "BoxTextured.glb 经 loadAsync 成功解析（GLTFAsset，warnings 记录），instantiate 后根节点挂入场景，frameObject 使模型完整可见。",
+        "visual": "带纹理的立方体模型完整居中显示，纹理清晰可辨，无裁切"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.loadAsync",
+          "GLTFAsset.instantiate"
+        ],
+        "supporting": [
+          "frameObject",
+          "GLTFLoader"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "frameObject",
+          "GLTFLoader",
+          "GLTFLoader.loadAsync",
+          "GLTFAsset.instantiate",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "a1036ddc3ba7"
+    },
+    {
+      "dir": "gltf-catalog",
+      "id": "gltf-catalog",
+      "version": "1.0.0",
+      "title": "glTF Catalog",
+      "category": "gltf",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "bench": {
+        "mode": "ui-shell",
+        "uiSelector": "#model-list .model-row"
+      },
+      "learning": {
+        "goal": "官方模型目录页（UI Shell）：目录数据驱动 DOM 列表 + iframe 嵌入 gltf-viewer",
+        "points": [
+          "fetch catalog.json 渲染可搜索/过滤的模型目录",
+          "iframe 以 URL 参数驱动 gltf-viewer 加载对应模型",
+          "ui-shell 示例的验收合同（DOM 选择器 + 零页面错误）"
+        ]
+      },
+      "effect": {
+        "functional": "页面加载后 fetch catalog.json 并渲染 #model-list .model-row 列表；选择模型后在 #air-preview iframe 内加载 gltf-viewer。",
+        "visual": "左侧目录列表（可搜索/分类过滤），右侧 AIR 预览舞台与官方对照舞台"
+      },
+      "api": {
+        "primary": [],
+        "supporting": [],
+        "claims": []
+      },
+      "capabilities": [
+        "gltf"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "#model-list .model-row"
+          ],
+          "dom": true
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "fe5b5218178e"
+    },
+    {
+      "dir": "gltf-clearcoat",
+      "id": "gltf-clearcoat",
+      "version": "1.0.0",
+      "title": "glTF Clearcoat",
+      "category": "materials",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握清漆层的视觉语义：KHR_materials_clearcoat 三档 clearcoatFactor 对照（E006）",
+        "points": [
+          "KHR_materials_clearcoat 扩展经 glTF 材质公开（引擎无独立 Clearcoat Material API）",
+          "clearcoatFactor 0/0.5/1.0 的第二层高光梯度",
+          "共享相机/灯光/基础参数的对照实验设计"
+        ]
+      },
+      "effect": {
+        "functional": "三个球体来自同一 GLTF，仅 clearcoatFactor 不同（0/0.5/1.0），扩展被解析且 materials 数量为 3；__clearcoatState 记录。",
+        "visual": "从左到右三个球体表面第二层镜面高光逐渐增强，基础色与光照完全一致"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync"
+        ],
+        "supporting": [
+          "GLTFAsset.instantiate"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "frameObject",
+          "GLTFLoader",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Node.addChild"
+        ]
+      },
+      "capabilities": [
+        "materials"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Fill Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "material-property",
+          "capability-status",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": [
+          "capability-status"
+        ]
+      },
+      "promotionEvidence": "51cf31986156"
+    },
+    {
+      "dir": "gltf-draco",
       "id": "gltf-draco",
       "version": "1.0.0",
-      "title": "Draco Compressed",
+      "title": "glTF Draco",
       "category": "gltf",
-      "status": "draft",
-      "apiClaims": [
-        "GLTFLoader.parseAsync",
-        "setDRACODecoder"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 Draco 压缩的公开合同：扩展支持查询 + 缺失 Decoder 时的稳定错误码 GLTF_DECODER_MISSING",
+        "points": [
+          "GLTFLoader.getExtensionSupport 查询扩展状态",
+          "缺 Decoder 的加载产生稳定错误码而非崩溃（教学错误示例同样 Ready）",
+          "宿主接入合同：setDRACODecoder(createDracoDecoder(() => draco3d.createDecoderModule({})))"
+        ]
+      },
+      "effect": {
+        "functional": "getExtensionSupport 报告 KHR_draco_mesh_compression 状态；无 decoder 加载 draco.glb 被拒绝，__decoderState === \"decoder-missing-observed\"，无泄漏实例、无 uncaught error。",
+        "visual": "画面为相机/灯光骨架 + 左上角状态面板，面板展示扩展状态、稳定错误码与宿主接入示例代码"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.getExtensionSupport",
+          "GLTFLoader.setDRACODecoder",
+          "createDracoDecoder"
+        ],
+        "supporting": [
+          "GLTFLoader.parseAsync"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "GLTFLoader",
+          "GLTFLoader.getExtensionSupport",
+          "GLTFLoader.setDRACODecoder",
+          "GLTFLoader.parseAsync",
+          "createDracoDecoder",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "gltf"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "no-runtime-error"
+          "scene-ready"
         ]
       },
-      "dir": "gltf-draco"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "capability-status",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [],
+        "lifecycle": [],
+        "capability": [
+          "capability-status"
+        ]
+      },
+      "promotionEvidence": "49c9746a8bf3"
     },
     {
+      "dir": "gltf-meshopt",
       "id": "gltf-meshopt",
       "version": "1.0.0",
-      "title": "Meshopt Compressed",
+      "title": "glTF Meshopt",
       "category": "gltf",
-      "status": "draft",
-      "apiClaims": [
-        "GLTFLoader.parseAsync",
-        "setMeshoptDecoder"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 Meshopt 压缩全流程：配置官方解码器加载渲染，并验证缺 decoder 时的稳定错误",
+        "points": [
+          "createMeshoptDecoder 包装官方 meshopt_decoder.mjs",
+          "loader.setMeshoptDecoder 注入解码器后加载 KHR_meshopt_compression 模型",
+          "isMeshoptAvailable 检查可用性 + 缺 decoder 稳定错误码"
+        ]
+      },
+      "effect": {
+        "functional": "配置解码器后 meshopt-khr.glb parseAsync 成功、instantiate 挂场景、frameObject 取景；同一模型用未配置 loader 再解析被拒绝且 error.code === \"GLTF_DECODER_MISSING\"。",
+        "visual": "画面中央显示解压后的模型几何，左上角面板展示 isMeshoptAvailable=true 与两种模式的结果"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.setMeshoptDecoder",
+          "createMeshoptDecoder"
+        ],
+        "supporting": [
+          "isMeshoptAvailable",
+          "GLTFLoader.parseAsync"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "GLTFLoader",
+          "GLTFLoader.setMeshoptDecoder",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "createMeshoptDecoder",
+          "isMeshoptAvailable",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "gltf"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "no-runtime-error"
+          "scene-ready"
         ]
       },
-      "dir": "gltf-meshopt"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "capability-status",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": [
+          "capability-status"
+        ]
+      },
+      "promotionEvidence": "2068703052a3"
     },
     {
+      "dir": "gltf-morph",
       "id": "gltf-morph",
       "version": "1.0.0",
-      "title": "Morph Cube",
+      "title": "glTF Morph Target",
       "category": "gltf",
-      "status": "draft",
-      "apiClaims": [
-        "GLTFLoader",
-        "Animation"
-      ],
-      "capabilities": [
-        "gltf"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "learning": {
+        "goal": "掌握 glTF morph target 模型的加载与动画剪辑播放（E009 animation-basic 的 GLTF 形态）",
+        "points": [
+          "GLTFLoader.parseAsync 从 ArrayBuffer 加载 GLB",
+          "GLTFAsset.instantiate 实例化挂场景",
+          "Animation.play + WrapMode.Loop 循环播放变形动画"
         ]
       },
-      "dir": "gltf-morph"
+      "effect": {
+        "functional": "AnimatedMorphCube.glb 经 parseAsync → instantiate 挂载；根节点 Animation 组件持有 ≥1 个剪辑并进入 playing 状态；frameObject 取景。",
+        "visual": "立方体持续做收缩/膨胀的变形动画，顶点位置随时间明显改变（帧间差异可测）"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "Animation.play",
+          "AnimationClip"
+        ],
+        "supporting": [
+          "GLTFAsset.instantiate",
+          "frameObject"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "Animation",
+          "Animation.play",
+          "AnimationClip",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "frameObject",
+          "GLTFLoader",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "gltf",
+        "animation"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "aae455c64f95"
     },
     {
+      "dir": "gltf-skin",
       "id": "gltf-skin",
       "version": "1.0.0",
-      "title": "Simple Skin",
+      "title": "glTF Skin",
       "category": "gltf",
-      "status": "draft",
-      "apiClaims": [
-        "GLTFLoader",
-        "SkinnedMeshRenderer"
-      ],
-      "capabilities": [
-        "gltf"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "learning": {
+        "goal": "掌握 glTF 蒙皮模型的加载与蒙皮动画播放（skins + joints + 动画剪辑）",
+        "points": [
+          "parseAsync 加载 .gltf JSON + 外部 bin（baseUrl 解析）",
+          "GLTFAsset.skeletons 蒙皮数据",
+          "Animation.play 循环播放骨骼动画"
         ]
       },
-      "dir": "gltf-skin"
+      "effect": {
+        "functional": "SimpleSkin.gltf 经 parseAsync(jsonText, \"./assets/\") 加载；skeletons.length ≥ 1；动画剪辑进入 playing 状态；frameObject 取景。",
+        "visual": "双骨骼蒙皮方块随动画绕关节弯曲摆动，网格顶点逐帧变形"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "Animation.play"
+        ],
+        "supporting": [
+          "GLTFAsset.instantiate",
+          "Animation"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "Animation",
+          "Animation.play",
+          "AnimationClip",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "frameObject",
+          "GLTFLoader",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "gltf",
+        "animation"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "b19c2b9d02ff"
     },
     {
+      "dir": "gltf-viewer",
       "id": "gltf-viewer",
       "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
       "title": "glTF Viewer",
       "category": "gltf",
-      "apiClaims": [
-        "GLTFLoader.parseAsync",
-        "GLTFAsset.instantiate",
-        "GLTFInstance"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
+        "points": [
+          "GLTFLoader 加载本地/参数化模型",
+          "AnimationClip 播放控制",
+          "AirTransmissionCapture 两相机捕获合同"
+        ]
+      },
+      "effect": {
+        "functional": "app 启动后按 URL 参数加载模型（默认本地资产），instantiate 挂场景；transmission-capture 节点在启动时武装捕获相机；模型带动画时播放。",
+        "visual": "视口中央渲染模型，可拖动旋转缩放；状态提示区显示加载状态"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader",
+          "AirTransmissionCapture"
+        ],
+        "supporting": [
+          "Animation"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Animation",
+          "AnimationClip",
+          "GLTFLoader",
+          "AirTransmissionCapture",
+          "math.Vec3",
+          "Node.addChild",
+          "Node.setPosition"
+        ]
+      },
       "capabilities": [
         "gltf"
       ],
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "transmission-capture"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "asset-loaded",
-          "visible-frame"
+          "scene-ready"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "gltf-viewer"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "7657bb15b256"
     },
     {
+      "dir": "hello-cube",
       "id": "hello-cube",
       "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
       "title": "Hello Cube",
       "category": "basics",
-      "apiClaims": [
-        "createAirApp",
-        "Scene",
-        "Node",
-        "MeshRenderer",
-        "Camera",
-        "DirectionalLight",
-        "utils.createMesh",
-        "primitives.box"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "第一个完整 3D 场景：相机 + 平行光 + 旋转立方体（E001 basic-cube）",
+        "points": [
+          "Camera 组件与投影参数",
+          "DirectionalLight 照明",
+          "Component.update 驱动自转"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=2）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*45。",
+        "visual": "画面中央立方体持续缓慢自转，三个可见面呈现不同明暗，背景深蓝"
+      },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "MeshRenderer",
+          "Component"
+        ],
+        "supporting": [
+          "Camera",
+          "DirectionalLight"
+        ],
+        "claims": [
+          "Layers",
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "MeshRenderer",
+          "Component",
+          "Material",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "math.Vec3",
+          "math.Color",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Node.addComponent"
+        ]
+      },
       "capabilities": [
         "basics"
       ],
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Cube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "visible-frame"
+          "scene-ready"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "hello-cube"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "20b9fa1229ed"
     },
     {
+      "dir": "input",
       "id": "input",
       "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
       "title": "Input Events",
       "category": "interaction",
-      "apiClaims": [
-        "input.on",
-        "Input.EventType.KEY_DOWN",
-        "Input.EventType.TOUCH_MOVE"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "输入系统全景：键盘 WASD 平移、滚轮推拉、拖拽旋转（真实输入链）",
+        "points": [
+          "input.on + Input.EventType.KEY_DOWN/KEY_UP",
+          "MOUSE_WHEEL 相机推拉",
+          "TOUCH_START/MOVE/END 拖拽旋转"
+        ]
+      },
+      "effect": {
+        "functional": "按键集合驱动 KeyboardMover.update 平移；滚轮改变相机 z（3~20 夹取）；按下拖动改变 cube 欧拉角。",
+        "visual": "WASD 移动方块、滚轮拉近拉远、拖拽旋转方块，三者实时响应"
+      },
+      "api": {
+        "primary": [
+          "input",
+          "Input"
+        ],
+        "supporting": [
+          "Component",
+          "Camera"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "Component",
+          "input",
+          "Input",
+          "Layers",
+          "math.Vec3",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "input"
       ],
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "interactive-cube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "按住 W 键约 0.35s（KEY_DOWN/KEY_UP）",
+            "expected": "interactive-cube 沿 -Z 平移（frame-diff 可测）"
+          },
+          {
+            "action": "在画布上按住并拖拽指针",
+            "expected": "cube 欧拉角随拖拽变化"
+          }
         ]
       },
-      "promotionEvidence": null,
-      "dir": "input"
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "3413b43c8405"
     },
     {
+      "dir": "interaction-click",
+      "id": "interaction-click",
+      "version": "1.0.0",
+      "title": "Interaction Click",
+      "category": "input",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握真实指针输入链：input.on(TOUCH_START) → 状态机 → 缓动到 +90°（E010）",
+        "points": [
+          "Input.EventType.TOUCH_START 的真实事件订阅",
+          "目标角状态机 + Component.update 缓动",
+          "每次点击精确 +90°，可重复累加"
+        ]
+      },
+      "effect": {
+        "functional": "初始 rotation.y=0；点击 1 次后目标角 90° 并在约 0.5s 内到达；点击 2 次后 180°；__clickState() 返回 {clicks, targetAngle, currentAngle}。",
+        "visual": "绿色方块每次点击后顺时针转动一个直角并带缓动收尾，左上角计数与目标角实时更新"
+      },
+      "api": {
+        "primary": [
+          "input",
+          "Input"
+        ],
+        "supporting": [
+          "Component",
+          "Node.setRotationFromEuler"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "input",
+          "Input",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "input"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "ClickableCube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）#1",
+            "expected": "targetAngle=90，currentAngle 在约 500ms 内达到 90±0.5（缓动收尾到精确值）"
+          },
+          {
+            "action": "pointer click #2",
+            "expected": "targetAngle=180，currentAngle 到达 180±0.5"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "75a0e49d906c"
+    },
+    {
+      "dir": "light-point",
       "id": "light-point",
       "version": "1.0.0",
       "title": "Point Light",
-      "category": "lighting",
-      "status": "draft",
-      "apiClaims": [
-        "PointLight"
-      ],
-      "capabilities": [
-        "lighting"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
+      "category": "lights",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "learning": {
+        "goal": "掌握 PointLight 的 illuminance/range 语义：点光源向四周发光，亮度随距离衰减",
+        "points": [
+          "PointLight 组件的 luminance（亮度）与 range（衰减半径）",
+          "光源节点移动时受光面实时变化",
+          "Component.update 驱动光源轨道运动"
         ]
       },
-      "dir": "light-point"
+      "effect": {
+        "functional": "名为 PointLightNode 的节点挂 PointLight（illuminance=40, range=8），每帧绕场景中心轨道运动；三块板与地板受单一点光源照明。",
+        "visual": "三块彩色板与灰地板仅被一个游走的点光源照亮，板上明暗随光源靠近/远离实时流动，形成明显距离衰减"
+      },
+      "api": {
+        "primary": [
+          "PointLight"
+        ],
+        "supporting": [
+          "Component",
+          "Node.setPosition"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "PointLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "primitives.plane",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "lights"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "PointLightNode",
+            "Floor",
+            "Left",
+            "Center",
+            "Right"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "d0f2836abd8d"
     },
     {
+      "dir": "light-sphere",
       "id": "light-sphere",
       "version": "1.0.0",
-      "title": "Sphere Light",
-      "category": "lighting",
-      "status": "draft",
-      "apiClaims": [
-        "SphereLight"
-      ],
-      "capabilities": [
-        "lighting"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
+      "title": "Lighting — Lit Sphere",
+      "category": "lights",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "learning": {
+        "goal": "理解 DirectionalLight 的方向语义：只有旋转影响照明，位置无关；观察球面明暗交界",
+        "points": [
+          "DirectionalLight 用 setRotationFromEuler 定向",
+          "illuminance 控制整体强度",
+          "球面高光/明暗交界随自转的视觉变化"
         ]
       },
-      "dir": "light-sphere"
+      "effect": {
+        "functional": "名为 Main Light 的节点挂 DirectionalLight（rotation -45/-30, illuminance=2）；ShadingSphere 每帧自转。",
+        "visual": "浅色球体在画面中央自转，球面从亮面到暗面有平滑明暗过渡，明暗交界位置固定于光源方向"
+      },
+      "api": {
+        "primary": [
+          "DirectionalLight"
+        ],
+        "supporting": [
+          "Node.setRotationFromEuler",
+          "primitives.sphere"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.sphere",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "lights"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "ShadingSphere"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "a21fe570d906"
     },
     {
+      "dir": "light-spot",
       "id": "light-spot",
       "version": "1.0.0",
       "title": "Spot Light",
-      "category": "lighting",
-      "status": "draft",
-      "apiClaims": [
-        "SpotLight",
-        "Light"
-      ],
-      "capabilities": [
-        "lighting"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
+      "category": "lights",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "learning": {
+        "goal": "掌握 SpotLight 聚光灯：锥形照射范围、主光斑 size 与衰减参数",
+        "points": [
+          "SpotLight 的 illuminance/range/size",
+          "聚光灯光锥随光源位置移动在地面上扫动",
+          "与 PointLight 的照射形态差异"
         ]
       },
-      "dir": "light-spot"
+      "effect": {
+        "functional": "名为 SpotLightNode 的节点挂 SpotLight（illuminance=120, range=12, size=0.15）垂直向下；每帧小幅轨道运动；地板出现移动的圆形光斑。",
+        "visual": "灰地板上有一团边界清晰的圆形亮斑缓慢环绕中央紫色展台扫动，光斑外区域明显更暗"
+      },
+      "api": {
+        "primary": [
+          "SpotLight"
+        ],
+        "supporting": [
+          "Component",
+          "Node.setPosition"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "SpotLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "primitives.plane",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "lights"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "SpotLightNode",
+            "Floor",
+            "Pedestal"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "d3193a1d48c9"
     },
     {
+      "dir": "light-two-directional",
       "id": "light-two-directional",
       "version": "1.0.0",
       "title": "Two Directional Lights",
-      "category": "lighting",
-      "status": "draft",
-      "apiClaims": [
-        "DirectionalLight"
-      ],
-      "capabilities": [
-        "lighting"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
+      "category": "lights",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "learning": {
+        "goal": "组合主光与补光两盏平行光，并用 illuminance 三态切换理解光照强度对画面的影响",
+        "points": [
+          "两盏 DirectionalLight 的主/补配合",
+          "illuminance OFF/LOW/NORMAL 三态",
+          "input.on 真实点击驱动状态切换"
         ]
       },
-      "dir": "light-two-directional"
+      "effect": {
+        "functional": "Key Light（illuminance=2）+ Fill Light（0.4）同时存在；点击画面后 keyLight.luminance 依次 2→0.5→0 循环，__lightState 记录当前档位。",
+        "visual": "点击画面时黄色方块从正常照明变暗直至只剩补光的蓝色微光，左上角状态文字同步显示当前档位"
+      },
+      "api": {
+        "primary": [
+          "DirectionalLight"
+        ],
+        "supporting": [
+          "input",
+          "Input"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "input",
+          "Input"
+        ]
+      },
+      "capabilities": [
+        "lights"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Key Light",
+            "Fill Light",
+            "Subject"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）画面任意处一次",
+            "expected": "keyLight.luminance 变为 0.5（LOW 档），__lightState === \"LOW\"，画面亮度明显下降（frame-diff 可测）"
+          },
+          {
+            "action": "再点击两次",
+            "expected": "依次进入 OFF（0，仅剩补光）→ NORMAL（2，恢复初始亮度）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "688b33f386d3"
     },
     {
+      "dir": "material-basic",
       "id": "material-basic",
       "version": "1.0.0",
       "title": "Material Basic",
       "category": "material",
-      "status": "draft",
-      "apiClaims": [
-        "MeshRenderer",
-        "builtinResMgr.get",
-        "builtin-standard-material"
-      ],
-      "capabilities": [
-        "material"
-      ],
-      "benchmarkRefs": [
-        "B031"
-      ],
-      "recipeRefs": [],
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "material-property",
-          "visible-frame"
+      "learning": {
+        "goal": "builtin-standard 材质的最小接线：builtinResMgr.get + MeshRenderer.material",
+        "points": [
+          "builtinResMgr 获取内建标准材质",
+          "renderer.material 挂接",
+          "三色并排的材质实例语义"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "material-basic"
-    },
-    {
-      "id": "material-color",
-      "version": "1.0.0",
-      "title": "Color Cubes",
-      "category": "material",
-      "status": "draft",
-      "apiClaims": [
-        "builtinResMgr.get"
-      ],
-      "capabilities": [
-        "material"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
+      "effect": {
+        "functional": "三个 cube 各持 MeshRenderer，材质均为 builtin-standard-material；场景由 cam（PERSPECTIVE）与 light 照明。",
+        "visual": "红/绿/蓝三个立方体并排，受光呈现不同明暗面"
+      },
+      "api": {
+        "primary": [
+          "builtinResMgr",
+          "MeshRenderer"
+        ],
+        "supporting": [
+          "Camera",
+          "DirectionalLight"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
         ]
       },
-      "dir": "material-color"
-    },
-    {
-      "id": "material-transparent",
-      "version": "1.0.0",
-      "title": "Transparent Cube",
-      "category": "material",
-      "status": "draft",
-      "apiClaims": [
-        "builtin-transparent-material"
-      ],
       "capabilities": [
-        "material"
+        "materials"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "cam",
+            "light",
+            "cube-0",
+            "cube-1",
+            "cube-2"
+          ]
+        }
       },
-      "dir": "material-transparent"
-    },
-    {
-      "id": "material-unlit",
-      "version": "1.0.0",
-      "title": "Unlit Cube",
-      "category": "material",
-      "status": "draft",
-      "apiClaims": [
-        "builtin-unlit-material"
-      ],
-      "capabilities": [
-        "material"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
+      "interaction": {
+        "steps": []
       },
-      "dir": "material-unlit"
-    },
-    {
-      "id": "mesh-cylinder",
-      "version": "1.0.0",
-      "title": "Cylinder Mesh",
-      "category": "mesh",
-      "status": "draft",
-      "apiClaims": [
-        "primitives.cylinder"
-      ],
-      "capabilities": [
-        "mesh"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "mesh-cylinder"
-    },
-    {
-      "id": "mesh-plane",
-      "version": "1.0.0",
-      "title": "Ground Plane",
-      "category": "mesh",
-      "status": "draft",
-      "apiClaims": [
-        "primitives.plane"
-      ],
-      "capabilities": [
-        "mesh"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "mesh-plane"
-    },
-    {
-      "id": "mesh-sphere",
-      "version": "1.0.0",
-      "title": "Sphere Mesh",
-      "category": "mesh",
-      "status": "draft",
-      "apiClaims": [
-        "primitives.sphere"
-      ],
-      "capabilities": [
-        "mesh"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "mesh-sphere"
-    },
-    {
-      "id": "mesh-torus",
-      "version": "1.0.0",
-      "title": "Torus Mesh",
-      "category": "mesh",
-      "status": "draft",
-      "apiClaims": [
-        "primitives.torus"
-      ],
-      "capabilities": [
-        "mesh"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "mesh-torus"
-    },
-    {
-      "id": "node-active",
-      "version": "1.0.0",
-      "title": "Node Active Toggle",
-      "category": "basics",
-      "status": "draft",
-      "apiClaims": [
-        "Node.active"
-      ],
-      "capabilities": [
-        "basics"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "node-active"
-    },
-    {
-      "id": "node-hierarchy",
-      "version": "1.0.0",
-      "title": "Node Hierarchy",
-      "category": "basics",
-      "status": "draft",
-      "apiClaims": [
-        "Node.addChild",
-        "Node.getChildByName"
-      ],
-      "capabilities": [
-        "basics"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "node-hierarchy"
-    },
-    {
-      "id": "node-scale",
-      "version": "1.0.0",
-      "title": "Node Scale",
-      "category": "basics",
-      "status": "draft",
-      "apiClaims": [
-        "Node.setScale"
-      ],
-      "capabilities": [
-        "basics"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "node-scale"
-    },
-    {
-      "id": "rc-capture-frame",
-      "version": "1.0.0",
-      "title": "Capture Frame",
-      "category": "devtools",
-      "status": "draft",
-      "apiClaims": [
-        "createAgentSession",
-        "captureFrame"
-      ],
-      "capabilities": [
-        "devtools"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": true,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "rc-capture-frame"
-    },
-    {
-      "id": "rc-create-node",
-      "version": "1.0.0",
-      "title": "Create Node via Session",
-      "category": "devtools",
-      "status": "draft",
-      "apiClaims": [
-        "createAgentSession",
-        "dispatch"
-      ],
-      "capabilities": [
-        "devtools"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": true,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "rc-create-node"
-    },
-    {
-      "id": "rc-error-report",
-      "version": "1.0.0",
-      "title": "Runtime Error Report",
-      "category": "devtools",
-      "status": "draft",
-      "apiClaims": [
-        "createAgentSession",
-        "getRuntimeErrors"
-      ],
-      "capabilities": [
-        "devtools"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": true,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "rc-error-report"
-    },
-    {
-      "id": "rc-inspect-scene",
-      "version": "1.0.0",
-      "title": "Inspect Scene",
-      "category": "devtools",
-      "status": "draft",
-      "apiClaims": [
-        "createAgentSession",
-        "inspectScene"
-      ],
-      "capabilities": [
-        "devtools"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": true,
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "no-runtime-error"
-        ]
-      },
-      "dir": "rc-inspect-scene"
-    },
-    {
-      "id": "skinned-animation",
-      "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "title": "Skinned Animation",
-      "category": "animation",
-      "apiClaims": [
-        "SkinnedMeshRenderer",
-        "SkeletalAnimation",
-        "AnimationClip"
-      ],
-      "capabilities": [
-        "animation",
-        "skeleton"
-      ],
-      "validation": {
-        "validators": [
-          "scene-ready",
-          "animation-playing"
-        ]
-      },
-      "promotionEvidence": null,
-      "dir": "skinned-animation"
-    },
-    {
-      "id": "starter",
-      "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "title": "Starter",
-      "category": "basics",
-      "apiClaims": [
-        "createAirApp",
-        "Scene"
-      ],
-      "capabilities": [
-        "basics"
-      ],
-      "validation": {
+      "ready": {
         "validators": [
           "scene-ready"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "starter"
-    },
-    {
-      "id": "static-model",
-      "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "title": "Static Model",
-      "category": "mesh",
-      "apiClaims": [
-        "MeshRenderer",
-        "Material",
-        "Texture2D"
-      ],
-      "capabilities": [
-        "basics",
-        "material"
-      ],
       "validation": {
-        "validators": [
-          "scene-ready",
-          "visible-frame"
-        ]
-      },
-      "promotionEvidence": null,
-      "dir": "static-model"
-    },
-    {
-      "id": "texture-basic",
-      "version": "1.0.0",
-      "title": "Textured Cube",
-      "category": "texture",
-      "status": "draft",
-      "apiClaims": [
-        "Texture2D",
-        "builtinResMgr.get"
-      ],
-      "capabilities": [
-        "texture"
-      ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
-        "validators": [
-          "scene-ready",
+        "functional": [
+          "node-exists",
+          "material-property",
           "no-runtime-error"
-        ]
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
       },
-      "dir": "texture-basic"
+      "promotionEvidence": "7d483e078413"
     },
     {
-      "id": "transform",
+      "dir": "material-color",
+      "id": "material-color",
       "version": "1.0.0",
-      "status": "draft",
-      "benchmarkRefs": [],
-      "recipeRefs": [],
+      "title": "Material Color",
+      "category": "materials",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
-      "title": "Transform Hierarchy",
-      "category": "basics",
-      "apiClaims": [
-        "Node.addChild",
-        "Node.setPosition",
-        "Node.setRotationFromEuler"
+      "learning": {
+        "goal": "掌握 Material.initialize({effectName}) + setProperty(\"mainColor\") 的标准着色流程",
+        "points": [
+          "Material 资源的创建与 effectName 选择",
+          "setProperty 传入 math.Color 修改主色",
+          "同一 effect 不同属性值呈现不同外观"
+        ]
+      },
+      "effect": {
+        "functional": "Red/Green/Blue 三个 Node 各持独立 Material；三者均 initialize({effectName:\"builtin-standard\"})，仅 mainColor 不同。",
+        "visual": "画面并排三个纯色立方体（红/绿/蓝），形状光照完全一致，仅颜色不同"
+      },
+      "api": {
+        "primary": [
+          "Material.initialize",
+          "Material.setProperty"
+        ],
+        "supporting": [
+          "math.Color",
+          "MeshRenderer"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition"
+        ]
+      },
+      "capabilities": [
+        "materials"
       ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Red",
+            "Green",
+            "Blue"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "a94ed612b535"
+    },
+    {
+      "dir": "material-transparent",
+      "id": "material-transparent",
+      "version": "1.0.0",
+      "title": "Material Transparent",
+      "category": "materials",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握引擎公开的透明合同：glTF alphaMode=BLEND 材质的加载与半透明渲染",
+        "points": [
+          "glTF material.alphaMode=\"BLEND\" 与 baseColorFactor 的 alpha 通道",
+          "GLTFLoader.parseAsync + GLTFAsset.instantiate 的加载流程",
+          "半透明面板透见后方不透明物体的混合效果"
+        ]
+      },
+      "effect": {
+        "functional": "BlendPanel 来自 GLTFLoader.parseAsync(inline glTF JSON)，其材质 alphaMode=BLEND、baseColorFactor alpha=0.45；instantiate 后挂到场景；SolidReference 为不透明参考方块。",
+        "visual": "半透明青色面板悬浮在红色实心立方体前，透过面板可隐约看到后方立方体的轮廓与颜色"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate"
+        ],
+        "supporting": [
+          "Material",
+          "MeshRenderer"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "GLTFLoader",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Node.addChild",
+          "Node.setPosition"
+        ]
+      },
+      "capabilities": [
+        "materials"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "SolidReference",
+            "BlendPanel"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "material-property",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "d5a470fe626f"
+    },
+    {
+      "dir": "material-unlit",
+      "id": "material-unlit",
+      "version": "1.0.0",
+      "title": "Material Unlit",
+      "category": "materials",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "区分 builtin-standard（受光照）与 builtin-unlit（纯平色）两种效果，理解 unlit 的适用场景",
+        "points": [
+          "builtinResMgr.get 获取内建材质",
+          "unlit 材质忽略灯光，颜色恒定",
+          "旋转时标准面明暗变化而 unlit 面恒定"
+        ]
+      },
+      "effect": {
+        "functional": "LitCube 使用 builtin-standard-material，UnlitCube 使用 builtin-unlit-material；两者同尺寸同步旋转。",
+        "visual": "左立方体表面有明暗过渡（受平行光），右立方体每个面都是均匀纯蓝色，无任何明暗变化"
+      },
+      "api": {
+        "primary": [
+          "builtinResMgr"
+        ],
+        "supporting": [
+          "MeshRenderer"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "materials"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "LitCube",
+            "UnlitCube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "e5e60981a98d"
+    },
+    {
+      "dir": "mesh-cylinder",
+      "id": "mesh-cylinder",
+      "version": "1.0.0",
+      "title": "Mesh — Cylinder",
+      "category": "meshes",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "学会用 primitives.cylinder 创建圆柱图元并观察柱面光照",
+        "points": [
+          "用 primitives.cylinder 指定上下半径与高度",
+          "utils.createMesh → MeshRenderer 的标准接线",
+          "Component.update 自转驱动"
+        ]
+      },
+      "effect": {
+        "functional": "名为 cylinder 的 Node 使用 primitives.cylinder 生成的 Mesh；自转角持续增加；场景含 Camera 与 DirectionalLight。",
+        "visual": "画面中央一个紫色圆柱体持续缓慢自转，柱面明暗随旋转流动，顶/底面轮廓可辨。"
+      },
+      "api": {
+        "primary": [
+          "primitives.cylinder",
+          "utils.createMesh",
+          "MeshRenderer"
+        ],
+        "supporting": [
+          "Component",
+          "Material.setProperty"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.cylinder",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "basics"
       ],
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "cylinder"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "transform-equals"
+          "scene-ready"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "transform"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "19e33f77386d"
     },
     {
+      "dir": "mesh-multi-material",
+      "id": "mesh-multi-material",
+      "version": "1.0.0",
+      "title": "Mesh Multi Material",
+      "category": "meshes",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握一个 Mesh 多个 SubMesh 各用不同材质的公开合同（E005）",
+        "points": [
+          "glTF mesh.primitives 多子网格结构",
+          "实例化后 MeshRenderer 的多材质槽（sharedMaterials.length ≥ 2）",
+          "同一物体上呈现两个明显不同的材质区域"
+        ]
+      },
+      "effect": {
+        "functional": "MultiMaterialCube 来自单 mesh 双 primitives 的 GLB；MeshRenderer.sharedMaterials.length === 2；__multiState.materialSlots === 2。",
+        "visual": "一个物体左半红色粗糙、右半蓝色金属，两个材质区域属于同一 MeshRenderer"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Node.getComponentInChildren"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "GLTFLoader",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Node.addChild",
+          "Node.getComponentInChildren"
+        ]
+      },
+      "capabilities": [
+        "materials"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "MultiMaterialCube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "ccec47df8da2"
+    },
+    {
+      "dir": "mesh-plane",
+      "id": "mesh-plane",
+      "version": "1.0.0",
+      "title": "Mesh — Plane",
+      "category": "meshes",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "学会用 primitives.plane 创建平面并理解平面图元的朝向与地面摆放",
+        "points": [
+          "用 primitives.plane 生成平面几何",
+          "理解 plane 默认朝向并通过 setRotationFromEuler 调整",
+          "Mesh 与 Material 的组合方式"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含名为 floor 的 Node（primitives.plane → utils.createMesh）与 marker 球体；marker 自转；两对象均可被 Camera 观察。",
+        "visual": "绿色平面铺在画面下方作为地板，黄色小球悬浮在平面上方缓慢自转，整体构成可辨识的地面场景。"
+      },
+      "api": {
+        "primary": [
+          "primitives.plane",
+          "utils.createMesh"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "Node.setRotationFromEuler"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "primitives.sphere",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "floor",
+            "marker"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "c88c117ab794"
+    },
+    {
+      "dir": "mesh-sphere",
+      "id": "mesh-sphere",
+      "version": "1.0.0",
+      "title": "Mesh — Sphere",
+      "category": "meshes",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "学会用 primitives.sphere 创建球体图元网格并交给 MeshRenderer 渲染",
+        "points": [
+          "用 primitives.sphere 生成球体几何数据",
+          "用 utils.createMesh 把几何数据上传为 Mesh 资源",
+          "用 Component.update 驱动每帧自转"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 挂载 Camera + DirectionalLight + 名为 sphere 的 Node；Node 上 MeshRenderer 的 mesh 来自 primitives.sphere → utils.createMesh；sphere 的 Y 轴欧拉角随时间持续增加。",
+        "visual": "画面中央显示一个完整可见的蓝色球体，持续缓慢自转，明暗随球面法线变化，可观察到立体轮廓。"
+      },
+      "api": {
+        "primary": [
+          "primitives.sphere",
+          "utils.createMesh",
+          "MeshRenderer"
+        ],
+        "supporting": [
+          "Component",
+          "DirectionalLight"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.sphere",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "sphere"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "5367471651db"
+    },
+    {
+      "dir": "mesh-torus",
+      "id": "mesh-torus",
+      "version": "1.0.0",
+      "title": "Mesh — Torus",
+      "category": "meshes",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "学会用 primitives.torus 创建圆环图元并组合欧拉角倾斜",
+        "points": [
+          "primitives.torus 的主半径/管径参数",
+          "setRotationFromEuler 组合多轴姿态",
+          "utils.createMesh → MeshRenderer 接线"
+        ]
+      },
+      "effect": {
+        "functional": "名为 torus 的 Node 使用 primitives.torus 生成的 Mesh；每帧更新欧拉角（Y 增加且保持 Z 倾斜）。",
+        "visual": "画面中央橙色圆环带 12° 侧倾持续旋转，环面内外侧明暗交替清晰可辨。"
+      },
+      "api": {
+        "primary": [
+          "primitives.torus",
+          "utils.createMesh"
+        ],
+        "supporting": [
+          "Node.setRotationFromEuler",
+          "Component"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.torus",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "torus"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "8bf66f5d500f"
+    },
+    {
+      "dir": "node-active",
+      "id": "node-active",
+      "version": "1.0.0",
+      "title": "Node Active",
+      "category": "basics",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "理解 node.active 停用语义：停用后不渲染不更新，但节点仍在场景树中",
+        "points": [
+          "用 active 属性开关节点",
+          "停用期间 getChildByName 仍可命中",
+          "Component.update 中驱动定时切换"
+        ]
+      },
+      "effect": {
+        "functional": "Blinker 每 1.5s 切换一次 active；停用期间画面回到清屏色，节点仍可通过 getChildByName 找到。",
+        "visual": "黄色方块以 1.5s 周期出现/消失（闪烁），消失时仅剩背景色"
+      },
+      "api": {
+        "primary": [
+          "Node",
+          "Component"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "primitives.box"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Blinker"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "f5a49a3d20f4"
+    },
+    {
+      "dir": "node-hierarchy",
+      "id": "node-hierarchy",
+      "version": "1.0.0",
+      "title": "Node Hierarchy",
+      "category": "basics",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "理解 Node 父子层级：旋转父节点时整条子链一起运动（world = parent world × local）",
+        "points": [
+          "用 addChild 组装 Root → Arm → Hand 层级",
+          "理解 local transform 与 world transform 的叠加关系",
+          "用 getChildByName 按名称解析节点"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 中 Root(Arm(Hand)) 三层嵌套；Root 每帧绕 Y 旋转；Hand 的世界位置随 Root 旋转持续变化；getChildByName 链式解析命中同一 Hand 实例。",
+        "visual": "机械臂式三节结构（蓝根/绿臂/橙手）绕中心缓慢旋转，子节点的位移轨迹随父节点转动"
+      },
+      "api": {
+        "primary": [
+          "Node.addChild",
+          "Node.getChildByName"
+        ],
+        "supporting": [
+          "Node.setScale",
+          "Component"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.getChildByName",
+          "Node.setPosition",
+          "Node.setScale",
+          "Node.setRotationFromEuler",
+          "Node.getChildByName"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Root",
+            "Arm",
+            "Hand"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "32782a6cbc5c"
+    },
+    {
+      "dir": "node-scale",
+      "id": "node-scale",
+      "version": "1.0.0",
+      "title": "Node Scale",
+      "category": "basics",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 setScale 的本地缩放语义与父子缩放叠加（child world = parent × local）",
+        "points": [
+          "用 setScale 设置非均匀缩放（X 拉伸）",
+          "观察父缩放对子节点世界形态的影响",
+          "缩放不影响子节点本地位置语义"
+        ]
+      },
+      "effect": {
+        "functional": "Base(1,1,1)、ScaledParent(2,1,1) 与其子 ScaledChild(0.5,0.5,0.5) 并排摆放；ScaledParent 每帧缓慢旋转；子块世界宽度 = 2 × 0.5 = 1。",
+        "visual": "左侧绿色基准立方体，右侧蓝色被 X 拉伸一倍的父块，其上浮动橙色小块；父块缓慢旋转带动子块"
+      },
+      "api": {
+        "primary": [
+          "Node.setScale"
+        ],
+        "supporting": [
+          "Node.addChild",
+          "primitives.box"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setScale",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Base",
+            "ScaledParent",
+            "ScaledChild"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "f5beb93055a6"
+    },
+    {
+      "dir": "rc-capture-frame",
+      "id": "rc-capture-frame",
+      "version": "1.0.0",
+      "title": "RC — Capture Frame",
+      "category": "runtime-control",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 captureFrame 的受控帧捕获：AFTER_DRAW 时机、可重复、不改播放状态",
+        "points": [
+          "session 捕获合同的调用方式与 dataURL 结果",
+          "捕获帧显示为页面缩略图",
+          "旋转场景后再次捕获验证可重复性"
+        ]
+      },
+      "effect": {
+        "functional": "捕获到的 dataURL 长度 > 512 且渲染为页面内 <img>；场景旋转 45° 后再次捕获成功；__rcState.captured === true。",
+        "visual": "右下角出现画布帧的缩略图（含绿色方块），面板展示 dataURL 字节数"
+      },
+      "api": {
+        "primary": [
+          "DevToolsSession.captureFrame"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "DevToolsSession.captureFrame",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "runtime-control"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "DemoCube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "29ba7a25535d"
+    },
+    {
+      "dir": "rc-create-node",
+      "id": "rc-create-node",
+      "version": "1.0.0",
+      "title": "RC — Create Node",
+      "category": "runtime-control",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 session.dispatch 的写操作：createNode + setTransform 与 requestId 幂等合同",
+        "points": [
+          "dispatch 请求结构（requestId/action/targetId/params）",
+          "createNode 后 inspectScene 核对节点出现",
+          "重复 requestId → 稳定错误码 INVALID_ARGUMENT"
+        ]
+      },
+      "effect": {
+        "functional": "dispatch createNode 成功返回 nodeId；setTransform 后 inspectNode 读回 position=[1.8,0.6,0]；重复 requestId 抛 INVALID_ARGUMENT；__rcState.created === true。",
+        "visual": "场景右侧出现新方块（橙色系），面板展示 nodeId、节点数变化与幂等错误码"
+      },
+      "api": {
+        "primary": [
+          "DevToolsSession.dispatch"
+        ],
+        "supporting": [
+          "DevToolsSession.inspectScene",
+          "Node.setPosition"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "DevToolsSession.dispatch",
+          "DevToolsSession.inspectScene",
+          "DevToolsSession.inspectNode",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "runtime-control"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "DemoCube",
+            "AgentGenerated"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "node-count",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "64dcd5a6f77a"
+    },
+    {
+      "dir": "rc-error-report",
+      "id": "rc-error-report",
+      "version": "1.0.0",
+      "title": "RC — Error Report",
+      "category": "runtime-control",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握错误观察合同：getRuntimeErrors 环形缓冲 + dispatch 失败的稳定错误码（教学错误示例同样 Ready）",
+        "points": [
+          "getRuntimeErrors({limit}) 读取受控错误环形缓冲",
+          "STALE_TARGET 等稳定错误码语义（非崩溃）",
+          "错误发生时业务主循环不受影响"
+        ]
+      },
+      "effect": {
+        "functional": "getRuntimeErrors 返回 {errors:[]} 结构；对不存在 targetId 的 dispatch 抛 STALE_TARGET 且被捕获；__rcState.stableCode === \"STALE_TARGET\"；场景持续运行。",
+        "visual": "面板展示错误基线、稳定错误码与\"主循环不受影响\"的核对行；画布场景正常渲染"
+      },
+      "api": {
+        "primary": [
+          "DevToolsSession.getRuntimeErrors",
+          "DevToolsSession.dispatch"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "DevToolsSession.dispatch",
+          "DevToolsSession.getRuntimeErrors",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "runtime-control"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "DemoCube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "689ec9ee0ad1"
+    },
+    {
+      "dir": "rc-inspect-scene",
+      "id": "rc-inspect-scene",
+      "version": "1.0.0",
+      "title": "RC — Inspect Scene",
+      "category": "runtime-control",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 DevTools/Agent Session 合同的只读观察：inspectScene 场景快照与 inspectNode 节点详情",
+        "points": [
+          "inspectScene 返回 sceneId/nodeCount/componentsByType",
+          "inspectNode(id) 读取 local transform",
+          "session 挂接入口（__benchSession / createAgentSession）"
+        ]
+      },
+      "effect": {
+        "functional": "getSession 后 inspectScene().nodeCount > 0 且能按名称命中 DemoCube 并 inspectNode 读取 transform；__rcState.inspected === true。",
+        "visual": "左上角面板展示场景快照字段与 DemoCube 的位置/缩放；画布内为相机/灯光/方块骨架场景"
+      },
+      "api": {
+        "primary": [
+          "DevToolsSession.inspectScene",
+          "DevToolsSession.inspectNode"
+        ],
+        "supporting": [
+          "Scene",
+          "Node"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "DevToolsSession.inspectScene",
+          "DevToolsSession.inspectNode",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "runtime-control"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "DemoCube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "4f5fd42a5165"
+    },
+    {
+      "dir": "runtime-asset-release",
+      "id": "runtime-asset-release",
+      "version": "1.0.0",
+      "title": "Runtime Asset Release",
+      "category": "runtime",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 Runtime 资产生命周期：GLTFAsset/instance 的加载、释放与重载全链路（E011）",
+        "points": [
+          "GLTFLoader.parseAsync + instantiate 的资源所有权",
+          "instance.dispose() + asset.destroy() 释放",
+          "isValid 核对无残留节点/泄漏资产，reload 可重复"
+        ]
+      },
+      "effect": {
+        "functional": "启动后自动跑 2 轮 load→dispose→reload；每轮 dispose 后 asset 与 instance.root 均 invalid（assetsAfter=0, nodesAfter=0），reload 后再次 valid；__releaseState 记录结果。",
+        "visual": "面板输出每轮 cycle 的 load/dispose/reload 状态行；场景中模型随 dispose 消失、随 reload 重新出现"
+      },
+      "api": {
+        "primary": [
+          "GLTFAsset.instantiate",
+          "isValid"
+        ],
+        "supporting": [
+          "GLTFLoader.parseAsync"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "isValid",
+          "GLTFLoader",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "lifecycle"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "resource-released",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotionEvidence": "768a60271098"
+    },
+    {
+      "dir": "skinned-animation",
+      "id": "skinned-animation",
+      "version": "1.0.0",
+      "title": "Skinned Animation",
+      "category": "animation",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "最高复杂度回归：程序化蒙皮网格 + 骨骼树 + 刚性绑定 + 骨骼动画（E009）",
+        "points": [
+          "buildSkeletonTree 构建 Skeleton（joints + bindposes）",
+          "restoreBindPose 静止姿势复位",
+          "骨骼旋转驱动蒙皮变形 + frameObject 取景"
+        ]
+      },
+      "effect": {
+        "functional": "Armature 骨骼链（bone0/1/2）经 buildSkeletonTree 建立绑定；update 中旋转骨骼 → SkinnedMeshRenderer 网格逐帧变形；restoreBindPose 可复位。",
+        "visual": "程序化\"触手\"网格随骨骼摆动弯曲变形，顶点位置逐帧变化（帧差可测）"
+      },
+      "api": {
+        "primary": [
+          "buildSkeletonTree",
+          "SkinnedMeshRenderer"
+        ],
+        "supporting": [
+          "restoreBindPose",
+          "Component"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "SkinnedMeshRenderer",
+          "Mesh",
+          "Material",
+          "Component",
+          "buildSkeletonTree",
+          "restoreBindPose",
+          "frameObject",
+          "math.Vec3",
+          "math.Color",
+          "Material.initialize",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "animation",
+        "skeleton"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Armature"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "658cfe0e7638"
+    },
+    {
+      "dir": "starter",
+      "id": "starter",
+      "version": "1.0.0",
+      "title": "Starter",
+      "category": "basics",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "跑通最小 Code First 场景：createAirApp + 空 Scene + app.run",
+        "points": [
+          "createAirApp 绑定 canvas 选择器",
+          "Scene 的创建与运行",
+          "app.getScene 查询运行中场景"
+        ]
+      },
+      "effect": {
+        "functional": "createAirApp 以 \"#GameCanvas\" 选择器启动；Scene(\"Main\") 经 app.run 进入运行；getScene() 返回该场景。",
+        "visual": "纯清屏色的空白画布（无节点），控制台输出运行日志"
+      },
+      "api": {
+        "primary": [
+          "createAirApp",
+          "Scene"
+        ],
+        "supporting": [],
+        "claims": [
+          "createAirApp",
+          "Scene"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [],
+          "allowEmpty": true
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "scene-ready",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "f8997d457804"
+    },
+    {
+      "dir": "static-model",
+      "id": "static-model",
+      "version": "1.0.0",
+      "title": "Static Model",
+      "category": "mesh",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "Runtime 资产链路：程序化 Mesh 入库 → loadAssetAsync 取回 → 贴图材质渲染（E007 gltf-basic 的资产形态）",
+        "points": [
+          "assetManager.assets 注册与 loadAssetAsync Promise 加载",
+          "ImageAsset/Texture2D 程序化贴图",
+          "USE_ALBEDO_MAP define + mainTexture 接线"
+        ]
+      },
+      "effect": {
+        "functional": "checkerboard 源 Mesh 经 assetManager.assets.add 注册后由 loadAssetAsync 取回同一实例（console.assert 相等）；StaticBox 材质带 USE_ALBEDO_MAP 与 mainTexture；frameObject 取景。",
+        "visual": "棋盘格贴图的金字塔/方块置于绿色地面上，纹理随视角变化清晰可辨"
+      },
+      "api": {
+        "primary": [
+          "loadAssetAsync",
+          "assetManager"
+        ],
+        "supporting": [
+          "Texture2D",
+          "ImageAsset"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "MeshRenderer",
+          "Material",
+          "Texture2D",
+          "ImageAsset",
+          "Mesh",
+          "utils.createMesh",
+          "primitives.plane",
+          "assetManager",
+          "loadAssetAsync",
+          "frameObject",
+          "math.Vec3",
+          "math.Color",
+          "Node.addChild",
+          "Node.setPosition"
+        ]
+      },
+      "capabilities": [
+        "gltf",
+        "assets"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "StaticBox",
+            "Ground"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "asset-loaded",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "ba8939b200a4"
+    },
+    {
+      "dir": "texture-basic",
+      "id": "texture-basic",
+      "version": "1.0.0",
+      "title": "Texture Basic",
+      "category": "materials",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握 Texture2D 贴图的完整接线：像素数据 → ImageAsset → Texture2D → 材质 mainTexture",
+        "points": [
+          "用 ImageAsset 包装程序化像素数据",
+          "Texture2D.image 挂载图像资源",
+          "USE_ALBEDO_MAP define + setProperty(\"mainTexture\") 启用反照率贴图"
+        ]
+      },
+      "effect": {
+        "functional": "checkerboard 像素数据经 ImageAsset 包装后挂到 Texture2D.image；材质 initialize 带 USE_ALBEDO_MAP define 并 setProperty(\"mainTexture\")；TexturedCube 使用该材质且持续自转。",
+        "visual": "立方体六个面呈现灰白棋盘格纹理，随自转可确认纹理 UV 正确包裹（非纯色、非渐变）"
+      },
+      "api": {
+        "primary": [
+          "Texture2D",
+          "ImageAsset"
+        ],
+        "supporting": [
+          "Material.initialize",
+          "Material.setProperty"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "Texture2D",
+          "ImageAsset",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "materials"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "TexturedCube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "deea61359713"
+    },
+    {
+      "dir": "transform",
+      "id": "transform",
+      "version": "1.0.0",
+      "title": "Transform Hierarchy",
+      "category": "basics",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "层级变换组合：root 旋转带动 child/grandchild，各层再叠加自身摆动",
+        "points": [
+          "三层嵌套的 parent × local 合成",
+          "Component.update 中分层动画",
+          "setScale 非均匀缩放与层级叠加"
+        ]
+      },
+      "effect": {
+        "functional": "root 每帧旋转带动整条链；child/grandchild 各自叠加摆动相位；层级世界变换持续变化。",
+        "visual": "三节链式结构做蛇形摆动，越往末端摆幅越大"
+      },
+      "api": {
+        "primary": [
+          "Node",
+          "Component"
+        ],
+        "supporting": [
+          "Node.setScale",
+          "utils.createMesh"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Component",
+          "Layers",
+          "math.Vec3",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setScale",
+          "Node.setRotationFromEuler"
+        ]
+      },
+      "capabilities": [
+        "basics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "root",
+            "child",
+            "grandchild"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "3bc9ad990363"
+    },
+    {
+      "dir": "tween-basic",
       "id": "tween-basic",
       "version": "1.0.0",
       "title": "Tween Basic",
       "category": "animation",
-      "status": "draft",
-      "apiClaims": [
-        "Node.setPosition",
-        "Scene",
-        "Camera"
-      ],
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "tween() 补间链：.to 多段 + 缓动 + onComplete 循环续接",
+        "points": [
+          "tween(target) 工厂与链式 .to",
+          "easing: \"sineInOut\" 缓动",
+          "onComplete 自续接形成往返循环"
+        ]
+      },
+      "effect": {
+        "functional": "tween-cube 的 position 由补间驱动在 x=-3 与 x=3 之间往返（sineInOut），onComplete 续接实现持续运动；非 setInterval 覆盖。",
+        "visual": "立方体在左右两端之间平滑往返，两端缓入缓出"
+      },
+      "api": {
+        "primary": [
+          "tween"
+        ],
+        "supporting": [
+          "MeshRenderer",
+          "primitives.box"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "tween",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler"
+        ]
+      },
       "capabilities": [
         "animation"
       ],
-      "benchmarkRefs": [],
-      "recipeRefs": [],
-      "requiresDevTools": false,
-      "validation": {
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "cam",
+            "light",
+            "tween-cube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
         "validators": [
-          "scene-ready",
-          "visible-frame"
+          "scene-ready"
         ]
       },
-      "promotionEvidence": null,
-      "dir": "tween-basic"
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotionEvidence": "9603bbb34f33"
     }
   ],
   "categories": {
@@ -988,11 +3859,7 @@
       "node-scale"
     ],
     "mesh": [
-      "static-model",
-      "mesh-sphere",
-      "mesh-cylinder",
-      "mesh-torus",
-      "mesh-plane"
+      "static-model"
     ],
     "animation": [
       "skinned-animation",
@@ -1006,7 +3873,8 @@
       "gltf-draco",
       "gltf-meshopt",
       "gltf-morph",
-      "gltf-skin"
+      "gltf-skin",
+      "gltf-basic"
     ],
     "camera": [
       "camera",
@@ -1018,26 +3886,42 @@
       "input"
     ],
     "devtools": [
-      "automation",
-      "rc-inspect-scene",
-      "rc-create-node",
-      "rc-capture-frame",
-      "rc-error-report"
+      "automation"
     ],
     "material": [
-      "material-basic",
-      "material-color",
-      "material-transparent",
-      "material-unlit"
+      "material-basic"
     ],
-    "lighting": [
+    "lights": [
       "light-spot",
       "light-sphere",
       "light-point",
       "light-two-directional"
     ],
-    "texture": [
-      "texture-basic"
+    "meshes": [
+      "mesh-sphere",
+      "mesh-cylinder",
+      "mesh-torus",
+      "mesh-plane",
+      "mesh-multi-material"
+    ],
+    "materials": [
+      "material-color",
+      "material-transparent",
+      "material-unlit",
+      "texture-basic",
+      "gltf-clearcoat"
+    ],
+    "runtime-control": [
+      "rc-inspect-scene",
+      "rc-create-node",
+      "rc-capture-frame",
+      "rc-error-report"
+    ],
+    "input": [
+      "interaction-click"
+    ],
+    "runtime": [
+      "runtime-asset-release"
     ]
   }
 }

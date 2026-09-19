@@ -31,6 +31,7 @@ import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 const canvas = document.querySelector('#GameCanvas');
 
 const app = await createAirApp({ canvas });
+window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 
 // ---------------- 1. 蒙皮网格（程序化"触手"） ----------------
 const ROWS = 9;           // 顶点行数（y = row * 0.5，0..4）

@@ -1,77 +1,986 @@
 {
-  "generatedAt": "2026-09-18T15:01:42.553Z",
+  "generatedAt": "2026-09-18T23:10:24.707Z",
+  "evidenceSource": {
+    "path": "docs/evidence/v11-examples-verified.json",
+    "measuredAt": "2026-09-18T23:08:28.566Z",
+    "mode": "spec-driven-v2"
+  },
+  "semantics": {
+    "claimed": "api.claims 与 inventory 精确匹配（声明）",
+    "verified": "claim 所属 example 浏览器验证 PASS 且 specFingerprint 与当前 example.json 一致"
+  },
   "totalUnits": 4729,
-  "totalClaimed": 31,
+  "totalClaimed": 57,
+  "totalVerified": 57,
+  "staleEvidenceExamples": [],
   "tiers": {
     "core": {
       "total": 717,
-      "claimed": 27,
-      "rate": 0.038,
+      "claimed": 43,
+      "verified": 43,
+      "claimedRate": 0.06,
+      "verifiedRate": 0.06,
       "gate": "100% verified",
       "threshold": 1,
       "pass": false
     },
     "important": {
       "total": 793,
-      "claimed": 4,
-      "rate": 0.005,
-      "gate": "≥ 60% claimed",
-      "threshold": 0.6,
+      "claimed": 6,
+      "verified": 6,
+      "claimedRate": 0.008,
+      "verifiedRate": 0.008,
+      "gate": "≥ 90% verified",
+      "threshold": 0.9,
       "pass": false
     },
     "advanced": {
       "total": 3219,
-      "claimed": 0,
-      "rate": 0,
-      "gate": "≥ 30% claimed",
-      "threshold": 0.3,
+      "claimed": 8,
+      "verified": 8,
+      "claimedRate": 0.002,
+      "verifiedRate": 0.002,
+      "gate": "≥ 80% verified",
+      "threshold": 0.8,
       "pass": false
     }
   },
-  "claimedList": [
+  "verifiedList": [
     {
-      "unit": "utils.createMesh",
+      "unit": "createAirApp",
       "tier": "core",
       "examples": [
-        "hello-cube"
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "starter",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Scene",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "starter",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Node",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
       ]
     },
     {
       "unit": "MeshRenderer",
       "tier": "core",
       "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
         "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
         "material-basic",
-        "static-model"
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Camera",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "static-model",
+        "texture-basic",
+        "tween-basic"
       ]
     },
     {
       "unit": "DirectionalLight",
       "tier": "core",
       "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
         "hello-cube",
+        "interaction-click",
+        "light-sphere",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "texture-basic",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Component",
+      "tier": "advanced",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "skinned-animation",
+        "texture-basic",
+        "transform"
+      ]
+    },
+    {
+      "unit": "Layers",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "math.Vec3",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "math.Color",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "hello-cube",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "Material",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "hello-cube",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-color",
+        "material-transparent",
+        "mesh-cylinder",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "skinned-animation",
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "Material.initialize",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-color",
+        "material-transparent",
+        "mesh-cylinder",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "skinned-animation",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "Material.setProperty",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-color",
+        "material-transparent",
+        "mesh-cylinder",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "utils.createMesh",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "primitives.box",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-ortho",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Node.addChild",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-multi-material",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Node.setPosition",
+      "tier": "core",
+      "examples": [
+        "anim-position",
+        "anim-rotation",
+        "camera",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-color",
+        "material-transparent",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "static-model",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Node.setRotationFromEuler",
+      "tier": "core",
+      "examples": [
+        "anim-rotation",
+        "camera-lookat",
+        "camera-multi",
+        "camera-ortho",
+        "gltf-basic",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "hello-cube",
+        "input",
+        "interaction-click",
+        "light-point",
+        "light-sphere",
+        "light-spot",
+        "light-two-directional",
+        "material-basic",
+        "material-unlit",
+        "mesh-cylinder",
+        "mesh-plane",
+        "mesh-sphere",
+        "mesh-torus",
+        "node-active",
+        "node-hierarchy",
+        "node-scale",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
+        "runtime-asset-release",
+        "skinned-animation",
+        "texture-basic",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "builtinResMgr",
+      "tier": "core",
+      "examples": [
+        "camera",
+        "hello-cube",
+        "input",
+        "material-basic",
+        "material-unlit",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "frameObject",
+      "tier": "core",
+      "examples": [
+        "camera",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-morph",
+        "gltf-skin",
+        "skinned-animation",
+        "static-model"
+      ]
+    },
+    {
+      "unit": "input",
+      "tier": "core",
+      "examples": [
+        "camera-lookat",
+        "camera-ortho",
+        "input",
+        "interaction-click",
         "light-two-directional"
       ]
     },
     {
-      "unit": "Light",
+      "unit": "Input",
       "tier": "core",
       "examples": [
-        "light-spot"
+        "camera-lookat",
+        "camera-ortho",
+        "input",
+        "interaction-click",
+        "light-two-directional"
       ]
     },
     {
-      "unit": "SphereLight",
+      "unit": "primitives.sphere",
       "tier": "core",
       "examples": [
-        "light-sphere"
+        "camera-lookat",
+        "camera-multi",
+        "light-sphere",
+        "mesh-plane",
+        "mesh-sphere"
       ]
     },
     {
-      "unit": "SpotLight",
+      "unit": "Layers.makeMaskInclude",
       "tier": "core",
       "examples": [
-        "light-spot"
+        "camera-multi"
+      ]
+    },
+    {
+      "unit": "primitives.plane",
+      "tier": "core",
+      "examples": [
+        "camera-multi",
+        "light-point",
+        "light-spot",
+        "mesh-plane",
+        "static-model"
+      ]
+    },
+    {
+      "unit": "GLTFLoader",
+      "tier": "core",
+      "examples": [
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "material-transparent",
+        "mesh-multi-material",
+        "runtime-asset-release"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.loadAsync",
+      "tier": "core",
+      "examples": [
+        "gltf-basic"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.instantiate",
+      "tier": "core",
+      "examples": [
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "material-transparent",
+        "mesh-multi-material",
+        "runtime-asset-release"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.parseAsync",
+      "tier": "core",
+      "examples": [
+        "gltf-clearcoat",
+        "gltf-draco",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "material-transparent",
+        "mesh-multi-material",
+        "runtime-asset-release"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.getExtensionSupport",
+      "tier": "core",
+      "examples": [
+        "gltf-draco"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.setDRACODecoder",
+      "tier": "core",
+      "examples": [
+        "gltf-draco"
+      ]
+    },
+    {
+      "unit": "createDracoDecoder",
+      "tier": "advanced",
+      "examples": [
+        "gltf-draco"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.setMeshoptDecoder",
+      "tier": "core",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "createMeshoptDecoder",
+      "tier": "core",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "isMeshoptAvailable",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "Animation",
+      "tier": "important",
+      "examples": [
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "Animation.play",
+      "tier": "important",
+      "examples": [
+        "gltf-morph",
+        "gltf-skin"
+      ]
+    },
+    {
+      "unit": "AnimationClip",
+      "tier": "important",
+      "examples": [
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "AirTransmissionCapture",
+      "tier": "advanced",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "Node.addComponent",
+      "tier": "core",
+      "examples": [
+        "hello-cube"
       ]
     },
     {
@@ -82,74 +991,84 @@
       ]
     },
     {
-      "unit": "SkinnedMeshRenderer",
-      "tier": "important",
+      "unit": "SpotLight",
+      "tier": "core",
       "examples": [
-        "gltf-skin",
-        "skinned-animation"
+        "light-spot"
       ]
     },
     {
-      "unit": "Camera",
+      "unit": "primitives.cylinder",
       "tier": "core",
       "examples": [
-        "hello-cube",
-        "tween-basic"
+        "mesh-cylinder"
       ]
     },
     {
-      "unit": "Node",
+      "unit": "Node.getComponentInChildren",
       "tier": "core",
       "examples": [
-        "hello-cube"
+        "mesh-multi-material"
+      ]
+    },
+    {
+      "unit": "primitives.torus",
+      "tier": "core",
+      "examples": [
+        "mesh-torus"
       ]
     },
     {
       "unit": "Node.getChildByName",
       "tier": "core",
       "examples": [
-        "node-hierarchy"
-      ]
-    },
-    {
-      "unit": "Node.addChild",
-      "tier": "core",
-      "examples": [
         "node-hierarchy",
-        "transform"
-      ]
-    },
-    {
-      "unit": "Node.setPosition",
-      "tier": "core",
-      "examples": [
-        "camera-lookat",
-        "transform",
-        "tween-basic"
-      ]
-    },
-    {
-      "unit": "Node.setRotationFromEuler",
-      "tier": "core",
-      "examples": [
-        "camera-lookat",
-        "transform"
+        "node-hierarchy"
       ]
     },
     {
       "unit": "Node.setScale",
       "tier": "core",
       "examples": [
-        "node-scale"
+        "node-hierarchy",
+        "node-scale",
+        "transform"
       ]
     },
     {
-      "unit": "Scene",
+      "unit": "isValid",
       "tier": "core",
       "examples": [
-        "hello-cube",
-        "starter",
-        "tween-basic"
+        "runtime-asset-release"
+      ]
+    },
+    {
+      "unit": "SkinnedMeshRenderer",
+      "tier": "important",
+      "examples": [
+        "skinned-animation"
+      ]
+    },
+    {
+      "unit": "Mesh",
+      "tier": "core",
+      "examples": [
+        "skinned-animation",
+        "static-model"
+      ]
+    },
+    {
+      "unit": "buildSkeletonTree",
+      "tier": "important",
+      "examples": [
+        "skinned-animation"
+      ]
+    },
+    {
+      "unit": "restoreBindPose",
+      "tier": "advanced",
+      "examples": [
+        "skinned-animation"
       ]
     },
     {
@@ -161,109 +1080,36 @@
       ]
     },
     {
-      "unit": "Material",
-      "tier": "core",
+      "unit": "ImageAsset",
+      "tier": "advanced",
+      "examples": [
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "assetManager",
+      "tier": "advanced",
       "examples": [
         "static-model"
       ]
     },
     {
-      "unit": "AnimationClip",
+      "unit": "loadAssetAsync",
+      "tier": "advanced",
+      "examples": [
+        "static-model"
+      ]
+    },
+    {
+      "unit": "tween",
       "tier": "important",
       "examples": [
-        "skinned-animation"
-      ]
-    },
-    {
-      "unit": "Animation",
-      "tier": "important",
-      "examples": [
-        "gltf-morph"
-      ]
-    },
-    {
-      "unit": "SkeletalAnimation",
-      "tier": "important",
-      "examples": [
-        "skinned-animation"
-      ]
-    },
-    {
-      "unit": "primitives.box",
-      "tier": "core",
-      "examples": [
-        "hello-cube"
-      ]
-    },
-    {
-      "unit": "primitives.cylinder",
-      "tier": "core",
-      "examples": [
-        "mesh-cylinder"
-      ]
-    },
-    {
-      "unit": "primitives.plane",
-      "tier": "core",
-      "examples": [
-        "mesh-plane"
-      ]
-    },
-    {
-      "unit": "primitives.sphere",
-      "tier": "core",
-      "examples": [
-        "mesh-sphere"
-      ]
-    },
-    {
-      "unit": "primitives.torus",
-      "tier": "core",
-      "examples": [
-        "mesh-torus"
-      ]
-    },
-    {
-      "unit": "createAirApp",
-      "tier": "core",
-      "examples": [
-        "hello-cube",
-        "starter"
-      ]
-    },
-    {
-      "unit": "frameObject",
-      "tier": "core",
-      "examples": [
-        "camera"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.instantiate",
-      "tier": "core",
-      "examples": [
-        "gltf-viewer"
-      ]
-    },
-    {
-      "unit": "GLTFLoader",
-      "tier": "core",
-      "examples": [
-        "gltf-catalog",
-        "gltf-morph",
-        "gltf-skin"
-      ]
-    },
-    {
-      "unit": "GLTFLoader.parseAsync",
-      "tier": "core",
-      "examples": [
-        "gltf-draco",
-        "gltf-meshopt",
-        "gltf-viewer"
+        "tween-basic"
       ]
     }
   ],
+  "claimedNotVerified": [],
   "unclaimedCore": [
     "utils.find",
     "utils.toPPM",
@@ -276,7 +1122,6 @@
     "BatchingUtility.constructor",
     "BatchingUtility.batchStaticModel",
     "BatchingUtility.unbatchStaticModel",
-    "Mesh",
     "Mesh.constructor",
     "Mesh.morphRendering",
     "Mesh.onLoaded",
@@ -319,6 +1164,7 @@
     "MeshRenderer.updateReflectionProbeBlendId",
     "MeshRenderer.updateReflectionProbeBlendWeight",
     "DirectionalLight.constructor",
+    "Light",
     "Light.constructor",
     "Light.LUMINOUS_FLUX",
     "Light.LUMINANCE",
@@ -326,6 +1172,7 @@
     "Light.onEnable",
     "Light.onDisable",
     "Light.onDestroy",
+    "SphereLight",
     "SphereLight.constructor",
     "SpotLight.constructor",
     "PointLight.constructor",
@@ -460,7 +1307,6 @@
     "math.Vec2.transformMat4",
     "math.Vec2.toVec3",
     "math.v2",
-    "math.Vec3",
     "math.Vec3.constructor",
     "math.Vec3.distance",
     "math.Vec3.squaredDistance",
@@ -651,7 +1497,6 @@
     "math.Rect.transformMat4",
     "math.Rect.transformMat4ToPoints",
     "math.rect",
-    "math.Color",
     "math.Color.constructor",
     "math.Color.toVec4",
     "math.Color.fromVec4",
@@ -707,7 +1552,6 @@
     "ColorKey.constructor",
     "ColorKey.color",
     "ColorKey.time",
-    "isValid",
     "Node.constructor",
     "Node._originalSceneId",
     "Node.attr",
@@ -725,9 +1569,7 @@
     "Node.isChildOf",
     "Node.getComponent",
     "Node.getComponents",
-    "Node.getComponentInChildren",
     "Node.getComponentsInChildren",
-    "Node.addComponent",
     "Node.removeComponent",
     "Node.on",
     "Node.off",
@@ -784,7 +1626,6 @@
     "Scene._onPostActivated",
     "Scene._onBatchCreated",
     "Scene.updateWorldTransform",
-    "Layers",
     "Layers.constructor",
     "Layers.NONE",
     "Layers.IGNORE_RAYCAST",
@@ -797,7 +1638,6 @@
     "Layers.DEFAULT",
     "Layers.ALL",
     "Layers.init",
-    "Layers.makeMaskInclude",
     "Layers.makeMaskExclude",
     "Layers.addLayer",
     "Layers.deleteLayer",
@@ -873,26 +1713,21 @@
     "Texture2D.validate",
     "Material.constructor",
     "Material.getHash",
-    "Material.initialize",
     "Material.reset",
     "Material.destroy",
     "Material.recompileShaders",
     "Material.overridePipelineStates",
     "Material.onLoaded",
     "Material.resetUniforms",
-    "Material.setProperty",
     "Material.getProperty",
     "Material.copy",
     "Material.initDefault",
     "Material.validate",
-    "builtinResMgr",
     "NodePool.constructor",
     "NodePool.size",
     "NodePool.clear",
     "NodePool.put",
     "NodePool.get",
-    "input",
-    "Input",
     "Input.constructor",
     "Input.getTouch",
     "Input.getAllTouches",
@@ -927,20 +1762,15 @@
     "GLTFAsset.meshMaterials",
     "GLTFAsset.destroy",
     "GLTFLoader.constructor",
-    "GLTFLoader.setDRACODecoder",
-    "GLTFLoader.setMeshoptDecoder",
     "GLTFLoader.setKTX2Transcoder",
     "GLTFLoader.register",
     "GLTFLoader.unregister",
-    "GLTFLoader.getExtensionSupport",
-    "GLTFLoader.loadAsync",
     "GLTFExtensionRegistry",
     "GLTFExtensionRegistry.constructor",
     "GLTFExtensionRegistry.register",
     "GLTFExtensionRegistry.unregister",
     "GLTFExtensionRegistry.createHandlers",
     "GLTFExtensionRegistry.validateRequired",
-    "createMeshoptDecoder",
     "LightInfo",
     "LightInfo.constructor",
     "LightInfo.reset",

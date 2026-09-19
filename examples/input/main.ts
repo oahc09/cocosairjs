@@ -24,8 +24,7 @@ import {
     Vec3,
     utils,
     primitives,
-    builtinResMgr,
-} from 'cocosair';
+    builtinResMgr, frameObject } from 'cocosair';
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 const keys = new Set<number>();
@@ -56,6 +55,7 @@ const renderer = cube.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 renderer.material = builtinResMgr.get('builtin-standard-material');
 cube.addComponent(KeyboardMover);
+frameObject(camera, cube); // 相机取景：目标居中（§21 Expected Result）
 
 // ---- 键盘：WASD 平移（KEY_DOWN/KEY_UP 维护按键集合，避免依赖重复 keydown 频率）----
 input.on(Input.EventType.KEY_DOWN, (event) => { keys.add(event.keyCode); });

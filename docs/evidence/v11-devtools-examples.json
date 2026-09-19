@@ -1,0 +1,37 @@
+{
+  "measuredAt": "2026-09-18T23:10:30.863Z",
+  "runner": "tools/verify/v11-devtools-examples.cjs",
+  "contract": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/dispatch/captureFrame/getRuntimeErrors）",
+  "examples": [
+    {
+      "id": "automation",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "5079d45cff66",
+      "validatorResults": [
+        {
+          "id": "inspectScene",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "id": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-5 present=true nodeCount 4→5"
+        },
+        {
+          "id": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8022"
+        },
+        {
+          "id": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "0 runtime errors"
+        }
+      ]
+    }
+  ],
+  "total": 4,
+  "pass": 4
+}

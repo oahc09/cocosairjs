@@ -19,8 +19,7 @@ import {
     Vec3,
     utils,
     primitives,
-    builtinResMgr,
-} from 'cocosair';
+    builtinResMgr, frameObject } from 'cocosair';
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 /** root 旋转带动整个子层级；child 自身再摆动。 */
@@ -66,7 +65,7 @@ function addCube (parent: Node, name: string, size: number): Node {
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 const scene = new Scene('transform-demo');
-setupCamera(scene, { position: [0, 3.5, 9], rotationEuler: [-18, 0, 0] });
+const camera = setupCamera(scene, { position: [0, 3.5, 9], rotationEuler: [-18, 0, 0] });
 setupDirectionalLight(scene, { rotationEuler: [-45, -30, 0] });
 
 // 层级：scene → root → child → grandchild
@@ -89,5 +88,7 @@ root.addComponent(HierarchyAnimator);
 root.addComponent(Reporter);
 
 window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
+frameObject(camera, root); // 相机取景：层级链居中
+
 app.run(scene);
 console.log('[transform] running — 打开控制台观察 local vs world position');

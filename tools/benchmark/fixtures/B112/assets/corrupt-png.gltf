@@ -1,0 +1,76 @@
+{
+  "asset": {
+    "version": "2.0"
+  },
+  "buffers": [
+    {
+      "byteLength": 292,
+      "uri": "data:application/octet-stream;base64,AACAvwAAgL8AAAAAAACAPwAAgL8AAAAAAAAAAAAAgD8AAAAAQ09SUlVQVEVEIQAAAAAAAENPUlJVUFRFRCEAAAAAAABDT1JSVVBURUQhAAAAAAAAQ09SUlVQVEVEIQAAAAAAAENPUlJVUFRFRCEAAAAAAABDT1JSVVBURUQhAAAAAAAAQ09SUlVQVEVEIQAAAAAAAENPUlJVUFRFRCEAAAAAAABDT1JSVVBURUQhAAAAAAAAQ09SUlVQVEVEIQAAAAAAAENPUlJVUFRFRCEAAAAAAABDT1JSVVBURUQhAAAAAAAAQ09SUlVQVEVEIQAAAAAAAENPUlJVUFRFRCEAAAAAAABDT1JSVVBURUQhAAAAAAAAQ09SUlVQVEVEIQAAAAAAAA=="
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 36
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 36,
+      "byteLength": 256
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5126,
+      "count": 3,
+      "type": "VEC3"
+    }
+  ],
+  "images": [
+    {
+      "bufferView": 1,
+      "mimeType": "image/png"
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    }
+  ],
+  "materials": [
+    {
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0
+          },
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0
+    }
+  ],
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "scene": 0
+}

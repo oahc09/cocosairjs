@@ -5,10 +5,13 @@ import * as path from 'path';
 import { TrialRunner, TrialOptions } from './runner/trial';
 import { BrowserRuntime } from './runner/browser-runtime.cjs';
 import { CATALOG_BENCHMARKS } from './catalog/catalog100';
+import { ISS_BENCHMARKS, CATALOG_ISS } from './catalog/catalog-iss';
+import { BenchmarkDefinition } from './catalog/schema';
+export { CATALOG_ISS };
 
-export async function runGolden10 ({ ids, workRoot, repo, esbuild, onTrial }: { ids: string[] | null; workRoot: string; repo: string; esbuild: unknown; onTrial?: (row: unknown) => void }): Promise<{ id: string; engineResult: string; failureDomain: string; failureReason?: string }[]> {
-  const results: { id: string; engineResult: string; failureDomain: string; failureReason?: string }[] = [];
-  for (const benchmark of CATALOG_BENCHMARKS) {
+export async function runGolden10 ({ ids, workRoot, repo, esbuild, onTrial, catalog }: { ids: string[] | null; workRoot: string; repo: string; esbuild: unknown; onTrial?: (row: unknown) => void; catalog?: BenchmarkDefinition[] }): Promise<{ id: string; engineResult: string; failureDomain: string; failureReason?: string }[]> {
+  const results: { id: string; engineResult: string; failureDomain: string; failureReason?: string; validatorResults?: unknown[] }[] = [];
+  for (const benchmark of catalog ?? CATALOG_BENCHMARKS) {
     if (ids && !ids.includes(benchmark.id)) { continue; }
     const runtime = new BrowserRuntime({ esbuild, repo });
     const runner = new TrialRunner(runtime);
@@ -31,6 +34,7 @@ export async function runGolden10 ({ ids, workRoot, repo, esbuild, onTrial }: { 
       engineResult: outcome.engineResult,
       failureDomain: outcome.failureDomain,
       failureReason: outcome.failureReason,
+      validatorResults: outcome.validators ?? [],
     };
     results.push(row);
     if (onTrial) { onTrial(row); }

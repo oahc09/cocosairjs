@@ -50,7 +50,7 @@ const BENCH_PRELUDE = `(async function(){
   window.__benchReady = true;
 })().catch(e => { window.__benchError = String(e && e.stack || e); });`;
 
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.ts': 'text/javascript', '.json': 'application/json', '.glb': 'model/gltf-binary', '.png': 'image/png', '.txt': 'text/plain', '.wasm': 'application/wasm', '.bin': 'application/octet-stream' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.ts': 'text/javascript', '.json': 'application/json', '.glb': 'model/gltf-binary', '.png': 'image/png', '.txt': 'text/plain', '.wasm': 'application/wasm', '.bin': 'application/octet-stream' };
 
 function serveTs (esbuild, res, file) {
   try {
@@ -100,25 +100,15 @@ class BrowserRuntime {
 
   /** Fresh Build：语法检查 + import 解析（Recipe scenario 不做 strict 类型检查）。 */
   build (workspace) {
-    const entry = ['src/main.ts', 'main.ts'].map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
-    if (!entry) { return Promise.resolve({ success: false, diagnostics: ['main.ts missing'] }); }
+    const entry = ['src/main.ts', 'main.ts', 'src/main.js', 'main.js']
+      .map((rel) => path.join(workspace.paths.workspace, rel)).find((p) => fs.existsSync(p));
+    if (!entry) { return Promise.resolve({ success: false, diagnostics: ['main.ts/main.js missing'] }); }
     try {
       const ts = require(require.resolve('typescript', { paths: [this.REPO] }));
-      const program = ts.createProgram([entry], {
-        target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
-        moduleResolution: ts.ModuleResolutionKind.NodeJs, strict: false,
-        noImplicitAny: false, strictNullChecks: false,
-        noEmit: true, skipLibCheck: true, skipDefaultLibCheck: true, types: [],
-        lib: ['lib.es2022.d.ts', 'lib.dom.d.ts'],
-        baseUrl: workspace.paths.workspace,
-        paths: { cocosair: [path.join(this.REPO, 'build/cocosair.module.d.ts')] },
-      });
-      const diagnostics = ts.getPreEmitDiagnostics(program).filter((d) => d.code < 2000000 && d.code !== 2307 && d.code !== 2308);
+      // 纯 JS 示例没有类型合同：跳过 tsc 程序检查，仍走 esbuild bundle 验证语法/解析。
+      const diagnostics = path.extname(entry) === '.js' ? [] : this.typecheck(entry, ts, workspace);
       if (diagnostics.length) {
-        return Promise.resolve({ success: false, diagnostics: diagnostics.map((d) => {
-          const pos = d.file && d.start !== undefined ? d.file.getLineAndCharacterOfPosition(d.start) : null;
-          return `${d.file ? path.relative(workspace.paths.workspace, d.file.fileName) : ''}${pos ? ':' + (pos.line + 1) : ''} TS${d.code}: ${ts.flattenDiagnosticMessageText(d.messageText, ' ')}`;
-        }) });
+        return Promise.resolve({ success: false, diagnostics });
       }
       const built = this.esbuild.buildSync({
         entryPoints: [entry],
@@ -138,6 +128,35 @@ class BrowserRuntime {
       const diag = String(error.message).split('\n').slice(0, 4).join(' | ').slice(0, 400);
       return Promise.resolve({ success: false, diagnostics: [diag] });
     }
+  }
+
+  typecheck (entry, ts, workspace) {
+    const options = {
+      target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,
+      moduleResolution: ts.ModuleResolutionKind.NodeJs, strict: false,
+      noImplicitAny: false, strictNullChecks: false,
+      noEmit: true, skipLibCheck: true, skipDefaultLibCheck: true, types: [],
+      lib: ['lib.es2022.d.ts', 'lib.dom.d.ts'],
+      baseUrl: workspace.paths.workspace,
+      paths: { cocosair: [path.join(this.REPO, 'build/cocosair.module.d.ts')] },
+    };
+    // 注入 bench 合同的全局声明（__airApp/__benchSession），不写入 workspace。
+    const host = ts.createCompilerHost(options, /* setParentNodes */ false);
+    const ambientName = '__air_bench_globals.d.ts';
+    const ambientText = 'declare global {\n  interface Window {\n    __airApp?: unknown;\n    __benchSession?: unknown;\n    __benchReady?: boolean;\n    __benchError?: string;\n    __recipeState?: unknown;\n    __recipeDispose?: unknown;\n  }\n}\nexport {};\n';
+    const baseGetSourceFile = host.getSourceFile.bind(host);
+    host.getSourceFile = (fileName, languageVersion, onError, shouldCreate, ...rest) => {
+      if (fileName === ambientName) { return ts.createSourceFile(fileName, ambientText, languageVersion, /* setParentNodes */ true); }
+      return baseGetSourceFile(fileName, languageVersion, onError, shouldCreate, ...rest);
+    };
+    const program = ts.createProgram([entry, ambientName], options, host);
+    return ts.getPreEmitDiagnostics(program)
+      .filter((d) => d.code < 2000000 && d.code !== 2307 && d.code !== 2308)
+      .filter((d) => !d.file || path.basename(d.file.fileName) !== ambientName)
+      .map((d) => {
+        const pos = d.file && d.start !== undefined ? d.file.getLineAndCharacterOfPosition(d.start) : null;
+        return `${d.file ? path.relative(workspace.paths.workspace, d.file.fileName) : ''}${pos ? ':' + (pos.line + 1) : ''} TS${d.code}: ${ts.flattenDiagnosticMessageText(d.messageText, ' ')}`;
+      });
   }
 
   async start (workspace) {
@@ -165,6 +184,7 @@ class BrowserRuntime {
         if (p === '/__debug/agent-session.js') {
           res.writeHead(200, { 'Content-Type': MIME['.js'] }); res.end(bundleDebugSession(this.REPO, this.esbuild)); return;
         }
+        if (p === '/favicon.ico') { res.writeHead(204); res.end(); return; }
         if (p.startsWith('/build/')) {
           const buildFile = path.join(this.REPO, p);
           if (fs.existsSync(buildFile)) {
