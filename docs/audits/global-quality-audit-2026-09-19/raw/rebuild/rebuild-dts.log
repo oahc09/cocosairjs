@@ -1,0 +1,22 @@
+[dts] bundling type declarations (this may take a few minutes) ...
+Typescript version: 4.9.5
+With index: true
+With exports: false
+With editor exports: true
+Unbundled will write to: E:/qoder-rebuild-audit-2026-09-19/repo/src/__dts_before_bundle
+Generating...
+E:/qoder-rebuild-audit-2026-09-19/repo/src/cocos/3d/misc/mesh-codec.ts (92,24): Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.js' or its corresponding type declarations.
+E:/qoder-rebuild-audit-2026-09-19/repo/src/cocos/3d/misc/mesh-codec.ts (93,24): Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.wasm' or its corresponding type declarations.
+E:/qoder-rebuild-audit-2026-09-19/repo/src/cocos/3d/misc/mesh-codec.ts (99,27): Cannot find module 'external:emscripten/meshopt/meshopt_decoder.asm.js' or its corresponding type declarations.
+Does 'cocos/spine/lib/spine-core.d.ts' no longer existed? I have a patch for it.
+Bundling...
+DeprecationWarning: '' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+DeprecationWarning: 'createIndexSignature' has been deprecated since v4.8.0. Decorators are no longer supported for this function. Callers should switch to an overload that does not accept a 'decorators' parameter.
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+Don't know how to handle type `${x}`(Syntax Kind: TemplateLiteralType)
+Failed to resolve type import('pal/input/input-source').InputSourceButton, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourceDpad, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourceStick, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourcePosition, There is no symbol info.
+Failed to resolve type import('pal/input/input-source').InputSourceOrientation, There is no symbol info.
+[dts] done in 12.4s → build/cocosair.module.d.ts

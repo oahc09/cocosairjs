@@ -1,0 +1,42 @@
+{
+  "note": "Recovery copy, not the ledger of record. At 15:02 this audit observed docs/audits/global-quality-audit-2026-09-19/findings.jsonl at 45 lines containing the two entries below (authored by the PARALLEL audit/verification session per memory 'Parallel audit session'); at 16:06 this audit's own read-modify-write of the same file produced a 44-line state ending in F-42,F-43(this audit),F-44(this audit) — i.e. the two entries below were dropped by a non-atomic concurrent write, exactly the lost-update hazard this audit reports elsewhere. The parallel session may re-apply them; whoever merges must renumber to avoid the F-44 id collision (this audit's F-44 = R7i refusal/isolation negative controls, evidence raw/negctl/nc-g-r7i-negative-controls.log). Their cited raw log raw/negctl/nc-h-specfingerprint-reverse-control.log did NOT exist at capture time, so this copy cannot be verified against raw bytes; treat the text below as a reconstruction from the workspace-change notification, not as attested evidence.",
+  "capturedAt": "2026-09-19T16:10:00+08:00",
+  "capturedBy": "global quality audit agent (this session)",
+  "recoveredFrom": "SessionStart/FileChanged system notification payload for findings.jsonl (45-line state)",
+  "entries": [
+    {
+      "findingId": "F-44",
+      "requirementId": "PLAN §5 负向控制 'stale screenshot evidence' + §15/§23.2 specFingerprint 防脱钩（F-38 指出的暴露面：截图内容 hash 不被门禁复核，example.json 其他字段篡改是否必然使 specFingerprint 失配）",
+      "gate": "negativeControls (反向控制：specFingerprint 篡改重算) + exampleStableVerify",
+      "category": "executed negative control in an isolated copy outside the source repo; the original tree was never written",
+      "blocking": false,
+      "location": "tools/verify/v11-examples-verify.cjs:463,470 (specFingerprint 重算+写入 promotionEvidence); tools/examples/spec-compliance-audit.cjs:168 (audit 侧重算比对); injection target = copy of examples/hello-cube/example.json (validation.renderer=none)",
+      "repro": "cd E:/qoder-fingerprint-2026-09-19/repo && node tools/examples/spec-compliance-audit.cjs --ids=hello-cube (control EXIT 0 fail=0) ; then mutate copy's example.json validation.renderer 'none'→'webgl2' (promotionEvidence.specFingerprint untouched) ; re-run same command",
+      "expected": "篡改任意被指纹覆盖的 spec 字段 → specFingerprint 重算失配 → S13-PE-FINGERPRINT fail、gate EXIT 1（截图内容不被复核的暴露面被限制在截图文件本体，而非整个 example.json）",
+      "actual": "DETECTED: control EXIT 0 fail=0; after single-line mutation EXIT 1 with structured fail S13-PE-FINGERPRINT 'specFingerprint 漂移 4317f89c2596 != 7800f7d0664f'。同时确认 spec-validate.cjs 对篡改后的文件仍 PASS（validation.renderer 属于合法枚举值），即结构门禁不捕获此类语义篡改，但 Stable 证据链门禁捕获 → 指纹覆盖 validation/render/camera/api/scene/assets 等全部 spec 字段。原仓库 example.json 复核 hash 6d5c5f7f1b25f020 未变。",
+      "evidence": ["raw/negctl/nc-h-specfingerprint-reverse-control.log"],
+      "impact": "部分闭合 F-38 的暴露面：截图内容 hash 虽不被门禁复核，但 example.json 任何字段（含 validation 列表本身）被篡改都会使 specFingerprint 失配、gate RED。'篡改规格再复用旧截图' 这条路需要同时改 promotionEvidence.specFingerprint，而该字段本身也在校验范围内。F-38 维持 blocking（截图内容仍需 size+hash 复核，R7f 不变），但风险等级从 '任意字段可改' 降为 '仅截图像素文件本体可换'。",
+      "minimalRecommendation": "无需修复。保留 specFingerprint 覆盖字段集合不变；R7f 修截图 size+hash 复核时不要缩小指纹字段集。",
+      "retestScope": "negativeControls §5 台账：执行 7 项（+specFingerprint 反向控制 DETECTED）；剩余未执行 2 项（正确策略拒绝、牺牲性隔离失效）受限于隔离副本无 node_modules（见 F-42）",
+      "verificationOwner": "audit",
+      "verdict": "PASS (negative control has teeth: control EXIT 0 GREEN vs injected EXIT 1 S13-PE-FINGERPRINT RED)"
+    },
+    {
+      "findingId": "F-30b",
+      "requirementId": "PLAN §6 '每 Example 配 1 个 recipe；门禁与 recipe 结果一致' — recipe 层对 Example Spec 的覆盖与门禁交叉核对是否可复核",
+      "gate": "v06FinalGate_recipe (structure + cross-check credibility)",
+      "category": "coverage observation (static read of recipes.cjs + scenarios.cjs, no gate rerun)",
+      "blocking": false,
+      "location": "tools/verify/recipes.cjs:29-273 (29 recipe 全量); tools/verify/scenarios.cjs:4-331 (scenario 实现)",
+      "repro": "node -e \"const fs=require('fs');const s=fs.readFileSync('tools/verify/recipes.cjs','utf8');const ids=[...s.matchAll(/id: '([^']+)'/g)].map(m=>m[1]);const specIds=fs.readdirSync('examples').filter(d=>fs.existsSync(`examples/${d}/example.json`)&&!d.startsWith('rc-'));console.log('recipes',ids.length,'examples-with-spec',specIds.length);const covered=new Set(ids.map(i=>i.replace('recipe-','')));console.log('examples NOT covered by any recipe:',specIds.filter(d=>!covered.has(d)))\"",
+      "expected": "PLAN §6 '每 Example 配 1 个 recipe' → 30/30 示例全覆盖或显式豁免清单",
+      "actual": "recipes.cjs 定义 29 个 recipe（id 形如 recipe-hello-cube）全部 PASS；examples/ 下 44 个非 rc- 目录含 example.json，其中 18 个无任何 recipe 覆盖（camera/camera-ortho/camera-multi/anim-easing/tween-* 等）。另 recipe 门禁与 Example Spec 门禁是两套独立体系：recipe PASS 不写 promotionEvidence，spec-compliance 不消费 recipe 结果，二者仅通过同一 example.json 的语义契约间接关联。",
+      "evidence": [],
+      "impact": "v06FinalGate_recipe 的 29/29 PASS 是真实且一致的（scenarios.cjs 为每个 recipe 定义了可执行的交互/视觉/生命周期契约），但它只覆盖 29/44 示例。PLAN §6 的 '每 Example 配 1 个 recipe' 若按字面理解则缺口 18；若 §6 原文只要求 V0.6 交付的 29 个 recipe 集合，则无缺口。需要 §6 原文口径裁决（与 R2 的分母裁决同类问题）。",
+      "minimalRecommendation": "在 v06-report.cjs 输出中显式声明 recipe 集合的分母口径（29 个 recipe 对应 V0.6 计划内示例子集，还是全量 44），避免 recipe PASS 被读成 '全示例门禁 PASS'。不改 recipe 本身。",
+      "retestScope": "R4 recipe evidence rebind 时一并复核分母口径声明",
+      "verificationOwner": "audit (static read) / implementation agent (口径裁决)",
+      "verdict": "PARTIAL (coverage observation)"
+    }
+  ]
+}

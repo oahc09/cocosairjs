@@ -1,0 +1,20 @@
+{
+  "runner": "jest (project-locked, ^28.0.2), jest.config.js sha dd88d923631e7767",
+  "discoveryCommand": "npx jest --listTests",
+  "testFilesDiscovered": 29,
+  "fullSuiteRun": { "command": "npx jest --silent", "exitCode": 0, "suites": "29 passed / 29", "tests": "207 passed / 207", "time_s": 92.8, "log": "docs/audits-tmp-jest.log" },
+  "antiPatternScan": {
+    "pattern": "\\.only|\\.skip|\\.todo\\(|xit\\(|xdescribe\\(|test\\.skip|describe\\.skip",
+    "scope": "test/**",
+    "matches": 0,
+    "conclusion": "No only/skip/todo masking in the jest tree."
+  },
+  "shouldRun_vs_discovered_vs_executed_vs_pass": "29 == 29 == 29; 207/207 tests green",
+  "browserGateReproduction": {
+    "v11-examples-verify.cjs": "0/40 PASS - all throw 'Cannot find module playwright' (tools/benchmark/runner/browser-runtime.cjs) -> INFRA/BLOCKED, NOT Engine FAIL",
+    "v11-gallery-artifact.cjs": "throws 'Cannot find module playwright' -> BLOCKED",
+    "consumer-acceptance.cjs": "EXIT 0 ok:true exportCount 368 (offline tarball import, no browser) -> PASS"
+  },
+  "committedEvidenceNotReproducible": "docs/evidence/v11-examples-verified.json claims 40/40 PASS (measuredAt 2026-09-19T04:20) but could not be independently re-run (playwright absent) and is unbound to the drifting working tree (v06 shows 30/30 sourceHash mismatch).",
+  "credibilityVerdict": "Jest suite is credible and green; browser/visual/stable-evidence layer is UNVERIFIED in this environment and stale vs source -> cannot be signed PASS."
+}

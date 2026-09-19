@@ -1,0 +1,9 @@
+
+=== CONTROL (animation running) :: runner EXIT 0, result=PASS
+   runner tail:  | == Examples spec-driven verify: 1/1 PASS, 0 promoted to stable == | fatal: not a git repository (or any of the parent directories): .git
+
+=== INJECTED (animation stopped) :: runner EXIT 1, result=FAIL
+   runner tail:  | == Examples spec-driven verify: 0/1 PASS, 0 promoted to stable == | fatal: not a git repository (or any of the parent directories): .git
+
+restored in copy: true | original repo untouched: true
+VERDICT-LINE: control=PASS injected=FAIL

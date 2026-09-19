@@ -1,0 +1,25 @@
+### P0 smoke-29 failure cause on frozen snapshot ###
+● Validation Error:
+### C1 CONTROL smoke-22 + smoke-23 (pristine snapshot copy) ###
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+C1-EXIT=1
+### F1 INJECT refusal: neutralize 4 OUT_OF_SCOPE throws ###
+guards-disabled=4
+F1-EXIT=1
+### F2a INJECT isolation: 5 DEBUG_MARKERS into default bundle ###
+● Validation Error:
+F2A-EXIT=1
+### F2b INJECT isolation: static /__debug/ import into an example ###
+● Validation Error:
+F2B-EXIT=1
+cp: cannot stat '/tmp/g-auto.bak': No such file or directory
+### RESTORE + re-verify control ###
+bundle-restored=yes
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+
+RESTORE-EXIT=1

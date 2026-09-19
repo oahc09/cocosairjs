@@ -1,0 +1,133 @@
+GATE SWEEP — every deterministic/CLI gate re-run on the FROZEN candidate inside an isolated copy
+date: 2026-09-19 (mandate step 7/8 + retest-plan R7d remaining scope)
+subject: E:/qoder-r7i-2026-09-19/work = extract of E:/qoder-frozen-2026-09-19/candidate
+         (3234 files, manifest digest 677cce412ce454b4, HEAD 3a53957db6bdd009bbd85af8b7d589a0b48dba5b, dirty=111)
+         + node_modules graft {esbuild,@esbuild/win32-x64}; NODE_PATH=<orig>/node_modules
+         + synthetic `git init` + 1 empty commit (bb80eab) because tools/verify/benchmark-evidence.cjs:24
+           shells out `git rev-parse HEAD` — see OBS-2. The ORIGINAL repo was written 0 times in this phase.
+findings: F-45 (sourceHash attribution + scope gap)
+
+=== 1. deterministic gate sweep (all run INSIDE the copy) ==================
+tools/verify/license-audit.cjs              exit=1  issues=3
+    ! example gltf-draco/assets/draco.glb: missing .LICENSE.md
+    ! example gltf-meshopt/assets/meshopt-khr.glb: missing .LICENSE.md
+    ! unexpected directory in build/: examples
+    => reproduces the live-tree result exactly; license stays FAIL off-tree.
+tools/verify/verify-web-only.cjs            exit=0  reachable 797 files, PASSED
+tools/verify/decoder-audit.cjs              exit=0  manifestFiles=16
+tools/examples/spec-evidence.cjs --check    exit=0  772 evidence entries: 0 drifted, 0 detached-validator, 0 errors
+tools/examples/coverage-report.cjs          exit=0  BUT prints
+    Core gate (100% verified): FAIL / Important (>=90%): FAIL / Advanced (>=80%): FAIL
+    important claimed 6/793 (0.008) | advanced claimed 8/3219 (0.002)
+    => F-40 reproduced on the frozen candidate off-tree: a gate that PRINTS FAIL EXITS 0.
+tools/verify/v06-report.cjs                 exit=1  blockers:
+    "运行证据与当前源码哈希不一致，需要重跑。"
+    "Recipe 完整场景证据未通过：R001..R008: sourceHash mismatch"
+    "本轮 Jest 结果尚未通过或缺失。"      <- v06-report does not itself run jest; needs the jest evidence in-step
+
+=== 2. OBS-1: the recipe sourceHash mismatch is ATTRIBUTED, not mystery ====
+Definition (tools/verify/benchmark-evidence.cjs:5-21): sha256 over
+    every file under tools/benchmark/**  + examples/gltf-viewer/assets/{BoxTextured,AnimatedMorphCube}.glb
+    + build/cocosair.module.js + build/cocosair.module.d.ts
+Numbers: recorded evidence docs/evidence/v06-recipes.json (measuredAt 2026-09-18T17:43:27.180Z,
+    sourceHash f5ebd60f582a70c9…, total 30 / pass 30 / fail 0)
+    current frozen candidate sourceHash ac1b151596b36975… — IDENTICAL when computed in the ORIGINAL repo
+    and in the frozen copy (=> the mismatch is not a copy artifact; the binding is path-independent)
+    commit 3a53957 landed 2026-09-19 09:14:45 +0800 (= 01:14Z, ~1.5 h AFTER the recipe run) and its diff
+    touches many tools/benchmark/** files (catalog-iss.ts +390, fixtures/B101..B103, …)
+    additionally tools/benchmark/runner/browser-runtime.cjs is dirty in the working tree (mtime 09-19 09:34);
+    reverting ONLY that file to HEAD in the copy moves the hash to 5687660e30f63a1b (still != recorded)
+    => both the V1.1 commit and the uncommitted runner edit contribute.
+Conclusion: the recipe gate is CORRECT and has teeth — stale evidence against changed tooling is detected,
+which downgrades the "unexplainable moving target" reading of candidateIntegrity for this specific gate.
+Remediation is one command on a frozen candidate: re-run run-recipes-browser.cjs (see OBS-3 for the copy
+attempt) — no assertion or threshold change.
+
+=== 3. OBS-2: NEGATIVE CONTROL on the freshness binding — src/** is NOT in scope ===
+Injected in the copy: appended one line to src/cocos/scene-graph/node.ts (engine source, no rebuild):
+    frozen sourceHash             = ac1b151596b36975
+    after src/** edit (no build)  = ac1b151596b36975   <-- UNCHANGED
+    after restore                 = ac1b151596b36975   (node.ts hash bdb87e07142a4d1e == snapshot)
+Meaning: recipe/dual-track evidence freshness is bound to the BUILT BUNDLE BYTES, not to engine sources.
+An engine-source change that is never rebuilt (or a build/ dir older than src/) leaves every sourceHash
+consumer reporting "evidence current". This is the mirror image of F-38/F-39 (existence/bytes bound,
+content not): here the binding is real but its INPUT SET is narrower than the thing it certifies.
+Not detected by any gate today. Restored; copy re-verified against the manifest afterwards.
+Minimal suggestion (needs approval; tools/ only): either add the built-bundle↔src consistency check that
+`npm run build` was re-executed (hash src/** into a separate buildStamp and assert buildStamp freshness),
+or widen sourceHash's input set to src/** + tools/**. Retest: an src edit without rebuild must flip
+v06-report RED; a clean rebuild must return it GREEN.
+
+=== 4. OBS-3: the recipe runner cannot execute outside a git checkout ======
+tools/verify/benchmark-evidence.cjs:24 metadata() execFileSync('git','rev-parse HEAD') with no try/catch:
+in a .git-less copy it throws status 128 "fatal: not a git repository (or any of the parent directories)"
+and run-recipes-browser.cjs:49 aborts BEFORE running a single recipe (recipes-run.log, nothing executed).
+Workaround applied: `git init` + one empty commit inside the copy
+(bb80eab), which leaves sourceHash unaffected (ac1b… verified again after init).
+Honest classification: fails LOUD, not silent -> harness/robustness defect, non-blocking for release, but it
+means the recipe gate is not reproducible in a clean-room or from an npm-installed source tarball
+(no .git). Suggested minimal fix: fall back to baseRevision 'unknown' when git is absent.
+
+=== 5. REBIND: recipe browser gate re-run ON the frozen candidate (copy) =====
+`git init` + 1 empty commit (bb80eab) to satisfy OBS-3, then
+  NODE_PATH="<orig>/node_modules;<playwright>/node_modules" node tools/benchmark/recipes/run-recipes-browser.cjs
+=> "Recipe browser gate: 30/30 PASS"   docs/evidence/v06-recipes.json
+   measuredAt 2026-09-19T09:17:05.751Z | sourceHash ac1b151596b36975 (= the frozen candidate's own hash)
+   baseRevision bb80eabccf9795375e821469054a25819406d749  <- SYNTHETIC, not a repo commit
+   promoted: 30/30 status=stable
+Then jest in-step:  node <orig>/node_modules/jest/bin/jest.js --rootDir <copy> --json --outputFile=output/v06-review-jest.json
+   => 29 suites / 207 of 207 passed, success=true, 101.4 s
+Then v06-report.cjs again:
+   evidenceFailures [] (was 8x 'sourceHash mismatch'), coverageFailures [], recipes {catalogTotal 30, validated 30, stable 30}
+   blockers remaining: 2 — "运行证据与当前源码哈希不一致" (v06-golden-dual-track.json +
+   v06-catalog-runtime-gate.json still carry the pre-3a53957 hash) and "本轮 Jest..." only if
+   output/v06-review-jest.json is absent (it is now present, so this one clears with one command).
+   sourceHash re-verified unchanged after every step: ac1b151596b36975 (the runners write only under
+   docs/evidence and output/, so regenerating evidence does not perturb the hash -> self-consistent).
+
+=== 6. OBS-4: 'revision' in recipe evidence is decorative (verified by construction) ==
+tools/benchmark/recipes/run-recipes-browser.cjs:82,86 store baseRevision/revision from `git rev-parse HEAD`;
+`baseRevision` appears in NO validator: grep over tools/benchmark/recipes/schema.ts, run-recipes-browser.cjs,
+v06-report.cjs shows zero assertions. My copy produced valid, accepted 30/30 evidence whose revision
+(bb80eab…) does not exist in the real repository. Severity is low because sourceHash (content-derived) IS
+asserted and cannot be forged without the same inputs — but any doc or human reading `revision` as
+provenance is being shown an unchecked field. Minimal suggestion (needs approval): have the gate assert
+revision === git rev-parse HEAD of the tree it runs in, or drop the field name to avoid implying binding.
+
+=== 7. CATALOG + DUAL-TRACK re-run on the frozen candidate (copy) ==========
+NODE_PATH="<orig>/node_modules;<playwright>/node_modules" node tools/verify/v06-catalog-gate.cjs   (~10 min, exclusive:
+  no other browser/CPU batch was started concurrently so frame-timing evidence is not contended)
+=> "§51 Runtime Gate: 100/100 PASS"
+   docs/evidence/v06-catalog-runtime-gate.json: pass 100 / total 100, counts {PASS:97, EXPECTED_UNSUPPORTED:3},
+   non-PASS rows 0, source.sourceHash ac1b151596b36975 == the frozen candidate's own hash,
+   measuredAt 2026-09-19T09:25:42.786Z
+   => the 100-item runtime gate reproduces off-tree on the frozen candidate; the in-repo copy of this
+      evidence is still pre-3a53957, which is why v06-report kept one stale-hash blocker.
+Then tools/benchmark/run-dual-track.cjs (golden 10, Reference + Agent Track A001) — see §8 for its result.
+Disclosure for the agent numbers: the A001 driver is tools/benchmark/driver/manual-driver.ts
+  (ManualAgentDriver — scripted, no LLM endpoint: no fetch/env-key in driver/*.ts), so a green dual-track
+  refreshes the Reference gate and the sourceHash binding but does NOT satisfy §7.1's real-LLM Agent track
+  (agentGate stays blocked; R5 open).
+
+=== 8. DUAL-TRACK + v06-REPORT: the whole V0.6 chain reaches PASS off-tree ====
+tools/benchmark/run-dual-track.cjs (golden 10, Reference + Agent Track A001):
+  docs/evidence/v06-golden-dual-track.json  measuredAt 2026-09-19T09:27:46.497Z
+  sourceHash ac1b151596b36975 (= frozen digest) | rows 10
+  reference results: PASS PASS PASS PASS EXPECTED_UNSUPPORTED PASS PASS PASS PASS PASS -> referenceGatePass true
+  raw-recomputed metrics: eligibleTrials 9 (1 excluded, byDomain {NONE:9, DEVICE:1}), eligibleTypeBTrials 6,
+    agentPass 9, agentFinalSuccessRate 1.0, firstCompileSuccessRate 1.0, medianRepairSuccessful 0,
+    meanRepairAllEligible 0, budgetExhaustionRate 0, profile A001
+node tools/verify/v06-report.cjs afterwards => EXIT=0
+  {status: "PASS", blockers: [], evidenceFailures: 0, coverageFailures: 0,
+   recipes {catalogTotal 30, validatedCount 30, stableCount 30}, tests {suites 29, tests 207, passed 207, success true}}
+
+=== 9. READ THAT PASS WITH THE AGENT CAVEAT ==================================
+The Agent Track is tools/benchmark/driver/manual-driver.ts (ManualAgentDriver, profile A001) — scripted,
+no LLM endpoint anywhere in tools/benchmark/driver/*.ts (no fetch, no API key). Every row reports
+repairs=0 and denials=[], so agentFinalSuccessRate=1.0 / firstCompileSuccessRate=1.0 measure the test
+author's pre-authored patches, not a model. The gate reaches overall PASS while its Agent dimension is a
+proxy. This is the strongest claimed-vs-verified instance in the audit:
+  "v06-report PASS"  !=  "Agent capability verified".
+Also: 1 of 10 trials is dropped from eligibleTrials with the reason only visible as byDomain DEVICE.
+Delivered-tree status is unchanged by this section: the repo's docs/evidence/* were NOT rewritten here,
+so in place v06-report still reports its 3 stale-evidence blockers.

@@ -1,0 +1,7 @@
+[coverage] core: claimed 49/717 | verified 49/717 (0.068)
+[coverage] important: claimed 6/793 | verified 6/793 (0.008)
+[coverage] advanced: claimed 8/3219 | verified 8/3219 (0.002)
+[coverage] Core gate (100% verified): FAIL
+[coverage] Important gate (>=90% verified): FAIL
+[coverage] Advanced gate (>=80% verified): FAIL
+[coverage] → docs\api-coverage-report.json

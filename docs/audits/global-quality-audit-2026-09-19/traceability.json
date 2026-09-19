@@ -1,0 +1,22 @@
+{
+  "auditId":"global-quality-audit-2026-09-19",
+  "rows":[
+    {"req":"STRUCT-SINGLE-REPO-001","impl":"repo layout","test":"n/a structural","artifact":"-","evidence":"top-level dirs","verdict":"PASS"},
+    {"req":"RUNTIME-NO-DEBUG-001","impl":"package.json files whitelist","test":"tools/verify/consumer-acceptance.cjs","artifact":"cocosair.js-0.1.0.tgz 73 files","evidence":"no devtools/examples/debug; exportCount 368","verdict":"PASS"},
+    {"req":"API-FROZEN-CONTRACT-001","impl":"package.json exports/module","test":"jest import tests","artifact":"build/cocosair.module.*","evidence":"commonjs+esm fields unchanged","verdict":"PASS"},
+    {"req":"TEST-CREDIBILITY-A2","impl":"test/smoke/**","test":"jest 207","artifact":"docs/audits-tmp-jest.log","evidence":"0 only/skip/todo","verdict":"PASS"},
+    {"req":"EXAMPLE-WAVE-STABLE-001 (spec structure)","impl":"examples/*/example.json frozen spec","test":"spec-validate.cjs","artifact":"v11-spec-validate.json","evidence":"45/45 frozen 0 draft 0 blocked","verdict":"PASS"},
+    {"req":"EXAMPLE-WAVE-STABLE-001 (stable verification)","impl":"v11-examples-verify.cjs","test":"browser (Chromium via external Playwright NODE_PATH)","artifact":"v11-examples-verified.json","evidence":"REPRODUCED 40/40 real Chromium; draco/meshopt only under capability-required expectation not forward-decode; Firefox/WebKit NOT installed","verdict":"PASS-Chromium-only"},
+    {"req":"GLTF-21-EXT-REAL-EVIDENCE-001","impl":"loaders/materials","test":"gltf-*-browser + capabilities","artifact":"capabilities + example renders","evidence":"Chromium render cases pass in examples; draco/meshopt forward-decode NOT proven; non-Chromium + real device unverified","verdict":"PARTIAL"},
+    {"req":"RECIPE-STABLE-COUNT-001","impl":"recipes catalog","test":"v06-report.cjs","artifact":"v06 evidence","evidence":"30/30 sourceHash mismatch (tree drift + parallel session + golden dual-track stale)","verdict":"FAIL"},
+    {"req":"API-COVERAGE-TIER-001","impl":"api inventory claims","test":"coverage-report.cjs","artifact":"docs/api-coverage-report.json","evidence":"core 6.8%/imp 0.8%/adv 0.25%; claimed==verified (honest)","verdict":"FAIL"},
+    {"req":"API-DENOMINATOR-FROZEN-001","impl":"docs/example-api-inventory.json","test":"coverage-report.cjs denominator","artifact":"totalUnits 4729/core 717","evidence":"no frozen approval doc located for the tier denominator -> validity UNRESOLVED; auditor must not re-scope","verdict":"UNRESOLVED"},
+    {"req":"LICENSE-PER-SOURCE-001","impl":"asset .LICENSE.md","test":"license-audit.cjs","artifact":"docs/evidence/license-audit.json","evidence":"issues=3: draco.glb & meshopt-khr.glb missing .LICENSE.md; build/examples hygiene (not shipped)","verdict":"FAIL"},
+    {"req":"AGENT-GATE-REAL-GEN-001","impl":"benchmark tracks","test":"agent runner","artifact":"-","evidence":"no isolated generated-source budget run","verdict":"NOT_RUN"},
+    {"req":"BENCH-100-POINTS-001","impl":"benchmark catalog","test":"benchmark-regression","artifact":"-","evidence":"golden dual-track not regenerated this pass","verdict":"NOT_RUN"},
+    {"req":"PERF-BOXTEXTURED-001","impl":"runtime baseline","test":"perf browser serial","artifact":"-","evidence":"30-load median/50-dispose not run (exclusive resource)","verdict":"NOT_RUN"},
+    {"req":"URL-DISCOVERY-NESTED-001","impl":"dev/gallery/CLI","test":"v11-devtools-examples + v11-gallery","artifact":"v11-devtools-examples.json + v11-gallery-artifact.json","evidence":"REPRODUCED DevTools 5/5 + Gallery 13/13 nested deep-link /apps/gallery/... 0 page errors in Chromium; non-Chromium NOT verified","verdict":"PASS-Chromium-only"},
+    {"req":"DEVTOOLS-EXPLICIT-ARTIFACT-001","impl":"build/devtools + runtime boundary","test":"v11-devtools-examples.cjs","artifact":"v11-devtools-examples.json","evidence":"REPRODUCED 5/5 Chromium + runtime bundle excludes debug","verdict":"PASS-Chromium-only"},
+    {"req":"STRUCT-SINGLE-REPO-001 (reverse drift)","impl":"top-level dirs","test":"structural ls","artifact":"repo root","evidence":"no packages/addons/plugins/framework; no AirScene/AirNode/AirModel second API. Extra dirs ai/ (task plans) + licenses/ beyond canonical six -> recorded as observations, not prohibited product layers","verdict":"PASS-with-observations"}
+  ]
+}

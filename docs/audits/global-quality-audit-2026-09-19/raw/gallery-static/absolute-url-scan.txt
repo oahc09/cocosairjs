@@ -1,0 +1,4 @@
+boot.js scanned: 45
+{"id":"automation","status":"stable","requiresDevTools":true,"hits":[{"url":"/__debug/agent-session.js","guarded":false}]}
+{"id":"gltf-meshopt","status":"stable","requiresDevTools":false,"hits":[{"url":"/build/gltf-decoders/meshopt/meshopt_decoder.mjs","guarded":false}]}
+unguarded absolute-URL examples: automation, gltf-meshopt
