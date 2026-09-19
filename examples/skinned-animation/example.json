@@ -20,7 +20,9 @@
     "functional": [
       "node-exists",
       "animation-playing",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
@@ -30,7 +32,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "658cfe0e7638",
+  "promotionEvidence": "06bce4ca8bdb",
   "specStatus": "frozen",
   "learning": {
     "goal": "最高复杂度回归：程序化蒙皮网格 + 骨骼树 + 刚性绑定 + 骨骼动画（E009）",
@@ -65,7 +67,6 @@
       "buildSkeletonTree",
       "restoreBindPose",
       "frameObject",
-      "math.Vec3",
       "math.Color",
       "Material.initialize",
       "Node.addChild",
@@ -80,103 +81,97 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L33"
+        "sourceLocation": "L31"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L181"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L139"
       },
       {
         "api": "Camera",
-        "source": "main.js",
+        "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L17"
+        "sourceLocation": "L28"
       },
       {
         "api": "SkinnedMeshRenderer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L168"
       },
       {
         "api": "Mesh",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L116"
       },
       {
         "api": "Material",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L20"
+        "sourceLocation": "L173"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L21"
+        "sourceLocation": "L154"
       },
       {
         "api": "buildSkeletonTree",
         "source": "main.js",
         "validator": "animation-playing",
-        "sourceLocation": "L5"
+        "sourceLocation": "L165"
       },
       {
         "api": "restoreBindPose",
         "source": "main.js",
         "validator": "animation-playing",
-        "sourceLocation": "L6"
+        "sourceLocation": "L188"
       },
       {
         "api": "frameObject",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L7"
-      },
-      {
-        "api": "math.Vec3",
-        "source": "main.js",
-        "validator": "scene-ready",
-        "sourceLocation": "L23"
+        "sourceLocation": "L190"
       },
       {
         "api": "math.Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L175"
       },
       {
         "api": "Material.initialize",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L176"
+        "sourceLocation": "L174"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L144"
+        "sourceLocation": "L142"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L145"
+        "sourceLocation": "L143"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L160"
+        "sourceLocation": "L158"
       }
     ]
   },

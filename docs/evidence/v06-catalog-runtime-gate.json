@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-09-18T20:23:56.022Z",
+  "measuredAt": "2026-09-19T05:07:59.588Z",
   "source": {
-    "baseRevision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+    "baseRevision": "3a53957db6bdd009bbd85af8b7d589a0b48dba5b",
     "workingTree": true,
-    "sourceHash": "5687660e30f63a1b8b39bf0f758f7a3c28fe10d5470d923b4b5200d5c31c3a14"
+    "sourceHash": "ac1b151596b3697554fdaa31d384714f91062562c646ceb103ffc2a8bc7b0bfa"
   },
   "gate": "§51 Runtime Gate",
   "total": 100,
@@ -12,7 +12,7 @@
     "PASS": 97,
     "EXPECTED_UNSUPPORTED": 3
   },
-  "cocosairRevision": "30e97e3",
+  "cocosairRevision": "3a53957",
   "trials": [
     {
       "id": "B001",

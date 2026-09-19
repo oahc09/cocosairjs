@@ -121,8 +121,8 @@
 | 目标 | 说明 |
 |---|---|
 | Example ≥ 40（Pilot 12 → Wave 1 → Wave 2 → Wave 3） | 含 example.json + Gallery manifest |
-| API Coverage Core ≥ 80% verified | 冻结清单 100% 验证 |
-| API Coverage Important ≥ 60% claimed | |
-| API Coverage Advanced ≥ 30% claimed | |
+| API Coverage Core ≥ 100% verified | §25/§26：冻结清单 100% 验证 |
+| API Coverage Important ≥ 90% verified | §25/§26，verified 口径（非 claimed） |
+| API Coverage Advanced ≥ 80% verified | 另 §26：documented-only ≤ 20%、uncovered = 0，且不得以 `verified + documented-only ≥ 80%` 充当门禁 |
 | Gallery（Search/Category/iframe/Source） | |
 | 30 stable Recipe（V0.9 需求，V1.1 继承） |

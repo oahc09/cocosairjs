@@ -19,7 +19,8 @@
     "functional": [
       "node-exists",
       "transform-equals",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property"
     ],
     "interaction": [
       "frame-diff"
@@ -30,7 +31,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "3413b43c8405",
+  "promotionEvidence": "5924070f3c80",
   "specStatus": "frozen",
   "learning": {
     "goal": "输入系统全景：键盘 WASD 平移、滚轮推拉、拖拽旋转（真实输入链）",
@@ -63,7 +64,6 @@
       "input",
       "Input",
       "Layers",
-      "math.Vec3",
       "builtinResMgr",
       "utils.createMesh",
       "primitives.box",
@@ -80,97 +80,91 @@
         "api": "createAirApp",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L46"
+        "sourceLocation": "L44"
       },
       {
         "api": "Scene",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L45"
       },
       {
         "api": "Node",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L49"
       },
       {
         "api": "MeshRenderer",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L16"
+        "sourceLocation": "L52"
       },
       {
         "api": "Camera",
-        "source": "main.ts",
+        "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L28"
       },
       {
         "api": "Component",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L17"
+        "sourceLocation": "L30"
       },
       {
         "api": "input",
         "source": "main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L2"
+        "sourceLocation": "L59"
       },
       {
         "api": "Input",
         "source": "main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L4"
+        "sourceLocation": "L59"
       },
       {
         "api": "Layers",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L22"
-      },
-      {
-        "api": "math.Vec3",
-        "source": "main.ts",
-        "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L50"
       },
       {
         "api": "builtinResMgr",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L27"
+        "sourceLocation": "L54"
       },
       {
         "api": "utils.createMesh",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L55"
+        "sourceLocation": "L53"
       },
       {
         "api": "primitives.box",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L55"
+        "sourceLocation": "L53"
       },
       {
         "api": "Node.addChild",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L53"
+        "sourceLocation": "L51"
       },
       {
         "api": "Node.setPosition",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L41"
+        "sourceLocation": "L39"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L75"
+        "sourceLocation": "L73"
       }
     ]
   },

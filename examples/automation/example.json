@@ -17,7 +17,8 @@
   "validation": {
     "functional": [
       "node-exists",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property"
     ],
     "interaction": [],
     "visual": [
@@ -26,7 +27,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "5079d45cff66",
+  "promotionEvidence": "7225d967159c",
   "specStatus": "frozen",
   "learning": {
     "goal": "Agent/DevTools 会话闭环（E012）：显式绑定 __airApp 后 session 观察 + 受控修改",
@@ -74,25 +75,25 @@
         "api": "Scene",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L17"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L33"
       },
       {
         "api": "MeshRenderer",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L19"
+        "sourceLocation": "L36"
       },
       {
         "api": "Layers",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L20"
+        "sourceLocation": "L34"
       },
       {
         "api": "utils.createMesh",
@@ -110,7 +111,7 @@
         "api": "builtinResMgr",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L23"
+        "sourceLocation": "L38"
       },
       {
         "api": "DevToolsSession.inspectScene",

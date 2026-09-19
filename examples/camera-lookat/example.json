@@ -81,7 +81,7 @@
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L23"
+        "sourceLocation": "L25"
       },
       {
         "api": "DirectionalLight",
@@ -117,13 +117,13 @@
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L28"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
       },
       {
         "api": "Material.initialize",
@@ -165,7 +165,7 @@
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L31"
+        "sourceLocation": "L51"
       }
     ]
   },
@@ -200,7 +200,8 @@
     "functional": [
       "node-exists",
       "transform-equals",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property"
     ],
     "interaction": [
       "frame-diff"
@@ -219,5 +220,5 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "31f5996ea1d5"
+  "promotionEvidence": "8f452ad54668"
 }

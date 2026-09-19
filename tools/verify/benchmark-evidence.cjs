@@ -20,7 +20,17 @@ function sourceHash(root) {
   entries.push(['build/cocosair.module.d.ts',crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'build/cocosair.module.d.ts'))).digest('hex')]);
   return crypto.createHash('sha256').update(JSON.stringify(entries.sort((a,b)=>a[0].localeCompare(b[0])))).digest('hex');
 }
-function metadata(root) {
-  return {baseRevision:cp.execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),workingTree:true,sourceHash:sourceHash(root)};
+function git (root, args) {
+  try { return cp.execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return null; }
 }
-module.exports = { sourceHash, metadata };
+// Recorded revisions are only meaningful if they name a commit this repository can
+// reach; a copy with a synthetic HEAD must not produce acceptable evidence.
+function revisionInHistory (root, revision) {
+  if (!revision) return false;
+  try { cp.execFileSync('git', ['merge-base', '--is-ancestor', revision, 'HEAD'], { cwd: root, stdio: 'ignore' }); return true; } catch { return false; }
+}
+function metadata(root) {
+  const head = git(root, ['rev-parse', 'HEAD']);
+  return { baseRevision: head, gitAvailable: head !== null, workingTree: true, sourceHash: sourceHash(root) };
+}
+module.exports = { sourceHash, metadata, revisionInHistory };

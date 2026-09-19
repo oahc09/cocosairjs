@@ -15,13 +15,11 @@ import {
     Node,
     MeshRenderer,
     Component,
-    Camera,
     input,
     Input,
     KeyCode,
     Layers,
     Vec2,
-    Vec3,
     utils,
     primitives,
     builtinResMgr, frameObject } from 'cocosair';

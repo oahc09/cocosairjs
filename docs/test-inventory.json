@@ -1,0 +1,363 @@
+{
+  "generatedAt": "2026-09-19T09:40:46.990Z",
+  "suites": [
+    {
+      "file": "test/smoke/smoke-01-bootstrap.test.ts",
+      "tests": [
+        "smoke 1 — createAirApp bootstrap createAirApp initializes engine and returns app"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-02-scene.test.ts",
+      "tests": [
+        "smoke 2 — scene setup and run scene with camera runs through director"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-03-runtime-asset.test.ts",
+      "tests": [
+        "smoke 3 — runtime asset load asset round-trip through assetManager",
+        "smoke 3 — runtime asset load deserialize can round-trip a material",
+        "smoke 3 — runtime asset load mesh can be created from primitives",
+        "smoke 3 — runtime asset load procedural texture2d can be created and bound"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-04-skinning.test.ts",
+      "tests": [
+        "smoke 4 — skeleton and skinning skeleton with joints and bindposes drives SkinningModel"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-05-promise-asset-helper.test.ts",
+      "tests": [
+        "smoke 5 — promise asset helper (loadAssetAsync) rejects when registered asset does not match requested type",
+        "smoke 5 — promise asset helper (loadAssetAsync) rejects with actionable guidance for unknown path",
+        "smoke 5 — promise asset helper (loadAssetAsync) resolves Code First asset registered in assetManager.assets by path"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-06-skeleton-utils.test.ts",
+      "tests": [
+        "smoke 6 — skeleton utilities buildSkeletonTree records joint paths and bindposes",
+        "smoke 6 — skeleton utilities buildSkeletonTree throws for missing joint path",
+        "smoke 6 — skeleton utilities restoreBindPose accepts child-first joint order without changing indices",
+        "smoke 6 — skeleton utilities restoreBindPose restores hierarchy to captured rest pose"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-07-gltf.test.ts",
+      "tests": [
+        "glTF runtime loader GLB and external glTF produce the same native meshes",
+        "glTF runtime loader GLB container and extension failures are explicit",
+        "glTF runtime loader KHR_texture_transform applies scale, then rotation, then offset and overrides UV selection",
+        "glTF runtime loader STEP, linear and cubic curves preserve intermediate samples",
+        "glTF runtime loader each texture slot has independent native transform uniforms",
+        "glTF runtime loader invalid bounds, cycles, shear and missing baseUrl are rejected",
+        "glTF runtime loader loadRemote and both helper forms share native asset cache, including query/hash URLs",
+        "glTF runtime loader material factors stay linear and mirrored transforms update native winding",
+        "glTF runtime loader missing external dependency is recoverable on the next load",
+        "glTF runtime loader multi primitive materials, multiple skins and scenes remain isolated",
+        "glTF runtime loader native Animation interpolates bones and morphs independently per instance",
+        "glTF runtime loader required texture transform is supported without suppressing other required-extension errors",
+        "glTF runtime loader sparse normalized accessors and matrix column padding decode correctly",
+        "glTF runtime loader stride and normalized vertex color accessors decode without reading padding",
+        "glTF runtime loader texture transforms reject malformed data and unsupported UV sets",
+        "glTF runtime loader triangle strip winding, fan and line loop conversion"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-08-frame-object.test.ts",
+      "tests": [
+        "framing uses world coordinates when the camera has a parent",
+        "orthographic fitting adjusts height for a portrait viewport",
+        "perspective fitting uses the narrower horizontal field of view"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-09-runtime-inspection.test.ts",
+      "tests": [
+        "read-only runtime asset inspection collects live native references without creating material instances",
+        "read-only runtime asset inspection missing mesh, skin joints and animation targets are actionable",
+        "read-only runtime asset inspection valid empty graph and destroyed/wrong-type collection entries are distinct"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-10-gltf-registry.test.ts",
+      "tests": [
+        "glTF extension registry and parser context abort signal cancels before parse and during load",
+        "glTF extension registry and parser context capability and error contract is machine readable through the public API",
+        "glTF extension registry and parser context cleanup stack disposes LIFO and survives failing cleanups",
+        "glTF extension registry and parser context decoder-backed extensions: required fails, optional falls back to core attributes",
+        "glTF extension registry and parser context dependency cache executes a key once and evicts failed promises",
+        "glTF extension registry and parser context handler ordering follows registration order",
+        "glTF extension registry and parser context progress phases and configureGLTFLoaderDefaults reach instance loaders",
+        "glTF extension registry and parser context registry rejects duplicate handler names and missing dependencies",
+        "glTF extension registry and parser context unknown required extension fails with a stable GLTFError code"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-11-gltf-geometry.test.ts",
+      "tests": [
+        "glTF geometry and compression extensions Draco combo keeps two primitives with skin channels and core morph accessors",
+        "glTF geometry and compression extensions Draco decoding is deduplicated and validated against the accessors",
+        "glTF geometry and compression extensions Draco-decoded COLOR_0 may be VEC3 (width comes from the accessor, not the semantic)",
+        "glTF geometry and compression extensions EXT_meshopt_compression decodes to the baseline geometry",
+        "glTF geometry and compression extensions KHR_draco_mesh_compression decodes attributes and indices",
+        "glTF geometry and compression extensions KHR_mesh_quantization dequantizes to the same geometry and bounds",
+        "glTF geometry and compression extensions KHR_meshopt_compression decodes to the baseline geometry",
+        "glTF geometry and compression extensions KHR_meshopt_compression decodes with a no-URI placeholder parent buffer",
+        "glTF geometry and compression extensions capability report reflects configured decoders",
+        "glTF geometry and compression extensions decoders stay idle for documents that use no compression extension",
+        "glTF geometry and compression extensions invalid meshopt mode/filter and corrupt payloads fail with stable codes",
+        "glTF geometry and compression extensions meshopt KHR COLOR filter decodes a real encoder payload",
+        "glTF geometry and compression extensions meshopt KHR accepts stride 256 with NONE and rejects invalid COLOR stride 256",
+        "glTF geometry and compression extensions meshopt combo keeps two primitives, 32-bit indices, skin and morph intact",
+        "glTF geometry and compression extensions optional meshopt falls back to uncompressed data when no decoder is configured",
+        "glTF geometry and compression extensions quantized component types are rejected when the extension is not declared",
+        "glTF geometry and compression extensions quantized morph accessors (signed SHORT) load under KHR_mesh_quantization",
+        "glTF geometry and compression extensions required meshopt without a decoder fails with GLTF_DECODER_MISSING",
+        "glTF geometry and compression extensions uncompressed baseline matches the fixture geometry"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-12-gltf-scene.test.ts",
+      "tests": [
+        "glTF scene extensions EXT_mesh_gpu_instancing expands to shared-mesh instances and reports fast-path status",
+        "glTF scene extensions KHR_lights_punctual registers as supported and maps units per spec",
+        "glTF scene extensions instancing validation rejects count mismatches and bad accessor types",
+        "glTF scene extensions invalid light definitions fail with GLTF_EXTENSION_INVALID",
+        "glTF scene extensions point without range uses a large finite stand-in, never a short distance",
+        "glTF scene extensions spot maps full cone angle, uniform-cone flux, and warns about innerConeAngle",
+        "glTF scene extensions two nodes referencing one light definition get independent components"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-13-gltf-image-formats.test.ts",
+      "tests": [
+        "EXT_texture_webp / EXT_texture_avif handlers capability status reflects the probe verdict",
+        "EXT_texture_webp / EXT_texture_avif handlers declared mimeType must match the extension format",
+        "EXT_texture_webp / EXT_texture_avif handlers payload/magic mismatch is rejected as invalid extension data",
+        "EXT_texture_webp / EXT_texture_avif handlers required extension without decoding capability fails with GLTF_DEVICE_UNSUPPORTED",
+        "EXT_texture_webp / EXT_texture_avif handlers supported browser returns extension source bytes",
+        "EXT_texture_webp / EXT_texture_avif handlers textures without the extension yield no source",
+        "EXT_texture_webp / EXT_texture_avif handlers unsupported browser falls back to core with a warning",
+        "EXT_texture_webp / EXT_texture_avif handlers validate rejects dangling image references",
+        "image format detection magic numbers map to the supported mimes",
+        "webp texture through the loader parse with a webp image source reaches texture decoding with core fallback ordering"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-14-gltf-ktx2.test.ts",
+      "tests": [
+        "KHR_texture_basisu transcoder absurd dimensions fail the allocation ceiling before any transcode",
+        "KHR_texture_basisu transcoder adapter applies the sRGB variant from the DFD transfer flag",
+        "KHR_texture_basisu transcoder adapter surfaces missing module surface as GLTF_DECODER_MISSING",
+        "KHR_texture_basisu transcoder adapter throws when a payload is not KTX2",
+        "KHR_texture_basisu transcoder adapter walks ranked targets and takes the first that yields data",
+        "KHR_texture_basisu transcoder device formats returns a supported subset or undefined",
+        "KHR_texture_basisu transcoder isKTX2 detects the container magic",
+        "KHR_texture_basisu transcoder isKTX2Available validates the module surface",
+        "KHR_texture_basisu transcoder loader end-to-end uploads a KTX2 texture via an injected provider",
+        "KHR_texture_basisu transcoder optional extension falls back to core with no transcoder configured",
+        "KHR_texture_basisu transcoder required extension without a core source fails with GLTF_DECODER_MISSING"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-15-gltf-physical.test.ts",
+      "tests": [
+        "glTF T5.1 physical materials effect derivation registers once and its sources declare the physical inputs",
+        "glTF T5.1 physical materials extendMaterial normalizes scalars and defaults stay absent",
+        "glTF T5.1 physical materials handler validation accepts valid and rejects invalid extension bodies",
+        "glTF T5.1 physical materials identity materials keep the base glTF effect, physical scalars select the variant",
+        "glTF T5.1 physical materials loader applies physical extensions end to end and stable-codes invalid bodies",
+        "glTF T5.1 physical materials physicalParams converts IOR to the F0 ratio and guards ranges",
+        "glTF T5.1 physical materials specular textures bind the physical samplers; unlit ignores BRDF modifiers"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-16-gltf-clearcoat.test.ts",
+      "tests": [
+        "glTF T5.2 clearcoat clearcoat selects the physical effect and binds the layer uniforms",
+        "glTF T5.2 clearcoat derived effect carries the clearcoat lobe sources",
+        "glTF T5.2 clearcoat extendMaterial normalizes spec defaults (factor 1, roughness 0, scale 1)",
+        "glTF T5.2 clearcoat factor 0 with no textures keeps the base effect (no layer)",
+        "glTF T5.2 clearcoat loader end to end applies clearcoat and stable-codes invalid bodies",
+        "glTF T5.2 clearcoat validation accepts defaults and rejects out-of-range scalars"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-17-gltf-anisotropy.test.ts",
+      "tests": [
+        "glTF T5.2 anisotropy defaults: strength 0 without texture, 1 with texture; rotation 0",
+        "glTF T5.2 anisotropy derived effect carries the anisotropic GGX sources",
+        "glTF T5.2 anisotropy loader end to end applies anisotropy and stable-codes invalid bodies",
+        "glTF T5.2 anisotropy strength selects physical effect; rotation encodes as cos/sin",
+        "glTF T5.2 anisotropy validation accepts spec ranges and rejects invalid bodies"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-18-gltf-iridescence.test.ts",
+      "tests": [
+        "glTF T5.2 iridescence derived effect carries the thin-film Airy helper",
+        "glTF T5.2 iridescence factor selects the physical effect and packs the uniform",
+        "glTF T5.2 iridescence loader end to end applies iridescence and stable-codes invalid bodies",
+        "glTF T5.2 iridescence spec defaults populate",
+        "glTF T5.2 iridescence validation enforces factor/ior ranges and ordered thickness"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-19-gltf-bump.test.ts",
+      "tests": [
+        "glTF T5.2 EXT_materials_bump bump texture selects the physical effect with derivative math bound",
+        "glTF T5.2 EXT_materials_bump derived effect carries the derivative perturbation",
+        "glTF T5.2 EXT_materials_bump extendMaterial defaults and normal-texture exclusion with warning",
+        "glTF T5.2 EXT_materials_bump loader end to end applies bump",
+        "glTF T5.2 EXT_materials_bump validation enforces texture index and factor"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-20-gltf-transmission.test.ts",
+      "tests": [
+        "glTF T6 transmission/volume/dispersion defaults normalize per spec",
+        "glTF T6 transmission/volume/dispersion report device-dependent while the pipeline is unarmed, supported when armed",
+        "glTF T6 transmission/volume/dispersion required transmission fails cleanly when the pipeline is unavailable; optional warns",
+        "glTF T6 transmission/volume/dispersion validate enforces factor/distance/color ranges"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-21-gltf-review-regression.test.ts",
+      "tests": [
+        "V0.5 review regression KHR_materials_anisotropy folds the blue channel into strength",
+        "V0.5 review regression KHR_materials_dispersion reads the `dispersion` field",
+        "V0.5 review regression KHR_materials_specular uses the texture alpha channel and allows HDR color",
+        "V0.5 review regression meshopt handler advertises providesPlaceholders for no-URI fallback buffers",
+        "V0.5 review regression morph quantization table forbids unsigned and unnormalized-int morph attributes",
+        "V0.5 review regression quantized NORMAL/TANGENT require signed normalized types",
+        "V0.5 review regression quantized POSITION accepts unnormalized integer types",
+        "V0.5 review regression specular diffuse energy term carries no duplicate metallic factor",
+        "V0.5 review regression transmission detection is define-based, not UBO-handle-based",
+        "V0.5 review regression transmission/volume/dispersion flip from device-dependent to supported on arming",
+        "V0.5 review regression volume attenuation uses pow(color, d/dist), not the 1-color approximation"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-22-agent-session.test.ts",
+      "tests": [
+        "agent session — 操作合同（G4） capture 请求后场景替换 → CAPTURE_FAILED，不返回另一场景的截图",
+        "agent session — 操作合同（G4） captureFrame 在 AFTER_DRAW 触发时用 mock 画布数据解析（受控时机）",
+        "agent session — 操作合同（G4） captureFrame：空场景合法（结构完整）；不可读 canvas 返回 CAPTURE_FAILED",
+        "agent session — 操作合同（G4） close 取消进行中 capture：AFTER_DRAW 到来时拒绝 SESSION_CLOSED，不冒充成功",
+        "agent session — 操作合同（G4） close 清理自有节点（不撤销对已有节点的显式编辑）；之后请求 SESSION_CLOSED",
+        "agent session — 操作合同（G4） create → setTransform → inspect 闭环生效",
+        "agent session — 操作合同（G4） loadAsset 失败 → LOAD_FAILED 且保留 glTF 稳定错误码在 cause；失败记入错误缓冲",
+        "agent session — 操作合同（G4） requestId 执行中/保留窗口内重复 → INVALID_ARGUMENT；窗口过期后可复用",
+        "agent session — 操作合同（G4） setTransform 先验证后应用：合法 position + 非法 rotation → 节点完全不变",
+        "agent session — 操作合同（G4） world scale 走 setWorldScale：有缩放父节点时 local = world/parent",
+        "agent session — 操作合同（G4） 共享缓存资产：两个 session 加载同 URL，关闭其一不销毁资产",
+        "agent session — 操作合同（G4） 关闭中完成的异步加载：资产被释放、响应 SESSION_CLOSED",
+        "agent session — 操作合同（G4） 只读 session：写操作 OUT_OF_SCOPE，观察不受影响",
+        "agent session — 操作合同（G4） 白名单外组件 INVALID_ARGUMENT；未知 action UNSUPPORTED_ACTION；缺 targetId INVALID_ARGUMENT",
+        "agent session — 观察合同（G3） inspectNode 返回完整视图；父子链可追溯",
+        "agent session — 观察合同（G3） inspectScene 区分节点数/组件数/唯一资源数，并给出可发现节点树",
+        "agent session — 观察合同（G3） 销毁节点 → STALE_TARGET；场景替换后旧 ID → STALE_TARGET",
+        "agent session — 错误收集与 hook 生命周期（G4） attach 幂等 + 最后一个 session detach 恢复自有 hook（无 prelude hub 时）",
+        "agent session — 错误收集与 hook 生命周期（G4） close 释放全部强引用映射（componentIds/assetIds/assetsById）",
+        "agent session — 错误收集与 hook 生命周期（G4） unhandledrejection 收集；JSON 可序列化错误条目",
+        "agent session — 错误收集与 hook 生命周期（G4） window error 进入环形缓冲；超出上限丢弃并计入 dropped；since/limit 生效",
+        "agent session — 错误收集与 hook 生命周期（G4） 共享 prelude hub：只订阅不二次包裹，detach 仅取消订阅",
+        "agent session — 错误收集与 hook 生命周期（G4） 反复 attach/detach 不泄漏监听器（一条错误只产生一条记录）"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-23-debug-isolation.test.ts",
+      "tests": [
+        "debug/agent 模块与默认 runtime 隔离 examples 不静态引用 /__debug/（仅动态 import，路径可为表达式以避免 bundler 解析）",
+        "debug/agent 模块与默认 runtime 隔离 npm 包 files 白名单不含 tools/debug（tarball 内容与 consumer 审计一致）",
+        "debug/agent 模块与默认 runtime 隔离 默认 bundle 不包含 agent session / debug panel 标识（真实输出检查）"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-24-benchmark-harness.test.ts",
+      "tests": [
+        "V0.6 §17 — Harness 动作执行与策略拒绝 ManualAgentDriver：脚本动作按合同流转并产出 transcript",
+        "V0.6 §17 — Harness 动作执行与策略拒绝 patch-file：上下文匹配应用成功；上下文漂移即失败",
+        "V0.6 §17 — Harness 动作执行与策略拒绝 write-file 落盘；越权写被拒并计入 denials；runtime 通道未挂接 → 拒绝",
+        "V0.6 §22/§24/§32 — Trial 隔离 IsolationLedger 检测 protected/ 目录改动",
+        "V0.6 §22/§24/§32 — Trial 隔离 从 fixture 创建隔离 workspace；受保护文件篡改 → violations",
+        "V0.6 §23/§30 — 策略拒绝与稳定错误码 §25-26：白名单外命令 / 默认禁止片段 / 参数逃逸 → COMMAND_NOT_ALLOWED",
+        "V0.6 §23/§30 — 策略拒绝与稳定错误码 §29：默认 offline；localhost 恒允许；未知主机 → NETWORK_NOT_ALLOWED",
+        "V0.6 §23/§30 — 策略拒绝与稳定错误码 受保护资源读 → PROTECTED_RESOURCE；不可见",
+        "V0.6 §23/§30 — 策略拒绝与稳定错误码 可写范围外 → WRITE_NOT_ALLOWED；受保护根写 → PROTECTED_RESOURCE",
+        "V0.6 §23/§30 — 策略拒绝与稳定错误码 可读范围外 → READ_NOT_ALLOWED；可读文件正常返回路径",
+        "V0.6 §23/§30 — 策略拒绝与稳定错误码 路径逃逸（../ 与盘符绝对路径）→ PATH_OUT_OF_SCOPE",
+        "V0.6 §25-28 — 命令沙箱 受控 node 命令执行并记录 PID/命令/退出码；超时进程被终止",
+        "V0.6 §33-35 — eligible_trials 唯一语义 INFRA_FAILURE / INVALID_RUN / approved non-blocking SKIP 不进分母；其余 VALID 全进",
+        "V0.6 §33-35 — eligible_trials 唯一语义 PASS 修复次数中位/均值与 budget exhaustion 率"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-25-benchmark-tracks.test.ts",
+      "tests": [
+        "V0.6 §48/§49 — Catalog Schema 合法 catalog 通过；Type B 缺 reference / 重复 id / deprecated 无替代 → 报错",
+        "V0.6 §54 — 首批 Validator 12 个 Validator 全部注册且可组合执行",
+        "V0.6 §54 — 首批 Validator 失败路径确定性：缺节点/错变换/旧帧/坏资产/运行时错误",
+        "V0.6 §54 — 首批 Validator 能力合同：unsupported/fallback 状态映射",
+        "V0.6 §6-15 — 双 Track 状态机 Agent Track：一次提交即通过 → PASS 且 firstCompile=true（§36）",
+        "V0.6 §6-15 — 双 Track 状态机 Agent 语法错误 → FAIL(AGENT) + compile feedback；修复后 PASS 计 1 次 repair（§37）",
+        "V0.6 §6-15 — 双 Track 状态机 Reference FAIL → failureDomain=ENGINE；Fixture 缺失 → INFRA_FAILURE",
+        "V0.6 §6-15 — 双 Track 状态机 Reference Track：validators 全过 → engine PASS；agent 不参与",
+        "V0.6 §6-15 — 双 Track 状态机 真实隔离突破（台账捕获）→ violations 非空（§32 审计）",
+        "V0.6 §6-15 — 双 Track 状态机 策略拒绝：写受保护路径被 Harness 阻止 → VALID + POLICY 事件，内容不变（§30/§31）"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-26-g1-attribution.test.ts",
+      "tests": [
+        "§44：Golden 10 catalog 通过 schema 校验且 fixtures/references 在场",
+        "场景1：Reference Validator FAIL → ENGINE（不误归 INFRA）",
+        "场景2：Browser Startup FAIL → INFRASTRUCTURE + NOT_EVALUATED",
+        "场景3：Agent Compile FAIL → AGENT（FEEDBACK 包含编译诊断）",
+        "场景4：Repair Budget Exhausted → AGENT/BUDGET_EXHAUSTED 且计入分母",
+        "场景5：Policy Denied → VALID + POLICY 事件（非 INVALID_RUN，仍计分母）",
+        "场景6：真实 Protected Resource Escape → ISOLATION/INVALID_RUN（台账）",
+        "场景7：Background Process Leakage → Sandbox 记录并可清理进程树",
+        "场景8：Expected Unsupported Device → EXPECTED_UNSUPPORTED（DEVICE 能力合同）"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-27-recipes-distribution.test.ts",
+      "tests": [
+        "V0.6 §58-§61 — Recipe 门禁 evidence schema rejects missing fields, stale hashes, duplicate runs and missing artifacts",
+        "V0.6 §58-§61 — Recipe 门禁 promotion requires one matching executed composite, not unrelated validator unions",
+        "V0.6 §58-§61 — Recipe 门禁 §64 Coverage Manifest：引用全部可解析，无悬空（有 evidence 时）",
+        "V0.6 §58-§61 — Recipe 门禁 §65 首批命名与分组（Character/Product/Camera/Interaction/Material/Experience 各 5）",
+        "V0.6 §58-§61 — Recipe 门禁 源码目录保持 draft，目标分布为 30 validated / 20 stable",
+        "V0.6 §67-71 — 分发边界 build/devtools 工件脚本存在（由 v06-fresh-consumer 产出）",
+        "V0.6 §67-71 — 分发边界 npm files 白名单不含 tools/debug、devtools、benchmark、fixtures"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-28-benchmark-regression.test.ts",
+      "tests": [
+        "real benchmark toolchain rejects invalid types, survives cleanup hangs and parses recipes"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-29-examples-spec.test.ts",
+      "tests": [
+        "V1.1 — Example Specification 门禁 §11/§12 证据链符合性零 fail（spec-compliance-audit）",
+        "V1.1 — Example Specification 门禁 §12 apiEvidence 行号无漂移（spec-evidence --check）",
+        "V1.1 — Example Specification 门禁 §15 全部 example.json 达到 frozen 且规格零问题",
+        "V1.1 — Example Specification 门禁 §23 files.json 只保留 Gallery 字段，规格实现细节不外溢",
+        "V1.1 — Example Specification 门禁 §3/§10 规格 validator id 必须真实存在（篡改可检测）"
+      ]
+    }
+  ],
+  "totals": {
+    "suites": 29,
+    "tests": 207,
+    "passed": 207,
+    "failed": 0
+  }
+}

@@ -80,7 +80,7 @@
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L27"
       },
       {
         "api": "DirectionalLight",
@@ -110,13 +110,13 @@
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L30"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L12"
+        "sourceLocation": "L13"
       },
       {
         "api": "Material.initialize",
@@ -140,7 +140,7 @@
         "api": "primitives.cylinder",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L38"
+        "sourceLocation": "L35"
       },
       {
         "api": "Node.addChild",
@@ -158,7 +158,7 @@
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L21"
+        "sourceLocation": "L26"
       }
     ]
   },
@@ -186,7 +186,9 @@
   "validation": {
     "functional": [
       "node-exists",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
@@ -203,5 +205,5 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "19e33f77386d"
+  "promotionEvidence": "0b2bc9eb185d"
 }

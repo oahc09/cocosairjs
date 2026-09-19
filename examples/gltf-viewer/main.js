@@ -1,4 +1,5 @@
 import { createAirApp, Scene, Vec3, Node, Animation, AnimationClip, GLTFLoader, MeshRenderer, AirTransmissionCapture } from 'cocosair';
+import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 const parameters = new URLSearchParams(location.search);
@@ -161,3 +162,19 @@ if (parameters.has('url')) {
     modelSelect.value = name;
     await load(name, parameters.get('url'));
 } else { await load(modelSelect.value); }
+
+// §25 Lifecycle Contract：查看器同一入口路径重取当前模型——释放在显示例资产后必须能再次装载并渲染。
+installAssetLifecycle({
+    label: 'gltf-viewer',
+    hold: () => (current ? [{ name: 'GLTFAsset(current)', ref: current.asset }, { name: 'instance.root', ref: current.instance.root }] : []),
+    release: () => {
+        const { asset, instance } = current;
+        instance.dispose();
+        asset.destroy();
+        current = undefined;
+    },
+    reacquire: async () => {
+        await load(modelSelect.value);
+        return [{ name: 'GLTFAsset(current)', ref: current.asset }, { name: 'instance.root', ref: current.instance.root }];
+    },
+});

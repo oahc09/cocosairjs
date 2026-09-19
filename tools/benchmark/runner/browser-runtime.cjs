@@ -32,6 +32,7 @@ const BENCH_PRELUDE = `(async function(){
     inspectAsset: () => session.inspectAsset(),
     getRuntimeErrors: (q) => session.getRuntimeErrors(q),
     dispatch: (req) => session.dispatch(req),
+    close: () => session.close(),
     canvasSize: () => ({ width: canvas.width, height: canvas.height }),
     capture: () => new Promise((resolve, reject) => {
       const timer = setTimeout(() => { cc.director.off(cc.Director.EVENT_AFTER_DRAW, onDraw); reject(new Error('no rendered frame')); }, 8000);

@@ -19,16 +19,19 @@
     "functional": [
       "node-exists",
       "asset-loaded",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property"
     ],
     "interaction": [],
     "visual": [
       "visible-frame"
     ],
-    "lifecycle": [],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
-  "promotionEvidence": "7657bb15b256",
+  "promotionEvidence": "2f2a1619aefe",
   "specStatus": "frozen",
   "learning": {
     "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
@@ -60,7 +63,9 @@
       "AirTransmissionCapture",
       "math.Vec3",
       "Node.addChild",
-      "Node.setPosition"
+      "Node.setPosition",
+      "GLTFAsset.destroy",
+      "isValid"
     ],
     "forbiddenShortcut": [
       "渲染外网远端模型（本地资产为准）",
@@ -71,61 +76,73 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L11"
+        "sourceLocation": "L12"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L13"
+        "sourceLocation": "L14"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L19"
       },
       {
         "api": "Animation",
         "source": "main.js",
-        "validator": "animation-playing",
-        "sourceLocation": "L63"
+        "validator": "asset-loaded",
+        "sourceLocation": "L64"
       },
       {
         "api": "AnimationClip",
         "source": "main.js",
-        "validator": "animation-playing",
-        "sourceLocation": "L105"
+        "validator": "asset-loaded",
+        "sourceLocation": "L106"
       },
       {
         "api": "GLTFLoader",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L23"
+        "sourceLocation": "L24"
       },
       {
         "api": "AirTransmissionCapture",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L20"
+        "sourceLocation": "L21"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L19"
+        "sourceLocation": "L20"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L56"
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "GLTFAsset.destroy",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L173"
+      },
+      {
+        "api": "isValid",
+        "source": "shared/asset-lifecycle.js",
+        "validator": "resource-released",
+        "sourceLocation": "L26"
       }
     ]
   },

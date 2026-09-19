@@ -7,6 +7,7 @@
  */
 
 import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, frameObject, primitives, GLTFLoader } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -83,21 +84,42 @@ var gltf = {
   scene: 0,
 };
 
-var asset = await new GLTFLoader().parseAsync(JSON.stringify(gltf));
-var instance = asset.instantiate();
-scene.addChild(instance.root);
-// 显式相机位姿：对准双半块接缝（x=0），两个材质区域同框
-cameraNode.setPosition(new Vec3(0, 0.9, 3.4));
-cameraNode.setRotationFromEuler(-10, 0, 0);
-
-var renderer = instance.root.getComponentInChildren(MeshRenderer);
-var slots = renderer ? renderer.sharedMaterials.length : 0;
-console.log('[mesh-multi-material] material slots on ONE MeshRenderer:', slots);
-
 var panel2 = document.createElement('div');
 panel2.style.cssText = 'position:fixed;left:10px;top:8px;color:#9cd;font:13px monospace';
 document.body.appendChild(panel2);
-panel2.textContent = 'one Mesh, 2 primitives, material slots: ' + slots;
-(window as any).__multiState = { materialSlots: slots };
+
+var asset: any;
+var instance: any;
+
+function owned (): any[] {
+  return [{ name: 'GLTFAsset(multi-material)', ref: asset }, { name: 'instance.root', ref: instance.root }];
+}
+
+/** 单个 Mesh 两个 primitives → 一个 MeshRenderer 两个材质槽；首帧与 §25 合同共用。 */
+async function acquire (): Promise<any[]> {
+  asset = await new GLTFLoader().parseAsync(JSON.stringify(gltf));
+  instance = asset.instantiate();
+  scene.addChild(instance.root);
+  // 显式相机位姿：对准双半块接缝（x=0），两个材质区域同框
+  cameraNode.setPosition(new Vec3(0, 0.9, 3.4));
+  cameraNode.setRotationFromEuler(-10, 0, 0);
+
+  var renderer = instance.root.getComponentInChildren(MeshRenderer);
+  var slots = renderer ? renderer.sharedMaterials.length : 0;
+  console.log('[mesh-multi-material] material slots on ONE MeshRenderer:', slots);
+  panel2.textContent = 'one Mesh, 2 primitives, material slots: ' + slots;
+  (window as any).__multiState = { materialSlots: slots };
+  return owned();
+}
+
+await acquire();
+
+// §25 Lifecycle Contract：双材质槽资产整体释放后重新解析，材质槽数须复现。
+installAssetLifecycle({
+  label: 'mesh-multi-material',
+  hold: owned,
+  release: () => { instance.dispose(); asset.destroy(); },
+  reacquire: acquire,
+});
 
 app.run(scene);

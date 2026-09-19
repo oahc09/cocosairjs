@@ -7,6 +7,7 @@
  */
 
 import { createAirApp, Scene, Node, Camera, DirectionalLight, Layers, Vec3, Color, isValid, GLTFLoader } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -34,6 +35,8 @@ function note(line: string) { log.push(line); render(); }
 var gltfBytes: ArrayBuffer;
 var cycles = 0;
 var release = { disposed: false, assetsAfter: 0, nodesAfter: 0, reloaded: false };
+/** 当前在场景里显示的那一对资产/实例：§25 合同由验证器再拆建一次。 */
+var displayed: { asset: any; instance: any } | null = null;
 
 async function loadOnce(): Promise<any> {
   var asset = await new GLTFLoader().parseAsync(gltfBytes.slice(0), './assets/');
@@ -42,10 +45,17 @@ async function loadOnce(): Promise<any> {
   return { asset: asset, instance: instance };
 }
 
+function held(): any[] {
+  return displayed
+    ? [{ name: 'GLTFAsset(BoxTextured)', ref: displayed.asset }, { name: 'instance.root', ref: displayed.instance.root }]
+    : [];
+}
+
 async function cycle(): Promise<void> {
   cycles++;
   note('cycle ' + cycles + ': load…');
   var owned = await loadOnce();
+  displayed = owned;
   note('  instance attached, valid=' + isValid(owned.instance.root));
   await new Promise(function (r) { setTimeout(r, 600); });
 
@@ -63,12 +73,32 @@ async function cycle(): Promise<void> {
 
   note('  reload…');
   var reloaded = await loadOnce();
+  displayed = reloaded;
   release.reloaded = isValid(reloaded.instance.root);
   note('  reloaded, valid=' + release.reloaded);
   render();
   (window as any).__releaseState = Object.assign({ cycles: cycles }, release);
-  (window as any).__lifecycle = function () { return { released: release.disposed && release.reloaded, disposed: release.disposed, reloaded: release.reloaded, cycles: cycles }; };
 }
+
+// §25 Lifecycle Contract：验证器调用 window.__lifecycle() 时按统一合同再拆建一次，
+// 泄漏核对与重载有效性由 shared/asset-lifecycle 计算。
+installAssetLifecycle({
+  label: 'runtime-asset-release',
+  hold: held,
+  release: () => {
+    var owned = displayed;
+    displayed = null;
+    owned.instance.dispose();
+    owned.asset.destroy();
+  },
+  reacquire: async () => {
+    var reloaded = await loadOnce();
+    displayed = reloaded;
+    cycles++;
+    note('verifier cycle: released → reloaded, valid=' + isValid(reloaded.instance.root));
+    return held();
+  },
+});
 
 (async function main() {
   gltfBytes = await (await fetch('./assets/BoxTextured.glb')).arrayBuffer();

@@ -79,13 +79,13 @@
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L19"
+        "sourceLocation": "L21"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L4"
+        "sourceLocation": "L30"
       },
       {
         "api": "Layers",
@@ -103,13 +103,13 @@
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L24"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L13"
       },
       {
         "api": "Material.initialize",
@@ -152,6 +152,18 @@
         "source": "src/main.ts",
         "validator": "transform-equals",
         "sourceLocation": "L20"
+      },
+      {
+        "api": "input",
+        "validator": "frame-diff",
+        "source": "src/main.ts",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "Input",
+        "validator": "node-exists",
+        "source": "src/main.ts",
+        "sourceLocation": "L57"
       }
     ]
   },
@@ -189,7 +201,9 @@
   "validation": {
     "functional": [
       "node-exists",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
     ],
     "interaction": [
       "frame-diff"
@@ -208,5 +222,5 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "688b33f386d3"
+  "promotionEvidence": "6ba4a7ad696e"
 }

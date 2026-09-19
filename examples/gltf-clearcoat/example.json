@@ -38,7 +38,9 @@
       "GLTFLoader",
       "GLTFLoader.parseAsync",
       "GLTFAsset.instantiate",
-      "Node.addChild"
+      "Node.addChild",
+      "GLTFAsset.destroy",
+      "isValid"
     ],
     "forbiddenShortcut": [
       "用贴图/环境球伪造清漆高光",
@@ -49,79 +51,91 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L11"
+        "sourceLocation": "L12"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L13"
+        "sourceLocation": "L14"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L4"
+        "sourceLocation": "L18"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L26"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L21"
+        "sourceLocation": "L22"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L17"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L20"
+        "sourceLocation": "L21"
       },
       {
         "api": "frameObject",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L95"
+        "sourceLocation": "L101"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L92"
+        "sourceLocation": "L98"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L92"
+        "sourceLocation": "L98"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
-        "validator": "resource-released",
-        "sourceLocation": "L93"
+        "validator": "asset-loaded",
+        "sourceLocation": "L99"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "GLTFAsset.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "isValid",
+        "source": "shared/asset-lifecycle.js",
+        "validator": "resource-released",
+        "sourceLocation": "L26"
       }
     ]
   },
@@ -152,15 +166,26 @@
       "asset-loaded",
       "material-property",
       "capability-status",
-      "no-runtime-error"
+      "no-runtime-error",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
       "visible-frame"
     ],
-    "lifecycle": [],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": [
       "capability-status"
+    ],
+    "capabilityExpectations": [
+      {
+        "extension": "KHR_materials_clearcoat",
+        "statuses": [
+          "supported"
+        ]
+      }
     ]
   },
   "coverage": {
@@ -171,5 +196,5 @@
   "license": {
     "assets": "无第三方资产"
   },
-  "promotionEvidence": "51cf31986156"
+  "promotionEvidence": "da49f4ca74ff"
 }

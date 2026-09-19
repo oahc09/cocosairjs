@@ -6,6 +6,7 @@
  */
 
 import { createAirApp, Scene, Node, Camera, DirectionalLight, Animation, AnimationClip, Layers, Vec3, Color, frameObject, GLTFLoader } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -26,15 +27,32 @@ app.run(scene);
 
 // 加载 morph target 模型（Khronos AnimatedMorphCube，本地资产）
 var bytes = await (await fetch('./assets/AnimatedMorphCube.glb')).arrayBuffer();
-var asset = await new GLTFLoader().parseAsync(bytes, './assets/');
-var instance = asset.instantiate();
-scene.addChild(instance.root);
-frameObject(camera, instance.root);
+var asset: any;
+var instance: any;
 
-// 循环播放第一个动画剪辑
-var animation = instance.root.getComponent(Animation);
-animation.clips.forEach(function (clip) { clip.wrapMode = AnimationClip.WrapMode.Loop; });
-animation.play(animation.clips[0].name);
-console.log('[gltf-morph] clips:', animation.clips.map(function (c) { return c.name; }));
+/** 解析 → 挂场景 → 循环播放变形动画：首帧与 §25 合同 reacquire 共用路径。 */
+async function acquire (): Promise<any[]> {
+  asset = await new GLTFLoader().parseAsync(bytes.slice(0), './assets/');
+  instance = asset.instantiate();
+  scene.addChild(instance.root);
+  frameObject(camera, instance.root);
+
+  // 循环播放第一个动画剪辑
+  var animation = instance.root.getComponent(Animation);
+  animation.clips.forEach(function (clip) { clip.wrapMode = AnimationClip.WrapMode.Loop; });
+  animation.play(animation.clips[0].name);
+  console.log('[gltf-morph] clips:', animation.clips.map(function (c) { return c.name; }));
+  return [{ name: 'GLTFAsset(AnimatedMorphCube)', ref: asset }, { name: 'instance.root', ref: instance.root }];
+}
+
+await acquire();
+
+// §25 Lifecycle Contract：morph 资产与实例全部释放后重新解析，动画随之重新播放。
+installAssetLifecycle({
+  label: 'gltf-morph',
+  hold: () => [{ name: 'GLTFAsset(AnimatedMorphCube)', ref: asset }, { name: 'instance.root', ref: instance.root }],
+  release: () => { instance.dispose(); asset.destroy(); },
+  reacquire: acquire,
+});
 
 console.log('[gltf-morph] running');

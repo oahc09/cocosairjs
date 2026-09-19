@@ -72,7 +72,7 @@
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L17"
+        "sourceLocation": "L19"
       },
       {
         "api": "DirectionalLight",
@@ -108,13 +108,13 @@
         "api": "GLTFLoader.getExtensionSupport",
         "source": "src/main.ts",
         "validator": "capability-status",
-        "sourceLocation": "L6"
+        "sourceLocation": "L35"
       },
       {
         "api": "GLTFLoader.setDRACODecoder",
         "source": "src/main.ts",
         "validator": "capability-status",
-        "sourceLocation": "L8"
+        "sourceLocation": "L56"
       },
       {
         "api": "GLTFLoader.parseAsync",
@@ -126,7 +126,7 @@
         "api": "createDracoDecoder",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L8"
+        "sourceLocation": "L57"
       },
       {
         "api": "Node.addChild",
@@ -174,13 +174,23 @@
     "functional": [
       "node-exists",
       "capability-status",
-      "no-runtime-error"
+      "no-runtime-error",
+      "asset-loaded",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [],
     "lifecycle": [],
     "capability": [
       "capability-status"
+    ],
+    "capabilityExpectations": [
+      {
+        "extension": "KHR_draco_mesh_compression",
+        "statuses": [
+          "decoder-required"
+        ]
+      }
     ]
   },
   "coverage": {
@@ -191,5 +201,5 @@
   "license": {
     "assets": "assets/draco.glb — 仓库自生成 fixture（tools/fixtures/gen-geometry-fixtures.cjs，draco3d 官方编码器），draco 许可见 licenses/"
   },
-  "promotionEvidence": "49c9746a8bf3"
+  "promotionEvidence": "005f7e3cf63d"
 }

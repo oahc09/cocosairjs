@@ -5,6 +5,7 @@
  */
 
 import { createAirApp, Scene, Node, Camera, DirectionalLight, Layers, Vec3, Color, frameObject, GLTFLoader } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -22,10 +23,29 @@ lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -3
 var light = lightNode.addComponent(DirectionalLight); light.illuminance = 2;
 
 // 正向加载：GLTFLoader.loadAsync(url) → GLTFAsset → instantiate → 挂场景
-var asset = await new GLTFLoader().loadAsync('./assets/BoxTextured.glb');
-var instance = asset.instantiate();
-scene.addChild(instance.root);
-frameObject(camera, instance.root);
+var loader = new GLTFLoader();
+var asset: any;
+var instance: any;
+
+/** 获取资源并挂回场景：首帧与 §25 生命周期合同的 reacquire 共用同一路径。 */
+async function acquire (): Promise<any[]> {
+  asset = await loader.loadAsync('./assets/BoxTextured.glb');
+  instance = asset.instantiate();
+  scene.addChild(instance.root);
+  frameObject(camera, instance.root);
+  return [{ name: 'GLTFAsset(BoxTextured.glb)', ref: asset }, { name: 'instance.root', ref: instance.root }];
+}
+
+await acquire();
 console.log('[gltf-basic] loaded, warnings:', asset.warnings.length);
+
+// §25 Lifecycle Contract：验证器调用 window.__lifecycle() 时真实 dispose/destroy 后重新加载，
+// 泄漏数、重载有效性与重载后画面由 v11-examples-verify 的 resource-released 判定。
+installAssetLifecycle({
+  label: 'gltf-basic',
+  hold: () => [{ name: 'GLTFAsset(BoxTextured.glb)', ref: asset }, { name: 'instance.root', ref: instance.root }],
+  release: () => { instance.dispose(); asset.destroy(); },
+  reacquire: acquire,
+});
 
 app.run(scene);

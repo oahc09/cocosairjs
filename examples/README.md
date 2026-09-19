@@ -37,7 +37,7 @@ npm run gallery:manifest     # tools/examples/generate-manifest.cjs → examples
 npm run gallery:api          # API 覆盖清单（example.json 的 apiClaims 来源核对）
 ```
 
-> 2026-09-18：`gallery.html` 的 `showSource()` 末尾有一个多余 `});`，内联脚本报 SyntaxError 导致整段不执行（左侧示例列表渲染为 0 条）。已删除该行，实测 Gallery 加载 40 examples / 10 categories，deep-link 选中、iframe 预览与源码查看均正常。
+> 2026-09-18：`gallery.html` 的 `showSource()` 末尾有一个多余 `});`，内联脚本报 SyntaxError 导致整段不执行（左侧示例列表渲染为 0 条）。已删除该行，deep-link 选中、iframe 预览与源码查看均正常（当时 40 examples / 10 categories；2026-09-19 清单扩至 45 examples / 14 categories，Gallery artifact 回归 45 链接 + 45 缩略图）。
 
 ## 3. 示例目录约定
 
@@ -45,11 +45,19 @@ npm run gallery:api          # API 覆盖清单（example.json 的 apiClaims 来
 examples/<id>/
 ├── index.html        # 必须含 <canvas id="GameCanvas">（见下方注意事项）
 ├── main.ts | main.js # 入口；部分新示例放在 src/main.ts
-└── example.json      # 元数据：id/title/category/apiClaims/capabilities/validation
+└── example.json      # Example Specification（§24 全量）：learning/effect/api/scene/interaction/ready/validation/coverage/screenshot/license + Gallery 元数据
 ```
 
 - **`.ts` 入口只有 dev server 能跑**：它用 esbuild 即时编译（target es2022，支持 top-level await）。换静态服务器需先自行编译。
 - **importmap**：`index.html` 若未自带 `<script type="importmap">`，dev server 会注入 `cocosair` → `/build/cocosair.module.js`。
+- **共享库 `examples/shared/` 按真实层级导入**：根级入口写 `../shared/x.js`，`src/` 下的入口写 `../../shared/x.js`。
+  浏览器验证器会把示例目录展平到暂存工作区根，因此写错层级的路径在它那里"恰好能跑"，而在 dev server 与
+  Gallery 部署物里是 404 —— `spec-compliance-audit` 的 `S-IMPORT-RESOLVE` 就是拦这个的。
+- **资源型示例的 Lifecycle Contract（§25）**：`examples/shared/asset-lifecycle.js` 的
+  `installAssetLifecycle({ label, hold, release, reacquire })` 会在页内安装 `window.__lifecycle()`，
+  验证器取完截图后调用它，真实执行 释放 → 帧末延迟销毁等待 → `isValid` 泄漏核对 → 重新获取挂回，
+  并要求重载后画面非空、无新增运行期错误、资产报告无 `DESTROYED_RESOURCE` 残留。
+  手工验证：`await window.__lifecycle()` → `{ held, leaked: [], released: true, reloaded: true }`。
 
 ## 4. 开发回路（三频道 + 错误可见性）
 
@@ -97,21 +105,20 @@ NODE_PATH=<含 playwright 的 node_modules 路径> node tools/verify/examples-sm
 
 ## 9. 当前示例实现状态（诚实清单）
 
-40 个示例中，**13 个有实际场景内容**，**27 个仍是占位壳**（仅 `createAirApp` + 空 `Scene`，为 V1.1 API 覆盖矩阵与 Gallery 骨架而建，`example.json` 里 `status: draft`）。全部条目 `status` 均为 `draft`，尚无 stable 晋级证据。
+45 个示例已全部补真实现并 `status = stable`（2026-09-19）。此前的 27 个占位壳（含
+`anim-*`、`camera-*`、`light-*`、`mesh-*`、`material-*`、`node-*`、`rc-*`、`texture-basic`、
+`gltf-draco/meshopt/morph/skin`）已补为真实场景内容。
 
-已实现（可直接看渲染效果）：
+状态不再在本文件手维护（易腐），改由机器证据给出：
 
-| 分类 | 示例 |
+| 事实 | 来源 |
 |---|---|
-| basics | `starter`、`hello-cube`、`transform` |
-| camera | `camera` |
-| interaction | `input` |
-| material | `material-basic` |
-| animation | `tween-basic`、`skinned-animation` |
-| mesh / texture | `static-model` |
-| gltf | `gltf-viewer`、`gltf-catalog` |
-| devtools | `automation` |
+| 规格冻结 / 校验问题 | `node tools/examples/spec-validate.cjs` → `docs/evidence/v11-spec-validate.json`（当前 45 frozen / 0 draft / 0 blocked） |
+| 浏览器验证 | `node tools/verify/v11-examples-verify.cjs` → `docs/evidence/v11-examples-verified.json`（当前 40/40 PASS） |
+| DevTools 会话验证 | `node tools/verify/v11-devtools-examples.cjs` → `docs/evidence/v11-devtools-examples.json`（当前 5/5 PASS：`automation` + `rc-*`×4） |
+| 缩略图 / 逐步 validator | `docs/evidence/examples/<id>.png`（45 张） |
+| API 覆盖（verified 口径） | `node tools/examples/coverage-report.cjs` → `docs/api-coverage-report.json`（core 49/717 · important 6/793 · advanced 8/3219，claimed=verified 零冒充，但三道门禁仍 FAIL，需按 Wave 扩量） |
+| 规范符合性（§1-§26 证据链） | `node tools/examples/spec-compliance-audit.cjs` → `docs/evidence/v11-spec-compliance.json`（当前 0 fail / 1 warn；唯一 warn 是 gltf-draco 缺 Lifecycle Contract 的机器可读豁免——解码器不在随包工件内，无已解码资产可释放，如实 BLOCKED 不伪造） |
 
-占位待补（27）：`anim-position`、`anim-rotation`、`camera-lookat`、`camera-multi`、`camera-ortho`、`gltf-draco`、`gltf-meshopt`、`gltf-morph`、`gltf-skin`、`light-point`、`light-sphere`、`light-spot`、`light-two-directional`、`material-color`、`material-transparent`、`material-unlit`、`mesh-cylinder`、`mesh-plane`、`mesh-sphere`、`mesh-torus`、`node-active`、`node-hierarchy`、`node-scale`、`rc-capture-frame`、`rc-create-node`、`rc-error-report`、`rc-inspect-scene`、`texture-basic`。
-
-新增示例后：写 `example.json` → `npm run gallery:manifest` → 起 dev server 访问 `/<id>/` 目视确认零 console 错误。
+新增示例后：写 `example.json`（§24 全量规格）→ `npm run gallery:manifest` → `node tools/examples/spec-validate.cjs`
+→ 起 dev server 访问 `/<id>/` 目视确认 → 跑上表对应验证器晋级 stable。

@@ -1,10 +1,11 @@
 /**
  * Smoke 29 — V1.1 Example Specification 门禁（§15 Spec Freeze / §3 API Bind / §23 Manifest 裁剪）。
  *
- * 1. spec-validate.cjs 全量通过：44 个 example.json 均为 frozen 且零问题；
- * 2. spec-evidence.cjs --check：apiEvidence 行号无漂移；
- * 3. files.json 裁剪合同（§23）：Gallery 字段在、实现细节（evidence 行号等）不在；
- * 4. 验证器清单变更会被规格验证器捕获（validator id 必须真实存在）。
+ * 1. spec-validate.cjs 全量通过：45 个 example.json 均为 frozen 且零问题；
+ * 2. spec-evidence.cjs --check：apiEvidence 行号无漂移、validator 绑定不脱钩；
+ * 3. spec-compliance-audit.cjs：§11 Stable 公式的当期证据链零 fail；
+ * 4. files.json 裁剪合同（§23）：Gallery 字段在、实现细节（evidence 行号等）不在；
+ * 5. 验证器清单变更会被规格验证器捕获（validator id 必须真实存在）。
  */
 import { nodeRequire } from '../shims';
 const path = nodeRequire('path') as typeof import('path');
@@ -34,6 +35,15 @@ describe('V1.1 — Example Specification 门禁', () => {
 
     test('§12 apiEvidence 行号无漂移（spec-evidence --check）', () => {
         const result = run('tools/examples/spec-evidence.cjs', ['--check']);
+        expect(result.status).toBe(0);
+    });
+
+    // 证据链门禁：stable 示例的 §11 六项（当期运行证据 + 指纹一致 + 截图 bytes>0 +
+    // promotionEvidence 一致 + license + claim↔evidence 1:1）必须由真实运行证据支撑。
+    // 改过任意 example.json 却不重跑验证器，这里会直接红。
+    test('§11/§12 证据链符合性零 fail（spec-compliance-audit）', () => {
+        const result = run('tools/examples/spec-compliance-audit.cjs');
+        expect(result.stdout).toContain('0 fail');
         expect(result.status).toBe(0);
     });
 

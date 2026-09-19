@@ -23,7 +23,8 @@
   "validation": {
     "functional": [
       "node-exists",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property"
     ],
     "interaction": [],
     "visual": [
@@ -33,7 +34,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "20b9fa1229ed",
+  "promotionEvidence": "a25768f61361",
   "specStatus": "frozen",
   "learning": {
     "goal": "第一个完整 3D 场景：相机 + 平行光 + 旋转立方体（E001 basic-cube）",
@@ -66,7 +67,6 @@
       "DirectionalLight",
       "MeshRenderer",
       "Component",
-      "Material",
       "builtinResMgr",
       "utils.createMesh",
       "primitives.box",
@@ -86,109 +86,103 @@
         "api": "Layers",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L9"
+        "sourceLocation": "L49"
       },
       {
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L33"
+        "sourceLocation": "L32"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L11"
+        "sourceLocation": "L34"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L37"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L5"
+        "sourceLocation": "L41"
       },
       {
         "api": "DirectionalLight",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L5"
+        "sourceLocation": "L57"
       },
       {
         "api": "MeshRenderer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L64"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L16"
-      },
-      {
-        "api": "Material",
-        "source": "main.js",
-        "validator": "material-property",
-        "sourceLocation": "L17"
+        "sourceLocation": "L24"
       },
       {
         "api": "builtinResMgr",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L18"
+        "sourceLocation": "L66"
       },
       {
         "api": "utils.createMesh",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L66"
+        "sourceLocation": "L65"
       },
       {
         "api": "primitives.box",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L66"
+        "sourceLocation": "L65"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L47"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L39"
+        "sourceLocation": "L38"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L40"
+        "sourceLocation": "L39"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L27"
+        "sourceLocation": "L40"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L42"
+        "sourceLocation": "L41"
       }
     ]
   },

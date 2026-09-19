@@ -21,16 +21,19 @@
       "node-exists",
       "asset-loaded",
       "material-property",
-      "no-runtime-error"
+      "no-runtime-error",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
       "visible-frame"
     ],
-    "lifecycle": [],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
-  "promotionEvidence": "ba8939b200a4",
+  "promotionEvidence": "9b716a5b72ab",
   "specStatus": "frozen",
   "learning": {
     "goal": "Runtime 资产链路：程序化 Mesh 入库 → loadAssetAsync 取回 → 贴图材质渲染（E007 gltf-basic 的资产形态）",
@@ -71,7 +74,12 @@
       "math.Vec3",
       "math.Color",
       "Node.addChild",
-      "Node.setPosition"
+      "Node.setPosition",
+      "Node.destroy",
+      "Mesh.destroy",
+      "Material.destroy",
+      "Texture2D.destroy",
+      "isValid"
     ],
     "forbiddenShortcut": [
       "从外网 URL 加载模型（示例必须离线可跑）",
@@ -82,109 +90,139 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L32"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L13"
+        "sourceLocation": "L35"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L108"
       },
       {
         "api": "Camera",
-        "source": "main.js",
+        "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L28"
       },
       {
         "api": "MeshRenderer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L8"
+        "sourceLocation": "L111"
       },
       {
         "api": "Material",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L7"
+        "sourceLocation": "L104"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L5"
+        "sourceLocation": "L89"
       },
       {
         "api": "ImageAsset",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L19"
+        "sourceLocation": "L82"
       },
       {
         "api": "Mesh",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L20"
+        "sourceLocation": "L101"
       },
       {
         "api": "utils.createMesh",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L61"
+        "sourceLocation": "L94"
       },
       {
         "api": "primitives.plane",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L93"
+        "sourceLocation": "L120"
       },
       {
         "api": "assetManager",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L6"
+        "sourceLocation": "L100"
       },
       {
         "api": "loadAssetAsync",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L6"
+        "sourceLocation": "L101"
       },
       {
         "api": "frameObject",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L8"
+        "sourceLocation": "L128"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L110"
       },
       {
         "api": "math.Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L124"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L82"
+        "sourceLocation": "L109"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L83"
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "Node.destroy",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L139"
+      },
+      {
+        "api": "Mesh.destroy",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L142"
+      },
+      {
+        "api": "Material.destroy",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L144"
+      },
+      {
+        "api": "Texture2D.destroy",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L146"
+      },
+      {
+        "api": "isValid",
+        "source": "shared/asset-lifecycle.js",
+        "validator": "resource-released",
+        "sourceLocation": "L26"
       }
     ]
   },

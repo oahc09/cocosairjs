@@ -47,7 +47,12 @@
       "primitives.box",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.setRotationFromEuler",
+      "Node.destroy",
+      "Mesh.destroy",
+      "Material.destroy",
+      "Texture2D.destroy",
+      "isValid"
     ],
     "forbiddenShortcut": [
       "从外网 URL 拉图（示例必须离线可跑）",
@@ -58,121 +63,151 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L9"
+        "sourceLocation": "L11"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L11"
+        "sourceLocation": "L13"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L35"
+        "sourceLocation": "L65"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L48"
+        "sourceLocation": "L67"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L76"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L44"
+        "sourceLocation": "L83"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L52"
+        "sourceLocation": "L36"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L41"
+        "sourceLocation": "L65"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L36"
+        "sourceLocation": "L66"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L40"
+        "sourceLocation": "L79"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L59"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L32"
+        "sourceLocation": "L60"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L33"
+        "sourceLocation": "L61"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L2"
+        "sourceLocation": "L56"
       },
       {
         "api": "ImageAsset",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L2"
+        "sourceLocation": "L55"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L49"
+        "sourceLocation": "L63"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L49"
+        "sourceLocation": "L63"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L35"
+        "sourceLocation": "L65"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L36"
+        "sourceLocation": "L66"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L36"
+        "sourceLocation": "L75"
+      },
+      {
+        "api": "Node.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "Mesh.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L93"
+      },
+      {
+        "api": "Material.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L94"
+      },
+      {
+        "api": "Texture2D.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L95"
+      },
+      {
+        "api": "isValid",
+        "source": "shared/asset-lifecycle.js",
+        "validator": "resource-released",
+        "sourceLocation": "L26"
       }
     ]
   },
@@ -201,13 +236,16 @@
     "functional": [
       "node-exists",
       "material-property",
-      "no-runtime-error"
+      "no-runtime-error",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
       "visible-frame"
     ],
-    "lifecycle": [],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -218,5 +256,5 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "deea61359713"
+  "promotionEvidence": "f6b3cd615748"
 }

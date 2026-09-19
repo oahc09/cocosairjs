@@ -42,6 +42,8 @@
   "analyze": "node tools/analyze/dep-graph.cjs",
   "typecheck": "tsc -p tsconfig.json",
   "verify:decoders": "node tools/verify/decoder-audit.cjs",
+  "verify:test-inventory": "node tools/verify/test-inventory.cjs",
+  "verify:api-coverage": "node tools/examples/coverage-report.cjs",
   "capabilities": "node tools/verify/update-capabilities.cjs",
   "verify:web-only": "node tools/verify/verify-web-only.cjs",
   "test": "jest",

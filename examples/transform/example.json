@@ -19,7 +19,8 @@
     "functional": [
       "node-exists",
       "transform-equals",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property"
     ],
     "interaction": [],
     "visual": [
@@ -29,7 +30,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "3bc9ad990363",
+  "promotionEvidence": "ec3cf9fd0dc0",
   "specStatus": "frozen",
   "learning": {
     "goal": "层级变换组合：root 旋转带动 child/grandchild，各层再叠加自身摆动",
@@ -82,43 +83,43 @@
         "api": "Scene",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L67"
       },
       {
         "api": "Node",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L5"
+        "sourceLocation": "L57"
       },
       {
         "api": "MeshRenderer",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L16"
+        "sourceLocation": "L60"
       },
       {
         "api": "Component",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L17"
+        "sourceLocation": "L26"
       },
       {
         "api": "Layers",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L58"
       },
       {
         "api": "math.Vec3",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L34"
       },
       {
         "api": "builtinResMgr",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L22"
+        "sourceLocation": "L62"
       },
       {
         "api": "utils.createMesh",
@@ -136,7 +137,7 @@
         "api": "Node.addChild",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L59"
+        "sourceLocation": "L77"
       },
       {
         "api": "Node.setPosition",

@@ -14,7 +14,6 @@ import {
     DirectionalLight,
     MeshRenderer,
     Component,
-    Material,
     builtinResMgr,
     utils,
     primitives,

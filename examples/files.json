@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-18T23:08:28.650Z",
-  "revision": "30e97e3",
+  "generatedAt": "2026-09-19T12:15:50.676Z",
+  "revision": "fbf5ae2",
   "examples": [
     {
       "dir": "anim-position",
@@ -76,7 +76,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -86,7 +87,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "ae4b573dcb68"
+      "promotionEvidence": "8766171f95de"
     },
     {
       "dir": "anim-rotation",
@@ -163,7 +164,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -173,7 +175,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "297e971102ce"
+      "promotionEvidence": "4c8fde3582af"
     },
     {
       "dir": "automation",
@@ -238,7 +240,8 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -247,7 +250,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "5079d45cff66"
+      "promotionEvidence": "7225d967159c"
     },
     {
       "dir": "camera",
@@ -318,7 +321,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -327,7 +332,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "e3b6b7627fd3"
+      "promotionEvidence": "51d515d53211"
     },
     {
       "dir": "camera-lookat",
@@ -411,7 +416,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [
           "frame-diff"
@@ -422,7 +428,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "31f5996ea1d5"
+      "promotionEvidence": "8f452ad54668"
     },
     {
       "dir": "camera-multi",
@@ -503,7 +509,9 @@
         "functional": [
           "node-exists",
           "node-count",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -512,7 +520,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "e281f8acab1b"
+      "promotionEvidence": "e4f412eb3678"
     },
     {
       "dir": "camera-ortho",
@@ -600,7 +608,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [
           "frame-diff"
@@ -611,7 +620,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "5e8de7c072d6"
+      "promotionEvidence": "ca2030886f0a"
     },
     {
       "dir": "gltf-basic",
@@ -658,7 +667,9 @@
           "GLTFAsset.instantiate",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "isValid",
+          "GLTFAsset.destroy"
         ]
       },
       "capabilities": [
@@ -684,16 +695,19 @@
         "functional": [
           "node-exists",
           "asset-loaded",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "a1036ddc3ba7"
+      "promotionEvidence": "85a1be447d72"
     },
     {
       "dir": "gltf-catalog",
@@ -796,7 +810,9 @@
           "GLTFLoader",
           "GLTFLoader.parseAsync",
           "GLTFAsset.instantiate",
-          "Node.addChild"
+          "Node.addChild",
+          "GLTFAsset.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -825,18 +841,29 @@
           "asset-loaded",
           "material-property",
           "capability-status",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": [
           "capability-status"
+        ],
+        "capabilityExpectations": [
+          {
+            "extension": "KHR_materials_clearcoat",
+            "statuses": [
+              "supported"
+            ]
+          }
         ]
       },
-      "promotionEvidence": "51cf31986156"
+      "promotionEvidence": "da49f4ca74ff"
     },
     {
       "dir": "gltf-draco",
@@ -910,16 +937,26 @@
         "functional": [
           "node-exists",
           "capability-status",
-          "no-runtime-error"
+          "no-runtime-error",
+          "asset-loaded",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [],
         "lifecycle": [],
         "capability": [
           "capability-status"
+        ],
+        "capabilityExpectations": [
+          {
+            "extension": "KHR_draco_mesh_compression",
+            "statuses": [
+              "decoder-required"
+            ]
+          }
         ]
       },
-      "promotionEvidence": "49c9746a8bf3"
+      "promotionEvidence": "005f7e3cf63d"
     },
     {
       "dir": "gltf-meshopt",
@@ -968,7 +1005,10 @@
           "isMeshoptAvailable",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "GLTFAsset.destroy",
+          "Material.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -995,18 +1035,35 @@
           "node-exists",
           "asset-loaded",
           "capability-status",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": [
           "capability-status"
+        ],
+        "capabilityExpectations": [
+          {
+            "extension": "KHR_meshopt_compression",
+            "statuses": [
+              "decoder-required"
+            ]
+          },
+          {
+            "extension": "EXT_meshopt_compression",
+            "statuses": [
+              "decoder-required"
+            ]
+          }
         ]
       },
-      "promotionEvidence": "2068703052a3"
+      "promotionEvidence": "1d2841ac9301"
     },
     {
       "dir": "gltf-morph",
@@ -1057,7 +1114,9 @@
           "GLTFAsset.instantiate",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "GLTFAsset.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -1085,17 +1144,20 @@
           "node-exists",
           "asset-loaded",
           "animation-playing",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame",
           "frame-diff"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "aae455c64f95"
+      "promotionEvidence": "eead341a5713"
     },
     {
       "dir": "gltf-skin",
@@ -1145,7 +1207,10 @@
           "GLTFAsset.instantiate",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "GLTFAsset.destroy",
+          "Material.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -1173,17 +1238,20 @@
           "node-exists",
           "asset-loaded",
           "animation-playing",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame",
           "frame-diff"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "b19c2b9d02ff"
+      "promotionEvidence": "427b55acb95e"
     },
     {
       "dir": "gltf-viewer",
@@ -1224,7 +1292,9 @@
           "AirTransmissionCapture",
           "math.Vec3",
           "Node.addChild",
-          "Node.setPosition"
+          "Node.setPosition",
+          "GLTFAsset.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -1251,16 +1321,19 @@
         "functional": [
           "node-exists",
           "asset-loaded",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "7657bb15b256"
+      "promotionEvidence": "2f2a1619aefe"
     },
     {
       "dir": "hello-cube",
@@ -1302,7 +1375,6 @@
           "DirectionalLight",
           "MeshRenderer",
           "Component",
-          "Material",
           "builtinResMgr",
           "utils.createMesh",
           "primitives.box",
@@ -1337,7 +1409,8 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -1347,7 +1420,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "20b9fa1229ed"
+      "promotionEvidence": "a25768f61361"
     },
     {
       "dir": "input",
@@ -1389,7 +1462,6 @@
           "input",
           "Input",
           "Layers",
-          "math.Vec3",
           "builtinResMgr",
           "utils.createMesh",
           "primitives.box",
@@ -1431,7 +1503,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [
           "frame-diff"
@@ -1442,7 +1515,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "3413b43c8405"
+      "promotionEvidence": "5924070f3c80"
     },
     {
       "dir": "interaction-click",
@@ -1530,7 +1603,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [
           "frame-diff"
@@ -1541,7 +1615,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "75a0e49d906c"
+      "promotionEvidence": "b2a73881af52"
     },
     {
       "dir": "light-point",
@@ -1620,7 +1694,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -1629,7 +1705,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "d0f2836abd8d"
+      "promotionEvidence": "b7e190d34dfa"
     },
     {
       "dir": "light-sphere",
@@ -1704,7 +1780,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -1714,7 +1792,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "a21fe570d906"
+      "promotionEvidence": "4088de9dce7a"
     },
     {
       "dir": "light-spot",
@@ -1791,7 +1869,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -1800,7 +1880,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "d3193a1d48c9"
+      "promotionEvidence": "97405c9df421"
     },
     {
       "dir": "light-two-directional",
@@ -1886,7 +1966,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [
           "frame-diff"
@@ -1897,7 +1979,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "688b33f386d3"
+      "promotionEvidence": "6ba4a7ad696e"
     },
     {
       "dir": "material-basic",
@@ -2058,7 +2140,8 @@
         "functional": [
           "node-exists",
           "material-property",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -2067,7 +2150,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "a94ed612b535"
+      "promotionEvidence": "5bbd566b0e9b"
     },
     {
       "dir": "material-transparent",
@@ -2118,7 +2201,10 @@
           "GLTFLoader.parseAsync",
           "GLTFAsset.instantiate",
           "Node.addChild",
-          "Node.setPosition"
+          "Node.setPosition",
+          "Node.destroy",
+          "Mesh.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -2147,16 +2233,19 @@
           "node-exists",
           "material-property",
           "asset-loaded",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "d5a470fe626f"
+      "promotionEvidence": "647ae9fc9ab4"
     },
     {
       "dir": "material-unlit",
@@ -2230,7 +2319,8 @@
         "functional": [
           "node-exists",
           "material-property",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -2239,7 +2329,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "e5e60981a98d"
+      "promotionEvidence": "85fe87d33619"
     },
     {
       "dir": "mesh-cylinder",
@@ -2316,7 +2406,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -2325,7 +2417,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "19e33f77386d"
+      "promotionEvidence": "0b2bc9eb185d"
     },
     {
       "dir": "mesh-multi-material",
@@ -2371,7 +2463,9 @@
           "GLTFLoader.parseAsync",
           "GLTFAsset.instantiate",
           "Node.addChild",
-          "Node.getComponentInChildren"
+          "Node.getComponentInChildren",
+          "GLTFAsset.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -2399,16 +2493,19 @@
           "node-exists",
           "asset-loaded",
           "material-property",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "ccec47df8da2"
+      "promotionEvidence": "588b2ae5063c"
     },
     {
       "dir": "mesh-plane",
@@ -2486,7 +2583,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -2495,7 +2594,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "c88c117ab794"
+      "promotionEvidence": "56030e6a48b0"
     },
     {
       "dir": "mesh-sphere",
@@ -2572,7 +2671,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -2581,7 +2682,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "5367471651db"
+      "promotionEvidence": "0d5d58e1ebea"
     },
     {
       "dir": "mesh-torus",
@@ -2657,7 +2758,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -2666,7 +2769,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "8bf66f5d500f"
+      "promotionEvidence": "bef96c42029a"
     },
     {
       "dir": "node-active",
@@ -2742,7 +2845,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -2751,7 +2856,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "f5a49a3d20f4"
+      "promotionEvidence": "eab58fab2dcd"
     },
     {
       "dir": "node-hierarchy",
@@ -2803,8 +2908,7 @@
           "Node.getChildByName",
           "Node.setPosition",
           "Node.setScale",
-          "Node.setRotationFromEuler",
-          "Node.getChildByName"
+          "Node.setRotationFromEuler"
         ]
       },
       "capabilities": [
@@ -2833,7 +2937,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -2842,7 +2947,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "32782a6cbc5c"
+      "promotionEvidence": "e9533a360ec7"
     },
     {
       "dir": "node-scale",
@@ -2921,7 +3026,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -2930,7 +3036,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "f5beb93055a6"
+      "promotionEvidence": "f7990f9e200d"
     },
     {
       "dir": "rc-capture-frame",
@@ -2940,7 +3046,7 @@
       "category": "runtime-control",
       "status": "stable",
       "specStatus": "frozen",
-      "requiresDevTools": false,
+      "requiresDevTools": true,
       "learning": {
         "goal": "掌握 captureFrame 的受控帧捕获：AFTER_DRAW 时机、可重复、不改播放状态",
         "points": [
@@ -3002,7 +3108,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -3011,7 +3119,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "29ba7a25535d"
+      "promotionEvidence": "0edc1d1d6ff2"
     },
     {
       "dir": "rc-create-node",
@@ -3021,7 +3129,7 @@
       "category": "runtime-control",
       "status": "stable",
       "specStatus": "frozen",
-      "requiresDevTools": false,
+      "requiresDevTools": true,
       "learning": {
         "goal": "掌握 session.dispatch 的写操作：createNode + setTransform 与 requestId 幂等合同",
         "points": [
@@ -3091,7 +3199,8 @@
           "node-exists",
           "node-count",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -3100,7 +3209,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "64dcd5a6f77a"
+      "promotionEvidence": "c33375a756c2"
     },
     {
       "dir": "rc-error-report",
@@ -3110,7 +3219,7 @@
       "category": "runtime-control",
       "status": "stable",
       "specStatus": "frozen",
-      "requiresDevTools": false,
+      "requiresDevTools": true,
       "learning": {
         "goal": "掌握错误观察合同：getRuntimeErrors 环形缓冲 + dispatch 失败的稳定错误码（教学错误示例同样 Ready）",
         "points": [
@@ -3174,7 +3283,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -3183,7 +3294,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "689ec9ee0ad1"
+      "promotionEvidence": "7b6f076ec497"
     },
     {
       "dir": "rc-inspect-scene",
@@ -3193,7 +3304,7 @@
       "category": "runtime-control",
       "status": "stable",
       "specStatus": "frozen",
-      "requiresDevTools": false,
+      "requiresDevTools": true,
       "learning": {
         "goal": "掌握 DevTools/Agent Session 合同的只读观察：inspectScene 场景快照与 inspectNode 节点详情",
         "points": [
@@ -3260,7 +3371,9 @@
       "validation": {
         "functional": [
           "node-exists",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -3269,7 +3382,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "4f5fd42a5165"
+      "promotionEvidence": "745a4cf387b5"
     },
     {
       "dir": "runtime-asset-release",
@@ -3315,7 +3428,8 @@
           "GLTFAsset.instantiate",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "GLTFAsset.destroy"
         ]
       },
       "capabilities": [
@@ -3342,7 +3456,8 @@
           "node-exists",
           "asset-loaded",
           "resource-released",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -3353,7 +3468,7 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "768a60271098"
+      "promotionEvidence": "c29e5f64a5b1"
     },
     {
       "dir": "skinned-animation",
@@ -3397,7 +3512,6 @@
           "buildSkeletonTree",
           "restoreBindPose",
           "frameObject",
-          "math.Vec3",
           "math.Color",
           "Material.initialize",
           "Node.addChild",
@@ -3430,7 +3544,9 @@
         "functional": [
           "node-exists",
           "animation-playing",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
@@ -3440,38 +3556,55 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "658cfe0e7638"
+      "promotionEvidence": "06bce4ca8bdb"
     },
     {
       "dir": "starter",
       "id": "starter",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "title": "Starter",
       "category": "basics",
       "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
-        "goal": "跑通最小 Code First 场景：createAirApp + 空 Scene + app.run",
+        "goal": "跑通最小 Code First 启动：createAirApp 绑定画布 → Scene → app.run，并让引擎真正产出一帧可见画面",
         "points": [
-          "createAirApp 绑定 canvas 选择器",
-          "Scene 的创建与运行",
-          "app.getScene 查询运行中场景"
+          "createAirApp 用 canvas 选择器（'#GameCanvas'）启动，画布必须早于引擎导入存在于 DOM",
+          "Scene 实例经 app.run 进入运行，app.getScene() 可查询当前场景",
+          "没有任何网格时，画面仍由相机决定清屏色——一个 Camera 是「看得见」的最小前提",
+          "camera.visibility 必须落在 Layers 掩码内，否则相机什么都不渲染",
+          "如何区分「引擎画的」与「DOM/CSS 背景」：body 为白色，画布为蓝色即为真帧缓冲"
         ]
       },
       "effect": {
-        "functional": "createAirApp 以 \"#GameCanvas\" 选择器启动；Scene(\"Main\") 经 app.run 进入运行；getScene() 返回该场景。",
-        "visual": "纯清屏色的空白画布（无节点），控制台输出运行日志"
+        "functional": "createAirApp 以 \"#GameCanvas\" 选择器启动；Scene(\"Main\") 经 app.run 进入运行；app.getScene() 返回该场景；场景含一个名为 Main Camera 的节点并挂载 Camera 组件，其 visibility 命中 Layers.DEFAULT、clearColor 为 (20,60,120,255)。",
+        "visual": "整屏为引擎清屏色 (20,60,120) 的纯蓝画面，无任何几何体、无文字、无 DOM 覆盖物；页面 body 背景是白色，因此只要画布呈蓝色就证明这一帧来自 WebGL 帧缓冲而不是 CSS 背景。"
       },
       "api": {
         "primary": [
           "createAirApp",
           "Scene"
         ],
-        "supporting": [],
+        "supporting": [
+          "Node",
+          "Node.addChild",
+          "Camera",
+          "Node.addComponent",
+          "Layers",
+          "Layers.DEFAULT",
+          "math.Color"
+        ],
         "claims": [
           "createAirApp",
-          "Scene"
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Camera",
+          "Node.addComponent",
+          "Layers",
+          "Layers.DEFAULT",
+          "math.Color"
         ]
       },
       "capabilities": [
@@ -3479,8 +3612,9 @@
       ],
       "scene": {
         "expectedGraph": {
-          "nodes": [],
-          "allowEmpty": true
+          "nodes": [
+            "Main Camera"
+          ]
         }
       },
       "interaction": {
@@ -3493,15 +3627,17 @@
       },
       "validation": {
         "functional": [
-          "scene-ready",
+          "node-exists",
           "no-runtime-error"
         ],
         "interaction": [],
-        "visual": [],
+        "visual": [
+          "visible-frame"
+        ],
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "f8997d457804"
+      "promotionEvidence": "509d0ba585c2"
     },
     {
       "dir": "static-model",
@@ -3551,7 +3687,12 @@
           "math.Vec3",
           "math.Color",
           "Node.addChild",
-          "Node.setPosition"
+          "Node.setPosition",
+          "Node.destroy",
+          "Mesh.destroy",
+          "Material.destroy",
+          "Texture2D.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -3581,16 +3722,19 @@
           "node-exists",
           "asset-loaded",
           "material-property",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "ba8939b200a4"
+      "promotionEvidence": "9b716a5b72ab"
     },
     {
       "dir": "texture-basic",
@@ -3642,7 +3786,12 @@
           "primitives.box",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "Node.destroy",
+          "Mesh.destroy",
+          "Material.destroy",
+          "Texture2D.destroy",
+          "isValid"
         ]
       },
       "capabilities": [
@@ -3669,16 +3818,19 @@
         "functional": [
           "node-exists",
           "material-property",
-          "no-runtime-error"
+          "no-runtime-error",
+          "transform-equals"
         ],
         "interaction": [],
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
-      "promotionEvidence": "deea61359713"
+      "promotionEvidence": "f6b3cd615748"
     },
     {
       "dir": "transform",
@@ -3753,7 +3905,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -3763,7 +3916,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "3bc9ad990363"
+      "promotionEvidence": "ec3cf9fd0dc0"
     },
     {
       "dir": "tween-basic",
@@ -3836,7 +3989,8 @@
         "functional": [
           "node-exists",
           "transform-equals",
-          "no-runtime-error"
+          "no-runtime-error",
+          "material-property"
         ],
         "interaction": [],
         "visual": [
@@ -3846,7 +4000,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "9603bbb34f33"
+      "promotionEvidence": "3327441806ff"
     }
   ],
   "categories": {

@@ -45,7 +45,10 @@
       "GLTFAsset.instantiate",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.setRotationFromEuler",
+      "GLTFAsset.destroy",
+      "Material.destroy",
+      "isValid"
     ],
     "forbiddenShortcut": [
       "用 morph 变形冒充骨骼蒙皮",
@@ -56,109 +59,127 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L11"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L12"
+        "sourceLocation": "L13"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L15"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L17"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L23"
+        "sourceLocation": "L24"
       },
       {
         "api": "Animation",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L44"
+        "sourceLocation": "L59"
       },
       {
         "api": "Animation.play",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L48"
+        "sourceLocation": "L63"
       },
       {
         "api": "AnimationClip",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L47"
+        "sourceLocation": "L62"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L20"
+        "sourceLocation": "L21"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L20"
       },
       {
         "api": "frameObject",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L32"
+        "sourceLocation": "L47"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L44"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L29"
+        "sourceLocation": "L44"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L45"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L15"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "GLTFAsset.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L78"
+      },
+      {
+        "api": "Material.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L78"
+      },
+      {
+        "api": "isValid",
+        "source": "shared/asset-lifecycle.js",
+        "validator": "resource-released",
+        "sourceLocation": "L26"
       }
     ]
   },
@@ -190,14 +211,17 @@
       "node-exists",
       "asset-loaded",
       "animation-playing",
-      "no-runtime-error"
+      "no-runtime-error",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
       "visible-frame",
       "frame-diff"
     ],
-    "lifecycle": [],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -208,5 +232,5 @@
   "license": {
     "assets": "assets/SimpleSkin.* — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/SimpleSkin.LICENSE.md"
   },
-  "promotionEvidence": "b19c2b9d02ff"
+  "promotionEvidence": "427b55acb95e"
 }

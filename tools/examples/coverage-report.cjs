@@ -11,36 +11,44 @@
  *   Advanced  — ≥ 80% verified
  * 门禁未达标如实输出 FAIL（达标依赖 Wave 扩量，不得以 claimed 冒充）。
  *
+ * 证据来源：普通浏览器矩阵 + DevTools 会话门禁（requiresDevTools 示例只在后者取证）。
+ *
  * 执行：node tools/examples/coverage-report.cjs
  * 产出：docs/api-coverage-report.json
  */
 var fs = require('fs');
 var path = require('path');
-var crypto = require('crypto');
 var REPO = path.resolve(__dirname, '..', '..');
+var { readFingerprint } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
 var INVENTORY_PATH = path.join(REPO, 'docs', 'example-api-inventory.json');
 var MANIFEST_PATH = path.join(REPO, 'examples', 'files.json');
-var EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-examples-verified.json');
+var EVIDENCE_PATHS = [
+  'docs/evidence/v11-examples-verified.json',
+  'docs/evidence/v11-devtools-examples.json',
+];
 var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
 
 (function main() {
   var inventory = JSON.parse(fs.readFileSync(INVENTORY_PATH, 'utf8'));
   var manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
-  var evidence = fs.existsSync(EVIDENCE_PATH) ? JSON.parse(fs.readFileSync(EVIDENCE_PATH, 'utf8')) : { results: [], measuredAt: null };
 
-  // 运行验证结果：exampleId -> { result, specFingerprint }
+  // 运行验证结果：exampleId -> { result, specFingerprint }（后到的来源不覆盖已有 PASS 记录）
   var runById = {};
-  for (var r of evidence.results || []) { runById[r.id] = r; }
-
-  function currentFingerprint (exampleDir) {
-    // 规范化指纹：排除 status/promotionEvidence（与验证器 specFingerprintOf 一致）
-    var file = path.join(REPO, 'examples', exampleDir, 'example.json');
-    if (!fs.existsSync(file)) { return null; }
-    var spec = JSON.parse(fs.readFileSync(file, 'utf8'));
-    delete spec.status;
-    delete spec.promotionEvidence;
-    return crypto.createHash('sha256').update(JSON.stringify(spec)).digest('hex').slice(0, 12);
+  var sources = [];
+  for (var rel of EVIDENCE_PATHS) {
+    var abs = path.join(REPO, rel);
+    if (!fs.existsSync(abs)) { sources.push({ path: rel, present: false }); continue; }
+    var evidence = JSON.parse(fs.readFileSync(abs, 'utf8'));
+    sources.push({ path: rel, present: true, measuredAt: evidence.measuredAt || null, mode: evidence.mode || evidence.contract || 'unknown' });
+    for (var r of evidence.results || evidence.examples || []) {
+      if (!r || !r.id) { continue; }
+      var prev = runById[r.id];
+      if (prev && prev.result === 'PASS') { continue; }
+      runById[r.id] = r;
+    }
   }
+
+  function currentFingerprint (exampleDir) { return readFingerprint(exampleDir); }
 
   // 构建冻结清单（分 tier）
   var frozen = {};
@@ -98,10 +106,10 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
 
   var report = {
     generatedAt: new Date().toISOString(),
-    evidenceSource: { path: 'docs/evidence/v11-examples-verified.json', measuredAt: evidence.measuredAt || null, mode: evidence.mode || 'unknown' },
+    evidenceSources: sources,
     semantics: {
       claimed: 'api.claims 与 inventory 精确匹配（声明）',
-      verified: 'claim 所属 example 浏览器验证 PASS 且 specFingerprint 与当前 example.json 一致',
+      verified: 'claim 所属 example 在浏览器矩阵或 DevTools 会话门禁中 PASS，且 specFingerprint 与当前 example.json 一致',
     },
     totalUnits: Object.keys(frozen).length,
     totalClaimed: Object.keys(claimedBy).length,
@@ -123,4 +131,8 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   console.log('[coverage] Advanced gate (>=80% verified):', tierReport.advanced.pass ? 'PASS' : 'FAIL');
   if (staleEvidence.length) { console.log('[coverage] stale evidence (spec changed after run):', staleEvidence.join(',')); }
   console.log('[coverage] → ' + path.relative(REPO, OUT_PATH));
+  // 机器可强制：门禁未达标必须以非零退出码阻断，而不只是打印 FAIL。
+  var gatesPass = tierReport.core.pass && tierReport.important.pass && tierReport.advanced.pass;
+  process.exitCode = gatesPass ? 0 : 1;
+  console.log('[coverage] gate:', gatesPass ? 'PASS' : 'FAIL');
 })();

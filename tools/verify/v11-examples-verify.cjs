@@ -7,8 +7,13 @@
  *  3. Animation/Frame：animation-playing 与 visual.frame-diff 以双帧捕获（400ms 间隔）像素差异证明；
  *  4. Interaction：按 spec.interaction.steps 以真实指针事件驱动画布，validation.interaction=frame-diff
  *     时以交互前后帧差证明；
- *  5. Lifecycle：validation.lifecycle 非空的示例必须暴露 __lifecycle() 且 released===true；
- *  6. 晋级：全部规格声明检查 PASS → example.json status draft→stable（证据驱动，含 specFingerprint）。
+ *  5. Lifecycle：validation.lifecycle 声明 resource-released 的示例必须暴露 __lifecycle()，
+ *     一次调用真实完成 释放→泄漏核对→重新获取，且重载后画面非空、无新增运行期错误、
+ *     资产报告无 DESTROYED_RESOURCE 残留；
+ *  6. Capability：validation.capability=capability-status 的示例必须给出
+ *     validation.capabilityExpectations，运行期以 live getExtensionSupport() 交叉核对状态与 reason；
+ *  7. 完备性：任何规格声明但未执行的 validator 记 FAIL（证据缺口不得判 PASS）；
+ *  8. 晋级：全部规格声明检查 PASS → example.json status draft→stable（证据驱动，含 specFingerprint）。
  *
  * 执行：NODE_PATH=<playwright> node tools/verify/v11-examples-verify.cjs [--ids=a,b]
  * 产出：docs/evidence/v11-examples-verified.json + docs/evidence/examples/<id>.png
@@ -21,6 +26,7 @@ const crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..', '..');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
 const { BrowserRuntime } = require(path.join(REPO, 'tools', 'benchmark', 'runner', 'browser-runtime.cjs'));
+const { specFingerprintOf, promoteFromEvidence, assetDigestsOf } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
 
 const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-examples-verified.json');
 const ARTIFACT_DIR = path.join(REPO, 'docs', 'evidence', 'examples');
@@ -54,28 +60,44 @@ function prepareWorkspace (example, workspace) {
   if (fs.existsSync(path.join(sharedSrc, 'scene-kit.js'))) {
     copyTree(sharedSrc, path.join(workspace, 'shared'));
   }
-  for (const name of ['main.ts', 'main.js']) {
-    const file = path.join(workspace, name);
+  // 暂存工作区把示例目录展平到根，shared 库落在 <workspace>/shared：按文件层级重算 shared 说明符。
+  // （真实布局 examples/<dir>/src/main.ts 必须写 ../../shared/，与展平后的 ../shared/ 层级不同；
+  //   只在这里改名，运行内容不变——否则验证器绿而 Gallery/静态部署 404。）
+  for (const rel of ['main.ts', 'main.js', 'src/main.ts', 'src/main.js']) {
+    const file = path.join(workspace, rel);
     if (!fs.existsSync(file)) { continue; }
+    const depth = path.relative(workspace, path.dirname(file)).split(path.sep).filter(Boolean).length;
     const code = fs.readFileSync(file, 'utf8');
-    if (code.includes('../shared/')) {
-      fs.writeFileSync(file, code.replace(/(\.\.\/)shared\//g, './shared/'));
-    }
+    const fixed = code.replace(/(\.\.\/)+shared\//g, './' + '../'.repeat(depth) + 'shared/');
+    if (fixed !== code) { fs.writeFileSync(file, fixed); }
   }
   return fs.readFileSync(path.join(workspace, 'index.html'), 'utf8');
 }
 
 function writeEvidence (results, done) {
-  const pass = results.filter((r) => r.result === 'PASS').length;
+  // --ids 子集运行不得整体覆盖证据文件（否则未跑示例的记录凭空消失，coverage/audit 失真）：
+  // 保留旧记录、按 id 覆盖本次运行结果，并把整份文件标为 partial 以提示非全量。
+  const ran = new Set(results.map((r) => r.id));
+  let merged = results;
+  if (targetIds && fs.existsSync(EVIDENCE_PATH)) {
+    try {
+      const prior = JSON.parse(fs.readFileSync(EVIDENCE_PATH, 'utf8')).results || [];
+      merged = [...prior.filter((r) => !ran.has(r.id)), ...results];
+    } catch (e) { /* 旧文件损坏时按本次结果重写 */ }
+  }
+  const pass = merged.filter((r) => r.result === 'PASS').length;
   const evidence = {
     measuredAt: new Date().toISOString(),
     runner: 'tools/verify/v11-examples-verify.cjs',
     mode: 'spec-driven-v2',
-    total: results.length,
+    total: merged.length,
     pass,
-    fail: results.length - pass,
-    partial: !done,
-    results,
+    fail: merged.length - pass,
+    partial: !done || !!targetIds,
+    subset: targetIds ? [...ran].sort() : undefined,
+    runPass: results.filter((r) => r.result === 'PASS').length,
+    runTotal: results.length,
+    results: merged,
   };
   fs.mkdirSync(path.dirname(EVIDENCE_PATH), { recursive: true });
   fs.writeFileSync(EVIDENCE_PATH, JSON.stringify(evidence, null, 2) + '\n');
@@ -146,21 +168,16 @@ async function capturePairMulti (runtime) {
   return best;
 }
 
-// 规范化指纹：排除 status/promotionEvidence（晋级写回不得使证据失配）
-function specFingerprintOf (spec) {
-  const copy = Object.assign({}, spec);
-  delete copy.status;
-  delete copy.promotionEvidence;
-  return crypto.createHash('sha256').update(JSON.stringify(copy)).digest('hex').slice(0, 12);
-}
-
+// 规范化指纹实现集中在 tools/verify/v11-spec-common.cjs（与 coverage-report 共用，避免漂移）
 function check (id, ok, detail) { return { validatorId: id, state: ok ? 'PASS' : 'FAIL', detail: String(detail || '').slice(0, 200) }; }
 
 /** 规格驱动检查（app 示例）。 */
 async function runSpecChecks (example, runtime, channel, spec) {
   const results = [];
-  // interaction 维度由 runInteractionChecks 以真实输入执行，不进入静态检查
-  const want = (validatorId) => spec.ready.validators.includes(validatorId) || spec.validation.functional.includes(validatorId) || spec.validation.visual.includes(validatorId) || spec.validation.lifecycle.includes(validatorId);
+  // interaction 维度由 runInteractionChecks 以真实输入执行；capability 维度由 runCapabilityChecks 执行
+  const dims = spec.validation || {};
+  const want = (validatorId) => spec.ready.validators.includes(validatorId) || dims.functional.includes(validatorId)
+    || dims.visual.includes(validatorId) || dims.lifecycle.includes(validatorId) || (dims.capability || []).includes(validatorId);
 
   const scene = await channel.inspect({ kind: 'inspectScene' });
   const errors = await channel.errorReport({ limit: 50 });
@@ -221,6 +238,39 @@ async function runSpecChecks (example, runtime, channel, spec) {
     results.push(check('no-runtime-error', msgs.length === 0, msgs.length ? msgs.slice(0, 2).map((m) => String(m).slice(0, 90)).join(' | ') : 'clean'));
   }
 
+  // --- capability-status：以 live getExtensionSupport() 与规格期望交叉核对（§64） ---
+  if (want('capability-status')) {
+    const expectations = dims.capabilityExpectations || [];
+    if (expectations.length === 0) {
+      results.push(check('capability-status', false, 'declared but validation.capabilityExpectations is missing'));
+    } else {
+      const observed = await runtime.page.evaluate(async (expected) => {
+        const cc = await import('/build/cocosair.module.js');
+        const support = new cc.GLTFLoader().getExtensionSupport();
+        return expected.map((e) => {
+          const hit = support.filter((s) => s.name === e.extension)[0] || null;
+          return {
+            extension: e.extension,
+            status: hit ? hit.status : null,
+            reason: hit ? String(hit.reason || '') : 'loader did not report this extension',
+          };
+        });
+      }, expectations);
+      const problems = [];
+      for (let i = 0; i < expectations.length; i++) {
+        const e = expectations[i];
+        const o = observed[i];
+        const allowed = e.statuses || [];
+        if (allowed.length === 0) { problems.push(`${o.extension}: expectation has no statuses`); continue; }
+        if (!o.status) { problems.push(`${o.extension}: ${o.reason}`); continue; }
+        if (!allowed.includes(o.status)) { problems.push(`${o.extension}: status=${o.status}, expected ${allowed.join('|')}`); continue; }
+        if (o.status !== 'supported' && !o.reason) { problems.push(`${o.extension}: ${o.status} reported without reason`); }
+      }
+      results.push(check('capability-status', problems.length === 0,
+        problems.length ? problems.join('; ') : observed.map((o) => `${o.extension}=${o.status}`).join(', ')));
+    }
+  }
+
   // --- 动画 / 帧差（双帧捕获） ---
   const needsFrames = want('animation-playing') || want('frame-diff');
   if (needsFrames) {
@@ -261,7 +311,7 @@ async function runInteractionChecks (example, runtime, spec, beforeCaptureArg) {
   let beforeCapture = beforeCaptureArg;
   const results = [];
   const steps = (spec.interaction && spec.interaction.steps) || [];
-  if (steps.length === 0) { return results; }
+  if (steps.length === 0) { return { results, after: null }; }
   // 交互前 Ready：确保画面已有实际内容（空帧上的交互差异无意义）
   let pre = await capture(runtime);
   for (let i = 0; i < 5 && !(pre.litRatio >= 0.01); i++) {
@@ -309,19 +359,55 @@ async function runInteractionChecks (example, runtime, spec, beforeCaptureArg) {
   return { results, after };
 }
 
-/** Lifecycle 合同：__lifecycle() 必须报告 released。 */
-async function runLifecycleChecks (example, runtime, spec) {
+/**
+ * Lifecycle 合同（§25）：示例必须暴露 window.__lifecycle()，一次调用即真实走完
+ * 释放 → 延迟销毁落地 → 泄漏核对 → 重新获取，回报 {held, released, leaked, reloaded, errors}。
+ * 仅 released===true 不足以证明生命周期闭合：拆完建不回来、或重载后画面为空同样是缺口。
+ */
+async function runLifecycleChecks (example, runtime, channel, spec) {
   const results = [];
-  if (spec.validation.lifecycle.length === 0) { return results; }
-  for (const validatorId of spec.validation.lifecycle) {
+  const declared = spec.validation.lifecycle || [];
+  for (const validatorId of declared) {
     if (validatorId !== 'resource-released') {
       results.push(check(`lifecycle:${validatorId}`, false, `validator ${validatorId} has no lifecycle executor`));
-      continue;
     }
-    const state = await runtime.page.evaluate(() => (window.__lifecycle ? window.__lifecycle() : null));
-    results.push(check('resource-released', !!state && state.released === true, JSON.stringify(state).slice(0, 160)));
   }
-  return results;
+  if (!declared.includes('resource-released')) { return { results, after: null }; }
+  const contractPresent = await runtime.page.evaluate(() => typeof window.__lifecycle === 'function');
+  if (!contractPresent) {
+    results.push(check('resource-released', false, 'validation.lifecycle 声明了 resource-released，但页面无 window.__lifecycle() 合同'));
+    return { results, after: null };
+  }
+  const errorsBefore = ((await channel.errorReport({ limit: 50 })) || {}).errors || [];
+  let report = null;
+  try {
+    report = await runtime.page.evaluate(() => window.__lifecycle());
+  } catch (error) {
+    results.push(check('resource-released', false, '__lifecycle() threw: ' + String(error.message || error).slice(0, 120)));
+    return { results, after: null };
+  }
+  const problems = [];
+  if (!report) { problems.push('contract returned no report'); } else {
+    if (!(report.held > 0)) { problems.push(`contract owns 0 resources (held=${report.held})`); }
+    if (report.released !== true) { problems.push(`leaked after release: ${(report.leaked || []).join(',') || 'released!=true'}`); }
+    if (report.reloaded !== true) { problems.push('reacquire did not restore valid resources'); }
+    for (const message of report.errors || []) { problems.push(message); }
+  }
+  // 释放后画面：证明重新获取真的重新渲染，而不是只把节点挂在隐藏状态
+  let post = null;
+  try { post = await capture(runtime); } catch (e) { problems.push('post-release capture failed: ' + String(e.message || e).slice(0, 60)); }
+  if (post && !(post.litRatio >= 0.01)) { problems.push(`post-release frame empty (litRatio=${post.litRatio.toFixed(4)})`); }
+  const errorsAfter = ((await channel.errorReport({ limit: 50 })) || {}).errors || [];
+  const newErrors = errorsAfter.slice(errorsBefore.length);
+  if (newErrors.length > 0) { problems.push(`${newErrors.length} runtime errors during release/reload: ${String(newErrors[0].message || '').slice(0, 80)}`); }
+  // 与 Reference Track 的 resource-released 同语义：资产报告不得残留 DESTROYED_RESOURCE
+  const assetReport = await channel.inspect({ kind: 'inspectAsset' });
+  const dangling = ((assetReport || {}).diagnostics || []).filter((d) => d.code === 'DESTROYED_RESOURCE');
+  if (dangling.length > 0) { problems.push(`${dangling.length} DESTROYED_RESOURCE diagnostics after reload`); }
+  results.push(check('resource-released', problems.length === 0, problems.length ? problems.join('; ')
+    : `held=${report.held} leaked=0 reloaded=true litRatio=${(post ? post.litRatio : 0).toFixed(4)} assetUnits=${Object.values(assetReport.counts || {}).reduce((a, b) => a + b, 0)}`));
+  // 合同跑完后的画面即"当期"截图：验收者看到的与验证器最后一次渲染一致
+  return { results, after: post };
 }
 
 /** ui-shell（目录页）合同：DOM 选择器渲染 + 零页面错误。 */
@@ -347,6 +433,7 @@ async function verifyUiShell (example, workspace, html) {
       id: example.id, result: failed.length === 0 ? 'PASS' : 'FAIL',
       specFingerprint: specFingerprintOf(spec),
       validatorResults: results, artifact,
+      assetDigests: assetDigestsOf(path.join(REPO, 'examples', example.dir), spec.assets),
       errors: [...ui.uiErrors, ...runtime.pageErrors.map((e) => e.message)].slice(0, 3),
     };
   } finally {
@@ -381,30 +468,51 @@ async function verifyApp (example, workspace, html) {
     // 热身：丢弃首帧捕获（管线首次绘制可能处于暖机状态）
     try { await capture(runtime); } catch (e) { /* 忽略热身失败 */ }
 
-    const { results, capture } = await runSpecChecks(example, runtime, channel, spec);
+    const { results, capture: specCapture } = await runSpecChecks(example, runtime, channel, spec);
 
     let interaction = [];
-    let finalCapture = capture;
+    let finalCapture = specCapture;
     if ((spec.interaction && spec.interaction.steps || []).length > 0) {
-      const out = await runInteractionChecks(example, runtime, spec, capture);
+      const out = await runInteractionChecks(example, runtime, spec, specCapture);
       interaction = out.results;
-      finalCapture = out.after || capture;
+      finalCapture = out.after || specCapture;
     }
-    const lifecycle = await runLifecycleChecks(example, runtime, spec);
+    const lifecycleOut = await runLifecycleChecks(example, runtime, channel, spec);
+    const lifecycle = lifecycleOut.results;
+    finalCapture = lifecycleOut.after || finalCapture;
 
     const all = [...results, ...interaction, ...lifecycle];
-    const failed = all.filter((r) => r.state !== 'PASS');
+    // 规格声明却没有执行器跑过的 validator 是证据缺口：必须显式 FAIL，不得静默省略后判 PASS
+    const validation = spec.validation || {};
+    const declared = new Set([
+      ...(spec.ready.validators || []), ...(validation.functional || []), ...(validation.visual || []),
+      ...(validation.lifecycle || []), ...(validation.capability || []),
+    ]);
+    for (const validatorId of (validation.interaction || [])) { declared.add(`interaction:${validatorId}`); }
+    const executed = new Set(all.map((r) => r.validatorId));
+    for (const validatorId of declared) {
+      if (!executed.has(validatorId)) { all.push(check(validatorId, false, 'declared in Example Spec but no executor ran it')); }
+    }
+    // §11 Stable 公式含 Screenshot Current：无视觉 validator 的示例也必须当期取帧，
+    // 否则旧截图会被当成当期证据（bytes:0 的占位记录不得存在）
+    if (!finalCapture) {
+      try { finalCapture = await capture(runtime); } catch (e) { /* 取帧失败时下面以 bytes=0 记录为 FAIL 依据 */ }
+    }
     const artifact = finalCapture ? await saveArtifact(example.id, finalCapture.png) : { path: `docs/evidence/examples/${example.id}.png`, bytes: 0 };
+    if (artifact.bytes === 0) { all.push(check('screenshot-current', false, 'no frame captured this run (§11 Screenshot Current)')); }
+    const failed = all.filter((r) => r.state !== 'PASS');
     return {
       id: example.id,
       result: failed.length === 0 ? 'PASS' : 'FAIL',
       specFingerprint: specFingerprintOf(spec),
       specDimensions: {
-        ready: spec.ready.validators, functional: spec.validation.functional,
-        interaction: spec.validation.interaction, visual: spec.validation.visual, lifecycle: spec.validation.lifecycle,
+        ready: spec.ready.validators, functional: validation.functional,
+        interaction: validation.interaction, visual: validation.visual,
+        lifecycle: validation.lifecycle, capability: validation.capability,
       },
       validatorResults: all,
       artifact,
+      assetDigests: assetDigestsOf(path.join(REPO, 'examples', example.dir), spec.assets),
       nodeCount: 0,
       errors: all.filter((r) => r.state === 'FAIL').slice(0, 3).map((r) => `${r.validatorId}: ${r.detail}`),
     };
@@ -435,23 +543,7 @@ function verifyOne (example) {
   });
 }
 
-/** 证据驱动晋级：PASS 示例 example.json status draft → stable。 */
-function promote (results) {
-  let promoted = 0;
-  for (const result of results) {
-    if (result.result !== 'PASS') { continue; }
-    const file = path.join(REPO, 'examples', result.id, 'example.json');
-    if (!fs.existsSync(file)) { continue; }
-    const spec = JSON.parse(fs.readFileSync(file, 'utf8'));
-    if (spec.status === 'stable' && spec.promotionEvidence === result.specFingerprint) { continue; }
-    spec.status = 'stable';
-    spec.promotionEvidence = result.specFingerprint;
-    fs.writeFileSync(file, JSON.stringify(spec, null, 2) + '\n');
-    promoted++;
-  }
-  return promoted;
-}
-
+/** 规格驱动浏览器验证主流程（晋级由 promoteFromEvidence 完成）。 */
 (async function main () {
   process.on('unhandledRejection', (error) => {
     console.error('UNHANDLED_REJECTION:', String(error && error.message || error).slice(0, 300));
@@ -478,7 +570,8 @@ function promote (results) {
     writeEvidence(results, false);
   }
   writeEvidence(results, true);
-  const promoted = promote(results);
+  // 证据驱动晋级（实现在 v11-spec-common.cjs，与 DevTools 运行器共用）
+  const promoted = promoteFromEvidence(results);
   require('child_process').execFileSync('node', [path.join(REPO, 'tools', 'examples', 'generate-manifest.cjs')], { cwd: REPO });
   const pass = results.filter((r) => r.result === 'PASS').length;
   console.log(`\n== Examples spec-driven verify: ${pass}/${results.length} PASS, ${promoted} promoted to stable ==`);

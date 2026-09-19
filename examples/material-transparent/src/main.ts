@@ -6,6 +6,7 @@
  */
 
 import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, Material, utils, primitives, GLTFLoader } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -29,12 +30,35 @@ var lightNode = new Node('Main Light'); scene.addChild(lightNode);
 lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);
 var light = lightNode.addComponent(DirectionalLight); light.illuminance = 2;
 
-// 不透明参考物：红色实心立方体
-var solid = new Node('SolidReference'); solid.layer = Layers.Enum.DEFAULT; scene.addChild(solid);
-solid.setPosition(new Vec3(0, 0.5, -0.8));
-var solidRenderer = solid.addComponent(MeshRenderer);
-solidRenderer.mesh = utils.createMesh(primitives.box({ width: 1.6, height: 1.6, length: 1.6 }));
-solidRenderer.material = materialWith(new Color(230, 90, 60, 255));
+// 不透明参考物与半透明面板一并由 acquire() 构建：首帧与 §25 合同的 reacquire 共用路径
+var solidMesh: any;
+var solidMaterial: any;
+var solid: any;
+var asset: any;
+var instance: any;
+
+function owned (): any[] {
+  return [
+    { name: 'SolidReference', ref: solid },
+    { name: 'Mesh', ref: solidMesh },
+    { name: 'Material', ref: solidMaterial },
+    { name: 'GLTFAsset(glass-panel)', ref: asset },
+    { name: 'instance.root', ref: instance.root },
+  ];
+}
+
+async function acquireSolid (): Promise<void> {
+  // 不透明参考物：红色实心立方体
+  solid = new Node('SolidReference'); solid.layer = Layers.Enum.DEFAULT; scene.addChild(solid);
+  solid.setPosition(new Vec3(0, 0.5, -0.8));
+  var solidRenderer = solid.addComponent(MeshRenderer);
+  solidMesh = utils.createMesh(primitives.box({ width: 1.6, height: 1.6, length: 1.6 }));
+  solidRenderer.mesh = solidMesh;
+  solidMaterial = materialWith(new Color(230, 90, 60, 255));
+  solidRenderer.material = solidMaterial;
+}
+
+await acquireSolid();
 
 // 半透明面板：glTF JSON（alphaMode=BLEND + baseColorFactor alpha 0.45）→ parseAsync → instantiate
 function quadBytesUri(): string {
@@ -76,10 +100,38 @@ var gltf = {
   scene: 0,
 };
 
-var asset = await new GLTFLoader().parseAsync(JSON.stringify(gltf));
-var instance = asset.instantiate();
-instance.root.setPosition(new Vec3(0, 0.9, 0.8));
-scene.addChild(instance.root);
+var panel = document.createElement('div');
+panel.style.cssText = 'position:fixed;left:10px;top:8px;color:#9cd;font:12px monospace;white-space:pre;background:rgba(0,0,0,.45);padding:6px 8px;border-radius:4px';
+document.body.appendChild(panel);
+
+/** 半透明面板：alphaMode=BLEND 的 glTF → parseAsync → instantiate → 挂场景。 */
+async function acquirePanel (): Promise<void> {
+  asset = await new GLTFLoader().parseAsync(JSON.stringify(gltf));
+  instance = asset.instantiate();
+  instance.root.setPosition(new Vec3(0, 0.9, 0.8));
+  scene.addChild(instance.root);
+  panel.textContent = 'alphaMode BLEND\nbaseColorFactor alpha = 0.45\ndoubleSided = true';
+}
+
+await acquirePanel();
+
+// §25 Lifecycle Contract：BLEND 资产与参考物资源整体释放 → 泄漏核对 → 全量重建。
+installAssetLifecycle({
+  label: 'material-transparent',
+  hold: owned,
+  release: () => {
+    solid.destroy();
+    solidMesh.destroy();
+    solidMaterial.destroy();
+    instance.dispose();
+    asset.destroy();
+  },
+  reacquire: async () => {
+    await acquireSolid();
+    await acquirePanel();
+    return owned();
+  },
+});
 
 app.run(scene);
 console.log('[material-transparent] running — alphaMode BLEND panel over solid cube');

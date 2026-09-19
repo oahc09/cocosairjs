@@ -18,7 +18,9 @@
   "validation": {
     "functional": [
       "node-exists",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
@@ -27,7 +29,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "e3b6b7627fd3",
+  "promotionEvidence": "51d515d53211",
   "specStatus": "frozen",
   "learning": {
     "goal": "相机控制与取景：PERSPECTIVE/ORTHO 切换 + frameObject 自动取景（E003）",
@@ -79,43 +81,43 @@
         "api": "Scene",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "MeshRenderer",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L16"
+        "sourceLocation": "L40"
       },
       {
         "api": "Camera",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L17"
+        "sourceLocation": "L63"
       },
       {
         "api": "Layers",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L37"
       },
       {
         "api": "math.Vec3",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L38"
       },
       {
         "api": "builtinResMgr",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L23"
+        "sourceLocation": "L42"
       },
       {
         "api": "utils.createMesh",
@@ -139,7 +141,7 @@
         "api": "Node.addChild",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L39"
       },
       {
         "api": "Node.setPosition",

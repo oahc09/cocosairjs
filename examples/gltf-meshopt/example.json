@@ -44,7 +44,10 @@
       "isMeshoptAvailable",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.setRotationFromEuler",
+      "GLTFAsset.destroy",
+      "Material.destroy",
+      "isValid"
     ],
     "forbiddenShortcut": [
       "加载未压缩模型冒充 meshopt 成功",
@@ -55,103 +58,121 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L11"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L12"
+        "sourceLocation": "L13"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L15"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L17"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L23"
+        "sourceLocation": "L24"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L20"
+        "sourceLocation": "L21"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L20"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L38"
+        "sourceLocation": "L39"
       },
       {
         "api": "GLTFLoader.setMeshoptDecoder",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L39"
+        "sourceLocation": "L40"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L43"
+        "sourceLocation": "L58"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
-        "validator": "resource-released",
-        "sourceLocation": "L44"
+        "validator": "asset-loaded",
+        "sourceLocation": "L59"
       },
       {
         "api": "createMeshoptDecoder",
         "source": "src/main.ts",
         "validator": "capability-status",
-        "sourceLocation": "L4"
+        "sourceLocation": "L38"
       },
       {
         "api": "isMeshoptAvailable",
         "source": "src/main.ts",
         "validator": "capability-status",
-        "sourceLocation": "L40"
+        "sourceLocation": "L41"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L14"
+        "sourceLocation": "L15"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L15"
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "GLTFAsset.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L83"
+      },
+      {
+        "api": "Material.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L83"
+      },
+      {
+        "api": "isValid",
+        "source": "shared/asset-lifecycle.js",
+        "validator": "resource-released",
+        "sourceLocation": "L26"
       }
     ]
   },
@@ -182,15 +203,32 @@
       "node-exists",
       "asset-loaded",
       "capability-status",
-      "no-runtime-error"
+      "no-runtime-error",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
       "visible-frame"
     ],
-    "lifecycle": [],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": [
       "capability-status"
+    ],
+    "capabilityExpectations": [
+      {
+        "extension": "KHR_meshopt_compression",
+        "statuses": [
+          "decoder-required"
+        ]
+      },
+      {
+        "extension": "EXT_meshopt_compression",
+        "statuses": [
+          "decoder-required"
+        ]
+      }
     ]
   },
   "coverage": {
@@ -201,5 +239,5 @@
   "license": {
     "assets": "assets/meshopt-khr.glb — 仓库自生成 fixture（tools/fixtures/gen-geometry-fixtures.cjs，meshoptimizer 官方编码器），许可见 licenses/LICENSE_meshoptimizer.md"
   },
-  "promotionEvidence": "2068703052a3"
+  "promotionEvidence": "1d2841ac9301"
 }

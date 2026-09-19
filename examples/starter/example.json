@@ -1,6 +1,6 @@
 {
   "id": "starter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "stable",
   "benchmarkRefs": [],
   "recipeRefs": [],
@@ -9,69 +9,138 @@
   "category": "basics",
   "apiClaims": [
     "createAirApp",
-    "Scene"
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Camera",
+    "Node.addComponent",
+    "Layers",
+    "Layers.DEFAULT",
+    "math.Color"
   ],
   "capabilities": [
     "basics"
   ],
   "validation": {
     "functional": [
-      "scene-ready",
+      "node-exists",
       "no-runtime-error"
     ],
     "interaction": [],
-    "visual": [],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "f8997d457804",
   "specStatus": "frozen",
   "learning": {
-    "goal": "跑通最小 Code First 场景：createAirApp + 空 Scene + app.run",
+    "goal": "跑通最小 Code First 启动：createAirApp 绑定画布 → Scene → app.run，并让引擎真正产出一帧可见画面",
     "points": [
-      "createAirApp 绑定 canvas 选择器",
-      "Scene 的创建与运行",
-      "app.getScene 查询运行中场景"
+      "createAirApp 用 canvas 选择器（'#GameCanvas'）启动，画布必须早于引擎导入存在于 DOM",
+      "Scene 实例经 app.run 进入运行，app.getScene() 可查询当前场景",
+      "没有任何网格时，画面仍由相机决定清屏色——一个 Camera 是「看得见」的最小前提",
+      "camera.visibility 必须落在 Layers 掩码内，否则相机什么都不渲染",
+      "如何区分「引擎画的」与「DOM/CSS 背景」：body 为白色，画布为蓝色即为真帧缓冲"
     ]
   },
   "effect": {
-    "functional": "createAirApp 以 \"#GameCanvas\" 选择器启动；Scene(\"Main\") 经 app.run 进入运行；getScene() 返回该场景。",
-    "visual": "纯清屏色的空白画布（无节点），控制台输出运行日志"
+    "functional": "createAirApp 以 \"#GameCanvas\" 选择器启动；Scene(\"Main\") 经 app.run 进入运行；app.getScene() 返回该场景；场景含一个名为 Main Camera 的节点并挂载 Camera 组件，其 visibility 命中 Layers.DEFAULT、clearColor 为 (20,60,120,255)。",
+    "visual": "整屏为引擎清屏色 (20,60,120) 的纯蓝画面，无任何几何体、无文字、无 DOM 覆盖物；页面 body 背景是白色，因此只要画布呈蓝色就证明这一帧来自 WebGL 帧缓冲而不是 CSS 背景。"
   },
   "api": {
     "primary": [
       "createAirApp",
       "Scene"
     ],
-    "supporting": [],
+    "supporting": [
+      "Node",
+      "Node.addChild",
+      "Camera",
+      "Node.addComponent",
+      "Layers",
+      "Layers.DEFAULT",
+      "math.Color"
+    ],
     "claims": [
       "createAirApp",
-      "Scene"
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Camera",
+      "Node.addComponent",
+      "Layers",
+      "Layers.DEFAULT",
+      "math.Color"
     ],
     "forbiddenShortcut": [
-      "用 DOM 手绘背景冒充引擎清屏",
-      "省略 app.run 直接操作 Scene"
+      "用 DOM/CSS 背景色冒充引擎清屏（本例 body 保持白色，画面必须来自 readPixels 的真实帧缓冲）",
+      "省略 app.run 直接操作 Scene，或依赖预置场景/编辑器场景文件",
+      "省略 Camera 或把 visibility 留空，用截图非空冒充「渲染成功」"
     ],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L22"
       },
       {
         "api": "Scene",
         "source": "main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Node",
+        "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L5"
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Camera",
+        "source": "main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Layers",
+        "source": "main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "Layers.DEFAULT",
+        "source": "main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "math.Color",
+        "source": "main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L34"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [],
-      "allowEmpty": true
+      "nodes": [
+        "Main Camera"
+      ]
     }
   },
   "interaction": {
@@ -88,6 +157,7 @@
   },
   "screenshot": {},
   "license": {
-    "assets": "无第三方资产"
-  }
+    "assets": "无第三方资产（程序化场景，代码随仓库 MIT 授权）"
+  },
+  "promotionEvidence": "509d0ba585c2"
 }

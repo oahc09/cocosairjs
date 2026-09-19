@@ -1,25 +1,34 @@
 {
-  "generatedAt": "2026-09-18T23:10:24.707Z",
-  "evidenceSource": {
-    "path": "docs/evidence/v11-examples-verified.json",
-    "measuredAt": "2026-09-18T23:08:28.566Z",
-    "mode": "spec-driven-v2"
-  },
+  "generatedAt": "2026-09-19T05:12:37.086Z",
+  "evidenceSources": [
+    {
+      "path": "docs/evidence/v11-examples-verified.json",
+      "present": true,
+      "measuredAt": "2026-09-19T05:00:38.496Z",
+      "mode": "spec-driven-v2"
+    },
+    {
+      "path": "docs/evidence/v11-devtools-examples.json",
+      "present": true,
+      "measuredAt": "2026-09-19T05:01:38.455Z",
+      "mode": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/inspectNode/dispatch/captureFrame/getRuntimeErrors/close）"
+    }
+  ],
   "semantics": {
     "claimed": "api.claims 与 inventory 精确匹配（声明）",
-    "verified": "claim 所属 example 浏览器验证 PASS 且 specFingerprint 与当前 example.json 一致"
+    "verified": "claim 所属 example 在浏览器矩阵或 DevTools 会话门禁中 PASS，且 specFingerprint 与当前 example.json 一致"
   },
   "totalUnits": 4729,
-  "totalClaimed": 57,
-  "totalVerified": 57,
+  "totalClaimed": 63,
+  "totalVerified": 63,
   "staleEvidenceExamples": [],
   "tiers": {
     "core": {
       "total": 717,
-      "claimed": 43,
-      "verified": 43,
-      "claimedRate": 0.06,
-      "verifiedRate": 0.06,
+      "claimed": 49,
+      "verified": 49,
+      "claimedRate": 0.068,
+      "verifiedRate": 0.068,
       "gate": "100% verified",
       "threshold": 1,
       "pass": false
@@ -52,6 +61,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -101,6 +111,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -150,6 +161,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -186,6 +198,7 @@
         "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
+        "starter",
         "static-model",
         "texture-basic",
         "transform",
@@ -198,6 +211,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -272,6 +286,7 @@
         "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
+        "starter",
         "static-model",
         "texture-basic",
         "tween-basic"
@@ -348,6 +363,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -382,6 +398,7 @@
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
+        "starter",
         "texture-basic",
         "transform",
         "tween-basic"
@@ -405,7 +422,6 @@
         "gltf-skin",
         "gltf-viewer",
         "hello-cube",
-        "input",
         "interaction-click",
         "light-point",
         "light-sphere",
@@ -428,7 +444,6 @@
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
-        "skinned-animation",
         "static-model",
         "texture-basic",
         "transform",
@@ -473,6 +488,7 @@
         "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
+        "starter",
         "static-model",
         "texture-basic"
       ]
@@ -486,7 +502,6 @@
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
-        "hello-cube",
         "interaction-click",
         "light-point",
         "light-sphere",
@@ -577,6 +592,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -615,6 +631,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-ortho",
         "hello-cube",
@@ -645,6 +662,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -681,6 +699,7 @@
         "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
+        "starter",
         "static-model",
         "texture-basic",
         "transform",
@@ -777,6 +796,7 @@
       "unit": "builtinResMgr",
       "tier": "core",
       "examples": [
+        "automation",
         "camera",
         "hello-cube",
         "input",
@@ -888,6 +908,37 @@
       ]
     },
     {
+      "unit": "isValid",
+      "tier": "core",
+      "examples": [
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "material-transparent",
+        "mesh-multi-material",
+        "runtime-asset-release",
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.destroy",
+      "tier": "core",
+      "examples": [
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "mesh-multi-material",
+        "runtime-asset-release"
+      ]
+    },
+    {
       "unit": "GLTFLoader.parseAsync",
       "tier": "core",
       "examples": [
@@ -944,6 +995,16 @@
       ]
     },
     {
+      "unit": "Material.destroy",
+      "tier": "core",
+      "examples": [
+        "gltf-meshopt",
+        "gltf-skin",
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
       "unit": "Animation",
       "tier": "important",
       "examples": [
@@ -980,7 +1041,8 @@
       "unit": "Node.addComponent",
       "tier": "core",
       "examples": [
-        "hello-cube"
+        "hello-cube",
+        "starter"
       ]
     },
     {
@@ -995,6 +1057,24 @@
       "tier": "core",
       "examples": [
         "light-spot"
+      ]
+    },
+    {
+      "unit": "Node.destroy",
+      "tier": "core",
+      "examples": [
+        "material-transparent",
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "Mesh.destroy",
+      "tier": "core",
+      "examples": [
+        "material-transparent",
+        "static-model",
+        "texture-basic"
       ]
     },
     {
@@ -1022,7 +1102,6 @@
       "unit": "Node.getChildByName",
       "tier": "core",
       "examples": [
-        "node-hierarchy",
         "node-hierarchy"
       ]
     },
@@ -1033,13 +1112,6 @@
         "node-hierarchy",
         "node-scale",
         "transform"
-      ]
-    },
-    {
-      "unit": "isValid",
-      "tier": "core",
-      "examples": [
-        "runtime-asset-release"
       ]
     },
     {
@@ -1069,6 +1141,13 @@
       "tier": "advanced",
       "examples": [
         "skinned-animation"
+      ]
+    },
+    {
+      "unit": "Layers.DEFAULT",
+      "tier": "core",
+      "examples": [
+        "starter"
       ]
     },
     {
@@ -1102,6 +1181,14 @@
       ]
     },
     {
+      "unit": "Texture2D.destroy",
+      "tier": "core",
+      "examples": [
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
       "unit": "tween",
       "tier": "important",
       "examples": [
@@ -1127,7 +1214,6 @@
     "Mesh.onLoaded",
     "Mesh.initialize",
     "Mesh.updateSubMesh",
-    "Mesh.destroy",
     "Mesh.destroyRenderingMesh",
     "Mesh.assign",
     "Mesh.reset",
@@ -1578,7 +1664,6 @@
     "Node.dispatchEvent",
     "Node.hasEventListener",
     "Node.targetOff",
-    "Node.destroy",
     "Node.destroyAllChildren",
     "Node._removeComponent",
     "Node._updateSiblingIndex",
@@ -1635,7 +1720,6 @@
     "Layers.SCENE_GIZMO",
     "Layers.UI_2D",
     "Layers.PROFILER",
-    "Layers.DEFAULT",
     "Layers.ALL",
     "Layers.init",
     "Layers.makeMaskExclude",
@@ -1703,7 +1787,6 @@
     "Texture2D.toString",
     "Texture2D.updateMipmaps",
     "Texture2D.getHtmlElementObj",
-    "Texture2D.destroy",
     "Texture2D.description",
     "Texture2D.releaseTexture",
     "Texture2D._serialize",
@@ -1714,7 +1797,6 @@
     "Material.constructor",
     "Material.getHash",
     "Material.reset",
-    "Material.destroy",
     "Material.recompileShaders",
     "Material.overridePipelineStates",
     "Material.onLoaded",
@@ -1760,7 +1842,6 @@
     "GLTFAsset.sceneNames",
     "GLTFAsset.images",
     "GLTFAsset.meshMaterials",
-    "GLTFAsset.destroy",
     "GLTFLoader.constructor",
     "GLTFLoader.setKTX2Transcoder",
     "GLTFLoader.register",

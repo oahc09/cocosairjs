@@ -19,7 +19,8 @@
     "functional": [
       "node-exists",
       "transform-equals",
-      "no-runtime-error"
+      "no-runtime-error",
+      "material-property"
     ],
     "interaction": [],
     "visual": [
@@ -29,7 +30,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "9603bbb34f33",
+  "promotionEvidence": "3327441806ff",
   "specStatus": "frozen",
   "learning": {
     "goal": "tween() 补间链：.to 多段 + 缓动 + onComplete 循环续接",
@@ -125,7 +126,7 @@
         "api": "tween",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L2"
+        "sourceLocation": "L26"
       },
       {
         "api": "builtinResMgr",

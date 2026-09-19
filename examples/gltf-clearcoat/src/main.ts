@@ -7,6 +7,7 @@
  */
 
 import { createAirApp, Scene, Node, Camera, DirectionalLight, Layers, Vec3, Color, frameObject, GLTFLoader } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -89,18 +90,34 @@ var gltf: any = {
   scene: 0,
 };
 
-var asset = await new GLTFLoader().parseAsync(JSON.stringify(gltf));
-var instance = asset.instantiate();
-scene.addChild(instance.root);
-frameObject(camera, instance.root);
+var asset: any;
+var instance: any;
 
-// 验证三个材质的 clearcoat 属性已按扩展解析
-var coats = asset.materials.map(function (m: any) { return m.getProperty ? (m.getProperty('airClearcoat') !== undefined ? 'ok' : 'parsed') : 'n/a'; });
-console.log('[gltf-clearcoat] factors', factors, 'property states', coats);
+/** 解析构造出的 clearcoat glTF 并挂场景：首帧与 §25 合同 reacquire 共用路径。 */
+async function acquire (): Promise<any[]> {
+  asset = await new GLTFLoader().parseAsync(JSON.stringify(gltf));
+  instance = asset.instantiate();
+  scene.addChild(instance.root);
+  frameObject(camera, instance.root);
+  // 验证三个材质的 clearcoat 属性已按扩展解析
+  var coats = asset.materials.map(function (m: any) { return m.getProperty ? (m.getProperty('airClearcoat') !== undefined ? 'ok' : 'parsed') : 'n/a'; });
+  console.log('[gltf-clearcoat] factors', factors, 'property states', coats);
+  (window as any).__clearcoatState = { factors: factors, materials: asset.materials.length };
+  return [{ name: 'GLTFAsset(clearcoat)', ref: asset }, { name: 'instance.root', ref: instance.root }];
+}
+
+await acquire();
 var panel2 = document.createElement('div');
 panel2.style.cssText = 'position:fixed;left:10px;top:8px;color:#9cd;font:13px monospace';
 document.body.appendChild(panel2);
 panel2.textContent = 'clearcoatFactor: 0 | 0.5 | 1.0  (left → right)';
-(window as any).__clearcoatState = { factors: factors, materials: asset.materials.length };
+
+// §25 Lifecycle Contract：释放在建的 clearcoat 资产 → 泄漏核对 → 重新解析挂回。
+installAssetLifecycle({
+  label: 'gltf-clearcoat',
+  hold: () => [{ name: 'GLTFAsset(clearcoat)', ref: asset }, { name: 'instance.root', ref: instance.root }],
+  release: () => { instance.dispose(); asset.destroy(); },
+  reacquire: acquire,
+});
 
 app.run(scene);

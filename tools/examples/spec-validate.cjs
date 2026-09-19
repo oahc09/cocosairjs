@@ -5,6 +5,8 @@
  *   - §3/§14 API 精确绑定：primary/supporting/claims 必须逐字存在于 docs/example-api-inventory.json
  *   - §4 primary 1~3 个（1 个 Example 1 个主要教学目标）
  *   - §9 Ready Contract + §10 Validation Contract（validator id 必须是真实 runtime validator）
+ *   - §64 Capability Contract：声明 capability-status 必须有 capabilityExpectations（扩展名 + 合法状态集）
+ *   - §52 DevTools 边界：使用 DevToolsSession 单元的示例必须 requiresDevTools
  *   - §12 apiEvidence：source 文件存在、sourceLocation 行号上确能找到该 API symbol
  *
  * 执行：node tools/examples/spec-validate.cjs [--strict]
@@ -45,33 +47,9 @@ const DEVTOOLS_SESSION_UNITS = new Set([
 ]);
 const IN_UNITS = new Set([...INVENTORY_UNITS, ...DEVTOOLS_SESSION_UNITS]);
 
-const SPEC_TOKEN_HINTS = {
-  'math.Vec3': 'Vec3',
-  'math.Color': 'Color',
-};
-
-function evidenceToken (unit) {
-  if (SPEC_TOKEN_HINTS[unit]) { return SPEC_TOKEN_HINTS[unit]; }
-  const parts = unit.split('.');
-  return parts[parts.length - 1];
-}
-
-function findSymbolLine (exampleDir, sourceFile, unit) {
-  const file = path.join(exampleDir, sourceFile);
-  if (!fs.existsSync(file)) { return { error: `source ${sourceFile} not found` }; }
-  const token = evidenceToken(unit);
-  const callLike = /^[a-z]/.test(token); // method/function 小写开头 → 按调用形态匹配，避免 playOnLoad 误配 play
-  const callRe = new RegExp(`\\b${token}\\s*\\(`);
-  const wordRe = new RegExp(`\\b${token}\\b`);
-  const lines = fs.readFileSync(file, 'utf8').split('\n');
-  for (const re of [callLike ? callRe : wordRe, wordRe]) {
-    for (let i = 0; i < lines.length; i++) {
-      if (/^\s*import\b|^\s*}\s*from\s+['"]/.test(lines[i])) { continue; }
-      if (re.test(lines[i])) { return { line: i + 1 }; }
-    }
-  }
-  return { error: `symbol "${token}" (${unit}) not found in ${sourceFile}` };
-}
+// §12 行号定位与 spec-evidence 回填共用同一实现（含注释/多行 import 过滤），
+// 否则「冻结门禁」比回填器更松，evidence 可以指向注释行仍算 frozen 合规。
+const { findSymbolLine, declaredValidatorSet } = require(path.join(__dirname, 'spec-evidence.cjs'));
 
 function validateExample (dirName, spec) {
   const issues = [];
@@ -109,6 +87,8 @@ function validateExample (dirName, spec) {
       for (const unit of arr) {
         if (typeof unit !== 'string' || !IN_UNITS.has(unit)) { issues.push(`${label} API "${unit}" not in example-api-inventory (§3: exact binding)`); }
       }
+      const dup = arr.filter((v, i, a) => a.indexOf(v) !== i);
+      if (dup.length) { issues.push(`api.${label} has duplicate units: ${[...new Set(dup)].join(', ')} (§3: exact binding, no double counting)`); }
     }
     for (const unit of new Set([...primary, ...supporting])) {
       if (!claims.includes(unit)) { issues.push(`api.claims must include ${label2(unit)} "${unit}"`); }
@@ -116,12 +96,21 @@ function validateExample (dirName, spec) {
     if (forbidden.some((f) => typeof f !== 'string' || !f.trim())) { issues.push('forbiddenShortcut items must be strings'); }
 
     const evidence = needArr(spec.api.evidence, 'api.evidence', uiShell ? 0 : 1);
+    const evDup = evidence.map((e) => e && e.api).filter((v, i, a) => v && a.indexOf(v) !== i);
+    if (evDup.length) { issues.push(`api.evidence has duplicate entries: ${[...new Set(evDup)].join(', ')}`); }
+    // §12：claim=声明 / evidence+PASS=verified —— 无 evidence 的 claim 不得进入 frozen；
+    // evidence 绑定的 validator 必须是本示例 ready/validation 真正声明的，否则永不执行。
+    const declaredValidators = declaredValidatorSet(spec);
+    for (const claim of new Set(claims)) {
+      if (!evidence.some((e) => e && e.api === claim)) { issues.push(`§12: claim "${claim}" has no apiEvidence (apiClaims=声明, apiEvidence+PASS=verified)`); }
+    }
     for (const ev of evidence) {
       if (!ev || typeof ev !== 'object') { issues.push('api.evidence entries must be objects'); continue; }
       if (!claims.includes(ev.api)) { issues.push(`evidence api "${ev.api}" not in api.claims`); }
       needStr(ev.source, 'evidence.source');
       if (!/^L\d+(-L\d+)?$/.test(ev.sourceLocation || '')) { issues.push(`evidence.sourceLocation bad format: ${ev.sourceLocation}`); }
       if (!VALIDATOR_IDS.has(ev.validator)) { issues.push(`evidence.validator "${ev.validator}" is not a runtime validator`); }
+      else if (!declaredValidators.has(ev.validator)) { issues.push(`§12: evidence "${ev.api}" validator "${ev.validator}" 未被本示例 ready/validation 声明（detached evidence，运行期不会执行）`); }
       if (ev.api && ev.source && !ev.sourceLocation) {
         // 缺行号时给出定位（不打断，让 spec-evidence.cjs 回填）
         const found = findSymbolLine(exampleDir, ev.source, ev.api);
@@ -164,6 +153,28 @@ function validateExample (dirName, spec) {
   for (const key of ['functional', 'interaction', 'visual', 'lifecycle', 'capability']) {
     const arr = needArr(validation[key], `validation.${key}`);
     for (const v of arr) { if (!VALIDATOR_IDS.has(v)) { issues.push(`validation.${key} validator "${v}" is not a runtime validator`); } }
+  }
+
+  // §64 Capability Contract：声明 capability-status 必须给出机器可读的期望状态
+  const EXT_STATUSES = ['supported', 'decoder-required', 'device-dependent', 'fallback', 'unsupported'];
+  const declaresCapability = [...(validation.functional || []), ...(validation.capability || [])].includes('capability-status');
+  const expectations = validation.capabilityExpectations;
+  if (declaresCapability) {
+    const list = needArr(expectations, 'validation.capabilityExpectations', 1);
+    for (const exp of list) {
+      if (!exp || typeof exp !== 'object') { issues.push('capabilityExpectations entries must be objects'); continue; }
+      if (typeof exp.extension !== 'string' || !exp.extension.trim()) { issues.push('capabilityExpectations[].extension required'); }
+      if (!Array.isArray(exp.statuses) || exp.statuses.length === 0) { issues.push(`capabilityExpectations[${exp.extension}].statuses must be non-empty array`); continue; }
+      for (const s of exp.statuses) { if (!EXT_STATUSES.includes(s)) { issues.push(`capabilityExpectations[].statuses "${s}" is not a GLTFExtensionStatus`); } }
+    }
+  } else if (expectations !== undefined) {
+    issues.push('validation.capabilityExpectations present but capability-status not declared');
+  }
+
+  // §52 DevTools 边界：使用 Session Contract 单元的示例必须声明 requiresDevTools
+  const apiUnits = [...((spec.api && spec.api.primary) || []), ...((spec.api && spec.api.supporting) || []), ...((spec.api && spec.api.claims) || [])];
+  if (apiUnits.some((u) => DEVTOOLS_SESSION_UNITS.has(u)) && spec.requiresDevTools !== true) {
+    issues.push('uses DevToolsSession units but requiresDevTools is not true (§52)');
   }
 
   // assets 存在性

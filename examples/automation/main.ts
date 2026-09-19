@@ -152,4 +152,6 @@ try {
     const afterClose = await session.dispatch({ requestId: 'a9', action: 'createNode', targetId: 'node-1', params: {} });
     check('close 后请求 → SESSION_CLOSED', !afterClose.ok && afterClose.error?.code === 'SESSION_CLOSED', afterClose.error?.code);
     log('session closed（自有节点已清理）');
+    // 自检结果对外发布：门禁据此判定页内闭环是否真的全绿（console.log 的 FAIL 不会被浏览器错误捕获）
+    (window as any).__rcState = { pass: results.pass, fail: results.fail };
 }

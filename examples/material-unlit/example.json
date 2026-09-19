@@ -75,7 +75,7 @@
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L12"
+        "sourceLocation": "L14"
       },
       {
         "api": "DirectionalLight",
@@ -171,7 +171,8 @@
     "functional": [
       "node-exists",
       "material-property",
-      "no-runtime-error"
+      "no-runtime-error",
+      "transform-equals"
     ],
     "interaction": [],
     "visual": [
@@ -188,5 +189,5 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "e5e60981a98d"
+  "promotionEvidence": "85fe87d33619"
 }

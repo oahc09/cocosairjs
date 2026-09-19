@@ -1,37 +1,1139 @@
 {
-  "measuredAt": "2026-09-18T23:10:30.863Z",
+  "measuredAt": "2026-09-19T12:15:50.581Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
-  "contract": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/dispatch/captureFrame/getRuntimeErrors）",
+  "contract": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/inspectNode/dispatch/captureFrame/getRuntimeErrors/close）",
   "examples": [
     {
       "id": "automation",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "5079d45cff66",
+      "specFingerprint": "7225d967159c",
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
       "validatorResults": [
         {
-          "id": "inspectScene",
+          "validatorId": "attach",
           "state": "PASS",
-          "detail": "sceneId=scene-1 nodeCount=4"
+          "detail": "__benchSession=true"
         },
         {
-          "id": "dispatch:createNode",
+          "validatorId": "node-exists",
           "state": "PASS",
-          "detail": "nodeId=node-5 present=true nodeCount 4→5"
+          "detail": "sceneId=scene-1 nodeCount=4 expected=2"
         },
         {
-          "id": "captureFrame",
+          "validatorId": "node-count",
           "state": "PASS",
-          "detail": "bytes=8022"
+          "detail": "nodeCount=4 min=2"
         },
         {
-          "id": "getRuntimeErrors",
+          "validatorId": "scene-ready",
           "state": "PASS",
-          "detail": "0 runtime errors"
+          "detail": "scene=automation-demo nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2,6]"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8022 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[46,93,126] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"pass\":14,\"fail\":0}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
-      ]
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/automation.png",
+        "bytes": 5999,
+        "hash": "281aa3a571d5477a"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-capture-frame",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "0edc1d1d6ff2",
+      "sessionUnits": [
+        "DevToolsSession.captureFrame"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-capture-frame nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8474 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"captured\":true,\"repeatable\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-capture-frame.png",
+        "bytes": 6337,
+        "hash": "f27e7c41239b9f21"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-create-node",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "c33375a756c2",
+      "sessionUnits": [
+        "DevToolsSession.dispatch",
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "node-count",
+          "transform-equals",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5 expected=4"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=5 min=4"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-create-node nodeCount=5"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-7 present=true nodeCount 5→6"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 6→6 leaked=false"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=7030 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\"}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-create-node.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-error-report",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "7b6f076ec497",
+      "sessionUnits": [
+        "DevToolsSession.getRuntimeErrors",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-error-report nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=7030 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\"}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-error-report.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-inspect-scene",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "745a4cf387b5",
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-inspect-scene nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=7030 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"nodeCount\":4,\"inspected\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-inspect-scene.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "assetDigests": [],
+      "errors": []
     }
   ],
-  "total": 4,
-  "pass": 4
+  "results": [
+    {
+      "id": "automation",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "7225d967159c",
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=2"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=2"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=automation-demo nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2,6]"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8022 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[46,93,126] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"pass\":14,\"fail\":0}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/automation.png",
+        "bytes": 5999,
+        "hash": "281aa3a571d5477a"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-capture-frame",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "0edc1d1d6ff2",
+      "sessionUnits": [
+        "DevToolsSession.captureFrame"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-capture-frame nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=8474 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"captured\":true,\"repeatable\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-capture-frame.png",
+        "bytes": 6337,
+        "hash": "f27e7c41239b9f21"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-create-node",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "c33375a756c2",
+      "sessionUnits": [
+        "DevToolsSession.dispatch",
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "node-count",
+          "transform-equals",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=5 expected=4"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=5 min=4"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-create-node nodeCount=5"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-7 present=true nodeCount 5→6"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 6→6 leaked=false"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=7030 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\"}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-create-node.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-error-report",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "7b6f076ec497",
+      "sessionUnits": [
+        "DevToolsSession.getRuntimeErrors",
+        "DevToolsSession.dispatch"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-error-report nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "dispatch:createNode",
+          "state": "PASS",
+          "detail": "nodeId=node-6 present=true nodeCount 4→5"
+        },
+        {
+          "validatorId": "dispatch:error-code",
+          "state": "PASS",
+          "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=7030 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\"}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-error-report.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "assetDigests": [],
+      "errors": []
+    },
+    {
+      "id": "rc-inspect-scene",
+      "requiresDevTools": true,
+      "result": "PASS",
+      "specFingerprint": "745a4cf387b5",
+      "sessionUnits": [
+        "DevToolsSession.inspectScene",
+        "DevToolsSession.inspectNode"
+      ],
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "attach",
+          "state": "PASS",
+          "detail": "__benchSession=true"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4 expected=3"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "nodeCount=4 min=3"
+        },
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=rc-inspect-scene nodeCount=4"
+        },
+        {
+          "validatorId": "inspectNode:id-stable",
+          "state": "PASS",
+          "detail": "node ids identical across snapshots"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "Main Camera local.position=[0,2.2,6.5]"
+        },
+        {
+          "validatorId": "captureFrame",
+          "state": "PASS",
+          "detail": "bytes=7030 viewport=480x360"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "center rgb=[11,51,29] differs from clear color"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Material=1"
+        },
+        {
+          "validatorId": "getRuntimeErrors",
+          "state": "PASS",
+          "detail": "schema ok, 0 entries, dropped=0"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "session-self-report",
+          "state": "PASS",
+          "detail": "in-page checks green: {\"nodeCount\":4,\"inspected\":true}"
+        },
+        {
+          "validatorId": "detach:SESSION_CLOSED",
+          "state": "PASS",
+          "detail": "ok=false code=SESSION_CLOSED"
+        },
+        {
+          "validatorId": "detach:loop-alive",
+          "state": "PASS",
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/examples/rc-inspect-scene.png",
+        "bytes": 5254,
+        "hash": "80cdb10343a2ac68"
+      },
+      "assetDigests": [],
+      "errors": []
+    }
+  ],
+  "checks": [
+    {
+      "validatorId": "runtime-bundle-boundary",
+      "state": "PASS",
+      "detail": "runtime bundle free of DevTools session implementation"
+    }
+  ],
+  "total": 5,
+  "pass": 5,
+  "fail": 0
 }

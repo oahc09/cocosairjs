@@ -6,6 +6,7 @@
  */
 
 import { createAirApp, Scene, Node, MeshRenderer, Material, Camera, DirectionalLight, Layers, Vec3, Color, frameObject, GLTFLoader, createMeshoptDecoder, isMeshoptAvailable } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -40,22 +41,48 @@ configured.setMeshoptDecoder(decoder);
 lines.push('isMeshoptAvailable: ' + isMeshoptAvailable(decoderModule.MeshoptDecoder));
 
 var bytes = await (await fetch('./assets/meshopt-khr.glb')).arrayBuffer();
-var asset = await configured.parseAsync(bytes, './assets/');
-var instance = asset.instantiate();
-scene.addChild(instance.root);
-// fixture 无材质（默认渲染为黑）：挂标准材质使解压后的几何可见
-var visibleMaterial = new Material();
-visibleMaterial.initialize({ effectName: 'builtin-standard' });
-visibleMaterial.setProperty('mainColor', new Color(200, 205, 215, 255));
-instance.root.walk(function (node: any) {
-  var renderer = node.getComponent ? node.getComponent(MeshRenderer) : null;
-  if (renderer) { renderer.material = visibleMaterial; }
+var asset: any;
+var instance: any;
+var visibleMaterial: any;
+
+function owned (): any[] {
+  return [
+    { name: 'GLTFAsset(meshopt-khr)', ref: asset },
+    { name: 'instance.root', ref: instance.root },
+    { name: 'Material', ref: visibleMaterial },
+  ];
+}
+
+/** 解码器已配置 → 解析 → 挂场景 → 补标准材质使解压几何可见。 */
+async function acquire (): Promise<any[]> {
+  asset = await configured.parseAsync(bytes.slice(0), './assets/');
+  instance = asset.instantiate();
+  scene.addChild(instance.root);
+  // fixture 无材质（默认渲染为黑）：挂标准材质使解压后的几何可见
+  visibleMaterial = new Material();
+  visibleMaterial.initialize({ effectName: 'builtin-standard' });
+  visibleMaterial.setProperty('mainColor', new Color(200, 205, 215, 255));
+  instance.root.walk(function (node: any) {
+    var renderer = node.getComponent ? node.getComponent(MeshRenderer) : null;
+    if (renderer) { renderer.material = visibleMaterial; }
+  });
+  // 显式相机位姿：正对压缩几何（三角形位于原点附近）
+  cameraNode.setPosition(new Vec3(0.2, 0.6, 2.6));
+  cameraNode.setRotationFromEuler(-8, 0, 0);
+  lines.push('mode: decoder-configured → model visible ✓');
+  render();
+  return owned();
+}
+
+await acquire();
+
+// §25 Lifecycle Contract：meshopt 解码出的资产与补挂材质全部释放后重新解码重建。
+installAssetLifecycle({
+  label: 'gltf-meshopt',
+  hold: owned,
+  release: () => { instance.dispose(); visibleMaterial.destroy(); asset.destroy(); },
+  reacquire: acquire,
 });
-// 显式相机位姿：正对压缩几何（三角形位于原点附近）
-cameraNode.setPosition(new Vec3(0.2, 0.6, 2.6));
-cameraNode.setRotationFromEuler(-8, 0, 0);
-lines.push('mode: decoder-configured → model visible ✓');
-render();
 
 // 教学模式：未配置解码器的 loader 加载同一模型 → 稳定错误码
 var decoderState = 'loaded';

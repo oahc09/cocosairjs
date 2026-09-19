@@ -1,8 +1,12 @@
 {
-  "scanned": 22,
-  "issues": [],
-  "issueCount": 0,
-  "pass": true,
+  "scanned": 36,
+  "issues": [
+    "example gltf-draco/assets/draco.glb: missing .LICENSE.md",
+    "example gltf-meshopt/assets/meshopt-khr.glb: missing .LICENSE.md",
+    "unexpected directory in build/: examples"
+  ],
+  "issueCount": 3,
+  "pass": false,
   "licenses": {
     "LICENSE": 1060,
     "THIRD_PARTY_LICENSES.md": 4242,

@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-18T23:04:57.324Z",
+  "measuredAt": "2026-09-19T12:19:03.196Z",
   "total": 45,
   "frozen": 45,
   "draft": 0,
@@ -153,7 +153,9 @@
     {
       "id": "mesh-sphere",
       "specStatus": "frozen",
-      "issues": []
+      "issues": [
+        "validation.functional validator \"not-a-real-validator\" is not a runtime validator"
+      ]
     },
     {
       "id": "mesh-torus",

@@ -103,9 +103,13 @@ try {
         if (!fs.existsSync(path.join(pkg, required))) { failures.push(`npm pack missing: ${required}`); }
     }
     // Loading the meshopt decoder from the unpacked tree proves offline usability.
-    const meshopt = require(path.join(pkg, 'build/gltf-decoders/meshopt/meshopt_decoder.cjs'));
-    if (typeof meshopt.decodeGltfBuffer !== 'function' || typeof meshopt.ready?.then !== 'function') {
-        failures.push('unpacked meshopt decoder lacks decodeGltfBuffer/ready');
+    try {
+        const meshopt = require(path.join(pkg, 'build/gltf-decoders/meshopt/meshopt_decoder.cjs'));
+        if (typeof meshopt.decodeGltfBuffer !== 'function' || typeof meshopt.ready?.then !== 'function') {
+            failures.push('unpacked meshopt decoder lacks decodeGltfBuffer/ready');
+        }
+    } catch (err) {
+        failures.push(`unpacked meshopt decoder cannot load: ${err.code || err.name}: ${err.message}`);
     }
     // Unpacked decoder hashes must match the manifest (bytes are not mutated by packaging).
     for (const [key, entry] of rows) {
