@@ -3,9 +3,11 @@
   "evidence": [
     {
       "path": "docs/audits-tmp-jest.log",
-      "kind": "raw-test-log",
+      "kind": "transient-stdout",
       "result": "29 suites/207 tests PASS",
-      "createdBy": "audit"
+      "createdBy": "audit",
+      "status": "DANGLING-SUPERSEDED",
+      "note": "file removed after capture; current equivalent: raw/gates/reevidence-05-jest-207.log (29 suites / 207 tests PASS, 2026-09-19 12:14Z)"
     },
     {
       "path": "docs/api-coverage-report.json",
@@ -41,18 +43,21 @@
     },
     {
       "path": "v06-report (stdout)",
-      "kind": "gate-output",
-      "result": "FAIL 30/30 recipe sourceHash mismatch; jest-binding null"
+      "kind": "stdout-capture",
+      "result": "FAIL 30/30 recipe sourceHash mismatch; jest-binding null",
+      "note": "descriptor, not a file path (see raw/gates/*)"
     },
     {
       "path": "consumer-acceptance (stdout)",
-      "kind": "gate-output",
-      "result": "ok exportCount=368 (offline tarball)"
+      "kind": "stdout-capture",
+      "result": "ok exportCount=368 (offline tarball)",
+      "note": "descriptor, not a file path (see raw/gates/*)"
     },
     {
       "path": "npm pack --dry-run",
-      "kind": "artifact-audit",
-      "result": "73 files 6.3MB; excludes devtools/examples/debug"
+      "kind": "stdout-capture",
+      "result": "73 files 6.3MB; excludes devtools/examples/debug",
+      "note": "descriptor, not a file path (see raw/gates/*)"
     },
     {
       "path": "docs/evidence/examples/*.png",
@@ -224,6 +229,118 @@
       ],
       "scratch": "E:/qoder-r7i-2026-09-19/work (frozen snapshot + node_modules graft + synthetic git init + chromium via external NODE_PATH)",
       "summary": "Catalog 100/100 + golden dual-track (referenceGatePass true) + 30/30 recipes + jest 207 rebound to the frozen digest => v06-report status PASS blockers [] OFF-TREE; Agent dimension is the scripted A001 driver, so agentGate stays blocked"
+    },
+    {
+      "id": "FIXWAVE-R7-2026-09-19",
+      "findings": [
+        "F-48",
+        "F-49",
+        "F-50"
+      ],
+      "raw": [
+        "raw/gates/fixwave-r7-2026-09-19.log"
+      ],
+      "scratch": "E:/qoder-r7i-2026-09-19/work (implement + inject) and E:/qoder-fixwave-2026-09-19/verify-current (ported gates re-run against current repo content, outside the repo)",
+      "summary": "R7a inventory gate (4 injections DETECTED incl. --testPathIgnorePatterns=smoke-11), R7c structured decoder failure, R7h coverage exit code both directions, OBS-3 no-git metadata, OBS-4 revision-reachable-from-HEAD assertion, R7f screenshot bytes+hash binding (delete / same-size garbage / truncation DETECTED; identical frame reproduced by a real Chromium re-capture), R7g assetDigests binding partial (0-byte + same-size garbage DETECTED). Copy reaches spec-compliance 0 fail after re-evidence; current delivered evidence yields 11 fail / 1 warn, all pre-binding rows."
+    },
+    {
+      "id": "R7G-ASSET-BINDING-2026-09-19",
+      "findings": [
+        "F-51",
+        "F-52",
+        "F-53",
+        "F-54"
+      ],
+      "raw": [
+        "raw/negctl/nc-r7g-asset-content-binding.log",
+        "raw/negctl/r7g-00-baseline.log",
+        "raw/negctl/r7g-01-NOT-detected.log",
+        "raw/negctl/r7g-02-widened-unbound.log",
+        "raw/negctl/r7g-03-recapture.log",
+        "raw/negctl/r7g-04-after-widened-recapture.log",
+        "raw/negctl/r7g-06-repo-delivered-evidence.log",
+        "raw/negctl/r7g-07-final-over-delivered.log",
+        "raw/negctl/r7g-08-NC-E8-gate-output.log"
+      ],
+      "scratch": "E:/qoder-r7i-2026-09-19/work (injections + genuine 8/8 Chromium re-capture + jest) and E:/qoder-fixwave-2026-09-19/verify-current (widened gate over delivered evidence, off-tree)",
+      "summary": "Binding scope widened from spec.assets to spec.assets + assets/** (65 files / 4.9 MB across 8 stable examples; only 7 paths were declared). Pre-fix injections NOT detected (0 fail / EXIT 0); post-fix NC-E1..E7 all DETECTED with restore verified and copy-side integrity sweep drift 0. Copy reaches 0 fail / 1 warn after a genuine re-capture; jest 29 suites / 207 tests. Delivered evidence now 70 fail / 1 warn off-tree (F-53), re-evidence needs authorization."
+    },
+    {
+      "id": "R7G-PROVENANCE-AND-GITIGNORE-2026-09-19",
+      "findings": [
+        "F-52",
+        "F-54"
+      ],
+      "raw": [
+        "raw/negctl/r7g-07-final-over-delivered.log",
+        "raw/negctl/r7g-08-NC-E8-gate-output.log",
+        "raw/negctl/nc-r7g-asset-content-binding.log"
+      ],
+      "scratch": "E:/qoder-r7i-2026-09-19/work (NC-E8 pre-capture tamper + genuine re-capture + jest 29 suites / 207 tests)",
+      "summary": "Pre-capture tamper of a manifested asset is caught two independent ways: the browser run FAILS {material-property,resource-released} and offline S15-ASSET-PROVENANCE fires. Upstream digests cover 25 of 65 delivered asset files (SHA256.json 9 + official/manifest.json 16, disjoint sets so no clash is possible), all agreeing with disk today. Final widened gate over the DELIVERED evidence reproduces 70 fail / 1 warn with provenance contributing zero false alarms. Workspace-search tooling asserted several missing/zero-byte assets (DamagedHelmet.glb, smk11-2704619213, asset-bundles/damp/damp.glb, Assets/Texture/history.png, smoke-12-dmp-loading.test.ts, gltf-catalog .bin sidecars); none exists - direct listing finds no 0-byte file anywhere under examples/. F-54: the raw logs of this audit are git-ignored."
+    },
+    {
+      "path": "raw/gates/reevidence-00-narrative-2026-09-19.log",
+      "kind": "narrative",
+      "note": "R7g re-evidence pass, 13 sections including the commit-boundary reasoning",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "raw/gates/reevidence-01-browser-40.log",
+      "kind": "raw-gate-log",
+      "note": "full 40-example Chromium verify: 40/40 PASS, partial=false",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "raw/gates/reevidence-02-devtools.log",
+      "kind": "raw-gate-log",
+      "note": "DevTools gate 5/5 PASS plus runtime bundle boundary PASS",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "raw/gates/reevidence-03-v06-blocked.log",
+      "kind": "raw-gate-log",
+      "note": "v06-report EXIT=1 with the 30 sourceHash mismatches (F-56)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "raw/gates/reevidence-04-compliance-0fail.log",
+      "kind": "raw-gate-log",
+      "note": "widened compliance gate 45 examples 0 fail / 1 warn (F-57)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "raw/gates/reevidence-05-jest-207.log",
+      "kind": "raw-gate-log",
+      "note": "npx jest --ci 29 suites / 207 tests PASS after re-evidence",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "raw/gates/reevidence-06-devtools-screenshot-dedup.txt",
+      "kind": "measurement",
+      "note": "F-55: three DevTools artifacts byte-identical (5254B / 80cdb10343a2ac68)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "E:/qoder-fixwave-2026-09-19/pre-reevidence-200119/MANIFEST.txt",
+      "kind": "pre-write-snapshot",
+      "note": "149 files hashed before any repository evidence was overwritten",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "E:/qoder-pngflat.cjs",
+      "kind": "tool",
+      "note": "minimal PNG zlib+unfilter decoder used to prove the F-55 frames are not blank",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:30:00.000Z"
     }
   ]
 }

@@ -1,0 +1,46 @@
+Verifying 40 examples (spec-driven v2)...
+PASS anim-position
+PASS anim-rotation
+PASS camera
+PASS camera-lookat
+PASS camera-multi
+PASS camera-ortho
+PASS gltf-basic
+[bench-404] /gltf-viewer/ C:\Users\caosh\AppData\Local\Temp\v11-example-JgMJEl\workspace\gltf-viewer\index.html
+[bench-page] Failed to load resource: the server responded with a status of 404 (Not Found)
+PASS gltf-catalog
+PASS gltf-clearcoat
+PASS gltf-draco
+PASS gltf-meshopt
+PASS gltf-morph
+PASS gltf-skin
+PASS gltf-viewer
+PASS hello-cube
+PASS input
+PASS interaction-click
+PASS light-point
+PASS light-sphere
+PASS light-spot
+PASS light-two-directional
+PASS material-basic
+PASS material-color
+PASS material-transparent
+PASS material-unlit
+PASS mesh-cylinder
+PASS mesh-multi-material
+PASS mesh-plane
+PASS mesh-sphere
+PASS mesh-torus
+PASS node-active
+PASS node-hierarchy
+PASS node-scale
+PASS runtime-asset-release
+PASS skinned-animation
+PASS starter
+PASS static-model
+PASS texture-basic
+PASS transform
+PASS tween-basic
+
+== Examples spec-driven verify: 40/40 PASS, 0 promoted to stable ==
+EXIT=0

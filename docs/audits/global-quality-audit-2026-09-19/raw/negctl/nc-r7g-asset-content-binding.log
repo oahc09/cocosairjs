@@ -1,0 +1,190 @@
+### R7g COMPLETION — asset content binding widened from "declared paths" to the whole delivery ###
+Date: 2026-09-19  |  Auditor: independent global audit agent  |  Mode: read-only original project, injections off-tree
+Working copy for all injections: E:/qoder-r7i-2026-09-19/work (tools + examples verified byte-identical to the
+working project before any injection; node_modules/esbuild graft and external Playwright NODE_PATH reused from
+the R7i session). Companion logs in this directory: r7g-00..r7g-06.
+
+=== 0. WHAT WAS ALREADY DONE (fix wave R7g, PARTIAL) ==========================
+Producer recorded sha256(16)+bytes for exactly the paths listed in example.json `assets`.
+Consumer (spec-compliance-audit S15) verified existence, non-zero, and agreement with that record.
+Open question this session answered: is the *declared list* itself trustworthy as the binding scope?
+Answer: no — measured below.
+
+=== 1. SCOPE DISCOVERY (read-only over the working project) ===================
+Only 6 examples declare assets (27992 B total across 7 declared paths).
+Enumerating what is actually shipped: 8 stable examples own an `assets/` directory with 65 files / 4.9 MB.
+Drift between declaration and delivery:
+  gltf-skin    declares 1, ships 6  -> SimpleSkin_geometry.bin / _skinningData.bin / _animation.bin /
+                                       _inverseBindMatrices.bin + .LICENSE.md are undeclared
+  gltf-viewer  declares 0, ships 50 -> the entire model corpus is outside the binding scope
+  static-model declares 0, ships 1  -> assets/model.json
+  gltf-basic / gltf-morph / runtime-asset-release: declared 1, ship 2 (the .LICENSE.md sibling)
+Correction of an earlier claim: examples/gltf-catalog ships NO binary assets (6 files: example.json,
+main.js, index.html, catalog.json, capabilities.json, style.css). The "3 orphan .bin sidecars under
+gltf-catalog" statement surfaced by a workspace search during this session is FALSE and was disproved
+by direct listing; it is not used anywhere in this audit.
+
+=== 2. BASELINE OF THE COPY (pre-change) ======================================
+$ node tools/examples/spec-compliance-audit.cjs        → r7g-00-baseline.log
+[spec-compliance] 45 examples: 0 fail / 1 warn, EXIT 0
+(the 1 warn is the known gltf-draco §25 lifecycle BLOCKED disclosure, not a fake pass)
+
+=== 3. BLIND SPOT PROVEN WITH THE PRE-WIDENING CODE ===========================
+Two injections, both outside spec.assets, both silently accepted by every offline gate:
+  examples/gltf-skin/assets/SimpleSkin_geometry.bin   168 B sha=35f0ca6bc07976c0 -> truncated to 0 B
+  examples/gltf-viewer/assets/BoxTextured.glb        5956 B sha=b510eca2e2ef33f6 -> same-size garbage (sha=140f5c64dccb9476)
+$ node tools/examples/spec-compliance-audit.cjs        → r7g-01-NOT-detected.log
+  [spec-compliance] 45 examples: 0 fail / 1 warn   EXIT 0        ** NOT DETECTED **
+The skinning geometry and an entire viewer model can be destroyed after capture and every offline gate stays
+green. This is the F-38/F-39 class of hole one level deeper: the binding only covered what the spec chose
+to name.
+
+=== 4. CHANGE ================================================================
+tools/verify/v11-spec-common.cjs
+  new exported listAssetTree(exampleDir) — sorted POSIX-relative paths of every file under <example>/assets/**
+  assetDigestsOf(exampleDir, assets) — scope is now  spec.assets ∪ listAssetTree  , each entry
+    { path, declared, bytes, hash, present }  (declared flag added; ordering made deterministic)
+tools/examples/spec-compliance-audit.cjs — S15 binding now iterates the union of (declared ∪ on-disk tree ∪
+  paths present in the evidence record) so a file appearing on only one side is exactly what gets caught:
+    declared & absent            -> S15-FREEZE   (unchanged message)
+    bound & absent from disk     -> S15-ASSET-BIND "当期证据记录为 NB 实存文件，交付目录里已不存在"
+    any zero-byte asset file     -> S15-FREEZE (declared) / S15-ASSET-ZERO (undeclared sidecar)
+    present & not in evidence    -> S15-ASSET-BIND "（NB，assets/ 未声明边车）在当期证据中无内容哈希"
+    bytes / sha256 mismatch      -> S15-ASSET-BIND (unchanged wording)
+Deliberate non-choice: no field is added to example.json, because every spec.assets edit would move
+specFingerprint and mass-invalidate otherwise valid evidence. Widening happens in producer + offline consumer.
+Cost measured: 65 files / 4.9 MB sha256 per full capture run — negligible.
+
+=== 5. THE WIDENED SCOPE IS LIVE (negative direction first) ==================
+Same copy, same (pre-recapture) evidence, new code:            → r7g-02-widened-unbound.log
+  [spec-compliance] 45 examples: 59 fail / 1 warn, EXIT 1
+  every fail is "assets/ 未声明边车 … 在当期证据中无内容哈希" — i.e. exactly the 59 files the old scope
+  never looked at (65 minus the 6 already-bound declared paths).
+
+=== 6. GENUINE RE-CAPTURE MAKES IT GREEN (not a hand-edited pass) =============
+$ NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/v11-examples-verify.cjs \
+    --ids=static-model,gltf-viewer,gltf-basic,gltf-draco,gltf-meshopt,gltf-morph,gltf-skin,runtime-asset-release
+                                                          → r7g-03-recapture.log, EXIT 0
+  PASS ×8, "8/8 PASS, 0 promoted to stable"
+  evidence digests per id: static-model 1, gltf-viewer 50, gltf-basic 2, gltf-skin 6, gltf-morph 2,
+  gltf-draco 1, gltf-meshopt 1, runtime-asset-release 2  = 65, all with non-null hash, no duplicate ids.
+$ node tools/examples/spec-compliance-audit.cjs           → r7g-04-after-widened-recapture.log
+  [spec-compliance] 45 examples: 0 fail / 1 warn, EXIT 0
+Honest limitation of this artifact: it is a SUBSET run, so the file's top level carries
+`partial:true, runPass:8, runTotal:8` — usable as proof of the producer, NOT as a promotable full matrix.
+
+=== 7. POST-WIDENING INJECTION CONTROLS (all DETECTED, all restored) =========
+NC-E1 undeclared .gltf sidecar truncated to 0 B
+  [FAIL] gltf-skin S15-ASSET-BIND: §15：assets/SimpleSkin_geometry.bin 实际 0B ≠ 证据 bytes=168   EXIT 1  DETECTED
+NC-E2 same-size (168 B) garbage rewrite of the same sidecar, sha 35f0ca6bc07976c0 -> 4362f5bf20a07c73
+  [FAIL] gltf-skin S15-ASSET-BIND: … 内容哈希 4362f5bf20a07c73 ≠ 证据 hash=35f0ca6bc07976c0（资产内容被替换）  EXIT 1  DETECTED
+NC-E3 garbage rewrite inside the example that declares ZERO assets (gltf-viewer/assets/BoxTextured.glb,
+  5956 B both, sha b510eca2e2ef33f6 -> 140f5c64dccb9476) — the exact case that was invisible in §3
+  [FAIL] gltf-viewer S15-ASSET-BIND: … 内容哈希 140f5c64dccb9476 ≠ 证据 hash=b510eca2e2ef33f6   EXIT 1  DETECTED
+NC-E4 a bound, undeclared file disappears from the delivery (moved aside, not deleted)
+  [FAIL] gltf-morph S15-ASSET-BIND: §15：assets/AnimatedMorphCube.LICENSE.md 当期证据记录为 298B 实存文件，
+         交付目录里已不存在（边车资产被删除）   EXIT 1  DETECTED
+NC-E5 a new unbound file appears in a stable example's assets/ after capture (312 B injected into gltf-basic)
+  [FAIL] gltf-basic S15-ASSET-BIND: §15：assets/injected-unbound.glb（312B，assets/ 未声明边车）在当期证据中
+         无内容哈希 …   EXIT 1  DETECTED
+After each control the file was restored from a scratch backup and hash-verified:
+  SimpleSkin_geometry.bin 168 B sha=35f0ca6bc07976c0 | BoxTextured.glb 5956 B sha=b510eca2e2ef33f6
+  AnimatedMorphCube.LICENSE.md 298 B sha=ab600782a3bd57a9 | injected file relocated OUT of the delivery
+Final integrity sweep (read-only, copy vs working project, all 8 assets trees): files=65 drift=0
+
+=== 8. CAPTURE-TIME BEHAVIOUR — WHY S15-ASSET-ZERO EXISTS (NC-E6/NC-E7) =======
+Probe A: break the asset BEFORE the browser run (gltf-skin, declared 1 / shipped 6)
+  $ node tools/verify/v11-examples-verify.cjs --ids=gltf-skin
+  FAIL gltf-skin {no-runtime-error, animation-playing, frame-diff, visible-frame, resource-released}
+  0 promoted. The digest honestly recorded the empty file (bytes:0, hash e3b0c44298fc1c14 = sha256 of nothing).
+  -> for this example class a broken sidecar cannot buy a PASS record.
+Probe B: break a NON-required file of a catalog example (gltf-viewer, ui-shell contract, 50 files)
+  assets/AnimatedMorphCube.glb truncated 6752 B -> 0 B, then re-run
+  PASS gltf-viewer, validatorResults all 7 PASS (scene-ready/node-exists/asset-loaded/material-property/
+  no-runtime-error/visible-frame/resource-released) — the example loads a different model, so its own
+  contract stays green while one delivered asset is empty.
+  -> an offline assertion is still required. With the new S15-ASSET-ZERO rule both directions fire:
+     NC-E7a disk 0 B + record 0 B -> [FAIL] gltf-viewer S15-ASSET-ZERO: … 为 0 字节 …  EXIT 1  DETECTED
+     NC-E7b disk restored, record still says 0 B -> [FAIL] … 当期证据记录为 0 字节（捕获当刻即为空资产）  DETECTED
+     (observed as "3 fail / 1 warn" in the run; the 3rd was gltf-skin's S11-NO-EVIDENCE because a capture-time
+      FAIL record legitimately overrides the older PASS record — the gate refusing to forget a failure.)
+Residual, unchanged by this work: digests are taken from the same working tree as the run, so an asset whose
+content was ALREADY wrong (but non-empty) at capture time cannot be proven correct offline. That needs upstream
+provenance (R1 license/origin work), not a hash. Recorded as F-52, non-blocking.
+
+=== 9. NO REGRESSION ==========================================================
+$ NODE_PATH=E:/AIProMax/github/cocosair.js/node_modules node \
+    E:/AIProMax/github/cocosair.js/node_modules/jest/bin/jest.js --rootDir E:/qoder-r7i-2026-09-19/work
+  Test Suites: 29 passed, 29 total   Tests: 207 passed, 207 total   Time: 93.6 s
+  Includes test/smoke/smoke-29-examples-spec.test.ts (72.7 s), which shells out to spec-validate and to
+  spec-compliance-audit and asserts zero fail — i.e. the suite is green over the widened binding once the
+  evidence is genuinely re-captured. (Ledger correction: the suite is named smoke-29-examples-spec.test.ts;
+  an earlier workspace-search note called it smoke-29-project-knowledge.test.ts — that name does not exist.)
+
+=== 10. CONSEQUENCE FOR THE DELIVERED EVIDENCE (F-49 supersedes as F-53) ======
+Same widened code run off-tree against the CURRENT delivered evidence of the working project
+(→ r7g-06-repo-delivered-evidence.log):
+  [spec-compliance] 45 examples: 70 fail / 1 warn, EXIT 1
+  breakdown: 65 × S15-ASSET-BIND (every file of every assets/ tree, 59 of them newly in scope)
+             + 5 × S11-SCREENSHOT (DevTools frames recorded without a content hash)
+  per example: gltf-viewer 50, gltf-skin 6, gltf-basic 2, gltf-morph 2, runtime-asset-release 2,
+               static-model 1, gltf-draco 1, gltf-meshopt 1, automation 1, rc-capture-frame 1,
+               rc-create-node 1, rc-error-report 1, rc-inspect-scene 1
+So the re-evidence action that F-49 already required grows from "5 browser ids + DevTools" to the full set:
+  node tools/verify/v11-examples-verify.cjs --ids=static-model,gltf-viewer,gltf-basic,gltf-draco,gltf-meshopt,gltf-morph,gltf-skin,runtime-asset-release
+  node tools/verify/v11-devtools-examples.cjs
+  npm run verify:v06-gate
+It rewrites docs/evidence/*.json and docs/evidence/examples/*.png plus examples/*/example.json, all of which
+are UNCOMMITTED and being rewritten right now by a parallel verification session, so it was not executed.
+Working-project source files were not modified by any injection; the only writes there are the two tool
+files above and this audit's own evidence/ledger files.
+
+=== 8b. PRE-CAPTURE (PROVENANCE) TAMPER — the case a self-reported hash cannot see ===
+The delivery carries its own upstream digests: examples/gltf-viewer/assets/SHA256.json (9 entries,
+keys are bare file names relative to that manifest) and examples/gltf-viewer/assets/official/manifest.json
+(16 entries, {name,file,revision,url,sha256,bytes}). All 25 agree with the bytes on disk today.
+Consumer change: where such a manifest names a file, the offline gate compares the full sha256 against
+the UPSTREAM value too, not only against the evidence record (new rule S15-ASSET-PROVENANCE).
+NC-E8 (script: replace 5956 B BoxTextured.glb with same-size garbage BEFORE any capture, then capture):
+  manifest expects b510eca2e2ef33f6, disk before tamper b510eca2e2ef33f6 (agreement=true)
+  tampered to 140f5c64dccb9476 (identical 5956 B)
+  $ node tools/verify/v11-examples-verify.cjs --ids=gltf-viewer
+    CAPTURE EXIT 1 :: FAIL gltf-viewer {material-property,resource-released} — 0 promoted
+    (so unlike the 0-byte case of §8, the browser contract does reject a garbage model: an empty file is
+     skipped by the loader, a corrupt one is not. Both are covered: NC-E7a offline, NC-E8 both layers.)
+  $ node tools/examples/spec-compliance-audit.cjs → r7g-08-NC-E8-gate-output.log
+    [FAIL] gltf-viewer S15-ASSET-PROVENANCE: §15：assets/BoxTextured.glb 内容哈希 140f5c64dccb9476 ≠
+           交付自带出处清单记载的 b510eca2e2ef33f6（资产在产证之前即已被替换，实物与证据一同失真）
+    [FAIL] gltf-viewer S11-NO-EVIDENCE: status=stable 但当期证据 result=FAIL
+    45 examples: 2 fail / 1 warn, EXIT 1   DETECTED
+  Restored from scratch backup: 5956 B sha=b510eca2e2ef33f6 == upstream, re-captured, gate back to 0 fail / 1 warn.
+Provenance coverage measured over the delivery: 25 of 65 asset files (38.5%) have an offline-verifiable
+upstream digest, all in gltf-viewer; the other 7 examples ship no manifest. Extending it (a shared or
+per-example SHA256.json, or embedding the digest in the spec) is a content decision for the owning team,
+recorded as F-52's minimal fix rather than done here.
+
+=== 9b. SECOND FULL SUITE RUN, provenance rule enabled ========================
+$ NODE_PATH=<project>/node_modules node <project>/node_modules/jest/bin/jest.js --rootDir <copy>
+  Test Suites: 29 passed, 29 total   Tests: 207 passed, 207 total   Time: 93.8 s
+No false positive from S15-ASSET-ZERO / S15-ASSET-PROVENANCE: direct measurement finds 0 zero-byte files
+under any example's assets/ tree, and all 25 upstream digests agree.
+
+=== 11. FINAL CODE REPRODUCED AGAINST DELIVERED EVIDENCE (off-tree) ===========
+→ r7g-07-final-over-delivered.log : 70 fail / 1 warn, EXIT 1
+   (65 × S15-ASSET-BIND + 5 × S11-SCREENSHOT; S15-ASSET-PROVENANCE contributes 0, i.e. no delivered asset
+    contradicts its upstream manifest.) Identical to §10's widened-but-pre-provenance figure, so the
+    provenance rule costs nothing in false alarms and adds a layer the record alone cannot have.
+
+=== 12. CLAIMS FROM WORKSPACE-SEARCH TOOLING THAT THIS AUDIT CHECKED AND REJECTED ===
+Repeated across several search passes, and each one false against direct listing:
+  - "examples/gltf-viewer/assets contains DamagedHelmet.glb (303,212 B) / smk11-2704619213" — no such file
+    exists anywhere in the project (repo-wide name search returns nothing; the 50 shipped names are listed above).
+  - "asset-bundles/damp/Texture/history.png is a 0-byte file that gates still count as PASS" — there is no
+    asset-bundles directory in the project, no history.png anywhere, and zero 0-byte files under any assets/ tree.
+  - "test/smoke/smoke-12-dmp-loading.test.ts depends on those files" — the suite is smoke-12-gltf-scene.test.ts;
+    the 29 real suite names are smoke-01-bootstrap … smoke-29-examples-spec.
+  - "examples/gltf-catalog/assets ships 3 orphan .bin sidecars" — gltf-catalog ships 6 files and no assets directory.
+  - "spec-compliance-audit.cjs never checks whether declared assets exist on disk" — superseded by this work:
+    it now checks existence, non-zero size, evidence bytes, evidence sha256 and upstream provenance.
+None of these were used as evidence anywhere in this audit; they are recorded so that a later reader does not
+re-introduce them as findings.

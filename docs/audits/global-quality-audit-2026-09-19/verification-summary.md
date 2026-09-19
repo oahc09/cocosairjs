@@ -211,3 +211,71 @@ User authorized exactly the two top resume items on 2026-09-19, then resumed. Bo
 结论两面都要说清。**好的一面**：V0.6 整链（100 catalog + golden-10 reference + 30 recipe + 207 jest）能在一个冻结摘要上仓库外复现全绿 ⇒ 交付树的 v06 FAIL 确证为"证据过期"，F-45 的归因端到端闭合，修复动作就是那 4 条命令。**必须打折的一面**：Agent 轨驱动是 `tools/benchmark/driver/manual-driver.ts` 的 `ManualAgentDriver`（profile A001，scripted，`driver/*.ts` 里没有任何 LLM 端点/取 key 代码），每行 `repairs=0 denials=[]`，所以 `agentFinalSuccessRate 1.0 / firstCompileSuccessRate 1.0` 量的是测试作者预先写好的补丁，不是模型。**"v06-report PASS" ≠ "Agent 能力已验证"**——这是本次审查里最典型的"门禁绿在代理指标上"。`agentGate` 继续 FAIL/BLOCKED（R5：真生成式 LLM 轨 + 全新 build/页面 + 保留全部重复）。交付树的 `docs/evidence/*` 本次未被本审计改写，原地仍报 3 条 stale blocker。
 
 本次未提升任何门禁到 PASS（副本内复现不等于交付证据），gates 仍 22 = 9 PASS / 3 FAIL / 7 PARTIAL / 3 NOT_RUN，blocking 14，`overall` **NOT_READY**；findings **47**（F-01…F-47 唯一），evidence **23** 条、悬空指针 0。
+
+
+---
+## UPDATE 16 — authorized fix wave executed (R7a / R7c / R7f / R7g partial / R7h / OBS-3 / OBS-4)
+- Everything was implemented and injected in an isolated copy first (`E:/qoder-r7i-2026-09-19/work`, the F-41/R7i toolchain recipe), then ported into the repo only after each target file was re-verified byte-identical to the F-43 frozen snapshot (`blocked=0`). The ported set is 10 tool/package files + 2 new files (`tools/verify/test-inventory.cjs`, `docs/test-inventory.json`). No `src/`, `examples/`, `test/`, `build/` file and no evidence JSON/PNG was written inside the repo; nothing staged, committed or pushed. Full log: `raw/gates/fixwave-r7-2026-09-19.log`.
+- New or hardened assertions, each with a proven DETECTED injection: suite/test inventory (4 controls, incl. the exact `--testPathIgnorePatterns=smoke-11` retest R7a demanded, which `npm test` had passed GREEN); screenshot content binding (delete / same-size garbage / truncation); declared-asset content binding (0-byte / same-size garbage); coverage tiers now drive the exit code (FAIL at core 49/717, and a sacrificial threshold=0 probe proved EXIT 0 is reachable); recorded revisions must be commits reachable from HEAD (unreachable-revision injection -> BLOCKED, restore -> PASS); `metadata()` survives a missing `.git` (F-46 crash removed) instead of aborting a 30-recipe run.
+- Nothing was weakened to get there: the frame-diff 400 ms two-frame contract and its thresholds are byte-unchanged (F-41 guardrail), and smoke-22 / smoke-23 were not touched (F-44 keeps their DETECTED status intact). The work copy is 29 suites / 207 tests PASS after all edits; the gltf-basic re-capture reproduced the identical 21695 B / 2111b65b8ff3af23 frame, which is why "the tightened gate is satisfiable by a real run, not by hand-editing evidence" can be claimed.
+- Honest cost (F-49, blocking): the tightened gate is stricter than the *delivered* evidence, so against current repo content spec-compliance reports 11 fail / 1 warn - every one of them "evidence recorded before binding existed" (5 DevTools screenshots without hash, 6 example assets without assetDigests), with zero bytes/hash contradictions. Because smoke-29 asserts spec-compliance zero-fail, `npm test` in the repo is RED until the two example gates run in-repo. Those commands rewrite `docs/evidence/*.json` and `docs/evidence/examples/*.png`, all of which are uncommitted and being rewritten by the parallel session right now, so they were deliberately NOT run. In the copy the same chain closes at 0 fail / 1 warn.
+- Gate movements: `testCredibility_jest` gap now machine-enforced (adoption into CI still open), `negativeControls` 8/8 executed controls now DETECTED (agent compile-fail still NOT_RUN), `exampleStableVerify` offline half no longer existence-only but pending re-evidence, `apiCoverage` enforced yet still FAIL at 6.8% Core, `v06FinalGate_recipe` attribution enforced and still FAIL in-repo (delivered recipe sourceHash f5ebd60f vs current ac1b1515). `blockingForRelease` 14 -> 12 (three binding items closed by code, one re-evidence item opened). Overall stays **NOT_READY**: no gate was promoted to PASS on the delivered candidate.
+- R7g stays PARTIAL by design and is labelled as such: digests are recorded in EVIDENCE (not in `example.json`, which would churn every specFingerprint) and are taken from the same working tree as the run, so post-capture replacement is detectable while an already-wrong upstream asset still needs the R1 provenance/license work.
+- Also surfaced (F-50, non-blocking): the 3234 -> 3587 file delta is entirely `build/.tmp-*` leftovers from earlier runs, invisible to git but inside any whole-tree candidate digest; and one full jest run in a partial copy flaked ("suite failed to execute: smoke-05", 204 tests) while the identical command immediately after was 207/207.
+
+
+## UPDATE-17 (2026-09-19) — R7g binding scope completed off-tree; overall remains NOT_READY
+
+The R7g fix wave bound only what `example.json` named. Measured: 8 stable examples ship 65 files / 4.9 MB under
+`assets/`, of which 7 paths were declared. With the pre-widening code, truncating `SimpleSkin_geometry.bin` to 0 B
+and replacing a `gltf-viewer` model with same-size garbage both left `spec-compliance-audit` at 0 fail / EXIT 0 —
+the same "exists therefore true" class as F-38/F-39, one level deeper. Scope is now `spec.assets ∪ assets/**` in both
+producer and consumer, plus a `S15-ASSET-ZERO` assertion. 7 injections DETECTED, each restored and hash-verified;
+copy-vs-project asset integrity sweep 65 files / drift 0; a genuine 8/8 PASS Chromium re-capture returns the copy to
+0 fail / 1 warn; jest 29 suites / 207 tests. Costs stated honestly: delivered evidence is now 70 fail / 1 warn
+off-tree (F-53 supersedes F-49, re-evidence set grew to 8 browser + 5 DevTools ids), no in-repo run was performed
+because those evidence paths are uncommitted and being rewritten by a parallel session; and a wrong-but-non-empty
+asset at capture time still cannot be disproved offline (F-52). Two search-agent claims were checked and rejected
+rather than repeated: "gltf-catalog ships 3 orphan .bin sidecars" (that example has no assets directory at all) and
+"the §11 zero-fail assertion lives in smoke-29-project-knowledge.test.ts" (the file is smoke-29-examples-spec.test.ts).
+Overall remains NOT_READY.
+
+### UPDATE-18 (2026-09-19 12:14Z) — R7g re-evidence executed in-repo; F-53 cleared; two new findings
+
+Authorization: "先提交git，可以授权继续完成剩余任务" (re-evidence pass + commit; push not authorized).
+
+The widened `assetDigests` binding was closed end-to-end **without weakening itself**: the 70-fail
+state over delivered evidence (F-53) was resolved by genuine re-capture, and the offline gate now
+prints **0 fail / 1 warn** over 45 examples with the sole survivor being the deliberate
+`gltf-draco` S25-LIFECYCLE BLOCKED warn. Numbers now measured, not remembered:
+browser matrix **40/40 PASS, partial=false**; DevTools **5/5 PASS** with `artifact.hash` on all five;
+**65/65** asset rows bound (6 declared + 59 undeclared sidecars), zero-byte rows **0**; full suite
+**29 suites / 207 tests PASS**. Asset tree digest `9675f73069eae7b4` (65 files / 5,191,306 B) is
+identical before and after, and `git status` shows **0** dirty paths under any `assets/` directory —
+the audit touched no delivery asset.
+
+Attribution discipline applied to two red items:
+- `verify:v06-gate` **EXIT=1** is **not** this wave's doing (F-56): the golden dual-track evidence is
+  dated 09-17 at `3ee7cafe` and the 30 Recipe runs 09-18 at `f5ebd60f`, while `sourceHash` has been
+  `ac1b1515` since before this session and did not move during it; the catalog set was already
+  re-run to `ac1b1515` on 09-19 05:07 and `v06-review-gate.json` was BLOCKED at 05:08, before any
+  write by this audit.
+- New finding **F-55**: three DevTools examples produce one byte-identical frame
+  (`80cdb10343a2ac68`, 5254 B) after a fresh capture. Decoded pixels prove it is a real render, and
+  the specs (`["visible-frame"]` only, shared `expectedGraph`) explain it. The hash binding still has
+  teeth; the visual claim simply cannot discriminate between those three. Left as a spec decision.
+
+Self-corrections recorded (log §10, §14): the repo declares **6** asset paths not 7; the DevTools
+producer **does** call `assetDigestsOf` (its `[]` means "no assets/ tree", not "blind"); the 5 S11
+screenshot failures needed no code change; and this audit's own `dangling=0` evidence-index check was
+too weak (it never resolved paths) — re-run strictly it found **1** real dangling pointer
+(`docs/audits-tmp-jest.log`, transient, now annotated DANGLING-SUPERSEDED) plus 3 stdout descriptors.
+
+Commit boundary (log §12): this audit commits its own tooling and ledger only
+(`tools/verify/v11-spec-common.cjs`, `tools/examples/spec-compliance-audit.cjs`, `docs/audits/**` with
+raw logs force-added because `.gitignore` hides `*.log`). The regenerated `docs/evidence/**` stays in
+the working tree with the 45 `example.json` it fingerprints, because splitting them across commits
+would create a clean-checkout `S11-STALE-EVIDENCE` failure and committing them would land another
+session's in-flight specs under an audit message.
+
+**Overall remains NOT_READY** (11 blocking items: F-56 replaces the cleared F-53 slot).

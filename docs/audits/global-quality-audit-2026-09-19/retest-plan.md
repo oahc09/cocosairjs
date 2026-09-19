@@ -60,3 +60,60 @@ Ordered so cheap deterministic retests gate the expensive isolated ones.
 - Execute Quick Start / glTF+decoder / DevTools / Gallery doc commands in each isolated consumer; confirm filenames/pkg/API/DOM-precondition/deploy-path/error-codes/support-state match artifacts.
 
 Exit: overall release PASS only when R0-R7 mandatory gates are PASS on a frozen candidate with bound evidence and stated real backend.
+
+
+---
+## FIX-WAVE STATUS 2026-09-19 (F-48 / F-49 / F-50, evidence `raw/gates/fixwave-r7-2026-09-19.log`)
+- R7a CLOSED: `tools/verify/test-inventory.cjs` + `docs/test-inventory.json` + `npm run verify:test-inventory`. Recorded retest satisfied: `-- --testPathIgnorePatterns=smoke-11` -> EXIT 1 "required suite not executed" (was GREEN 28/188). Three further injections DETECTED (suite removed, title renamed, test.skip).
+- R7c CLOSED: missing decoder -> 3 structured failures, stderr 0 bytes, EXIT 1 (control EXIT 0).
+- R7f CLOSED: S11-SCREENSHOT now binds on-disk bytes + sha256[0..16) to the evidence record; DevTools producer now records the hash like the browser producer. NC-C1 (delete), NC-C2 (same-size garbage -> hash branch), NC-C2b (truncation -> bytes branch) all EXIT 1; fresh real-Chromium re-capture reproduces the same frame and passes.
+- R7g PARTIAL: `assetDigestsOf()` recorded by all three producers + S15-ASSET-BIND enforced; 0-byte and same-size garbage DETECTED. Still open: provenance of an asset that was already wrong at capture time (needs R1), and in-repo re-evidence (F-49).
+- R7h CLOSED: exit code from tier flags + `npm run verify:api-coverage` named as the authoritative entry; both directions proven. The underlying Core 100% shortfall is R2 work, untouched.
+- F-46 OBS-3 CLOSED (`.git` tolerated, `gitAvailable` reported) and OBS-4 CLOSED with a deliberate contract choice: revision is ATTRIBUTION (must be a commit reachable from HEAD), not freshness - demanding `revision == HEAD` was rejected as it would force a 30-recipe browser re-run per unrelated commit; the recorded-vs-HEAD delta is printed in `docs/v06-final-gate.md` instead.
+- R4/R0 consequence: `sourceHash` (ac1b1515...) unchanged by this wave, so the F-45/F-46/F-47 off-tree rebinds remain valid; the re-freeze is recorded in `candidateFreeze.refreeze_afterFixWave`.
+- NEW blocking item for the plan: re-run `v11-examples-verify --ids=gltf-draco,gltf-meshopt,gltf-morph,gltf-skin,runtime-asset-release` + `v11-devtools-examples` in-repo (needs authorization; rewrites uncommitted evidence), then `verify:v06-gate`. Until then `npm test` is RED via smoke-29 by design, not by accident.
+
+
+## R7g COMPLETION STATUS 2026-09-19 (asset content binding, F-51/F-52/F-53)
+
+- R7g **CLOSED for the offline surface, with a disclosed limit**: binding scope is now `spec.assets ∪ assets/**`
+  (65 files / 4.9 MB over 8 stable examples; only 7 paths were declared). Producer records
+  `{path, declared, bytes, hash, present}`; consumer asserts zero-byte (`S15-ASSET-ZERO`), bound-but-absent,
+  unbound-new-file and bytes/hash mismatch. Evidence: `raw/negctl/nc-r7g-asset-content-binding.log`.
+- **Corrected command list** (supersedes the 5/6-id lists in the fix-wave log §9/§9b):
+  `node tools/verify/v11-examples-verify.cjs --ids=static-model,gltf-viewer,gltf-basic,gltf-draco,gltf-meshopt,gltf-morph,gltf-skin,runtime-asset-release`
+  then `node tools/verify/v11-devtools-examples.cjs` then `npm run verify:v06-gate`.
+- R7g-limitation (new, non-blocking, = F-52): per-asset loadability at capture time is not proven for catalog-style
+  examples (gltf-viewer PASSed all 7 validators with one 0-byte model). Unlock = R1 provenance or per-asset coverage.
+- New R-item to keep in view: `docs/evidence/v06-catalog-runtime-gate.json` lists assets with `path/bytes/usage` but
+  **no hash** — same content-binding gap in the v06 catalog gate, not covered by `run.assetDigests`.
+
+## R7g-5 RE-EVIDENCE EXECUTED (2026-09-19 12:01-12:14Z, user-authorized)
+
+| step | command | result |
+|---|---|---|
+| pre-write snapshot | 149 files + MANIFEST.txt in `E:/qoder-fixwave-2026-09-19/pre-reevidence-200119` | done before any overwrite |
+| pilot | `node tools/verify/v11-examples-verify.cjs --ids=static-model` | PASS (proves NODE_PATH playwright works in-repo) |
+| subset | same, 7 remaining browser ids | 7/7 PASS |
+| full | `node tools/verify/v11-examples-verify.cjs` (no --ids) | **40/40 PASS, partial=false** (chosen so the committed claim is not a subset merge) |
+| DevTools | `node tools/verify/v11-devtools-examples.cjs` | **5/5 PASS**, runtime bundle boundary PASS, artifact.hash present on all 5 |
+| R7g gate | `node tools/examples/spec-compliance-audit.cjs` | **45 examples: 0 fail / 1 warn**, EXIT=0 |
+| suite | `npx jest --ci` | **29 suites / 207 tests PASS**, 62.4 s |
+| V0.6 | `node tools/verify/v06-report.cjs` | **EXIT=1** - pre-existing, see F-56 |
+
+Status changes: **F-53 cleared (recorded as F-57)**, F-51 already fixed, new **F-55** (three identical
+DevTools frames; spec decision, not tooling) and new **F-56** (golden dual-track + 30 recipe runs stale
+against current `sourceHash`).
+
+### Open R-items after this pass
+- **R0** frozen-candidate browser forensics — still NOT_RUN (copy lacks the grafted toolchain).
+- **R-NEW (from F-56)** V0.6 track re-run: `run-recipes-browser.cjs` + golden dual-track + jest --json into
+  `output/v06-review-jest.json`, then `v06-report.cjs` until status=PASS. Independent of R7g.
+- **R-NEW (from F-55)** replace bare `visible-frame` with an example-distinguishing visual validator.
+- **R1** two example `.LICENSE.md` files + extend upstream provenance manifests (only 25/65 asset files,
+  38.5% of bytes, are provable against a shipped manifest today).
+- **R1b** gltf-meshopt absolute decoder path; **R1c** Gallery-static vs DevTools profiles (F-34/F-35).
+- **R2** API denominator (Core 49/717); **R3** Firefox/WebKit; **R5** real-LLM Agent track; **R6** perf/≥50
+  dispose exclusive run; **R8** docs-as-run consumers.
+- **v06 catalog `assets[]` has `path/bytes/usage` but no `hash`** — the same class of hole R7g closed for
+  examples; still open for recipes.
