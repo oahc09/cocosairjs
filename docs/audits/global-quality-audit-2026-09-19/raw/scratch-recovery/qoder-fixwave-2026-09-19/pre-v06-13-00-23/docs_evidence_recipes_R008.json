@@ -1,0 +1,139 @@
+{
+  "before": {
+    "id": "R008",
+    "semantic": "exploded-toggle",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 3,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "initialPosition": [
+        -1.6,
+        0,
+        0
+      ]
+    },
+    "position": [
+      -1.6,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "after": {
+    "id": "R008",
+    "semantic": "exploded-toggle",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 1,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 3,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": true,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "initialPosition": [
+        -1.6,
+        0,
+        0
+      ]
+    },
+    "position": [
+      -2.5,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "scene": {
+    "sceneId": "scene-1",
+    "name": "R008",
+    "nodeCount": 6,
+    "componentCount": 5,
+    "componentsByType": {
+      "Camera": 1,
+      "DirectionalLight": 1,
+      "MeshRenderer": 3
+    },
+    "cameraCount": 1,
+    "lightCount": 1,
+    "rendererCount": 3,
+    "uniqueAssetCount": {
+      "total": 12,
+      "byKind": {
+        "Node": 6,
+        "Mesh": 3,
+        "Material": 3
+      }
+    },
+    "nodes": [
+      {
+        "id": "node-1",
+        "name": "R008",
+        "parentId": null
+      },
+      {
+        "id": "node-2",
+        "name": "recipe-camera",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-3",
+        "name": "recipe-light",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-4",
+        "name": "exploded-toggle-0",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-5",
+        "name": "exploded-toggle-1",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-6",
+        "name": "exploded-toggle-2",
+        "parentId": "node-1"
+      }
+    ],
+    "truncated": false
+  }
+}

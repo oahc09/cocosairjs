@@ -117,3 +117,33 @@ against current `sourceHash`).
   dispose exclusive run; **R8** docs-as-run consumers.
 - **v06 catalog `assets[]` has `path/bytes/usage` but no `hash`** — the same class of hole R7g closed for
   examples; still open for recipes.
+
+## R4 / F-56 CLOSED — full V0.6 track re-run in the repo (2026-09-19 21:00–21:12 +08, user-authorized)
+
+Evidence: `raw/gates/v06-fulltrack-2026-09-19.log`; pre-overwrite hash manifest
+`E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/MANIFEST.json` (69 files).
+
+- Started from a **clean tree at e06d2988**; nothing relaxed: `validateEvidenceSet`, `artifactExists`,
+  `scenarioHash`, the `sourceHash` equality and the revision-reachability assertion all ran unchanged.
+- `run-dual-track.cjs` EXIT 0 → 10 rows (9 PASS + B051 EXPECTED_UNSUPPORTED), agent metrics
+  Type-B 6 / first-compile 1.0 / final 1.0 / median repairs 0.
+- `run-recipes-browser.cjs` EXIT 0 → **30/30 PASS**, 30 distinct `scenarioHash`, single revision `e06d2988`.
+- `npx jest --ci --json --outputFile=output/v06-review-jest.json` → success, 29 suites / 207 tests.
+- `node tools/verify/v06-report.cjs` → **EXIT 0, status=PASS, blockers=[]**. Immediately before this pass
+  (recorded 2026-09-19T12:16:03Z in git) it was `BLOCKED` with **3 blockers** and **30** recipe
+  `evidenceFailures`; the 4-blocker figure in the earlier fix-wave log was a different, still-older state.
+- Independent RAW recompute by the auditor: 60/60 recipe artifacts re-hashed off disk with 0 unbound.
+- **`v06FinalGate_recipe` removed from `blockingForRelease` (11 → 10).**
+- Two NEW non-blocking findings came out of the same run and stay open:
+  - **F-60** — recipe `visual` assertion is non-discriminating: 24 distinct PNG hashes for 30 runs;
+    `R022=R023=R024=R025` (clearcoat/transmission/anisotropy/iridescence share one frame), plus
+    `R001=R006`, `R004=R010`, `R005=R009`. Retest = the 4 extension recipes must yield 4 distinct artifact
+    hashes, or their specs must stop claiming per-extension visual proof. Needs an owner decision.
+  - **F-61** — `v06-catalog-runtime-gate.json` still records revision `3a53957` (sourceHash matches, so it
+    passes the ancestor test). Retest = re-run `tools/verify/v06-catalog-gate.cjs` so all three V0.6 inputs
+    name one revision, or make `v06-report.cjs` warn on per-source revision drift.
+- Still open from before, unchanged by this pass: **R1** licenses/provenance, **R1b/R1c** Gallery
+  self-containment, **R2** API denominator, **R3** Firefox/WebKit, **R5** real-LLM Agent, **R6** exclusive
+  perf, **R8** docs-as-run, and the catalog `assets[]` **missing `hash`** (recipe-side twin of the R7g hole).
+- Process note (F-61 §8c): never run `git status` while a capture runner is writing `docs/evidence/**` —
+  it broke git's index refresh once here.

@@ -1,0 +1,3020 @@
+{
+  "measuredAt": "2026-09-18T17:43:27.180Z",
+  "runIdBase": "recipe-1789753299700",
+  "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+  "baseRevision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+  "total": 30,
+  "pass": 30,
+  "fail": 0,
+  "runs": [
+    {
+      "recipeId": "R001",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R001",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R001-1",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "1eb560e95b92d011c2eb3ee65c8fbdac8badf6c617415fcf96907726787e88fd",
+      "measuredAt": "2026-09-18T17:41:43.616Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [
+        "examples/gltf-viewer/assets/BoxTextured.glb"
+      ],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "打开页面即自动展示",
+        "拖动画布旋转视角（可选）"
+      ],
+      "visualTarget": "模型在画面中心且纹理可见",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R001"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=707"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "textured-model"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[\"examples/gltf-viewer/assets/BoxTextured.glb\"]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R001.png",
+          "hash": "17da85d683996a96a6f405cfc94079b64b505413de07474f81e56c56e36a8437",
+          "bytes": 22892
+        },
+        {
+          "path": "docs/evidence/recipes/R001.json",
+          "hash": "f50b8c9395edd38449448d8f96bdcca46fd08ca1b40502838591adce2105d0ba",
+          "bytes": 2680
+        }
+      ]
+    },
+    {
+      "recipeId": "R002",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R002",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R002-2",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "1de1077319fdc8981f4ab09e4ffec94681a6dff472a0b624cf6dc56589b0cacc",
+      "measuredAt": "2026-09-18T17:41:47.482Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [
+        "examples/gltf-viewer/assets/AnimatedMorphCube.glb"
+      ],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "页面加载后自动播放动画",
+        "帧间画面差异验证动画确实在播"
+      ],
+      "visualTarget": "动画帧间画面变化（frame-diff 通过）",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R002"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "animation-playing",
+          "state": "PASS",
+          "detail": "1 animation component(s)"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=326"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "clip-playing"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[\"examples/gltf-viewer/assets/AnimatedMorphCube.glb\"]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "wait"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R002.png",
+          "hash": "0019012b892e0f00c3657a3fd9a0fb77924043898fefbda8db8b84bb780a47da",
+          "bytes": 5746
+        },
+        {
+          "path": "docs/evidence/recipes/R002.json",
+          "hash": "eae5535cd6819a9d579d13e93106d698c628ecd50bb532471642c49a8209ffd2",
+          "bytes": 2656
+        }
+      ]
+    },
+    {
+      "recipeId": "R003",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R003",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R003-3",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "7e03f9ea205805d7f6719ad5900dcff41d65728c5a1dac0c7139d877bcaa8965",
+      "measuredAt": "2026-09-18T17:41:51.182Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "按键/拖拽触发角色响应"
+      ],
+      "visualTarget": "角色随输入产生位姿变化",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R003"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=79"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "keyboard-move"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "keyboard"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R003.png",
+          "hash": "c32b56f261a783606ced84df01cb43c0d33c359e4518a3b1a3a62cdc17b77989",
+          "bytes": 5698
+        },
+        {
+          "path": "docs/evidence/recipes/R003.json",
+          "hash": "b01d31251b70d96b0c42d804f9f6c398004ce912f2496618e19cdc51aab08cbb",
+          "bytes": 2190
+        }
+      ]
+    },
+    {
+      "recipeId": "R004",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R004",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R004-4",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "9b957b0c4c4b91b6a44ab0f24aab4abb4cf811d9032f820cf22241fbf9a25c41",
+      "measuredAt": "2026-09-18T17:41:54.483Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [
+        "examples/gltf-viewer/assets/BoxTextured.glb"
+      ],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "多实例同屏呈现"
+      ],
+      "visualTarget": "两处以上模型实例同时可见",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R004"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "9"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=670"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "multi-instance"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[\"examples/gltf-viewer/assets/BoxTextured.glb\"]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":2,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R004.png",
+          "hash": "bc8734831d6710da85f0d6813ec2c94a3a374b37d501d426faf113ed1bdb5dd7",
+          "bytes": 24122
+        },
+        {
+          "path": "docs/evidence/recipes/R004.json",
+          "hash": "68eef4ad5f477b87be4f3d509c383e986af6defc5d6726ce15220b41611c7ccb",
+          "bytes": 3022
+        }
+      ]
+    },
+    {
+      "recipeId": "R005",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R005",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R005-5",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "f9029956991805c85bd84dca2c25abf7de967987d2ba2c18965037321e0b6175",
+      "measuredAt": "2026-09-18T17:41:58.132Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "查看材质变体"
+      ],
+      "visualTarget": "各材质变体渲染正确",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R005"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=158"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "material-variants"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":4,\"assetsAfter\":0,\"nodesBefore\":2,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R005.png",
+          "hash": "920561285f99660634217385dc2279c382b6bf4fafc6a38de0571b21a9a34767",
+          "bytes": 6631
+        },
+        {
+          "path": "docs/evidence/recipes/R005.json",
+          "hash": "fa6808173bb89d2ee87d2379848178ef64d52ebafed649643e92d5b36a4a297e",
+          "bytes": 2321
+        }
+      ]
+    },
+    {
+      "recipeId": "R006",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R006",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R006-6",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "56c5a4420d1592ef5918f544cfe8b9f23ecfe760cfb5e1d77ada079ffd45eec6",
+      "measuredAt": "2026-09-18T17:42:01.598Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [
+        "examples/gltf-viewer/assets/BoxTextured.glb"
+      ],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "页面加载即完整呈现产品"
+      ],
+      "visualTarget": "产品居中且纹理完整",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R006"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=707"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "product-framed"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[\"examples/gltf-viewer/assets/BoxTextured.glb\"]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R006.png",
+          "hash": "17da85d683996a96a6f405cfc94079b64b505413de07474f81e56c56e36a8437",
+          "bytes": 22892
+        },
+        {
+          "path": "docs/evidence/recipes/R006.json",
+          "hash": "88fc81d0947d3e346de6cf8524fd9d4cf18558aa92939456532e6b3c6e817f42",
+          "bytes": 2680
+        }
+      ]
+    },
+    {
+      "recipeId": "R007",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R007",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R007-7",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "57cffd0519245f54e67208b2c8664f21c415ddd186b5c667b72a747e8c35dce9",
+      "measuredAt": "2026-09-18T17:42:05.052Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "按住拖拽 → 模型/相机旋转"
+      ],
+      "visualTarget": "拖拽过程模型姿态连续变化",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R007"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=84"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "orbit-drag"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "drag"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R007.png",
+          "hash": "e56521164813fa0b5453446ec351992b78826be285ce62ef0069a9883b260456",
+          "bytes": 6345
+        },
+        {
+          "path": "docs/evidence/recipes/R007.json",
+          "hash": "d826fce3e3f4c461043e43017742e479f03445cfaf729020eb966b6c95d48e87",
+          "bytes": 2180
+        }
+      ]
+    },
+    {
+      "recipeId": "R008",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R008",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R008-8",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "edaca14c0f8ac11adf947bb53eb7dc978631bbfdd5e64b077db215092e8d9e52",
+      "measuredAt": "2026-09-18T17:42:08.966Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "展开/收起切换"
+      ],
+      "visualTarget": "子部件按偏移分离渲染",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R008"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "exploded-toggle-0"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=275"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "exploded-toggle"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":6,\"assetsAfter\":0,\"nodesBefore\":3,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R008.png",
+          "hash": "abedb2a347dc9a225b904d066a42d268dd9955b341944cd4d31ce9d1e2c7b5bc",
+          "bytes": 8180
+        },
+        {
+          "path": "docs/evidence/recipes/R008.json",
+          "hash": "4906bcbf5ff971103df1c254b5404ed5540da3d33c97a14615756b66edbb120a",
+          "bytes": 2420
+        }
+      ]
+    },
+    {
+      "recipeId": "R009",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R009",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R009-9",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "2dd4af303414311f5f79727d7786946ed6f11f6775dff4ebec2eff6949049281",
+      "measuredAt": "2026-09-18T17:42:12.249Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "并排查看变体"
+      ],
+      "visualTarget": "多个材质实例同时可见",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R009"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=158"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "material-variants"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":4,\"assetsAfter\":0,\"nodesBefore\":2,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R009.png",
+          "hash": "920561285f99660634217385dc2279c382b6bf4fafc6a38de0571b21a9a34767",
+          "bytes": 6631
+        },
+        {
+          "path": "docs/evidence/recipes/R009.json",
+          "hash": "6fea90b945ea408ea75a76028b34ec7462c9ea469a807a130d197f805c07c372",
+          "bytes": 2321
+        }
+      ]
+    },
+    {
+      "recipeId": "R010",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R010",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R010-10",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "043dc84a8787437d0550dd52941db260b2c83fd8e095c17655a42808862e95ba",
+      "measuredAt": "2026-09-18T17:42:15.731Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [
+        "examples/gltf-viewer/assets/BoxTextured.glb"
+      ],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "同屏对比两个模型"
+      ],
+      "visualTarget": "两模型同时可见",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R010"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "9"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=670"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "model-comparison"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[\"examples/gltf-viewer/assets/BoxTextured.glb\"]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":2,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R010.png",
+          "hash": "bc8734831d6710da85f0d6813ec2c94a3a374b37d501d426faf113ed1bdb5dd7",
+          "bytes": 24122
+        },
+        {
+          "path": "docs/evidence/recipes/R010.json",
+          "hash": "c125e1131da7810ffdc10245f6f2d68b6ab0b81660d4d0c99a18765ca3c5b64b",
+          "bytes": 3026
+        }
+      ]
+    },
+    {
+      "recipeId": "R011",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R011",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R011-11",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "43ea40e834dafc7c470f4d312dc8093af0a36cb0841029afac3172d2695c8a2a",
+      "measuredAt": "2026-09-18T17:42:18.968Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "调用 frameObject 后模型恰好充满视口"
+      ],
+      "visualTarget": "模型完整入画且居中",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R011"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=499"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "auto-framing"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R011.png",
+          "hash": "c566379ff7b1f80686e3e1341b4bd70cf1e3cc71d90717234d36e3cd9017fb11",
+          "bytes": 8579
+        },
+        {
+          "path": "docs/evidence/recipes/R011.json",
+          "hash": "9f2272f8603c45b2dcc0611f06ba9e6516af6e3bffbfbd6e4f02ab7576a71faf",
+          "bytes": 2291
+        }
+      ]
+    },
+    {
+      "recipeId": "R012",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R012",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R012-12",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "78b505fd8e13c84e73f54cf625c901dc5651eada69f3ba9207bb6ae7504414c8",
+      "measuredAt": "2026-09-18T17:42:22.798Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "自动巡游播放"
+      ],
+      "visualTarget": "巡游各帧画面连续且模型可见",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R012"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=79"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "camera-tour"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "wait"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":3,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R012.png",
+          "hash": "a08113b39c133b45551b85f469df8fb607fbdd47eaa85b5671db60d346d86004",
+          "bytes": 5579
+        },
+        {
+          "path": "docs/evidence/recipes/R012.json",
+          "hash": "79077bc2b7c4c9f366b8437daa4eba66dcf92bf7ec07e0a45f35dd7d6141fa34",
+          "bytes": 2330
+        }
+      ]
+    },
+    {
+      "recipeId": "R013",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R013",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R013-13",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "b85573f45bd70bd31bdbbc0080319287d4e0c2006bf1382ec5876f59703deee7",
+      "measuredAt": "2026-09-18T17:42:26.598Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "触发过渡动画"
+      ],
+      "visualTarget": "过渡过程画面平滑无跳变报错",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R013"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=109"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "camera-transition"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R013.png",
+          "hash": "3ab66d1bd75202e6171d1083a30af47cdd9945ceaa72dd082cbc54f168ad7a81",
+          "bytes": 5971
+        },
+        {
+          "path": "docs/evidence/recipes/R013.json",
+          "hash": "17568468f7f5b088cee37401d3593bd93bfbf38ae8a3408458c3b64a9dcf702a",
+          "bytes": 2265
+        }
+      ]
+    },
+    {
+      "recipeId": "R014",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R014",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R014-14",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "1ee7a56d6d8919b06de664362d2bb46b46de4f507239e7464e4c13b8cd86686c",
+      "measuredAt": "2026-09-18T17:42:30.115Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "切换正交/透视"
+      ],
+      "visualTarget": "正交模式下近远物体同尺寸",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R014"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=80"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "orthographic-toggle"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R014.png",
+          "hash": "de0e73321facb83d79b4ea1e823e590b3486b8bc978d203492724650f2df958e",
+          "bytes": 5465
+        },
+        {
+          "path": "docs/evidence/recipes/R014.json",
+          "hash": "cfdda322ec4ccb9374e615c18b572b9654d5d45eca6e20e989657d466e7dad26",
+          "bytes": 2205
+        }
+      ]
+    },
+    {
+      "recipeId": "R015",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R015",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R015-15",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "2fb30b4a4d42c2c846eebf7d8907841d9eb193d68dea92d5c2f41ea67ed140f8",
+      "measuredAt": "2026-09-18T17:42:33.648Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "双机位呈现"
+      ],
+      "visualTarget": "主相机画面正常渲染",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R015"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=2700"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "multi-camera"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":4,\"assetsAfter\":0,\"nodesBefore\":3,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R015.png",
+          "hash": "69e5f69b91a26a424654e0de2f5e5361c9f8d5df391b4d3c403c07169f023595",
+          "bytes": 7832
+        },
+        {
+          "path": "docs/evidence/recipes/R015.json",
+          "hash": "206fc07f22b8fa023641091c762f002b5090f2581cc1f40389bbbd2a96918ebd",
+          "bytes": 2546
+        }
+      ]
+    },
+    {
+      "recipeId": "R016",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R016",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R016-16",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "a710c8c523cd9487fa6d5536f1a63c1a8f68a0135273b99c5590dc936ff4ff19",
+      "measuredAt": "2026-09-18T17:42:37.414Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "点击 → 动画播放"
+      ],
+      "visualTarget": "动画状态随点击切换",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R016"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "animation-playing",
+          "state": "PASS",
+          "detail": "1 animation component(s)"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=90"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "click-animation"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":3,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R016.png",
+          "hash": "237e5a3b0a506628920b025c6692dde77a931cbeb244643b934eaf10370acc62",
+          "bytes": 6542
+        },
+        {
+          "path": "docs/evidence/recipes/R016.json",
+          "hash": "28edb7648537c4b3857dd64534fa67ee173f30daffc652dcd410c321995b1ce4",
+          "bytes": 2325
+        }
+      ]
+    },
+    {
+      "recipeId": "R017",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R017",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R017-17",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "2179cc3478a1b7cf3cd01604a7b9eef1d188fe6965fcb22b33aa417e68afcc41",
+      "measuredAt": "2026-09-18T17:42:41.230Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "点击 → 材质切换"
+      ],
+      "visualTarget": "材质切换渲染即时生效",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R017"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=80"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "click-material"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R017.png",
+          "hash": "f04fe441310147a6f326e5f95f38a95ea9add55548bf253b236bb2a9685e6b7a",
+          "bytes": 5605
+        },
+        {
+          "path": "docs/evidence/recipes/R017.json",
+          "hash": "7e8b07ea437762e59150ad718da5fe4f52d57cde8cfbbc95a32e183234bd2b5c",
+          "bytes": 2222
+        }
+      ]
+    },
+    {
+      "recipeId": "R018",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R018",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R018-18",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "db6c0b08fe3960e68c284bf48340ac00e716f4781af439577d963f7e5ce0f8d5",
+      "measuredAt": "2026-09-18T17:42:44.666Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "按住拖动 → 物体跟随"
+      ],
+      "visualTarget": "物体位姿随拖拽连续变化",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R018"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=84"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "drag-object"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "drag"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R018.png",
+          "hash": "9ca6faaf9ac2e2765c2966cf6d0cdaefde1f705f892b56fdfe6e7eee880a3242",
+          "bytes": 6243
+        },
+        {
+          "path": "docs/evidence/recipes/R018.json",
+          "hash": "8189eb9cbc84edaec5320df4267e62f69c7f7190e1f536dc5d7f88ec8813b339",
+          "bytes": 2184
+        }
+      ]
+    },
+    {
+      "recipeId": "R019",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R019",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R019-19",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "e5449149c4ab53dfce38d0b3c2506139c0b770949f3c69f2e4f279fb62855581",
+      "measuredAt": "2026-09-18T17:42:48.431Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "点击物体 → 选中反馈"
+      ],
+      "visualTarget": "选中状态在画面可见",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R019"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=118"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "selection"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R019.png",
+          "hash": "8a11cb28100462d000c0e8b62112fd7978231954b850713ef541c4399bb683cc",
+          "bytes": 6086
+        },
+        {
+          "path": "docs/evidence/recipes/R019.json",
+          "hash": "162c400a0a6ebba06cc47e2bb75c110e0ef57f77e6f40104e74baeee3a669150",
+          "bytes": 2175
+        }
+      ]
+    },
+    {
+      "recipeId": "R020",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R020",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R020-20",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "6a4a46a273f8e4dad9f822767783f256bb71c44f570aae47ffc5e9824b4cdbf9",
+      "measuredAt": "2026-09-18T17:42:52.047Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "热点悬停/点击反馈"
+      ],
+      "visualTarget": "热点标记可见且事件生效",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R020"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=72"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "hotspot"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R020.png",
+          "hash": "2da6fce172f5a33cc46961188d55b84b1d17574f449390045b60be0de48f1f9c",
+          "bytes": 5765
+        },
+        {
+          "path": "docs/evidence/recipes/R020.json",
+          "hash": "71dc0bde26a5262e3602469216911e3b5d3e85f5369cce0cd84efaadec0094ee",
+          "bytes": 2171
+        }
+      ]
+    },
+    {
+      "recipeId": "R021",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R021",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R021-21",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "0015269e90d67e1900919bc70afe12c83d69818800e490280bada2ac335fbf6a",
+      "measuredAt": "2026-09-18T17:42:55.648Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "查看透明叠加效果"
+      ],
+      "visualTarget": "透明与实心物体正确叠渲",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R021"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=152"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "glass"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\",\"alpha-blend\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":3,\"assetsAfter\":0,\"nodesBefore\":2,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R021.png",
+          "hash": "5467be2b8d58c501a56421e0e67361185069e3e666c4a4c65e466cb30bef1b28",
+          "bytes": 7027
+        },
+        {
+          "path": "docs/evidence/recipes/R021.json",
+          "hash": "486e2900673dc7e5324574e354607ba101116a44dc3ce4f855ef18c85f887137",
+          "bytes": 2695
+        }
+      ]
+    },
+    {
+      "recipeId": "R022",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R022",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R022-22",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "08b4b23155da89baf64fc493b12f0c303e2f399d206c2ebbffbab929a741451f",
+      "measuredAt": "2026-09-18T17:42:58.965Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2",
+        "KHR_materials_clearcoat"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "查看清漆高光"
+      ],
+      "visualTarget": "高光层随视角变化",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R022"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=107"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "clearcoat"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\",\"KHR_materials_clearcoat\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R022.png",
+          "hash": "9fb2d53e608cf4b8980ee4862a6f680545d51400c0bced1589dada6b3a1a291e",
+          "bytes": 5911
+        },
+        {
+          "path": "docs/evidence/recipes/R022.json",
+          "hash": "89e6188afccf84d161c56f4f8537633118ea95b381224e2aa4f30be3eafffd14",
+          "bytes": 2673
+        }
+      ]
+    },
+    {
+      "recipeId": "R023",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R023",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R023-23",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "3b2b13979b38e2722c3b5ee15707c8ae1b6a14a309cd9460751adeb722246434",
+      "measuredAt": "2026-09-18T17:43:02.396Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2",
+        "KHR_materials_transmission"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "查看透射效果或回退提示"
+      ],
+      "visualTarget": "透射渲染或受控回退",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R023"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "capability-status",
+          "state": "EXPECTED_FALLBACK",
+          "detail": "KHR_materials_transmission"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=107"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "transmission"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\",\"KHR_materials_transmission\":\"fallback\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R023.png",
+          "hash": "9fb2d53e608cf4b8980ee4862a6f680545d51400c0bced1589dada6b3a1a291e",
+          "bytes": 5911
+        },
+        {
+          "path": "docs/evidence/recipes/R023.json",
+          "hash": "10178284c3c12e9be2445969eefe17dde7e2779b19a29012ab74d5a06a74e67f",
+          "bytes": 3008
+        }
+      ]
+    },
+    {
+      "recipeId": "R024",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R024",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R024-24",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "292cfe47e90a57a7322775b77f996bfd89f47aee0278688d1a24f044e1db47bd",
+      "measuredAt": "2026-09-18T17:43:05.798Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2",
+        "KHR_materials_anisotropy"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "查看各向异性效果或回退"
+      ],
+      "visualTarget": "各向异性渲染或受控回退",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R024"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "capability-status",
+          "state": "PASS",
+          "detail": "KHR_materials_anisotropy=supported"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=107"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "anisotropy"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\",\"KHR_materials_anisotropy\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R024.png",
+          "hash": "9fb2d53e608cf4b8980ee4862a6f680545d51400c0bced1589dada6b3a1a291e",
+          "bytes": 5911
+        },
+        {
+          "path": "docs/evidence/recipes/R024.json",
+          "hash": "6a3b53de7cafdadf47f5e31bb4f36c57cf033ead159b7bbbd1dccd085f732b61",
+          "bytes": 2682
+        }
+      ]
+    },
+    {
+      "recipeId": "R025",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R025",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R025-25",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "613eeedd7b5f32a8ba0291b1776f0511554502a81c9b4a2f6593eaf4e79b1ed2",
+      "measuredAt": "2026-09-18T17:43:09.283Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2",
+        "KHR_materials_iridescence"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "查看虹彩效果或回退"
+      ],
+      "visualTarget": "虹彩渲染或受控回退",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R025"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "capability-status",
+          "state": "PASS",
+          "detail": "KHR_materials_iridescence=supported"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=107"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "iridescence"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\",\"KHR_materials_iridescence\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "none"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R025.png",
+          "hash": "9fb2d53e608cf4b8980ee4862a6f680545d51400c0bced1589dada6b3a1a291e",
+          "bytes": 5911
+        },
+        {
+          "path": "docs/evidence/recipes/R025.json",
+          "hash": "723e5106ba70855e9752b294128d939768fabbe6b29628baf875f2e062a6a397",
+          "bytes": 2691
+        }
+      ]
+    },
+    {
+      "recipeId": "R026",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R026",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R026-26",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "499e38ee35bb4502ee41df79587b0e65008d5815d404df3a5efd319b4ce13664",
+      "measuredAt": "2026-09-18T17:43:12.814Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "背景持续动效"
+      ],
+      "visualTarget": "全屏画面持续变化无报错",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R026"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=503"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "wallpaper-motion"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "wait"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":11,\"assetsAfter\":0,\"nodesBefore\":5,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R026.png",
+          "hash": "510e09cbda9b5eb7a013b5f023660ea8284b50a68a43e6b417f320a41961864b",
+          "bytes": 10971
+        },
+        {
+          "path": "docs/evidence/recipes/R026.json",
+          "hash": "7d457b8aa0a2a12941e17e6479c5cc9c87be07cabd5063874475b0159d9abe76",
+          "bytes": 2791
+        }
+      ]
+    },
+    {
+      "recipeId": "R027",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R027",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R027-27",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "d9d5cd658e71bfb26c6b7cea3782a7a03a242ec77b2d24eaedd53823881fee1a",
+      "measuredAt": "2026-09-18T17:43:16.664Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [
+        "examples/gltf-viewer/assets/BoxTextured.glb"
+      ],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "加载即呈现 Hero 画面"
+      ],
+      "visualTarget": "Hero 模型居中完整呈现",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R027"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=401"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "landing-hero"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[\"examples/gltf-viewer/assets/BoxTextured.glb\"]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "wait"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":1,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R027.png",
+          "hash": "d0b845db53b4164a9e3348f64925de3c5c833ce49f7a379186c972dda32e17f0",
+          "bytes": 22469
+        },
+        {
+          "path": "docs/evidence/recipes/R027.json",
+          "hash": "0b92f3ae65dba94db643b8912e0342faa8459778834269591af0e21736b01fbf",
+          "bytes": 2731
+        }
+      ]
+    },
+    {
+      "recipeId": "R028",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R028",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R028-28",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "f0e0d42c04fb4610bd6bb12e35138f78648d255346babf15e2a593d18016b457",
+      "measuredAt": "2026-09-18T17:43:20.064Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "Logo 持续动效"
+      ],
+      "visualTarget": "Logo 动效连续渲染",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R028"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=258"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "animated-logo"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "wait"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":7,\"assetsAfter\":0,\"nodesBefore\":3,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R028.png",
+          "hash": "5d1f27cafa7d99572b1394558a22afcd5649bc94b183f3242ebfe558ed219b1f",
+          "bytes": 8254
+        },
+        {
+          "path": "docs/evidence/recipes/R028.json",
+          "hash": "6591a108d3f80a492c94972fd25129d4c111e60c7c6f08c2fff46ff58802b687",
+          "bytes": 2560
+        }
+      ]
+    },
+    {
+      "recipeId": "R029",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R029",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R029-29",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "23cf197268ae13483ca1c6bc8baf72e6bf8a8337bf75103a011263b5be8b4ae2",
+      "measuredAt": "2026-09-18T17:43:23.464Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "切换天气照明"
+      ],
+      "visualTarget": "不同光照下场景正常渲染",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R029"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=2700"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "weather-toggle"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "click"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R029.png",
+          "hash": "e25ffff24c18a7a189bc3eb3a2d6decc3cb74ac348952af2c222d146839df3c6",
+          "bytes": 5312
+        },
+        {
+          "path": "docs/evidence/recipes/R029.json",
+          "hash": "a340d00455beb4f938a556d038c4f738b80a5d1575a95268c3e89734e4c526ba",
+          "bytes": 2218
+        }
+      ]
+    },
+    {
+      "recipeId": "R030",
+      "recipeVersion": "1.0.0",
+      "source": {
+        "kind": "benchmark",
+        "id": "recipe:R030",
+        "composite": true
+      },
+      "runId": "recipe-1789753299700-R030-30",
+      "revision": "30e97e3a35630dfc316af6910418d5994bcb2ba8",
+      "sourceHash": "f5ebd60f582a70c993075904b530713a06c39de8e689a6d008782eeb021521a6",
+      "scenarioHash": "0c6c3bd87f01df7a7736abea0c14c6026894985e54ccddad7f75e0e0792be62b",
+      "measuredAt": "2026-09-18T17:43:26.881Z",
+      "environment": {
+        "browser": "chromium-headless",
+        "viewport": "480x360",
+        "webglBackend": "webgl2-angle"
+      },
+      "result": "PASS",
+      "sceneSetup": "Code First 场景：createAirApp(#GameCanvas) + 相机 + 平行光 + 资产/网格节点",
+      "requiredAssets": [],
+      "requiredCapabilities": [
+        "webgl2"
+      ],
+      "runtimeState": "场景运行中；renderer 就绪；无阻塞运行时错误",
+      "interactionSteps": [
+        "session 创建节点 → 设变换 → 捕帧验证"
+      ],
+      "visualTarget": "session 创建的内容可见",
+      "checks": {
+        "scene": true,
+        "interaction": true,
+        "visual": true,
+        "lifecycle": true,
+        "noRuntimeErrors": true,
+        "capability": true,
+        "semantic": true
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "scene=R030"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "node-1"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS"
+        },
+        {
+          "validatorId": "node-count",
+          "state": "PASS",
+          "detail": "5"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "foreground samples=80"
+        },
+        {
+          "validatorId": "recipe-semantic",
+          "state": "PASS",
+          "detail": "agent-session"
+        },
+        {
+          "validatorId": "recipe-assets",
+          "state": "PASS",
+          "detail": "[]"
+        },
+        {
+          "validatorId": "recipe-capabilities",
+          "state": "PASS",
+          "detail": "{\"webgl2\":\"supported\"}"
+        },
+        {
+          "validatorId": "recipe-interaction",
+          "state": "PASS",
+          "detail": "agent"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "{\"released\":true,\"assetsBefore\":2,\"assetsAfter\":0,\"nodesBefore\":1,\"nodesAfter\":0}"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "docs/evidence/recipes/R030.png",
+          "hash": "34ed00aaa3e2d44f3b5c7b8eb4b1f080bbed36f2a529ec01bf290a3e2dd8efcf",
+          "bytes": 5699
+        },
+        {
+          "path": "docs/evidence/recipes/R030.json",
+          "hash": "db8a505d7ade397f1c6294b5b7ab82e36a11c52cf75e430adab137b19b3e7664",
+          "bytes": 2293
+        }
+      ]
+    }
+  ]
+}

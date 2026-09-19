@@ -1,0 +1,925 @@
+{
+  "purpose": "Small unique logs/scripts pulled out of the off-repo scratch dirs before the user-authorized cleanup deleted them.",
+  "measuredAt": "2026-09-19T13:23:06.491Z",
+  "keptFiles": 150,
+  "keptBytes": 4080321,
+  "skippedBulkDirs": [
+    "node_modules",
+    ".git",
+    "build",
+    "work",
+    "candidate",
+    "consumer",
+    "L1",
+    "L2",
+    "pre-reevidence-200119",
+    "pre-ledger",
+    "pre-f54-ledger",
+    "pre-r7g-ledger",
+    "r7g-bak",
+    "verify-current"
+  ],
+  "maxBytes": 2097152,
+  "rows": [
+    {
+      "src": "E:/qoder-r7i-2026-09-19/recipes-run.log",
+      "dest": "../scratch-recovery/qoder-r7i-2026-09-19/recipes-run.log",
+      "bytes": 1141,
+      "sha256_16": "6859f246badde991"
+    },
+    {
+      "src": "E:/qoder-r7i-2026-09-19/recipes-run2.log",
+      "dest": "../scratch-recovery/qoder-r7i-2026-09-19/recipes-run2.log",
+      "bytes": 1636,
+      "sha256_16": "3b7cfcd5560e492a"
+    },
+    {
+      "src": "E:/qoder-r7i-2026-09-19/catalog-run.log",
+      "dest": "../scratch-recovery/qoder-r7i-2026-09-19/catalog-run.log",
+      "bytes": 1280,
+      "sha256_16": "7a2e1a8c5e95890a"
+    },
+    {
+      "src": "E:/qoder-r7i-2026-09-19/dual-run.log",
+      "dest": "../scratch-recovery/qoder-r7i-2026-09-19/dual-run.log",
+      "bytes": 1171,
+      "sha256_16": "a6d005c89d988a8d"
+    },
+    {
+      "src": "E:/qoder-r7i-2026-09-19/v06-report-after.log",
+      "dest": "../scratch-recovery/qoder-r7i-2026-09-19/v06-report-after.log",
+      "bytes": 694,
+      "sha256_16": "395f6e1503ee27d7"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncb-control.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncb-control.log",
+      "bytes": 2938,
+      "sha256_16": "e4d677efc52f211f"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncb-inject.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncb-inject.log",
+      "bytes": 1169,
+      "sha256_16": "a2c67e86a2fc71e6"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncc-control.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncc-control.log",
+      "bytes": 1103,
+      "sha256_16": "bade5a2a77896b9d"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncc-inject.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncc-inject.log",
+      "bytes": 1103,
+      "sha256_16": "bade5a2a77896b9d"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncc-manifest.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncc-manifest.log",
+      "bytes": 131,
+      "sha256_16": "266162f531fcb254"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncc-cov.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncc-cov.log",
+      "bytes": 366,
+      "sha256_16": "709cda5245c3f063"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncc2-control.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncc2-control.log",
+      "bytes": 1103,
+      "sha256_16": "bade5a2a77896b9d"
+    },
+    {
+      "src": "E:/qoder-negctl-audit-2026-09-19/ncc2-restored.log",
+      "dest": "../scratch-recovery/qoder-negctl-audit-2026-09-19/ncc2-restored.log",
+      "bytes": 1103,
+      "sha256_16": "bade5a2a77896b9d"
+    },
+    {
+      "src": "E:/qoder-negctl2-2026-09-19/ncc2-control.log",
+      "dest": "../scratch-recovery/qoder-negctl2-2026-09-19/ncc2-control.log",
+      "bytes": 330,
+      "sha256_16": "aeca873421e5b893"
+    },
+    {
+      "src": "E:/qoder-negctl2-2026-09-19/hello-cube.orig.png",
+      "dest": "../scratch-recovery/qoder-negctl2-2026-09-19/hello-cube.orig.png",
+      "bytes": 5847,
+      "sha256_16": "fe6a5511883d40ab"
+    },
+    {
+      "src": "E:/qoder-negctl2-2026-09-19/ncc1-delete.log",
+      "dest": "../scratch-recovery/qoder-negctl2-2026-09-19/ncc1-delete.log",
+      "bytes": 493,
+      "sha256_16": "5e8a95b76c0663c1"
+    },
+    {
+      "src": "E:/qoder-negctl2-2026-09-19/ncc2-tampered.log",
+      "dest": "../scratch-recovery/qoder-negctl2-2026-09-19/ncc2-tampered.log",
+      "bytes": 330,
+      "sha256_16": "aeca873421e5b893"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/pack-err.log",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/pack-err.log",
+      "bytes": 3898,
+      "sha256_16": "6dde9fa3df1bc955"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/pack-list.txt",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/pack-list.txt",
+      "bytes": 2790,
+      "sha256_16": "80926d460b0132c2"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/negctl-spec.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/negctl-spec.mjs",
+      "bytes": 1445,
+      "sha256_16": "97849c8f59a45e27"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/gallery-probe.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/gallery-probe.mjs",
+      "bytes": 2136,
+      "sha256_16": "55b2a1d54b78eeef"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/abs-url-scan.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/abs-url-scan.mjs",
+      "bytes": 1116,
+      "sha256_16": "f1925bc532c9f5fe"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/append-f35.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/append-f35.mjs",
+      "bytes": 4650,
+      "sha256_16": "561b072aec8eb6aa"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/update-report-f3435.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/update-report-f3435.mjs",
+      "bytes": 3294,
+      "sha256_16": "7116c24b5cba1dc6"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/record-f36.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/record-f36.mjs",
+      "bytes": 6887,
+      "sha256_16": "f5a17ffa5c8cb275"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/record-f37.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/record-f37.mjs",
+      "bytes": 9052,
+      "sha256_16": "46ffd106ab7a8591"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/record-f38.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/record-f38.mjs",
+      "bytes": 6065,
+      "sha256_16": "d5953e9805be26ef"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/nc-d-assets.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/nc-d-assets.mjs",
+      "bytes": 2691,
+      "sha256_16": "ea3698921ddae43a"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/nc-d2.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/nc-d2.mjs",
+      "bytes": 1523,
+      "sha256_16": "92645f065d5f6d18"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/nc-d3.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/nc-d3.mjs",
+      "bytes": 1412,
+      "sha256_16": "6f610680be46f1bb"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/record-f39-40.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/record-f39-40.mjs",
+      "bytes": 7549,
+      "sha256_16": "95a67f69d7755caa"
+    },
+    {
+      "src": "E:/qoder-cleanroom-audit-2026-09-19/nc-e-animation.mjs",
+      "dest": "../scratch-recovery/qoder-cleanroom-audit-2026-09-19/nc-e-animation.mjs",
+      "bytes": 2760,
+      "sha256_16": "ec9ef7aebe4d6a28"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/original-build-hashes.txt",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/original-build-hashes.txt",
+      "bytes": 374,
+      "sha256_16": "d2d13b7ac70874d3"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/build-before.txt",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/build-before.txt",
+      "bytes": 194902,
+      "sha256_16": "86884ce68ea843b9"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/rebuild.log",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/rebuild.log",
+      "bytes": 9606,
+      "sha256_16": "5effd83a30c6bbd4"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/build-after1.txt",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/build-after1.txt",
+      "bytes": 682,
+      "sha256_16": "93bb02b67edc1a2b"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/rebuild2.log",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/rebuild2.log",
+      "bytes": 8986,
+      "sha256_16": "b9eacec31ff15ce9"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/list-before.txt",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/list-before.txt",
+      "bytes": 1520,
+      "sha256_16": "2930ef16aaa2e2bc"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/list-after.txt",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/list-after.txt",
+      "bytes": 259,
+      "sha256_16": "565365a0913237f1"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/rebuild-min.log",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/rebuild-min.log",
+      "bytes": 9441,
+      "sha256_16": "ef3f202263d74048"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/rebuild-dts.log",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/rebuild-dts.log",
+      "bytes": 2009,
+      "sha256_16": "5e00d4104bdac1fc"
+    },
+    {
+      "src": "E:/qoder-rebuild-audit-2026-09-19/rebuild3.log",
+      "dest": "../scratch-recovery/qoder-rebuild-audit-2026-09-19/rebuild3.log",
+      "bytes": 9590,
+      "sha256_16": "6f1da6a169550b24"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/port.cjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/port.cjs",
+      "bytes": 1429,
+      "sha256_16": "9b0f845455183a65"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/fixwave-verify-current.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/fixwave-verify-current.log",
+      "bytes": 3493,
+      "sha256_16": "d77dedc5209633f0"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/freeze.cjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/freeze.cjs",
+      "bytes": 897,
+      "sha256_16": "879189d948744d25"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/SHA256MANIFEST-current.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/SHA256MANIFEST-current.txt",
+      "bytes": 424098,
+      "sha256_16": "786127686d762340"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/SHA256MANIFEST-frozen-recheck.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/SHA256MANIFEST-frozen-recheck.txt",
+      "bytes": 373938,
+      "sha256_16": "93e957fb28053976"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/record-fixwave.mjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/record-fixwave.mjs",
+      "bytes": 9893,
+      "sha256_16": "85c7db1c97419088"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/update-ledger.mjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/update-ledger.mjs",
+      "bytes": 13659,
+      "sha256_16": "13eed6ad67d06839"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/r7g-00-baseline.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/r7g-00-baseline.log",
+      "bytes": 330,
+      "sha256_16": "aeca873421e5b893"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/r7g-01-NOT-detected.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/r7g-01-NOT-detected.log",
+      "bytes": 330,
+      "sha256_16": "aeca873421e5b893"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/r7g-02-widened-unbound.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/r7g-02-widened-unbound.log",
+      "bytes": 14581,
+      "sha256_16": "4f6d3a2e205c3e4b"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/r7g-03-recapture.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/r7g-03-recapture.log",
+      "bytes": 251,
+      "sha256_16": "09e5369cc2ba54dc"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/r7g-04-after-widened-recapture.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/r7g-04-after-widened-recapture.log",
+      "bytes": 330,
+      "sha256_16": "aeca873421e5b893"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/r7g-06-repo-delivered-evidence.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/r7g-06-repo-delivered-evidence.log",
+      "bytes": 16937,
+      "sha256_16": "24b01f996bd55e39"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/update-r7g-ledger.mjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/update-r7g-ledger.mjs",
+      "bytes": 13718,
+      "sha256_16": "9c9ea758949671e8"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/update-r7g-ledger.cjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/update-r7g-ledger.cjs",
+      "bytes": 13718,
+      "sha256_16": "9c9ea758949671e8"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/r7g-07-final-over-delivered.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/r7g-07-final-over-delivered.log",
+      "bytes": 16937,
+      "sha256_16": "24b01f996bd55e39"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/SHA256MANIFEST-r7g-complete.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/SHA256MANIFEST-r7g-complete.txt",
+      "bytes": 425609,
+      "sha256_16": "9028109817c25789"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/update-f54.cjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/update-f54.cjs",
+      "bytes": 5488,
+      "sha256_16": "60c04370e757e6be"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/LAST-SNAPSHOT.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/LAST-SNAPSHOT.txt",
+      "bytes": 50,
+      "sha256_16": "22ebb99fbf75c176"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/reevidence/browser-40-full.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/reevidence/browser-40-full.log",
+      "bytes": 1055,
+      "sha256_16": "7ad3406e4a19b71e"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/reevidence/devtools-gate.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/reevidence/devtools-gate.log",
+      "bytes": 257,
+      "sha256_16": "72dbf162d828ed5d"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/reevidence/v06-gate.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/reevidence/v06-gate.log",
+      "bytes": 2269,
+      "sha256_16": "34c82cf776af3004"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/reevidence/compliance-after.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/reevidence/compliance-after.log",
+      "bytes": 330,
+      "sha256_16": "aeca873421e5b893"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/reevidence/jest-after-reevidence.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/reevidence/jest-after-reevidence.log",
+      "bytes": 24124,
+      "sha256_16": "d4246584bc8f89e8"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/rcshots/pre-automation.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/rcshots/pre-automation.png",
+      "bytes": 5999,
+      "sha256_16": "281aa3a571d5477a"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/rcshots/pre-rc-capture-frame.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/rcshots/pre-rc-capture-frame.png",
+      "bytes": 6337,
+      "sha256_16": "f27e7c41239b9f21"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/rcshots/pre-rc-create-node.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/rcshots/pre-rc-create-node.png",
+      "bytes": 5254,
+      "sha256_16": "80cdb10343a2ac68"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/rcshots/pre-rc-error-report.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/rcshots/pre-rc-error-report.png",
+      "bytes": 5254,
+      "sha256_16": "80cdb10343a2ac68"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/rcshots/pre-rc-inspect-scene.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/rcshots/pre-rc-inspect-scene.png",
+      "bytes": 5254,
+      "sha256_16": "80cdb10343a2ac68"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-reevidence-ledger-findings.jsonl",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-reevidence-ledger-findings.jsonl",
+      "bytes": 121852,
+      "sha256_16": "3d0d9113b23a57e3"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-reevidence-global-verdict.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-reevidence-global-verdict.json",
+      "bytes": 22137,
+      "sha256_16": "f83f9a44e437b5ad"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-reevidence-evidence-index.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-reevidence-evidence-index.json",
+      "bytes": 13277,
+      "sha256_16": "a1714d08a217f336"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/SHA256MANIFEST-reevidence.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/SHA256MANIFEST-reevidence.txt",
+      "bytes": 426694,
+      "sha256_16": "14f91a8a922e655c"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/SHA256MANIFEST-postcommit.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/SHA256MANIFEST-postcommit.txt",
+      "bytes": 426694,
+      "sha256_16": "9b4fe787d2440d53"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/SHA256MANIFEST-final-committed.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/SHA256MANIFEST-final-committed.txt",
+      "bytes": 426866,
+      "sha256_16": "4beed7232f240caf"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/snapshot-v06.cjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/snapshot-v06.cjs",
+      "bytes": 2032,
+      "sha256_16": "19a1a29191ba8d3b"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-golden-dual-track.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-golden-dual-track.json",
+      "bytes": 18654,
+      "sha256_16": "7ea469854f65b202"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-recipes.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-recipes.json",
+      "bytes": 91242,
+      "sha256_16": "12ba8cedf7edf8b4"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-recipes-promoted.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-recipes-promoted.json",
+      "bytes": 2844,
+      "sha256_16": "64b97e3aa6d72441"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-recipes.log",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-recipes.log",
+      "bytes": 1604,
+      "sha256_16": "4ca5944bdf6394f7"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-catalog-runtime-gate.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-catalog-runtime-gate.json",
+      "bytes": 9772,
+      "sha256_16": "43805b0bcbf2b221"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-review-gate.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-review-gate.json",
+      "bytes": 2269,
+      "sha256_16": "34c82cf776af3004"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-fresh-consumer.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-fresh-consumer.json",
+      "bytes": 2866,
+      "sha256_16": "c1142b4c421c9aea"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-lifecycle-gate.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_v06-lifecycle-gate.json",
+      "bytes": 196,
+      "sha256_16": "826a51a67a17b812"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_v06-final-gate.md",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_v06-final-gate.md",
+      "bytes": 1442,
+      "sha256_16": "1b33d805528d2a04"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R003.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R003.png",
+      "bytes": 5698,
+      "sha256_16": "c32b56f261a78360"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R003.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R003.json",
+      "bytes": 2190,
+      "sha256_16": "b01d31251b70d96b"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R001.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R001.png",
+      "bytes": 22892,
+      "sha256_16": "17da85d683996a96"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R001.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R001.json",
+      "bytes": 2680,
+      "sha256_16": "f50b8c9395edd384"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R002.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R002.png",
+      "bytes": 5746,
+      "sha256_16": "0019012b892e0f00"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R002.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R002.json",
+      "bytes": 2656,
+      "sha256_16": "eae5535cd6819a9d"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R008.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R008.png",
+      "bytes": 8180,
+      "sha256_16": "abedb2a347dc9a22"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R008.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R008.json",
+      "bytes": 2420,
+      "sha256_16": "4906bcbf5ff97110"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R021.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R021.png",
+      "bytes": 7027,
+      "sha256_16": "5467be2b8d58c501"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R021.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R021.json",
+      "bytes": 2695,
+      "sha256_16": "486e2900673dc7e5"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R022.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R022.png",
+      "bytes": 5911,
+      "sha256_16": "9fb2d53e608cf4b8"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R022.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R022.json",
+      "bytes": 2673,
+      "sha256_16": "89e6188afccf84d1"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R023.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R023.png",
+      "bytes": 5911,
+      "sha256_16": "9fb2d53e608cf4b8"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R023.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R023.json",
+      "bytes": 3008,
+      "sha256_16": "10178284c3c12e9b"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R024.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R024.png",
+      "bytes": 5911,
+      "sha256_16": "9fb2d53e608cf4b8"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R024.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R024.json",
+      "bytes": 2682,
+      "sha256_16": "6a3b53de7cafdadf"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R025.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R025.png",
+      "bytes": 5911,
+      "sha256_16": "9fb2d53e608cf4b8"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R025.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R025.json",
+      "bytes": 2691,
+      "sha256_16": "723e5106ba70855e"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R030.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R030.png",
+      "bytes": 5699,
+      "sha256_16": "34ed00aaa3e2d44f"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R030.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R030.json",
+      "bytes": 2293,
+      "sha256_16": "db8a505d7ade397f"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R004.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R004.png",
+      "bytes": 24122,
+      "sha256_16": "bc8734831d6710da"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R004.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R004.json",
+      "bytes": 3022,
+      "sha256_16": "68eef4ad5f477b87"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R005.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R005.png",
+      "bytes": 6631,
+      "sha256_16": "920561285f996606"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R005.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R005.json",
+      "bytes": 2321,
+      "sha256_16": "fa6808173bb89d2e"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R006.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R006.png",
+      "bytes": 22892,
+      "sha256_16": "17da85d683996a96"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R006.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R006.json",
+      "bytes": 2680,
+      "sha256_16": "88fc81d0947d3e34"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R007.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R007.png",
+      "bytes": 6345,
+      "sha256_16": "e56521164813fa0b"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R007.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R007.json",
+      "bytes": 2180,
+      "sha256_16": "d826fce3e3f4c461"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R009.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R009.png",
+      "bytes": 6631,
+      "sha256_16": "920561285f996606"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R009.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R009.json",
+      "bytes": 2321,
+      "sha256_16": "6fea90b945ea408e"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R010.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R010.png",
+      "bytes": 24122,
+      "sha256_16": "bc8734831d6710da"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R010.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R010.json",
+      "bytes": 3026,
+      "sha256_16": "c125e1131da7810f"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R011.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R011.png",
+      "bytes": 8579,
+      "sha256_16": "c566379ff7b1f806"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R011.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R011.json",
+      "bytes": 2291,
+      "sha256_16": "9f2272f8603c45b2"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R012.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R012.png",
+      "bytes": 5579,
+      "sha256_16": "a08113b39c133b45"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R012.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R012.json",
+      "bytes": 2330,
+      "sha256_16": "79077bc2b7c4c9f3"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R013.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R013.png",
+      "bytes": 5971,
+      "sha256_16": "3ab66d1bd75202e6"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R013.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R013.json",
+      "bytes": 2265,
+      "sha256_16": "17568468f7f5b088"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R014.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R014.png",
+      "bytes": 5465,
+      "sha256_16": "de0e73321facb83d"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R014.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R014.json",
+      "bytes": 2205,
+      "sha256_16": "cfdda322ec4ccb93"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R015.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R015.png",
+      "bytes": 7832,
+      "sha256_16": "69e5f69b91a26a42"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R015.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R015.json",
+      "bytes": 2546,
+      "sha256_16": "206fc07f22b8fa02"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R016.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R016.png",
+      "bytes": 6542,
+      "sha256_16": "237e5a3b0a506628"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R016.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R016.json",
+      "bytes": 2325,
+      "sha256_16": "28edb7648537c4b3"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R017.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R017.png",
+      "bytes": 5605,
+      "sha256_16": "f04fe441310147a6"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R017.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R017.json",
+      "bytes": 2222,
+      "sha256_16": "7e8b07ea437762e5"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R018.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R018.png",
+      "bytes": 6243,
+      "sha256_16": "9ca6faaf9ac2e276"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R018.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R018.json",
+      "bytes": 2184,
+      "sha256_16": "8189eb9cbc84edae"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R019.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R019.png",
+      "bytes": 6086,
+      "sha256_16": "8a11cb28100462d0"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R019.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R019.json",
+      "bytes": 2175,
+      "sha256_16": "162c400a0a6ebba0"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R020.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R020.png",
+      "bytes": 5765,
+      "sha256_16": "2da6fce172f5a33c"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R020.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R020.json",
+      "bytes": 2171,
+      "sha256_16": "71dc0bde26a5262e"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R026.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R026.png",
+      "bytes": 10971,
+      "sha256_16": "510e09cbda9b5eb7"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R026.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R026.json",
+      "bytes": 2791,
+      "sha256_16": "7d457b8aa0a2a129"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R027.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R027.png",
+      "bytes": 22469,
+      "sha256_16": "d0b845db53b4164a"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R027.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R027.json",
+      "bytes": 2731,
+      "sha256_16": "0b92f3ae65dba94d"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R028.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R028.png",
+      "bytes": 8254,
+      "sha256_16": "5d1f27cafa7d9957"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R028.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R028.json",
+      "bytes": 2560,
+      "sha256_16": "6591a108d3f80a49"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R029.png",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R029.png",
+      "bytes": 5312,
+      "sha256_16": "e25ffff24c18a7a1"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R029.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/docs_evidence_recipes_R029.json",
+      "bytes": 2218,
+      "sha256_16": "a340d00455beb4f9"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/pre-v06-13-00-23/MANIFEST.json",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/MANIFEST.json",
+      "bytes": 14609,
+      "sha256_16": "b71b7b73e1cfee75"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/verify-v06-raw.cjs",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/verify-v06-raw.cjs",
+      "bytes": 4633,
+      "sha256_16": "61122e37a042ffd0"
+    },
+    {
+      "src": "E:/qoder-fixwave-2026-09-19/SHA256MANIFEST-postv06.txt",
+      "dest": "../scratch-recovery/qoder-fixwave-2026-09-19/SHA256MANIFEST-postv06.txt",
+      "bytes": 427390,
+      "sha256_16": "1a8912efa3c26a75"
+    }
+  ]
+}

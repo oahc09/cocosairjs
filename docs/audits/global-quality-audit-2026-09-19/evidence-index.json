@@ -2,12 +2,12 @@
   "auditId": "global-quality-audit-2026-09-19",
   "evidence": [
     {
-      "path": "docs/audits-tmp-jest.log",
+      "path": "DANGLING-SUPERSEDED: docs/audits-tmp-jest.log",
       "kind": "transient-stdout",
       "result": "29 suites/207 tests PASS",
       "createdBy": "audit",
       "status": "DANGLING-SUPERSEDED",
-      "note": "file removed after capture; current equivalent: raw/gates/reevidence-05-jest-207.log (29 suites / 207 tests PASS, 2026-09-19 12:14Z)"
+      "note": "file removed after capture; current equivalent: raw/gates/reevidence-05-jest-207.log (29 suites / 207 tests PASS, 2026-09-19 12:14Z) [2026-09-19 21:25 re-check: file absent from the tree and absent from git history (--all) -> the entry never pointed at anything durable; kept visible rather than deleting the row]"
     },
     {
       "path": "docs/api-coverage-report.json",
@@ -42,22 +42,22 @@
       "result": "FAIL issues=3"
     },
     {
-      "path": "v06-report (stdout)",
+      "path": "raw/gates/v06-report-stdout-2026-09-19.log",
       "kind": "stdout-capture",
       "result": "FAIL 30/30 recipe sourceHash mismatch; jest-binding null",
-      "note": "descriptor, not a file path (see raw/gates/*)"
+      "note": "full v06-report.cjs PASS JSON stdout (F-59); the earlier 12:16Z BLOCKED run is documented in raw/gates/reevidence-03-v06-blocked.log"
     },
     {
-      "path": "consumer-acceptance (stdout)",
-      "kind": "stdout-capture",
+      "path": "DESCRIPTOR:consumer-acceptance (stdout)",
+      "kind": "command-descriptor",
       "result": "ok exportCount=368 (offline tarball)",
-      "note": "descriptor, not a file path (see raw/gates/*)"
+      "note": "descriptor, not a file path (see raw/gates/*) [descriptor, not a file path: command run whose output was captured elsewhere; recorded in path field by mistake]"
     },
     {
-      "path": "npm pack --dry-run",
-      "kind": "stdout-capture",
+      "path": "DESCRIPTOR:npm pack --dry-run",
+      "kind": "command-descriptor",
       "result": "73 files 6.3MB; excludes devtools/examples/debug",
-      "note": "descriptor, not a file path (see raw/gates/*)"
+      "note": "descriptor, not a file path (see raw/gates/*) [descriptor, not a file path: command run whose output was captured elsewhere; recorded in path field by mistake]"
     },
     {
       "path": "docs/evidence/examples/*.png",
@@ -329,16 +329,16 @@
       "measuredAt": "2026-09-19T12:30:00.000Z"
     },
     {
-      "path": "E:/qoder-fixwave-2026-09-19/pre-reevidence-200119/MANIFEST.txt",
+      "path": "raw/scratch-recovery/qoder-fixwave-2026-09-19/pre-reevidence-200119/MANIFEST.txt",
       "kind": "pre-write-snapshot",
-      "note": "149 files hashed before any repository evidence was overwritten",
+      "note": "149 files hashed before any repository evidence was overwritten [relocated into the audit dir before the authorized scratch cleanup; scratch original deleted]",
       "createdBy": "audit",
       "measuredAt": "2026-09-19T12:30:00.000Z"
     },
     {
-      "path": "E:/qoder-pngflat.cjs",
+      "path": "raw/scratch-recovery/qoder-pngflat.cjs",
       "kind": "tool",
-      "note": "minimal PNG zlib+unfilter decoder used to prove the F-55 frames are not blank",
+      "note": "minimal PNG zlib+unfilter decoder used to prove the F-55 frames are not blank [relocated into the audit dir before the authorized scratch cleanup; scratch original deleted]",
       "createdBy": "audit",
       "measuredAt": "2026-09-19T12:30:00.000Z"
     },
@@ -348,6 +348,62 @@
       "note": "post-commit jest 29/207 PASS on b1a1eed + the 2 measuredAt-only evidence diffs (F-58)",
       "createdBy": "audit",
       "measuredAt": "2026-09-19T12:45:00.000Z"
+    },
+    {
+      "path": "raw/gates/v06-fulltrack-2026-09-19.log",
+      "kind": "raw-gate-log",
+      "note": "F-59/F-60/F-61: full V0.6 track (dual-track 10/10, recipes 30/30, jest 207/207, v06-report PASS blockers=[]) + independent RAW recompute + duplicate-frame table",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:12:00.000Z"
+    },
+    {
+      "path": "raw/scratch-recovery/qoder-fixwave-2026-09-19/pre-v06-13-00-23/MANIFEST.json",
+      "kind": "pre-overwrite-hash-manifest",
+      "note": "69 superseded V0.6 evidence files (bytes/mtime/full sha256) captured before the authorized re-run; off-repo scratch [relocated into the audit dir before the authorized scratch cleanup; scratch original deleted]",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:00:23.000Z"
+    },
+    {
+      "path": "raw/gates/v06-dual-track-stdout-2026-09-19.log",
+      "kind": "stdout-capture",
+      "note": "run-dual-track.cjs per-reference + per-agent lines and the metrics aggregate (promoted into the audit dir; the scratch copy is deleted by the authorized cleanup)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:02:37.000Z"
+    },
+    {
+      "path": "raw/gates/v06-recipes-stdout-2026-09-19.log",
+      "kind": "stdout-capture",
+      "note": "run-recipes-browser.cjs R001..R030 PASS lines + \"Recipe browser gate: 30/30 PASS\" (promoted into the audit dir; the scratch copy is deleted by the authorized cleanup)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:06:14.000Z"
+    },
+    {
+      "path": "output/v06-review-jest.json",
+      "kind": "gate-input",
+      "note": "jest --ci --json: success=true, 29 suites / 207 tests passed; consumed by tools/verify/v06-report.cjs:26 (gitignored output dir)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:09:00.000Z"
+    },
+    {
+      "path": "raw/gates/v06-jest-json-stdout-2026-09-19.log",
+      "kind": "raw-gate-log",
+      "note": "stdout capture of the authorized V0.6 track (jest --json run; v06-report.cjs full PASS JSON)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:20:00.000+08:00"
+    },
+    {
+      "path": "raw/gates/v06-report-stdout-2026-09-19.log",
+      "kind": "raw-gate-log",
+      "note": "stdout capture of the authorized V0.6 track (jest --json run; v06-report.cjs full PASS JSON)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:20:00.000+08:00"
+    },
+    {
+      "path": "raw/scratch-recovery/RECOVERY-MANIFEST.json",
+      "kind": "recovery-manifest",
+      "note": "150 scratch files (4,080,321 B) recovered with sha256/16 before the authorized cleanup deleted their originals (F-62)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:23:00.000+08:00"
     }
   ]
 }

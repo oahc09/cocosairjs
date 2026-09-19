@@ -1,14 +1,13 @@
 {
-  "measuredAt": "2026-09-19T12:16:03.152Z",
-  "status": "BLOCKED",
+  "measuredAt": "2026-09-19T13:39:07.036Z",
+  "status": "PASS",
   "referenceGatePass": true,
   "catalogGatePass": true,
   "revision": {
-    "head": "fbf5ae2774174086af6897cbba3e3a3a37a78242",
+    "head": "41b4c713c61813617320ab0dfc5d640fa35e8cf4",
     "recorded": [
-      "c2e71bbe236e18cd7f4ba475d0bb3896de7e31dd",
-      "3a53957db6bdd009bbd85af8b7d589a0b48dba5b",
-      "30e97e3a35630dfc316af6910418d5994bcb2ba8"
+      "e06d29880b398c43d318eedee43c32941dd4eb97",
+      "3a53957db6bdd009bbd85af8b7d589a0b48dba5b"
     ],
     "failures": []
   },
@@ -31,43 +30,13 @@
     "validatedCount": 30,
     "stableCount": 30
   },
-  "evidenceFailures": [
-    "R001: sourceHash mismatch",
-    "R002: sourceHash mismatch",
-    "R003: sourceHash mismatch",
-    "R004: sourceHash mismatch",
-    "R005: sourceHash mismatch",
-    "R006: sourceHash mismatch",
-    "R007: sourceHash mismatch",
-    "R008: sourceHash mismatch",
-    "R009: sourceHash mismatch",
-    "R010: sourceHash mismatch",
-    "R011: sourceHash mismatch",
-    "R012: sourceHash mismatch",
-    "R013: sourceHash mismatch",
-    "R014: sourceHash mismatch",
-    "R015: sourceHash mismatch",
-    "R016: sourceHash mismatch",
-    "R017: sourceHash mismatch",
-    "R018: sourceHash mismatch",
-    "R019: sourceHash mismatch",
-    "R020: sourceHash mismatch",
-    "R021: sourceHash mismatch",
-    "R022: sourceHash mismatch",
-    "R023: sourceHash mismatch",
-    "R024: sourceHash mismatch",
-    "R025: sourceHash mismatch",
-    "R026: sourceHash mismatch",
-    "R027: sourceHash mismatch",
-    "R028: sourceHash mismatch",
-    "R029: sourceHash mismatch",
-    "R030: sourceHash mismatch"
-  ],
+  "evidenceFailures": [],
   "coverageFailures": [],
-  "tests": null,
-  "blockers": [
-    "运行证据与当前源码哈希不一致，需要重跑。",
-    "Recipe 完整场景证据未通过：R001: sourceHash mismatch；R002: sourceHash mismatch；R003: sourceHash mismatch；R004: sourceHash mismatch；R005: sourceHash mismatch；R006: sourceHash mismatch；R007: sourceHash mismatch；R008: sourceHash mismatch",
-    "本轮 Jest 结果尚未通过或缺失。"
-  ]
+  "tests": {
+    "suites": 29,
+    "tests": 207,
+    "passed": 207,
+    "success": true
+  },
+  "blockers": []
 }

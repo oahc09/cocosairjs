@@ -1,0 +1,134 @@
+{
+  "before": {
+    "id": "R030",
+    "semantic": "agent-session",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 1,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "after": {
+    "id": "R030",
+    "semantic": "agent-session",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 1,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 1,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "initialPosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "scene": {
+    "sceneId": "scene-1",
+    "name": "R030",
+    "nodeCount": 5,
+    "componentCount": 3,
+    "componentsByType": {
+      "Camera": 1,
+      "DirectionalLight": 1,
+      "MeshRenderer": 1
+    },
+    "cameraCount": 1,
+    "lightCount": 1,
+    "rendererCount": 1,
+    "uniqueAssetCount": {
+      "total": 7,
+      "byKind": {
+        "Node": 5,
+        "Mesh": 1,
+        "Material": 1
+      }
+    },
+    "nodes": [
+      {
+        "id": "node-1",
+        "name": "R030",
+        "parentId": null
+      },
+      {
+        "id": "node-2",
+        "name": "recipe-camera",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-3",
+        "name": "recipe-light",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-4",
+        "name": "agent-session-0",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-5",
+        "name": "agent-generated",
+        "parentId": "node-1"
+      }
+    ],
+    "truncated": false
+  }
+}

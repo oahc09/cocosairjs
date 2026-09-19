@@ -1,0 +1,21 @@
+[ref][B001] PASS
+[agent][B001] PASS repairs=0 firstCompile=true denials=[] fails=[]
+[ref][B011] PASS
+[agent][B011] PASS repairs=0 firstCompile=true denials=[] fails=[]
+[ref][B031] PASS
+[agent][B031] PASS repairs=0 firstCompile=true denials=[] fails=[]
+[ref][B041] PASS
+[agent][B041] PASS repairs=0 firstCompile=true denials=[] fails=[]
+[ref][B042] PASS
+[agent][B042] PASS repairs=0 firstCompile=true denials=[] fails=[]
+[ref][B051] EXPECTED_UNSUPPORTED
+[ref][B061] PASS
+[agent][B061] PASS repairs=0 firstCompile=false denials=[] fails=[]
+[ref][B081] PASS
+[agent][B081] PASS repairs=0 firstCompile=false denials=[] fails=[]
+[ref][B091] PASS
+[agent][B091] PASS repairs=0 firstCompile=false denials=[] fails=[]
+[ref][B100] PASS
+[agent][B100] PASS repairs=0 firstCompile=true denials=[] fails=[]
+metrics: {"eligibleTrials":9,"eligibleTypeBTrials":6,"agentPass":9,"agentFinalSuccessRate":1,"firstCompileSuccessRate":1,"medianRepairSuccessful":0,"meanRepairAllEligible":0,"budgetExhaustionRate":0,"byDomain":{"NONE":9,"DEVICE":1},"finalSuccessRate":1,"referenceGatePass":true,"profile":"A001"}
+evidence → E:\qoder-r7i-2026-09-19\work\docs\evidence\v06-golden-dual-track.json

@@ -1,0 +1,148 @@
+{
+  "before": {
+    "id": "R015",
+    "semantic": "multi-camera",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 0,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 2,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 2,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "priorities": [
+        0,
+        -1
+      ],
+      "initialPosition": [
+        -0.8,
+        0,
+        0
+      ]
+    },
+    "position": [
+      -0.8,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "after": {
+    "id": "R015",
+    "semantic": "multi-camera",
+    "ready": true,
+    "semanticOk": true,
+    "interactionCount": 1,
+    "animationTicks": 0,
+    "instanceCount": 0,
+    "materialCount": 2,
+    "featureApplied": false,
+    "selected": false,
+    "exploded": false,
+    "ortho": false,
+    "cameraCount": 2,
+    "agentNode": false,
+    "capabilities": {
+      "webgl2": "supported"
+    },
+    "details": {
+      "priorities": [
+        -1,
+        0
+      ],
+      "initialPosition": [
+        -0.8,
+        0,
+        0
+      ],
+      "activeCamera": 1
+    },
+    "position": [
+      -0.8,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "cameraPosition": [
+      0,
+      2.5,
+      7
+    ]
+  },
+  "scene": {
+    "sceneId": "scene-1",
+    "name": "R015",
+    "nodeCount": 6,
+    "componentCount": 5,
+    "componentsByType": {
+      "Camera": 2,
+      "DirectionalLight": 1,
+      "MeshRenderer": 2
+    },
+    "cameraCount": 2,
+    "lightCount": 1,
+    "rendererCount": 2,
+    "uniqueAssetCount": {
+      "total": 10,
+      "byKind": {
+        "Node": 6,
+        "Mesh": 2,
+        "Material": 2
+      }
+    },
+    "nodes": [
+      {
+        "id": "node-1",
+        "name": "R015",
+        "parentId": null
+      },
+      {
+        "id": "node-2",
+        "name": "recipe-camera",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-3",
+        "name": "recipe-light",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-4",
+        "name": "multi-camera-0",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-5",
+        "name": "multi-camera-1",
+        "parentId": "node-1"
+      },
+      {
+        "id": "node-6",
+        "name": "recipe-camera-secondary",
+        "parentId": "node-1"
+      }
+    ],
+    "truncated": false
+  }
+}

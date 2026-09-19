@@ -279,3 +279,50 @@ would create a clean-checkout `S11-STALE-EVIDENCE` failure and committing them w
 session's in-flight specs under an audit message.
 
 **Overall remains NOT_READY** (11 blocking items: F-56 replaces the cleared F-53 slot).
+
+## UPDATE-19 — 2026-09-19 21:00–21:12 +08: full V0.6 track re-run closes F-56 (R4)
+
+User authorized exactly two things this pass: "1.授权跑 V0.6 全轨道 2.清理临时目录". The track was run **in the
+repo working tree** (not an isolated copy) because the blocker was that the *delivered* evidence was stale; a
+copy could not fix that. Starting state was a clean tree at `e06d2988`, and the 69 evidence files about to be
+overwritten were snapshotted with full sha256 first.
+
+**The gate is now PASS on its own terms.** `node tools/verify/v06-report.cjs` → EXIT 0,
+`status=PASS`, `blockers=[]`, `referenceGatePass=true`, `catalogGatePass=true`,
+`recipes={catalogTotal:30, validatedCount:30, stableCount:30}`, `evidenceFailures=[]`,
+`coverageFailures=[]`, `revision.failures=[]`. Nothing was relaxed to get there — the same
+`validateEvidenceSet` / `artifactExists` / `scenarioHash` / sourceHash-equality / revision-reachability code
+that produced the 3 blockers (and 30 recipe `evidenceFailures`) in the 20:16 record produced this result after
+genuine re-capture.
+
+**I did not take the runners' PASS lines at face value.** Recomputed from RAW with my own code: all 60 recipe
+artifacts re-hashed off disk → 0 unbound; one `sourceHash` (ac1b1515…) and one revision (`e06d2988`) across all
+30 runs; 30 distinct `scenarioHash`; five sampled PNGs decoded through a hand-written zlib+unfilter path to
+real 480×360 content (R001: 1,267 distinct colours) rather than blank fills.
+
+**Re-running the track bought a finding, not just a green.** Hashing the 30 screenshots showed **24 distinct
+hashes for 30 runs**: `R022=R023=R024=R025`, `R001=R006`, `R004=R010`, `R005=R009`. That upgrades F-55 from "an
+rc-* pair happens to look alike" to **F-60**: every recipe record carries the identical coarse boolean bundle
+`{scene, interaction, visual, lifecycle, noRuntimeErrors, capability, semantic}=true`, so `visual=true` carries
+no per-claim signal — and for clearcoat / transmission / anisotropy / iridescence, four *different* claims,
+the frame is literally one image. This is an assertion-strength gap and it survives the green gate; it needs an
+owner decision (give the four extension recipes distinguishing visual targets, or stop calling the screenshot
+extension proof). F-59 must not be read as contradicting it.
+
+**Self-correction on my own tooling this pass.** (a) My first read of `docs/evidence/v11-spec-compliance.json`
+iterated `examples[]` and reported "1 example, 0 fail, 1 warn" — wrong: that array holds only examples **with**
+findings (`spec-compliance-audit.cjs:371`), so the honest numbers come from `summary` (45 audited / 0 fail /
+1 warn). (b) The `blockingForRelease` list initially still carried the cleared `v06FinalGate_recipe` text, which
+would have overstated the blocker count; it was moved to a new `blockingForReleaseResolved` array → 10 blocking
+items. (c) F-61: the catalog evidence names commit `3a53957`, one commit behind HEAD; `sourceHash` is identical
+so content currency holds, but the reachability check only asks "ancestor", never "is HEAD" — a real weakness in
+attribution that I had previously counted as a strength. (d) Process: `git status` mid-capture broke git's index
+refresh once ("unable to read sha1 file … fatal"); transient, retry clean, and I now keep git index operations
+out of the capture window.
+
+**Cost of honesty about the tree:** this pass left 19 generated paths dirty (4 V0.6 evidence files +
+`docs/v06-final-gate.md` + 12 recipe artifacts + 2 timestamp-only V1.1 evidence files, restating F-58). Those
+are **not** committed — commit authorization for this wave was not given. No `examples/*/example.json` changed,
+so the 20:0x V1.1 binding (45 examples / 0 fail / 1 warn) still stands.
+
+**Overall remains NOT_READY** (10 blocking items after F-56 cleared; `v06FinalGate_recipe` is now PASS).

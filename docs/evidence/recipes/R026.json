@@ -5,7 +5,7 @@
     "ready": true,
     "semanticOk": true,
     "interactionCount": 0,
-    "animationTicks": 44,
+    "animationTicks": 56,
     "instanceCount": 0,
     "materialCount": 5,
     "featureApplied": false,
@@ -32,7 +32,7 @@
     ],
     "rotation": [
       0,
-      120.31750000000001,
+      142.26250000000002,
       0
     ],
     "cameraPosition": [
@@ -47,7 +47,7 @@
     "ready": true,
     "semanticOk": true,
     "interactionCount": 0,
-    "animationTicks": 84,
+    "animationTicks": 97,
     "instanceCount": 0,
     "materialCount": 5,
     "featureApplied": false,
@@ -74,7 +74,7 @@
     ],
     "rotation": [
       0,
-      183.64450000226495,
+      207.20450000226495,
       0
     ],
     "cameraPosition": [

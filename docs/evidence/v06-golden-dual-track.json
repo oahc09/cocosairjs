@@ -1,9 +1,10 @@
 {
-  "measuredAt": "2026-09-17T23:50:29.574Z",
+  "measuredAt": "2026-09-19T13:02:37.589Z",
   "source": {
-    "baseRevision": "c2e71bbe236e18cd7f4ba475d0bb3896de7e31dd",
+    "baseRevision": "e06d29880b398c43d318eedee43c32941dd4eb97",
+    "gitAvailable": true,
     "workingTree": true,
-    "sourceHash": "3ee7cafe3eab657bf278d8019618b93c804a9c860ca6db60dc826aff599d6df3"
+    "sourceHash": "ac1b151596b3697554fdaa31d384714f91062562c646ceb103ffc2a8bc7b0bfa"
   },
   "profile": "A001",
   "gate": {

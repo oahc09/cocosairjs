@@ -1,0 +1,176 @@
+[build] cocosair moduleFormat=esm min=true
+Module source "internal-constants":
+function tryDefineGlobal (name, value) {
+    const _global = typeof window === 'undefined' ? global : window;
+    if (typeof _global[name] === 'undefined') {
+        return (_global[name] = value);
+    } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return _global[name];
+    }
+}
+export const HTML5 = true;
+
+export const NATIVE = false;
+
+export const ANDROID = false;
+
+export const IOS = false;
+
+export const MAC = false;
+
+export const WINDOWS = false;
+
+export const LINUX = false;
+
+export const OHOS = false;
+
+export const OPEN_HARMONY = false;
+
+export const WECHAT = false;
+tryDefineGlobal('CC_WECHAT', false);
+
+export const WECHAT_MINI_PROGRAM = false;
+
+export const XIAOMI = false;
+tryDefineGlobal('CC_XIAOMI', false);
+
+export const ALIPAY = false;
+tryDefineGlobal('CC_ALIPAY', false);
+
+export const TAOBAO = false;
+
+export const TAOBAO_MINIGAME = false;
+
+export const BYTEDANCE = false;
+tryDefineGlobal('CC_BYTEDANCE', false);
+
+export const OPPO = false;
+tryDefineGlobal('CC_OPPO', false);
+
+export const VIVO = false;
+tryDefineGlobal('CC_VIVO', false);
+
+export const HUAWEI = false;
+tryDefineGlobal('CC_HUAWEI', false);
+
+export const MIGU = false;
+tryDefineGlobal('CC_MIGU', false);
+
+export const HONOR = false;
+tryDefineGlobal('CC_HONOR', false);
+
+export const COCOS_RUNTIME = false;
+tryDefineGlobal('CC_COCOS_RUNTIME', false);
+
+export const SUD = false;
+tryDefineGlobal('CC_SUD', false);
+
+export const SUDV2 = false;
+tryDefineGlobal('CC_SUDV2', false);
+
+export const NODEJS = false;
+tryDefineGlobal('CC_NODEJS', false);
+
+export const EDITOR = false;
+tryDefineGlobal('CC_EDITOR', false);
+
+export const EDITOR_NOT_IN_PREVIEW = false;
+
+export const PREVIEW = false;
+tryDefineGlobal('CC_PREVIEW', false);
+
+export const BUILD = true;
+tryDefineGlobal('CC_BUILD', true);
+
+export const TEST = false;
+tryDefineGlobal('CC_TEST', false);
+
+export const DEBUG = true;
+tryDefineGlobal('CC_DEBUG', true);
+
+export const SERVER_MODE = false;
+
+export const DEV = false;
+tryDefineGlobal('CC_DEV', false);
+
+export const MINIGAME = false;
+tryDefineGlobal('CC_MINIGAME', false);
+
+export const RUNTIME_BASED = false;
+tryDefineGlobal('CC_RUNTIME_BASED', false);
+
+export const SUPPORT_JIT = true;
+tryDefineGlobal('CC_SUPPORT_JIT', true);
+
+export const JSB = false;
+tryDefineGlobal('CC_JSB', false);
+
+export const NOT_PACK_PHYSX_LIBS = false;
+
+export const NET_MODE = 0;
+
+export const WEBGPU = false;
+
+export const NATIVE_CODE_BUNDLE_MODE = 2;
+
+export const WASM_SUBPACKAGE = false;
+
+export const CULL_MESHOPT = true;
+
+export const LOAD_SPINE_MANUALLY = false;
+
+export const LOAD_BOX2D_MANUALLY = false;
+
+export const LOAD_BULLET_MANUALLY = false;
+
+export const LOAD_PHYSX_MANUALLY = false;
+
+export const USE_3D = true;
+
+export const USE_UI_SKEW = false;
+
+export const USE_XR = false;
+
+export const USE_SORTING_2D = false;
+
+
+Module source "cc":
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\air.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\base.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\gfx-webgl.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\gfx-webgl2.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\gfx-empty.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\3d.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\animation.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\skeletal-animation.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\primitive.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\tween.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\custom-pipeline.ts';
+export * from 'E:\\qoder-rebuild-audit-2026-09-19\\repo\\src\\exports\\legacy-pipeline.ts';
+>>> ERROR: noSideEffectFile: ( cocos/xr/event/xr-event-handle.ts ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( cocos/spine/lib/spine-binary.ts ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/gamepad-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handheld-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handle-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/hmd-input.js ) doesn't exist!
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (92:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (93:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (99:27): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.asm.js' or its corresponding type declarations.
+Redirect module pal/system-info to E:\qoder-rebuild-audit-2026-09-19\repo\src\pal\system-info\web\system-info.js
+Redirect module internal:native to E:\qoder-rebuild-audit-2026-09-19\repo\src\cocos\native-binding\impl.ts
+Redirect module pal/screen-adapter to E:\qoder-rebuild-audit-2026-09-19\repo\src\pal\screen-adapter\web\screen-adapter.js
+Redirect module pal/env to E:\qoder-rebuild-audit-2026-09-19\repo\src\pal\env\web\env.js
+Redirect module pal/pacer to E:\qoder-rebuild-audit-2026-09-19\repo\src\pal\pacer\pacer-web.js
+Redirect module pal/input to E:\qoder-rebuild-audit-2026-09-19\repo\src\pal\input\web\index.js
+Redirect module E:\qoder-rebuild-audit-2026-09-19\repo\src\cocos\animation\marionette\runtime-exports.ts to E:\qoder-rebuild-audit-2026-09-19\repo\src\cocos\animation\marionette\index-empty.ts
+Redirect module pal/wasm to E:\qoder-rebuild-audit-2026-09-19\repo\src\pal\wasm\wasm-web.js
+Circular dependency: src/air/assets/gltf/material.ts -> src/air/assets/gltf/material/physical-effect.ts -> src/air/assets/gltf/material.ts
+==== Performance ====
+{"# BUILD":[19159.397900000004,1682475944,1848735752],"## initialize":[8594.6912,515409752,681681008],"- plugin 6 (node-resolve) - buildStart":[0.39049999999997453,7384,166289480],"- plugin 8 (commonjs) - buildStart":[0.8182999999999083,11192,166302120],"- plugin 9 (@cocos/typescript) - buildStart":[8593.1352,515374760,681677424],"## generate module graph":[8998.387499999999,1057985520,1739668304],"- plugin 0 (commonjs--resolver) - resolveId":[13.688999999949374,13054712,1737023464],"- plugin 1 (@cocos/ccbuild|external-loader) - resolveId":[5.475199999891629,720352,1737024152],"- plugin 2 (@cocos/ccbuild|module-overrides) - resolveId":[6.933599999998478,794096,1737025656],"- plugin 3 (virtual) - resolveId":[13.263399999996182,3633400,1737027672],"- plugin 1 (@cocos/ccbuild|external-loader) - load":[1.6216999999978725,424040,1730649688],"- plugin 2 (@cocos/ccbuild|module-overrides) - load":[4.143300000025192,651240,1730652456],"- plugin 3 (virtual) - load":[1.071399999978894,183096,1730653296],"- plugin 7 (json) - transform":[3.797999999998865,1307904,1735420224],"- plugin 8 (commonjs) - transform":[2.3467999999666063,326576,1735423224],"- plugin 10 (babel) - transform":[252.08799999998337,11989568,1735475000],"generate ast":[522.7836000000043,58342784,1735402128],"- plugin 4 (@cocos/ccbuild|module-query-plugin) - resolveId":[8.289700000099401,4356000,1737030480],"- plugin 5 (ts-paths) - resolveId":[19.867700000004334,-30815144,1737032040],"- plugin 9 (@cocos/typescript) - resolveId":[2234.1137000001618,45433960,1737059808],"- plugin 10 (babel) - resolveId":[1.2741000000442,279416,1737060896],"- plugin 6 (node-resolve) - resolveId":[4.4350000000195,941800,1737062344],"- plugin 6 (node-resolve) - load":[1.0265000000108557,162904,1730654136],"- plugin 8 (commonjs) - load":[1.3919000000187225,-102496,1730654976],"- plugin 9 (@cocos/typescript) - load":[11.545099999986633,10856424,1730670384],"- plugin 10 (babel) - load":[164.1687000000038,12047456,1730671544],"## sort and bind modules":[145.88630000000194,18367168,1758035504],"## mark included statements":[1406.9099999999999,90075296,1848110832],"treeshaking pass 1":[241.3080000000009,38815720,1797247256],"treeshaking pass 2":[286.6943999999967,18430000,1815677288],"treeshaking pass 3":[193.27869999999893,-7641424,1808035896],"treeshaking pass 4":[136.4161000000022,52155856,1860191784],"treeshaking pass 5":[93.64679999999862,-15065888,1845125928],"treeshaking pass 6":[87.39249999999811,-22948168,1822177792],"treeshaking pass 7":[76.54439999999886,39649208,1861827032],"treeshaking pass 8":[75.20620000000054,-34579384,1827247680],"treeshaking pass 9":[72.28399999999965,30253320,1857501032],"treeshaking pass 10":[71.82470000000103,-37540832,1819960232],"treeshaking pass 11":[71.1359999999986,28150136,1848110400],"- plugin 8 (commonjs) - buildEnd":[0.15720000000146683,1480,1848116944],"- plugin 9 (@cocos/typescript) - buildEnd":[12.802200000001903,617864,1848734840]}
+====             ====
+[build] ccbuild done in 28.9s
+[build] output: build/cocosair.module.min.js.map (source map)
+[build] output: build/cocosair.module.min.js
+[build] output: build/package.json (type: module)
+[build] output: build/gltf-decoders/package.json (type: commonjs)
