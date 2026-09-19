@@ -48,7 +48,6 @@ function fitOfficialModel(root) {
     if (!Number.isFinite(min.x)) throw new Error('Model has no renderable bounds');
     const center = Vec3.multiplyScalar(new Vec3(), Vec3.add(new Vec3(), min, max), 0.5);
     const radius = Math.max(Vec3.distance(min, max) * 0.5, 0.01);
-    if (!embedded) center.x -= radius * 0.6; // Keep the standalone model clear of the controls.
     camera.near = Math.max(radius / 1000, 0.001); camera.far = Math.max(radius * 100, 100);
     const halfFov = camera.fov * Math.PI / 360;
     const fitDistance = embedded

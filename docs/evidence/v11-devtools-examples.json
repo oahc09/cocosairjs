@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-19T12:15:50.581Z",
+  "measuredAt": "2026-09-19T14:32:54.302Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "contract": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/inspectNode/dispatch/captureFrame/getRuntimeErrors/close）",
   "examples": [
@@ -77,7 +77,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[46,93,126] differs from clear color"
+          "detail": "center rgb=[46,72,93] differs from clear color"
         },
         {
           "validatorId": "material-property",
@@ -107,13 +107,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/automation.png",
-        "bytes": 5999,
-        "hash": "281aa3a571d5477a"
+        "bytes": 6000,
+        "hash": "f6cfe95fdea1be98"
       },
       "assetDigests": [],
       "errors": []
@@ -122,7 +122,7 @@
       "id": "rc-capture-frame",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "0edc1d1d6ff2",
+      "specFingerprint": "78764b916464",
       "sessionUnits": [
         "DevToolsSession.captureFrame"
       ],
@@ -177,7 +177,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=8474 viewport=480x360"
+          "detail": "bytes=8466 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -212,13 +212,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-capture-frame.png",
-        "bytes": 6337,
-        "hash": "f27e7c41239b9f21"
+        "bytes": 6331,
+        "hash": "a3edb2ec44c8fc0a"
       },
       "assetDigests": [],
       "errors": []
@@ -227,7 +227,7 @@
       "id": "rc-create-node",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "c33375a756c2",
+      "specFingerprint": "c34d0b8bb9e8",
       "sessionUnits": [
         "DevToolsSession.dispatch",
         "DevToolsSession.inspectScene",
@@ -295,7 +295,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=7030 viewport=480x360"
+          "detail": "bytes=6946 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -330,13 +330,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 5254,
-        "hash": "80cdb10343a2ac68"
+        "bytes": 5193,
+        "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
       "errors": []
@@ -345,7 +345,7 @@
       "id": "rc-error-report",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "7b6f076ec497",
+      "specFingerprint": "12a01a35616b",
       "sessionUnits": [
         "DevToolsSession.getRuntimeErrors",
         "DevToolsSession.dispatch"
@@ -411,7 +411,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=7030 viewport=480x360"
+          "detail": "bytes=6946 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -451,8 +451,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 5254,
-        "hash": "80cdb10343a2ac68"
+        "bytes": 5193,
+        "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
       "errors": []
@@ -461,7 +461,7 @@
       "id": "rc-inspect-scene",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "745a4cf387b5",
+      "specFingerprint": "505e0eeb0112",
       "sessionUnits": [
         "DevToolsSession.inspectScene",
         "DevToolsSession.inspectNode"
@@ -517,7 +517,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=7030 viewport=480x360"
+          "detail": "bytes=6946 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -557,8 +557,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-inspect-scene.png",
-        "bytes": 5254,
-        "hash": "80cdb10343a2ac68"
+        "bytes": 5193,
+        "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
       "errors": []
@@ -639,7 +639,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[46,93,126] differs from clear color"
+          "detail": "center rgb=[46,72,93] differs from clear color"
         },
         {
           "validatorId": "material-property",
@@ -669,13 +669,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/automation.png",
-        "bytes": 5999,
-        "hash": "281aa3a571d5477a"
+        "bytes": 6000,
+        "hash": "f6cfe95fdea1be98"
       },
       "assetDigests": [],
       "errors": []
@@ -684,7 +684,7 @@
       "id": "rc-capture-frame",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "0edc1d1d6ff2",
+      "specFingerprint": "78764b916464",
       "sessionUnits": [
         "DevToolsSession.captureFrame"
       ],
@@ -739,7 +739,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=8474 viewport=480x360"
+          "detail": "bytes=8466 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -774,13 +774,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-capture-frame.png",
-        "bytes": 6337,
-        "hash": "f27e7c41239b9f21"
+        "bytes": 6331,
+        "hash": "a3edb2ec44c8fc0a"
       },
       "assetDigests": [],
       "errors": []
@@ -789,7 +789,7 @@
       "id": "rc-create-node",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "c33375a756c2",
+      "specFingerprint": "c34d0b8bb9e8",
       "sessionUnits": [
         "DevToolsSession.dispatch",
         "DevToolsSession.inspectScene",
@@ -857,7 +857,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=7030 viewport=480x360"
+          "detail": "bytes=6946 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -892,13 +892,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 5254,
-        "hash": "80cdb10343a2ac68"
+        "bytes": 5193,
+        "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
       "errors": []
@@ -907,7 +907,7 @@
       "id": "rc-error-report",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "7b6f076ec497",
+      "specFingerprint": "12a01a35616b",
       "sessionUnits": [
         "DevToolsSession.getRuntimeErrors",
         "DevToolsSession.dispatch"
@@ -973,7 +973,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=7030 viewport=480x360"
+          "detail": "bytes=6946 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -1013,8 +1013,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 5254,
-        "hash": "80cdb10343a2ac68"
+        "bytes": 5193,
+        "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
       "errors": []
@@ -1023,7 +1023,7 @@
       "id": "rc-inspect-scene",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "745a4cf387b5",
+      "specFingerprint": "505e0eeb0112",
       "sessionUnits": [
         "DevToolsSession.inspectScene",
         "DevToolsSession.inspectNode"
@@ -1079,7 +1079,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=7030 viewport=480x360"
+          "detail": "bytes=6946 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -1119,8 +1119,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-inspect-scene.png",
-        "bytes": 5254,
-        "hash": "80cdb10343a2ac68"
+        "bytes": 5193,
+        "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
       "errors": []

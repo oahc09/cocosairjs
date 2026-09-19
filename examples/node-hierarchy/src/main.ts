@@ -35,7 +35,7 @@ function boxNode (name: string, parent: Node, x: number, y: number, z: number, s
 }
 
 var cameraNode = new Node('Main Camera'); scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 3.2, 8)); cameraNode.setRotationFromEuler(-22, 0, 0);
+cameraNode.setPosition(new Vec3(0, 3.2, 8)); cameraNode.lookAt(new Vec3(0, 1.26, 0));
 var camera = cameraNode.addComponent(Camera);
 camera.projection = Camera.ProjectionType.PERSPECTIVE; camera.fov = 45;
 camera.near = 0.1; camera.far = 1000;

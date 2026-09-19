@@ -45,7 +45,7 @@
       "primitives.plane",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.lookAt"
     ],
     "forbiddenShortcut": [
       "用贴图烘焙的假光斑冒充动态点光源",
@@ -161,7 +161,7 @@
         "sourceLocation": "L20"
       },
       {
-        "api": "Node.setRotationFromEuler",
+        "api": "Node.lookAt",
         "source": "src/main.ts",
         "validator": "transform-equals",
         "sourceLocation": "L20"
@@ -214,5 +214,5 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "b7e190d34dfa"
+  "promotionEvidence": "0f7b7a2d60d0"
 }

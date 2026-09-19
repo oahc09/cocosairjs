@@ -31,7 +31,7 @@
     ],
     "capability": []
   },
-  "promotionEvidence": "2f2a1619aefe",
+  "promotionEvidence": "922dd81bd5f3",
   "specStatus": "frozen",
   "learning": {
     "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
@@ -94,13 +94,13 @@
         "api": "Animation",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L64"
+        "sourceLocation": "L63"
       },
       {
         "api": "AnimationClip",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L106"
+        "sourceLocation": "L105"
       },
       {
         "api": "GLTFLoader",
@@ -130,13 +130,13 @@
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L57"
+        "sourceLocation": "L56"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L173"
+        "sourceLocation": "L172"
       },
       {
         "api": "isValid",

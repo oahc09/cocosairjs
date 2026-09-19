@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-19T05:01:47.498Z",
+  "measuredAt": "2026-09-19T14:33:15.141Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "total": 13,
@@ -48,7 +48,7 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:49872/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:53830/apps/gallery/mesh-sphere/"
     },
     {
       "id": "example-boot:anim-position",

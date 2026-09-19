@@ -172,7 +172,7 @@
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L22"
+        "sourceLocation": "L29"
       }
     ]
   },
@@ -230,5 +230,5 @@
   "license": {
     "assets": "无第三方资产"
   },
-  "promotionEvidence": "b2a73881af52"
+  "promotionEvidence": "e4fd635ae276"
 }

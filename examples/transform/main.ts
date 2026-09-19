@@ -88,7 +88,8 @@ root.addComponent(HierarchyAnimator);
 root.addComponent(Reporter);
 
 window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
-frameObject(camera, root); // 相机取景：层级链居中
+frameObject(camera, root); // 相机取景：层级链按包围盒取距
+camera.node.lookAt(new Vec3(0, 0.5, 0)); // 链条绕 root 旋转，视点锚在扫掠中心而非某一帧的包围盒中心
 
 app.run(scene);
 console.log('[transform] running — 打开控制台观察 local vs world position');

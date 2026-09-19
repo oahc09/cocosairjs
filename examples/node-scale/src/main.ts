@@ -60,7 +60,7 @@ class Sway extends Component {
   }
 }
 scaledParent.addComponent(Sway);
-frameObject(camera, scaledParent); // 相机取景：目标居中（§21 Expected Result）
+frameObject(camera, scene); // 相机取景：基准块与缩放块同框居中（§21 Expected Result）
 
 app.run(scene);
 console.log('[node-scale] running');

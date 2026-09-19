@@ -34,7 +34,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "a25768f61361",
+  "promotionEvidence": "ae097c5c7da7",
   "specStatus": "frozen",
   "learning": {
     "goal": "第一个完整 3D 场景：相机 + 平行光 + 旋转立方体（E001 basic-cube）",
@@ -176,7 +176,7 @@
         "api": "Node.setRotationFromEuler",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L40"
+        "sourceLocation": "L56"
       },
       {
         "api": "Node.addComponent",

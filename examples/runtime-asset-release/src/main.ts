@@ -14,7 +14,7 @@ var app = await createAirApp({ canvas: '#GameCanvas' });
 var scene = new Scene('runtime-asset-release');
 
 var cameraNode = new Node('Main Camera'); scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 1.8, 5)); cameraNode.setRotationFromEuler(-15, 0, 0);
+cameraNode.setPosition(new Vec3(0, 1.8, 5)); cameraNode.lookAt(new Vec3(0, 0, 0));
 var camera = cameraNode.addComponent(Camera);
 camera.projection = Camera.ProjectionType.PERSPECTIVE; camera.fov = 45;
 camera.near = 0.1; camera.far = 1000;

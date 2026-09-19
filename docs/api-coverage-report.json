@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-19T05:12:37.086Z",
+  "generatedAt": "2026-09-19T14:33:38.532Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
-      "measuredAt": "2026-09-19T05:00:38.496Z",
+      "measuredAt": "2026-09-19T14:30:20.532Z",
       "mode": "spec-driven-v2"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
-      "measuredAt": "2026-09-19T05:01:38.455Z",
+      "measuredAt": "2026-09-19T14:32:54.302Z",
       "mode": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/inspectNode/dispatch/captureFrame/getRuntimeErrors/close）"
     }
   ],
@@ -19,16 +19,16 @@
     "verified": "claim 所属 example 在浏览器矩阵或 DevTools 会话门禁中 PASS，且 specFingerprint 与当前 example.json 一致"
   },
   "totalUnits": 4729,
-  "totalClaimed": 63,
-  "totalVerified": 63,
+  "totalClaimed": 64,
+  "totalVerified": 64,
   "staleEvidenceExamples": [],
   "tiers": {
     "core": {
       "total": 717,
-      "claimed": 49,
-      "verified": 49,
-      "claimedRate": 0.068,
-      "verifiedRate": 0.068,
+      "claimed": 50,
+      "verified": 50,
+      "claimedRate": 0.07,
+      "verifiedRate": 0.07,
       "gate": "100% verified",
       "threshold": 1,
       "pass": false
@@ -768,9 +768,7 @@
         "hello-cube",
         "input",
         "interaction-click",
-        "light-point",
         "light-sphere",
-        "light-spot",
         "light-two-directional",
         "material-basic",
         "material-unlit",
@@ -1050,6 +1048,14 @@
       "tier": "core",
       "examples": [
         "light-point"
+      ]
+    },
+    {
+      "unit": "Node.lookAt",
+      "tier": "core",
+      "examples": [
+        "light-point",
+        "light-spot"
       ]
     },
     {
@@ -1676,7 +1682,6 @@
     "Node._onPostActivated",
     "Node.translate",
     "Node.rotate",
-    "Node.lookAt",
     "Node.invalidateChildren",
     "Node.updateWorldTransform",
     "Node.getPosition",

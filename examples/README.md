@@ -53,6 +53,13 @@ examples/<id>/
 - **共享库 `examples/shared/` 按真实层级导入**：根级入口写 `../shared/x.js`，`src/` 下的入口写 `../../shared/x.js`。
   浏览器验证器会把示例目录展平到暂存工作区根，因此写错层级的路径在它那里"恰好能跑"，而在 dev server 与
   Gallery 部署物里是 404 —— `spec-compliance-audit` 的 `S-IMPORT-RESOLVE` 就是拦这个的。
+- **取景约定：主体必须落在画面中心**。默认俯仰角固定的样板相机（`position=[0,2.4,6.5]`、
+  `rotationEuler=[-20,0,0]`）只对准原点，主体一旦不在原点就会偏到画面左下——所以要么传
+  `setupCamera(scene, { lookAt: [x, y, z] })`（内部改用 `node.lookAt(...)` 代替欧拉角），
+  要么在入口里显式 `cameraNode.lookAt(主体中心)`；用 `frameObject(camera, target)` 时 target 要覆盖
+  全部需要同框的节点（例如 `node-scale` 取 `scene` 而不是被缩放的子节点）。
+  `frameObject` 在 `renderer.model` 尚未随场景激活创建时回退到 `Mesh` 静态包围盒 × `node.worldMatrix`，
+  因此场景未激活也能取到真中心，不会再降级成「节点原点 + 保底距离」。
 - **资源型示例的 Lifecycle Contract（§25）**：`examples/shared/asset-lifecycle.js` 的
   `installAssetLifecycle({ label, hold, release, reacquire })` 会在页内安装 `window.__lifecycle()`，
   验证器取完截图后调用它，真实执行 释放 → 帧末延迟销毁等待 → `isValid` 泄漏核对 → 重新获取挂回，

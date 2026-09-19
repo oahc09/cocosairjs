@@ -102,7 +102,7 @@ async function acquire (): Promise<any[]> {
   scene.addChild(instance.root);
   // 显式相机位姿：对准双半块接缝（x=0），两个材质区域同框
   cameraNode.setPosition(new Vec3(0, 0.9, 3.4));
-  cameraNode.setRotationFromEuler(-10, 0, 0);
+  cameraNode.lookAt(new Vec3(0, 0, 0));
 
   var renderer = instance.root.getComponentInChildren(MeshRenderer);
   var slots = renderer ? renderer.sharedMaterials.length : 0;

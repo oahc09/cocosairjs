@@ -46,7 +46,7 @@ orangeRenderer.material = materialWith(new Color(235, 125, 65, 255));
 
 // 相机 A：DEFAULT 层全场景
 var baseCamNode = new Node('BaseCamera'); scene.addChild(baseCamNode);
-baseCamNode.setPosition(new Vec3(0, 2.2, 6.5)); baseCamNode.setRotationFromEuler(-18, 0, 0);
+baseCamNode.setPosition(new Vec3(0, 2.2, 6.5)); baseCamNode.lookAt(new Vec3(0.1, 0.6, 0));
 var baseCamera = baseCamNode.addComponent(Camera);
 baseCamera.projection = Camera.ProjectionType.PERSPECTIVE; baseCamera.fov = 45;
 baseCamera.near = 0.1; baseCamera.far = 1000;
@@ -56,7 +56,7 @@ baseCamera.priority = 0;
 
 // 相机 B：只渲染 UI_2D 层；DEPTH_ONLY 保留 A 的颜色输出，实现叠加
 var overlayCamNode = new Node('OverlayCamera'); scene.addChild(overlayCamNode);
-overlayCamNode.setPosition(new Vec3(0, 2.2, 6.5)); overlayCamNode.setRotationFromEuler(-18, 0, 0);
+overlayCamNode.setPosition(new Vec3(0, 2.2, 6.5)); overlayCamNode.lookAt(new Vec3(0.1, 0.6, 0));
 var overlayCamera = overlayCamNode.addComponent(Camera);
 overlayCamera.projection = Camera.ProjectionType.PERSPECTIVE; overlayCamera.fov = 45;
 overlayCamera.near = 0.1; overlayCamera.far = 1000;

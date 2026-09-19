@@ -45,7 +45,7 @@
       "primitives.plane",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.lookAt"
     ],
     "forbiddenShortcut": [
       "用 emissive 自发光材质冒充聚光照明"
@@ -160,7 +160,7 @@
         "sourceLocation": "L20"
       },
       {
-        "api": "Node.setRotationFromEuler",
+        "api": "Node.lookAt",
         "source": "src/main.ts",
         "validator": "transform-equals",
         "sourceLocation": "L20"
@@ -211,5 +211,5 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "97405c9df421"
+  "promotionEvidence": "3aea85e7a9cd"
 }

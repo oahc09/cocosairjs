@@ -32,7 +32,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "06bce4ca8bdb",
+  "promotionEvidence": "d289357cd724",
   "specStatus": "frozen",
   "learning": {
     "goal": "最高复杂度回归：程序化蒙皮网格 + 骨骼树 + 刚性绑定 + 骨骼动画（E009）",
@@ -99,7 +99,7 @@
         "api": "Camera",
         "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L35"
       },
       {
         "api": "SkinnedMeshRenderer",

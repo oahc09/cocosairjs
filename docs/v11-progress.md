@@ -14,7 +14,7 @@
   非默认 clearColor(20,60,120)，页面 body 保持白色，因此"画布呈蓝"只能来自 readPixels 的真实帧缓冲
   （§6 Effect Contract + §11 Screenshot Current 双向可判定），9 条 claim 逐条带源码行证据
 - API 精确绑定：772 条 §12 apiEvidence（行号自动定位 + validator 绑定闭环，`--check` 零漂移零脱钩）；
-  772 条 api.claims（去重后 68 个唯一单元，claim↔evidence 1:1；其中 63 个落在 inventory 分层，
+  772 条 api.claims（去重后 69 个唯一单元，claim↔evidence 1:1；其中 64 个落在 inventory 分层，
   余 5 个 `DevToolsSession.*` 不在分母内）
   primary/supporting/claims 逐字命中 `docs/example-api-inventory.json`
 - 门禁：`tools/examples/spec-validate.cjs`（结构冻结）+ `spec-evidence.cjs`（证据回填/校验）+
@@ -54,15 +54,38 @@
   一律记 FAIL（防"声明未执行"冒充通过）；`bench.mode=ui-shell` 的目录页
   （gltf-catalog，无 GameCanvas）改为验证 DOM UI 选择器（`#model-list .model-row`）渲染 + 零页面错误
 
+## 取景居中修复（2026-09-19 本轮）
+
+- 现象：从 `examples/gallery.html`（iframe 1000×702）或独立打开进入部分示例时，主体不在画面正中，
+  偏向左下。对 44 个可渲染示例逐一在页内把世界包围盒顶点投影到 NDC 后测量（不是靠肉眼看截图），
+  定位出两类根因并修复：
+  1. **样板相机未对准主体**：`position=[0,2.4,6.5] + rotationEuler=[-20,0,0]` 只指向原点。
+     24 个示例改为 `setPosition(...) + lookAt(主体中心)`；`examples/shared/scene-kit.js` 的
+     `setupCamera` 新增 `lookAt` 选项（走 `Node.lookAt`，与欧拉角二选一）。
+  2. **`utils.frameObject` 激活前静默降级**：`renderer.model` 未随场景激活创建、或世界包围盒为空
+     （蒙皮网格首帧前）时，直接 `continue` → 退化成「节点原点 + fallbackDistance」，而节点常贴地放置。
+     `src/air/utils/frame-object.ts` 补静态包围盒回退（`Mesh.struct.minPosition/maxPosition ×
+     node.worldMatrix`，含空盒判定 `halfExtents.lengthSqr() === 0`），
+     锁定回归用例 `test/smoke/smoke-08-frame-object.test.ts`（去掉回退即 RED）。
+- 另两处取景目标修正：`node-scale` 由 `frameObject(camera, scaledParent)` 改 `frameObject(camera, scene)`
+  （§21 要求基准块与缩放块同框）；`transform` 在 `frameObject` 后追加 `lookAt(0, 0.5, 0)`
+  （层级链绕 root 旋转，视点应锚在扫掠中心而非瞬时包围盒中心）；`gltf-viewer` 去掉
+  "非嵌入模式时把主体往右推" 的 `center.x -= radius * 0.6`，Gallery 与独立视图统一用同一居中。
+- 修复后复测：全部示例主体投影 dx=dy≈0；仍偏离者均为设计意图（位移/旋转动画、可切换的 lookAt 目标、
+  竖直层级、地面平面拉低像素包围盒），Gallery 模式下峰值偏移 ≤0.03 NDC。
+- 连带影响：`shared/scene-kit.js` 与多个 `src/main.ts` 行号整体下移，§12 apiEvidence 已重跑
+  `spec-evidence.cjs` 回填（772 条，0 漂移 0 脱钩）；light-point / light-spot 的相机证据符号由
+  `Node.setRotationFromEuler` 改为 `Node.lookAt`（源码已不再调用前者）。
+
 ## API Coverage（基线，目标差距）
 
 - `tools/examples/api-inventory.cjs`：4729 覆盖单元（core 717 / important 793 / advanced 3219）
 - `tools/examples/coverage-report.cjs` → `docs/api-coverage-report.json`；verified 口径同时消费
   浏览器矩阵与 DevTools 会话门禁两份证据（`v11-examples-verified.json` + `v11-devtools-examples.json`），
   并要求 `specFingerprint` 与当前 `example.json` 一致，否则视为陈旧证据
-- 当前（verified 口径，非 claimed；2026-09-19 全链路当期取数）：core 49/717（6.8%）·
-  important 6/793（0.8%）· advanced 8/3219（0.2%）。772 条 api.claims 去重后 68 个唯一单元，
-  其中 63 个进入 inventory 分层统计（core 49 / important 6 / advanced 8）且全部 verified、0 条 stale；
+- 当前（verified 口径，非 claimed；2026-09-19 全链路当期取数）：core 50/717（7.0%）·
+  important 6/793（0.8%）· advanced 8/3219（0.2%）。772 条 api.claims 去重后 69 个唯一单元，
+  其中 64 个进入 inventory 分层统计（core 50 / important 6 / advanced 8）且全部 verified、0 条 stale；
   余 5 个 `DevToolsSession.*` 属
   V0.5.1 会话合同、不在 API inventory 分母内
 - 目标（§25/§26，不得下调）：**core 100% verified / important ≥ 90% verified / advanced ≥ 80% verified**，

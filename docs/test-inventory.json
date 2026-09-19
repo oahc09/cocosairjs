@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T09:40:46.990Z",
+  "generatedAt": "2026-09-19T14:38:41.175Z",
   "suites": [
     {
       "file": "test/smoke/smoke-01-bootstrap.test.ts",
@@ -69,6 +69,7 @@
     {
       "file": "test/smoke/smoke-08-frame-object.test.ts",
       "tests": [
+        "framing uses mesh static bounds when renderer.model is not created yet",
         "framing uses world coordinates when the camera has a parent",
         "orthographic fitting adjusts height for a portrait viewport",
         "perspective fitting uses the narrower horizontal field of view"
@@ -356,8 +357,8 @@
   ],
   "totals": {
     "suites": 29,
-    "tests": 207,
-    "passed": 207,
+    "tests": 208,
+    "passed": 208,
     "failed": 0
   }
 }

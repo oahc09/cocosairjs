@@ -33,7 +33,7 @@ const app = await createAirApp({ canvas: '#GameCanvas' });
 window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 
 const scene = new Scene('static-model');
-const camera = setupCamera(scene, { position: [0, 3, 6], rotationEuler: [-20, 0, 0] });
+const camera = setupCamera(scene, { position: [0, 3, 6], lookAt: [0, -0.2, 0] });
 setupDirectionalLight(scene, { position: [0, 10, 0], illuminance: 20000 });
 
 // ---------- 1. 程序化 checkerboard 纹理（Texture Reference） ----------

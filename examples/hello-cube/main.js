@@ -37,7 +37,7 @@ const scene = new Scene('hello-cube');
 const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 2, 6));
-cameraNode.setRotationFromEuler(-15, 0, 0);
+cameraNode.lookAt(new Vec3(0, 0, 0));
 const camera = cameraNode.addComponent(Camera);
 camera.projection = Camera.ProjectionType.PERSPECTIVE;
 camera.fov = 45;

@@ -13,7 +13,8 @@
   `docs/example-api-inventory.json`；E012 类（DevTools 会话教学）按 §13 使用
   `DevToolsSession.*` 冻结合同单元，且此类示例必须标 `requiresDevTools: true`
   （`spec-validate.cjs` 强制，避免被当作普通场景示例通过）。
-- **API 证据（§12）**：742 条 `api.evidence`（与 742 条 `api.claims` 1:1，去重后 63 个唯一单元），
+- **API 证据（§12）**：772 条 `api.evidence`（与 772 条 `api.claims` 1:1，去重后 69 个唯一单元，
+  其中 64 个落在 inventory 分层），
   行号与 validator 绑定均由 `tools/examples/spec-evidence.cjs` 自动定位/收敛：注释行与 import
   成员表不计为证据，evidence 绑定的 validator 必须在本示例 `ready/validation` 声明集合内
   （否则 DECLARE 补声明或 REBIND 改绑），`--check` 当前 0 drifted / 0 detached / 0 errors。
@@ -131,12 +132,22 @@ G1 不宣称完整**，Draco 正向解码待宿主浏览器 glue 以可哈希固
    **gltf-meshopt**（官方 meshopt_decoder.mjs 随包）演示同等解码器注入流程。
 2. **引擎发现（待追踪）**：PointLight/SpotLight 不跟随节点变换（灯光节点移动/埋地后渲染像素不变，
    方块缩放对照证明渲染管线本身活跃）——light-point/light-spot 的 frame-diff 断言因此移除，
-   灯光语义仍由场景存在性 + 可见性证明；`frameObject` 在部分场景存在取景偏移（内容落画面左下），
-   相关示例改用显式相机位姿。两者属引擎层问题，已从 Example 层面规避并记录。
+   灯光语义仍由场景存在性 + 可见性证明。属引擎层问题，已从 Example 层面规避并记录。
+2b. **取景偏移已修复（不再是偏离项，记为已闭环）**：Gallery/独立打开时主体落画面左下，根因两条：
+   ① 大量示例用固定俯仰的样板相机位姿而未对准主体，已改为 `setPosition(...) + lookAt(主体中心)`
+   （24 例；`shared/scene-kit.js` 的 `setupCamera` 新增 `lookAt` 选项）；
+   ② `utils.frameObject` 在 `renderer.model` 尚未随场景激活创建（或包围盒为空，如蒙皮网格首帧前）时
+   静默降级为「节点原点 + fallbackDistance」，而节点常放在地面处 → 中心偏出画面。已在
+   `src/air/utils/frame-object.ts` 补静态包围盒回退（`Mesh.struct.minPosition/maxPosition × node.worldMatrix`），
+   回归用例见 `test/smoke/smoke-08-frame-object.test.ts`「framing uses mesh static bounds when
+   renderer.model is not created yet」（移除该回退即 RED，已做负向控制）。
+   `node-scale`（改 `frameObject(camera, scene)` 使基准块同框）与 `transform`（视点锚在旋转扫掠中心）
+   为同类修正。修复后全 44 例逐帧测量主体投影偏移 dx=dy≈0，残留位移均为设计意图（运动/旋转动画、
+   可切换 lookAt 目标、竖直层级、地面平面）。
 3. **tween-basic 重写**：原实现以 setInterval 冒充补间，已重写为真正的 `tween()` 链
    （.to 多段 + sineInOut + onComplete 续接）。
-4. **API Coverage 数值**：core verified 49/717（6.8%）——验证体系已建立且 claimed=verified
-   零冒充（63 个入分母的唯一单元全部当期取证）；数值增长依赖 Wave 1-3 示例内容扩展。
+4. **API Coverage 数值**：core verified 50/717（7.0%）——验证体系已建立且 claimed=verified
+   零冒充（64 个入分母的唯一单元全部当期取证）；数值增长依赖 Wave 1-3 示例内容扩展。
 5. **specFingerprint 只覆盖 example.json**：示例源码（`main.ts` / `index.html`）改动不会使
    既有证据失配，§21 `lastVerifiedRevision` 式源码漂移检测尚未建立。本轮为 automation / rc-*
    补写页内 `__rcState` 自检即为一例：源码已变而指纹不变，只能靠人工重跑会话门禁才刷新。

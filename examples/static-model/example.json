@@ -33,7 +33,7 @@
     ],
     "capability": []
   },
-  "promotionEvidence": "9b716a5b72ab",
+  "promotionEvidence": "f2107edbe836",
   "specStatus": "frozen",
   "learning": {
     "goal": "Runtime 资产链路：程序化 Mesh 入库 → loadAssetAsync 取回 → 贴图材质渲染（E007 gltf-basic 的资产形态）",
@@ -108,7 +108,7 @@
         "api": "Camera",
         "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L35"
       },
       {
         "api": "MeshRenderer",

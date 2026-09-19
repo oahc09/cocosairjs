@@ -26,7 +26,7 @@ import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 const scene = new Scene('automation-demo');
-setupCamera(scene, { position: [0, 2, 6], rotationEuler: [-15, 0, 0] });
+setupCamera(scene, { position: [0, 2, 6], lookAt: [0, 0, 0] });
 setupDirectionalLight(scene, { rotationEuler: [-45, -30, 0] });
 
 // 一个已存在的立方体：session 对"已有节点"只能按授权（可写范围）操作

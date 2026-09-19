@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-19T12:13:08.427Z",
+  "measuredAt": "2026-09-19T14:30:20.532Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "mode": "spec-driven-v2",
   "total": 40,
@@ -65,13 +65,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0651"
+          "detail": "litRatio=0.0615"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 5092,
-        "hash": "d6f6040c92b8ff5c"
+        "bytes": 5142,
+        "hash": "7400006458cba185"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -80,7 +80,7 @@
     {
       "id": "anim-rotation",
       "result": "PASS",
-      "specFingerprint": "4c8fde3582af",
+      "specFingerprint": "09a03f6e8059",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -138,8 +138,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 5965,
-        "hash": "d95ec9124ee089c2"
+        "bytes": 5924,
+        "hash": "95006c0df5a05c69"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -332,13 +332,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.6911"
+          "detail": "litRatio=0.6013"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/camera-multi.png",
-        "bytes": 14612,
-        "hash": "a06351dd91d57017"
+        "bytes": 14564,
+        "hash": "c85df72b64ec9a81"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -347,7 +347,7 @@
     {
       "id": "camera-ortho",
       "result": "PASS",
-      "specFingerprint": "ca2030886f0a",
+      "specFingerprint": "97ec02d18347",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -396,7 +396,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0400"
+          "detail": "litRatio=0.0397"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -406,8 +406,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/camera-ortho.png",
-        "bytes": 4929,
-        "hash": "2bae7e8a13a34593"
+        "bytes": 4931,
+        "hash": "a5cd8b935006433b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -465,7 +465,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0418"
+          "detail": "litRatio=0.2546"
         },
         {
           "validatorId": "resource-released",
@@ -515,8 +515,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-catalog.png",
-        "bytes": 46207,
-        "hash": "84ab193324a9ad87"
+        "bytes": 46763,
+        "hash": "18dce4386c077268"
       },
       "assetDigests": [],
       "errors": []
@@ -587,7 +587,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9987"
+          "detail": "litRatio=0.9992"
         },
         {
           "validatorId": "resource-released",
@@ -735,18 +735,18 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1632"
+          "detail": "litRatio=0.1574"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1632 assetUnits=7"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1574 assetUnits=7"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-meshopt.png",
-        "bytes": 5099,
-        "hash": "e79587f7495c7635"
+        "bytes": 5092,
+        "hash": "333003abdcaadd00"
       },
       "assetDigests": [
         {
@@ -824,7 +824,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2130"
+          "detail": "litRatio=0.1760"
         },
         {
           "validatorId": "resource-released",
@@ -834,8 +834,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-morph.png",
-        "bytes": 5887,
-        "hash": "6b4fc9d0dbfb2ee5"
+        "bytes": 5889,
+        "hash": "2c6934a9626d1805"
       },
       "assetDigests": [
         {
@@ -920,18 +920,18 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1560"
+          "detail": "litRatio=0.1951"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1908 assetUnits=11"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1906 assetUnits=11"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-skin.png",
-        "bytes": 7068,
-        "hash": "256caeab32a2a6a8"
+        "bytes": 7113,
+        "hash": "2b59cbf34d35e326"
       },
       "assetDigests": [
         {
@@ -983,7 +983,7 @@
     {
       "id": "gltf-viewer",
       "result": "PASS",
-      "specFingerprint": "2f2a1619aefe",
+      "specFingerprint": "922dd81bd5f3",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -1403,7 +1403,7 @@
     {
       "id": "hello-cube",
       "result": "PASS",
-      "specFingerprint": "a25768f61361",
+      "specFingerprint": "ae097c5c7da7",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -1450,13 +1450,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0401"
+          "detail": "litRatio=0.0455"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 6017,
-        "hash": "db6856297b1fb91d"
+        "bytes": 5684,
+        "hash": "112b9e2cba2b4e26"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1465,7 +1465,7 @@
     {
       "id": "input",
       "result": "PASS",
-      "specFingerprint": "5924070f3c80",
+      "specFingerprint": "e30546154d39",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -1514,7 +1514,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0419"
+          "detail": "litRatio=0.2543"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -1524,8 +1524,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/input.png",
-        "bytes": 6775,
-        "hash": "636432f29b2ff12c"
+        "bytes": 8904,
+        "hash": "c711cdcabe3f2278"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1534,7 +1534,7 @@
     {
       "id": "interaction-click",
       "result": "PASS",
-      "specFingerprint": "b2a73881af52",
+      "specFingerprint": "e4fd635ae276",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -1583,7 +1583,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0872"
+          "detail": "litRatio=0.0868"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -1593,8 +1593,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/interaction-click.png",
-        "bytes": 5497,
-        "hash": "647ee853dd02d670"
+        "bytes": 5424,
+        "hash": "4529d2ee24edc0da"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1603,7 +1603,7 @@
     {
       "id": "light-point",
       "result": "PASS",
-      "specFingerprint": "b7e190d34dfa",
+      "specFingerprint": "0f7b7a2d60d0",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -1650,13 +1650,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.6636"
+          "detail": "litRatio=0.5854"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 6699,
-        "hash": "80c353eb48c13253"
+        "bytes": 6687,
+        "hash": "903090a767aeb401"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1718,13 +1718,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1197"
+          "detail": "litRatio=0.1318"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 16826,
-        "hash": "fff82398e3bac5de"
+        "bytes": 17492,
+        "hash": "a291fc7a5a015719"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1733,7 +1733,7 @@
     {
       "id": "light-spot",
       "result": "PASS",
-      "specFingerprint": "97405c9df421",
+      "specFingerprint": "3aea85e7a9cd",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -1780,13 +1780,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.6652"
+          "detail": "litRatio=0.5748"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 5727,
-        "hash": "051bdfb8aaf7855e"
+        "bytes": 5749,
+        "hash": "40a8d0ead6332ea5"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1795,7 +1795,7 @@
     {
       "id": "light-two-directional",
       "result": "PASS",
-      "specFingerprint": "6ba4a7ad696e",
+      "specFingerprint": "813d80014e16",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -1844,7 +1844,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0416"
+          "detail": "litRatio=0.0414"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -1854,8 +1854,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/light-two-directional.png",
-        "bytes": 5137,
-        "hash": "6557e1bc47cd16e8"
+        "bytes": 5096,
+        "hash": "7ba457176ffb627d"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1967,13 +1967,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0794"
+          "detail": "litRatio=0.0831"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/material-color.png",
-        "bytes": 6258,
-        "hash": "27e1c686e45ba723"
+        "bytes": 6096,
+        "hash": "5395ca77f1489be4"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2037,18 +2037,18 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2244"
+          "detail": "litRatio=0.2191"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2244 assetUnits=10"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2191 assetUnits=10"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/material-transparent.png",
-        "bytes": 5769,
-        "hash": "9cd3e9e5d38daa8b"
+        "bytes": 5655,
+        "hash": "65229389a7039504"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2057,7 +2057,7 @@
     {
       "id": "material-unlit",
       "result": "PASS",
-      "specFingerprint": "85fe87d33619",
+      "specFingerprint": "f291ca26c584",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2104,13 +2104,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1056"
+          "detail": "litRatio=0.1135"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 6677,
-        "hash": "dcb230b133d38620"
+        "bytes": 7076,
+        "hash": "857d87bc71845234"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2119,7 +2119,7 @@
     {
       "id": "mesh-cylinder",
       "result": "PASS",
-      "specFingerprint": "0b2bc9eb185d",
+      "specFingerprint": "5c9129d03609",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2166,13 +2166,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0602"
+          "detail": "litRatio=0.0583"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
-        "bytes": 5643,
-        "hash": "266b88a3e403a044"
+        "bytes": 5602,
+        "hash": "8f249b869a8dbe0b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2236,18 +2236,18 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2728"
+          "detail": "litRatio=0.2699"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.2728 assetUnits=8"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.2699 assetUnits=8"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/mesh-multi-material.png",
-        "bytes": 5458,
-        "hash": "955d1d61ef8537a1"
+        "bytes": 5639,
+        "hash": "d4ee708fb3fbc837"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2256,7 +2256,7 @@
     {
       "id": "mesh-plane",
       "result": "PASS",
-      "specFingerprint": "56030e6a48b0",
+      "specFingerprint": "04dab6dc7bd5",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2303,13 +2303,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.4009"
+          "detail": "litRatio=0.4087"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 9159,
-        "hash": "14a4fe762d161f6c"
+        "bytes": 9047,
+        "hash": "0eeb0429f794754b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2318,7 +2318,7 @@
     {
       "id": "mesh-sphere",
       "result": "PASS",
-      "specFingerprint": "0d5d58e1ebea",
+      "specFingerprint": "13576f6a2dc0",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2365,13 +2365,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0496"
+          "detail": "litRatio=0.0493"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 11520,
-        "hash": "8bdcebb91c71c37d"
+        "bytes": 11552,
+        "hash": "280bb300c3255ef3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2380,7 +2380,7 @@
     {
       "id": "mesh-torus",
       "result": "PASS",
-      "specFingerprint": "bef96c42029a",
+      "specFingerprint": "2977be59beb2",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2427,13 +2427,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0413"
+          "detail": "litRatio=0.0546"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 9006,
-        "hash": "7fdfc266e8cfeac6"
+        "bytes": 12186,
+        "hash": "e5d923d17c4869f1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2489,13 +2489,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0843"
+          "detail": "litRatio=0.2470"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/node-active.png",
-        "bytes": 5259,
-        "hash": "b3487d6dd3556208"
+        "bytes": 5729,
+        "hash": "ba85bda31ed14276"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2551,13 +2551,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0160"
+          "detail": "litRatio=0.0126"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 5824,
-        "hash": "900cbae29163d859"
+        "bytes": 5327,
+        "hash": "c896ab4dbc180426"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2613,13 +2613,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0858"
+          "detail": "litRatio=0.0488"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 6597,
-        "hash": "40d9f223fb89c27c"
+        "bytes": 6043,
+        "hash": "732c8e8c08db5e11"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2628,7 +2628,7 @@
     {
       "id": "runtime-asset-release",
       "result": "PASS",
-      "specFingerprint": "c29e5f64a5b1",
+      "specFingerprint": "b2dbf4f85534",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2678,18 +2678,18 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0563"
+          "detail": "litRatio=0.0560"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0563 assetUnits=15"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0560 assetUnits=15"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/runtime-asset-release.png",
-        "bytes": 12480,
-        "hash": "dcf3468c2effa3d2"
+        "bytes": 12452,
+        "hash": "c885bd59ab76aef3"
       },
       "assetDigests": [
         {
@@ -2713,7 +2713,7 @@
     {
       "id": "skinned-animation",
       "result": "PASS",
-      "specFingerprint": "06bce4ca8bdb",
+      "specFingerprint": "d289357cd724",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2772,13 +2772,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0446"
+          "detail": "litRatio=0.0644"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 5890,
-        "hash": "8ef829343e297bc7"
+        "bytes": 5972,
+        "hash": "879e413c341919de"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2837,7 +2837,7 @@
     {
       "id": "static-model",
       "result": "PASS",
-      "specFingerprint": "9b716a5b72ab",
+      "specFingerprint": "f2107edbe836",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2892,18 +2892,18 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.6812"
+          "detail": "litRatio=0.6031"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=8 leaked=0 reloaded=true litRatio=0.5934 assetUnits=10"
+          "detail": "held=8 leaked=0 reloaded=true litRatio=0.6031 assetUnits=10"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/static-model.png",
-        "bytes": 11810,
-        "hash": "d0a5ad3b364934d7"
+        "bytes": 11830,
+        "hash": "64c1fb712151ab2b"
       },
       "assetDigests": [
         {
@@ -2920,7 +2920,7 @@
     {
       "id": "texture-basic",
       "result": "PASS",
-      "specFingerprint": "f6b3cd615748",
+      "specFingerprint": "1233d305cb04",
       "specDimensions": {
         "ready": [
           "scene-ready"
@@ -2969,18 +2969,18 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0986"
+          "detail": "litRatio=0.0890"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0857 assetUnits=7"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0854 assetUnits=7"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/texture-basic.png",
-        "bytes": 21363,
-        "hash": "fb92cd085a8e2a91"
+        "bytes": 20950,
+        "hash": "1de652844eff5029"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -3042,13 +3042,13 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0194"
+          "detail": "litRatio=0.0416"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 5495,
-        "hash": "c15165d0755f3f71"
+        "bytes": 6913,
+        "hash": "d807e4f74abe8730"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -3115,8 +3115,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
-        "bytes": 5373,
-        "hash": "70e8e59f852444ae"
+        "bytes": 5009,
+        "hash": "ba23d40d74ad2302"
       },
       "assetDigests": [],
       "nodeCount": 0,

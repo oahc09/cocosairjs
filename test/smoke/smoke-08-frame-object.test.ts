@@ -35,3 +35,24 @@ test('perspective fitting uses the narrower horizontal field of view', () => {
     const halfAngle = Math.atan(Math.tan(Math.PI / 6) * 0.5);
     expect(distance * Math.sin(halfAngle)).toBeGreaterThanOrEqual(bounds.halfExtents.length());
 });
+test('framing uses mesh static bounds when renderer.model is not created yet', () => {
+    // 场景激活前 renderer.model 还不存在：必须退回 Mesh 包围盒，而不是节点原点，
+    // 否则主体（放在地面之上）会整体偏出画面中心。
+    const target = new Node('target');
+    jest.spyOn(target, 'getComponent').mockReturnValue({
+        model: null,
+        node: target,
+        mesh: { struct: { minPosition: new Vec3(-0.5, 0, -0.5), maxPosition: new Vec3(0.5, 1.8, 0.5) } },
+    } as unknown as MeshRenderer);
+    jest.spyOn(target, 'getComponentsInChildren').mockReturnValue([]);
+    const node = new Node('camera'); node.setWorldPosition(0, 2.4, 6.5);
+    const camera = node.addComponent(Camera);
+    jest.spyOn(camera, 'camera', 'get').mockReturnValue({ aspect: 1.5 } as any);
+
+    frameObject(camera, target);
+
+    const center = new Vec3(0, 0.9, 0); // Mesh 包围盒世界中心，区别于 target 节点原点
+    const toCenter = new Vec3(); Vec3.subtract(toCenter, center, camera.node.worldPosition); toCenter.normalize();
+    expect(Vec3.distance(toCenter, camera.node.forward)).toBeLessThan(1e-3);
+    expect(Vec3.distance(camera.node.worldPosition, center)).toBeLessThan(6);
+});

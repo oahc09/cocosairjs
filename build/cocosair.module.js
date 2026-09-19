@@ -72948,6 +72948,8 @@ function restoreBindPose(root, skeleton) {
 const DEFAULT_DISTANCE = 6;
 const v3_dir = new Vec3();
 const v3_center = new Vec3();
+const aabb_local = AABB.create();
+const aabb_world = AABB.create();
 function frameObject(camera, target, fallbackDistance = DEFAULT_DISTANCE) {
   const camNode = camera.node;
   const worldCenter = target.worldPosition;
@@ -72993,11 +72995,18 @@ function collectWorldBounds(target) {
     }
   }
   for (const r of renderers) {
+    let b = null;
     if (r.model) {
       r.model.updateWorldBound();
+      b = r.model.worldBounds;
     }
-    const b = r.model ? r.model.worldBounds : null;
-    if (!b) {
+    const struct = r.mesh ? r.mesh.struct : null;
+    if ((!b || b.halfExtents.lengthSqr() === 0) && struct && struct.minPosition && struct.maxPosition) {
+      AABB.fromPoints(aabb_local, struct.minPosition, struct.maxPosition);
+      AABB.transform(aabb_world, aabb_local, r.node.worldMatrix);
+      b = aabb_world;
+    }
+    if (!b || b.halfExtents.lengthSqr() === 0) {
       continue;
     }
     if (!result) {

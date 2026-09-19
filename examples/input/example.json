@@ -31,7 +31,7 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "5924070f3c80",
+  "promotionEvidence": "e30546154d39",
   "specStatus": "frozen",
   "learning": {
     "goal": "输入系统全景：键盘 WASD 平移、滚轮推拉、拖拽旋转（真实输入链）",
@@ -104,7 +104,7 @@
         "api": "Camera",
         "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L35"
       },
       {
         "api": "Component",

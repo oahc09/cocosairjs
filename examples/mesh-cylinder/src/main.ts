@@ -23,7 +23,7 @@ class Rotator extends Component {
 }
 
 var cameraNode = new Node('Main Camera'); scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.setRotationFromEuler(-20, 0, 0);
+cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lookAt(new Vec3(0, 0.9, 0));
 var camera = cameraNode.addComponent(Camera);
 camera.projection = Camera.ProjectionType.PERSPECTIVE; camera.fov = 45;
 camera.near = 0.1; camera.far = 1000;

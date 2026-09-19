@@ -137,7 +137,7 @@
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L17"
+        "sourceLocation": "L24"
       },
       {
         "api": "GLTFAsset.destroy",
@@ -194,5 +194,5 @@
   "license": {
     "assets": "assets/BoxTextured.glb — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/BoxTextured.LICENSE.md"
   },
-  "promotionEvidence": "c29e5f64a5b1"
+  "promotionEvidence": "b2dbf4f85534"
 }

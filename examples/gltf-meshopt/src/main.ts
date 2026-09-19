@@ -68,7 +68,7 @@ async function acquire (): Promise<any[]> {
   });
   // 显式相机位姿：正对压缩几何（三角形位于原点附近）
   cameraNode.setPosition(new Vec3(0.2, 0.6, 2.6));
-  cameraNode.setRotationFromEuler(-8, 0, 0);
+  cameraNode.lookAt(new Vec3(0, 0.5, 0));
   lines.push('mode: decoder-configured → model visible ✓');
   render();
   return owned();

@@ -14,6 +14,8 @@ import { Vec3, geometry } from '../../cocos/core';
 const DEFAULT_DISTANCE = 6;
 const v3_dir = new Vec3();
 const v3_center = new Vec3();
+const aabb_local = geometry.AABB.create();
+const aabb_world = geometry.AABB.create();
 
 /**
  * @en Position the camera along its current view direction so the target node
@@ -71,7 +73,10 @@ export function frameObject (camera: Camera, target: Node, fallbackDistance = DE
     camNode.lookAt(v3_center);
 }
 
-/** 汇集 target 及其子孙所有 MeshRenderer 的 model.worldBounds 的并集（世界空间）。 */
+/**
+ * 汇集 target 及其子孙所有 MeshRenderer 的世界包围盒并集（世界空间）。
+ * model 尚未创建（场景激活前调用）时退回 Mesh 静态包围盒 × 节点世界矩阵。
+ */
 function collectWorldBounds (target: Node): geometry.AABB | null {
     let result: geometry.AABB | null = null;
     const renderers: MeshRenderer[] = [];
@@ -81,9 +86,21 @@ function collectWorldBounds (target: Node): geometry.AABB | null {
     for (const r of children) { if (renderers.indexOf(r) === -1) { renderers.push(r); } }
 
     for (const r of renderers) {
-        if (r.model) { r.model.updateWorldBound(); }
-        const b = r.model ? r.model.worldBounds : null;
-        if (!b) { continue; }
+        let b: geometry.AABB | null = null;
+        if (r.model) {
+            r.model.updateWorldBound();
+            b = r.model.worldBounds;
+        }
+        // model 尚未随场景激活创建、或包围盒还没算出来（蒙皮网格在首帧前是空盒）时，
+        // 退回 Mesh 静态包围盒 × 节点世界矩阵；直接跳过会静默降级成
+        // fallbackDistance + 节点原点，而节点常放在地面处，主体中心就偏出画面了。
+        const struct = r.mesh ? r.mesh.struct : null;
+        if ((!b || b.halfExtents.lengthSqr() === 0) && struct && struct.minPosition && struct.maxPosition) {
+            geometry.AABB.fromPoints(aabb_local, struct.minPosition, struct.maxPosition);
+            geometry.AABB.transform(aabb_world, aabb_local, r.node.worldMatrix);
+            b = aabb_world;
+        }
+        if (!b || b.halfExtents.lengthSqr() === 0) { continue; }
         if (!result) {
             result = b.clone();
         } else {

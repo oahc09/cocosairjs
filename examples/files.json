@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-19T12:15:50.676Z",
-  "revision": "fbf5ae2",
+  "generatedAt": "2026-09-19T14:35:13.768Z",
+  "revision": "33b4281",
   "examples": [
     {
       "dir": "anim-position",
@@ -175,7 +175,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "4c8fde3582af"
+      "promotionEvidence": "09a03f6e8059"
     },
     {
       "dir": "automation",
@@ -620,7 +620,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "ca2030886f0a"
+      "promotionEvidence": "97ec02d18347"
     },
     {
       "dir": "gltf-basic",
@@ -1333,7 +1333,7 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "2f2a1619aefe"
+      "promotionEvidence": "922dd81bd5f3"
     },
     {
       "dir": "hello-cube",
@@ -1420,7 +1420,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "a25768f61361"
+      "promotionEvidence": "ae097c5c7da7"
     },
     {
       "dir": "input",
@@ -1515,7 +1515,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "5924070f3c80"
+      "promotionEvidence": "e30546154d39"
     },
     {
       "dir": "interaction-click",
@@ -1615,7 +1615,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "b2a73881af52"
+      "promotionEvidence": "e4fd635ae276"
     },
     {
       "dir": "light-point",
@@ -1665,7 +1665,7 @@
           "primitives.plane",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.lookAt"
         ]
       },
       "capabilities": [
@@ -1705,7 +1705,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "b7e190d34dfa"
+      "promotionEvidence": "0f7b7a2d60d0"
     },
     {
       "dir": "light-sphere",
@@ -1842,7 +1842,7 @@
           "primitives.plane",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.lookAt"
         ]
       },
       "capabilities": [
@@ -1880,7 +1880,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "97405c9df421"
+      "promotionEvidence": "3aea85e7a9cd"
     },
     {
       "dir": "light-two-directional",
@@ -1979,7 +1979,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "6ba4a7ad696e"
+      "promotionEvidence": "813d80014e16"
     },
     {
       "dir": "material-basic",
@@ -2329,7 +2329,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "85fe87d33619"
+      "promotionEvidence": "f291ca26c584"
     },
     {
       "dir": "mesh-cylinder",
@@ -2417,7 +2417,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "0b2bc9eb185d"
+      "promotionEvidence": "5c9129d03609"
     },
     {
       "dir": "mesh-multi-material",
@@ -2594,7 +2594,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "56030e6a48b0"
+      "promotionEvidence": "04dab6dc7bd5"
     },
     {
       "dir": "mesh-sphere",
@@ -2682,7 +2682,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "0d5d58e1ebea"
+      "promotionEvidence": "13576f6a2dc0"
     },
     {
       "dir": "mesh-torus",
@@ -2769,7 +2769,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "bef96c42029a"
+      "promotionEvidence": "2977be59beb2"
     },
     {
       "dir": "node-active",
@@ -3119,7 +3119,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "0edc1d1d6ff2"
+      "promotionEvidence": "78764b916464"
     },
     {
       "dir": "rc-create-node",
@@ -3209,7 +3209,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "c33375a756c2"
+      "promotionEvidence": "c34d0b8bb9e8"
     },
     {
       "dir": "rc-error-report",
@@ -3294,7 +3294,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "7b6f076ec497"
+      "promotionEvidence": "12a01a35616b"
     },
     {
       "dir": "rc-inspect-scene",
@@ -3382,7 +3382,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "745a4cf387b5"
+      "promotionEvidence": "505e0eeb0112"
     },
     {
       "dir": "runtime-asset-release",
@@ -3468,7 +3468,7 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "c29e5f64a5b1"
+      "promotionEvidence": "b2dbf4f85534"
     },
     {
       "dir": "skinned-animation",
@@ -3556,7 +3556,7 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "06bce4ca8bdb"
+      "promotionEvidence": "d289357cd724"
     },
     {
       "dir": "starter",
@@ -3734,7 +3734,7 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "9b716a5b72ab"
+      "promotionEvidence": "f2107edbe836"
     },
     {
       "dir": "texture-basic",
@@ -3830,7 +3830,7 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "f6b3cd615748"
+      "promotionEvidence": "1233d305cb04"
     },
     {
       "dir": "transform",
