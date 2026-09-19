@@ -1,0 +1,17 @@
+diff --git a/docs/evidence/v11-spec-compliance.json b/docs/evidence/v11-spec-compliance.json
+index de55b9c..cbf6973 100644
+--- a/docs/evidence/v11-spec-compliance.json
++++ b/docs/evidence/v11-spec-compliance.json
+@@ -2 +2 @@
+-  "measuredAt": "2026-09-19T12:40:36.636Z",
++  "measuredAt": "2026-09-19T12:43:16.520Z",
+diff --git a/docs/evidence/v11-spec-validate.json b/docs/evidence/v11-spec-validate.json
+index 02d1264..5faf1c5 100644
+--- a/docs/evidence/v11-spec-validate.json
++++ b/docs/evidence/v11-spec-validate.json
+@@ -2 +2 @@
+-  "measuredAt": "2026-09-19T12:19:03.196Z",
++  "measuredAt": "2026-09-19T12:43:18.561Z",
+
+jest post-commit: 29 suites / 207 tests PASS, 60.36 s, EXIT=0 (tree == commit b1a1eed)
+npx jest then git status --porcelain -uall -> the 2 measuredAt-only diffs above

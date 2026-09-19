@@ -341,6 +341,13 @@
       "note": "minimal PNG zlib+unfilter decoder used to prove the F-55 frames are not blank",
       "createdBy": "audit",
       "measuredAt": "2026-09-19T12:30:00.000Z"
+    },
+    {
+      "path": "raw/gates/reevidence-07-postcommit-jest-timestamp-churn.log",
+      "kind": "raw-gate-log",
+      "note": "post-commit jest 29/207 PASS on b1a1eed + the 2 measuredAt-only evidence diffs (F-58)",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T12:45:00.000Z"
     }
   ]
 }
