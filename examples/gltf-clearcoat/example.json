@@ -148,7 +148,10 @@
       "nodes": [
         "Main Camera",
         "Main Light",
-        "Fill Light"
+        "Fill Light",
+        "Sphere-Co-0",
+        "Sphere-Co-0_5",
+        "Sphere-Co-1"
       ]
     }
   },
@@ -196,5 +199,273 @@
   "license": {
     "assets": "无第三方资产"
   },
-  "promotionEvidence": "da49f4ca74ff"
+  "validationExpectations": {
+    "transform-equals": {
+      "Sphere-Co-0": {
+        "position": [
+          -2.6,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 88,
+            "text": "translation: [(i - 1) * 2.6, 0, 0] 且 name: 'Sphere-Co-' + String(factors[i]).replace('.', '_') —— factors=[0,0.5,1]，i=0 ⇒ Sphere-Co-0 / [-2.6,0,0]；nodes[] 未声明 rotation/scale ⇒ identity"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Sphere-Co-0_5": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 88,
+            "text": "同上 i=1 ⇒ String(0.5) 的点号替换为下划线得 Sphere-Co-0_5，translation [(1-1)*2.6,0,0] = [0,0,0]"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Sphere-Co-1": {
+        "position": [
+          2.6,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 88,
+            "text": "同上 i=2 ⇒ Sphere-Co-1，translation [(2-1)*2.6,0,0] = [2.6,0,0]"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Main Light": {
+        "position": [
+          0,
+          6,
+          4
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 25,
+            "text": "keyNode.setPosition(new Vec3(0, 6, 4)); keyNode.setRotationFromEuler(-50, 0, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -50,
+          0,
+          0
+        ]
+      },
+      "Fill Light": {
+        "position": [
+          -5,
+          2,
+          -4
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 28,
+            "text": "fillNode.setPosition(new Vec3(-5, 2, -4)); fillNode.setRotationFromEuler(-5, 60, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -5,
+          60,
+          0
+        ]
+      }
+    },
+    "material-property": {
+      "Sphere-Co-0": {
+        "materialName": "clearcoat-0",
+        "effect": "air-gltf-standard",
+        "props": {
+          "albedo": {
+            "value": [
+              0.55,
+              0.62,
+              0.72,
+              1
+            ],
+            "encoding": "0-1",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 83,
+              "text": "pbrMetallicRoughness.baseColorFactor [0.55,0.62,0.72,1]（三球共用）→ 引擎 material.ts L347 setProperty('albedo', Vec4(factor))；encoding 固定 0-1，不允许 0-255 归一化旁路"
+            }
+          },
+          "airClearcoat": {
+            "expect": "unset",
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 84,
+              "text": "clearcoatFactor: 0（factors[0]）→ 引擎 material.ts L285/L304 clearcoatScalar=false，不走 physical 通道（effect=air-gltf-standard），故 airClearcoat 必须缺席；断言『扩展为 0 时不生效』"
+            }
+          }
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 82,
+            "text": "name: 'clearcoat-' + f ⇒ factors[0]=0 得 'clearcoat-0'，clearcoatFactor=0 不升级 physical ⇒ effect 仍为 air-gltf-standard；名取自共享材质 getMaterial(0).name，非 MaterialInstance（F-69）"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Sphere-Co-0_5": {
+        "materialName": "clearcoat-0.5",
+        "effect": "air-gltf-physical",
+        "props": {
+          "albedo": {
+            "value": [
+              0.55,
+              0.62,
+              0.72,
+              1
+            ],
+            "encoding": "0-1",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 83,
+              "text": "同上 f=0.5 球体基色一致（只差清漆强度）"
+            }
+          },
+          "airClearcoat": {
+            "value": [
+              0.5,
+              0.12
+            ],
+            "encoding": "0-1",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 84,
+              "text": "extensions.KHR_materials_clearcoat { clearcoatFactor: 0.5, clearcoatRoughnessFactor: 0.12 } → material.ts L355 setProperty('airClearcoat', Vec4(factor, roughness, normalScale, 1))；只断言源码声明的前两分量，normalScale 默认值属引擎侧，不写进示例合同"
+            }
+          }
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 82,
+            "text": "name: 'clearcoat-' + f ⇒ 'clearcoat-0.5'；clearcoatFactor>0 ⇒ 走 physical 通道（effect=air-gltf-physical）"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Sphere-Co-1": {
+        "materialName": "clearcoat-1",
+        "effect": "air-gltf-physical",
+        "props": {
+          "albedo": {
+            "value": [
+              0.55,
+              0.62,
+              0.72,
+              1
+            ],
+            "encoding": "0-1",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 83,
+              "text": "同上 f=1 球体基色一致"
+            }
+          },
+          "airClearcoat": {
+            "value": [
+              1,
+              0.12
+            ],
+            "encoding": "0-1",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 84,
+              "text": "clearcoatFactor 1.0 / roughness 0.12 ⇒ airClearcoat 前两分量为 [1, 0.12]"
+            }
+          }
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 82,
+            "text": "name: 'clearcoat-' + f ⇒ 'clearcoat-1'；clearcoatFactor=1 ⇒ physical 通道"
+          }
+        ],
+        "handAuthored": true
+      }
+    },
+    "asset-loaded": {
+      "handAuthored": true,
+      "kinds": {
+        "Material": 3
+      },
+      "provenance": [
+        {
+          "source": "src/main.ts",
+          "line": 79,
+          "text": "materials: factors.map(...) 且 factors=[0,0.5,1] ⇒ 三个材质对象必须各自建立；buffer 为 data URI，无外部文件可取，故以唯一材质对象数而非 HTTP 取回为合同"
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, instance.root);）",
+        "line": "L101"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "c6b480406f7f",
+    "source": "221fa314ef0a2167",
+    "candidate": "5612c4c2746f395b",
+    "verified": 15,
+    "attested": 0,
+    "units": 15
+  }
 }

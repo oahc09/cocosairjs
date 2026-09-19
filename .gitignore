@@ -16,3 +16,6 @@ build/.dev-log.txt
 
 # V1.1 Gallery 发布 Artifact（可再生，tools/verify/v11-gallery-artifact.cjs build）
 build/examples/
+
+# F-54：审计原始日志/证据必须入库（覆写上表 *.log 规则），避免逐份 git add -f
+!docs/audits/**/raw/**

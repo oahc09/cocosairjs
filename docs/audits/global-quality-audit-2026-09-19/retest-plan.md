@@ -147,3 +147,19 @@ Evidence: `raw/gates/v06-fulltrack-2026-09-19.log`; pre-overwrite hash manifest
   perf, **R8** docs-as-run, and the catalog `assets[]` **missing `hash`** (recipe-side twin of the R7g hole).
 - Process note (F-61 §8c): never run `git status` while a capture runner is writing `docs/evidence/**` —
   it broke git's index refresh once here.
+
+## F-54 CLOSED / F-61 RE-RUN -> CORRECTED (2026-09-19 21:44-21:56 +08, user-authorized)
+
+- **F-54 -> CLOSED** by `.gitignore:21 !docs/audits/**/raw/**` (F-64). Retest now: `git ls-files
+  docs/audits | grep -c "\.log$"` = 84 with on-disk 85 (in-flight stdout) and 0 tracked-but-missing; the
+  next commit needs no `git add -f` for raw logs.
+- **F-61 -> corrected, not closed** (F-65). Executed option (a): catalog gate re-run at HEAD `33b4281` =
+  100/100, same `sourceHash ac1b1515`, revision now equals HEAD. `v06-report.cjs` still PASS / blockers [].
+  But `revision.recorded` = `[e06d298, 33b4281]`: re-running only the lagging source cannot merge the pair,
+  because `33b4281` itself is the commit that recorded `e06d298`. Retest options for the owner:
+  (i) label revisions per source (`revision.perSource`) and keep the ancestor + sourceHash assertions
+  unchanged - recommended, presentation-only edit to one gate script; (ii) re-run all three captures at one
+  HEAD to force a single recorded value, knowing it becomes "one behind" again at the next commit;
+  (iii) close F-61 as won't-fix with the invariant documented. All three need authorization for `tools/`.
+- **Unchanged by this pass**: F-60 (recipe frames), R1 (2 sidecars + provenance policy, census restated in
+  F-66), R1b/R1c, R2 (3/3 tier gates FAIL), R3, R5, R6, R8, catalog `assets[] hash`, F-58, F-63.

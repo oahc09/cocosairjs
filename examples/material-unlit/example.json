@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Material Unlit",
   "category": "materials",
-  "status": "stable",
+  "status": "draft",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -189,5 +189,114 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "f291ca26c584"
+  "promotionEvidence": "f291ca26c584",
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 13,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lookAt(new Vec3(0, 0.5, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 21,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "LitCube": {
+        "position": [
+          -1.6,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 26,
+            "text": "lit.setPosition(new Vec3(-1.6, 0.5, 0));"
+          }
+        ]
+      },
+      "UnlitCube": {
+        "position": [
+          1.6,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 33,
+            "text": "unlit.setPosition(new Vec3(1.6, 0.5, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 40,
+            "text": "0,this.node.eulerAngles.y + dt * 40,0"
+          }
+        ],
+        "rotationEuler": {
+          "vary": true
+        }
+      }
+    },
+    "material-property": {
+      "LitCube": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      },
+      "UnlitCube": {
+        "effect": "builtin-unlit",
+        "effectFrom": {
+          "builtin": "builtin-unlit-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        },
+        "handAuthored": true,
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 36,
+            "text": "unlitRenderer.material = builtinResMgr.get('builtin-unlit-material');"
+          }
+        ]
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
+        "line": "L13"
+      }
+    }
+  },
+  "stableReview": {
+    "demotedAt": "2026-09-19T16:15:48.555Z",
+    "reason": "current run FAIL"
+  }
 }

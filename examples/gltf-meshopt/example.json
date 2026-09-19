@@ -239,5 +239,71 @@
   "license": {
     "assets": "assets/meshopt-khr.glb — 仓库自生成 fixture（tools/fixtures/gen-geometry-fixtures.cjs，meshoptimizer 官方编码器），许可见 licenses/LICENSE_meshoptimizer.md"
   },
-  "promotionEvidence": "1d2841ac9301"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0.2,
+          0.6,
+          2.6
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 70,
+            "text": "cameraNode.setPosition(new Vec3(0.2, 0.6, 2.6));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 23,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      }
+    },
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "assets/meshopt-khr.glb",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 43,
+              "text": "var bytes = await (await fetch('./assets/meshopt-khr.glb')).arrayBuffer();"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0.5, 0));）",
+        "line": "L71"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "d4312702ec07",
+    "source": "dfc18d7d5f412dd2",
+    "candidate": "5612c4c2746f395b",
+    "verified": 20,
+    "attested": 0,
+    "units": 20
+  }
 }

@@ -211,5 +211,135 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "3aea85e7a9cd"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 20,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lookAt(new Vec3(0, 0.5, 0));"
+          }
+        ]
+      },
+      "SpotLightNode": {
+        "position": {
+          "vary": true,
+          "range": [
+            [
+              -1.5,
+              1.5
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -1.5,
+              1.5
+            ]
+          ],
+          "minDelta": 0.0001
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 48,
+            "text": "正弦包络 Math.sin(this.t * 0.6) * 1.5,4.5,Math.cos(this.t * 0.6) * 1.5：三角项取 [-1,1]，其余为字面量算术"
+          }
+        ]
+      },
+      "Floor": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 34,
+            "text": "Floor.setPosition(new Vec3(0, 0, 0));"
+          }
+        ]
+      },
+      "Pedestal": {
+        "position": [
+          0,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 39,
+            "text": "Pedestal.setPosition(new Vec3(0, 0.5, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Floor": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              80,
+              90,
+              110,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 37,
+              "text": "new Color(80, 90, 110, 255)"
+            }
+          }
+        }
+      },
+      "Pedestal": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              205,
+              90,
+              190,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 42,
+              "text": "new Color(205, 90, 190, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
+        "line": "L20"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "74538d51cd5a",
+    "source": "9e6871b1fb516900",
+    "candidate": "5612c4c2746f395b",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
+  }
 }

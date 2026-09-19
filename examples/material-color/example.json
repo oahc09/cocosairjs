@@ -193,5 +193,161 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "5bbd566b0e9b"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 20,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lookAt(new Vec3(0, 0.5, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 28,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Red": {
+        "position": [
+          -2.4,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 35,
+            "text": "node.setPosition(new Vec3(-2.4, 0.5, 0)); x += 2.4;"
+          }
+        ]
+      },
+      "Green": {
+        "position": [
+          0,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 35,
+            "text": "node.setPosition(new Vec3(0, 0.5, 0)); x += 2.4;"
+          }
+        ]
+      },
+      "Blue": {
+        "position": [
+          2.4,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 35,
+            "text": "node.setPosition(new Vec3(2.4, 0.5, 0)); x += 2.4;"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Red": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              235,
+              70,
+              70,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 40,
+              "text": "new Color(235, 70, 70, 255)"
+            }
+          }
+        }
+      },
+      "Green": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              70,
+              200,
+              90,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 40,
+              "text": "new Color(70, 200, 90, 255)"
+            }
+          }
+        }
+      },
+      "Blue": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              70,
+              120,
+              235,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 40,
+              "text": "new Color(70, 120, 235, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
+        "line": "L20"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "40bc8fbce245",
+    "source": "e4c05344db3660e6",
+    "candidate": "5612c4c2746f395b",
+    "verified": 16,
+    "attested": 0,
+    "units": 16
+  }
 }

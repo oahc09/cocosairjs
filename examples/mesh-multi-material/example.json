@@ -194,5 +194,156 @@
   "license": {
     "assets": "无第三方资产"
   },
-  "promotionEvidence": "588b2ae5063c"
+  "validationExpectations": {
+    "transform-equals": {
+      "MultiMaterialCube": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 82,
+            "text": "nodes: [{ name: 'MultiMaterialCube', mesh: 0 }] —— 内联 glTF 未声明 TRS，局部变换为引擎默认 identity"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 102,
+            "text": "scene.addChild(instance.root);（根包装节点未再赋局部变换，位姿合同整体为 identity）"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Main Camera": {
+        "position": [
+          0,
+          0.9,
+          3.4
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 104,
+            "text": "cameraNode.setPosition(new Vec3(0, 0.9, 3.4));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 24,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      }
+    },
+    "material-property": {
+      "MultiMaterialCube": {
+        "slots": [
+          {
+            "slot": 0,
+            "materialName": "red-half",
+            "props": {
+              "albedo": {
+                "value": [
+                  0.85,
+                  0.2,
+                  0.2,
+                  1
+                ],
+                "encoding": "0-1",
+                "tolerance": 0.002,
+                "provenance": {
+                  "source": "src/main.ts",
+                  "line": 75,
+                  "text": "materials[0]={name:'red-half', baseColorFactor:[0.85,0.2,0.2,1]}（L75）→ material.ts L347 setProperty('albedo', …)；slot 0 = primitives[0].material=0（L79）"
+                }
+              }
+            }
+          },
+          {
+            "slot": 1,
+            "materialName": "blue-half",
+            "props": {
+              "albedo": {
+                "value": [
+                  0.2,
+                  0.45,
+                  0.85,
+                  1
+                ],
+                "encoding": "0-1",
+                "tolerance": 0.002,
+                "provenance": {
+                  "source": "src/main.ts",
+                  "line": 76,
+                  "text": "materials[1]={name:'blue-half', baseColorFactor:[0.2,0.45,0.85,1]}（L76）→ slot 1 = primitives[1].material=1（L80）；只断言 slot 0 时『多材质』合同为空判"
+                }
+              }
+            }
+          }
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 78,
+            "text": "meshes:[{primitives:[{material:0},{material:1}]}] ⇒ 同一 MeshRenderer 两个材质槽，两槽名字与基色各自独立"
+          }
+        ],
+        "handAuthored": true
+      }
+    },
+    "asset-loaded": {
+      "handAuthored": true,
+      "kinds": {
+        "Material": 2
+      },
+      "provenance": [
+        {
+          "source": "src/main.ts",
+          "line": 74,
+          "text": "materials: [red-half, blue-half] —— 两个材质槽都必须被导入器建立，否则「单网格多材质」不成立"
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0, 0));）",
+        "line": "L105"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "03cd6b3c1dff",
+    "source": "ec1bfedbbea794d3",
+    "candidate": "5612c4c2746f395b",
+    "verified": 16,
+    "attested": 0,
+    "units": 16
+  }
 }

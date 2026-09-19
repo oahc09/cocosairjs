@@ -1,6 +1,6 @@
 # V0.6 Final Gate（自动生成）
 
-状态：**PASS**。生成时间：2026-09-19T13:39:07.036Z。
+状态：**PASS**。生成时间：2026-09-19T13:53:11.424Z。
 
 本文件由 `node tools/verify/v06-report.cjs` 从本轮证据生成，禁止手工填写全绿结论。
 
@@ -9,7 +9,7 @@
 - Agent：9/9；First Compile：1，Type-B 分母 6；成功 repair 中位数 0。
 - Recipe：总数 30，validated（含 stable）30，stable 30；evidence failures 0。
 - Jest：29 suites / 207 of 207 tests；success=true。
-- 证据 revision：HEAD 41b4c713c61813617320ab0dfc5d640fa35e8cf4，记录值 e06d29880b398c43d318eedee43c32941dd4eb97 / 3a53957db6bdd009bbd85af8b7d589a0b48dba5b，无法归因 0 项。
+- 证据 revision：HEAD 33b4281625fd2b0b6e5bad7922d8dfb4894c75dd，记录值 e06d29880b398c43d318eedee43c32941dd4eb97 / 33b4281625fd2b0b6e5bad7922d8dfb4894c75dd，无法归因 0 项。
 
 ## 待完成门禁
 

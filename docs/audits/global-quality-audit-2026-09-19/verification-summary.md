@@ -326,3 +326,140 @@ are **not** committed — commit authorization for this wave was not given. No `
 so the 20:0x V1.1 binding (45 examples / 0 fail / 1 warn) still stands.
 
 **Overall remains NOT_READY** (10 blocking items after F-56 cleared; `v06FinalGate_recipe` is now PASS).
+
+## UPDATE-20 - F-54 closed, F-61 re-run executed, premise break measured (2026-09-19 21:44-21:56 +08)
+
+User authorized two things: re-run `tools/verify/v06-catalog-gate.cjs` so the three V0.6 inputs share a
+revision, and add a `.gitignore` exception for `docs/audits/**/raw/**`. F-58's relocation and R1/R1b/R1c/
+R2/R3/R5/R6/R8 were explicitly returned to the user as decisions; nothing under `tools/` was touched and
+nothing was staged or committed.
+
+1. **F-54 -> F-64 CLOSED.** `.gitignore:21` now reads `!docs/audits/**/raw/**`. Scope proven in both
+   directions with `git check-ignore -v`: a new `.log` under `raw/` resolves to the negation (no longer
+   ignored), while `docs/evidence/v06-recipes.log` still resolves to `*.log` (no accidental widening). The
+   three new files this pass produced appeared as `??` with no `git add -f`, which is the behavioural proof.
+   Ledger census: 225 tracked files under `docs/audits` of which 84 are `.log`; on disk 227 / 85 (the extra
+   is this pass' in-flight stdout); tracked-but-missing 0.
+2. **F-63 opened (non-blocking).** `.gitignore:15` contains the literal characters `.tmp-basis\n`
+   (backslash + n), so the pattern is inert - `git check-ignore .tmp-basis` exits 1. Left as-is: outside the
+   authorized scope, and un-ignoring a path could hand the parallel session a new untracked file.
+3. **F-61 re-run executed, and it produced a measurement rather than a close.** The catalog gate EXIT 0 at
+   HEAD `33b4281`: 100/100, {PASS 97, EXPECTED_UNSUPPORTED 3}, failureDomain {NONE 97, DEVICE 3}, identical
+   `sourceHash ac1b1515`, and its recorded revision moved `3a53957 -> 33b4281`. Re-running
+   `tools/verify/v06-report.cjs` kept `status=PASS / blockers=[] / recipes 30/30/30 / tests 29-207-207`, but
+   `revision.recorded` went from `[e06d298, 3a53957]` to `[e06d298, 33b4281]` - the lagging pair rotated
+   instead of merging. Root cause, verified not argued: the dual-track and recipe evidence recorded
+   `e06d298` **and were committed by `33b4281`** (`git log -1 -- docs/evidence/v06-recipes.json` ->
+   `33b4281 09-19 21:40`), and `git merge-base --is-ancestor e06d298 HEAD` is true with 3 commits in
+   between. A capture can only ever name the HEAD that predates its own commit, so the literal goal
+   "committed evidence records HEAD" is unattainable, and turning it into a warn (option b as originally
+   worded) would emit a permanent non-actionable warning. The invariant the gate already enforces -
+   ancestor + identical `sourceHash` + per-run `scenarioHash` + artifact re-hash, currently 0 failures - is
+   the meaningful one. Residual defect is presentation only: `revision.recorded` is a flat de-duplicated
+   list, so a reader cannot tell which input came from which commit. Proposed fix (needs authorization,
+   touches `tools/verify/v06-report.cjs`): `revision.perSource {goldenDualTrack, catalogRuntime, recipeBatch,
+   recipeRuns}`. Alternative if a single value is wanted cosmetically: re-run all three captures at one HEAD.
+4. **R2 refreshed at HEAD** (`npm run verify:api-coverage`, 13:49Z): `totalUnits 4729`,
+   `claimed = verified = 63`, `staleEvidenceExamples []` - zero claimed-without-proof - while core
+   49/717 (6.8 %), important 6/793 (0.8 %), advanced 8/3219 (0.2 %) all fail their 100/90/80 % thresholds,
+   and `unclaimedCore` lists 668 units. Still an owner contract decision.
+5. **R1 census corrected against my own earlier note** (F-66). Under the definition "payload = non-sidecar
+   file under `examples/*/assets/`, covered = sibling `<name>.LICENSE.md` exists": 41 payloads, 24 covered,
+   17 uncovered totalling 17,533 B, i.e. **99.7 % of asset bytes are proven**. My stored "25/65 files,
+   38.5 % of bytes" used a denominator that counted the sidecars themselves and overstated the gap. Two
+   concrete gaps from F-27 re-verified as still open: `examples/gltf-draco/assets/draco.glb` (992 B) and
+   `examples/gltf-meshopt/assets/meshopt-khr.glb` (1,428 B) have no sidecar. Two self-corrections in one
+   pass worth naming: my first census probe looked for `examples/<d>/LICENSE.md` and therefore wrongly
+   reported all 8 examples as uncovered before I fixed the convention.
+6. **Tree state.** 5 tracked modifications (`.gitignore`, the two regenerated V0.6 evidence/report files,
+   `docs/v06-final-gate.md`, `docs/api-coverage-report.json`) plus this ledger, and one foreign untracked
+   `.tmp-frame-probe.cjs` left alone. `output/v06-review-jest.json` was not re-run in this pass, so the
+   `tests` block in the gate JSON is the 21:04 capture - consistent, but flagged for honesty.
+   **Overall verdict unchanged: NOT_READY, 10 release blockers.**
+
+### UPDATE-20b - same wave, three more self-checks (22:02-22:05)
+
+- **F-67 opened** while indexing this wave: two `evidence-index.json` rows named
+  `raw/gates/v06-report-stdout-2026-09-19.log`, but the file holds only the later PASS capture (914 B,
+  sha16 `b53a5b8374bbd508`, 13:39:07Z, head `41b4c71`) because the second run reused the filename. Third
+  occurrence of the "row does not match bytes" class, so the rule is now stated in the row itself: one
+  filename per capture. Nothing was lost - the BLOCKED stdout is
+  `raw/gates/reevidence-03-v06-blocked.log` and the BLOCKED JSON is `git show 33b4281~1:docs/evidence/v06-review-gate.json`
+  (3 blockers / 30 evidenceFailures / 12:16:03Z). Both rows annotated, none deleted.
+- **My dangling-ref sweep was wrong before it was right**: resolving every row against the audit directory
+  flagged 10 repo-root rows as missing (`docs/api-coverage-report.json`, `output/v06-review-jest.json`, ...).
+  Re-run against both bases: unresolved refs = 0, plus the 3 rows already labelled
+  `DANGLING-SUPERSEDED`/`DESCRIPTOR` and 1 intentional glob. Also: 16 of the 48 rows are per-experiment
+  bundles with no `path` field at all - a naive "unique paths vs row count" diff is not a dangler count.
+- **True exit codes re-measured** (the first capture piped through `tail` and printed *tail's* status):
+  `license-audit.cjs` **EXIT 1, issues=3** (`draco.glb`, `meshopt-khr.glb`, `unexpected directory in build/:
+  examples`) - so the `license` gate stays FAIL and remains a release blocker;
+  `spec-compliance-audit.cjs --warn-ok` **EXIT 0, 45 examples / 0 fail / 1 warn** - unchanged.
+- **F-58 observed live rather than argued**: the compliance run rewrote
+  `docs/evidence/v11-spec-compliance.json` for a `measuredAt`-only reason, which is exactly why a clean tree
+  is unattainable after any verification pass. Relocation still awaits the owner's scope decision.
+
+### UPDATE-20c - F-68: my provenance number had the wrong unit attached (22:12)
+
+F-66 explained the old "25/65 / 38.5 % of bytes" figure as a sidecar-inclusive denominator. That explanation
+was wrong, so it is superseded by F-68 rather than edited away. Re-measured: the two upstream manifests live
+only under `examples/gltf-viewer/assets/` and name 25 files (9 + 16), which resolve to 33 on-disk files
+carrying **99.4 % of the 5,191,306 B** asset payload - so 38.5 % was the *file-count* share (25/65) that my
+note had labelled "bytes". The separate `.LICENSE.md` sidecar channel covers 24/41 payloads = 99.7 % of
+payload bytes. Both numbers are high on bytes and low on file count, which is precisely why every provenance
+claim now has to state channel + denominator + unit. R1's substance is unchanged: 7 of 8 examples have no
+upstream manifest, 17 payloads lack a sidecar (`draco.glb` 992 B and `meshopt-khr.glb` 1,428 B among them),
+and `license-audit.cjs` still exits 1 with issues=3.
+
+---
+
+## 追加波次 r21/r22（2026-09-19 19:0x–19:3xZ，总审查 item 1–4 收口）
+
+候选身份（本波现读，勿与历史口径混用）：`candidateFingerprint 5612c4c2746f395b`（`build/cocosair.module.js` + `examples/shared` 字节），
+`inventoryFingerprint 2d10b49ee9c22d24`（`docs/example-api-inventory.json` 4729 单元），HEAD 见 `git log`（工作树含本波未提交改动）。
+本波证据全部在 `raw/gates/*-r21.log` / `*-r22.log`，逐条退出码由 `${PIPESTATUS}` 之外的直接重定向捕获（不再出现"管道后取 EXIT"的 F-16 类错误）。
+
+### 门禁结果（退出码为真值）
+
+| 门禁 | 命令 | 结果 | 退出码 |
+|---|---|---|---|
+| 结构冻结 | `node tools/examples/spec-validate.cjs` | 45 例 0 issue（经 jest smoke-29 复验） | 0 |
+| 证据链符合性 | `node tools/examples/spec-compliance-audit.cjs` | 45 例 **0 fail / 1 warn**（warn = gltf-draco 诚实 BLOCKED） | 0 |
+| 浏览器矩阵（示例） | `NODE_PATH=<pw> node tools/verify/v11-examples-verify.cjs` | **39/40 PASS，1 promoted / 0 demoted**；apiProof 合计 667 verified / 15 attested / 1 unproven；stale 0 | 1（material-unlit 真缺陷 F-70） |
+| DevTools 会话 | `... tools/verify/v11-devtools-examples.cjs` | **4/5 PASS**，rc-create-node `transform-equals` FAIL（F-74） | 1 |
+| Gallery 部署物 | `... tools/verify/v11-gallery-artifact.cjs verify` | **70/76 PASS**（修 F-76 竞态前 68/76）；残留 = 2 条门禁自身误设（F-78）+ 4 条真实交付缺陷（F-79） | 1 |
+| API 覆盖率 | `node tools/examples/coverage-report.cjs` | core **46/717 = 6.4%**[call 44/read 2]，important **6/793 = 0.8%**[call 4/read 2]，advanced **NOT_APPLICABLE**（required 0/3219）→ 门禁 FAIL | 1 |
+| V0.8 浏览器矩阵 | `... tools/verify/v08-browser-matrix.cjs` | **1/3 PASS**（chromium 全绿；firefox-1532 / webkit-2311 可执行文件缺失 = NOT_INSTALLED，属 R3） | 1 |
+| Jest 全量 | `npx jest --ci` | **29 suites / 208 tests PASS**（修 F-77 前为 1 failed / 207 passed） | 0 |
+| License | `node tools/verify/license-audit.cjs` | issues=3（draco.glb / meshopt-khr.glb 缺 sidecar；`build/` 里多出 `examples/`） | 1 |
+
+### item 1–4 的处置
+
+1. **verified 口径（不再由示例级 PASS 推导）**：`verified = executed ∧ bound ∧ lineOk` 三条件在
+   `v11-spec-common.apiProofOf` 一处实现，浏览器/DevTools/覆盖率三方共用；`sourceFingerprint` 现覆盖
+   example.json（排除 runner 自写字段）+ index.html + 入口源码 + 整棵 `assets/`，故源码改动必然使证据失配
+   （F-73 三门控制：晋级写回幂等 / 期望值编辑 DETECTED / 源码字节编辑 DETECTED）。
+2. **validator 名实相符**：`asset-loaded / material-property / transform-equals` 全部改为
+   `validationExpectations` 逐节点驱动 + 覆盖合同（作用域内每个节点要么给期望值，要么给带源码出处的豁免），
+   无期望值即 FAIL。因此 40/40 变成 39/40：唯一红是 `builtin-unlit-material` 从未注册（F-70），
+   它此前被"存在材质即可"的弱口径掩盖。45 个 stable 标记复核结果：**42 stable**，非 stable 3 个
+   （gltf-catalog 无 claims/无插桩、material-unlit F-70、rc-create-node F-74）。
+   本波另发现并修复 F-75（`interaction:` / `lifecycle:` 前缀使 `api.evidence[].validator` 永远解不开 bound）。
+3. **静态交付深度**：Gallery 门禁实际执行 76 项（解码器集、40 张缩略图、深链、源码查看、11 条生命周期释放合同、
+   绝对路径/agent 端点字节扫描、0 page error），非"13 项"。但结论仍是 PARTIAL：F-78/F-79 未修，
+   且 gltf-draco/meshopt 浏览器例只到 capability-gated，正向解码证明仍在锁定的 jest smoke-11。
+4. **统计合同**：分母 = `coverageRequired=true`（1510；advanced 全 false → NOT_APPLICABLE），
+   比例强制绑定 `inventoryFingerprint` + `candidateFingerprint` + `measuredAt`，call/read 通道分开披露，
+   inventory 自身计数（totalUnits/tierSummary/coverageRequiredUnits）不一致即 FAIL，
+   不在 inventory 的 claim 显式列进 `claimsNotInInventory`（当前 5 个 `DevToolsSession.*`）。
+   **天花板事实**：45 份规格合计只 claim 67 个 unit（其中可入门禁分母的 ≤55），
+   所以 120 stable 也补不齐 1510 分母——覆盖率必须逐 API 做 claims+evidence，不能靠加示例数。
+   documented-only 门禁 **BLOCKED**：inventory 4729 个 unit 的字段只有
+   `{kind,tier,coverageRequired,parent}`，`documented` 填充数 **0**，仓库内无任何生产者；
+   先决条件是最小机器合同 `documented:{source,line,text}` 并按 provenance 同款方式验出处。
+
+### 并行会话安全（F-81）
+
+同工作树内另一会话的 r18 结论未被采纳：其 `candidateFingerprint 7903e764a1678115` ≠ 本波复算 `5612c4c2746f395b`，
+`measuredAt 2026-09-20T09:59:00Z` 当时比墙钟超前约 15 小时，其"core 718/718=100%"与本波复算 46/717 冲突，
+其引用的 `examples/gltf-{anisotropy,iridescence,sheen}` 与 `docs/evidence/visual/` 在本仓库不存在（该会话后已自行撤回）。

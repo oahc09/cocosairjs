@@ -222,5 +222,112 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "813d80014e16"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 20,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lookAt(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      },
+      "Key Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 29,
+            "text": "keyNode.setPosition(new Vec3(0, 8, 0)); keyNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Fill Light": {
+        "position": [
+          0,
+          4,
+          -8
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 35,
+            "text": "fillNode.setPosition(new Vec3(0, 4, -8)); fillNode.setRotationFromEuler(-10, 180, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -10,
+          180,
+          0
+        ]
+      },
+      "Subject": {
+        "position": [
+          0,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 40,
+            "text": "Subject.setPosition(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Subject": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              235,
+              205,
+              75,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 43,
+              "text": "new Color(235, 205, 75, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
+        "line": "L20"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "2a5fe86a854b",
+    "source": "1b02a2906065565c",
+    "candidate": "5612c4c2746f395b",
+    "verified": 18,
+    "attested": 1,
+    "units": 19
+  }
 }

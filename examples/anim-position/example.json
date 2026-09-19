@@ -198,5 +198,108 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "8766171f95de"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          1.4,
+          4.8
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 46,
+            "text": "cameraNode.setPosition(new Vec3(0, 1.4, 4.8));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 47,
+            "text": "cameraNode.setRotationFromEuler(-8, 0, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -8,
+          0,
+          0
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 28,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Mover": {
+        "position": {
+          "vary": true,
+          "range": [
+            [
+              -0.8,
+              0.8
+            ],
+            [
+              0.6,
+              0.6
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "minDelta": 0.0001
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 41,
+            "text": "正弦包络 Math.sin(this.t * 2) * 0.8,0.6,0：三角项取 [-1,1]，其余为字面量算术"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Mover": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 35,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "8ebd4d7639df",
+    "source": "c6fc70109be99971",
+    "candidate": "5612c4c2746f395b",
+    "verified": 17,
+    "attested": 0,
+    "units": 17
+  }
 }

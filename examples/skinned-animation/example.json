@@ -32,7 +32,6 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "d289357cd724",
   "specStatus": "frozen",
   "learning": {
     "goal": "最高复杂度回归：程序化蒙皮网格 + 骨骼树 + 刚性绑定 + 骨骼动画（E009）",
@@ -200,5 +199,90 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 183,
+            "text": "position 默认值 [0,8,0]（示例显式传入）"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Armature": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 139,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Armature": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              240,
+              160,
+              40,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "main.js",
+              "line": 175,
+              "text": "new Color(240, 160, 40, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, armature);）",
+        "line": "L190"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "e5ceb0171281",
+    "source": "cf1a4e3b115fd499",
+    "candidate": "5612c4c2746f395b",
+    "verified": 16,
+    "attested": 0,
+    "units": 16
   }
 }

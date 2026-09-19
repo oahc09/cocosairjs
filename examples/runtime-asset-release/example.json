@@ -194,5 +194,71 @@
   "license": {
     "assets": "assets/BoxTextured.glb — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/BoxTextured.LICENSE.md"
   },
-  "promotionEvidence": "b2dbf4f85534"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          1.8,
+          5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 17,
+            "text": "cameraNode.setPosition(new Vec3(0, 1.8, 5)); cameraNode.lookAt(new Vec3(0, 0, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 24,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      }
+    },
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "assets/BoxTextured.glb",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 104,
+              "text": "gltfBytes = await (await fetch('./assets/BoxTextured.glb')).arrayBuffer();"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 1.8, 5)); cameraNode.look）",
+        "line": "L17"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "928e831458d2",
+    "source": "11c2af5dc6de1137",
+    "candidate": "5612c4c2746f395b",
+    "verified": 16,
+    "attested": 0,
+    "units": 16
+  }
 }

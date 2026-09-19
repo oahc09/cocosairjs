@@ -19,12 +19,17 @@ const crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..', '..');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
 const { BrowserRuntime } = require(path.join(REPO, 'tools', 'benchmark', 'runner', 'browser-runtime.cjs'));
-const { specFingerprintOf, promoteFromEvidence, assetDigestsOf } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+const specCommon = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+const { specFingerprintOf, promoteFromEvidence, assetDigestsOf, apiProofOf } = specCommon;
+const apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
+const readback = require(path.join(REPO, 'tools', 'verify', 'runtime-readback.cjs'));
+const expChecks = require(path.join(REPO, 'tools', 'verify', 'expectation-checks.cjs'));
 
 const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-devtools-examples.json');
 const ARTIFACT_DIR = path.join(REPO, 'docs', 'evidence', 'examples');
 const SETTLE_MS = 2000;
 const CLEAR_COLOR = [30, 40, 60];
+const TRACE_ON = !process.argv.includes('--no-trace');
 
 const args = process.argv.slice(2);
 const idsArg = args.find((a) => a.startsWith('--ids='));
@@ -45,7 +50,7 @@ function copyTree (from, to) {
   }
 }
 
-function prepareWorkspace (example, workspace) {
+function prepareWorkspace (example, workspace, spec, opts) {
   copyTree(path.join(REPO, 'examples', example.dir), workspace);
   const sharedSrc = path.join(REPO, 'examples', 'shared');
   if (fs.existsSync(path.join(sharedSrc, 'scene-kit.js'))) { copyTree(sharedSrc, path.join(workspace, 'shared')); }
@@ -57,10 +62,28 @@ function prepareWorkspace (example, workspace) {
   const htmlPath = path.join(workspace, 'index.html');
   let html = fs.readFileSync(htmlPath, 'utf8');
   if (!html.includes('__bench-prelude')) { html = html.replace('</body>', '<script src="/__bench-prelude.js"></script></body>'); }
+  if (opts && opts.trace) {
+    // 与浏览器矩阵同一套逐 API 插桩：只改工作区 index.html 的 importmap，不动仓库源码。
+    const bypass = ['main.ts', 'main.js', path.join('src', 'main.ts'), path.join('src', 'main.js')]
+      .filter((rel) => {
+        const file = path.join(workspace, rel);
+        return fs.existsSync(file) && /from\s+['"][^'"]*cocosair\.module\.js['"]/.test(fs.readFileSync(file, 'utf8'));
+      });
+    if (bypass.length > 0) { throw new Error(`trace-bypass: 源码直连真实 bundle (${bypass.join(', ')})，逐 API 证据不可信`); }
+    const tracedHtml = html.replace('"/build/cocosair.module.js"', `"./${apiTrace.TRACE_FILE_NAME}"`);
+    if (tracedHtml === html) { throw new Error('trace-importmap-rewrite-failed: index.html 无 "/build/cocosair.module.js" importmap 项'); }
+    fs.writeFileSync(htmlPath, tracedHtml);
+    const units = apiTrace.claimedUnits([example], () => spec);
+    return { trace: apiTrace.writeTraceWorkspace(workspace, units), units };
+  }
   fs.writeFileSync(htmlPath, html);
+  return { trace: null, units: [] };
 }
 
 function check (id, ok, detail) { return { validatorId: id, state: ok ? 'PASS' : 'FAIL', detail: String(detail || '').slice(0, 200) }; }
+
+/** URL 解码仅用于路径比对；非法转义按原文处理。 */
+function safeDecode (url) { try { return decodeURIComponent(url); } catch (e) { return url; } }
 
 function saveArtifact (id, dataUrl) {
   fs.mkdirSync(ARTIFACT_DIR, { recursive: true });
@@ -88,15 +111,34 @@ async function verifyOne (example) {
   const workspace = path.join(workRoot, 'workspace');
   const runtime = new BrowserRuntime({ esbuild, repo: REPO });
   const results = [];
+  let prepared = { trace: null, units: [] };
   try {
-    prepareWorkspace(example, workspace);
+    prepared = prepareWorkspace(example, workspace, spec, { trace: TRACE_ON });
     const channel = await runtime.start({ paths: { workspace } });
     await new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
+
+    // 场景数值读回（期望值合同共用）+ 浏览器资源计时（asset paths 证明）
+    const propNames = expChecks.materialPropNames(spec);
+    let readCache = null;
+    const ensureRead = async (delay) => {
+      if (delay) { readCache = null; await new Promise((resolve) => setTimeout(resolve, delay)); }
+      if (!readCache) {
+        const out = await readback.readScene(runtime.page, propNames);
+        if (out.error) { throw new Error('scene readback failed: ' + out.error); }
+        readCache = out;
+      }
+      return readCache;
+    };
+    const findNode = (read, name) => read.nodes.find((n) => n.name === name) || read.nodes.find((n) => n.name.startsWith(name + '__'));
+    const resources = (await runtime.page.evaluate(() => performance.getEntriesByType('resource')
+      .map((e) => ({ url: e.name, status: e.responseStatus || 0, size: e.transferSize || 0 }))))
+      .map((r) => ({ ...r, decoded: safeDecode(r.url.split('?')[0]) }));
 
     const benchError = await runtime.page.evaluate(() => (window.__benchError ? String(window.__benchError).slice(0, 160) : null));
     const attached = await runtime.page.evaluate(() => !!window.__benchSession);
     results.push(check('attach', attached && !benchError, benchError ? `bench prelude failed: ${benchError}` : `__benchSession=${attached}`));
 
+    const functionalDeclared = (spec.validation && spec.validation.functional) || [];
     const graphNodes = (spec.scene && spec.scene.expectedGraph && spec.scene.expectedGraph.nodes) || [];
     const allowEmpty = !!(spec.scene && spec.scene.expectedGraph && spec.scene.expectedGraph.allowEmpty);
     const scene = await channel.inspect({ kind: 'inspectScene' });
@@ -122,14 +164,44 @@ async function verifyOne (example) {
       results.push(check('inspectNode:id-stable', idStable, idStable ? 'node ids identical across snapshots' : 'ids changed between inspectScene calls'));
       const firstExpected = graphNodes.length > 0 ? graphNodes[0] : null;
       const target = (scene.nodes || []).find((n) => (firstExpected ? n.name === firstExpected || n.name.startsWith(firstExpected + '__') : true));
+      // inspectNode 读到的局部位置必须与页面真实节点一致（防 DevTools 视图与场景脱钩），
+      // 而"值是否等于合同期望"由下面的期望值合同判定。
       if (target) {
         const view = await channel.inspect({ kind: 'inspectNode', id: target.id });
+        const read = await ensureRead();
+        const live = findNode(read, (target.name || '').replace(/__[^_]*$/, ''));
         const pos = view && view.local && view.local.position;
-        const finite = Array.isArray(pos) && pos.length === 3 && pos.every((v) => Number.isFinite(v));
-        results.push(check('transform-equals', finite && view.name === target.name, finite ? `${target.name} local.position=[${pos}]` : `bad node view: ${JSON.stringify(view).slice(0, 120)}`));
+        const matchesLive = !!live && Array.isArray(pos) && readback.nearly(pos, live.position, 1e-3);
+        results.push(check('inspectNode:view-matches-scene', matchesLive,
+          matchesLive ? `${view.name} local.position=[${pos}] equals live node` : `view ${JSON.stringify(pos)} vs live ${live ? JSON.stringify(live.position) : 'node not found'}`));
       } else {
-        results.push(check('transform-equals', false, 'no node to inspect'));
+        results.push(check('inspectNode:view-matches-scene', false, 'no node to inspect'));
       }
+    }
+
+    // 期望值驱动的合同：validator 名字承诺的行为必须真比对（总审查 item 2）
+    if (functionalDeclared.includes('transform-equals')) {
+      const exp = expChecks.declared(spec, 'transform-equals');
+      const read = await ensureRead();
+      const second = expChecks.needsSecondSample(exp) ? await ensureRead(900) : read;
+      const r = expChecks.evalTransformEquals(exp, read, second, findNode, graphNodes.length);
+      const cov = expChecks.evalCoverage(path.join(REPO, 'examples', example.dir), 'transform-equals', spec, graphNodes, exp);
+      results.push(check('transform-equals', r.ok && cov.ok, [r.detail, cov.detail].join(' | ')));
+    }
+    if (functionalDeclared.includes('material-property')) {
+      const exp = expChecks.declared(spec, 'material-property');
+      const read = await ensureRead();
+      const r = expChecks.evalMaterialProperty(exp, read, findNode);
+      const withRenderer = new Set(read.nodes.filter((n) => (n.renderers || []).length > 0).map((n) => (n.name || '').replace(/__[^_]*$/, '')));
+      const cov = expChecks.evalCoverage(path.join(REPO, 'examples', example.dir), 'material-property', spec, graphNodes.filter((n) => withRenderer.has(n)), exp);
+      results.push(check('material-property', r.ok && cov.ok, [r.detail, cov.detail].join(' | ')));
+    }
+    if (functionalDeclared.includes('asset-loaded')) {
+      const assets = await channel.inspect({ kind: 'inspectAsset' });
+      const exp = expChecks.declared(spec, 'asset-loaded');
+      const r = expChecks.evalAssetLoaded(spec, exp, assets, resources);
+      const cov = expChecks.evalAssetCoverage(path.join(REPO, 'examples', example.dir), 'asset-loaded', spec, exp);
+      results.push(check('asset-loaded', r.ok && cov.ok, [r.detail, cov.detail].join(' | ')));
     }
 
     // dispatch：受控写入 + 非法目标的稳定错误码与零副作用（§6.2 合同）
@@ -168,23 +240,7 @@ async function verifyOne (example) {
       if (isPng) { artifact = saveArtifact(example.id, cap.png); }
     }
 
-    // 资产报告合同（与浏览器矩阵同语义）：Material 在场且无致命诊断，资源计数达标
-    const functionalDeclared = spec.validation.functional || [];
-    if (functionalDeclared.includes('material-property') || functionalDeclared.includes('asset-loaded')) {
-      const assets = await channel.inspect({ kind: 'inspectAsset' });
-      const counts = (assets && assets.counts) || {};
-      const blocking = ((assets && assets.diagnostics) || [])
-        .filter((d) => d.code === 'MISSING_DEPENDENCY' || d.code === 'DESTROYED_RESOURCE' || d.code === 'TYPE_MISMATCH');
-      const total = Object.values(counts).reduce((s, n) => s + n, 0);
-      if (functionalDeclared.includes('material-property')) {
-        results.push(check('material-property', (counts.Material || 0) >= 1 && blocking.length === 0,
-          assets ? `Material=${counts.Material || 0}${blocking.length ? ' diagnostics: ' + blocking.map((d) => d.code).join(',') : ''}` : 'inspectAsset reported nothing'));
-      }
-      if (functionalDeclared.includes('asset-loaded')) {
-        results.push(check('asset-loaded', total >= 1 && blocking.length === 0,
-          assets ? `assets total=${total}${blocking.length ? ' diagnostics: ' + blocking.map((d) => d.code).join(',') : ''}` : 'inspectAsset reported nothing'));
-      }
-    }
+    // 资产报告合同已由上面的期望值驱动检查承担（weak "counts>0" 版本已删）。
 
     // §11 Screenshot Current：交付示例必须有当期帧，旧截图不得冒充（bytes=0 的占位记录一律 FAIL）
     if (!artifact.bytes) {
@@ -239,12 +295,30 @@ async function verifyOne (example) {
       if (!executed.has(id)) { results.push(check(id, false, 'declared in Example Spec but no DevTools executor ran it')); }
     }
 
+    // 逐 API 运行期证据（与浏览器矩阵同口径）：claim 一次都没执行 → 该 claim 不成立
+    const traceRaw = await runtime.page.evaluate(apiTrace.snapshotInPage);
+    if (prepared.trace && !traceRaw) {
+      results.push(check('api-instrumented', false, '页面无 window.__apiTrace：包装模块未加载（importmap 改写失效或被缓存）'));
+    }
+    const trace = apiTrace.normalizeTrace(traceRaw, prepared.units || []);
+    const passedValidators = new Set(results.filter((r) => r.state === 'PASS').map((r) => r.validatorId));
+    const proof = apiProofOf(spec, path.join(REPO, 'examples', example.dir), trace.units, passedValidators);
+    const neverRan = proof.filter((p) => p.state === 'not-observed');
+    if (neverRan.length > 0) {
+      results.push(check('api-executed', false, `${neverRan.length}/${proof.length} claimed APIs never executed: `
+        + neverRan.slice(0, 4).map((p) => p.api).join(',')));
+    }
+
     const failed = results.filter((r) => r.state !== 'PASS');
     return {
       id: example.id,
       requiresDevTools: true,
       result: failed.length === 0 ? 'PASS' : 'FAIL',
       specFingerprint: specFingerprintOf(spec),
+      sourceFingerprint: apiTrace.sourceFingerprint(path.join(REPO, 'examples', example.dir)),
+      candidateFingerprint: apiTrace.candidateFingerprint(),
+      instrumentation: prepared.trace ? { ...prepared.trace, notes: trace.notes, observed: trace.instrumentedCount, total: (prepared.units || []).length } : null,
+      apiProof: proof,
       sessionUnits: [...sessionUnits],
       specDimensions: {
         ready: spec.ready.validators || [], functional: spec.validation.functional || [],
@@ -263,17 +337,36 @@ async function verifyOne (example) {
 }
 
 function writeEvidence (results, globals) {
-  const pass = results.filter((r) => r.result === 'PASS').length;
+  // --ids 子集运行不得整体覆盖证据（否则未跑示例的记录凭空消失，coverage/audit 失真）
+  const ran = new Set(results.map((r) => r.id));
+  let merged = results;
+  if (targetIds && fs.existsSync(EVIDENCE_PATH)) {
+    try {
+      const prior = JSON.parse(fs.readFileSync(EVIDENCE_PATH, 'utf8')).results || [];
+      merged = [...prior.filter((r) => !ran.has(r.id)), ...results];
+    } catch (e) { /* 旧文件损坏时按本次结果重写 */ }
+  }
+  const pass = merged.filter((r) => r.result === 'PASS').length;
+  const proofTotals = { verified: 0, attested: 0, unproven: 0 };
+  for (const r of merged) { for (const p of (r.apiProof || [])) { proofTotals[p.proof] = (proofTotals[p.proof] || 0) + 1; } }
   const evidence = {
     measuredAt: new Date().toISOString(),
     runner: 'tools/verify/v11-devtools-examples.cjs',
+    mode: 'devtools-session-v3',
+    instrumentation: TRACE_ON ? 'per-api-execution-trace (cocosair.traced.js via importmap)' : 'NONE (--no-trace control run：逐 API 状态不可用)',
+    candidateFingerprint: apiTrace.candidateFingerprint(),
+    apiProofTotals: proofTotals,
     contract: 'V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/inspectNode/dispatch/captureFrame/getRuntimeErrors/close）',
-    examples: results,
-    results,
+    examples: merged,
+    results: merged,
     checks: globals,
-    total: results.length,
+    total: merged.length,
     pass,
-    fail: results.length - pass,
+    fail: merged.length - pass,
+    partial: !globals || !!targetIds,
+    subset: targetIds ? [...ran].sort() : undefined,
+    runPass: results.filter((r) => r.result === 'PASS').length,
+    runTotal: results.length,
   };
   fs.mkdirSync(path.dirname(EVIDENCE_PATH), { recursive: true });
   fs.writeFileSync(EVIDENCE_PATH, JSON.stringify(evidence, null, 2) + '\n');
@@ -295,11 +388,12 @@ function writeEvidence (results, globals) {
     writeEvidence(results, globalChecks);
   }
   writeEvidence(results, globalChecks);
-  const promoted = promoteFromEvidence(results);
+  const promotion = promoteFromEvidence(results);
   require('child_process').execFileSync('node', [path.join(REPO, 'tools', 'examples', 'generate-manifest.cjs')], { cwd: REPO });
   const pass = results.filter((r) => r.result === 'PASS').length;
   const boundary = globalChecks[0];
-  console.log(`\n== DevTools examples: ${pass}/${results.length} PASS, runtime bundle boundary ${boundary.state}, ${promoted} promoted to stable ==`);
+  console.log(`\n== DevTools examples: ${pass}/${results.length} PASS, runtime bundle boundary ${boundary.state}, `
+    + `${promotion.promoted} promoted / ${promotion.demoted} demoted (stable 需逐 API 证明无 unproven) ==`);
   process.exitCode = (pass === results.length && boundary.state === 'PASS') ? 0 : 1;
 })().catch((error) => {
   console.error('FATAL:', String(error && error.stack || error).slice(0, 600));

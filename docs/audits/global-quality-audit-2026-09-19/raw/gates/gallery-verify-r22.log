@@ -1,0 +1,77 @@
+PASS artifact:no-absolute-path-dependency no repo-absolute / agent-endpoint references in shipped bytes
+FAIL artifact:decoder-set missing: draco/draco_decoder.js
+PASS static:index.html status=200
+PASS static:gallery.html status=200
+PASS static:files.json status=200
+PASS static:cocosair.module.js status=200
+PASS artifact:thumbnails-all 40/40 thumbnails reachable
+PASS artifact:devtools-page-served:automation status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-capture-frame status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-create-node status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-error-report status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS artifact:devtools-page-served:rc-inspect-scene status=200（仅静态可访问；agent 通道启动不在本门禁范围）
+PASS gallery:list-rendered links=45 expected=45
+PASS gallery:deep-link iframe src=http://127.0.0.1:53330/apps/gallery/mesh-sphere/
+PASS gallery:source-view source chars=1893 head="/**\n * mesh-sphere — 球体图元 + 标准材质 + 慢速自转（"
+PASS example-boot:anim-position booted via /anim-position/
+PASS example-boot:anim-rotation booted via /anim-rotation/
+PASS example-boot:camera booted via /camera/
+PASS example-boot:camera-lookat booted via /camera-lookat/
+PASS example-boot:camera-multi booted via /camera-multi/
+PASS example-boot:camera-ortho booted via /camera-ortho/
+PASS example-boot:gltf-basic booted via /gltf-basic/
+PASS lifecycle:gltf-basic held=2 leaked=0 reloaded=true
+FAIL example-boot:gltf-catalog boot-failed via /gltf-catalog/
+PASS example-boot:gltf-clearcoat booted via /gltf-clearcoat/
+PASS lifecycle:gltf-clearcoat held=2 leaked=0 reloaded=true
+PASS example-boot:gltf-draco booted via /gltf-draco/
+PASS decoder-request:gltf-draco draco.glb 已被部署页请求
+PASS decoder-state:gltf-draco __decoderState=decoder-missing-observed
+PASS example-boot:gltf-meshopt booted via /gltf-meshopt/
+PASS lifecycle:gltf-meshopt held=3 leaked=0 reloaded=true
+PASS decoder-request:gltf-meshopt meshopt/meshopt_decoder.mjs 已被部署页请求
+FAIL decoder-wasm:meshopt wasm requests=0
+PASS decoder-state:gltf-meshopt __decoderState=loaded-bare
+PASS example-boot:gltf-morph booted via /gltf-morph/
+PASS lifecycle:gltf-morph held=2 leaked=0 reloaded=true
+PASS example-boot:gltf-skin booted via /gltf-skin/
+PASS lifecycle:gltf-skin held=3 leaked=0 reloaded=true
+PASS example-boot:gltf-viewer booted via /gltf-viewer/
+PASS lifecycle:gltf-viewer held=2 leaked=0 reloaded=true
+PASS example-boot:hello-cube booted via /hello-cube/
+PASS example-boot:input booted via /input/
+PASS example-boot:interaction-click booted via /interaction-click/
+PASS example-boot:light-point booted via /light-point/
+PASS example-boot:light-sphere booted via /light-sphere/
+PASS example-boot:light-spot booted via /light-spot/
+PASS example-boot:light-two-directional booted via /light-two-directional/
+PASS example-boot:material-basic booted via /material-basic/
+PASS example-boot:material-color booted via /material-color/
+PASS example-boot:material-transparent booted via /material-transparent/
+PASS lifecycle:material-transparent held=5 leaked=0 reloaded=true
+PASS example-boot:material-unlit booted via /material-unlit/
+PASS example-boot:mesh-cylinder booted via /mesh-cylinder/
+PASS example-boot:mesh-multi-material booted via /mesh-multi-material/
+PASS lifecycle:mesh-multi-material held=2 leaked=0 reloaded=true
+PASS example-boot:mesh-plane booted via /mesh-plane/
+PASS example-boot:mesh-sphere booted via /mesh-sphere/
+PASS example-boot:mesh-torus booted via /mesh-torus/
+PASS example-boot:node-active booted via /node-active/
+PASS example-boot:node-hierarchy booted via /node-hierarchy/
+PASS example-boot:node-scale booted via /node-scale/
+PASS example-boot:runtime-asset-release booted via /runtime-asset-release/
+PASS lifecycle:runtime-asset-release held=2 leaked=0 reloaded=true
+PASS example-boot:skinned-animation booted via /skinned-animation/
+PASS example-boot:starter booted via /starter/
+PASS example-boot:static-model booted via /static-model/
+PASS lifecycle:static-model held=8 leaked=0 reloaded=true
+PASS example-boot:texture-basic booted via /texture-basic/
+PASS lifecycle:texture-basic held=5 leaked=0 reloaded=true
+PASS example-boot:transform booted via /transform/
+PASS example-boot:tween-basic booted via /tween-basic/
+FAIL artifact:all-boottable-examples boot failures: gltf-catalog
+PASS artifact:lifecycle-covered 11 §25 合同示例在部署物内完成释放核对
+FAIL artifact:no-http-errors 6 次 4xx/5xx/失败请求：404 /mesh-sphere/src/main.js | 404 /mesh-sphere/main.js | 404 /mesh-sphere/main.ts | FAILED /mesh-sphere/src/main.js
+FAIL artifact:no-external-requests 越界请求 36 次：https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/Animat | https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/Anisot | https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/Antiqu
+PASS gallery:no-page-errors 0 page errors
+[gallery-artifact] verify: 70/76 PASS → docs\evidence\v11-gallery-artifact.json

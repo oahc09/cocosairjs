@@ -45,7 +45,9 @@
       "path": "raw/gates/v06-report-stdout-2026-09-19.log",
       "kind": "stdout-capture",
       "result": "FAIL 30/30 recipe sourceHash mismatch; jest-binding null",
-      "note": "full v06-report.cjs PASS JSON stdout (F-59); the earlier 12:16Z BLOCKED run is documented in raw/gates/reevidence-03-v06-blocked.log"
+      "note": "full v06-report.cjs PASS JSON stdout (F-59); the earlier 12:16Z BLOCKED run is documented in raw/gates/reevidence-03-v06-blocked.log [2026-09-19 22:02 F-67] the BLOCKED stdout that this row described was overwritten in place by the later PASS capture (same filename). The BLOCKED state remains evidenced by raw/gates/reevidence-03-v06-blocked.log and by git show 33b4281~1:docs/evidence/v06-review-gate.json (3 blockers / 30 evidenceFailures / 12:16:03Z). Row kept and labelled rather than deleted.",
+      "contentNowOnDisk": "PASS capture only: measuredAt 2026-09-19T13:39:07.036Z, head 41b4c71, 914 B, sha16 b53a5b8374bbd508",
+      "status": "SUPERSEDED-ON-DISK"
     },
     {
       "path": "DESCRIPTOR:consumer-acceptance (stdout)",
@@ -394,9 +396,10 @@
     {
       "path": "raw/gates/v06-report-stdout-2026-09-19.log",
       "kind": "raw-gate-log",
-      "note": "stdout capture of the authorized V0.6 track (jest --json run; v06-report.cjs full PASS JSON)",
+      "note": "stdout capture of the authorized V0.6 track (jest --json run; v06-report.cjs full PASS JSON) [2026-09-19 22:02 F-67] second row for the same path; it is the capture the bytes actually correspond to.",
       "createdBy": "audit",
-      "measuredAt": "2026-09-19T21:20:00.000+08:00"
+      "measuredAt": "2026-09-19T21:20:00.000+08:00",
+      "contentNowOnDisk": "PASS capture only: measuredAt 2026-09-19T13:39:07.036Z, head 41b4c71, 914 B, sha16 b53a5b8374bbd508"
     },
     {
       "path": "raw/scratch-recovery/RECOVERY-MANIFEST.json",
@@ -404,6 +407,234 @@
       "note": "150 scratch files (4,080,321 B) recovered with sha256/16 before the authorized cleanup deleted their originals (F-62)",
       "createdBy": "audit",
       "measuredAt": "2026-09-19T21:23:00.000+08:00"
+    },
+    {
+      "path": "raw/gates/pre-f61reprocess-2144-v06-catalog-runtime-gate.json",
+      "kind": "pre-overwrite-snapshot",
+      "note": "byte-identical copy (sha16 43805b0bcbf2b221, 9,772 B) of the catalog evidence preserved before the F-61 re-run replaced it with a87f480f93c7ad8b",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:56:00.000+08:00"
+    },
+    {
+      "path": "raw/gates/f61-catalog-gate-stdout-2026-09-19.log",
+      "kind": "gate-stdout",
+      "note": "tools/verify/v06-catalog-gate.cjs at HEAD 33b4281: EXIT 0, 100/100",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:56:00.000+08:00"
+    },
+    {
+      "path": "raw/gates/f61-postcatalog-v06-report-stdout-2026-09-19.log",
+      "kind": "gate-stdout",
+      "note": "tools/verify/v06-report.cjs after the re-run: EXIT 0, status PASS, blockers [], recorded revisions [e06d298, 33b4281]",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:56:00.000+08:00"
+    },
+    {
+      "path": "raw/gates/f61-catalog-rerun-2026-09-19.log",
+      "kind": "narrative-raw-log",
+      "note": "sections 1-9: authorization scope, snapshot, .gitignore change + two-direction proof, F-63, catalog re-run, report re-run + premise break, dirty-tree inventory, R2 census, R1 census self-correction",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T21:56:00.000+08:00"
+    },
+    {
+      "path": "raw/f61-wave-ledger-update.cjs",
+      "kind": "audit-tool",
+      "note": "append-only ledger writer for F-63..F-66 + verdict/index/markdown updates; asserts the 62-row prefix is unchanged before appending",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T22:05:00.000+08:00"
+    },
+    {
+      "path": "raw/f61-wave-closeout.cjs",
+      "kind": "audit-tool",
+      "note": "this script: indexes the wave tools and appends UPDATE-20b",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T22:05:00.000+08:00"
+    },
+    {
+      "path": "raw/f67-index-hygiene.cjs",
+      "kind": "audit-tool",
+      "note": "appends F-67 and annotates the two colliding evidence-index rows",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T22:05:00.000+08:00"
+    },
+    {
+      "path": "raw/gates/f61-postwave-offline-checks-2026-09-19.log",
+      "kind": "offline-checks",
+      "note": "license-audit EXIT 1 with 3 issues (draco.glb + meshopt-khr.glb sidecars, build/examples) and spec-compliance EXIT 0 at 45 examples / 0 fail / 1 warn, after the .gitignore and ledger writes",
+      "createdBy": "audit",
+      "measuredAt": "2026-09-19T22:05:00.000+08:00"
+    },
+    {
+      "path": "raw/gates/verify-r21.log",
+      "kind": "r21 browser matrix (40 examples, expectation-driven validators, F-75 binder fix)",
+      "result": "39/40 PASS, 1 promoted / 0 demoted, apiProof 667 verified + 15 attested + 1 unproven, candidate 5612c4c2746f395b, REAL_EXIT=1 (material-unlit FAIL → F-70)",
+      "createdBy": "audit",
+      "sha256_16": "a2c849d80c5aa629",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/verify-devtools-r21.log",
+      "kind": "r21 DevTools session gate (5 examples)",
+      "result": "4/5 PASS, REAL_EXIT=1, rc-create-node transform-equals FAIL → F-74",
+      "createdBy": "audit",
+      "sha256_16": "79d0b654872ab141",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/gallery-verify-r21.log",
+      "kind": "gallery artifact verify BEFORE the F-76 lifecycle-race fix",
+      "result": "68/76 PASS, REAL_EXIT=1; lifecycle failures swapped examples run-to-run",
+      "createdBy": "audit",
+      "sha256_16": "891c25cd1937a706",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/gallery-verify-r22.log",
+      "kind": "gallery artifact verify AFTER the F-76 fix (waitForFunction on __lifecycle)",
+      "result": "70/76 PASS, REAL_EXIT=1; residual fails → F-78 (2 gate mis-specs) + F-79 (real delivery defects)",
+      "createdBy": "audit",
+      "sha256_16": "5cb4a962e7388764",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/coverage-r21.log",
+      "kind": "coverage report with the corrected statistical contract (item 4)",
+      "result": "core 46/717=6.4% [call 44/read 2], important 6/793=0.8% [call 4/read 2], advanced NOT_APPLICABLE, gates FAIL, REAL_EXIT=1",
+      "createdBy": "audit",
+      "sha256_16": "b082e6c88a71c050",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/jest-r21.log",
+      "kind": "jest BEFORE F-77 fix",
+      "result": "208 tests: 1 failed (smoke-29 §11/§12 zero-fail) / 207 passed, REAL_EXIT=1 — 42 S22-GALLERY fails caused by promotionEvidence/v3 producer-consumer drift",
+      "createdBy": "audit",
+      "sha256_16": "3e42ae622028430c",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/jest-r22.log",
+      "kind": "jest AFTER F-77 fix",
+      "result": "29 suites / 208 tests PASS, REAL_EXIT=0",
+      "createdBy": "audit",
+      "sha256_16": "dd46228787c3d419",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/spec-compliance-r21.log",
+      "kind": "spec-compliance audit after the v3 promotion rule landed",
+      "result": "45 examples, 0 fail / 1 warn (honest gltf-draco BLOCKED warn), REAL_EXIT=0",
+      "createdBy": "audit",
+      "sha256_16": "aeca873421e5b893",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/tamper-run.log",
+      "kind": "F-77 negative control: promotion.candidate tampered to deadbeef00000000 in anim-position",
+      "result": "DETECTED: 2 fail (S11-PROMOTION-DRIFT + S23-MANIFEST), REAL_EXIT=1; file restored byte-identical",
+      "createdBy": "audit",
+      "sha256_16": "2855829a803566f0",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/f73-fingerprint-control-r22.log",
+      "kind": "F-73 three-way fingerprint control on a repo-external copy of examples/light-point",
+      "result": "base ea448f328c7d5108: C1 promotion write IDEMPOTENT PASS, C2 expectation edit DETECTED PASS, C3 entry-source byte edit DETECTED PASS",
+      "createdBy": "audit",
+      "sha256_16": "694bb7255a30edfa",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/f75-binder-replay-diff-r21.log",
+      "kind": "F-75 regression: replay of r21 evidence through the fixed binder",
+      "result": "examples-with-diff=0/40, units-changed=0, unexplained=0",
+      "createdBy": "audit",
+      "sha256_16": "8e97b38007967f34",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/gates/f75-binder-negative-control-r21.log",
+      "kind": "F-75 negative control: empty pass-set and prefix-stripped pass-set",
+      "result": "step1 empty ⇒ bound=false everywhere; step3 namespaced-only removal ⇒ no binding gained; 1 unit total affected by the fix (light-two-directional.input)",
+      "createdBy": "audit",
+      "sha256_16": "a5d48e57fe289fe3",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "path": "raw/r20-examples-verified-pre-r21.json",
+      "kind": "pre-r21 evidence snapshot (F-72 protection: producer rewrites in place)",
+      "result": "r20 39/40 PASS, measuredAt 2026-09-19T18:46:14.569Z",
+      "createdBy": "audit",
+      "sha256_16": "9404da18da8016a8",
+      "status": "SHIPPED",
+      "note": "r21/r22 wave (findings F-69..F-81), captured 2026-09-19 19:0x-19:3xZ"
+    },
+    {
+      "id": "R21-R22-GATE-RE-EVIDENCE-2026-09-19T19Z",
+      "findings": [
+        "F-69",
+        "F-70",
+        "F-71",
+        "F-72",
+        "F-73",
+        "F-74",
+        "F-75",
+        "F-76",
+        "F-77",
+        "F-78",
+        "F-79",
+        "F-80",
+        "F-81"
+      ],
+      "raw": [
+        "raw/gates/verify-r21.log",
+        "raw/gates/verify-devtools-r21.log",
+        "raw/gates/gallery-verify-r21.log",
+        "raw/gates/gallery-verify-r22.log",
+        "raw/gates/coverage-r21.log",
+        "raw/gates/jest-r21.log",
+        "raw/gates/jest-r22.log",
+        "raw/gates/spec-compliance-r21.log",
+        "raw/gates/tamper-run.log",
+        "raw/gates/f73-fingerprint-control-r22.log",
+        "raw/gates/f75-binder-replay-diff-r21.log",
+        "raw/gates/f75-binder-negative-control-r21.log",
+        "raw/r20-examples-verified-pre-r21.json"
+      ],
+      "scratch": "E:/AIProMax/cocosair-fp-scratch (f73-control.cjs, f75-binder-control.cjs, f75-replay-diff.cjs, probe-gallery-fails.cjs — all outside the repo)",
+      "commands": [
+        "NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/v11-examples-verify.cjs",
+        "NODE_PATH=<same> node tools/verify/v11-devtools-examples.cjs",
+        "NODE_PATH=<same> node tools/verify/v11-gallery-artifact.cjs verify",
+        "node tools/examples/coverage-report.cjs",
+        "node tools/examples/spec-compliance-audit.cjs",
+        "node tools/examples/generate-manifest.cjs",
+        "node tools/verify/license-audit.cjs",
+        "npx jest --ci"
+      ],
+      "note": "candidate under test: build/cocosair.module.js + examples/shared → candidateFingerprint 5612c4c2746f395b; inventory fingerprint 2d10b49ee9c22d24"
+    },
+    {
+      "path": "raw/gates/v08-browser-matrix-r21.log",
+      "kind": "gate-stdout",
+      "result": "Browser Matrix 1/3 PASS (chromium boot/webgl2/visible/clean=true; firefox firefox-1532 与 webkit-2311 可执行文件缺失 → NOT_INSTALLED, 属 R3 授权项)",
+      "createdBy": "audit",
+      "sha256_16": "0b23495e5d6a833e",
+      "status": "SHIPPED",
+      "note": "r21 wave; REAL_EXIT=1"
     }
-  ]
+  ],
+  "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\" (16 of 48). F-67."
 }

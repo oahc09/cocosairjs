@@ -1,7 +1,7 @@
 {
   "id": "gltf-catalog",
   "version": "1.0.0",
-  "status": "stable",
+  "status": "draft",
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
@@ -74,5 +74,9 @@
   },
   "interaction": {
     "steps": []
+  },
+  "stableReview": {
+    "demotedAt": "2026-09-19T16:15:48.529Z",
+    "reason": "no per-API evidence"
   }
 }

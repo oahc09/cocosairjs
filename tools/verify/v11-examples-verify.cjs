@@ -3,7 +3,9 @@
  * 与 v1（仅基础运行检查）的差异：
  *  1. Ready Contract：inspectScene 校验 scene.expectedGraph.nodes 逐名在场（starter 空场景按 allowEmpty）；
  *  2. Functional：按 spec.validation.functional 执行 node-exists / node-count / asset-loaded /
- *     material-property / transform-equals（expectedGraph 节点变换可读且有限）/ no-runtime-error；
+ *     material-property / transform-equals；后三者一律由 Example Spec 的 validationExpectations
+ *     驱动（逐节点期望值、逐资产出处），无期望值即 FAIL；声明了的 validator 还必须覆盖作用域内
+ *     每个节点（或给出带源码出处的豁免），否则同样 FAIL——"2/5 节点通过"不给整项发绿。
  *  3. Animation/Frame：animation-playing 与 visual.frame-diff 以双帧捕获（400ms 间隔）像素差异证明；
  *  4. Interaction：按 spec.interaction.steps 以真实指针事件驱动画布，validation.interaction=frame-diff
  *     时以交互前后帧差证明；
@@ -26,7 +28,11 @@ const crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..', '..');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
 const { BrowserRuntime } = require(path.join(REPO, 'tools', 'benchmark', 'runner', 'browser-runtime.cjs'));
-const { specFingerprintOf, promoteFromEvidence, assetDigestsOf } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+const specCommon = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+const { specFingerprintOf, promoteFromEvidence, assetDigestsOf } = specCommon;
+const apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
+const readback = require(path.join(REPO, 'tools', 'verify', 'runtime-readback.cjs'));
+const expChecks = require(path.join(REPO, 'tools', 'verify', 'expectation-checks.cjs'));
 
 const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-examples-verified.json');
 const ARTIFACT_DIR = path.join(REPO, 'docs', 'evidence', 'examples');
@@ -37,6 +43,25 @@ const FRAME_GAP_MS = 400;
 const args = process.argv.slice(2);
 const idsArg = args.find((a) => a.startsWith('--ids='));
 const targetIds = idsArg ? new Set(idsArg.slice(6).split(',')) : null;
+// 插桩是本期 verified 语义的地基；--no-trace 只用于"插桩是否改变结论"的对照运行。
+const TRACE_ON = !args.includes('--no-trace');
+
+/** 期望值覆盖度：validator 通过不代表 expectedGraph 每个节点都被比对过，缺口必须留痕。 */
+function expectationGapNote (spec) {
+  const graph = (spec.scene && spec.scene.expectedGraph && spec.scene.expectedGraph.nodes) || [];
+  const exp = spec.validationExpectations || {};
+  const out = {};
+  for (const key of ['transform-equals', 'material-property']) {
+    const covered = Object.keys(exp[key] || {});
+    out[key] = { compared: covered.length, graph: graph.length, missing: graph.filter((n) => !covered.includes(n)) };
+  }
+  const assetExp = exp['asset-loaded'] || {};
+  out['asset-loaded'] = {
+    paths: (assetExp.paths || []).length, specAssets: (spec.assets || []).length,
+    kinds: assetExp.kinds ? Object.keys(assetExp.kinds).length : 0,
+  };
+  return out;
+}
 
 const manifest = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8'));
 const entries = manifest.examples
@@ -54,7 +79,7 @@ function copyTree (from, to) {
   }
 }
 
-function prepareWorkspace (example, workspace) {
+function prepareWorkspace (example, workspace, spec, options = {}) {
   copyTree(path.join(REPO, 'examples', example.dir), workspace);
   const sharedSrc = path.join(REPO, 'examples', 'shared');
   if (fs.existsSync(path.join(sharedSrc, 'scene-kit.js'))) {
@@ -71,7 +96,37 @@ function prepareWorkspace (example, workspace) {
     const fixed = code.replace(/(\.\.\/)+shared\//g, './' + '../'.repeat(depth) + 'shared/');
     if (fixed !== code) { fs.writeFileSync(file, fixed); }
   }
-  return fs.readFileSync(path.join(workspace, 'index.html'), 'utf8');
+  let html = fs.readFileSync(path.join(workspace, 'index.html'), 'utf8');
+  if (options.trace) {
+    const bypass = traceBypasses(workspace, html);
+    if (bypass.length > 0) {
+      // 示例绕过 importmap 直连真实 bundle 时，计数器看不到它的调用：
+      // 与其产出一份"看起来没执行"的假证据，不如拒绝插桩并让门禁显式失败。
+      throw new Error(`trace-bypass: 源码直连 /build/cocosair.module.js (${bypass.join(', ')})，逐 API 证据不可信`);
+    }
+    const tracedHtml = html.replace('"/build/cocosair.module.js"', `"./${apiTrace.TRACE_FILE_NAME}"`);
+    if (tracedHtml === html) {
+      throw new Error('trace-importmap-rewrite-failed: index.html 没有 "/build/cocosair.module.js" importmap 项，插桩未生效');
+    }
+    fs.writeFileSync(path.join(workspace, 'index.html'), tracedHtml);
+    const units = apiTrace.claimedUnits([example], () => spec);
+    return { html: tracedHtml, units, trace: apiTrace.writeTraceWorkspace(workspace, units) };
+  }
+  return { html, trace: null };
+}
+
+/** 找出直连真实 bundle（绕过 importmap）的文件——那样计数器看不到示例侧调用。 */
+function traceBypasses (workspace, html) {
+  const hits = [];
+  const scan = (file, text) => {
+    if (/from\s+['"][^'"]*cocosair\.module\.js['"]/.test(text) || /import\(\s*['"][^'"]*cocosair\.module\.js['"]/.test(text)) { hits.push(file); }
+  };
+  for (const rel of ['main.ts', 'main.js', 'src/main.ts', 'src/main.js']) {
+    const file = path.join(workspace, rel);
+    if (fs.existsSync(file)) { scan(rel, fs.readFileSync(file, 'utf8')); }
+  }
+  if (/src=["'][^"']*cocosair\.module\.js/.test(html)) { hits.push('index.html'); }
+  return hits;
 }
 
 function writeEvidence (results, done) {
@@ -86,10 +141,15 @@ function writeEvidence (results, done) {
     } catch (e) { /* 旧文件损坏时按本次结果重写 */ }
   }
   const pass = merged.filter((r) => r.result === 'PASS').length;
+  const proofTotals = { verified: 0, attested: 0, unproven: 0 };
+  for (const r of merged) { for (const p of (r.apiProof || [])) { proofTotals[p.proof] = (proofTotals[p.proof] || 0) + 1; } }
   const evidence = {
     measuredAt: new Date().toISOString(),
     runner: 'tools/verify/v11-examples-verify.cjs',
-    mode: 'spec-driven-v2',
+    mode: 'spec-driven-v3',
+    instrumentation: TRACE_ON ? 'per-api-execution-trace (cocosair.traced.js via importmap)' : 'NONE (--no-trace control run：逐 API 状态不可用)',
+    candidateFingerprint: apiTrace.candidateFingerprint(),
+    apiProofTotals: proofTotals,
     total: merged.length,
     pass,
     fail: merged.length - pass,
@@ -171,6 +231,9 @@ async function capturePairMulti (runtime) {
 // 规范化指纹实现集中在 tools/verify/v11-spec-common.cjs（与 coverage-report 共用，避免漂移）
 function check (id, ok, detail) { return { validatorId: id, state: ok ? 'PASS' : 'FAIL', detail: String(detail || '').slice(0, 200) }; }
 
+/** URL 解码仅用于路径比对；非法转义（示例文件名里的裸 %）按原文处理。 */
+function safeDecode (url) { try { return decodeURIComponent(url); } catch (e) { return url; } }
+
 /** 规格驱动检查（app 示例）。 */
 async function runSpecChecks (example, runtime, channel, spec) {
   const results = [];
@@ -186,6 +249,23 @@ async function runSpecChecks (example, runtime, channel, spec) {
   const allowEmpty = spec.scene.expectedGraph && spec.scene.expectedGraph.allowEmpty === true;
   const nodeNameSet = new Set((scene.nodes || []).map((n) => n.name));
 
+  // 场景数值读回（一次即可，material/transform 共用）与浏览器资源计时（asset paths 证明）
+  const propNames = expChecks.materialPropNames(spec);
+  let readCache = null;
+  const ensureRead = async (delay) => {
+    if (delay) { readCache = null; await new Promise((resolve) => setTimeout(resolve, delay)); }
+    if (!readCache) {
+      const out = await readback.readScene(runtime.page, propNames);
+      if (out.error) { throw new Error('scene readback failed: ' + out.error); }
+      readCache = out;
+    }
+    return readCache;
+  };
+  const findNode = (read, name) => read.nodes.find((n) => n.name === name) || read.nodes.find((n) => n.name.startsWith(name + '__'));
+  const resources = (await runtime.page.evaluate(() => performance.getEntriesByType('resource')
+    .map((e) => ({ url: e.name, status: e.responseStatus || 0, size: e.transferSize || 0, duration: Math.round(e.duration) }))))
+    .map((r) => ({ ...r, decoded: safeDecode(r.url.split('?')[0]) }));
+
   // --- Ready / 结构合同 ---
   if (want('scene-ready')) {
     results.push(check('scene-ready', !!scene && (scene.nodeCount > 0 || allowEmpty), `sceneId=${scene && scene.sceneId} nodeCount=${scene && scene.nodeCount}`));
@@ -200,36 +280,39 @@ async function runSpecChecks (example, runtime, channel, spec) {
     results.push(check('node-count', scene.nodeCount >= min, `nodeCount=${scene.nodeCount} min=${min}`));
   }
 
-  // --- 资产 / 材质 ---
-  const assets = spec.assets || [];
+  // --- 期望值驱动的合同（总审查 item 2）---
+  // 旧实现只查"资产总数>0 / 存在材质 / 坐标有限"，与 validator 名称无关，PASS 不构成行为证据。
+  // 现在必须比对 example.json 的 validationExpectations：期望值来自示例源码字面量（provenance 记录出处），
+  // 没有期望值的声明一律 FAIL——宁可红，也不给"名字对应行为"的假绿。
+  const declaredExpectations = (key) => expChecks.declared(spec, key);
+  const exampleDir = path.join(REPO, 'examples', example.dir);
+  const baseName = (n) => n.replace(/__[^_]*$/, '');
+
   if (want('asset-loaded')) {
     const report = await channel.inspect({ kind: 'inspectAsset' });
-    const total = (report.counts ? Object.values(report.counts).reduce((a, b) => a + b, 0) : 0);
-    results.push(check('asset-loaded', total > 0, 'spec assets=' + assets.length + ' runtime asset units=' + total));
+    const exp = declaredExpectations('asset-loaded');
+    const r = expChecks.evalAssetLoaded(spec, exp, report, resources);
+    const cov = expChecks.evalAssetCoverage(exampleDir, 'asset-loaded', spec, exp);
+    results.push(check('asset-loaded', r.ok && cov.ok, [r.detail, cov.detail].join(' | ')));
   }
   if (want('material-property')) {
-    const report = await channel.inspect({ kind: 'inspectAsset' });
-    const materials = report.counts ? (report.counts.Material || report.counts.materials || 0) : 0;
-    results.push(check('material-property', materials >= 1, `materials=${materials}`));
+    const exp = declaredExpectations('material-property');
+    const read = await ensureRead();
+    const r = expChecks.evalMaterialProperty(exp, read, findNode);
+    // 覆盖作用域 = 带渲染组件的节点（相机/灯天然无材质；有渲染器却没材质是真缺口，不能豁免）
+    const withRenderer = new Set(read.nodes.filter((n) => (n.renderers || []).length > 0).map((n) => baseName(n.name)));
+    const cov = expChecks.evalCoverage(exampleDir, 'material-property', spec, graphNodes.filter((n) => withRenderer.has(n)), exp);
+    results.push(check('material-property', r.ok && cov.ok, [r.detail, cov.detail].join(' | ')));
   }
 
-  // --- transform-equals：expectedGraph 每个节点变换可读且有限 ---
-  if (want('transform-equals') && graphNodes.length > 0) {
-    let ok = true;
-    const details = [];
-    for (const name of graphNodes) {
-      const entry = (scene.nodes || []).find((n) => n.name === name || n.name.startsWith(name + '__'));
-      if (!entry) { ok = false; details.push(`${name}: absent`); continue; }
-      try {
-        const view = await channel.inspect({ kind: 'inspectNode', id: entry.id });
-        const pos = view && view.local && view.local.position;
-        const finite = Array.isArray(pos) && pos.length === 3 && pos.every((v) => Number.isFinite(v));
-        if (!finite) { ok = false; details.push(`${name}: bad transform`); }
-      } catch (e) {
-        ok = false; details.push(`${name}: ${String(e.message || e).slice(0, 60)}`);
-      }
-    }
-    results.push(check('transform-equals', ok, details.join('; ') || `${graphNodes.length} node transforms readable`));
+  // --- transform-equals：与声明的期望值逐量比较（数组=精确，{range/vary}=动态）---
+  if (want('transform-equals')) {
+    const exp = declaredExpectations('transform-equals');
+    const read = await ensureRead();
+    const second = expChecks.needsSecondSample(exp) ? await ensureRead(900) : read;
+    const r = expChecks.evalTransformEquals(exp, read, second, findNode, graphNodes.length);
+    const cov = expChecks.evalCoverage(exampleDir, 'transform-equals', spec, graphNodes, exp);
+    results.push(check('transform-equals', r.ok && cov.ok, [r.detail, cov.detail].join(' | ')));
   }
 
   // --- no-runtime-error ---
@@ -311,7 +394,24 @@ async function runInteractionChecks (example, runtime, spec, beforeCaptureArg) {
   let beforeCapture = beforeCaptureArg;
   const results = [];
   const steps = (spec.interaction && spec.interaction.steps) || [];
-  if (steps.length === 0) { return { results, after: null }; }
+  // 交互驱动的 {vary} 期望必须跨"交互前/交互后"两次读回判定：
+  // transform-equals 在主检查阶段只采样静置帧，点击/按键带来的变化那时还不存在。
+  const varyExp = varyOnlyExpectations(spec);
+  const propNames = expChecks.materialPropNames(spec);
+  const findReadNode = (read, name) => read.nodes.find((n) => n.name === name) || read.nodes.find((n) => n.name.startsWith(name + '__'));
+  if (steps.length === 0) {
+    // 期望把判定权交给交互窗口，但没有任何交互步骤会跑 → 无人判定，必须显式红。
+    const orphan = Object.entries(varyExp).flatMap(([node, decl]) => Object.keys(decl).map((k) => `${node}.${k}`));
+    if (orphan.length > 0) {
+      results.push(check('transform-equals:interaction-driven', false, `deferTo=interaction-window 但示例无 interaction.steps，无人判定：${orphan.join(',')}`));
+    }
+    return { results, after: null };
+  }
+  let readBefore = null;
+  if (Object.keys(varyExp).length > 0) {
+    readBefore = await readback.readScene(runtime.page, propNames);
+    if (readBefore.error) { results.push(check('transform-equals:interaction-driven', false, `交互前读回失败：${readBefore.error}`)); readBefore = null; }
+  }
   // 交互前 Ready：确保画面已有实际内容（空帧上的交互差异无意义）
   let pre = await capture(runtime);
   for (let i = 0; i < 5 && !(pre.litRatio >= 0.01); i++) {
@@ -329,6 +429,61 @@ async function runInteractionChecks (example, runtime, spec, beforeCaptureArg) {
   await new Promise((resolve) => setTimeout(resolve, 700));
   after = await capture(runtime);
   if (pngDiffers(beforeCapture, after)) { changed = true; }
+  // 声明了 buttonText 的步骤必须真实点击 DOM 控件：按钮不存在即 FAIL，
+  // 绝不静默跳过后让 claim 的 API 靠"示例级 PASS"顶包（frameObject 这类只挂在按钮上的 API）。
+  let buttonSteps = 0; let buttonMisses = 0;
+  for (const step of steps.filter((s) => s && s.buttonText)) {
+    const label = String(step.buttonText);
+    buttonSteps++;
+    const locator = runtime.page.getByRole('button', { name: label, exact: true });
+    if ((await locator.count()) === 0) {
+      buttonMisses++;
+      results.push(check('interaction:button-click', false, `DOM 按钮不存在，步骤未执行：${label}`));
+      continue;
+    }
+    await locator.first().click();
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    const shot = await capture(runtime);
+    if (pngDiffers(beforeCapture, shot)) { changed = true; }
+    after = shot;
+    results.push(check('interaction:button-click', true,
+      `点击「${label}」已执行 lit=${shot.litRatio.toFixed(4)} differs=${pngDiffers(beforeCapture, shot)}`));
+  }
+  // 声明了 selectId/optionValue 的步骤必须真实切换 DOM <select> 并触发 change：
+  // 选项不存在或加载不完成即 FAIL——gltf-viewer 的 AnimationClip 等 API 只在换模型后才执行，
+  // 静默跳过会让"示例级 PASS"替未执行的 API 顶包。
+  let selectMisses = 0;
+  for (const step of steps.filter((s) => s && s.selectId)) {
+    const switched = await runtime.page.evaluate((arg) => {
+      const el = document.getElementById(arg.selectId);
+      if (!el) { return { ok: false, why: `DOM 控件 #${arg.selectId} 不存在` }; }
+      const opt = [...(el.options || [])].find((o) => o.value === arg.optionValue);
+      if (!opt) { return { ok: false, why: `#${arg.selectId} 无选项 ${arg.optionValue}` }; }
+      el.value = opt.value;
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+      return { ok: true, why: `#${arg.selectId}=${opt.value}` };
+    }, { selectId: String(step.selectId), optionValue: String(step.optionValue) });
+    if (!switched.ok) {
+      selectMisses++;
+      results.push(check('interaction:select-option', false, `步骤未执行：${switched.why}`));
+      continue;
+    }
+    // 换模型是异步加载：等状态行脱离"加载中"再取帧，否则差异可能来自空档而非新模型
+    let settled = true;
+    try {
+      await runtime.page.waitForFunction(() => {
+        const s = document.querySelector('#status');
+        return !s || !/加载中/.test(s.textContent || '');
+      }, { timeout: 15000 });
+    } catch (err) { settled = false; }
+    const shot = await capture(runtime);
+    if (pngDiffers(beforeCapture, shot)) { changed = true; }
+    after = shot;
+    selectMisses += settled ? 0 : 1;
+    results.push(check('interaction:select-option', settled, settled
+      ? `切换「${switched.why}」加载完成 lit=${shot.litRatio.toFixed(4)} differs=${pngDiffers(beforeCapture, shot)}`
+      : `${switched.why} 切换后 15s 内未完成加载`));
+  }
   // 逐点击捕获：任一中间帧与初始帧不同即证明真实输入产生了状态变化（切换奇偶性鲁棒）
   for (let i = 0; i < clicks; i++) {
     await runtime.page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
@@ -352,11 +507,39 @@ async function runInteractionChecks (example, runtime, spec, beforeCaptureArg) {
   for (const validatorId of spec.validation.interaction) {
     if (validatorId === 'frame-diff') {
       results.push(check('interaction:frame-diff', changed, changed ? 'canvas state changed after real input' : 'no pixel change after interaction'));
+    } else if (validatorId === 'button-click') {
+      // 上方已逐个按钮点击并各自记 check；这里汇总声明本身是否被兑现：
+      // 声明了 button-click 却没有任何 buttonText 步骤可执行 → 该验证器等于没跑，必须红。
+      const ok = buttonSteps > 0 && buttonMisses === 0;
+      results.push(check('interaction:button-click', ok, ok
+        ? `${buttonSteps} 个 DOM 按钮步骤全部真实点击`
+        : (buttonSteps === 0 ? 'validation.interaction 声明 button-click，但 interaction.steps 无 buttonText 步骤' : `${buttonMisses}/${buttonSteps} 个按钮步骤未执行`)));
     } else {
       results.push(check(`interaction:${validatorId}`, false, `validator ${validatorId} has no interaction executor`));
     }
   }
+  if (readBefore) {
+    const readAfter = await readback.readScene(runtime.page, propNames);
+    if (readAfter.error) {
+      results.push(check('transform-equals:interaction-driven', false, `交互后读回失败：${readAfter.error}`));
+    } else {
+      const r = expChecks.evalTransformEquals(varyExp, readBefore, readAfter, findReadNode, 0);
+      results.push(check('transform-equals:interaction-driven', r.ok, `跨交互两次读回：${r.detail}`));
+    }
+  }
   return { results, after };
+}
+
+/** 摘出交给交互窗口判定的 vary 期望（deferTo: 'interaction-window'）。 */
+function varyOnlyExpectations (spec) {
+  const exp = (spec.validationExpectations || {})['transform-equals'] || {};
+  const out = {};
+  for (const [node, decl] of Object.entries(exp)) {
+    const keys = Object.entries(decl || {}).filter(([, v]) => v && v.vary && v.deferTo === 'interaction-window');
+    if (keys.length === 0) { continue; }
+    out[node] = Object.fromEntries(keys);
+  }
+  return out;
 }
 
 /**
@@ -411,14 +594,14 @@ async function runLifecycleChecks (example, runtime, channel, spec) {
 }
 
 /** ui-shell（目录页）合同：DOM 选择器渲染 + 零页面错误。 */
-async function verifyUiShell (example, workspace, html) {
+async function verifyUiShell (example, workspace, html, specArg) {
   const runtime = new BrowserRuntime({ esbuild, repo: REPO });
   try {
     const probe = `<script>document.addEventListener('DOMContentLoaded',function(){window.__benchReady=true;});window.addEventListener('error',function(e){(window.__uiErrors=window.__uiErrors||[]).push(String(e.message).slice(0,200));});</script>`;
     fs.writeFileSync(path.join(workspace, 'index.html'), html.replace('</body>', probe + '</body>'));
     await runtime.start({ paths: { workspace } });
     await new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
-    const spec = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', example.dir, 'example.json'), 'utf8'));
+    const spec = specArg || JSON.parse(fs.readFileSync(path.join(REPO, 'examples', example.dir, 'example.json'), 'utf8'));
     const ui = await runtime.page.evaluate((selector) => ({
       count: document.querySelectorAll(selector).length,
       uiErrors: window.__uiErrors || [],
@@ -432,6 +615,9 @@ async function verifyUiShell (example, workspace, html) {
     return {
       id: example.id, result: failed.length === 0 ? 'PASS' : 'FAIL',
       specFingerprint: specFingerprintOf(spec),
+      sourceFingerprint: apiTrace.sourceFingerprint(path.join(REPO, 'examples', example.dir)),
+      candidateFingerprint: apiTrace.candidateFingerprint(),
+      apiProof: specCommon.apiProofOf(spec, path.join(REPO, 'examples', example.dir), {}, new Set(results.filter((r) => r.state === 'PASS').map((r) => r.validatorId))),
       validatorResults: results, artifact,
       assetDigests: assetDigestsOf(path.join(REPO, 'examples', example.dir), spec.assets),
       errors: [...ui.uiErrors, ...runtime.pageErrors.map((e) => e.message)].slice(0, 3),
@@ -441,13 +627,12 @@ async function verifyUiShell (example, workspace, html) {
   }
 }
 
-async function verifyApp (example, workspace, html) {
+async function verifyApp (example, workspace, html, spec, prepared) {
   const runtime = new BrowserRuntime({ esbuild, repo: REPO });
   try {
     if (!html.includes('__bench-prelude')) {
       fs.writeFileSync(path.join(workspace, 'index.html'), html.replace('</body>', '<script src="/__bench-prelude.js"></script></body>'));
     }
-    const spec = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', example.dir, 'example.json'), 'utf8'));
     const channel = await runtime.start({ paths: { workspace } });
     await new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
 
@@ -493,6 +678,24 @@ async function verifyApp (example, workspace, html) {
     for (const validatorId of declared) {
       if (!executed.has(validatorId)) { all.push(check(validatorId, false, 'declared in Example Spec but no executor ran it')); }
     }
+
+    // 逐 API 运行期证据：插桩计数器看到 claim 的 unit 一次都没执行 → 该 claim 不成立，FAIL。
+    // 投影由包装模块的 snapshot() 给出（通道清单在此各写一份会漏 alias/reads）。
+    const traceRaw = await runtime.page.evaluate(apiTrace.snapshotInPage);
+    if (prepared.trace && !traceRaw) {
+      all.push(check('api-instrumented', false, '页面无 window.__apiTrace：包装模块未加载（importmap 改写失效或被缓存）'));
+    }
+    const trace = apiTrace.normalizeTrace(traceRaw, prepared.units || []);
+    const traceUnits = trace.units;
+    const passedValidators = new Set(all.filter((r) => r.state === 'PASS').map((r) => r.validatorId));
+    const proof = specCommon.apiProofOf(spec, path.join(REPO, 'examples', example.dir), traceUnits, passedValidators);
+    const neverRan = proof.filter((p) => p.state === 'not-observed');
+    if (neverRan.length > 0) {
+      all.push(check('api-executed', false, `${neverRan.length}/${proof.length} claimed APIs never executed: `
+        + neverRan.slice(0, 4).map((p) => p.api).join(',')));
+    }
+    // 期望值覆盖度：validator PASS 了但只比对了部分声明节点，剩余仍是缺口（不 FAIL，如实计数）
+    const gapNote = expectationGapNote(spec);
     // §11 Stable 公式含 Screenshot Current：无视觉 validator 的示例也必须当期取帧，
     // 否则旧截图会被当成当期证据（bytes:0 的占位记录不得存在）
     if (!finalCapture) {
@@ -500,11 +703,17 @@ async function verifyApp (example, workspace, html) {
     }
     const artifact = finalCapture ? await saveArtifact(example.id, finalCapture.png) : { path: `docs/evidence/examples/${example.id}.png`, bytes: 0 };
     if (artifact.bytes === 0) { all.push(check('screenshot-current', false, 'no frame captured this run (§11 Screenshot Current)')); }
+    const exampleDir = path.join(REPO, 'examples', example.dir);
     const failed = all.filter((r) => r.state !== 'PASS');
     return {
       id: example.id,
       result: failed.length === 0 ? 'PASS' : 'FAIL',
       specFingerprint: specFingerprintOf(spec),
+      sourceFingerprint: apiTrace.sourceFingerprint(exampleDir),
+      candidateFingerprint: apiTrace.candidateFingerprint(),
+      instrumentation: prepared.trace ? { ...prepared.trace, notes: trace.notes, observed: trace.instrumentedCount, total: (prepared.units || []).length } : null,
+      apiProof: proof,
+      expectationGaps: gapNote,
       specDimensions: {
         ready: spec.ready.validators, functional: validation.functional,
         interaction: validation.interaction, visual: validation.visual,
@@ -512,7 +721,7 @@ async function verifyApp (example, workspace, html) {
       },
       validatorResults: all,
       artifact,
-      assetDigests: assetDigestsOf(path.join(REPO, 'examples', example.dir), spec.assets),
+      assetDigests: assetDigestsOf(exampleDir, spec.assets),
       nodeCount: 0,
       errors: all.filter((r) => r.state === 'FAIL').slice(0, 3).map((r) => `${r.validatorId}: ${r.detail}`),
     };
@@ -526,10 +735,10 @@ function verifyOne (example) {
   const workspace = path.join(workRoot, 'workspace');
   let timedOut = false;
   const run = (async () => {
-    const html = prepareWorkspace(example, workspace);
-    return example.bench && example.bench.mode === 'ui-shell'
-      ? verifyUiShell(example, workspace, html)
-      : verifyApp(example, workspace, html);
+    const spec = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', example.dir, 'example.json'), 'utf8'));
+    const isShell = example.bench && example.bench.mode === 'ui-shell';
+    const prepared = prepareWorkspace(example, workspace, spec, { trace: TRACE_ON && !isShell });
+    return isShell ? verifyUiShell(example, workspace, prepared.html, spec) : verifyApp(example, workspace, prepared.html, spec, prepared);
   })();
   const timer = new Promise((_, reject) => {
     setTimeout(() => { timedOut = true; reject(new Error(`timeout after ${PER_EXAMPLE_TIMEOUT}ms`)); }, PER_EXAMPLE_TIMEOUT);
@@ -574,7 +783,7 @@ function verifyOne (example) {
   const promoted = promoteFromEvidence(results);
   require('child_process').execFileSync('node', [path.join(REPO, 'tools', 'examples', 'generate-manifest.cjs')], { cwd: REPO });
   const pass = results.filter((r) => r.result === 'PASS').length;
-  console.log(`\n== Examples spec-driven verify: ${pass}/${results.length} PASS, ${promoted} promoted to stable ==`);
+  console.log(`\n== Examples spec-driven verify: ${pass}/${results.length} PASS, ${promoted.promoted} promoted / ${promoted.demoted} demoted ==`);
   process.exitCode = pass === results.length ? 0 : 1;
 })().catch((error) => {
   console.error('FATAL:', String(error && error.stack || error).slice(0, 600));

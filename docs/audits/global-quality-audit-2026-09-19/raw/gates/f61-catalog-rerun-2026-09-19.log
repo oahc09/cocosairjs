@@ -1,0 +1,149 @@
+F-54 / F-61 follow-up pass — 2026-09-19 21:44–21:56 +08 (user-authorized)
+Candidate at start: HEAD 33b4281625fd2b0b6e5bad7922d8dfb4894c75dd (my own previous commit), tree clean except
+?? .tmp-frame-probe.cjs (21:42, foreign/parallel-session, untouched).
+
+§1  Authorization scope taken from the user message
+    (1) F-61 fix, option (a): re-run tools/verify/v06-catalog-gate.cjs so the three V0.6 inputs share a revision.
+    (2) .gitignore exception for docs/audits/**/raw/** (closes F-54).
+    (3) F-58 relocation of generated gate JSON into output/  -> NOT executed: needs a scope decision, see §6.
+    (4) R1/R1b/R1c/R2/R3/R5/R6/R8 -> NOT executed: owner decisions, table returned to the user, see §6.
+    No source, assertion, threshold, reference image, license, package name or permission file was modified.
+    No commit, stage, push or publish was performed in this pass.
+
+§2  Pre-overwrite snapshot (targeted file preservation, per F-18 discipline)
+    cp docs/evidence/v06-catalog-runtime-gate.json
+       -> docs/audits/global-quality-audit-2026-09-19/raw/gates/pre-f61reprocess-2144-v06-catalog-runtime-gate.json
+    sha256/16 both sides: 43805b0bcbf2b221, 9,772 B  (byte-identical, verified before writing anything)
+    Old values: measuredAt 2026-09-19T05:07:59.588Z, sourceHash ac1b1515..., baseRevision 3a53957,
+                cocosairRevision 3a53957, total 100, pass 100.
+
+§3  .gitignore change (F-54) — the only repo edit in this pass
+    Appended:
+        # F-54：审计原始日志/证据必须入库（覆写上表 *.log 规则），避免逐份 git add -f
+        !docs/audits/**/raw/**
+    Two-direction scope proof (git check-ignore -v, read-only):
+      docs/audits/global-quality-audit-2026-09-19/raw/.ignore-probe.log
+        -> ".gitignore:21:!docs/audits/**/raw/**"      (last match = negation -> no longer ignored)
+      docs/evidence/v06-recipes.log
+        -> ".gitignore:5:*.log"                         (still ignored -> no unintended widening)
+    Behavioural proof: after the change the two NEW raw logs in this directory show up as '??' in
+    git status instead of being silently swallowed (see §7).
+    F-54 retest criterion measured: git ls-files docs/audits = 225 files / 84 of them '.log';
+    on-disk = 227 / 85 (the +1 file is this pass' in-flight stdout log); tracked-but-missing = 0.
+    i.e. the committed ledger no longer drops any raw log it cites.
+
+§4  F-63 (new, non-blocking): .gitignore:15 is an inert pattern
+    Read of the raw bytes of line 15 gives ".tmp-basis\\n" -> codepoints 46,116,109,112,45,98,97,115,
+    105,115,92,110 i.e. the file literally contains a backslash + 'n'. git check-ignore .tmp-basis exits 1
+    (not ignored), so the intended ignore never worked. Not fixed here (out of authorized scope; fixing it
+    could surface a new untracked path for another session). Disclosed only.
+
+§5  Catalog runtime gate re-run (F-61 option (a)) — EXIT 0
+    Command: NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/v06-catalog-gate.cjs
+    stdout capture: raw/gates/f61-catalog-gate-stdout-2026-09-19.log ("EXIT=0")
+    New docs/evidence/v06-catalog-runtime-gate.json: sha256/16 a87f480f93c7ad8b, 9,798 B,
+      measuredAt 2026-09-19T13:52:19.240Z, total 100, pass 100,
+      counts {PASS:97, EXPECTED_UNSUPPORTED:3}, failureDomain tally {NONE:97, DEVICE:3},
+      non-pass trials: none,
+      sourceHash ac1b151596b3697554fdaa31d384714f91062562c646ceb103ffc2a8bc7b0bfa (unchanged),
+      baseRevision 33b4281625..., cocosairRevision 33b4281.
+    Note: the .log this tool also writes lands in docs/evidence/, which stays *.log-ignored by design
+    (the exception is scoped to docs/audits/**/raw/**).
+
+§6  v06-report re-run at HEAD — EXIT 0, but the intended collapse did NOT happen (premise break)
+    Command: node tools/verify/v06-report.cjs
+    stdout capture: raw/gates/f61-postcatalog-v06-report-stdout-2026-09-19.log
+    Result: status PASS, blockers [], tests {29 suites / 207 tests / 207 passed / success true},
+            recipes {catalogTotal 30, validatedCount 30, stableCount 30}, revision.failures [].
+    revision.recorded BEFORE this pass: [e06d298, 3a53957]
+    revision.recorded AFTER  this pass: [e06d298, 33b4281]     <- the lagging pair rotated, it did not merge
+    Reason, measured rather than argued:
+      - the dual-track + recipe evidence recorded revision e06d298 and were committed BY 33b4281
+        (git log -1 --format=%h -- docs/evidence/v06-recipes.json -> 33b4281 09-19 21:40; same for
+        v06-golden-dual-track.json and v06-review-gate.json),
+      - a capture can only ever name the HEAD that existed before its own commit, so "committed evidence
+        whose recorded revision equals HEAD" is unattainable by construction;
+      - git merge-base --is-ancestor e06d298 HEAD -> yes, with 3 commits between e06d298..HEAD.
+    Consequence for the two options the user was given:
+      (a) re-running ONLY the catalog gate cannot make three sources agree, because my own previous commit
+          advanced HEAD. To get a single recorded value all three captures must be re-run at the same HEAD
+          (and the value then becomes "one commit behind" again as soon as it is committed - still single).
+      (b) asserting recorded == HEAD would emit a permanent, non-actionable warn; the existing invariant
+          (ancestor + identical sourceHash + per-run scenarioHash + artifact re-hash) is the correct one
+          and it currently reports 0 failures. The real residual is presentation only: revision.recorded is a
+          flat de-duplicated list, so a reader cannot tell WHICH input was captured at WHICH revision.
+    Recommendation (needs authorization because it touches tools/verify/v06-report.cjs): emit
+    revision.perSource = {goldenDualTrack, catalogRuntime, recipeBatch, recipeRuns[]} instead of the flat
+    list; keep the ancestor + sourceHash assertions exactly as they are.
+
+§7  Working tree after the pass (git status --porcelain)
+    M  .gitignore                                      (F-54 exception, §3)
+    M  docs/evidence/v06-catalog-runtime-gate.json      (§5, intended)
+    M  docs/evidence/v06-review-gate.json               (§6, derived)
+    M  docs/v06-final-gate.md                           (§6, derived)
+    M  docs/api-coverage-report.json                    (§8, R2 refresh: measuredAt + nothing else semantic)
+    ?? .tmp-frame-probe.cjs                             (21:42, not mine, left alone)
+    ?? docs/audits/.../raw/gates/pre-f61reprocess-2144-v06-catalog-runtime-gate.json
+    ?? docs/audits/.../raw/gates/f61-catalog-gate-stdout-2026-09-19.log
+    ?? docs/audits/.../raw/gates/f61-postcatalog-v06-report-stdout-2026-09-19.log
+    (the three raw/ files above are visible precisely BECAUSE of the §3 change)
+    Not staged, not committed.
+
+§8  R2 denominator census refreshed at HEAD (npm run verify:api-coverage, tools/examples/coverage-report.cjs)
+    generatedAt 2026-09-19T13:49:08.961Z | totalUnits 4729 | totalClaimed 63 | totalVerified 63 |
+    staleEvidenceExamples []  -> the anti-冒充 property still holds: every claim is verified, no stale claim.
+    tiers: core 49/717 (0.068) threshold 1.0 -> pass false;
+           important 6/793 (0.008) threshold 0.9 -> pass false;
+           advanced 8/3219 (0.002) threshold 0.8 -> pass false.  gate: FAIL (3/3 tiers)
+    unclaimedCore list length 668 (units no example claims at all).
+    => R2 is purely a contract question: keep the FAILs as a roadmap, or change unit granularity
+       (class-level vs method-level: 4729 units is method-granular), or lower thresholds.
+       All three are gate-semantics changes -> owner decision, not audit-side.
+
+§9  R1 provenance census re-measured with explicit definitions (corrects my own earlier number)
+    Definition A (what I measured now): payload = a file under examples/*/assets/ that is not itself a
+    '.LICENSE.md'; covered = a sibling '<name>.LICENSE.md' exists.
+      payloads 41, sidecars 24, covered payloads 24, uncovered 17, payload bytes 5,183,132,
+      covered bytes 5,165,599 = 99.7 %, uncovered bytes 17,533.
+      uncovered examples/gltf-viewer files: 10 of 50, 13,878 B total.
+    Definition B (what my earlier note said): denominator = ALL files under assets/ including sidecars
+      -> 65 files, "25/65". That phrasing made byte coverage look like 38.5 %; the correct statement of the
+      gap is "17 of 41 payloads (41 %) lack a sidecar, and they are only 17.5 KB, i.e. 0.3 % of asset bytes".
+    Still-true concrete gaps (F-27 items 1 and 2 re-checked at HEAD, both still open):
+      examples/gltf-draco/assets/draco.glb        992 B, sidecar MISSING
+      examples/gltf-meshopt/assets/meshopt-khr.glb 1,428 B, sidecar MISSING
+    The audit agent cannot author the license text; it needs the upstream source/statement from the owner.
+    (Note: my first pass at this census printed "without any LICENSE.md: <all 8 examples>" - that was a wrong
+     filename convention in my probe (I looked for examples/<d>/LICENSE.md). The per-asset
+     '<name>.LICENSE.md' convention is the real one; corrected in §9 Definition A. Logged as a self-correction.)
+
+§10  Post-write self-check of this audit's own ledger (F-67)
+    Re-grouped evidence-index.json by path: 48 rows total. 32 rows carry a "path" and those resolve to 31
+    distinct values (one collision); the remaining 16 rows are per-experiment bundles
+    ({id, findings[], raw[], scratch}) that carry no "path" field - two legitimate shapes in one file.
+    One genuine collision: raw/gates/v06-report-stdout-2026-09-19.log is
+    named by two rows, and only the later PASS capture (914 B, sha16 b53a5b8374bbd508, measuredAt
+    2026-09-19T13:39:07.036Z, head 41b4c71) is on disk; the earlier BLOCKED stdout was overwritten because
+    both runs reused the filename. Nothing lost: raw/gates/reevidence-03-v06-blocked.log holds the BLOCKED
+    stdout and 'git show 33b4281~1:docs/evidence/v06-review-gate.json' still yields status BLOCKED /
+    3 blockers / 30 evidenceFailures / 12:16:03Z. Both rows annotated (SUPERSEDED-ON-DISK + contentNowOnDisk);
+    no row deleted.
+    Correction of my own tooling in the same breath: the first dangling-ref sweep resolved every row against
+    the audit directory and so falsely flagged 10 repo-root rows (docs/api-coverage-report.json,
+    docs/evidence/license-audit.json, output/v06-review-jest.json, ...). Re-run with both bases: unresolved = 0
+    apart from the 3 rows already labelled DANGLING-SUPERSEDED / DESCRIPTOR and 1 intentional glob.
+
+§11  Non-regression checks after the .gitignore + ledger writes (offline, cheap)
+    see raw/gates/f61-postwave-offline-checks-2026-09-19.log
+
+§12  F-68: provenance channels reconciled (corrects F-66's explanation, not its numbers)
+    Channel 1 - upstream manifests (examples/gltf-viewer only):
+      SHA256.json 9 entries + official/manifest.json 16 entries = 25 unique names
+      -> resolve to 33 files on disk, 5,161,326 B of 5,191,306 B under examples/*/assets
+      -> 99.4 % BYTES, 50.8 % of files, 0 coverage for the other 7 examples.
+      My stored phrasing "25/65 files ~ 38.5 % of bytes" is a unit error: 38.5 % = 25/65 is a COUNT share.
+    Channel 2 - per-asset '.LICENSE.md' sidecars (all 8 examples):
+      41 payloads / 24 covered / 17 uncovered = 17,533 B -> 99.7 % of payload bytes covered.
+    Gate unchanged and still red: node tools/verify/license-audit.cjs EXIT 1, issues=3.
+    Net for R1: the byte-level story is much better than my earlier wording implied; the real gaps are
+    (a) 7 of 8 examples have no upstream manifest, (b) 17 payloads lack a sidecar, incl. the two F-27 .glb.

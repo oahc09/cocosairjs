@@ -30,7 +30,6 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "7d483e078413",
   "specStatus": "frozen",
   "learning": {
     "goal": "builtin-standard 材质的最小接线：builtinResMgr.get + MeshRenderer.material",
@@ -188,5 +187,38 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "material-property": {
+      "cube-0": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      },
+      "cube-1": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      },
+      "cube-2": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "d2f18d65ff5f",
+    "source": "64a5e60f317d77b8",
+    "candidate": "5612c4c2746f395b",
+    "verified": 13,
+    "attested": 1,
+    "units": 14
   }
 }

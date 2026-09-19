@@ -27,7 +27,6 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "7225d967159c",
   "specStatus": "frozen",
   "learning": {
     "goal": "Agent/DevTools 会话闭环（E012）：显式绑定 __airApp 后 session 观察 + 受控修改",
@@ -138,7 +137,8 @@
     "expectedGraph": {
       "nodes": [
         "Main Camera",
-        "Main Light"
+        "Main Light",
+        "existing-cube"
       ]
     }
   },
@@ -157,5 +157,24 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "material-property": {
+      "existing-cube": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "c00b9e5f3a5a",
+    "source": "4b4c481434e58eab",
+    "candidate": "5612c4c2746f395b",
+    "verified": 8,
+    "attested": 3,
+    "units": 11
   }
 }

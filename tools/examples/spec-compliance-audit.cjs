@@ -28,7 +28,7 @@ const DEVTOOLS_UNITS = new Set([
 ]);
 // §19-§22 Gallery 展示所需的 Manifest 字段（§23 允许外溢的最小集）
 const MANIFEST_ALLOWED = new Set(['dir', 'id', 'version', 'title', 'category', 'status', 'specStatus', 'requiresDevTools',
-  'learning', 'effect', 'api', 'capabilities', 'scene', 'interaction', 'ready', 'validation', 'promotionEvidence', 'bench', 'screenshot']);
+  'learning', 'effect', 'api', 'capabilities', 'scene', 'interaction', 'ready', 'validation', 'promotion', 'bench', 'screenshot']);
 // §10/§25：仅证明"跑起来没报错"的 validator 不算实质性功能验证
 const TRIVIAL = new Set(['scene-ready', 'no-runtime-error', 'node-count']);
 
@@ -251,6 +251,26 @@ function auditExample (dir, spec, ctx) {
         }
       }
     }
+    // §11 v3：stable 的"Verified revision"必须是三元组（spec+source+candidate）且逐字等于当期证据。
+    // 旧 promotionEvidence 只记规格指纹（示例级 PASS 即写），正是总审查 item 1 要拆掉的口径，
+    // 因此它不再能作为晋级依据；同时校验 verified+attested===units 且 unproven===0（§11 公式）。
+    const promo = spec.promotion;
+    if (isStable) {
+      if (!promo) {
+        add('S11-PROMOTION-DRIFT', 'fail', '§11：status=stable 但缺 v3 promotion 三元组（promotionEvidence 口径已废弃，不得再作盖章依据）');
+      } else if (!run) {
+        add('S11-PROMOTION-DRIFT', 'fail', '§11：status=stable 但当期没有任何运行证据行可对照 promotion 三元组');
+      } else {
+        const drift = [];
+        if (promo.spec !== run.specFingerprint) { drift.push(`spec ${promo.spec}≠${run.specFingerprint}`); }
+        if (promo.source !== run.sourceFingerprint) { drift.push(`source ${promo.source}≠${run.sourceFingerprint}`); }
+        if (promo.candidate !== run.candidateFingerprint) { drift.push(`candidate ${promo.candidate}≠${run.candidateFingerprint}`); }
+        if (!(promo.units > 0) || promo.verified + promo.attested !== promo.units) {
+          drift.push(`逐 API 证明不完整 verified=${promo.verified} attested=${promo.attested} units=${promo.units}`);
+        }
+        if (drift.length) { add('S11-PROMOTION-DRIFT', 'fail', `§11：promotion 与当期证据不符 → ${drift.join('；')}`); }
+      }
+    }
     if (spec.promotionEvidence && run && spec.promotionEvidence !== run.specFingerprint) {
       add('S11-PROMOTION-DRIFT', 'fail', `§11：promotionEvidence ${spec.promotionEvidence} ≠ 当期证据指纹 ${run.specFingerprint}`);
     }
@@ -327,7 +347,7 @@ function auditExample (dir, spec, ctx) {
       if (!MANIFEST_ALLOWED.has(key)) { add('S23-MANIFEST', 'warn', `§23：files.json 含非 Gallery 字段 "${key}"`); }
     }
     for (const [field, a, b] of [['status', entry.status, spec.status], ['specStatus', entry.specStatus, spec.specStatus],
-      ['promotionEvidence', entry.promotionEvidence, spec.promotionEvidence]]) {
+      ['promotion', JSON.stringify(entry.promotion), JSON.stringify(spec.promotion)]]) {
       if (a !== b) { add('S23-MANIFEST', 'fail', `§23：files.json 的 ${field}=${a} 与 example.json ${b} 不一致（双份漂移）`); }
     }
     if (uiShell) {
@@ -336,7 +356,7 @@ function auditExample (dir, spec, ctx) {
       if (!(entry.learning && entry.learning.points && entry.learning.points.length)) { add('S19-GALLERY', 'fail', '§19：Gallery 需 What you\'ll learn（learning.points 为空）'); }
       if (!((entry.api && entry.api.claims || []).length)) { add('S20-GALLERY', 'fail', '§20：Gallery 需 APIs Used（api.claims 为空）'); }
       if (!(entry.effect && (entry.effect.visual || entry.effect.functional))) { add('S21-GALLERY', 'fail', '§21：Gallery 需 Expected Result'); }
-      if (isStable && !entry.promotionEvidence) { add('S22-GALLERY', 'fail', '§22：Validation Status 需 Verified revision（promotionEvidence 缺失）'); }
+      if (isStable && !entry.promotion) { add('S22-GALLERY', 'fail', '§22：Validation Status 需 Verified revision（Gallery 条目缺 v3 promotion 三元组）'); }
     }
   }
   return findings;

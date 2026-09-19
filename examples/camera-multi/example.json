@@ -216,5 +216,167 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "e4f412eb3678"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 24,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Floor": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 29,
+            "text": "floor.setPosition(new Vec3(0, 0, 0));"
+          }
+        ]
+      },
+      "BlueSphere": {
+        "position": [
+          -1.2,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 35,
+            "text": "blueSphere.setPosition(new Vec3(-1.2, 0.6, 0));"
+          }
+        ]
+      },
+      "OrangeSphere": {
+        "position": [
+          1.4,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 42,
+            "text": "orangeSphere.setPosition(new Vec3(1.4, 0.6, 0));"
+          }
+        ]
+      },
+      "BaseCamera": {
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 49,
+            "text": "baseCamNode.setPosition(new Vec3(0, 2.2, 6.5)); baseCamNode.lookAt(new Vec3(0.1, 0.6, 0));"
+          }
+        ]
+      },
+      "OverlayCamera": {
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 59,
+            "text": "overlayCamNode.setPosition(new Vec3(0, 2.2, 6.5)); overlayCamNode.lookAt(new Vec3(0.1, 0.6"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Floor": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              80,
+              90,
+              110,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 32,
+              "text": "new Color(80, 90, 110, 255)"
+            }
+          }
+        }
+      },
+      "BlueSphere": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 38,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      },
+      "OrangeSphere": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 45,
+              "text": "new Color(235, 125, 65, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "e1f579ddd6f6",
+    "source": "5fec34368f419b87",
+    "candidate": "5612c4c2746f395b",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
+  }
 }

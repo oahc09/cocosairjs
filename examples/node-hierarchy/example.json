@@ -221,5 +221,176 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "e9533a360ec7"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          3.2,
+          8
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 38,
+            "text": "cameraNode.setPosition(new Vec3(0, 3.2, 8)); cameraNode.lookAt(new Vec3(0, 1.26, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 45,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Root": {
+        "position": [
+          0,
+          0.4,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 49,
+            "text": "boxNode(Root) → position [0,0.4,0]（工厂形参见 L29）"
+          }
+        ],
+        "scale": [
+          0.6,
+          0.6,
+          0.6
+        ]
+      },
+      "Arm": {
+        "position": [
+          0,
+          1.2,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 50,
+            "text": "boxNode(Arm) → position [0,1.2,0]（工厂形参见 L29）"
+          }
+        ],
+        "scale": [
+          0.4,
+          1.6,
+          0.4
+        ]
+      },
+      "Hand": {
+        "position": [
+          0,
+          1.2,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 51,
+            "text": "boxNode(Hand) → position [0,1.2,0]（工厂形参见 L29）"
+          }
+        ],
+        "scale": [
+          0.7,
+          0.4,
+          0.7
+        ]
+      }
+    },
+    "material-property": {
+      "Root": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 49,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      },
+      "Arm": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 50,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      },
+      "Hand": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 51,
+              "text": "new Color(235, 125, 65, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 3.2, 8)); cameraNode.look）",
+        "line": "L38"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "72efe2cf6b66",
+    "source": "fa2e5f388b65f479",
+    "candidate": "5612c4c2746f395b",
+    "verified": 20,
+    "attested": 0,
+    "units": 20
+  }
 }

@@ -256,5 +256,96 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "1233d305cb04"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.4,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 75,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lookAt(new Vec3(0, 0.5, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 82,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "TexturedCube": {
+        "position": [
+          0,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 66,
+            "text": "texturedCube.setPosition(new Vec3(0, 0.5, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 38,
+            "text": "0,this.node.eulerAngles.y + dt * 35,0"
+          }
+        ],
+        "rotationEuler": {
+          "vary": true
+        }
+      }
+    },
+    "material-property": {
+      "TexturedCube": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainTexture": {
+            "expect": "object",
+            "name": null,
+            "tolerance": null,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 61,
+              "text": "texture"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lo）",
+        "line": "L75"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "801c006d64c7",
+    "source": "f45c5c6dcce11ce3",
+    "candidate": "5612c4c2746f395b",
+    "verified": 25,
+    "attested": 0,
+    "units": 25
+  }
 }

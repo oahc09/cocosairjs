@@ -20,9 +20,7 @@
   },
   "api": {
     "primary": [
-      "GLTFLoader.getExtensionSupport",
-      "GLTFLoader.setDRACODecoder",
-      "createDracoDecoder"
+      "GLTFLoader.getExtensionSupport"
     ],
     "supporting": [
       "GLTFLoader.parseAsync"
@@ -38,9 +36,7 @@
       "math.Color",
       "GLTFLoader",
       "GLTFLoader.getExtensionSupport",
-      "GLTFLoader.setDRACODecoder",
       "GLTFLoader.parseAsync",
-      "createDracoDecoder",
       "Node.addChild",
       "Node.setPosition",
       "Node.setRotationFromEuler"
@@ -111,22 +107,10 @@
         "sourceLocation": "L35"
       },
       {
-        "api": "GLTFLoader.setDRACODecoder",
-        "source": "src/main.ts",
-        "validator": "capability-status",
-        "sourceLocation": "L56"
-      },
-      {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
         "sourceLocation": "L44"
-      },
-      {
-        "api": "createDracoDecoder",
-        "source": "src/main.ts",
-        "validator": "scene-ready",
-        "sourceLocation": "L57"
       },
       {
         "api": "Node.addChild",
@@ -146,7 +130,8 @@
         "validator": "transform-equals",
         "sourceLocation": "L18"
       }
-    ]
+    ],
+    "claimsNote": "claims / evidence / primary 只保留示例源码真实调用的 API；GLTFLoader.setDRACODecoder / createDracoDecoder 在源码中仅出现在面板教学字符串（src/main.ts L56-57）内，不构成执行证据；教学表述仍保留在 learning.points 与 README。Draco 正向解码路径因 shipped bundle 无浏览器端 draco3d glue 而未覆盖（独立缺口）。"
   },
   "capabilities": [
     "gltf"
@@ -201,5 +186,68 @@
   "license": {
     "assets": "assets/draco.glb — 仓库自生成 fixture（tools/fixtures/gen-geometry-fixtures.cjs，draco3d 官方编码器），draco 许可见 licenses/"
   },
-  "promotionEvidence": "005f7e3cf63d"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          1.8,
+          5.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 18,
+            "text": "cameraNode.setPosition(new Vec3(0, 1.8, 5.5)); cameraNode.setRotationFromEuler(-15, 0, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -15,
+          0,
+          0
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 25,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      }
+    },
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "assets/draco.glb",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 43,
+              "text": "var bytes = await (await fetch('./assets/draco.glb')).arrayBuffer();"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "promotion": {
+    "spec": "a7a345f064ed",
+    "source": "a8c5968b88c6e9d8",
+    "candidate": "5612c4c2746f395b",
+    "verified": 14,
+    "attested": 0,
+    "units": 14
+  }
 }

@@ -1,0 +1,8 @@
+chromium: boot=true webgl2=true visible=true clean=true
+firefox: boot=false webgl2=false visible=false clean=true ERR=[browser-runtime] browserType.launch: Executable doesn't exist at C:\Users\caosh\AppData\Local\ms-playwright\firefox-1532\firefox\firefox.exe
+╔═════════════════════════════════════════════════════════
+webkit: boot=false webgl2=false visible=false clean=true ERR=[browser-runtime] browserType.launch: Executable doesn't exist at C:\Users\caosh\AppData\Local\ms-playwright\webkit-2311\Playwright.exe
+╔════════════════════════════════════════════════════════════╗
+║
+
+Browser Matrix: 1/3 PASS

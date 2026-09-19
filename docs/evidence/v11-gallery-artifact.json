@@ -1,10 +1,26 @@
 {
-  "measuredAt": "2026-09-19T14:33:15.141Z",
+  "measuredAt": "2026-09-19T19:07:10.980Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
-  "total": 13,
-  "pass": 13,
+  "scope": {
+    "examples": 45,
+    "booted": 40,
+    "devToolsPagesServed": 5,
+    "lifecycle": 11
+  },
+  "total": 76,
+  "pass": 70,
   "results": [
+    {
+      "id": "artifact:no-absolute-path-dependency",
+      "ok": true,
+      "detail": "no repo-absolute / agent-endpoint references in shipped bytes"
+    },
+    {
+      "id": "artifact:decoder-set",
+      "ok": false,
+      "detail": "missing: draco/draco_decoder.js"
+    },
     {
       "id": "static:index.html",
       "ok": true,
@@ -26,19 +42,34 @@
       "detail": "status=200"
     },
     {
-      "id": "thumbnail:anim-position",
+      "id": "artifact:thumbnails-all",
       "ok": true,
-      "detail": "status=200"
+      "detail": "40/40 thumbnails reachable"
     },
     {
-      "id": "thumbnail:anim-rotation",
+      "id": "artifact:devtools-page-served:automation",
       "ok": true,
-      "detail": "status=200"
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
     },
     {
-      "id": "thumbnail:camera",
+      "id": "artifact:devtools-page-served:rc-capture-frame",
       "ok": true,
-      "detail": "status=200"
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "artifact:devtools-page-served:rc-create-node",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "artifact:devtools-page-served:rc-error-report",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
+    },
+    {
+      "id": "artifact:devtools-page-served:rc-inspect-scene",
+      "ok": true,
+      "detail": "status=200（仅静态可访问；agent 通道启动不在本门禁范围）"
     },
     {
       "id": "gallery:list-rendered",
@@ -48,27 +79,326 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:53830/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:53330/apps/gallery/mesh-sphere/"
+    },
+    {
+      "id": "gallery:source-view",
+      "ok": true,
+      "detail": "source chars=1893 head=\"/**\\n * mesh-sphere — 球体图元 + 标准材质 + 慢速自转（\""
     },
     {
       "id": "example-boot:anim-position",
       "ok": true,
-      "detail": "booted"
+      "detail": "booted via /anim-position/"
     },
     {
       "id": "example-boot:anim-rotation",
       "ok": true,
-      "detail": "booted"
+      "detail": "booted via /anim-rotation/"
     },
     {
       "id": "example-boot:camera",
       "ok": true,
-      "detail": "booted"
+      "detail": "booted via /camera/"
+    },
+    {
+      "id": "example-boot:camera-lookat",
+      "ok": true,
+      "detail": "booted via /camera-lookat/"
+    },
+    {
+      "id": "example-boot:camera-multi",
+      "ok": true,
+      "detail": "booted via /camera-multi/"
+    },
+    {
+      "id": "example-boot:camera-ortho",
+      "ok": true,
+      "detail": "booted via /camera-ortho/"
+    },
+    {
+      "id": "example-boot:gltf-basic",
+      "ok": true,
+      "detail": "booted via /gltf-basic/"
+    },
+    {
+      "id": "lifecycle:gltf-basic",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-catalog",
+      "ok": false,
+      "detail": "boot-failed via /gltf-catalog/"
+    },
+    {
+      "id": "example-boot:gltf-clearcoat",
+      "ok": true,
+      "detail": "booted via /gltf-clearcoat/"
+    },
+    {
+      "id": "lifecycle:gltf-clearcoat",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-draco",
+      "ok": true,
+      "detail": "booted via /gltf-draco/"
+    },
+    {
+      "id": "decoder-request:gltf-draco",
+      "ok": true,
+      "detail": "draco.glb 已被部署页请求"
+    },
+    {
+      "id": "decoder-state:gltf-draco",
+      "ok": true,
+      "detail": "__decoderState=decoder-missing-observed"
+    },
+    {
+      "id": "example-boot:gltf-meshopt",
+      "ok": true,
+      "detail": "booted via /gltf-meshopt/"
+    },
+    {
+      "id": "lifecycle:gltf-meshopt",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "decoder-request:gltf-meshopt",
+      "ok": true,
+      "detail": "meshopt/meshopt_decoder.mjs 已被部署页请求"
+    },
+    {
+      "id": "decoder-wasm:meshopt",
+      "ok": false,
+      "detail": "wasm requests=0"
+    },
+    {
+      "id": "decoder-state:gltf-meshopt",
+      "ok": true,
+      "detail": "__decoderState=loaded-bare"
+    },
+    {
+      "id": "example-boot:gltf-morph",
+      "ok": true,
+      "detail": "booted via /gltf-morph/"
+    },
+    {
+      "id": "lifecycle:gltf-morph",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-skin",
+      "ok": true,
+      "detail": "booted via /gltf-skin/"
+    },
+    {
+      "id": "lifecycle:gltf-skin",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-viewer",
+      "ok": true,
+      "detail": "booted via /gltf-viewer/"
+    },
+    {
+      "id": "lifecycle:gltf-viewer",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:hello-cube",
+      "ok": true,
+      "detail": "booted via /hello-cube/"
+    },
+    {
+      "id": "example-boot:input",
+      "ok": true,
+      "detail": "booted via /input/"
+    },
+    {
+      "id": "example-boot:interaction-click",
+      "ok": true,
+      "detail": "booted via /interaction-click/"
+    },
+    {
+      "id": "example-boot:light-point",
+      "ok": true,
+      "detail": "booted via /light-point/"
+    },
+    {
+      "id": "example-boot:light-sphere",
+      "ok": true,
+      "detail": "booted via /light-sphere/"
+    },
+    {
+      "id": "example-boot:light-spot",
+      "ok": true,
+      "detail": "booted via /light-spot/"
+    },
+    {
+      "id": "example-boot:light-two-directional",
+      "ok": true,
+      "detail": "booted via /light-two-directional/"
+    },
+    {
+      "id": "example-boot:material-basic",
+      "ok": true,
+      "detail": "booted via /material-basic/"
+    },
+    {
+      "id": "example-boot:material-color",
+      "ok": true,
+      "detail": "booted via /material-color/"
+    },
+    {
+      "id": "example-boot:material-transparent",
+      "ok": true,
+      "detail": "booted via /material-transparent/"
+    },
+    {
+      "id": "lifecycle:material-transparent",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:material-unlit",
+      "ok": true,
+      "detail": "booted via /material-unlit/"
+    },
+    {
+      "id": "example-boot:mesh-cylinder",
+      "ok": true,
+      "detail": "booted via /mesh-cylinder/"
+    },
+    {
+      "id": "example-boot:mesh-multi-material",
+      "ok": true,
+      "detail": "booted via /mesh-multi-material/"
+    },
+    {
+      "id": "lifecycle:mesh-multi-material",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:mesh-plane",
+      "ok": true,
+      "detail": "booted via /mesh-plane/"
+    },
+    {
+      "id": "example-boot:mesh-sphere",
+      "ok": true,
+      "detail": "booted via /mesh-sphere/"
+    },
+    {
+      "id": "example-boot:mesh-torus",
+      "ok": true,
+      "detail": "booted via /mesh-torus/"
+    },
+    {
+      "id": "example-boot:node-active",
+      "ok": true,
+      "detail": "booted via /node-active/"
+    },
+    {
+      "id": "example-boot:node-hierarchy",
+      "ok": true,
+      "detail": "booted via /node-hierarchy/"
+    },
+    {
+      "id": "example-boot:node-scale",
+      "ok": true,
+      "detail": "booted via /node-scale/"
+    },
+    {
+      "id": "example-boot:runtime-asset-release",
+      "ok": true,
+      "detail": "booted via /runtime-asset-release/"
+    },
+    {
+      "id": "lifecycle:runtime-asset-release",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:skinned-animation",
+      "ok": true,
+      "detail": "booted via /skinned-animation/"
+    },
+    {
+      "id": "example-boot:starter",
+      "ok": true,
+      "detail": "booted via /starter/"
+    },
+    {
+      "id": "example-boot:static-model",
+      "ok": true,
+      "detail": "booted via /static-model/"
+    },
+    {
+      "id": "lifecycle:static-model",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:texture-basic",
+      "ok": true,
+      "detail": "booted via /texture-basic/"
+    },
+    {
+      "id": "lifecycle:texture-basic",
+      "ok": true,
+      "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:transform",
+      "ok": true,
+      "detail": "booted via /transform/"
+    },
+    {
+      "id": "example-boot:tween-basic",
+      "ok": true,
+      "detail": "booted via /tween-basic/"
+    },
+    {
+      "id": "artifact:all-boottable-examples",
+      "ok": false,
+      "detail": "boot failures: gltf-catalog"
+    },
+    {
+      "id": "artifact:lifecycle-covered",
+      "ok": true,
+      "detail": "11 §25 合同示例在部署物内完成释放核对"
+    },
+    {
+      "id": "artifact:no-http-errors",
+      "ok": false,
+      "detail": "6 次 4xx/5xx/失败请求：404 /mesh-sphere/src/main.js | 404 /mesh-sphere/main.js | 404 /mesh-sphere/main.ts | FAILED /mesh-sphere/src/main.js"
+    },
+    {
+      "id": "artifact:no-external-requests",
+      "ok": false,
+      "detail": "越界请求 36 次：https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/Animat | https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/9"
     },
     {
       "id": "gallery:no-page-errors",
       "ok": true,
       "detail": "0 page errors"
     }
+  ],
+  "absolutePathHits": [],
+  "failedRequests": [
+    "404 /mesh-sphere/src/main.js",
+    "404 /mesh-sphere/main.js",
+    "404 /mesh-sphere/main.ts",
+    "FAILED /mesh-sphere/src/main.js",
+    "FAILED /mesh-sphere/main.js",
+    "FAILED /mesh-sphere/main.ts"
   ]
 }

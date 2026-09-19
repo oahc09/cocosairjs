@@ -22,14 +22,15 @@
       "material-property",
       "transform-equals"
     ],
-    "interaction": [],
+    "interaction": [
+      "frame-diff"
+    ],
     "visual": [
       "visible-frame"
     ],
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "51d515d53211",
   "specStatus": "frozen",
   "learning": {
     "goal": "相机控制与取景：PERSPECTIVE/ORTHO 切换 + frameObject 自动取景（E003）",
@@ -157,12 +158,28 @@
       "nodes": [
         "Main Camera",
         "Main Light",
-        "group"
+        "group",
+        "cube-0",
+        "cube-1",
+        "cube-2",
+        "cube-3",
+        "cube-4"
       ]
     }
   },
   "interaction": {
-    "steps": []
+    "steps": [
+      {
+        "action": "点击 DOM 按钮「切换正交/透视」",
+        "buttonText": "切换正交/透视",
+        "expected": "camera.projection 在 PERSPECTIVE/ORTHO 间切换，画面近大远小消失"
+      },
+      {
+        "action": "点击 DOM 按钮「frameObject 取景」",
+        "buttonText": "frameObject 取景",
+        "expected": "frameObject(camera, group) 真实执行一次（api-executed 以 trace 计数为证）"
+      }
+    ]
   },
   "ready": {
     "validators": [
@@ -176,5 +193,175 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "examples/shared/scene-kit.js",
+            "line": 53,
+            "text": "position 默认值 [0,8,0]（shared 形参默认值）"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "group": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.ts",
+            "line": 33,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      },
+      "cube-0": {
+        "position": [
+          -2.4,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.ts",
+            "line": 38,
+            "text": "node.setPosition(new Vec3(-2.4, 0, 0));"
+          }
+        ]
+      },
+      "cube-1": {
+        "position": [
+          -1.2,
+          0,
+          -1.2
+        ],
+        "provenance": [
+          {
+            "source": "main.ts",
+            "line": 38,
+            "text": "node.setPosition(new Vec3(-1.2, 0, -1.2));"
+          }
+        ]
+      },
+      "cube-2": {
+        "position": [
+          0,
+          0,
+          -2.4
+        ],
+        "provenance": [
+          {
+            "source": "main.ts",
+            "line": 38,
+            "text": "node.setPosition(new Vec3(0, 0, -2.4));"
+          }
+        ]
+      },
+      "cube-3": {
+        "position": [
+          1.2,
+          0,
+          -3.6
+        ],
+        "provenance": [
+          {
+            "source": "main.ts",
+            "line": 38,
+            "text": "node.setPosition(new Vec3(1.2, 0, -3.6));"
+          }
+        ]
+      },
+      "cube-4": {
+        "position": [
+          2.4,
+          0,
+          -4.8
+        ],
+        "provenance": [
+          {
+            "source": "main.ts",
+            "line": 38,
+            "text": "node.setPosition(new Vec3(2.4, 0, -4.8));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "cube-0": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      },
+      "cube-1": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      },
+      "cube-2": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      },
+      "cube-3": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      },
+      "cube-4": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（button('frameObject 取景', () => { frameObject(camera, group);）",
+        "line": "L67"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "678fb005e8ec",
+    "source": "78040895699e23e3",
+    "candidate": "5612c4c2746f395b",
+    "verified": 12,
+    "attested": 1,
+    "units": 13
   }
 }

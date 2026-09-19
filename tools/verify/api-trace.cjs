@@ -1,0 +1,406 @@
+/* F-A — 逐 API 运行期执行证据（per-API execution proof）。
+ *
+ * 为什么要它：docs/api-coverage-report.json 的 verified 过去只要求"claim 所属示例整体
+ * PASS"，示例级结论被当成逐 API 证明（总审查 item 1）。本模块给浏览器矩阵装一个真实
+ * 调用计数器，让 verified 必须同时满足：
+ *   (1) 规格 api.evidence[] 把该 unit 绑到一个本次运行 PASS 的 validator；
+ *   (2) 该 unit 在运行期被观测到执行（instrumented 且 calls>0）；
+ *   (3) 示例源码指纹（example.json + index.html + src/** + 引擎 bundle）与证据一致。
+ *
+ * 做法（不碰仓库源码、不碰 build 产物）：在暂存工作区生成一个包装模块，静态重导出真实
+ * bundle 的全部具名导出，并对"被 claim 的 unit"就地插桩：
+ *   - 顶层函数/类            → export 处包一层 construct/apply 计数（只影响示例侧引用）
+ *   - 类实例方法             → 就地替换原型方法（示例与引擎内部调用都会计数）
+ *   - 静态方法 / 单例方法    → 就地替换该对象上的方法
+ *   - 原型访问器（get/set）  → 包住 accessor
+ *   - 数据属性 / 常量        → 无法插桩，如实记 not-instrumentable（绝不当作 verified）
+ *
+ * 计数语义是"该 API 在本次运行中被执行过"，不是"这一行由示例自己调用"：原型/访问器插桩
+ * 同样会记到引擎内部调用。因此 unit 状态附带 mechanism，报告端不得把内部调用冒充示例调用
+ * （示例侧的行级归属由 api.evidence[] 的 sourceLocation 承担）。
+ *
+ * 门禁自身不是无辜的观察者：读回用 `Material.getProperty()` / `MeshRenderer.getMaterial(i)`
+ * 取值，走的正是同一张被打桩原型，不隔离就会由验证器自己把 claim 刷成 executed。所以读回窗口
+ * 内 `T.observing>0`，其间调用只记 harnessCalls（披露用），永不参与 state 判定。
+ *
+ * 执行：node tools/verify/api-trace.cjs --selftest
+ */
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+const REPO = path.resolve(__dirname, '..', '..');
+
+const TRACE_FILE_NAME = 'cocosair.traced.js';
+
+function sha16 (buf) { return crypto.createHash('sha256').update(buf).digest('hex').slice(0, 16); }
+
+/** 示例"当期"源码指纹：规格 + 入口 html/ts/js + 引擎 bundle + shared 库。
+ *  旧口径只哈希 example.json，所以 src/main.ts 改动不会使证据失配（item 1/2 的根因之一）。
+ *
+ *  example.json 一律按**规范化字节**参与哈希：门禁在跑完后会把 promotion/status 写回同一个文件，
+ *  直接哈希原始字节会让"自己刚写的晋级块"改掉自己记录的指纹 ⇒ 每次晋级都把自己判成 stale，
+ *  verified 数随运行顺序漂移（实测 light-point：记录 37d423582c54f261，重算 18d9…，永远不等）。
+ *  剔除的只有门禁自写字段；规格内容（含 validationExpectations）与源码/资产改动照样进哈希。
+ */
+const SELF_WRITTEN_SPEC_FIELDS = ['promotion', 'promotionEvidence', 'stableReview', 'status'];
+
+function canonicalSpecBytes (abs) {
+  const raw = fs.readFileSync(abs);
+  try {
+    const spec = JSON.parse(raw.toString('utf8'));
+    for (const key of SELF_WRITTEN_SPEC_FIELDS) { delete spec[key]; }
+    return Buffer.from(JSON.stringify(spec));
+  } catch (e) {
+    return raw; // 解析不了就按原始字节算：宁可保守失配，不静默丢掉绑定
+  }
+}
+
+function sourceFingerprint (exampleDir) {
+  const files = [];
+  const push = (rel) => {
+    const abs = path.join(exampleDir, rel);
+    if (!fs.existsSync(abs) || !fs.statSync(abs).isFile()) { return; }
+    const buf = rel === 'example.json' ? canonicalSpecBytes(abs) : fs.readFileSync(abs);
+    files.push({ rel, hash: sha16(buf) });
+  };
+  push('example.json');
+  push('index.html');
+  for (const rel of ['src/main.ts', 'src/main.js', 'main.ts', 'main.js']) { push(rel); }
+  const assets = path.join(exampleDir, 'assets');
+  if (fs.existsSync(assets)) {
+    (function walk (dir) {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const abs = path.join(dir, entry.name);
+        if (entry.isDirectory()) { walk(abs); continue; }
+        files.push({ rel: 'assets/' + path.relative(assets, abs).replace(/\\/g, '/'), hash: sha16(fs.readFileSync(abs)) });
+      }
+    })(assets);
+  }
+  files.sort((a, b) => a.rel.localeCompare(b.rel));
+  return sha16(Buffer.from(JSON.stringify(files)));
+}
+
+function candidateFingerprint () {
+  const bundle = path.join(REPO, 'build', 'cocosair.module.js');
+  const dts = path.join(REPO, 'build', 'cocosair.module.d.ts');
+  const parts = [];
+  for (const f of [bundle, dts]) { if (fs.existsSync(f)) { parts.push(sha16(fs.readFileSync(f))); } }
+  const shared = path.join(REPO, 'examples', 'shared');
+  if (fs.existsSync(shared)) {
+    for (const entry of fs.readdirSync(shared).sort()) {
+      const abs = path.join(shared, entry);
+      if (fs.statSync(abs).isFile()) { parts.push(entry + ':' + sha16(fs.readFileSync(abs))); }
+    }
+  }
+  return sha16(Buffer.from(parts.join('|')));
+}
+
+/** 解析 bundle 末尾的 `export { a as X, b as Y, ... };`，得到全部具名导出。 */
+function bundleExportNames (bundlePath) {
+  const src = fs.readFileSync(bundlePath || path.join(REPO, 'build', 'cocosair.module.js'), 'utf8');
+  const start = src.lastIndexOf('export {');
+  if (start < 0) { throw new Error('api-trace: no `export {` clause found in bundle — refusing to generate an untraced wrapper'); }
+  const end = src.indexOf('}', start);
+  const clause = src.slice(start + 'export {'.length, end);
+  const names = [...new Set(clause.split(',').map((s) => s.trim()).filter(Boolean).map((s) => {
+    const m = /\s+as\s+(\S+)$/.exec(s);
+    return m ? m[1] : s;
+  }))];
+  const bad = names.filter((n) => !/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(n));
+  if (bad.length) { throw new Error(`api-trace: bundle export names not usable as identifiers: ${bad.slice(0, 5).join(',')}`); }
+  return names;
+}
+
+/** 需要插桩的 unit 集合：全部示例 api.claims ∪ api.evidence[].api。 */
+function claimedUnits (manifestExamples, readSpec) {
+  const set = new Set();
+  for (const ex of manifestExamples) {
+    const spec = readSpec(ex);
+    for (const u of (spec.api && spec.api.claims) || []) { set.add(u); }
+    for (const ev of (spec.api && spec.api.evidence) || []) { if (ev && ev.api) { set.add(ev.api); } }
+  }
+  return [...set].sort();
+}
+
+/** 生成包装模块源码。realUrl 为真实 bundle 的浏览器 URL（默认 /build/cocosair.module.js）。 */
+function generateTraceModule (exportNames, units, realUrl) {
+  const lines = [];
+  lines.push('/* GENERATED by tools/verify/api-trace.cjs — per-API execution instrumentation.');
+  lines.push('   Do not edit and never ship this file: it exists only in the throwaway verify workspace. */');
+  lines.push(`import * as __CC from '${realUrl || '/build/cocosair.module.js'}';`);
+  lines.push('__traceRuntime();');
+  lines.push(`const __UNITS = ${JSON.stringify(units)};`);
+  lines.push(`const __NAMES = ${JSON.stringify(exportNames)};`);
+  lines.push('function __traceRuntime() {');
+  lines.push(`  const T = window.__apiTrace = { calls: Object.create(null), reads: Object.create(null), harnessCalls: Object.create(null), mechanism: Object.create(null), alias: Object.create(null), canonical: new Map(), notes: [], observing: 0, startedAt: Date.now() };
+  // T.observing：门禁自己的读回（Material.getProperty / MeshRenderer.getMaterial …）会走同一张
+  // 被打桩的原型，不隔离就能凭"验证器读了一次"把 claim 刷成 executed。读回期间计数改记 harnessCalls
+  // ——它只用于证明隔离边界确实生效，永不参与 verified 判定。
+  const hit = (key) => { const k = T.alias[key] || key; if (T.observing > 0) { T.harnessCalls[k] = (T.harnessCalls[k] || 0) + 1; return; } T.calls[k] = (T.calls[k] || 0) + 1; };
+  T.hit = hit;
+  const note = (msg) => { if (T.notes.length < 200) { T.notes.push(String(msg).slice(0, 160)); } };
+
+  const fnMeta = (orig, name) => {
+    const w = function () { hit(name); return orig.apply(this, arguments); };
+    try { Object.defineProperty(w, 'name', { value: orig.name || name, configurable: true }); } catch (e) { /* ignore */ }
+    try { Object.defineProperty(w, 'length', { value: orig.length, configurable: true }); } catch (e) { /* ignore */ }
+    w.__tracedOriginal = orig;
+    return w;
+  };
+  // 类/函数一律用 Proxy 包：手写 function + orig.apply() 对 ES class 会抛
+  // "Class constructor cannot be invoked without new"（实测：示例在 new Node() 处崩，
+  // 表面看却像"场景没运行"），而 Proxy 的 construct 陷阱经 Reflect.construct 保留语义。
+  // get 陷阱记录「成员被读取」：Layers.Enum.DEFAULT 这类命名空间用法永远不会有 construct/apply，
+  // 只记 calls 就会把真实用到的 API 误报成"未执行"。reads 与 calls 分开计，报告端不得混为调用。
+  T.wrapExport = (orig, key) => {
+    if (typeof orig !== 'function') { return orig; }
+    T.mechanism[key] = T.mechanism[key] || 'export-wrapper';
+    if (!T.canonical.has(orig)) { T.canonical.set(orig, key); }
+    const handler = {
+      construct (target, args, newTarget) { hit(key); return Reflect.construct(target, args, newTarget === proxy ? target : newTarget); },
+      apply (target, thisArg, args) { hit(key); return Reflect.apply(target, thisArg, args); },
+      get (target, prop) {
+        if (typeof prop === 'string') { T.reads[key] = (T.reads[key] || 0) + 1; }
+        return Reflect.get(target, prop);
+      },
+    };
+    const proxy = new Proxy(orig, handler);
+    return proxy;
+  };
+  T.nsCopy = (src, members, hostKey) => {
+    // esbuild 把 export namespace utils/primitives 打成 Object.freeze 的命名空间对象：
+    // 属性不可写，install 的 patchOwn 只能报 unresolved。此处按宿主建一份浅拷贝并替换成员，
+    // 让经命名空间访问的 API 也有真实计数。拷贝只在冻结时发生（否则返回原对象给 install 就地插桩）。
+    if (!src || typeof src !== 'object') { return src; }
+    if (!Object.isFrozen(src)) { return src; }
+    const copy = Object.assign(Object.create(null), src);
+    for (const member of members) {
+      const unit = hostKey + '.' + member;
+      const orig = src[member];
+      if (typeof orig !== 'function') { T.mechanism[unit] = 'data-member'; continue; }
+      const canon = T.canonical.get(orig);
+      if (canon) { T.alias[unit] = canon; T.mechanism[unit] = 'alias:' + canon; continue; }
+      copy[member] = fnMeta(orig, unit);
+      T.canonical.set(orig, unit);
+      T.mechanism[unit] = 'frozen-namespace-member';
+    }
+    return copy;
+  };
+  T.patchOwn = (obj, prop, key, mechanism) => {
+    if (!obj) { note(key + ': no host object'); return false; }
+    const d = Object.getOwnPropertyDescriptor(obj, prop);
+    if (!d) { note(key + ': no own descriptor on ' + mechanism); return false; }
+    try {
+      if (d.get || d.set) {
+        const get = d.get ? function () { hit(key); return d.get.apply(this, arguments); } : undefined;
+        const set = d.set ? function () { hit(key); return d.set.apply(this, arguments); } : undefined;
+        Object.defineProperty(obj, prop, { get, set, enumerable: d.enumerable, configurable: true });
+      } else if (typeof d.value === 'function') {
+        const orig = d.value;
+        // 同一函数对象已有规范名（如 Vec3 与 math.Vec3 是同一个类）：只记别名，不重复插桩，
+        // 否则示例走顶层导入时成员 unit 会被误报"未执行"。
+        const canon = T.canonical.get(orig);
+        if (canon && canon !== key) {
+          T.alias[key] = canon;
+          T.mechanism[key] = 'alias:' + canon;
+          return true;
+        }
+        const isClass = /^class[ ({]/.test(Function.prototype.toString.call(orig));
+        const value = isClass ? T.wrapExport(orig, key) : fnMeta(orig, key);
+        if (!isClass) { T.canonical.set(orig, T.canonical.get(orig) || key); }
+        Object.defineProperty(obj, prop, { value, writable: true, enumerable: d.enumerable, configurable: true });
+      } else {
+        // 数据属性/常量（如 math.EPSILON）：读一次即失去存在痕迹，无法证明"该 API 被执行"。
+        // 如实记 data-member → 报告端归入 not-instrumentable（attested），绝不写 verified。
+        T.mechanism[key] = 'data-member';
+        note(key + ': data property, not instrumentable');
+        return false;
+      }
+      T.mechanism[key] = T.mechanism[key] ? T.mechanism[key] + '→' + mechanism : mechanism;
+      return true;
+    } catch (e) { note(key + ': patch failed ' + String(e.message || e).slice(0, 60)); return false; }
+  };
+  T.ns = __CC;
+  T.hit = hit;
+  // 投影必须由包装模块自己给出：调用方各自手写通道清单时，漏掉 alias/reads 会把真实使用误报成「未执行」。
+  T.snapshot = () => ({ calls: Object.assign({}, T.calls), reads: Object.assign({}, T.reads), harnessCalls: Object.assign({}, T.harnessCalls), mechanism: Object.assign({}, T.mechanism), alias: Object.assign({}, T.alias), notes: T.notes.slice(0) });`);
+  lines.push('}');
+  // 导出必须先于 install：成员 unit 若与顶层导出是同一函数对象（`math.Vec3` === `Vec3`），
+  // 只有导出包装先登记 canonical 名，install 才能把成员 unit 记成别名而不是重复插桩。
+  // 顶层函数的"文档命名空间前缀"（`math.X`，运行时不存在 `math`）在浏览器里才知道，
+  // 所以叶子名一律预包装，install 需要时可直接别名到它。
+  const topNames = new Set(units.filter((u) => u.indexOf('.') < 0));
+  const memberLeaves = new Set();
+  for (const u of units) {
+    const parts = u.split('.');
+    if (parts.length < 2) { continue; }
+    if (!topNames.has(parts[0])) { memberLeaves.add(parts[parts.length - 1]); }
+    if (u.endsWith('.constructor')) { memberLeaves.add(parts[0]); }
+  }
+  const tracedTop = new Set([...topNames, ...memberLeaves]);
+  // 命名空间宿主（`primitives.box` / `utils.createMesh`）：成员在冻结对象上无法就地替换，
+  // 只有导出侧换成浅拷贝才能计数，因此按宿主收集成员名。
+  const nsMembers = {};
+  const exportedSet = new Set(exportNames);
+  for (const u of units) {
+    const parts = u.split('.');
+    if (parts.length !== 2) { continue; }
+    if (!exportedSet.has(parts[0])) { continue; }
+    (nsMembers[parts[0]] = nsMembers[parts[0]] || []).push(parts[1]);
+  }
+  lines.push('const __wrap = window.__apiTrace.wrapExport;');
+  lines.push('const __nsCopy = window.__apiTrace.nsCopy;');
+  for (const name of exportNames) {
+    const wrapped = tracedTop.has(name) ? `__wrap(__CC.${name}, ${JSON.stringify(name)})` : `__CC.${name}`;
+    if (nsMembers[name]) {
+      lines.push(`export const ${name} = __nsCopy(${wrapped}, ${JSON.stringify(nsMembers[name])}, ${JSON.stringify(name)});`);
+    } else {
+      lines.push(`export const ${name} = ${wrapped};`);
+    }
+  }
+  lines.push(`(function install () {
+  const T = window.__apiTrace;
+  const exported = new Set(__NAMES);
+  const aliasTo = (unit, target) => { T.alias[unit] = target; T.mechanism[unit] = 'alias:' + target; };
+  for (const unit of __UNITS) {
+    if (T.mechanism[unit]) { continue; }
+    const parts = unit.split('.');
+    if (parts.length === 1) {
+      if (!exported.has(parts[0])) { T.mechanism[unit] = 'unresolved'; continue; }
+      const value = __CC[parts[0]];
+      T.mechanism[unit] = typeof value === 'function' ? 'export-wrapper'
+        : (value && typeof value === 'object' ? 'namespace' : 'unresolved');
+      continue;
+    }
+    const leaf = parts[parts.length - 1];
+    let host = __CC[parts[0]];
+    let walked = true;
+    for (const step of parts.slice(1, parts.length - 1)) {
+      if (!host || (typeof host !== 'object' && typeof host !== 'function')) { walked = false; break; }
+      host = host[step];
+    }
+    if (!walked || !host || (typeof host !== 'object' && typeof host !== 'function')) {
+      // 文档命名空间在 bundle 里不存在（inventory 来自 .d.ts，具名导出是扁平的）：
+      // 只有叶子名本身是导出时才别名，否则如实 unresolved。
+      if (parts.length === 2 && exported.has(leaf) && typeof __CC[leaf] === 'function') { aliasTo(unit, leaf); continue; }
+      T.mechanism[unit] = 'unresolved';
+      continue;
+    }
+    let done = false;
+    if (typeof host === 'function') {
+      if (parts.length === 2) {
+        done = T.patchOwn(host.prototype, leaf, unit, 'prototype');
+        if (!done) { done = T.patchOwn(host, leaf, unit, 'static'); }
+        if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
+      } else {
+        done = T.patchOwn(host, leaf, unit, 'static');
+      }
+    } else {
+      done = T.patchOwn(host, leaf, unit, 'namespace-member');
+    }
+    if (!done && !T.mechanism[unit]) { T.mechanism[unit] = 'unresolved'; }
+  }
+  for (const unit of __UNITS) { if (!T.mechanism[unit]) { T.mechanism[unit] = 'unresolved'; } }
+})();`);
+  return lines.join('\n') + '\n';
+}
+
+/** 页面内投影入口（三处门禁共用，避免各写一份通道清单）：无包装模块返回 null。 */
+function snapshotInPage () {
+  const T = window.__apiTrace;
+  if (!T) { return null; }
+  if (typeof T.snapshot !== 'function') { return { staleWrapper: true }; }
+  return T.snapshot();
+}
+
+/** 从页面读回计数，归一化成 unit -> {state, calls, reads, mechanism}。
+ *  calls = 真实被调用/构造；reads = 仅被读取成员（命名空间式用法，如 Layers.Enum.DEFAULT）。
+ *  两者都可能让 unit 成为 executed，但 `via` 字段必须留在证据里，报告端不得把 read 冒充 call。 */
+function normalizeTrace (raw, units) {
+  const out = {};
+  const calls = (raw && raw.calls) || {};
+  const reads = (raw && raw.reads) || {};
+  const mechanism = (raw && raw.mechanism) || {};
+  const harness = (raw && raw.harnessCalls) || {};
+  const alias = (raw && raw.alias) || {};
+  const notes = ((raw && raw.notes) || []).slice(0);
+  if (raw && raw.staleWrapper) { notes.unshift('api-trace: wrapper has no snapshot(); channels dropped by a stale wrapper module'); }
+  for (const unit of units) {
+    // unit 可能是 'Node.toString' 之类与 Object.prototype 重名的键：一律校验值类型，
+    // 否则属性查找会命中继承成员并把计数读成 undefined/函数。
+    const rawTarget = alias[unit];
+    const target = typeof rawTarget === 'string' ? rawTarget : undefined;
+    const rawMech = mechanism[unit];
+    const mech = typeof rawMech === 'string' ? rawMech : (target ? 'alias:' + target : 'unresolved');
+    const n = Number(calls[target || unit]) || 0;
+    const r = Number(reads[target || unit]) || 0;
+    let state;
+    // reads 只对命名空间式宿主有意义（顶层导出对象/类）；成员 unit 的读取不代表成员本身被执行。
+    const via = n > 0 ? 'call' : (r > 0 && unit.indexOf('.') < 0 ? 'read' : null);
+    if (via) { state = 'executed'; } else if (mech === 'unresolved') { state = 'unresolved'; } else if (mech === 'data-member' || mech === 'namespace') { state = 'not-instrumentable'; } else { state = 'not-observed'; }
+    out[unit] = {
+      state, calls: n, reads: r > 0 && unit.indexOf('.') < 0 ? r : 0, via, mechanism: mech,
+      observedVia: target && target !== unit ? target : undefined,
+      // 门禁读回期间被抑制的调用：只作边界生效的披露，不参与 state 判定。
+      harnessCalls: Number(harness[target || unit]) || undefined,
+    };
+  }
+  return { units: out, notes: notes.slice(0, 40), instrumentedCount: Object.values(out).filter((u) => u.state === 'executed').length };
+}
+
+function writeTraceWorkspace (workspaceDir, units, realUrl) {
+  const names = bundleExportNames();
+  const code = generateTraceModule(names, units, realUrl);
+  const file = path.join(workspaceDir, TRACE_FILE_NAME);
+  fs.writeFileSync(file, code);
+  // 不回传绝对临时路径：证据文件必须跨机器可比。
+  return { name: TRACE_FILE_NAME, exports: names.length, unitCount: units.length, bytes: code.length, hash: sha16(Buffer.from(code)) };
+}
+
+if (require.main === module) {
+  const argv = process.argv.slice(2);
+  if (argv.includes('--selftest')) {
+    const code = generateTraceModule(['Node', 'createAirApp', 'Vec3'], ['createAirApp', 'Node', 'Node.setPosition', 'Node.constructor', 'math.Vec3'], '/build/cocosair.module.js');
+    const names = bundleExportNames();
+    console.log('[api-trace] bundle exports:', names.length, '| wrapper bytes:', code.length);
+    if (!names.includes('Node') || !names.includes('createAirApp')) { throw new Error('selftest: expected export names missing'); }
+    if (!/export const Node =/.test(code) || !/__wrap\(__CC\.createAirApp/.test(code)) { throw new Error('selftest: wrapper shape wrong'); }
+    // 语义断言：install 必须在全部导出之后（否则 canonical 为空，成员别名失效）
+    if (code.indexOf('(function install') < code.lastIndexOf('export const ')) { throw new Error('selftest: install() must run after export wrapping'); }
+    // 成员 unit 的宿主（Node）与叶子（setPosition）都必须被预包装/可别名
+    if (!/__wrap\(__CC\.Node, "Node"\)/.test(code)) { throw new Error('selftest: host class of member unit not wrapped'); }
+    if (!/__wrap\(__CC\.Vec3, "Vec3"\)/.test(code)) { throw new Error('selftest: doc-namespace leaf (math.Vec3→Vec3) not wrapped'); }
+    const norm = normalizeTrace({ calls: { Node: 3, Vec3: 1 }, mechanism: { 'Node.setPosition': 'prototype', 'math.Vec3': 'alias:Vec3', 'material.dataMember': 'data-member' }, alias: { 'math.Vec3': 'Vec3' } },
+      ['Node', 'Node.setPosition', 'Node.constructor', 'math.Vec3', 'material.dataMember']);
+    const expect = { 'Node': 'executed', 'Node.setPosition': 'not-observed', 'Node.constructor': 'unresolved', 'math.Vec3': 'executed', 'material.dataMember': 'not-instrumentable' };
+    for (const [u, s] of Object.entries(expect)) {
+      if (norm.units[u].state !== s) { throw new Error(`selftest: ${u} → ${norm.units[u].state}, want ${s}`); }
+    }
+    if (norm.units['math.Vec3'].observedVia !== 'Vec3') { throw new Error('selftest: alias source not recorded'); }
+    // 命名空间式读取（Layers.Enum.DEFAULT）：顶层类导出只被读成员时算 executed(via=read)，
+    // 但成员 unit 只有 reads 不算执行——读 `Layers.Enum` 不等于调用 `Layers.Enum.something`。
+    const norm2 = normalizeTrace({ calls: {}, reads: { Layers: 4, 'Layers.Enum': 2, 'Layers.enableLayers': 9 }, mechanism: { Layers: 'export-wrapper', 'Layers.Enum': 'data-member', 'Layers.enableLayers': 'static' }, alias: {} },
+      ['Layers', 'Layers.Enum', 'Layers.enableLayers']);
+    if (norm2.units.Layers.state !== 'executed' || norm2.units.Layers.via !== 'read') { throw new Error('selftest: namespace read not observed as executed(via=read)'); }
+    if (norm2.units['Layers.Enum'].state !== 'not-instrumentable') { throw new Error('selftest: member unit wrongly promoted by reads'); }
+    if (norm2.units['Layers.enableLayers'].state !== 'not-observed') { throw new Error('selftest: instrumented member with 0 calls must stay not-observed despite reads'); }
+    if (!/T\.reads\[key\]/.test(code)) { throw new Error('selftest: read trap missing from generated wrapper'); }
+    if (!/T\.snapshot = \(\)/.test(code)) { throw new Error('selftest: snapshot() projection missing from generated wrapper'); }
+    if (!/T\.observing > 0/.test(code)) { throw new Error('selftest: harness-suppression guard missing from generated wrapper'); }
+    // 门禁读回期间的调用只披露、不晋升：harnessCalls>0 且 calls=0 必须仍是 not-observed。
+    const norm3 = normalizeTrace({ calls: {}, reads: {}, harnessCalls: { 'Node.setPosition': 7 }, mechanism: { 'Node.setPosition': 'proto' }, alias: {} }, ['Node.setPosition']);
+    if (norm3.units['Node.setPosition'].state !== 'not-observed' || norm3.units['Node.setPosition'].harnessCalls !== 7) { throw new Error('selftest: harness-only calls leaked into executed state'); }
+    // 生成物必须是合法 ESM：模板里混进反引号/未转义字符会让包装模块在浏览器里静默变垃圾。
+    const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
+    const full = generateTraceModule(bundleExportNames(), ['Node', 'Node.setPosition', 'primitives.box', 'utils.createMesh', 'math.Color'], '/build/cocosair.module.js');
+    esbuild.transformSync(full, { loader: 'js', format: 'esm', target: 'es2022' });
+    if (!/__nsCopy\(__CC\.primitives, \["box"\], "primitives"\)/.test(full)) { throw new Error('selftest: frozen-namespace copy not emitted'); }
+    console.log('[api-trace] selftest PASS (shape + alias/normalize semantics + generated ESM parses)');
+    process.exitCode = 0;
+  } else {
+    console.log('usage: node tools/verify/api-trace.cjs --selftest');
+  }
+}
+
+module.exports = { REPO, TRACE_FILE_NAME, sha16, sourceFingerprint, candidateFingerprint, bundleExportNames, claimedUnits, generateTraceModule, normalizeTrace, snapshotInPage, writeTraceWorkspace };

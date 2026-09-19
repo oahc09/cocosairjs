@@ -1,17 +1,31 @@
-/* V1.1 F2 — API Coverage Report（claimed / verified 严格分离 + verified 门禁）。
+/* V1.1 F2 — API Coverage Report（逐 API 执行证明，不再由示例级 PASS 推导）。
  *
- * 覆盖语义（§12/§25）：
- *   claimed  — example.json 的 api.claims 与 inventory 精确匹配（声明）
- *   verified — claim 所属 example 在 v11-examples-verified.json 中 result=PASS，
- *              且 evidence.specFingerprint 与当前 example.json 哈希一致（防陈旧证据冒充）
+ * 覆盖语义（§12/§25，总审查 item 1 修正）：
+ *   claimed   — example.json 的 api.claims 与 inventory 精确匹配（仅声明，零执行证据）
+ *   attested  — 当期证据显示该 API 真被执行（trace state=executed），但没有一条仍成立的
+ *               证据行把它绑到通过的 validator 上；或不可插桩的别名/数据成员。
+ *   verified  — 逐 API 执行证明：example 在 v11-examples-verified.json / v11-devtools-examples.json
+ *               中 result=PASS，且证据里该 API 的 apiProof[].proof === 'verified'
+ *               （= 运行期被 trace 计到调用次数 ∧ 至少一条 validator PASS ∧ 该 validator 的
+ *                 证据行仍能在当前源码里找到该 API token）。
+ *               verified 再按观察通道拆分披露：call=被当作函数/构造器执行，read=只观察到顶层
+ *               导出的成员读取（命名空间用法），unknown=证据未记录通道。引用 verified 比例时
+ *               必须同时给出该拆分，不得把 read 说成"调用执行"。
  *
- * verified 门禁（§25 增补）：
- *   Core      — 100% verified
- *   Important — ≥ 90% verified
- *   Advanced  — ≥ 80% verified
- * 门禁未达标如实输出 FAIL（达标依赖 Wave 扩量，不得以 claimed 冒充）。
+ *   示例级 PASS 本身不再产生 verified：证据必须携带 mode/spec + source + candidate 指纹与
+ *   apiProof 明细；缺任一项 → 该示例的全部 claims 只算 claimed，并列入 evidenceSchemaGaps。
  *
- * 证据来源：普通浏览器矩阵 + DevTools 会话门禁（requiresDevTools 示例只在后者取证）。
+ * 指纹绑定（防陈旧证据冒充，三种失配都要检）：
+ *   specFingerprint      — example.json（不含 status/promotion/stableReview）
+ *   sourceFingerprint    — example.json + index.html + src/main.* + assets/**
+ *   candidateFingerprint — build/cocosair.module.js + .d.ts + examples/shared
+ *   源码/引擎改动都会使既有 verified 失效，这是"改动不影响结论"这类说法的反例控制。
+ *
+ * verified 门禁（§25 增补 + 总审查 item 4 分母修正）：
+ *   分母 = inventory 中 coverageRequired=true 的同 tier 单元（Core/Important 共 1510；
+ *   Advanced 全部 coverageRequired=false → 门禁 NOT_APPLICABLE，不再用 3219 的可选面自证）。
+ *   Core 100% / Important ≥90% / Advanced ≥80%（在其 own required 分母上）。
+ * 门禁未达标如实输出 FAIL 并以非零退出码阻断。
  *
  * 执行：node tools/examples/coverage-report.cjs
  * 产出：docs/api-coverage-report.json
@@ -19,7 +33,8 @@
 var fs = require('fs');
 var path = require('path');
 var REPO = path.resolve(__dirname, '..', '..');
-var { readFingerprint } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+var specCommon = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+var apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
 var INVENTORY_PATH = path.join(REPO, 'docs', 'example-api-inventory.json');
 var MANIFEST_PATH = path.join(REPO, 'examples', 'files.json');
 var EVIDENCE_PATHS = [
@@ -32,7 +47,24 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   var inventory = JSON.parse(fs.readFileSync(INVENTORY_PATH, 'utf8'));
   var manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8'));
 
-  // 运行验证结果：exampleId -> { result, specFingerprint }（后到的来源不覆盖已有 PASS 记录）
+  // 分母自身的完整性：inventory 是 coverage 的分母来源，若它的汇总字段与 units 不一致
+  // （或 units 被人手删改而与派生的 tierSummary 脱钩），所有比例都失去意义 ⇒ 直接 FAIL。
+  var inventoryInconsistencies = [];
+  var unitCount = Object.keys(inventory.units || {}).length;
+  if (inventory.totalUnits !== unitCount) {
+    inventoryInconsistencies.push('totalUnits=' + inventory.totalUnits + ' != units ' + unitCount);
+  }
+  for (var tk in inventory.tierSummary || {}) {
+    var actual = Object.keys(inventory.units || {}).filter(function (u) { return inventory.units[u].tier === tk; }).length;
+    if (inventory.tierSummary[tk] !== actual) { inventoryInconsistencies.push('tierSummary.' + tk + '=' + inventory.tierSummary[tk] + ' != ' + actual); }
+  }
+  var actualRequired = Object.keys(inventory.units || {}).filter(function (u) { return inventory.units[u].coverageRequired; }).length;
+  if (inventory.coverageRequiredUnits !== actualRequired) {
+    inventoryInconsistencies.push('coverageRequiredUnits=' + inventory.coverageRequiredUnits + ' != ' + actualRequired);
+  }
+  var inventoryFingerprint = apiTrace.sha16(fs.readFileSync(INVENTORY_PATH));
+
+  // 运行验证结果：exampleId -> evidence row（后到的来源不覆盖已有 PASS 记录）
   var runById = {};
   var sources = [];
   for (var rel of EVIDENCE_PATHS) {
@@ -48,7 +80,7 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
     }
   }
 
-  function currentFingerprint (exampleDir) { return readFingerprint(exampleDir); }
+  var currentCandidate = apiTrace.candidateFingerprint();
 
   // 构建冻结清单（分 tier）
   var frozen = {};
@@ -57,50 +89,106 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
     frozen[fq] = { tier: units[fq].tier, coverageRequired: units[fq].coverageRequired, kind: units[fq].kind };
   }
 
-  // claimed / verified 覆盖映射
-  var claimedBy = {};   // fqName -> [exampleId]
-  var verifiedBy = {};  // fqName -> [exampleId]（PASS + fingerprint 一致）
+  // claimed / attested / verified 覆盖映射（逐 API）
+  var claimedBy = {};
+  var attestedBy = {};
+  var verifiedBy = {};
+  // verified 的观察通道拆分（总审查 item 1 的残留披露）：call = 真的被调用/构造，
+  // read = 只观察到顶层导出的成员读取（Layers.Enum.DEFAULT 这类命名空间用法）。
+  // 两者都算执行过，但强度不同；引用 verified 比例时必须同时给出该拆分。
+  var verifiedVia = {};
   var staleEvidence = [];
+  var evidenceSchemaGaps = [];
+  var unmatchedClaims = [];
+  var perExampleProof = [];
   for (var ex of manifest.examples) {
     var claims = (ex.api && ex.api.claims) || ex.apiClaims || [];
     var run = runById[ex.id];
-    var fp = currentFingerprint(ex.dir);
-    var verified = !!run && run.result === 'PASS' && run.specFingerprint === fp;
-    if (run && run.result === 'PASS' && run.specFingerprint !== fp) {
-      staleEvidence.push(ex.id);
+    var exampleDir = path.join(REPO, 'examples', ex.dir);
+    var binding = {
+      spec: !!run && run.specFingerprint === specCommon.readFingerprint(ex.dir),
+      source: !!run && !!run.sourceFingerprint && run.sourceFingerprint === apiTrace.sourceFingerprint(exampleDir),
+      candidate: !!run && !!run.candidateFingerprint && run.candidateFingerprint === currentCandidate,
+    };
+    var pass = !!run && run.result === 'PASS';
+    var hasApiProof = !!run && Array.isArray(run.apiProof) && run.apiProof.length > 0;
+    var fresh = pass && binding.spec && binding.source && binding.candidate && hasApiProof;
+    if (run && pass && (!binding.spec || !binding.source || !binding.candidate)) { staleEvidence.push(ex.id); }
+    if (run && pass && !hasApiProof) { evidenceSchemaGaps.push({ id: ex.id, reason: 'evidence row has no apiProof[] (pre-v3 schema): claims cannot be counted as verified' }); }
+    var proofById = {};
+    if (hasApiProof) {
+      for (var p of run.apiProof) { if (p && p.api) { proofById[p.api] = p; } }
     }
+    var tally = { verified: 0, attested: 0, claimedOnly: 0, verifiedCall: 0, verifiedRead: 0 };
     for (var claim of claims) {
-      if (!frozen[claim]) { continue; }
-      if (!claimedBy[claim]) claimedBy[claim] = [];
+      if (!frozen[claim]) {
+        // 结构门禁允许 DevToolsSession.* 这类清单外单元；coverage 必须显式披露而不是静默丢弃，
+        // 否则"示例声明的 API"与"进入分母的 API"两套口径悄悄不一致。
+        if (unmatchedClaims.indexOf(claim) < 0) { unmatchedClaims.push(claim); }
+        continue;
+      }
+      if (!claimedBy[claim]) { claimedBy[claim] = []; }
       claimedBy[claim].push(ex.id);
-      if (verified) {
-        if (!verifiedBy[claim]) verifiedBy[claim] = [];
-        verifiedBy[claim].push(ex.id);
+      var pr = fresh ? proofById[claim] : null;
+      if (pr && pr.proof === 'verified') {
+        (verifiedBy[claim] = verifiedBy[claim] || []).push(ex.id);
+        tally.verified++;
+        var via = pr.via === 'read' ? 'read' : (pr.via === 'call' ? 'call' : 'unknown');
+        if (via === 'call') { tally.verifiedCall++; } else if (via === 'read') { tally.verifiedRead++; }
+        if (verifiedVia[claim] !== 'call') { verifiedVia[claim] = via; }
+      } else if (pr && pr.proof === 'attested') {
+        (attestedBy[claim] = attestedBy[claim] || []).push(ex.id);
+        tally.attested++;
+      } else { tally.claimedOnly++; }
+    }
+    perExampleProof.push({ id: ex.id, result: run ? run.result : 'no-evidence', fresh: fresh, binding: binding,
+      hasApiProof: hasApiProof, instrumentation: run && run.instrumentation ? { observed: run.instrumentation.observed, total: run.instrumentation.total, hash: run.instrumentation.hash } : null,
+      claims: claims.length, tally: tally });
+  }
+
+  function rate (n, total) { return total ? Math.round((n / total) * 1000) / 1000 : 0; }
+  var GATES = { core: { label: '100% verified of coverageRequired', threshold: 1.0 }, important: { label: '>= 90% verified of coverageRequired', threshold: 0.9 }, advanced: { label: '>= 80% verified of coverageRequired', threshold: 0.8 } };
+
+  // 分层统计：required 分母（coverageRequired=true）用于门禁，全量分母仅用于披露
+  var tiers = {};
+  for (var fq2 in frozen) {
+    var tier = frozen[fq2].tier;
+    if (!tiers[tier]) { tiers[tier] = { total: 0, required: 0, claimed: 0, attested: 0, verified: 0, requiredClaimed: 0, requiredVerified: 0, verifiedViaCall: 0, verifiedViaRead: 0, verifiedViaUnknown: 0, requiredVerifiedViaCall: 0, requiredVerifiedViaRead: 0, requiredVerifiedViaUnknown: 0 }; }
+    var t = tiers[tier];
+    t.total++;
+    if (frozen[fq2].coverageRequired) { t.required++; }
+    if (claimedBy[fq2]) { t.claimed++; if (frozen[fq2].coverageRequired) { t.requiredClaimed++; } }
+    if (attestedBy[fq2] && !verifiedBy[fq2]) { t.attested++; }
+    if (verifiedBy[fq2]) {
+      t.verified++;
+      var channel = verifiedVia[fq2] === 'read' ? 'read' : (verifiedVia[fq2] === 'unknown' ? 'unknown' : 'call');
+      t['verifiedVia' + channel[0].toUpperCase() + channel.slice(1)]++;
+      if (frozen[fq2].coverageRequired) {
+        t.requiredVerified++;
+        t['requiredVerifiedVia' + channel[0].toUpperCase() + channel.slice(1)]++;
       }
     }
   }
 
-  // 分层统计
-  var tiers = {};
-  for (var fq2 in frozen) {
-    var tier = frozen[fq2].tier;
-    if (!tiers[tier]) { tiers[tier] = { total: 0, claimed: 0, verified: 0 }; }
-    tiers[tier].total++;
-    if (claimedBy[fq2]) { tiers[tier].claimed++; }
-    if (verifiedBy[fq2]) { tiers[tier].verified++; }
-  }
-
-  function rate (n, total) { return total ? Math.round((n / total) * 1000) / 1000 : 0; }
-  var GATES = { core: { label: '100% verified', threshold: 1.0 }, important: { label: '≥ 90% verified', threshold: 0.9 }, advanced: { label: '≥ 80% verified', threshold: 0.8 } };
   var tierReport = {};
   for (var name of ['core', 'important', 'advanced']) {
-    var t = tiers[name] || { total: 0, claimed: 0, verified: 0 };
-    var vr = rate(t.verified, t.total);
+    var s = tiers[name] || { total: 0, required: 0, claimed: 0, attested: 0, verified: 0, requiredClaimed: 0, requiredVerified: 0, verifiedViaCall: 0, verifiedViaRead: 0, verifiedViaUnknown: 0, requiredVerifiedViaCall: 0, requiredVerifiedViaRead: 0, requiredVerifiedViaUnknown: 0 };
+    var vr = rate(s.requiredVerified, s.required);
     tierReport[name] = {
-      total: t.total, claimed: t.claimed, verified: t.verified,
-      claimedRate: rate(t.claimed, t.total), verifiedRate: vr,
+      denominator: 'coverageRequired',
+      total: s.total, required: s.required,
+      claimed: s.claimed, attested: s.attested, verified: s.verified,
+      requiredClaimed: s.requiredClaimed, requiredVerified: s.requiredVerified,
+      // verified 的观察通道拆分：只有 call 是"该 API 被当作函数/构造器执行过"的直接证据。
+      verifiedViaCall: s.verifiedViaCall, verifiedViaRead: s.verifiedViaRead, verifiedViaUnknown: s.verifiedViaUnknown,
+      requiredVerifiedViaCall: s.requiredVerifiedViaCall, requiredVerifiedViaRead: s.requiredVerifiedViaRead, requiredVerifiedViaUnknown: s.requiredVerifiedViaUnknown,
+      requiredVerifiedViaCallRate: rate(s.requiredVerifiedViaCall, s.required),
+      claimedRate: rate(s.requiredClaimed, s.required), verifiedRate: vr,
+      allUnitsVerifiedRate: rate(s.verified, s.total),
       gate: GATES[name].label, threshold: GATES[name].threshold,
-      pass: vr >= GATES[name].threshold,
+      // required=0 表示该 tier 不进入覆盖义务（如 Advanced 全部可选），门禁不适用而非"通过"
+      applicable: s.required > 0,
+      pass: s.required === 0 ? true : vr >= GATES[name].threshold,
     };
   }
 
@@ -108,31 +196,60 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
     generatedAt: new Date().toISOString(),
     evidenceSources: sources,
     semantics: {
-      claimed: 'api.claims 与 inventory 精确匹配（声明）',
-      verified: 'claim 所属 example 在浏览器矩阵或 DevTools 会话门禁中 PASS，且 specFingerprint 与当前 example.json 一致',
+      claimed: 'api.claims 与 inventory 精确匹配（仅声明，零执行证据）',
+      attested: '当期证据显示 API 被执行（trace executed），但没有仍成立的 validator 绑定；或不可插桩的别名/数据成员',
+      verified: '逐 API 执行证明：当期 PASS 证据（spec+source+candidate 指纹一致）中该 API 的 apiProof.proof === "verified"',
+      verifiedChannels: 'verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分',
+      denominator: '门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE',
     },
+    candidateFingerprint: currentCandidate,
+    // 比例必须绑定分母身份：inventory 重新生成（增删单元/改 tier）会让同名指标含义变化，
+    // 没有这个哈希就无法判断报告数字对应的是哪一版分母。
+    inventoryFingerprint: inventoryFingerprint,
+    inventoryConsistency: inventoryInconsistencies,
     totalUnits: Object.keys(frozen).length,
+    totalRequired: Object.keys(frozen).filter(function (u) { return frozen[u].coverageRequired; }).length,
     totalClaimed: Object.keys(claimedBy).length,
+    totalAttested: Object.keys(attestedBy).filter(function (u) { return !verifiedBy[u]; }).length,
     totalVerified: Object.keys(verifiedBy).length,
+    totalVerifiedViaCall: Object.keys(verifiedBy).filter(function (u) { return verifiedVia[u] === 'call'; }).length,
+    totalVerifiedViaRead: Object.keys(verifiedBy).filter(function (u) { return verifiedVia[u] === 'read'; }).length,
+    totalVerifiedViaUnknown: Object.keys(verifiedBy).filter(function (u) { return !verifiedVia[u] || verifiedVia[u] === 'unknown'; }).length,
     staleEvidenceExamples: staleEvidence,
+    // 声明了但不属于冻结清单的 API（DevToolsSession.* 等）：不进任何分子/分母，仅披露。
+    claimsNotInInventory: unmatchedClaims,
+    evidenceSchemaGaps: evidenceSchemaGaps,
+    examples: perExampleProof,
     tiers: tierReport,
-    verifiedList: Object.keys(verifiedBy).map(function (u) { return { unit: u, tier: frozen[u].tier, examples: verifiedBy[u] }; }),
+    verifiedList: Object.keys(verifiedBy).map(function (u) { return { unit: u, tier: frozen[u].tier, via: verifiedVia[u] || null, examples: verifiedBy[u] }; }),
+    attestedNotVerified: Object.keys(attestedBy).filter(function (u) { return !verifiedBy[u]; }).map(function (u) { return { unit: u, tier: frozen[u].tier, examples: attestedBy[u] }; }),
     claimedNotVerified: Object.keys(claimedBy).filter(function (u) { return !verifiedBy[u]; }).map(function (u) { return { unit: u, tier: frozen[u].tier, examples: claimedBy[u] }; }),
     unclaimedCore: Object.keys(frozen).filter(function (u) { return frozen[u].tier === 'core' && !claimedBy[u]; }),
+    unclaimedRequired: Object.keys(frozen).filter(function (u) { return frozen[u].coverageRequired && !claimedBy[u]; }).length,
   };
 
   fs.writeFileSync(OUT_PATH, JSON.stringify(report, null, 2) + '\n');
   for (var t2 of ['core', 'important', 'advanced']) {
     var tr = tierReport[t2];
-    console.log('[coverage] ' + t2 + ': claimed ' + tr.claimed + '/' + tr.total + ' | verified ' + tr.verified + '/' + tr.total + ' (' + tr.verifiedRate + ')');
+    console.log('[coverage] ' + t2 + ': required ' + tr.required + '/' + tr.total + ' | claimed ' + tr.requiredClaimed
+      + ' | verified ' + tr.requiredVerified + ' (' + tr.verifiedRate + ')'
+      + ' [call ' + tr.requiredVerifiedViaCall + ' / read ' + tr.requiredVerifiedViaRead + ' / unknown ' + tr.requiredVerifiedViaUnknown + ']'
+      + ' | attested(all-units) ' + tr.attested);
   }
-  console.log('[coverage] Core gate (100% verified):', tierReport.core.pass ? 'PASS' : 'FAIL');
-  console.log('[coverage] Important gate (>=90% verified):', tierReport.important.pass ? 'PASS' : 'FAIL');
-  console.log('[coverage] Advanced gate (>=80% verified):', tierReport.advanced.pass ? 'PASS' : 'FAIL');
-  if (staleEvidence.length) { console.log('[coverage] stale evidence (spec changed after run):', staleEvidence.join(',')); }
+  for (var t3 of ['core', 'important', 'advanced']) {
+    var g = tierReport[t3];
+    console.log('[coverage] ' + t3 + ' gate (' + GATES[t3].label + '): ' + (g.applicable ? (g.pass ? 'PASS' : 'FAIL') : 'NOT_APPLICABLE'));
+  }
+  if (staleEvidence.length) { console.log('[coverage] stale evidence (source/candidate/spec changed after run): ' + staleEvidence.length + ' → ' + staleEvidence.join(',')); }
+  if (inventoryInconsistencies.length) {
+    console.log('[coverage] inventory 自相矛盾（分母不可信，比例全部作废）: ' + inventoryInconsistencies.join(' | '));
+  }
+  console.log('[coverage] inventory fingerprint: ' + inventoryFingerprint);
+  if (evidenceSchemaGaps.length) { console.log('[coverage] evidence without apiProof (counted as claimed only): ' + evidenceSchemaGaps.length); }
   console.log('[coverage] → ' + path.relative(REPO, OUT_PATH));
-  // 机器可强制：门禁未达标必须以非零退出码阻断，而不只是打印 FAIL。
-  var gatesPass = tierReport.core.pass && tierReport.important.pass && tierReport.advanced.pass;
+  // 机器可强制：门禁未达标必须以非零退出码阻断，而不只是打印 FAIL；分母自相矛盾同样阻断。
+  var gatesPass = inventoryInconsistencies.length === 0
+    && ['core', 'important', 'advanced'].every(function (n) { return tierReport[n].pass; });
   process.exitCode = gatesPass ? 0 : 1;
   console.log('[coverage] gate:', gatesPass ? 'PASS' : 'FAIL');
 })();

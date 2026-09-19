@@ -10,7 +10,7 @@ const REPO = path.resolve(__dirname, '..', '..');
 const EXAMPLES_DIR = path.join(REPO, 'examples');
 
 // Gallery 展示字段（§19-§22：What you'll learn / APIs Used / Expected Result / Validation Status）
-const GALLERY_FIELDS = ['id', 'version', 'title', 'category', 'status', 'specStatus', 'requiresDevTools', 'bench', 'learning', 'effect', 'api', 'capabilities', 'scene', 'interaction', 'ready', 'validation', 'promotionEvidence'];
+const GALLERY_FIELDS = ['id', 'version', 'title', 'category', 'status', 'specStatus', 'requiresDevTools', 'bench', 'learning', 'effect', 'api', 'capabilities', 'scene', 'interaction', 'ready', 'validation', 'promotion'];
 
 function findExampleJsons(dir, prefix) {
   var results = [];

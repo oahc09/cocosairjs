@@ -212,5 +212,175 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "f7990f9e200d"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 33,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Base": {
+        "position": [
+          -2,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 38,
+            "text": "base.setPosition(new Vec3(-2, 0.5, 0));"
+          }
+        ]
+      },
+      "ScaledParent": {
+        "position": [
+          2,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 44,
+            "text": "scaledParent.setPosition(new Vec3(2, 0.5, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 59,
+            "text": "0,this.node.eulerAngles.y + dt * 25,0"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 45,
+            "text": "scaledParent.setScale(new Vec3(2, 1, 1));"
+          }
+        ],
+        "rotationEuler": {
+          "vary": true
+        },
+        "scale": [
+          2,
+          1,
+          1
+        ]
+      },
+      "ScaledChild": {
+        "position": [
+          0,
+          1,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 51,
+            "text": "child.setPosition(new Vec3(0, 1, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 52,
+            "text": "child.setScale(new Vec3(0.5, 0.5, 0.5));"
+          }
+        ],
+        "scale": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    },
+    "material-property": {
+      "Base": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 41,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      },
+      "ScaledParent": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 48,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      },
+      "ScaledChild": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 55,
+              "text": "new Color(235, 125, 65, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, scene);）",
+        "line": "L63"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "9c52ef0d0bc2",
+    "source": "c3ab3e755cd3f539",
+    "candidate": "5612c4c2746f395b",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
+  }
 }

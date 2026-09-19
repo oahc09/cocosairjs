@@ -1,0 +1,16 @@
+# F-61 wave post-write offline non-regression checks (2026-09-19 22:04 +08, HEAD 33b4281)
+# Self-correction: the first version of this log printed EXIT= after '| tail', which reports tail's status not the tool's. Redone with ${PIPESTATUS[0]}.
+
+$ node tools/verify/license-audit.cjs
+[license-audit] issues=3 → docs\evidence\license-audit.json
+  ! example gltf-draco/assets/draco.glb: missing .LICENSE.md
+  ! example gltf-meshopt/assets/meshopt-khr.glb: missing .LICENSE.md
+  ! unexpected directory in build/: examples
+EXIT=1
+
+$ node tools/examples/spec-compliance-audit.cjs --warn-ok
+[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract
+[spec-compliance] 45 examples: 0 fail / 1 warn → docs\evidence\v11-spec-compliance.json
+EXIT=0
+
+# side effect: the compliance run rewrote docs/evidence/v11-spec-compliance.json (measuredAt-only churn) - the F-58 phenomenon, observed live.

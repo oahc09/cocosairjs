@@ -22,7 +22,9 @@
       "no-runtime-error",
       "material-property"
     ],
-    "interaction": [],
+    "interaction": [
+      "frame-diff"
+    ],
     "visual": [
       "visible-frame"
     ],
@@ -31,7 +33,6 @@
     ],
     "capability": []
   },
-  "promotionEvidence": "922dd81bd5f3",
   "specStatus": "frozen",
   "learning": {
     "goal": "综合 glTF 查看器：URL 参数驱动加载、动画播放与 transmission 捕获相机",
@@ -152,12 +153,20 @@
       "nodes": [
         "Main Camera",
         "Main Light",
-        "transmission-capture"
+        "transmission-capture",
+        "node__1"
       ]
     }
   },
   "interaction": {
-    "steps": []
+    "steps": [
+      {
+        "action": "切换模型下拉到 SimpleSkin.gltf（骨骼动画 · 多文件 glTF）",
+        "selectId": "model",
+        "optionValue": "SimpleSkin.gltf",
+        "expected": "模型换装成功且画面变化；AnimationClip.WrapMode.Loop 被真实读取（api-executed 以 trace 为证）"
+      }
+    ]
   },
   "ready": {
     "validators": [
@@ -171,5 +180,68 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "material-property": {
+      "node__1": {
+        "materialName": "Texture",
+        "effect": "air-gltf-standard",
+        "props": {
+          "albedo": {
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "encoding": "0-1",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "assets/BoxTextured.glb",
+              "line": 1,
+              "text": "glTF JSON materials[0].pbrMetallicRoughness 无 baseColorFactor ⇒ §3.4 默认 [1,1,1,1]；资产由 SHA256.json 冻结。资产在 main.js 的引用行：L35 index.html option / loader.loadAsync('./assets/BoxTextured.glb')（L77 拼接）"
+            }
+          },
+          "mainColor": {
+            "expect": "unset",
+            "provenance": {
+              "source": "src/air/assets/gltf/material.ts",
+              "line": 347,
+              "text": "导入器把 baseColorFactor 写入 albedo，不写 mainColor（审计 F-71）；此处反向断言，防\"属性名取错也绿灯\""
+            }
+          }
+        },
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 163,
+            "text": "else { await load(modelSelect.value); } —— 默认选中 index.html L35 的第一个 option 'BoxTextured.glb'；其 nodes[1]（mesh:0, 未命名）即读回到的 node__1"
+          }
+        ],
+        "handAuthored": true
+      }
+    },
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "BoxTextured.glb",
+          "provenance": [
+            {
+              "source": "main.js",
+              "line": 82,
+              "text": "'BoxTextured.glb': [[2.5, 1.8, 3.5], [0, 0, 0]],"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "promotion": {
+    "spec": "b6adba815b69",
+    "source": "8e01d359fbeb0bce",
+    "candidate": "5612c4c2746f395b",
+    "verified": 12,
+    "attested": 0,
+    "units": 12
   }
 }

@@ -1,0 +1,4 @@
+[license-audit] issues=3 → docs\evidence\license-audit.json
+  ! example gltf-draco/assets/draco.glb: missing .LICENSE.md
+  ! example gltf-meshopt/assets/meshopt-khr.glb: missing .LICENSE.md
+  ! unexpected directory in build/: examples

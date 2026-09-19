@@ -209,5 +209,93 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "12a01a35616b"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 23,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lookAt(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 30,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "DemoCube": {
+        "position": [
+          0,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 34,
+            "text": "demoCube.setPosition(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "DemoCube": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 37,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lo）",
+        "line": "L23"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "7bf168d53362",
+    "source": "ff9a1514bf26d523",
+    "candidate": "5612c4c2746f395b",
+    "verified": 17,
+    "attested": 2,
+    "units": 19
+  }
 }

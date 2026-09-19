@@ -34,7 +34,6 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "ae097c5c7da7",
   "specStatus": "frozen",
   "learning": {
     "goal": "第一个完整 3D 场景：相机 + 平行光 + 旋转立方体（E001 basic-cube）",
@@ -211,5 +210,24 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "material-property": {
+      "Cube": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "b3f13053f440",
+    "source": "35b97a8b06d8d399",
+    "candidate": "5612c4c2746f395b",
+    "verified": 16,
+    "attested": 1,
+    "units": 17
   }
 }

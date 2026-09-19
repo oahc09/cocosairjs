@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-19T14:35:13.768Z",
-  "revision": "33b4281",
+  "generatedAt": "2026-09-19T19:13:23.205Z",
+  "revision": "99f56e2",
   "examples": [
     {
       "dir": "anim-position",
@@ -87,7 +87,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "8766171f95de"
+      "promotion": {
+        "spec": "8ebd4d7639df",
+        "source": "c6fc70109be99971",
+        "candidate": "5612c4c2746f395b",
+        "verified": 17,
+        "attested": 0,
+        "units": 17
+      }
     },
     {
       "dir": "anim-rotation",
@@ -175,7 +182,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "09a03f6e8059"
+      "promotion": {
+        "spec": "fe051d63a498",
+        "source": "64c06a98436e9204",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 0,
+        "units": 18
+      }
     },
     {
       "dir": "automation",
@@ -225,7 +239,8 @@
         "expectedGraph": {
           "nodes": [
             "Main Camera",
-            "Main Light"
+            "Main Light",
+            "existing-cube"
           ]
         }
       },
@@ -250,7 +265,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "7225d967159c"
+      "promotion": {
+        "spec": "c00b9e5f3a5a",
+        "source": "4b4c481434e58eab",
+        "candidate": "5612c4c2746f395b",
+        "verified": 8,
+        "attested": 3,
+        "units": 11
+      }
     },
     {
       "dir": "camera",
@@ -306,12 +328,28 @@
           "nodes": [
             "Main Camera",
             "Main Light",
-            "group"
+            "group",
+            "cube-0",
+            "cube-1",
+            "cube-2",
+            "cube-3",
+            "cube-4"
           ]
         }
       },
       "interaction": {
-        "steps": []
+        "steps": [
+          {
+            "action": "点击 DOM 按钮「切换正交/透视」",
+            "buttonText": "切换正交/透视",
+            "expected": "camera.projection 在 PERSPECTIVE/ORTHO 间切换，画面近大远小消失"
+          },
+          {
+            "action": "点击 DOM 按钮「frameObject 取景」",
+            "buttonText": "frameObject 取景",
+            "expected": "frameObject(camera, group) 真实执行一次（api-executed 以 trace 计数为证）"
+          }
+        ]
       },
       "ready": {
         "validators": [
@@ -325,14 +363,23 @@
           "material-property",
           "transform-equals"
         ],
-        "interaction": [],
+        "interaction": [
+          "frame-diff"
+        ],
         "visual": [
           "visible-frame"
         ],
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "51d515d53211"
+      "promotion": {
+        "spec": "678fb005e8ec",
+        "source": "78040895699e23e3",
+        "candidate": "5612c4c2746f395b",
+        "verified": 12,
+        "attested": 1,
+        "units": 13
+      }
     },
     {
       "dir": "camera-lookat",
@@ -428,7 +475,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "8f452ad54668"
+      "promotion": {
+        "spec": "0f969f97ee12",
+        "source": "ada3caa09ec5937e",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 1,
+        "units": 19
+      }
     },
     {
       "dir": "camera-multi",
@@ -520,7 +574,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "e4f412eb3678"
+      "promotion": {
+        "spec": "e1f579ddd6f6",
+        "source": "5fec34368f419b87",
+        "candidate": "5612c4c2746f395b",
+        "verified": 19,
+        "attested": 0,
+        "units": 19
+      }
     },
     {
       "dir": "camera-ortho",
@@ -620,7 +681,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "97ec02d18347"
+      "promotion": {
+        "spec": "3446e2c5a876",
+        "source": "b75a2948236ad40b",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 1,
+        "units": 19
+      }
     },
     {
       "dir": "gltf-basic",
@@ -707,7 +775,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "85a1be447d72"
+      "promotion": {
+        "spec": "5589594abdf5",
+        "source": "481aee4186a2fcf5",
+        "candidate": "5612c4c2746f395b",
+        "verified": 17,
+        "attested": 0,
+        "units": 17
+      }
     },
     {
       "dir": "gltf-catalog",
@@ -715,7 +790,7 @@
       "version": "1.0.0",
       "title": "glTF Catalog",
       "category": "gltf",
-      "status": "stable",
+      "status": "draft",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "bench": {
@@ -766,8 +841,7 @@
         "visual": [],
         "lifecycle": [],
         "capability": []
-      },
-      "promotionEvidence": "fe5b5218178e"
+      }
     },
     {
       "dir": "gltf-clearcoat",
@@ -823,7 +897,10 @@
           "nodes": [
             "Main Camera",
             "Main Light",
-            "Fill Light"
+            "Fill Light",
+            "Sphere-Co-0",
+            "Sphere-Co-0_5",
+            "Sphere-Co-1"
           ]
         }
       },
@@ -863,7 +940,14 @@
           }
         ]
       },
-      "promotionEvidence": "da49f4ca74ff"
+      "promotion": {
+        "spec": "c6b480406f7f",
+        "source": "221fa314ef0a2167",
+        "candidate": "5612c4c2746f395b",
+        "verified": 15,
+        "attested": 0,
+        "units": 15
+      }
     },
     {
       "dir": "gltf-draco",
@@ -888,9 +972,7 @@
       },
       "api": {
         "primary": [
-          "GLTFLoader.getExtensionSupport",
-          "GLTFLoader.setDRACODecoder",
-          "createDracoDecoder"
+          "GLTFLoader.getExtensionSupport"
         ],
         "supporting": [
           "GLTFLoader.parseAsync"
@@ -906,9 +988,7 @@
           "math.Color",
           "GLTFLoader",
           "GLTFLoader.getExtensionSupport",
-          "GLTFLoader.setDRACODecoder",
           "GLTFLoader.parseAsync",
-          "createDracoDecoder",
           "Node.addChild",
           "Node.setPosition",
           "Node.setRotationFromEuler"
@@ -956,7 +1036,14 @@
           }
         ]
       },
-      "promotionEvidence": "005f7e3cf63d"
+      "promotion": {
+        "spec": "a7a345f064ed",
+        "source": "a8c5968b88c6e9d8",
+        "candidate": "5612c4c2746f395b",
+        "verified": 14,
+        "attested": 0,
+        "units": 14
+      }
     },
     {
       "dir": "gltf-meshopt",
@@ -1063,7 +1150,14 @@
           }
         ]
       },
-      "promotionEvidence": "1d2841ac9301"
+      "promotion": {
+        "spec": "d4312702ec07",
+        "source": "dfc18d7d5f412dd2",
+        "candidate": "5612c4c2746f395b",
+        "verified": 20,
+        "attested": 0,
+        "units": 20
+      }
     },
     {
       "dir": "gltf-morph",
@@ -1157,7 +1251,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "eead341a5713"
+      "promotion": {
+        "spec": "594304b3020c",
+        "source": "3cfacd5aeece3c7a",
+        "candidate": "5612c4c2746f395b",
+        "verified": 20,
+        "attested": 0,
+        "units": 20
+      }
     },
     {
       "dir": "gltf-skin",
@@ -1251,7 +1352,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "427b55acb95e"
+      "promotion": {
+        "spec": "efdda98c555e",
+        "source": "48524527b8a65b3d",
+        "candidate": "5612c4c2746f395b",
+        "verified": 21,
+        "attested": 0,
+        "units": 21
+      }
     },
     {
       "dir": "gltf-viewer",
@@ -1305,12 +1413,20 @@
           "nodes": [
             "Main Camera",
             "Main Light",
-            "transmission-capture"
+            "transmission-capture",
+            "node__1"
           ]
         }
       },
       "interaction": {
-        "steps": []
+        "steps": [
+          {
+            "action": "切换模型下拉到 SimpleSkin.gltf（骨骼动画 · 多文件 glTF）",
+            "selectId": "model",
+            "optionValue": "SimpleSkin.gltf",
+            "expected": "模型换装成功且画面变化；AnimationClip.WrapMode.Loop 被真实读取（api-executed 以 trace 为证）"
+          }
+        ]
       },
       "ready": {
         "validators": [
@@ -1324,7 +1440,9 @@
           "no-runtime-error",
           "material-property"
         ],
-        "interaction": [],
+        "interaction": [
+          "frame-diff"
+        ],
         "visual": [
           "visible-frame"
         ],
@@ -1333,7 +1451,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "922dd81bd5f3"
+      "promotion": {
+        "spec": "b6adba815b69",
+        "source": "8e01d359fbeb0bce",
+        "candidate": "5612c4c2746f395b",
+        "verified": 12,
+        "attested": 0,
+        "units": 12
+      }
     },
     {
       "dir": "hello-cube",
@@ -1420,7 +1545,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "ae097c5c7da7"
+      "promotion": {
+        "spec": "b3f13053f440",
+        "source": "35b97a8b06d8d399",
+        "candidate": "5612c4c2746f395b",
+        "verified": 16,
+        "attested": 1,
+        "units": 17
+      }
     },
     {
       "dir": "input",
@@ -1515,7 +1647,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "e30546154d39"
+      "promotion": {
+        "spec": "7b79f441a1fe",
+        "source": "d955f577fb18256d",
+        "candidate": "5612c4c2746f395b",
+        "verified": 13,
+        "attested": 2,
+        "units": 15
+      }
     },
     {
       "dir": "interaction-click",
@@ -1615,7 +1754,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "e4fd635ae276"
+      "promotion": {
+        "spec": "cdf688132cb5",
+        "source": "13832355ec662f05",
+        "candidate": "5612c4c2746f395b",
+        "verified": 19,
+        "attested": 1,
+        "units": 20
+      }
     },
     {
       "dir": "light-point",
@@ -1705,7 +1851,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "0f7b7a2d60d0"
+      "promotion": {
+        "spec": "88951008b00d",
+        "source": "ea448f328c7d5108",
+        "candidate": "5612c4c2746f395b",
+        "verified": 19,
+        "attested": 0,
+        "units": 19
+      }
     },
     {
       "dir": "light-sphere",
@@ -1792,7 +1945,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "4088de9dce7a"
+      "promotion": {
+        "spec": "022251e312e0",
+        "source": "2d60ccd6e7859061",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 0,
+        "units": 18
+      }
     },
     {
       "dir": "light-spot",
@@ -1880,7 +2040,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "3aea85e7a9cd"
+      "promotion": {
+        "spec": "74538d51cd5a",
+        "source": "9e6871b1fb516900",
+        "candidate": "5612c4c2746f395b",
+        "verified": 19,
+        "attested": 0,
+        "units": 19
+      }
     },
     {
       "dir": "light-two-directional",
@@ -1979,7 +2146,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "813d80014e16"
+      "promotion": {
+        "spec": "2a5fe86a854b",
+        "source": "1b02a2906065565c",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 1,
+        "units": 19
+      }
     },
     {
       "dir": "material-basic",
@@ -2063,7 +2237,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "7d483e078413"
+      "promotion": {
+        "spec": "d2f18d65ff5f",
+        "source": "64a5e60f317d77b8",
+        "candidate": "5612c4c2746f395b",
+        "verified": 13,
+        "attested": 1,
+        "units": 14
+      }
     },
     {
       "dir": "material-color",
@@ -2150,7 +2331,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "5bbd566b0e9b"
+      "promotion": {
+        "spec": "40bc8fbce245",
+        "source": "e4c05344db3660e6",
+        "candidate": "5612c4c2746f395b",
+        "verified": 16,
+        "attested": 0,
+        "units": 16
+      }
     },
     {
       "dir": "material-transparent",
@@ -2245,7 +2433,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "647ae9fc9ab4"
+      "promotion": {
+        "spec": "bfab06f0ff3f",
+        "source": "fe359d18cc0d7555",
+        "candidate": "5612c4c2746f395b",
+        "verified": 22,
+        "attested": 0,
+        "units": 22
+      }
     },
     {
       "dir": "material-unlit",
@@ -2253,7 +2448,7 @@
       "version": "1.0.0",
       "title": "Material Unlit",
       "category": "materials",
-      "status": "stable",
+      "status": "draft",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -2328,8 +2523,7 @@
         ],
         "lifecycle": [],
         "capability": []
-      },
-      "promotionEvidence": "f291ca26c584"
+      }
     },
     {
       "dir": "mesh-cylinder",
@@ -2417,7 +2611,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "5c9129d03609"
+      "promotion": {
+        "spec": "c3d9b8dd565b",
+        "source": "fd61367663c2b0a1",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 0,
+        "units": 18
+      }
     },
     {
       "dir": "mesh-multi-material",
@@ -2505,7 +2706,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "588b2ae5063c"
+      "promotion": {
+        "spec": "03cd6b3c1dff",
+        "source": "ec1bfedbbea794d3",
+        "candidate": "5612c4c2746f395b",
+        "verified": 16,
+        "attested": 0,
+        "units": 16
+      }
     },
     {
       "dir": "mesh-plane",
@@ -2594,7 +2802,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "04dab6dc7bd5"
+      "promotion": {
+        "spec": "2702df7692e6",
+        "source": "003d016d9bbdc124",
+        "candidate": "5612c4c2746f395b",
+        "verified": 19,
+        "attested": 0,
+        "units": 19
+      }
     },
     {
       "dir": "mesh-sphere",
@@ -2682,7 +2897,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "13576f6a2dc0"
+      "promotion": {
+        "spec": "c0d64a28c555",
+        "source": "cb85b55b88591609",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 0,
+        "units": 18
+      }
     },
     {
       "dir": "mesh-torus",
@@ -2769,7 +2991,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "2977be59beb2"
+      "promotion": {
+        "spec": "4de78c63719b",
+        "source": "abe4881c69f707f5",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 0,
+        "units": 18
+      }
     },
     {
       "dir": "node-active",
@@ -2856,7 +3085,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "eab58fab2dcd"
+      "promotion": {
+        "spec": "9c7cfcdb6c9f",
+        "source": "957e34f8616eaf44",
+        "candidate": "5612c4c2746f395b",
+        "verified": 18,
+        "attested": 0,
+        "units": 18
+      }
     },
     {
       "dir": "node-hierarchy",
@@ -2947,7 +3183,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "e9533a360ec7"
+      "promotion": {
+        "spec": "72efe2cf6b66",
+        "source": "fa2e5f388b65f479",
+        "candidate": "5612c4c2746f395b",
+        "verified": 20,
+        "attested": 0,
+        "units": 20
+      }
     },
     {
       "dir": "node-scale",
@@ -3036,7 +3279,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "f7990f9e200d"
+      "promotion": {
+        "spec": "9c52ef0d0bc2",
+        "source": "c3ab3e755cd3f539",
+        "candidate": "5612c4c2746f395b",
+        "verified": 19,
+        "attested": 0,
+        "units": 19
+      }
     },
     {
       "dir": "rc-capture-frame",
@@ -3119,7 +3369,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "78764b916464"
+      "promotion": {
+        "spec": "86059190543b",
+        "source": "9c24eade6728d6e4",
+        "candidate": "5612c4c2746f395b",
+        "verified": 17,
+        "attested": 1,
+        "units": 18
+      }
     },
     {
       "dir": "rc-create-node",
@@ -3127,7 +3384,7 @@
       "version": "1.0.0",
       "title": "RC — Create Node",
       "category": "runtime-control",
-      "status": "stable",
+      "status": "draft",
       "specStatus": "frozen",
       "requiresDevTools": true,
       "learning": {
@@ -3208,8 +3465,7 @@
         ],
         "lifecycle": [],
         "capability": []
-      },
-      "promotionEvidence": "c34d0b8bb9e8"
+      }
     },
     {
       "dir": "rc-error-report",
@@ -3294,7 +3550,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "12a01a35616b"
+      "promotion": {
+        "spec": "7bf168d53362",
+        "source": "ff9a1514bf26d523",
+        "candidate": "5612c4c2746f395b",
+        "verified": 17,
+        "attested": 2,
+        "units": 19
+      }
     },
     {
       "dir": "rc-inspect-scene",
@@ -3382,7 +3645,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "505e0eeb0112"
+      "promotion": {
+        "spec": "495816944ba8",
+        "source": "b164c0231173bf02",
+        "candidate": "5612c4c2746f395b",
+        "verified": 17,
+        "attested": 2,
+        "units": 19
+      }
     },
     {
       "dir": "runtime-asset-release",
@@ -3468,7 +3738,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "b2dbf4f85534"
+      "promotion": {
+        "spec": "928e831458d2",
+        "source": "11c2af5dc6de1137",
+        "candidate": "5612c4c2746f395b",
+        "verified": 16,
+        "attested": 0,
+        "units": 16
+      }
     },
     {
       "dir": "skinned-animation",
@@ -3556,7 +3833,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "d289357cd724"
+      "promotion": {
+        "spec": "e5ceb0171281",
+        "source": "cf1a4e3b115fd499",
+        "candidate": "5612c4c2746f395b",
+        "verified": 16,
+        "attested": 0,
+        "units": 16
+      }
     },
     {
       "dir": "starter",
@@ -3637,7 +3921,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "509d0ba585c2"
+      "promotion": {
+        "spec": "509d0ba585c2",
+        "source": "84714e6e975fbc32",
+        "candidate": "5612c4c2746f395b",
+        "verified": 8,
+        "attested": 1,
+        "units": 9
+      }
     },
     {
       "dir": "static-model",
@@ -3734,7 +4025,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "f2107edbe836"
+      "promotion": {
+        "spec": "cab0aa290350",
+        "source": "63e4502a895fc0fa",
+        "candidate": "5612c4c2746f395b",
+        "verified": 22,
+        "attested": 1,
+        "units": 23
+      }
     },
     {
       "dir": "texture-basic",
@@ -3830,7 +4128,14 @@
         ],
         "capability": []
       },
-      "promotionEvidence": "1233d305cb04"
+      "promotion": {
+        "spec": "801c006d64c7",
+        "source": "f45c5c6dcce11ce3",
+        "candidate": "5612c4c2746f395b",
+        "verified": 25,
+        "attested": 0,
+        "units": 25
+      }
     },
     {
       "dir": "transform",
@@ -3889,7 +4194,10 @@
             "Main Light",
             "root",
             "child",
-            "grandchild"
+            "grandchild",
+            "root-cube",
+            "child-cube",
+            "grandchild-cube"
           ]
         }
       },
@@ -3916,7 +4224,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "ec3cf9fd0dc0"
+      "promotion": {
+        "spec": "e9fb4d97b277",
+        "source": "b8bf300dc9d60f49",
+        "candidate": "5612c4c2746f395b",
+        "verified": 13,
+        "attested": 1,
+        "units": 14
+      }
     },
     {
       "dir": "tween-basic",
@@ -4000,7 +4315,14 @@
         "lifecycle": [],
         "capability": []
       },
-      "promotionEvidence": "3327441806ff"
+      "promotion": {
+        "spec": "a2b66e97135b",
+        "source": "97805d6ae4dda9e7",
+        "candidate": "5612c4c2746f395b",
+        "verified": 14,
+        "attested": 1,
+        "units": 15
+      }
     }
   ],
   "categories": {

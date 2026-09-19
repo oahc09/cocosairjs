@@ -223,5 +223,161 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "97ec02d18347"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 23,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lookAt(new Vec3(0, 0.5, -2));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 31,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "DepthCube-0": {
+        "position": [
+          0,
+          0.5,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 37,
+            "text": "cube.setPosition(new Vec3(0, 0.5, 0));"
+          }
+        ]
+      },
+      "DepthCube-1": {
+        "position": [
+          0,
+          0.5,
+          -2
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 37,
+            "text": "cube.setPosition(new Vec3(0, 0.5, -2));"
+          }
+        ]
+      },
+      "DepthCube-2": {
+        "position": [
+          0,
+          0.5,
+          -4
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 37,
+            "text": "cube.setPosition(new Vec3(0, 0.5, -4));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "DepthCube-0": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 40,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      },
+      "DepthCube-1": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              215
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 40,
+              "text": "new Color(95, 205, 120, 215)"
+            }
+          }
+        }
+      },
+      "DepthCube-2": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              175
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 40,
+              "text": "new Color(95, 205, 120, 175)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lo）",
+        "line": "L23"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "3446e2c5a876",
+    "source": "b75a2948236ad40b",
+    "candidate": "5612c4c2746f395b",
+    "verified": 18,
+    "attested": 1,
+    "units": 19
+  }
 }

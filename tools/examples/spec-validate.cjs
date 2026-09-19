@@ -171,6 +171,75 @@ function validateExample (dirName, spec) {
     issues.push('validation.capabilityExpectations present but capability-status not declared');
   }
 
+  // §65 期望值合同（item 2 的静态镜像）：声明了"值合同"validator 就必须给出结构可判定的期望，
+  // 豁免必须落在源码派生行上。运行期才检查会把著述错误/行漂移拖到 40 例浏览器矩阵才暴露。
+  const expChecks = require(path.join(REPO, 'tools', 'verify', 'expectation-checks.cjs'));
+  const EXPECTATION_BOUND = ['transform-equals', 'material-property', 'asset-loaded'];
+  const allDeclared = new Set([...(validation.functional || []), ...(validation.interaction || []), ...(validation.capability || [])]);
+  const specExpectations = spec.validationExpectations || {};
+  for (const id of EXPECTATION_BOUND) {
+    const exp = specExpectations[id];
+    const hasExp = !!exp && Object.keys(exp).length > 0;
+    if (!allDeclared.has(id)) {
+      if (hasExp) { issues.push(`validationExpectations["${id}"] present but validator not declared（死期望，运行期不会执行）`); }
+      continue;
+    }
+    if (!hasExp) {
+      const excl = (spec.expectationExclusions || {})[id];
+      issues.push(`validation declares "${id}" but validationExpectations["${id}"] is missing${excl ? '（只有豁免不构成合同）' : ''}：validator 名承诺的行为无人比对`);
+      continue;
+    }
+    if (id === 'asset-loaded') {
+      const paths = Array.isArray(exp.paths) ? exp.paths : [];
+      const kinds = exp.kinds && Object.keys(exp.kinds).length;
+      if (!paths.length && !kinds) {
+        issues.push('validationExpectations["asset-loaded"] 既无 paths 也无 kinds（结构上空判）');
+      }
+      for (const p of paths) {
+        if (!p || !(Array.isArray(p.provenance) ? p.provenance.length : p.provenance)) {
+          issues.push(`validationExpectations["asset-loaded"].path "${p && p.path}" 缺出处（该路径未绑定到源码 load 调用行）`);
+        }
+      }
+      if (kinds && !paths.length && !(Array.isArray(exp.provenance) && exp.provenance.length)) {
+        issues.push('validationExpectations["asset-loaded"].kinds 需要 entry provenance（kind 计数出自源码哪一行无从核对）');
+      }
+      continue;
+    }
+    for (const [node, entry] of Object.entries(exp)) {
+      if (node === 'handAuthored') { continue; }
+      if (!entry || typeof entry !== 'object') { issues.push(`validationExpectations["${id}"].${node} must be object`); continue; }
+      const comparable = id === 'transform-equals'
+        ? ['position', 'rotationEuler', 'scale'].some((k) => entry[k] !== undefined)
+        : (Array.isArray(entry.slots) && entry.slots.length > 0) || entry.props || entry.effect || entry.materialName;
+      if (!comparable) { issues.push(`validationExpectations["${id}"].${node} 无可比对字段（结构上空判）`); }
+      const propList = Object.values(entry.props || {});
+      const propsProvenanced = propList.length > 0 && propList.every((p) => p && p.provenance);
+      const slotsProvenanced = (entry.slots || []).length > 0 && (entry.slots || []).every((s) => s && Object.values(s.props || {}).length > 0 && Object.values(s.props || {}).every((p) => p && p.provenance));
+      const carriesProof = Array.isArray(entry.provenance) && entry.provenance.length > 0;
+      const namedOnly = !propList.length && !(entry.slots || []).length && !!(entry.effect || entry.materialName);
+      if (!carriesProof && !propsProvenanced && !slotsProvenanced && !namedOnly) {
+        issues.push(`validationExpectations["${id}"].${node} 缺出处（entry provenance 或 prop provenance）`);
+      }
+      if (Array.isArray(entry.slots)) {
+        const seen = new Set();
+        for (const s of entry.slots) {
+          if (!s || typeof s.slot !== 'number') { issues.push(`validationExpectations["${id}"].${node}.slots[] 每项需要数字 slot（否则默认槽会重复比对同一个材质）`); continue; }
+          if (seen.has(s.slot)) { issues.push(`validationExpectations["${id}"].${node} slot ${s.slot} 重复`); }
+          seen.add(s.slot);
+        }
+      }
+    }
+  }
+  for (const [id, block] of Object.entries(spec.expectationExclusions || {})) {
+    if (!allDeclared.has(id)) { issues.push(`expectationExclusions["${id}"] present but validator not declared`); }
+    for (const [node, e] of Object.entries(block || {})) {
+      const verdict = expChecks.groundingVerdict(exampleDir, e);
+      if (verdict !== true) { issues.push(`expectationExclusions[${id}].${node}: ${verdict}`); }
+    }
+  }
+  // 出处逐条可核对：文件定位不到 / 行不存在 / 指向注释 / 引文与行号打脸，一律静态红。
+  issues.push(...expChecks.provenanceIssues(exampleDir, spec));
+
   // §52 DevTools 边界：使用 Session Contract 单元的示例必须声明 requiresDevTools
   const apiUnits = [...((spec.api && spec.api.primary) || []), ...((spec.api && spec.api.supporting) || []), ...((spec.api && spec.api.claims) || [])];
   if (apiUnits.some((u) => DEVTOOLS_SESSION_UNITS.has(u)) && spec.requiresDevTools !== true) {

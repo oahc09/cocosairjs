@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-19T05:02:02.355Z",
+  "measuredAt": "2026-09-19T19:20:42.881Z",
   "gate": "V0.8 Browser Matrix",
   "total": 3,
   "passCount": 1,
@@ -21,7 +21,7 @@
       "sceneVisible": false,
       "noErrors": true,
       "pass": false,
-      "error": "[browser-runtime] browserType.launch: Executable doesn't exist at C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1538\\firefox\\firefox.exe\n╔═════════════════════════════════════════════════════════"
+      "error": "[browser-runtime] browserType.launch: Executable doesn't exist at C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\firefox-1532\\firefox\\firefox.exe\n╔═════════════════════════════════════════════════════════"
     },
     {
       "browser": "webkit",
@@ -30,7 +30,7 @@
       "sceneVisible": false,
       "noErrors": true,
       "pass": false,
-      "error": "[browser-runtime] browserType.launch: Executable doesn't exist at C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2336\\Playwright.exe\n╔════════════════════════════════════════════════════════════╗\n║"
+      "error": "[browser-runtime] browserType.launch: Executable doesn't exist at C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\webkit-2311\\Playwright.exe\n╔════════════════════════════════════════════════════════════╗\n║"
     }
   ]
 }

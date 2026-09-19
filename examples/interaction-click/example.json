@@ -230,5 +230,102 @@
   "license": {
     "assets": "无第三方资产"
   },
-  "promotionEvidence": "e4fd635ae276"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 22,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lookAt(new Vec3(0, 0.6, 0.4));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 29,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "ClickableCube": {
+        "position": [
+          0,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 33,
+            "text": "cube.setPosition(new Vec3(0, 0.6, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 52,
+            "text": "0,next,0 —— 该轴由交互改写，变化在交互前/后两次读回之间判定"
+          }
+        ],
+        "rotationEuler": {
+          "vary": true,
+          "deferTo": "interaction-window"
+        }
+      }
+    },
+    "material-property": {
+      "ClickableCube": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 36,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lo）",
+        "line": "L22"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "cdf688132cb5",
+    "source": "13832355ec662f05",
+    "candidate": "5612c4c2746f395b",
+    "verified": 19,
+    "attested": 1,
+    "units": 20
+  }
 }

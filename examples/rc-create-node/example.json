@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "RC — Create Node",
   "category": "runtime-control",
-  "status": "stable",
+  "status": "draft",
   "specStatus": "frozen",
   "requiresDevTools": true,
   "learning": {
@@ -220,5 +220,115 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "c34d0b8bb9e8"
+  "promotionEvidence": "c34d0b8bb9e8",
+  "validationExpectations": {
+    "transform-equals": {
+      "AgentGenerated": {
+        "position": [
+          1.8,
+          0.6,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.8,
+          0.8,
+          0.8
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 70,
+            "text": "dispatch setTransform params { space:'local', position:[1.8,0.6,0], scale:[0.8,0.8,0.8] }（L70）；params 未给 rotation ⇒ 创建后保持引擎默认 identity"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Main Camera": {
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 21,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lookAt(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 28,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "DemoCube": {
+        "position": [
+          0,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 32,
+            "text": "demoCube.setPosition(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "DemoCube": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 35,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lo）",
+        "line": "L21"
+      }
+    }
+  },
+  "stableReview": {
+    "demotedAt": "2026-09-19T18:48:56.273Z",
+    "reason": "current run FAIL"
+  }
 }

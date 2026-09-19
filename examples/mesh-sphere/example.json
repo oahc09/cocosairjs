@@ -206,5 +206,101 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "13576f6a2dc0"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.4,
+          6.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 26,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lookAt(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 33,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "sphere": {
+        "position": [
+          0,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 36,
+            "text": "sphere.setPosition(new Vec3(0, 0.6, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 21,
+            "text": "0,this.node.eulerAngles.y + dt * 45,0"
+          }
+        ],
+        "rotationEuler": {
+          "vary": true
+        }
+      }
+    },
+    "material-property": {
+      "sphere": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 39,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lo）",
+        "line": "L26"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "c0d64a28c555",
+    "source": "cb85b55b88591609",
+    "candidate": "5612c4c2746f395b",
+    "verified": 18,
+    "attested": 0,
+    "units": 18
+  }
 }

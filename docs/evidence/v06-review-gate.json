@@ -1,13 +1,13 @@
 {
-  "measuredAt": "2026-09-19T13:39:07.036Z",
+  "measuredAt": "2026-09-19T13:53:11.424Z",
   "status": "PASS",
   "referenceGatePass": true,
   "catalogGatePass": true,
   "revision": {
-    "head": "41b4c713c61813617320ab0dfc5d640fa35e8cf4",
+    "head": "33b4281625fd2b0b6e5bad7922d8dfb4894c75dd",
     "recorded": [
       "e06d29880b398c43d318eedee43c32941dd4eb97",
-      "3a53957db6bdd009bbd85af8b7d589a0b48dba5b"
+      "33b4281625fd2b0b6e5bad7922d8dfb4894c75dd"
     ],
     "failures": []
   },

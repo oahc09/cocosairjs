@@ -159,5 +159,12 @@
   "license": {
     "assets": "无第三方资产（程序化场景，代码随仓库 MIT 授权）"
   },
-  "promotionEvidence": "509d0ba585c2"
+  "promotion": {
+    "spec": "509d0ba585c2",
+    "source": "84714e6e975fbc32",
+    "candidate": "5612c4c2746f395b",
+    "verified": 8,
+    "attested": 1,
+    "units": 9
+  }
 }

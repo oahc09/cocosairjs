@@ -232,5 +232,57 @@
   "license": {
     "assets": "assets/SimpleSkin.* — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/SimpleSkin.LICENSE.md"
   },
-  "promotionEvidence": "427b55acb95e"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 23,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      }
+    },
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "assets/SimpleSkin.gltf",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 29,
+              "text": "var jsonText = await (await fetch('./assets/SimpleSkin.gltf')).text();"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, instance.root);）",
+        "line": "L47"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "efdda98c555e",
+    "source": "48524527b8a65b3d",
+    "candidate": "5612c4c2746f395b",
+    "verified": 21,
+    "attested": 0,
+    "units": 21
+  }
 }

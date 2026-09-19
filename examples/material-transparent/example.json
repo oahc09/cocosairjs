@@ -237,5 +237,164 @@
   "license": {
     "assets": "无第三方资产（inline glTF JSON 程序化生成）"
   },
-  "promotionEvidence": "647ae9fc9ab4"
+  "validationExpectations": {
+    "transform-equals": {
+      "BlendPanel": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 98,
+            "text": "nodes: [{ name: 'BlendPanel', mesh: 0 }] —— 内联 glTF 未声明 TRS，局部变换为引擎默认 identity"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 111,
+            "text": "instance.root.setPosition(new Vec3(0, 0.9, 0.8)) —— 偏移落在 glTF 场景根的无名包装节点上（不在 expectedGraph），不落在 BlendPanel 上；上一轮把该偏移误记为 BlendPanel 期望，本轮更正"
+          }
+        ],
+        "handAuthored": true
+      },
+      "Main Camera": {
+        "position": [
+          0,
+          2,
+          6
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 23,
+            "text": "cameraNode.setPosition(new Vec3(0, 2, 6)); cameraNode.lookAt(new Vec3(0, 0.7, 0));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 30,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "SolidReference": {
+        "position": [
+          0,
+          0.5,
+          -0.8
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 53,
+            "text": "solid.setPosition(new Vec3(0, 0.5, -0.8));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "BlendPanel": {
+        "materialName": "glass-panel",
+        "props": {
+          "albedo": {
+            "value": [
+              0.3,
+              0.75,
+              0.95,
+              0.45
+            ],
+            "encoding": "0-1",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 95,
+              "text": "materials[0] = { name:'glass-panel', alphaMode:'BLEND', pbrMetallicRoughness:{ baseColorFactor:[0.3,0.75,0.95,0.45] } }（L92-95）→ 引擎 material.ts L347 setProperty('albedo', Vec4(factor))"
+            }
+          }
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 92,
+            "text": "name: 'glass-panel' —— 半透明材质必须是这一个，否则比对的是别的材质"
+          }
+        ],
+        "handAuthored": true
+      },
+      "SolidReference": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              230,
+              90,
+              60,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 57,
+              "text": "new Color(230, 90, 60, 255)"
+            }
+          }
+        }
+      }
+    },
+    "asset-loaded": {
+      "handAuthored": true,
+      "kinds": {
+        "Material": 1
+      },
+      "provenance": [
+        {
+          "source": "src/main.ts",
+          "line": 91,
+          "text": "materials: [{ name: 'glass-panel', alphaMode: 'BLEND' }]"
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2, 6)); cameraNode.lookAt）",
+        "line": "L23"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "bfab06f0ff3f",
+    "source": "fe359d18cc0d7555",
+    "candidate": "5612c4c2746f395b",
+    "verified": 22,
+    "attested": 0,
+    "units": 22
+  }
 }

@@ -1,0 +1,10 @@
+[coverage] core: required 717/717 | claimed 49 | verified 46 (0.064) [call 44 / read 2 / unknown 0] | attested(all-units) 3
+[coverage] important: required 793/793 | claimed 6 | verified 6 (0.008) [call 4 / read 2 / unknown 0] | attested(all-units) 0
+[coverage] advanced: required 0/3219 | claimed 0 | verified 0 (0) [call 0 / read 0 / unknown 0] | attested(all-units) 1
+[coverage] core gate (100% verified of coverageRequired): FAIL
+[coverage] important gate (>= 90% verified of coverageRequired): FAIL
+[coverage] advanced gate (>= 80% verified of coverageRequired): NOT_APPLICABLE
+[coverage] inventory fingerprint: 2d10b49ee9c22d24
+[coverage] evidence without apiProof (counted as claimed only): 1
+[coverage] → docs\api-coverage-report.json
+[coverage] gate: FAIL

@@ -214,5 +214,203 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "0f7b7a2d60d0"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 20,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lookAt(new Vec3(0, 0.4, 0));"
+          }
+        ]
+      },
+      "PointLightNode": {
+        "position": {
+          "vary": true,
+          "range": [
+            [
+              -2.2,
+              2.2
+            ],
+            [
+              3.2,
+              3.2
+            ],
+            [
+              -2.2,
+              2.2
+            ]
+          ],
+          "minDelta": 0.0001
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 58,
+            "text": "正弦包络 Math.sin(this.t * 0.8) * 2.2,3.2,Math.cos(this.t * 0.8) * 2.2：三角项取 [-1,1]，其余为字面量算术"
+          }
+        ]
+      },
+      "Floor": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 34,
+            "text": "Floor.setPosition(new Vec3(0, 0, 0));"
+          }
+        ]
+      },
+      "Left": {
+        "position": [
+          -2.2,
+          0.4,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 39,
+            "text": "Left.setPosition(new Vec3(-2.2, 0.4, 0));"
+          }
+        ]
+      },
+      "Center": {
+        "position": [
+          0,
+          0.4,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 44,
+            "text": "Center.setPosition(new Vec3(0, 0.4, 0));"
+          }
+        ]
+      },
+      "Right": {
+        "position": [
+          2.2,
+          0.4,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 49,
+            "text": "Right.setPosition(new Vec3(2.2, 0.4, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Floor": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              80,
+              90,
+              110,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 37,
+              "text": "new Color(80, 90, 110, 255)"
+            }
+          }
+        }
+      },
+      "Left": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 42,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      },
+      "Center": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 47,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      },
+      "Right": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 52,
+              "text": "new Color(235, 125, 65, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
+        "line": "L20"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "88951008b00d",
+    "source": "ea448f328c7d5108",
+    "candidate": "5612c4c2746f395b",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
+  }
 }

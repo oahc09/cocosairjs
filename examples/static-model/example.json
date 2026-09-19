@@ -33,7 +33,6 @@
     ],
     "capability": []
   },
-  "promotionEvidence": "f2107edbe836",
   "specStatus": "frozen",
   "learning": {
     "goal": "Runtime 资产链路：程序化 Mesh 入库 → loadAssetAsync 取回 → 贴图材质渲染（E007 gltf-basic 的资产形态）",
@@ -252,5 +251,123 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          10,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 37,
+            "text": "position 默认值 [0,10,0]（示例显式传入）"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "StaticBox": {
+        "position": [
+          0,
+          -0.8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 110,
+            "text": "boxNode.setPosition(new Vec3(0, -0.8, 0));"
+          }
+        ]
+      },
+      "Ground": {
+        "position": [
+          0,
+          -2,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 118,
+            "text": "groundNode.setPosition(new Vec3(0, -2, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "StaticBox": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainTexture": {
+            "expect": "object",
+            "name": null,
+            "tolerance": null,
+            "provenance": {
+              "source": "main.js",
+              "line": 106,
+              "text": "checkerTexture"
+            }
+          }
+        }
+      },
+      "Ground": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              90,
+              110,
+              90,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "main.js",
+              "line": 124,
+              "text": "new Color(90, 110, 90, 255)"
+            }
+          }
+        }
+      }
+    },
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "assets/model.json",
+          "provenance": [
+            {
+              "source": "main.js",
+              "line": 92,
+              "text": "const assetResp = await fetch('./assets/model.json');"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, boxNode);）",
+        "line": "L128"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "cab0aa290350",
+    "source": "63e4502a895fc0fa",
+    "candidate": "5612c4c2746f395b",
+    "verified": 22,
+    "attested": 1,
+    "units": 23
   }
 }

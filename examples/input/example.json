@@ -31,7 +31,6 @@
     "lifecycle": [],
     "capability": []
   },
-  "promotionEvidence": "e30546154d39",
   "specStatus": "frozen",
   "learning": {
     "goal": "输入系统全景：键盘 WASD 平移、滚轮推拉、拖拽旋转（真实输入链）",
@@ -202,5 +201,75 @@
   "screenshot": {},
   "license": {
     "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "examples/shared/scene-kit.js",
+            "line": 53,
+            "text": "position 默认值 [0,8,0]（shared 形参默认值）"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "interactive-cube": {
+        "position": {
+          "vary": true,
+          "deferTo": "interaction-window"
+        },
+        "provenance": [
+          {
+            "source": "main.ts",
+            "line": 39,
+            "text": "this.node.position.x + x * dt * 3,this.node.position.y,this.node.position.z + z * dt * 3 —— 该轴由交互改写，变化在交互前/后两次读回之间判定"
+          },
+          {
+            "source": "main.ts",
+            "line": 73,
+            "text": "cube.eulerAngles.x + delta.y * 0.5,cube.eulerAngles.y + delta.x * 0.5,0 —— 该轴由交互改写，变化在交互前/后两次读回之间判定"
+          }
+        ],
+        "rotationEuler": {
+          "vary": true,
+          "deferTo": "interaction-window"
+        }
+      }
+    },
+    "material-property": {
+      "interactive-cube": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, cube);）",
+        "line": "L56"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "7b79f441a1fe",
+    "source": "d955f577fb18256d",
+    "candidate": "5612c4c2746f395b",
+    "verified": 13,
+    "attested": 2,
+    "units": 15
   }
 }

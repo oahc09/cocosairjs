@@ -204,5 +204,79 @@
   "license": {
     "assets": "无第三方资产（程序化图元）"
   },
-  "promotionEvidence": "eab58fab2dcd"
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 33,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
+      },
+      "Blinker": {
+        "position": [
+          0,
+          0.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 37,
+            "text": "blinker.setPosition(new Vec3(0, 0.6, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Blinker": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [
+              235,
+              205,
+              75,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 40,
+              "text": "new Color(235, 205, 75, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, blinker);）",
+        "line": "L59"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "9c7cfcdb6c9f",
+    "source": "957e34f8616eaf44",
+    "candidate": "5612c4c2746f395b",
+    "verified": 18,
+    "attested": 0,
+    "units": 18
+  }
 }
