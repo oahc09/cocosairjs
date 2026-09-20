@@ -634,6 +634,31 @@
       "sha256_16": "0b23495e5d6a833e",
       "status": "SHIPPED",
       "note": "r21 wave; REAL_EXIT=1"
+    },
+    {
+      "id": "F70-F72-F74-FIX-WAVE-2026-09-20",
+      "findings": [
+        "F-70",
+        "F-72",
+        "F-74"
+      ],
+      "raw": [
+        "raw/gates/f72-atomic-control-r23.log",
+        "raw/gates/coverage-r23.log",
+        "raw/gates/spec-compliance-r23.log"
+      ],
+      "scratch": "E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs (C1-C7, outside the repo)",
+      "commands": [
+        "node E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs   (x3 then x8 after the C6 re-specification)",
+        "node tools/examples/coverage-report.cjs",
+        "node tools/examples/spec-compliance-audit.cjs",
+        "npx tsc --noEmit; npm run build"
+      ],
+      "candidate": "d705a2c8b8eadd68 (unchanged by the recompute; build already carries builtin-unlit-material)",
+      "result": "F-70/F-74 fixes applied in working tree (uncommitted, owner re-run pending); F-72 controls 8/8 exit 0; consumers proven to reject un-stamped evidence (verified 0, 2 x S11-EVIDENCE-NOT-RUN)",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "run 3 of the first triple showed a mis-specified C6 assertion (target shadow test) — recorded verbatim, re-specified to the tmp-cannot-collide property, not weakened"
     }
   ],
   "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\" (16 of 48). F-67."

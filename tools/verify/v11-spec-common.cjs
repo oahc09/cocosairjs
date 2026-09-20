@@ -170,7 +170,7 @@ function promoteFromEvidence (results) {
       if (spec.status === 'stable') {
         spec.status = 'draft';
         spec.stableReview = { demotedAt: new Date().toISOString(), reason };
-        fs.writeFileSync(file, JSON.stringify(spec, null, 2) + '\n');
+        writeJsonAtomic(file, spec);
         demoted++;
       }
       continue;
@@ -180,13 +180,53 @@ function promoteFromEvidence (results) {
     spec.promotion = record;
     delete spec.promotionEvidence;
     delete spec.stableReview;
-    fs.writeFileSync(file, JSON.stringify(spec, null, 2) + '\n');
+    writeJsonAtomic(file, spec);
     promoted++;
   }
   return { promoted, demoted };
 }
 
+/** 原子写 JSON：先写同目录 tmp 再 rename（同目录 rename 是原子的）。
+ *  被 kill 只会留下一个 tmp，目标文件要么旧要么新，绝不会是半份 JSON（审计 F-72）。 */
+function writeJsonAtomic (abs, value) {
+  fs.mkdirSync(path.dirname(abs), { recursive: true });
+  // 唯一 tmp 名：并行会话（F-81）同时写同一目标时，各自的 tmp 不会互撞，
+  // 谁先 rename 谁是完整的一份，绝不会把别人的半成品写成目标。
+  const tmp = `${abs}.writing-${process.pid}-${Math.random().toString(36).slice(2, 8)}`;
+  fs.writeFileSync(tmp, JSON.stringify(value, null, 2) + '\n');
+  const deadline = Date.now() + 2000;
+  for (;;) {
+    try {
+      fs.renameSync(tmp, abs);
+      return;
+    } catch (e) {
+      // Windows：目标被编辑器/杀软/并行会话瞬时占用时 rename 会 EPERM/EACCES/EBUSY，短暂重试；
+      // 其余错误或重试超时（例如目录不可写）必须真抛，不许静默丢证据。
+      if (!['EPERM', 'EACCES', 'EBUSY'].includes(e.code) || Date.now() > deadline) {
+        fs.rmSync(tmp, { force: true });
+        throw e;
+      }
+      const waitUntil = Date.now() + 25;
+      while (Date.now() < waitUntil) { /* 让出时间给占用方释放句柄 */ }
+    }
+  }
+}
+
+/** 证据文件消费入口：只有 completed === true 才代表"一次跑完的全量测量"。
+ *  缺标记（中断路径、--ids 子集、旧版产线）按 NOT_RUN 处理，
+ *  不得让半成品文件的 FAIL 行冒充当期结论（审计 F-72：r16 曾整份替换掉 r15 证据）。 */
+function readEvidence (abs) {
+  if (!fs.existsSync(abs)) { return { status: 'NOT_RUN', reason: 'evidence file missing', data: null }; }
+  let data;
+  try { data = JSON.parse(fs.readFileSync(abs, 'utf8')); }
+  catch (e) { return { status: 'NOT_RUN', reason: `evidence JSON unreadable: ${e.message}`, data: null }; }
+  if (data.completed !== true) {
+    return { status: 'NOT_RUN', reason: `completed!==true（${data.runner || 'unknown runner'}：中断路径或 --ids 子集运行）`, data };
+  }
+  return { status: 'COMPLETE', reason: '', data };
+}
+
 module.exports = {
   REPO, specFingerprintOf, readFingerprint, promoteFromEvidence, promotionOf, assetDigestsOf, listAssetTree,
-  evidenceLineOk, apiProofOf,
+  evidenceLineOk, apiProofOf, writeJsonAtomic, readEvidence,
 };

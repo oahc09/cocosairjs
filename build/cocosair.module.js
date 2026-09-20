@@ -69020,6 +69020,15 @@ function registerBuiltinAirAssets() {
     effectName: 'builtin-standard'
   });
   builtinResMgr.addAsset(standardMtl._uuid, standardMtl);
+  const unlitMtl = new Material();
+  unlitMtl._uuid = 'builtin-unlit-material';
+  unlitMtl.initialize({
+    effectName: 'builtin-unlit',
+    defines: {
+      USE_TEXTURE: false
+    }
+  });
+  builtinResMgr.addAsset(unlitMtl._uuid, unlitMtl);
 }
 
 function ensureCanvasDOM(canvas) {

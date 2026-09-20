@@ -55,37 +55,42 @@ document.body.appendChild(panel);
 (async function demo() {
   var session = await getSession();
   var snapshot = session.inspectScene();
-  var root = snapshot.nodes[snapshot.nodes.length - 1];
+  // inspectScene 从 Scene 自身开始深度优先：nodes[0] 才是根，nodes[last] 是最后访问的叶子。
+  var root = snapshot.nodes[0];
 
-  var created: any = await session.dispatch({
+  // dispatch 不抛异常：失败以 { ok:false, error:{ code } } 返回，业务字段在 result 里。
+  var createRes: any = await session.dispatch({
     requestId: 'rc-create-node-1',
     action: 'createNode',
     targetId: root.id,
     params: { name: 'AgentGenerated' },
   });
-  await session.dispatch({
+  var nodeId: string = createRes.ok ? createRes.result.nodeId : '';
+  var setRes: any = await session.dispatch({
     requestId: 'rc-set-transform-1',
     action: 'setTransform',
-    targetId: created.nodeId,
+    targetId: nodeId,
     params: { space: 'local', position: [1.8, 0.6, 0], scale: [0.8, 0.8, 0.8] },
   });
 
   var after = session.inspectScene();
-  var hit = after.nodes.filter(function (n: any) { return n.name === 'AgentGenerated'; })[0];
-  var view = hit ? session.inspectNode(hit.id) : null;
+  var view = nodeId ? session.inspectNode(nodeId) : null;
   var lines = [
-    'createNode → nodeId: ' + created.nodeId,
+    'createNode → nodeId: ' + (nodeId || ('FAILED ' + createRes.error.code)),
     'scene nodeCount: ' + snapshot.nodeCount + ' → ' + after.nodeCount,
     'AgentGenerated pos: ' + (view ? JSON.stringify(view.local.position) : 'NOT FOUND'),
+    'setTransform → ' + (setRes.ok ? 'applied ' + JSON.stringify(setRes.result.applied) : 'FAILED ' + setRes.error.code),
   ];
 
-  // 稳定错误码：重复 requestId → INVALID_ARGUMENT（幂等合同）
-  try {
-    await session.dispatch({ requestId: 'rc-create-node-1', action: 'createNode', targetId: root.id, params: { name: 'Dup' } });
-    lines.push('duplicate requestId: NO ERROR (unexpected)');
-  } catch (e: any) {
-    lines.push('duplicate requestId → ' + (e.code || 'UNKNOWN'));
-  }
+  // 稳定错误码：重复 requestId → INVALID_ARGUMENT（幂等合同，返回而非抛出）
+  var dup: any = await session.dispatch({ requestId: 'rc-create-node-1', action: 'createNode', targetId: root.id, params: { name: 'Dup' } });
+  var duplicateCode: string = dup.ok ? 'NO-ERROR' : String(dup.error.code);
+  lines.push('duplicate requestId → ' + duplicateCode);
   panel.textContent = lines.join('\n');
-  (window as any).__rcState = { created: !!hit, nodeCount: after.nodeCount, duplicateCode: 'INVALID_ARGUMENT' };
+  (window as any).__rcState = {
+    created: !!view,
+    nodeCount: after.nodeCount,
+    duplicateCode: duplicateCode,
+    dupNodeSuppressed: !after.nodes.some(function (n: any) { return n.name === 'Dup'; }),
+  };
 })();

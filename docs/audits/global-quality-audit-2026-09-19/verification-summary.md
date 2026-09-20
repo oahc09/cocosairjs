@@ -463,3 +463,40 @@ and `license-audit.cjs` still exits 1 with issues=3.
 同工作树内另一会话的 r18 结论未被采纳：其 `candidateFingerprint 7903e764a1678115` ≠ 本波复算 `5612c4c2746f395b`，
 `measuredAt 2026-09-20T09:59:00Z` 当时比墙钟超前约 15 小时，其"core 718/718=100%"与本波复算 46/717 冲突，
 其引用的 `examples/gltf-{anisotropy,iridescence,sheen}` 与 `docs/evidence/visual/` 在本仓库不存在（该会话后已自行撤回）。
+
+## UPDATE-23 — 授权修复波执行完毕，交回 owner 重跑浏览器门禁（2026-09-20）
+
+授权范围（owner 原话）："提交git。授权引擎修 F-70（注册 builtin-unlit-material）与 F-74（解析真实目标节点 + 统一 duplicate 码），修后我重跑 r22 矩阵 + DevTools 门禁。授权 F-72 产证原子化（tmp+rename + completed:true，消费端缺标记按 NOT_RUN 处理）。"
+
+### 执行结果
+
+| 项 | 状态 | 说明 |
+| --- | --- | --- |
+| 提交 | DONE | `0773058`（r21/r22 审计波次 117 文件，**未 push**）。修复波本身仍在工作树，未获提交授权。 |
+| F-70 | 修复已落地 / 验证待 owner 重跑 | `src/air/builtin/register.ts` 第 3 步补注册 `builtin-unlit-material`（`initialize({effectName:'builtin-unlit', defines:{USE_TEXTURE:false}})` + `builtinResMgr.addAsset`）。tsc/build 退出 0，产物含该 uuid，候选 `d705a2c8b8eadd68`。 |
+| F-74 | 修复已落地 / 验证待 owner 重跑 | 三层：示例代码真解析（`snapshot.nodes[0]` 取根、解包 `{ok,result}`、`inspectNode` 回读、`duplicateCode`/`stableCode` 观察而非硬编码）+ `example.json` 文案与 4 处行号引用重算（L62/L77/L73、rc-error-report L64）+ 门禁补真探针（自发 duplicate requestId + `session-self-report-codes` 页内外码一致核对）。 |
+| F-72 | 已实现 + 离线证伪通过 | `writeJsonAtomic`（唯一 `.writing-<pid>-<rand>` tmp + EPERM/EACCES/EBUSY 有界重试，放弃前清自己 tmp）+ `completed:true` 只在完整跑通路径盖章；三个生产者与 `promoteFromEvidence` 全走原子写，`coverage-report`/`spec-compliance-audit` 两个消费端走 `readEvidence`。 |
+
+### F-72 离线对照（`E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs`，仓库外）
+
+C1–C7：完整证据被采纳 / 缺 `completed`、`completed:false`、JSON 截断、文件缺失四种形态一律 NOT_RUN；C6 SIGKILL 打断写入；C7 双进程并发写同一目标。
+日志：`raw/gates/f72-atomic-control-r23.log`。**首次 3 连跑中 run 3 FAIL**：
+
+```
+FAIL C6 target never shadowed by tmp :: e2e.json,e2e.json.writing-38848-ra3lnd
+```
+
+归因：这条断言测的是错的性质。SIGKILL 之后不可能回收 tmp，而残留 tmp 里恰好是**写完整的一代**（含 `completed:true`），读起来就是 COMPLETE。真正的安全性是"tmp 名既不等于目标路径、也不以 `.json/.png` 结尾，因此精确路径消费端与扩展名式目录扫描都命中不了；目标永远是完整代次"。核对过仓库内三个目录扫描式读者（`benchmark-evidence.cjs` 只走 `tools/benchmark`、`v11-gallery-artifact.cjs:109` 用 `endsWith('.png')`、`spec-evidence.cjs:180` 走示例目录名），均不会命中。改断言口径后 8 连跑全 `REAL_EXIT=0`，其中 3 次真的留下 tmp（`tmp leftovers=1`），断言非空洞。**这是控制脚本口径修正，不是把断言调松换取绿灯**——新断言额外要求名字匹配 `.writing-\d+-[a-z0-9]+`。
+
+### 消费端端到端证据（离线，非浏览器门禁）
+
+- `raw/gates/coverage-r23.log`：`verified 0`，两份已提交证据以 `status:"NOT_RUN" + reason:"completed!==true"` 被拒，`core/important gate FAIL`。
+- `raw/gates/spec-compliance-r23.log`：45 例 151 fail，含 2 条全局 `S11-EVIDENCE-NOT-RUN`（逐一点名文件与生产者）。
+
+### 本次必须如实标注的中间红
+
+已提交的 `v11-examples-verified.json` / `v11-devtools-examples.json` 早于 `completed` 契约，**在新消费端下必然按 NOT_RUN 处理**，于是覆盖率与合规门禁当前红。这是设计出来的过渡红，不是回归；**不得靠手写 `completed:true` 抹平**（那等于伪造盖章），只能由 owner 重跑产生。
+
+### 交回
+
+r22 全量矩阵（40 id）与 DevTools 门禁（5 id）归 owner 执行（我方尝试运行被会话策略拦截，且其已声明"修后我重跑"）。重跑后需要：候选仍为 `d705a2c8b8eadd68`、`material-unlit` 的 `material-property` 回读 `UnlitCube.effect==='builtin-unlit'`、`dispatch:duplicate-requestId` + `session-self-report-codes` 为真观察 PASS、两份证据带 `completed:true`、`coverage-report` 与 `spec-compliance-audit` 的 NOT_RUN 归零。台账 F-70/F-72/F-74 已改为上述处置状态。

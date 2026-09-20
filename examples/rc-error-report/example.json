@@ -15,7 +15,7 @@
     ]
   },
   "effect": {
-    "functional": "getRuntimeErrors 返回 {errors:[]} 结构；对不存在 targetId 的 dispatch 抛 STALE_TARGET 且被捕获；__rcState.stableCode === \"STALE_TARGET\"；场景持续运行。",
+    "functional": "getRuntimeErrors 返回 {errors:[]} 结构；对不存在 targetId 的 dispatch 返回 ok:false + code STALE_TARGET（错误码由页面读回、非写死）；__rcState.stableCode === \"STALE_TARGET\"；场景持续运行。",
     "visual": "面板展示错误基线、稳定错误码与\"主循环不受影响\"的核对行；画布场景正常渲染"
   },
   "api": {
@@ -90,7 +90,7 @@
         "api": "DevToolsSession.dispatch",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L65"
+        "sourceLocation": "L64"
       },
       {
         "api": "DevToolsSession.getRuntimeErrors",

@@ -211,9 +211,14 @@ export function registerBuiltinAirAssets (): void {
     // 2. 注册 builtin 材质（missing/particle/sprite/standard 等）
     initBuiltinMaterial();
 
-    // 3. Air 附加：标准 PBR 材质（Creator 中来自 internal db；独立引擎由 Air 提供）
+    // 3. Air 附加：标准 PBR / 无光照材质（Creator 中来自 internal db；独立引擎由 Air 提供）
     const standardMtl = new Material();
     standardMtl._uuid = 'builtin-standard-material';
     standardMtl.initialize({ effectName: 'builtin-standard' });
     builtinResMgr.addAsset(standardMtl._uuid, standardMtl);
+
+    const unlitMtl = new Material();
+    unlitMtl._uuid = 'builtin-unlit-material';
+    unlitMtl.initialize({ effectName: 'builtin-unlit', defines: { USE_TEXTURE: false } });
+    builtinResMgr.addAsset(unlitMtl._uuid, unlitMtl);
 }

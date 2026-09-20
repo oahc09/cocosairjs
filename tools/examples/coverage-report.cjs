@@ -69,9 +69,16 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   var sources = [];
   for (var rel of EVIDENCE_PATHS) {
     var abs = path.join(REPO, rel);
-    if (!fs.existsSync(abs)) { sources.push({ path: rel, present: false }); continue; }
-    var evidence = JSON.parse(fs.readFileSync(abs, 'utf8'));
-    sources.push({ path: rel, present: true, measuredAt: evidence.measuredAt || null, mode: evidence.mode || evidence.contract || 'unknown' });
+    // F-72：只有 completed:true 的证据代表"一次跑完的当期测量"。缺标记（被 kill 的进度快照、
+    // 旧版产线）整份按 NOT_RUN 处理，不得让半成品里的 FAIL/PASS 行冒充结论。
+    var ev = specCommon.readEvidence(abs);
+    if (ev.status !== 'COMPLETE') {
+      sources.push({ path: rel, present: !!ev.data, status: 'NOT_RUN', reason: ev.reason,
+        measuredAt: ev.data && ev.data.measuredAt || null, mode: (ev.data && (ev.data.mode || ev.data.contract)) || 'unknown' });
+      continue;
+    }
+    var evidence = ev.data;
+    sources.push({ path: rel, present: true, status: 'COMPLETE', measuredAt: evidence.measuredAt || null, mode: evidence.mode || evidence.contract || 'unknown' });
     for (var r of evidence.results || evidence.examples || []) {
       if (!r || !r.id) { continue; }
       var prev = runById[r.id];

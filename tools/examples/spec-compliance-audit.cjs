@@ -18,7 +18,7 @@ const crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..', '..');
 const EXAMPLES_DIR = path.join(REPO, 'examples');
 const OUT_PATH = path.join(REPO, 'docs', 'evidence', 'v11-spec-compliance.json');
-const { specFingerprintOf, listAssetTree } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
+const { specFingerprintOf, listAssetTree, readEvidence } = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs'));
 const { findSymbolLine } = require(path.join(__dirname, 'spec-evidence.cjs'));
 
 const EVIDENCE_FILES = ['docs/evidence/v11-examples-verified.json', 'docs/evidence/v11-devtools-examples.json'];
@@ -64,13 +64,22 @@ function upstreamDigest (exampleDir, rel) {
 
 /** 收集两份门禁的当期证据（按示例类型选用）：requiresDevTools 走 DevTools 会话门禁，
  *  其余走浏览器矩阵；取不到对应门禁时退回另一份（指纹核对仍会揭穿失配）。 */
-function loadRuns () {
+function loadRuns (globalFindings) {
   const byId = {};
   const sourceKind = (rel) => (rel.indexOf('devtools') >= 0 ? 'devtools' : 'browser');
   for (const rel of EVIDENCE_FILES) {
     const abs = path.join(REPO, rel);
-    if (!fs.existsSync(abs)) { continue; }
-    for (const r of readJson(abs).results || []) {
+    // F-72：证据必须是 completed:true 的整轮测量。半成品（被 kill 的进度快照、旧版产线）
+    // 整份按 NOT_RUN 处理，行不得被采纳，同时在全局发现里点名，避免"批量缺证据"被误读成"批量失败"。
+    const ev = readEvidence(abs);
+    if (ev.status !== 'COMPLETE') {
+      if (globalFindings) {
+        globalFindings.push({ rule: 'S11-EVIDENCE-NOT-RUN', severity: 'fail',
+          detail: `§11：${rel} 非当期完整测量（${ev.reason}）→ 整份按 NOT_RUN 处理，需重跑对应门禁` });
+      }
+      continue;
+    }
+    for (const r of ev.data.results || []) {
       (byId[r.id] = byId[r.id] || []).push(Object.assign({ source: rel, kind: sourceKind(rel) }, r));
     }
   }
@@ -368,10 +377,10 @@ function main () {
   const manifest = readJson(path.join(EXAMPLES_DIR, 'files.json'));
   const manifestById = {};
   for (const e of manifest.examples) { manifestById[e.id] = e; }
-  const ctx = { inventory, manifestById, runs: loadRuns() };
-
+  const ctx = { inventory, manifestById };
   const galleryHtml = fs.readFileSync(path.join(EXAMPLES_DIR, 'gallery.html'), 'utf8');
   const globalFindings = [];
+  ctx.runs = loadRuns(globalFindings);
   for (const [title, needle] of [[
     '§19 What you\'ll learn', /What you'll learn/,
   ], ['§20 APIs Used', /APIs Used/], ['§21 Expected Result', /Expected Result/], ['§22 Validation Status', /Validation Status/]]) {

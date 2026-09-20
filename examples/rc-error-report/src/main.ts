@@ -3,7 +3,7 @@
  *
  * 演示：
  *  1. session.getRuntimeErrors 读取运行时错误环形缓冲基线；
- *  2. dispatch 不存在的目标 → STALE_TARGET 稳定错误码（被捕获、不上抛为崩溃）；
+ *  2. dispatch 不存在的目标 → 返回 { ok:false, error:{ code:'STALE_TARGET' } }（稳定错误码，不抛为崩溃）；
  *  3. 面板展示两类信息，业务主循环不受影响。
  */
 import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, Material, utils, primitives } from 'cocosair';
@@ -60,16 +60,14 @@ document.body.appendChild(panel);
   var lines = ['runtime errors baseline: ' + baseline.errors.length + ' 条'];
   baseline.errors.slice(0, 3).forEach(function (e: any) { lines.push('  · ' + String(e.message).slice(0, 80)); });
 
+  // dispatch 不抛异常：稳定错误码在返回值的 error.code 里，必须读回来而不是写死。
+  var stale: any = await session.dispatch({ requestId: 'rc-error-1', action: 'addComponent', targetId: 'no-such-node-id', params: { component: 'MeshRenderer' } });
+  var stableCode: string = stale.ok ? 'NO-ERROR' : String(stale.error.code);
   lines.push('---');
-  try {
-    await session.dispatch({ requestId: 'rc-error-1', action: 'addComponent', targetId: 'no-such-node-id', params: { component: 'MeshRenderer' } });
-    lines.push('dispatch to stale target: NO ERROR (unexpected)');
-  } catch (e: any) {
-    lines.push('dispatch to stale target → ' + (e.code || 'UNKNOWN') + ' (stable error code)');
-  }
+  lines.push('dispatch to stale target → ' + stableCode + ' (stable error code)');
 
   var after = session.getRuntimeErrors({ limit: 50 });
   lines.push('runtime errors after: ' + after.errors.length + ' 条（主循环不受影响）');
   panel.textContent = lines.join('\n');
-  (window as any).__rcState = { baseline: baseline.errors.length, stableCode: 'STALE_TARGET' };
+  (window as any).__rcState = { baseline: baseline.errors.length, stableCode: stableCode, staleRejected: stale.ok === false };
 })();

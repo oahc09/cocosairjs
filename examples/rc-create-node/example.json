@@ -9,13 +9,13 @@
   "learning": {
     "goal": "掌握 session.dispatch 的写操作：createNode + setTransform 与 requestId 幂等合同",
     "points": [
-      "dispatch 请求结构（requestId/action/targetId/params）",
-      "createNode 后 inspectScene 核对节点出现",
-      "重复 requestId → 稳定错误码 INVALID_ARGUMENT"
+      "dispatch 请求结构（requestId/action/targetId/params）与响应结构（ok / result / error.code）",
+      "createNode 返回 result.nodeId，setTransform 用它作 targetId 后 inspectNode 读回变换",
+      "重复 requestId → 返回 ok:false + 稳定错误码 INVALID_ARGUMENT（幂等合同，不抛异常）"
     ]
   },
   "effect": {
-    "functional": "dispatch createNode 成功返回 nodeId；setTransform 后 inspectNode 读回 position=[1.8,0.6,0]；重复 requestId 抛 INVALID_ARGUMENT；__rcState.created === true。",
+    "functional": "dispatch createNode 成功返回 result.nodeId；setTransform 后 inspectNode 读回 position=[1.8,0.6,0]；重复 requestId 返回 ok:false + INVALID_ARGUMENT；__rcState.created === true 且 duplicateCode 为页面实际读回值。",
     "visual": "场景右侧出现新方块（橙色系），面板展示 nodeId、节点数变化与幂等错误码"
   },
   "api": {
@@ -93,7 +93,7 @@
         "api": "DevToolsSession.dispatch",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L60"
+        "sourceLocation": "L62"
       },
       {
         "api": "DevToolsSession.inspectScene",
@@ -105,7 +105,7 @@
         "api": "DevToolsSession.inspectNode",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L75"
+        "sourceLocation": "L77"
       },
       {
         "api": "Layers",
@@ -242,8 +242,8 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 70,
-            "text": "dispatch setTransform params { space:'local', position:[1.8,0.6,0], scale:[0.8,0.8,0.8] }（L70）；params 未给 rotation ⇒ 创建后保持引擎默认 identity"
+            "line": 73,
+            "text": "params: { space: 'local', position: [1.8, 0.6, 0], scale: [0.8, 0.8, 0.8] },（L73）；params 未给 rotation ⇒ 创建后保持引擎默认 identity"
           }
         ],
         "handAuthored": true

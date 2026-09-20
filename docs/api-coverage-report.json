@@ -1,15 +1,19 @@
 {
-  "generatedAt": "2026-09-19T19:03:19.795Z",
+  "generatedAt": "2026-09-19T23:53:01.494Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
+      "status": "NOT_RUN",
+      "reason": "completed!==true（tools/verify/v11-examples-verify.cjs：中断路径或 --ids 子集运行）",
       "measuredAt": "2026-09-19T19:01:48.259Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
+      "status": "NOT_RUN",
+      "reason": "completed!==true（tools/verify/v11-devtools-examples.cjs：中断路径或 --ids 子集运行）",
       "measuredAt": "2026-09-19T19:03:11.848Z",
       "mode": "devtools-session-v3"
     }
@@ -21,16 +25,16 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "5612c4c2746f395b",
+  "candidateFingerprint": "d705a2c8b8eadd68",
   "inventoryFingerprint": "2d10b49ee9c22d24",
   "inventoryConsistency": [],
   "totalUnits": 4729,
   "totalRequired": 1510,
   "totalClaimed": 62,
-  "totalAttested": 4,
-  "totalVerified": 58,
-  "totalVerifiedViaCall": 54,
-  "totalVerifiedViaRead": 4,
+  "totalAttested": 0,
+  "totalVerified": 0,
+  "totalVerifiedViaCall": 0,
+  "totalVerifiedViaRead": 0,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -40,213 +44,176 @@
     "DevToolsSession.inspectNode",
     "DevToolsSession.getRuntimeErrors"
   ],
-  "evidenceSchemaGaps": [
-    {
-      "id": "gltf-catalog",
-      "reason": "evidence row has no apiProof[] (pre-v3 schema): claims cannot be counted as verified"
-    }
-  ],
+  "evidenceSchemaGaps": [],
   "examples": [
     {
       "id": "anim-position",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 17,
-        "total": 17,
-        "hash": "278c27457e0eefc1"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 17,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "anim-rotation",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 18,
-        "hash": "b2dd1d88a84d5199"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 18,
       "tally": {
-        "verified": 18,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 1
+        "claimedOnly": 18,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "automation",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 8,
-        "total": 11,
-        "hash": "ec54c04fa2d7ce21"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 11,
       "tally": {
-        "verified": 8,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 7,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 9,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "camera",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 12,
-        "total": 13,
-        "hash": "d61872d95de70c0a"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 13,
       "tally": {
-        "verified": 12,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 11,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 13,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "camera-lookat",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 19,
-        "hash": "db701a5662887450"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 2
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "camera-multi",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "c9c7b32b4b2e7351"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 19,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 18,
-        "verifiedRead": 1
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "camera-ortho",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 19,
-        "hash": "eb6b6be22820c681"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 2
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "gltf-basic",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 17,
-        "total": 17,
-        "hash": "22c24e251d1662f9"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 17,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "gltf-catalog",
-      "result": "PASS",
+      "result": "no-evidence",
       "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
       "hasApiProof": false,
       "instrumentation": null,
@@ -261,403 +228,335 @@
     },
     {
       "id": "gltf-clearcoat",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 15,
-        "total": 15,
-        "hash": "d4be4507e274f02a"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 15,
       "tally": {
-        "verified": 15,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 14,
-        "verifiedRead": 1
+        "claimedOnly": 15,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "gltf-draco",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 14,
-        "total": 14,
-        "hash": "bdeceafdf820701f"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 14,
       "tally": {
-        "verified": 14,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 13,
-        "verifiedRead": 1
+        "claimedOnly": 14,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "gltf-meshopt",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 20,
-        "total": 20,
-        "hash": "967ecd8f4804978e"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 20,
       "tally": {
-        "verified": 20,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 19,
-        "verifiedRead": 1
+        "claimedOnly": 20,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "gltf-morph",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 20,
-        "total": 20,
-        "hash": "91c716ba2cdf55a1"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 20,
       "tally": {
-        "verified": 20,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 3
+        "claimedOnly": 20,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "gltf-skin",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 21,
-        "total": 21,
-        "hash": "4bf0d443c133b1e2"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 21,
       "tally": {
-        "verified": 21,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 18,
-        "verifiedRead": 3
+        "claimedOnly": 21,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "gltf-viewer",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 12,
-        "total": 12,
-        "hash": "c47bf7669dd3ce44"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 12,
       "tally": {
-        "verified": 12,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 10,
-        "verifiedRead": 2
+        "claimedOnly": 12,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "hello-cube",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 16,
-        "total": 17,
-        "hash": "3da224e7e8b807c3"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 17,
       "tally": {
-        "verified": 16,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 15,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "input",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 13,
-        "total": 15,
-        "hash": "30c11955f5e41fab"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 15,
       "tally": {
-        "verified": 13,
-        "attested": 2,
-        "claimedOnly": 0,
-        "verifiedCall": 11,
-        "verifiedRead": 2
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 15,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "interaction-click",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 19,
-        "total": 20,
-        "hash": "0ba7b2c3ecc12291"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 20,
       "tally": {
-        "verified": 19,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 2
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 20,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "light-point",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "5004b0773faa5573"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 19,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 18,
-        "verifiedRead": 1
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "light-sphere",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 18,
-        "hash": "fd41804244b001c5"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 18,
       "tally": {
-        "verified": 18,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 1
+        "claimedOnly": 18,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "light-spot",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "ef3c0263c09c296c"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 19,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 18,
-        "verifiedRead": 1
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "light-two-directional",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 19,
-        "hash": "eb6b6be22820c681"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 2
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "material-basic",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 13,
-        "total": 14,
-        "hash": "2c13ff60a02fdbb8"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 14,
       "tally": {
-        "verified": 13,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 12,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 14,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "material-color",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 16,
-        "total": 16,
-        "hash": "4d54609b004246c0"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 16,
       "tally": {
-        "verified": 16,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 15,
-        "verifiedRead": 1
+        "claimedOnly": 16,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "material-transparent",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 22,
-        "total": 22,
-        "hash": "edae80a57f806e2d"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 22,
       "tally": {
-        "verified": 22,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 21,
-        "verifiedRead": 1
+        "claimedOnly": 22,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "material-unlit",
-      "result": "FAIL",
+      "result": "no-evidence",
       "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 15,
-        "total": 16,
-        "hash": "1d4a07b34f76d106"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 16,
       "tally": {
         "verified": 0,
@@ -669,235 +568,195 @@
     },
     {
       "id": "mesh-cylinder",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 18,
-        "hash": "e6a47ff866864e62"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 18,
       "tally": {
-        "verified": 18,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 1
+        "claimedOnly": 18,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "mesh-multi-material",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 16,
-        "total": 16,
-        "hash": "539e35fdfeb749ca"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 16,
       "tally": {
-        "verified": 16,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 14,
-        "verifiedRead": 2
+        "claimedOnly": 16,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "mesh-plane",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "01a024a136310e4c"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 19,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 18,
-        "verifiedRead": 1
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "mesh-sphere",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 18,
-        "hash": "fd41804244b001c5"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 18,
       "tally": {
-        "verified": 18,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 1
+        "claimedOnly": 18,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "mesh-torus",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 18,
-        "hash": "18aecf6102e96da4"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 18,
       "tally": {
-        "verified": 18,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 1
+        "claimedOnly": 18,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "node-active",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 18,
-        "total": 18,
-        "hash": "b2dd1d88a84d5199"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 18,
       "tally": {
-        "verified": 18,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 1
+        "claimedOnly": 18,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "node-hierarchy",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 20,
-        "total": 20,
-        "hash": "c9670fba88418360"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 20,
       "tally": {
-        "verified": 20,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 19,
-        "verifiedRead": 1
+        "claimedOnly": 20,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "node-scale",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "3cc6d65c679be1f7"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 19,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 18,
-        "verifiedRead": 1
+        "claimedOnly": 19,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "rc-capture-frame",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 17,
-        "total": 18,
-        "hash": "58959b9e074f9cf4"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 18,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "rc-create-node",
-      "result": "FAIL",
+      "result": "no-evidence",
       "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 17,
-        "total": 20,
-        "hash": "26fb99fbbb41f46b"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 20,
       "tally": {
         "verified": 0,
@@ -909,218 +768,182 @@
     },
     {
       "id": "rc-error-report",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 17,
-        "total": 19,
-        "hash": "19d0bc6283e733aa"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "rc-inspect-scene",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 17,
-        "total": 19,
-        "hash": "333f745563deefa7"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 19,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "runtime-asset-release",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 16,
-        "total": 16,
-        "hash": "04d62335a2da9def"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 16,
       "tally": {
-        "verified": 16,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 15,
-        "verifiedRead": 1
+        "claimedOnly": 16,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "skinned-animation",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 16,
-        "total": 16,
-        "hash": "d4d816ec5571f078"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 16,
       "tally": {
-        "verified": 16,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
+        "claimedOnly": 16,
+        "verifiedCall": 0,
         "verifiedRead": 0
       }
     },
     {
       "id": "starter",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 8,
-        "total": 9,
-        "hash": "076a25068621ba26"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 9,
       "tally": {
-        "verified": 8,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 7,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 9,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "static-model",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 22,
-        "total": 23,
-        "hash": "dc2f823868683f32"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 23,
       "tally": {
-        "verified": 22,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 21,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 23,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "texture-basic",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 25,
-        "total": 25,
-        "hash": "c50312d6801fc9a4"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 25,
       "tally": {
-        "verified": 25,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 24,
-        "verifiedRead": 1
+        "claimedOnly": 25,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "transform",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 13,
-        "total": 14,
-        "hash": "4538090a7e72787b"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 14,
       "tally": {
-        "verified": 13,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 12,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 14,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "tween-basic",
-      "result": "PASS",
-      "fresh": true,
+      "result": "no-evidence",
+      "fresh": false,
       "binding": {
-        "spec": true,
-        "source": true,
-        "candidate": true
+        "spec": false,
+        "source": false,
+        "candidate": false
       },
-      "hasApiProof": true,
-      "instrumentation": {
-        "observed": 14,
-        "total": 15,
-        "hash": "926ab79fd884adb5"
-      },
+      "hasApiProof": false,
+      "instrumentation": null,
       "claims": 15,
       "tally": {
-        "verified": 14,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 13,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 15,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     }
   ],
@@ -1130,20 +953,20 @@
       "total": 717,
       "required": 717,
       "claimed": 49,
-      "attested": 3,
-      "verified": 46,
+      "attested": 0,
+      "verified": 0,
       "requiredClaimed": 49,
-      "requiredVerified": 46,
-      "verifiedViaCall": 44,
-      "verifiedViaRead": 2,
+      "requiredVerified": 0,
+      "verifiedViaCall": 0,
+      "verifiedViaRead": 0,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 44,
-      "requiredVerifiedViaRead": 2,
+      "requiredVerifiedViaCall": 0,
+      "requiredVerifiedViaRead": 0,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.061,
+      "requiredVerifiedViaCallRate": 0,
       "claimedRate": 0.068,
-      "verifiedRate": 0.064,
-      "allUnitsVerifiedRate": 0.064,
+      "verifiedRate": 0,
+      "allUnitsVerifiedRate": 0,
       "gate": "100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -1155,19 +978,19 @@
       "required": 793,
       "claimed": 6,
       "attested": 0,
-      "verified": 6,
+      "verified": 0,
       "requiredClaimed": 6,
-      "requiredVerified": 6,
-      "verifiedViaCall": 4,
-      "verifiedViaRead": 2,
+      "requiredVerified": 0,
+      "verifiedViaCall": 0,
+      "verifiedViaRead": 0,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 4,
-      "requiredVerifiedViaRead": 2,
+      "requiredVerifiedViaCall": 0,
+      "requiredVerifiedViaRead": 0,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.005,
+      "requiredVerifiedViaCallRate": 0,
       "claimedRate": 0.008,
-      "verifiedRate": 0.008,
-      "allUnitsVerifiedRate": 0.008,
+      "verifiedRate": 0,
+      "allUnitsVerifiedRate": 0,
       "gate": ">= 90% verified of coverageRequired",
       "threshold": 0.9,
       "applicable": true,
@@ -1178,11 +1001,11 @@
       "total": 3219,
       "required": 0,
       "claimed": 7,
-      "attested": 1,
-      "verified": 6,
+      "attested": 0,
+      "verified": 0,
       "requiredClaimed": 0,
       "requiredVerified": 0,
-      "verifiedViaCall": 6,
+      "verifiedViaCall": 0,
       "verifiedViaRead": 0,
       "verifiedViaUnknown": 0,
       "requiredVerifiedViaCall": 0,
@@ -1191,18 +1014,19 @@
       "requiredVerifiedViaCallRate": 0,
       "claimedRate": 0,
       "verifiedRate": 0,
-      "allUnitsVerifiedRate": 0.002,
+      "allUnitsVerifiedRate": 0,
       "gate": ">= 80% verified of coverageRequired",
       "threshold": 0.8,
       "applicable": false,
       "pass": true
     }
   },
-  "verifiedList": [
+  "verifiedList": [],
+  "attestedNotVerified": [],
+  "claimedNotVerified": [
     {
       "unit": "createAirApp",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1228,6 +1052,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1237,6 +1062,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1251,7 +1077,6 @@
     {
       "unit": "Scene",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1277,6 +1102,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1286,6 +1112,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1300,7 +1127,6 @@
     {
       "unit": "Node",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1326,6 +1152,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1335,6 +1162,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1349,7 +1177,6 @@
     {
       "unit": "MeshRenderer",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1368,6 +1195,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1377,6 +1205,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "static-model",
@@ -1388,7 +1217,6 @@
     {
       "unit": "Camera",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1412,6 +1240,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1421,6 +1250,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1434,7 +1264,6 @@
     {
       "unit": "DirectionalLight",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1454,6 +1283,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1463,6 +1293,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1473,7 +1304,6 @@
     {
       "unit": "Component",
       "tier": "advanced",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1483,6 +1313,7 @@
         "light-point",
         "light-sphere",
         "light-spot",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
         "mesh-sphere",
@@ -1498,7 +1329,6 @@
     {
       "unit": "Layers",
       "tier": "core",
-      "via": "read",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1523,6 +1353,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1532,6 +1363,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1544,7 +1376,6 @@
     {
       "unit": "math.Vec3",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1568,6 +1399,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1577,6 +1409,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1589,7 +1422,6 @@
     {
       "unit": "math.Color",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1610,6 +1442,7 @@
         "light-two-directional",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1619,6 +1452,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1631,7 +1465,6 @@
     {
       "unit": "Material",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1653,6 +1486,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "skinned-animation",
@@ -1663,7 +1497,6 @@
     {
       "unit": "Material.initialize",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1685,6 +1518,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "skinned-animation",
@@ -1694,7 +1528,6 @@
     {
       "unit": "Material.setProperty",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1716,6 +1549,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "texture-basic"
@@ -1724,7 +1558,6 @@
     {
       "unit": "utils.createMesh",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1743,6 +1576,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
         "mesh-sphere",
@@ -1751,6 +1585,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "static-model",
@@ -1762,7 +1597,6 @@
     {
       "unit": "primitives.box",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1778,10 +1612,12 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "texture-basic",
@@ -1792,7 +1628,6 @@
     {
       "unit": "Node.addChild",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1818,6 +1653,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
@@ -1827,6 +1663,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1841,7 +1678,6 @@
     {
       "unit": "Node.setPosition",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1865,6 +1701,7 @@
         "material-basic",
         "material-color",
         "material-transparent",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
         "mesh-sphere",
@@ -1873,6 +1710,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1886,7 +1724,6 @@
     {
       "unit": "Node.setRotationFromEuler",
       "tier": "core",
-      "via": "call",
       "examples": [
         "anim-rotation",
         "camera-lookat",
@@ -1903,6 +1740,7 @@
         "light-sphere",
         "light-two-directional",
         "material-basic",
+        "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
         "mesh-sphere",
@@ -1911,6 +1749,7 @@
         "node-hierarchy",
         "node-scale",
         "rc-capture-frame",
+        "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
         "runtime-asset-release",
@@ -1921,9 +1760,22 @@
       ]
     },
     {
+      "unit": "builtinResMgr",
+      "tier": "core",
+      "examples": [
+        "automation",
+        "camera",
+        "hello-cube",
+        "input",
+        "material-basic",
+        "material-unlit",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
       "unit": "frameObject",
       "tier": "core",
-      "via": "call",
       "examples": [
         "camera",
         "gltf-basic",
@@ -1935,9 +1787,19 @@
       ]
     },
     {
+      "unit": "input",
+      "tier": "core",
+      "examples": [
+        "camera-lookat",
+        "camera-ortho",
+        "input",
+        "interaction-click",
+        "light-two-directional"
+      ]
+    },
+    {
       "unit": "Input",
       "tier": "core",
-      "via": "read",
       "examples": [
         "camera-lookat",
         "camera-ortho",
@@ -1949,7 +1811,6 @@
     {
       "unit": "primitives.sphere",
       "tier": "core",
-      "via": "call",
       "examples": [
         "camera-lookat",
         "camera-multi",
@@ -1961,7 +1822,6 @@
     {
       "unit": "Layers.makeMaskInclude",
       "tier": "core",
-      "via": "call",
       "examples": [
         "camera-multi"
       ]
@@ -1969,7 +1829,6 @@
     {
       "unit": "primitives.plane",
       "tier": "core",
-      "via": "call",
       "examples": [
         "camera-multi",
         "light-point",
@@ -1981,7 +1840,6 @@
     {
       "unit": "GLTFLoader",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -1998,7 +1856,6 @@
     {
       "unit": "GLTFLoader.loadAsync",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-basic"
       ]
@@ -2006,7 +1863,6 @@
     {
       "unit": "GLTFAsset.instantiate",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -2021,7 +1877,6 @@
     {
       "unit": "isValid",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -2039,7 +1894,6 @@
     {
       "unit": "GLTFAsset.destroy",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -2054,7 +1908,6 @@
     {
       "unit": "GLTFLoader.parseAsync",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-clearcoat",
         "gltf-draco",
@@ -2069,7 +1922,6 @@
     {
       "unit": "GLTFLoader.getExtensionSupport",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-draco"
       ]
@@ -2077,7 +1929,6 @@
     {
       "unit": "GLTFLoader.setMeshoptDecoder",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-meshopt"
       ]
@@ -2085,7 +1936,6 @@
     {
       "unit": "createMeshoptDecoder",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-meshopt"
       ]
@@ -2093,7 +1943,6 @@
     {
       "unit": "isMeshoptAvailable",
       "tier": "advanced",
-      "via": "call",
       "examples": [
         "gltf-meshopt"
       ]
@@ -2101,7 +1950,6 @@
     {
       "unit": "Material.destroy",
       "tier": "core",
-      "via": "call",
       "examples": [
         "gltf-meshopt",
         "gltf-skin",
@@ -2112,7 +1960,6 @@
     {
       "unit": "Animation",
       "tier": "important",
-      "via": "read",
       "examples": [
         "gltf-morph",
         "gltf-skin",
@@ -2122,7 +1969,6 @@
     {
       "unit": "Animation.play",
       "tier": "important",
-      "via": "call",
       "examples": [
         "gltf-morph",
         "gltf-skin"
@@ -2131,7 +1977,6 @@
     {
       "unit": "AnimationClip",
       "tier": "important",
-      "via": "read",
       "examples": [
         "gltf-morph",
         "gltf-skin",
@@ -2141,7 +1986,6 @@
     {
       "unit": "AirTransmissionCapture",
       "tier": "advanced",
-      "via": "call",
       "examples": [
         "gltf-viewer"
       ]
@@ -2149,7 +1993,6 @@
     {
       "unit": "Node.addComponent",
       "tier": "core",
-      "via": "call",
       "examples": [
         "hello-cube",
         "starter"
@@ -2158,7 +2001,6 @@
     {
       "unit": "PointLight",
       "tier": "core",
-      "via": "call",
       "examples": [
         "light-point"
       ]
@@ -2166,7 +2008,6 @@
     {
       "unit": "Node.lookAt",
       "tier": "core",
-      "via": "call",
       "examples": [
         "light-point",
         "light-spot"
@@ -2175,7 +2016,6 @@
     {
       "unit": "SpotLight",
       "tier": "core",
-      "via": "call",
       "examples": [
         "light-spot"
       ]
@@ -2183,7 +2023,6 @@
     {
       "unit": "Node.destroy",
       "tier": "core",
-      "via": "call",
       "examples": [
         "material-transparent",
         "static-model",
@@ -2193,7 +2032,6 @@
     {
       "unit": "Mesh.destroy",
       "tier": "core",
-      "via": "call",
       "examples": [
         "material-transparent",
         "static-model",
@@ -2203,7 +2041,6 @@
     {
       "unit": "primitives.cylinder",
       "tier": "core",
-      "via": "call",
       "examples": [
         "mesh-cylinder"
       ]
@@ -2211,7 +2048,6 @@
     {
       "unit": "Node.getComponentInChildren",
       "tier": "core",
-      "via": "call",
       "examples": [
         "mesh-multi-material"
       ]
@@ -2219,7 +2055,6 @@
     {
       "unit": "primitives.torus",
       "tier": "core",
-      "via": "call",
       "examples": [
         "mesh-torus"
       ]
@@ -2227,7 +2062,6 @@
     {
       "unit": "Node.getChildByName",
       "tier": "core",
-      "via": "call",
       "examples": [
         "node-hierarchy"
       ]
@@ -2235,7 +2069,6 @@
     {
       "unit": "Node.setScale",
       "tier": "core",
-      "via": "call",
       "examples": [
         "node-hierarchy",
         "node-scale",
@@ -2245,7 +2078,6 @@
     {
       "unit": "SkinnedMeshRenderer",
       "tier": "important",
-      "via": "call",
       "examples": [
         "skinned-animation"
       ]
@@ -2253,7 +2085,6 @@
     {
       "unit": "Mesh",
       "tier": "core",
-      "via": "call",
       "examples": [
         "skinned-animation",
         "static-model"
@@ -2262,7 +2093,6 @@
     {
       "unit": "buildSkeletonTree",
       "tier": "important",
-      "via": "call",
       "examples": [
         "skinned-animation"
       ]
@@ -2270,15 +2100,20 @@
     {
       "unit": "restoreBindPose",
       "tier": "advanced",
-      "via": "call",
       "examples": [
         "skinned-animation"
       ]
     },
     {
+      "unit": "Layers.DEFAULT",
+      "tier": "core",
+      "examples": [
+        "starter"
+      ]
+    },
+    {
       "unit": "Texture2D",
       "tier": "core",
-      "via": "call",
       "examples": [
         "static-model",
         "texture-basic"
@@ -2287,16 +2122,21 @@
     {
       "unit": "ImageAsset",
       "tier": "advanced",
-      "via": "call",
       "examples": [
         "static-model",
         "texture-basic"
       ]
     },
     {
+      "unit": "assetManager",
+      "tier": "advanced",
+      "examples": [
+        "static-model"
+      ]
+    },
+    {
       "unit": "loadAssetAsync",
       "tier": "advanced",
-      "via": "call",
       "examples": [
         "static-model"
       ]
@@ -2304,7 +2144,6 @@
     {
       "unit": "Texture2D.destroy",
       "tier": "core",
-      "via": "call",
       "examples": [
         "static-model",
         "texture-basic"
@@ -2313,90 +2152,8 @@
     {
       "unit": "tween",
       "tier": "important",
-      "via": "call",
       "examples": [
         "tween-basic"
-      ]
-    }
-  ],
-  "attestedNotVerified": [
-    {
-      "unit": "builtinResMgr",
-      "tier": "core",
-      "examples": [
-        "automation",
-        "camera",
-        "hello-cube",
-        "input",
-        "material-basic",
-        "transform",
-        "tween-basic"
-      ]
-    },
-    {
-      "unit": "input",
-      "tier": "core",
-      "examples": [
-        "camera-lookat",
-        "camera-ortho",
-        "input",
-        "interaction-click",
-        "light-two-directional"
-      ]
-    },
-    {
-      "unit": "Layers.DEFAULT",
-      "tier": "core",
-      "examples": [
-        "starter"
-      ]
-    },
-    {
-      "unit": "assetManager",
-      "tier": "advanced",
-      "examples": [
-        "static-model"
-      ]
-    }
-  ],
-  "claimedNotVerified": [
-    {
-      "unit": "builtinResMgr",
-      "tier": "core",
-      "examples": [
-        "automation",
-        "camera",
-        "hello-cube",
-        "input",
-        "material-basic",
-        "material-unlit",
-        "transform",
-        "tween-basic"
-      ]
-    },
-    {
-      "unit": "input",
-      "tier": "core",
-      "examples": [
-        "camera-lookat",
-        "camera-ortho",
-        "input",
-        "interaction-click",
-        "light-two-directional"
-      ]
-    },
-    {
-      "unit": "Layers.DEFAULT",
-      "tier": "core",
-      "examples": [
-        "starter"
-      ]
-    },
-    {
-      "unit": "assetManager",
-      "tier": "advanced",
-      "examples": [
-        "static-model"
       ]
     }
   ],

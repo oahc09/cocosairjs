@@ -154,13 +154,15 @@ function writeEvidence (results, done) {
     pass,
     fail: merged.length - pass,
     partial: !done || !!targetIds,
+    // completed 只在整轮跑完（done）时为 true；每条示例的进度快照一律 false，
+    // 被 kill 后文件不自认"当期测量"，消费端按 NOT_RUN 处理（F-72）。
+    completed: done === true,
     subset: targetIds ? [...ran].sort() : undefined,
     runPass: results.filter((r) => r.result === 'PASS').length,
     runTotal: results.length,
     results: merged,
   };
-  fs.mkdirSync(path.dirname(EVIDENCE_PATH), { recursive: true });
-  fs.writeFileSync(EVIDENCE_PATH, JSON.stringify(evidence, null, 2) + '\n');
+  specCommon.writeJsonAtomic(EVIDENCE_PATH, evidence);
 }
 
 async function saveArtifact (dir, dataUrl) {

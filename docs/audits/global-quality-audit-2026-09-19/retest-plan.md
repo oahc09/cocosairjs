@@ -163,3 +163,29 @@ Evidence: `raw/gates/v06-fulltrack-2026-09-19.log`; pre-overwrite hash manifest
   (iii) close F-61 as won't-fix with the invariant documented. All three need authorization for `tools/`.
 - **Unchanged by this pass**: F-60 (recipe frames), R1 (2 sidecars + provenance policy, census restated in
   F-66), R1b/R1c, R2 (3/3 tier gates FAIL), R3, R5, R6, R8, catalog `assets[] hash`, F-58, F-63.
+
+## r23 — authorised fix wave landed, browser gates handed back (2026-09-20)
+
+Candidate under test: `d705a2c8b8eadd68` (build/cocosair.module.js + .d.ts + examples/shared). Fixes are
+**uncommitted working-tree changes**; commit authorisation was not re-granted for this wave.
+
+Owner re-run (the runs I must not perform) and the machine-checkable expectations afterwards:
+
+- `node tools/verify/v11-examples-verify.cjs` (40 ids) → `material-unlit` PASS with `material-property`
+  readback `UnlitCube.effect === 'builtin-unlit'`; evidence carries `completed:true`; no threshold touched.
+- `node tools/verify/v11-devtools-examples.cjs` (5 ids) → new checks `dispatch:duplicate-requestId`
+  (nodeCount unchanged, no shadow node) and `session-self-report-codes` (in-page observed code === gate
+  observed code) PASS for rc-create-node / rc-error-report.
+- `node tools/examples/coverage-report.cjs` + `node tools/examples/spec-compliance-audit.cjs` → zero
+  `NOT_RUN` / `S11-EVIDENCE-NOT-RUN` rows; `S11-NO-EVIDENCE` and `S15-ASSET-BIND` cascades clear; verified
+  count recomputed from the fresh apiProof (interim `verified 0` is a contract effect, not a regression).
+- Retest for F-72 itself: run the matrix, kill it mid-flight, and confirm the previous complete evidence
+  file is adopted unchanged (`readEvidence` → COMPLETE on the old generation, target never torn).
+- If `material-unlit` still FAILs `material-property`, the residual suspect is the effect-name readback path
+  in the runtime (`Material.effectAsset` naming), not the validator — do not soften the validator.
+
+Still open and unchanged by this pass: F-78 (decoder/worker gate expectation vs vendored bytes — owner
+decision), F-79 (clean-room delivery defects), F-69/F-71 (API surface), F-60, F-63 (`.gitignore:15`),
+F-81 (shared-worktree evidence collision — now also visible as last-writer-wins between two atomic
+producers), R1/R1b/R1c/R2/R3/R5/R6/R8, 13th `button-click` validator, `visible-frame` discrimination,
+documented-only gate (0/4729).

@@ -1,0 +1,157 @@
+# F-72 atomic-evidence negative control (offline, scratch: E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs) x3
+--- run 1 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 target never shadowed by tmp :: e2e.json
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-88
+PASS C6 completed flag is machine-readable :: completed=true → COMPLETE
+PASS C7 concurrent writers leave a whole generation :: NEW-69 blob=1835008B
+exitCode=0
+REAL_EXIT=0
+--- run 2 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 target never shadowed by tmp :: e2e.json
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-64
+PASS C6 completed flag is machine-readable :: completed=true → COMPLETE
+PASS C7 concurrent writers leave a whole generation :: NEW-49 blob=262144B
+exitCode=0
+REAL_EXIT=0
+--- run 3 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+FAIL C6 target never shadowed by tmp :: e2e.json,e2e.json.writing-38848-ra3lnd
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-93
+PASS C6 completed flag is machine-readable :: completed=false → NOT_RUN
+PASS C7 concurrent writers leave a whole generation :: NEW-93 blob=786432B
+exitCode=1
+REAL_EXIT=1
+
+# --- corrected C6 assertion (see run 3 above: my assertion tested the wrong property, not a producer defect) x8
+--- retry 1 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json,e2e.json.writing-5032-ahrsd1 (tmp leftovers=1)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-89
+PASS C6 completed flag is machine-readable :: completed=false → NOT_RUN
+PASS C7 concurrent writers leave a whole generation :: NEW-71 blob=524288B
+exitCode=0
+REAL_EXIT=0
+--- retry 2 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json (tmp leftovers=0)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-90
+PASS C6 completed flag is machine-readable :: completed=true → COMPLETE
+PASS C7 concurrent writers leave a whole generation :: NEW-62 blob=1835008B
+exitCode=0
+REAL_EXIT=0
+--- retry 3 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json,e2e.json.writing-34280-7sxhz8 (tmp leftovers=1)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-88
+PASS C6 completed flag is machine-readable :: completed=true → COMPLETE
+PASS C7 concurrent writers leave a whole generation :: NEW-77 blob=262144B
+exitCode=0
+REAL_EXIT=0
+--- retry 4 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json (tmp leftovers=0)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-87
+PASS C6 completed flag is machine-readable :: completed=false → NOT_RUN
+PASS C7 concurrent writers leave a whole generation :: NEW-70 blob=262144B
+exitCode=0
+REAL_EXIT=0
+--- retry 5 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json (tmp leftovers=0)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-94
+PASS C6 completed flag is machine-readable :: completed=true → COMPLETE
+PASS C7 concurrent writers leave a whole generation :: NEW-90 blob=1835008B
+exitCode=0
+REAL_EXIT=0
+--- retry 6 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json (tmp leftovers=0)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-87
+PASS C6 completed flag is machine-readable :: completed=false → NOT_RUN
+PASS C7 concurrent writers leave a whole generation :: NEW-60 blob=1310720B
+exitCode=0
+REAL_EXIT=0
+--- retry 7 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json (tmp leftovers=0)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-82
+PASS C6 completed flag is machine-readable :: completed=true → COMPLETE
+PASS C7 concurrent writers leave a whole generation :: NEW-98 blob=262144B
+exitCode=0
+REAL_EXIT=0
+--- retry 8 ---
+PASS C1 complete evidence adopted :: COMPLETE 
+PASS C1 no tmp leftover
+PASS C2 missing marker = NOT_RUN :: NOT_RUN completed!==true（r：中断路径或 --ids 子集运行）
+PASS C3 completed:false = NOT_RUN
+PASS C4 corrupt json = NOT_RUN (no throw) :: evidence JSON unreadable: Unterminated string in JSON at position 18 (line 1 column 19)
+PASS C5 missing file = NOT_RUN
+PASS C6 tmp leftovers stay off the target path and off extension scanners :: e2e.json,e2e.json.writing-15292-k9bbxn (tmp leftovers=1)
+PASS C6 target parses after kill
+PASS C6 content is a whole generation :: NEW-85
+PASS C6 completed flag is machine-readable :: completed=false → NOT_RUN
+PASS C7 concurrent writers leave a whole generation :: NEW-73 blob=1048576B
+exitCode=0
+REAL_EXIT=0

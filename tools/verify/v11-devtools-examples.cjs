@@ -205,6 +205,8 @@ async function verifyOne (example) {
     }
 
     // dispatch：受控写入 + 非法目标的稳定错误码与零副作用（§6.2 合同）
+    let observedDuplicateCode = null;
+    let observedStaleCode = null;
     if (uses('dispatch')) {
       const parent = (scene.nodes || []).find((n) => n.name === 'Main Camera') || (scene.nodes || [])[scene.nodes.length - 1];
       const created = await channel.inspect({
@@ -221,10 +223,25 @@ async function verifyOne (example) {
       const afterCount = (await channel.inspect({ kind: 'inspectScene' })).nodeCount;
       const leaked = (await channel.inspect({ kind: 'inspectScene' })).nodes.some((n) => n.name === 'must-not-exist');
       const code = rejected && rejected.error && rejected.error.code;
+      observedStaleCode = code || null;
       results.push(check('dispatch:error-code', rejected && rejected.ok === false
         && ['STALE_TARGET', 'INVALID_ARGUMENT', 'OUT_OF_SCOPE'].includes(code)
         && afterCount === beforeCount && !leaked,
       `ok=${rejected && rejected.ok} code=${code} nodeCount ${beforeCount}→${afterCount} leaked=${leaked}`));
+
+      // requestId 幂等合同（§6.2）：保留窗口内重复同一 requestId 必须以 INVALID_ARGUMENT 被拒，
+      // 且零副作用。此前没有任何门禁真正跑过这条路——教学页写的"重复 → INVALID_ARGUMENT"
+      // 只是声称，rc-create-node 的自报值与门禁观测还各说一个码（审计 F-74）。
+      const dupBefore = (await channel.inspect({ kind: 'inspectScene' })).nodeCount;
+      const dup = await runtime.page.evaluate(async (requestId) => (window.__benchSession.dispatch({
+        requestId, action: 'createNode', targetId: parent && parent.id, params: { name: 'devtools-duplicate-must-not-exist' },
+      })), `devtools-${example.id}-1`);
+      const dupScene = await channel.inspect({ kind: 'inspectScene' });
+      const dupCode = dup && dup.error && dup.error.code;
+      observedDuplicateCode = dupCode || null;
+      results.push(check('dispatch:duplicate-requestId', dup && dup.ok === false && dupCode === 'INVALID_ARGUMENT'
+        && dupScene.nodeCount === dupBefore && !dupScene.nodes.some((n) => n.name === 'devtools-duplicate-must-not-exist'),
+      `ok=${dup && dup.ok} code=${dupCode} nodeCount ${dupBefore}→${dupScene.nodeCount}`));
     }
 
     // captureFrame：受控时机新帧（同时作为 Gallery 缩略图，避免 stale 截图冒充证据）
@@ -266,6 +283,13 @@ async function verifyOne (example) {
     } else {
       const bad = Object.entries(selfReport).filter(([k, v]) => (k === 'fail' ? v !== 0 : v === false));
       results.push(check('session-self-report', bad.length === 0, bad.length ? `${JSON.stringify(selfReport)}` : `in-page checks green: ${JSON.stringify(selfReport)}`));
+      // 教学页自报的错误码必须等于门禁独立观测到的同一个值（自报不得与可观测状态矛盾，审计 F-74）。
+      const codePairs = [['duplicateCode', observedDuplicateCode], ['stableCode', observedStaleCode]]
+        .filter((entry) => entry[1] !== null && selfReport[entry[0]] !== undefined);
+      if (codePairs.length) {
+        results.push(check('session-self-report-codes', codePairs.every((entry) => selfReport[entry[0]] === entry[1]),
+          codePairs.map((entry) => `${entry[0]}: in-page=${selfReport[entry[0]]} gate=${entry[1]}`).join(' | ')));
+      }
     }
 
     // close/detach：之后请求 SESSION_CLOSED，且业务主循环继续渲染（E012 验收项）
@@ -336,7 +360,7 @@ async function verifyOne (example) {
   }
 }
 
-function writeEvidence (results, globals) {
+function writeEvidence (results, globals, done) {
   // --ids 子集运行不得整体覆盖证据（否则未跑示例的记录凭空消失，coverage/audit 失真）
   const ran = new Set(results.map((r) => r.id));
   let merged = results;
@@ -363,13 +387,15 @@ function writeEvidence (results, globals) {
     total: merged.length,
     pass,
     fail: merged.length - pass,
-    partial: !globals || !!targetIds,
+    partial: !globals || !!targetIds || done !== true,
+    // completed 只在整轮跑完（done）时为 true；每条示例的进度快照一律 false，
+    // 被 kill 后文件不自认"当期测量"，消费端按 NOT_RUN 处理（F-72）。
+    completed: done === true,
     subset: targetIds ? [...ran].sort() : undefined,
     runPass: results.filter((r) => r.result === 'PASS').length,
     runTotal: results.length,
   };
-  fs.mkdirSync(path.dirname(EVIDENCE_PATH), { recursive: true });
-  fs.writeFileSync(EVIDENCE_PATH, JSON.stringify(evidence, null, 2) + '\n');
+  specCommon.writeJsonAtomic(EVIDENCE_PATH, evidence);
 }
 
 (async function main () {
@@ -385,9 +411,9 @@ function writeEvidence (results, globals) {
     }
     results.push(result);
     console.log(`${result.result} ${result.id}${result.reason ? ' [' + result.reason + ']' : ''} ${(result.validatorResults || []).filter((v) => v.state !== 'PASS').map((v) => v.validatorId).join(',')}`);
-    writeEvidence(results, globalChecks);
+    writeEvidence(results, globalChecks, false);
   }
-  writeEvidence(results, globalChecks);
+  writeEvidence(results, globalChecks, true);
   const promotion = promoteFromEvidence(results);
   require('child_process').execFileSync('node', [path.join(REPO, 'tools', 'examples', 'generate-manifest.cjs')], { cwd: REPO });
   const pass = results.filter((r) => r.result === 'PASS').length;

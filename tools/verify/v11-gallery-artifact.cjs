@@ -310,12 +310,14 @@ async function verifyArtifact () {
     const pass = results.every((r) => r.ok);
     const evidence = {
       measuredAt: new Date().toISOString(), mount, base: '<self-hosted>',
+      runner: 'tools/verify/v11-gallery-artifact.cjs',
+      // 整轮检查跑完才落盘并盖章；中断路径不写文件，旧证据留给消费端按指纹陈旧判定（F-72）。
+      completed: true,
       scope: { examples: manifest.examples.length, booted: boottable.length, devToolsPagesServed: devToolsOnly.length, lifecycle: lifecycleSeen.length },
       total: results.length, pass: results.filter((r) => r.ok).length, results,
       absolutePathHits: scans.slice(0, 40), failedRequests: failedRequests.slice(0, 40),
     };
-    fs.mkdirSync(path.dirname(EVIDENCE_PATH), { recursive: true });
-    fs.writeFileSync(EVIDENCE_PATH, JSON.stringify(evidence, null, 2) + '\n');
+    require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.cjs')).writeJsonAtomic(EVIDENCE_PATH, evidence);
     console.log(`[gallery-artifact] verify: ${results.filter((r) => r.ok).length}/${results.length} PASS → ${path.relative(REPO, EVIDENCE_PATH)}`);
     return pass;
   } finally {
