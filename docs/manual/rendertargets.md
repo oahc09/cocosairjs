@@ -1,6 +1,6 @@
 # 渲染目标（Render Targets）
 
-> 对应 three.js manual 的 *Render Targets* 一篇：把相机输出渲进纹理，再把纹理当普通贴图用
+> 把相机输出渲进纹理，再把纹理当普通贴图用
 > （镜像/小窗/后处理的基础件）。
 > 配套可运行示例：[`examples/manual-render-targets/`](examples/manual-render-targets/)。
 > **本篇状态：PARTIAL。** RT 的创建/绑定/恢复生命周期可跑通（验证器 4/4），但**快照保真度在本环境
@@ -73,12 +73,11 @@ class Capture extends Component {
 因此本篇只承诺"生命周期可跑、不报错、frame-diff 通过"，**不承诺快照可见保真**；
 待管线修复后按 §2 时间线复测，将本篇升级为 FULL 并补保真截图。
 
-## 4. 与 three.js 的差异备忘
+## 4. 行为要点备忘
 
-- three.js 是 `new THREE.WebGLRenderTarget(w, h)` 并手动 `renderer.setRenderTarget(rt)` / `null`；
-  AIR 把改道挂在**相机**上（`camera.targetTexture`），多相机可各自改道，无需 renderer 级全局状态。
-- three.js 的 `rt.texture` 是独立成员；AIR 的 `RenderTexture` 自身即纹理，直接赋给 `mainTexture`。
-- 屏幕暂黑期（改道中）在 three.js 里表现为"该相机不再画到画布"，语义一致。
+- 改道挂在**相机**上（`camera.targetTexture`），多相机可各自改道，没有 renderer 级全局状态要维护。
+- `RenderTexture` 自身即纹理，没有独立的 `.texture` 成员要取——直接赋给 `mainTexture` 就能采样。
+- 屏幕暂黑期（改道中）的语义就是：该相机不再画到画布，输出全部进 RT。
 
 ## 5. 跑示例与验证记录
 

@@ -1,6 +1,6 @@
 # 雾（Fog）
 
-> 对应 three.js manual 的 *Fog* 一篇：用距离混色把远处物体溶进雾色，制造纵深感和"世界边界"。
+> 用距离混色把远处物体溶进雾色，制造纵深感和"世界边界"。
 > 配套可运行示例：[`examples/manual-fog/`](examples/manual-fog/)（六个纵深立方体 + 品红线性雾，每 3s 开关做 A/B 对照）。
 
 AIR 的雾是**场景级**配置，入口 `scene.globals.fog`（`FogInfo`，d.ts 20764），不需要逐材质开关——
@@ -52,13 +52,13 @@ on: 越远越接近雾色（品红）
 
 距离 ≥ `fogEnd`（12）的后三颗在 on 相应当纯品红，与截图一致。
 
-## 4. 与 three.js 的差异备忘
+## 4. AIR 雾的注意点
 
-- three.js 是 `scene.fog = new THREE.Fog(color, near, far)` 换对象；AIR 是改 `scene.globals.fog` 的字段，
-  **不要**给 `scene.fog` 赋值（AIR 的 `Scene` 上没有这个成员，同 `shadows` 的坑，见 [阴影](shadows.md)）。
-- three.js 材质可用 `material.fog = false` 单材质豁免；AIR 未见材质级豁免开关，豁免只能靠分层/多相机。
-- 指数雾两者语义一致（`fogDensity`），但 AIR 另提供 `accurate` 与高度雾字段（`fogTop` / `fogAtten`），
-  three.js 无对应物。
+- 雾配置走 `scene.globals.fog` 的**字段**（改字段而非换对象）：**不要**给 `scene.fog` 赋值
+  （AIR 的 `Scene` 上没有这个成员，同 `shadows` 的坑，见 [阴影](shadows.md)）。
+- 没有材质级豁免开关（做不到"这一颗物体不吃雾"），要让某些物体不吃雾只能靠分层/多相机。
+- 指数雾用 `fogDensity` 控浓度；AIR 另提供 `accurate` 与高度雾字段（`fogTop` / `fogAtten`），
+  可做顶端衰减的高度雾。
 
 ## 5. 跑示例与验证记录
 

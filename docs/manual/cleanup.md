@@ -1,24 +1,23 @@
 # Freeing Resources（释放资源）
 
-> 对应 three.js manual 的 *Freeing Resources* 一篇：浏览器 GC 收不走 GPU 内存，
-> 用了 GPU 资源的对象必须手动释放。
+> 浏览器 GC 收不走 GPU 内存，用了 GPU 资源的对象必须手动释放。
 > 配套可运行示例：[`examples/manual-cleanup/`](examples/manual-cleanup/)
 > （A 贴"脸"立方体与 B 贴"脸"球体两套私有材质/纹理/网格定时互换，
 > 换场即完整释放旧套并回读失效证据——零外部资产）。
 
-three.js 该篇的结论是"texture/geometry/material 三类对象要 `dispose()`，节点树要递归
-removeAndDispose"。AIR 的分层几乎逐句可译，但**边界写得更死**——`Scene.destroy` 的
+AIR 的释放规则分两层：节点树由 `node.destroy()` 级联回收，GPU 资产（网格/材质/纹理）
+不会随节点或场景释放，必须逐个显式 `destroy()`——**边界写得很死**，`Scene.destroy` 的
 d.ts 注释原文就是免责声明（19420）：
 
 > Destroy the current scene and all its nodes, **this action won't destroy related assets**
 
-| three.js | AIR | 实测 |
-| --- | --- | --- |
-| `scene.remove(obj)` / 递归遍历子节点 | `node.destroy()` 自动级联子节点+组件（`_onPreDestroyBase` 逐个 `_destroyImmediate`） | ✓（探针：父毁，Trim 子节点同步失效） |
-| `geometry.dispose()` | `mesh.destroy()`（"释放它占有的所有 GPU 资源"，d.ts 185） | ✓（`_renderingSubMeshes` 置 null） |
-| `material.dispose()` | `material.destroy()`（"销毁后无法重新初始化"，d.ts 23871） | ✓（`passes` 置空） |
-| `texture.dispose()` | `texture.destroy()`（"清空所有 Mipmap 并释放占用的 GPU 资源"，d.ts 23371） | ✓（`getGFXTexture()` 变 null） |
-| 忘 dispose = 静默泄漏 | 同：忘 destroy 资产不报错，只是 GPU 内存不还 | ✓ 语义一致 |
+| AIR | 实测 |
+| --- | --- |
+| `node.destroy()` 自动级联子节点+组件（`_onPreDestroyBase` 逐个 `_destroyImmediate`），无需手动逐个摘除 | ✓（探针：父毁，Trim 子节点同步失效） |
+| `mesh.destroy()`（"释放它占有的所有 GPU 资源"，d.ts 185） | ✓（`_renderingSubMeshes` 置 null） |
+| `material.destroy()`（"销毁后无法重新初始化"，d.ts 23871） | ✓（`passes` 置空） |
+| `texture.destroy()`（"清空所有 Mipmap 并释放占用的 GPU 资源"，d.ts 23371） | ✓（`getGFXTexture()` 变 null） |
+| 忘 destroy = 静默泄漏：不报错，只是 GPU 内存不还 | ✓ |
 
 ## 1. 释放清单（API 锚点，源码+探针双证）
 
@@ -47,10 +46,10 @@ isValid=true、+2 帧读全 false"不是 bug，是文档承诺的行为。
 ## 2. 示例拆解：A/B 换场即完整释放
 
 每 3.5s 在两套之间切换：A=贴"A"脸立方体（含共用同一套资产的 Trim 子节点，演示
-"共享资产只能整体释放一次"），B=贴"B"脸球体。three.js `removeAndDispose` 模板的 AIR 等价：
+"共享资产只能整体释放一次"），B=贴"B"脸球体。完整释放函数的 AIR 写法（先节点后资源）：
 
 ```ts
-// three.js removeAndDispose 的 AIR 等价：先节点后资源，destroy() 返回值 = 是否首次销毁
+// 递归"移除+释放"模板的 AIR 落地：先节点后资源，destroy() 返回值 = 是否首次销毁
 function disposeSet (set: AssetSet): DisposeReturns {
     const returns = {
         node: set.root.destroy(),
@@ -62,7 +61,7 @@ function disposeSet (set: AssetSet): DisposeReturns {
 }
 ```
 
-不需要 three.js 那种手写递归——`node.destroy()` 自己下树；需要手写的反而是**资产清单**
+不需要手写递归下树——`node.destroy()` 自己完成；需要手写的反而是**资产清单**
 （AIR 不会替你数"这套材质还有没有人用"）。换场 +2 帧后回读旧套探针打到覆盖层：
 
 ```js
@@ -109,8 +108,8 @@ function disposeSet (set: AssetSet): DisposeReturns {
 - **共享资产红线**：与"永不改共享内建材质"同源——`builtin-standard` 等默认资源的
   实例/内建资产**不要 destroy**，`Asset.destroy` 是无差别刀（d.ts 23056），毁了就全场景
   遭殃；Material.destroy 注释也明示销毁后不可重新初始化。
-- **何时值得做**：three.js 该篇结尾的口径 AIR 同样成立——一次性页面/小场景不做
-  释放没有任何问题，浏览器关页全回收；换关/换模式/长会话 UGC 才是本清单的主场。
+- **何时值得做**：一次性页面/小场景不做释放没有任何问题，浏览器关页全回收；
+  换关/换模式/长会话 UGC 才是本清单的主场。
 
 ## 5. 跑示例与验证记录
 
@@ -170,8 +169,8 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  * Cocos AIR 开发手册 — Freeing Resources（释放资源）
  * 配套文章：docs/manual/cleanup.md
  *
- * three.js 该篇：JS 的 GC 收不走 GPU 内存，texture/geometry/material 三类对象必须手动
- * dispose()，并给出递归 removeAndDispose 模板。AIR 的对应关系（源码取证）：
+ * JS 的 GC 收不走 GPU 内存，texture/geometry/material 三类资源必须手动释放。
+ * AIR 的对应关系（源码取证）：
  *   - node.destroy() 级联销毁子节点+组件（node.ts _onPreDestroyBase），本帧渲染前生效；
  *   - 但资源（Asset 派生：Mesh/Material/Texture2D）不会随节点/场景释放——
  *     Scene.destroy 注释原文 "this action won't destroy related assets"（d.ts 19420）；
@@ -334,7 +333,7 @@ function probeSet (set: AssetSet): SetProbe {
     return out;
 }
 
-// three.js removeAndDispose 的 AIR 等价：先节点后资源，destroy() 返回值 = 是否首次销毁
+// 递归"移除+释放"模板的 AIR 落地：先节点后资源，destroy() 返回值 = 是否首次销毁
 function disposeSet (set: AssetSet): DisposeReturns {
     const returns = {
         node: set.root.destroy(),

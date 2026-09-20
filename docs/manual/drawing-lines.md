@@ -1,20 +1,19 @@
 # Drawing Lines 绘制线条
 
-> three.js 里画线是 `LineSegments` + `LineBasicMaterial`，或者用 `Line2` 拿可变线宽。
 > Cocos AIR 没有"线"这种一等公民组件，但**线拓扑本身是通的**：`utils.createMesh` 接受 `primitiveMode: gfx.PrimitiveMode.LINE_LIST`，再用材质实例把 pass 的绘制图元改回 `LINE_LIST` 即可得到 1px 真线。
 > 本篇给出两条路：真线拓扑（坐标轴、网格、线框盒），以及细长方盒（可控"线宽"、参与光照），并把两个实测坑讲清楚。
 
 > 前置阅读：[Creating a Scene 创建场景](./creating-a-scene.md)
 
-## 概念对照
+## 画线要点
 
-| three.js | Cocos AIR | 说明 |
-|---|---|---|
-| `new THREE.BufferGeometry().setFromPoints(pts)` | `utils.createMesh({ positions, primitiveMode: gfx.PrimitiveMode.LINE_LIST })` | 几何侧支持线拓扑 |
-| `new THREE.LineSegments(geo, mat)` | `MeshRenderer` + 材质实例 `overridePipelineStates({ primitive: LINE_LIST })` | **不做这一步，线顶点会被按 TRIANGLE_LIST 画成填充面**（见坑 1） |
-| `LineBasicMaterial({ color })` | `builtin-unlit` + `setProperty('mainColor', ...)` | 线不受光，用 unlit |
-| `Line2` / `LineMaterial`（可变线宽） | **无对应物** | 想要粗线只能用细长方盒（途径 2） |
-| `EdgesGeometry` | 手工边表，或 `primitives.wireframed()` | 见坑 3 |
+| Cocos AIR 做法 | 说明 |
+|---|---|
+| `utils.createMesh({ positions, primitiveMode: gfx.PrimitiveMode.LINE_LIST })` | 几何侧支持线拓扑 |
+| `MeshRenderer` + 材质实例 `overridePipelineStates({ primitive: LINE_LIST })` | **不做这一步，线顶点会被按 TRIANGLE_LIST 画成填充面**（见坑 1） |
+| `builtin-unlit` + `setProperty('mainColor', ...)` | 线不受光，用 unlit |
+| **无可变线宽的线组件** | 想要粗线只能用细长方盒（途径 2） |
+| 手工边表，或 `primitives.wireframed()` | 立方体线框的做法，见途径 1 |
 
 ## 坑 1：mesh 的 primitiveMode 会被 PSO 覆盖
 
@@ -92,7 +91,7 @@ for (let i = -GRID; i <= GRID + 0.001; i += STEP) {
 addLineNode('Grid', gridSegments, [120, 160, 185, 255]);
 ```
 
-立方体线框本可以直接用 `primitives.wireframed` 把实心 mesh 转成线框 mesh，但本篇实测中，把它与上面的 LINE_LIST 覆盖路径组合时**画面里没有出线**（截图证据见台账），原因未定位；因此示例改用手工边表 —— 12 条边的表写一次就够，且与 three.js 的 `EdgesGeometry` 心智模型一致。若你在自己的项目里让 `wireframed` 跑通了，欢迎回补本篇。
+立方体线框本可以直接用 `primitives.wireframed` 把实心 mesh 转成线框 mesh，但本篇实测中，把它与上面的 LINE_LIST 覆盖路径组合时**画面里没有出线**（截图证据见台账），原因未定位；因此示例改用手工边表 —— 12 条边的表写一次就够，后续增删边也直观。若你在自己的项目里让 `wireframed` 跑通了，欢迎回补本篇。
 
 ```ts
 // 立方体边线框：12 条边手工列出，一个 mesh

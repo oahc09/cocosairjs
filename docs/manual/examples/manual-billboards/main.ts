@@ -2,8 +2,8 @@
  * Cocos AIR 开发手册 — Billboards and Facades（公告板与立面）
  * 配套文章：docs/manual/billboards.md
  *
- * three.js 该篇用顶点着色器（ModelViewMatrix 去旋转 / gl_VertexID 手搓 quad）让面片永远正对相机。
- * AIR 无用户 GLSL（shadertoy 篇 N/A），GPU 顶点路线不存在；引擎也没有 Billboard 组件
+ * 让面片永远正对相机的经典 GPU 路线是在顶点着色器里做（视图矩阵去旋转 / 按顶点 ID 手搓 quad）。
+ * AIR 无用户 GLSL（shadertoy 篇 N/A），这条路线不存在；引擎也没有 Billboard 组件
  * （d.ts grep 零命中）。CPU 等价路线：每帧把相机的世界旋转抄给面片父节点——
  * 全量抄=球面公告板（spherical），只抄 yaw=柱面/立面（cylindrical facade），不抄=对照组。
  * 本例：三块面片同贴一张 canvas 现造的"脸"纹理（standard+USE_ALBEDO_MAP；实测 unlit 配

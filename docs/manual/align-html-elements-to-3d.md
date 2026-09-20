@@ -1,20 +1,19 @@
 # Aligning HTML Elements to 3D（HTML 元素对齐 3D）
 
-> 对应 three.js manual 的 *Aligning HTML Elements to 3D* 一篇：把 DOM 元素钉在 3D 对象的屏幕位置上。
+> 把 DOM 元素钉在 3D 对象的屏幕位置上。
 > 配套可运行示例：[`examples/manual-align-html/`](examples/manual-align-html/)
 > （两颗轨道立方体各带一个 HTML 标签跟随投影位置，中心大立方体做遮挡隐藏——零外部资产）。
 
-three.js 该篇的套路：`object.localToWorld()` / `vector.project(camera)` 把 3D 位置换算到屏幕像素，
-去摆绝对定位的 DOM 元素；再用 `Raycaster` 检测"锚点被挡住就藏标签"。
-AIR 的对应件是相机组件自带的 **`camera.worldToScreen(worldPos, out?)`**（d.ts 21418）——
-一步给出屏幕像素坐标，DOM 侧就是普通 CSS。对照：
+AIR 做这件事靠相机组件自带的 **`camera.worldToScreen(worldPos, out?)`**（d.ts 21418）——
+一步把 3D 世界位置换算成屏幕像素坐标，去摆绝对定位的 DOM 元素；
+"锚点被挡住就藏标签"用应用层射线检测。DOM 侧就是普通 CSS。要点：
 
-| three.js | AIR | 实测 |
-| --- | --- | --- |
-| `vector.project(camera)` → NDC → 手算像素 | `camera.worldToScreen(pos, out)` 直接给像素 | ✓（本示例核心） |
-| `position: absolute` + `transform: translate(-50%,-50%)` | 同款 CSS，无引擎参与 | ✓ |
-| `Raycaster` 遮挡检测（被挡住藏标签） | 无引擎级求交；应用层 slab 射线（[picking](picking.md) 同款） | ✓（本示例） |
-| `CSS2DRenderer`（官方独立渲染器类） | 无此类；每帧手写 `style.left/top` 即等价 | 缺（不需要） |
+| AIR | 实测 |
+| --- | --- |
+| `camera.worldToScreen(pos, out)` 世界坐标直接给屏幕像素 | ✓（本示例核心） |
+| `position: absolute` + `transform: translate(-50%,-50%)` 普通 CSS，无引擎参与 | ✓ |
+| 遮挡检测（被挡住藏标签）：无引擎级求交，应用层 slab 射线（[picking](picking.md) 同款） | ✓（本示例） |
+| 无"引擎托管 DOM 层"的渲染器类；每帧手写 `style.left/top` 即等价 | 缺（不需要） |
 
 ## 1. 投影相关 API 面（实测锚点）
 
@@ -79,13 +78,13 @@ AIR 的对应件是相机组件自带的 **`camera.worldToScreen(worldPos, out?)
 **探针踩坑**：`window.__inspect.camera` 是 Camera 组件，不是本篇的 Aligner 组件——
 第一版钉相位钉在 `camera._t` 上毫无效果（读数纹丝不动），须把 `aligner` 实例也挂进 `__inspect` 才能远程驱动。
 
-## 4. 与 three.js 的差异备忘
+## 4. 实践备忘
 
-- **一步 vs 两步**：three.js 要 `project()` 得 NDC 再手算 `(x*0.5+0.5)*width`；AIR `worldToScreen` 直接给像素，
-  但换来的是左下角原点（CSS 是左上角），翻转这一步省不掉。
-- **遮挡检测**：three.js 文章用 `Raycaster.intersectObjects` 一行；AIR 沿用本篇姊妹技术——应用层 slab 射线
+- **一步投影**：`worldToScreen` 直接给像素坐标，但输出是左下角原点（CSS 是左上角），
+  每帧 `innerHeight - y` 的翻转这一步省不掉。
+- **遮挡检测**：引擎不暴露射线求交 API，沿用本篇姊妹技术——应用层 slab 射线
   （见 [picking](picking.md)）。锚点若换任意网格，这里同样只能 AABB 近似或挂物理体。
-- **CSS2DRenderer 无对应物**：AIR 没有"引擎托管 DOM 层"的渲染器类，也不需要——每帧写 `style.left/top`
+- **无引擎托管 DOM 层**：AIR 没有"DOM 层渲染器"类，也不需要——每帧写 `style.left/top`
   就是它的全部职责，示例即模板。
 
 ## 5. 跑示例与验证记录
@@ -158,7 +157,7 @@ DOM 层对齐/遮挡读数见 §3。`manual-doc-consistency` 结果见台账行�
  * Cocos AIR 开发手册 — Aligning HTML Elements to 3D（HTML 元素对齐 3D）
  * 配套文章：docs/manual/align-html-elements-to-3d.md
  *
- * three.js 该篇的核心是 camera 投影：把 3D 世界坐标换算成屏幕像素，去摆 DOM 元素，
+ * 本能力的核心是 camera 投影：把 3D 世界坐标换算成屏幕像素，去摆 DOM 元素，
  * 并用射线检测决定"被挡住就藏标签"。AIR 的对应件是 camera.worldToScreen（d.ts 21418，
  * 输出左下角原点像素——与 screenPointToRay 同一坐标系，摆 DOM 时要翻 y）。
  * 本例：两颗轨道立方体（橙/青）各带一个 HTML 标签跟随其屏幕投影位置；

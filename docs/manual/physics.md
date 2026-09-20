@@ -1,6 +1,6 @@
 # 物理（Physics）
 
-> 对应 three.js manual 体系里靠 cannon/rapier/ammo 外挂物理的那一组内容。
+> 3D 场景物理（刚体、碰撞），通行做法是外挂 cannon/rapier/ammo 这类物理库。
 > **状态：N/A（本篇不提供示例）。**
 
 ## 1. 结论先行
@@ -12,8 +12,8 @@ Cocos AIR 的 code-first 导出面**没有组件级物理**：`RigidBody`、`Col
 （`IPhysicsEngineId`、`IPhysicsWrapperObject` 之属），用于"注册/切换物理后端"，
 没有任何可 `addComponent` 的刚体或碰撞体。
 
-因此 three.js 生态里"加一个 cannon 世界 → 给 mesh 挂 body → step()"这条路径，
-在 AIR 里没有对应物；本篇如实标 N/A，不硬凑示例。
+因此"外挂一个 cannon/rapier 世界 → 给 mesh 挂 body → step()"这类常见集成路径，
+在 AIR 引擎原生能力面里没有对应封装；本篇如实标 N/A，不硬凑示例。
 
 ## 2. 需要"碰撞/运动"时的三条替代路
 

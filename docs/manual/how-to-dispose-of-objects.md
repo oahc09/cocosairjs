@@ -1,11 +1,11 @@
 # 销毁对象（How to dispose of Objects）
 
-> 对应 three.js manual 的 *How to dispose of Objects* 一篇：对象不用了怎么把 GPU/内存真正还回去。
+> 对象不用了怎么把 GPU/内存真正还回去。
 > 配套可运行示例：[`examples/manual-dispose-objects/`](examples/manual-dispose-objects/)（生长/排空循环同页演示 NodePool 回收、`destroy()` 真销毁、资产引用计数三条路径）。
 
-three.js 那篇的核心警告是"GC 不管 GPU 内存，必须手动 `geometry.dispose()` / `material.dispose()`"。
-AIR 的对象模型是 Cocos 式 **节点/组件 + 资产** 双层：节点侧靠 `destroy()` 与 `NodePool`，
-资产侧靠引用计数（`addRef` / `decRef`）与 `assetManager.releaseAsset`。两层**生命周期独立**，分开管。
+核心警告：JS 的 GC 不管 GPU 内存，资产不用了必须自己还。AIR 的对象模型是 Cocos 式 **节点/组件 + 资产** 双层：
+节点侧靠 `destroy()` 与 `NodePool`，资产侧靠引用计数（`addRef` / `decRef`）与 `assetManager.releaseAsset`。
+两层**生命周期独立**，分开管。
 
 ## 1. 三条路径与 API 面
 
@@ -67,17 +67,15 @@ cubeMaterial.setProperty('mainColor', new Color(95, 205, 120, 255));
 ```
 
 反过来：**每个节点私有一份 Material/Texture 的写法，节点 destroy 并不会释放那份资产**
-（资产生命周期独立于节点）——那才是 AIR 版的"three.js 手动 dispose"责任区：
+（资产生命周期独立于节点）——那才是 AIR 里需要手动归还资产的责任区：
 私有资产不用时 `decRef()` 归零或 `assetManager.releaseAsset()`。共享优先、私有必还，是本页的总原则。
 
-## 4. 与 three.js 的差异备忘
+## 4. 资源回收要点
 
-- three.js 要逐对象调 `dispose()`（geometry/material/texture/renderTarget 各一套）；
-  AIR 节点侧一个 `destroy()` 覆盖组件树，资产侧走引用计数——**没有逐 geometry 的 dispose 调用面**。
-- three.js 没有内置对象池惯例（社区自造）；AIR 内置 `NodePool` 且带 `poolHandlerComp` 钩子
- （unuse/reuse 回调，d.ts 26648），高频生成物（子弹/特效）应优先池化。
-- three.js 的 `renderer.dispose()` / `forceContextLoss()` 一类上下文级清理在 AIR 无对应物；
-  上下文生命周期随 `createAirApp` / 页面，用户代码不碰。
+- AIR 的清理面分两层：节点侧一个 `destroy()` 覆盖组件树，资产侧走引用计数——**没有逐 geometry 的 dispose 调用面**。
+- 对象池是引擎内置的：`NodePool` 且带 `poolHandlerComp` 钩子（unuse/reuse 回调，d.ts 26648），
+  高频生成物（子弹/特效）应优先池化。
+- **没有**图形上下文级的清理入口；上下文生命周期随 `createAirApp` / 页面，用户代码不碰。
 
 ## 5. 跑示例与验证记录
 

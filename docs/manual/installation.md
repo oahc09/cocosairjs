@@ -1,19 +1,18 @@
 # Installation 安装与引入
 
-> three.js 的安装篇讲的是"从 npm 装包，或者用 CDN 的 ES module 构建，再用 importmap 把裸说明符 `three` 指过去"。
-> Cocos AIR 的形态一样：**一个 ESM 构建产物 + importmap**，没有运行时依赖、没有打包器要求。区别在于产物由本仓库自己构建（`npm run build`），而不是从 npm 拉取。
+> Cocos AIR 的形态：**一个 ESM 构建产物 + importmap**——没有运行时依赖、没有打包器要求，产物由本仓库自己构建（`npm run build`），不从 npm 拉取。
 > 本篇把"从零到一个能看见的立方体"这条最短链路走完，并教你怎么在页面上确认引擎版本、平台与渲染后端。
 
 > 下一篇：[Creating a Scene 创建场景](./creating-a-scene.md)
 
-## 概念对照
+## 引入要点
 
-| three.js | Cocos AIR | 说明 |
-|---|---|---|
-| `npm install three` | `npm install && npm run build` | AIR 目前从源码构建，产物是 `build/cocosair.module.js`（package.json `version: 0.1.0`） |
-| `importmap: { "three": "./build/three.module.js" }` | `importmap: { "cocosair": "/build/cocosair.module.js" }` | 裸说明符统一叫 `cocosair` |
-| `import * as THREE from 'three'` | `import { createAirApp, Scene, Node } from 'cocosair'` | AIR 导出 368 个具名符号，**没有默认导出**，不要写 `import cc from 'cocosair'` |
-| `new THREE.WebGLRenderer()` | `await createAirApp({ canvas })` | 异步；渲染器由 app 托管，你拿不到 renderer 对象 |
+| 做法 | 说明 |
+|---|---|
+| `npm install && npm run build` | AIR 目前从源码构建，产物是 `build/cocosair.module.js`（package.json `version: 0.1.0`） |
+| `importmap: { "cocosair": "/build/cocosair.module.js" }` | 裸说明符统一叫 `cocosair` |
+| `import { createAirApp, Scene, Node } from 'cocosair'` | AIR 导出 368 个具名符号，**没有默认导出**，不要写 `import cc from 'cocosair'` |
+| `await createAirApp({ canvas })` | 异步；渲染器由 app 托管，你拿不到 renderer 对象 |
 
 ## 1. 获取构建产物
 
@@ -54,7 +53,7 @@ npm run build          # → build/cocosair.module.js（+ .d.ts / .map）
     </script>
 ```
 
-之后代码里就可以写 `from 'cocosair'`，跟 three.js manual 里的 `from 'three'` 一模一样。本仓库的 dev server（`npm run dev`）已经把 `/build/*` 挂在 web 根上，所以手册示例里的这个 importmap 在 `http://127.0.0.1:7454/manual/examples/...` 下能直接解析；换成任何以仓库根为 web 根的静态服务器同样成立。
+之后代码里就可以写 `from 'cocosair'`。本仓库的 dev server（`npm run dev`）已经把 `/build/*` 挂在 web 根上，所以手册示例里的这个 importmap 在 `http://127.0.0.1:7454/manual/examples/...` 下能直接解析；换成任何以仓库根为 web 根的静态服务器同样成立。
 
 如果你用打包器（Vite/Rollup/esbuild），把 `cocosair` 配成 alias 指向 `build/cocosair.module.js` 即可，importmap 就不需要了。
 
@@ -129,7 +128,7 @@ npm run build          # → build/cocosair.module.js（+ .d.ts / .map）
 const app = await createAirApp({ canvas });
 ```
 
-顶层 `await` 要求脚本是 ES module（`<script type="module">`），这也是 three.js manual 的写法，一致。
+顶层 `await` 要求脚本是 ES module（`<script type="module">`）。
 
 ## 5. 确认引擎版本、平台与渲染后端
 

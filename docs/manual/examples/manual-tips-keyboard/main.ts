@@ -3,7 +3,8 @@
  * 配套文章：docs/manual/tips.md#get-keyboard-input-from-a-canvas-从画布获取键盘输入
  *
  * AIR 的键盘事件走 window 级 input 单例（input.on(SystemEventType.KEY_DOWN/KEY_UP)），
- * 不需要给 canvas 加 tabindex/聚焦（与 three.js 把 keydown 绑在 canvas 上不同）。
+ * 不需要给 canvas 加 tabindex/聚焦——事件来自全局 input 单例，与页面焦点在哪无关，
+ * 任意时刻按下都会被收到。
  * 本例维护一个 pressed 集合：WASD/方向键平移立方体、Space 加速自转，覆盖层实时回显；
  * 无按键时立方体仍空闲自转 20°/s，保证 frame-diff 有帧间差异。
  */

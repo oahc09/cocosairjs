@@ -1,20 +1,19 @@
 # Responsive Design 响应式设计
 
-> three.js 的响应式篇要你监听 `window.resize`，手动 `renderer.setSize(w, h)` + `camera.aspect = w/h` + `camera.updateProjectionMatrix()`，漏一步画面就拉伸或留黑边。
-> Cocos AIR 把这条链**内建**了：screen-adapter 在模块顶层就把 canvas 尺寸跟到窗口，相机纵横比自动跟随 canvas。你要做的只是**读**尺寸（`screen.windowSize` / `resolution` / `devicePixelRatio`）和**订阅**事件（`screen.on('window-resize' / 'canvas-resize')`），不需要任何 setSize / 改 aspect。
+> Cocos AIR 把响应式这条链**内建**了：screen-adapter 在模块顶层就把 canvas 尺寸跟到窗口，相机纵横比自动跟随 canvas。你要做的只是**读**尺寸（`screen.windowSize` / `resolution` / `devicePixelRatio`）和**订阅**事件（`screen.on('window-resize' / 'canvas-resize')`），不需要任何手动 setSize / 改 aspect——窗口变化时画面拉伸或留黑边的问题在源头就不存在。
 > 本篇讲清"canvas 尺寸从哪来、窗口变化时引擎做了什么、devicePixelRatio 与清晰度的关系、常见拉伸错因"。
 
 > 前置阅读：[Creating a Scene 创建场景](./creating-a-scene.md) §1（HTML 骨架）
 
-## 概念对照
+## 要点对照
 
-| three.js | Cocos AIR | 说明 |
+| 关注点 | Cocos AIR | 说明 |
 |---|---|---|
-| `renderer.setSize(w, h)` | **无需**（screen-adapter 自动） | 手动 setSize 在 AIR 里没有对应物，也不要改 canvas 的 width/height 属性 |
-| `camera.aspect = w/h; updateProjectionMatrix()` | **无需**（纵横比自动跟 canvas） | 相机投影由引擎按当前 canvas 维护 |
-| `window.addEventListener('resize', …)` | `screen.on('window-resize', cb)` / `screen.on('canvas-resize', cb)` | 事件源换成 `cc.screen`；`screen.off(type, cb)` 退订 |
-| `renderer.getPixelRatio()` / `setPixelRatio` | `screen.devicePixelRatio`（只读） | AIR 暴露 dpr 供你读，清晰度策略由引擎按 dpr 处理 |
-| `renderer.domElement.width/height` | `canvas.width/height` + `screen.resolution` | `resolution` 是引擎认定的渲染分辨率（对象 `{width,height}`） |
+| canvas 尺寸同步 | **无需手动 setSize**（screen-adapter 自动） | 不要改 canvas 的 width/height 属性，引擎会持续同步 |
+| 相机纵横比 | **无需手动更新**（自动跟随 canvas） | 相机投影由引擎按当前 canvas 维护 |
+| 窗口变化事件 | `screen.on('window-resize', cb)` / `screen.on('canvas-resize', cb)` | 事件源是 `screen`；`screen.off(type, cb)` 退订 |
+| 设备像素比 | `screen.devicePixelRatio`（只读） | AIR 暴露 dpr 供你读，清晰度策略由引擎按 dpr 处理 |
+| 渲染分辨率读数 | `canvas.width/height` + `screen.resolution` | `resolution` 是引擎认定的渲染分辨率（对象 `{width,height}`） |
 
 **没有 `cc.view`**：老 Cocos 教程里的 `cc.view.setDesignResolutionSize` 一类在 AIR 不存在，视口一律走 `screen`。
 
@@ -115,10 +114,9 @@ npm run dev
  * Cocos AIR 开发手册 — Responsive Design（响应式设计）
  * 配套文章：docs/manual/responsive.md
  *
- * 窗口任意缩放时 canvas 铺满且画面不变形。AIR 与 three.js 的关键差别：
- *   - three.js 要手动 renderer.setSize + camera.aspect + updateProjectionMatrix；
- *   - AIR 的 screen-adapter 自动把 canvas 尺寸跟到窗口，相机纵横比自动跟随，
- *     你**不需要**手动 setSize / 改 aspect。
+ * 窗口任意缩放时 canvas 铺满且画面不变形。AIR 的自适应模型：
+ *   - screen-adapter 自动把 canvas 尺寸跟到窗口，相机纵横比自动跟随，
+ *     你**不需要**手动 setSize / 改 aspect / 重算投影矩阵。
  * 本页做两件事：
  *   1. 覆盖层实时显示 screen.windowSize / screen.resolution / devicePixelRatio / canvas 实际像素；
  *   2. 订阅 screen.on('window-resize' / 'canvas-resize')，尺寸变化时刷新覆盖层，
@@ -217,7 +215,7 @@ console.log('[manual/responsive] running on cocosair');
 
 ## API 参考
 
-`screen.windowSize` / `screen.resolution`（均返回 `{width,height}` 对象）、`screen.devicePixelRatio`、`screen.on(type, cb)` / `screen.off(type, cb)`（type ∈ `window-resize` / `canvas-resize` / 全屏类）、`screen.supportsFullScreen` / `requestFullScreen`。**无 `cc.view`、无 `renderer.setSize`**。以 `build/cocosair.module.d.ts` 为准。
+`screen.windowSize` / `screen.resolution`（均返回 `{width,height}` 对象）、`screen.devicePixelRatio`、`screen.on(type, cb)` / `screen.off(type, cb)`（type ∈ `window-resize` / `canvas-resize` / 全屏类）、`screen.supportsFullScreen` / `requestFullScreen`。**无 `cc.view`，canvas 尺寸无需手动设置**。以 `build/cocosair.module.d.ts` 为准。
 
 ## 下一步
 

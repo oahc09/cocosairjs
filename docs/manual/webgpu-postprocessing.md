@@ -1,18 +1,16 @@
 # Post-Processing（WebGPU 后处理）
 
-> 对应 three.js manual WebGPU 系列的 *How to use Post Processing* 相邻那篇
-> *Post Processing*：在 WebGPU 后端上用 TSL 节点写 pass/effect，组装
-> `new PostProcessing(renderer, [{ pass, effects }])` 自定义管线。
+> 话题：在 WebGPU 后端上以节点式 API 编写 pass/effect，组装成自定义后处理管线。
 > 状态：**N/A**（双重不成立）—— 后端没有 WebGPU（见上篇），管线也没有用户装配面
 > （见 [post-processing](post-processing.md) 篇实测），不配示例。
 
 ## 1. 两层边界，各有一篇实测证据
 
-| 层 | three.js WebGPU 篇的做法 | AIR 现状 | 证据去处 |
-| --- | --- | --- | --- |
-| 后端 | `WebGPURenderer` + compute 友好的 pass 模型 | 构建只带 `WebGL2Device`，`RenderType.WEBGPU` 有枚举无实现 | [webgpurenderer](webgpurenderer.md) §1 |
-| 管线 | `renderer.render(scene, camera)` 换成 `postProcessing.render()`，pass/effects 数组用户自组 | Stage 类全导出，但 `PostProcessStage.initialize(IRenderStageInfo)` 是元数据初始化，没有"把自定义 stage 插进 RenderFlow"的公开装配面 | [post-processing](post-processing.md) §1 |
-| 效果编写 | TSL 节点函数（`grayscale()`、`bloom()` 用户可写） | 无用户 GLSL/TSL 入口，效果集是 builtin-effects 编译期定死的 | [shadertoy](shadertoy.md)、[debugging-glsl](debugging-glsl.md) |
+| 层 | AIR 现状 | 证据去处 |
+| --- | --- | --- |
+| 后端 | 构建只带 `WebGL2Device`，`RenderType.WEBGPU` 有枚举无实现 | [webgpurenderer](webgpurenderer.md) §1 |
+| 管线 | Stage 类全导出，但 `PostProcessStage.initialize(IRenderStageInfo)` 是元数据初始化，没有"把自定义 stage 插进 RenderFlow"的公开装配面 | [post-processing](post-processing.md) §1 |
+| 效果编写 | 无用户 GLSL 入口，效果集是 builtin-effects 编译期定死的 | [shadertoy](shadertoy.md)、[debugging-glsl](debugging-glsl.md) |
 
 ## 2. 现在能做的（不是这级别的需求先别急着要 WebGPU）
 

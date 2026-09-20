@@ -1,7 +1,6 @@
 # Scenegraph 场景图
 
-> three.js 的 scenegraph 是 `Object3D` 树：父子变换继承、`visible` 开关。
-> Cocos AIR 的心智模型同构但更"组件化"：**`Scene` 是树根，`Node` 只承载变换与层级，渲染/行为全靠挂 Component**。
+> Cocos AIR 的场景图心智模型是**组件化**的：**`Scene` 是树根，`Node` 只承载变换与层级，渲染/行为全靠挂 Component**。
 > 本篇用三层结构（Scene → Rig → Arm → Tip）演示变换继承与 `active` 隐藏。
 
 > 前置阅读：[Fundamentals 基本概念](./fundamentals.md)
@@ -70,17 +69,17 @@ tip.active = false;
 | `node.active` | 本节点自己的开关（可读写） |
 | `node.activeInHierarchy` | 综合判定：自己及**所有祖先**都 active 才为 true（只读） |
 
-`active=false` 的效果比 three.js 的 `visible=false` 更重：不仅不渲染，挂在上面的 Component 的 `update` 也停止调度。想"只停渲染但逻辑照跑"在 AIR 里没有直接开关，常规做法是摘/挂 `MeshRenderer`（`renderer.enabled = false` 亦可，Component 级开关）。
+`active=false` 是"重隐藏"：不仅不渲染，挂在上面的 Component 的 `update` 也停止调度。想"只停渲染但逻辑照跑"在 AIR 里没有直接开关，常规做法是摘/挂 `MeshRenderer`（`renderer.enabled = false` 亦可，Component 级开关）。
 
-## 4. 与 three.js Object3D 的差异点
+## 4. 节点模型要点
 
-| 关注点 | three.js | Cocos AIR |
-|---|---|---|
-| 树节点 | `Object3D`（Mesh 也是 Object3D） | `Node`（纯变换+层级） |
-| 渲染 | `mesh.geometry/material` 直接在节点上 | `MeshRenderer` Component 挂在 Node 上 |
-| 隐藏 | `visible=false`（仅渲染） | `active=false`（渲染+逻辑全停） |
-| 裁剪参与 | `layers` 掩码 vs camera.layers | `node.layer` vs `camera.visibility`（**必须显式设置**，见 [Cameras 相机](./cameras.md)） |
-| 树根 | 任意 Object3D | `Scene`（一个 app 同时跑一个） |
+| 关注点 | Cocos AIR |
+|---|---|
+| 树节点 | `Node`（纯变换+层级） |
+| 渲染 | `MeshRenderer` Component 挂在 Node 上 |
+| 隐藏 | `active=false`（渲染+逻辑全停） |
+| 裁剪参与 | `node.layer` vs `camera.visibility`（**必须显式设置**，见 [Cameras 相机](./cameras.md)） |
+| 树根 | `Scene`（一个 app 同时跑一个） |
 
 ## 5. 跑示例与验证记录
 

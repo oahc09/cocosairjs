@@ -1,13 +1,12 @@
 # 技巧合集（Tips）
 
-> 对应 three.js manual 的 *Tips* 一组短条目：截图、阻止清屏、画布键盘输入、画布透明、作为 HTML 背景。
-> three.js 把这几个做成独立小页；本手册按 index.md 的归并约定，把 5 个锚点收进本篇。
+> 话题：截图、阻止清屏、画布键盘输入、画布透明、作为 HTML 背景——五个短条目，
+> 按 index.md 的归并约定收进本篇。
 > 其中"画布键盘输入"为 FULL 并配可运行示例 [`examples/manual-tips-keyboard/`](examples/manual-tips-keyboard/)；其余 4 个为 PARTIAL（诚实说明边界，不配示例）。
 
 ## Taking a screenshot 截图
 
-**PARTIAL。** three.js 靠 `renderer.domElement.toDataURL()`（或开 `preserveDrawingBuffer`）截图。
-AIR 的 d.ts 里 grep `toDataURL|preserveDrawingBuffer` **零命中**——引擎不暴露截图 API，也不暴露 WebGL 上下文的 preserveDrawingBuffer 开关；
+**PARTIAL。** AIR 的 d.ts 里 grep `toDataURL|preserveDrawingBuffer` **零命中**——引擎不暴露截图 API，也不暴露 WebGL 上下文的 preserveDrawingBuffer 开关；
 WebGL 默认 `preserveDrawingBuffer=false`，在绘制回调之外调 `canvas.toDataURL()` 通常得到空白帧。
 
 本仓库实际可行的截图路是**外部抓帧**：验证器用 Playwright 对页面做 canvas-only 截图，落到 `docs/evidence/examples/<id>.png`
@@ -15,17 +14,15 @@ WebGL 默认 `preserveDrawingBuffer=false`，在绘制回调之外调 `canvas.to
 
 ## Prevent the Canvas Being Cleared 阻止画布被清除
 
-**PARTIAL。** three.js 用 `renderer.autoClear = false` 保留上一帧做拖尾/累积。
-AIR 的对应物是每相机的清屏标志：`camera.clearFlags` 可取 `Camera.ClearFlag.SOLID_COLOR`（默认，全清）/ `DEPTH_ONLY`（只清深度模板）/ `DONT_CLEAR`（不清颜色，module.js 43870–43873）。
+**PARTIAL。** "保留上一帧做拖尾/累积"这类需求，AIR 的入口是每相机的清屏标志：`camera.clearFlags` 可取 `Camera.ClearFlag.SOLID_COLOR`（默认，全清）/ `DEPTH_ONLY`（只清深度模板）/ `DONT_CLEAR`（不清颜色，module.js 43870–43873）。
 设 `camera.clearFlags = Camera.ClearFlag.DONT_CLEAR` 即"不清颜色缓冲"。
 
-标 PARTIAL 的原因：AIR 主循环是连续渲染，`DONT_CLEAR` 在每帧重绘同一批几何体时不会产生 three.js 式拖尾（几何体原地重画），
+标 PARTIAL 的原因：AIR 主循环是连续渲染，`DONT_CLEAR` 在每帧重绘同一批几何体时不会产生拖尾/累积效果（几何体原地重画），
 且该组合在本仓库**未做像素级取证**；它只是把"清屏"这个开关如实指出，不承诺累积效果。
 
 ## Get Keyboard Input From a Canvas 从画布获取键盘输入
 
-**FULL。** three.js 的坑是 canvas 默认不可聚焦，要把 `keydown` 绑到 window 或给 canvas 加 `tabindex`。
-AIR 的键盘事件走 **window 级 `input` 单例**，与 canvas 聚焦无关，因此**不需要 tabindex/聚焦技巧**：
+**FULL。** AIR 的键盘事件走 **window 级 `input` 单例**，与 canvas 聚焦无关，**不需要给 canvas 加 tabindex/做聚焦技巧**：
 
 ```js
 input.on(SystemEventType.KEY_DOWN, (e) => {
@@ -52,15 +49,14 @@ input.on(SystemEventType.KEY_UP, (e) => {
 
 ## Make the Canvas Transparent 让画布透明
 
-**PARTIAL。** three.js 建 renderer 时传 `{ alpha: true }` + 清屏色 alpha=0。
-AIR 的对应开关是 `macro.ENABLE_TRANSPARENT_CANVAS`（d.ts 16275，`macro` 顶层导出 16151），文档明确**必须在 `game.init` 之前**设为 true（d.ts 16267），再配合 `camera.clearColor` 的 alpha=0。
+**PARTIAL。** AIR 的透明画布开关是 `macro.ENABLE_TRANSPARENT_CANVAS`（d.ts 16275，`macro` 顶层导出 16151），文档明确**必须在 `game.init` 之前**设为 true（d.ts 16267），再配合 `camera.clearColor` 的 alpha=0。
 
 标 PARTIAL 的原因：标准入口 `createAirApp({ canvas })` 内部已完成 init，用户代码拿到 app 时**已错过 pre-init 窗口**；
 本仓库没有暴露"在 init 前插一脚"的钩子，因此透明画布在现有入口下**无法可靠达成**，只如实记录开关与前置条件。
 
 ## Use as Background in HTML 作为 HTML 背景
 
-**PARTIAL。** three.js 的做法是 CSS 把 canvas 固定定位、`z-index:-1` 垫在内容后，配合透明画布。
+**PARTIAL。** 通用做法是 CSS 把 canvas 固定定位、`z-index:-1` 垫在内容后，配合透明画布。
 AIR 侧的 CSS 定位部分完全可行（canvas 就是普通 DOM 元素，`position:fixed; z-index:-1` 即可垫底）；
 但"看到背后 DOM"依赖**画布透明**，即上一锚点的 `macro.ENABLE_TRANSPARENT_CANVAS` pre-init 限制——因此本锚点继承 PARTIAL。
 
@@ -118,7 +114,8 @@ AIR 侧的 CSS 定位部分完全可行（canvas 就是普通 DOM 元素，`posi
  * 配套文章：docs/manual/tips.md#get-keyboard-input-from-a-canvas-从画布获取键盘输入
  *
  * AIR 的键盘事件走 window 级 input 单例（input.on(SystemEventType.KEY_DOWN/KEY_UP)），
- * 不需要给 canvas 加 tabindex/聚焦（与 three.js 把 keydown 绑在 canvas 上不同）。
+ * 不需要给 canvas 加 tabindex/聚焦——事件来自全局 input 单例，与页面焦点在哪无关，
+ * 任意时刻按下都会被收到。
  * 本例维护一个 pressed 集合：WASD/方向键平移立方体、Space 加速自转，覆盖层实时回显；
  * 无按键时立方体仍空闲自转 20°/s，保证 frame-diff 有帧间差异。
  */

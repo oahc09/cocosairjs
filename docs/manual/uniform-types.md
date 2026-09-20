@@ -1,20 +1,19 @@
 # Uniform Types Uniform 类型
 
-> three.js 的 uniform 篇讲的是 `ShaderMaterial` 里 `uniforms: { u: { value } }` 的各种 GLSL 类型（float / vec2 / vec3 / vec4 / color / texture）。
 > Cocos AIR 不让你手写 uniform 块：**材质属性就是 uniform**。`builtin-standard` 等内置 effect 声明好了一组带类型的属性，你用 `material.setProperty(name, value)` 传**对应 JS 类型**的值即可。
 > 本篇给一张"声明类型 → JS 类型 → 代表属性"的对照表，并用四个并排立方体把每种类型的可见效果摆在一起。
 
 > 前置阅读：[Creating a Scene 创建场景](./creating-a-scene.md)、[Materials 材质](./materials.md)（可后读）
 
-## 概念对照
+## 概念要点
 
-| three.js | Cocos AIR | 说明 |
-|---|---|---|
-| `uniforms: { uScale: { value: 1.0 } }` | `material.setProperty('metallic', 1.0)` | float uniform → JS `number` |
-| `uniform vec3 uTint` | `setProperty('emissiveScale', new Vec3(...))` | Vec3 uniform → `Vec3` |
-| `uniform vec4 uColor` | `setProperty('mainColor', new Color(...))` | Vec4/Color uniform → `Color`（或 `Vec4`） |
-| `uniform sampler2D uMap` | `setProperty('mainTexture', texture2D)` | sampler2D → `Texture2D` |
-| 自己写 GLSL 声明类型 | 类型由 **effect 声明**决定 | 传错类型会在 `setProperty` 时告警/无效，命名与类型以 effect 为准 |
+| Cocos AIR | 说明 |
+|---|---|
+| `material.setProperty('metallic', 1.0)` | float uniform → JS `number` |
+| `setProperty('emissiveScale', new Vec3(...))` | Vec3 uniform → `Vec3` |
+| `setProperty('mainColor', new Color(...))` | Vec4/Color uniform → `Color`（或 `Vec4`） |
+| `setProperty('mainTexture', texture2D)` | sampler2D → `Texture2D` |
+| 类型由 **effect 声明**决定，无需手写 GLSL | 传错类型会在 `setProperty` 时告警/无效，命名与类型以 effect 为准 |
 
 ## 1. 类型对照表（以 builtin-standard 实际声明为准）
 

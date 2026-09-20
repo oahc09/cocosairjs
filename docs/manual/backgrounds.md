@@ -1,18 +1,18 @@
 # Add a Background or Skybox（背景与天空盒）
 
-> 对应 three.js manual 的 *Add a Background or Skybox* 一篇：`scene.background` 的纯色 / 贴图 / 立方体图三形态。
+> 场景背景的三种形态：纯色、默认天空盒、自定义立方体图（cubemap）。
 > 配套可运行示例：[`examples/manual-backgrounds/`](examples/manual-backgrounds/)（三按钮切三模式：纯色、
 > 默认天空盒、页面内 6 张 canvas 现造的 cubemap 天空盒——零外部资产）。
 
-three.js 把三种背景统一在 `scene.background` 一个属性上；AIR 拆成两层：
-**相机清除策略**（`camera.clearFlags` + `clearColor`）与**场景环境层**（`scene.globals.skybox`）。对照：
+AIR 的背景分两层：**相机清除策略**（`camera.clearFlags` + `clearColor`）与
+**场景环境层**（`scene.globals.skybox`）。要点：
 
-| three.js | AIR | 实测 |
-| --- | --- | --- |
-| `scene.background = new Color(...)` | `clearFlags = SOLID_COLOR` + `clearColor` | ✓（本手册几乎每个示例都在用） |
-| `scene.background = texture2D` | 无 `scene.background` 纹理槽位 | **缺**——本篇 PARTIAL 主因之一 |
-| `scene.background = cubeTexture` | `scene.globals.skybox.envmap = TextureCube` | ✓ 实测（canvas 现造 6 面可上屏） |
-| `Sky` 着色器（程序化大气） | 无对应物；`setSkyboxMaterial`（d.ts 6114）是自定义材质入口，但本构建无用户面 GLSL（见 [debugging-glsl](debugging-glsl.md) N/A） | 缺 |
+| AIR | 实测 |
+| --- | --- |
+| 纯色背景：`clearFlags = SOLID_COLOR` + `clearColor` | ✓（本手册几乎每个示例都在用） |
+| 2D 贴图背景：无纹理槽位 | **缺**——本篇 PARTIAL 主因之一 |
+| cubemap 天空盒：`scene.globals.skybox.envmap = TextureCube` | ✓ 实测（canvas 现造 6 面可上屏） |
+| 程序化大气：无内置对应物；`setSkyboxMaterial`（d.ts 6114）是自定义材质入口，但本构建无用户面 GLSL（见 [debugging-glsl](debugging-glsl.md) N/A） | 缺 |
 
 ## 1. 背景入口（实测 API 面）
 
@@ -111,21 +111,19 @@ useIBL: false, envLightingType: 0, hdrClearsEnvmap: { before: true, after: true 
 4. **立方体"暗"与背景模式无关**：solid 模式下同场景同光同材质（对比 `backgrounds-solid.png`），
    中等偏暗色调是本仓库示例统一风格（对照 `manual-animation-system.png`），不是天空盒副作用。
 
-**如实标注**：three.js 的 `scene.background = texture2D`（2D 图当背景，含 aspect 自适应）在 AIR 没有
-一等公民槽位。应用层替代是给相机挂一张正对的大 quad 并配 `builtin-unlit` 材质（贴图路线见
+**如实标注**："2D 图当背景"（含 aspect 自适应）在 AIR 没有一等公民槽位。应用层替代是给相机挂一张正对的大 quad 并配 `builtin-unlit` 材质（贴图路线见
 [textures](textures.md)），或用 `DONT_CLEAR` + CSS 页面背景垫底（后者依赖透明画布，见
 [tips](tips.md) 的 PARTIAL 结论）——两条都属"能做但引擎不替你管"，故本篇定 **PARTIAL**。
 
-## 4. 与 three.js 的差异备忘
+## 4. 实现备忘
 
-- **属性归属**：three.js 一个 `scene.background` 按对象类型（Color/Texture/CubeTexture/equirect）自动分流；
-  AIR 是 `camera.clearFlags`（怎么清）× `scene.globals.skybox`（清成什么环境）两维正交，
-  组合出错时有警告文案兜底（module.js 语言表 15100："clear flag is skybox, but skybox is disabled"）。
-- **背景不吃光照**：两边一致，background/skybox 都以原色上屏。
-- **IBL 复用**：cocos 的 skybox 同时是环境光来源（`useIBL`/`envLightingType`/`applyDiffuseMap`，
-  对应 three.js 的 `scene.environment` 职能）；本构建实测默认 `useIBL=false`、`envLightingType=0`，
-  即天空盒默认只管看不管照。
-- **程序化天空**：three.js 有 `Sky` 着色器示例；AIR 无用户面 GLSL（见 debugging-glsl），
+- **属性归属**：背景拆在两维正交的入口上：`camera.clearFlags`（怎么清）×
+  `scene.globals.skybox`（清成什么环境），组合出错时有警告文案兜底
+  （module.js 语言表 15100："clear flag is skybox, but skybox is disabled"）。
+- **背景不吃光照**：background/skybox 都以原色上屏，不参与场景光照。
+- **IBL 复用**：天空盒同时可作环境光来源（`useIBL`/`envLightingType`/`applyDiffuseMap`）；
+  本构建实测默认 `useIBL=false`、`envLightingType=0`，即天空盒默认只管看不管照。
+- **程序化天空**：本构建无用户面 GLSL（见 [debugging-glsl](debugging-glsl.md)），
   天花板是 `setSkyboxMaterial` 换内建材质——本篇未取证。
 
 ## 5. 跑示例与验证记录

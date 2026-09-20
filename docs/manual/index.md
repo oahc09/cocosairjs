@@ -1,8 +1,8 @@
 # Cocos AIR 开发手册
 
-> 本手册的**分组、顺序与篇目**全量对齐 [three.js manual](https://threejs.org/manual/)（`list.json` 共 10 组 64 条目），
-> 内容映射到 Cocos AIR 的真实 API（Cocos 组件式 Code First，非 Three.js API）。
-> 正文中文，篇目标题保留英文原名以便对照阅读。
+> 本手册面向 **Cocos AIR**（Code First Web 3D 运行时）：分组、顺序与篇目共 10 组 64 条目，
+> 内容全部映射到 AIR 的真实 API（Cocos 组件式 Code First）。
+> 正文中文，篇目标题保留英文原名以便检索。
 
 **条目账**：64 条目 → 60 篇文档（Tips 组 5 个锚点条目并入 [tips.md](./tips.md)）。
 **状态图例**：`FULL` 能力完整可写 ｜ `PARTIAL` 部分能力，如实标注差距 ｜ `N/A` 当前不包含（诚实说明 + 近似替代）｜ `META` 元信息页（无示例）。

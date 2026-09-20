@@ -1,21 +1,20 @@
 # Using Indexed Textures for Picking and Color（索引纹理拾取与着色）
 
-> 对应 three.js manual 的 *Using Indexed Textures for Picking and Color* 一篇：把三角形序号写进纹理，
-> 用 GPU 读回实现任意网格的逐三角拾取/着色。
+> 把三角形序号写进纹理，用 GPU 读回实现任意网格的逐三角拾取/着色。
 > 配套可运行示例：[`examples/manual-indexed-textures/`](examples/manual-indexed-textures/)
 > （16×12 球 2048 三角形，CPU 逐三角求交，命中三角形重心坐标处放黄球标记——零外部资产）。
 
-three.js 该篇的路线是 GPU 的：自定义着色器把 `gl_PrimitiveID`（或顶点索引）编码成 RGB 渲到离屏纹理，
+索引纹理的路线是 GPU 的：自定义着色器把 `gl_PrimitiveID`（或顶点索引）编码成 RGB 渲到离屏纹理，
 读鼠标处那一像素的颜色反解出三角形序号——同一张"索引纹理"还能顺带驱动逐三角着色。
 **AIR 里这条路线不存在**：无用户 GLSL 入口（[shadertoy](shadertoy.md) 篇已用 grep 级证据定 N/A），
 Stage 体系也不给自定义 pass 挂着色器（[post-processing](post-processing.md) N/A）。
 但本篇的**目标**——逐三角形拾取——有一条诚实的 CPU 等价路线：
 `primitives.*` 生成的 `IGeometry` 自带 `positions` + `indices`（索引缓冲，d.ts 32078），
-应用层把它展开成三角形列表，用 [picking](picking.md) 同款 `screenPointToRay` 射线做 Möller–Trumbore 求交。对照：
+应用层把它展开成三角形列表，用 [picking](picking.md) 同款 `screenPointToRay` 射线做 Möller–Trumbore 求交。要点：
 
-| three.js | AIR | 实测 |
+| 路线 | AIR 现状 | 实测 |
 | --- | --- | --- |
-| 离屏渲染 ID 纹理 + `readRenderTargetPixels` | 无用户 GLSL/自定义 pass → GPU 路线缺 | N/A（升级条件见 §4） |
+| 离屏渲 ID 纹理 + GPU 读回 | 无用户 GLSL/自定义 pass → GPU 路线缺 | N/A（升级条件见 §4） |
 | 逐三角形拾取任意网格 | CPU：索引缓冲 + Möller–Trumbore | ✓（本示例核心） |
 | 索引纹理驱动逐三角着色 | `IGeometry.colors` 字段存在（d.ts 32031）；顶点色是否被 builtin-standard 采纳**未取证** | 述而不承诺 |
 
@@ -73,7 +72,7 @@ Stage 体系也不给自定义 pass 挂着色器（[post-processing](post-proces
 
 三点合起来证明：索引展开正确（球面处处在 r=2）、求交取最近命中有效、坐标系翻转沿用 picking 篇结论无漂移。
 **性能口径**：2048 三角 × 每帧一次 ≈ 现代 JS 单帧 <1ms 量级，本例 60fps 无压力；
-万级三角以上该上应用层 BVH/包围球粗筛——three.js 文章选 GPU 路线正是为了绕开这个规模问题，
+万级三角以上该上应用层 BVH/包围球粗筛——GPU 路线本就是为了绕开这个规模问题，
 AIR 的 CPU 路线在中小网格舒适区成立，超大网格是它的真实边界。
 
 ## 4. 边界与升级条件（为何定 PARTIAL）
@@ -148,7 +147,7 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  * Cocos AIR 开发手册 — Using Indexed Textures for Picking and Color（索引纹理拾取）
  * 配套文章：docs/manual/indexed-textures.md
  *
- * three.js 该篇用"把三角形序号编码进颜色渲染到离屏纹理再读回"的 GPU 路线做任意网格拾取。
+ * 任意网格拾取有一条经典 GPU 路线："把三角形序号编码进颜色渲染到离屏纹理再读回"。
  * AIR 无用户 GLSL（shadertoy 篇 N/A 同结论），GPU 路线不存在；但目标（逐三角形拾取）
  * 可以走 CPU 等价路线：primitives 生成的 IGeometry 自带 positions + indices（索引缓冲），
  * 应用层拿 picking 篇同款 screenPointToRay 射线，对索引展开的三角形做 Möller–Trumbore 求交。

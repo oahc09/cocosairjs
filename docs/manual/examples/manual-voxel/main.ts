@@ -2,9 +2,8 @@
  * Cocos AIR 开发手册 — Making Voxel Geometry (Minecraft)（体素几何）
  * 配套文章：docs/manual/voxel-geometry.md
  *
- * three.js 该篇：12×24×12 体素山，用"邻居不透明就丢面"的可见性剔除把数千 cube 合成
- * 一个 BufferGeometry（mergeGeometries），再按高度染顶点色，OrbitControls 环绕看。
- * AIR 侧逐件对上：primitives.box() 现造 6 面模板（面序 +Z,+X,-Z,-X,-Y,+Y，源码
+ * 目标场景：12×24×12 体素山，用"邻居不透明就丢面"的可见性剔除把数千 cube 合并成
+ * 单个大网格，再按高度染顶点色，环绕观看。AIR 侧逐件实现：primitives.box() 现造 6 面模板（面序 +Z,+X,-Z,-X,-Y,+Y，源码
  * build js 54805 faceNormals 实锤）→ 应用层手工合并 positions/normals/uvs/colors/
  * indices 成一个大 IGeometry → utils.createMesh 一次建 Mesh → 一个 MeshRenderer
  * 一次 draw call；顶点色走 USE_VERTEX_COLOR 宏（builtin-standard 着色器面已含
@@ -67,7 +66,7 @@ for (let z = 0; z < GRID; z++) {
 }
 const maxH = Math.max(...heights);
 
-// 体素占据判定：网格外=空；y<0 视为实心（底面永不暴露，同 three.js 篇的地面约定）
+// 体素占据判定：网格外=空；y<0 视为实心（底面永不暴露，通用地面约定）
 function solid (x: number, y: number, z: number): boolean {
     if (y < 0) return true;
     if (x < 0 || x >= GRID || z < 0 || z >= GRID) return false;

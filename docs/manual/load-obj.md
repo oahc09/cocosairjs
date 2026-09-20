@@ -1,6 +1,5 @@
 # Load an .OBJ file（加载 OBJ 文件）
 
-> 对应 three.js manual 的 *Load an .OBJ file* 一篇：用 `OBJLoader` 把 Wavefront OBJ 读进场景。
 > 状态：**N/A** —— AIR 的模型加载面是 glTF，不含 OBJ 解析器，本篇给实测证据与替代路线，不配示例。
 
 ## 1. 实测结论：无 OBJ 解析器

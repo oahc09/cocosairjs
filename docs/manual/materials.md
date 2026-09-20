@@ -1,6 +1,5 @@
 # Materials 材质
 
-> three.js 的材质是**类**：`MeshBasicMaterial` / `MeshStandardMaterial`，new 一个改属性。
 > Cocos AIR 的材质是 **effect 实例 + uniform 取值**：`new Material()` 后 `initialize({ effectName })` 选"配方"，`setProperty` 填参数。没有材质类继承树，配方名字就是字符串。
 > 本篇给 builtin 清单、获取途径、三种配方对比，以及"绝不原地改共享材质"的纪律。
 

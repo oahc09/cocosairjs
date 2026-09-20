@@ -1,6 +1,6 @@
 # 矩阵变换（Matrix Transformations）
 
-> 对应 three.js manual 的 *Matrix Transformations* 一篇：世界/本地变换矩阵怎么组合、怎么把一个点从本地空间搬到世界空间。
+> 世界/本地变换矩阵怎么组合、怎么把一个点从本地空间搬到世界空间。
 > 配套可运行示例：[`examples/manual-matrix-transformations/`](examples/manual-matrix-transformations/)（三级节点链 root→mid→tip + 每帧"引擎世界矩阵 vs 手工 Mat4 乘法"对账）。
 
 **状态：FULL。** AIR 导出完整的 `Mat4` 静态运算面与 `Node` 世界变换读回面，本篇把两者**逐帧对账**：
@@ -78,15 +78,13 @@ mid node euler (node API): (0.0, 0.0, 30.0)°
 `Mat4.toEuler` 的坑：对 `mid.worldMatrix`（一个明确非零的世界旋转）分解，返回 `ret=false` 且 `eulerOut` 保持零向量——分解在本构建里失效。
 同一姿态用节点 API 读 `mid.eulerAngles` 得到正确的 `(0.0, 0.0, 30.0)°`。结论：**读世界/本地欧拉角走 `node.eulerAngles`，取旋转四元数走 `Mat4.getRotation`，不要依赖 `Mat4.toEuler`。**
 
-## 4. 与 three.js 的差异备忘
+## 4. 矩阵使用备忘
 
-- three.js 的 `Matrix4` 内部是列主序 `elements` 数组（16 元素 `Float32Array`），`matrix.multiplyMatrices(a, b)` 做 `a * b`；
-  AIR 的 `Mat4` **没有 `elements` 数组**，是 16 个具名字段 `m00`…`m15`（gl-matrix 风格），比较/遍历要按字段名。
-- 乘法约定一致：两边都是"父世界矩阵在左、子本地矩阵在右"，`out = parentWorld * childLocal`。
-  所以 three.js 的层级世界矩阵心智模型可直接迁移，只是访问元素从 `m.elements[i]` 换成 `mat.m00` 这类具名字段。
-- 点变换：three.js `vector.applyMatrix4(m)`；AIR `Vec3.transformMat4(out, v, m)`（多一个 out 参数，静态方法）。
-- 欧拉分解：three.js `Matrix4` 无直接 toEuler，一般用 `Quaternion.setFromRotationMatrix` + `Euler.setFromQuaternion`；
-  AIR 名义上有 `Mat4.toEuler` 但本构建失效（§3），等价路径是 `Mat4.getRotation` 取四元数或直接用 `node.eulerAngles`。
+- AIR 的 `Mat4` **没有 `elements` 数组**，是 16 个具名字段 `m00`…`m15`（gl-matrix 风格），比较/遍历要按字段名。
+- 乘法约定：`Mat4.multiply(out, a, b)` 做 `out = a * b`，即"父世界矩阵在左、子本地矩阵在右"，
+  `out = parentWorld * childLocal`。层级世界矩阵的心智模型据此建立即可。
+- 点变换：`Vec3.transformMat4(out, v, m)`（静态方法，带独立 `out` 参数）。
+- 欧拉分解：名义上有 `Mat4.toEuler` 但本构建失效（§3），可靠路径是 `Mat4.getRotation` 取四元数，或直接用 `node.eulerAngles`。
 
 ## 5. 跑示例与验证记录
 

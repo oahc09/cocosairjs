@@ -1,22 +1,22 @@
 # Multiple Canvases, Multiple Scenes（多画布多场景）
 
-> 对应 three.js manual 的 *Multiple Canvases, Multiple Scenes* 一篇：三个 canvas × 三个 renderer × 三个 scene 并排渲染。
+> 三个 canvas × 三个 renderer × 三个 scene 并排渲染的多画布分屏课题。
 > 配套可运行示例：[`examples/manual-multi-canvas/`](examples/manual-multi-canvas/)
 > （单画布三条竖带 × 三台相机 × 三层掩码"子场景"——零外部资产）。
 
-three.js 的分屏路线是**多 canvas 各自 new 一个 renderer**；AIR 这条路走不通——
+"多 canvas 各自 new 一个 renderer"这条分屏路线在 AIR 走不通——
 `createAirApp` 只收**一个** canvas（d.ts 32782 `canvas: HTMLCanvasElement | string`），
 且 pal/screen-adapter 是模块顶层单例、import 期就绑定文档 `#GameCanvas`
 （[offscreencanvas](offscreencanvas.md) N/A 篇归因过的同一条架构约束）。
-AIR 原生的等价物是**单画布多相机分屏**：每台相机给一条 `rect` 视口带、给一份 `visibility` 层掩码。对照：
+AIR 原生的分屏解法是**单画布多相机**：每台相机给一条 `rect` 视口带、给一份 `visibility` 层掩码。要点：
 
-| three.js | AIR | 实测 |
-| --- | --- | --- |
-| 多个 `<canvas>` + 多个 `WebGLRenderer` | 无多窗口/多画布渲染入口 | **缺**——本篇 PARTIAL 主因 |
-| 一个 renderer 连续 `render(scene, camera)` 切场景 | 单 scene 激活（`app.run(scene)` 收一个；`director.getScene()` 单例） | 缺（多 Scene 对象并存未取证） |
-| 分屏 = 三 canvas 并排 | `camera.rect = new Rect(x, y, w, h)`（归一化视口带） | ✓ 本示例（三条竖带） |
-| 每屏独立内容 = 每 scene 各自装对象 | 每"子场景"占一个自定义层位 + `camera.visibility` 掩码 | ✓ 本示例（层隔离成立） |
-| `renderer.setScissorTest` 防互染 | 每相机 clear 只作用于自身 rect 区域 | ✓ 实测（三带 clearColor 互不覆盖） |
+| AIR | 实测 |
+| --- | --- |
+| 无多窗口/多画布渲染入口 | **缺**——本篇 PARTIAL 主因 |
+| 单 scene 激活（`app.run(scene)` 收一个；`director.getScene()` 单例） | 缺（多 Scene 对象并存未取证） |
+| `camera.rect = new Rect(x, y, w, h)`（归一化视口带） | ✓ 本示例（三条竖带） |
+| 每"子场景"占一个自定义层位 + `camera.visibility` 掩码 | ✓ 本示例（层隔离成立） |
+| 每相机 clear 只作用于自身 rect 区域 | ✓ 实测（三带 clearColor 互不覆盖） |
 
 ## 1. 分屏相关 API 面（实测锚点）
 
@@ -83,19 +83,19 @@ cam2: rect.x=0.67 w=0.33 vis=1073741832 (layer 8)
 另注：探针里用 `readPixels` 量化亮度不可行（WebGL 未开 `preserveDrawingBuffer`，读回全 0，
 与 [tips](tips.md) 截图锚点篇同一约束），亮度对账以验证器截图为准。
 
-**如实标注**：three.js 的"多 canvas 各自 renderer"在 AIR 无一等公民路线（单 canvas 架构约束 +
+**如实标注**："多 canvas 各自 renderer"式分屏在 AIR 无一等公民路线（单 canvas 架构约束 +
 无 OffscreenCanvas/Worker，见 offscreencanvas）；"多个 `Scene` 对象并存、逐 scene 渲染"也未取证——
 `app.run(scene)` 收单 scene、`director.getScene()` 单例，多 Scene 对象是否有渲染通路本篇不承诺。
 能承诺的是上表的**单画布分屏三件套**（rect × visibility × priority），故定 **PARTIAL**。
 
-## 4. 与 three.js 的差异备忘
+## 4. 分屏语义备忘
 
-- **隔离粒度**：three.js 示例里"每屏一个 scene"是对象树级隔离；AIR 的层掩码是**渲染剔除级**隔离——
+- **隔离粒度**：AIR 的层掩码是**渲染剔除级**隔离——
   所有物体仍在同一棵 scene 树里，物理/脚本/遍历仍会互相看见。要行为级隔离得应用层自律（按 rig 根节点分组遍历）。
-- **清屏语义**：three.js 三 canvas 天然互不覆盖；AIR 单 canvas 上靠"每相机 clear 只作用自身 rect"实现，
+- **清屏语义**：AIR 单 canvas 上靠"每相机 clear 只作用自身 rect"实现互不覆盖，
   实测三带各自 `clearColor` 成立（截图带底色分明）。
-- **成本**：AIR 分屏是**每带一次全场景剔除 + 一次绘制**（可见集不同），带数越多剔除/绘制批次越多；
-  three.js 多 renderer 则是多份 GL 上下文级开销。两边都不是免费午餐。
+- **成本**：AIR 分屏是**每带一次全场景剔除 + 一次绘制**（可见集不同），带数越多剔除/绘制批次越多，
+  不是免费午餐。
 
 ## 5. 跑示例与验证记录
 
@@ -155,9 +155,9 @@ rect/visibility 探针 dump 见 §3。`manual-doc-consistency` 结果见台账�
  * Cocos AIR 开发手册 — Multiple Scenes（多场景与多视口）
  * 配套文章：docs/manual/multiple-scenes.md
  *
- * three.js 用"多个 Scene + 多个 WebGLRenderer + 多个 canvas"实现分屏；AIR 的 pal/screen-adapter
- * 是模块顶层单例、createAirApp 只认一个 #GameCanvas，多 canvas 路线走不通（见 offscreencanvas N/A）。
- * 本篇给 AIR 原生替代：单 Scene + 多 Camera，每台相机用 rect 占屏幕一条竖带、用 visibility 层掩码
+ * AIR 的 pal/screen-adapter 是模块顶层单例、createAirApp 只认一个 #GameCanvas，
+ * "多个 Scene + 多个渲染器 + 多个 canvas"的分屏路线走不通（见 offscreencanvas N/A）。
+ * 本篇给 AIR 原生分屏方案：单 Scene + 多 Camera，每台相机用 rect 占屏幕一条竖带、用 visibility 层掩码
  * 只渲染自己那组节点——三带各显一组不同几何、各自转速，视觉上等价于"三个场景并排"。
  * 覆盖层读回三台相机的 rect / visibility，证明分屏与层剔除都真实生效。
  */

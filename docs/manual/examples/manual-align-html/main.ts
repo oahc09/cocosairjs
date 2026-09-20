@@ -2,7 +2,7 @@
  * Cocos AIR 开发手册 — Aligning HTML Elements to 3D（HTML 元素对齐 3D）
  * 配套文章：docs/manual/align-html-elements-to-3d.md
  *
- * three.js 该篇的核心是 camera 投影：把 3D 世界坐标换算成屏幕像素，去摆 DOM 元素，
+ * 本能力的核心是 camera 投影：把 3D 世界坐标换算成屏幕像素，去摆 DOM 元素，
  * 并用射线检测决定"被挡住就藏标签"。AIR 的对应件是 camera.worldToScreen（d.ts 21418，
  * 输出左下角原点像素——与 screenPointToRay 同一坐标系，摆 DOM 时要翻 y）。
  * 本例：两颗轨道立方体（橙/青）各带一个 HTML 标签跟随其屏幕投影位置；

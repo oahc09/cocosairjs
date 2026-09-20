@@ -1,7 +1,6 @@
 # Textures 纹理
 
-> three.js 里纹理是 `TextureLoader().load(url)` 一步拿到 `Texture`。
-> Cocos AIR 是**两步**：像素载体 `ImageAsset`（CPU 侧）→ 采样对象 `Texture2D`（GPU 侧）；来源可以是 `assetManager.loadRemote(url)` 的文件图，也可以是程序化像素。
+> Cocos AIR 的纹理是**两步**：像素载体 `ImageAsset`（CPU 侧）→ 采样对象 `Texture2D`（GPU 侧）；来源可以是 `assetManager.loadRemote(url)` 的文件图，也可以是程序化像素。
 > 本篇示例零外部资产：代码现画一张 32×32 棋盘格走完全流程。
 
 > 前置阅读：[Materials 材质](./materials.md)、[Uniform Types 统一类型](./uniform-types.md)

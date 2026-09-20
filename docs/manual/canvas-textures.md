@@ -1,21 +1,19 @@
 # Using A Canvas for Dynamic Textures（用 Canvas 做动态纹理）
 
-> 对应 three.js manual 的 *Using A Canvas for Dynamic Textures* 一篇：把 2D canvas 当活纹理，
-> 每帧作画、每帧重传，贴到 3D 表面上。
+> 把 2D canvas 当活纹理：每帧作画、每帧重传，贴到 3D 表面上。
 > 配套可运行示例：[`examples/manual-dynamic-texture/`](examples/manual-dynamic-texture/)
 > （256×256 离屏画布画"时钟扫针 + 递增帧号"，同贴一块竖直面与一颗自转立方体——零外部资产）。
 
-three.js 的套路：`new THREE.CanvasTexture(canvas2d)` + 每次改完画设置 `texture.needsUpdate = true`。
-AIR 没有 CanvasTexture 这个类，但机制完全对得上——`SimpleTexture.uploadData(source)`
-（d.ts 43970）**source 直接收 `HTMLCanvasElement`**，每帧调一次就是 `needsUpdate=true` 的等价物；
-纹理本体用 `new Texture2D()` + `reset({width, height, format})` 现造。对照：
+AIR 的动态纹理机制：`SimpleTexture.uploadData(source)`（d.ts 43970）
+**source 直接收 `HTMLCanvasElement`**，每帧画完调一次即让新内容上屏；
+纹理本体用 `new Texture2D()` + `reset({width, height, format})` 现造。要点：
 
-| three.js | AIR | 实测 |
-| --- | --- | --- |
-| `new CanvasTexture(canvas)` | `new Texture2D()` + `reset({w,h,format})` + 首次 `uploadData(canvas)` | ✓（本示例） |
-| `texture.needsUpdate = true` | 每帧 `texture.uploadData(canvas)` | ✓（探针实测 ~62 次/秒无异常） |
-| 上传后 y 方向自动对齐 | **不翻转**——画布顶行落在 v=0=面片下缘，画面上下颠倒（§2 踩坑） | ✗ 需预翻转 |
-| `texture.image = canvas` 换源 | `ImageAsset(canvas)` + `texture.image = ...` 也可行（[textures](textures.md) 篇两步上传路线），逐帧换 image 未取证 | 述而不承诺 |
+| AIR | 实测 |
+| --- | --- |
+| 建纹理：`new Texture2D()` + `reset({w,h,format})` + 首次 `uploadData(canvas)` | ✓（本示例） |
+| 重传：每帧 `texture.uploadData(canvas)` | ✓（探针实测 ~62 次/秒无异常） |
+| y 方向：`uploadData` **不翻转**——画布顶行落在 v=0=面片下缘，画面上下颠倒（§2 踩坑） | ✗ 需预翻转 |
+| 换源：`ImageAsset(canvas)` + `texture.image = ...` 也可行（[textures](textures.md) 篇两步上传路线），逐帧换 image 未取证 | 述而不承诺 |
 
 ## 1. 动态纹理 API 面（实测锚点）
 
@@ -31,8 +29,7 @@ AIR 没有 CanvasTexture 这个类，但机制完全对得上——`SimpleTextur
 ## 2. 示例拆解 + y 翻转踩坑
 
 每帧三步：`drawPaint` 在离屏 2D context 上作画 → `texture.uploadData(paint)` 重传 →
-材质侧什么都不用改（同一 `Texture2D` 对象被竖直面和立方体共用，一处上传两处生效——
-等价于 three.js 共享 CanvasTexture）。
+材质侧什么都不用改（同一 `Texture2D` 对象被竖直面和立方体共用，一处上传两处生效）。
 
 **踩坑（截图实锤）**：首版画面上下颠倒——"AIR" 方位标（画在画布顶部）出现在面片底部且倒立。
 归因：引擎上传路径固定 `UNPACK_FLIP_Y_WEBGL = false`（build js 78228/82958 两处），
@@ -66,13 +63,13 @@ AIR 没有 CanvasTexture 这个类，但机制完全对得上——`SimpleTextur
 
 ## 4. 边界（为何定 PARTIAL）
 
-- 机制层成立（上传/共享/动画全取证），但**没有** three.js `CanvasTexture` 那种"构造即绑定 + 脏标记"
-  的一等公民封装：每次改动都要显式 `uploadData`，忘调不报错、只是画面不动（静默失败）。
+- 机制层成立（上传/共享/动画全取证），但**没有**"构造即绑定 + 脏标记自动重传"式
+  的一等公民动态纹理封装：每次改动都要显式 `uploadData`，忘调不报错、只是画面不动（静默失败）。
 - `uploadData` 文档承诺的**局部更新**（小图从左上角覆盖）未取证；逐帧全量重传 256×256 无压力，
   大纹理高频局部位是否更省，本构建未测。
 - 逐帧 `texture.image = new ImageAsset(canvas)` 的替代路线未取证（一次性上传路线已在
   [textures](textures.md) 篇取证）。
-- 升级 FULL 条件：出现官方 `needsUpdate` 式脏标记/自动重传设施，或局部上传路径取证通过。
+- 升级 FULL 条件：出现官方脏标记/自动重传设施，或局部上传路径取证通过。
 
 ## 5. 跑示例与验证记录
 
@@ -132,9 +129,9 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  * Cocos AIR 开发手册 — Using A Canvas for Dynamic Textures（用 Canvas 做动态纹理）
  * 配套文章：docs/manual/canvas-textures.md
  *
- * three.js 该篇：往一个 2D canvas 上每帧作画，喂给 CanvasTexture，改完把 needsUpdate 置真。
+ * 本能力的流程：往一个 2D canvas 上每帧作画，把画布内容作为纹理源，改了就要显式上传。
  * AIR 的对应件是 SimpleTexture.uploadData(source)（d.ts 43970）——source 直接收
- * HTMLCanvasElement，每帧调一次就是 needsUpdate=true 的等价物；纹理本体用
+ * HTMLCanvasElement，每帧调一次即为"改动即时生效"；纹理本体用
  * new Texture2D() + reset({width,height,format}) 现造（零外部资产）。
  * 本例：256×256 离屏 2D canvas 每帧画"时钟扫针 + 递增帧数 + 左上角 AIR 方位标"，
  * uploadData 上传后贴到一块竖直面（quad）与一颗自转立方体上（同一纹理两用）。
@@ -270,7 +267,7 @@ class DynTex extends Component {
         this._t = (this._t || 0) + dt;
         frame++;
         drawPaint(frame, this._t);
-        texture.uploadData(paint); // = three.js 的 needsUpdate=true 等价物
+        texture.uploadData(paint); // 改动即时生效：每帧显式上传一次
         uploads++;
         const e = cube.node.eulerAngles;
         cube.node.setRotationFromEuler(0, e.y + 36 * dt, 0);

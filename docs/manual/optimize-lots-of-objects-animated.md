@@ -1,19 +1,19 @@
 # Optimizing Lots of Objects Animated（优化大量动画对象）
 
-> 对应 three.js manual 的 *Optimizing Lots of Objects Animated* 一篇：对象又多又每帧在动时怎么组织。
+> 对象又多又每帧在动时怎么组织。
 > 配套可运行示例：[`examples/manual-lots-animated/`](examples/manual-lots-animated/)（20×20=400 颗立方体正弦波场，单个管理组件集中写变换，覆盖层实测逻辑耗时）。
 
-three.js 这一篇的主角是 `InstancedMesh`：一次 draw 承载数千实例，每帧往 `instanceMatrix` 写矩阵再
-`needsUpdate = true`。AIR **没有**用户面 instancing 入口（d.ts 里 `InstancedBuffer` /
+大量动态对象的常规解是 instancing（一次 draw 承载数千实例，每帧写实例矩阵再标脏提交），
+AIR **没有**用户面 instancing 入口（d.ts 里 `InstancedBuffer` /
 `SkinnedMeshBatchRenderer` 均为引擎内部件），所以本篇的实测最短路径是：
 **共享资源 + 数据化布局 + 单个管理组件**。能力缺口如实标注，本篇 PARTIAL。
 
-| 需求 | three.js 答案 | AIR 实测 |
-| --- | --- | --- |
-| N 个动态对象一次 draw | `InstancedMesh` + `instanceMatrix` | 无用户面入口（N/A） |
-| 每帧逻辑成本收敛 | 每实例写矩阵（一个循环） | 单 Component + `Float32Array`，实测 **0.04 ms/frame @400**（§3） |
-| 提交侧优化 | instancing | 仅共享 mesh/material；draw 数不可测（无统计入口） |
-| 其中静态子集 | `mergeGeometries` | `BatchingUtility`（[上一篇](optimize-lots-of-objects.md)）；在动的对象不能静态合批 |
+| 需求 | AIR 实测 |
+| --- | --- |
+| N 个动态对象一次 draw | 无用户面入口（N/A） |
+| 每帧逻辑成本收敛 | 单 Component + `Float32Array`，实测 **0.04 ms/frame @400**（§3） |
+| 提交侧优化 | 仅共享 mesh/material；draw 数不可测（无统计入口） |
+| 其中静态子集 | `BatchingUtility`（[上一篇](optimize-lots-of-objects.md)）；在动的对象不能静态合批 |
 
 ## 1. 数据化布局：一个组件管 400 个变换
 
@@ -95,18 +95,17 @@ AIR: no user InstancedMesh → data-driven single manager
 **读图设计约束**（非踩坑复盘，是选参依据）：波场类示例要涟漪分明，需"边长 < 间距"
 （本例 0.8 < 1.1，波谷不穿插）且波幅取间距一半（本例 0.55：峰谷差 1.1 恰为一个间距，邻峰邻谷不叠死）。
 
-## 4. 与 three.js 的差异备忘
+## 4. 能力边界与原则备忘
 
-- three.js 本篇的每个优化都围绕 instancing：单 draw、`instanceMatrix` 每帧写、
-  以及 instancing 特有的坑（包围球不自动更新要 `computeBoundingSphere()`、`frustumCulled` 误剔）。
-  AIR 无 instancing，这些坑不存在；对应地，**动态对象数量的上限也低一个量级**——
+- AIR 无用户面 instancing，实例化绘制特有的坑（包围球不自动更新要 `computeBoundingSphere()`、
+  `frustumCulled` 误剔）在这里不存在；对应地，**动态对象数量的上限也低一个量级**——
   400 颗已在本环境 headless 验证器下顺畅跑通，再往上提交侧会成为瓶颈且无法实测定位，本篇不承诺上限数字。
-- three.js 社区对"大量动态对象"还有 GPU 粒子/变换纹理等路线；AIR 无用户面 GLSL 与变换纹理入口
+- "大量动态对象"还有 GPU 粒子/变换纹理等路线；AIR 无用户面 GLSL 与变换纹理入口
   （见 [debugging-glsl](debugging-glsl.md) 的 N/A 结论），不展开。
-- 共同原则两边一致：循环内零分配、状态数据化、逻辑与提交分离。本篇 §1 的 TypedArray + 复用 Vec3
+- 通用原则：循环内零分配、状态数据化、逻辑与提交分离。本篇 §1 的 TypedArray + 复用 Vec3
   即该原则在 AIR 的最小形态。
 - AIR 独有便利：节点生命周期与组件调度由引擎托管，管理器组件随节点销毁自动停摆，
-  无需 three.js 那样手工 dispose instance 属性。
+  无需手工 dispose 实例属性。
 
 ## 5. 跑示例与验证记录
 

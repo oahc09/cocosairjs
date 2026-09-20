@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-20T03:30:28.871Z",
+  "measuredAt": "2026-09-20T15:16:32.043Z",
   "runner": "tools/verify/manual-examples-verify.cjs",
   "mode": "manual-examples-v1",
   "scope": "docs/manual/examples/manual-*",
@@ -23,7 +23,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0871 distinctColors=14 640x480"
+          "detail": "litRatio=0.0862 distinctColors=11 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -38,13 +38,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-align-html.png",
-        "bytes": 9352,
-        "hash": "4a18955ea2ca55d1"
+        "bytes": 8787,
+        "hash": "b3328b680f70f59b"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3732,
-      "measuredAt": "2026-09-20T03:28:20.595Z"
+      "ms": 4876,
+      "measuredAt": "2026-09-20T15:13:59.442Z"
     },
     {
       "id": "manual-animation-system",
@@ -73,13 +73,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-animation-system.png",
-        "bytes": 9937,
-        "hash": "fde022ce161c54f2"
+        "bytes": 9961,
+        "hash": "43481c85aae76a58"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3318,
-      "measuredAt": "2026-09-20T03:28:23.927Z"
+      "ms": 3874,
+      "measuredAt": "2026-09-20T15:14:03.339Z"
     },
     {
       "id": "manual-backgrounds",
@@ -108,8 +108,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2879,
-      "measuredAt": "2026-09-20T03:28:26.815Z"
+      "ms": 3402,
+      "measuredAt": "2026-09-20T15:14:06.762Z"
     },
     {
       "id": "manual-billboards",
@@ -123,7 +123,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.1735 distinctColors=23 640x480"
+          "detail": "litRatio=0.0720 distinctColors=20 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -138,13 +138,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-billboards.png",
-        "bytes": 18611,
-        "hash": "54b03527f27a71d4"
+        "bytes": 15177,
+        "hash": "54ae877b26c7631e"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3335,
-      "measuredAt": "2026-09-20T03:28:30.160Z"
+      "ms": 4437,
+      "measuredAt": "2026-09-20T15:14:11.221Z"
     },
     {
       "id": "manual-cameras",
@@ -158,7 +158,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.1362 distinctColors=27 640x480"
+          "detail": "litRatio=0.1801 distinctColors=25 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -173,13 +173,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-cameras.png",
-        "bytes": 14016,
-        "hash": "51de49a50db0b7f5"
+        "bytes": 13105,
+        "hash": "07a4e63f6948e04a"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3340,
-      "measuredAt": "2026-09-20T03:28:33.510Z"
+      "ms": 3813,
+      "measuredAt": "2026-09-20T15:14:15.056Z"
     },
     {
       "id": "manual-cleanup",
@@ -208,8 +208,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2861,
-      "measuredAt": "2026-09-20T03:28:36.381Z"
+      "ms": 3392,
+      "measuredAt": "2026-09-20T15:14:18.465Z"
     },
     {
       "id": "manual-color-management",
@@ -223,7 +223,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.2376 distinctColors=27 640x480"
+          "detail": "litRatio=0.2376 distinctColors=29 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -238,13 +238,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-color-management.png",
-        "bytes": 8697,
-        "hash": "7988b89ab12290ec"
+        "bytes": 8695,
+        "hash": "00de453e86a63e74"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3316,
-      "measuredAt": "2026-09-20T03:28:39.708Z"
+      "ms": 3833,
+      "measuredAt": "2026-09-20T15:14:22.322Z"
     },
     {
       "id": "manual-creating-a-scene",
@@ -258,7 +258,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0450 distinctColors=6 640x480"
+          "detail": "litRatio=0.0459 distinctColors=6 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -273,13 +273,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-creating-a-scene.png",
-        "bytes": 9641,
-        "hash": "afe18a87232b161c"
+        "bytes": 9430,
+        "hash": "92bf827b02e87705"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3292,
-      "measuredAt": "2026-09-20T03:28:43.009Z"
+      "ms": 3844,
+      "measuredAt": "2026-09-20T15:14:26.187Z"
     },
     {
       "id": "manual-custom-geometry",
@@ -293,7 +293,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.2925 distinctColors=6 640x480"
+          "detail": "litRatio=0.2945 distinctColors=6 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -308,13 +308,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-custom-geometry.png",
-        "bytes": 23201,
-        "hash": "e4c1b519c8414acc"
+        "bytes": 21706,
+        "hash": "a9738e292f6ca2f8"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3337,
-      "measuredAt": "2026-09-20T03:28:46.360Z"
+      "ms": 3881,
+      "measuredAt": "2026-09-20T15:14:30.086Z"
     },
     {
       "id": "manual-debugging-js",
@@ -328,7 +328,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0466 distinctColors=5 640x480"
+          "detail": "litRatio=0.0476 distinctColors=5 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -338,13 +338,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-debugging-js.png",
-        "bytes": 9629,
-        "hash": "a5730e744dab2461"
+        "bytes": 9651,
+        "hash": "e655418bc1b2f5c7"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2875,
-      "measuredAt": "2026-09-20T03:28:49.246Z"
+      "ms": 3373,
+      "measuredAt": "2026-09-20T15:14:33.479Z"
     },
     {
       "id": "manual-dispose-objects",
@@ -358,7 +358,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0409 distinctColors=7 640x480"
+          "detail": "litRatio=0.0406 distinctColors=7 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -373,13 +373,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-dispose-objects.png",
-        "bytes": 9613,
-        "hash": "ec55494d9aec5d2e"
+        "bytes": 9978,
+        "hash": "2b9101f7a7087c4e"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3303,
-      "measuredAt": "2026-09-20T03:28:52.559Z"
+      "ms": 3799,
+      "measuredAt": "2026-09-20T15:14:37.296Z"
     },
     {
       "id": "manual-drawing-lines",
@@ -408,8 +408,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2863,
-      "measuredAt": "2026-09-20T03:28:55.432Z"
+      "ms": 3386,
+      "measuredAt": "2026-09-20T15:14:40.698Z"
     },
     {
       "id": "manual-dynamic-texture",
@@ -423,7 +423,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.3247 distinctColors=21 640x480"
+          "detail": "litRatio=0.3217 distinctColors=21 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -438,13 +438,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-dynamic-texture.png",
-        "bytes": 38641,
-        "hash": "9b28c217c930de3e"
+        "bytes": 37853,
+        "hash": "f4e3f900b28a36e2"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3352,
-      "measuredAt": "2026-09-20T03:28:58.793Z"
+      "ms": 3890,
+      "measuredAt": "2026-09-20T15:14:44.609Z"
     },
     {
       "id": "manual-fog",
@@ -458,7 +458,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0808 distinctColors=24 640x480"
+          "detail": "litRatio=0.0807 distinctColors=20 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -473,13 +473,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-fog.png",
-        "bytes": 9205,
-        "hash": "5454de3cabf5df6d"
+        "bytes": 9223,
+        "hash": "4cd7089a7680af38"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3306,
-      "measuredAt": "2026-09-20T03:29:02.109Z"
+      "ms": 3889,
+      "measuredAt": "2026-09-20T15:14:48.521Z"
     },
     {
       "id": "manual-fundamentals",
@@ -493,7 +493,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0492 distinctColors=13 640x480"
+          "detail": "litRatio=0.0531 distinctColors=14 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -508,13 +508,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-fundamentals.png",
-        "bytes": 11830,
-        "hash": "4192c63977d74379"
+        "bytes": 12367,
+        "hash": "23694f4d8a44c1f5"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3322,
-      "measuredAt": "2026-09-20T03:29:05.441Z"
+      "ms": 3881,
+      "measuredAt": "2026-09-20T15:14:52.423Z"
     },
     {
       "id": "manual-indexed-textures",
@@ -538,13 +538,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-indexed-textures.png",
-        "bytes": 35799,
-        "hash": "f036b136a5aac4ea"
+        "bytes": 35814,
+        "hash": "7035081c9b862f53"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2882,
-      "measuredAt": "2026-09-20T03:29:08.333Z"
+      "ms": 3480,
+      "measuredAt": "2026-09-20T15:14:55.921Z"
     },
     {
       "id": "manual-installation",
@@ -573,8 +573,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2869,
-      "measuredAt": "2026-09-20T03:29:11.215Z"
+      "ms": 3421,
+      "measuredAt": "2026-09-20T15:14:59.366Z"
     },
     {
       "id": "manual-lights",
@@ -588,7 +588,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0591 distinctColors=16 640x480"
+          "detail": "litRatio=0.0588 distinctColors=16 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -603,13 +603,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-lights.png",
-        "bytes": 18202,
-        "hash": "84fbd875766a3846"
+        "bytes": 18156,
+        "hash": "3b1ea972f608922b"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3316,
-      "measuredAt": "2026-09-20T03:29:14.540Z"
+      "ms": 3850,
+      "measuredAt": "2026-09-20T15:15:03.238Z"
     },
     {
       "id": "manual-load-gltf",
@@ -623,7 +623,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0970 distinctColors=10 640x480"
+          "detail": "litRatio=0.0968 distinctColors=10 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -633,13 +633,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-load-gltf.png",
-        "bytes": 10430,
-        "hash": "c54e1dac64e474b5"
+        "bytes": 10402,
+        "hash": "1f0db373fb17d947"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2867,
-      "measuredAt": "2026-09-20T03:29:17.418Z"
+      "ms": 4057,
+      "measuredAt": "2026-09-20T15:15:07.313Z"
     },
     {
       "id": "manual-loading-models",
@@ -653,7 +653,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0781 distinctColors=8 640x480"
+          "detail": "litRatio=0.0719 distinctColors=8 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -668,13 +668,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-loading-models.png",
-        "bytes": 8905,
-        "hash": "59ddaa432e50ea43"
+        "bytes": 9929,
+        "hash": "54fc5597296259ad"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3314,
-      "measuredAt": "2026-09-20T03:29:20.744Z"
+      "ms": 3875,
+      "measuredAt": "2026-09-20T15:15:11.206Z"
     },
     {
       "id": "manual-lots-animated",
@@ -688,7 +688,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.6491 distinctColors=4 640x480"
+          "detail": "litRatio=0.6401 distinctColors=4 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -703,13 +703,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-lots-animated.png",
-        "bytes": 76267,
-        "hash": "729f8584349cc7ef"
+        "bytes": 76201,
+        "hash": "81a5978e975afc72"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3355,
-      "measuredAt": "2026-09-20T03:29:24.111Z"
+      "ms": 3972,
+      "measuredAt": "2026-09-20T15:15:15.196Z"
     },
     {
       "id": "manual-lots-of-objects",
@@ -723,7 +723,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.3351 distinctColors=7 640x480"
+          "detail": "litRatio=0.3229 distinctColors=7 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -738,13 +738,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-lots-of-objects.png",
-        "bytes": 39682,
-        "hash": "aca705c587f9a278"
+        "bytes": 37108,
+        "hash": "b127e1803114ab9a"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3321,
-      "measuredAt": "2026-09-20T03:29:27.443Z"
+      "ms": 3908,
+      "measuredAt": "2026-09-20T15:15:19.123Z"
     },
     {
       "id": "manual-materials",
@@ -773,8 +773,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2876,
-      "measuredAt": "2026-09-20T03:29:30.329Z"
+      "ms": 3389,
+      "measuredAt": "2026-09-20T15:15:22.530Z"
     },
     {
       "id": "manual-matrix-transformations",
@@ -788,7 +788,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0341 distinctColors=20 640x480"
+          "detail": "litRatio=0.0316 distinctColors=19 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -803,13 +803,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-matrix-transformations.png",
-        "bytes": 10749,
-        "hash": "6c44ccf317209368"
+        "bytes": 10237,
+        "hash": "fb806415f1f7d8c6"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3302,
-      "measuredAt": "2026-09-20T03:29:33.641Z"
+      "ms": 3809,
+      "measuredAt": "2026-09-20T15:15:26.356Z"
     },
     {
       "id": "manual-mini-game",
@@ -823,7 +823,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.6332 distinctColors=26 640x480"
+          "detail": "litRatio=0.6332 distinctColors=22 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -838,13 +838,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-mini-game.png",
-        "bytes": 13923,
-        "hash": "818c7ca667b54680"
+        "bytes": 14400,
+        "hash": "ed5d02fb0f457dfb"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3306,
-      "measuredAt": "2026-09-20T03:29:36.957Z"
+      "ms": 3911,
+      "measuredAt": "2026-09-20T15:15:30.289Z"
     },
     {
       "id": "manual-multi-canvas",
@@ -858,7 +858,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.4307 distinctColors=18 640x480"
+          "detail": "litRatio=0.4376 distinctColors=18 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -868,13 +868,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-multi-canvas.png",
-        "bytes": 12859,
-        "hash": "f2060634cdb3e5c1"
+        "bytes": 13239,
+        "hash": "c8d149095335b3a0"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2861,
-      "measuredAt": "2026-09-20T03:29:39.827Z"
+      "ms": 3451,
+      "measuredAt": "2026-09-20T15:15:33.760Z"
     },
     {
       "id": "manual-picking",
@@ -888,7 +888,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.1257 distinctColors=42 640x480"
+          "detail": "litRatio=0.1258 distinctColors=42 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -903,13 +903,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-picking.png",
-        "bytes": 17252,
-        "hash": "6e20fe3ad441454f"
+        "bytes": 17464,
+        "hash": "716be9cabaa768b0"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3285,
-      "measuredAt": "2026-09-20T03:29:43.123Z"
+      "ms": 3893,
+      "measuredAt": "2026-09-20T15:15:37.673Z"
     },
     {
       "id": "manual-post-processing",
@@ -923,7 +923,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0400 distinctColors=6 640x480"
+          "detail": "litRatio=0.0405 distinctColors=6 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -938,13 +938,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-post-processing.png",
-        "bytes": 9078,
-        "hash": "789bc19479119892"
+        "bytes": 9353,
+        "hash": "39a900bb4aedf240"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3309,
-      "measuredAt": "2026-09-20T03:29:46.442Z"
+      "ms": 3860,
+      "measuredAt": "2026-09-20T15:15:41.554Z"
     },
     {
       "id": "manual-primitives",
@@ -958,7 +958,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.1425 distinctColors=78 640x480"
+          "detail": "litRatio=0.1410 distinctColors=75 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -973,13 +973,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-primitives.png",
-        "bytes": 20207,
-        "hash": "5a1727e2e1dbdf0c"
+        "bytes": 20198,
+        "hash": "0bd496adc8b0f12c"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3302,
-      "measuredAt": "2026-09-20T03:29:49.756Z"
+      "ms": 3886,
+      "measuredAt": "2026-09-20T15:15:45.457Z"
     },
     {
       "id": "manual-render-targets",
@@ -993,7 +993,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.2807 distinctColors=8 640x480"
+          "detail": "litRatio=0.2887 distinctColors=8 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -1008,13 +1008,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-render-targets.png",
-        "bytes": 8876,
-        "hash": "226b8228715e5539"
+        "bytes": 9243,
+        "hash": "92df492d32e3f321"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3340,
-      "measuredAt": "2026-09-20T03:29:53.106Z"
+      "ms": 3829,
+      "measuredAt": "2026-09-20T15:15:49.303Z"
     },
     {
       "id": "manual-rendering-on-demand",
@@ -1048,8 +1048,8 @@
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 4023,
-      "measuredAt": "2026-09-20T03:29:57.140Z"
+      "ms": 4517,
+      "measuredAt": "2026-09-20T15:15:53.840Z"
     },
     {
       "id": "manual-responsive-design",
@@ -1078,8 +1078,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2879,
-      "measuredAt": "2026-09-20T03:30:00.032Z"
+      "ms": 3453,
+      "measuredAt": "2026-09-20T15:15:57.314Z"
     },
     {
       "id": "manual-scenegraph",
@@ -1093,7 +1093,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0381 distinctColors=10 640x480"
+          "detail": "litRatio=0.0338 distinctColors=9 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -1108,13 +1108,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-scenegraph.png",
-        "bytes": 9086,
-        "hash": "24e0813ef18dc571"
+        "bytes": 9794,
+        "hash": "30efbf0b0fec93d4"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3329,
-      "measuredAt": "2026-09-20T03:30:03.373Z"
+      "ms": 3907,
+      "measuredAt": "2026-09-20T15:16:01.239Z"
     },
     {
       "id": "manual-setup",
@@ -1143,8 +1143,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2860,
-      "measuredAt": "2026-09-20T03:30:06.244Z"
+      "ms": 3455,
+      "measuredAt": "2026-09-20T15:16:04.714Z"
     },
     {
       "id": "manual-textures",
@@ -1158,7 +1158,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0697 distinctColors=19 640x480"
+          "detail": "litRatio=0.0763 distinctColors=17 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -1173,13 +1173,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-textures.png",
-        "bytes": 52019,
-        "hash": "7332b76278fd0a41"
+        "bytes": 52072,
+        "hash": "4d11c49ee5f4bfc8"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3304,
-      "measuredAt": "2026-09-20T03:30:09.557Z"
+      "ms": 3889,
+      "measuredAt": "2026-09-20T15:16:08.621Z"
     },
     {
       "id": "manual-tips-keyboard",
@@ -1193,7 +1193,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0467 distinctColors=7 640x480"
+          "detail": "litRatio=0.0477 distinctColors=7 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -1208,13 +1208,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-tips-keyboard.png",
-        "bytes": 9616,
-        "hash": "b185dbf9f1812f73"
+        "bytes": 9696,
+        "hash": "ef8325248d362de0"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3306,
-      "measuredAt": "2026-09-20T03:30:12.873Z"
+      "ms": 3864,
+      "measuredAt": "2026-09-20T15:16:12.504Z"
     },
     {
       "id": "manual-transparent",
@@ -1228,7 +1228,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0928 distinctColors=34 640x480"
+          "detail": "litRatio=0.0928 distinctColors=33 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -1244,12 +1244,12 @@
       "screenshot": {
         "path": "docs/evidence/examples/manual-transparent.png",
         "bytes": 19846,
-        "hash": "503487d22a22ce69"
+        "hash": "6e15520bc8f0bf93"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3329,
-      "measuredAt": "2026-09-20T03:30:16.211Z"
+      "ms": 3873,
+      "measuredAt": "2026-09-20T15:16:16.400Z"
     },
     {
       "id": "manual-uniform-types",
@@ -1278,8 +1278,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2910,
-      "measuredAt": "2026-09-20T03:30:19.131Z"
+      "ms": 3394,
+      "measuredAt": "2026-09-20T15:16:19.811Z"
     },
     {
       "id": "manual-update-things",
@@ -1293,7 +1293,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0784 distinctColors=8 640x480"
+          "detail": "litRatio=0.0989 distinctColors=8 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -1308,13 +1308,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-update-things.png",
-        "bytes": 11538,
-        "hash": "9dc5748af3490d1a"
+        "bytes": 11140,
+        "hash": "a21ea6018becca3b"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3299,
-      "measuredAt": "2026-09-20T03:30:22.439Z"
+      "ms": 3858,
+      "measuredAt": "2026-09-20T15:16:23.687Z"
     },
     {
       "id": "manual-voxel",
@@ -1328,7 +1328,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.3963 distinctColors=27 640x480"
+          "detail": "litRatio=0.3870 distinctColors=29 640x480"
         },
         {
           "name": "no-runtime-error",
@@ -1343,13 +1343,13 @@
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-voxel.png",
-        "bytes": 20274,
-        "hash": "24466de57abd3d64"
+        "bytes": 26830,
+        "hash": "754b4e72d7200612"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3293,
-      "measuredAt": "2026-09-20T03:30:25.742Z"
+      "ms": 4533,
+      "measuredAt": "2026-09-20T15:16:28.238Z"
     },
     {
       "id": "manual-webgl-compat",
@@ -1378,8 +1378,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 2891,
-      "measuredAt": "2026-09-20T03:30:28.644Z"
+      "ms": 3441,
+      "measuredAt": "2026-09-20T15:16:31.700Z"
     }
   ]
 }

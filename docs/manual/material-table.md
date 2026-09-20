@@ -1,6 +1,6 @@
 # Material Table（材质对照表）
 
-> 对应 three.js manual 的 *Material Table* 一篇：全部材质类型 × 关键属性 × 适用场景
+> 全部材质类型 × 关键属性 × 适用场景
 > 的速查大表。AIR 的"材质表"分两半：**手写的 builtin 表**（本篇 §1–§2）和
 > **glTF 资产自动选表**（§3，底本 [docs/gltf-extension-reference.md](../gltf-extension-reference.md)）。
 > 纯参考篇，不配示例；每行的实测出处标了对应示例文章。
@@ -12,8 +12,8 @@ AIR 包内注册 14 个 `builtin-*` 效果（build js 效果名逐一 grep 实�
 
 | effectName | 定位 | 关键属性（实测可 setProperty） | 关键 defines | 手写场景 → 实测文章 |
 | --- | --- | --- | --- | --- |
-| `builtin-standard` | PBR 主力（对应 three `MeshStandardMaterial`） | `albedo`/`mainColor`¹、`albedoMap`/`mainTexture`¹、`metallic`、`roughness`、`emissive`、`emissiveMap`、`metallicRoughnessMap`、`tilingOffset` | `USE_ALBEDO_MAP`(639)、`USE_EMISSIVE_MAP`(646)、`USE_METALLIC_ROUGHNESS_MAP`、`USE_NORMAL_MAP`、`USE_OCCLUSION_MAP`、`USE_VERTEX_COLOR`(628)、`USE_ALPHA_TEST`、`USE_TWOSIDE`、`USE_INSTANCING`/`USE_BATCHING`、`CC_USE_IBL/SKINNING/MORPH/FOG/LIGHTMAP/…` | 绝大多数 3D 演示 → [materials](materials.md)、[lights](lights.md)、[voxel-geometry](voxel-geometry.md)（顶点色） |
-| `builtin-unlit` | 无光照平涂（对应 `MeshBasicMaterial`） | `mainColor`、`mainTexture`、`tilingOffset`、`offset` | `USE_TEXTURE`(576)、`USE_LOCAL` | 公告板/自发光 UI 感 → [billboards](billboards.md)（有 raw 上传纹理变纯白的坑）、[backgrounds](backgrounds.md) |
+| `builtin-standard` | PBR 主力 | `albedo`/`mainColor`¹、`albedoMap`/`mainTexture`¹、`metallic`、`roughness`、`emissive`、`emissiveMap`、`metallicRoughnessMap`、`tilingOffset` | `USE_ALBEDO_MAP`(639)、`USE_EMISSIVE_MAP`(646)、`USE_METALLIC_ROUGHNESS_MAP`、`USE_NORMAL_MAP`、`USE_OCCLUSION_MAP`、`USE_VERTEX_COLOR`(628)、`USE_ALPHA_TEST`、`USE_TWOSIDE`、`USE_INSTANCING`/`USE_BATCHING`、`CC_USE_IBL/SKINNING/MORPH/FOG/LIGHTMAP/…` | 绝大多数 3D 演示 → [materials](materials.md)、[lights](lights.md)、[voxel-geometry](voxel-geometry.md)（顶点色） |
+| `builtin-unlit` | 无光照平涂 | `mainColor`、`mainTexture`、`tilingOffset`、`offset` | `USE_TEXTURE`(576)、`USE_LOCAL` | 公告板/自发光 UI 感 → [billboards](billboards.md)（有 raw 上传纹理变纯白的坑）、[backgrounds](backgrounds.md) |
 | `builtin-sprite` / `builtin-graphics` / `builtin-clear-stencil` | 2D 家族 | 2D 组件专用 | — | 2D 层（超出手册 3D 范围） |
 | `builtin-particle` / `-gpu` / `-trail` / `builtin-billboard` | 粒子/公告板组件后端 | 由 Particle/Billboard 组件驱动 | — | 手写朝向替代见 [billboards](billboards.md) |
 | `builtin-spine` / `builtin-terrain` / `builtin-geometry-renderer` / `builtin-debug-renderer` / `builtin-occlusion-query` | 专项 | 各自组件/内部管线消费 | — | Spine/Terrain 组件面未展开（能力边界见索引总说明） |
@@ -22,19 +22,19 @@ AIR 包内注册 14 个 `builtin-*` 效果（build js 效果名逐一 grep 实�
 `albedo/albedoMap`（builtin-effects.ts 599 起）——两条名都实测可 `setProperty` 生效
 （primitives/picking 等示例全走 `mainColor`），新代码建议按效果表原名写。
 
-## 2. 场景 → 选表（three.js 该篇的"怎么选材质"）
+## 2. 场景 → 选表
 
-| 需求 | three.js | AIR 选择 | 实测注意（都踩过） |
-| --- | --- | --- | --- |
-| 受光的实体 | `MeshStandard/Physical` | `builtin-standard` | sRGB→linear 会压暗：亮色系 + illuminance 8–14（[color-management](color-management.md)） |
-| 金属感 | metalness workflow | `metallic/roughness` 属性 | **无 IBL/env 时 metallic 拉高→近黑**（mini-game 截图实锤）：卡通金属走 diffuse |
-| 不受光/平涂 | `MeshBasicMaterial` | `builtin-unlit` | 动态上传的 raw Texture2D 会渲染异常（billboards 篇），走 `builtin-standard`+`USE_ALBEDO_MAP` 稳 |
-| 顶点色 | `vertexColors` | `defines: { USE_VERTEX_COLOR: true }` | colors 缓冲默认 RGBA32F，分量必须 0..1（[voxel-geometry](voxel-geometry.md) 白山坑） |
-| 镂空/硬边透明 | `alphaTest` | `USE_ALPHA_TEST` + `albedoScaleAndCutoff` | 与排序透明是两回事（[transparency](transparency.md)） |
-| 双面 | `side: DoubleSide` | `USE_TWOSIDE` | 法线朝向与光照的取舍见 transparency/picking 篇 |
-| 自发光 | `emissive` | `emissive` + `USE_EMISSIVE_MAP` | 不受光≠unlit：standard 的 emissive 仍参与透明/雾 |
-| 任意自定义着色 | `ShaderMaterial` | **无**（无用户 GLSL 入口） | 诚实边界 → [shadertoy](shadertoy.md)、[debugging-glsl](debugging-glsl.md) |
-| Lambert 感 | `MeshLambertMaterial` | standard + `metallic=0, roughness≈1` 近似 | 无独立 Lambert 效果 |
+| 需求 | AIR 选择 | 实测注意（都踩过） |
+| --- | --- | --- |
+| 受光的实体 | `builtin-standard` | sRGB→linear 会压暗：亮色系 + illuminance 8–14（[color-management](color-management.md)） |
+| 金属感 | `metallic/roughness` 属性 | **无 IBL/env 时 metallic 拉高→近黑**（mini-game 截图实锤）：卡通金属走 diffuse |
+| 不受光/平涂 | `builtin-unlit` | 动态上传的 raw Texture2D 会渲染异常（billboards 篇），走 `builtin-standard`+`USE_ALBEDO_MAP` 稳 |
+| 顶点色 | `defines: { USE_VERTEX_COLOR: true }` | colors 缓冲默认 RGBA32F，分量必须 0..1（[voxel-geometry](voxel-geometry.md) 白山坑） |
+| 镂空/硬边透明 | `USE_ALPHA_TEST` + `albedoScaleAndCutoff` | 与排序透明是两回事（[transparency](transparency.md)） |
+| 双面 | `USE_TWOSIDE` | 法线朝向与光照的取舍见 transparency/picking 篇 |
+| 自发光 | `emissive` + `USE_EMISSIVE_MAP` | 不受光≠unlit：standard 的 emissive 仍参与透明/雾 |
+| 任意自定义着色 | **无**（无用户 GLSL 入口） | 诚实边界 → [shadertoy](shadertoy.md)、[debugging-glsl](debugging-glsl.md) |
+| Lambert 感 | standard + `metallic=0, roughness≈1` 近似 | 无独立 Lambert 效果 |
 
 ## 3. glTF 自动选表（资产侧，底本 gltf-extension-reference）
 

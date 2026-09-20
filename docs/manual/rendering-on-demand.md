@@ -1,12 +1,11 @@
 # 按需渲染（Rendering On Demand）
 
-> 对应 three.js manual 的 *Rendering On Demand* 一篇：不跑连续动画循环，只在"有东西变了"时才出一帧，省 CPU/GPU。
+> 不跑连续动画循环，只在"有东西变了"时才出一帧，省 CPU/GPU。
 > 配套可运行示例：[`examples/manual-rendering-on-demand/`](examples/manual-rendering-on-demand/)（dirty 标志 + `game.step()` 按需出帧，覆盖层打印主循环暂停状态与实际渲染帧数）。
 
 **状态：PARTIAL。** AIR 没有 first-class 的"按需渲染模式"——`app.run(scene)` 总是启动一个连续主循环。
 但可以用 `game.pause()` 停掉主循环、再用 `game.step()` 手工逐帧推进来**实现**按需渲染，实测可行（§3：`isPaused()=true` 且帧计数只在 step 时增长）。
-标 PARTIAL 的原因：这是**叠在连续循环引擎上的 workaround**，`game.pause()` 的副作用不止渲染（还暂停输入派发与音频，d.ts 22474–22486），且 `game.step()` 用固定 dt 而非真实帧间隔；
-three.js 里"不调 requestAnimationFrame、手动 renderer.render()"是零成本的原生姿势，AIR 里则要先付出 pause 的代价。
+标 PARTIAL 的原因：这是**叠在连续循环引擎上的 workaround**——`game.pause()` 的副作用不止渲染（还暂停输入派发与音频，d.ts 22474–22486），且 `game.step()` 用固定 dt 而非真实帧间隔，按需出帧要先付出 pause 的代价。
 
 ## 1. 有什么
 
@@ -80,11 +79,10 @@ click "Render one frame" or enable Auto to draw
 验证器的 app-contract 正是等这个事件（`tools/verify/manual-examples-verify.cjs:118–122`），首版因此 `runner=FAIL: no rendered frame within 10s`。
 解法即 §2 的 `director.once(EVENT_AFTER_DRAW, …)`：先让一帧落地，再切按需。
 
-## 4. 与 three.js 的差异备忘
+## 4. 行为边界备忘
 
-- three.js 的按需渲染是**默认姿势**：不开 `renderer.setAnimationLoop`、不调 rAF，需要时在事件回调里手动 `renderer.render(scene, camera)` 即可，无副作用。
-- AIR 的 `app.run` 必然启动连续循环，按需渲染必须**先 pause 再 step**；而 `game.pause()` 连带暂停输入派发（Web/小游戏平台除外）与音频（d.ts 22474–22486），副作用面比 three.js 大。
-- dt 语义不同：three.js 手动 render 用真实时间差；`game.step()` 用**固定** dt（匹配 `game.frameRate`），所以按需模式下动画速度由 step 次数决定、与墙钟解耦。
+- AIR 的 `app.run` 必然启动连续循环，按需渲染必须**先 pause 再 step**；而 `game.pause()` 连带暂停输入派发（Web/小游戏平台除外）与音频（d.ts 22474–22486），副作用不止渲染这一项。
+- dt 语义：`game.step()` 用**固定** dt（匹配 `game.frameRate`），所以按需模式下动画速度由 step 次数决定、与墙钟解耦。
 - `director.pause()`（只停逻辑、不停渲染）与 `game.pause()`（全停）要分清：做按需渲染必须用后者，否则渲染仍在空转。
 
 ## 5. 跑示例与验证记录

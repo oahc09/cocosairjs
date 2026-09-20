@@ -1,9 +1,9 @@
 # 每帧更新（How to update Things）
 
-> 对应 three.js manual 的 *How to update Things* 一篇：让场景随时间变化的几种驱动方式与它们的取舍。
+> 让场景随时间变化的几种驱动方式与它们的取舍。
 > 配套可运行示例：[`examples/manual-update-things/`](examples/manual-update-things/)（三颗立方体分别由 `update(dt)` / `lateUpdate(dt)` / `schedule(cb, 0.5)` 驱动，覆盖层打印 dt 统计与阶段顺序验证位）。
 
-three.js 那篇的结论是"能不动就不动、按需渲染"；AIR 是游戏引擎式**常驻渲染循环**
+AIR 是游戏引擎式**常驻渲染循环**
 （`app.run(scene)` 后 director 每帧推进），所以本页的问题变成：**你的逻辑挂在哪一个每帧钩子上**。
 
 ## 1. 四个钩子与一个调度器
@@ -41,7 +41,7 @@ order update→lateUpdate verified: true
 - **schedule 按墙钟间隔触发**：约 5s 内 10 次 ≈ 0.5s 间隔，与帧数解耦（帧率抖动不影响间隔语义）。
 - **dt 有启动尖峰**（max=356.3ms 来自首帧编译/上传），稳态 min≈8.6ms——
   用 dt 积分的逻辑天然吃掉尖峰（A 的转角不因卡帧跳变），用"每帧固定增量"的写法则会丢进度；
-  这是 dt 驱动 vs 帧驱动的核心取舍，three.js manual 同节亦强调 clock delta。
+  这是 dt 驱动 vs 帧驱动的核心取舍。
 
 ## 3. 取舍清单（何时用哪个）
 
@@ -53,13 +53,13 @@ order update→lateUpdate verified: true
 - **完全不需要动** → 本页反面：静态场景每帧重跑 update 是浪费；AIR 当前无"按需渲染"开关，
   见 [按需渲染](rendering-on-demand.md)（PARTIAL）。
 
-## 4. 与 three.js 的差异备忘
+## 4. 每帧驱动的补充说明
 
-- three.js 没有内置组件生命周期，"每帧更新"= 用户自己的 `requestAnimationFrame` 循环里手动调；
-  AIR 的 update/lateUpdate/schedule 由 director 统一推进，用户代码**不碰 rAF**。
-- three.js manual 该篇劝"按需渲染省 GPU"；AIR 常驻循环下等价手段是**让 update 早退**
+- `update`/`lateUpdate`/`schedule` 全部由 director 统一推进，用户代码**不碰 rAF**——
+  不需要自己写 `requestAnimationFrame` 循环来驱动每帧逻辑。
+- 常驻循环下想省算力，手段是**让 update 早退**
  （状态没变就 return）或关掉节点 `active`（组件 update 随之停摆，见 [销毁对象](how-to-dispose-of-objects.md) §1 的 active 语义）。
-- `dt` 语义两者一致（秒）；但 AIR 首帧尖峰更明显（shader 编译在首帧内），做计时 UI 时建议前几帧丢弃或 clamp。
+- `dt` 单位是秒；首帧尖峰明显（shader 编译在首帧内），做计时 UI 时建议前几帧丢弃或 clamp。
 
 ## 5. 跑示例与验证记录
 

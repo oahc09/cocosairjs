@@ -2,9 +2,9 @@
  * Cocos AIR 开发手册 — Multiple Scenes（多场景与多视口）
  * 配套文章：docs/manual/multiple-scenes.md
  *
- * three.js 用"多个 Scene + 多个 WebGLRenderer + 多个 canvas"实现分屏；AIR 的 pal/screen-adapter
- * 是模块顶层单例、createAirApp 只认一个 #GameCanvas，多 canvas 路线走不通（见 offscreencanvas N/A）。
- * 本篇给 AIR 原生替代：单 Scene + 多 Camera，每台相机用 rect 占屏幕一条竖带、用 visibility 层掩码
+ * AIR 的 pal/screen-adapter 是模块顶层单例、createAirApp 只认一个 #GameCanvas，
+ * "多个 Scene + 多个渲染器 + 多个 canvas"的分屏路线走不通（见 offscreencanvas N/A）。
+ * 本篇给 AIR 原生分屏方案：单 Scene + 多 Camera，每台相机用 rect 占屏幕一条竖带、用 visibility 层掩码
  * 只渲染自己那组节点——三带各显一组不同几何、各自转速，视觉上等价于"三个场景并排"。
  * 覆盖层读回三台相机的 rect / visibility，证明分屏与层剔除都真实生效。
  */

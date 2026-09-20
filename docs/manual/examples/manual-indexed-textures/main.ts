@@ -2,7 +2,7 @@
  * Cocos AIR 开发手册 — Using Indexed Textures for Picking and Color（索引纹理拾取）
  * 配套文章：docs/manual/indexed-textures.md
  *
- * three.js 该篇用"把三角形序号编码进颜色渲染到离屏纹理再读回"的 GPU 路线做任意网格拾取。
+ * 任意网格拾取有一条经典 GPU 路线："把三角形序号编码进颜色渲染到离屏纹理再读回"。
  * AIR 无用户 GLSL（shadertoy 篇 N/A 同结论），GPU 路线不存在；但目标（逐三角形拾取）
  * 可以走 CPU 等价路线：primitives 生成的 IGeometry 自带 positions + indices（索引缓冲），
  * 应用层拿 picking 篇同款 screenPointToRay 射线，对索引展开的三角形做 Möller–Trumbore 求交。

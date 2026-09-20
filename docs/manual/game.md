@@ -1,22 +1,21 @@
 # Start Making a Game（开始做小游戏）
 
-> 对应 three.js manual 的 *Start Making a Game* 一篇：不用任何游戏框架，纯引擎 API
+> 不用任何游戏框架，纯引擎 API
 > 手写"方向键/WASD 移动小球、吃随机出现的方块、计分"的迷你游戏，碰撞就用中心距离判定。
 > 配套可运行示例：[`examples/manual-mini-game/`](examples/manual-mini-game/)
 > （键盘小球吃金币、距离判定、tween 消失重生、DOM 计分 HUD——零外部资产）。
 
-three.js 该篇的核心主张是"three.js 本身就能做游戏，别急着上框架"。AIR 同样成立，
-而且每一件事都有第一等入口：键盘走全局 `input` 单例、游戏循环就是 `Component.update(dt)`、
-判定就是几行 JS。[physics](physics.md) 篇 N/A 时预告的"距离判定近似替代"在这里落地。对照：
+做小游戏不必先上框架，AIR 本身就够用了，而且每一件事都有第一等入口：键盘走全局 `input` 单例、游戏循环就是 `Component.update(dt)`、
+判定就是几行 JS。[physics](physics.md) 篇 N/A 时预告的"距离判定近似替代"在这里落地。要点：
 
-| three.js | AIR | 实测 |
+| 环节 | AIR 做法 | 实测 |
 | --- | --- | --- |
-| `keydown/keyup` 手写按下表 | `input.on(SystemEventType.KEY_DOWN/KEY_UP)` + `KeyCode` 按下集合 | ✓（[tips-keyboard](tips.md) 同款模式复用） |
-| `SphereGeometry` / `BoxGeometry` | `primitives.sphere` / `primitives.cylinder`（金币）+ `utils.createMesh` | ✓ |
-| 碰撞 = 中心距离（`v.lengthSq()`） | 同款：XZ 平方距离 `< (r_ball + r_coin)²`，免开方 | ✓（§3 探针实锤吃币回路） |
-| 吃到的方块 `visible=false` + 随机重生 | `tween(node).to(scale→0).call(重摆位)` 消失/重生 | ✓（但 `active=false` 有坑，§2） |
-| HTML div 计分 | 直接写 DOM `#score` div——引擎内外一张皮 | ✓ |
-| 固定俯视相机 | `Camera` + `lookAt(0,0,0)` | ✓ |
+| 键盘输入 | `input.on(SystemEventType.KEY_DOWN/KEY_UP)` + `KeyCode` 按下集合 | ✓（[tips-keyboard](tips.md) 同款模式复用） |
+| 小球与金币几何 | `primitives.sphere` / `primitives.cylinder`（金币）+ `utils.createMesh` | ✓ |
+| 碰撞判定 | XZ 平方距离 `< (r_ball + r_coin)²`，免开方 | ✓（§3 探针实锤吃币回路） |
+| 吃到的金币消失与随机重生 | `tween(node).to(scale→0).call(重摆位)` 消失/重生 | ✓（但 `active=false` 有坑，§2） |
+| 计分 HUD | 直接写 DOM `#score` div——引擎内外一张皮 | ✓ |
+| 相机 | `Camera` + `lookAt(0,0,0)` 固定俯视 | ✓ |
 
 ## 1. 输入与循环 API 面（实测锚点）
 
@@ -41,7 +40,7 @@ three.js 该篇的核心主张是"three.js 本身就能做游戏，别急着上�
         this.node.setPosition(new Vec3(nx, BALL_R, nz));
 ```
 
-判定+消失+重生段（three.js 该篇同款"距离判定"，AIR 实测两个坑都埋在这几行附近）：
+判定+消失+重生段（中心距离判定，AIR 实测两个坑都埋在这几行附近）：
 
 ```js
             if (d2 < CATCH2) { // 吃到：平方距离过阈值即命中，免开方
@@ -85,7 +84,7 @@ headless 没有键盘，自动演示模式保证持续变化与吃币事件。�
 ## 4. 延伸与边界
 
 - **相机跟随**：把相机节点挂到球父级或 update 里 lerp——[camera](cameras.md) 篇的
-  `lookAt` 现成可用；three.js 该篇固定机位，本示例保持一致。
+  `lookAt` 现成可用；本示例保持固定俯视机位。
 - **真物理**：距离判定是近似（无摩擦/弹性/射线），需要刚体时看 [physics](physics.md)
   篇的能力边界与替代路径。
 - **金币很多时**：每币一节点在几十枚量级没问题；上千枚走
@@ -163,7 +162,7 @@ node tools/verify/manual-doc-consistency.cjs
  * Cocos AIR 开发手册 — Start Making a Game（开始做小游戏）
  * 配套文章：docs/manual/game.md
  *
- * three.js 该篇：不用任何游戏框架，手写一个"方向键/WASD 移动小球、吃随机出现的
+ * 不用任何游戏框架，纯引擎手写一个"方向键/WASD 移动小球、吃随机出现的
  * 方块、计分"的迷你游戏——碰撞用中心距离判定（勾股免开方），相机固定俯视。
  * AIR 侧全件对上且不依赖物理（physics 篇 N/A 预告的"距离判定"近似替代在这里落地）：
  *   - 输入：window 级 input 单例，input.on(SystemEventType.KEY_DOWN/KEY_UP) + KeyCode
@@ -202,7 +201,7 @@ const app = await createAirApp({ canvas });
 
 const scene = new Scene('minigame');
 
-// ---- 灯光 + 固定俯视相机（three.js 该篇同款机位思路：看清全场） ----
+// ---- 灯光 + 固定俯视相机（机位思路：一眼看清全场） ----
 const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-40, 25, 0);
 scene.addChild(dirNode);

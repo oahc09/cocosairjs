@@ -1,6 +1,6 @@
 # 颜色管理（Color Management）
 
-> 对应 three.js manual 的 *Color Management* 一篇：颜色空间、伽马、色调映射这套"颜色从哪来、到哪去"的规矩。
+> 颜色空间、伽马、色调映射这套"颜色从哪来、到哪去"的规矩。
 > 配套可运行示例：[`examples/manual-color-management/`](examples/manual-color-management/)（hex 色板排 + 逐帧 lerp 渐变带 + 色调映射 A/B 开关）。
 
 **状态：PARTIAL。** AIR 的导出面里**没有**颜色空间管理 API（全 d.ts grep `ColorSpace|colorSpace|gamma` 零命中；
@@ -25,7 +25,7 @@ toArray / fromArray / fromUint32 / toUint32 / strictEquals / equals / hex`（另
 
 - `fromHEX` 吃 `'#rrggbb'` 带井号，但实例 `toHEX()` **返回不带井号**的 `'eb7d41'`（覆盖层 roundtrip 实测）——
   往返字符串拼接时要自己补 `#`。
-- AIR 给的是 **HSV**（`fromHSV` / `toHSV`），不是 three.js 的 HSL；做色相环动画时注意饱和度/明度语义不同。
+- AIR 给的是 **HSV**（`fromHSV` / `toHSV`），不是 HSL；做色相环动画时注意饱和度/明度语义不同。
 
 逐帧插值用静态 `Color.lerp(out, from, to, ratio)`（示例下排渐变带，每帧写回 `mainColor`）：
 
@@ -48,14 +48,14 @@ post.toneMappingType = 0;
 
 ## 2. 没有什么（诚实清单）
 
-| three.js 概念 | AIR 现状 |
+| 能力项 | AIR 现状 |
 | --- | --- |
-| `ColorManagement.enabled` 总开关 | 无对应物（导出面不存在） |
-| `workingColorSpace`（线性工作空间） | 无用户级开关；管线内部行为不暴露 |
-| `renderer.outputColorSpace`（输出 sRGB 编码） | 无对应物 |
-| `texture.colorSpace`（贴图 sRGB/Linear 标注） | `Texture2D` 上无 colorSpace 字段（grep 零命中） |
-| `Color.setHSL` / `getHSL` | 只有 HSV（`fromHSV` / `toHSV`） |
-| `renderer.toneMapping`（ACES/Reinhard 等） | 仅 `postSettings.toneMappingType` 的 DEFAULT/LINEAR 两值 |
+| 颜色管理总开关 | 无对应物（导出面不存在） |
+| 线性工作空间 | 无用户级开关；管线内部行为不暴露 |
+| 输出色彩空间（sRGB 编码） | 无对应物 |
+| 贴图色彩空间标注（sRGB/Linear） | `Texture2D` 上无 colorSpace 字段（grep 零命中） |
+| HSL 取色 | 只有 HSV（`fromHSV` / `toHSV`） |
+| 色调映射算子 | 仅 `postSettings.toneMappingType` 的 DEFAULT/LINEAR 两值，无 ACES/Reinhard 等预设 |
 
 实践含义：**把 `Color` 的 0–255 分量当作显示参考值（display-referred）直接用**——
 示例上排 unlit 色板的截图色相与 hex 意图目检一致（§3），没有可见的二次空间转换；
@@ -83,13 +83,13 @@ toneMapping: postSettings.toneMappingType=0 (0=DEFAULT 1=LINEAR, toggles every 3
 结论：本环境（forward 管线 + headless swiftshader）下 `toneMappingType` 0/1 **无像素级差异**，
 赋值与读回正常但不承诺可视效果。spike 页立方体同样偏暗（方向光贡献弱），与 [lights.md §4](lights.md) 的环境记录一致。
 
-## 4. 与 three.js 的差异备忘
+## 4. 实现备忘
 
-- three.js 的颜色管理是**全局单例 + 每资产标注**（ColorManagement / texture.colorSpace）；AIR 是**无全局单例、无资产标注**，
-  颜色值从 `Color` 直达材质 uniform，中间没有用户可见的空间转换层。
-- three.js `Color` 分量是 0–1 浮点；AIR `Color` 分量是 **0–255 整数语义**（`new Color(235, 125, 65, 255)`），
-  从 three.js 移植代码时第一件事是乘 255。
-- 色调映射：three.js 在 renderer 上、选项丰富（ACESFilmic/Reinhard/…）；AIR 在 `scene.globals.postSettings` 上、仅两值且本环境无视觉效果（§3）。
+- AIR 的颜色管线**无全局单例、无每资产色彩空间标注**，颜色值从 `Color` 直达材质 uniform，
+  中间没有用户可见的空间转换层。
+- `Color` 分量是 **0–255 整数语义**（`new Color(235, 125, 65, 255)`），不是 0–1 浮点——
+  参考 0–1 分量的素材/代码时第一件事是乘 255。
+- 色调映射：入口在 `scene.globals.postSettings`，仅 DEFAULT/LINEAR 两值，且本环境无视觉效果（§3）。
 - HSV vs HSL 见 §1 坑条；做"色相旋转"类效果时两者公式不通用。
 
 ## 5. 跑示例与验证记录

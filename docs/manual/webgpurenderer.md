@@ -1,7 +1,6 @@
 # WebGPURenderer（WebGPU 渲染器）
 
-> 对应 three.js manual 的 *WebGPU renderer* 一篇：`new WebGPURenderer()` 后端选择、
-> TSL 节点材质体系、`backend` 探测。
+> 话题：WebGPU 后端的选择与探测、节点式材质体系。
 > 状态：**N/A** —— Cocos AIR 当前构建只带 WebGL2 后端设备，WebGPU 是"有钩子、无实现"
 > 的半成品枚举位，不配示例。
 
@@ -17,15 +16,15 @@ GFX 层不是完全没给 WebGPU 留门——但门后是空的：
 | AIR 入口选项 | bootstrap.ts 86 `game.init` 只透传 `rendering.renderMode`，无 renderType 参数 | `createAirApp` 没有后端选择面 |
 | 实际运行设备 | [webgl-compatibility-check](webgl-compatibility-check.md) 篇探针：`active device: WebGL2Device` | 当前唯一可用后端是 WebGL2（降写 WebGL1 路径见该篇） |
 
-## 2. 与 three.js 该篇的概念对照
+## 2. 相关能力边界
 
-| three.js（WebGPU 篇） | AIR 现状 | 去处 |
-| --- | --- | --- |
-| `new WebGPURenderer()` / `await renderer.init()` | 无对应入口；设备由 `game.init` 内部定死 WebGL2 | 本篇 §1 |
-| `renderer.backend` 探测（WebGPU/WebGL2 切换） | 无运行时后端切换；探测等价物=看设备类名 | [webgl-compatibility-check](webgl-compatibility-check.md) |
-| TSL（Three Shading Language）节点材质 | 无节点图/无用户 GLSL；材质=effectName + defines + properties 三件套 | [materials](materials.md) |
-| `Fn()/uniform()/attribute()` 等着色器编程 | 无用户着色器入口（`debugging-glsl` 篇同款边界） | [debugging-glsl](debugging-glsl.md)、[shadertoy](shadertoy.md) |
-| 后处理节点管线 | 同样不成立，且叠加"无装配面"问题 | [webgpu-postprocessing](webgpu-postprocessing.md) |
+| AIR 现状 | 去处 |
+| --- | --- |
+| 无对应入口；设备由 `game.init` 内部定死 WebGL2 | 本篇 §1 |
+| 无运行时后端切换；判断当前后端看设备类名 | [webgl-compatibility-check](webgl-compatibility-check.md) |
+| 无节点图/无用户 GLSL；材质=effectName + defines + properties 三件套 | [materials](materials.md) |
+| 无用户着色器入口（`debugging-glsl` 篇同款边界） | [debugging-glsl](debugging-glsl.md)、[shadertoy](shadertoy.md) |
+| 无用户后处理管线，且叠加"无装配面"问题 | [webgpu-postprocessing](webgpu-postprocessing.md) |
 
 ## 3. 近似替代与升级条件
 

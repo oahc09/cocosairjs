@@ -2,10 +2,9 @@
  * Cocos AIR 开发手册 — Responsive Design（响应式设计）
  * 配套文章：docs/manual/responsive.md
  *
- * 窗口任意缩放时 canvas 铺满且画面不变形。AIR 与 three.js 的关键差别：
- *   - three.js 要手动 renderer.setSize + camera.aspect + updateProjectionMatrix；
- *   - AIR 的 screen-adapter 自动把 canvas 尺寸跟到窗口，相机纵横比自动跟随，
- *     你**不需要**手动 setSize / 改 aspect。
+ * 窗口任意缩放时 canvas 铺满且画面不变形。AIR 的自适应模型：
+ *   - screen-adapter 自动把 canvas 尺寸跟到窗口，相机纵横比自动跟随，
+ *     你**不需要**手动 setSize / 改 aspect / 重算投影矩阵。
  * 本页做两件事：
  *   1. 覆盖层实时显示 screen.windowSize / screen.resolution / devicePixelRatio / canvas 实际像素；
  *   2. 订阅 screen.on('window-resize' / 'canvas-resize')，尺寸变化时刷新覆盖层，

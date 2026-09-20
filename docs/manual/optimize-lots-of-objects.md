@@ -1,9 +1,8 @@
 # Optimizing Lots of Objects（优化大量对象）
 
-> 对应 three.js manual 的 *Optimizing Lots of Objects* 一篇：场景里对象成百上千时怎么保住帧率。
+> 场景里对象成百上千时怎么保住帧率。
 > 配套可运行示例：[`examples/manual-lots-of-objects/`](examples/manual-lots-of-objects/)（10×10=100 颗立方体共享 mesh+material，按钮一键静态合批/还原）。
 
-three.js 的答案是两件套：`InstancedMesh`（一次 draw 画 N 个实例）与 `mergeGeometries`（把几何体拼成一份）。
 AIR 的答案是**静态合批**：`BatchingUtility.batchStaticModel` 把一棵子树下的所有网格合并成一个 mesh、
 禁用原来的每个渲染组件、把合并结果挂到目标节点上。实测对照：
 
@@ -114,19 +113,18 @@ click [Batch] to toggle BatchingUtility.batchStaticModel
 压低机位到 `y=8.5, r=19` 露出侧面、`illuminance` 提到 4.5 后读图清晰。
 **俯拍大阵列时机位高度决定还能不能看见侧面**，这是本例读图的主要旋钮。
 
-## 4. 与 three.js 的差异备忘
+## 4. 能力边界与路线备忘
 
-- three.js 的主轴是 `InstancedMesh`：一次 draw、每实例矩阵可每帧更新（`instanceMatrix.needsUpdate`），
-  动态大阵列也吃得下。AIR **没有**用户面 instancing 入口（d.ts 里 `InstancedBuffer` /
+- instancing（一次 draw 画 N 个实例、每实例矩阵可每帧更新，动态大阵列也吃得下）是常见的另一半答案，
+  AIR **没有**用户面 instancing 入口（d.ts 里 `InstancedBuffer` /
   `SkinnedMeshBatchRenderer` 均为引擎内部件），动态大阵列只能靠"共享资源 + 组件更新"，见下一篇
   [Optimizing Lots of Objects Animated](optimize-lots-of-objects-animated.md)。
-- three.js 的 `mergeGeometries`（BufferGeometryUtils）是纯几何操作；AIR 的 `batchStaticModel` 是
-  **场景图操作**：合并 mesh 之外还自动禁用原组件、挂载结果、保留世界变换，并配 `unbatchStaticModel` 一键回退——
-  比 three.js 手工管理合并几何体的生命周期省事，但粒度是"整棵子树"。
-- three.js manual 提醒 instancing 后要自己管包围球/剔除（`frustumCulled`、`boundingSphere`）；
+- AIR 的 `batchStaticModel` 不只是合并几何体，而是**场景图操作**：合并 mesh 之外还自动禁用原组件、挂载结果、保留世界变换，并配 `unbatchStaticModel` 一键回退——
+  省去手工管理合并几何体的生命周期，但粒度是"整棵子树"。
+- 合并/实例化后包围球与剔除通常要自己留意；
   AIR 合批后是单个 Model，剔除粒度随合并变粗，本篇未实测其代价。
-- 共同点：两条路线都只解决"提交开销"，不解决"每对象逻辑开销"；上千对象的每帧逻辑仍要靠数据化布局
-  （TypedArray / 组件池），这点两引擎一致。
+- 边界：静态合批只解决"提交开销"，不解决"每对象逻辑开销"；上千对象的每帧逻辑仍要靠数据化布局
+  （TypedArray / 组件池）。
 
 ## 5. 跑示例与验证记录
 

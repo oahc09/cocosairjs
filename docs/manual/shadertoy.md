@@ -1,13 +1,12 @@
 # Using Shadertoy Shaders（使用 Shadertoy 着色器）
 
-> 对应 three.js manual 的 *Using Shadertoy shaders* 一篇：把 Shadertoy 的 fragment 着色器搬进
-> `ShaderMaterial` + 全屏 quad，并喂 `iTime`/`iResolution`/`iMouse` 等 uniform。
+> 话题：把 Shadertoy 的 fragment 着色器搬进引擎——用用户可写的着色器材质 + 全屏 quad，喂 `iTime`/`iResolution`/`iMouse` 等 uniform。
 > 状态：**N/A** —— AIR 没有用户写着色器的入口，本篇给实测证据与边界，不配示例。
 > 姊妹篇：[debugging-glsl](debugging-glsl.md)（同为 N/A，从"调试 GLSL"角度给过同一结论与边缘面）。
 
 ## 1. 实测结论：无用户着色器入口
 
-- **没有 `ShaderMaterial` 对应物**：顶层导出表 grep `ShaderMaterial|CustomMaterial|RawShaderMaterial` 零命中
+- **没有用户着色器入口**：顶层导出表 grep `ShaderMaterial|CustomMaterial|RawShaderMaterial` 零命中
   （module.js export 实测）。材质创作面止步于 `material.initialize({ effectName, defines, states })`——
   **选用**已注册 effect + 调宏 + 覆盖管线状态，不能提供新的着色器源码。
 - **着色器源码字段存在但非入口**：`IShaderInfo` 的 `glsl1/glsl3/glsl4`（d.ts 23700–23710，全 d.ts 仅 3 处命中）

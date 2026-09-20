@@ -2,8 +2,8 @@
  * Cocos AIR 开发手册 — Picking Objects with the Mouse（鼠标拾取）
  * 配套文章：docs/manual/picking.md
  *
- * three.js 用 Raycaster + 每帧读鼠标坐标做拾取。AIR 顶层导出里没有 Ray/AABB 构造器，
- * 但相机组件自带 screenPointToRay(x, y) 返回一条几何射线（o 起点 + d 方向）。
+ * AIR 顶层导出里没有 Ray/AABB 构造器，也没有内置 Raycaster，但相机组件自带
+ * screenPointToRay(x, y) 返回一条几何射线（o 起点 + d 方向），拾取由此自建。
  * 本例：3×3 彩色立方体网格，把鼠标屏幕坐标转成射线，与应用层手算的立方体 AABB 做 slab 相交，
  * 命中的立方体放大 + 变白。无鼠标时（自动验证器）射线沿 Lissajous 轨迹自动扫过网格，保证画面持续变化。
  * 覆盖层打印当前指针坐标与命中序号，供探针取证。

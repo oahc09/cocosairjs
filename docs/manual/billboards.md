@@ -1,18 +1,17 @@
 # Billboards and Facades（公告板与立面）
 
-> 对应 three.js manual 的 *Billboards and Facades* 一篇：让一块面片永远正对相机（球面公告板），
-> 或只绕竖轴转身（柱面/立面 facade）。
+> 让一块面片永远正对相机（球面公告板），或只绕竖轴转身（柱面/立面 facade）。
 > 配套可运行示例：[`examples/manual-billboards/`](examples/manual-billboards/)
 > （三块面片同贴一张 canvas 现造的"脸"纹理，相机绕圈巡游，球面/柱面/静态三路对照——零外部资产）。
 
-three.js 该篇走的是 **GPU 顶点着色器路线**：在顶点着色器里把 ModelViewMatrix 的旋转部分剥掉
-（或 `gl_VertexID` 手搓 quad），让三角形在视空间里天然平行于视平面。AIR 这条路不存在：
+公告板的经典实现是 **GPU 顶点着色器路线**：在顶点着色器里把模型视图矩阵的旋转部分剥掉
+（或手搓 quad），让三角形在视空间里天然平行于视平面。这条路在 AIR 不存在。各实现路线的有无：
 
-| three.js 路线 | AIR 对应 | 实测 |
-| --- | --- | --- |
-| 用户顶点着色器去旋转 | **无用户 GLSL**（[shadertoy](shadertoy.md) 篇 N/A 同结论：引擎不暴露自定义 shader 编写面） | ✗ 路线不存在 |
-| `Sprite` 内置公告板类 | d.ts grep `Billboard` 零命中，引擎无此组件 | ✗ |
-| — | **CPU 等价路线**：每帧把相机世界旋转抄给面片节点（本示例） | ✓ |
+| 路线 | 实测 |
+| --- | --- |
+| GPU 顶点着色器去旋转 | **无用户面 GLSL**（[shadertoy](shadertoy.md) 篇 N/A 同结论：引擎不暴露自定义 shader 编写面），路线不存在 ✗ |
+| 引擎内置公告板组件 | 引擎无此类组件，d.ts grep `Billboard` 零命中 ✗ |
+| **CPU 路线**：每帧把相机世界旋转抄给面片节点（本示例） | ✓ |
 
 CPU 抄旋转在数学上与"顶点着色器去旋转"同解：面片的世界旋转 ≡ 相机世界旋转时，
 面片平面恒平行于视平面。区别只在代价——每个公告板节点每帧一次四元数赋值，而非顶点级零成本。
@@ -73,12 +72,12 @@ faceTexture.reset({ width: TEX_SIZE, height: TEX_SIZE, format: Texture2D.PixelFo
 `staticEuler=[0,0]`（对照组从未被写入朝向）。
 
 **CPU 路线代价**：每个公告板每帧一次四元数复制，几十个节点量级无压力；上千节点时逐节点
-`setRotation` 的 JS 开销开始可感，且遮挡/淡出等 three.js 该篇后续话题（按距离缩放等）都得自行补。
+`setRotation` 的 JS 开销开始可感，且遮挡/淡出、按距离缩放等进阶能力都得应用层自行补。
 
 ## 4. 边界（为何定 PARTIAL）
 
-- 目标行为（球面/柱面公告板）**已完整取证**，但走的是 CPU 抄旋转，不是 three.js 的 GPU 顶点路线——
-  AIR 无用户 GLSL，该路线结构性缺失。
+- 目标行为（球面/柱面公告板）**已完整取证**，但走的是 CPU 抄旋转；GPU 顶点路线因
+  本构建无用户 GLSL 而结构性缺失。
 - 无引擎内置 `Billboard`/`Sprite` 组件可用，全部逻辑需应用层每帧手写；批量场景（粒子式海量公告板）
   没有合批友好的官方方案。
 - unlit 材质配裸上传纹理不显示（§2 踩坑），意味着"公告板 = 无光照 WYSIWYG 色"的常规做法
@@ -144,8 +143,8 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  * Cocos AIR 开发手册 — Billboards and Facades（公告板与立面）
  * 配套文章：docs/manual/billboards.md
  *
- * three.js 该篇用顶点着色器（ModelViewMatrix 去旋转 / gl_VertexID 手搓 quad）让面片永远正对相机。
- * AIR 无用户 GLSL（shadertoy 篇 N/A），GPU 顶点路线不存在；引擎也没有 Billboard 组件
+ * 让面片永远正对相机的经典 GPU 路线是在顶点着色器里做（视图矩阵去旋转 / 按顶点 ID 手搓 quad）。
+ * AIR 无用户 GLSL（shadertoy 篇 N/A），这条路线不存在；引擎也没有 Billboard 组件
  * （d.ts grep 零命中）。CPU 等价路线：每帧把相机的世界旋转抄给面片父节点——
  * 全量抄=球面公告板（spherical），只抄 yaw=柱面/立面（cylindrical facade），不抄=对照组。
  * 本例：三块面片同贴一张 canvas 现造的"脸"纹理（standard+USE_ALBEDO_MAP；实测 unlit 配

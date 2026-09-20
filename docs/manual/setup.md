@@ -1,7 +1,6 @@
 # Setup 环境搭建
 
-> three.js 的 setup 篇讲"怎么把开发环境跑起来"。
-> Cocos AIR 是仓库内开发的运行时：本篇讲 **dev server 的启动方式、三条 watch 频道的分工、构建状态通道**，以及静态部署时的诚实边界。
+> Cocos AIR 是仓库内开发的运行时，本篇讲**怎么把开发环境跑起来**：**dev server 的启动方式、三条 watch 频道的分工、构建状态通道**，以及静态部署时的诚实边界。
 > 配套示例是一个最小 hello-cube starter —— 它的意义是"跑通载体"，重点在文章。
 
 > 前置阅读：[Installation 安装与引入](./installation.md)

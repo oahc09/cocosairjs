@@ -1,22 +1,21 @@
 # Loading 3D Models 加载 3D 模型
 
-> three.js 的加载篇用 `GLTFLoader` 把一个 `.glb` / `.gltf` 从 URL 拉下来、`gltf.scene` 挂进场景。
-> Cocos AIR 同样内置 `GLTFLoader`，但入口是**异步的**、产物是**共享原生资产**：`parseAsync` / `loadAsync` 返回 `GLTFAsset`，再 `asset.instantiate()` 拿到可挂场景的节点树。
+> Cocos AIR 内置 `GLTFLoader`，入口是**异步的**、产物是**共享原生资产**：`parseAsync` / `loadAsync` 返回 `GLTFAsset`，再 `asset.instantiate()` 拿到可挂场景的节点树。
 > 本篇走一条**零外部资产**的完整链路：在运行时把立方体的顶点/法线/索引打包成 glTF 二进制缓冲、用 base64 data URI 内联进 glTF JSON、交给 `GLTFLoader.parseAsync` 解析并实例化自转 —— 把"模型从字节到节点"每一步都摊开看。
 
 > 前置阅读：[Creating a Scene 创建场景](./creating-a-scene.md)、[Installation 安装与引入](./installation.md)
 
-## 概念对照
+## 入口速览
 
-| three.js | Cocos AIR | 说明 |
-|---|---|---|
-| `new GLTFLoader()` | `new GLTFLoader()` | 同名；AIR 的在 `cocosair` 命名导出里 |
-| `loader.load(url, cb)` | `await loader.loadAsync(url)` | AIR 只有 Promise 形态，无回调 |
-| `loader.parse(data, path, cb)` | `await loader.parseAsync(data, baseUrl?)` | **内联/内存解析入口**，本篇用它 |
-| `gltf.scene`（Object3D） | `asset.instantiate().root`（Node） | AIR 的资产与实例分离：`GLTFAsset` 共享原生资源，`instantiate()` 产出独立节点/动画状态 |
-| `gltf.animations`（AnimationClip[]） | `instance.animations` | 实例级动画剪辑 |
-| `gltf.parser` 调试 | `asset.meshes / materials / skeletons / warnings` | AIR 直接暴露解析结果集合与告警，便于自检 |
-| `DRACOLoader` / `MeshoptDecoder` / `KTX2Loader` 挂到 loader | `loader.setDRACODecoder(...) / setMeshoptDecoder(...) / setKTX2Transcoder(...)` | **显式注入式**，不注入则压缩模型如实报 decoder required（见 §5） |
+| 入口 | 说明 |
+|---|---|
+| `new GLTFLoader()` | 加载器在 `cocosair` 命名导出里 |
+| `await loader.loadAsync(url)` | Promise 形态，无回调 |
+| `await loader.parseAsync(data, baseUrl?)` | **内联/内存解析入口**，本篇用它 |
+| `asset.instantiate().root`（Node） | 资产与实例分离：`GLTFAsset` 共享原生资源，`instantiate()` 产出独立节点/动画状态 |
+| `instance.animations` | 实例级动画剪辑 |
+| `asset.meshes / materials / skeletons / warnings` | 直接暴露解析结果集合与告警，便于自检 |
+| `loader.setDRACODecoder(...) / setMeshoptDecoder(...) / setKTX2Transcoder(...)` | **显式注入式**，不注入则压缩模型如实报 decoder required（见 §5） |
 
 ## 1. 两条加载入口：loadAsync 与 parseAsync
 

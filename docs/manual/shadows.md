@@ -1,6 +1,5 @@
 # 阴影（Shadows）
 
-> 对应 three.js manual 的 *Shadows* 一篇。
 > **状态：BLOCKED（本篇不提供示例）。** API 面如下如实记录，但在当前构建 +
 > headless swiftshader 环境下**未能产出任何可见阴影**，故不配示例、不作可视化承诺。
 > 证据：`docs/evidence/manual/shadows-spike-{map,planar,off}.png`（见 §3）。
@@ -51,12 +50,11 @@ spike 页结构：灰色地面 plane + 橙色球（`primitives.sphere(1.0, …)`
 未继续追）。因此**不能**断言"启用阴影导致光照消失"；能断言的只有一句：
 **两种 ShadowType 在本环境均未产出可见阴影**，本篇按 BLOCKED 记录，不配示例。
 
-## 4. 与 three.js 的差异备忘
+## 4. 行为要点与修复预期
 
-- three.js 是 `renderer.shadowMap.enabled` + `light.castShadow` + `mesh.castShadow/receiveShadow` 四件套；
-  AIR 对应物是 `scene.globals.shadows.enabled` + `light.shadowEnabled` + `shadowCastingMode`，
+- 开启阴影是三件套：`scene.globals.shadows.enabled` + 光源 `light.shadowEnabled` + 物体 `shadowCastingMode`，
   且**接收方无需单独开关**（场景级生效）。
-- three.js 的 `PCFSoftShadowMap` 等类型对应 AIR 的 `shadowPcf`（PCFType 分级）。
+- 阴影边缘的软硬由光源上的 `shadowPcf`（PCFType 分级）控制。
 - 修复预期：待管线在 swiftshader 下的 shadow pass 可用后，按 §2 顺序补示例并重跑验证器，
   将本篇从 BLOCKED 升级为 PASS；届时同步更新 `docs/evidence/manual-waves.md` 台账。
 

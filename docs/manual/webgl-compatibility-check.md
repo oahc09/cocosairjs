@@ -1,19 +1,19 @@
 # WebGL Compatibility Check WebGL 兼容性检查
 
-> three.js 的兼容性检查篇教你在跑渲染之前先问浏览器："你支持 WebGL 吗？支持到什么程度？"
+> 在跑渲染之前，先问清楚当前环境到底支持什么、支持到什么程度。
 > Cocos AIR 里这件事分**三层**，缺一不可：浏览器原生能力（`canvas.getContext('webgl2')`）、引擎枚举（`gfx.API.*` 的数值）、以及**引擎实际跑在哪个后端 + 硬件上限**（`device.constructor.name` + `device.capabilities`）。
 > 本篇给一个只做检测、不渲染花哨内容的页面，把三层全部问出来打到覆盖层，并解释为什么不能只看 `gfx.API`。
 
 > 前置阅读：[Installation 安装与引入](./installation.md) §5
 
-## 概念对照
+## 概念要点
 
-| three.js | Cocos AIR | 说明 |
-|---|---|---|
-| `WEBGL.isWebGL2Available()` | `!!canvas.getContext('webgl2')` | 浏览器原生探针，不经过引擎 |
-| `renderer.capabilities.maxTextureSize` | `device.capabilities.maxTextureSize` | 注意是 `capabilities`，**不是** `caps` |
-| `renderer.info` / `capabilities` | `device.numDrawCalls` / `numTris` / `capabilities` | 见 [Drawing Lines](./drawing-lines.md) 成本对照 |
-| `WebGLRenderer` 构造即选定后端 | `device.constructor.name`（`WebGL2Device` / WebGPU 设备） | `game.renderType` 在 AIR 里是 `-1`，**不可用**，判后端看设备类名 |
+| Cocos AIR | 说明 |
+|---|---|
+| `!!canvas.getContext('webgl2')` | 浏览器原生探针，不经过引擎 |
+| `device.capabilities.maxTextureSize` | 注意是 `capabilities`，**不是** `caps` |
+| `device.numDrawCalls` / `numTris` / `capabilities` | 见 [Drawing Lines](./drawing-lines.md) 成本对照 |
+| `device.constructor.name`（`WebGL2Device` / WebGPU 设备） | `game.renderType` 在 AIR 里是 `-1`，**不可用**，判后端看设备类名 |
 
 ## 1. 三层检测
 

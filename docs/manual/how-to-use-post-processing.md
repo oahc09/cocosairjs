@@ -1,6 +1,6 @@
 # 后处理（How to use Post Processing）
 
-> 对应 three.js manual 的 *How to use Post Processing* 一篇：bloom/辉光/SSAO 这类全屏后期效果怎么挂。
+> bloom/辉光/SSAO 这类全屏后期效果怎么挂。
 > 配套可运行示例：[`examples/manual-post-processing/`](examples/manual-post-processing/)（相机后处理开关 A/B + 槽位读回；实测开关无像素级效果，见 §3）。
 
 **状态：PARTIAL。** AIR 导出面里后处理的**开关与管线类在、效果创作面不在**：
@@ -33,7 +33,7 @@ const ppType = ppInitial === null ? 'null' : typeof ppInitial;
 
 - **没有** `PostProcess` 组件/类的顶层导出 → 无法 `new` 一个后处理配置挂到相机槽；
 - **没有** 用户级效果列表（bloom / tone-mapping effect / FXAA 等的创作入口）；
-- **没有** three.js 式 `EffectComposer` / `RenderPass` / `UnrealBloomPass` 组合面；
+- **没有** 用户态后期 stage 组合面（无法把全屏效果逐 pass 串成链）；
 - 因此 `usePostProcess = true` 在槽为 `null` 时是**空转开关**（§3 字节级证实）。
 
 **当前可行的近似路**：手工 RT 合成——相机渲进 `RenderTexture`、全屏 quad 采样做后期，
@@ -59,13 +59,12 @@ effects list: not exposed — see article §2
 （sha256 前 16 位均 `3ac8c80d2104d078`），而读回值确为 false/true——
 **开关被接受但无像素级效果**，与槽位 `null` 自洽。结论：拨开关不等于有后期，效果创作面缺失是本环境的硬边界。
 
-## 4. 与 three.js 的差异备忘
+## 4. 设计与口径
 
-- three.js 的后处理是**用户态组合**（EffectComposer + Pass 链），引擎只提供 RT 与全屏 quad 基元；
-  AIR 的设计是**引擎内建 PostProcess 组件**（Cocos 3.8 路线），但 AIR V0.1 导出面截断了创作层，只留开关与管线类。
-- three.js 换 pass 链是换对象；AIR 未来若放开，应是往 `camera.postProcess` 槽放组件化配置——
+- AIR 的后处理设计是**引擎内建 PostProcess 组件**（Cocos 3.8 路线），但 AIR V0.1 导出面截断了创作层，只留开关与管线类。
+- 未来若放开创作面，预期是往 `camera.postProcess` 槽放组件化配置——
   升级信号：`PostProcess` 进入顶层导出（届时本篇升 FULL 并补 bloom 示例）。
-- 色调映射在 three.js 属 renderer 后处理链一环；AIR 把它放在 `scene.globals.postSettings`（[颜色管理](color-management.md) §1），
+- 色调映射放在 `scene.globals.postSettings`（[颜色管理](color-management.md) §1），
   与后处理开关**互不联动**（两者本环境均无像素效果，证据分别在两篇 §3）。
 
 ## 5. 跑示例与验证记录

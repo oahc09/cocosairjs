@@ -1,11 +1,10 @@
 # Load a .GLTF file（加载 glTF 文件）
 
-> 对应 three.js manual 的 *Load a .GLTF file* 一篇：把 glTF/GLB 模型读进场景。
+> 把 glTF/GLB 模型读进场景。
 > 配套可运行示例：[`examples/manual-load-gltf/`](examples/manual-load-gltf/)（页面内现造一份最小 glTF JSON、
 > buffer 以 data URI 内嵌，走 `parseAsync` 全链路——零外部资产也能把加载管线跑通并取证）。
 
-three.js 用 `GLTFLoader.load(url, cb)` 回调风格；AIR 有同名的 `GLTFLoader` 类（d.ts 32918），
-但是 **Promise 风格**，且把"资产"与"实例"分成两层：解析得 `GLTFAsset`，`instantiate()` 才产出可挂场景的节点树。
+AIR 内置 `GLTFLoader` 类（d.ts 32918），是 **Promise 风格**，且把"资产"与"实例"分成两层：解析得 `GLTFAsset`，`instantiate()` 才产出可挂场景的节点树。
 两条加载路都实测可用：真实文件走 `loadAsync(url)`，内存数据走 `parseAsync(data)`——示例用后者实现零资产取证。
 
 ## 1. 加载入口（实测 API 面）
@@ -89,19 +88,15 @@ sceneNames:   ["ManualScene"]
 `warnings: 0` 证明手搓 JSON 通过规范校验；`animations: 0` 与最小资产无动画自洽
 （带动画的 glTF 会在 `instance.animations` 拿到 `AnimationClip[]`，接 [animation-system](animation-system.md) 的 clip 路线播放）。
 
-## 4. 与 three.js 的差异备忘
+## 4. 设计与口径
 
-- **回调 vs Promise**：three.js `load(url, onLoad, onProgress, onError)`；AIR 全 Promise
-  （`loadAsync` / `parseAsync`），进度走 options.onProgress（d.ts 32938，`GLTFLoadProgress` 分
+- **全 Promise**：加载入口是 `loadAsync` / `parseAsync`，无回调参数形态；进度走 options.onProgress（d.ts 32938，`GLTFLoadProgress` 分
   container/dependencies/decode/textures/objects 五相，d.ts 32941–32945）。
-- **资产/实例分层**：three.js 的 loader 直接返回可挂场景的 `Group`，复用靠手工 `clone()`；
-  AIR 返回 `GLTFAsset`（资产层，可缓存可多次实例化）+ `instantiate()`（实例层）+ `dispose()` 回收——
-  与 [cleanup](cleanup.md) 的资产生命周期模型同构。
-- **扩展解码器**：three.js 要自己 new `DRACOLoader` / `KTX2Loader` 并 `setDRACOLoader(...)`；
-  AIR 用同语义 setter + 进程级 `configureGLTFLoaderDefaults`，少一层 loader 对象管理。
-- **动画归属**：three.js 解析结果里动画是 `animations` 数组、播放靠外部 `AnimationMixer`；
-  AIR 的 `instance.animations` 同样是 clip 数组，但播放走组件式 `Animation`（无 mixer 概念，见 animation-system §4）。
-- 共同点：两者都建议"解析一次、实例多次"，都把 Draco/meshopt/KTX2 当可选依赖而非默认。
+- **资产/实例分层**：loader 返回 `GLTFAsset`（资产层，可缓存可多次实例化）+ `instantiate()`（实例层）+ `dispose()` 回收——
+  与 [cleanup](cleanup.md) 的资产生命周期模型同构；复用同一模型即"解析一次、实例多次"，不必手工克隆。
+- **扩展解码器**：解码器用 loader 上的同语义 setter 注入 + 进程级 `configureGLTFLoaderDefaults`，少一层解码器对象管理。
+- **动画归属**：`instance.animations` 是 clip 数组，但播放走组件式 `Animation`（无 mixer 概念，见 animation-system §4）。
+- **压缩是可选依赖**：Draco/meshopt/KTX2 均为可选注入而非默认，未压缩 glTF/GLB 才是零依赖安全区（§1 已注明）。
 
 ## 5. 跑示例与验证记录
 

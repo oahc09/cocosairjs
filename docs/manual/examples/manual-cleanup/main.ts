@@ -2,8 +2,8 @@
  * Cocos AIR 开发手册 — Freeing Resources（释放资源）
  * 配套文章：docs/manual/cleanup.md
  *
- * three.js 该篇：JS 的 GC 收不走 GPU 内存，texture/geometry/material 三类对象必须手动
- * dispose()，并给出递归 removeAndDispose 模板。AIR 的对应关系（源码取证）：
+ * JS 的 GC 收不走 GPU 内存，texture/geometry/material 三类资源必须手动释放。
+ * AIR 的对应关系（源码取证）：
  *   - node.destroy() 级联销毁子节点+组件（node.ts _onPreDestroyBase），本帧渲染前生效；
  *   - 但资源（Asset 派生：Mesh/Material/Texture2D）不会随节点/场景释放——
  *     Scene.destroy 注释原文 "this action won't destroy related assets"（d.ts 19420）；
@@ -166,7 +166,7 @@ function probeSet (set: AssetSet): SetProbe {
     return out;
 }
 
-// three.js removeAndDispose 的 AIR 等价：先节点后资源，destroy() 返回值 = 是否首次销毁
+// 递归"移除+释放"模板的 AIR 落地：先节点后资源，destroy() 返回值 = 是否首次销毁
 function disposeSet (set: AssetSet): DisposeReturns {
     const returns = {
         node: set.root.destroy(),

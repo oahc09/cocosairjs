@@ -1,8 +1,7 @@
 # Creating Text 创建文字
 
 > **状态：N/A（本篇不提供示例）。**
-> three.js 的创建文字篇靠 `FontLoader` + `TextGeometry` 把字体转成 3D 网格，或者用 canvas 贴图 / troika-three-text。
-> Cocos AIR 的 code-first 导出面（368 个具名符号）**没有** 3D 文字几何、也没有 `Label` / `Font` 这类文本渲染组件：与文字相关的导出只有 `TextAsset`（纯文本资产容器，不负责渲染）和一组 UI 坐标换算工具（`WorldNode3DToLocalNodeUI` 等）。因此"加载字体→生成文字网格"这条 three.js 路径在 AIR 里没有对应物，本篇如实标 N/A，不硬凑示例。
+> Cocos AIR 的 code-first 导出面（368 个具名符号）**没有** 3D 文字几何、也没有 `Label` / `Font` 这类文本渲染组件：与文字相关的导出只有 `TextAsset`（纯文本资产容器，不负责渲染）和一组 UI 坐标换算工具（`WorldNode3DToLocalNodeUI` 等）。因此"加载字体→生成文字网格"这条路径在 AIR 里没有对应物，本篇如实标 N/A，不硬凑示例。
 
 ## 那在 AIR 里怎么显示文字？
 

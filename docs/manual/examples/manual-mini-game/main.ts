@@ -2,7 +2,7 @@
  * Cocos AIR 开发手册 — Start Making a Game（开始做小游戏）
  * 配套文章：docs/manual/game.md
  *
- * three.js 该篇：不用任何游戏框架，手写一个"方向键/WASD 移动小球、吃随机出现的
+ * 不用任何游戏框架，纯引擎手写一个"方向键/WASD 移动小球、吃随机出现的
  * 方块、计分"的迷你游戏——碰撞用中心距离判定（勾股免开方），相机固定俯视。
  * AIR 侧全件对上且不依赖物理（physics 篇 N/A 预告的"距离判定"近似替代在这里落地）：
  *   - 输入：window 级 input 单例，input.on(SystemEventType.KEY_DOWN/KEY_UP) + KeyCode
@@ -41,7 +41,7 @@ const app = await createAirApp({ canvas });
 
 const scene = new Scene('minigame');
 
-// ---- 灯光 + 固定俯视相机（three.js 该篇同款机位思路：看清全场） ----
+// ---- 灯光 + 固定俯视相机（机位思路：一眼看清全场） ----
 const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-40, 25, 0);
 scene.addChild(dirNode);

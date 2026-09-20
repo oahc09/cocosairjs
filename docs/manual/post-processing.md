@@ -1,6 +1,6 @@
 # Post Processing（后处理）
 
-> 对应 three.js manual 的 *Post Processing* 一篇（WebGPU 系列里"自建后处理管线"那篇：render target + 自定义着色器拼 Bloom/灰度等效果）。
+> 自建后处理管线：用 render target + 自定义着色器拼 Bloom/灰度等效果。
 > 状态：**N/A** —— AIR 没有用户可装配的后处理管线入口，本篇给实测证据与边界，不配示例。
 > 内建后处理槽位（`camera.usePostProcess` / 色调映射单项）已在专篇讨论：见
 > [how-to-use-post-processing](how-to-use-post-processing.md)（PARTIAL）。
@@ -22,9 +22,9 @@
 
 ## 2. 与 how-to-use 篇的分工
 
-three.js 手册里这是两篇：*How to use Post Processing*（用现成 EffectComposer）与 *Post Processing*
-（WebGPU 系列，自己搭管线）。AIR 侧对应：前者→ [how-to-use-post-processing](how-to-use-post-processing.md)
-（内建槽位 PARTIAL：色调映射单项可用、composer 类效果缺）；本篇→ 自建管线，**N/A**（上节四条证据）。
+后处理在本手册分两篇讲：*How to use Post Processing*（用现成内建槽位）与 *Post Processing*
+（本篇，自己搭管线）。前者见 [how-to-use-post-processing](how-to-use-post-processing.md)
+（内建槽位 PARTIAL：色调映射单项可用、composer 类效果缺）；本篇自建管线，**N/A**（上节四条证据）。
 
 ## 3. 应用层近似（不伪装）
 

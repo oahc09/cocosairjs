@@ -1,11 +1,10 @@
 # 自定义几何（Custom BufferGeometry）
 
-> 对应 three.js manual 的 *Custom BufferGeometry* 一篇：不用内置生成器，手写顶点数组造网格。
+> 不用内置生成器，手写顶点数组造网格。
 > 配套可运行示例：[`examples/manual-custom-geometry/`](examples/manual-custom-geometry/)（手写 IGeometry 正弦波纹网格）。
 
-three.js 里这条路是 `new THREE.BufferGeometry()` + `setAttribute('position', new BufferAttribute(…))`。
-AIR 的对应物更直接：**拼一个普通 JS 对象（IGeometry）交给 `utils.createMesh`**——
-没有 BufferAttribute 包装类，数组就是数组。
+AIR 的这条路很直接：**拼一个普通 JS 对象（IGeometry）交给 `utils.createMesh`**——
+没有顶点属性包装类，数组就是数组。
 
 ## 1. IGeometry 的四组数组
 
@@ -72,7 +71,7 @@ waveRenderer.mesh = utils.createMesh(waveGeometry);
 `utils.createMesh` 是唯一入口：它把 IGeometry 上传成 GPU 缓冲并返回 `Mesh`，
 之后与 `primitives.*` 产出的 mesh 用法完全相同（赋给 `MeshRenderer.mesh` 即可）。
 想改顶点动画就重建 IGeometry 再 `createMesh`（或走 [动态纹理/顶点动画](dynamic-texture.md) 的思路），
-AIR 未暴露"就地改写缓冲"的 BufferAttribute 级 API。
+AIR 未暴露"就地改写顶点缓冲"的细粒度 API。
 
 ## 3. 实测读图与覆盖层
 
@@ -91,11 +90,11 @@ utils.createMesh(IGeometry) → MeshRenderer.mesh
 
 625 = (24+1)²、3456 = 24×24×6，与手写循环自洽。
 
-## 4. 与 three.js 的差异备忘
+## 4. 边界与注意点
 
-- 无 `BufferAttribute` / `setIndex` / `computeVertexNormals`：法线要自己算（示例用解析偏导），
+- 没有顶点属性包装类与索引/法线的自动工具：法线要自己算（示例用解析偏导），
   包围盒要自己给（`minPos`/`maxPos`）。
-- 无 `geometry.setDrawRange`、无多 draw call 分组；一个 IGeometry = 一个 mesh = 一次 draw。
+- 没有绘制区间裁剪（draw range）、无多 draw call 分组；一个 IGeometry = 一个 mesh = 一次 draw。
 - 顶点色字段存在（`colors`），但启用需材质宏配合，踩坑记录见 [图元一篇](primitives.md)。
 
 ## 5. 跑示例与验证记录

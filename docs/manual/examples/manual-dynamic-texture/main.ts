@@ -2,9 +2,9 @@
  * Cocos AIR 开发手册 — Using A Canvas for Dynamic Textures（用 Canvas 做动态纹理）
  * 配套文章：docs/manual/canvas-textures.md
  *
- * three.js 该篇：往一个 2D canvas 上每帧作画，喂给 CanvasTexture，改完把 needsUpdate 置真。
+ * 本能力的流程：往一个 2D canvas 上每帧作画，把画布内容作为纹理源，改了就要显式上传。
  * AIR 的对应件是 SimpleTexture.uploadData(source)（d.ts 43970）——source 直接收
- * HTMLCanvasElement，每帧调一次就是 needsUpdate=true 的等价物；纹理本体用
+ * HTMLCanvasElement，每帧调一次即为"改动即时生效"；纹理本体用
  * new Texture2D() + reset({width,height,format}) 现造（零外部资产）。
  * 本例：256×256 离屏 2D canvas 每帧画"时钟扫针 + 递增帧数 + 左上角 AIR 方位标"，
  * uploadData 上传后贴到一块竖直面（quad）与一颗自转立方体上（同一纹理两用）。
@@ -140,7 +140,7 @@ class DynTex extends Component {
         this._t = (this._t || 0) + dt;
         frame++;
         drawPaint(frame, this._t);
-        texture.uploadData(paint); // = three.js 的 needsUpdate=true 等价物
+        texture.uploadData(paint); // 改动即时生效：每帧显式上传一次
         uploads++;
         const e = cube.node.eulerAngles;
         cube.node.setRotationFromEuler(0, e.y + 36 * dt, 0);

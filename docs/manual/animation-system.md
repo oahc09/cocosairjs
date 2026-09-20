@@ -1,6 +1,6 @@
 # 动画系统（Animation System）
 
-> 对应 three.js manual 的 *Animation System* 一篇：让物体随时间动起来。
+> 让物体随时间动起来。
 > 配套可运行示例：[`examples/manual-animation-system/`](examples/manual-animation-system/)（一颗立方体走"右移 → 上移 → 回原点"循环序列，并行一条缩放脉冲）。
 
 AIR 里有**两条**动画路线，本篇以 code-first 的 `tween` 为主线（零资产、最短路径），
@@ -32,7 +32,7 @@ clip 路线需要构造或加载 `AnimationClip` 资产（曲线/关键帧数据
 | `union()` | 32503 | 把链上动作合并为一个整体（供 repeat 整段重复） |
 
 `opts.easing` 接收缓动函数或 lambda（d.ts 32514 注释）。属性写法是**直接给属性名与目标值对象**
-（`{ position: new Vec3(...) }`、`{ scale: new Vec3(...) }`），不是 three.js 社区的字符串路径风格。
+（`{ position: new Vec3(...) }`、`{ scale: new Vec3(...) }`），这是 AIR tween 唯一的属性给法，没有字符串路径形式。
 
 **节点生命周期联动**（d.ts 32375–32377 注释，实测语义）：目标节点被 `active=false` 时 tween 自动 pause，
 重新激活自动 resume，节点销毁时 tween 自动销毁——不需要手工 `stop()` 防泄漏。
@@ -102,16 +102,14 @@ tween 系统时钟与组件 `update` 累加时钟存在约半秒相位差（起�
 解法是加一颗**静态锚点立方体**（`(-1.8,1,0)`，斜视三面受光）并把舞者行程收窄到右半区、相机退到 `(2.4,3.0,7.4)`，
 使 visible-frame 与动画相位**解耦**。**单面正对镜头的动画演示、以及"可见性依赖动画相位"的演示都会踩这个门槛**。
 
-## 4. 与 three.js 的差异备忘
+## 4. 实现备忘
 
-- three.js manual 的 Animation System 主角是 `AnimationMixer` / `AnimationClip` / `AnimationAction` 三件套；
-  AIR 的对应物是组件式 `Animation` + `AnimationState`（d.ts 30500 / 30313），**没有** mixer 概念，
-  播放控制落在组件与 state 上（`play` / `crossFade` 等见 d.ts 30500 起）。
-- three.js 生态里"代码补间"靠第三方库（gsap/tween.js）；AIR **内置** `tween` 且与节点生命周期联动
- （§1 末条），这是 three.js 没有的便利。
-- three.js 的 `mixer.update(dt)` 需要手动每帧驱动；AIR 的 tween 由 `TweenSystem`（d.ts 32262）随 director 自动步进，
-  用户代码不碰 dt。
-- 骨骼动画两者都有（three.js `SkinnedMesh` ↔ AIR `SkeletalAnimation` d.ts 31737），但都需要资产，本篇不展开。
+- **clip 路线是组件式的**：播放控制集中在 `Animation` 组件与 `AnimationState` 上
+ （d.ts 30500 / 30313，`play` / `crossFade` 等见 d.ts 30500 起），引擎没有独立的 mixer 中间层。
+- **代码补间内置**：顶层 `tween` 不依赖任何第三方库，且与节点生命周期联动（§1 末条）——
+  目标节点失活自动 pause、激活自动 resume、销毁自动清理。
+- **自动步进**：tween 由 `TweenSystem`（d.ts 32262）随 director 自动推进，用户代码不碰 dt。
+- **骨骼动画**走 `SkeletalAnimation`（d.ts 31737），与 clip 路线一样需要资产，本篇不展开。
 
 ## 5. 跑示例与验证记录
 

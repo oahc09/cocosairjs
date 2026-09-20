@@ -1,7 +1,6 @@
 # Primitives 内置图元
 
-> three.js 的 primitives 是一组 `BufferGeometry` 生成器（Box/Sphere/Torus…）。
-> Cocos AIR 的对应物是 `primitives.*` 命名空间：**返回纯数据 `IGeometry`**（positions/normals/uvs/indices/包围盒/拓扑），再经 `utils.createMesh` 变成可渲染的 `Mesh` 资产。
+> Cocos AIR 的内置图元是 `primitives.*` 命名空间：**返回纯数据 `IGeometry`**（positions/normals/uvs/indices/包围盒/拓扑），再经 `utils.createMesh` 变成可渲染的 `Mesh` 资产。
 > 本篇给全清单、统一摆放代码，以及 `circle` 的三个实测坑。
 
 > 前置阅读：[Fundamentals 基本概念](./fundamentals.md)

@@ -1,11 +1,10 @@
 # 光源（Lights）
 
-> 对应 three.js manual 的 *Lights* 一篇：讲清"有哪些光、强度怎么设、为什么我的光不亮"。
+> 讲清"有哪些光、强度怎么设、为什么我的光不亮"。
 > 配套可运行示例：[`examples/manual-lights/`](examples/manual-lights/)（四种光源轮流点亮同一颗球）。
 
 Cocos AIR 暴露四种光源组件：`DirectionalLight`、`PointLight`、`SpotLight`、`SphereLight`。
-它们都是普通 `Component`，挂到 `Node` 上、把节点加进场景即生效——没有 three.js 里
-"光还要手动 add 到 scene 的 lights 列表"之类的额外步骤，但**强度单位与开关方式**有几个必须知道的坑。
+它们都是普通 `Component`，挂到 `Node` 上、把节点加进场景即生效——不需要任何额外的注册步骤，但**强度单位与开关方式**有几个必须知道的坑。
 
 ## 1. 四种光源一览
 

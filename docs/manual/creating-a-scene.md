@@ -1,22 +1,21 @@
 # Creating a Scene 创建场景
 
-> three.js 里"创建场景"意味着 `new THREE.Scene()` + `new THREE.WebGLRenderer()` + 一个 `PerspectiveCamera`，再往场景里塞一个带几何和材质的 `Mesh`。
-> Cocos AIR 的骨架完全同形，但组织方式是 **Cocos 组件式**：渲染器不是你能拿在手里的对象，而是由 `createAirApp` 创建并托管的 `app`；几何与材质不直接是"物体"，而是挂在节点上的 `MeshRenderer` 组件的两个属性。
+> Cocos AIR 的最小场景骨架是 **Cocos 组件式**组织：渲染器不是你能拿在手里的对象，而是由 `createAirApp` 创建并托管的 `app`；几何与材质不直接是"物体"，而是挂在节点上的 `MeshRenderer` 组件的两个属性。
 > 本篇把最小可运行场景（一个旋转的立方体）从零搭出来，后续每一篇都在这个骨架上做增量。
 
 > 前置阅读：[Installation 安装与引入](./installation.md)
 
-## 概念对照
+## 核心对象速查
 
-| three.js | Cocos AIR | 说明 |
-|---|---|---|
-| `new THREE.WebGLRenderer({ canvas })` | `await createAirApp({ canvas })` | AIR 的 app 只暴露 `run` / `getScene` 两个方法，渲染循环由 app 托管 |
-| `new THREE.Scene()` | `new Scene('name')` | 名字用于调试与场景切换 |
-| `scene.add(obj)` | `scene.addChild(node)` | **没有 `appendChild`** |
-| `new THREE.PerspectiveCamera(fov, aspect, near, far)` | `node.addComponent(Camera)` + 逐个赋值 `projection/fov/near/far` | 相机是组件，宽高比由引擎按画布自动处理，不需要手写 aspect |
-| `new THREE.DirectionalLight()` | `node.addComponent(DirectionalLight)` + `light.illuminance` | 亮度是标量 `illuminance`，不是 `intensity` + `color` 组合 |
-| `new THREE.Mesh(geometry, material)` | `node.addComponent(MeshRenderer)` + `renderer.mesh` / `renderer.material` | 几何来自 `utils.createMesh(primitives.box(...))` |
-| `renderer.setAnimationLoop(fn)` | `class X extends Component { update (dt) {} }` | 逐帧更新挂在节点的组件上，`dt` 单位为秒 |
+| Cocos AIR | 说明 |
+|---|---|
+| `await createAirApp({ canvas })` | AIR 的 app 只暴露 `run` / `getScene` 两个方法，渲染循环由 app 托管 |
+| `new Scene('name')` | 名字用于调试与场景切换 |
+| `scene.addChild(node)` | **没有 `appendChild`** |
+| `node.addComponent(Camera)` + 逐个赋值 `projection/fov/near/far` | 相机是组件，宽高比由引擎按画布自动处理，不用手工维护 |
+| `node.addComponent(DirectionalLight)` + `light.illuminance` | 亮度主控是标量 `illuminance` |
+| `node.addComponent(MeshRenderer)` + `renderer.mesh` / `renderer.material` | 几何来自 `utils.createMesh(primitives.box(...))` |
+| `class X extends Component { update (dt) {} }` | 逐帧更新挂在节点的组件上，`dt` 单位为秒 |
 
 ## 1. HTML 骨架：canvas 必须在引擎之前
 
@@ -87,7 +86,7 @@ camera.priority = 0;
 
 - **`visibility` 必须显式设置。** 引擎 4.0-alpha 的默认值是 `undefined`，与任何节点 layer 都不匹配，结果是场景里有物体、有光、有相机，画面却只有清屏色。
 - `lookAt` 要传 `Vec3`，且它作用在**节点**上（改的是节点朝向），不是相机组件的方法。
-- `clearFlags` + `clearColor` 等价于 three.js 的 `renderer.setClearColor`。想透明背景见 [Tips：Make the Canvas Transparent](./tips.md#make-the-canvas-transparent-让画布透明)。
+- `clearFlags` + `clearColor` 决定每帧清屏行为。想透明背景见 [Tips：Make the Canvas Transparent](./tips.md#make-the-canvas-transparent-让画布透明)。
 
 ## 4. 光源
 

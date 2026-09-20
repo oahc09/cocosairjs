@@ -1,6 +1,6 @@
 # 相机（Cameras）
 
-> 对应 three.js manual 的 *Cameras* 一篇：透视与正交两种投影、取景参数、位置与朝向。
+> 透视与正交两种投影、取景参数、位置与朝向。
 > 配套可运行示例：[`examples/manual-cameras/`](examples/manual-cameras/)（同一台相机每 3s 切换投影，五个等尺寸立方体当"投影差异放大镜"）。
 
 AIR 里相机是一个普通组件 `Camera`，挂在 `Node` 上。**取景四件套**是：

@@ -1,11 +1,6 @@
 # Useful Links 有用链接
 
-> **META 篇**：手册之外值得收藏的资源。分"对齐源""规范与样本""浏览器/图形文档""本仓库内部"四组。
-
-## 对齐源（本手册的参照系）
-
-- [three.js manual](https://threejs.org/manual/) —— 本手册的目录结构与内容形式对齐源；每篇开头的对照表都以它为基准。
-- [three.js docs](https://threejs.org/docs/) —— 查 three.js 侧 API 语义时用。
+> **META 篇**：手册之外值得收藏的资源。分"规范与样本""浏览器/图形文档""本仓库内部"三组。
 
 ## 规范与样本资产
 

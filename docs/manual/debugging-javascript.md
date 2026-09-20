@@ -1,6 +1,6 @@
 # 调试 JavaScript（Debugging JavaScript）
 
-> 对应 three.js manual 的 *Debugging JavaScript* 一篇：代码跑起来不对时，怎么把运行时状态掏出来看。
+> 代码跑起来不对时，怎么把运行时状态掏出来看。
 > 配套可运行示例：[`examples/manual-debugging-js/`](examples/manual-debugging-js/)（场景图内省 + 覆盖层 dump + 守卫探针 try/catch）。
 
 **状态：FULL。** AIR 是纯代码运行时，浏览器 devtools（断点/console/network）全部可用；在此之上引擎还提供运行时内省面：
@@ -74,12 +74,12 @@ debugging-javascript [-] @(0.0,0.0,0.0)
 
 **本仓库实测踩过的坑（调试时优先排查）**：`#GameCanvas` 必须在引擎 import 前存在；`utils.createSphere` 等几何体用位置参数易传错；共享 builtin material 直接改属性会串色（要 `new Material()`）；`Mat4` 实例是具名字段 `m00…m15` 而非 `.m` 数组（见 [矩阵变换](matrix-transformations.md) §3）。
 
-## 4. 与 three.js 的差异备忘
+## 4. 调试要点备忘
 
-- three.js 调试 JS 基本等于"浏览器 devtools + console.log"，引擎本身内省面薄（scene.traverse 可用）；
-  AIR 因为节点/组件模型更重，内省面更厚（`components` / `walk` / `getWorldPosition`），适合做结构化 dump。
-- three.js 里未捕获异常通常只坏一帧；AIR 里组件 `update` 抛未捕获异常会中断当帧逻辑，守卫探针（§2）是低成本防线。
-- 两边都建议把 app/scene 挂到 window 供控制台取用；AIR 示例统一用 `window.__airApp`（验证器 app-contract 也依赖它）。
+- AIR 调试 JS 的基线是"浏览器 devtools + console.log"；在此之上引擎自带较厚的运行时内省面
+  （`components` / `walk` / `getWorldPosition`），因为节点/组件模型偏重，适合做结构化 dump。
+- 组件 `update` 里抛出的未捕获异常会中断当帧逻辑，守卫探针（§2）是低成本防线。
+- 建议把 app/scene 挂到 window 供控制台取用；AIR 示例统一用 `window.__airApp`（验证器 app-contract 也依赖它）。
 
 ## 5. 跑示例与验证记录
 

@@ -1,21 +1,20 @@
 # Picking Objects with the Mouse（鼠标拾取）
 
-> 对应 three.js manual 的 *Picking objects with the mouse* 一篇：`Raycaster` + 鼠标坐标做拾取。
+> 用鼠标坐标 + 射线做物体拾取。
 > 配套可运行示例：[`examples/manual-picking/`](examples/manual-picking/)
 > （3×3 彩色立方体网格，射线命中者放大变白，无鼠标时自动扫——零外部资产）。
 
-three.js 的拾取套路是：读鼠标坐标 → `raycaster.setFromCamera(ndc, camera)` → `intersectObjects`。
-AIR 里第一步的对应物是**相机组件自带的 `screenPointToRay`**（d.ts 21410，把屏幕坐标转成一条几何射线），
-但**没有** `intersectObjects` 那种"引擎替你遍历网格求交"的顶层 API——
+AIR 的拾取套路是：读鼠标坐标 → **相机组件自带的 `screenPointToRay`**（d.ts 21410，把屏幕坐标转成一条几何射线）→ 求交。
+但 AIR **没有**"引擎替你遍历网格求交"的顶层 API——
 `Ray` / `AABB` 类都不在顶层导出表里（实测：`geometry` 命名空间导出，`Ray`/`AABB` 单独名不导出）。
-所以 AIR 拾取 = `screenPointToRay` + **应用层自己求交**。对照：
+所以 AIR 拾取 = `screenPointToRay` + **应用层自己求交**。要点：
 
-| three.js | AIR | 实测 |
-| --- | --- | --- |
-| `raycaster.setFromCamera(mouseNDC, camera)` | `camera.screenPointToRay(sx, sy, outRay)` | ✓（本示例核心） |
-| `raycaster.intersectObjects(meshes)` | 无引擎级网格求交；应用层手写射线×AABB | ✓（本示例 slab 相交） |
-| 逐三角形精确拾取 | 无一等公民入口（`Ray`/`AABB` 不导出、无用户 GLSL 做 GPU picking） | 缺（属进阶变体，见 §3） |
-| 物理射线 `physics.raycastClosest` | 存在（d.ts 35590），但需碰撞体 + 物理后端 | 契约在，本篇未取证 |
+| AIR | 实测 |
+| --- | --- |
+| `camera.screenPointToRay(sx, sy, outRay)` | ✓（本示例核心） |
+| 无引擎级网格求交；应用层手写射线×AABB | ✓（本示例 slab 相交） |
+| 逐三角形精确拾取 / GPU picking：无一等公民入口（`Ray`/`AABB` 不导出、无用户 GLSL 可做） | 缺（属进阶变体，见 §3） |
+| 物理射线 `physics.raycastClosest` 存在（d.ts 35590），但需碰撞体 + 物理后端 | 契约在，本篇未取证 |
 
 ## 1. 拾取相关 API 面（实测锚点）
 
@@ -67,7 +66,7 @@ AIR 里第一步的对应物是**相机组件自带的 `screenPointToRay`**（d.
 ```
 
 立方体是轴对齐、不旋转的，故其世界 AABB 就是 `center = 节点位置`、`half = 0.5`——
-本例刻意如此，避免引入 OBB/旋转矩阵求交的复杂度（那是 three.js 文章"进阶"部分的话题）。
+本例刻意如此，避免引入 OBB/旋转矩阵求交的复杂度。
 命中的立方体放大到 1.4×、`mainColor` 变白。另有一颗 `builtin-unlit` 亮黄小球作**光标标记**，
 沿射线×水平面落点持续移动——既直观指示指针落点，又保证画面持续变化（frame-diff 用，见 §3）。
 
@@ -91,18 +90,18 @@ Lissajous 指针在两帧 400ms 间隔内可能停在同一格或格间（`hit=-
 加了持续移动的光标球后过（与 [animation-system](animation-system.md) 的"动画示例要有与相位无关的持续变化源"同一条经验）。
 
 **如实标注（能力边界，不改本篇 FULL 定性）**：本篇教的"鼠标拾取"在 AIR 端到端可用——射线生成、求交、命中反馈全成立，
-故定 **FULL**。边界在于：本例是**轴对齐立方体 + 应用层 AABB**，属规则形状拾取；three.js 文章一笔带过的
-**逐三角形精确拾取**（`Raycaster` 对任意 mesh 求三角命中）与 **GPU picking**（离屏渲染 ID 图）在 AIR 无一等公民入口——
+故定 **FULL**。边界在于：本例是**轴对齐立方体 + 应用层 AABB**，属规则形状拾取；
+**逐三角形精确拾取**（对任意 mesh 求三角命中）与 **GPU picking**（离屏渲染 ID 图）在 AIR 无一等公民入口——
 `Ray`/`AABB` 不导出、无用户 GLSL 做 ID 图（GPU picking 的完整讨论在专门的 [indexed-textures](indexed-textures.md) 一篇，定 PARTIAL）。
 可行升级路：给物体挂物理碰撞体走 `physics.raycastClosest`（本篇未取证），或应用层对三角列表手写 Möller–Trumbore
 （数据自备，指路 [custom-geometry](custom-geometry.md)）。
 
-## 4. 与 three.js 的差异备忘
+## 4. 拾取要点备忘
 
-- **求交谁做**：three.js `Raycaster.intersectObjects` 引擎内置遍历 + 逐三角求交；AIR 只给"屏幕→射线"这一步，
+- **求交谁做**：AIR 引擎只给"屏幕→射线"这一步，
   射线与什么求交、怎么求交全在应用层。好处是形状语义自由（AABB/球/物理体任选），代价是要自己写。
-- **坐标系**：three.js 用 NDC（[-1,1]，y 向上）喂 `setFromCamera`；AIR `screenPointToRay` 吃**像素**且 y 向下翻转
-  （§2 踩坑）。两套坐标约定别混。
+- **坐标系**：AIR `screenPointToRay` 吃**像素**坐标且 y 以左下为原点向上，
+  而事件 `getUILocation()` 给的是左上角 y 向下的 UI 坐标——两套坐标约定别混（§2 踩坑）。
 - **事件层**：AIR 鼠标走 window 级 `input.on(MOUSE_MOVE)`（与 [tips](tips.md) 键盘锚点同源），
   无需给 canvas 绑 DOM 监听、也无需聚焦。
 
@@ -164,8 +163,8 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  * Cocos AIR 开发手册 — Picking Objects with the Mouse（鼠标拾取）
  * 配套文章：docs/manual/picking.md
  *
- * three.js 用 Raycaster + 每帧读鼠标坐标做拾取。AIR 顶层导出里没有 Ray/AABB 构造器，
- * 但相机组件自带 screenPointToRay(x, y) 返回一条几何射线（o 起点 + d 方向）。
+ * AIR 顶层导出里没有 Ray/AABB 构造器，也没有内置 Raycaster，但相机组件自带
+ * screenPointToRay(x, y) 返回一条几何射线（o 起点 + d 方向），拾取由此自建。
  * 本例：3×3 彩色立方体网格，把鼠标屏幕坐标转成射线，与应用层手算的立方体 AABB 做 slab 相交，
  * 命中的立方体放大 + 变白。无鼠标时（自动验证器）射线沿 Lissajous 轨迹自动扫过网格，保证画面持续变化。
  * 覆盖层打印当前指针坐标与命中序号，供探针取证。

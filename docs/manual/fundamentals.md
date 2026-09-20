@@ -1,24 +1,23 @@
 # Fundamentals 基本概念
 
-> three.js 的 fundamentals 讲 `Scene` / `Camera` / `Renderer` 三件套和"一帧是怎么出来的"。
-> Cocos AIR 的心智模型不一样：它是**组件式**的 —— `App` 托管运行时，`Scene` 是节点树根，`Node` 只承载变换与层级，**一切行为与渲染都是挂在 Node 上的 `Component`**（相机、灯光、网格渲染器、你自己的脚本，全都是组件）。
-> 本篇给一张四概念对照大表、一段"一帧的旅程"，以及一个把运行时结构树打印出来的全景注释示例。
+> Cocos AIR 的心智模型是**组件式**的 —— `App` 托管运行时，`Scene` 是节点树根，`Node` 只承载变换与层级，**一切行为与渲染都是挂在 Node 上的 `Component`**（相机、灯光、网格渲染器、你自己的脚本，全都是组件）。
+> 本篇给一张四概念职责大表、一段"一帧是怎么出来的"，以及一个把运行时结构树打印出来的全景注释示例。
 
 > 前置阅读：[Creating a Scene 创建场景](./creating-a-scene.md)
 
-## 概念对照大表
+## 四概念职责大表
 
-| 层 | three.js | Cocos AIR | 职责边界 |
-|---|---|---|---|
-| 运行时 | `WebGLRenderer` + `setAnimationLoop` | `App`（`createAirApp` 返回） | 只管 `run(scene)` / `getScene()` / `canvas`；帧循环由引擎内部驱动 |
-| 场景 | `THREE.Scene` | `Scene` | 节点树根容器；一个 app 同一时刻跑一个 scene |
-| 物体 | `THREE.Object3D` / `Mesh` | `Node` | **只有**变换（位置/旋转/缩放）与父子层级；本身不渲染 |
-| 渲染 | `mesh.geometry` + `mesh.material` | `MeshRenderer`（Component） | `renderer.mesh` + `renderer.material` |
-| 相机 | `THREE.PerspectiveCamera` | `Camera`（Component） | 挂在 Node 上；`visibility` 决定看哪些 layer |
-| 灯光 | `THREE.DirectionalLight` | `DirectionalLight`（Component） | 挂在 Node 上；朝向由 Node 旋转决定 |
-| 脚本 | 在 render loop 里手写 | `class X extends Component { update(dt) }` | 逐帧更新入口，`dt` 单位秒 |
+| 层 | Cocos AIR | 职责边界 |
+|---|---|---|
+| 运行时 | `App`（`createAirApp` 返回） | 只管 `run(scene)` / `getScene()` / `canvas`；帧循环由引擎内部驱动 |
+| 场景 | `Scene` | 节点树根容器；一个 app 同一时刻跑一个 scene |
+| 物体 | `Node` | **只有**变换（位置/旋转/缩放）与父子层级；本身不渲染 |
+| 渲染 | `MeshRenderer`（Component） | `renderer.mesh` + `renderer.material` |
+| 相机 | `Camera`（Component） | 挂在 Node 上；`visibility` 决定看哪些 layer |
+| 灯光 | `DirectionalLight`（Component） | 挂在 Node 上；朝向由 Node 旋转决定 |
+| 脚本 | `class X extends Component { update(dt) }` | 逐帧更新入口，`dt` 单位秒 |
 
-关键心智转换：**three.js 里"物体=Mesh"，AIR 里"物体=Node，Mesh 只是它挂的一个渲染组件"**。同一个 Node 可以同时挂 `MeshRenderer` + 自定义脚本 + 碰撞体；同一个 Component 类型也可以挂到不同 Node 上复用。
+关键心智：**AIR 里"物体 = Node，Mesh 只是它挂的一个渲染组件"**。同一个 Node 可以同时挂 `MeshRenderer` + 自定义脚本 + 碰撞体；同一个 Component 类型也可以挂到不同 Node 上复用。
 
 ## 1. 运行时结构树（示例实测）
 

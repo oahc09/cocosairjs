@@ -107,3 +107,15 @@
 | 收尾三门禁 | PASS | ① 全量验证器（无 `--ids`）41/41 PASS，证据 `docs/evidence/manual-examples-verified.json`（`partial:false`，本轮无需 re-capture）；抽查截图 `manual-load-gltf.png`/`manual-voxel.png`/`manual-mini-game.png` 渲染正常。② `node tools/verify/manual-doc-consistency.cjs --strict` = `PASS (fail=0, warn=0, missing=0, strict)`。③ `npm run typecheck`（`tsc -p tsconfig.json`，编译 src）干净。 |
 
 **范围外如实标注**：对手册示例子集临时跑严格 `tsc`（`.tmp-tsconfig-manual.json`，strict）会报约 50 条 `primitives.plane` 选项必填段、`createMesh` 第 3 参、`SystemEventType.*` 与 `InputEventMap` 键、`{o,d}` 鸭子类型 Ray 等——均为**引擎 d.ts 与运行时实现的口径差**（示例运行时行为已由验证器 + 探针实锤），非示例代码缺陷；仓库主示例树同样不在 `tsconfig.json` 编译范围（`include` 仅 `src/**`）。故本次迁移以"esbuild 转译通过 + 浏览器验证器全绿"为准，未强行让示例迁就严格 tsc。临时 tsconfig/globals 属 scratch，收尾删除。
+
+## 手册去 three.js 化：描述文字全部改为面向 Cocos AIR 的直述 — PASS
+
+用户指令："md文件很多写了 对应three.js 的描述文字，都要去掉，显得比较奇怪，手册是针对cocosair的"。
+
+| 项 | 状态 | 证据与说明 |
+| --- | --- | --- |
+| 60 篇文章正文 | PASS | 删除 "> 对应 three.js manual 的 *X* 一篇" 前缀（保留话题名）、对照表 three.js 列（"对照："→"要点："等）、行内 "three.js 用/该篇" 对比句式改为 AIR 直述；技术事实、d.ts 锚点、实测数字、N/A 边界全部保留；代码围栏零改动（改后 consistency --strict 全绿即证）。 |
+| index.md 引言 | PASS | 改为"本手册面向 Cocos AIR……内容全部映射到 AIR 的真实 API"，不再以 three.js 为对照基准。 |
+| 11 个示例 main.ts 共 17 处注释 | PASS | responsive-design/tips-keyboard/multi-canvas/picking/align-html/indexed-textures/dynamic-texture(头+143 行内)/billboards/cleanup(头+169 行内)/voxel(头+70)/mini-game(头+44) 的 three.js 对比句改为 AIR 直述，技术内容与锚点不变。其中 dynamic-texture:143 行内注释首轮批量编辑漏改，末遍全树 grep 复查捕获后补改并二次重同步 canvas-textures.md 附录。 |
+| 附录与正文引用重同步 | PASS | "最长 ts 块整体替换"脚本同步 11 篇对应文章（responsive/tips/multiple-scenes/picking/align-html-elements-to-3d/indexed-textures/canvas-textures/billboards/cleanup/voxel-geometry/game）；cleanup.md 正文引用旧 disposeSet 注释 1 处随之改写。 |
+| 收尾门禁 | PASS | ① `grep -rn "three\.js\|THREE\|threejs" docs/manual/`（md+ts+html）零命中。② `node tools/verify/manual-doc-consistency.cjs --strict` = `PASS (fail=0, warn=0, missing=0, strict)`（中途曾因 cleanup.md 引用漂移 warn=1，修后归零）。③ 全量验证器（示例文件有改动，整树复跑）41/41 PASS，证据 `docs/evidence/manual-examples-verified.json`（`partial:false`）。 |

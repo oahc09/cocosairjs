@@ -1,6 +1,6 @@
 # Using OffscreenCanvas in a Web Worker（在 Worker 中使用 OffscreenCanvas）
 
-> 对应 three.js manual 的 *Using OffscreenCanvas in a Web Worker* 一篇：把渲染搬进 Worker，主线程只留 UI。
+> 把渲染搬进 Web Worker、主线程只留 UI 的课题。
 > 状态：**N/A** —— AIR 当前构建没有这条路线的入口，本篇给实测证据与边界，不配示例（无可行示例）。
 
 ## 1. 实测结论：无入口
@@ -14,8 +14,7 @@
   假定主线程 RAF 环境。
 
 三条加起来意味着：既不能把 canvas 转移进 Worker（类型与 pal 层都不接受），
-也没有"引擎跑在 Worker、画面回传"的官方通路。three.js 那篇的前提（`WebGLRenderer` 接受 OffscreenCanvas）
-在 AIR 不成立。
+也没有"引擎跑在 Worker、画面回传"的官方通路——OffscreenCanvas + Worker 渲染路线在 AIR 不成立。
 
 ## 2. 架构归因
 

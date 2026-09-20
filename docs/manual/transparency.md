@@ -1,19 +1,17 @@
 # How to Draw Transparent Objects（绘制透明对象）
 
-> 对应 three.js manual 的 *How to Draw Transparent Objects* 一篇：`material.transparent = true` 的半透明混合、
-> 排序与"挖洞"技巧。配套可运行示例：[`examples/manual-transparent/`](examples/manual-transparent/)
+> 本篇讲半透明对象的混合、排序与"挖洞"技巧。配套可运行示例：[`examples/manual-transparent/`](examples/manual-transparent/)
 > （三个 alpha 递减的"玻璃球"摆动遮挡后排三颗不透明色块——零外部资产）。
 
-three.js 把透明做成一个布尔开关（`transparent = true`，混合模式固定为标准 alpha 混合）；
-AIR 没有这个开关——透明是一条**管线状态**（`blendState`），必须在材质初始化时显式声明。对照：
+在 Cocos AIR 里，透明不是一个布尔开关，而是一条**管线状态**（`blendState`），必须在材质初始化时显式声明。要点：
 
-| three.js | AIR | 实测 |
-| --- | --- | --- |
-| `material.transparent = true` | `material.initialize({ states: { blendState: ... } })` | ✓（本示例核心，见 §2） |
-| `material.opacity = 0.5` | `mainColor` 的 `a` 分量（0–255 字节域，0.5≈128） | ✓ 但**单独设 a 不混合**，见 §3 踩坑 1 |
-| `material.depthWrite = false` | `states.depthStencilState`（同一 `IPassStates` 槽位） | 契约在（d.ts 23589），本篇未取证 |
-| `renderOrder` / 透明物自动 back-to-front 排序 | `model.priority`（透明队列排序优先级，d.ts 5407–5411） | 契约在，页面内未取证 |
-| "挖洞"双 pass 技巧（先画只写深度的材质） | 两私有材质 + 两 renderer 叠加，`states` 各自给 | 路线可行，本篇未取证 |
+| AIR | 实测 |
+| --- | --- |
+| `material.initialize({ states: { blendState: ... } })`（开启混合） | ✓（本示例核心，见 §2） |
+| `mainColor` 的 `a` 分量控透明度（0–255 字节域，0.5≈128） | ✓ 但**单独设 a 不混合**，见 §3 踩坑 1 |
+| `states.depthStencilState`（同一 `IPassStates` 槽位控深度写入） | 契约在（d.ts 23589），本篇未取证 |
+| `model.priority`（透明队列排序优先级，d.ts 5407–5411） | 契约在，页面内未取证 |
+| "挖洞"双 pass：两私有材质 + 两 renderer 叠加，`states` 各自给 | 路线可行，本篇未取证 |
 
 ## 1. 透明相关 API 面（实测锚点）
 
@@ -25,7 +23,7 @@ AIR 没有这个开关——透明是一条**管线状态**（`blendState`），
 | `gfx.BlendFactor`：`ZERO=0, ONE=1, SRC_ALPHA=2, ONE_MINUS_SRC_ALPHA=4` | d.ts 2664–2680 | 标准 alpha 混合即 `src=2, dst=4` |
 | `material.passes[0].blendState.targets[0]` | d.ts 23830 / 7552 / 3998 | 读回当前 pass 混合状态（覆盖层的证据来源） |
 | `material.overridePipelineStates(overrides, passIdx?)` | d.ts 23885 | 运行时改管线状态——**实测对本构建的 builtin-standard 不生效**，见 §3 踩坑 3 |
-| `model.priority`（Model 在透明队列中的排序优先级） | d.ts 5407–5411 | three.js `renderOrder` 的对应物；取 model 的公开路径未取证 |
+| `model.priority`（Model 在透明队列中的排序优先级） | d.ts 5407–5411 | 透明队列按此值排序；取 model 的公开路径未取证 |
 
 ## 2. 示例拆解
 
@@ -103,13 +101,12 @@ rig yaw: 26.0° (swings to reveal overlap order)
 **生效的唯一路线是 `initialize` 时给 `states`**（上表 pass 0 随即变 `blend=true src=2 dst=4`，画面即透明）。
 推论：混合状态要**在材质创建时定死**，运行时切换透明/不透明请备两个材质实例换 `renderer.material`。
 
-## 4. 与 three.js 的差异备忘
+## 4. 机制要点备忘
 
-- **开关 vs 状态**：three.js `transparent=true` 隐含"进透明队列 + 标准 alpha 混合"两件事；
-  AIR 只帮你做后者（且要手写 `src/dst` 因子），前者（队列与排序）由引擎按 pass 的 `phase/priority` 决定——
+- **状态而非开关**：AIR 的透明没有"一个开关同时管混合与排序"这回事——混合要手写 `blendState` 的 `src/dst` 因子（在 `initialize` 的 `states` 里给），队列与排序则由引擎按 pass 的 `phase/priority` 决定——
   本示例球-球、球-立方体重叠在摆动下未见错序，但**排序细节本篇未做受控取证**，密集透明场景请自行验证。
-- **alpha 值域**：three `opacity` 是 0–1 浮点；AIR `Color` 的 a 是 0–255 字节（`128 ≈ 0.5`）。
-- **`renderer.info` 类统计**：AIR 无对应物，混合是否生效只能靠读回 + 截图两条证据链（本篇即如此做）。
+- **alpha 值域**：AIR `Color` 的 a 分量是 0–255 字节域（`128 ≈ 0.5`）。
+- **渲染统计**：AIR 无内建的 `info`/统计读数可查，混合是否生效只能靠读回 + 截图两条证据链（本篇即如此做）。
 
 ## 5. 跑示例与验证记录
 

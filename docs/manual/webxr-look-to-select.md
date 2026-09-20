@@ -1,18 +1,17 @@
 # VR - Look To Select（注视选择）
 
-> 对应 three.js manual 的 *Look to select* 一篇：头显朝向即射线，准星（reticle）
-> 注视目标驻留计时后触发选择。
+> 话题：把头显朝向当作射线，准星（reticle）注视目标驻留计时后触发选择。
 > 状态：**N/A**（XR 设备层）+ **可近似**（选择逻辑内核）——会话层边界见
 > [webxr-basics](webxr-basics.md)，本篇给"没有头显也能练内核"的桌面配方，不配示例
 > （内核交互件在 [picking](picking.md) 篇示例已全部演示过）。
 
-## 1. 拆开看：这篇里 AIR 缺什么、有什么
+## 1. 拆开看：这套交互里 AIR 缺什么、有什么
 
-| three.js 该篇的件 | AIR | 证据/去处 |
+| 所需构件 | AIR | 证据/去处 |
 | --- | --- | --- |
 | XR 会话 + 头显位姿（射线源） | ✗ 无 | build js `requestSession/XRWebGLLayer` 0 命中（basics 篇 §1） |
 | 相机前向射线 | ✓ 有 | `camera.screenPointToRay(sx, sy, outRay)`（d.ts 21410）——取屏幕中心即"注视射线" |
-| 射线×物体相交 | ✓ 应用层 | 无引擎级 `intersectObjects`，手写射线×AABB slab 相交（[picking](picking.md) §实测） |
+| 射线×物体相交 | ✓ 应用层 | 无引擎级相交 API，手写射线×AABB slab 相交（[picking](picking.md) §实测） |
 | 准星 reticle | ✓ 等价 | 一个小平面/球钉在世界锚点：`camera` 子节点前置偏移，或屏幕中心 DOM div（[align-html](align-html-elements-to-3d.md)） |
 | 驻留计时（dwell timer） | ✓ 纯 JS | `update(dt)` 里：命中同一目标则 `t += dt`，超阈值触发；换目标清零 |
 | 选中反馈 | ✓ | 材质属性改色/发光 tween（[materials](materials.md)、[animation-system](animation-system.md)） |
