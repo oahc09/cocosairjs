@@ -166,8 +166,7 @@ Evidence: `raw/gates/v06-fulltrack-2026-09-19.log`; pre-overwrite hash manifest
 
 ## r23 — authorised fix wave landed, browser gates handed back (2026-09-20)
 
-Candidate under test: `d705a2c8b8eadd68` (build/cocosair.module.js + .d.ts + examples/shared). Fixes are
-**uncommitted working-tree changes**; commit authorisation was not re-granted for this wave.
+Candidate under test: `d705a2c8b8eadd68` (build/cocosair.module.js + .d.ts + examples/shared). Fixes are **committed as `3692554`** (no push) after the owner added "提交当前修复到 git"; `build/cocosair.module.min.js` was stale-at-2026-09-17 and missing the F-70 uuid while sitting in package.json `files`, so it was rebuilt in the same commit (candidate fingerprint unaffected).
 
 Owner re-run (the runs I must not perform) and the machine-checkable expectations afterwards:
 

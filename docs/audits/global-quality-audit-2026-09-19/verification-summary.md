@@ -500,3 +500,12 @@ FAIL C6 target never shadowed by tmp :: e2e.json,e2e.json.writing-38848-ra3lnd
 ### 交回
 
 r22 全量矩阵（40 id）与 DevTools 门禁（5 id）归 owner 执行（我方尝试运行被会话策略拦截，且其已声明"修后我重跑"）。重跑后需要：候选仍为 `d705a2c8b8eadd68`、`material-unlit` 的 `material-property` 回读 `UnlitCube.effect==='builtin-unlit'`、`dispatch:duplicate-requestId` + `session-self-report-codes` 为真观察 PASS、两份证据带 `completed:true`、`coverage-report` 与 `spec-compliance-audit` 的 NOT_RUN 归零。台账 F-70/F-72/F-74 已改为上述处置状态。
+
+
+### 更正：本波修复已提交（同日晚，owner 追加授权「提交当前修复到 git」）
+
+- 提交为 `3692554`（25 文件，**未 push**；`git remote -v` 仍为空）。上表「修复波留在工作树 / 未获提交授权」只对提交前成立。
+- 提交前自查额外发现并修掉一处：`build/cocosair.module.min.js` 停在 2026-09-17、**不含 F-70 修复**，而它列在 `package.json` 的 `files` 发布清单里 → 跑 `npm run build:min` + `build:dts`（各退出 0）后一并入库，min 现含 `builtin-unlit-material`。`npm run build` 单条命令从不产出 min（F-36(a) 早有记录），所以这条陈旧不是本波引入，但本波让它从「陈旧」变成「与源码矛盾」，必须一起提交。
+- 候选指纹仍为 `d705a2c8b8eadd68`（其定义域 = module.js + .d.ts + examples/shared，不含 min）。
+- 未 staged 的仍是并行会话的 42 个路径：`ai/*.md`、`tools/dev/dev-server.cjs`、`docs/manual/**`、`docs/evidence/manual*`、`tools/verify/manual-*.cjs`、`.tmp-*`。
+- jest 两次运行尝试被会话策略拦截，因此本次提交前检查用的是离线集合：`node --check` ×6、`tsc`/`build`/`build:min`/`build:dts` 退出 0、F-72 C1–C7 对照 8/8、两个消费端端到端。smoke-29 / smoke-03 未在本次真实跑过 → 不宣称绿灯。
