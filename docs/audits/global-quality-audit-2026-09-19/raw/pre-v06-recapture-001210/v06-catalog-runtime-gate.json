@@ -1,0 +1,519 @@
+{
+  "measuredAt": "2026-09-19T13:52:19.240Z",
+  "source": {
+    "baseRevision": "33b4281625fd2b0b6e5bad7922d8dfb4894c75dd",
+    "gitAvailable": true,
+    "workingTree": true,
+    "sourceHash": "ac1b151596b3697554fdaa31d384714f91062562c646ceb103ffc2a8bc7b0bfa"
+  },
+  "gate": "§51 Runtime Gate",
+  "total": 100,
+  "pass": 100,
+  "counts": {
+    "PASS": 97,
+    "EXPECTED_UNSUPPORTED": 3
+  },
+  "cocosairRevision": "33b4281",
+  "trials": [
+    {
+      "id": "B001",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B011",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B041",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B042",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B061",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B031",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B081",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B051",
+      "engineResult": "EXPECTED_UNSUPPORTED",
+      "failureDomain": "DEVICE"
+    },
+    {
+      "id": "B091",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B100",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B002",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B003",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B004",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B005",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B006",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B007",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B008",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B009",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B010",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B012",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B013",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B014",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B015",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B032",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B033",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B043",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B044",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B062",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B082",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B092",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B093",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B094",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B095",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B016",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B017",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B018",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B019",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B020",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B021",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B022",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B023",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B024",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B025",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B026",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B027",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B028",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B029",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B030",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B034",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B035",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B036",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B037",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B038",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B039",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B040",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B045",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B046",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B047",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B048",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B049",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B050",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B052",
+      "engineResult": "EXPECTED_UNSUPPORTED",
+      "failureDomain": "DEVICE"
+    },
+    {
+      "id": "B053",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B054",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B055",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B056",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B057",
+      "engineResult": "EXPECTED_UNSUPPORTED",
+      "failureDomain": "DEVICE"
+    },
+    {
+      "id": "B058",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B059",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B060",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B063",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B064",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B065",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B066",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B067",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B068",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B069",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B070",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B071",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B072",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B073",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B074",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B075",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B076",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B077",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B078",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B079",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B080",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B083",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B084",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B085",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B086",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B087",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B088",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B089",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B090",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B096",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B097",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B098",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    },
+    {
+      "id": "B099",
+      "engineResult": "PASS",
+      "failureDomain": "NONE"
+    }
+  ]
+}

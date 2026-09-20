@@ -1,4 +1,5 @@
 /* V0.5.1 T1 Gate G1: tarball consumer acceptance (async, real import()).
+ * 0. Assert every published build/*.js still carries the builtins src/ registers (F-82)
  * 1. `npm pack` the engine
  * 2. Create a standalone consumer package in a temp dir
  * 3. `npm install` the tarball (alias: cocosair) — the installed package is NOT modified
@@ -22,6 +23,12 @@ function run (cmd, opts) {
 }
 
 (async () => {
+// 0. F-82: every published build/*.js must carry what src/air/builtin/register.ts registers,
+//    checked before packing so a stale bundle cannot reach a consumer.
+const published = require('./published-artifacts.cjs').check();
+for (const failure of published.failures) { failures.push(`published-artifacts: ${failure}`); }
+console.log(`[t1] published-artifacts: ${published.markers.length} markers x ${published.checked.length} bundles, ${published.failures.length} fail`);
+
 // 1. Pack the tarball
 const tarball = JSON.parse(run('npm pack --json', { cwd: root }))[0].filename;
 const tarballPath = path.join(root, tarball);

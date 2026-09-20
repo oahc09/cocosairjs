@@ -1,13 +1,12 @@
 {
-  "measuredAt": "2026-09-19T13:53:11.424Z",
-  "status": "PASS",
+  "measuredAt": "2026-09-20T13:44:47.577Z",
+  "status": "BLOCKED",
   "referenceGatePass": true,
   "catalogGatePass": true,
   "revision": {
-    "head": "33b4281625fd2b0b6e5bad7922d8dfb4894c75dd",
+    "head": "9d6ac48a1697a91c7dcc7992e6e9652535d20e58",
     "recorded": [
-      "e06d29880b398c43d318eedee43c32941dd4eb97",
-      "33b4281625fd2b0b6e5bad7922d8dfb4894c75dd"
+      "9d6ac48a1697a91c7dcc7992e6e9652535d20e58"
     ],
     "failures": []
   },
@@ -34,9 +33,11 @@
   "coverageFailures": [],
   "tests": {
     "suites": 29,
-    "tests": 207,
+    "tests": 208,
     "passed": 207,
-    "success": true
+    "success": false
   },
-  "blockers": []
+  "blockers": [
+    "本轮 Jest 结果尚未通过或缺失。"
+  ]
 }

@@ -32,7 +32,7 @@
     ],
     "rotation": [
       0,
-      120.56450000226499,
+      117.334500002265,
       0
     ],
     "cameraPosition": [
@@ -47,7 +47,7 @@
     "ready": true,
     "semanticOk": true,
     "interactionCount": 0,
-    "animationTicks": 86,
+    "animationTicks": 85,
     "instanceCount": 0,
     "materialCount": 3,
     "featureApplied": false,
@@ -74,7 +74,7 @@
     ],
     "rotation": [
       0,
-      185.4780000033975,
+      180.64250000000013,
       0
     ],
     "cameraPosition": [

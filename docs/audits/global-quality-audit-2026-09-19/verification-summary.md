@@ -509,3 +509,39 @@ r22 全量矩阵（40 id）与 DevTools 门禁（5 id）归 owner 执行（我�
 - 候选指纹仍为 `d705a2c8b8eadd68`（其定义域 = module.js + .d.ts + examples/shared，不含 min）。
 - 未 staged 的仍是并行会话的 42 个路径：`ai/*.md`、`tools/dev/dev-server.cjs`、`docs/manual/**`、`docs/evidence/manual*`、`tools/verify/manual-*.cjs`、`.tmp-*`。
 - jest 两次运行尝试被会话策略拦截，因此本次提交前检查用的是离线集合：`node --check` ×6、`tsc`/`build`/`build:min`/`build:dts` 退出 0、F-72 C1–C7 对照 8/8、两个消费端端到端。smoke-29 / smoke-03 未在本次真实跑过 → 不宣称绿灯。
+
+## UPDATE-24 — V0.6 三轨道在新 bundle 上重采 + F-82 修复落地（2026-09-20，owner 点名放行 jest / V0.6 / F-82）
+
+放行范围（点名）：全量 jest、V0.6 三轨道重采、F-82 修法（`build:all` + 一条离线绑定断言）。r22 40 例矩阵与 DevTools 5 例门禁仍归 owner，未执行。
+
+### 起因：`3692554` 把 V0.6 弄红了（正确的红）
+
+`benchmark-evidence.sourceHash()` 的定义域含 `build/cocosair.module.js` + `.d.ts`，F-70 重建 bundle 后它从 `ac1b151596b36975` 变成 `4e4fd374e33166ce` → `v06-report.cjs` 立刻 EXIT 1 / blockers 2（运行证据哈希不一致 + R001–R008 recipe sourceHash mismatch）。这是货币性失效，不是内容损坏；覆盖前已把三份 v06 证据连 sha256 快照进 `raw/pre-v06-recapture-001210/`（`474ff2bbd3b5c02d` / `a87f480f93c7ad8b` / `2a6e5391c5a8b749`）。
+
+### 重采结果（全部真实浏览器执行，退出码为真值）
+
+| 轨道 | 命令 | 结果 |
+|---|---|---|
+| golden dual-track | `NODE_PATH=<playwright> node tools/benchmark/run-dual-track.cjs` | EXIT 0，10 refs PASS，agent eligible 9/9、firstCompile 1.0 |
+| recipes | `... node tools/benchmark/recipes/run-recipes-browser.cjs` | EXIT 0，**30/30 PASS**，semantic/lifecycle 全通过 |
+| catalog runtime | `... node tools/verify/v06-catalog-gate.cjs` | EXIT 0，**100/100 PASS** |
+| jest | `npx jest --ci --json --outputFile=output/v06-review-jest.json` | EXIT 1，29 套件 / **207 通过 / 1 失败** |
+| v06-report | `node tools/verify/v06-report.cjs` | EXIT 1，`evidenceFailures []`、`coverageFailures []`，blockers 只剩 1 条：「本轮 Jest 结果尚未通过或缺失」 |
+
+三份证据现绑 `4e4fd374e33166ce`（`measuredAt` 13:38:24Z / 13:40:22Z / 13:43:08Z）。
+
+### 唯一 jest 失败的归因（不是回归）
+
+`smoke-29-examples-spec` 的「§11/§12 证据链符合性零 fail」收到 45 例 `S11-NO-EVIDENCE` + `S11-PROMOTION-DRIFT`。原因只有一条：F-72 之后 `readEvidence` 把没有 `completed:true` 的旧浏览器证据整份判为 NOT_RUN。**链条闭合：owner 重跑 r22 + DevTools → 两份证据带章 → smoke-29 绿 → `npm test` 绿 → `v06-report` blockers 归零。** 在这之前 `npm test` 与 `verify:v06-gate` 在 HEAD 就是红的，这是事实，不做任何抹平（不手写盖章、不动阈值）。
+
+其余 207 例全绿，包含读我改过脚本的 `smoke-03-runtime-asset`、以及加载 `build/cocosair.module.js` 的 `smoke-23-debug-isolation` → 本波 bundle 变更没有弄坏任何既有行为断言。
+
+### F-82 处置（已按授权实现）
+
+- 新增 `tools/verify/published-artifacts.cjs`：期望集从 `src/air/builtin/register.ts` 的 `builtin-*` 字面量推导（**不是 bundle 互比**，因此两份产物同时陈旧也能抓到），要求 `package.json` `files[]` 里每个 `build/*.js` 都含之；作为 `verify:consumer` 的第 0 步（打包前）执行，并串进新的 `npm run build:all`（esm + min + dts + 该检查）。
+- 负控（仓库外 stub `E:/AIProMax/cocosair-fp-scratch/f82-copy`）：A) 新 source + 新 module.js + 从 `3692554^` 取回的旧 min → `FAIL cocosair.module.min.js: missing registered builtin "builtin-unlit-material"`，EXIT 1；B) 同树换上重建后的 min → `4 markers x 2 bundles: PASS`，EXIT 0。仓库内实跑 PASS。
+
+### 顺手复核的既有条目
+
+- **F-60 未变**：重采后 30 张 recipe 截图仍是 **24 个不同哈希**，重复组一字不差（`R001=R006`、`R004=R010`、`R005=R009`、`R022=R023=R024=R025`）。新增数据点：**6 张（R002/R012/R016/R026/R027/R028）在只换 bundle 的重采中改了字节却全部 PASS** → recipe 视觉容差会在不报任何异常的情况下吸收真实像素移动，这是 F-60 缺口的又一面。
+- 待办不变：F-70/F-74 结案、覆盖率 `verified` 复算，全部等 owner 的两次重跑。

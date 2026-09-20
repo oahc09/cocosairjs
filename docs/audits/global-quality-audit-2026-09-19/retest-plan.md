@@ -188,3 +188,10 @@ decision), F-79 (clean-room delivery defects), F-69/F-71 (API surface), F-60, F-
 F-81 (shared-worktree evidence collision — now also visible as last-writer-wins between two atomic
 producers), R1/R1b/R1c/R2/R3/R5/R6/R8, 13th `button-click` validator, `visible-frame` discrimination,
 documented-only gate (0/4729).
+
+## r23b 更新（2026-09-20）：V0.6 已在新 bundle 上重采，剩一条 jest 货币红
+
+- dual-track / recipes / catalog 已在 `sourceHash 4e4fd374e33166ce` 上重采（EXIT 0，10 refs / 30 / 100）。`v06-report.cjs` blockers 由 2 → **1**：「本轮 Jest 结果尚未通过或缺失」。
+- `npx jest --ci` = 207/208，唯一失败 `smoke-29`（§11 证据链）45 例 `S11-NO-EVIDENCE`/`S11-PROMOTION-DRIFT` → 与 r23 的 `S11-EVIDENCE-NOT-RUN` 同一因。**owner 重跑 r22 矩阵 + DevTools 门禁后复测**：`npx jest --ci` 必须 208/208，`node tools/verify/v06-report.cjs` 必须 PASS/blockers=[]，`node tools/examples/coverage-report.cjs` 的 `verified` 必须从 0 回升且 `evidenceSources[*].status=COMPLETE`。
+- 新增复测项 F-82：`node tools/verify/published-artifacts.cjs`（现在 EXIT 0）；副本里把 min 换回 `3692554^` 的字节 → EXIT 1 并点名 uuid。
+- 期间不做：为转绿手写 `completed:true`、调 recipe 视觉容差、弱化 `material-property`。

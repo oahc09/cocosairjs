@@ -659,6 +659,38 @@
       "createdBy": "audit",
       "status": "SHIPPED",
       "note": "run 3 of the first triple showed a mis-specified C6 assertion (target shadow test) — recorded verbatim, re-specified to the tmp-cannot-collide property, not weakened"
+    },
+    {
+      "id": "V06-RECAPTURE-F82-FIX-2026-09-20",
+      "findings": [
+        "F-82",
+        "F-60",
+        "F-72",
+        "F-70"
+      ],
+      "raw": [
+        "raw/gates/v06-dualtrack-r23.log",
+        "raw/gates/v06-recipes-r23.log",
+        "raw/gates/v06-catalog-r23.log",
+        "raw/gates/jest-r23.log",
+        "raw/gates/v06-report-r23.log",
+        "raw/pre-v06-recapture-001210/MANIFEST.txt"
+      ],
+      "scratch": "E:/AIProMax/cocosair-fp-scratch/f82-copy (stub copy for the published-artifacts control, outside the repo)",
+      "commands": [
+        "node tools/verify/v06-report.cjs (before the re-capture: EXIT 1, blockers 2 = sourceHash + R001-R008 recipe mismatch)",
+        "node -e \"benchmark-evidence.sourceHash\" -> ac1b151596b36975 recorded / 4e4fd374e33166ce live",
+        "NODE_PATH=<playwright> node tools/benchmark/run-dual-track.cjs",
+        "NODE_PATH=<playwright> node tools/benchmark/recipes/run-recipes-browser.cjs",
+        "NODE_PATH=<playwright> node tools/verify/v06-catalog-gate.cjs",
+        "npx jest --ci --json --outputFile=output/v06-review-jest.json",
+        "node tools/verify/v06-report.cjs (after)",
+        "node tools/verify/published-artifacts.cjs + the two stub-copy control runs"
+      ],
+      "result": "all three V0.6 tracks now bind 4e4fd374e33166ce (dual 10/10 + agent 9/9, recipes 30/30, catalog 100/100); jest 207/208 with the single failure attributed to smoke-29 (F-72 NOT_RUN cascade); v06-report EXIT 1 with exactly one blocker left: \"本轮 Jest 结果尚未通过或缺失\"; F-82 fixed with both-direction control",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "snapshot MANIFEST.txt records sha256_16 + bytes + measuredAt of the three v06 evidence files as they stood before this re-capture"
     }
   ],
   "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\" (16 of 48). F-67."

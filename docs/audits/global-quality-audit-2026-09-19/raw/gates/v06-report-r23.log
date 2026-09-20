@@ -1,0 +1,44 @@
+{
+  "measuredAt": "2026-09-20T13:44:47.577Z",
+  "status": "BLOCKED",
+  "referenceGatePass": true,
+  "catalogGatePass": true,
+  "revision": {
+    "head": "9d6ac48a1697a91c7dcc7992e6e9652535d20e58",
+    "recorded": [
+      "9d6ac48a1697a91c7dcc7992e6e9652535d20e58"
+    ],
+    "failures": []
+  },
+  "metrics": {
+    "eligibleTrials": 9,
+    "eligibleTypeBTrials": 6,
+    "agentPass": 9,
+    "agentFinalSuccessRate": 1,
+    "firstCompileSuccessRate": 1,
+    "medianRepairSuccessful": 0,
+    "meanRepairAllEligible": 0,
+    "budgetExhaustionRate": 0,
+    "byDomain": {
+      "NONE": 9,
+      "DEVICE": 1
+    }
+  },
+  "recipes": {
+    "catalogTotal": 30,
+    "validatedCount": 30,
+    "stableCount": 30
+  },
+  "evidenceFailures": [],
+  "coverageFailures": [],
+  "tests": {
+    "suites": 29,
+    "tests": 208,
+    "passed": 207,
+    "success": false
+  },
+  "blockers": [
+    "本轮 Jest 结果尚未通过或缺失。"
+  ]
+}
+V06_EXIT=1

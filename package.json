@@ -37,6 +37,7 @@
   "build": "node tools/build/build.cjs --format esm",
   "build:min": "node tools/build/build.cjs --format esm --min",
   "build:dts": "node tools/build/build-dts.cjs",
+  "build:all": "node tools/build/build.cjs --format esm && node tools/build/build.cjs --format esm --min && node tools/build/build-dts.cjs && node tools/verify/published-artifacts.cjs",
   "build:system": "node tools/build/build.cjs --format system",
   "baseline": "node tools/baseline/build-baseline.cjs",
   "analyze": "node tools/analyze/dep-graph.cjs",
