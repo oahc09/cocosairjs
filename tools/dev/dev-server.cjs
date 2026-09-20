@@ -32,6 +32,8 @@ function argOf (name, def) {
 }
 
 const EXAMPLES_DIR = path.join(ROOT, 'examples');
+// 开发手册自包含树：文章 + 手册专属示例（不进 examples/ 主树、不进 §24 门禁）
+const MANUAL_DIR = path.join(ROOT, 'docs', 'manual');
 // V1.1 §28：Manifest 是 example 枚举的唯一事实源
 const MANIFEST_PATH = path.join(EXAMPLES_DIR, 'files.json');
 var examples = [];
@@ -143,6 +145,10 @@ try {
     fs.watch(EXAMPLES_DIR, { recursive: true }, onExampleChange('example'));
     fs.watch(path.join(ROOT, 'tools', 'debug'), { recursive: true }, onExampleChange('debug-tool'));
     console.log('[dev] watching examples/** + tools/debug/** (reload only)');
+    if (fs.existsSync(MANUAL_DIR)) {
+        fs.watch(MANUAL_DIR, { recursive: true }, onExampleChange('manual'));
+        console.log('[dev] watching docs/manual/** (reload only)');
+    }
 } catch (e) {
     console.warn('[dev] fs.watch(examples) 不可用:', e.message);
 }
@@ -356,6 +362,44 @@ b.onclick=function(){
         const file = path.join(ROOT, p);
         if (fs.existsSync(file)) return serveFile(res, file);
         res.writeHead(404); res.end('not found (builtin-assets?)');
+        return;
+    }
+
+    // 开发手册：/manual/** → docs/manual/**（文章 md + 手册专属示例，自带 importmap）
+    if (p === '/manual' || p === '/manual/') {
+        res.writeHead(302, { 'Cache-Control': 'no-store', Location: '/manual/index.md' });
+        res.end();
+        return;
+    }
+    if (p.startsWith('/manual/')) {
+        const manualRel = p.slice('/manual/'.length).replace(/\\/g, '/');
+        const manualResolved = path.resolve(path.join(MANUAL_DIR, manualRel));
+        // 目录穿越守卫：只允许落在 docs/manual/ 前缀内
+        if (manualResolved !== MANUAL_DIR && !manualResolved.startsWith(MANUAL_DIR + path.sep)) {
+            res.writeHead(403); res.end('forbidden (manual?)');
+            return;
+        }
+        const manualIsDir = fs.existsSync(manualResolved) && fs.statSync(manualResolved).isDirectory();
+        const manualFile = manualIsDir ? path.join(manualResolved, 'index.html') : manualResolved;
+        if (fs.existsSync(manualFile) && fs.statSync(manualFile).isFile()) {
+            if (manualFile.endsWith('.html')) {
+                const html = fs.readFileSync(manualFile, 'utf8');
+                res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/html; charset=utf-8' });
+                // 手册示例自带 importmap；缺失时补注入，再挂 prelude/reload/debug 按钮（与 examples 一致）
+                const importMap = /<script\b[^>]*type=["']importmap["']/i.test(html)
+                    ? '' : `<script type="importmap">${IMPORT_MAP}</script>`;
+                res.end(html.replace('</head>',
+                    `${importMap}<script src="/__air-prelude.js"></script><script src="/__reload.js"></script><script src="/__debug-button.js"></script></head>`));
+                return;
+            }
+            if (manualFile.endsWith('.md')) {
+                res.writeHead(200, { 'Cache-Control': 'no-store', 'Content-Type': 'text/markdown; charset=utf-8' });
+                res.end(fs.readFileSync(manualFile, 'utf8'));
+                return;
+            }
+            return serveFile(res, manualFile);
+        }
+        res.writeHead(404); res.end('not found (manual?)');
         return;
     }
 

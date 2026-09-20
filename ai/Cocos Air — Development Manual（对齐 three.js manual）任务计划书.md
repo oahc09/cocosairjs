@@ -4,7 +4,7 @@
 
 **Goal:** 为 cocosair.js 建立一套成体系开发手册：目录全量对齐 https://threejs.org/manual/（分组/顺序/64 条目一模一样），每篇有能力的条目配一个专属可运行示例，纯 Markdown 交付。
 
-**Architecture:** `docs/manual/` 自包含手册（59 篇文章 + 1 索引页）；示例按用户指定放 `docs/manual/examples/manual-<slug>/`（与 three.js 官方形态一致——manual 示例树与主 examples 产品树分离，45 例门禁/Gallery/覆盖率零改动）；示例为自带 importmap 的纯 JS（index.html + main.js），经 dev server 新增 `/manual/` 静态路由运行；验证走专用轻量浏览器验证器，不进 §24 门禁。
+**Architecture:** `docs/manual/` 自包含手册（60 篇文章 + 1 索引页）；示例按用户指定放 `docs/manual/examples/manual-<slug>/`（与 three.js 官方形态一致——manual 示例树与主 examples 产品树分离，45 例门禁/Gallery/覆盖率零改动）；示例为自带 importmap 的纯 JS（index.html + main.js），经 dev server 新增 `/manual/` 静态路由运行；验证走专用轻量浏览器验证器，不进 §24 门禁。
 
 **Tech Stack:** 纯 Markdown + 纯 JS 示例 + dev server 小改（一条静态路由）+ 专用 Playwright 验证脚本。
 
@@ -30,7 +30,7 @@
 ```
 docs/manual/
 ├── index.md                          # 索引页：复刻 three.js list.json 分组/顺序/64 条目（含 --- 分隔线）
-├── installation.md …                 # 59 篇文章，直接用 three.js slug 命名
+├── installation.md …                 # 60 篇文章，直接用 three.js slug 命名
 ├── tips.md                           # 承接 5 个锚点条目（taking-a-screenshot 等 H2）
 └── examples/
     └── manual-<slug>/                # 与现有 45 例零命名冲突；零资产（无 assets/ 目录）
@@ -278,7 +278,7 @@ window.__airApp = app;                 // 每个示例末尾固定，供控制�
 
 ## 六、与现有文档衔接（最小侵入）
 
-- `README.md`「文档」区块首行加一条：`- [开发手册](docs/manual/index.md) — 对齐 three.js manual 的 59 篇体系教程`
+- `README.md`「文档」区块首行加一条：`- [开发手册](docs/manual/index.md) — 对齐 three.js manual 的 60 篇体系教程`
 - 旧教程不迁移：manual 对应篇「延伸阅读」回链（06→creating-a-scene/setup、07→loading-models、08→animation-system、09→setup/debugging-javascript）
 - N/A 篇目统一回链 README §Air V0.1 能力边界
 

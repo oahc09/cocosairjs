@@ -81,6 +81,7 @@ cocosair.js/
 
 ## 文档
 
+- [Cocos AIR 开发手册](docs/manual/index.md) — 对齐 three.js manual 的 60 篇条目与状态、41 个零外部资产可运行示例、能力边界总说明
 - [资源集成与运行时检查](docs/10-v03-runtime-integration.md) — 资源关系、Code First 组装、Inspect/Validate、生命周期与静态复现
 - [V0.2 审查与 V0.3 验收](docs/11-v03-verification.md) — 修复证据、验证矩阵与限制
 - [直接加载 glTF / GLB](docs/gltf-runtime.md) — 运行时模型加载、PBR、骨骼动画与 Morph；完整示例见 `examples/gltf-viewer/`

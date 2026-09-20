@@ -1,0 +1,1385 @@
+{
+  "measuredAt": "2026-09-20T03:30:28.871Z",
+  "runner": "tools/verify/manual-examples-verify.cjs",
+  "mode": "manual-examples-v1",
+  "scope": "docs/manual/examples/manual-*",
+  "total": 41,
+  "pass": 41,
+  "fail": 0,
+  "discovered": 41,
+  "partial": false,
+  "runPass": 41,
+  "runTotal": 41,
+  "results": [
+    {
+      "id": "manual-align-html",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0871 distinctColors=14 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-align-html.png",
+        "bytes": 9352,
+        "hash": "4a18955ea2ca55d1"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3732,
+      "measuredAt": "2026-09-20T03:28:20.595Z"
+    },
+    {
+      "id": "manual-animation-system",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0500 distinctColors=10 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-animation-system.png",
+        "bytes": 9937,
+        "hash": "fde022ce161c54f2"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3318,
+      "measuredAt": "2026-09-20T03:28:23.927Z"
+    },
+    {
+      "id": "manual-backgrounds",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0802 distinctColors=16 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-backgrounds.png",
+        "bytes": 17277,
+        "hash": "4fc17fc777dd1a28"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2879,
+      "measuredAt": "2026-09-20T03:28:26.815Z"
+    },
+    {
+      "id": "manual-billboards",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.1735 distinctColors=23 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-billboards.png",
+        "bytes": 18611,
+        "hash": "54b03527f27a71d4"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3335,
+      "measuredAt": "2026-09-20T03:28:30.160Z"
+    },
+    {
+      "id": "manual-cameras",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.1362 distinctColors=27 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-cameras.png",
+        "bytes": 14016,
+        "hash": "51de49a50db0b7f5"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3340,
+      "measuredAt": "2026-09-20T03:28:33.510Z"
+    },
+    {
+      "id": "manual-cleanup",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0800 distinctColors=11 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-cleanup.png",
+        "bytes": 14962,
+        "hash": "416e7a279c7e40b3"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2861,
+      "measuredAt": "2026-09-20T03:28:36.381Z"
+    },
+    {
+      "id": "manual-color-management",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.2376 distinctColors=27 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-color-management.png",
+        "bytes": 8697,
+        "hash": "7988b89ab12290ec"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3316,
+      "measuredAt": "2026-09-20T03:28:39.708Z"
+    },
+    {
+      "id": "manual-creating-a-scene",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0450 distinctColors=6 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-creating-a-scene.png",
+        "bytes": 9641,
+        "hash": "afe18a87232b161c"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3292,
+      "measuredAt": "2026-09-20T03:28:43.009Z"
+    },
+    {
+      "id": "manual-custom-geometry",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.2925 distinctColors=6 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-custom-geometry.png",
+        "bytes": 23201,
+        "hash": "e4c1b519c8414acc"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3337,
+      "measuredAt": "2026-09-20T03:28:46.360Z"
+    },
+    {
+      "id": "manual-debugging-js",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0466 distinctColors=5 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-debugging-js.png",
+        "bytes": 9629,
+        "hash": "a5730e744dab2461"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2875,
+      "measuredAt": "2026-09-20T03:28:49.246Z"
+    },
+    {
+      "id": "manual-dispose-objects",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0409 distinctColors=7 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-dispose-objects.png",
+        "bytes": 9613,
+        "hash": "ec55494d9aec5d2e"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3303,
+      "measuredAt": "2026-09-20T03:28:52.559Z"
+    },
+    {
+      "id": "manual-drawing-lines",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0875 distinctColors=61 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-drawing-lines.png",
+        "bytes": 42734,
+        "hash": "3ab3d6a44efed8f9"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2863,
+      "measuredAt": "2026-09-20T03:28:55.432Z"
+    },
+    {
+      "id": "manual-dynamic-texture",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.3247 distinctColors=21 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-dynamic-texture.png",
+        "bytes": 38641,
+        "hash": "9b28c217c930de3e"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3352,
+      "measuredAt": "2026-09-20T03:28:58.793Z"
+    },
+    {
+      "id": "manual-fog",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0808 distinctColors=24 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-fog.png",
+        "bytes": 9205,
+        "hash": "5454de3cabf5df6d"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3306,
+      "measuredAt": "2026-09-20T03:29:02.109Z"
+    },
+    {
+      "id": "manual-fundamentals",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0492 distinctColors=13 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-fundamentals.png",
+        "bytes": 11830,
+        "hash": "4192c63977d74379"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3322,
+      "measuredAt": "2026-09-20T03:29:05.441Z"
+    },
+    {
+      "id": "manual-indexed-textures",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.3284 distinctColors=13 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-indexed-textures.png",
+        "bytes": 35799,
+        "hash": "f036b136a5aac4ea"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2882,
+      "measuredAt": "2026-09-20T03:29:08.333Z"
+    },
+    {
+      "id": "manual-installation",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.1134 distinctColors=7 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-installation.png",
+        "bytes": 8905,
+        "hash": "3e66648782703fde"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2869,
+      "measuredAt": "2026-09-20T03:29:11.215Z"
+    },
+    {
+      "id": "manual-lights",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0591 distinctColors=16 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-lights.png",
+        "bytes": 18202,
+        "hash": "84fbd875766a3846"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3316,
+      "measuredAt": "2026-09-20T03:29:14.540Z"
+    },
+    {
+      "id": "manual-load-gltf",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0970 distinctColors=10 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-load-gltf.png",
+        "bytes": 10430,
+        "hash": "c54e1dac64e474b5"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2867,
+      "measuredAt": "2026-09-20T03:29:17.418Z"
+    },
+    {
+      "id": "manual-loading-models",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0781 distinctColors=8 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-loading-models.png",
+        "bytes": 8905,
+        "hash": "59ddaa432e50ea43"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3314,
+      "measuredAt": "2026-09-20T03:29:20.744Z"
+    },
+    {
+      "id": "manual-lots-animated",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.6491 distinctColors=4 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-lots-animated.png",
+        "bytes": 76267,
+        "hash": "729f8584349cc7ef"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3355,
+      "measuredAt": "2026-09-20T03:29:24.111Z"
+    },
+    {
+      "id": "manual-lots-of-objects",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.3351 distinctColors=7 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-lots-of-objects.png",
+        "bytes": 39682,
+        "hash": "aca705c587f9a278"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3321,
+      "measuredAt": "2026-09-20T03:29:27.443Z"
+    },
+    {
+      "id": "manual-materials",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.1320 distinctColors=20 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-materials.png",
+        "bytes": 9952,
+        "hash": "6011e451eef513d7"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2876,
+      "measuredAt": "2026-09-20T03:29:30.329Z"
+    },
+    {
+      "id": "manual-matrix-transformations",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0341 distinctColors=20 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-matrix-transformations.png",
+        "bytes": 10749,
+        "hash": "6c44ccf317209368"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3302,
+      "measuredAt": "2026-09-20T03:29:33.641Z"
+    },
+    {
+      "id": "manual-mini-game",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.6332 distinctColors=26 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-mini-game.png",
+        "bytes": 13923,
+        "hash": "818c7ca667b54680"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3306,
+      "measuredAt": "2026-09-20T03:29:36.957Z"
+    },
+    {
+      "id": "manual-multi-canvas",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.4307 distinctColors=18 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-multi-canvas.png",
+        "bytes": 12859,
+        "hash": "f2060634cdb3e5c1"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2861,
+      "measuredAt": "2026-09-20T03:29:39.827Z"
+    },
+    {
+      "id": "manual-picking",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.1257 distinctColors=42 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-picking.png",
+        "bytes": 17252,
+        "hash": "6e20fe3ad441454f"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3285,
+      "measuredAt": "2026-09-20T03:29:43.123Z"
+    },
+    {
+      "id": "manual-post-processing",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0400 distinctColors=6 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-post-processing.png",
+        "bytes": 9078,
+        "hash": "789bc19479119892"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3309,
+      "measuredAt": "2026-09-20T03:29:46.442Z"
+    },
+    {
+      "id": "manual-primitives",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.1425 distinctColors=78 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-primitives.png",
+        "bytes": 20207,
+        "hash": "5a1727e2e1dbdf0c"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3302,
+      "measuredAt": "2026-09-20T03:29:49.756Z"
+    },
+    {
+      "id": "manual-render-targets",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.2807 distinctColors=8 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-render-targets.png",
+        "bytes": 8876,
+        "hash": "226b8228715e5539"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3340,
+      "measuredAt": "2026-09-20T03:29:53.106Z"
+    },
+    {
+      "id": "manual-rendering-on-demand",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0438 distinctColors=8 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-rendering-on-demand.png",
+        "bytes": 9563,
+        "hash": "213cf1f6bddb9f03"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 4023,
+      "measuredAt": "2026-09-20T03:29:57.140Z"
+    },
+    {
+      "id": "manual-responsive-design",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0777 distinctColors=7 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-responsive-design.png",
+        "bytes": 11326,
+        "hash": "976812f3c7c9e5a9"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2879,
+      "measuredAt": "2026-09-20T03:30:00.032Z"
+    },
+    {
+      "id": "manual-scenegraph",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0381 distinctColors=10 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-scenegraph.png",
+        "bytes": 9086,
+        "hash": "24e0813ef18dc571"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3329,
+      "measuredAt": "2026-09-20T03:30:03.373Z"
+    },
+    {
+      "id": "manual-setup",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0556 distinctColors=10 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-setup.png",
+        "bytes": 8496,
+        "hash": "1f7adee0aa007735"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2860,
+      "measuredAt": "2026-09-20T03:30:06.244Z"
+    },
+    {
+      "id": "manual-textures",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0697 distinctColors=19 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-textures.png",
+        "bytes": 52019,
+        "hash": "7332b76278fd0a41"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3304,
+      "measuredAt": "2026-09-20T03:30:09.557Z"
+    },
+    {
+      "id": "manual-tips-keyboard",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0467 distinctColors=7 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-tips-keyboard.png",
+        "bytes": 9616,
+        "hash": "b185dbf9f1812f73"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3306,
+      "measuredAt": "2026-09-20T03:30:12.873Z"
+    },
+    {
+      "id": "manual-transparent",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0928 distinctColors=34 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-transparent.png",
+        "bytes": 19846,
+        "hash": "503487d22a22ce69"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3329,
+      "measuredAt": "2026-09-20T03:30:16.211Z"
+    },
+    {
+      "id": "manual-uniform-types",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.1404 distinctColors=29 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-uniform-types.png",
+        "bytes": 16717,
+        "hash": "1b18734d972217fe"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2910,
+      "measuredAt": "2026-09-20T03:30:19.131Z"
+    },
+    {
+      "id": "manual-update-things",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0784 distinctColors=8 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-update-things.png",
+        "bytes": 11538,
+        "hash": "9dc5748af3490d1a"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3299,
+      "measuredAt": "2026-09-20T03:30:22.439Z"
+    },
+    {
+      "id": "manual-voxel",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.3963 distinctColors=27 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        },
+        {
+          "name": "frame-diff",
+          "result": "PASS",
+          "detail": "frames differ over 400ms"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-voxel.png",
+        "bytes": 20274,
+        "hash": "24466de57abd3d64"
+      },
+      "animated": true,
+      "frameDiffers": true,
+      "ms": 3293,
+      "measuredAt": "2026-09-20T03:30:25.742Z"
+    },
+    {
+      "id": "manual-webgl-compat",
+      "result": "PASS",
+      "checks": [
+        {
+          "name": "app-contract",
+          "result": "PASS",
+          "detail": "window.__airApp present"
+        },
+        {
+          "name": "visible-frame",
+          "result": "PASS",
+          "detail": "litRatio=0.0508 distinctColors=7 640x480"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
+        }
+      ],
+      "screenshot": {
+        "path": "docs/evidence/examples/manual-webgl-compat.png",
+        "bytes": 8517,
+        "hash": "8ba2704ca35a1e8a"
+      },
+      "animated": false,
+      "frameDiffers": null,
+      "ms": 2891,
+      "measuredAt": "2026-09-20T03:30:28.644Z"
+    }
+  ]
+}
