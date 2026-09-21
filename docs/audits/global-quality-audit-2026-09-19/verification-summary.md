@@ -702,3 +702,33 @@ F-72 的 `completed:true` 只证明"跑完了"，不证明"测的是哪份字节
 全仓零生产零消费；meshopt 的 wasm 是内嵌编码串，永远不会有独立 `.wasm` 请求），4 条属 F-79
 （gltf-catalog 不装 `window.__airApp`、source-view 探 3 条不存在的路径、36 次 raw.githubusercontent 请求），
 另外该文件本身没有 `completed` 字段（写于原子生产者之前），消费端按 NOT_RUN 处理，属 F-72 已知效果。
+
+---
+
+## UPDATE-30（r23g，2026-09-21T15:47Z–15:55Z 实跑）：F-86 加强断言落地并双向负控
+
+owner 在 F-86 / F-84 两个选项里点选了"F-86 的 `artifact:engine-copy-current`"，并授权"提交、不 push"。
+本波唯一改动的仓库文件是 `tools/verify/v11-gallery-artifact.cjs`（+22 行，只加断言，未动任何既有期望/阈值/计数）：
+
+- `engineCopyState()`：分别对 `build/examples/cocosair.module.js` 与 `build/cocosair.module.js` 取 sha256 前 16 位；
+- 新检查 `artifact:engine-copy-current`：两条 hash 不等即 FAIL，消息里同时打印双方；artifact 副本不存在时提示先跑 build；
+- evidence 对象新增 `artifactBytes{engineCopySha256_16, liveBundleSha256_16, identical}`。
+
+**两个方向的负控（证据见 `raw/gates/f86-controlA-stale-artifact.log`、`raw/gates/f86-controlB-copy-rebuild-then-verify.log`）**：
+
+| 控制 | 做法 | 结果 |
+|---|---|---|
+| A 陈旧字节 | 仓库侧、什么都不重建，只跑 `mode verify`（正是历史上被读成 70/76 绿的那个状态） | `FAIL artifact:engine-copy-current artifact 5527b1fa87ea3a36 vs live build ca099f3483d67194` → **70/77 PASS / EXIT 1**；其余 6 条红的 check id 与冻结读数逐条一致 ⇒ 新检查完全可归因、不干扰其他格 |
+| B 新鲜字节 | 隔离副本 `E:/AIProMax/cocosair-f86-copy`（tools+build+examples+docs/evidence+esbuild 平拷，无 junction）跑 `mode all` | `PASS artifact:engine-copy-current artifact ca099f3483d67194 vs live build ca099f3483d67194` → **71/77 PASS / EXIT 1**，仅剩 F-78/F-79 的 6 条 |
+
+两点必须一起说，否则表格读起来比实际更干净：
+
+1. **A/B 两条网络计数不同**（`no-http-errors` 6 次 vs 7 次、`no-external-requests` 36 次 vs 54 次）。这不是新检查造成的，而是 F-79 本身已记录的运行期抖动（请求集随示例推进到哪一步而变）。归属结论只到"失败的 check id 集合相同"这一层，不到"计数字节相同"。
+2. **B 通过的是"副本 == 实时"的相等性**，因为 `buildArtifact` 里 artifact 内引擎本来就是实时 bundle 的拷贝步骤。所以 B 证明的是"新鲜流程下断言不误红"，**不是**证明重建本身正确（那是 F-82 published-artifacts 管的域）。
+3. 复测判据第 3 条（只污染 `build/examples/cocosair.module.js` 一个文件 → 只有新检查红）**未执行**。
+
+**未做的另一半（留给 owner）**：evidence 对象仍无 `candidateFingerprint`/`sourceHash`，因此下游消费者只能靠比对 `artifactBytes` 两个 hash 判陈旧，拿不到别处统一的指纹口径。
+
+**副作用与善后**：Control A 会改写 `docs/evidence/v11-gallery-artifact.json`（在禁改清单上）。跑前先做逐字节快照，跑完已还原为 HEAD 字节（sha1 `2c00a4fc6d97c6ed512d1eea3bd36e01539bd7d9`），该文件**不进本波提交**；快照本身另存 `raw/gates/f86-pre-capture-*`（`output/` 是 gitignore 的，只放本地不够）。隔离副本已整目录删除，删前扫过 reparse point（无 junction/hardlink，不会误删目标）。**今后所有 Gallery 认证必须跑 `mode all`（或 build+verify）**，裸 `mode verify` 现在会对着陈旧 artifact 确定性 EXIT 1。
+
+**台账治理（owner 2026-09-22 立规）**：本审计台账只允许**追加**——发现/状态/证据一律不回写覆盖，历史状态只能通过新增 `statusUpdate_*` / `UPDATE-nn` / `*_rNNx` 追加说明为 UPDATE/FIXED/REOPENED；不得整文件重写台账。本波即按此执行（F-86 原 `status` 与 `retest` 文本保持原样，新增 `statusUpdate_r23g` 字段；`galleryReread_r23f` 的"NOT applied"原句保留，由新 addendum `f86Implementation_r23g` 记录后态）。

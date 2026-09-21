@@ -270,5 +270,25 @@
     },
     "notTouched": ["assertions", "thresholds", "reference images", "files[]", "README", "completed fields", "build/examples (no rebuild)"],
     "overall": "NOT_READY"
+  },
+  "f86Implementation_r23g": {
+    "measuredAt": "runs spanned 2026-09-21T15:47Z-15:55Z (pre-capture snapshot output/f86-pre written 15:47Z; Control A log mtime 15:49:30Z; Control B log mtime 15:54:52Z); raw/ duplication of the snapshot 16:01:36Z; ledger append 2026-09-21T16:05Z",
+    "supersedes": "the \"NOT applied\" clause in galleryReread_r23f.opened - kept verbatim as history, this cell records the later state",
+    "authorized": "owner picked \"F-86 的 artifact:engine-copy-current\" over F-84, with commit-but-no-push",
+    "changed": "tools/verify/v11-gallery-artifact.cjs: engineCopyState() helper + check artifact:engine-copy-current + evidence artifactBytes{artifact,live,identical}. Assertion added only; no existing expectation, threshold or count weakened.",
+    "proven": "stale artifact -> check FAILs naming both hashes, EXIT 1; freshly built artifact (isolated copy) -> check PASSes with identical hashes. The 6 other FAILs are unchanged in both runs (same check ids), so the new cell is fully attributed.",
+    "stillOpen": [
+      "F-86 second half: evidence object still has no candidateFingerprint/sourceHash, so downstream consumers can only demote gallery evidence by comparing the two hash fields, not by fingerprint",
+      "gallery certification must now run mode all (or build+verify), never bare mode verify, since bare verify now provably EXIT 1 against a stale artifact",
+      "F-78 (2 unsatisfiable expectations), F-79 (external requests / source-view 404s / gltf-catalog boot), F-35 (5 /__debug dependencies) - owner decisions",
+      "F-84 export-table + --head mode, F-85 packaging choice - owner decisions, not implemented here"
+    ],
+    "notTouched": [
+      "assertions/thresholds/reference images",
+      "build/examples (shared artifact directory - rebuilt only inside the deleted scratch copy)",
+      "docs/evidence/v11-gallery-artifact.json (restored to HEAD bytes)",
+      "files[] / README / package publish list"
+    ],
+    "overall": "NOT_READY"
   }
 }

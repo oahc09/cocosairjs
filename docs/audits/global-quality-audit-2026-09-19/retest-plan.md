@@ -258,3 +258,24 @@ documented-only gate (0/4729).
 F-78 的两条不可满足期望（`draco/draco_decoder.js` 这个名字全仓零生产零消费；meshopt 解码器的 wasm 是内嵌编码串、
 永远不会有独立 `.wasm` 请求）与 F-79 的 4 条仍归 owner；修 F-78 时方向只能是"按 MANIFEST 生成必需文件集 +
 用解码后的几何（vertex count）而非幻影网络请求来断言 meshopt 真工作"。
+
+---
+
+## r23g（2026-09-21T15:47Z–15:55Z）：F-86 断言落地后的 Gallery 门禁复测口径（以本节为准）
+
+r23f 那三条判据里，第 1、2 条已执行、第 3 条未执行；第 2 条原话含"实时 hash + 指纹"，实际只落了 hash 半边。逐条对账：
+
+| r23f 判据 | 状态 | 实测 |
+|---|---|---|
+| 1. 裸 `mode verify` 对陈旧 artifact 必须 EXIT 1 并点名两个 hash | **已执行，符合预期** | Control A：`FAIL artifact:engine-copy-current artifact 5527b1fa87ea3a36 vs live build ca099f3483d67194`，70/77，EXIT 1；其余 6 条红的 check id 与冻结读数逐条相同 |
+| 2. `mode all` 必须让新检查 PASS 且 evidence 带实时 hash（+指纹） | **hash 半边已执行；指纹半边未实现** | Control B（隔离副本）：`PASS ... ca099f3483d67194 vs live build ca099f3483d67194`，71/77；evidence 只有 `artifactBytes{engineCopySha256_16, liveBundleSha256_16, identical}`，**没有** `candidateFingerprint`/`sourceHash` |
+| 3. 只污染 `build/examples/cocosair.module.js` → 只第 2 条红 | **未执行** | 需要仓库侧重建部署物（`build mode` 起手 `fs.rmSync(build/examples)`），该目录属并行会话在飞的产物，未获授权动它 |
+
+**今后任何 Gallery 认证的硬口径**（F-86 之后变了）：
+
+- 必须 `mode all`（或先 `build` 再 `verify`）；裸 `mode verify` 面对陈旧部署物现在会**确定性 EXIT 1**，这是设计目标不是回归。
+- 读数里 `artifactBytes.identical` 必须为 `true` 且 `liveBundleSha256_16` 等于当下 `build/cocosair.module.js` 的 sha256 前 16 位；不等于就按"测的不是这份字节"处理。
+- 判据 3 仍需执行才能把"新检查只抓引擎副本污染、不误伤别的东西"钉死；宿主环境里跑它之前要先约定 `build/examples` 的重建窗口。
+- 若要让下游（`coverage-report` / `spec-compliance-audit`）像 F-72 那样自动降级陈旧 Gallery 证据，还差 evidence 级指纹那半边（F-86 `statusUpdate_r23g.stillOpen`）。
+
+**控制实验的读取口径提醒**：`no-http-errors` 与 `no-external-requests` 两条的**计数**在 A/B 之间就会变（6/7 次、36/54 次），这是 F-79 已记的运行期抖动。归因只写到"失败 check id 集合一致"，不要把这两条的具体数字当稳定基线引用。

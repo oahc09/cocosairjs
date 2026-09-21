@@ -6,6 +6,8 @@
  * 2) 验证：node tools/verify/v11-gallery-artifact.cjs verify
  *    以 /apps/gallery/ 嵌套前缀静态服务 artifact，Playwright 做独立部署验收：
  *      · 交付物字节扫描（无仓库根 /build/ 绝对引用、无根绝对 fetch/src/href/import）
+ *      · 引擎字节货币（F-86）：build/examples/cocosair.module.js 必须与 build/cocosair.module.js 逐字节相同，
+ *        否则 mode verify 会在认证两天前的旧引擎（证据里同时落双方 sha256_16）
  *      · 解码器发布集（meshopt/draco/basis 文件必须在包内）
  *      · 静态入口与全量非 DevTools 示例缩略图 200
  *      · Gallery 列表、#deep-link、Source 源码查看
@@ -173,6 +175,19 @@ function scanArtifactBytes () {
   return hits;
 }
 
+/** 字节货币绑定（F-86）：部署物里的引擎必须与本次构建的引擎逐字节相同，
+ *  否则 `mode verify` 会认证一份陈旧的 build/examples（历史读数曾测到 F-70 之前的引擎）。 */
+function engineCopyState () {
+  const artifactCopy = path.join(ARTIFACT, 'cocosair.module.js');
+  const liveBundle = path.join(REPO, 'build', 'cocosair.module.js');
+  const sha = (file) => (fs.existsSync(file)
+    ? require('crypto').createHash('sha256').update(fs.readFileSync(file)).digest('hex').slice(0, 16)
+    : null);
+  const artifact = sha(artifactCopy);
+  const live = sha(liveBundle);
+  return { artifact, live, identical: artifact !== null && artifact === live };
+}
+
 /** 解码器发布集：build/gltf-decoders 必须整体随 artifact 走，否则压缩示例在静态部署必然失败。 */
 function checkDecoderSet () {
   const root = path.join(ARTIFACT, 'gltf-decoders');
@@ -226,6 +241,11 @@ async function verifyArtifact () {
     // 2) 解码器发布集
     const dec = checkDecoderSet();
     check('artifact:decoder-set', dec.missing.length === 0, dec.missing.length ? `missing: ${dec.missing.join(',')}` : `${dec.present} decoder files shipped`);
+    // 2b) 字节货币（F-86）：本门禁测的是哪份引擎字节必须自证，否则陈旧 artifact 与新鲜 artifact 读数不可区分
+    const engine = engineCopyState();
+    check('artifact:engine-copy-current', engine.identical,
+      engine.artifact === null ? 'build/examples/cocosair.module.js 不存在，先跑 build（或整轮 all）'
+        : `artifact ${engine.artifact} vs live build ${engine.live}`);
 
     // 3) 静态入口 200
     for (const route of ['index.html', 'gallery.html', 'files.json', 'cocosair.module.js']) {
@@ -314,6 +334,8 @@ async function verifyArtifact () {
       // 整轮检查跑完才落盘并盖章；中断路径不写文件，旧证据留给消费端按指纹陈旧判定（F-72）。
       completed: true,
       scope: { examples: manifest.examples.length, booted: boottable.length, devToolsPagesServed: devToolsOnly.length, lifecycle: lifecycleSeen.length },
+      // F-86：证据必须自述它测到的是哪份字节，消费端才可能把陈旧读数与新鲜读数区分开。
+      artifactBytes: { engineCopySha256_16: engine.artifact, liveBundleSha256_16: engine.live, identical: engine.identical },
       total: results.length, pass: results.filter((r) => r.ok).length, results,
       absolutePathHits: scans.slice(0, 40), failedRequests: failedRequests.slice(0, 40),
     };

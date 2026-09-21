@@ -810,6 +810,28 @@
       "createdBy": "audit",
       "status": "SHIPPED",
       "note": "Deliberately read-only: build mode begins with fs.rmSync(build/examples) and that directory belongs to a parallel session's in-flight work, so no rebuild was performed here; the retest map in retest-plan.md r23f states what a rebuild must show."
+    },
+    {
+      "id": "F86-IMPL-CONTROLS-R23G",
+      "findings": [
+        "F-86"
+      ],
+      "raw": [
+        "raw/gates/f86-controlA-stale-artifact.log",
+        "raw/gates/f86-controlB-copy-rebuild-then-verify.log",
+        "raw/gates/f86-pre-capture-v11-gallery-artifact.json.orig",
+        "raw/gates/f86-pre-capture-build-examples-manifest.txt"
+      ],
+      "commands": [
+        "sha256_16 build/examples/cocosair.module.js vs build/cocosair.module.js BEFORE editing the gate (pre-capture snapshot of the evidence file + 345-file artifact manifest)",
+        "NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/v11-gallery-artifact.cjs verify   # Control A: repo-side, stale artifact on disk, nothing rebuilt",
+        "isolated copy E:/AIProMax/cocosair-f86-copy (tools+build+examples+docs/evidence+package.json+node_modules/esbuild, plain copy - no junction/hardlink): node tools/verify/v11-gallery-artifact.cjs all   # Control B: rebuild then verify in the copy",
+        "restore docs/evidence/v11-gallery-artifact.json from the pre-capture snapshot; delete the scratch copy"
+      ],
+      "result": "F-86 strengthening landed and is negative-controlled in both directions. Control A (stale bytes, the exact state every consumer previously read as an indistinguishable 70/76): FAIL artifact:engine-copy-current artifact 5527b1fa87ea3a36 vs live build ca099f3483d67194 -> 70/77 PASS, EXIT 1; the other 6 FAILs are the same 6 check ids as the frozen reading, so attribution is clean. Control B (fresh artifact built by the same process, in an isolated copy so the shared build/examples was never deleted): PASS artifact ca099f3483d67194 vs live build ca099f3483d67194 -> 71/77 PASS, EXIT 1 only for the 6 pre-existing F-78/F-79 cells. Run-to-run caveat recorded honestly: no-http-errors is 6 hits in A vs 7 in B and no-external-requests 36 vs 54 - those two counts are the known F-79 nondeterminism, not caused by the new check. Retest criterion (3) (corrupt only the artifact engine copy) was NOT executed. Evidence-side fingerprint/sourceHash widening (second half of the F-86 minimalFix) was NOT implemented - owner scope.",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "Only repo file changed by this wave: tools/verify/v11-gallery-artifact.cjs (+22 lines, assertion added only; no threshold/expectation weakened). docs/evidence/v11-gallery-artifact.json is back to HEAD bytes and is NOT part of the commit."
     }
   ],
   "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\". F-67. Counts go stale on every append — recompute with node -e instead of trusting a number written into this note."
