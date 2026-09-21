@@ -1,0 +1,36 @@
+Build tmp dirs listed for cleanup (regenerable rollup intermediates, untracked+gitignored, one cc.js.map each).
+Created by tools/build/build.cjs:38 which never removes tmpOut after moving the bundle.
+
+build\.tmp-dev-1789827093252\cc.js.map	11040522	sha256=3a8ef8df5cf181b8
+build\.tmp-dev-1789827114613\cc.js.map	11040711	sha256=f9b019228b448fbf
+build\.tmp-dev-1789827219697\cc.js.map	11040710	sha256=07ae0e12e0f2b65f
+build\.tmp-dev-1789827463796\cc.js.map	11040967	sha256=70b4cbb99192b9a9
+build\.tmp-dev-1789861261908\cc.js.map	11041506	sha256=a74c170e07f437e4
+build\.tmp-dev-1789912146408\cc.js.map	11041506	sha256=a74c170e07f437e4
+build\.tmp-min-1789862777524\cc.js.map	9158914	sha256=e8bfdc010c087f7b
+build\.tmp-min-1789912166983\cc.js.map	9158914	sha256=e8bfdc010c087f7b
+
+total bytes=84563750 dirs-listed=8 (dirs=9 in the generator counted one dir that was still empty at manifest time, i.e. a build in flight; it held no files and is not part of the reclaimed total)
+
+OUTCOME (2026-09-20T15:02Z)
+all 8 dirs above were deleted: 7 in one pass (2026-09-20T14:59Z-15:00Z) and build/.tmp-dev-1789912146408 once it was confirmed idle (cc.js.map mtime 2026-09-20T13:49:26Z, 73 min before the check).
+total reclaimed = 84,563,750 B. Nothing in the ledger pointed at these paths; they are untracked + gitignored, so no tracked state changed.
+NOT deleted: build/.tmp-rollup-cache (94 MB persistent cache), output/ (gate input), and build/.tmp-dev-1789916465781 which the parallel session created mid-cleanup.
+
+LIVE REPRODUCTION OF F-83 (2026-09-20T15:09Z)
+within 8 minutes of the cleanup the parallel session ran three more builds and left three more orphan dirs behind:
+  build/.tmp-dev-1789916465781/cc.js.map
+  build/.tmp-dev-1789916638558/cc.js.map
+  build/.tmp-min-1789916690875/cc.js.map
+They were left in place (a build may still be reading them) and are deliberately NOT part of the reclaimed total. This is the leak described in F-83 reproducing itself in real time.
+
+SECOND PASS (started 2026-09-21T12:19Z, user: "先清理"). The three dirs left behind mid-cleanup by the parallel session are now idle 9+ hours and hold only the orphan cc.js.map; deleted after this manifest.
+build\.tmp-dev-1789916465781\cc.js.map	11041983	sha256=13083adf59d411eb	idleMin=1301	lastIdle=2026-09-20T15:01:56.000Z
+build\.tmp-dev-1789916638558\cc.js.map	11042490	sha256=1eb0290916032be6	idleMin=1298	lastIdle=2026-09-20T15:04:44.000Z
+build\.tmp-min-1789916690875\cc.js.map	9159893	sha256=07b1f12cce6b539f	idleMin=1297	lastIdle=2026-09-20T15:06:16.000Z
+total bytes=31244366 dirs=3
+
+CUMULATIVE (both passes)
+84,563,750 B + 31,244,366 B = 115,808,116 B (110.4 MiB) of orphan rollup intermediates reclaimed across 11 dirs.
+Only build/.tmp-rollup-cache is left under build/.tmp-* on purpose (94 MB persistent incremental cache).
+F-83 stays open until tools/build/build.cjs removes tmpOut itself; the parallel session has since committed f0b5925, and no build has run in the last ~12 h (no new dirs appeared).

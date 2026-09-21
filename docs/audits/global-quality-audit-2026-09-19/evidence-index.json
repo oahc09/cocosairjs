@@ -613,7 +613,7 @@
         "raw/gates/f75-binder-negative-control-r21.log",
         "raw/r20-examples-verified-pre-r21.json"
       ],
-      "scratch": "E:/AIProMax/cocosair-fp-scratch (f73-control.cjs, f75-binder-control.cjs, f75-replay-diff.cjs, probe-gallery-fails.cjs — all outside the repo)",
+      "scratch": "DANGLING-SUPERSEDED (2026-09-20 r23 cleanup, E:/AIProMax/cocosair-fp-scratch no longer exists): E:/AIProMax/cocosair-fp-scratch (f73-control.cjs, f75-binder-control.cjs, f75-replay-diff.cjs, probe-gallery-fails.cjs — all outside the repo) -> preserved into raw/scratch-preserving-r23/scripts/ before the dir was deleted (sha256 in raw/scratch-preserving-r23/MANIFEST.txt)",
       "commands": [
         "NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/v11-examples-verify.cjs",
         "NODE_PATH=<same> node tools/verify/v11-devtools-examples.cjs",
@@ -647,9 +647,9 @@
         "raw/gates/coverage-r23.log",
         "raw/gates/spec-compliance-r23.log"
       ],
-      "scratch": "E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs (C1-C7, outside the repo)",
+      "scratch": "DANGLING-SUPERSEDED (2026-09-20 r23 cleanup, E:/AIProMax/cocosair-fp-scratch no longer exists): E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs (C1-C7, outside the repo) -> now raw/scratch-preserving-r23/scripts/f72-atomic-control.cjs, re-run from that path = 11/11 PASS / EXIT 0",
       "commands": [
-        "node E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs   (x3 then x8 after the C6 re-specification)",
+        "node docs/audits/global-quality-audit-2026-09-19/raw/scratch-preserving-r23/scripts/f72-atomic-control.cjs   (ported path; originally node E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs x3 then x8 after the C6 re-specification)",
         "node tools/examples/coverage-report.cjs",
         "node tools/examples/spec-compliance-audit.cjs",
         "npx tsc --noEmit; npm run build"
@@ -676,7 +676,7 @@
         "raw/gates/v06-report-r23.log",
         "raw/pre-v06-recapture-001210/MANIFEST.txt"
       ],
-      "scratch": "E:/AIProMax/cocosair-fp-scratch/f82-copy (stub copy for the published-artifacts control, outside the repo)",
+      "scratch": "DANGLING-SUPERSEDED (2026-09-20 r23 cleanup, E:/AIProMax/cocosair-fp-scratch no longer exists): E:/AIProMax/cocosair-fp-scratch/f82-copy (stub copy for the published-artifacts control, outside the repo) -> NOT PRESERVED (one-off stub tree, regenerable; the rebuild recipe is recorded verbatim in raw/gates/f82-published-artifacts-control-r23.log)",
       "commands": [
         "node tools/verify/v06-report.cjs (before the re-capture: EXIT 1, blockers 2 = sourceHash + R001-R008 recipe mismatch)",
         "node -e \"benchmark-evidence.sourceHash\" -> ac1b151596b36975 recorded / 4e4fd374e33166ce live",
@@ -691,7 +691,58 @@
       "createdBy": "audit",
       "status": "SHIPPED",
       "note": "snapshot MANIFEST.txt records sha256_16 + bytes + measuredAt of the three v06 evidence files as they stood before this re-capture"
+    },
+    {
+      "id": "SCRATCH-CLEANUP-R23",
+      "findings": [
+        "F-83",
+        "F-72",
+        "F-82"
+      ],
+      "raw": [
+        "raw/gates/r23-tmp-build-dirs-manifest.txt",
+        "raw/scratch-preserving-r23/MANIFEST.txt",
+        "raw/scratch-preserving-r23/scripts/f72-atomic-control.cjs",
+        "raw/scratch-preserving-r23/scripts/f73-control.cjs",
+        "raw/scratch-preserving-r23/scripts/f75-binder-control.cjs",
+        "raw/scratch-preserving-r23/scripts/f75-replay-diff.cjs",
+        "raw/scratch-preserving-r23/scripts/probe-gallery-fails.cjs"
+      ],
+      "commands": [
+        "node docs/audits/global-quality-audit-2026-09-19/raw/scratch-preserving-r23/scripts/f72-atomic-control.cjs  (re-run from the ported path after the recycle: 11/11 PASS, EXIT 0)",
+        "per-file size + sha256_16 manifest of the 8 deleted build/.tmp-* dirs written before deletion -> raw/gates/r23-tmp-build-dirs-manifest.txt"
+      ],
+      "result": "reclaimed 84,563,750 B repo-side (8 build/.tmp-{dev,min}-* dirs, each a single orphan cc.js.map, untracked + gitignored) and 5.8 MB outside the repo (E:/AIProMax/cocosair-fp-scratch + the recycle helper). Deliberately kept: build/.tmp-rollup-cache (94 MB incremental cache) and output/ (v06-review-jest.json is read by v06-report.cjs:26). No gate verdict changed.",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "F-83 opened for the root cause (tools/build/build.cjs:38 never removes tmpOut). During the cleanup a parallel session started another build and created a fresh .tmp-dev-* — left untouched."
+    },
+    {
+      "id": "LIVE-REREAD-R23C",
+      "findings": [
+        "F-70",
+        "F-72",
+        "F-74",
+        "F-80",
+        "F-81",
+        "F-82",
+        "F-83"
+      ],
+      "raw": [
+        "raw/gates/live-reread-r23c.txt"
+      ],
+      "commands": [
+        "node tools/verify/v06-report.cjs",
+        "node tools/examples/spec-compliance-audit.cjs",
+        "node tools/verify/license-audit.cjs",
+        "node tools/verify/published-artifacts.cjs",
+        "node -e \"require('./tools/verify/benchmark-evidence.cjs').sourceHash(process.cwd())\""
+      ],
+      "result": "all four offline gates re-read against the CURRENT tree: v06 EXIT 1 / 3 blockers, spec-compliance EXIT 1 / 151 fail + 1 warn, license EXIT 1 / issues=3, published-artifacts EXIT 0 / 4 markers x 2 bundles. Candidate moved d705a2c8b8eadd68 -> cdba413e50ab6065 (inventory 152b912918b78a9d, 210 tests / 209 passed / 1 failed, 4730 units, coverage verified 0) because the parallel session rebuilt and regenerated two tracked gate outputs at 15:08/15:13Z.",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "Answers \"is everything resolved?\" with: no. Ledger gate cells freeze at their own wave, so every verdict quoted here was re-measured rather than reused. See global-verdict.liveReread_r23c."
     }
   ],
-  "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\" (16 of 48). F-67."
+  "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\". F-67. Counts go stale on every append — recompute with node -e instead of trusting a number written into this note."
 }

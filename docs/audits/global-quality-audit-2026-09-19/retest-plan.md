@@ -195,3 +195,17 @@ documented-only gate (0/4729).
 - `npx jest --ci` = 207/208，唯一失败 `smoke-29`（§11 证据链）45 例 `S11-NO-EVIDENCE`/`S11-PROMOTION-DRIFT` → 与 r23 的 `S11-EVIDENCE-NOT-RUN` 同一因。**owner 重跑 r22 矩阵 + DevTools 门禁后复测**：`npx jest --ci` 必须 208/208，`node tools/verify/v06-report.cjs` 必须 PASS/blockers=[]，`node tools/examples/coverage-report.cjs` 的 `verified` 必须从 0 回升且 `evidenceSources[*].status=COMPLETE`。
 - 新增复测项 F-82：`node tools/verify/published-artifacts.cjs`（现在 EXIT 0）；副本里把 min 换回 `3692554^` 的字节 → EXIT 1 并点名 uuid。
 - 期间不做：为转绿手写 `completed:true`、调 recipe 视觉容差、弱化 `material-property`。
+
+## r23c 更新（2026-09-20 15:20Z）：候选已移动，复测必须在冻结树上做
+
+- 现读（不是引用台账快照）：`node tools/verify/v06-report.cjs` **EXIT 1 / blockers 3**（r23b 收尾时是 1）。
+  原因是并行会话在 15:01–15:13Z 重建并改写了 `build/cocosair.module.{js,map,min.js,min.js.map,d.ts}` 与
+  `docs/api-coverage-report.json` / `docs/test-inventory.json` → 实时 `sourceHash=430dcd0c65a1cbff` ≠ 记录的
+  `4e4fd374e33166ce`，R001-R030 全部 `sourceHash mismatch`。**属货币漂移，没有证据内容损坏。**
+- 候选身份随之变化：审计冻结的 `d705a2c8b8eadd68`（208 tests / 4729 units）→ 当前工作树
+  `cdba413e50ab6065`（inventory `152b912918b78a9d`，210 tests / 209 passed / 1 failed，4730 units）。
+  HEAD 仍是 `8f5bc76`，差值全是未提交的并行会话工作。
+- 复测前置条件（新增，必须写进任何"跑一遍就绿"的期望）：先**冻结一个候选**（提交或至少停构建），
+  再按顺序跑 owner 的两次浏览器门禁 → `npx jest --ci` → 三轨道重采 → `v06-report`。
+  在构建与门禁并发的工作树上，`v06-report` 与 `spec-compliance` 永远会因哈希漂移红，与缺陷无关。
+- 其余不变：F-70/F-74 结案、`verified` 从 0 回升、`evidenceSources[*].status=COMPLETE` 的判据同 r23b。

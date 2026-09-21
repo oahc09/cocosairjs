@@ -170,11 +170,44 @@
       "tools/verify/consumer-acceptance.cjs step 0",
       "package.json scripts.build:all"
     ],
-    "control": "E:/AIProMax/cocosair-fp-scratch/f82-copy: stale min EXIT 1 / rebuilt min EXIT 0",
+    "control": "DANGLING-SUPERSEDED (2026-09-20 r23 cleanup): E:/AIProMax/cocosair-fp-scratch/f82-copy: stale min EXIT 1 / rebuilt min EXIT 0 — stub copy was NOT preserved (regenerable); the two control runs are recorded byte-for-byte in raw/gates/f82-published-artifacts-control-r23.log",
     "repoRun": "node tools/verify/published-artifacts.cjs -> 4 markers x 2 bundles PASS",
     "notRun": [
       "npm run verify:consumer (tarball pack + npm install + jsdom import) - not in this turn's authorised list; the new step 0 has therefore never executed inside a real consumer run",
       "npm run build:all end-to-end"
     ]
+  },
+  "scratchCleanup_r23": {
+    "measuredAt": "2026-09-20T15:10:00.000Z",
+    "authorisedBy": "user: \"清理无用产物文件\"",
+    "reclaimedRepoSide": "84,563,750 B across 8 build/.tmp-{dev,min}-* dirs (one orphan cc.js.map each, untracked + gitignored; oldest 2026-09-19T14:11Z, newest idle 73 min, no build in flight at delete time)",
+    "reclaimedOutsideRepo": "E:/AIProMax/cocosair-fp-scratch (5.8 MB) + E:/AIProMax/github/cocosair-recycle-r23.cjs (the helper itself)",
+    "preserved": "raw/scratch-preserving-r23/scripts/ — 5 control scripts, per-file sha256 in raw/scratch-preserving-r23/MANIFEST.txt (PRESERVED 5 / DISCARDED 17 files 519,795 B); the ported F-72 control was re-run from its new in-repo path and passed 11/11 (EXIT 0), so preservation is functional, not archival",
+    "deliberatelyKept": [
+      "build/.tmp-rollup-cache (94 MB incremental cache - deleting forces a full rebuild, cost already disclosed under F-62)",
+      "output/ (gitignored, but v06-review-jest.json is the input v06-report.cjs:26 reads)",
+      "build/.tmp-dev-1789916465781 - created by the parallel session's build while this cleanup was running"
+    ],
+    "newFinding": "F-83 (non-blocking) - tools/build/build.cjs:38 opens a unique tmpOut per build and never removes it, so every build leaks 9-11 MB; minimal fix + retest recorded in the finding row. Source was NOT modified this wave.",
+    "verdictsChanged": false,
+    "overallUnchanged": "NOT_READY"
+  },
+  "liveReread_r23c": {
+    "measuredAt": "2026-09-20T15:20:00Z",
+    "why": "User asked whether every audit issue is now resolved. Gate cells in this file freeze the moment their wave ended, so the whole set was re-read live against the CURRENT working tree rather than quoted from the ledger. The tree moved underneath: the parallel session rebuilt (build/cocosair.module.js/.min.js/.d.ts rewritten) and regenerated two tracked gate outputs at 15:08Z / 15:13Z.",
+    "candidateHasMoved": {
+      "auditFrozenCandidate_r23b": "d705a2c8b8eadd68 (inventory 2d10b49ee9c22d24, 208 tests)",
+      "liveWorkingTree": "candidateFingerprint cdba413e50ab6065, inventoryFingerprint 152b912918b78a9d, 210 tests (209 passed / 1 failed per docs/test-inventory.json 15:13Z), totalUnits 4729 -> 4730",
+      "consequence": "every PASS recorded against d705a2c8b8eadd68 is now historical, not current-tree evidence. HEAD is still 8f5bc76; the delta is uncommitted parallel-session work."
+    },
+    "liveReadings": {
+      "node tools/verify/v06-report.cjs": "EXIT 1, blockers 3 (was 1 after r23b): live sourceHash 430dcd0c65a1cbff != recorded 4e4fd374e33166ce, so R001-R030 all report sourceHash mismatch, plus the Jest dimension is still not green. This SUPERSEDES the PASS text in gates.v06FinalGate_recipe for the current tree - currency drift (trap 7), no evidence content is corrupted.",
+      "node tools/examples/spec-compliance-audit.cjs": "EXIT 1, 45 examples, 151 fail / 1 warn - every failure traces to the two F-72 global demotions (S11-EVIDENCE-NOT-RUN on both browser evidence files, completed!==true), i.e. the same owner re-run dependency, not 151 independent defects.",
+      "node tools/verify/license-audit.cjs": "EXIT 1, issues=3 unchanged (examples/gltf-draco/assets/draco.glb + examples/gltf-meshopt/assets/meshopt-khr.glb missing .LICENSE.md, unexpected build/examples/ directory).",
+      "node tools/verify/published-artifacts.cjs": "EXIT 0 - 4 markers x 2 bundles (cocosair.module.js 3,736,205 B, .min.js 2,129,898 B). The F-82 guard holds across the parallel session's rebuild.",
+      "docs/api-coverage-report.json (as regenerated 15:08Z)": "claimed 62, verified 0, attested 0, stale 0, claimsNotInInventory 5. The verified collapse from 63 to 0 is F-72 working as designed (consumers reject un-stamped evidence), not a regression in the counting."
+    },
+    "answerToTheQuestion": "No - not everything is resolved. Counting口径 matters: findings.jsonl has 83 rows; 22 rows carry an in-row CLOSED/FIXED/CLEARED marker (F-24/26/29/44/48/49/51/52/57/58/59/61/62/63/64/67/72/73/75/76/77/82), 35 rows still carry open/partial/NOT_RUN/FAIL wording in their own text (15 of those flagged blocking=true), and the early F-01..F-23 batch never rewrites its frozen `verdict` field, so the authoritative view is this file's blockingForRelease list = 10 gate cells. Four remaining classes: (1) closed on the engine side, waiting only on the owner re-running the two browser gates on a frozen candidate - F-70, F-74, F-72 browser evidence, then jest 210/210, v06 blockers to 0, coverage verified back above 0; (2) missing environment/authorisation - F-16 (Firefox/WebKit not installed), R6 exclusive-env perf, R5 real-LLM agent track, npm run verify:consumer (F-82 step 0 has never executed inside a real consumer run), F-83 (build leak, fix specified, source edit not authorised); (3) needs an owner decision because the honest fix changes assertions or content, not code - F-34/F-35/F-79 Gallery self-containment, F-78 two mis-specified gate expectations, F-27 license sidecars, F-80/R2 denominator granularity and the 120-stable ceiling, F-60/F-55 non-discriminating visual evidence, F-81 shared-worktree evidence collision; (4) long-standing scope gaps - documented-only 0/4730, the 13th button-click validator, F-69/F-71 API surface. Overall remains NOT_READY.",
+    "overall": "NOT_READY"
   }
 }

@@ -478,6 +478,7 @@ and `license-audit.cjs` still exits 1 with issues=3.
 | F-72 | 已实现 + 离线证伪通过 | `writeJsonAtomic`（唯一 `.writing-<pid>-<rand>` tmp + EPERM/EACCES/EBUSY 有界重试，放弃前清自己 tmp）+ `completed:true` 只在完整跑通路径盖章；三个生产者与 `promoteFromEvidence` 全走原子写，`coverage-report`/`spec-compliance-audit` 两个消费端走 `readEvidence`。 |
 
 ### F-72 离线对照（`E:/AIProMax/cocosair-fp-scratch/f72-atomic-control.cjs`，仓库外）
+［2026-09-20 UPDATE-25：scratch 已回收，该脚本现位于 `raw/scratch-preserving-r23/scripts/f72-atomic-control.cjs`，从新路径重跑仍 11/11 PASS］
 
 C1–C7：完整证据被采纳 / 缺 `completed`、`completed:false`、JSON 截断、文件缺失四种形态一律 NOT_RUN；C6 SIGKILL 打断写入；C7 双进程并发写同一目标。
 日志：`raw/gates/f72-atomic-control-r23.log`。**首次 3 连跑中 run 3 FAIL**：
@@ -545,3 +546,66 @@ r22 全量矩阵（40 id）与 DevTools 门禁（5 id）归 owner 执行（我�
 
 - **F-60 未变**：重采后 30 张 recipe 截图仍是 **24 个不同哈希**，重复组一字不差（`R001=R006`、`R004=R010`、`R005=R009`、`R022=R023=R024=R025`）。新增数据点：**6 张（R002/R012/R016/R026/R027/R028）在只换 bundle 的重采中改了字节却全部 PASS** → recipe 视觉容差会在不报任何异常的情况下吸收真实像素移动，这是 F-60 缺口的又一面。
 - 待办不变：F-70/F-74 结案、覆盖率 `verified` 复算，全部等 owner 的两次重跑。
+
+## UPDATE-25 · 2026-09-20 15:10Z · 清理无用产物文件（用户授权），并开 F-83
+
+**动作与结果**
+
+- 仓库外：`E:/AIProMax/cocosair-fp-scratch`（5.8 MB）回收。**5 个对照脚本先搬进台账再删目录**
+  （`raw/scratch-preserving-r23/scripts/`，逐文件 sha256 见 `raw/scratch-preserving-r23/MANIFEST.txt`：
+  PRESERVED 5 / DISCARDED 17 files 519,795 B）。回收助手本身（`E:/AIProMax/github/cocosair-recycle-r23.cjs`）随后删除。
+  搬移后从**新路径**重跑 F-72 原子性对照：`node docs/audits/.../scripts/f72-atomic-control.cjs` → **11/11 PASS / EXIT 0**，
+  即"保留不是归档尸体，仍可复现"。
+- 仓库内：`build/.tmp-dev-*` ×6 + `build/.tmp-min-*` ×2 = **84,563,750 B**（每个目录只有一个 `cc.js.map`，
+  未跟踪且 gitignore；最旧 09-19 22:11 本地，最新一个已空闲 73 分钟，删除瞬间无构建在跑）。
+  删除前落清单 `raw/gates/r23-tmp-build-dirs-manifest.txt`（size + sha256_16；
+  其中 07:41 与 21:49 两次 dev 构建的 map 摘要相同 `a74c170e07f437e4`，即两次构建产物未变；
+  两次 min 同为 `e8bfdc010c087f7b`）。**清理过程中并行会话又起了一次构建**，新出现的
+  `.tmp-dev-1789916465781` 与它改写中的 `build/cocosair.module.*` 一律不动、不提交。
+- 明确**保留**：`build/.tmp-rollup-cache`（94 MB 增量缓存，删了下次构建变全量——代价已在 F-62 披露过一次）、
+  `output/`（gitignore，但 `v06-review-jest.json` 是 `v06-report.cjs:26` 的输入，门禁要读）。
+
+**新 finding F-83（非阻断，构建工具链）**：`tools/build/build.cjs:38` 为每次构建开唯一 `tmpOut`
+（刻意为之，见 :36-37 注释：避开本机 safe-delete shim 对批量删除的拦截），但搬走 bundle、改写 map 之后
+**从不回收该目录**，于是每次 `npm run build` / `build:min` 泄漏 9-11 MB。只泄漏字节、不影响正确性：
+`candidateFingerprint` 与 `package.json files[]` 都不读 `build/.tmp-*`，真正的"陈旧产物上网"是 F-82（已修）。
+最小修法与复测写在该条 finding 里；本轮**未改源码**（改动需 owner 授权）。
+
+**台账指针一致性**：`evidence-index.json` 3 处 + `global-verdict.json` 1 处指向 scratch 的字符串已加
+`DANGLING-SUPERSEDED (2026-09-20 r23 cleanup):` 前缀并给出新落点，**没有删任何历史行**；
+`findings.jsonl` 仍 append-only（82 → 83 行，前缀逐行比对通过）。唯一未保留的是 `f82-copy`（一次性 stub 树，
+重建配方在 `raw/gates/f82-published-artifacts-control-r23.log`），指针里如实写明 NOT PRESERVED 而不是假装仍在。
+另：`evidence-index.json` 的 `rowShapesNote` 原写 "16 of 48"，实际已 69→70 行——计数会腐烂，已改成"用现读命令重算"。
+
+Overall remains **NOT_READY**（本次清理不改变任何门禁 verdict）。
+
+## UPDATE-26 · 2026-09-20 15:20Z · "是否全部解决"→ 按当前树现读一遍，不复用台账结论
+
+用户问核查问题是否全部解决。台账里的 gate 文本是**各自那一波的冻结读数**，所以全部改成对当前工作树现读：
+
+| 命令（离线） | 现读 | 相对台账的变化 |
+|---|---|---|
+| `node tools/verify/v06-report.cjs` | **EXIT 1 / blockers 3** | r23b 收尾是 1 条 → 并行会话 15:01–15:13Z 重建使 `sourceHash` 移动（live `430dcd0c…` vs 记录 `4e4fd374…`），R001-R030 集体 `sourceHash mismatch` |
+| `node tools/examples/spec-compliance-audit.cjs` | **EXIT 1 / 151 fail, 1 warn** | 与 r23 同因（两份浏览器证据 `completed!==true` → 整份 NOT_RUN），不是 151 个独立缺陷 |
+| `node tools/verify/license-audit.cjs` | **EXIT 1 / issues=3** | 不变：两个 `.glb` 缺 sidecar + `build/examples/` |
+| `node tools/verify/published-artifacts.cjs` | **EXIT 0 / 4 markers x 2 bundles** | F-82 断言在并行重建之后依然成立（这条是本轮唯一"越动越可信"的） |
+| `docs/api-coverage-report.json`（15:08Z 由并行会话重算） | claimed 62 / **verified 0** / stale 0 / claimsNotInInventory 5 | 63→0 的塌缩正是 F-72 生效的表现，不是计数回退 |
+
+**候选身份已移动，必须写在所有结论前面**：审计冻结的 `d705a2c8b8eadd68`（208 tests / 4729 units）已被当前工作树的
+`cdba413e50ab6065`（inventory `152b912918b78a9d`、210 tests、4730 units）取代；HEAD 仍是 `8f5bc76`，差值全是并行会话未提交的
+manual/示例工作。因此凡"PASS 于 d705a2c8"的表述现在都是**历史读数**，不是当期证据。
+
+**回答：没有全部解决。** 口径先说清（三种计数会互相矛盾，别混用）：`findings.jsonl` 共 **83 行**；行内自述明确写成
+CLOSED/FIXED/CLEARED 的 **22 行**（F-24/26/29/44/48/49/51/52/57/58/59/61/62/63/64/67/72/73/75/76/77/82）；
+行内文字仍含 open / partial / NOT_RUN / FAIL 语义的 **35 行**（其中 15 行带 `blocking=true` 标记）——
+早期 F-01…F-23 那批用 `verdict` 字段冻结在发现波，从不在行内回写，所以真正的权威口径是
+`global-verdict.json` 的 **10 个发布阻断门禁格**（多条 finding 汇入同一格）。`overall = NOT_READY`。四类缺口：
+
+1. **只差 owner 在冻结候选上跑两次浏览器门禁**（引擎侧修复已落并离线证伪通过）：F-70、F-74、F-72 的浏览器证据、
+   随之 `npx jest --ci` 210/210、`v06-report` 归零、覆盖率 `verified` 回升。
+2. **缺环境/授权**：F-16（Firefox/WebKit 未装）、R6 独占环境 perf、R5 真 LLM Agent 轨道、`npm run verify:consumer`（F-82 新第 0 步从未在真实 consumer 跑里执行过）、F-83（构建泄漏，修法已给，改源码需授权）。
+3. **需 owner 决策的内容/口径缺陷**（不许靠改断言凑绿）：F-34/F-35/F-79 Gallery 交付自足、F-78 两条门禁误设、
+   F-27 license sidecar、F-80/R2 覆盖率分母粒度与 120-stable 天花板、F-60/F-55 视觉不可判别、F-81 共树证据碰撞。
+4. **本来就是长期缺口**：documented-only 0/4730、13 个 `button-click` validator、F-69/F-71 API 面。
+
+**本轮没有为了变绿而碰任何断言、阈值、参考图或 `completed` 字段。** 明细见 `global-verdict.json` 的 `liveReread_r23c`。
