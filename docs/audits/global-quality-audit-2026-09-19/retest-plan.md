@@ -209,3 +209,52 @@ documented-only gate (0/4729).
   再按顺序跑 owner 的两次浏览器门禁 → `npx jest --ci` → 三轨道重采 → `v06-report`。
   在构建与门禁并发的工作树上，`v06-report` 与 `spec-compliance` 永远会因哈希漂移红，与缺陷无关。
 - 其余不变：F-70/F-74 结案、`verified` 从 0 回升、`evidenceSources[*].status=COMPLETE` 的判据同 r23b。
+
+## r23d 更新（2026-09-21 13:04Z）：F-83 结案 + F-84 开门，漂移归因补一条自己的
+
+- **F-83 已修**（`tools/build/build.cjs` 回收 `tmpOut`），复测三项全过：`npm run build:all` EXIT 0 端到端、
+  `build/` 下只剩 `.tmp-rollup-cache`、两个 bundle 逐字节未变（`ca099f3483d67194` / `3794077b58006fe9`）。
+  残余复测项：任何后续构建后 `ls -d build/.tmp-*` 仍必须只匹配 `.tmp-rollup-cache`。
+- **F-84 新开（blocking）**：`HEAD:build/*` 里 `AIR_VERSION` = 0 命中而 `HEAD:src/air/app.ts` = 1 →
+  该 commit 干净 checkout 会在 smoke-01 红（作者补交产物即自愈）。**新增复测项**：修完后在仓库外的干净克隆里
+  `node tools/verify/published-artifacts.cjs --head` 必须在"产物提交前"EXIT 1 并点名 `AIR_VERSION`、提交后 EXIT 0。
+- **漂移归因要包括审计自己**：`sourceHash` 的定义域含 `build/cocosair.module.js` **和 `.d.ts`**
+  （`tools/verify/benchmark-evidence.cjs:20-21`）。本波重建把并行会话那批 pre-final-src 的 `.d.ts` 补成了
+  与已提交 src 一致的字节，于是实时 `sourceHash` 由 `430dcd0c65a1cbff` 变成 **`ec5ccc39aa32c64a…`**
+  （记录值仍是 `4e4fd374e33166ce`）。也就是说 `v06-report` 第 2 条 blocker 现在是**审计侧构建动作**推动的，
+  且方向与 F-84 一致（产物追上源码），不是缺陷。复测顺序不变：**先冻结候选**（一次提交把 src 与 build 同时钉住）
+  → 两次浏览器门禁 → `npx jest --ci` → 三轨道重采 → `v06-report`。在并发树上这些数字每构建一次就会再漂一次。
+- 另记：本波审计自己误跑了一次多余构建（bash 反引号命令替换），已在
+  `raw/gates/f83-fix-verification-r23d.txt` 的 ADDENDUM (r23d-2) 留痕并复核无后果。
+
+## r23e 更新（2026-09-21 15:02Z）：verify:consumer 真跑过一次，基线是"只差 1 条链接"
+
+- `npm run verify:consumer` **EXIT 1**，唯一失败 `README links to missing packaged file: docs/manual/index.md`（F-85）。
+  其余 7 个阶段全绿，含 F-82 第 0 步（4 markers x 2 bundles, 0 fail）、exportCount 369、strict+node16 消费者编译。
+- **今后任何"发布前自查"的判据**：这条命令必须 EXIT 0。修 F-85 时任选 README.md:84 改指已打包文档，
+  或 `files[]` 纳入 `docs/manual/`（整目录 852,353 B）／`docs/manual/*.md`（583,859 B）。
+  选后两者时必须同时把门禁第 6 步的链接遍历扩到已打包的 `docs/*.md`，否则手册内部 39 条
+  `examples/manual-*/` 链接无人校验（README-only 遍历是这条门禁当前深度上限）。
+- 复测顺序不变：F-85 修完 → `npm run verify:consumer` EXIT 0 → 冻结候选 → 两次浏览器门禁 → jest → 三轨道 → `v06-report`。
+
+## r23f 更新（2026-09-21 15:13Z）：F-34 结案、F-86 开门，Gallery 门禁复测判据换成三条
+
+只读复跑（未跑 `build` 模式，它会 `fs.rmSync(build/examples)` 而该目录属并行会话在飞工作）：
+把 `build/examples` 用静态服务挂在**自己的根**上（无 `/build/` 路由、无 `/__debug/`、无 dev server）后：
+
+- `gltf-meshopt/main.boot.js` → 200，其中的 decoder 字面量已是 `../gltf-decoders/meshopt/meshopt_decoder.mjs`，
+  按文档基解析后 → **200**；老的绝对形态 `/build/gltf-decoders/...` → 404 且已无任何字节引用它；45 个 `main.boot.js`
+  绝对 `/build/` 命中数 = **0**。⇒ **F-34 关闭**（守卫修复早已随 0773058 提交，这次是对交付物本身的证伪通过）。
+- 残留 5 处 `/__debug`（automation 无守卫且 rethrow + 4 个 `rc-*` 的 `window.__debugBase || "/__debug"`）
+  在离线静态服务下仍 404 ⇒ **F-35 不动**，等 owner 的合同口径（把 requiresDevTools 从静态认证集里排除，还是随包发一个静态 DevTools 入口）。
+- **新开门 F-86**：部署物与当前字节之间**零绑定**。artifact 内引擎 `5527b1fa87ea3a36`/3,735,922 B/09-19T14:17Z
+  vs 实时 `ca099f3483d67194`/3,736,205 B；而 `... v11-gallery-artifact.cjs verify` 单独跑只读盘上现成字节，
+  evidence 对象里连一个 hash 字段都没有 ⇒ 那份 70/76 的读数认证的是 **F-70 之前的引擎**，且与新鲜读数不可区分。
+
+**Gallery 门禁今后三个复测判据**：
+1. `mode verify`（不改任何东西）必须 **EXIT 1** 并点名两个引擎 hash（F-86 的负控：今天它会绿吞两天前的字节）；
+2. `mode all`（或先 build 再 verify）必须让 `artifact:engine-copy-current` PASS 且 evidence 里带上实时 hash + 指纹；
+3. 只污染 `build/examples/cocosair.module.js` 一个文件 → 只有第 2 条新检查红，其余保持原状。
+F-78 的两条不可满足期望（`draco/draco_decoder.js` 这个名字全仓零生产零消费；meshopt 解码器的 wasm 是内嵌编码串、
+永远不会有独立 `.wasm` 请求）与 F-79 的 4 条仍归 owner；修 F-78 时方向只能是"按 MANIFEST 生成必需文件集 +
+用解码后的几何（vertex count）而非幻影网络请求来断言 meshopt 真工作"。

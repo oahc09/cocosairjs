@@ -603,9 +603,102 @@ CLOSED/FIXED/CLEARED 的 **22 行**（F-24/26/29/44/48/49/51/52/57/58/59/61/62/6
 
 1. **只差 owner 在冻结候选上跑两次浏览器门禁**（引擎侧修复已落并离线证伪通过）：F-70、F-74、F-72 的浏览器证据、
    随之 `npx jest --ci` 210/210、`v06-report` 归零、覆盖率 `verified` 回升。
-2. **缺环境/授权**：F-16（Firefox/WebKit 未装）、R6 独占环境 perf、R5 真 LLM Agent 轨道、`npm run verify:consumer`（F-82 新第 0 步从未在真实 consumer 跑里执行过）、F-83（构建泄漏，修法已给，改源码需授权）。
+2. **缺环境/授权**：F-16（Firefox/WebKit 未装）、R6 独占环境 perf、R5 真 LLM Agent 轨道、`npm run verify:consumer`（F-82 新第 0 步从未在真实 consumer 跑里执行过）、F-83（构建泄漏，修法已给，改源码需授权）［r23d 已授权并修完，见 UPDATE-27］。
 3. **需 owner 决策的内容/口径缺陷**（不许靠改断言凑绿）：F-34/F-35/F-79 Gallery 交付自足、F-78 两条门禁误设、
    F-27 license sidecar、F-80/R2 覆盖率分母粒度与 120-stable 天花板、F-60/F-55 视觉不可判别、F-81 共树证据碰撞。
 4. **本来就是长期缺口**：documented-only 0/4730、13 个 `button-click` validator、F-69/F-71 API 面。
 
 **本轮没有为了变绿而碰任何断言、阈值、参考图或 `completed` 字段。** 明细见 `global-verdict.json` 的 `liveReread_r23c`。
+
+## UPDATE-27 · 2026-09-21 13:04Z · r23d：F-83 修复落地 + 新开 F-84（HEAD 自洽 / 门禁盲区）
+
+owner 指令「先清理，然后提交，最后把未完成的加入任务列表，逐个执行。」在 `1ffe3eb` 之后继续执行的第一波。
+
+### F-83 已修并验证（`tools/build/build.cjs`）
+
+成功路径末尾加 `fs.rmSync(tmpOut, {recursive:true, force:true, maxRetries:5, retryDelay:100})`；失败路径（`:78 process.exit(1)`）**故意**保留中间目录以便诊断；`build/.tmp-rollup-cache` 是另一套持久缓存，不在本域内。
+
+| 复测 | 结果 |
+|---|---|
+| `npm run build:all` | **EXIT 0 端到端**（该脚本历史上第一次跑通），`[published-artifacts] 4 markers x 2 bundles: PASS` |
+| `npm run build` | 打印 `[build] cleaned: build\.tmp-dev-1789995728481`；跑完后 `build/` 下 `.tmp-*` 只剩 `.tmp-rollup-cache` |
+| 发布字节 | `cocosair.module.js` `ca099f3483d67194` (3,736,205 B)、`.min.js` `3794077b58006fe9` (2,129,898 B) 修复前后**逐字节相同**——本修复没动过任何一个 consumer 会拿到的字节 |
+| `npx jest --ci` | 209/210，唯一失败仍是 `smoke-29-examples-spec.test.ts:46` 期望 `0 fail`（F-72 NOT_RUN 级联，等 owner 两次浏览器重跑），与本修复无关 |
+
+**自曝一次工具误用**：写本节时把带反引号的正文塞进 `node -e "…"`，bash 把反引号当命令替换，实际多跑了一次 `npm run build` / `npm run build:all`（14:54Z）。后果核对：两个 bundle 仍是 `ca099f3483d67194` / `3794077b58006fe9`，`published-artifacts.cjs` EXIT 0，`build/` 无遗留 `.tmp-*`——即 F-83 的确定性**额外被复现了第三次**，没有污染任何已记录的数，`.map`/`output/v06-review-jest.json` 等未被这次误跑改写。记录在此是因为这类"我自己触发的构建"正是 F-81（共树 last-writer-wins）的成因，审计方也要留痕。
+
+**副作用已披露**：并行会话未提交的 `build/*.map` 与 `.d.ts` 在本次重建后差一行文档注释。归因：那批字节产于 f0b5925（2026-09-20T15:24:41Z 改 `src/air/app.ts`）之前，本来就是 pre-final-src；重建严格更新，所以**没有回滚覆盖**他们的工作，快照留在 `output/f83-pre-build-backup/`（gitignored）+ 清单可核对。
+
+### F-84 新开（blocking，gate `candidateIntegrity`）
+
+只读 git 对象库证明（`raw/gates/f84-head-vs-worktree-airversion.txt`）：`HEAD:build/cocosair.module.js` / `.min.js` / `.d.ts` 里 `AIR_VERSION` 命中数 = **0**，`HEAD:src/air/app.ts` = **1**，工作树 = 2/1/1。两个事实分层：
+
+1. **瞬态**：干净 checkout 该提交会在 smoke-01 上红，作者把重建产物提交后自愈——不夸大严重性，但也不豁免：候选自洽就是按 checkout 判定的。
+2. **持久缺口**：没有任何东西把已提交 src 绑定到已提交 `build/`。F-82 新断言按构造看不见它——`published-artifacts.cjs:18-21` 的期望集只来自 `src/air/builtin/register.ts` 里的 `'builtin-[a-z0-9-]+'` 字面量，且只读工作树。新导出符号（`AIR_VERSION`）与"提交了源码没提交产物字节"这两类它都判不出来。
+
+修法方向是**加强**断言（不许反向）：期望集扩到入口 re-export 表；再加 `--head` 模式对 `HEAD:src` vs `HEAD:build` 跑同一断言，使"工作树绿、checkout 红"不再可能。
+
+### 计数口径（不可与 UPDATE-26 的"22 行"混用）
+
+`findings.jsonl` 现 **84 行**（F-84 已 append）。本轮只按 `status`/`verdict` 字段文本重算：含 FIXED/CLOSED/CLEARED = **20 行**（含新收的 F-83）；并上自述 RESOLVED/PASS 且行内无红/开字样 = 并集 **25 行**；`blocking=true` 标记 **34 行**。UPDATE-26 的 22 行是当时的跨字段枚举，口径不同，**不要引用它做进度百分比**。权威口径仍是 `global-verdict.json` 的 **10 个 `blockingForRelease` 门禁格**（多条 finding 汇入同一格），本轮长度不变：F-84 挂在本来就红的 `candidateIntegrity` 上。
+
+证据：`raw/gates/f83-fix-verification-r23d.txt`、`raw/gates/f84-head-vs-worktree-airversion.txt`；索引行 `F83-FIX-AND-F84-R23D`；结论格 `global-verdict.json` 的 `f83FixAndF84_r23d`。**本轮同样没有为了变绿而碰任何断言、阈值、参考图或 `completed` 字段。**
+
+## UPDATE-28 · 2026-09-21 15:02Z · r23e：verify:consumer 首次真实端到端 → 新开 F-85
+
+任务 #42 针对的就是"F-82 新加的第 0 步从未在真实 consumer 跑里执行过"。这次真跑 `npm run verify:consumer`
+（日志 `raw/gates/r23e-verify-consumer.log`，启动 14:57:29Z / 落盘 15:02:46Z）：
+
+| 阶段 | 结果 |
+|---|---|
+| 0 published-artifacts（F-82 断言） | **PASS 4 markers x 2 bundles, 0 fail** —— 首次在真实 consumer 流程内执行 |
+| 1-2 pack + install | tarball 6,321,041 B / 74 文件；消费者目录在系统 tmp，装完不改包体 |
+| 3 安装树断言 | 无 `src/test/tools/output` 泄漏；`build/package.json` 确实声明 `{"type":"module"}` |
+| 4 真实 `import()`（jsdom 全局域） | **exportCount 369**，14 个具名导出全在 |
+| 5 消费者 TS 编译 | strict + node16 解析对已发布 `.d.ts` 通过 |
+| 6 README 相对链接 | **FAIL 1 条**：`README links to missing packaged file: docs/manual/index.md` |
+
+`EXIT=1`，唯一红项就是那条链接 → 新开 **F-85（`blocking:false`）**：`README.md:84` 的手册链接随 8a1658b 手册波进来，
+而 `package.json` 的 `files` 对 docs 只 glob 一层（`docs/*.md` + `docs/*.json`：实 pack 45 个 md / 4 个 json，
+`docs/manual` 命中 **0**）。文件在仓库里存在且已跟踪，只是没被打进包。
+
+**为什么不顺手改掉**：`files` 决定发布内容，属 owner 决策；`docs/manual/**` 是并行会话的在飞工作（台账已列为不可动）。
+而且这里有第二层坑：门禁第 6 步只走 README.md。手册 61 篇 `.md` 内部共 426 条相对链接，其中 **40 条超出 `.md` 集合**
+（39 条指向 `docs/manual/examples/manual-*/`，1 条指向 `../../README.md`）。所以"只 ship `docs/manual/*.md`"会把
+1 条可见坏链换成 39 条无门禁覆盖的坏链——修法必须与门禁深度一起加强（F-85 `minimalFix` 给了 (a1)/(a2)/(b) 三选项）。
+
+顺带钉掉两处过时表述：`publishedArtifacts_addendum.notRun` 的"step 0 从未在真实 consumer 跑里执行"、
+`liveReread_r23c.answerToTheQuestion` 的"缺授权：npm run verify:consumer"，均已就地标 `SUPERSEDED`。
+**没有为变绿而碰任何断言、阈值、`files`、README 或参考图。**
+
+## UPDATE-29 · 2026-09-21 15:13Z · r23f：Gallery 部署物离线复读 → F-34 结案、F-86 开门
+
+任务 #43 的口径是"部署物离线自足"。这次把 `build/examples` 用静态服务挂在**它自己的根**上
+（无 `/build/` 路由、无 `/__debug/`、无 dev server）**只读**复跑（`build` 模式开头是
+`fs.rmSync(build/examples)`，那目录是并行会话的在飞产物，所以没重建）：
+
+| 检查 | 结果 |
+|---|---|
+| `GET /gltf-meshopt/main.boot.js` | 200，字面量已是 `../gltf-decoders/meshopt/meshopt_decoder.mjs` |
+| 按文档基解析后的解码器 URL | **200**（老绝对形态 `/build/gltf-decoders/...` → 404，且 45 个 boot.js 里绝对 `/build/` 命中数 = 0） |
+| `GET /gltf-meshopt/assets/meshopt-khr.glb` | 200 |
+| `GET /__debug/agent-session.js` | **404** —— 5 个 boot.js 仍引它（automation 无守卫 + rethrow，4 个 `rc-*` 走 `__debugBase` 兜底） |
+
+⇒ **F-34 关闭**：守卫修复（前缀匹配、两种引号）早已随 0773058 提交，这一次是对**交付字节**的证伪通过，
+不是对源码的推断。**F-35 保持原样**：它是 owner 的合同口径问题（requiresDevTools 的 6 个 stable 示例
+到底算不算静态认证集），不许我用弱化断言的方式"解决"。
+
+**新开 F-86（`blocking:false`，证据货币类）**：`sha256_16` 实测 artifact 内引擎 `5527b1fa87ea3a36`
+（3,735,922 B，mtime 2026-09-19T14:17:58Z）vs 实时 `build/cocosair.module.js` `ca099f3483d67194`
+（3,736,205 B）——而这个门禁的 evidence 对象**没有任何 hash/指纹字段**，`mode verify` 又允许只读盘上现成字节，
+于是最后一次 70/76 的读数认证的是 **F-70 之前的引擎**，且与新鲜读数在字节层面不可区分。
+这是 F-82（发布 bundle vs 源码）、F-84（已提交 src vs 已提交 build/）之后同一家族的第三例。
+F-72 的 `completed:true` 只证明"跑完了"，不证明"测的是哪份字节"——这条缺口正是它管不到的地方。
+修法（加强方向，写在 F-86 `minimalFix`）：evidence 里记两个引擎 sha256 + 候选指纹，
+并加 `artifact:engine-copy-current` 断言，两条 hash 不等就 FAIL 并打印双方。
+没动手改这个脚本：它与并行会话共用，且它的 build 模式会删 `build/examples`。
+
+**顺带纠一处口径**：那份 70/76 读数里 6 条红的归属已逐条核清——2 条属 F-78（`draco/draco_decoder.js`
+全仓零生产零消费；meshopt 的 wasm 是内嵌编码串，永远不会有独立 `.wasm` 请求），4 条属 F-79
+（gltf-catalog 不装 `window.__airApp`、source-view 探 3 条不存在的路径、36 次 raw.githubusercontent 请求），
+另外该文件本身没有 `completed` 字段（写于原子生产者之前），消费端按 NOT_RUN 处理，属 F-72 已知效果。

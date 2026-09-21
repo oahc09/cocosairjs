@@ -1,0 +1,49 @@
+# F-83 fix verification (2026-09-21, user: "先清理，然后提交，最后...逐个执行")
+change: tools/build/build.cjs - success path now ends with fs.rmSync(tmpOut,{recursive,force,maxRetries:5,retryDelay:100}) + a cleaned/warning log line; failure paths (bundle-not-found exit(1) at :78) keep tmpOut for diagnosis BY DESIGN (the rm sits after every success-path write).
+
+## pass 1: npm run build:all (esm + esm --min + build-dts + published-artifacts) end to end
+BUILD_ALL_EXIT=0  ... [published-artifacts] 4 markers x 2 bundles: PASS
+(this also closes the publishedArtifacts_addendum.notRun item "npm run build:all end-to-end")
+
+## pass 2: npm run build  ->  log line "[build] cleaned: build\.tmp-dev-1789995728481", SECOND_BUILD_EXIT=0
+## surviving build/.tmp-* after both passes: build/.tmp-rollup-cache only (the persistent incremental cache, tools/build/incremental.cjs:21 - different dir, deliberately untouched)
+
+## byte comparison against the pre-retest snapshot of the parallel session UNCOMMITTED outputs (output/f83-pre-build-backup/MANIFEST.txt)
+  IDENTICAL  build/cocosair.module.js  snapshot=ca099f3483d67194 rebuilt=ca099f3483d67194  3736205 -> 3736205 B
+  DIFFERS    build/cocosair.module.js.map  snapshot=c42f15699122c61f rebuilt=0cd16810901587d3  11040790 -> 11040898 B
+  IDENTICAL  build/cocosair.module.min.js  snapshot=3794077b58006fe9 rebuilt=3794077b58006fe9  2129898 -> 2129898 B
+  DIFFERS    build/cocosair.module.min.js.map  snapshot=39a1c4fd617b621c rebuilt=1f51b359d4674ad3  9158197 -> 9158305 B
+  DIFFERS    build/cocosair.module.d.ts  snapshot=7c1ecc34c370e7a9 rebuilt=44e6122b9c3a5b60  2231337 -> 2231448 B
+
+reading: both shipped bundles are byte-identical (determinism re-proven). The .map and .d.ts deltas are exactly one extra doc-comment line - "里程碑身份（V0.1/V0.2/…）由 git tag 与 docs/v11-baseline.md 承载，不写入此常量。" - which landed in src/air/app.ts at f0b5925 (2026-09-20T15:24:41Z), i.e. AFTER the parallel session built its artifacts at 15:01-15:07Z. Their on-disk artifacts were therefore already pre-final-src; the rebuild is strictly fresher, so the bytes were NOT restored. Snapshot kept in output/ for the owner.
+
+## side effect found while comparing (feeds F-84)
+HEAD:src/air/app.ts already carries the comment; HEAD:build/cocosair.module.d.ts carries neither the comment nor AIR_VERSION (0 hits) -> the committed artifacts lag the committed source by one doc line and one whole new export.
+
+## regression check
+npx jest --ci  ->  Test Suites: 1 failed, 28 passed, 29 total; Tests: 1 failed, 209 passed, 210 total (43.9 s). Sole failure = smoke-29 §11 证据链 (151 fail) = the F-72 NOT_RUN cascade awaiting the owner browser re-runs. Nothing else moved.
+
+=====================================================================
+ADDENDUM (r23d-2) 2026-09-21T14:54Z - self-inflicted extra rebuild, disclosed
+Cause: while writing UPDATE-27 the prose (which contains markdown
+backticks) was passed inside `node -e "..."`, so bash performed command
+substitution and actually executed `npm run build` and
+`npm run build:all` a second time. Recorded here because the auditor's
+own stray build is exactly the F-81 shared-worktree collision class.
+
+Post-incident verification (read-only):
+  build/cocosair.module.js       3,736,205 B  sha256_16 ca099f3483d67194  (unchanged)
+  build/cocosair.module.min.js   2,129,898 B  sha256_16 3794077b58006fe9  (unchanged)
+  build/cocosair.module.js.map  11,040,898 B  sha256_16 0cd16810901587d3
+  build/cocosair.module.d.ts     2,231,448 B  sha256_16 44e6122b9c3a5b60
+  $ node tools/verify/published-artifacts.cjs
+    [published-artifacts] 4 markers x 2 bundles: PASS (cocosair.module.js 3736205B, cocosair.module.min.js 2129898B)
+    EXIT 0
+  $ ls -d build/.tmp-*
+    build/.tmp-rollup-cache            <- only the persistent cache; no tmp-* leak
+  output/v06-review-jest.json untouched (mtime 2026-09-20T13:44:24Z) -> the
+  accidental run was `npx jest --ci` without --json/--outputFile, so no gate
+  input was rewritten.
+
+Effect on claims above: none. It is a THIRD reproduction of the F-83
+determinism + no-leak result.

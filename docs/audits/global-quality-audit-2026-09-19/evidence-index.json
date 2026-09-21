@@ -742,6 +742,74 @@
       "createdBy": "audit",
       "status": "SHIPPED",
       "note": "Answers \"is everything resolved?\" with: no. Ledger gate cells freeze at their own wave, so every verdict quoted here was re-measured rather than reused. See global-verdict.liveReread_r23c."
+    },
+    {
+      "id": "F83-FIX-AND-F84-R23D",
+      "findings": [
+        "F-83",
+        "F-84",
+        "F-82",
+        "F-72"
+      ],
+      "raw": [
+        "raw/gates/f83-fix-verification-r23d.txt",
+        "raw/gates/f84-head-vs-worktree-airversion.txt"
+      ],
+      "scratch": "output/f83-pre-build-backup/ (gitignored): sha256_16 + bytes + MANIFEST.txt of the parallel session's uncommitted build/* as they stood before this build, so their pre-final-src state is recoverable and attributable",
+      "commands": [
+        "npm run build:all",
+        "npm run build (twice: assert '[build] cleaned: build\\.tmp-dev-<ts>' and that only build/.tmp-rollup-cache survives)",
+        "node tools/verify/published-artifacts.cjs",
+        "git show HEAD:build/cocosair.module.js | grep -c AIR_VERSION  (and the same for .min.js / .d.ts / src/air/app.ts + the worktree)",
+        "npx jest --ci"
+      ],
+      "result": "F-83 FIXED and verified: build:all EXIT 0 end-to-end for the first time; the tmp intermediate is reclaimed inside the same run; shipped bundles byte-identical before/after (ca099f3483d67194 / 3794077b58006fe9), so no consumer byte moved; published-artifacts 4 markers x 2 bundles PASS; jest 209/210 with the only failure still smoke-29 (F-72 NOT_RUN cascade awaiting the owner's browser re-runs). Side effect disclosed: the .map / .d.ts of the parallel session's uncommitted artifacts changed by one doc-comment line because those bytes were built before f0b5925 edited src/air/app.ts (pre-final-src), not because of this fix; nothing was restored, hashes recorded. F-84 OPEN (blocking): HEAD's committed bundles contain 0 AIR_VERSION while HEAD's committed src contains 1 -> a clean checkout of that commit is red on smoke-01 until the author's artifact commit lands; durable gap is that nothing binds committed src to committed build/, and the F-82 assertion reads only the working tree so it cannot see it.",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "Distinguish the two reading domains: f83-fix-verification-r23d.txt is WORKING-TREE evidence; f84-head-vs-worktree-airversion.txt is read-only git-object-DB evidence (HEAD vs HEAD). Only the first can go green while the second is red. The file also carries ADDENDUM (r23d-2): an extra rebuild the auditor triggered by a bash backtick-substitution mistake at 14:54Z, verified harmless (same bundle hashes, no tmp leak, no gate input rewritten) and kept as third-party-free reproduction of the F-83 result."
+    },
+    {
+      "id": "VERIFY-CONSUMER-R23E",
+      "findings": [
+        "F-82",
+        "F-85"
+      ],
+      "raw": [
+        "raw/gates/r23e-verify-consumer.log"
+      ],
+      "commands": [
+        "npm run verify:consumer (full: published-artifacts step 0 -> npm pack -> consumer dir in os.tmpdir -> npm install file:tarball -> installed-tree asserts -> real dynamic import under jsdom -> consumer typecheck via repo tsc -> README link walk -> cleanup)",
+        "npm pack --dry-run --json (read-only listing of the 74 packaged paths)"
+      ],
+      "result": "verify:consumer EXIT 1 with exactly one failure: \"README links to missing packaged file: docs/manual/index.md\". F-82 step 0 executed inside a real consumer run for the first time -> PASS 4 markers x 2 bundles, 0 fail. Everything else green: tarball 6,321,041 B / 74 files, build/package.json declares type:module, no src|test|tools|output leak, real import() of the installed entry with exportCount 369, strict bundler-resolution typecheck OK. The single red is a NEW finding F-85 (README gained a manual link in 8a1658b while files[] globs docs at one level only: 45 docs/*.md + 4 docs/*.json ship, docs/manual hits = 0) - reported, not fixed, because publish content is an owner call and docs/manual/ belongs to the parallel session.",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "Supersedes the notRun item in global-verdict.publishedArtifacts_addendum (\"the new step 0 has therefore never executed inside a real consumer run\"). Also closes the \"npm run verify:consumer\" entry of task #42's authorisation-dependent list."
+    },
+    {
+      "id": "GALLERY-OFFLINE-R23F",
+      "findings": [
+        "F-34",
+        "F-35",
+        "F-78",
+        "F-79",
+        "F-86"
+      ],
+      "raw": [
+        "raw/gates/r23f-gallery-artifact-offline-reread.txt"
+      ],
+      "commands": [
+        "static http server rooted AT build/examples (own process, ephemeral port, no /build/ route, no /__debug/, no dev server) + fetch of /gltf-meshopt/main.boot.js, its resolved decoder URL, the old absolute form, the .glb and /__debug/agent-session.js",
+        "absolute-URL sweep over all 45 build/examples/*/main.boot.js",
+        "sha256_16 + bytes + mtime compare of build/examples/cocosair.module.js vs build/cocosair.module.js",
+        "key scan of docs/evidence/v11-gallery-artifact.json for hash/fingerprint/source fields",
+        "build/examples/gltf-decoders/{basis,draco,meshopt} listing vs the gate required[] list",
+        "grep of build/examples/gltf-decoders/meshopt/meshopt_decoder.mjs for how its wasm arrives (embedded encoded string + unpack(), no .wasm fetch)"
+      ],
+      "result": "F-34 CLOSED with offline proof: the delivered meshopt boot.js requests ../gltf-decoders/... which returns 200 from the artifact root (0 absolute /build/ hits left in 45 boot.js; the guard fix is committed in 0773058). F-35 unchanged: 5 /__debug hits remain, agent-session 404s offline. NEW F-86: the gallery artifact binds nothing to current bytes - artifact engine 5527b1fa87ea3a36 (3,735,922 B, 2026-09-19T14:17Z) vs live ca099f3483d67194 (3,736,205 B), mode verify alone consumes whatever is on disk, and the evidence object has no hash/fingerprint at all, so the last 70/76 reading certifies a pre-F-70 engine. Also re-confirmed which of the 6 fails in that reading are already owned by F-78 (2 unsatisfiable expectations) and F-79 (4).",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "Deliberately read-only: build mode begins with fs.rmSync(build/examples) and that directory belongs to a parallel session's in-flight work, so no rebuild was performed here; the retest map in retest-plan.md r23f states what a rebuild must show."
     }
   ],
   "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\". F-67. Counts go stale on every append — recompute with node -e instead of trusting a number written into this note."

@@ -109,6 +109,14 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     fs.mkdirSync(join(ROOT, 'build', 'gltf-decoders'), { recursive: true });
     fs.writeFileSync(join(ROOT, 'build', 'gltf-decoders', 'package.json'), JSON.stringify({ type: 'commonjs' }, null, 2) + '\n');
     console.log('[build] output: build/gltf-decoders/package.json (type: commonjs)');
+    // F-83: 成功路径末尾回收中间目录（每次构建泄漏 9-11 MB 孤儿 map）；
+    // 失败路径（上方 exit(1)）故意保留 tmpOut 以便诊断，且 build/.tmp-rollup-cache 是另一套持久缓存，不在此域内。
+    try {
+        fs.rmSync(tmpOut, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+        console.log('[build] cleaned: ' + relative(ROOT, tmpOut));
+    } catch (e) {
+        console.warn('[build] WARNING tmp dir left behind: ' + relative(ROOT, tmpOut) + ' (' + e.message + ')');
+    }
     } finally { release(); }
 })().catch((e) => {
     console.error('[build] FAILED:', e && e.message ? e.message : e);

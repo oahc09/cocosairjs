@@ -173,7 +173,7 @@
     "control": "DANGLING-SUPERSEDED (2026-09-20 r23 cleanup): E:/AIProMax/cocosair-fp-scratch/f82-copy: stale min EXIT 1 / rebuilt min EXIT 0 — stub copy was NOT preserved (regenerable); the two control runs are recorded byte-for-byte in raw/gates/f82-published-artifacts-control-r23.log",
     "repoRun": "node tools/verify/published-artifacts.cjs -> 4 markers x 2 bundles PASS",
     "notRun": [
-      "npm run verify:consumer (tarball pack + npm install + jsdom import) - not in this turn's authorised list; the new step 0 has therefore never executed inside a real consumer run",
+      "npm run verify:consumer (tarball pack + npm install + jsdom import) - not in this turn's authorised list; the new step 0 has therefore never executed inside a real consumer run [SUPERSEDED r23e: executed end-to-end 2026-09-21T14:57Z, step 0 PASS, EXIT 1 only on a new finding F-85 README->docs/manual/index.md link; see verifyConsumer_r23e and raw/gates/r23e-verify-consumer.log]",
       "npm run build:all end-to-end"
     ]
   },
@@ -207,7 +207,68 @@
       "node tools/verify/published-artifacts.cjs": "EXIT 0 - 4 markers x 2 bundles (cocosair.module.js 3,736,205 B, .min.js 2,129,898 B). The F-82 guard holds across the parallel session's rebuild.",
       "docs/api-coverage-report.json (as regenerated 15:08Z)": "claimed 62, verified 0, attested 0, stale 0, claimsNotInInventory 5. The verified collapse from 63 to 0 is F-72 working as designed (consumers reject un-stamped evidence), not a regression in the counting."
     },
-    "answerToTheQuestion": "No - not everything is resolved. Counting口径 matters: findings.jsonl has 83 rows; 22 rows carry an in-row CLOSED/FIXED/CLEARED marker (F-24/26/29/44/48/49/51/52/57/58/59/61/62/63/64/67/72/73/75/76/77/82), 35 rows still carry open/partial/NOT_RUN/FAIL wording in their own text (15 of those flagged blocking=true), and the early F-01..F-23 batch never rewrites its frozen `verdict` field, so the authoritative view is this file's blockingForRelease list = 10 gate cells. Four remaining classes: (1) closed on the engine side, waiting only on the owner re-running the two browser gates on a frozen candidate - F-70, F-74, F-72 browser evidence, then jest 210/210, v06 blockers to 0, coverage verified back above 0; (2) missing environment/authorisation - F-16 (Firefox/WebKit not installed), R6 exclusive-env perf, R5 real-LLM agent track, npm run verify:consumer (F-82 step 0 has never executed inside a real consumer run), F-83 (build leak, fix specified, source edit not authorised); (3) needs an owner decision because the honest fix changes assertions or content, not code - F-34/F-35/F-79 Gallery self-containment, F-78 two mis-specified gate expectations, F-27 license sidecars, F-80/R2 denominator granularity and the 120-stable ceiling, F-60/F-55 non-discriminating visual evidence, F-81 shared-worktree evidence collision; (4) long-standing scope gaps - documented-only 0/4730, the 13th button-click validator, F-69/F-71 API surface. Overall remains NOT_READY.",
+    "answerToTheQuestion": "No - not everything is resolved. Counting口径 matters: findings.jsonl has 83 rows; 22 rows carry an in-row CLOSED/FIXED/CLEARED marker (F-24/26/29/44/48/49/51/52/57/58/59/61/62/63/64/67/72/73/75/76/77/82), 35 rows still carry open/partial/NOT_RUN/FAIL wording in their own text (15 of those flagged blocking=true), and the early F-01..F-23 batch never rewrites its frozen `verdict` field, so the authoritative view is this file's blockingForRelease list = 10 gate cells. Four remaining classes: (1) closed on the engine side, waiting only on the owner re-running the two browser gates on a frozen candidate - F-70, F-74, F-72 browser evidence, then jest 210/210, v06 blockers to 0, coverage verified back above 0; (2) missing environment/authorisation - F-16 (Firefox/WebKit not installed), R6 exclusive-env perf, R5 real-LLM agent track, npm run verify:consumer (F-82 step 0 has never executed inside a real consumer run), F-83 (build leak, fix specified, source edit not authorised) [SUPERSEDED by r23d: the owner authorised the cleanup/follow-through wave; build.cjs now reclaims tmpOut, build:all EXIT 0 end-to-end, bundles byte-identical — see f83FixAndF84_r23d]; (3) needs an owner decision because the honest fix changes assertions or content, not code - F-34/F-35/F-79 Gallery self-containment, F-78 two mis-specified gate expectations, F-27 license sidecars, F-80/R2 denominator granularity and the 120-stable ceiling, F-60/F-55 non-discriminating visual evidence, F-81 shared-worktree evidence collision; (4) long-standing scope gaps - documented-only 0/4730, the 13th button-click validator, F-69/F-71 API surface. Overall remains NOT_READY.",
+    "overall": "NOT_READY"
+  },
+  "f83FixAndF84_r23d": {
+    "measuredAt": "2026-09-21T13:04:24Z (mtime of raw/gates/f83-fix-verification-r23d.txt; the runs themselves spanned ~12:55-13:04Z)",
+    "ledgerRecordedAt": "2026-09-21T13:12:03Z",
+    "authorisedBy": "owner instruction \"先清理，然后提交，最后把未完成的加入任务列表，逐个执行。\" — the cleanup/follow-through wave, executed after commit 1ffe3eb",
+    "fixed": [
+      "F-83 tools/build/build.cjs: tmpOut is now removed with fs.rmSync(...,{recursive:true,force:true,maxRetries:5,retryDelay:100}) on the success path only; the failure path (process.exit(1) at :78) still keeps the intermediate for diagnosis, and build/.tmp-rollup-cache is a deliberately persistent cache that stays"
+    ],
+    "verification": {
+      "npm run build:all": "EXIT 0 end-to-end for the first time; [published-artifacts] 4 markers x 2 bundles PASS",
+      "npm run build": "printed [build] cleaned: build\\.tmp-dev-1789995728481; afterwards ls -d build/.tmp-* returns only build/.tmp-rollup-cache",
+      "consumer-bytes": "cocosair.module.js ca099f3483d67194 and .min.js 3794077b58006fe9 identical before/after the fix — the fix moved no shipped byte",
+      "npx jest --ci": "209/210; sole failure tests/smoke-29-examples-spec.test.ts:46 expecting 0 fail, i.e. the F-72 NOT_RUN cascade awaiting the owner's two browser re-runs, unrelated to F-83"
+    },
+    "disclosedSideEffect": "The parallel session's uncommitted build/* .map and .d.ts differ by exactly one doc-comment line after this rebuild because those bytes were produced before f0b5925 edited src/air/app.ts (pre-final-src), not because of the F-83 edit. Nothing was restored over their work; output/f83-pre-build-backup/ (gitignored) keeps their pre-build bytes + MANIFEST.txt so the state is attributable and recoverable.",
+    "opened": [
+      "F-84 (blocking, gate candidateIntegrity) — HEAD's committed bundles hold 0 AIR_VERSION while HEAD's committed src/air/app.ts holds 1, so that commit is not self-consistent on a clean checkout (transient; self-heals when the author commits the regenerated artifacts). The durable half is the gate blind spot: published-artifacts.cjs:18-21 derives markers only from /'builtin-[a-z0-9-]+'/g in src/air/builtin/register.ts and reads only the WORKING TREE, so it is structurally blind to a new exported symbol and to a commit that ships source without its bytes.",
+      "F-84 minimal fix direction (strengthening, not weakening): widen the expected set to the entry re-export table, and add a --head mode that runs the same assertion against HEAD:src vs HEAD:build so a commit cannot be green in the worktree and red on checkout."
+    ],
+    "gateCellsAffected": {
+      "buildHygiene": "F-83 closed; the r23 cleanup leak class is now prevented at source",
+      "candidateIntegrity": "STILL FAIL — and now for a second, independent reason (F-84) on top of the drift already recorded in liveReread_r23c",
+      "cleanRoomRebuild": "Partially strengthened: rebuild determinism of the shipped bundles is proven; the HEAD-vs-HEAD self-consistency assertion is still to be implemented",
+      "negativeControls": "F-83's control is the rebuild itself (identical hashes + tmp dir gone); F-84 still has no executed control because no fix has landed"
+    },
+    "answerToTheQuestion": "This wave closed exactly one finding (F-83) and opened one (F-84). The blocking list is unchanged in length: F-84 attaches to a gate cell that was already red. Everything still outstanding falls in the three other classes from liveReread_r23c — owner browser re-runs on a frozen candidate (F-70/F-72/F-74, then jest 210/210, v06 blockers 0, coverage verified > 0), missing environment/authorisation (F-16, R5, R6, npm run verify:consumer) [verify:consumer has since run end-to-end - see verifyConsumer_r23e], owner decisions that change assertions or content (F-34/F-35/F-79, F-78, F-27, F-80/R2, F-60/F-55, F-81), plus the long-standing scope gaps. Overall remains NOT_READY.",
+    "overall": "NOT_READY"
+  },
+  "verifyConsumer_r23e": {
+    "measuredAt": "2026-09-21T15:02:46Z (mtime of raw/gates/r23e-verify-consumer.log; the run was launched 2026-09-21T14:57:29Z)",
+    "scope": "Closes the last authorisation-dependent item of the F-82 wave: step 0 (published-artifacts) executed inside a REAL consumer run for the first time.",
+    "result": {
+      "exit": 1,
+      "failures": ["README links to missing packaged file: docs/manual/index.md"],
+      "green": [
+        "step 0 published-artifacts: 4 markers x 2 bundles, 0 fail",
+        "tarball 6,321,041 B / 74 files, top-level {LICENSE, README.md, THIRD_PARTY_LICENSES.md, UPSTREAM.md, build, docs, package.json}",
+        "installed tree: no src|test|tools|output leak, build/package.json really declares {\"type\":\"module\"}",
+        "real dynamic import() of the installed entry under jsdom: exportCount 369 (>= 100), all 14 named exports present",
+        "consumer typecheck: strict, module/moduleResolution node16, against the shipped .d.ts"
+      ]
+    },
+    "newFinding": "F-85 (non-blocking for the runtime consumer, blocking the docsConsumer/publishDirArtifacts story): README.md:84 links to docs/manual/index.md; that file exists and is tracked (8a1658b) but package.json files[] globs docs at one level (docs/*.md, docs/*.json), so the published package carries a broken documentation link. Reported, deliberately NOT fixed - publish content is an owner decision and docs/manual/ is the parallel session's in-flight work. Gate-depth note included in F-85: step 6 walks README.md only, and docs/manual/*.md itself contains 40 links that leave the .md set (39 -> docs/manual/examples/manual-*/, 1 -> ../../README.md), so the naive 'ship the .md files' fix would trade one visible broken link for 39 invisible ones.",
+    "gateCellsAffected": {
+      "runtimePackageBoundary": "This run is that cell's consumer-acceptance evidence executed for real: FAIL on one README/doc link, all seven other phases green; note the frozen cell text still says \"73-file tarball\", the current pack is 74 files.",
+      "docsConsumer": "Was PARTIAL (static symbol consistency + shipped .d.ts compile). Now also carries a hard negative: the packaged README advertises a manual that the package does not contain, so doc-consumption through the published artifact is broken (F-85).",
+      "namingNote": "\"publishDirArtifacts\" is a finding-level gate name in findings.jsonl (F-82, F-85), not a verdict cell; both land in runtimePackageBoundary / docsConsumer above."
+    },
+    "overall": "NOT_READY"
+  },
+  "galleryReread_r23f": {
+    "measuredAt": "2026-09-21T15:13:36Z (mtime of raw/gates/r23f-gallery-artifact-offline-reread.txt; read-only probes ran 15:05-15:13Z)",
+    "closed": "F-34 - the meshopt decoder URL bug is fixed in COMMITTED builder code (0773058) and proven against the delivered artifact served from its own root: relative URL 200, old absolute form 404 and unreferenced, 0 /build/ hits across 45 boot.js.",
+    "unchanged": "F-35 - 5 shipped boot.js still reach for the dev-server /__debug agent channel (automation unguarded + rethrows); owner contract decision (exclude requiresDevTools from the static certification set vs ship a static DevTools entry) is still open, so nothing was edited.",
+    "opened": "F-86 - nothing binds the gallery artifact to current engine bytes: artifact copy 5527b1fa87ea3a36 / 3,735,922 B / 2026-09-19T14:17Z vs live ca099f3483d67194 / 3,736,205 B; mode verify alone reads whatever is on disk; the evidence object carries no hash or fingerprint field, so a two-day-old 70/76 reading is indistinguishable from a fresh one. Third instance of the F-82/F-84 binding family. Reported with a minimal strengthening patch, NOT applied: tools/verify/v11-gallery-artifact.cjs is shared with a parallel session and its rebuild mode starts by deleting build/examples.",
+    "gateCellsAffected": {
+      "galleryStandalone": "still PARTIAL/FAIL, but the reason set shrank: F-34 leaves it, F-35 + F-78 + F-79 (+ now F-86 on the evidence-currency side) remain. The frozen 70/76 reading is additionally NOT_RUN for consumers because that file predates the F-72 completed stamp.",
+      "exampleStableVerify": "F-34's downgrade of this cell is lifted for the decoder-URL reason; the 6 stable DevTools examples (F-35) still hold it at PARTIAL."
+    },
+    "notTouched": ["assertions", "thresholds", "reference images", "files[]", "README", "completed fields", "build/examples (no rebuild)"],
     "overall": "NOT_READY"
   }
 }
