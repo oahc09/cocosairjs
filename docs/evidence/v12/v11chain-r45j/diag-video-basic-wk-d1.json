@@ -1,0 +1,796 @@
+{
+  "measuredAt": "2026-09-23T05:42:28.189Z",
+  "runner": "tools/verify/v11-examples-verify.cjs",
+  "browser": "webkit",
+  "mode": "spec-driven-v3",
+  "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
+  "candidateFingerprint": "9fa85f88b968d5f1",
+  "apiProofTotals": {
+    "verified": 23,
+    "attested": 13,
+    "unproven": 1
+  },
+  "total": 1,
+  "pass": 0,
+  "fail": 1,
+  "partial": true,
+  "completed": true,
+  "subset": [
+    "video-basic"
+  ],
+  "runPass": 0,
+  "runTotal": 1,
+  "results": [
+    {
+      "id": "video-basic",
+      "result": "FAIL",
+      "specFingerprint": "e4de09333e06",
+      "sourceFingerprint": "35f72dfaf054cab5",
+      "candidateFingerprint": "9fa85f88b968d5f1",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 574,
+        "unitCount": 37,
+        "bytes": 45833,
+        "hash": "81d0c7a9a2dbcd2c",
+        "notes": [
+          "EventHandler.component: no own descriptor on prototype",
+          "EventHandler.component: no own descriptor on static",
+          "EventHandler.customEventData: no own descriptor on prototype",
+          "EventHandler.customEventData: no own descriptor on static",
+          "EventHandler.handler: no own descriptor on prototype",
+          "EventHandler.handler: no own descriptor on static",
+          "EventHandler.target: no own descriptor on prototype",
+          "EventHandler.target: no own descriptor on static",
+          "VideoPlayer.LOCAL: no own descriptor on prototype",
+          "VideoPlayer.LOCAL: no own descriptor on static",
+          "VideoPlayer.REMOTE: no own descriptor on prototype",
+          "VideoPlayer.REMOTE: no own descriptor on static",
+          "VideoPlayer.videoPlayerEvent: no own descriptor on prototype",
+          "VideoPlayer.videoPlayerEvent: no own descriptor on static"
+        ],
+        "observed": 23,
+        "total": 37
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 33,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Canvas",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 2,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 951,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Component",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 18,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "EventHandler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "EventHandler.component",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "EventHandler.customEventData",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "EventHandler.handler",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "EventHandler.target",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "GraphicsComponent",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 4,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "GraphicsComponent.clear",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 626,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "GraphicsComponent.fill",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 322,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "GraphicsComponent.rect",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 948,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "GraphicsComponent.stroke",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 626,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Label",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 4,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 9,
+          "reads": 54,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.on",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 37,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "ResolutionPolicy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Screen.exitFullScreen",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Screen.requestFullScreen",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "UITransform",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 7,
+          "reads": 28,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoClip",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoPlayer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 43,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoPlayer.LOCAL",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoPlayer.REMOTE",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoPlayer.pause",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoPlayer.play",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoPlayer.resume",
+          "proof": "unproven",
+          "state": "not-observed",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "VideoPlayer.videoPlayerEvent",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "assetManager",
+          "proof": "attested",
+          "state": "not-instrumentable",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "namespace",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "js.setClassName",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "macro",
+          "proof": "attested",
+          "state": "not-instrumentable",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "namespace",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "screen",
+          "proof": "attested",
+          "state": "not-instrumentable",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "namespace",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "view",
+          "proof": "attested",
+          "state": "not-instrumentable",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "namespace",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "expectationGaps": {
+        "transform-equals": {
+          "compared": 8,
+          "graph": 8,
+          "missing": []
+        },
+        "material-property": {
+          "compared": 0,
+          "graph": 8,
+          "missing": [
+            "Canvas",
+            "UICamera",
+            "Status",
+            "Hint",
+            "FrameGuide",
+            "Clock",
+            "ClockHost",
+            "VideoHost"
+          ]
+        },
+        "asset-loaded": {
+          "paths": 0,
+          "specAssets": 1,
+          "kinds": 0
+        }
+      },
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=9"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "8 expected nodes present"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "14 declared components matched (nodes 8/8 in graph) | coverage 8/8 nodes authored"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=1.0000"
+        },
+        {
+          "validatorId": "interaction:frame-diff",
+          "state": "PASS",
+          "detail": "canvas state changed after real input"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "FAIL",
+          "detail": "1 runtime errors during release/reload: p3Controls@http://127.0.0.1:56721/main.js:365:20\nasync runSequence@http://127.0."
+        },
+        {
+          "validatorId": "api-executed",
+          "state": "FAIL",
+          "detail": "1/37 claimed APIs never executed: VideoPlayer.resume"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/v12/v11chain-r45j/diag-video-basic-wk-d1/video-basic.png",
+        "bytes": 8835,
+        "hash": "86be8cab04ba0c7b"
+      },
+      "assetDigests": [
+        {
+          "path": "assets/clip.mp4",
+          "declared": true,
+          "bytes": 25279,
+          "hash": "6ff568dbe13fd606",
+          "present": true
+        }
+      ],
+      "nodeCount": 0,
+      "errors": [
+        "resource-released: 1 runtime errors during release/reload: p3Controls@http://127.0.0.1:56721/main.js:365:20\nasync runSequence@http://127.0.",
+        "api-executed: 1/37 claimed APIs never executed: VideoPlayer.resume"
+      ],
+      "attempts": 2
+    }
+  ]
+}

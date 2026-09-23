@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AIR WebView Error Page</title>
+<style>
+    html, body { margin: 0; height: 100%; background: #1b1f28; color: #f2c9c0;
+                 font-family: system-ui, sans-serif; }
+    .box { padding: 18px 14px; }
+    .code { font-size: 34px; font-weight: 700; letter-spacing: 2px; color: #ff7d6b; }
+    p { font-size: 12px; line-height: 1.6; margin: 8px 0 0; }
+    .pulse { width: 100%; height: 8px; background: #ff7d6b; animation: fade 1.2s ease-in-out infinite alternate; }
+    @keyframes fade { from { opacity: .25; } to { opacity: 1; } }
+</style>
+</head>
+<body data-page="webview-basic-error-like">
+<div class="box">
+    <div class="code">404</div>
+    <p>本页由矩阵内同源提供，HTTP 状态码是 <b>200</b>。<br>
+    它的存在只为触发 web 实现里那条正文嗅探：<br>
+    <code>body.innerHTML.includes('404')</code> ⇒ 派发 <code>error</code> 事件。</p>
+</div>
+<div class="pulse"></div>
+</body>
+</html>

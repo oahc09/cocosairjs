@@ -1,0 +1,522 @@
+{
+  "id": "particle-2d-basic",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Particle System 2D — 程序化 plist 解析 / 模拟定步 / 出图 (V12 LV12-07)",
+  "category": "particle-2d",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "Component",
+    "UITransform",
+    "Layers",
+    "Color",
+    "Label",
+    "SpriteFrame",
+    "Texture2D",
+    "ImageAsset",
+    "ParticleSystem2D",
+    "ParticleSystem2D.resetSystem",
+    "ParticleSystem2D._simulator",
+    "ParticleSystem2D._renderSpriteFrame",
+    "ParticleSystem2D.emitterMode",
+    "ParticleSystem2D.gravity",
+    "ParticleSystem2D.speed",
+    "ParticleSystem2D.startSize",
+    "ParticleSystem2D.endSize",
+    "ParticleSystem2D.life",
+    "ParticleSystem2D.emissionRate",
+    "ParticleSystem2D.duration",
+    "ParticleSystem2D.rotationIsDir",
+    "ParticleAsset",
+    "math.setRandGenerator",
+    "math.random",
+    "view",
+    "ResolutionPolicy",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.on"
+  ],
+  "capabilities": [
+    "particle-2d"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：程序化生成的 plist 必须走引擎自己的 `assetManager.parser.parsePlist → ParticleAsset._nativeAsset → ParticleSystem2D.file → _applyFile → _initWithDictionary` 真实通路，字段映射、两种发射器模式、三种 positionType、duration 收尾与贴图/混合状态都要在种子化随机 + 手工定步下三引擎逐字节一致，并且真的出图",
+    "points": [
+      "决定性三件套：plist 文本运行时程序化生成后交引擎解析（不是手写组件属性）；`math.setRandGenerator(seededRandom)` 换掉随机源让所有 variance 抽样跨引擎同串；求值用 `simulator.step(1/60)×N` 手工定步。实测 chromium/firefox/webkit 三份 `__probe()` 的 28 个 phase 键、约 50 项读回逐字节相同（`tools/v12/browser-matrix-contract.json` 的 probeEquals 全等，`docs/evidence/v12/browser-matrix.json` 三引擎 records 全 PASS）",
+      "`step(dt)` 会把 dt 夹到 `assembler.maxParticleDeltaTime`，而该值只在**第一次**取 assembler 时由 `cclegacy.game.frameTime/1000*2` 定死（本例首取实测 0.033333）。不定住它，同一段定步代码在慢机器上会被悄悄夹小 ⇒ 本例首行就把它读到 results 里再显式设成 0.05，收尾时还原",
+      "`custom = true` 会整段跳过 `_initWithDictionary` ⇒ 号称「程序化 plist」其实 plist 解析与字段映射一行都没跑。本例恒置 `custom = false`，并断言 `emitterMode/gravity/speed/startSize/endSize/life/emissionRate/duration/rotationIsDir` 全部由 plist 推导出来（P1 读回 gravity=[0,-100]、speed=60、life=1、emissionRate=10、duration=-1）",
+      "plist 缺省推导规则实测：无 `emissionRate` 键 ⇒ `min(maxParticles/life)`（24/1.5=16）；`finishParticleSize: -1` ⇒ `endSize=-1` 且尺寸不随寿命衰减（P4 60 步后首粒 size 仍是 6）；`maxParticles: 40.7` ⇒ `totalParticles` 取整为 40；`rotationIsDir` 的 plist 布尔被解析成 JSON `true` 并映射为组件 `rotationIsDir=true`",
+      "发射栅格与上限：rate=10/life=1 时第 6 步（elapsed 0.1）emitCounter 恰好归零、第 7 步才出现第 1 粒；30 步存活 4 粒、160 步稳态 10 粒（= rate×life 的栅格解）；`maxParticles: 3` 时 20 步只到 3 粒且 `vertexCount=12`（每粒 4 顶点）",
+      "positionType 三态差别只在 `startPos`：FREE(0) 记世界位置 [30,20]、RELATIVE(1) 记本地 [0,40]、GROUPED(2) 记本地且发射后移动节点会整体带走（rig 移到 (0,-100) 后 worldPosition 变 [30,-120]，而已存粒子 startPos 仍是 [30,20]）；`particle.pos` 三种模式同为 [0.8,0]，只看 pos 会误判成「positionType 没生效」",
+      "radius 发射器（emitterType=1）字段换名：`maxRadius→startRadius`、`minRadius→endRadius`、`rotatePerSecond→弧度/秒`（90°/s ⇒ dps=1.570796）；10 步后 radius=58、angle=0.10472 rad、pos=[-57.6823,-6.0627]。gravity 模式的 `angle` 还会被节点 worldRotation 旋转：节点转 90° 后 dir 从 [30,0] 变成 [0,30]",
+      "duration 收尾：duration=0.2 在第 13 步（elapsed 恰好 0.2）置 `stopped=true / active=false`，emitCounter 归 0，但已发射的 2 粒继续存活到各自寿命 ⇒ 「停止发射」≠「清空系统」",
+      "⚠️ blend 值是本例踩到的真坑：`ParticleSystem2D` 把 plist 的 `blendFuncSource/blendFuncDestination` 原样 `wrapParseInt` 进 gfx 的 `BlendFactor` 枚举槽位，既不校验也不换算（P10 读回 `_srcBlendFactor=770`、`_dstBlendFactor=1`）。而 770 是裸 GL 常量 GL_SRC_ALPHA，gfx 枚举只到 14 ⇒ WebGL 侧越界被当作 GL_ZERO，源色乘 0、目的色保留 ⇒ 粒子**模拟、批次、IA、buffer、drawElements 全部正常且零 GL 错误，但一个像素都不变**（`frameChanged:false`）。同一张贴图同一个 batcher 用枚举值 SRC_ALPHA=2/ONE=1 立刻出图（`E:/AIProMax/cocosair-scratch/v12-diag/diag-2-nopack1gfxblend1.png` 四变体全亮）。plist 不含 blend 键时回到枚举默认 2/4（ONE_MINUS_SRC_ALPHA），本例把这两组值都锁进 probeEquals",
+      "贴图必须在 `createAirApp` 之后创建：设备就绪前 `new Texture2D().image = canvas` 会让 `_gfxDevice` 永远为 null，表现为每帧 `Can't getGFXSampler with out device`（errorID 9302）+ batcher 读 `sampler.hash` 崩",
+      "plist 的寿命键必须写官方键名 `particleLifespan`：`_initWithDictionary` 读的是 `dict.particleLifespan`，写成语义更直观的 `life` 会被静默忽略 ⇒ `life=0`，而 `emissionRate` 缺省时按 `totalParticles / life` 反推并被 `Math.min` 夹成 `Number.MAX_VALUE`；实测 10 个定步后 `particles.length=0`、`vertexCount=0`，屏幕上什么都没有且零告警",
+      "`spriteFrame` setter 只在传入帧带 `_uuid` 时才写 `_spriteFrame`，运行时程序化帧没有 uuid ⇒ `_spriteFrame` 恒空、读帧只能看 `_renderSpriteFrame`；也因此 `file` 的 `_applyFile` 里 `this._spriteFrame !== file.spriteFrame` 两边都是 null，不会覆盖示例先前赋的帧（实测四变体 `_renderSpriteFrame` uv 恒为整帧 0/0/1/1），而会把帧换成内置 2048×2048 图集子矩形（uv 0.0009765625…0.0322265625）的 `_initTextureWithDictionary` 只在 `custom=true` 分支才走到 ⇒ 帧与 `file` 的赋值顺序无关"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas + UICamera + Status + Rig(30,-20) + 三个 ParticleSystem2D：Flame（gravity 型，maxParticles 260/rate 140/life 1.1，橙红相加混合）、Ring（radius 型，minRadius 96/maxRadius 8/rotatePerSecond 42，蓝色）、Probe（读回用，挂在偏移的 Rig 下）。真实点击一次性跑完 10 阶段手工定步序列（`simulator.step(1/60)×N`，种子 LCG，dt 夹取定死 0.05），读回 28 个 phase 键：clampFromFirstAssemblerFetch=0.033333；P1 plist 35 个键解析无错、第 6 步 emitCounter=0.1 且 0 粒、第 7 步 1 粒、30 步 4 粒/16 顶点、首粒 pos=[24,-8.3333] dir=[60,-40] size=12 rotation=36 ttl=0.6 startPos=[30,20]；P2 160 步 10 粒、resetSystem 后 0 粒 0 顶点；P3 maxParticles=3 时 20 步 cap 在 3 粒 12 顶点；P4 无 emissionRate 键推导 16、finishParticleSize=-1 时 endSize=-1 且 60 步后尺寸仍 6；P5 FREE startPos=[30,20] vs RELATIVE startPos=[0,40]（pos 同为 [0.8,0]）；P6 radius 模式 radius=58 angle=0.10472 dps=1.570796 pos=[-57.6823,-6.0627]；P7 节点转 90° 后 dir=[0,30]；P8 duration=0.2 在第 13 步 stopped=true/active=false、elapsed=0.2、仍存活 2 粒；P9 GROUPED 移动节点后 worldPosition=[30,-120]；P10 maxParticles 40.7→totalParticles 40、rotationIsDir true、textureImageData 的 <data> 标签解析为 null、未知键保留、`_srcBlendFactor/_dstBlendFactor` = 770/1 原样透传、plist 无 blend 键时回到 2/4、`dstBlendFactor` 无公开 getter、getMaterialInstance(0) 返回实例、`_renderSpriteFrame` 仍归示例所有；终态两个活系统各 146 粒",
+    "visual": "深蓝底（clearColor 10,14,26）一屏：左下橙色火焰柱（gravity 型，相加混合，底部亮黄向上渐红渐隐），右中蓝色环形烟花（radius 型，绕心旋转的散点环），顶部一行状态文字 `particle plist step=30 count=4 p0=(24,-8.3333) verts=16`。点击前画面只有状态行与深蓝底，点击后两团粒子真实出图（frame-diff 可测，三引擎矩阵 frameChanged 全 PASS，PNG 54–64 KB ≫ 5000 B 地板）"
+  },
+  "api": {
+    "primary": [
+      "ParticleSystem2D",
+      "ParticleAsset"
+    ],
+    "supporting": [
+      "ParticleSystem2D.resetSystem",
+      "ParticleSystem2D._simulator",
+      "ParticleSystem2D._renderSpriteFrame",
+      "ParticleSystem2D.emitterMode",
+      "ParticleSystem2D.gravity",
+      "ParticleSystem2D.speed",
+      "ParticleSystem2D.startSize",
+      "ParticleSystem2D.endSize",
+      "ParticleSystem2D.life",
+      "ParticleSystem2D.emissionRate",
+      "ParticleSystem2D.duration",
+      "ParticleSystem2D.rotationIsDir",
+      "math.setRandGenerator",
+      "math.random",
+      "SpriteFrame",
+      "Texture2D",
+      "ImageAsset",
+      "Node.on"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Canvas",
+      "Component",
+      "UITransform",
+      "Layers",
+      "Color",
+      "Label",
+      "SpriteFrame",
+      "Texture2D",
+      "ImageAsset",
+      "ParticleSystem2D",
+      "ParticleSystem2D.resetSystem",
+      "ParticleSystem2D._simulator",
+      "ParticleSystem2D._renderSpriteFrame",
+      "ParticleSystem2D.emitterMode",
+      "ParticleSystem2D.gravity",
+      "ParticleSystem2D.speed",
+      "ParticleSystem2D.startSize",
+      "ParticleSystem2D.endSize",
+      "ParticleSystem2D.life",
+      "ParticleSystem2D.emissionRate",
+      "ParticleSystem2D.duration",
+      "ParticleSystem2D.rotationIsDir",
+      "ParticleAsset",
+      "math.setRandGenerator",
+      "math.random",
+      "view",
+      "ResolutionPolicy",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.on"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene/.prefab 或外部 .plist/.png 冒充「程序化 plist」（必须运行时生成 plist 文本并交 `assetManager.parser.parsePlist` 解析）",
+      "设 `custom = true`（会跳过 `_initWithDictionary`，plist 解析与字段映射一行都没跑，等于自证未测）",
+      "依赖帧率/墙钟时间做粒子断言（必须 `math.setRandGenerator` 种子化 + `simulator.step(1/60)×N` 手工定步，并显式定住 `assembler.maxParticleDeltaTime`，否则 dt 被首取时算出的 frameTime 悄悄夹小）",
+      "把 plist 的 `blendFuncSource/blendFuncDestination` 写成裸 GL 常量（770/1 等）：引擎原样塞进 gfx `BlendFactor` 枚举槽位，越界值在 WebGL 侧当作 GL_ZERO ⇒ 粒子全部模拟正常、零 GL 错误但一个像素都不画。必须写 gfx 枚举（ZERO=0、ONE=1、SRC_ALPHA=2、ONE_MINUS_SRC_ALPHA=4）",
+      "在 `createAirApp` 之前创建 Texture2D/ImageAsset（设备未就绪 ⇒ `_gfxDevice` 恒 null，每帧 errorID 9302 并在 batcher 崩溃）",
+      "手写 plist 时按直觉用非官方键名（如把寿命写成 `life` 而不是 `particleLifespan`）：未知键被静默忽略，缺寿命键 ⇒ `life=0` 且 `emissionRate` 反推成 `Number.MAX_VALUE`，粒子同帧即死，观测上与「blend 越界」「贴图没上传」同形且零报错",
+      "在 `custom=false` 的 `file` 通路下依赖 `_spriteFrame` 读回帧（运行时程序化帧没有 `_uuid`，setter 不写 `_spriteFrame`，只有 `_renderSpriteFrame` 有值）；反过来把 `_initTextureWithDictionary` 换内置图集子矩形的分支当成必然（它只在 `custom=true` 才走到，实测帧与 file 赋值顺序无关）",
+      "只读 `particle.pos` 就断言 positionType 生效（FREE/RELATIVE/GROUPED 三态下 pos 相同，差别在 `startPos` 与发射后节点移动的处理）",
+      "只 addComponent 不给页面外可读回的定步数值（必须有 plist 键数、emitCounter、逐粒 pos/dir/size/rotation/ttl/startPos/radius/angle/dps 与 blend 透传值等断言）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L133"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L127"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L446"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L43"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L135"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "SpriteFrame",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "Texture2D",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "ParticleSystem2D",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L167"
+      },
+      {
+        "api": "ParticleSystem2D.resetSystem",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L280"
+      },
+      {
+        "api": "ParticleSystem2D._simulator",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L218"
+      },
+      {
+        "api": "ParticleSystem2D._renderSpriteFrame",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L400"
+      },
+      {
+        "api": "ParticleSystem2D.emitterMode",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L236"
+      },
+      {
+        "api": "ParticleSystem2D.gravity",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L238"
+      },
+      {
+        "api": "ParticleSystem2D.speed",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L178"
+      },
+      {
+        "api": "ParticleSystem2D.startSize",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L240"
+      },
+      {
+        "api": "ParticleSystem2D.endSize",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L241"
+      },
+      {
+        "api": "ParticleSystem2D.life",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L233"
+      },
+      {
+        "api": "ParticleSystem2D.emissionRate",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L178"
+      },
+      {
+        "api": "ParticleSystem2D.duration",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L178"
+      },
+      {
+        "api": "ParticleSystem2D.rotationIsDir",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L386"
+      },
+      {
+        "api": "ParticleAsset",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L81"
+      },
+      {
+        "api": "math.setRandGenerator",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L274"
+      },
+      {
+        "api": "math.random",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L434"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L138"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "Node.on",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L444"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "Rig",
+        "Flame",
+        "Ring",
+        "Probe"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）画布任意处一次：一次性跑完 10 阶段的手工定步序列（种子化 LCG + `simulator.step(1/60)×N`，dt 夹取定死 0.05，结束还原随机源与 clamp）",
+        "expected": "画面从「只有深蓝底 + 状态行」变为「左下橙色火焰柱 + 右中蓝色环形烟花 + 状态行写入 P1 读回」，frame-diff 可测；ParticleSystem2D / ParticleAsset / resetSystem / _simulator 在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Canvas": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 123,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      },
+      "UICamera": {
+        "position": [
+          0,
+          0,
+          1000
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 132,
+            "text": "cameraNode.setPosition(0, 0, 1000);"
+          }
+        ]
+      },
+      "Status": {
+        "position": [
+          0,
+          162,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 145,
+            "text": "statusNode.setPosition(0, 162, 0);"
+          }
+        ]
+      },
+      "Rig": {
+        "position": [
+          30,
+          -20,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 157,
+            "text": "rig.setPosition(30, -20, 0);"
+          }
+        ]
+      },
+      "Flame": {
+        "position": [
+          -140,
+          -120,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 172,
+            "text": "makeParticle(Flame) → position [-140,-120,0]（工厂形参见 L173）"
+          }
+        ]
+      },
+      "Ring": {
+        "position": [
+          140,
+          -60,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 173,
+            "text": "makeParticle(Ring) → position [140,-60,0]（工厂形参见 L173）"
+          }
+        ]
+      },
+      "Probe": {
+        "position": [
+          0,
+          40,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 174,
+            "text": "makeParticle(Probe) → position [0,40,0]（工厂形参见 L173）"
+          }
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（粒子贴图为运行时 canvas 程序化绘制；plist 文本运行时程序化生成；particle-2d 模块为 cocos4 上游 TypeScript 端口，逐字节同源于 src/cocos/particle-2d，随 bundle 出处登记）"
+  },
+  "promotion": {
+    "spec": "d8a9dd22b4c3",
+    "source": "e87330f4b1d52ba0",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 22,
+    "attested": 12,
+    "units": 34
+  }
+}

@@ -1,7 +1,7 @@
 {
   "meta": {
     "generatedAt": "2026-09-12T02:07:25.970Z",
-    "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+    "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "platform": "HTML5",
     "mode": "BUILD",
     "airFeatures": [

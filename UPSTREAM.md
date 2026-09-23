@@ -7,18 +7,142 @@
 | 项 | 值 |
 |---|---|
 | Upstream package | `cocos-creator` |
-| Upstream version | `4.0.0-alpha.33` |
+| Upstream version | `4.0.0-alpha.34`（V0.1 抽取时为 `4.0.0-alpha.33`） |
 | Upstream creator field | `3.8.8` |
 | Upstream repository | https://github.com/cocos-creator/engine |
-| Baseline Date | 2026-09-12 |
-| Upstream commit SHA | 不可用（见 Deviation-01） |
+| Baseline Date | 2026-09-12（alpha.33 快照）→ 2026-09-19（alpha.34 对齐，V1.2 G0） |
+| Upstream commit SHA | 工作副本 HEAD `557b06f7e636572a15a426eb8c2387f40b92798a`；**V1.2 冻结对齐点 `fffd9a514a`（bump to 4.0.0-alpha.34）** |
 
-## Deviation-01: 上游 commit SHA 不可得
+## V1.2 G0 基线升级记录（2026-09-19/22）
 
-- 现象：本地目录为一次性下载的上游源码快照，随后才执行 `git init`，git 仓库内无任何 commit、无 remote、无 packed-refs。
-- 影响：无法以 `cocos4 @ <commit SHA>` 形式记录基线。
-- 处理：以 **引擎版本号（4.0.0-alpha.33）+ 快照日期（2026-09-12）+ 目录指纹统计** 作为基线标识，详见 `docs/00-upstream-baseline.md`。
-- 后续如获得上游仓库地址与对应 commit，应补记本文件。
+1. `cocos4` 现为**有完整历史与 remote 的 git 仓库**，Deviation-01 关闭。
+2. alpha.33 → alpha.34 触及 `cocos/` 的提交实测 **4 个**（V1.2 计划书 §2.1 原记 2 个，已修正）：
+   `60f9352c56` #336 createMesh 索引格式自适应、`6b455561f4` #338 noise 优化、
+   `f66365f959` #334 TerrainInfo `@visible(false)`、`2a75cfb9da` #329 webgpu pipelinelayout 顺序。
+3. 冻结点后 HEAD 另有 `b46553e615` #341、`557b06f7e6` #343 两个提交，均标注 native platform，
+   按计划书 R7「V1.2 期间冻结对齐点」不追。
+4. 漂移修复执行：`src/cocos/3d/misc/create-mesh.ts`、`src/cocos/particle/noise.ts` 已从上游逐字节复制对齐；
+   `src/cocos/rendering/custom/web-program-library.ts` 实测此前已一致。详见 `docs/v12-upstream-regression.md`。
+5. 全量比对脚本化：`node tools/compare/baseline-compare.cjs [--upstream <dir>]` → `docs/v12-baseline-compare.json`。
+
+## Deviation-01: 上游 commit SHA 不可得 —— **已关闭（2026-09-19，V1.2 G0）**
+
+- 原现象：本地目录为一次性下载的上游源码快照，随后才 `git init`，无 commit / 无 remote。
+- 关闭依据：`cocos4` 现具备完整 git 历史，可解析 `git rev-parse HEAD` = `557b06f7e6`，
+  且 alpha.33 / alpha.34 的 bump 提交（`7f806abad6` / `fffd9a514a`）均可定位。
+- 后续报告与提交说明改用：`cocos4 @ 4.0.0-alpha.34 (commit fffd9a514a)`。
+
+## Deviation-02: `cocos/root.jsb.ts` 不抽取（V1.2 决策点 D4，批次 F-2）—— **豁免登记**
+
+- 上游事实：`cocos/root.jsb.ts` 是 `cocos/root.ts` 的 **native(jsb) 入口变体**，由 `cc.config.json`
+  的 `moduleOverrides`（`test: context.buildTimeConstants.NATIVE`）在 native 构建时整体替换 `root.ts` 等入口；
+  其代码依赖 `jsb` / `cc.*` native 绑定全局符号。
+- Air 口径：Air 为纯 Web 闭包（计划书 §1.3 排除全部 54 个 `*.jsb.ts`；护栏 5 要求「回归文件不得引入 native/minigame 闭包，
+  54 个 jsb 变体依旧零进入」）。抽取该文件不会进入任何 Web feature unit 的闭包，只会把 `jsb` 符号面引入仓库，
+  并被 `tools/verify/verify-web-only.cjs` 判为违规。
+- 处置：**不抽取**，作为 §1.1 回归组 12 的约定豁免。可复核证据：
+  `node tools/compare/baseline-compare.cjs` → `docs/v12-baseline-compare.json`
+  的 `upstreamOnlyByCategory["platform.jsb-variant"]`（54 项，含 `cocos/root.jsb.ts`）。
+  同步登记于 `docs/17-baseline-comparison.md` §9.2。
+- 复议条件：若评审要求「12/12 物理对齐」，则按计划书备选口径原样复制且不接线（零风险），需另行授权。
+
+## Deviation-03: 上游零引用者文件按原文落位但不接线（V1.2 批次 F-1）
+
+- 计划书 F-1 要求 `cocos/deprecated.ts` 抽取后「在 exports/base 或独立出口中按官方引用方式挂接」。
+- 实测上游 `4.0.0-alpha.34`：`cocos/deprecated.ts` **零引用者**（`grep -rn "cocos/deprecated"` 在
+  `cocos/`、`exports/`、`typedoc-index.ts`、`cc.config.json` 均无 importer；该文件最后触及提交为 2023 年 `afd22296b4`）。
+  官方 Web 构建因此同样不含它注册的 `Root.prototype.ui → batcher2D` 别名。
+- 处置：文件按官方原文逐字节抽取并登记（满足 §1.3 差集口径），**不新增 feature unit、不接线**——
+  「官方引用方式」即无引用。运行语义在 `test/smoke/smoke-30-v12-regression.test.ts` 的 F-1 项验证：
+  显式 import 后别名 getter/setter 生效、除注册警告外无其他副作用。
+  同类情形：`cocos/serialization/deserialize-dynamic-empty.ts`（见 §9.2 `needs-decision.unreferenced-upstream-file`）。
+
+## Deviation-04: gfx-webgpu 子图「已抽取、未接线、暂不类型核对」（V1.2 批次 E / 决策点 D10）—— **部分交付 + 待确认**
+
+- 已完成：`cocos/gfx/webgpu/**`（24）+ `cocos/webgpu/instantiated.ts` + `exports/gfx-webgpu.ts` 共 26 文件按官方原文逐字节抽取
+  （`node tools/v12/regress.cjs --group E1 …` → `wrote 26/26; byte-identical 26; DIFF 0; MISSING 0`），并已登记进
+  `docs/extraction-manifest.json` 与 `docs/upstream-file-map.json`；类型面补上官方逐字节 `@types/webGPU.d.ts`（3258 行）。
+- 受阻事实（三条，均可复现，证据见 `docs/evidence/v12/d10/README.md`）：
+  1. **上游引用图本身不经过 Web**：`cocos/gfx/index.ts`（web 变体）对 webgpu 零引用，唯一接线者是 `cocos/gfx/index.ems.ts`
+     （emscripten 平台变体，与 54 个 `*.jsb.ts` 同类，按 §1.3/护栏 5 不抽取）。
+  2. **运行时与类型资产不在基线快照内**：`cocos4/native/external/` 整个目录不存在，`webgpu_wasm/glslang/twgsl` 的 `.js/.wasm`
+     与配套 `.d.ts` 需上游 `npm run update:native-external` 联网拉取。因此 Air 侧 `npm run typecheck` 命中 12 条硬错
+     （`TS6053` / `TS2307 external:emscripten/webgpu/*` / `TS1343 import.meta` / 上游 `webgpu-define.ts:39` 的 `import { warn } from 'console'` 笔误 /
+     `TS2550 matchAll·at` 需 `lib≥es2020`），变体构建 `exit=1`（`Could not load external:emscripten/webgpu/glslang.js … ENOENT`）。
+  3. **上游自身在本快照内也无法核对**：`cocos4` 里跑 `tsc -p tsconfig.json --noEmit` → `exit=2`，10×`TS2688`（含 `./native/external/emscripten/webgpu/webgpu`、
+     `./@types/consts`），说明「与上游对等的 gfx-webgpu 类型面」在快照内无参照物。
+- Air 处置：**两处**按上游引用图对等豁免，且都写成可复跑断言——① 根 `tsconfig.json`（Air 自有）三项 exclude 移出类型核对；
+  ② `src/tsconfig.json` 同名三项 exclude 移出发布声明图（实测 `dtsBundler` 会把 `exports/**` 全量收进 d.ts，
+  于是未接线的后端在 `cc.d.ts` 里凭空多出 `export class WebGPUDevice`，而默认 bundle 导出表没有它 → 类型/产物不一致，+60,649 B）。
+  `cc.config.json` 的 `features["gfx-webgpu"]` 登记也因此**回退**（登记即并入发布类型面）。
+  **未写任何替代实现、未放宽 `lib`/`module`**。豁免范围由 `smoke-30`「批次 E / D10」三条断言锁定
+  （exclude 清单精确匹配、子图外零引进口、抽取件仍在簿记内），不允许静默扩大。
+- 交付面零影响（护栏 7，逐字节）：批次 E 前后三份发布产物完全不变 ——
+  dev `6,081,668 B` / sha256 `35496aebda066ab5…`，min `3,499,182 B` / `8795c8685ace28a1…`，
+  d.ts `3,082,360 B` / `sha256sum -c` OK；`npm run typecheck` 与 `npm run verify:web-only` PASS。
+- 待确认（D10）：三选一 —— (a) 授权联网拉取第三方 emscripten 资产（`glslang/twgsl/webgpu_wasm` 的 js+wasm 及配套 d.ts）入 `src/native/external/emscripten/`
+  并做许可审计，再补 `WEBGPU=true` 常量通道与 `device` 探测链路；(b) 手写类型替身 + 放宽 `module/lib` 以强行让子图入核对（与 §1.1「不得手写替代」冲突，不推荐）；
+  (c) 批次 E 以「抽取完成、运行面按官方平台变体口径豁免」结案。计划书要求豁免须「可复核理由并经确认」，故本项在得到答复前不计入验收通过。
+
+## Deviation-05: 三个 wasm 后端子图「已抽取、未接线、暂不类型核对」（V1.2 批次 D-4 / G-3，决策点 D3 / R8）—— **部分交付 + 待确认**
+
+- 已完成：`cocos/physics/bullet/**`（30）+ `cocos/physics/physx/**`（26）+ `cocos/physics-2d/box2d-wasm/**`（23）+
+  `exports/physics-ammo.ts` / `exports/physics-physx.ts` / `exports/physics-2d-box2d-wasm.ts` 共 **82** 文件按官方原文逐字节抽取，并已登记进
+  `docs/extraction-manifest.json`（1196 → 1278）与 `docs/upstream-file-map.json`（1233 → 1315）：
+  `node tools/v12/regress.cjs --group G3-physics-bullet-physx --features physics-ammo,physics-physx --prefix cocos/physics/bullet,cocos/physics/physx --exports physics-ammo,physics-physx`
+  → `wrote 58/58; byte-identical 58; DIFF 0; MISSING 0`；`--group D4-physics-2d-box2d-wasm` 同型 → `24/24 byte-identical`。
+  `npm run verify:file-map` PASS（`rows=1315 manifest=1278`）。上游第 83 个种子 `cocos/physics/physx/instantiate.jsb.ts`
+  按 §1.3 / 护栏 5 **零进入**（`regress.cjs` 自动 skip，且 `smoke-30` 断言磁盘上不存在该文件）。
+- 纳入范围按闭包实测而非推断：83 个种子沿静态 import 求传递闭包 = 上游 764 文件，其中 **678** 已在 Air 且逐字节一致、
+  **3** 为「已在 Air 但与上游不同」（`cocos/core/platform/debug.ts`、`cocos/core/utils/path.ts`、`cocos/rendering/global-descriptor-set-manager.ts`，
+  均为 upstream-file-map 在册的 Air 修改）、净新增恰为 83 个种子 ⇒ **零连带扩面**。
+- 受阻事实（与 D10 同因）：三后端的**类型面与运行时资产同源同缺** —— 上游根 `tsconfig.json` 的 `types[]` 指着
+  `./native/external/emscripten/{bullet/bullet,physx/physx,box2d/box2d}.d.ts`，该目录不在基线快照内（需上游 `npm run update:native-external` 联网拉取）。
+  实测把子图纳入类型核对时 `npm run typecheck` 从 0 红到 **118**：`Cannot find namespace 'Bullet'` ×35、
+  `Namespace 'B2' has no exported member …`（box2d-wasm 合计 74 条）、`Cannot find module 'external:emscripten/{bullet,physx}/…'`、
+  `Cannot find namespace 'PhysX'`、`Cannot find name 'FilterData'`。上游自身在同一快照内跑 `tsc -p tsconfig.json` 亦 `exit=2`，
+  即「与上游对等的 wasm 后端类型面」在快照内无参照物。
+- Air 处置：与 Deviation-04 同因同治，**两处** tsconfig（根 `tsconfig.json` 与 `src/tsconfig.json`）各加 6 项 exclude（3 子树 + 3 exports 入口），
+  **未写任何替代实现、未写 `any` 垫片、未放宽 `lib`/`module`/`types`**。与 Deviation-04 不同处：`cc.config.json` 的
+  `physics-ammo` / `physics-physx` / `physics-2d-box2d-wasm` 三个 feature unit 按上游原文**保留声明**——因 `src/exports/*.ts` 已移出发布类型图，
+  实测 `cc.d.ts` 逐字节未增长，不会重演「类型面凭空多出未接线后端」。三者也未进 `tools/build/build.cjs` 的默认 `AIR_FEATURES`。
+  豁免范围由 `test/smoke/smoke-30-v12-regression.test.ts`「批次 D-4 / G-3」三条断言 + 精确锁定的 exclude 清单钉住，不允许静默扩大。
+- 交付面零影响（护栏 7，逐字节）：抽取前后三份发布产物完全不变 ——
+  dev `6,081,668 B` / sha256 `35496aebda066ab5…`，min `3,499,182 B` / `8795c8685ace28a1…`，d.ts `3,082,360 B` / `6d01c030d85bf86c…`；
+  `npm run typecheck` EXIT=0、`npm test` 全绿（抽取当轮 r45c 为 31 套件 / 255 用例；补上本条末尾的 smoke-32 后，
+  r45d 整表复跑为 **32 套件 / 261 用例 / 0 failed**，`E:/AIProMax/cocosair-scratch/pg-probe/r45d-jest.log`，
+  清单已 `--update` 回填并经 `verify:test-inventory` 校验 EXIT=0）、`build` 与 `build:min` EXIT=0
+  ⇒ 36 条三引擎矩阵记录与 51 条 V1.1 记录的产物绑定继续有效。
+- 「未接线」的边界（免误读）：只指**默认发行面**不含这三族；**测试面**由 `test/smoke/smoke-32-wasm-fallback.test.ts` 6 条直接驱动三族 loader
+  （`jest.mock(..., {virtual:true})` 顶掉 `external:emscripten/**` 九个说明符，控 `NATIVE_CODE_BUNDLE_MODE` 与 `sys.hasFeature` 两条开关），
+  已把 **asm.js 兜底一支**从「零用例」变为可复跑断言：ASMJS 恒走兜底、BOTH 按能力探测、WASM 成对请求 `.wasm.js`+`.wasm.wasm`、
+  bullet 仅 wasm 支写 `globalThis.Bullet`、physx 的 asm 用 `Object.assign` 而 wasm 重绑定 `PX`、asm 工厂为 null 时早退不改写 `bt`、
+  三族在未开 `LOAD_*_MANUALLY` 时常驻挂在 `game.onPostInfrastructureInitDelegate`。此法**不引第三方资产、不改 `jest.config.js` 的 `moduleNameMapper`**，
+  其余既有用例不受影响（全量计数以 `docs/test-inventory.json` 为准，r45d 为 32 套件 / 261 用例）。运行级**真实出图**（三引擎矩阵）仍卡 #10 的资产缺口。
+- 待确认（D3 / R8，见 `docs/v12-owner-decisions.md` §2 #10 与 §2.1）：本行只覆盖**编译面**的处置。运行级取证
+  （box2d-wasm / ammo / physx 三示例 × 三引擎矩阵）仍卡在同一资产缺口——`external:emscripten/**` 既不在上游快照也不在上游 git
+  （`git ls-files external` 仅 11 文件，Air 11/11 逐字节镜像），且 `@cocos/box2d@1.0.2` 包内 `.wasm` 计数为 **0**，
+  故计划书 D3「来源 = @cocos/box2d 包内资产」前提为假（明细 `docs/v12-physics-asset-sourcing.md`）。三选一：
+  (a) 按计划书自带默认 D8 口径结案（代码回归 + 选择器可达 + 降级路径可测 = 部分通过、显著标注、不阻塞 Gate）；
+  (b) 从官方 npm/CDN 引入 wasm 资产入发行物（需许可登记 + `verify:licenses` / `verify:web-only` / bundle 预算三处门禁同步改 + 全量重采）；
+  (c) 记「不达」。答复前 LV12-14 / LV12-16 不计入验收通过。
+- 自办欠账进度：**~~`asm.js` 兜底分支零用例~~ 已收口**（r45c 写就 `test/smoke/smoke-32-wasm-fallback.test.ts` 6 条 / r45d 整表复跑 + 清单回填，见上一条）；
+  **~~scratch 判据脚本随文件系统即失~~ 部分清偿**（r45d 新增正式门禁 `npm run verify:v12-backends` = `tools/v12/verify-wasm-backends.cjs`，
+  把 `wasm-backend-closure` / `closure-unresolved-detail` / `feature-units` / `physx-count-recon` 四份一次性判据固化成六条只读不变量：
+  A1 闭包 764 文件（除 1 个 jsb 变体）全部落盘、A2 seed/闭包/jsb 集合/默认 `AIR_FEATURES` 数未漂移、
+  A2 seed 内相对说明符零条解析不到上游、A3 闭包内字节偏差集合 ⊆ 在册 3 项、A4 `external:emscripten/**` 仍是登记的 9 个且只出现在动态分支、
+  A5 feature 声明面 34/55/22 + `airOnly=["air"]` + 三后端定义与上游逐字段相同且不进默认集、
+  A6 上游 `types[]` 一旦能解析到 `{bullet,physx,box2d}` 声明即判红 = **Deviation-05 的解禁触发器**（对应 owner #14 候选 (b)）。
+  r45d 现读 `verify:v12-backends` **EXIT=0**（`{"ok":true,"seeds":83,"closureTotal":764,"airByteIdentical":760,"drifted":3,"specs":9}`）；
+  负向对照（仓库外副本改常量）EXIT=1 且两条断言各自起火 ⇒ 门禁非空转。判据脚本仍在 scratch 的其余项：`lv12-16-attribution` / `physx-which-file` / `check-doc-refs`。
+- **UPDATE-r45f（上一行末的「仍在 scratch 的其余项」自本行作废）**：`verify:v12-backends` 增至**七条**（新增 **A7「物理后端子树缺件必须登记在 `docs/v12-baseline-compare.json` 差集任一桶内」**，
+  子树 = `SEED_DIRS` + `cocos/physics/cannon` + `cocos/physics-2d/box2d`；`SEED_DIRS` 另断言非 jsb 缺件数 = 0）。r45f 现读 `EXIT=0`
+  （`{"ok":true,"seeds":83,"closureTotal":764,"airByteIdentical":760,"drifted":3,"specs":9,"subtreeUnregistered":0,"registeredFace":96}`；
+  子树计数 `bullet 30/0/0`、`physx 27/1/0`、`box2d-wasm 23/0/0`、`cannon 20/0/0`、`box2d 22/0/0`，physx 那条 1 即 **Deviation-02** 的 jsb 变体不抽口径下的 `cocos/physics/physx/instantiate.jsb.ts`）；
+  A7 负向控制三份（`pg-probe/negctl-a7*.cjs`：删在册差集条目 / 塞不存在的子树 / 仅钉 ROOT 的阳性对照）→ 前两份 EXIT=1 各报 A7 红项、阳性 EXIT=0。
+  同轮新增两份只读门禁、均不改任何既有判定阈值：`verify:doc-refs`（文档互引棘轮，登记 46 条历史断链为 LV12-21 债务 = F-127）、
+  `verify:v12-custom-face`（LV12-17「custom 导出面一致」半项：两个 `src/exports/custom-pipeline*.ts` 与上游逐字节同、
+  `cocos/rendering/post-process` 34/34 与 `cocos/rendering/custom` 25/26 逐字节同且逐张登记在 `docs/upstream-file-map.json`）。
 
 ## 基线快照统计（2026-09-12）
 

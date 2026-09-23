@@ -1,0 +1,22 @@
+{
+  "ok": false,
+  "mode": "check",
+  "extraJestArgs": [],
+  "manifest": "docs/test-inventory.json",
+  "totals": {
+    "suites": 32,
+    "tests": 262,
+    "passed": 262,
+    "failed": 0
+  },
+  "observedTotals": {
+    "suites": 32,
+    "tests": 262,
+    "passed": 262,
+    "failed": 0
+  },
+  "failures": [
+    "new test not in manifest: test/smoke/smoke-30-v12-regression.test.ts :: smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币 证据目录对账：docs/evidence/v12/ 下每个目录要么被矩阵记录引用，要么在册豁免（不许静默堆积孤儿捕获，也不许留僵尸豁免）"
+  ],
+  "output": null
+}

@@ -1,0 +1,408 @@
+{
+  "id": "ui-layout",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "UI Layout & Widget Adaptivity (V1.2 LV12-09)",
+  "category": "ui",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "Widget",
+    "Layout",
+    "UITransform",
+    "Sprite",
+    "Label"
+  ],
+  "capabilities": [
+    "ui"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：Widget 多边形对齐 + Layout 重排在 Air 单文件产物里随真实视口变化而重算，几何结果由页面外读回断言而不是示例自报",
+    "points": [
+      "视口变化 → window resize → 重设设计分辨率（EXACT_FIT）→ view 'design-resolution-changed' → widgetManager 重排全部 Widget，是自适应的唯一驱动链；断掉任一环 Widget 就不动",
+      "三边对齐（LEFT+TOP+RIGHT）给出恒等于视口宽的顶栏；LEFT+BOTTOM / RIGHT+BOTTOM 给出贴角徽章——左右徽章的 x 差值就是视口宽变化的尺子",
+      "Layout 与 Widget 叠加才有可测 reflow：容器被 Widget 左右各留 30 拉伸，HORIZONTAL/RIGHT_TO_LEFT 于是逐帧重算每个单元的位置",
+      "本例在 V1.1 链上不声明 input 交互（页面没有输入处理），真实交互 = V1.2 三浏览器矩阵的 resize 步骤；两链各自的断言不要混着引用"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas（Widget 四边对齐，尺寸跟随视口）+ UICamera（ORTHO，visibility 含 Layers.Enum.UI_3D）+ TopBar（LEFT+TOP+RIGHT）+ BadgeL/BadgeR（LEFT/RIGHT+BOTTOM 各留 10）+ Row（Widget 左右各留 30，内含 HORIZONTAL/RIGHT_TO_LEFT Layout、spacingX 10、3 个 90x60 单元）。静置 480x360 下引擎局部变换读回：Canvas(240,180)、TopBar(0,160)、BadgeL(-200,-158)、BadgeR(200,-158)、Row(0,20)、Cell0(165,0)/Cell1(65,0)/Cell2(-35,0)。V1.2 矩阵把视口真实改为 320x240 后世界几何全部重算：canvas 480x360→320x240、topBar 宽 480→320、badgeRight x 440→280（badgeLeft 保持 40,22 证明左下角锚定）、row 宽 420→260、单元 x 405/305/205→245/145/45。",
+    "visual": "深蓝底上一屏响应式布局：顶栏横贯且标题实时写着当前视口尺寸、左下绿徽章、右下橙徽章、中央三个等距色块；视口缩小后顶栏变窄、右徽章左移、色块整体重排、标题数字同步（截图 resize 前后各一张）"
+  },
+  "api": {
+    "primary": [
+      "Canvas",
+      "Widget",
+      "Layout"
+    ],
+    "supporting": [
+      "UITransform",
+      "Sprite",
+      "Label",
+      "Camera"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Component",
+      "Canvas",
+      "UITransform",
+      "Widget",
+      "Layout",
+      "Layers",
+      "view",
+      "ResolutionPolicy",
+      "Sprite",
+      "Label",
+      "SpriteFrame",
+      "Texture2D",
+      "ImageAsset",
+      "Color",
+      "math.Vec3",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.getComponent",
+      "UITransform.convertToWorldSpaceAR"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene/.prefab 冒充 Code First",
+      "只改 HTML/CSS 尺寸或用 window 事件手写坐标冒充 Widget 对齐",
+      "在示例里自报『已自适应』而不给页面外可读回的 before/after 几何",
+      "只 addComponent 不改变视口就声称 Layout/Widget reflow 已验证"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L95"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L104"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L191"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L107"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L63"
+      },
+      {
+        "api": "Widget",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "Layout",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L96"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L96"
+      },
+      {
+        "api": "Sprite",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L71"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L86"
+      },
+      {
+        "api": "SpriteFrame",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L53"
+      },
+      {
+        "api": "Texture2D",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L50"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L172"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L63"
+      },
+      {
+        "api": "Node.getComponent",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L63"
+      },
+      {
+        "api": "UITransform.convertToWorldSpaceAR",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L172"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "TopBar",
+        "BadgeL",
+        "BadgeR",
+        "Row",
+        "Cell0",
+        "Cell1",
+        "Cell2"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Canvas": {
+        "position": [
+          240,
+          180,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 110,
+            "text": "cw.left = cw.right = cw.top = cw.bottom = 0;"
+          }
+        ]
+      },
+      "UICamera": {
+        "position": [
+          0,
+          0,
+          1000
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 120,
+            "text": "canvas.cameraComponent = cam;"
+          }
+        ]
+      },
+      "TopBar": {
+        "position": [
+          0,
+          160,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 129,
+            "text": "tw.top = 0;"
+          }
+        ]
+      },
+      "BadgeL": {
+        "position": [
+          -200,
+          -158,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 138,
+            "text": "bl.left = bl.bottom = 10;"
+          }
+        ]
+      },
+      "BadgeR": {
+        "position": [
+          200,
+          -158,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 146,
+            "text": "br.right = br.bottom = 10;"
+          }
+        ]
+      },
+      "Row": {
+        "position": [
+          0,
+          20,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 167,
+            "text": "rw.verticalCenter = 20;"
+          }
+        ]
+      },
+      "Cell0": {
+        "position": [
+          165,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 158,
+            "text": "rowLayout.horizontalDirection = Layout.HorizontalDirection.RIGHT_TO_LEFT;"
+          }
+        ]
+      },
+      "Cell1": {
+        "position": [
+          65,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 156,
+            "text": "rowLayout.spacingX = 10;"
+          }
+        ]
+      },
+      "Cell2": {
+        "position": [
+          -35,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 160,
+            "text": "const cell = makeUINode(`Cell${i}`, rowNode, 90, 60);"
+          }
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（纹理运行时程序化生成）"
+  },
+  "promotion": {
+    "spec": "f15b913767bc",
+    "source": "77f21c2819021f29",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 22,
+    "attested": 1,
+    "units": 23
+  }
+}

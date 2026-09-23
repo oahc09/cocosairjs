@@ -1,0 +1,293 @@
+{
+  "version": "5.5",
+  "frameRate": 24,
+  "name": "AirDragon",
+  "armature": [
+    {
+      "name": "airdragon",
+      "type": "Armature",
+      "frameRate": 24,
+      "defaultActions": {},
+      "bone": [
+        {
+          "name": "root",
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "skew": 0,
+            "rotation": 0,
+            "scaleX": 1,
+            "scaleY": 1
+          }
+        },
+        {
+          "name": "body",
+          "parent": "root",
+          "length": 24,
+          "transform": {
+            "x": 0,
+            "y": 0,
+            "skew": 0,
+            "rotation": 0,
+            "scaleX": 1,
+            "scaleY": 1
+          }
+        },
+        {
+          "name": "wing-left",
+          "parent": "body",
+          "length": 20,
+          "transform": {
+            "x": -6,
+            "y": 6,
+            "skew": 20,
+            "rotation": 20,
+            "scaleX": 1,
+            "scaleY": 1
+          }
+        },
+        {
+          "name": "wing-right",
+          "parent": "body",
+          "length": 20,
+          "transform": {
+            "x": -6,
+            "y": -6,
+            "skew": -20,
+            "rotation": -20,
+            "scaleX": 1,
+            "scaleY": 1
+          }
+        },
+        {
+          "name": "tail",
+          "parent": "body",
+          "length": 28,
+          "transform": {
+            "x": 24,
+            "y": 0,
+            "skew": 0,
+            "rotation": 0,
+            "scaleX": 1,
+            "scaleY": 1
+          }
+        }
+      ],
+      "slot": [
+        {
+          "name": "body",
+          "parent": "body",
+          "z": 0
+        },
+        {
+          "name": "wing-left",
+          "parent": "wing-left",
+          "z": 1
+        },
+        {
+          "name": "wing-right",
+          "parent": "wing-right",
+          "z": 2
+        },
+        {
+          "name": "tail",
+          "parent": "tail",
+          "z": 3
+        }
+      ],
+      "skin": [
+        {
+          "name": "default",
+          "slot": [
+            {
+              "name": "body",
+              "display": [
+                {
+                  "name": "plate",
+                  "path": "",
+                  "type": "Image"
+                }
+              ]
+            },
+            {
+              "name": "wing-left",
+              "display": [
+                {
+                  "name": "wing",
+                  "path": "",
+                  "type": "Image"
+                }
+              ]
+            },
+            {
+              "name": "wing-right",
+              "display": [
+                {
+                  "name": "wing",
+                  "path": "",
+                  "type": "Image"
+                }
+              ]
+            },
+            {
+              "name": "tail",
+              "display": [
+                {
+                  "name": "plate",
+                  "path": "",
+                  "type": "Image"
+                },
+                {
+                  "name": "tip",
+                  "path": "",
+                  "type": "Image"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "animation": [
+        {
+          "name": "flap",
+          "duration": 24,
+          "playTimes": 0,
+          "slot": [
+            {
+              "name": "tail",
+              "displayFrame": [
+                {
+                  "duration": 0,
+                  "value": 0
+                },
+                {
+                  "duration": 12,
+                  "value": 1
+                },
+                {
+                  "duration": 12,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "bone": [
+            {
+              "name": "root",
+              "translateFrame": [
+                {
+                  "duration": 0,
+                  "x": 0,
+                  "y": 0,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 6,
+                  "x": 0,
+                  "y": 10,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 6,
+                  "x": 0,
+                  "y": 0,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 6,
+                  "x": 0,
+                  "y": -10,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 6,
+                  "x": 0,
+                  "y": 0,
+                  "tweenEasing": 0
+                }
+              ]
+            },
+            {
+              "name": "wing-left",
+              "rotateFrame": [
+                {
+                  "duration": 0,
+                  "skew": 20,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 12,
+                  "skew": -25,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 12,
+                  "skew": 20,
+                  "tweenEasing": 0
+                }
+              ]
+            },
+            {
+              "name": "wing-right",
+              "rotateFrame": [
+                {
+                  "duration": 0,
+                  "skew": -20,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 12,
+                  "skew": 25,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 12,
+                  "skew": -20,
+                  "tweenEasing": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "idle",
+          "duration": 12,
+          "playTimes": -1,
+          "slot": [
+            {
+              "name": "tail",
+              "displayFrame": [
+                {
+                  "duration": 0,
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "bone": [
+            {
+              "name": "body",
+              "rotateFrame": [
+                {
+                  "duration": 0,
+                  "skew": 0,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 6,
+                  "skew": 4,
+                  "tweenEasing": 0
+                },
+                {
+                  "duration": 6,
+                  "skew": 0,
+                  "tweenEasing": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

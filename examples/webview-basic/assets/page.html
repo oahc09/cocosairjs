@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AIR WebView Page</title>
+<style>
+    /* 内嵌零外链：矩阵对 failedRequests 是硬门禁（status>=400 即记一条），
+       本页任何字体/脚本/图片请求都会让三引擎那一格变红。 */
+    html, body { margin: 0; padding: 0; height: 100%; font-family: system-ui, sans-serif; }
+    body { background: linear-gradient(135deg, #12305a, #0d7a5f); color: #eef4ff; overflow: hidden; }
+    .bar { height: 26px; background: #e8542f; }
+    .strip { position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: #1a2233; }
+    /* 持续动画：矩阵的 frameChanged 靠页内元素推进，不依赖引擎侧画布。 */
+    .runner { position: absolute; top: 44px; width: 22px; height: 22px; border-radius: 4px;
+              background: #ffd166; animation: sweep 1.6s linear infinite alternate; }
+    @keyframes sweep { from { left: 6px; } to { left: calc(100% - 28px); } }
+    h1 { font-size: 15px; margin: 10px 12px 4px; letter-spacing: .4px; }
+    ul { margin: 0 12px; padding-left: 18px; font-size: 11px; line-height: 1.55; }
+    .counter { position: absolute; right: 10px; bottom: 18px; font-size: 11px;
+               background: rgba(0,0,0,.35); padding: 3px 7px; border-radius: 9px; }
+    .stamp { position: absolute; left: 12px; bottom: 18px; font-size: 11px; color: #9fe8c7; }
+</style>
+</head>
+<body data-page="webview-basic-local-page">
+<div class="bar"></div>
+<h1>local static page (same-origin, no network)</h1>
+<ul>
+    <li>mounted by WebView as an IFRAME overlay</li>
+    <li>engine drives geometry via syncMatrix</li>
+    <li>clicks land here, not on the WebGL canvas</li>
+</ul>
+<div class="runner"></div>
+<div class="counter">clicks: <b id="c">0</b></div>
+<div class="stamp" id="s">no-engine-stamp</div>
+<div class="strip"></div>
+<script>
+// 三个可被引擎回读的落点：title / dataset / window 全局。evaluateJS 走同源 DOM，
+// 只有真的执行了才会改变它们，所以它们是「脚本注入生效」的机器证据。
+document.title = 'AIR WebView Page';
+document.body.dataset.ready = '1';
+window.__clicks = 0;
+document.addEventListener('click', function () {
+    window.__clicks++;
+    document.body.dataset.clicks = String(window.__clicks);
+    var el = document.getElementById('c');
+    if (el) { el.textContent = String(window.__clicks); }
+});
+</script>
+</body>
+</html>

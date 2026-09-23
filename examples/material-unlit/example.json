@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Material Unlit",
   "category": "materials",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
@@ -189,7 +189,6 @@
   "license": {
     "assets": "无第三方资产（程序化图元/贴图）"
   },
-  "promotionEvidence": "f291ca26c584",
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
@@ -295,8 +294,12 @@
       }
     }
   },
-  "stableReview": {
-    "demotedAt": "2026-09-19T16:15:48.555Z",
-    "reason": "current run FAIL"
+  "promotion": {
+    "spec": "d56c8ac8b8fc",
+    "source": "bf83768a54c7e5fb",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 15,
+    "attested": 1,
+    "units": 16
   }
 }

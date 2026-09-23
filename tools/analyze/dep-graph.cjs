@@ -302,10 +302,26 @@ for (const t of reachable) {
     }
 }
 
+// 基线标签的权威来源是 docs/upstream-file-map.json 的 meta.baseline；读不到才回落到上游 package.json version。
+function currentBaseline () {
+    const mapPath = path.join(ROOT, 'docs', 'upstream-file-map.json');
+    try {
+        const m = JSON.parse(fs.readFileSync(mapPath, 'utf8'));
+        if (m.meta && m.meta.baseline) { return m.meta.baseline; }
+    } catch (e) { /* 首次生成或文件缺失 */ }
+    const upstream = path.resolve(process.env.COCOS_UPSTREAM || 'E:/AIProMax/github/cocos4');
+    try {
+        const v = JSON.parse(fs.readFileSync(path.join(upstream, 'package.json'), 'utf8')).version;
+        return `cocos4 @ ${v}`;
+    } catch (e) {
+        return 'cocos4 @ unknown（COCOS_UPSTREAM 未指向可用上游）';
+    }
+}
+
 const depGraph = {
     meta: {
         generatedAt: new Date().toISOString(),
-        baseline: 'cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)',
+        baseline: currentBaseline(),
         platform: 'HTML5',
         mode: 'BUILD',
         airFeatures: AIR_FEATURES,

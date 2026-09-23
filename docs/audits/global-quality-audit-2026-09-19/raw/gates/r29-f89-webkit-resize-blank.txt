@@ -1,0 +1,47 @@
+F-89 取证（r29，2026-09-22）— Playwright WebKit(2361) 在真实改变视口后不再把 WebGL 画布合成进截图
+================================================================================
+
+现象
+  examples/ui-layout（LV12-09 响应式附例）三浏览器矩阵：chromium/firefox PASS，webkit FAIL
+  （唯一红项 pngBytesAboveFloor）。逐字段探针断言三引擎全过。
+  webkit 记录：pngBytes=1155（纯白，肉眼核对 docs/evidence/v12/ui-layout/matrix-webkit.png 无任何画布内容）
+  chromium=6471、firefox=7961（同为 resize 后 320x240 截图，内容正确：顶栏变窄、右徽章左移、色块重排、
+  标题实时写着 TOP BAR 320x240）。
+
+对照实验（scratch：E:/AIProMax/cocosair-scratch/v12-logs/resize-blank-diag.cjs，webkit）
+  1) 不 resize 的控制序列：t0=8276B、t1=8276B（同一 sha e16e8fdb565959c1）→ 画布合成本身正常，
+     不是「webkit 截图一直空白」。
+  2) setViewportSize(320x240) 后 +1.5s = 1155B、+5.5s 仍 = 1155B（同一 sha feb85eaf6e6c20d6）→ 一次性变白后冻结。
+  3) 同一时刻页面内状态：inner=[320,240] css=[320,240] backing=[320,240] dpr=1 contextLost=false，
+     引擎探针 window.__probe() 返回 canvas 320x240 / topBar.w 320 / badgeRight.x 280 / row.w 260 /
+     单元 x 245,145,45（与 chromium、firefox 逐字段一致）→ 引擎仍在跑帧、screenAdapter/Widget/Layout
+     全链路正常，缺的只是「合成到截图」。
+  4) 换示例复现：examples/profiler-overlay（自带逐帧动画）同法操作，resize 前两张截图 sha 不同
+     （a58d7621106f10cf → 7db5ec1a475f9ad8，证明在动），resize 后两张 sha 完全相同（d2e73c38bf2d6157，2245B）
+     → 空白/冻结与示例无关，是 webkit + setViewportSize 的通用行为。
+
+已尝试且无效的恢复手段（webkit，ui-layout）
+  - 再改一次视口 nudge 321x240 后回到 320x240：1155B（sha 44662d5f…/feb85eaf…，仍空白）
+  - CSS 强制重排（canvas display:none → 读 offsetWidth → block）：1155B
+  - 页面内补发 window.dispatchEvent(new Event('resize'))：1155B
+  脚本：E:/AIProMax/cocosair-scratch/v12-logs/webkit-nudge.cjs
+
+判定
+  不是 Cocos AIR 的回归：引擎侧几何、组件、渲染调用都按 resize 正确重算并被页面外读回；
+  是 Playwright WebKit 构建在视口变化后停止合成 WebGL 画布层（截图路径）的限制。
+  影响面：任何依赖「resize 后截图」的三浏览器视觉证据在 webkit 上不可用。
+
+处置（只收紧、不放宽）
+  tools/v12/browser-matrix.cjs 的 resize 步骤新增 resize 前截图 matrix-<engine>-before.png 与
+  beforePngBytesAboveFloor 检查；字节下界支持按引擎覆盖（checks.minPngBytesByEngine）。
+  tools/v12/browser-matrix-contract.json ui-layout 条目：
+    minPngBytes=3500（chromium/firefox 的 resize 后截图仍要过界）
+    minPngBytesBefore=3500（三引擎 resize 前截图一律过界，webkit 实测 8276B 且肉眼核对有内容）
+    minPngBytesByEngine.webkit=1 + pngFloorNotes.webkit 写明本 finding 与豁免理由
+  即：webkit 只豁免「resize 后」这一张视觉证据，reflow 由 probe 的 before/after 两套数值几何承担；
+  证据文件里逐记录带 pngFloors/pngBeforeBytes/pngBeforeSha256_16，豁免可审计、不静默。
+
+复现命令
+  NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules \
+    node tools/v12/browser-matrix.cjs --ids=ui-layout --out=<scratch>/ui-layout-matrix-3eng.json
+  （子集跑 completed=false，不作为发布证据；全量跑见 docs/evidence/v12/browser-matrix.json）

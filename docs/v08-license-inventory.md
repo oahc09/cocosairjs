@@ -1,6 +1,8 @@
 # License Inventory（V0.8 §89 / V1.0 §96-G-LICENSE）
 
-> 逐项列出仓库内全部第三方代码与资产及其许可。生成脚本：`tools/verify/license-inventory.cjs`。
+> 逐项列出仓库内全部第三方代码与资产及其许可。审计脚本：`tools/verify/license-audit.cjs`（V0.9 逐文件许可审计）；
+> 发布面门禁：`npm run verify:licenses`（`tools/v12/verify-licenses.cjs`，校验许可原文逐字节一致 + `docs/license-decisions.json` 处置登记 + `files[]` 随包发布）。
+> 本文档正文为人工维护的登记表，不由脚本生成。
 
 ## 1. Source Code（上游引擎）
 

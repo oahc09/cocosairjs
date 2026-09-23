@@ -1,0 +1,45 @@
+{
+  "name": "AirDragon",
+  "imagePath": "AirDragon_atlas.png",
+  "width": 64,
+  "height": 64,
+  "scale": 1,
+  "SubTexture": [
+    {
+      "name": "plate",
+      "x": 2,
+      "y": 2,
+      "width": 20,
+      "height": 20,
+      "frameX": 0,
+      "frameY": 0,
+      "frameWidth": 20,
+      "frameHeight": 20,
+      "rotated": false
+    },
+    {
+      "name": "wing",
+      "x": 26,
+      "y": 2,
+      "width": 20,
+      "height": 20,
+      "frameX": 0,
+      "frameY": 0,
+      "frameWidth": 20,
+      "frameHeight": 20,
+      "rotated": false
+    },
+    {
+      "name": "tip",
+      "x": 2,
+      "y": 26,
+      "width": 12,
+      "height": 28,
+      "frameX": 0,
+      "frameY": 0,
+      "frameWidth": 12,
+      "frameHeight": 28,
+      "rotated": false
+    }
+  ]
+}

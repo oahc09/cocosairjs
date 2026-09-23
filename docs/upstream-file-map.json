@@ -1,65 +1,65 @@
 {
   "meta": {
-    "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-    "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason",
-    "modifiedCount": 5
+    "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+    "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
+    "modifiedCount": 28
   },
   "mapping": [
     {
       "airPath": "src/air/app.ts",
-      "upstreamPath": "air/app.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/bootstrap.ts",
-      "upstreamPath": "air/bootstrap.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/bootstrap.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/builtin-effects.ts",
-      "upstreamPath": "air/builtin/builtin-effects.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-effects.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/builtin-glsl4.ts",
-      "upstreamPath": "air/builtin/builtin-glsl4.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-glsl4.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/builtin-material.ts",
-      "upstreamPath": "air/builtin/builtin-material.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-material.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/register.ts",
-      "upstreamPath": "air/builtin/register.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/register.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/index.ts",
-      "upstreamPath": "air/index.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/utils/index.ts",
-      "upstreamPath": "air/utils/index.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创（上游 cocos4 无 air/utils/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/cocos/2d/assembler/graphics/helper.ts",
@@ -67,6 +67,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/2d/assembler/graphics/index.ts",
+      "upstreamPath": "cocos/2d/assembler/graphics/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/2d/assembler/graphics/types.ts",
@@ -95,6 +102,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/2d/assembler/graphics/webgl/index.ts",
+      "upstreamPath": "cocos/2d/assembler/graphics/webgl/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/2d/assembler/index.ts",
@@ -284,6 +298,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/2d/category.json",
+      "upstreamPath": "cocos/2d/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/2d/components/deprecated.ts",
@@ -531,6 +552,13 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/2d/renderer/linear-buffer-accessor.ts",
+      "upstreamPath": "cocos/2d/renderer/linear-buffer-accessor.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/2d/renderer/mesh-buffer.ts",
       "upstreamPath": "cocos/2d/renderer/mesh-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -678,6 +706,13 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/3d/category.json",
+      "upstreamPath": "cocos/3d/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 resid-asset 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/3d/framework/deprecated.ts",
       "upstreamPath": "cocos/3d/framework/deprecated.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -799,9 +834,9 @@
     {
       "airPath": "src/cocos/3d/misc/create-mesh.ts",
       "upstreamPath": "cocos/3d/misc/create-mesh.ts",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": false,
-      "reason": "extraction copy"
+      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #336 (60f9352c56) createMesh 按最大索引值自适应 R16UI/R32UI；Air 副本逐字节等于官方原文"
     },
     {
       "airPath": "src/cocos/3d/misc/index.ts",
@@ -1028,6 +1063,20 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/animation/category.json",
+      "upstreamPath": "cocos/animation/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/compression.ts",
+      "upstreamPath": "cocos/animation/compression.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/animation/core/animation-handle.ts",
       "upstreamPath": "cocos/animation/core/animation-handle.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -1215,6 +1264,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/asset-creation.ts",
+      "upstreamPath": "cocos/animation/marionette/asset-creation.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/animation/marionette/clip-overriding.ts",
@@ -1441,6 +1497,20 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/animation/marionette/pose-graph/op/index.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/op/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/op/internal.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/op/internal.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/animation/marionette/pose-graph/pose-graph.ts",
       "upstreamPath": "cocos/animation/marionette/pose-graph/pose-graph.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -1455,11 +1525,144 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/additively-blend.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/additively-blend.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/all.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/all.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/apply-transform.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/apply-transform.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/blend-in-proportion.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/blend-in-proportion.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose-base.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose-base.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-base.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-base.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-boolean.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-boolean.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-index.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/index.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/menu.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/menu.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/copy-transform.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/copy-transform.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/filtering-blend.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/filtering-blend.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/menu.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/ik/menu.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/solve-two-bone-ik.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/ik/solve-two-bone-ik.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-debugger.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-debugger.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-solver.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-solver.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/intensity-specification.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/intensity-specification.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/menu-common.ts",
       "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/menu-common.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/modify-pose-base.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/modify-pose-base.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/play-motion.ts",
@@ -1476,11 +1679,39 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/sample-motion.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/sample-motion.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/set-auxiliary-curve.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/set-auxiliary-curve.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/state-machine.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/state-machine.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/transform-space.ts",
       "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/transform-space.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pose-nodes/use-stashed-pose.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pose-nodes/use-stashed-pose.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/animation/marionette/pose-graph/pure-value-node.ts",
@@ -1490,11 +1721,46 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pure-value-nodes/all.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pure-value-nodes/all.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/pure-value-nodes/get-variable.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/pure-value-nodes/get-variable.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/runtime-exports-empty.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/runtime-exports-empty.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/runtime-exports.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/runtime-exports.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 C3 撤销 Air 侧修改，恢复官方原文（byte-identical，实测 72/72 字节一致）：原「以空实现覆盖」的 Air 修改因 pose-nodes 全量回归而不再需要，默认构建仍由 !PROCEDURAL_ANIMATION moduleOverride 指向 runtime-exports-empty.ts"
+    },
+    {
       "airPath": "src/cocos/animation/marionette/pose-graph/stash/runtime-stash.ts",
       "upstreamPath": "cocos/animation/marionette/pose-graph/stash/runtime-stash.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/animation/marionette/pose-graph/utils.ts",
+      "upstreamPath": "cocos/animation/marionette/pose-graph/utils.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/animation/marionette/runtime-exports.ts",
@@ -1770,6 +2036,13 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/animation/value-proxy-factories/index.ts",
+      "upstreamPath": "cocos/animation/value-proxy-factories/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c3-pose-nodes 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/animation/value-proxy-factories/morph-weights.ts",
       "upstreamPath": "cocos/animation/value-proxy-factories/morph-weights.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -1838,6 +2111,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/asset/asset-manager/category.json",
+      "upstreamPath": "cocos/asset/asset-manager/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 resid-asset 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/asset/asset-manager/config.ts",
@@ -2050,6 +2330,13 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/asset/assets/category.json",
+      "upstreamPath": "cocos/asset/assets/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 resid-asset 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/asset/assets/deprecation.ts",
       "upstreamPath": "cocos/asset/assets/deprecation.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -2244,6 +2531,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/core/curves/keys-shared-curves.ts",
+      "upstreamPath": "cocos/core/curves/keys-shared-curves.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-core-dep 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/core/curves/object-curve.ts",
@@ -2456,6 +2750,20 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/core/data/utils/constget.ts",
+      "upstreamPath": "cocos/core/data/utils/constget.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-core-dep 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/core/data/utils/extends-enum.ts",
+      "upstreamPath": "cocos/core/data/utils/extends-enum.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-core-dep 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/core/data/utils/preprocess-class.ts",
       "upstreamPath": "cocos/core/data/utils/preprocess-class.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -2503,6 +2811,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/core/event/defines.ts",
+      "upstreamPath": "cocos/core/event/defines.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": true,
+      "reason": "V1.2 批次 B4 抽取后 Air 侧最小类型修补：EventArgumentsOf/EventCallbackOf 改用 Extract<Map[K],(...args:any[])=>void> 以满足 Parameters<> 函数约束（Air tsconfig strict:true，官方原文在 Air 编译面报 TS2344）。语义等价，仅函数成员取参数。"
     },
     {
       "airPath": "src/cocos/core/event/event-target-factory.ts",
@@ -2692,6 +3007,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/core/math/affine-transform.ts",
+      "upstreamPath": "cocos/core/math/affine-transform.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-core-dep 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/core/math/bits.ts",
@@ -3035,6 +3357,104 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/ArmatureCache.ts",
+      "upstreamPath": "cocos/dragon-bones/ArmatureCache.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/ArmatureDisplay.ts",
+      "upstreamPath": "cocos/dragon-bones/ArmatureDisplay.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/ArmatureSystem.ts",
+      "upstreamPath": "cocos/dragon-bones/ArmatureSystem.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/AttachUtil.ts",
+      "upstreamPath": "cocos/dragon-bones/AttachUtil.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/CCArmatureDisplay.ts",
+      "upstreamPath": "cocos/dragon-bones/CCArmatureDisplay.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/CCFactory.ts",
+      "upstreamPath": "cocos/dragon-bones/CCFactory.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/CCSlot.ts",
+      "upstreamPath": "cocos/dragon-bones/CCSlot.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/CCTextureData.ts",
+      "upstreamPath": "cocos/dragon-bones/CCTextureData.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/DragonBonesAsset.ts",
+      "upstreamPath": "cocos/dragon-bones/DragonBonesAsset.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/DragonBonesAtlasAsset.ts",
+      "upstreamPath": "cocos/dragon-bones/DragonBonesAtlasAsset.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/assembler/index.ts",
+      "upstreamPath": "cocos/dragon-bones/assembler/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/assembler/simple.ts",
+      "upstreamPath": "cocos/dragon-bones/assembler/simple.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/category.json",
+      "upstreamPath": "cocos/dragon-bones/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/dragon-bones/index.ts",
+      "upstreamPath": "cocos/dragon-bones/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/game/deprecated.ts",
@@ -3912,6 +4332,83 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/particle-2d/category.json",
+      "upstreamPath": "cocos/particle-2d/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/define.ts",
+      "upstreamPath": "cocos/particle-2d/define.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/index.ts",
+      "upstreamPath": "cocos/particle-2d/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/motion-streak-2d-assembler.ts",
+      "upstreamPath": "cocos/particle-2d/motion-streak-2d-assembler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/motion-streak-2d.ts",
+      "upstreamPath": "cocos/particle-2d/motion-streak-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/particle-asset.ts",
+      "upstreamPath": "cocos/particle-2d/particle-asset.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/particle-simulator-2d.ts",
+      "upstreamPath": "cocos/particle-2d/particle-simulator-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/particle-system-2d-assembler.ts",
+      "upstreamPath": "cocos/particle-2d/particle-system-2d-assembler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/particle-system-2d.ts",
+      "upstreamPath": "cocos/particle-2d/particle-system-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/png-reader.ts",
+      "upstreamPath": "cocos/particle-2d/png-reader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/particle-2d/tiff-reader.ts",
+      "upstreamPath": "cocos/particle-2d/tiff-reader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/particle/animator/color-overtime.ts",
       "upstreamPath": "cocos/particle/animator/color-overtime.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -4047,9 +4544,9 @@
     {
       "airPath": "src/cocos/particle/noise.ts",
       "upstreamPath": "cocos/particle/noise.ts",
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": false,
-      "reason": "extraction copy"
+      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #338 (6b455561f4) noise 静态置换表 + build512 优化；Air 副本逐字节等于官方原文"
     },
     {
       "airPath": "src/cocos/particle/particle-culler.ts",
@@ -4120,6 +4617,251 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/builtin-contact.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/builtin-contact.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/builtin-world.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/builtin-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/instantiate.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/intersection-2d.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/intersection-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/shapes/box-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/shapes/box-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/shapes/circle-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/shapes/circle-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/shapes/polygon-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/shapes/polygon-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/builtin/shapes/shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/builtin/shapes/shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/category.json",
+      "upstreamPath": "cocos/physics-2d/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/colliders/box-collider-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/colliders/box-collider-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/colliders/circle-collider-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/colliders/circle-collider-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/colliders/collider-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/colliders/collider-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/colliders/polygon-collider-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/colliders/polygon-collider-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/distance-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/distance-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/fixed-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/fixed-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/hinge-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/hinge-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/mouse-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/mouse-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/relative-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/relative-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/slider-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/slider-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/spring-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/spring-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/joints/wheel-joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/joints/wheel-joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/components/rigid-body-2d.ts",
+      "upstreamPath": "cocos/physics-2d/framework/components/rigid-body-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/index.ts",
+      "upstreamPath": "cocos/physics-2d/framework/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/physics-internal-types.ts",
+      "upstreamPath": "cocos/physics-2d/framework/physics-internal-types.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/physics-selector.ts",
+      "upstreamPath": "cocos/physics-2d/framework/physics-selector.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/physics-system.ts",
+      "upstreamPath": "cocos/physics-2d/framework/physics-system.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/physics-types.ts",
+      "upstreamPath": "cocos/physics-2d/framework/physics-types.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/utils/polygon-partition.ts",
+      "upstreamPath": "cocos/physics-2d/framework/utils/polygon-partition.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/framework/utils/polygon-separator.ts",
+      "upstreamPath": "cocos/physics-2d/framework/utils/polygon-separator.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/spec/i-physics-contact.ts",
+      "upstreamPath": "cocos/physics-2d/spec/i-physics-contact.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/spec/i-physics-joint.ts",
+      "upstreamPath": "cocos/physics-2d/spec/i-physics-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/spec/i-physics-shape.ts",
+      "upstreamPath": "cocos/physics-2d/spec/i-physics-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/spec/i-physics-world.ts",
+      "upstreamPath": "cocos/physics-2d/spec/i-physics-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/spec/i-rigid-body.ts",
+      "upstreamPath": "cocos/physics-2d/spec/i-rigid-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/physics/framework/assets/physics-material.ts",
@@ -4491,6 +5233,34 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/profiler/category.json",
+      "upstreamPath": "cocos/profiler/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 A1 回归抽取，官方原文（Settings 分类清单资产）"
+    },
+    {
+      "airPath": "src/cocos/profiler/counter.ts",
+      "upstreamPath": "cocos/profiler/counter.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 A1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/profiler/perf-counter.ts",
+      "upstreamPath": "cocos/profiler/perf-counter.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 A1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/profiler/profiler.ts",
+      "upstreamPath": "cocos/profiler/profiler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 A1 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/render-scene/core/constants.ts",
@@ -4993,8 +5763,8 @@
       "airPath": "src/cocos/rendering/global-descriptor-set-manager.ts",
       "upstreamPath": "cocos/rendering/global-descriptor-set-manager.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR(2026-09-13)：CCShadow 全局 UBO 尺寸用 AIR_SHADOW_UBO_SIZE=2048 取代 UBOShadowEnum.SIZE(256B)。builtin effects 将 CSM 数组按 std140 展开到 1248B，256B 触发 WebGL2 \"uniform buffer too small\"。与 pipeline-ubo.ts 的 PipelineUBO 扩展成对，必须同时改。V1.2 G0 补登记（此前该文件已修改但 mapping 标 modified:false，比对脚本 tools/compare/baseline-compare.cjs 暴露）"
     },
     {
       "airPath": "src/cocos/rendering/index.ts",
@@ -5212,6 +5982,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/scene-graph/category.json",
+      "upstreamPath": "cocos/scene-graph/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 resid-asset 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/scene-graph/component-event-handler.schema.ts",
@@ -5438,6 +6215,20 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/sorting/index.ts",
+      "upstreamPath": "cocos/sorting/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/sorting/sorting-2d.ts",
+      "upstreamPath": "cocos/sorting/sorting-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/sorting/sorting-layers.ts",
       "upstreamPath": "cocos/sorting/sorting-layers.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -5445,11 +6236,291 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/sorting/sorting.ts",
+      "upstreamPath": "cocos/sorting/sorting.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/assembler/index.ts",
+      "upstreamPath": "cocos/spine/assembler/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/assembler/simple.ts",
+      "upstreamPath": "cocos/spine/assembler/simple.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/attach-util.ts",
+      "upstreamPath": "cocos/spine/attach-util.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/category.json",
+      "upstreamPath": "cocos/spine/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/index.ts",
+      "upstreamPath": "cocos/spine/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/LICENSE",
+      "upstreamPath": "cocos/spine/lib/LICENSE",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/air-spine-instantiate-js.ts",
+      "upstreamPath": "cocos/spine/lib/spine-instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": true,
+      "reason": "AIR 新增（非上游文件）：经 src/cc.config.json moduleOverrides 顶替 spine-instantiate 入口。alpha.34 的 spine 运行时真实实现只在 external:emscripten/spine/{3.8,4.2}/* 外部产物内（仓库内 spine-core.js 仅 177 行枚举桩），该产物不随引擎快照分发；本文件让缺失资产的构建通过、运行期输出可读提示而非崩溃（计划书 D2/P2）。上游 spine-instantiate.ts / -3.8 / -4.2 / -dynamic 四个文件均按官方原文保留未改，资产落位后删除该 override 即回到官方行为"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/instantiated.ts",
+      "upstreamPath": "cocos/spine/lib/instantiated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-binary.ts",
+      "upstreamPath": "cocos/spine/lib/spine-binary.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-core.d.ts",
+      "upstreamPath": "cocos/spine/lib/spine-core.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-core.js",
+      "upstreamPath": "cocos/spine/lib/spine-core.js",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-define.ts",
+      "upstreamPath": "cocos/spine/lib/spine-define.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-instantiate-3.8.ts",
+      "upstreamPath": "cocos/spine/lib/spine-instantiate-3.8.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-instantiate-4.2.ts",
+      "upstreamPath": "cocos/spine/lib/spine-instantiate-4.2.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-instantiate-dynamic.ts",
+      "upstreamPath": "cocos/spine/lib/spine-instantiate-dynamic.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-instantiate.ts",
+      "upstreamPath": "cocos/spine/lib/spine-instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-version-3.8.ts",
+      "upstreamPath": "cocos/spine/lib/spine-version-3.8.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-version-4.2.ts",
+      "upstreamPath": "cocos/spine/lib/spine-version-4.2.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-version-dynamic.ts",
+      "upstreamPath": "cocos/spine/lib/spine-version-dynamic.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-version.ts",
+      "upstreamPath": "cocos/spine/lib/spine-version.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/lib/spine-wasm-utils.ts",
+      "upstreamPath": "cocos/spine/lib/spine-wasm-utils.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/skeleton-cache.ts",
+      "upstreamPath": "cocos/spine/skeleton-cache.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/skeleton-data.ts",
+      "upstreamPath": "cocos/spine/skeleton-data.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/skeleton-system.ts",
+      "upstreamPath": "cocos/spine/skeleton-system.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/skeleton.ts",
+      "upstreamPath": "cocos/spine/skeleton.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/track-entry-listeners.ts",
+      "upstreamPath": "cocos/spine/track-entry-listeners.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/spine/vertex-effect-delegate.ts",
+      "upstreamPath": "cocos/spine/vertex-effect-delegate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/terrain/terrain-asset.ts",
       "upstreamPath": "cocos/terrain/terrain-asset.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/assembler/index.ts",
+      "upstreamPath": "cocos/tiledmap/assembler/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/assembler/simple.ts",
+      "upstreamPath": "cocos/tiledmap/assembler/simple.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/category.json",
+      "upstreamPath": "cocos/tiledmap/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/index.ts",
+      "upstreamPath": "cocos/tiledmap/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tiled-layer.ts",
+      "upstreamPath": "cocos/tiledmap/tiled-layer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tiled-map-asset.ts",
+      "upstreamPath": "cocos/tiledmap/tiled-map-asset.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tiled-map.ts",
+      "upstreamPath": "cocos/tiledmap/tiled-map.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tiled-object-group.ts",
+      "upstreamPath": "cocos/tiledmap/tiled-object-group.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tiled-tile.ts",
+      "upstreamPath": "cocos/tiledmap/tiled-tile.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tiled-types.ts",
+      "upstreamPath": "cocos/tiledmap/tiled-types.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tiled-utils.ts",
+      "upstreamPath": "cocos/tiledmap/tiled-utils.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/tiledmap/tmx-xml-parser.ts",
+      "upstreamPath": "cocos/tiledmap/tmx-xml-parser.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/tween/actions/action-instant.ts",
@@ -5536,11 +6607,186 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/ui/block-input-events.ts",
+      "upstreamPath": "cocos/ui/block-input-events.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/button.ts",
+      "upstreamPath": "cocos/ui/button.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/category.json",
+      "upstreamPath": "cocos/ui/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/deprecated-1.2.0.ts",
+      "upstreamPath": "cocos/ui/deprecated-1.2.0.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/deprecated.ts",
+      "upstreamPath": "cocos/ui/deprecated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/editbox/edit-box-impl-base.ts",
+      "upstreamPath": "cocos/ui/editbox/edit-box-impl-base.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/editbox/edit-box-impl.ts",
+      "upstreamPath": "cocos/ui/editbox/edit-box-impl.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/editbox/edit-box.ts",
+      "upstreamPath": "cocos/ui/editbox/edit-box.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/editbox/tabIndexUtil.ts",
+      "upstreamPath": "cocos/ui/editbox/tabIndexUtil.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/editbox/types.ts",
+      "upstreamPath": "cocos/ui/editbox/types.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/index.ts",
+      "upstreamPath": "cocos/ui/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/layout.ts",
+      "upstreamPath": "cocos/ui/layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/page-view-indicator.ts",
+      "upstreamPath": "cocos/ui/page-view-indicator.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/page-view.ts",
+      "upstreamPath": "cocos/ui/page-view.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/progress-bar.ts",
+      "upstreamPath": "cocos/ui/progress-bar.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/safe-area.ts",
+      "upstreamPath": "cocos/ui/safe-area.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/scroll-bar.ts",
+      "upstreamPath": "cocos/ui/scroll-bar.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/scroll-view.ts",
+      "upstreamPath": "cocos/ui/scroll-view.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/slider.ts",
+      "upstreamPath": "cocos/ui/slider.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/sub-context-view.ts",
+      "upstreamPath": "cocos/ui/sub-context-view.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/toggle-container.ts",
+      "upstreamPath": "cocos/ui/toggle-container.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/toggle.ts",
+      "upstreamPath": "cocos/ui/toggle.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/ui-coordinate-tracker.ts",
+      "upstreamPath": "cocos/ui/ui-coordinate-tracker.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/ui/view-group.ts",
+      "upstreamPath": "cocos/ui/view-group.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/ui/view.ts",
       "upstreamPath": "cocos/ui/view.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/cocos/ui/widget-manager.ts",
+      "upstreamPath": "cocos/ui/widget-manager.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
     },
     {
       "airPath": "src/cocos/ui/widget.ts",
@@ -5550,11 +6796,144 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/cocos/video/assets/video-clip.ts",
+      "upstreamPath": "cocos/video/assets/video-clip.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/category.json",
+      "upstreamPath": "cocos/video/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/deprecated.ts",
+      "upstreamPath": "cocos/video/deprecated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/index.ts",
+      "upstreamPath": "cocos/video/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/video-downloader.ts",
+      "upstreamPath": "cocos/video/video-downloader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/video-player-enums.ts",
+      "upstreamPath": "cocos/video/video-player-enums.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/video-player-impl-manager.ts",
+      "upstreamPath": "cocos/video/video-player-impl-manager.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/video-player-impl-web.ts",
+      "upstreamPath": "cocos/video/video-player-impl-web.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/video-player-impl.ts",
+      "upstreamPath": "cocos/video/video-player-impl.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/video/video-player.ts",
+      "upstreamPath": "cocos/video/video-player.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/web-view/category.json",
+      "upstreamPath": "cocos/web-view/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a4-webview 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/web-view/web-view-enums.ts",
+      "upstreamPath": "cocos/web-view/web-view-enums.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a4-webview 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/web-view/web-view-impl-manager.ts",
+      "upstreamPath": "cocos/web-view/web-view-impl-manager.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a4-webview 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/web-view/web-view-impl-web.ts",
+      "upstreamPath": "cocos/web-view/web-view-impl-web.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a4-webview 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/web-view/web-view-impl.ts",
+      "upstreamPath": "cocos/web-view/web-view-impl.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a4-webview 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/web-view/web-view.ts",
+      "upstreamPath": "cocos/web-view/web-view.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a4-webview 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/xr/event/xr-event-handle.ts",
+      "upstreamPath": "cocos/xr/event/xr-event-handle.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-xr-dep 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/xr/index.ts",
+      "upstreamPath": "cocos/xr/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-xr-dep 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/cocos/xr/xr-enums.ts",
       "upstreamPath": "cocos/xr/xr-enums.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/exports/2d.ts",
+      "upstreamPath": "exports/2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
     },
     {
       "airPath": "src/exports/3d.ts",
@@ -5565,10 +6944,10 @@
     },
     {
       "airPath": "src/exports/air.ts",
-      "upstreamPath": "exports/air.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR 原创聚合出口（上游 cocos4 无 exports/air.ts）：Air 面向 Code First 的单入口 re-export 面。V1.2 各回归批次在此追加 `export * from './<unit>'` 行（profiler/video/webview/2d/particle-2d/tiled-map/ui/spine/dragon-bones/physics-2d-box2d/physics-framework/physics-builtin/custom-pipeline-post-process/audio），并 export * from '../air' 引入 Air 层。原登记 reason=\"extraction copy\" 系 V0.x 工具误标，r26 更正。"
     },
     {
       "airPath": "src/exports/animation.ts",
@@ -5592,6 +6971,20 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/exports/dragon-bones.ts",
+      "upstreamPath": "exports/dragon-bones.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c2-dragonbones 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/geometry-renderer.ts",
+      "upstreamPath": "exports/geometry-renderer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/exports/gfx-empty.ts",
       "upstreamPath": "exports/gfx-empty.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
@@ -5613,11 +7006,53 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/exports/graphics.ts",
+      "upstreamPath": "exports/graphics.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/intersection-2d.ts",
+      "upstreamPath": "exports/intersection-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/exports/legacy-pipeline.ts",
       "upstreamPath": "exports/legacy-pipeline.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/exports/mask.ts",
+      "upstreamPath": "exports/mask.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/particle-2d.ts",
+      "upstreamPath": "exports/particle-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b2-particle2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-2d-builtin.ts",
+      "upstreamPath": "exports/physics-2d-builtin.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-2d-framework.ts",
+      "upstreamPath": "exports/physics-2d-framework.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 d1-d2-physics2d 回归抽取，官方原文"
     },
     {
       "airPath": "src/exports/physics-framework.ts",
@@ -5634,11 +7069,46 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/exports/profiler.ts",
+      "upstreamPath": "exports/profiler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 A1 回归抽取，官方同名入口原样复制"
+    },
+    {
       "airPath": "src/exports/skeletal-animation.ts",
       "upstreamPath": "exports/skeletal-animation.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/exports/sorting-2d.ts",
+      "upstreamPath": "exports/sorting-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/sorting.ts",
+      "upstreamPath": "exports/sorting.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b1-2d-base 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/spine.ts",
+      "upstreamPath": "exports/spine.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 c1-spine 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/tiled-map.ts",
+      "upstreamPath": "exports/tiled-map.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b3-tiledmap 回归抽取，官方原文"
     },
     {
       "airPath": "src/exports/tween.ts",
@@ -5648,11 +7118,88 @@
       "reason": "extraction copy"
     },
     {
+      "airPath": "src/exports/ui.ts",
+      "upstreamPath": "exports/ui.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 b4-ui 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/video.ts",
+      "upstreamPath": "exports/video.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/webview.ts",
+      "upstreamPath": "exports/webview.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a4-webview 回归抽取，官方原文"
+    },
+    {
       "airPath": "src/extensions/ccpool/node-pool.ts",
       "upstreamPath": "extensions/ccpool/node-pool.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": false,
       "reason": "extraction copy"
+    },
+    {
+      "airPath": "src/external/compression/ZipUtils.d.ts",
+      "upstreamPath": "external/compression/ZipUtils.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/external/compression/ZipUtils.js",
+      "upstreamPath": "external/compression/ZipUtils.js",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/external/compression/base64-values.ts",
+      "upstreamPath": "external/compression/base64-values.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/external/compression/base64.d.ts",
+      "upstreamPath": "external/compression/base64.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/external/compression/base64.js",
+      "upstreamPath": "external/compression/base64.js",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/external/compression/gzip.d.ts",
+      "upstreamPath": "external/compression/gzip.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/external/compression/gzip.js",
+      "upstreamPath": "external/compression/gzip.js",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/external/compression/zlib.min.d.ts",
+      "upstreamPath": "external/compression/zlib.min.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 p-external 回归抽取，官方原文"
     },
     {
       "airPath": "src/external/compression/zlib.min.js",
@@ -5879,11 +7426,1789 @@
       "reason": "extraction copy"
     },
     {
-      "airPath": "src/cocos/animation/marionette/pose-graph/runtime-exports.ts",
-      "upstreamPath": "cocos/animation/marionette/pose-graph/runtime-exports.ts",
+      "airPath": "src/cocos/physics-2d/box2d/instantiate.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/distance-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/distance-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/fixed-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/fixed-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/hinge-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/hinge-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/mouse-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/mouse-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/relative-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/relative-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/slider-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/slider-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/spring-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/spring-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/joints/wheel-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/joints/wheel-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/physics-contact-manager.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/physics-contact-manager.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/physics-contact.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/physics-contact.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/physics-world.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/physics-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/platform/physics-aabb-query-callback.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/platform/physics-aabb-query-callback.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/platform/physics-contact-listener.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/platform/physics-contact-listener.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/platform/physics-debug-draw.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/platform/physics-debug-draw.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V12 批次 physics-2d-box2d 回归抽取，官方原文（其 B2.Vec2 由 src/@types/box2d.d.ts 的环境声明提供：上游该类型来自未随快照分发的 native/external/emscripten/box2d/box2d  typings，Air 以最小 ambient 声明替位，抽取文件保持逐字节一致）"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/rigid-body.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/rigid-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/shapes/box-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/shapes/box-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/shapes/circle-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/shapes/circle-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/shapes/polygon-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/shapes/polygon-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d/shapes/shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d/shapes/shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/builtin-interface.ts",
+      "upstreamPath": "cocos/physics/cocos/builtin-interface.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/builtin-rigid-body.ts",
+      "upstreamPath": "cocos/physics/cocos/builtin-rigid-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/builtin-shared-body.ts",
+      "upstreamPath": "cocos/physics/cocos/builtin-shared-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/builtin-world.ts",
+      "upstreamPath": "cocos/physics/cocos/builtin-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/instantiate.ts",
+      "upstreamPath": "cocos/physics/cocos/instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/object/builtin-object.ts",
+      "upstreamPath": "cocos/physics/cocos/object/builtin-object.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/shapes/builtin-box-shape.ts",
+      "upstreamPath": "cocos/physics/cocos/shapes/builtin-box-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/shapes/builtin-capsule-shape.ts",
+      "upstreamPath": "cocos/physics/cocos/shapes/builtin-capsule-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/shapes/builtin-shape.ts",
+      "upstreamPath": "cocos/physics/cocos/shapes/builtin-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cocos/shapes/builtin-sphere-shape.ts",
+      "upstreamPath": "cocos/physics/cocos/shapes/builtin-sphere-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/cannon-contact-equation.ts",
+      "upstreamPath": "cocos/physics/cannon/cannon-contact-equation.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/cannon-rigid-body.ts",
+      "upstreamPath": "cocos/physics/cannon/cannon-rigid-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/cannon-shared-body.ts",
+      "upstreamPath": "cocos/physics/cannon/cannon-shared-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/cannon-util.ts",
+      "upstreamPath": "cocos/physics/cannon/cannon-util.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/cannon-world.ts",
+      "upstreamPath": "cocos/physics/cannon/cannon-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/constraints/cannon-constraint.ts",
+      "upstreamPath": "cocos/physics/cannon/constraints/cannon-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/constraints/cannon-distance-constraint.ts",
+      "upstreamPath": "cocos/physics/cannon/constraints/cannon-distance-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/constraints/cannon-hinge-constraint.ts",
+      "upstreamPath": "cocos/physics/cannon/constraints/cannon-hinge-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/constraints/cannon-lock-constraint.ts",
+      "upstreamPath": "cocos/physics/cannon/constraints/cannon-lock-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/constraints/cannon-point-to-point-constraint.ts",
+      "upstreamPath": "cocos/physics/cannon/constraints/cannon-point-to-point-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/instantiate.ts",
+      "upstreamPath": "cocos/physics/cannon/instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-box-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-box-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-cone-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-cone-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-cylinder-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-cylinder-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-plane-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-plane-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-simplex-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-simplex-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-sphere-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-sphere-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-terrain-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-terrain-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/cannon/shapes/cannon-trimesh-shape.ts",
+      "upstreamPath": "cocos/physics/cannon/shapes/cannon-trimesh-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/custom/layout-graph-editor.ts",
+      "upstreamPath": "cocos/rendering/custom/layout-graph-editor.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/custom/layout-graph-names.ts",
+      "upstreamPath": "cocos/rendering/custom/layout-graph-names.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/custom/types-names.ts",
+      "upstreamPath": "cocos/rendering/custom/types-names.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/blit-screen.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/blit-screen.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/bloom.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/bloom.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/color-grading.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/color-grading.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/dof.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/dof.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/fsr.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/fsr.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/fxaa.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/fxaa.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/hbao.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/hbao.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/index.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/taa-mask.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/taa-mask.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/components/taa.ts",
+      "upstreamPath": "cocos/rendering/post-process/components/taa.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/index.ts",
+      "upstreamPath": "cocos/rendering/post-process/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/base-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/base-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/blit-screen-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/blit-screen-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/bloom-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/bloom-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/color-grading-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/color-grading-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/dof-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/dof-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/float-output-process-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/float-output-process-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/forward-final-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/forward-final-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/forward-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/forward-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/forward-transparency-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/forward-transparency-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/forward-transparency-simple-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/forward-transparency-simple-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/fsr-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/fsr-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/fxaa-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/fxaa-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/hbao-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/hbao-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/index.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/post-final-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/post-final-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/setting-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/setting-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/shadow-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/shadow-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/skin-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/skin-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/passes/taa-pass.ts",
+      "upstreamPath": "cocos/rendering/post-process/passes/taa-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/post-process-builder.ts",
+      "upstreamPath": "cocos/rendering/post-process/post-process-builder.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/rendering/post-process/utils/pass-context.ts",
+      "upstreamPath": "cocos/rendering/post-process/utils/pass-context.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-2d-box2d.ts",
+      "upstreamPath": "exports/physics-2d-box2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-2d-box2d 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-builtin.ts",
+      "upstreamPath": "exports/physics-builtin.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-builtin 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-cannon.ts",
+      "upstreamPath": "exports/physics-cannon.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-cannon 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/custom-pipeline-post-process.ts",
+      "upstreamPath": "exports/custom-pipeline-post-process.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/utils/array-collision-matrix.ts",
+      "upstreamPath": "cocos/physics/utils/array-collision-matrix.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-utils 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/utils/object-collision-matrix.ts",
+      "upstreamPath": "cocos/physics/utils/object-collision-matrix.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-utils 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/utils/tuple-dictionary.ts",
+      "upstreamPath": "cocos/physics/utils/tuple-dictionary.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 physics-utils 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/audio/audio-clip.ts",
+      "upstreamPath": "cocos/audio/audio-clip.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/audio/audio-downloader.ts",
+      "upstreamPath": "cocos/audio/audio-downloader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/audio/audio-manager.ts",
+      "upstreamPath": "cocos/audio/audio-manager.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/audio/audio-source.ts",
+      "upstreamPath": "cocos/audio/audio-source.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/audio/category.json",
+      "upstreamPath": "cocos/audio/category.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/audio/deprecated.ts",
+      "upstreamPath": "cocos/audio/deprecated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/audio/index.ts",
+      "upstreamPath": "cocos/audio/index.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/audio.ts",
+      "upstreamPath": "exports/audio.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/audio-buffer-manager.js",
+      "upstreamPath": "pal/audio/audio-buffer-manager.js",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/audio-timer.js",
+      "upstreamPath": "pal/audio/audio-timer.js",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/operation-queue.js",
+      "upstreamPath": "pal/audio/operation-queue.js",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/type.d.ts",
+      "upstreamPath": "pal/audio/type.d.ts",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/type.js",
+      "upstreamPath": "pal/audio/type.js",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/web/player-dom.js",
+      "upstreamPath": "pal/audio/web/player-dom.js",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/web/player-web.js",
+      "upstreamPath": "pal/audio/web/player-web.js",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/pal/audio/web/player.js",
+      "upstreamPath": "pal/audio/web/player.js",
+      "baseline": "@cocos/engine-pal@1.0.4 (npm，上游 pin ^1.0.4；<engineRoot>/pal 由 postinstall spread-pal.cjs 复制 dist/*)",
+      "modified": false,
+      "reason": "V1.2 批次 a2-audio-pal 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/index.js",
+      "upstreamPath": "@cocos/box2d@1.0.2/index.js",
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": false,
+      "reason": "V1.2 P1 运行库 vendored：官方发布包原始字节逐字复制（不做 esbuild 改写），smoke-30 以 sha256 断言与 node_modules 一致"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/build/box2d/box2d.umd.js",
+      "upstreamPath": "@cocos/box2d@1.0.2/build/box2d/box2d.umd.js",
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": false,
+      "reason": "V1.2 P1 运行库 vendored：官方发布包原始字节逐字复制（不做 esbuild 改写），smoke-30 以 sha256 断言与 node_modules 一致"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/LICENSE",
+      "upstreamPath": "@cocos/box2d@1.0.2/LICENSE",
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": false,
+      "reason": "V1.2 P1 运行库 vendored：官方发布包原始字节逐字复制（不做 esbuild 改写），smoke-30 以 sha256 断言与 node_modules 一致"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/package.json",
+      "upstreamPath": "@cocos/box2d@1.0.2/package.json",
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "V1.2 P1 Air 侧撰写（非上游原文）：ccbuild 的 moduleOverrides 用 `export * from` 实现虚拟模块，按 ESM 规范不转发 default，而官方物理/骨骼代码写的是默认导入；nodeResolve 的 jail=realpath(src) 又使仓库根 node_modules 不可达。故把包按真实布局复制进 src/node_modules/，本 manifest 只声明 main/type，并把 types 回指已安装包（../../../../node_modules/@cocos/box2d/index.d.ts）以复用官方声明，避免把发布包全量源码（box2d 约 92 MB）纳入仓库。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/cannon/build/cannon.js",
+      "upstreamPath": "@cocos/cannon@1.2.8/build/cannon.js",
+      "baseline": "npm @cocos/cannon@1.2.8（上游 package.json pin）",
+      "modified": false,
+      "reason": "V1.2 P1 运行库 vendored：官方发布包原始字节逐字复制（不做 esbuild 改写），smoke-30 以 sha256 断言与 node_modules 一致"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/cannon/LICENSE",
+      "upstreamPath": "@cocos/cannon@1.2.8/LICENSE",
+      "baseline": "npm @cocos/cannon@1.2.8（上游 package.json pin）",
+      "modified": false,
+      "reason": "V1.2 P1 运行库 vendored：官方发布包原始字节逐字复制（不做 esbuild 改写），smoke-30 以 sha256 断言与 node_modules 一致"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/cannon/package.json",
+      "upstreamPath": "@cocos/cannon@1.2.8/package.json",
+      "baseline": "npm @cocos/cannon@1.2.8（上游 package.json pin）",
+      "modified": true,
+      "reason": "V1.2 P1 Air 侧撰写（非上游原文）：ccbuild 的 moduleOverrides 用 `export * from` 实现虚拟模块，按 ESM 规范不转发 default，而官方物理/骨骼代码写的是默认导入；nodeResolve 的 jail=realpath(src) 又使仓库根 node_modules 不可达。故把包按真实布局复制进 src/node_modules/，本 manifest 只声明 main/type，并把 types 回指已安装包（../../../../node_modules/@cocos/cannon/CANNON.d.ts）以复用官方声明，避免把发布包全量源码（box2d 约 92 MB）纳入仓库。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/dragonbones-js/out/dragonBones.js",
+      "upstreamPath": "@cocos/dragonbones-js@1.0.2/out/dragonBones.js",
+      "baseline": "npm @cocos/dragonbones-js@1.0.2（上游 package.json pin）",
+      "modified": false,
+      "reason": "V1.2 P1 运行库 vendored：官方发布包原始字节逐字复制（不做 esbuild 改写），smoke-30 以 sha256 断言与 node_modules 一致"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/dragonbones-js/README.md",
+      "upstreamPath": "@cocos/dragonbones-js@1.0.2/README.md",
+      "baseline": "npm @cocos/dragonbones-js@1.0.2（上游 package.json pin）",
+      "modified": false,
+      "reason": "V1.2 P1 运行库 vendored：官方发布包原始字节逐字复制（不做 esbuild 改写），smoke-30 以 sha256 断言与 node_modules 一致"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/dragonbones-js/package.json",
+      "upstreamPath": "@cocos/dragonbones-js@1.0.2/package.json",
+      "baseline": "npm @cocos/dragonbones-js@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "V1.2 P1 Air 侧撰写（非上游原文）：ccbuild 的 moduleOverrides 用 `export * from` 实现虚拟模块，按 ESM 规范不转发 default，而官方物理/骨骼代码写的是默认导入；nodeResolve 的 jail=realpath(src) 又使仓库根 node_modules 不可达。故把包按真实布局复制进 src/node_modules/，本 manifest 只声明 main/type，并把 types 回指已安装包（../../../../node_modules/@cocos/dragonbones-js/out/dragonBones.d.ts）以复用官方声明，避免把发布包全量源码（box2d 约 92 MB）纳入仓库。"
+    },
+    {
+      "airPath": "src/index.ts",
+      "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: 以空实现覆盖（构建时本就被 !PROCEDURAL_ANIMATION moduleOverride 替换为空实现；测试环境无法走 override 路径，故物理替换）（注：非抽取映射文件，module-override/特殊锚点）"
+      "reason": "AIR 原创（上游无同名文件）：npm 包 `cocosair` 的源码消费入口（three.js 风格 named export 面）。注意：发布 d.ts 面由 ccbuild 从 src/cc.config.json 的 feature units 生成 virtual-cc.d.ts，不经本文件；本文件只约束 `import ... from 'cocosair/src'` 与 jest 侧源码可见符号。"
+    },
+    {
+      "airPath": "src/package.json",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": true,
+      "reason": "AIR 原创最小 manifest（上游 package.json 含 npm scripts/postinstall/native 打包工具链，Air 不复制）：仅声明 name/version，供 ccbuild 识别引擎根。"
+    },
+    {
+      "airPath": "src/cc.config.json",
+      "upstreamPath": "cc.config.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/v12-pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。"
+    },
+    {
+      "airPath": "src/tsconfig.json",
+      "upstreamPath": "tsconfig.json",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "V1.2 P1（Air 修改）：显式钉住 \"rootDir\": \"./\"。ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录按「全部输入文件的最长公共根」布局；V1.2 把 @cocos/box2d 等运行库 vendored 到 src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 类型闭包约 92 MB，不入仓库），公共根上移到仓库根，emit 落到 __dts_before_bundle/src/**，而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 → 解析全空，发布 d.ts 退化为 `declare module \"cc\" { export {}; }`。钉住后声明布局恒以引擎根为准（build/cocosair.module.d.ts 恢复 3.08 MB 完整面）。另：Air 版裁掉上游的 outDir/editor typedoc include 项，files 收敛为 predefine/cocos/external；@types 引用去掉 native/jest/box2d-jsb 项。V1.2 批次 E 把 ./@types/webGPU 按上游同名项回接（gfx-webgpu 后端需要 GPU* 全局类型）。批次 E / D10 另在 exclude 追加 cocos/gfx/webgpu/**、cocos/webgpu/**、exports/gfx-webgpu.ts：dtsBundler 用本配置把 exports/** 全量收进声明图，未接线的 gfx-webgpu 会被并入发布面（cc.d.ts 多出 `export class WebGPUDevice` 而默认 bundle 导出表无此符号，实测 +60,649 B 类型/产物不一致），且该 emscripten-only 子图在本快照内无法核对，故整图移出声明与核对闭包（详见 UPSTREAM.md Deviation-04）。"
+    },
+    {
+      "airPath": "src/EngineErrorMap.md",
+      "upstreamPath": "EngineErrorMap.md",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（上游原文，字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/DebugInfos.d.ts",
+      "upstreamPath": "DebugInfos.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（上游原文，字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/DebugInfos.json",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "上游产物，非上游仓库文件：由官方 scripts/build-debug-infos.js 从 EngineErrorMap.md 生成，cocos4 侧 .gitignore 不入库。Air 提交生成结果以保证 src/ 自包含（源码消费面需要 DebugInfos.json）。重新生成：在 cocos4 根跑 `node scripts/build-debug-infos.js` 后复制。"
+    },
+    {
+      "airPath": "src/@types/consts.d.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": true,
+      "reason": "AIR 原创声明：ccbuild 的 build-const 产物（macro-constants/private-macro-constants）类型面在 Air 独立构建下不生成，此处按上游常量语义手工声明。"
+    },
+    {
+      "airPath": "src/@types/external-modules.d.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "modified": true,
+      "reason": "AIR 原创声明：为 ccbuild `external:` / `virtual:` 前缀模块提供 ambient module 声明，使 typecheck 与 tsc 声明阶段可解析。"
+    },
+    {
+      "airPath": "src/@types/emscripten-assets.d.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "V1.2 新增 Air 原创声明：上游 `external:emscripten/{spine,meshopt,box2d,...}/*.{js,wasm}` 模块（不随快照分发的 emscripten 资产）在 Air 树内无 native/external 目录可引用，本文件补 ambient 声明使 build:dts 与 typecheck 通过；不改变运行时行为（资产缺失由 air-spine-instantiate-js / 物理后端降级路径处理）。"
+    },
+    {
+      "airPath": "src/@types/box2d.d.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "V1.2 新增 Air 原创声明：官方 @cocos/box2d 发布包只带 UMD 实现与 index.d.ts（无全局 B2 命名空间），而 cocos/physics-2d/box2d/** 的官方源码按全局 `B2.` 命名空间书写（其类型面在上游来自 native/external/emscripten/box2d/box2d.d.ts，Air 不复制 native 目录）。本文件为 typecheck/dts 阶段提供 B2 命名空间声明；运行时仍由 vendored @cocos/box2d UMD 注入全局 B2。"
+    },
+    {
+      "airPath": "src/@types/editor-extends.d.ts",
+      "upstreamPath": "@types/editor-extends.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（@types 声明随引擎根一起复制，上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/globals.d.ts",
+      "upstreamPath": "@types/globals.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（@types 声明随引擎根一起复制，上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/jsb.d.ts",
+      "upstreamPath": "@types/jsb.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（@types 声明随引擎根一起复制，上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/webGL.extras.d.ts",
+      "upstreamPath": "@types/webGL.extras.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（@types 声明随引擎根一起复制，上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/webGL2.extras.d.ts",
+      "upstreamPath": "@types/webGL2.extras.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（@types 声明随引擎根一起复制，上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/audio.d.ts",
+      "upstreamPath": "@types/pal/audio.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/env.d.ts",
+      "upstreamPath": "@types/pal/env.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/input-box.d.ts",
+      "upstreamPath": "@types/pal/input-box.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/input.d.ts",
+      "upstreamPath": "@types/pal/input.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/minigame.d.ts",
+      "upstreamPath": "@types/pal/minigame.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/pacer.d.ts",
+      "upstreamPath": "@types/pal/pacer.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/screen-adapter.d.ts",
+      "upstreamPath": "@types/pal/screen-adapter.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/system-info.d.ts",
+      "upstreamPath": "@types/pal/system-info.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/@types/pal/wasm.d.ts",
+      "upstreamPath": "@types/pal/wasm.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+    },
+    {
+      "airPath": "src/cocos/deprecated.ts",
+      "upstreamPath": "cocos/deprecated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 F1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/define.ts",
+      "upstreamPath": "cocos/gfx/webgpu/define.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/instantiated.ts",
+      "upstreamPath": "cocos/gfx/webgpu/instantiated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/override.ts",
+      "upstreamPath": "cocos/gfx/webgpu/override.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-command-allocator.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-command-allocator.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-command-buffer.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-command-buffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-commands.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-commands.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-core.d.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-core.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-define.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-define.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-descriptor-set.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-device.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-device.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-framebuffer.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-framebuffer.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-gpu-objects.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-gpu-objects.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-input-assembler.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-input-assembler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-pipeline-state.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-pipeline-state.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-queue.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-queue.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-render-pass.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-render-pass.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-sampler.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-sampler.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-shader.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-shader.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-state-cache.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-state-cache.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-swapchain.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-swapchain.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/gfx/webgpu/webgpu-texture.ts",
+      "upstreamPath": "cocos/gfx/webgpu/webgpu-texture.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/webgpu/instantiated.ts",
+      "upstreamPath": "cocos/webgpu/instantiated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/gfx-webgpu.ts",
+      "upstreamPath": "exports/gfx-webgpu.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/@types/webGPU.d.ts",
+      "upstreamPath": "@types/webGPU.d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": false,
+      "reason": "extraction copy（V1.2 批次 E：gfx-webgpu 后端回归所需的 WebGPU 类型面，上游原文逐字节一致，并在 src/tsconfig.json types 中按上游同名项回接）"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-bvh-triangle-mesh-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-bvh-triangle-mesh-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-cache.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-cache.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-contact-data.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-contact-data.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-enum.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-enum.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-env.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-env.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-interface.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-interface.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-rigid-body.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-rigid-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-shared-body.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-shared-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-utils.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-utils.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/bullet-world.ts",
+      "upstreamPath": "cocos/physics/bullet/bullet-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/character-controllers/bullet-box-character-controller.ts",
+      "upstreamPath": "cocos/physics/bullet/character-controllers/bullet-box-character-controller.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/character-controllers/bullet-capsule-character-controller.ts",
+      "upstreamPath": "cocos/physics/bullet/character-controllers/bullet-capsule-character-controller.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/character-controllers/bullet-character-controller.ts",
+      "upstreamPath": "cocos/physics/bullet/character-controllers/bullet-character-controller.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/constraints/bullet-configurable-constraint.ts",
+      "upstreamPath": "cocos/physics/bullet/constraints/bullet-configurable-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/constraints/bullet-constraint.ts",
+      "upstreamPath": "cocos/physics/bullet/constraints/bullet-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/constraints/bullet-fixed-constraint.ts",
+      "upstreamPath": "cocos/physics/bullet/constraints/bullet-fixed-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/constraints/bullet-hinge-constraint.ts",
+      "upstreamPath": "cocos/physics/bullet/constraints/bullet-hinge-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/constraints/bullet-p2p-constraint.ts",
+      "upstreamPath": "cocos/physics/bullet/constraints/bullet-p2p-constraint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/instantiate.ts",
+      "upstreamPath": "cocos/physics/bullet/instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/instantiated.ts",
+      "upstreamPath": "cocos/physics/bullet/instantiated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-box-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-box-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-capsule-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-capsule-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-cone-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-cone-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-cylinder-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-cylinder-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-plane-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-plane-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-simplex-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-simplex-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-sphere-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-sphere-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-terrain-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-terrain-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/bullet/shapes/bullet-trimesh-shape.ts",
+      "upstreamPath": "cocos/physics/bullet/shapes/bullet-trimesh-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/character-controllers/physx-box-character-controller.ts",
+      "upstreamPath": "cocos/physics/physx/character-controllers/physx-box-character-controller.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/character-controllers/physx-capsule-character-controller.ts",
+      "upstreamPath": "cocos/physics/physx/character-controllers/physx-capsule-character-controller.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/character-controllers/physx-character-controller.ts",
+      "upstreamPath": "cocos/physics/physx/character-controllers/physx-character-controller.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/filter-data.ts",
+      "upstreamPath": "cocos/physics/physx/filter-data.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/instantiate.ts",
+      "upstreamPath": "cocos/physics/physx/instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/joints/physx-configurable-joint.ts",
+      "upstreamPath": "cocos/physics/physx/joints/physx-configurable-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/joints/physx-fixed-joint.ts",
+      "upstreamPath": "cocos/physics/physx/joints/physx-fixed-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/joints/physx-joint.ts",
+      "upstreamPath": "cocos/physics/physx/joints/physx-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/joints/physx-revolute-joint.ts",
+      "upstreamPath": "cocos/physics/physx/joints/physx-revolute-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/joints/physx-spherical-joint.ts",
+      "upstreamPath": "cocos/physics/physx/joints/physx-spherical-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/physx-adapter.ts",
+      "upstreamPath": "cocos/physics/physx/physx-adapter.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/physx-contact-equation.ts",
+      "upstreamPath": "cocos/physics/physx/physx-contact-equation.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/physx-enum.ts",
+      "upstreamPath": "cocos/physics/physx/physx-enum.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/physx-instance.ts",
+      "upstreamPath": "cocos/physics/physx/physx-instance.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/physx-rigid-body.ts",
+      "upstreamPath": "cocos/physics/physx/physx-rigid-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/physx-shared-body.ts",
+      "upstreamPath": "cocos/physics/physx/physx-shared-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/physx-world.ts",
+      "upstreamPath": "cocos/physics/physx/physx-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-box-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-box-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-capsule-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-capsule-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-cone-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-cone-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-cylinder-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-cylinder-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-plane-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-plane-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-sphere-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-sphere-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-terrain-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-terrain-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics/physx/shapes/physx-trimesh-shape.ts",
+      "upstreamPath": "cocos/physics/physx/shapes/physx-trimesh-shape.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-ammo.ts",
+      "upstreamPath": "exports/physics-ammo.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-physx.ts",
+      "upstreamPath": "exports/physics-physx.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 G3-physics-bullet-physx 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/instantiate.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/instantiate.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/instantiated.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/instantiated.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/distance-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/distance-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/fixed-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/fixed-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/hinge-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/hinge-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/joint-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/joint-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/mouse-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/mouse-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/relative-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/relative-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/slider-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/slider-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/spring-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/spring-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/joints/wheel-joint.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/joints/wheel-joint.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/physics-contact-manager.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/physics-contact-manager.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/physics-contact.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/physics-contact.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/physics-world.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/physics-world.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/platform/physics-aabb-query-callback.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/platform/physics-aabb-query-callback.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/platform/physics-contact-listener.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/platform/physics-contact-listener.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/platform/physics-debug-draw.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/platform/physics-debug-draw.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/platform/physics-ray-cast-callback.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/platform/physics-ray-cast-callback.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/rigid-body.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/rigid-body.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/shapes/box-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/shapes/box-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/shapes/circle-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/shapes/circle-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/shapes/polygon-shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/shapes/polygon-shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/cocos/physics-2d/box2d-wasm/shapes/shape-2d.ts",
+      "upstreamPath": "cocos/physics-2d/box2d-wasm/shapes/shape-2d.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/exports/physics-2d-box2d-wasm.ts",
+      "upstreamPath": "exports/physics-2d-box2d-wasm.ts",
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
+      "modified": false,
+      "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
     }
   ]
 }

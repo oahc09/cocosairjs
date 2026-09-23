@@ -1,0 +1,28 @@
+Verifying 11 examples (spec-driven v2)...
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS camera
+[bench-page] [JavaScript Error: "The stylesheet http://127.0.0.1:56060/style.css was not loaded because its MIME type, “application/octet-stream”, is not “text/css”." {file: "http://127.0.0.1:56060/index.html" line: 0}]
+[bench-404] /gltf-viewer/ C:\Users\caosh\AppData\Local\Temp\v11-example-TABw0q\workspace\gltf-viewer\index.html
+PASS gltf-catalog
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS gltf-viewer
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS hello-cube
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS input
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS material-basic
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS skinned-animation
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS starter
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS static-model
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS transform
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS tween-basic
+[skip-promote] 本次写入 docs\evidence\v12\pilot12-r45i\v11-pilot12-firefox.json（非当期证据路径）⇒ 不回写 example.json / files.json
+
+== Examples spec-driven verify: 11/11 PASS, 0 promoted / 0 demoted ==
+FIREFOX_EXIT=0

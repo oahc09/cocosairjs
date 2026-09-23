@@ -1,0 +1,105 @@
+{
+  "round": "r45h3-currency",
+  "measuredAt": "2026-09-23T02:45:59.799Z",
+  "overrides": {
+    "matrix": null,
+    "v11": null
+  },
+  "live": {
+    "candidateFingerprint": "9fa85f88b968d5f1",
+    "bundle": {
+      "bytes": 6081668,
+      "sha16": "35496aebda066ab5"
+    },
+    "minBundle": {
+      "bytes": 3499182,
+      "sha16": "8795c8685ace28a1"
+    }
+  },
+  "matrix": {
+    "evidenceBytes": 2134220,
+    "evidenceSha16": "1a18400038575e46",
+    "completed": true,
+    "runPass": 36,
+    "runTotal": 36,
+    "measuredAt": "2026-09-22T18:28:59.376Z",
+    "records": 36,
+    "contractEntries": 12,
+    "contractFingerprintMatchesLive": true,
+    "recordedBundleMatchesLive": true,
+    "pngChecked": 36,
+    "pngMissing": 0,
+    "pngSizeMismatch": 0,
+    "pngHashMismatch": 0,
+    "weakRecords": [],
+    "verdict": "CURRENT（逐记录 bundle/contract/PNG 字节与哈希现读复算全命中；PNG 本体仍是捕获时刻字节，未重采）"
+  },
+  "v11chain": {
+    "evidenceBytes": 631722,
+    "evidenceSha16": "49c81e5a1e4054e9",
+    "completed": true,
+    "partial": false,
+    "runPass": 52,
+    "runTotal": 52,
+    "measuredAt": "2026-09-22T18:49:42.756Z",
+    "records": 52,
+    "fileCandidateFingerprint": "9fa85f88b968d5f1",
+    "fileCandidateMatchesLive": true,
+    "apiProofTotals": {
+      "verified": 1004,
+      "attested": 129,
+      "unproven": 0
+    },
+    "recordsWithoutCandidateFpField": 0,
+    "distinctCandidateFingerprints": {
+      "9fa85f88b968d5f1": 52
+    },
+    "recordsNotMatchingLiveCandidate": 0,
+    "verdict": "CURRENT（52/52 逐条候选指纹 == 现算值，文件级同值，completed 且非 partial）"
+  },
+  "devtools": {
+    "file": "docs/evidence/v11-devtools-examples.json",
+    "bytes": 113157,
+    "sha16": "fd265122810fa003",
+    "measuredAt": "2026-09-21T22:47:03.629Z",
+    "completed": true,
+    "candidateFingerprint": "9fa85f88b968d5f1",
+    "matchesLive": true,
+    "topKeys": [
+      "measuredAt",
+      "runner",
+      "mode",
+      "instrumentation",
+      "candidateFingerprint",
+      "apiProofTotals",
+      "contract",
+      "examples",
+      "results",
+      "checks",
+      "total",
+      "pass",
+      "fail",
+      "partial",
+      "completed",
+      "runPass"
+    ]
+  },
+  "gallery": {
+    "file": "docs/evidence/v11-gallery-artifact.json",
+    "bytes": 10164,
+    "sha16": "ddaafd374c9f5e2e",
+    "measuredAt": "2026-09-19T19:07:10.980Z",
+    "matchesLive": false,
+    "topKeys": [
+      "measuredAt",
+      "mount",
+      "base",
+      "scope",
+      "total",
+      "pass",
+      "results",
+      "absolutePathHits",
+      "failedRequests"
+    ]
+  }
+}

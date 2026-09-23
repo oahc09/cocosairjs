@@ -1,0 +1,278 @@
+{
+  "id": "profiler-overlay",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Profiler Overlay (V1.2 LV12-02)",
+  "category": "debug",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "DirectionalLight",
+    "MeshRenderer",
+    "Profiler",
+    "profiler",
+    "Profiler.showStats",
+    "Profiler.setBackgroundColor",
+    "Profiler.setFontColor"
+  ],
+  "capabilities": [
+    "profiler"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：Profiler 系统从上游 cocos/profiler 原样回归后可在 Air 单文件产物中开启实时统计面板",
+    "points": [
+      "profiler 单例与 Profiler 系统类",
+      "showStats / setBackgroundColor / setFontColor 的绘制效果叠加在画面上",
+      "stats 计数器（fps / draws / frame / tricount / render / present）逐帧更新"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=3）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*60；profiler.showStats() 已调用，isShowingStats() 为 true，stats 的 12 个计数器可读回且 frame/draws 值随时间变化。",
+    "visual": "画面中央立方体持续自转，左下角叠加半透明统计面板（Framerate/Draw call/Frame time/Triangle/Logic/Physics/Renderer/Present/内存）"
+  },
+  "api": {
+    "primary": [
+      "profiler",
+      "Profiler"
+    ],
+    "supporting": [
+      "Profiler.showStats",
+      "MeshRenderer"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "MeshRenderer",
+      "Component",
+      "Layers",
+      "builtinResMgr",
+      "utils.createMesh",
+      "primitives.box",
+      "math.Vec3",
+      "math.Color",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Node.addComponent",
+      "profiler",
+      "Profiler",
+      "Profiler.showStats",
+      "Profiler.isShowingStats",
+      "Profiler.setBackgroundColor",
+      "Profiler.setFontColor"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene 文件冒充 Code First",
+      "用 HTML/DOM 自建 FPS 文本冒充引擎 Profiler 面板",
+      "只 import 不调用 showStats 就声称面板可见"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "builtinResMgr",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L59"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L58"
+      },
+      {
+        "api": "primitives.box",
+        "source": "main.js",
+        "validator": "material-property",
+        "sourceLocation": "L58"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "math.Color",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L44"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L50"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "profiler",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "Profiler",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L70"
+      },
+      {
+        "api": "Profiler.showStats",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L67"
+      },
+      {
+        "api": "Profiler.isShowingStats",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L70"
+      },
+      {
+        "api": "Profiler.setBackgroundColor",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "Profiler.setFontColor",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L66"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "material-property": {
+      "Cube": {
+        "effect": "builtin-standard",
+        "effectFrom": {
+          "builtin": "builtin-standard-material",
+          "rule": "builtinResMgr.get('builtin<X>-material') → effect 'builtin<X>'"
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "66d6546c7a37",
+    "source": "afc5dc805c737985",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 21,
+    "attested": 2,
+    "units": 23
+  }
+}

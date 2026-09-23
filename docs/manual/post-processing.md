@@ -17,7 +17,7 @@
 - **`PostProcess` 本体未导出**。how-to-use 篇实测：`camera.postProcess` 槽位在（d.ts 21372–21375）、
   `usePostProcess` 开关能读写，但类型 `__private` 未顶层导出，读回 `null` 且无效果创作面；
   开关两帧像素全同（spike 实锤空转，见 how-to-use 篇台账行）。
-- **兜底路线也缺最后一块**：用 render target 手工合成（[render-targets](render-targets.md) PARTIAL 走过的路）
+- **兜底路线也缺最后一块**：用 render target 手工合成（[render-targets](rendertargets.md) PARTIAL 走过的路）
   需要"对纹理做像素运算的自定义着色器"，而 AIR 无用户面 GLSL 入口（[debugging-glsl](debugging-glsl.md) N/A 篇的同一结论）。
 
 ## 2. 与 how-to-use 篇的分工

@@ -1,0 +1,50 @@
+PASS test/smoke/smoke-30-v12-regression.test.ts
+  smoke 30 — V1.2 回归组产物面与运行时
+    ○ skipped 产物自包含：无 bare @cocos/* 与 pal/* import
+    ○ skipped A1 profiler 的代表符号在产物导出表中
+    ○ skipped A2 audio 的代表符号在产物导出表中
+    ○ skipped A3 video 的代表符号在产物导出表中
+    ○ skipped A4 webview 的代表符号在产物导出表中
+    ○ skipped B1 2d 基座 的代表符号在产物导出表中
+    ○ skipped B2 particle-2d 的代表符号在产物导出表中
+    ○ skipped B3 tiled-map 的代表符号在产物导出表中
+    ○ skipped B4 ui 的代表符号在产物导出表中
+    ○ skipped C1 spine（命名空间 sp） 的代表符号在产物导出表中
+    ○ skipped C2 dragon-bones（命名空间 dragonBones） 的代表符号在产物导出表中
+    ○ skipped D1-2 physics-2d framework 的代表符号在产物导出表中
+    ○ skipped D3 physics-2d box2d（JS 后端） 的代表符号在产物导出表中
+    ○ skipped G1 physics builtin 3D 的代表符号在产物导出表中
+    ○ skipped H post-process（命名空间 postProcess） 的代表符号在产物导出表中
+    ○ skipped A2 audio：产物含真实 Web Audio 实现，pal 运行面按官方语义可用
+    ○ skipped vendored 运行库与已安装 npm 包逐字节一致
+    ○ skipped src/pal 全部文件是 @cocos/engine-pal dist 的原始字节（无手写替身）
+    ○ skipped V1.2 新增导出在 .d.ts 发布面中可见（类型与产物同源）
+    ○ skipped spine 运行时资产缺失走可读降级提示（D2/P2 口径）
+    ○ skipped F-1 deprecated.ts：Root.prototype.ui → batcher2D 别名可解析（纯注册副作用，无引擎初始化依赖）
+    ○ skipped F-3 簿记完整性：upstream-file-map / extraction-manifest 与磁盘事实一致
+    运行时（createAirApp 之后）
+      ○ skipped A2 audio：AudioSource 组件可挂载（cc 类注册与装饰器元数据在案）
+      ○ skipped D7 默认后端：2D = box2d，3D = builtin
+      ○ skipped box2d 后端真实模拟：引擎 createPhysicsWorld() 自由落体 1 秒位移 ≈ 5 m
+    批次 E / D10：gfx-webgpu 子图的类型核对豁免不外溢
+      ○ skipped 豁免清单精确锁定：根与 src 两份 tsconfig 的 exclude 只允许已登记的豁免项
+      ○ skipped 类型面与产物面一致：未接线的 gfx-webgpu 不得出现在发布 d.ts 导出表中
+      ○ skipped 豁免不遮蔽活代码：子图之外没有任何文件把该子图引进口
+      ○ skipped 26 个 gfx-webgpu 抽取文件仍与官方逐字节一致（豁免只作用于类型核对，不改内容）
+    批次 D-4 / G-3（Deviation-05）：三个 wasm 后端子图「已抽取、未接线、暂不类型核对」
+      ○ skipped 82 个抽取文件全部在册且落盘（豁免只作用于类型核对，不改内容）
+      ○ skipped 豁免不遮蔽活代码：子图之外没有任何文件把该子图引进口
+      ○ skipped 三个 feature unit 已声明但未进默认发行面（默认产物字节货币不受影响）
+    V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币
+      √ 证据目录对账：docs/evidence/v12/ 下每个目录要么被矩阵记录引用，要么在册豁免（不许静默堆积孤儿捕获，也不许留僵尸豁免） (10 ms)
+      ○ skipped 证据在案且已完成：completed=true（缺标记即 NOT_RUN）
+      ○ skipped 产物绑定：矩阵记录的 bundle 与 d.ts 哈希就是当期构建产物
+      ○ skipped 契约绑定：矩阵断言自采证后未被放松
+      ○ skipped 每张截图仍在盘且与记录逐字节一致；断言全部为真
+      ○ skipped 覆盖率：契约里每个示例 × 每个声明引擎都有 PASS 记录（不许静默漏跑）
+
+Test Suites: 1 passed, 1 total
+Tests:       37 skipped, 1 passed, 38 total
+Snapshots:   0 total
+Time:        3.048 s, estimated 44 s
+Ran all test suites matching /test\\smoke\\smoke-30-v12-regression.test.ts/i with tests matching "证据目录对账".

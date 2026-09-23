@@ -1,0 +1,506 @@
+{
+  "id": "physics-2d-basic",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "2D Physics Mount & Queries — box2d backend (V12 LV12-13)",
+  "category": "physics-2d",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "Component",
+    "UITransform",
+    "Layers",
+    "view",
+    "ResolutionPolicy",
+    "Sprite",
+    "Label",
+    "SpriteFrame",
+    "Texture2D",
+    "ImageAsset",
+    "Color",
+    "math.Vec2",
+    "math.Size",
+    "math.Rect",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.getComponent",
+    "PhysicsSystem2D",
+    "PhysicsSystem2D.testPoint",
+    "PhysicsSystem2D.testAABB",
+    "PhysicsSystem2D.raycast",
+    "RigidBody2D",
+    "RigidBody2D.getMass",
+    "Collider2D",
+    "Collider2D.apply",
+    "Collider2D.TYPE",
+    "BoxCollider2D",
+    "CircleCollider2D",
+    "PolygonCollider2D",
+    "PolygonCollider2D.threshold",
+    "PHYSICS_2D_PTM_RATIO"
+  ],
+  "capabilities": [
+    "physics-2d"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：默认发行产物的 2D 物理后端是 box2d（决策 D7），RigidBody2D + Collider2D 的组件链路挂载后 testPoint/testAABB/raycast 三类查询必须真实命中，且节点变换改动经 Collider2D.apply() + 帧同步确定地反映到查询结果",
+    "points": [
+      "默认 bundle 里 PhysicsSystem2D.PHYSICS_BOX2D === true、PHYSICS_BUILTIN === false，physicsWorld 实际类型是 b2PhysicsWorld，ptm ratio 32、重力 (0,-320)——builtin 后端未接线，它那套空实现（builtin-world.ts:285 的 raycast）与默认发行无关",
+      "BoxCollider2D 的尺寸默认是 1×1（box-collider-2d.ts:38 _size = new Size(1, 1)），不跟随 UITransform 的 contentSize；漏设 size 时地面只有 1×1，动态体会穿过它坠落。CircleCollider2D.radius 与 PolygonCollider2D.points 则直接就是形状参数",
+      "「挂载与查询，不模拟」用逐刚体 gravityScale = 0 做到，而不是 autoSimulation = false：后者在 physics-system.ts 的 postUpdate 里提前 return，会连 syncSceneToPhysics() 一起关掉——实测改变换 + apply() 后查询永远命中旧位置。系统重力与自动模拟都保持打开",
+      "改节点变换后有三态：apply() 同帧内 worldPoints（由变换直接算）已是新值而 worldAABB/三类查询仍是旧值（走碰撞树代理）；下一次 postUpdate 按 node.hasChangedFlags 调 SetTransformVec，代理同步，查询与 worldAABB 才全部落到新位置"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas + UICamera（ORTHO，visibility 含 Layers.Enum.UI_3D）+ 四个物理节点：Ground（Static + BoxCollider2D 360×20，中心 (0,-120)）、Crate（Dynamic + BoxCollider2D 48×48，gravityScale 0、density 1.2/friction 0.3/restitution 0.4，中心 (-120,40)）、Ball（Dynamic + CircleCollider2D r=28，中心 (0,40)）、Gem（Kinematic + PolygonCollider2D 六边形外接半径 30、threshold 0.1，中心 (120,40)）。后端读回：backend=box2d、flagBox2D=true、flagBuiltin=false、worldCtor=b2PhysicsWorld、ptmRatio=32、gravityY=-320、fixedTimeStep=0.02、crateMass=2.7、crateColliderType=1、colliderBodyIdentity=true、colliderInheritsBase=true（三种碰撞体都 instanceof Collider2D）。查询读回（坐标单位=像素）：testPoint(-120,40)=Crate、(0,40)=Ball、(120,40)=Gem、(0,-120)=Ground、(2000,2000)=空；testAABB(Rect(-150,20,60,40))=Crate；raycast((-240,40)→(240,40)) 首命中 Crate、All 命中 Ball,Crate,Gem。真实点击后木箱挪到 (0,-86)：applyOnly 态 worldMin 已 (-24,-110) 而 worldAABB/查询仍旧位置；下一帧同步后 testPoint(0,-86)=Crate、旧位置查询为空、testAABB 为空、raycast 首命中变为 Ball、All 变为 Ball,Gem。",
+    "visual": "深蓝底一屏：灰色地面长条横贯下方，其上左橙（盒木箱）、中绿（圆球）、右蓝（六边形宝石）四个色块等间距排布，顶部状态行实时写着后端类型与木箱坐标；点击后橙木箱瞬移到地面上表面（截图取点击后状态）"
+  },
+  "api": {
+    "primary": [
+      "PhysicsSystem2D",
+      "RigidBody2D",
+      "Collider2D"
+    ],
+    "supporting": [
+      "BoxCollider2D",
+      "CircleCollider2D",
+      "PolygonCollider2D",
+      "Collider2D.apply",
+      "Collider2D.TYPE",
+      "RigidBody2D.getMass",
+      "PhysicsSystem2D.testPoint",
+      "PhysicsSystem2D.testAABB",
+      "PhysicsSystem2D.raycast",
+      "PHYSICS_2D_PTM_RATIO",
+      "math.Vec2",
+      "math.Size",
+      "math.Rect",
+      "PolygonCollider2D.threshold"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Canvas",
+      "Component",
+      "UITransform",
+      "Layers",
+      "view",
+      "ResolutionPolicy",
+      "Sprite",
+      "Label",
+      "SpriteFrame",
+      "Texture2D",
+      "ImageAsset",
+      "Color",
+      "math.Vec2",
+      "math.Size",
+      "math.Rect",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.getComponent",
+      "PhysicsSystem2D",
+      "PhysicsSystem2D.testPoint",
+      "PhysicsSystem2D.testAABB",
+      "PhysicsSystem2D.raycast",
+      "RigidBody2D",
+      "RigidBody2D.getMass",
+      "Collider2D",
+      "Collider2D.apply",
+      "Collider2D.TYPE",
+      "BoxCollider2D",
+      "CircleCollider2D",
+      "PolygonCollider2D",
+      "PolygonCollider2D.threshold",
+      "PHYSICS_2D_PTM_RATIO"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene/.prefab 冒充 Code First",
+      "把 builtin 后端（默认未接线）的 raycast 空实现当作默认发行产物的 2D raycast 结论",
+      "只 addComponent 不查询、或示例自报『物理已工作』而不给页面外可读回的 testPoint/testAABB/raycast 命中集",
+      "用 autoSimulation=false 冒充『不模拟』——那会连 scene→physics 变换同步一起关掉，位移后查询永远命中旧位置",
+      "断言自由落体/接触回调（属 physics-2d-collision 与 D3/R8 的范围）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L120"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L131"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L270"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L53"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "Sprite",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "SpriteFrame",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L69"
+      },
+      {
+        "api": "Texture2D",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L67"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "math.Vec2",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L182"
+      },
+      {
+        "api": "math.Size",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L149"
+      },
+      {
+        "api": "math.Rect",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L247"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L136"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "Node.getComponent",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "PhysicsSystem2D",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "PhysicsSystem2D.testPoint",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L241"
+      },
+      {
+        "api": "PhysicsSystem2D.testAABB",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L247"
+      },
+      {
+        "api": "PhysicsSystem2D.raycast",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L248"
+      },
+      {
+        "api": "RigidBody2D",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "RigidBody2D.getMass",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L220"
+      },
+      {
+        "api": "Collider2D",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L214"
+      },
+      {
+        "api": "Collider2D.apply",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L265"
+      },
+      {
+        "api": "Collider2D.TYPE",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L212"
+      },
+      {
+        "api": "BoxCollider2D",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "CircleCollider2D",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L170"
+      },
+      {
+        "api": "PolygonCollider2D",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L178"
+      },
+      {
+        "api": "PolygonCollider2D.threshold",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L185"
+      },
+      {
+        "api": "PHYSICS_2D_PTM_RATIO",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L203"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Ground",
+        "Crate",
+        "Ball",
+        "Gem",
+        "Status"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Canvas": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 125,
+            "text": "const canvas = canvasNode.addComponent(Canvas);"
+          }
+        ]
+      },
+      "UICamera": {
+        "position": [
+          0,
+          0,
+          1000
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 137,
+            "text": "canvas.cameraComponent = cam;"
+          }
+        ]
+      },
+      "Ground": {
+        "position": [
+          0,
+          -120,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 143,
+            "text": "const ground = makeBox('Ground', canvasNode, 0, -120, 360, 20);"
+          }
+        ]
+      },
+      "Crate": {
+        "position": [
+          -120,
+          40,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 152,
+            "text": "const crate = makeBox('Crate', canvasNode, CRATE_START.x, CRATE_START.y, 48, 48);"
+          }
+        ]
+      },
+      "Ball": {
+        "position": [
+          0,
+          40,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 165,
+            "text": "const ball = makeBox('Ball', canvasNode, 0, 40, 56, 56);"
+          }
+        ]
+      },
+      "Gem": {
+        "position": [
+          120,
+          40,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 174,
+            "text": "const gem = makeBox('Gem', canvasNode, 120, 40, 60, 60);"
+          }
+        ]
+      },
+      "Status": {
+        "position": [
+          -10,
+          150,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 187,
+            "text": "const statusLabel = addLabel(canvasNode, 'physics-2d (box2d backend) — mount + queries only, gravityScale=0', -10, 150);"
+          }
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（纹理运行时程序化生成；box2d 为 cocos4 上游 TypeScript 端口，随 bundle 出处登记）"
+  },
+  "promotion": {
+    "spec": "a74c759a85f8",
+    "source": "3f9207b6bac28f9b",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 32,
+    "attested": 4,
+    "units": 36
+  }
+}

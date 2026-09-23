@@ -1,0 +1,105 @@
+{
+  "ok": false,
+  "hardCount": 5,
+  "hard": [
+    "webkit/audio-basic 诊断样本缺失 docs/evidence/v12/v11chain-r45j/diag-audio-basic-wk-d2.json",
+    "webkit/audio-basic 诊断样本缺失 docs/evidence/v12/v11chain-r45j/diag-audio-basic-wk-d3.json",
+    "webkit/video-basic 诊断样本缺失 docs/evidence/v12/v11chain-r45j/diag-video-basic-wk-d1.json",
+    "webkit/video-basic 诊断样本缺失 docs/evidence/v12/v11chain-r45j/diag-video-basic-wk-d2.json",
+    "webkit/video-basic 诊断样本缺失 docs/evidence/v12/v11chain-r45j/diag-video-basic-wk-d3.json"
+  ],
+  "staleCount": 0,
+  "stale": [],
+  "attributedCount": 4,
+  "notes": [
+    "webkit/audio-basic 诊断复跑 1 次 ⇒ 0 PASS / 1 FAIL（mode=STRUCTURAL）",
+    "webkit/video-basic 诊断复跑 2 次 ⇒ 1 PASS / 1 FAIL（mode=INTERMITTENT）"
+  ],
+  "threeEnginePass": 49,
+  "totals": {
+    "chromium": {
+      "verified": 1004,
+      "attested": 129,
+      "unproven": 0,
+      "pass": 52,
+      "fail": 0
+    },
+    "firefox": {
+      "verified": 1004,
+      "attested": 129,
+      "unproven": 0,
+      "pass": 51,
+      "fail": 1
+    },
+    "webkit": {
+      "verified": 999,
+      "attested": 130,
+      "unproven": 4,
+      "pass": 49,
+      "fail": 3
+    }
+  },
+  "cells": {
+    "firefox/mesh-sphere": {
+      "why": "并行会话在工作树 examples/mesh-sphere/example.json 注入的假 validator（F-132 写盘语义的连带），非引擎差异",
+      "mode": null,
+      "errors": [
+        "not-a-real-validator"
+      ],
+      "unproven": null,
+      "crossDiff": [
+        "specFp",
+        "srcFp"
+      ],
+      "result": "FAIL"
+    },
+    "webkit/mesh-sphere": {
+      "why": "同 firefox/mesh-sphere：工作树并行 NC，非引擎差异",
+      "mode": null,
+      "errors": [
+        "not-a-real-validator"
+      ],
+      "unproven": null,
+      "crossDiff": [
+        "specFp",
+        "srcFp"
+      ],
+      "result": "FAIL"
+    },
+    "webkit/audio-basic": {
+      "why": "待定：在册 F-100（webkit 音频 DOM 分支能力缺口）vs 时序竞态，见 DIAG 判定",
+      "mode": "STRUCTURAL",
+      "errors": [
+        "resource-released",
+        "api-executed"
+      ],
+      "unproven": [
+        "AudioPCMDataView",
+        "AudioPCMDataView.getData",
+        "AudioSource.playOneShot"
+      ],
+      "crossDiff": [
+        "verified",
+        "attested",
+        "instr"
+      ],
+      "result": "FAIL"
+    },
+    "webkit/video-basic": {
+      "why": "待定：webkit 序列尾部与释放/重载抢次序（新册），见 DIAG 判定",
+      "mode": "INTERMITTENT",
+      "errors": [
+        "resource-released",
+        "api-executed"
+      ],
+      "unproven": [
+        "VideoPlayer.resume"
+      ],
+      "crossDiff": [
+        "verified",
+        "instr"
+      ],
+      "result": "FAIL"
+    }
+  }
+}

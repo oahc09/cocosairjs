@@ -1,7 +1,7 @@
 # 01 — Web Feature Set 分析（Phase 1 / 验收 L1）
 
 > 基线：`cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)`
-> 判据来源：`cc.config.json` + `scripts/build-h5-source.js` + 实际构建验证（docs/03），不人工假设。
+> 判据来源：`cc.config.json` + `cocos4/scripts/build-h5-source.js`（上游仓库内文件，本仓库无 `scripts/` 目录；AIR 侧对应实现为 `tools/build/build.cjs`）+ 实际构建验证（docs/03），不人工假设。
 
 ## 1. 构建 feature 机制
 
@@ -90,3 +90,54 @@ primitive, tween, custom-pipeline, legacy-pipeline
 | Native | No | No |
 | JSB | No | No |
 | MiniGame | No | No |
+
+## 7. V1.2 之后的 feature 表现况（r45g 新增，机器导出）
+
+§4 / §5 是 V0.1 立项期的取舍叙述，**不回改**；本节只登记**当前可复跑读数**，两者不一致处以本节为准（不一致本身已登记为 F-129，见 §7.5）。
+
+自查命令（两个独立事实源，可交叉核对）：
+
+- `npm run verify:v12-feature-face` 的 **D1** 臂 —— 读 Air `src/cc.config.json` 与上游 `cc.config.json` 的 `features{}` 键，默认集由 `tools/build/build.cjs` 源码里正则取 `AIR_FEATURES` 数组（**不手抄**），并断言默认集里没有未声明名。
+- `npm run verify:v12-backends` 的 A4/A5 两臂（**第二个独立实现**，同一对面；两者写错任一侧即对不上）⇒ 现读 `{"air":34,"upstream":55,"missing":22,"airOnly":["air"],"defaultAirFeatures":26}`。
+
+### 7.1 声明面对账（现读）
+
+| 项 | 数 | 说明 |
+|---|---|---|
+| Air 声明的 feature unit | **34** | `src/cc.config.json` 的 `features{}` 键数 |
+| 上游声明 | **55** | `cocos4/cc.config.json` 同键 |
+| 上游有 / Air 无 | **22** | 逐名见 §7.4 |
+| Air 独有 | **1**（`air`） | bundle 入口 unit（`src/exports/air.ts`），上游无同名 |
+
+### 7.2 默认构建集 = 26（按 `tools/build/build.cjs` 内注释归批）
+
+| 归批 | feature |
+|---|---|
+| V0.1 期即在默认集（12 项，含入口） | `air`, `base`, `gfx-webgl`, `gfx-webgl2`, `gfx-empty`, `3d`, `animation`, `skeletal-animation`, `primitive`, `tween`, `custom-pipeline`, `legacy-pipeline` ——**该行实为 12 项**（`gfx-webgl2` 自 V0.1 基线提交 `f1bc676` 起即在默认集，与 §4 第 11 行「Air V0.1 = No」和 §5 的十项列表不一致 ⇒ F-129） |
+| V1.2 批次 A（LV12-02/04/05） | `profiler`, `video`, `webview` |
+| V1.2 批次 B1 / D-1 | `2d`, `physics-2d-framework` |
+| V1.2 批次 B2–B4 / C1–C2 | `particle-2d`, `tiled-map`, `ui`, `spine-3.8`, `spine-4.2`, `dragon-bones` |
+| V1.2 批次 D-3 / G-1（决策 D7：3D 默认后端 = builtin，2D 默认 = box2d 纯 JS 端口） | `physics-2d-box2d`, `physics-builtin` |
+| V1.2 批次 H | `custom-pipeline-post-process` |
+
+`AIR_FEATURES` 全部 26 项均已在 `cc.config.json` 声明（`verify:v12-feature-face` D1 的同一断言：未声明名进默认集即红）。这条本身是护栏：`tools/build/build.cjs` 对未声明名会**失败退出**，因为 `@cocos/ccbuild` 对未声明 feature 是静默忽略（产物与默认逐字节相同，r43 实测）。
+
+### 7.3 声明了、但不在默认集的 8 项（各有登记来源）
+
+| feature | `modules` | 为何不在默认集（来源） |
+|---|---|---|
+| `physics-cannon`, `physics-ammo`, `physics-physx`, `physics-2d-box2d-wasm`, `physics-2d-builtin` | 各 ≥1 | `tools/build/build.cjs` 的 D-3 / G-1 注释：物理选择器一个图中只允许一个后端，其余后端走 `AIR_FEATURES=` 变体构建取证 |
+| `marionette`, `procedural-animation` | **0**（只有 `intrinsicFlags`） | §4 注已述：不选则空实现替换生效；`marionette` 的 pose-node **文件**属计划书回归组 14，与「是否声明 feature unit」是两件事 |
+| `audio` | 1（`audio`） | ⚠️ 现读：默认 bundle 里的 `AudioSource` **不是**由 `audio` feature 选择子带进来的，而是 `src/exports/air.ts:37` 的 `export * from './audio'` 走 `air` 入口（`grep -c AudioSource build/cocosair.module.js` → 17，而 `audio` 不在 `AIR_FEATURES`）。⇒ 在 Air 里 `audio` unit 与 `air` unit **不是同一个开关面**，变体构建 `AIR_FEATURES=audio` 不会改变默认产物 |
+
+### 7.4 上游有而 Air 未声明的 22 项（只固定名字，不逐条给理由）
+
+`gfx-webgpu`, `rich-text`, `mask`, `graphics`, `ui-skew`, `affine-transform`, `sorting-2d`, `particle`, `physics-framework`, `physics-2d-box2d-jsb`, `intersection-2d`, `occlusion-query`, `geometry-renderer`, `debug-renderer`, `xr`, `light-probe`, `terrain`, `vendor-google`, `custom-pipeline-builtin-scripts`, `websocket`, `websocket-server`, `meshopt`
+
+本表**不主张**这 22 个名字各自的处置理由（部分名可在 `docs/v12-d9-residual-triage.md` 与 `docs/v12-baseline-compare.json` 的差集桶里找到对应讨论，但那是**文件级**残留分类，不等同于 feature unit 级处置）。逐条 feature-unit 级处置与 §7.5 的缺口一起挂在 LV12-21 / D9 待批面。
+
+### 7.5 本节不覆盖（避免被当成本节已完成）
+
+- feature unit ↔ LV12 回归组的逐条对齐与该组当期取证状态：以 `docs/acceptance-report-v12.md` §1 为当期口径，`docs/v12-upstream-regression.md` §3 / §3.1 为总账。
+- 计划书 F-3 项「README 特性矩阵、`docs/progress.md` 更新」中 README 侧的 V1.2 段（`README.md` 「能力边界（V1.2）」）与本页 §7 是两份东西，未合并。
+- **F-129（本轮新开，非阻断）**：§4/§5 的 V0.1 取舍表与 `tools/build/build.cjs` 自 V0.1 基线提交起的实际默认集不一致（`gfx-webgl2` 一行、§5 列表少列 `air`）⇒ 属历史陈述与代码现读不符，修哪一侧要 owner 定（改文档陈述 vs 承认当年确未开 WebGL2）。

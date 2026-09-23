@@ -2,6 +2,8 @@
 
 日期：2026-09-12。范围：运行时加载器、原生模型/动画适配、SDK 导出、本地浏览器示例。
 
+> **证据链接可读性说明（V1.2 补）**：本文中指向 `../output/playwright/` 下文件的 Markdown 链接（截图、`.json` 结果、`.log`）共 20 条，目标是 `.gitignore` 排除的瞬态验证目录 `output/`；这批 V0.x 期捕获只写在当时的开发机上、**从未随仓库入库**，因此在干净检出的仓库里不可解析。链接仅作 provenance 指针保留，**不据此判「证据在仓库内可得」**；已逐条登记在 `tools/v12/doc-refs-baseline.json`（class `v0x-evidence-path`），由 `npm run verify:doc-refs` 棘轮锁定。仓库内可解析的当期证据在 `docs/evidence/`。
+
 ## 结果
 
 | 检查 | 结果与依据 |

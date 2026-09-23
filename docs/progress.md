@@ -1,4 +1,4 @@
-# Cocos Air V0.1 — 进展日志
+# Cocos Air 进展日志（V0.1 → V0.6；V1.x 见文末分工说明）
 
 > 基线：`cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)`
 > 依据：《Cocos Air V0.1 — cocos4 Web-TS Engine Extraction 任务计划书》
@@ -55,7 +55,7 @@
 - `npm run verify:web-only` — PASSED
 - `npm test` — 4 suites / 7 tests 全过
 - 浏览器实测：蒙皮变体编译链接成功、3 关节注册、网格逐帧变形
-  （4 帧 bbox w=142→176→252→234），证据 `docs/evidence/skinned-animation-pose1~3.png`
+  （4 帧 bbox w=142→176→252→234），证据 `docs/evidence/skinned-animation-pose1.png` / `docs/evidence/skinned-animation-pose2.png` / `docs/evidence/skinned-animation-pose3.png`
 
 ### 剩余已知事项（非阻塞）
 
@@ -531,3 +531,23 @@ examples 浏览器 7/7；panel 浏览器 7/7。
 Fresh Consumer ok；性能/生命周期 PASS。
 Deviations：A001 为脚本化求解档（LLM Provider 接入后以 A002+ 测量，不混算）；
 draco 系浏览器 EXPECTED_UNSUPPORTED 按稳定错误码判。
+
+---
+
+## V1.x 与本文件的关系（2026-09-22 r45g 追加）
+
+本文件的正文止于 **V0.6（2026-09-16）**——这不是漏写，而是 V1.x 起把「进展日志」拆成了按版本各自维护的文件，V1.0/V1.1 的历史陈述以那些文件为准，本文件不转述（转述会造出第二份可能各自漂移的历史）。现读分工：
+
+| 版本 | 权威记录 | 说明 |
+| --- | --- | --- |
+| V0.1 – V0.6 | 本文件（上面各节） | 逐日执行日志 |
+| V0.6 → V1.1 发布门 | `docs/v06-v10-release-gates.md`（2026-09-18，「All numbers from actual verification runs」） | 阶段收口报告 |
+| V1.1 | `docs/v11-progress.md`（2026-09-19，155 行）+ `docs/v11-baseline.md` + `docs/v11-example-specs.md` | 示例规范体系 / API 覆盖 / 规范符合性核查 / 已知门禁弱点 |
+| **V1.2（本期）** | `docs/acceptance-report-v12.md`（LV12-01…21 矩阵）+ `docs/v12-upstream-regression.md`（逐轮 §7.x）+ `docs/v12-owner-decisions.md`（待批清单） | 下面只给「怎么读 + 当期诚实结论」，具体读数不在本文件复制（同一数字两处各自漂移是本项目已付过学费的坑，见 `docs/v12-upstream-regression.md` §7.5） |
+
+### V1.2 当期口径（一句话版，2026-09-22）
+
+- **结论：V1.2 未达「验收通过」。** 主链路（16 个回归组的抽取 / 接线 / 三引擎取证）大面积推进，但收口卡在**待批复项**与**证据入库授权**上，不是卡在这轮没做的事上——具体卡点见验收报告 §1 矩阵每行状态列，不在本文件重复列举。
+- **能力面（发行范围）**以 `docs/01-web-feature-set.md` §7 为准，其机器判据已内联为仓库内只读门禁 `npm run verify:v12-feature-face`（D1–D5）；README「能力边界」段与之同源。历史遗留的一条口径矛盾（`gfx-webgl2` 在文档里标「未选」、在默认构建集里自 V0.1 基线提交 `f1bc676` 起就在）已登记为 **F-129 / 待批 #16**，**未擅改历史陈述**。
+- **本轮（r45g）零改产物**：三产物 sha16 逐个未变、`verify:consumer` 的 `failures` 集合仍只等于已知的那一项（F-85，README 指向未随包发布的手册入口），tarball 字节只随文档改动变化——逐轮字节链只记在 `docs/audits/global-quality-audit-2026-09-19/findings.jsonl`（F-129 `packaging_r45g` / F-130 `gate_sweep_r45g_f130`），本文件不留数字。
+- **未复跑项要现读再判**：`typecheck` / `npm test` / `build` / `build:min` / 三引擎矩阵 / 其余护栏门禁在 r45g 的文档子轮里**没有重跑**（该子轮无源码与构建输入改动，唯一新增的仓库内文件是 `tools/v12/verify-feature-face.cjs` 与 `package.json` 一行 scripts）。任何后续判定前请按计划书 §12 的全序复跑并现读，勿引用本文件的转述。

@@ -1,0 +1,948 @@
+PASS test/smoke/smoke-09-runtime-inspection.test.ts (34.306 s)
+  ● Console
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 12 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 4 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 10 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-24-benchmark-harness.test.ts (30.548 s)
+PASS test/smoke/smoke-07-gltf.test.ts (33.624 s)
+  ● Console
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 5 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-03-runtime-asset.test.ts (33.374 s)
+PASS test/smoke/smoke-04-skinning.test.ts
+PASS test/smoke/smoke-28-benchmark-regression.test.ts (34.031 s)
+PASS test/smoke/smoke-02-scene.test.ts (34.475 s)
+  ● Console
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 5 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.time
+      InitScene: 1 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:409:21)
+
+    console.time
+      AttachPersist: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:436:21)
+
+    console.time
+      AutoRelease: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:457:25)
+
+    console.time
+      Destroy: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:466:39)
+
+    console.time
+      Activate: 3 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:483:21)
+
+    console.time
+      InitScene: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:409:21)
+
+    console.time
+      AttachPersist: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:436:21)
+
+    console.time
+      AutoRelease: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:457:25)
+
+    console.time
+      Destroy: 1 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:466:39)
+
+    console.time
+      Activate: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:483:21)
+
+PASS test/smoke/smoke-01-bootstrap.test.ts
+  ● Console
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 5 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 3 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-25-benchmark-tracks.test.ts
+PASS test/smoke/smoke-16-gltf-clearcoat.test.ts (35.354 s)
+  ● Console
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 4 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 2 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-26-g1-attribution.test.ts
+PASS test/smoke/smoke-08-frame-object.test.ts (35.471 s)
+PASS test/smoke/smoke-27-recipes-distribution.test.ts
+PASS test/smoke/smoke-23-debug-isolation.test.ts
+PASS test/smoke/smoke-32-wasm-fallback.test.ts
+  ● Console
+
+    console.log
+      [bullet]:bullet asm lib loaded.
+
+      at debug (src/cocos/core/platform/debug.ts:115:12)
+
+    console.log
+      [box2d]:box2d asm lib loaded.
+
+      at debug (src/cocos/core/platform/debug.ts:115:12)
+
+    console.debug
+      [PHYSICS]: Internal PhysX asm libs loaded.
+
+      at src/cocos/physics/physx/physx-adapter.ts:80:43
+
+    console.log
+      [bullet]:bullet asm lib loaded.
+
+      at debug (src/cocos/core/platform/debug.ts:115:12)
+
+    console.log
+      [box2d]:box2d wasm lib loaded.
+
+      at debug (src/cocos/core/platform/debug.ts:115:12)
+
+    console.log
+      [bullet]:bullet asm lib loaded.
+
+      at debug (src/cocos/core/platform/debug.ts:115:12)
+
+    console.log
+      [bullet]:bullet wasm lib loaded.
+
+      at debug (src/cocos/core/platform/debug.ts:115:12)
+
+    console.debug
+      [PHYSICS]: Internal PhysX asm libs loaded.
+
+      at src/cocos/physics/physx/physx-adapter.ts:80:43
+
+    console.debug
+      [PHYSICS]: Internal PhysX wasm libs loaded.
+
+      at src/cocos/physics/physx/physx-adapter.ts:106:43
+
+PASS test/smoke/smoke-05-promise-asset-helper.test.ts (36.254 s)
+PASS test/smoke/smoke-06-skeleton-utils.test.ts
+PASS test/smoke/smoke-12-gltf-scene.test.ts (36.475 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 22 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 4 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 6 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.warn
+      [glTF] node 4: innerConeAngle has no engine plateau input, retained as metadata
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at Object.instantiate (src/air/assets/gltf/extensions/scene/lights.ts:117:29)
+      at GLTFAsset.instantiate (src/air/assets/gltf/asset.ts:137:40)
+      at test/smoke/smoke-12-gltf-scene.test.ts:85:32
+      at fulfilled (test/smoke/smoke-12-gltf-scene.test.ts:5:58)
+
+PASS test/smoke/smoke-15-gltf-physical.test.ts (36.532 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 11 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 3 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-19-gltf-bump.test.ts (36.495 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 9 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 5 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 3 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-21-gltf-review-regression.test.ts (36.544 s)
+  ● Console
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 13 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 2 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 6 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-14-gltf-ktx2.test.ts (36.51 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 12 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 4 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 5 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.warn
+      [glTF] extension KHR_texture_basisu: decoder-required (configure setKTX2Transcoder / createKTX2Transcoder)
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at GLTFExtensionRegistry.validateRequired (src/air/assets/gltf/extension-registry.ts:122:21)
+      at GLTFLoader.<anonymous> (src/air/assets/gltf/loader.ts:129:27)
+      at src/air/assets/gltf/loader.ts:8:71
+      at Object.<anonymous>.__awaiter (src/air/assets/gltf/loader.ts:4:12)
+      at GLTFLoader.parseAsync (src/air/assets/gltf/loader.ts:128:16)
+
+    console.warn
+      [glTF] texture 0: KHR_texture_basisu transcoder not configured, using core image fallback
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at Object.<anonymous> (src/air/assets/gltf/extensions/texture/basisu.ts:55:21)
+      at src/air/assets/gltf/extensions/texture/basisu.ts:8:71
+      at Object.<anonymous>.__awaiter (src/air/assets/gltf/extensions/texture/basisu.ts:4:12)
+      at Object.resolveTextureSource (src/air/assets/gltf/extensions/texture/basisu.ts:53:20)
+      at src/air/assets/gltf/material.ts:147:57
+
+PASS test/smoke/smoke-10-gltf-registry.test.ts (36.528 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 6 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 3 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.warn
+      [glTF] extension KHR_draco_mesh_compression: decoder-required (configure a decoder with setDRACODecoder())
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at GLTFExtensionRegistry.validateRequired (src/air/assets/gltf/extension-registry.ts:122:21)
+      at GLTFLoader.<anonymous> (src/air/assets/gltf/loader.ts:129:27)
+      at src/air/assets/gltf/loader.ts:8:71
+      at Object.<anonymous>.__awaiter (src/air/assets/gltf/loader.ts:4:12)
+      at GLTFLoader.parseAsync (src/air/assets/gltf/loader.ts:128:16)
+
+    console.warn
+      [glTF] extension KHR_draco_mesh_compression: no decoder configured, loading core fallback attributes
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at Object.loadPrimitive (src/air/assets/gltf/extensions/geometry/draco.ts:83:21)
+      at GLTFParserContext.<anonymous> (src/air/assets/gltf/parser-context.ts:206:63)
+      at fulfilled (src/air/assets/gltf/parser-context.ts:5:58)
+
+    console.warn
+      [glTF] extension KHR_draco_mesh_compression: decoder-required (configure a decoder with setDRACODecoder())
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at GLTFExtensionRegistry.validateRequired (src/air/assets/gltf/extension-registry.ts:122:21)
+      at GLTFLoader.<anonymous> (src/air/assets/gltf/loader.ts:129:27)
+      at src/air/assets/gltf/loader.ts:8:71
+      at Object.<anonymous>.__awaiter (src/air/assets/gltf/loader.ts:4:12)
+      at GLTFLoader.parseAsync (src/air/assets/gltf/loader.ts:128:16)
+
+    console.warn
+      [glTF] optional extension KHR_materials_unknown: using core fallback where available
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at GLTFParserContext.<anonymous> (src/air/assets/gltf/parser-context.ts:142:22)
+      at src/air/assets/gltf/parser-context.ts:8:71
+      at Object.<anonymous>.__awaiter (src/air/assets/gltf/parser-context.ts:4:12)
+      at GLTFParserContext.loadBuffers (src/air/assets/gltf/parser-context.ts:177:16)
+      at GLTFLoader.<anonymous> (src/air/assets/gltf/loader.ts:134:27)
+
+PASS test/smoke/smoke-31-pose-graph.test.ts (36.506 s)
+PASS test/smoke/smoke-20-gltf-transmission.test.ts (36.662 s)
+  ● Console
+
+    console.time
+      Init Base: 2 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 11 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 3 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 3 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.warn
+      [glTF] extension KHR_materials_transmission: device-dependent (requires the scene-color transmission pipeline (transmission pipeline not armed))
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at GLTFExtensionRegistry.validateRequired (src/air/assets/gltf/extension-registry.ts:122:21)
+      at GLTFLoader.<anonymous> (src/air/assets/gltf/loader.ts:129:27)
+      at src/air/assets/gltf/loader.ts:8:71
+      at Object.<anonymous>.__awaiter (src/air/assets/gltf/loader.ts:4:12)
+      at GLTFLoader.parseAsync (src/air/assets/gltf/loader.ts:128:16)
+
+PASS test/smoke/smoke-13-gltf-image-formats.test.ts (36.63 s)
+  ● Console
+
+    console.warn
+      [glTF] texture 0: EXT_texture_webp webp unavailable, using core image fallback
+
+    [0m [90m 88 |[39m         [36mthis[39m[33m.[39moptions[33m.[39monProgress[33m?[39m[33m.[39m({ phase[33m,[39m loaded[33m,[39m total[33m,[39m url })[33m;[39m
+     [90m 89 |[39m     }
+    [31m[1m>[22m[39m[90m 90 |[39m     [36mpublic[39m warn (message[33m:[39m string)[33m:[39m [36mvoid[39m { [36mthis[39m[33m.[39mwarnings[33m.[39mpush(message)[33m;[39m console[33m.[39mwarn([32m`[glTF] ${message}`[39m)[33m;[39m }
+     [90m    |[39m                                                                                [31m[1m^[22m[39m
+     [90m 91 |[39m
+     [90m 92 |[39m     [90m/**[39m
+     [90m 93 |[39m [90m     * Deduplicates concurrent dependency work: the promise itself is cached, so the same[39m[0m
+
+      at GLTFParserContext.warn (src/air/assets/gltf/parser-context.ts:90:80)
+      at Object.<anonymous> (src/air/assets/gltf/extensions/texture/image-formats.ts:92:21)
+      at fulfilled (src/air/assets/gltf/extensions/texture/image-formats.ts:5:58)
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 21 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 6 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 4 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-18-gltf-iridescence.test.ts (36.612 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 17 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 5 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 10 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-17-gltf-anisotropy.test.ts (36.611 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 20 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 5 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 7 ms
+
+      at src/cocos/game/game.ts:905:29
+
+PASS test/smoke/smoke-22-agent-session.test.ts (36.78 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 6 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 2 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.time
+      InitScene: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:409:21)
+
+    console.time
+      AttachPersist: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:436:21)
+
+    console.time
+      AutoRelease: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:457:25)
+
+    console.time
+      Destroy: 1 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:466:39)
+
+    console.time
+      Activate: 2 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:483:21)
+
+    console.time
+      InitScene: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:409:21)
+
+    console.time
+      AttachPersist: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:436:21)
+
+    console.time
+      AutoRelease: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:457:25)
+
+    console.time
+      Destroy: 3 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:466:39)
+
+    console.time
+      Activate: 1 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:483:21)
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 1 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 1 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.time
+      InitScene: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:409:21)
+
+    console.time
+      AttachPersist: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:436:21)
+
+    console.time
+      AutoRelease: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:457:25)
+
+    console.time
+      Destroy: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:466:39)
+
+    console.time
+      Activate: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:483:21)
+
+    console.time
+      InitScene: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:409:21)
+
+    console.time
+      AttachPersist: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:436:21)
+
+    console.time
+      AutoRelease: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:457:25)
+
+    console.time
+      Destroy: 1 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:466:39)
+
+    console.time
+      Activate: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:483:21)
+
+    console.time
+      Init Base: 0 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 1 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 0 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 1 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.time
+      InitScene: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:409:21)
+
+    console.time
+      AttachPersist: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:436:21)
+
+    console.time
+      AutoRelease: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:457:25)
+
+    console.time
+      Destroy: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:466:39)
+
+    console.time
+      Activate: 0 ms
+
+      at Director.runSceneImmediate (src/cocos/game/director.ts:483:21)
+
+PASS test/smoke/smoke-11-gltf-geometry.test.ts (36.762 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 18 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 2 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 9 ms
+
+      at src/cocos/game/game.ts:905:29
+
+FAIL test/smoke/smoke-29-examples-spec.test.ts (38.447 s)
+  ● V1.1 — Example Specification 门禁 › §15 全部 example.json 达到 frozen 且规格零问题
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+    [0m [90m 51 |[39m         expect(result[33m.[39mstdout)[33m.[39mtoContain([32m`${EXAMPLE_COUNT} examples`[39m)[33m;[39m
+     [90m 52 |[39m         expect(result[33m.[39mstdout)[33m.[39mtoContain([32m`${EXAMPLE_COUNT} frozen / 0 draft / 0 blocked`[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 53 |[39m         expect(result[33m.[39mstatus)[33m.[39mtoBe([35m0[39m)[33m;[39m
+     [90m    |[39m                               [31m[1m^[22m[39m
+     [90m 54 |[39m     })[33m;[39m
+     [90m 55 |[39m
+     [90m 56 |[39m     test([32m'§12 apiEvidence 行号无漂移（spec-evidence --check）'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at Object.<anonymous> (test/smoke/smoke-29-examples-spec.test.ts:53:31)
+
+  ● V1.1 — Example Specification 门禁 › §11/§12 证据链符合性零 fail（spec-compliance-audit）
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "0 fail"
+    Received string:    "[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract
+    [FAIL] mesh-sphere S11-STALE-EVIDENCE: §11：证据 specFingerprint c0d64a28c555 ≠ 当前 example.json 6a2bfacb3483（陈旧证据冒充当期通过）
+    [spec-compliance] 57 examples: 1 fail / 1 warn → docs\\evidence\\v11-spec-compliance.json
+    "
+
+    [0m [90m 64 |[39m     test([32m'§11/§12 证据链符合性零 fail（spec-compliance-audit）'[39m[33m,[39m () [33m=>[39m {
+     [90m 65 |[39m         [36mconst[39m result [33m=[39m run([32m'tools/examples/spec-compliance-audit.cjs'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 66 |[39m         expect(result[33m.[39mstdout)[33m.[39mtoContain([32m'0 fail'[39m)[33m;[39m
+     [90m    |[39m                               [31m[1m^[22m[39m
+     [90m 67 |[39m         expect(result[33m.[39mstatus)[33m.[39mtoBe([35m0[39m)[33m;[39m
+     [90m 68 |[39m     })[33m;[39m
+     [90m 69 |[39m[0m
+
+      at Object.<anonymous> (test/smoke/smoke-29-examples-spec.test.ts:66:31)
+
+PASS test/smoke/smoke-30-v12-regression.test.ts (7.868 s)
+  ● Console
+
+    console.time
+      Init Base: 1 ms
+
+      at src/cocos/game/game.ts:759:29
+
+    console.time
+      Init Infrastructure: 5 ms
+
+      at src/cocos/game/game.ts:812:29
+
+    console.time
+      Init SubSystem: 3 ms
+
+      at src/cocos/game/game.ts:861:29
+
+    console.time
+      Init Project: 2 ms
+
+      at src/cocos/game/game.ts:905:29
+
+    console.error
+      [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+
+    [0m [90m 90 |[39m [90m */[39m
+     [90m 91 |[39m [36mexport[39m [36mfunction[39m error ([33m...[39mdata[33m:[39m unknown[])[33m:[39m [36mvoid[39m {
+    [31m[1m>[22m[39m[90m 92 |[39m     [36mreturn[39m ccError([33m...[39mdata)[33m;[39m
+     [90m    |[39m            [31m[1m^[22m[39m
+     [90m 93 |[39m }
+     [90m 94 |[39m
+     [90m 95 |[39m [90m/**[39m[0m
+
+      at error (src/cocos/core/platform/debug.ts:92:12)
+      at errorID (src/cocos/core/platform/debug.ts:291:5)
+      at PhysicsSystem.initDefaultMaterial (src/cocos/physics/framework/physics-system.ts:228:20)
+      at src/cocos/core/event/async-delegate.ts:106:58
+          at Array.map (<anonymous>)
+      at AsyncDelegate.dispatch (src/cocos/core/event/async-delegate.ts:106:44)
+      at src/cocos/game/game.ts:908:55
+
+
+Summary of all failing tests
+FAIL test/smoke/smoke-29-examples-spec.test.ts (38.447 s)
+  ● V1.1 — Example Specification 门禁 › §15 全部 example.json 达到 frozen 且规格零问题
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+    [0m [90m 51 |[39m         expect(result[33m.[39mstdout)[33m.[39mtoContain([32m`${EXAMPLE_COUNT} examples`[39m)[33m;[39m
+     [90m 52 |[39m         expect(result[33m.[39mstdout)[33m.[39mtoContain([32m`${EXAMPLE_COUNT} frozen / 0 draft / 0 blocked`[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 53 |[39m         expect(result[33m.[39mstatus)[33m.[39mtoBe([35m0[39m)[33m;[39m
+     [90m    |[39m                               [31m[1m^[22m[39m
+     [90m 54 |[39m     })[33m;[39m
+     [90m 55 |[39m
+     [90m 56 |[39m     test([32m'§12 apiEvidence 行号无漂移（spec-evidence --check）'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at Object.<anonymous> (test/smoke/smoke-29-examples-spec.test.ts:53:31)
+
+  ● V1.1 — Example Specification 门禁 › §11/§12 证据链符合性零 fail（spec-compliance-audit）
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "0 fail"
+    Received string:    "[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract
+    [FAIL] mesh-sphere S11-STALE-EVIDENCE: §11：证据 specFingerprint c0d64a28c555 ≠ 当前 example.json 6a2bfacb3483（陈旧证据冒充当期通过）
+    [spec-compliance] 57 examples: 1 fail / 1 warn → docs\\evidence\\v11-spec-compliance.json
+    "
+
+    [0m [90m 64 |[39m     test([32m'§11/§12 证据链符合性零 fail（spec-compliance-audit）'[39m[33m,[39m () [33m=>[39m {
+     [90m 65 |[39m         [36mconst[39m result [33m=[39m run([32m'tools/examples/spec-compliance-audit.cjs'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 66 |[39m         expect(result[33m.[39mstdout)[33m.[39mtoContain([32m'0 fail'[39m)[33m;[39m
+     [90m    |[39m                               [31m[1m^[22m[39m
+     [90m 67 |[39m         expect(result[33m.[39mstatus)[33m.[39mtoBe([35m0[39m)[33m;[39m
+     [90m 68 |[39m     })[33m;[39m
+     [90m 69 |[39m[0m
+
+      at Object.<anonymous> (test/smoke/smoke-29-examples-spec.test.ts:66:31)
+
+
+Test Suites: 1 failed, 31 passed, 32 total
+Tests:       2 failed, 260 passed, 262 total
+Snapshots:   0 total
+Time:        50.374 s
+Ran all test suites.

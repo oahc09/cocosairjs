@@ -1,7 +1,7 @@
 {
   "meta": {
     "generatedAt": "2026-09-12T02:07:25.970Z",
-    "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+    "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "sourceOfTruth": "docs/web-dependency-graph.json",
     "note": "destination = src/<source relative path>; engine root = src/"
   },
@@ -4200,6 +4200,2201 @@
       "source": "predefine.ts",
       "destination": "src/predefine.ts",
       "category": "COMMON_REQUIRED"
+    },
+    {
+      "source": "cocos/profiler/counter.ts",
+      "destination": "src/cocos/profiler/counter.ts",
+      "category": "V12_REGRESSION_PROFIER"
+    },
+    {
+      "source": "cocos/profiler/perf-counter.ts",
+      "destination": "src/cocos/profiler/perf-counter.ts",
+      "category": "V12_REGRESSION_PROFIER"
+    },
+    {
+      "source": "cocos/profiler/profiler.ts",
+      "destination": "src/cocos/profiler/profiler.ts",
+      "category": "V12_REGRESSION_PROFIER"
+    },
+    {
+      "source": "cocos/profiler/category.json",
+      "destination": "src/cocos/profiler/category.json",
+      "category": "V12_REGRESSION_PROFIER"
+    },
+    {
+      "source": "exports/profiler.ts",
+      "destination": "src/exports/profiler.ts",
+      "category": "V12_REGRESSION_PROFIER"
+    },
+    {
+      "source": "cocos/video/assets/video-clip.ts",
+      "destination": "src/cocos/video/assets/video-clip.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/category.json",
+      "destination": "src/cocos/video/category.json",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/deprecated.ts",
+      "destination": "src/cocos/video/deprecated.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/index.ts",
+      "destination": "src/cocos/video/index.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/video-downloader.ts",
+      "destination": "src/cocos/video/video-downloader.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/video-player-enums.ts",
+      "destination": "src/cocos/video/video-player-enums.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/video-player-impl-manager.ts",
+      "destination": "src/cocos/video/video-player-impl-manager.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/video-player-impl-web.ts",
+      "destination": "src/cocos/video/video-player-impl-web.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/video-player-impl.ts",
+      "destination": "src/cocos/video/video-player-impl.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/video/video-player.ts",
+      "destination": "src/cocos/video/video-player.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "exports/video.ts",
+      "destination": "src/exports/video.ts",
+      "category": "V12_REGRESSION_A3_VIDEO"
+    },
+    {
+      "source": "cocos/web-view/category.json",
+      "destination": "src/cocos/web-view/category.json",
+      "category": "V12_REGRESSION_A4_WEBVIEW"
+    },
+    {
+      "source": "cocos/web-view/web-view-enums.ts",
+      "destination": "src/cocos/web-view/web-view-enums.ts",
+      "category": "V12_REGRESSION_A4_WEBVIEW"
+    },
+    {
+      "source": "cocos/web-view/web-view-impl-manager.ts",
+      "destination": "src/cocos/web-view/web-view-impl-manager.ts",
+      "category": "V12_REGRESSION_A4_WEBVIEW"
+    },
+    {
+      "source": "cocos/web-view/web-view-impl-web.ts",
+      "destination": "src/cocos/web-view/web-view-impl-web.ts",
+      "category": "V12_REGRESSION_A4_WEBVIEW"
+    },
+    {
+      "source": "cocos/web-view/web-view-impl.ts",
+      "destination": "src/cocos/web-view/web-view-impl.ts",
+      "category": "V12_REGRESSION_A4_WEBVIEW"
+    },
+    {
+      "source": "cocos/web-view/web-view.ts",
+      "destination": "src/cocos/web-view/web-view.ts",
+      "category": "V12_REGRESSION_A4_WEBVIEW"
+    },
+    {
+      "source": "exports/webview.ts",
+      "destination": "src/exports/webview.ts",
+      "category": "V12_REGRESSION_A4_WEBVIEW"
+    },
+    {
+      "source": "cocos/2d/assembler/graphics/index.ts",
+      "destination": "src/cocos/2d/assembler/graphics/index.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "cocos/2d/assembler/graphics/webgl/index.ts",
+      "destination": "src/cocos/2d/assembler/graphics/webgl/index.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "cocos/2d/category.json",
+      "destination": "src/cocos/2d/category.json",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "cocos/2d/renderer/linear-buffer-accessor.ts",
+      "destination": "src/cocos/2d/renderer/linear-buffer-accessor.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "cocos/sorting/index.ts",
+      "destination": "src/cocos/sorting/index.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "cocos/sorting/sorting-2d.ts",
+      "destination": "src/cocos/sorting/sorting-2d.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "cocos/sorting/sorting.ts",
+      "destination": "src/cocos/sorting/sorting.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "exports/2d.ts",
+      "destination": "src/exports/2d.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "exports/geometry-renderer.ts",
+      "destination": "src/exports/geometry-renderer.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "exports/graphics.ts",
+      "destination": "src/exports/graphics.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "exports/intersection-2d.ts",
+      "destination": "src/exports/intersection-2d.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "exports/mask.ts",
+      "destination": "src/exports/mask.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "exports/sorting-2d.ts",
+      "destination": "src/exports/sorting-2d.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "exports/sorting.ts",
+      "destination": "src/exports/sorting.ts",
+      "category": "V12_REGRESSION_B1_2D_BASE"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/builtin-contact.ts",
+      "destination": "src/cocos/physics-2d/builtin/builtin-contact.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/builtin-world.ts",
+      "destination": "src/cocos/physics-2d/builtin/builtin-world.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/instantiate.ts",
+      "destination": "src/cocos/physics-2d/builtin/instantiate.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/intersection-2d.ts",
+      "destination": "src/cocos/physics-2d/builtin/intersection-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/shapes/box-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/builtin/shapes/box-shape-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/shapes/circle-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/builtin/shapes/circle-shape-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/shapes/polygon-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/builtin/shapes/polygon-shape-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/builtin/shapes/shape-2d.ts",
+      "destination": "src/cocos/physics-2d/builtin/shapes/shape-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/category.json",
+      "destination": "src/cocos/physics-2d/category.json",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/colliders/box-collider-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/colliders/box-collider-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/colliders/circle-collider-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/colliders/circle-collider-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/colliders/collider-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/colliders/collider-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/colliders/polygon-collider-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/colliders/polygon-collider-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/distance-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/distance-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/fixed-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/fixed-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/hinge-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/hinge-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/mouse-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/mouse-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/relative-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/relative-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/slider-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/slider-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/spring-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/spring-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/joints/wheel-joint-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/joints/wheel-joint-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/components/rigid-body-2d.ts",
+      "destination": "src/cocos/physics-2d/framework/components/rigid-body-2d.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/index.ts",
+      "destination": "src/cocos/physics-2d/framework/index.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/physics-internal-types.ts",
+      "destination": "src/cocos/physics-2d/framework/physics-internal-types.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/physics-selector.ts",
+      "destination": "src/cocos/physics-2d/framework/physics-selector.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/physics-system.ts",
+      "destination": "src/cocos/physics-2d/framework/physics-system.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/physics-types.ts",
+      "destination": "src/cocos/physics-2d/framework/physics-types.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/utils/polygon-partition.ts",
+      "destination": "src/cocos/physics-2d/framework/utils/polygon-partition.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/framework/utils/polygon-separator.ts",
+      "destination": "src/cocos/physics-2d/framework/utils/polygon-separator.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/spec/i-physics-contact.ts",
+      "destination": "src/cocos/physics-2d/spec/i-physics-contact.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/spec/i-physics-joint.ts",
+      "destination": "src/cocos/physics-2d/spec/i-physics-joint.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/spec/i-physics-shape.ts",
+      "destination": "src/cocos/physics-2d/spec/i-physics-shape.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/spec/i-physics-world.ts",
+      "destination": "src/cocos/physics-2d/spec/i-physics-world.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/physics-2d/spec/i-rigid-body.ts",
+      "destination": "src/cocos/physics-2d/spec/i-rigid-body.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "exports/physics-2d-builtin.ts",
+      "destination": "src/exports/physics-2d-builtin.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "exports/physics-2d-framework.ts",
+      "destination": "src/exports/physics-2d-framework.ts",
+      "category": "V12_REGRESSION_D1_D2_PHYSICS2D"
+    },
+    {
+      "source": "cocos/particle-2d/category.json",
+      "destination": "src/cocos/particle-2d/category.json",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/define.ts",
+      "destination": "src/cocos/particle-2d/define.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/index.ts",
+      "destination": "src/cocos/particle-2d/index.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/motion-streak-2d-assembler.ts",
+      "destination": "src/cocos/particle-2d/motion-streak-2d-assembler.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/motion-streak-2d.ts",
+      "destination": "src/cocos/particle-2d/motion-streak-2d.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/particle-asset.ts",
+      "destination": "src/cocos/particle-2d/particle-asset.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/particle-simulator-2d.ts",
+      "destination": "src/cocos/particle-2d/particle-simulator-2d.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/particle-system-2d-assembler.ts",
+      "destination": "src/cocos/particle-2d/particle-system-2d-assembler.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/particle-system-2d.ts",
+      "destination": "src/cocos/particle-2d/particle-system-2d.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/png-reader.ts",
+      "destination": "src/cocos/particle-2d/png-reader.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/particle-2d/tiff-reader.ts",
+      "destination": "src/cocos/particle-2d/tiff-reader.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "exports/particle-2d.ts",
+      "destination": "src/exports/particle-2d.ts",
+      "category": "V12_REGRESSION_B2_PARTICLE2D"
+    },
+    {
+      "source": "cocos/tiledmap/assembler/index.ts",
+      "destination": "src/cocos/tiledmap/assembler/index.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/assembler/simple.ts",
+      "destination": "src/cocos/tiledmap/assembler/simple.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/category.json",
+      "destination": "src/cocos/tiledmap/category.json",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/index.ts",
+      "destination": "src/cocos/tiledmap/index.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tiled-layer.ts",
+      "destination": "src/cocos/tiledmap/tiled-layer.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tiled-map-asset.ts",
+      "destination": "src/cocos/tiledmap/tiled-map-asset.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tiled-map.ts",
+      "destination": "src/cocos/tiledmap/tiled-map.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tiled-object-group.ts",
+      "destination": "src/cocos/tiledmap/tiled-object-group.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tiled-tile.ts",
+      "destination": "src/cocos/tiledmap/tiled-tile.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tiled-types.ts",
+      "destination": "src/cocos/tiledmap/tiled-types.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tiled-utils.ts",
+      "destination": "src/cocos/tiledmap/tiled-utils.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/tiledmap/tmx-xml-parser.ts",
+      "destination": "src/cocos/tiledmap/tmx-xml-parser.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "exports/tiled-map.ts",
+      "destination": "src/exports/tiled-map.ts",
+      "category": "V12_REGRESSION_B3_TILEDMAP"
+    },
+    {
+      "source": "cocos/ui/block-input-events.ts",
+      "destination": "src/cocos/ui/block-input-events.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/button.ts",
+      "destination": "src/cocos/ui/button.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/category.json",
+      "destination": "src/cocos/ui/category.json",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/deprecated-1.2.0.ts",
+      "destination": "src/cocos/ui/deprecated-1.2.0.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/deprecated.ts",
+      "destination": "src/cocos/ui/deprecated.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/editbox/edit-box-impl-base.ts",
+      "destination": "src/cocos/ui/editbox/edit-box-impl-base.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/editbox/edit-box-impl.ts",
+      "destination": "src/cocos/ui/editbox/edit-box-impl.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/editbox/edit-box.ts",
+      "destination": "src/cocos/ui/editbox/edit-box.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/editbox/tabIndexUtil.ts",
+      "destination": "src/cocos/ui/editbox/tabIndexUtil.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/editbox/types.ts",
+      "destination": "src/cocos/ui/editbox/types.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/index.ts",
+      "destination": "src/cocos/ui/index.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/layout.ts",
+      "destination": "src/cocos/ui/layout.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/page-view-indicator.ts",
+      "destination": "src/cocos/ui/page-view-indicator.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/page-view.ts",
+      "destination": "src/cocos/ui/page-view.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/progress-bar.ts",
+      "destination": "src/cocos/ui/progress-bar.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/safe-area.ts",
+      "destination": "src/cocos/ui/safe-area.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/scroll-bar.ts",
+      "destination": "src/cocos/ui/scroll-bar.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/scroll-view.ts",
+      "destination": "src/cocos/ui/scroll-view.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/slider.ts",
+      "destination": "src/cocos/ui/slider.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/sub-context-view.ts",
+      "destination": "src/cocos/ui/sub-context-view.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/toggle-container.ts",
+      "destination": "src/cocos/ui/toggle-container.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/toggle.ts",
+      "destination": "src/cocos/ui/toggle.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/ui-coordinate-tracker.ts",
+      "destination": "src/cocos/ui/ui-coordinate-tracker.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/view-group.ts",
+      "destination": "src/cocos/ui/view-group.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/ui/widget-manager.ts",
+      "destination": "src/cocos/ui/widget-manager.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "exports/ui.ts",
+      "destination": "src/exports/ui.ts",
+      "category": "V12_REGRESSION_B4_UI"
+    },
+    {
+      "source": "cocos/spine/assembler/index.ts",
+      "destination": "src/cocos/spine/assembler/index.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/assembler/simple.ts",
+      "destination": "src/cocos/spine/assembler/simple.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/attach-util.ts",
+      "destination": "src/cocos/spine/attach-util.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/category.json",
+      "destination": "src/cocos/spine/category.json",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/index.ts",
+      "destination": "src/cocos/spine/index.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/LICENSE",
+      "destination": "src/cocos/spine/lib/LICENSE",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/instantiated.ts",
+      "destination": "src/cocos/spine/lib/instantiated.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-binary.ts",
+      "destination": "src/cocos/spine/lib/spine-binary.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-core.d.ts",
+      "destination": "src/cocos/spine/lib/spine-core.d.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-core.js",
+      "destination": "src/cocos/spine/lib/spine-core.js",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-define.ts",
+      "destination": "src/cocos/spine/lib/spine-define.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-instantiate-3.8.ts",
+      "destination": "src/cocos/spine/lib/spine-instantiate-3.8.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-instantiate-4.2.ts",
+      "destination": "src/cocos/spine/lib/spine-instantiate-4.2.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-instantiate-dynamic.ts",
+      "destination": "src/cocos/spine/lib/spine-instantiate-dynamic.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-instantiate.ts",
+      "destination": "src/cocos/spine/lib/spine-instantiate.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-version-3.8.ts",
+      "destination": "src/cocos/spine/lib/spine-version-3.8.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-version-4.2.ts",
+      "destination": "src/cocos/spine/lib/spine-version-4.2.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-version-dynamic.ts",
+      "destination": "src/cocos/spine/lib/spine-version-dynamic.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-version.ts",
+      "destination": "src/cocos/spine/lib/spine-version.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/lib/spine-wasm-utils.ts",
+      "destination": "src/cocos/spine/lib/spine-wasm-utils.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/skeleton-cache.ts",
+      "destination": "src/cocos/spine/skeleton-cache.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/skeleton-data.ts",
+      "destination": "src/cocos/spine/skeleton-data.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/skeleton-system.ts",
+      "destination": "src/cocos/spine/skeleton-system.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/skeleton.ts",
+      "destination": "src/cocos/spine/skeleton.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/track-entry-listeners.ts",
+      "destination": "src/cocos/spine/track-entry-listeners.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/spine/vertex-effect-delegate.ts",
+      "destination": "src/cocos/spine/vertex-effect-delegate.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "exports/spine.ts",
+      "destination": "src/exports/spine.ts",
+      "category": "V12_REGRESSION_C1_SPINE"
+    },
+    {
+      "source": "cocos/dragon-bones/ArmatureCache.ts",
+      "destination": "src/cocos/dragon-bones/ArmatureCache.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/ArmatureDisplay.ts",
+      "destination": "src/cocos/dragon-bones/ArmatureDisplay.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/ArmatureSystem.ts",
+      "destination": "src/cocos/dragon-bones/ArmatureSystem.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/AttachUtil.ts",
+      "destination": "src/cocos/dragon-bones/AttachUtil.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/CCArmatureDisplay.ts",
+      "destination": "src/cocos/dragon-bones/CCArmatureDisplay.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/CCFactory.ts",
+      "destination": "src/cocos/dragon-bones/CCFactory.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/CCSlot.ts",
+      "destination": "src/cocos/dragon-bones/CCSlot.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/CCTextureData.ts",
+      "destination": "src/cocos/dragon-bones/CCTextureData.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/DragonBonesAsset.ts",
+      "destination": "src/cocos/dragon-bones/DragonBonesAsset.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/DragonBonesAtlasAsset.ts",
+      "destination": "src/cocos/dragon-bones/DragonBonesAtlasAsset.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/assembler/index.ts",
+      "destination": "src/cocos/dragon-bones/assembler/index.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/assembler/simple.ts",
+      "destination": "src/cocos/dragon-bones/assembler/simple.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/category.json",
+      "destination": "src/cocos/dragon-bones/category.json",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/dragon-bones/index.ts",
+      "destination": "src/cocos/dragon-bones/index.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "exports/dragon-bones.ts",
+      "destination": "src/exports/dragon-bones.ts",
+      "category": "V12_REGRESSION_C2_DRAGONBONES"
+    },
+    {
+      "source": "cocos/animation/category.json",
+      "destination": "src/cocos/animation/category.json",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/compression.ts",
+      "destination": "src/cocos/animation/compression.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/asset-creation.ts",
+      "destination": "src/cocos/animation/marionette/asset-creation.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/op/index.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/op/index.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/op/internal.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/op/internal.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/additively-blend.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/additively-blend.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/all.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/all.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/apply-transform.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/apply-transform.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/blend-in-proportion.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/blend-in-proportion.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose-base.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose-base.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/blend-two-pose.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-base.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-base.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-boolean.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-boolean.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-index.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/choose-pose-by-index.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/index.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/index.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/menu.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/choose-pose/menu.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/copy-transform.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/copy-transform.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/filtering-blend.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/filtering-blend.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/ik/menu.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/menu.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/ik/solve-two-bone-ik.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/solve-two-bone-ik.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-debugger.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-debugger.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-solver.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/ik/two-bone-ik-solver.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/intensity-specification.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/intensity-specification.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/modify-pose-base.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/modify-pose-base.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/sample-motion.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/sample-motion.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/set-auxiliary-curve.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/set-auxiliary-curve.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/state-machine.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/state-machine.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pose-nodes/use-stashed-pose.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pose-nodes/use-stashed-pose.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pure-value-nodes/all.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pure-value-nodes/all.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/pure-value-nodes/get-variable.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/pure-value-nodes/get-variable.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/runtime-exports-empty.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/runtime-exports-empty.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/runtime-exports.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/runtime-exports.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/marionette/pose-graph/utils.ts",
+      "destination": "src/cocos/animation/marionette/pose-graph/utils.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "cocos/animation/value-proxy-factories/index.ts",
+      "destination": "src/cocos/animation/value-proxy-factories/index.ts",
+      "category": "V12_REGRESSION_C3_POSE_NODES"
+    },
+    {
+      "source": "external/compression/ZipUtils.d.ts",
+      "destination": "src/external/compression/ZipUtils.d.ts",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "external/compression/ZipUtils.js",
+      "destination": "src/external/compression/ZipUtils.js",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "external/compression/base64-values.ts",
+      "destination": "src/external/compression/base64-values.ts",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "external/compression/base64.d.ts",
+      "destination": "src/external/compression/base64.d.ts",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "external/compression/base64.js",
+      "destination": "src/external/compression/base64.js",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "external/compression/gzip.d.ts",
+      "destination": "src/external/compression/gzip.d.ts",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "external/compression/gzip.js",
+      "destination": "src/external/compression/gzip.js",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "external/compression/zlib.min.d.ts",
+      "destination": "src/external/compression/zlib.min.d.ts",
+      "category": "V12_REGRESSION_P_EXTERNAL"
+    },
+    {
+      "source": "cocos/xr/event/xr-event-handle.ts",
+      "destination": "src/cocos/xr/event/xr-event-handle.ts",
+      "category": "V12_REGRESSION_B4_XR_DEP"
+    },
+    {
+      "source": "cocos/xr/index.ts",
+      "destination": "src/cocos/xr/index.ts",
+      "category": "V12_REGRESSION_B4_XR_DEP"
+    },
+    {
+      "source": "cocos/core/curves/keys-shared-curves.ts",
+      "destination": "src/cocos/core/curves/keys-shared-curves.ts",
+      "category": "V12_REGRESSION_B4_CORE_DEP"
+    },
+    {
+      "source": "cocos/core/data/utils/constget.ts",
+      "destination": "src/cocos/core/data/utils/constget.ts",
+      "category": "V12_REGRESSION_B4_CORE_DEP"
+    },
+    {
+      "source": "cocos/core/data/utils/extends-enum.ts",
+      "destination": "src/cocos/core/data/utils/extends-enum.ts",
+      "category": "V12_REGRESSION_B4_CORE_DEP"
+    },
+    {
+      "source": "cocos/core/event/defines.ts",
+      "destination": "src/cocos/core/event/defines.ts",
+      "category": "V12_REGRESSION_B4_CORE_DEP"
+    },
+    {
+      "source": "cocos/core/math/affine-transform.ts",
+      "destination": "src/cocos/core/math/affine-transform.ts",
+      "category": "V12_REGRESSION_B4_CORE_DEP"
+    },
+    {
+      "source": "cocos/3d/category.json",
+      "destination": "src/cocos/3d/category.json",
+      "category": "V12_REGRESSION_RESID_ASSET"
+    },
+    {
+      "source": "cocos/asset/asset-manager/category.json",
+      "destination": "src/cocos/asset/asset-manager/category.json",
+      "category": "V12_REGRESSION_RESID_ASSET"
+    },
+    {
+      "source": "cocos/asset/assets/category.json",
+      "destination": "src/cocos/asset/assets/category.json",
+      "category": "V12_REGRESSION_RESID_ASSET"
+    },
+    {
+      "source": "cocos/scene-graph/category.json",
+      "destination": "src/cocos/scene-graph/category.json",
+      "category": "V12_REGRESSION_RESID_ASSET"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/instantiate.ts",
+      "destination": "src/cocos/physics-2d/box2d/instantiate.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/distance-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/distance-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/fixed-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/fixed-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/hinge-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/hinge-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/joint-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/joint-2d.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/mouse-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/mouse-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/relative-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/relative-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/slider-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/slider-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/spring-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/spring-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/joints/wheel-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d/joints/wheel-joint.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/physics-contact-manager.ts",
+      "destination": "src/cocos/physics-2d/box2d/physics-contact-manager.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/physics-contact.ts",
+      "destination": "src/cocos/physics-2d/box2d/physics-contact.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/physics-world.ts",
+      "destination": "src/cocos/physics-2d/box2d/physics-world.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/platform/physics-aabb-query-callback.ts",
+      "destination": "src/cocos/physics-2d/box2d/platform/physics-aabb-query-callback.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/platform/physics-contact-listener.ts",
+      "destination": "src/cocos/physics-2d/box2d/platform/physics-contact-listener.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/platform/physics-debug-draw.ts",
+      "destination": "src/cocos/physics-2d/box2d/platform/physics-debug-draw.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts",
+      "destination": "src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/rigid-body.ts",
+      "destination": "src/cocos/physics-2d/box2d/rigid-body.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/shapes/box-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d/shapes/box-shape-2d.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/shapes/circle-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d/shapes/circle-shape-2d.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/shapes/polygon-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d/shapes/polygon-shape-2d.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics-2d/box2d/shapes/shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d/shapes/shape-2d.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "cocos/physics/cocos/builtin-interface.ts",
+      "destination": "src/cocos/physics/cocos/builtin-interface.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/builtin-rigid-body.ts",
+      "destination": "src/cocos/physics/cocos/builtin-rigid-body.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/builtin-shared-body.ts",
+      "destination": "src/cocos/physics/cocos/builtin-shared-body.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/builtin-world.ts",
+      "destination": "src/cocos/physics/cocos/builtin-world.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/instantiate.ts",
+      "destination": "src/cocos/physics/cocos/instantiate.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/object/builtin-object.ts",
+      "destination": "src/cocos/physics/cocos/object/builtin-object.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/shapes/builtin-box-shape.ts",
+      "destination": "src/cocos/physics/cocos/shapes/builtin-box-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/shapes/builtin-capsule-shape.ts",
+      "destination": "src/cocos/physics/cocos/shapes/builtin-capsule-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/shapes/builtin-shape.ts",
+      "destination": "src/cocos/physics/cocos/shapes/builtin-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cocos/shapes/builtin-sphere-shape.ts",
+      "destination": "src/cocos/physics/cocos/shapes/builtin-sphere-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "cocos/physics/cannon/cannon-contact-equation.ts",
+      "destination": "src/cocos/physics/cannon/cannon-contact-equation.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/cannon-rigid-body.ts",
+      "destination": "src/cocos/physics/cannon/cannon-rigid-body.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/cannon-shared-body.ts",
+      "destination": "src/cocos/physics/cannon/cannon-shared-body.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/cannon-util.ts",
+      "destination": "src/cocos/physics/cannon/cannon-util.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/cannon-world.ts",
+      "destination": "src/cocos/physics/cannon/cannon-world.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/constraints/cannon-constraint.ts",
+      "destination": "src/cocos/physics/cannon/constraints/cannon-constraint.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/constraints/cannon-distance-constraint.ts",
+      "destination": "src/cocos/physics/cannon/constraints/cannon-distance-constraint.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/constraints/cannon-hinge-constraint.ts",
+      "destination": "src/cocos/physics/cannon/constraints/cannon-hinge-constraint.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/constraints/cannon-lock-constraint.ts",
+      "destination": "src/cocos/physics/cannon/constraints/cannon-lock-constraint.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/constraints/cannon-point-to-point-constraint.ts",
+      "destination": "src/cocos/physics/cannon/constraints/cannon-point-to-point-constraint.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/instantiate.ts",
+      "destination": "src/cocos/physics/cannon/instantiate.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-box-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-box-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-cone-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-cone-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-cylinder-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-cylinder-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-plane-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-plane-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-simplex-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-simplex-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-sphere-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-sphere-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-terrain-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-terrain-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/physics/cannon/shapes/cannon-trimesh-shape.ts",
+      "destination": "src/cocos/physics/cannon/shapes/cannon-trimesh-shape.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "cocos/rendering/custom/layout-graph-editor.ts",
+      "destination": "src/cocos/rendering/custom/layout-graph-editor.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/custom/layout-graph-names.ts",
+      "destination": "src/cocos/rendering/custom/layout-graph-names.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/custom/types-names.ts",
+      "destination": "src/cocos/rendering/custom/types-names.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/blit-screen.ts",
+      "destination": "src/cocos/rendering/post-process/components/blit-screen.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/bloom.ts",
+      "destination": "src/cocos/rendering/post-process/components/bloom.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/color-grading.ts",
+      "destination": "src/cocos/rendering/post-process/components/color-grading.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/dof.ts",
+      "destination": "src/cocos/rendering/post-process/components/dof.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/fsr.ts",
+      "destination": "src/cocos/rendering/post-process/components/fsr.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/fxaa.ts",
+      "destination": "src/cocos/rendering/post-process/components/fxaa.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/hbao.ts",
+      "destination": "src/cocos/rendering/post-process/components/hbao.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/index.ts",
+      "destination": "src/cocos/rendering/post-process/components/index.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/taa-mask.ts",
+      "destination": "src/cocos/rendering/post-process/components/taa-mask.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/components/taa.ts",
+      "destination": "src/cocos/rendering/post-process/components/taa.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/index.ts",
+      "destination": "src/cocos/rendering/post-process/index.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/base-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/base-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/blit-screen-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/blit-screen-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/bloom-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/bloom-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/color-grading-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/color-grading-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/dof-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/dof-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/float-output-process-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/float-output-process-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/forward-final-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/forward-final-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/forward-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/forward-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/forward-transparency-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/forward-transparency-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/forward-transparency-simple-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/forward-transparency-simple-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/fsr-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/fsr-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/fxaa-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/fxaa-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/hbao-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/hbao-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/index.ts",
+      "destination": "src/cocos/rendering/post-process/passes/index.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/post-final-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/post-final-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/setting-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/setting-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/shadow-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/shadow-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/skin-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/skin-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/passes/taa-pass.ts",
+      "destination": "src/cocos/rendering/post-process/passes/taa-pass.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/post-process-builder.ts",
+      "destination": "src/cocos/rendering/post-process/post-process-builder.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/rendering/post-process/utils/pass-context.ts",
+      "destination": "src/cocos/rendering/post-process/utils/pass-context.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "exports/physics-2d-box2d.ts",
+      "destination": "src/exports/physics-2d-box2d.ts",
+      "category": "V12_REGRESSION_PHYSICS_2D_BOX2D"
+    },
+    {
+      "source": "exports/physics-builtin.ts",
+      "destination": "src/exports/physics-builtin.ts",
+      "category": "V12_REGRESSION_PHYSICS_BUILTIN"
+    },
+    {
+      "source": "exports/physics-cannon.ts",
+      "destination": "src/exports/physics-cannon.ts",
+      "category": "V12_REGRESSION_PHYSICS_CANNON"
+    },
+    {
+      "source": "exports/custom-pipeline-post-process.ts",
+      "destination": "src/exports/custom-pipeline-post-process.ts",
+      "category": "V12_REGRESSION_POST_PROCESS"
+    },
+    {
+      "source": "cocos/physics/utils/array-collision-matrix.ts",
+      "destination": "src/cocos/physics/utils/array-collision-matrix.ts",
+      "category": "V12_REGRESSION_PHYSICS_UTILS"
+    },
+    {
+      "source": "cocos/physics/utils/object-collision-matrix.ts",
+      "destination": "src/cocos/physics/utils/object-collision-matrix.ts",
+      "category": "V12_REGRESSION_PHYSICS_UTILS"
+    },
+    {
+      "source": "cocos/physics/utils/tuple-dictionary.ts",
+      "destination": "src/cocos/physics/utils/tuple-dictionary.ts",
+      "category": "V12_REGRESSION_PHYSICS_UTILS"
+    },
+    {
+      "source": "cocos/audio/audio-clip.ts",
+      "destination": "src/cocos/audio/audio-clip.ts",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "cocos/audio/audio-downloader.ts",
+      "destination": "src/cocos/audio/audio-downloader.ts",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "cocos/audio/audio-manager.ts",
+      "destination": "src/cocos/audio/audio-manager.ts",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "cocos/audio/audio-source.ts",
+      "destination": "src/cocos/audio/audio-source.ts",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "cocos/audio/category.json",
+      "destination": "src/cocos/audio/category.json",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "cocos/audio/deprecated.ts",
+      "destination": "src/cocos/audio/deprecated.ts",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "cocos/audio/index.ts",
+      "destination": "src/cocos/audio/index.ts",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "exports/audio.ts",
+      "destination": "src/exports/audio.ts",
+      "category": "V12_REGRESSION_A2_AUDIO"
+    },
+    {
+      "source": "pal/audio/audio-buffer-manager.js",
+      "destination": "src/pal/audio/audio-buffer-manager.js",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "pal/audio/audio-timer.js",
+      "destination": "src/pal/audio/audio-timer.js",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "pal/audio/operation-queue.js",
+      "destination": "src/pal/audio/operation-queue.js",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "pal/audio/type.d.ts",
+      "destination": "src/pal/audio/type.d.ts",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "pal/audio/type.js",
+      "destination": "src/pal/audio/type.js",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "pal/audio/web/player-dom.js",
+      "destination": "src/pal/audio/web/player-dom.js",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "pal/audio/web/player-web.js",
+      "destination": "src/pal/audio/web/player-web.js",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "pal/audio/web/player.js",
+      "destination": "src/pal/audio/web/player.js",
+      "category": "V12_REGRESSION_A2_AUDIO_PAL"
+    },
+    {
+      "source": "cocos/deprecated.ts",
+      "destination": "src/cocos/deprecated.ts",
+      "category": "V12_REGRESSION_F1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/define.ts",
+      "destination": "src/cocos/gfx/webgpu/define.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/instantiated.ts",
+      "destination": "src/cocos/gfx/webgpu/instantiated.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/override.ts",
+      "destination": "src/cocos/gfx/webgpu/override.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-buffer.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-buffer.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-command-allocator.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-command-allocator.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-command-buffer.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-command-buffer.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-commands.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-commands.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-core.d.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-core.d.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-define.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-define.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-descriptor-set.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-device.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-device.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-framebuffer.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-framebuffer.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-gpu-objects.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-gpu-objects.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-input-assembler.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-input-assembler.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-pipeline-state.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-pipeline-state.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-queue.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-queue.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-render-pass.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-render-pass.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-sampler.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-sampler.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-shader.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-shader.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-state-cache.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-state-cache.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-swapchain.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-swapchain.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/gfx/webgpu/webgpu-texture.ts",
+      "destination": "src/cocos/gfx/webgpu/webgpu-texture.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/webgpu/instantiated.ts",
+      "destination": "src/cocos/webgpu/instantiated.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "exports/gfx-webgpu.ts",
+      "destination": "src/exports/gfx-webgpu.ts",
+      "category": "V12_REGRESSION_E1"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-bvh-triangle-mesh-shape.ts",
+      "destination": "src/cocos/physics/bullet/bullet-bvh-triangle-mesh-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-cache.ts",
+      "destination": "src/cocos/physics/bullet/bullet-cache.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-contact-data.ts",
+      "destination": "src/cocos/physics/bullet/bullet-contact-data.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-enum.ts",
+      "destination": "src/cocos/physics/bullet/bullet-enum.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-env.ts",
+      "destination": "src/cocos/physics/bullet/bullet-env.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-interface.ts",
+      "destination": "src/cocos/physics/bullet/bullet-interface.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-rigid-body.ts",
+      "destination": "src/cocos/physics/bullet/bullet-rigid-body.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-shared-body.ts",
+      "destination": "src/cocos/physics/bullet/bullet-shared-body.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-utils.ts",
+      "destination": "src/cocos/physics/bullet/bullet-utils.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/bullet-world.ts",
+      "destination": "src/cocos/physics/bullet/bullet-world.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/character-controllers/bullet-box-character-controller.ts",
+      "destination": "src/cocos/physics/bullet/character-controllers/bullet-box-character-controller.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/character-controllers/bullet-capsule-character-controller.ts",
+      "destination": "src/cocos/physics/bullet/character-controllers/bullet-capsule-character-controller.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/character-controllers/bullet-character-controller.ts",
+      "destination": "src/cocos/physics/bullet/character-controllers/bullet-character-controller.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/constraints/bullet-configurable-constraint.ts",
+      "destination": "src/cocos/physics/bullet/constraints/bullet-configurable-constraint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/constraints/bullet-constraint.ts",
+      "destination": "src/cocos/physics/bullet/constraints/bullet-constraint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/constraints/bullet-fixed-constraint.ts",
+      "destination": "src/cocos/physics/bullet/constraints/bullet-fixed-constraint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/constraints/bullet-hinge-constraint.ts",
+      "destination": "src/cocos/physics/bullet/constraints/bullet-hinge-constraint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/constraints/bullet-p2p-constraint.ts",
+      "destination": "src/cocos/physics/bullet/constraints/bullet-p2p-constraint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/instantiate.ts",
+      "destination": "src/cocos/physics/bullet/instantiate.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/instantiated.ts",
+      "destination": "src/cocos/physics/bullet/instantiated.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-box-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-box-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-capsule-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-capsule-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-cone-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-cone-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-cylinder-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-cylinder-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-plane-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-plane-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-simplex-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-simplex-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-sphere-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-sphere-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-terrain-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-terrain-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/bullet/shapes/bullet-trimesh-shape.ts",
+      "destination": "src/cocos/physics/bullet/shapes/bullet-trimesh-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/character-controllers/physx-box-character-controller.ts",
+      "destination": "src/cocos/physics/physx/character-controllers/physx-box-character-controller.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/character-controllers/physx-capsule-character-controller.ts",
+      "destination": "src/cocos/physics/physx/character-controllers/physx-capsule-character-controller.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/character-controllers/physx-character-controller.ts",
+      "destination": "src/cocos/physics/physx/character-controllers/physx-character-controller.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/filter-data.ts",
+      "destination": "src/cocos/physics/physx/filter-data.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/instantiate.ts",
+      "destination": "src/cocos/physics/physx/instantiate.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/joints/physx-configurable-joint.ts",
+      "destination": "src/cocos/physics/physx/joints/physx-configurable-joint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/joints/physx-fixed-joint.ts",
+      "destination": "src/cocos/physics/physx/joints/physx-fixed-joint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/joints/physx-joint.ts",
+      "destination": "src/cocos/physics/physx/joints/physx-joint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/joints/physx-revolute-joint.ts",
+      "destination": "src/cocos/physics/physx/joints/physx-revolute-joint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/joints/physx-spherical-joint.ts",
+      "destination": "src/cocos/physics/physx/joints/physx-spherical-joint.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/physx-adapter.ts",
+      "destination": "src/cocos/physics/physx/physx-adapter.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/physx-contact-equation.ts",
+      "destination": "src/cocos/physics/physx/physx-contact-equation.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/physx-enum.ts",
+      "destination": "src/cocos/physics/physx/physx-enum.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/physx-instance.ts",
+      "destination": "src/cocos/physics/physx/physx-instance.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/physx-rigid-body.ts",
+      "destination": "src/cocos/physics/physx/physx-rigid-body.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/physx-shared-body.ts",
+      "destination": "src/cocos/physics/physx/physx-shared-body.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/physx-world.ts",
+      "destination": "src/cocos/physics/physx/physx-world.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-box-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-box-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-capsule-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-capsule-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-cone-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-cone-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-cylinder-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-cylinder-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-plane-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-plane-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-sphere-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-sphere-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-terrain-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-terrain-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics/physx/shapes/physx-trimesh-shape.ts",
+      "destination": "src/cocos/physics/physx/shapes/physx-trimesh-shape.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "exports/physics-ammo.ts",
+      "destination": "src/exports/physics-ammo.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "exports/physics-physx.ts",
+      "destination": "src/exports/physics-physx.ts",
+      "category": "V12_REGRESSION_G3_PHYSICS_BULLET_PHYSX"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/instantiate.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/instantiate.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/instantiated.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/instantiated.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/distance-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/distance-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/fixed-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/fixed-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/hinge-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/hinge-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/joint-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/joint-2d.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/mouse-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/mouse-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/relative-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/relative-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/slider-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/slider-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/spring-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/spring-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/joints/wheel-joint.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/joints/wheel-joint.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/physics-contact-manager.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/physics-contact-manager.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/physics-contact.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/physics-contact.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/physics-world.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/physics-world.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/platform/physics-aabb-query-callback.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/platform/physics-aabb-query-callback.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/platform/physics-contact-listener.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/platform/physics-contact-listener.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/platform/physics-debug-draw.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/platform/physics-debug-draw.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/platform/physics-ray-cast-callback.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/platform/physics-ray-cast-callback.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/rigid-body.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/rigid-body.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/shapes/box-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/shapes/box-shape-2d.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/shapes/circle-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/shapes/circle-shape-2d.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/shapes/polygon-shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/shapes/polygon-shape-2d.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "cocos/physics-2d/box2d-wasm/shapes/shape-2d.ts",
+      "destination": "src/cocos/physics-2d/box2d-wasm/shapes/shape-2d.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
+    },
+    {
+      "source": "exports/physics-2d-box2d-wasm.ts",
+      "destination": "src/exports/physics-2d-box2d-wasm.ts",
+      "category": "V12_REGRESSION_D4_PHYSICS_2D_BOX2D_WASM"
     }
   ]
 }

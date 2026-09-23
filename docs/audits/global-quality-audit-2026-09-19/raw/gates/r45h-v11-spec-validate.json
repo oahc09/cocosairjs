@@ -1,0 +1,296 @@
+{
+  "measuredAt": "2026-09-23T01:37:28.725Z",
+  "total": 57,
+  "frozen": 57,
+  "draft": 0,
+  "blocked": 0,
+  "examples": [
+    {
+      "id": "anim-position",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "anim-rotation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "audio-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "automation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-lookat",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-multi",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-ortho",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "dragonbones-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-catalog",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-clearcoat",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-draco",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-meshopt",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-morph",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-skin",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-viewer",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "hello-cube",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "input",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "interaction-click",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-point",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-sphere",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-spot",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-two-directional",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-color",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-transparent",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-unlit",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-cylinder",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-multi-material",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-plane",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-sphere",
+      "specStatus": "frozen",
+      "issues": [
+        "validation.functional validator \"not-a-real-validator\" is not a runtime validator"
+      ]
+    },
+    {
+      "id": "mesh-torus",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-active",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-hierarchy",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-scale",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "particle-2d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-2d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-2d-collision",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-3d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "profiler-overlay",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-capture-frame",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-create-node",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-error-report",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "rc-inspect-scene",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "runtime-asset-release",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "skinned-animation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "starter",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "static-model",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "texture-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tiledmap-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "transform",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tween-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-layout",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "video-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "webview-basic",
+      "specStatus": "frozen",
+      "issues": []
+    }
+  ]
+}

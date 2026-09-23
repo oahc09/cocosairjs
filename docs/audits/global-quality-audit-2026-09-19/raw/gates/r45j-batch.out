@@ -1,0 +1,15 @@
+=== r45j firefox chunk-A start 2026-09-23T04:56:21Z ===
+EXIT_firefox_chunkA=0
+skip-promote_lines_firefox_A=1
+=== r45j firefox chunk-B start 2026-09-23T05:00:50Z ===
+EXIT_firefox_chunkB=1
+skip-promote_lines_firefox_B=1
+=== r45j webkit chunk-A start 2026-09-23T05:05:06Z ===
+EXIT_webkit_chunkA=1
+skip-promote_lines_webkit_A=1
+=== r45j webkit chunk-B start 2026-09-23T05:10:31Z ===
+EXIT_webkit_chunkB=1
+skip-promote_lines_webkit_B=1
+=== r45j all legs done 2026-09-23T05:15:11Z ===
+cted token `)'
+r45j-batch.sh: line 21: `rt)'

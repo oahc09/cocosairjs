@@ -14,10 +14,10 @@
 | Final Revision / G5 Report | `aec5882` + `docs/acceptance-v0.5.md` | ✅ |
 | GLTFLoader / GLTFAsset / GLTFInstance | `src/air/assets/gltf/loader.ts` `asset.ts`（公共 API，smoke-07/11/12） | ✅ |
 | Extension Registry / GLTFParserContext / getExtensionSupport() | `src/air/assets/gltf/extension-registry.ts` `parser-context.ts`；`loader.getExtensionSupport()`（smoke-10） | ✅ |
-| Stable Error Codes | `src/air/assets/gltf/errors.ts`（GLTFErrorCode 稳定集合；smoke-10/11 断言） | ✅ |
+| Stable Error Codes | `src/air/assets/gltf/diagnostics.ts`（GLTFErrorCode 稳定集合；smoke-10/11 断言） | ✅ |
 | Draco / Meshopt / Basis(KTX2) Decoder | `build/gltf-decoders/{draco,meshopt,basis}/`（smoke-13/14；`tools/verify/decoder-audit.cjs` ok） | ✅ |
 | Decoder Version/Source/SHA-256/License | `build/gltf-decoders/MANIFEST.md`（双向哈希核对）+ `docs/gltf-decoder-deployment.md` | ✅ |
-| capabilities.json | `build/capabilities.json`（生成器 `tools/verify/update-capabilities.cjs`；浏览器证据 `docs/gltf-validation.md`） | ✅ |
+| capabilities.json | `examples/gltf-catalog/capabilities.json`（生成器 `npm run capabilities` → `tools/verify/update-capabilities.cjs`；浏览器证据 `docs/gltf-validation.md`） | ✅ |
 | Package / Build / Dev Tooling | `package.json` scripts；`tools/build/` `tools/dev/` | ✅ |
 | npm pack / offline decoder evidence | `tools/verify/consumer-acceptance.cjs`（真 import，exportCount 368）+ `docs/v051-package-consumption.md` | ✅ |
 | Performance Baseline | `docs/gltf-performance-baseline.md`（BoxTextured 30 轮冻结基线 4.1ms） | ✅ |

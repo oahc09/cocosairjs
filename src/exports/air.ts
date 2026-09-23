@@ -9,5 +9,31 @@ export * from './animation';
 export * from './skeletal-animation';
 export * from './primitive';
 export * from './tween';
+export * from './profiler';
+export * from './video';
+export * from './webview';
+export * from './2d';
+export * from './graphics';
+export * from './mask';
+export * from './sorting';
+export * from './physics-2d-framework';
+export * from './particle-2d';
+export * from './tiled-map';
+export * from './ui';
+export * from './spine';
+export * from './dragon-bones';
+export * from './intersection-2d';
+export * from './sorting-2d';
+export * from './geometry-renderer';
+// 物理后端：官方 selector 是「后注册者胜出」（register 覆盖 selector.id），单个 bundle 只装一个后端。
+// 按决策 D7，默认发行 = 3D builtin（零外部运行库）+ 2D box2d（@cocos/box2d 纯 JS 端口，可真实模拟）；
+// 3D 框架面（PhysicsSystem / RigidBody / Collider ...）经 ./physics-framework 并入聚合出口（D5）。
+// cannon / box2d-wasm / ammo / physx / 2D builtin 的后端代码与 feature unit 均已回归，
+// 走 AIR_FEATURES 变体构建验证。
+export * from './physics-2d-box2d';
+export * from './physics-framework';
+export * from './physics-builtin';
+export * from './custom-pipeline-post-process';
+export * from './audio';
 
 export * from '../air';

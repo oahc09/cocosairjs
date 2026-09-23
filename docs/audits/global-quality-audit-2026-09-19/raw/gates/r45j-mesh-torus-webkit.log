@@ -1,0 +1,6 @@
+Verifying 1 examples (spec-driven v2)...
+[bench-page] [Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial.
+PASS mesh-torus
+[skip-promote] 本次写入 docs\evidence\v12\v11chain-r45j\v11-chain-webkit-mesh-torus.json（非当期证据路径）⇒ 不回写 example.json / files.json
+
+== Examples spec-driven verify: 1/1 PASS, 0 promoted / 0 demoted ==

@@ -1,0 +1,393 @@
+{
+  "id": "ui-components",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "UI Components (V1.2 LV12-09)",
+  "category": "ui",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "UITransform",
+    "Label",
+    "Sprite",
+    "Button",
+    "Toggle",
+    "ToggleContainer",
+    "Slider",
+    "ProgressBar",
+    "Layout",
+    "ScrollView",
+    "EditBox"
+  ],
+  "capabilities": [
+    "ui"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：2D UI 组件基座（canvas/widget/layout/scroll-view/editbox）在 Air 单文件产物里可纯 Code First 组装，并对真实鼠标输入产生引擎侧可回读的状态变化",
+    "points": [
+      "Canvas + Widget 四边对齐 + UI 相机（visibility 含 Layers.Enum.UI_3D）是 UI 出图的最小三件套",
+      "UITransform（width/height/anchor）+ Layout（VERTICAL / GRID）自动排布：子节点位置由布局写出，而不是手写坐标",
+      "Button 的 click 事件、ToggleContainer 的互斥、Slider 的 progress→handle 位移、ScrollView 的 scrollToBottom 偏移、EditBox 的 DOM input 回写，都要在页面外读回而不是自报",
+      "零第三方资产路线：运行时 canvas → ImageAsset → Texture2D → SpriteFrame（本构建下 builtinResMgr 的 default-spriteframe 内存图源上传 GPU 会抛错，已登记）"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas（Widget 四边对齐，尺寸跟随 480x360 视口）+ UICamera（ORTHO，visibility 含 UI_3D）；Stack 用 VERTICAL Layout 排 4 个子节点（Button / Toggles / Slider / EditBox），Grid 用 GRID Layout 排 2x2 色块，ScrollView 用 Mask 裁切并程序化 scrollToBottom（offset y 0→270）；真实鼠标点击 Button 后 click 事件计数 1、文本变为 Clicked x1、Sprite 颜色过渡生效；Slider.progress 0.2→0.75 使 handle x 位移到 42.5；ToggleContainer 互斥（置 B 后 A=false/B=true）；EditBox focus 后 DOM TEXTAREA 输入回写 string='air'。",
+    "visual": "深蓝底上一屏 UI：左上标题、左列按钮/两个开关/滑杆/输入框、右上 2x2 色块网格、右下裁切列表；左下角红点持续脉动（证明每帧真实重绘）"
+  },
+  "api": {
+    "primary": [
+      "Canvas",
+      "Button",
+      "Layout"
+    ],
+    "supporting": [
+      "UITransform",
+      "Widget",
+      "ScrollView",
+      "Slider",
+      "Toggle",
+      "ToggleContainer",
+      "EditBox"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Component",
+      "Layers",
+      "math.Color",
+      "math.Vec3",
+      "Size",
+      "SpriteFrame",
+      "Texture2D",
+      "ImageAsset",
+      "view",
+      "ResolutionPolicy",
+      "Canvas",
+      "UITransform",
+      "Widget",
+      "Label",
+      "Sprite",
+      "Button",
+      "Toggle",
+      "ToggleContainer",
+      "Slider",
+      "ProgressBar",
+      "Layout",
+      "ScrollView",
+      "EditBox",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setScale",
+      "Node.on",
+      "UITransform.convertToWorldSpaceAR",
+      "ScrollView.scrollToBottom",
+      "ScrollView.getScrollOffset",
+      "EditBox.focus",
+      "EditBox.isFocused"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene/.prefab 冒充 Code First",
+      "用 HTML/CSS 自建 UI 控件冒充引擎组件",
+      "只 addComponent 不驱动任何状态变化就声称组件回归通过",
+      "用程序化 setter 替代真实鼠标输入来声称交互已验证"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L161"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L166"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L75"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L180"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L267"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "math.Color",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L183"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L83"
+      },
+      {
+        "api": "Size",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L311"
+      },
+      {
+        "api": "SpriteFrame",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "Texture2D",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L164"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L164"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L170"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L77"
+      },
+      {
+        "api": "Widget",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L171"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L137"
+      },
+      {
+        "api": "Sprite",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "Button",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L210"
+      },
+      {
+        "api": "Toggle",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L239"
+      },
+      {
+        "api": "ToggleContainer",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L228"
+      },
+      {
+        "api": "Slider",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L262"
+      },
+      {
+        "api": "ProgressBar",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L257"
+      },
+      {
+        "api": "Layout",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L198"
+      },
+      {
+        "api": "ScrollView",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L326"
+      },
+      {
+        "api": "EditBox",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L282"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L84"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L78"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L83"
+      },
+      {
+        "api": "Node.setScale",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L295"
+      },
+      {
+        "api": "Node.on",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L219"
+      },
+      {
+        "api": "UITransform.convertToWorldSpaceAR",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L148"
+      },
+      {
+        "api": "ScrollView.scrollToBottom",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L388"
+      },
+      {
+        "api": "ScrollView.getScrollOffset",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L386"
+      },
+      {
+        "api": "EditBox.focus",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L403"
+      },
+      {
+        "api": "EditBox.isFocused",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L423"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Title",
+        "Stack",
+        "Grid",
+        "ScrollView"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "三浏览器矩阵（tools/v12/browser-matrix-contract.json）在 480x360 视口向 (110,68) 发一次真实鼠标点击（该坐标 = 页面布局完成后实测的 Button 世界坐标换算值，probe 里回读 clickTargets.button 核对）",
+        "expected": "button.realClicks=1、button.labelBefore='Press me' → labelAfterLive='Clicked x1'、COLOR transition 使 sprite 颜色变化"
+      },
+      {
+        "action": "页面加载后程序化驱动（非输入模拟，矩阵逐字段断言）：Slider.progress 0.2→0.75；ToggleContainer 置 ToggleB；ScrollView.scrollToBottom(0)；EditBox.focus() 后向 DOM input 派发 input 事件（value='air'）",
+        "expected": "slider.handleMoved=42.5；toggle.exclusive={a:false,b:true,allowSwitchOff:false} 且 toggle 事件 2 条；scrollView.offsetAfter.y=270（offsetLive 同值）；editBox.dom.found=true、focused=true、string='air'"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（纹理运行时程序化生成）"
+  },
+  "validationExpectations": {},
+  "promotion": {
+    "spec": "ee9cf6470300",
+    "source": "4d867b64bb82d212",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 36,
+    "attested": 1,
+    "units": 37
+  }
+}

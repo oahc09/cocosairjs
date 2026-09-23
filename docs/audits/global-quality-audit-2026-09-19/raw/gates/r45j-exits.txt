@@ -1,0 +1,12 @@
+EXIT_webkit_chunkA=1
+skip-promote_lines_webkit_A=1
+EXIT_webkit_chunkB=1
+skip-promote_lines_webkit_B=1
+EXIT_firefox_chunkA=0
+skip-promote_lines_firefox_A=1
+EXIT_firefox_chunkB=1
+skip-promote_lines_firefox_B=1
+EXIT_webkit_chunkA=1
+skip-promote_lines_webkit_A=1
+EXIT_webkit_chunkB=1
+skip-promote_lines_webkit_B=1

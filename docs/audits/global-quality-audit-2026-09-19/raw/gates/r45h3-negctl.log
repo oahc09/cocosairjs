@@ -1,0 +1,166 @@
+{
+  "round": "r45h3-negctl",
+  "arms": [
+    {
+      "arm": "P-positive-copy",
+      "why": "正向对照：证明「覆盖口 + 仓库外副本」本身不改结论",
+      "auditExit": 0,
+      "matrixVerdict": "CURRENT（逐记录 bundle/contract/PNG 字节与哈希现读复算全命中；PNG 本体仍是捕获时刻字节，未重采）",
+      "v11Verdict": "CURRENT（52/52 逐条候选指纹 == 现算值，文件级同值，completed 且非 partial）",
+      "signals": {
+        "pngMissing": 0,
+        "pngSizeMismatch": 0,
+        "pngHashMismatch": 0,
+        "recordedBundleMatchesLive": true,
+        "contractFingerprintMatchesLive": true,
+        "v11NotMatching": 0,
+        "v11Records": 52,
+        "v11Partial": false
+      },
+      "expected": {
+        "matrix": "CURRENT",
+        "v11": "CURRENT"
+      },
+      "pass": true
+    },
+    {
+      "arm": "N1-png-hash",
+      "why": "篡改一条记录的 pngSha256_16 ⇒ PNG 哈希复核必须抓到",
+      "auditExit": 0,
+      "matrixVerdict": "STALE-or-PARTIAL",
+      "v11Verdict": "CURRENT（52/52 逐条候选指纹 == 现算值，文件级同值，completed 且非 partial）",
+      "signals": {
+        "pngMissing": 0,
+        "pngSizeMismatch": 0,
+        "pngHashMismatch": 1,
+        "recordedBundleMatchesLive": true,
+        "contractFingerprintMatchesLive": true,
+        "v11NotMatching": 0,
+        "v11Records": 52,
+        "v11Partial": false
+      },
+      "expected": {
+        "matrix": "NOT-CURRENT",
+        "v11": "CURRENT",
+        "field": "pngHashMismatch>=1"
+      },
+      "pass": true
+    },
+    {
+      "arm": "N2-recorded-bundle",
+      "why": "篡改文件级 bundle.sha256_16 ⇒ 记录与现盘 bundle 的绑定必须断",
+      "auditExit": 0,
+      "matrixVerdict": "STALE-or-PARTIAL",
+      "v11Verdict": "CURRENT（52/52 逐条候选指纹 == 现算值，文件级同值，completed 且非 partial）",
+      "signals": {
+        "pngMissing": 0,
+        "pngSizeMismatch": 0,
+        "pngHashMismatch": 0,
+        "recordedBundleMatchesLive": false,
+        "contractFingerprintMatchesLive": true,
+        "v11NotMatching": 0,
+        "v11Records": 52,
+        "v11Partial": false
+      },
+      "expected": {
+        "matrix": "NOT-CURRENT",
+        "v11": "CURRENT",
+        "field": "recordedBundleMatchesLive=false"
+      },
+      "pass": true
+    },
+    {
+      "arm": "N3-contract-fp",
+      "why": "篡改 contractFingerprint ⇒ 契约漂移必须被抓（现盘契约 12 例）",
+      "auditExit": 0,
+      "matrixVerdict": "STALE-or-PARTIAL",
+      "v11Verdict": "CURRENT（52/52 逐条候选指纹 == 现算值，文件级同值，completed 且非 partial）",
+      "signals": {
+        "pngMissing": 0,
+        "pngSizeMismatch": 0,
+        "pngHashMismatch": 0,
+        "recordedBundleMatchesLive": true,
+        "contractFingerprintMatchesLive": false,
+        "v11NotMatching": 0,
+        "v11Records": 52,
+        "v11Partial": false
+      },
+      "expected": {
+        "matrix": "NOT-CURRENT",
+        "v11": "CURRENT",
+        "field": "contractFingerprintMatchesLive=false"
+      },
+      "pass": true
+    },
+    {
+      "arm": "N4-v11-candidate",
+      "why": "篡改一条 V1.1 记录的 candidateFingerprint ⇒ 逐条候选绑定必须抓到（这正是 F-82 类缺口）",
+      "auditExit": 0,
+      "matrixVerdict": "CURRENT（逐记录 bundle/contract/PNG 字节与哈希现读复算全命中；PNG 本体仍是捕获时刻字节，未重采）",
+      "v11Verdict": "STALE（1/52 条记录的候选指纹不等于现算值）",
+      "signals": {
+        "pngMissing": 0,
+        "pngSizeMismatch": 0,
+        "pngHashMismatch": 0,
+        "recordedBundleMatchesLive": true,
+        "contractFingerprintMatchesLive": true,
+        "v11NotMatching": 1,
+        "v11Records": 52,
+        "v11Partial": false
+      },
+      "expected": {
+        "matrix": "CURRENT",
+        "v11": "NOT-CURRENT",
+        "field": "recordsNotMatchingLiveCandidate>=1"
+      },
+      "pass": true
+    },
+    {
+      "arm": "N5-v11-partial",
+      "why": "把 partial 由 false 改 true ⇒ 子集跑不得被判当期",
+      "auditExit": 0,
+      "matrixVerdict": "CURRENT（逐记录 bundle/contract/PNG 字节与哈希现读复算全命中；PNG 本体仍是捕获时刻字节，未重采）",
+      "v11Verdict": "STALE（0/52 条记录的候选指纹不等于现算值）",
+      "signals": {
+        "pngMissing": 0,
+        "pngSizeMismatch": 0,
+        "pngHashMismatch": 0,
+        "recordedBundleMatchesLive": true,
+        "contractFingerprintMatchesLive": true,
+        "v11NotMatching": 0,
+        "v11Records": 52,
+        "v11Partial": true
+      },
+      "expected": {
+        "matrix": "CURRENT",
+        "v11": "NOT-CURRENT",
+        "field": "partial=true"
+      },
+      "pass": true
+    },
+    {
+      "arm": "N6-vacuous-guard",
+      "why": "删掉全部 results ⇒ 记录数 0 必须落进 NOT-ASSERTABLE，不能因为「0 条不匹配」而恒真",
+      "auditExit": 0,
+      "matrixVerdict": "CURRENT（逐记录 bundle/contract/PNG 字节与哈希现读复算全命中；PNG 本体仍是捕获时刻字节，未重采）",
+      "v11Verdict": "NOT-ASSERTABLE（记录缺 candidateFingerprint，离线无法逐条绑定 ⇒ 计数为 0 属空转不是绿）",
+      "signals": {
+        "pngMissing": 0,
+        "pngSizeMismatch": 0,
+        "pngHashMismatch": 0,
+        "recordedBundleMatchesLive": true,
+        "contractFingerprintMatchesLive": true,
+        "v11NotMatching": 0,
+        "v11Records": 0,
+        "v11Partial": false
+      },
+      "expected": {
+        "matrix": "CURRENT",
+        "v11": "NOT-ASSERTABLE"
+      },
+      "pass": true
+    }
+  ],
+  "passCount": 7,
+  "total": 7
+}

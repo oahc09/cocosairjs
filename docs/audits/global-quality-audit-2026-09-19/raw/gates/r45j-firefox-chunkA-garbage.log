@@ -1,0 +1,88 @@
+Verifying 21 examples (spec-driven v2)...
+FAIL anim-position [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL anim-rotation [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL audio-basic [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL camera-lookat [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL camera-multi [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL camera-ortho [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL dragonbones-basic [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL gltf-basic [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL gltf-clearcoat [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL gltf-draco [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL gltf-meshopt [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL gltf-morph [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL gltf-skin [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL interaction-click [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL light-point [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL light-sphere [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL light-spot [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL light-two-directional [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL material-color [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL material-transparent [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+FAIL material-unlit [[browser-runtime] Cannot find module 'playwright'
+Require stack:
+- E:\AIProMax\github\cocosair.js\tools\benchmark\runner\browser-runtime.cjs
+- E:\AIProMax\github\cocosair.js\tools\verify\v11-examples-verify.cjs]
+[skip-promote] 本次写入 docs\evidence\v12\v11chain-r45j\v11-chain-firefox-chunkA.json（非当期证据路径）⇒ 不回写 example.json / files.json
+
+== Examples spec-driven verify: 0/21 PASS, 0 promoted / 0 demoted ==

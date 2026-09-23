@@ -95,8 +95,8 @@
 
 ## Capabilities
 
-- 来源：`build/capabilities.json`
-- 上次生成：`tools/verify/update-capabilities.cjs`
+- 来源：`examples/gltf-catalog/capabilities.json`
+- 上次生成：`npm run capabilities`（`tools/verify/update-capabilities.cjs`）
 
 ## License Manifest
 

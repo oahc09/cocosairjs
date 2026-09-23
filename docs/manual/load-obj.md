@@ -17,7 +17,7 @@
    （法线/UV/多材质分组的语义 glTF 都有对应物）。转完后走 [load-gltf](load-gltf.md) 的加载路线。
    本篇不点名具体工具版本，避免承诺未实测的转换保真度。
 2. **代码建网格**：若 OBJ 只是"一份顶点数据"，直接解析文本后喂 `utils.createMesh` / 自定义 `Mesh`
-   （见 [custom-geometry](custom-geometry.md) 的顶点布局写法）。OBJ 文本格式简单（`v/vn/vt/f` 行），
+   （见 [custom-geometry](custom-buffergeometry.md) 的顶点布局写法）。OBJ 文本格式简单（`v/vn/vt/f` 行），
    应用层写个百行解析器可行——但那是应用代码，不是引擎能力，本手册不内置。
 3. **primitives 顶替**：演示用途常用盒/球/柱/环面等内建图元（[primitives](primitives.md)），零资产零解析。
 

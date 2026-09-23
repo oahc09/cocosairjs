@@ -18,7 +18,10 @@
  *  8. 晋级：全部规格声明检查 PASS → example.json status draft→stable（证据驱动，含 specFingerprint）。
  *
  * 执行：NODE_PATH=<playwright> node tools/verify/v11-examples-verify.cjs [--ids=a,b]
+ *       [--browser=chromium|firefox|webkit] [--out=<证据路径>] [--artifact-dir=<截图目录>]
  * 产出：docs/evidence/v11-examples-verified.json + docs/evidence/examples/<id>.png
+ * 三引擎铺开（LV12-01）：默认即上式（chromium 整批口径，且只有写回该路径才做证据驱动晋级）。
+ * 非 chromium 必须同时显式 --out=，否则 EXIT=2 —— 否则会把另一种浏览器的结果并进 chromium 的批次字段（F-117 那类自伤）。
  */
 const fs = require('fs');
 const path = require('path');
@@ -34,8 +37,8 @@ const apiTrace = require(path.join(REPO, 'tools', 'verify', 'api-trace.cjs'));
 const readback = require(path.join(REPO, 'tools', 'verify', 'runtime-readback.cjs'));
 const expChecks = require(path.join(REPO, 'tools', 'verify', 'expectation-checks.cjs'));
 
-const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-examples-verified.json');
-const ARTIFACT_DIR = path.join(REPO, 'docs', 'evidence', 'examples');
+const CANON_EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-examples-verified.json');
+const CANON_ARTIFACT_DIR = path.join(REPO, 'docs', 'evidence', 'examples');
 const PER_EXAMPLE_TIMEOUT = 120000;
 const SETTLE_MS = 2500;
 const FRAME_GAP_MS = 400;
@@ -45,6 +48,26 @@ const idsArg = args.find((a) => a.startsWith('--ids='));
 const targetIds = idsArg ? new Set(idsArg.slice(6).split(',')) : null;
 // 插桩是本期 verified 语义的地基；--no-trace 只用于"插桩是否改变结论"的对照运行。
 const TRACE_ON = !args.includes('--no-trace');
+
+// 三引擎铺开（LV12-01）：默认仍是 chromium + 当期证据路径，行为逐字节不变。
+// 硬守卫：非 chromium 必须显式给 --out= —— 否则 firefox/webkit 的结果会并进 chromium 的整批证据，
+// 而 spec-compliance-audit / smoke-29 读的正是那一份（F-117 那类「同一文件两种批次语义」的自伤）。
+const BROWSER_ARG = args.find((a) => a.startsWith('--browser='));
+const BROWSER = BROWSER_ARG ? BROWSER_ARG.slice(10) : 'chromium';
+const OUT_ARG = args.find((a) => a.startsWith('--out='));
+if (BROWSER !== 'chromium' && !OUT_ARG) {
+  console.error(`--browser=${BROWSER} 必须同时显式指定 --out=<证据路径>：不允许写回 ${path.relative(REPO, CANON_EVIDENCE_PATH)}（该文件是 chromium 整批口径）。`);
+  process.exit(2);
+}
+const { launchOptions } = require(path.join(REPO, 'tools', 'verify', 'browser-engines.cjs'));
+const BROWSER_LAUNCH = launchOptions(BROWSER);
+const EVIDENCE_PATH = OUT_ARG ? path.resolve(REPO, OUT_ARG.slice(6)) : CANON_EVIDENCE_PATH;
+const WRITES_CANONICAL = EVIDENCE_PATH === CANON_EVIDENCE_PATH;
+// 截图目录同样可外置：一次「只为测三引擎可行性」的探查跑不应往仓库里落新证据。
+const ARTIFACT_ARG = args.find((a) => a.startsWith('--artifact-dir='));
+const ARTIFACT_DIR = ARTIFACT_ARG ? path.resolve(REPO, ARTIFACT_ARG.slice(15))
+  : (WRITES_CANONICAL ? CANON_ARTIFACT_DIR : path.join(REPO, 'docs', 'evidence', `examples-${BROWSER}`));
+const ARTIFACT_REL_DIR = path.relative(REPO, ARTIFACT_DIR).split(path.sep).join('/');
 
 /** 期望值覆盖度：validator 通过不代表 expectedGraph 每个节点都被比对过，缺口必须留痕。 */
 function expectationGapNote (spec) {
@@ -146,6 +169,7 @@ function writeEvidence (results, done) {
   const evidence = {
     measuredAt: new Date().toISOString(),
     runner: 'tools/verify/v11-examples-verify.cjs',
+    browser: BROWSER,
     mode: 'spec-driven-v3',
     instrumentation: TRACE_ON ? 'per-api-execution-trace (cocosair.traced.js via importmap)' : 'NONE (--no-trace control run：逐 API 状态不可用)',
     candidateFingerprint: apiTrace.candidateFingerprint(),
@@ -168,8 +192,8 @@ function writeEvidence (results, done) {
 async function saveArtifact (dir, dataUrl) {
   fs.mkdirSync(ARTIFACT_DIR, { recursive: true });
   const png = Buffer.from(dataUrl.replace(/^data:image\/png;base64,/, ''), 'base64');
-  const artifactRel = `docs/evidence/examples/${dir}.png`;
-  fs.writeFileSync(path.join(REPO, artifactRel), png);
+  const artifactRel = `${ARTIFACT_REL_DIR}/${dir}.png`;
+  fs.writeFileSync(path.join(ARTIFACT_DIR, `${dir}.png`), png);
   return { path: artifactRel, bytes: png.length, hash: crypto.createHash('sha256').update(png).digest('hex').slice(0, 16) };
 }
 
@@ -597,7 +621,7 @@ async function runLifecycleChecks (example, runtime, channel, spec) {
 
 /** ui-shell（目录页）合同：DOM 选择器渲染 + 零页面错误。 */
 async function verifyUiShell (example, workspace, html, specArg) {
-  const runtime = new BrowserRuntime({ esbuild, repo: REPO });
+  const runtime = new BrowserRuntime({ esbuild, repo: REPO, browserType: BROWSER, browserLaunch: BROWSER_LAUNCH });
   try {
     const probe = `<script>document.addEventListener('DOMContentLoaded',function(){window.__benchReady=true;});window.addEventListener('error',function(e){(window.__uiErrors=window.__uiErrors||[]).push(String(e.message).slice(0,200));});</script>`;
     fs.writeFileSync(path.join(workspace, 'index.html'), html.replace('</body>', probe + '</body>'));
@@ -630,7 +654,7 @@ async function verifyUiShell (example, workspace, html, specArg) {
 }
 
 async function verifyApp (example, workspace, html, spec, prepared) {
-  const runtime = new BrowserRuntime({ esbuild, repo: REPO });
+  const runtime = new BrowserRuntime({ esbuild, repo: REPO, browserType: BROWSER, browserLaunch: BROWSER_LAUNCH });
   try {
     if (!html.includes('__bench-prelude')) {
       fs.writeFileSync(path.join(workspace, 'index.html'), html.replace('</body>', '<script src="/__bench-prelude.js"></script></body>'));
@@ -781,9 +805,15 @@ function verifyOne (example) {
     writeEvidence(results, false);
   }
   writeEvidence(results, true);
-  // 证据驱动晋级（实现在 v11-spec-common.cjs，与 DevTools 运行器共用）
-  const promoted = promoteFromEvidence(results);
-  require('child_process').execFileSync('node', [path.join(REPO, 'tools', 'examples', 'generate-manifest.cjs')], { cwd: REPO });
+  let promoted = { promoted: 0, demoted: 0 };
+  if (WRITES_CANONICAL) {
+    // 证据驱动晋级（实现在 v11-spec-common.cjs，与 DevTools 运行器共用）。
+    // 晋级合同只属于 chromium 整批口径：探查跑（--out=）不得回写 example.json / files.json。
+    promoted = promoteFromEvidence(results);
+    require('child_process').execFileSync('node', [path.join(REPO, 'tools', 'examples', 'generate-manifest.cjs')], { cwd: REPO });
+  } else {
+    console.log(`[skip-promote] 本次写入 ${path.relative(REPO, EVIDENCE_PATH)}（非当期证据路径）⇒ 不回写 example.json / files.json`);
+  }
   const pass = results.filter((r) => r.result === 'PASS').length;
   console.log(`\n== Examples spec-driven verify: ${pass}/${results.length} PASS, ${promoted.promoted} promoted / ${promoted.demoted} demoted ==`);
   process.exitCode = pass === results.length ? 0 : 1;

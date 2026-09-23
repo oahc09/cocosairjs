@@ -27,6 +27,7 @@
   "docs/*.json",
   "README.md",
   "LICENSE",
+  "licenses/",
   "UPSTREAM.md",
   "THIRD_PARTY_LICENSES.md"
  ],
@@ -41,17 +42,26 @@
   "build:system": "node tools/build/build.cjs --format system",
   "baseline": "node tools/baseline/build-baseline.cjs",
   "analyze": "node tools/analyze/dep-graph.cjs",
+  "vendor:npm": "node tools/v12/vendor-pkg.cjs",
   "typecheck": "tsc -p tsconfig.json",
   "verify:decoders": "node tools/verify/decoder-audit.cjs",
   "verify:test-inventory": "node tools/verify/test-inventory.cjs",
   "verify:api-coverage": "node tools/examples/coverage-report.cjs",
   "capabilities": "node tools/verify/update-capabilities.cjs",
   "verify:web-only": "node tools/verify/verify-web-only.cjs",
+  "verify:file-map": "node tools/v12/verify-file-map.cjs",
+  "verify:licenses": "node tools/v12/verify-licenses.cjs",
   "test": "jest",
   "dev": "node tools/dev/dev-server.cjs",
   "verify:consumer": "node tools/verify/consumer-acceptance.cjs",
   "verify:benchmark": "tsc -p tools/benchmark/tsconfig.json && node tools/verify/benchmark-regression.cjs",
   "verify:v06-gate": "node tools/verify/v06-report.cjs",
+  "verify:v12-matrix": "node tools/v12/browser-matrix.cjs",
+  "verify:v12-backends": "node tools/v12/verify-wasm-backends.cjs",
+  "verify:v12-custom-face": "node tools/v12/verify-custom-export-face.cjs",
+  "verify:doc-refs": "node tools/v12/verify-doc-refs.cjs",
+  "verify:v12-feature-face": "node tools/v12/verify-feature-face.cjs",
+  "verify:v11-chain-face": "node tools/v12/verify-v11-chain-face.cjs",
   "gallery:manifest": "node tools/examples/generate-manifest.cjs",
   "gallery:api": "node tools/examples/api-inventory.cjs"
  },
@@ -59,6 +69,7 @@
   "@babel/preset-env": "^7.29.7",
   "@cocos/babel-preset-cc": "2.2.0",
   "@cocos/ccbuild": "^2.3.21",
+  "@cocos/engine-pal": "^1.0.4",
   "@types/fs-extra": "^5.0.4",
   "@types/jest": "^24.9.1",
   "chalk": "^4.1.2",
@@ -69,5 +80,10 @@
   "ts-jest": "^28.0.8",
   "tslib": "^2.8.1",
   "typescript": "^4.9.5"
+ },
+ "dependencies": {
+  "@cocos/box2d": "1.0.2",
+  "@cocos/cannon": "1.2.8",
+  "@cocos/dragonbones-js": "^1.0.1"
  }
 }

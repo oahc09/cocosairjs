@@ -22,9 +22,14 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 
 ## 2. PAL 平台层（src/pal/**）
 
-- 来源：`@cocos/engine-pal@1.x`（npm）预编译产物，MIT。
+- 来源：`@cocos/engine-pal@1.0.4`（npm）预编译产物，逐字节抽取（`npm run verify:licenses` 断言）。
 - 形态：按 HTML5 平台虚拟模块映射抽取（web 实现 + non-minigame + 共享类型），
   原始 `_ccprivate$` 属性名变换保持原样。
+- **许可状态（2026-09-22 V1.2 审计更正）**：该包 `package.json` 标 `license: "UNLICENSED"`，
+  其 `README.md:16` 写「UNLICENSED — Cocos 内部使用」，包内不含许可原文。
+  本节此前所述「MIT」**不成立**，已改登记为 `pending-owner-decision`
+  （见 `docs/license-decisions.json` 与 §7）；候选处置：以 cocos4 仓库 MIT（Copyright 2025 SUD）
+  作为 pal 源码许可依据并登记依据链 / 取得书面澄清 / 改从上游源码路径抽取。
 
 ## 3. 构建期依赖（devDependencies，不进入运行时产物）
 
@@ -65,3 +70,35 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 逐文件 bytes/SHA-256 与注入方式（provider API、浏览器 Draco 决策、MIME/静态服务策略）以
 `build/gltf-decoders/MANIFEST.md` 为权威记录；可重复审计工具：`node tools/verify/decoder-audit.cjs`
 （Gate G5-build：包内离线加载三类 decoder + 清单哈希漂移 + 主 bundle/地图零内嵌）。
+
+## 7. V1.2 内嵌第三方运行时（回归补全带入的运行库，2026-09-22 审计）
+
+`npm run verify:licenses`（`tools/v12/verify-licenses.cjs`）是本节的门禁：每项必须有
+（a）`licenses/`（或 `build/gltf-decoders/`）下的许可原文，且与来源**逐字节一致**（不许手写许可）；
+（b）产物指纹与发布形态相符；（c）需所有者判断的项必须在 `docs/license-decisions.json` 有处置登记。
+`licenses/` 已列入 `package.json` `files[]`，许可原文随 npm 包发布。
+
+| 组件 | 落点 | 许可 | 原文 | 产物形态 |
+|---|---|---|---|---|
+| Spine runtime（`spine-core.js`） | `src/cocos/spine/lib/` | **Spine Runtimes License Agreement 2019-05-01**（Esoteric Software LLC） | `licenses/LICENSE_spine.txt`（= 上游 `licenses/LICENSE_spine.txt`） | 默认 bundle 内嵌 |
+| DragonBonesJS（`@cocos/dragonbones-js@1.0.2`） | `src/node_modules/@cocos/dragonbones-js/` | MIT（c) 2012-2016 DragonBones team | `licenses/LICENSE_DragonBones.txt` | 默认 bundle 内嵌 |
+| Box2D（`@cocos/box2d@1.0.2`） | `src/node_modules/@cocos/box2d/` | MIT（c) 2019 Erin Catto | `licenses/LICENSE_box2d.txt` | 默认 bundle 内嵌（2D 默认后端） |
+| cannon.js（`@cocos/cannon@1.2.8`） | `src/node_modules/@cocos/cannon/` | MIT（c) 2015 cannon.js Authors | `licenses/LICENSE_cannon.txt` | 仅 AIR_FEATURES 变体（默认 3D 后端是 builtin） |
+| zlib.js（`src/external/compression/zlib.min.js`） | 上游原文 | MIT（imaya/zlib.js） | `licenses/LICENSE_zlibjs.txt` | 默认 bundle 内嵌 |
+| notepack.io（`src/external/deserialize/`） | 上游原文 | MIT（c) 2014 Ion Drive Software Ltd. | `licenses/LICENSE_notepack.io.txt` | 默认 bundle 内嵌 |
+| `@cocos/engine-pal@1.0.4` | `src/pal/**` | **UNLICENSED**（见 §2） | 无（来源包未附文本） | 默认 bundle 内嵌 |
+
+两条需要所有者决定（`docs/license-decisions.json`，门禁以 ATTENTION 呈现）：
+
+1. **Spine**：该协议要求「产品的每个用户须自备 Spine Editor 许可」且「任何形式的再分发必须附带本许可与版权声明」。
+   现状已满足第二项（文本随包发布），第一项与仓库根 `license: MIT` 的单文件引擎发行姿态并不等价。
+   风险面比字面看起来小：按 `docs/v12-spine-asset-sourcing.md` 的实测，alpha.34 的 Web 侧 spine 只有
+   wasm/asm 后端，随仓库抽取的 `spine-core.js` 实际是枚举/类型桩，而 emscripten 运行资产并未取得（D2 受阻），
+   故默认产物目前并不含 Esoteric 的完整运行时实现。
+   选项：保留默认产物 + 显式声明该条件（当前做法）/ 移入常量变体 / 移除该组（与计划书「16 组全部回归」冲突）。
+2. **engine-pal**：见 §2 —— 无许可原文可录，公开发布前需澄清依据链。
+
+许可元数据缺口（不阻塞，但记录在案）：`@cocos/dragonbones-js@1.0.2` 的 npm 包既无 `LICENSE` 文件也无
+`license` 字段，许可原文是从上游 cocos4 `licenses/` 取的；`@cocos/box2d`、`@cocos/cannon` 的
+`package.json` 同样无 `license` 字段，但包内带 `LICENSE` 文件（门禁按该文件逐字节比对）。
+

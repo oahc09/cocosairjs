@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-19T19:13:23.205Z",
-  "revision": "99f56e2",
+  "generatedAt": "2026-09-22T18:49:42.865Z",
+  "revision": "97d44d0",
   "examples": [
     {
       "dir": "anim-position",
@@ -90,7 +90,7 @@
       "promotion": {
         "spec": "8ebd4d7639df",
         "source": "c6fc70109be99971",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -185,10 +185,148 @@
       "promotion": {
         "spec": "fe051d63a498",
         "source": "64c06a98436e9204",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 0,
         "units": 18
+      }
+    },
+    {
+      "dir": "audio-basic",
+      "id": "audio-basic",
+      "version": "1.0.0",
+      "title": "AudioSource — 手势解锁播放/暂停/循环/音量/判尾 + Code First 运行时 AudioClip (V12 LV12-03)",
+      "category": "audio",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：`cocos/audio` + vendored `pal/audio` 的 web 通路必须真实跑通——`assetManager.loadRemote('.wav')` 经 downloader 的 `.wav` 注册项 → `loadAudioPlayer` → `AudioPlayer.load` →（WebAudio 后端）`decodeAudioData` → factory `createAudioClip`，产出带 `_nativeAsset={player,url,type,duration}` 的运行时 `AudioClip`（Code First，无 .meta/无 uuid 依赖图）；`AudioSource` 的播放/暂停/循环/volume/判尾、手势解锁后的 resume、组件禁用即自动暂停都要在 chromium/firefox/webkit 三引擎矩阵里逐字段可回读，并且真的出图",
+        "points": [
+          "Code First 的真实入口是 downloader/factory 的两张表：`audio-downloader.ts` 给 `.mp3/.ogg/.wav/.m4a` 注册 `loadAudioPlayer`，factory 侧注册 `createAudioClip` ⇒ `loadRemote('./assets/tone.wav')` 直接返回 `AudioClip`（`validate() true`、`getDuration() 1.6`、`nativeUrl` 就是请求 URL）。组件侧不需要 uuid，也不该自己 `new Audio()` 冒充",
+          "`AudioSource.clip` 的 setter **另开一个 `AudioPlayer` 实例**（同一份已解码 buffer，`audioBufferManager` 引用计数缓存）：实测 `clipPlayerIsSourcePlayer false`（clip 自带 player 与 srcA 的 player 不是同一对象）、`twoSourcesShareOneClip true`。所以「两个 AudioSource 播同一 clip」是两个通道共享一次解码，不是两次解码",
+          "`play()` 在 player 尚未 `_isLoaded` 时不会丢操作：`_operationsBeforeLoading` 把它排队（实测调用前 0 → 调用后 1），加载完成由 `_syncStates` 重放，队列随之清空（`opsQueueEmptyAfterLoad true`）。⚠️ 这条队列在 webkit 上永不清空，见下面 DOM 后端一组",
+          "自动播放策略：手势前 `srcA.play()` 不 emit STARTED（`autoplayBlocked true`、`startedCountBeforeGesture 0`、300 ms 后仍 `INIT(0)`）。解锁靠 `AudioContextAgent.runContext()` 往 `#GameCanvas` 挂 **capture 阶段的 `touchend`/`mouseup`** 调 `context.resume()`，`_doPlay()` 走 `onceRunning` 延后。实测三引擎都拦（headless 也拦），但解锁耗时 512/599/1660 ms 逐次不同 ⇒ 判据只能是轮询到的 `waitFor(() => srcB.playing)`，不能是固定 sleep",
+          "`AudioTimer.currentTime` 是 `performance.now()` 换算，不是 AudioContext 时钟，并且 `% duration` 回绕：所以 `pause()` 把它冻住（`frozenWhilePaused 0`）、`seek()` 设偏移、`checkEnded` 用 `setTimeout(duration - currentTime)` 判尾。非循环播完 ⇒ emit ENDED 且状态回 `INIT(0)`、`playing false`、位置归 0；`loop=true` 时实测 `endedDeltaDuringLoop 0`（不判尾，播放头回绕）",
+          "`volume` setter 做 `clamp01` 且 NaN 保留前值（只 warn，不 error）：实测 `0.35` 读回 0.35、`2 → 1`、`NaN → 仍是 1`。WebAudio 后端能顺到 `srcB._player._ccprivate$_player._ccprivate$_gainNode.gain.value`，读回恰好 0.35 ⇒ 「属性生效」有第二路独立证据。`playOneShot(clip, 0.5)` 另开 OneShot 通道，主播放头不受影响（`stillPlayingAfterOneShot true`）",
+          "`seek(999)` 被 `clamp(0, duration)` 夹到 1.6，且因为此时状态已 `INIT(0)`，夹完仍是停的（`stillStoppedAfterClampSeek true`）⇒ 「endTime/越界」不能只看返回值，必须连状态一起断言",
+          "`decodeAudioData` 一定把资产**重采样到 AudioContext 采样率**：8000 Hz 资产在 48 kHz context 下 `getSampleRate() 48000`、`getPCMData(0).length 76800`（= 1.6 × 48000），而 `duration` 仍是 1.6。⇒ 断言 PCM 长度必须按 context 采样率算，照资产头里的数字写期望会永久红。单声道上 `getPCMData(1)` 直接抛 `IndexSizeError`（WebAudio `getChannelData(1)`），越界声道不是返回 undefined",
+          "⚠️ Playwright 的 webkit-2361（Windows）**根本没有 Web Audio API**：`AudioContext / webkitAudioContext / OfflineAudioContext / webkitOfflineAudioContext` 全是 `undefined`（`typeof` 实测，UA `Version/26.5 Safari/605.1.15`）。于是引擎退回 `AudioPlayerDOM`：`clip._nativeAsset.type` 从 `WEB_AUDIO(1)` 变成 `0`、`AudioSource._player` 的 impl 是 `AudioPlayerDOM`、`getPCMData()` 返回 undefined、`sampleRate` getter 恒 0。⇒ 本示例「PCM 解码/峰值/bin 包络」这一组在 webkit 上结构性不可能，只能钉在 chromium/firefox 的 probeNonEmpty，不进 probeEquals",
+          "⚠️ DOM 后端的 `AudioPlayerDOM.getPCMData()` 返回 undefined 而 `AudioSource.getSampleRate()` 返回**永不 settle 的 promise**：不兜底会挂死整条点击序列（实测 `p3Decoded` 只剩 `{playerType:null}`、summary 停在 `audio: loading`、`phaseKeys 3`）。本示例的 `safeAsync(fn, 1200)` 用 `Promise.race` 给每个 await 加硬超时，并把判别写成「像不像 AudioPCMDataView」（`typeof view0.getData === 'function'`）而不是「有没有 length」——错误字符串同样有 `length`，第一版就是被这个坑到抛 `view0.getData is not a function`（pageerror，整段序列废掉）",
+          "⚠️ `AudioPlayerDOM.loadNative()` 只认 `canplaythrough`（iOS 特例 `loadedmetadata`、Firefox 特例 `canplay`），headless webkit 对这支 25 kB 的 WAV **从不触发 `canplaythrough`** ⇒ 每次音频加载都要吃满实现里那个 8000 ms 兜底 `setTimeout`：实测 webkit 模块顶层落在 `performance.now() ≈ 8.5 s`（chromium 0.7 s / firefox 1.1 s）。矩阵的 `waitMs` 必须 ≥ 12000 才可能把点击打在已注册 TOUCH_START 之后，否则 webkit 只会 `phaseKeys 1` 全红",
+          "⚠️ 资产采样率必须是 **PCM16/8000 Hz/mono**：同一支 1.600 s 正弦，webkit 的 `<audio>.duration` 读回 22050→0.3705、44100→0.1853、48000 mono→0.1702、48000 stereo→0.0851、float32→超时，只有 8000→**1.6000** 正确（chromium/firefox 六种封装全对）。`duration` 一错，`AudioClip.getDuration()`、判尾 timeout、loop 回绕点、播放头换算全部跟着错，而且是静默错。实测命令与逐条 JSON：`node E:/AIProMax/cocosair-scratch/v12-logs/wav-dom-durations.cjs` ⇒ `E:/AIProMax/cocosair-scratch/v12-diag/wav-dom-durations.json`（含无 Web Audio 的能力实测 `webkit-audio.json`）",
+          "⚠️ DOM 后端存在**假阳性播放**：`ensurePlaying()` 在 `domAudio.play()` 被拒时改为往 `#GameCanvas` 挂一次性 `touchend/mouseup` 重试，并且**照样 resolve** ⇒ facade `state` 被置成 `PLAYING(1)`，而元素实际 `paused=true`、`currentTime` 冻结在 0（probe 实测 `players.srcB={backend:'dom',facadeState:'PLAYING(1)',paused:true,currentTime:0}`，两次相隔 600 ms 采样 `srcBDelta=0`）。所以「`AudioSource.playing === true`」绝不等于「真的在出声」，三引擎矩阵里能证明渲染循环的必须是与音频后端无关的帧时钟，不能是播放头",
+          "⚠️ `clip.destroy()` 单独调用**不等于释放**：`assetManager.loadRemote` 以 URL 为键把结果缓存在 `assetManager.assets`（`asset-manager.ts:654` 命中即原样回缓存、不再走下载/解析），而 `release-manager._free` 第 235 行对已失效对象直接 `return` ⇒ 缓存条目残留，同 URL 二次 `loadRemote` 取回的是**已销毁实例**，`AudioSource.clip` setter 立刻 `console.error('Invalid audio clip')`（`audio-source.ts:133/433`）。实测：本例 §25 lifecycle 合同先前只写 `clip.destroy()` 时 v11 验证器判 `resource-released` FAIL（`reacquire: toneClip invalid after reacquire`，快照 `E:/AIProMax/cocosair-scratch/v12-diag/pre-audio-v11/v11-examples-verified-FAIL-destroyonly.json`），改成在资产仍有效时 `assetManager.releaseAsset(clip)`（`tryRelease(asset, true)` 的 force 分支才会 `assets.remove` + destroy）后转绿。P1 的 `cacheHasUrl` 把「URL 即缓存键、加载后条目在册」钉进 probe，避免把「销毁了」当成「释放了」"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera + Status + Wave + Hint + AudioHost（AudioHost 上挂两个 `playOnAwake=false` 的 AudioSource）。加载期先记 P0/P2：`autoplayBlocked true`、`startedCountBeforeGesture 0`、手势前 300 ms 仍 `INIT(0)`、`opsQueueBeforeCall 0 → opsQueueAfterCall 1`、`isLoadedAtCall false`。真实点击一次性跑完 8 阶段（纯同步读回 + 轮询延迟，无随机）：P1 运行时资产（ctor 'AudioClip'、`assetManager.assets.has(URL) cacheHasUrl true`、`validate true`、`getDuration 1.6`、`_nativeAsset` 键 `duration,player,type,url`、`url === nativeUrl true`、`clipPlayerIsSourcePlayer false`、`twoSourcesShareOneClip true`、`maxAudioChannel 24`）；P3 解码后 PCM（WebAudio 后端：`sampleRate 48000`、`pcmLength 76800`、`pcmViewCtor 'AudioPCMDataView'`、64 bin 包络、前/后半峰值 0.5/0.25、越界声道 `IndexSizeError`；webkit 后端记 `hasAudioContext false` + 两次超时串）；P4 手势解锁（`stateAtGesture INIT(0)` → `PLAYING(1)`、`playingAfterGesture true`、`startedCountAfterUnlock 2`、`unlockLatencyMs` 只入非空集）；P5 播放头即钟（`clockAdvancedWhilePlaying true`、`stateAfterPause PAUSED(2)`、`frozenWhilePaused 0`、`resumedFromOffset true`）；P6 音量（`volReadback 0.35`、`clampedHigh 1`、`afterNaN 1`、`nanKeepsPrevious true`、WebAudio 侧 `gain 0.35`）；P7 seek 与判尾（`seekLandedsInRange true`、`endEventFired true`、`endedDelta 1`、`stateAfterEnd INIT(0)`、`playingAfterEnd false`、`clampedToDuration 1.6`、`stillStoppedAfterClampSeek true`）；P8 循环/OneShot/生命周期（`loopFlagOnPlayer true`、`wrappedBelowSeekTarget true`、`endedDeltaDuringLoop 0`、`stillPlayingAfterOneShot true`、`oneShotVolumeProduct 0.175`、`stateAfterDisable PAUSED(2)`、`playingAfterReEnable false`、`playingAfterExplicitPlay true`）。终态 live：`srcB` 处于 `loop=true, volume=0.35, PLAYING(1)`，`endedCount 1`，状态行 `audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)`（三引擎逐字相同，进 probeEquals）",
+        "visual": "深蓝底（clearColor 12,16,24）一屏：顶部状态行 `audio: loading` → 点击后改写为 `audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)`；中部一条 420×120 的 64 bin 波形（前半 440 Hz 高幅、后半 660 Hz 低幅，2:1 设计肉眼可分），波形上叠一条琥珀色竖线＝播放头（仅 `playing` 时绘制），波形下方一条绿色小块＝帧时钟（每 2400 ms 横扫一次，与音频后端无关）；底部一行提示 `unlocked: playing`。frame-diff 的持续帧间变化来源是绿色帧时钟：三引擎都有牙（chromium/firefox 播放头也在走，webkit 播放头因 DOM 后端假阳性冻结，见 learning 末条）⇒ 三引擎 frameChanged 全 PASS，而「音频是否真出声」由 probe 的 `players.srcB.{backend,paused,currentTime,srcBDelta}` 独立回读，不用画面替引擎背书"
+      },
+      "api": {
+        "primary": [
+          "AudioSource",
+          "AudioClip",
+          "AudioPCMDataView"
+        ],
+        "supporting": [
+          "AudioClip.validate",
+          "AudioClip.getDuration",
+          "AudioPCMDataView.getData",
+          "AudioSource.play",
+          "AudioSource.pause",
+          "AudioSource.stop",
+          "AudioSource.playOneShot",
+          "AudioSource.getPCMData",
+          "AudioSource.getSampleRate",
+          "assetManager",
+          "Component",
+          "Node.on",
+          "Label"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Canvas",
+          "UITransform",
+          "Layers",
+          "Color",
+          "Label",
+          "Component",
+          "view",
+          "ResolutionPolicy",
+          "assetManager",
+          "AudioSource",
+          "AudioClip",
+          "AudioPCMDataView",
+          "AudioPCMDataView.getData",
+          "AudioClip.validate",
+          "AudioClip.getDuration",
+          "AudioSource.play",
+          "AudioSource.pause",
+          "AudioSource.stop",
+          "AudioSource.playOneShot",
+          "AudioSource.getPCMData",
+          "AudioSource.getSampleRate",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.on"
+        ]
+      },
+      "capabilities": [
+        "audio"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Status",
+            "Wave",
+            "Hint",
+            "AudioHost"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）画布一次（矩阵 `waitMs=12000` 保证打在 webkit 的模块顶层之后）：跑完 8 阶段读回序列，末尾把 srcB 留在 `loop=true / volume=0.35 / PLAYING` 的持续态；序列带闩锁，后续点击不会重跑（`ensurePlaying` 自己会往 #GameCanvas 挂一次性重试，不闩锁会让 started/ended 计数翻倍）",
+            "expected": "画面从「波形静止 + `audio: loading`」变为「64 bin 波形 + 琥珀播放头 + 绿色帧时钟横扫 + 状态行改写」，frame-diff 可测；AudioSource / AudioClip / AudioPCMDataView 与手势解锁、判尾、循环、音量语义在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "9df8c691b6ad",
+        "source": "002fb0bcb6e664a6",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 26,
+        "attested": 2,
+        "units": 28
       }
     },
     {
@@ -268,7 +406,7 @@
       "promotion": {
         "spec": "c00b9e5f3a5a",
         "source": "4b4c481434e58eab",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 8,
         "attested": 3,
         "units": 11
@@ -375,7 +513,7 @@
       "promotion": {
         "spec": "678fb005e8ec",
         "source": "78040895699e23e3",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 12,
         "attested": 1,
         "units": 13
@@ -478,7 +616,7 @@
       "promotion": {
         "spec": "0f969f97ee12",
         "source": "ada3caa09ec5937e",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -577,7 +715,7 @@
       "promotion": {
         "spec": "e1f579ddd6f6",
         "source": "5fec34368f419b87",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -684,10 +822,182 @@
       "promotion": {
         "spec": "3446e2c5a876",
         "source": "b75a2948236ad40b",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 1,
         "units": 19
+      }
+    },
+    {
+      "dir": "dragonbones-basic",
+      "id": "dragonbones-basic",
+      "version": "1.0.0",
+      "title": "DragonBones — 运行期构造龙骨资产 / REALTIME 骨骼动画 / display 换图 / 资源释放重建 (V12 LV12-11)",
+      "category": "dragon-bones",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：DragonBones（龙骨）在 Cocos Air Code First 下必须能**不依赖 assetManager 的 uuid 依赖图**、由运行期 `new DragonBonesAsset()` + `new DragonBonesAtlasAsset()` 真实构造资产，经 `CCFactory` 解析、`ArmatureDisplay` 建 armature、走引擎自己的 `assembler/drawList` 出图；并且「骨骼动画在播」「slot 换 display」「资源释放后重建」三件事都要在浏览器矩阵里逐字段可回读、像素可佐证。资产为 `tools/fixtures/make-dragonbones-skeleton.cjs` 生成的手写 DragonBones 5.5 数据，零第三方许可面",
+        "points": [
+          "手工构造的资产 uuid 会**退化成数据里的 name**（`DragonBonesAtlasAsset.init`：uuid 为空则取 `atlasJson.name`；`DragonBonesAsset.init` 同理取 `dbData.name`）。实测本例 `atlasUuid === dragonUuid === 'AirDragon'` ⇒ `armatureKey === 'AirDragon#AirDragon'`（`uuid#atlasUUID` 拼装）。这既是 Code First 可用的原因，也是「同一份数据重复 new 会撞 key」的原因：`init()` 命中已有 `dragonBonesData` 就直接早退",
+          "`ArmatureDisplay` 的运行期形状与文档直觉不符，三处实测：`display.armature` 是**方法**（`typeof display.armature === 'function'`）而不是属性；`display.renderEntity` 没有 `getRenderData()`；`factory.getTextureAtlasData(uuid)` 返回的是 **Array**（`ownKeys ['0']`）而不是 `TextureAtlasData` ⇒ 图集事实只能读 `atlasAsset._textureAtlasData`（实测 ctor `CCTextureAtlasData`，字段 `textures/_renderTexture/width/height/scale/name/imagePath`）。探针里读空不报错，症状与「龙骨根本没解析」完全同形",
+          "运行层事实的采集时机是硬约束：armature 要到 `__preload → _init → _parseDragonAtlasAsset → _refresh → _buildArmature` 才建出来，而 `__preload` 只在场景激活后触发 ⇒ 必须在 `app.run(scene)` 且至少一帧 `Director.EVENT_AFTER_DRAW` 之后采。⚠️ 更隐蔽的一条：Air Code First 的场景入口是 `app.run(scene)`，**不是** `director.runScene(scene)`——后者 `EVENT_AFTER_DRAW` 永不触发，探针只会报 `no rendered frame`，看起来和「龙骨渲染坏了」一模一样（r5 实测踩过后写进合同）",
+          "龙骨的公开**属性 setter**（`dragonAsset` / `dragonAtlasAsset` / `armatureName` / `animationName` / `dragonBonesJson` / `atlasJson` / `texture`）与 vendored 运行层的 `Slot.*` / `Bone.global` 在 `docs/example-api-inventory.json` 的 units 里**根本不存在**（inventory 只收方法/字段单元）。§3 精确绑定门禁（`claim not in example-api-inventory`）因此挡死了「用 setter 当主张」的写法 ⇒ 本例的 claim 面退到 `Armature.getSlots` / `Animation.gotoAndStopByFrame` / `DragonBonesAsset.init` 等确实存在于 inventory 的单元，而 setter 通路只在 `learning` 与 `p1/p6` 事实里留痕。这是 inventory 的覆盖面观察，不是本示例的取舍偏好",
+          "`SlotData` 的层序字段叫 **`zOrder`**（没有 `z`）：实测 `[body 0, wing-left 1, wing-right 2, tail 3]`，与生成器写入顺序一致；`displayIndex` 是第二个字段（本例恒 0）。按 `z` 读会得到一片 null 并被误判成「数据没解析进来」",
+          "`AnimationData` 的时间线**不是**数组而是**按 bone/slot 名字索引的映射**：`boneTimelines` / `slotTimelines`（值 = `TimelineData[]`），`TimelineData` 只有 `type / offset / frameIndicesOffset` 三个字段（实测 flap：`boneTimelines {root:[[11,0,0]], wing-left:[[12,10,25]], wing-right:[[12,18,50]]}`、`slotTimelines {tail:[[20,26,75]]}`）。`type` 语义实测自 `out/dragonBones.js`：11=BoneTranslate、12=BoneRotate、**20=SlotDisplay**（`case 20 → SlotDislayTimelineState`，源码就是这个拼写）。帧的数值本体在 `DragonBonesData.frameIntArray/frameFloatArray` 里，`cacheFrameRate 0` 时 `cachedFrames.length === 0` ⇒ 不要指望 `anim.frames[i]` 这种 UI 文档式取帧",
+          "⚠️ 最容易假通过的一条：**帧数据的旋转角键名是 `skew`，不是 `rotation`**（`out/dragonBones.js:12987`：`_frameFloatArray[..] = _getNumber(rawData, DataParser.SKEW, 0.0) * DEG_RAD`）。生成器早先写 `rotateFrame: {duration, rotation}`，解析器不报错、按默认值 0 收，表现为「时间线确实存在（type 12）但姿态恒为 0」——只有把 `bone.global` 整块逐帧采出来才看得见（r8 实测 `wingSkew` 五帧全 0）。改成 `skew` 后（r9）实测 `wing.global.skew` 在钉帧序列上给出 0.7 / 0.24 / 0.63 / 0.7 / 0.7 rad。骨架**初始**变换走另一条分支（13259-13261：`rotate` 或 `skew` 任一存在即读 `skew` 值），两处键名并不统一",
+          "`bone.global` 实测是 `Transform`，ownKeys 为 `[x, y, skew, rotation, scaleX, scaleY]`：**全局角在 `skew`（弧度）**，`rotation` 恒 0。所以「翅膀有没有转」只能比 `skew`；先按 `skewX`（另一版 dragonBones 的写法）取会拿到 undefined，再退到 `rotation` 就得到一个看起来合理的 0 ⇒ 假阴性。本示例用 `firstDefined(['skewX','skew','rotation'])` 把**实际命中的键名**也记成事实（`wingSkewKey`），避免键名漂移被静默吸收",
+          "`playAnimation(animName, playTimes)` 的第二参不是「第几遍」而是循环次数，且**`0` 在龙骨语义里是「播一次后停」**：早先传 0 使 `anim.isPlaying === false`、姿态停在末帧（r6 归因）。传 `-1`（无限循环）后实测 `afterIdle.isPlaying true`、`backToFlap.isPlaying true`。数据侧 `flap.playTimes 0` / `idle.playTimes -1` 保持原样并被记进 `p3Skeleton.animations`——引擎侧显式覆盖是本合同的一部分",
+          "动画取证的决定性通路是 `Animation.gotoAndStopByFrame(name, frame)`（内部 `gotoAndPlayByFrame(name, frame, 1)` + `state.stop()`）+ `armature.advanceTime(0)`：实测钉帧后 `state.currentTime`（键名由 `stateTimeKey` 事实锁定）精确等于 `frame/frameCount` ⇒ 0/0.25/0.5/0.75/0.96，且同一帧在真实渲染帧前后各读一次姿态全等（`allFramesStable true`）。挂钟相位跨引擎不可复现，钉帧可以",
+          "换图（displayFrame）的双层判据：tail slot 在 default skin 有 2 个 display（`rawDisplayDataNames ['plate','tip']`，`displayList.length 2`），flap 的 `slotTimelines.tail` type 20 驱动 0→1→0。实测帧 6/12 `displayIndex 1 / region 'tip'`，帧 0/18/23 `displayIndex 0 / region 'plate'`；**同一帧的帧缓冲里红色 tip 像素 78、绿色 plate 掉到 21/15**，而 plate 帧 tip 像素恒 0、plate 恒 120 ⇒ 「内部索引变了」与「屏幕真换了 region」同时成立。⚠️ 只用 `slot.display.name` 会永远读到 slot 名（引擎 display 对象的 name 不是 region 名），据此断言换图必假阴性",
+          "崩溃前置条件也要当事实采：`TimelineState.init` 读 `this._animationData.parent.frameRate`，`AnimationData.parent` 为 null（资产已 destroy / 对象池回收后）会直接抛 `Cannot read properties of null (reading 'frameRate')` ⇒ 本合同把 `animationsHaveParent [['flap',true],['idle',true]]` 与 `parentIsArmatureData true` 钉成显式事实，并规定**生命周期释放/重建取证必须排在动画事实冻结之后**（否则 pageerror 会被误读成渲染链坏了）",
+          "缓存模式决定钉帧有没有意义：`_defaultCacheModeValue` 默认即 `AnimationCacheMode.REALTIME`（实测 `_cacheMode REALTIME:0`、`isAnimationCached() false`），本例仍显式 `setAnimationCacheMode(REALTIME)` 把意图写进代码。SHARED_CACHE/PRIVATE_CACHE 下出图由**缓存帧表按挂钟采样**，`gotoAndStopByFrame` 改的是实时状态而不改渲染帧 ⇒ 想用钉帧做确定性像素证据就必须 REALTIME",
+          "矩阵取证只调**一次** `window.__probe()`（`tools/v12/browser-matrix.cjs`：waitMs → 点击 → afterClickMs → probe），所以任何「靠多次采样累积」的事实都不能进 `probeEquals`。实测踩过：`live.tipSeenInLiveSampling`（由 `__probe` 自己那一次像素采样置位）在三引擎上一致为 `false` ⇒ 整条矩阵红（快照 `E:/AIProMax/cocosair-scratch/db-probe/matrix-dry-r1.json`）。同一事实改由钉帧通路的 `live.tipSeenInPerFrameSampling`（帧 6/12 采样累积）给出后三引擎一致 `true`，改判据不改代码即转绿（`matrix-dry-r2.json`，247 条 probeEquals 全 PASS）。`live.tailIndex/tailRegion` 同理属挂钟相位量，只进 `probePresent`",
+          "三引擎决定性实测（当期全量矩阵 `docs/evidence/v12/browser-matrix.json`，`waitMs 9000 / click 240,180 / afterClickMs 2000`）：**钉帧通路逐字段一致**——`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、`regionSequence` 五条、70 条 `goToFrame.*` 姿态读数在 chromium(swiftshader)/firefox/webkit 上全部为 `probeEquals` 且全绿；而**终态 `live.pixels.counts` 属挂钟量**（probe 那一刻 tail 正贴 plate）：chromium/firefox 同为 `{plate:120, wing:137, tip:0, background:0}`，webkit `{plate:117, wing:136, tip:0}`（2 步长采样 + ±24 容差下的光栅化差 ±3 点）⇒ 合同只对它用 `probeNonEmpty`/`probePresent`，不钉数值。截图字节 10898/12867/11521，`minPngBytes` 定 8000（对最小值留 ~27% 余量）。本例龙骨图形只占约 0.6% 采样点（终态 plate+wing = 257 / 43200；`litRatio` 0.0237~0.0252 里还含顶部状态文字），帧间变化来源是龙骨自己的逐帧换图（wing skew + tail display），因此 `frameChanged true` 与钉帧像素事实一起，才构成「三引擎真的出图且出的是同一张图」而不是「都画了点什么」"
+        ],
+        "evidenceMix": "本合同 46 units 的逐 API 证明实测为 15 verified + 31 attested（`docs/evidence/v11-examples-verified.json` 行 `dragonbones-basic`，promotion 三元组见 `examples/files.json` 行 `dragonbones-basic` 的 `promotion`（**规格文本里不印自己的 spec 指纹**：一印就自我作废——本例实测把 `66029ac700c7` 写进这段后，追加一条 learning 就触发 `spec-compliance-audit` 的 `S11-STALE-EVIDENCE fail：证据 specFingerprint ≠ 当前 example.json`，只能重取证据。所有指纹值留在产物里，不留在规格里）。分界不是「证据强弱」而是 tracer 的机制：`tools/verify/api-trace.cjs` 只在**顶层导出的 export table** 上装 wrapper/prototype descriptor（`DragonBonesAsset` 这类挂在 `dragonBones` 命名空间下的类，实测 `notes: 'Animation.gotoAndStopByFrame: no own descriptor on prototype'`、state `unresolved`）⇒ 31 个龙骨侧 unit 只能 attested（bound 到 PASS 的 validator 且出处行号逐字节对得上），15 个 cc 顶层 unit 拿到 executed 计数。⚠️ 另一条实测坑：`spec-evidence.cjs` 与 `spec-expectations.cjs` 写的都是**行号**，改过 `main.js` 之后必须重跑这两步再跑 `v11-examples-verify`，否则 `bound` 会因「L210 未出现 DragonBonesAsset（行内容漂移）」整片退成 unproven（本例 r2 就是这样从 promoted 退回再转绿的）"
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera + Status + airdragon 四/五个节点，`ArmatureDisplay` 挂在 `airdragon` 上。P1 构造：`atlasCtor DragonBonesAtlasAsset` / `dragonCtor DragonBonesAsset` / `displayCtor ArmatureDisplay` / `factoryType CCFactory`，`loadRemote` 对 `.png` 回 `ImageAsset`、对两份 `.json` 回 `JsonAsset`；`atlasUuid dragonUuid 'AirDragon'`、`armatureKey 'AirDragon#AirDragon'`、`armatureKeyIsUuidHashAtlas true`、`setterRoundTrip true`、`cacheMode {_cacheMode, REALTIME:0, isAnimationCached false}`、`sameDataFromFactory true`。P2 图集（读 `atlasAsset._textureAtlasData`，ctor `CCTextureAtlasData`）：`{name:'AirDragon', width:64, height:64, imagePath:'AirDragon_atlas.png', scale:1, regionCount:3, textureNames:['plate','tip','wing'], regions:[plate [2,2,20,20], wing [26,2,20,20], tip [2,26,12,28]]（均 rotated false / hasFrame true）, renderTextureAttached true`；`factory.getTextureAtlasData(uuid)` 的形状记为 `factoryReturnShape {ctor:'Array', ownKeys:['0']}`（事实登记，不当访问器用）。P3 骨架数据：`dataName AirDragon`、`dataVersion 5.5`、`armatureNames ['airdragon']`、bones `[root, body, wing-left, wing-right, tail]` 带 parents（root 的 parent 为 null）与 lengths `[0,24,20,20,28]`、slots `[body, wing-left, wing-right, tail]` 的 `zOrder [0,1,2,3]`、`skinDisplays {body:[plate], wing-left:[wing], wing-right:[wing], tail:[plate,tip]}`、`animations`：flap `{duration 1, frameCount 24, playTimes 0, fadeInTime 0, cacheFrameRate 0, boneTimelines {root:[[11,0,0]], wing-left:[[12,10,25]], wing-right:[[12,18,50]]}, slotTimelines {tail:[[20,26,75]]}, cachedFramesLength 0}` / idle `{0.5, 12, -1, boneTimelines {body:[[12,34,100]]}, slotTimelines {tail:[[20,42,-1]]}}`，两条 `parentIsArmatureData true`。P4 运行层（`app.run` + 3 帧之后采）：`armatureIsMethodOnDisplay true`、ctor `Armature`、`name 'airdragon'`、`slotSource 'getSlots()'`、slotNames `[body, wing-left, wing-right, tail]`、boneNames 五条与数据层全等、`drawListLength 1`、`nodeParent 'Canvas'`、`dataSlotCount 4`、逐 slot `displayIndex/region/displayListLength/rawDisplayDataNames`（tail 唯一有 2 个候选 display）。P5 动画：ctor `Animation`，`stateShape.ctor AnimationState`、`stateTimeKey 'currentTime'`、`lastAnimationName 'flap'`、`animationStateNames ['flap','idle']`、`tailDisplayCount 2`；对帧 [0,6,12,18,23] 逐个 `gotoAndStopByFrame` + `advanceTime(0)` → 读姿态 → 真实渲染帧采样像素 → 再读姿态，结果 `allFramesStable true`，`regionSequence [[0,0,'plate'],[6,1,'tip'],[12,1,'tip'],[18,0,'plate'],[23,0,'plate']]`、`displayIndexSwapped true`、`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、`wingSkewKey 'skew'` 且 `wingSkew` 逐帧 0.7/0.24/0.63/0.7/0.7、`rootY` 0/-1.67/8.33/1.67/0、`stateTime` 0/0.25/0.5/0.75/0.96；换到 idle 后 `{animationName idle, playTimesProp -1, isPlaying true, stateName 'idle'}`，切回 flap 仍 `isPlaying true`。P6 生命周期合同面：释放路径 `display.dragonAtlasAsset=null → dragonAsset=null → 三个资产 destroy()`，重建路径 `重新 new + 填 setter → atlasAsset.init(factory) → wireDisplay → dragonAsset.init → playAnimation(-1)`，判定量由 `window.__lifecycle()` 产出（released/leaked/reloaded）。终态 live（当期全量矩阵三引擎）：`slotCount 4`、`drawListLength 1`、`isPlaying true`、`animationName idle`、`tailRegion plate`、像素 counts chromium/firefox `{plate 120, wing 137, tip 0, background 0}`、webkit `{117, 136, 0, 0}`（`litRatio` 0.0237~0.0252）。⚠️ 终态 counts 是 `__probe()` 调用那一刻的挂钟快照：页面级另一次捕获（钉帧停在 tip 帧）读到的是 `{plate 19, wing 146, tip 78}` ⇒ 合同不钉它的数值，像素事实全部由钉帧通路（`tipRenderedAtFrames` / `regionSequence` / `goToFrame.*`）承担",
+        "visual": "深蓝底（clearColor 12,16,24）随窗口大小出图（`view.setDesignResolutionSize(innerWidth, innerHeight, EXACT_FIT)`；矩阵固定 480×360）：中央一只由纯色矩形拼成的会动的「小 Dragon」——绿色 plate 方块做身体、左右两块蓝色 wing 方块随 flap 逐帧摆角（`bone.global.skew` 实测 0.7→0.24→0.63 rad），尾部位移在 plate（绿）与 tip（红）之间按 displayFrame 时间线交替；顶部一行状态文字 `dragonbones: armature=airdragon anim=<flap|idle> slots=4 click=N`。龙骨动画每帧改像素 ⇒ 相邻截图逐字节必不同（animation-playing 与 frame-diff 双判据同源不同层）；点击一次把 flap 切成 idle（摆幅小、周期 12 帧）并改写状态行，再点切回。⚠️ 判「出图」不能只看整体亮度：本例龙骨色块只占约 0.6% 采样点，`minPngBytes` 与 `litRatio` 下界必须按实测留余量"
+      },
+      "api": {
+        "primary": [
+          "ArmatureDisplay",
+          "DragonBonesAsset",
+          "DragonBonesAtlasAsset"
+        ],
+        "supporting": [
+          "CCFactory",
+          "AnimationCacheMode",
+          "DragonBonesAsset.init",
+          "DragonBonesAtlasAsset.init",
+          "CCFactory.getInstance",
+          "CCFactory.getDragonBonesDataByUUID",
+          "ArmatureDisplay.playAnimation",
+          "ArmatureDisplay.playTimes",
+          "ArmatureDisplay.setAnimationCacheMode",
+          "ArmatureDisplay.isAnimationCached",
+          "ArmatureDisplay.armature",
+          "Armature.getSlots",
+          "Armature.getBones",
+          "Armature.animation",
+          "Armature.advanceTime",
+          "Armature.name",
+          "Animation.gotoAndStopByFrame",
+          "Animation.isPlaying",
+          "ArmatureData.getSkin",
+          "ArmatureData.animations",
+          "ArmatureData.bones",
+          "ArmatureData.slots",
+          "DragonBonesData.getArmature",
+          "DragonBonesData.armatureNames",
+          "DragonBonesData.version",
+          "Texture2D",
+          "assetManager",
+          "Node.on"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Canvas",
+          "UITransform",
+          "Layers",
+          "Color",
+          "Label",
+          "Texture2D",
+          "assetManager",
+          "view",
+          "ResolutionPolicy",
+          "Director",
+          "director",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.on",
+          "DragonBonesAsset",
+          "DragonBonesAtlasAsset",
+          "ArmatureDisplay",
+          "CCFactory",
+          "AnimationCacheMode",
+          "DragonBonesAsset.init",
+          "DragonBonesAtlasAsset.init",
+          "CCFactory.getInstance",
+          "CCFactory.getDragonBonesDataByUUID",
+          "ArmatureDisplay.playAnimation",
+          "ArmatureDisplay.playTimes",
+          "ArmatureDisplay.setAnimationCacheMode",
+          "ArmatureDisplay.isAnimationCached",
+          "ArmatureDisplay.armature",
+          "Armature.getSlots",
+          "Armature.getBones",
+          "Armature.animation",
+          "Armature.advanceTime",
+          "Armature.name",
+          "Animation.gotoAndStopByFrame",
+          "Animation.isPlaying",
+          "ArmatureData.getSkin",
+          "ArmatureData.animations",
+          "ArmatureData.bones",
+          "ArmatureData.slots",
+          "DragonBonesData.getArmature",
+          "DragonBonesData.armatureNames",
+          "DragonBonesData.version"
+        ]
+      },
+      "capabilities": [
+        "dragon-bones"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Status",
+            "airdragon"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_END）画布一次：`display.playAnimation('idle', -1)` 把 24 帧 flap 换成 12 帧 idle（摆幅小、无 display 换图），并改写状态行为 `anim=idle`；探针在此之前已一次性冻结 P1~P6 六组事实",
+            "expected": "画面从「wing 大幅摆 + tail 在 plate/tip 之间换」变为「body 小幅摆动、tail 恒 plate」，状态行文本变化，frame-diff 可测；`live.animationName` 读回 `idle`、`live.tailRegion` 读回 `plate`。再点一次切回 flap（`isPlaying true`）。DragonBonesAsset / DragonBonesAtlasAsset / ArmatureDisplay / CCFactory 与 `Animation.gotoAndStopByFrame` 钉帧通路在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error",
+          "animation-playing"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "cfd28d7885f1",
+        "source": "d9ccae6dfd74bdea",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 15,
+        "attested": 31,
+        "units": 46
       }
     },
     {
@@ -778,7 +1088,7 @@
       "promotion": {
         "spec": "5589594abdf5",
         "source": "481aee4186a2fcf5",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -943,7 +1253,7 @@
       "promotion": {
         "spec": "c6b480406f7f",
         "source": "221fa314ef0a2167",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -1039,7 +1349,7 @@
       "promotion": {
         "spec": "a7a345f064ed",
         "source": "a8c5968b88c6e9d8",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -1153,7 +1463,7 @@
       "promotion": {
         "spec": "d4312702ec07",
         "source": "dfc18d7d5f412dd2",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1254,7 +1564,7 @@
       "promotion": {
         "spec": "594304b3020c",
         "source": "3cfacd5aeece3c7a",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1355,7 +1665,7 @@
       "promotion": {
         "spec": "efdda98c555e",
         "source": "48524527b8a65b3d",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1454,7 +1764,7 @@
       "promotion": {
         "spec": "b6adba815b69",
         "source": "8e01d359fbeb0bce",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 12,
         "attested": 0,
         "units": 12
@@ -1548,7 +1858,7 @@
       "promotion": {
         "spec": "b3f13053f440",
         "source": "35b97a8b06d8d399",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 16,
         "attested": 1,
         "units": 17
@@ -1650,7 +1960,7 @@
       "promotion": {
         "spec": "7b79f441a1fe",
         "source": "d955f577fb18256d",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 13,
         "attested": 2,
         "units": 15
@@ -1757,7 +2067,7 @@
       "promotion": {
         "spec": "cdf688132cb5",
         "source": "13832355ec662f05",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -1854,7 +2164,7 @@
       "promotion": {
         "spec": "88951008b00d",
         "source": "ea448f328c7d5108",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1948,7 +2258,7 @@
       "promotion": {
         "spec": "022251e312e0",
         "source": "2d60ccd6e7859061",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -2043,7 +2353,7 @@
       "promotion": {
         "spec": "74538d51cd5a",
         "source": "9e6871b1fb516900",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2149,7 +2459,7 @@
       "promotion": {
         "spec": "2a5fe86a854b",
         "source": "1b02a2906065565c",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -2240,7 +2550,7 @@
       "promotion": {
         "spec": "d2f18d65ff5f",
         "source": "64a5e60f317d77b8",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -2334,7 +2644,7 @@
       "promotion": {
         "spec": "40bc8fbce245",
         "source": "e4c05344db3660e6",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -2436,7 +2746,7 @@
       "promotion": {
         "spec": "bfab06f0ff3f",
         "source": "fe359d18cc0d7555",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -2448,7 +2758,7 @@
       "version": "1.0.0",
       "title": "Material Unlit",
       "category": "materials",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
@@ -2523,6 +2833,14 @@
         ],
         "lifecycle": [],
         "capability": []
+      },
+      "promotion": {
+        "spec": "d56c8ac8b8fc",
+        "source": "bf83768a54c7e5fb",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 15,
+        "attested": 1,
+        "units": 16
       }
     },
     {
@@ -2614,7 +2932,7 @@
       "promotion": {
         "spec": "c3d9b8dd565b",
         "source": "fd61367663c2b0a1",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -2709,7 +3027,7 @@
       "promotion": {
         "spec": "03cd6b3c1dff",
         "source": "ec1bfedbbea794d3",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -2805,7 +3123,7 @@
       "promotion": {
         "spec": "2702df7692e6",
         "source": "003d016d9bbdc124",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2900,7 +3218,7 @@
       "promotion": {
         "spec": "c0d64a28c555",
         "source": "cb85b55b88591609",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -2994,7 +3312,7 @@
       "promotion": {
         "spec": "4de78c63719b",
         "source": "abe4881c69f707f5",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3088,7 +3406,7 @@
       "promotion": {
         "spec": "9c7cfcdb6c9f",
         "source": "957e34f8616eaf44",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3186,7 +3504,7 @@
       "promotion": {
         "spec": "72efe2cf6b66",
         "source": "fa2e5f388b65f479",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -3282,10 +3600,710 @@
       "promotion": {
         "spec": "9c52ef0d0bc2",
         "source": "c3ab3e755cd3f539",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 19,
         "attested": 0,
         "units": 19
+      }
+    },
+    {
+      "dir": "particle-2d-basic",
+      "id": "particle-2d-basic",
+      "version": "1.0.0",
+      "title": "Particle System 2D — 程序化 plist 解析 / 模拟定步 / 出图 (V12 LV12-07)",
+      "category": "particle-2d",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：程序化生成的 plist 必须走引擎自己的 `assetManager.parser.parsePlist → ParticleAsset._nativeAsset → ParticleSystem2D.file → _applyFile → _initWithDictionary` 真实通路，字段映射、两种发射器模式、三种 positionType、duration 收尾与贴图/混合状态都要在种子化随机 + 手工定步下三引擎逐字节一致，并且真的出图",
+        "points": [
+          "决定性三件套：plist 文本运行时程序化生成后交引擎解析（不是手写组件属性）；`math.setRandGenerator(seededRandom)` 换掉随机源让所有 variance 抽样跨引擎同串；求值用 `simulator.step(1/60)×N` 手工定步。实测 chromium/firefox/webkit 三份 `__probe()` 的 28 个 phase 键、约 50 项读回逐字节相同（`tools/v12/browser-matrix-contract.json` 的 probeEquals 全等，`docs/evidence/v12/browser-matrix.json` 三引擎 records 全 PASS）",
+          "`step(dt)` 会把 dt 夹到 `assembler.maxParticleDeltaTime`，而该值只在**第一次**取 assembler 时由 `cclegacy.game.frameTime/1000*2` 定死（本例首取实测 0.033333）。不定住它，同一段定步代码在慢机器上会被悄悄夹小 ⇒ 本例首行就把它读到 results 里再显式设成 0.05，收尾时还原",
+          "`custom = true` 会整段跳过 `_initWithDictionary` ⇒ 号称「程序化 plist」其实 plist 解析与字段映射一行都没跑。本例恒置 `custom = false`，并断言 `emitterMode/gravity/speed/startSize/endSize/life/emissionRate/duration/rotationIsDir` 全部由 plist 推导出来（P1 读回 gravity=[0,-100]、speed=60、life=1、emissionRate=10、duration=-1）",
+          "plist 缺省推导规则实测：无 `emissionRate` 键 ⇒ `min(maxParticles/life)`（24/1.5=16）；`finishParticleSize: -1` ⇒ `endSize=-1` 且尺寸不随寿命衰减（P4 60 步后首粒 size 仍是 6）；`maxParticles: 40.7` ⇒ `totalParticles` 取整为 40；`rotationIsDir` 的 plist 布尔被解析成 JSON `true` 并映射为组件 `rotationIsDir=true`",
+          "发射栅格与上限：rate=10/life=1 时第 6 步（elapsed 0.1）emitCounter 恰好归零、第 7 步才出现第 1 粒；30 步存活 4 粒、160 步稳态 10 粒（= rate×life 的栅格解）；`maxParticles: 3` 时 20 步只到 3 粒且 `vertexCount=12`（每粒 4 顶点）",
+          "positionType 三态差别只在 `startPos`：FREE(0) 记世界位置 [30,20]、RELATIVE(1) 记本地 [0,40]、GROUPED(2) 记本地且发射后移动节点会整体带走（rig 移到 (0,-100) 后 worldPosition 变 [30,-120]，而已存粒子 startPos 仍是 [30,20]）；`particle.pos` 三种模式同为 [0.8,0]，只看 pos 会误判成「positionType 没生效」",
+          "radius 发射器（emitterType=1）字段换名：`maxRadius→startRadius`、`minRadius→endRadius`、`rotatePerSecond→弧度/秒`（90°/s ⇒ dps=1.570796）；10 步后 radius=58、angle=0.10472 rad、pos=[-57.6823,-6.0627]。gravity 模式的 `angle` 还会被节点 worldRotation 旋转：节点转 90° 后 dir 从 [30,0] 变成 [0,30]",
+          "duration 收尾：duration=0.2 在第 13 步（elapsed 恰好 0.2）置 `stopped=true / active=false`，emitCounter 归 0，但已发射的 2 粒继续存活到各自寿命 ⇒ 「停止发射」≠「清空系统」",
+          "⚠️ blend 值是本例踩到的真坑：`ParticleSystem2D` 把 plist 的 `blendFuncSource/blendFuncDestination` 原样 `wrapParseInt` 进 gfx 的 `BlendFactor` 枚举槽位，既不校验也不换算（P10 读回 `_srcBlendFactor=770`、`_dstBlendFactor=1`）。而 770 是裸 GL 常量 GL_SRC_ALPHA，gfx 枚举只到 14 ⇒ WebGL 侧越界被当作 GL_ZERO，源色乘 0、目的色保留 ⇒ 粒子**模拟、批次、IA、buffer、drawElements 全部正常且零 GL 错误，但一个像素都不变**（`frameChanged:false`）。同一张贴图同一个 batcher 用枚举值 SRC_ALPHA=2/ONE=1 立刻出图（`E:/AIProMax/cocosair-scratch/v12-diag/diag-2-nopack1gfxblend1.png` 四变体全亮）。plist 不含 blend 键时回到枚举默认 2/4（ONE_MINUS_SRC_ALPHA），本例把这两组值都锁进 probeEquals",
+          "贴图必须在 `createAirApp` 之后创建：设备就绪前 `new Texture2D().image = canvas` 会让 `_gfxDevice` 永远为 null，表现为每帧 `Can't getGFXSampler with out device`（errorID 9302）+ batcher 读 `sampler.hash` 崩",
+          "plist 的寿命键必须写官方键名 `particleLifespan`：`_initWithDictionary` 读的是 `dict.particleLifespan`，写成语义更直观的 `life` 会被静默忽略 ⇒ `life=0`，而 `emissionRate` 缺省时按 `totalParticles / life` 反推并被 `Math.min` 夹成 `Number.MAX_VALUE`；实测 10 个定步后 `particles.length=0`、`vertexCount=0`，屏幕上什么都没有且零告警",
+          "`spriteFrame` setter 只在传入帧带 `_uuid` 时才写 `_spriteFrame`，运行时程序化帧没有 uuid ⇒ `_spriteFrame` 恒空、读帧只能看 `_renderSpriteFrame`；也因此 `file` 的 `_applyFile` 里 `this._spriteFrame !== file.spriteFrame` 两边都是 null，不会覆盖示例先前赋的帧（实测四变体 `_renderSpriteFrame` uv 恒为整帧 0/0/1/1），而会把帧换成内置 2048×2048 图集子矩形（uv 0.0009765625…0.0322265625）的 `_initTextureWithDictionary` 只在 `custom=true` 分支才走到 ⇒ 帧与 `file` 的赋值顺序无关"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera + Status + Rig(30,-20) + 三个 ParticleSystem2D：Flame（gravity 型，maxParticles 260/rate 140/life 1.1，橙红相加混合）、Ring（radius 型，minRadius 96/maxRadius 8/rotatePerSecond 42，蓝色）、Probe（读回用，挂在偏移的 Rig 下）。真实点击一次性跑完 10 阶段手工定步序列（`simulator.step(1/60)×N`，种子 LCG，dt 夹取定死 0.05），读回 28 个 phase 键：clampFromFirstAssemblerFetch=0.033333；P1 plist 35 个键解析无错、第 6 步 emitCounter=0.1 且 0 粒、第 7 步 1 粒、30 步 4 粒/16 顶点、首粒 pos=[24,-8.3333] dir=[60,-40] size=12 rotation=36 ttl=0.6 startPos=[30,20]；P2 160 步 10 粒、resetSystem 后 0 粒 0 顶点；P3 maxParticles=3 时 20 步 cap 在 3 粒 12 顶点；P4 无 emissionRate 键推导 16、finishParticleSize=-1 时 endSize=-1 且 60 步后尺寸仍 6；P5 FREE startPos=[30,20] vs RELATIVE startPos=[0,40]（pos 同为 [0.8,0]）；P6 radius 模式 radius=58 angle=0.10472 dps=1.570796 pos=[-57.6823,-6.0627]；P7 节点转 90° 后 dir=[0,30]；P8 duration=0.2 在第 13 步 stopped=true/active=false、elapsed=0.2、仍存活 2 粒；P9 GROUPED 移动节点后 worldPosition=[30,-120]；P10 maxParticles 40.7→totalParticles 40、rotationIsDir true、textureImageData 的 <data> 标签解析为 null、未知键保留、`_srcBlendFactor/_dstBlendFactor` = 770/1 原样透传、plist 无 blend 键时回到 2/4、`dstBlendFactor` 无公开 getter、getMaterialInstance(0) 返回实例、`_renderSpriteFrame` 仍归示例所有；终态两个活系统各 146 粒",
+        "visual": "深蓝底（clearColor 10,14,26）一屏：左下橙色火焰柱（gravity 型，相加混合，底部亮黄向上渐红渐隐），右中蓝色环形烟花（radius 型，绕心旋转的散点环），顶部一行状态文字 `particle plist step=30 count=4 p0=(24,-8.3333) verts=16`。点击前画面只有状态行与深蓝底，点击后两团粒子真实出图（frame-diff 可测，三引擎矩阵 frameChanged 全 PASS，PNG 54–64 KB ≫ 5000 B 地板）"
+      },
+      "api": {
+        "primary": [
+          "ParticleSystem2D",
+          "ParticleAsset"
+        ],
+        "supporting": [
+          "ParticleSystem2D.resetSystem",
+          "ParticleSystem2D._simulator",
+          "ParticleSystem2D._renderSpriteFrame",
+          "ParticleSystem2D.emitterMode",
+          "ParticleSystem2D.gravity",
+          "ParticleSystem2D.speed",
+          "ParticleSystem2D.startSize",
+          "ParticleSystem2D.endSize",
+          "ParticleSystem2D.life",
+          "ParticleSystem2D.emissionRate",
+          "ParticleSystem2D.duration",
+          "ParticleSystem2D.rotationIsDir",
+          "math.setRandGenerator",
+          "math.random",
+          "SpriteFrame",
+          "Texture2D",
+          "ImageAsset",
+          "Node.on"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Canvas",
+          "Component",
+          "UITransform",
+          "Layers",
+          "Color",
+          "Label",
+          "SpriteFrame",
+          "Texture2D",
+          "ImageAsset",
+          "ParticleSystem2D",
+          "ParticleSystem2D.resetSystem",
+          "ParticleSystem2D._simulator",
+          "ParticleSystem2D._renderSpriteFrame",
+          "ParticleSystem2D.emitterMode",
+          "ParticleSystem2D.gravity",
+          "ParticleSystem2D.speed",
+          "ParticleSystem2D.startSize",
+          "ParticleSystem2D.endSize",
+          "ParticleSystem2D.life",
+          "ParticleSystem2D.emissionRate",
+          "ParticleSystem2D.duration",
+          "ParticleSystem2D.rotationIsDir",
+          "ParticleAsset",
+          "math.setRandGenerator",
+          "math.random",
+          "view",
+          "ResolutionPolicy",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.on"
+        ]
+      },
+      "capabilities": [
+        "particle-2d"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Status",
+            "Rig",
+            "Flame",
+            "Ring",
+            "Probe"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）画布任意处一次：一次性跑完 10 阶段的手工定步序列（种子化 LCG + `simulator.step(1/60)×N`，dt 夹取定死 0.05，结束还原随机源与 clamp）",
+            "expected": "画面从「只有深蓝底 + 状态行」变为「左下橙色火焰柱 + 右中蓝色环形烟花 + 状态行写入 P1 读回」，frame-diff 可测；ParticleSystem2D / ParticleAsset / resetSystem / _simulator 在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "d8a9dd22b4c3",
+        "source": "e87330f4b1d52ba0",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 22,
+        "attested": 12,
+        "units": 34
+      }
+    },
+    {
+      "dir": "physics-2d-basic",
+      "id": "physics-2d-basic",
+      "version": "1.0.0",
+      "title": "2D Physics Mount & Queries — box2d backend (V12 LV12-13)",
+      "category": "physics-2d",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：默认发行产物的 2D 物理后端是 box2d（决策 D7），RigidBody2D + Collider2D 的组件链路挂载后 testPoint/testAABB/raycast 三类查询必须真实命中，且节点变换改动经 Collider2D.apply() + 帧同步确定地反映到查询结果",
+        "points": [
+          "默认 bundle 里 PhysicsSystem2D.PHYSICS_BOX2D === true、PHYSICS_BUILTIN === false，physicsWorld 实际类型是 b2PhysicsWorld，ptm ratio 32、重力 (0,-320)——builtin 后端未接线，它那套空实现（builtin-world.ts:285 的 raycast）与默认发行无关",
+          "BoxCollider2D 的尺寸默认是 1×1（box-collider-2d.ts:38 _size = new Size(1, 1)），不跟随 UITransform 的 contentSize；漏设 size 时地面只有 1×1，动态体会穿过它坠落。CircleCollider2D.radius 与 PolygonCollider2D.points 则直接就是形状参数",
+          "「挂载与查询，不模拟」用逐刚体 gravityScale = 0 做到，而不是 autoSimulation = false：后者在 physics-system.ts 的 postUpdate 里提前 return，会连 syncSceneToPhysics() 一起关掉——实测改变换 + apply() 后查询永远命中旧位置。系统重力与自动模拟都保持打开",
+          "改节点变换后有三态：apply() 同帧内 worldPoints（由变换直接算）已是新值而 worldAABB/三类查询仍是旧值（走碰撞树代理）；下一次 postUpdate 按 node.hasChangedFlags 调 SetTransformVec，代理同步，查询与 worldAABB 才全部落到新位置"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera（ORTHO，visibility 含 Layers.Enum.UI_3D）+ 四个物理节点：Ground（Static + BoxCollider2D 360×20，中心 (0,-120)）、Crate（Dynamic + BoxCollider2D 48×48，gravityScale 0、density 1.2/friction 0.3/restitution 0.4，中心 (-120,40)）、Ball（Dynamic + CircleCollider2D r=28，中心 (0,40)）、Gem（Kinematic + PolygonCollider2D 六边形外接半径 30、threshold 0.1，中心 (120,40)）。后端读回：backend=box2d、flagBox2D=true、flagBuiltin=false、worldCtor=b2PhysicsWorld、ptmRatio=32、gravityY=-320、fixedTimeStep=0.02、crateMass=2.7、crateColliderType=1、colliderBodyIdentity=true、colliderInheritsBase=true（三种碰撞体都 instanceof Collider2D）。查询读回（坐标单位=像素）：testPoint(-120,40)=Crate、(0,40)=Ball、(120,40)=Gem、(0,-120)=Ground、(2000,2000)=空；testAABB(Rect(-150,20,60,40))=Crate；raycast((-240,40)→(240,40)) 首命中 Crate、All 命中 Ball,Crate,Gem。真实点击后木箱挪到 (0,-86)：applyOnly 态 worldMin 已 (-24,-110) 而 worldAABB/查询仍旧位置；下一帧同步后 testPoint(0,-86)=Crate、旧位置查询为空、testAABB 为空、raycast 首命中变为 Ball、All 变为 Ball,Gem。",
+        "visual": "深蓝底一屏：灰色地面长条横贯下方，其上左橙（盒木箱）、中绿（圆球）、右蓝（六边形宝石）四个色块等间距排布，顶部状态行实时写着后端类型与木箱坐标；点击后橙木箱瞬移到地面上表面（截图取点击后状态）"
+      },
+      "api": {
+        "primary": [
+          "PhysicsSystem2D",
+          "RigidBody2D",
+          "Collider2D"
+        ],
+        "supporting": [
+          "BoxCollider2D",
+          "CircleCollider2D",
+          "PolygonCollider2D",
+          "Collider2D.apply",
+          "Collider2D.TYPE",
+          "RigidBody2D.getMass",
+          "PhysicsSystem2D.testPoint",
+          "PhysicsSystem2D.testAABB",
+          "PhysicsSystem2D.raycast",
+          "PHYSICS_2D_PTM_RATIO",
+          "math.Vec2",
+          "math.Size",
+          "math.Rect",
+          "PolygonCollider2D.threshold"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Canvas",
+          "Component",
+          "UITransform",
+          "Layers",
+          "view",
+          "ResolutionPolicy",
+          "Sprite",
+          "Label",
+          "SpriteFrame",
+          "Texture2D",
+          "ImageAsset",
+          "Color",
+          "math.Vec2",
+          "math.Size",
+          "math.Rect",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.getComponent",
+          "PhysicsSystem2D",
+          "PhysicsSystem2D.testPoint",
+          "PhysicsSystem2D.testAABB",
+          "PhysicsSystem2D.raycast",
+          "RigidBody2D",
+          "RigidBody2D.getMass",
+          "Collider2D",
+          "Collider2D.apply",
+          "Collider2D.TYPE",
+          "BoxCollider2D",
+          "CircleCollider2D",
+          "PolygonCollider2D",
+          "PolygonCollider2D.threshold",
+          "PHYSICS_2D_PTM_RATIO"
+        ]
+      },
+      "capabilities": [
+        "physics-2d"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Ground",
+            "Crate",
+            "Ball",
+            "Gem",
+            "Status"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "a74c759a85f8",
+        "source": "3f9207b6bac28f9b",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 32,
+        "attested": 4,
+        "units": 36
+      }
+    },
+    {
+      "dir": "physics-2d-collision",
+      "id": "physics-2d-collision",
+      "version": "1.0.0",
+      "title": "2D Physics Contacts — sensor / 事件门控 / 碰撞过滤 (V12 LV12-13)",
+      "category": "physics-2d",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：默认发行产物（box2d 后端）的四类接触事件、sensor 语义、接触回调门控时机与 categoryBits/maskBits 过滤规则，必须在手工确定性驱动下逐字节可复现，并且三引擎一致",
+        "points": [
+          "确定性手工驱动：autoSimulation=false 时由 syncSceneToPhysics() → N × step(fixedTimeStep) → syncPhysicsToScene() 代替帧循环，结果只由 step 次数决定；实测 chromium/firefox/webkit 三份 __probe() 输出逐字节相同（probe-p2d-collision.json allIdentical=true）",
+          "sensor 只发事件不求解：begin/end 正常送达（step 54/69），但 getWorldManifold() 的 points、separations 长度为 0、normal 为 [0,0]、getManifold().type 为 -1、getImpulse() 为 null，Box 直穿 y∈[-54,-18] 的 sensor 带继续落到地面",
+          "实体接触四事件同步骤发生（Box↔Ground 的 begin/pre/post 都在 step 72），manifold type=1、normal=[0,1]；getImpulse() 只在 POST_SOLVE 内非空（begin 时 null，post 时 normalImpulses=[299.93,300.11]、tangentImpulses=[-0.01,0]），静止接触不再产生 END_CONTACT（boxEndStep=-1），而 restitution 0.6 的小球在 step 73 拿到 end 后重新起跳",
+          "摩擦/弹性合成规则实测：friction 取几何平均 sqrt(0.3×0.2)=0.2449、restitution 取较大者 max(0.6,0)=0.6",
+          "接触回调门控发生在 emit 时且逐侧独立：同一 Ground↔Mute 接触，listener 为 true 的 Ground 侧收到 begin（count=1），false 的 Mute 侧一条都没有；落地后再打开 Mute 的 listener，同一接触的 pre-solve/post-solve 从 step 91 起立刻送达，但那次 begin 永远补不回来（muteSideBeginAfterFlip=0）",
+          "过滤位只在创建 fixture 时读一次，且 box2d 判定是双向的：默认 collisionMatrix 只有 1→1（其余全 0），group=2 的 P 直穿地面；只把 matrix[2] 设为 1（地面 matrix[1] 仍不含 2）→ 轨迹与默认矩阵逐字节相同（都是 y=-234），接触数仍为 0；补齐 matrix[1]=3 并 apply() 后 P 才落到 -104.23。事后把 matrix 全清回默认但不 apply() → P/Q 仍被地面托在 -104.23；再 apply() → 同一帧内立刻穿地（-145.57 → -266.9）",
+          "P/Q 精确重叠 5px：互相过滤时 x 间距恒为 25、P|Q begin 数 0；matrix[2]=5、matrix[4]=3 后 begin 出现，重叠沿 x 被推开到 30.77"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera + 7 个物理节点：Ground（Static 440×20，上表面 y=-120）、SensorBand（Static sensor 440×36，y∈[-54,-18]）、Box（Dynamic 40×40，friction 0.3）、Ball（Dynamic circle r20，restitution 0.6）、Mute（Dynamic 40×40，enabledContactListener 初始 false）、P（Dynamic 30×30，group 2，x=70）、Q（Dynamic 30×30，group 4，x=95，与 P 重叠 5px）。真实点击一次性跑完 490 步的 9 阶段序列，读回（单位=像素）：backend=box2d、worldCtor=b2PhysicsWorld、ptmRatio=32、autoSimulation=false、fixedTimeStep≈0.02、gravityY=-320、tallyKeys=58；sensor begin@54/end@69 pts=0 sep=0 normal=[0,0] manifoldType=-1 impulse=null；Box↔Ground begin/pre/post 全 @72、manifoldType=1、normal=[0,1]、begin 时 impulse=null、post 时 normalImpulses=[299.93,300.11]、friction 合成 0.24、restitution 合成 0；Ball 的 end@73、restitution 合成 0.6、post normalImpulses=[753.98]；Mute 侧 begin 计数 0（Ground 侧 1）、晚开后 pre/post 各 13 次（首个 @91）；P 默认矩阵穿地到 -234、单向 mask 仍 -234（接触 0）、双向后停 -104.23；P/Q 间距 25→30.77（P|Q begin 0→1）；清空 matrix 不 apply 仍停 -104.23，apply 后穿地到 -145.57/-266.9；终态 Box -99.23、Ball -99.54、Mute -99.23",
+        "visual": "深蓝底一屏：底部灰色地面长条，其上横贯一条青色半透明 sensor 带；左侧橙色方块与绿色圆球静息在地面上（绿球带轻微穿透后的落定高度），中间浅灰方块（listener 晚开的那颗）也停在地面上，右侧蓝色 P 与黄色 Q 在终态已穿过地面落到画面外；顶部状态行写着 `collision step=490 keys=58 P↔Q gap 25px→30.77px`"
+      },
+      "api": {
+        "primary": [
+          "PhysicsSystem2D",
+          "RigidBody2D",
+          "Collider2D"
+        ],
+        "supporting": [
+          "PhysicsSystem2D.collisionMatrix",
+          "PhysicsSystem2D.step",
+          "RigidBody2D.enabledContactListener",
+          "Collider2D.apply",
+          "BoxCollider2D",
+          "CircleCollider2D",
+          "Contact2DType",
+          "PhysicsGroup",
+          "PHYSICS_2D_PTM_RATIO",
+          "math.Vec2",
+          "math.Size",
+          "Node.on"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Canvas",
+          "Component",
+          "UITransform",
+          "Layers",
+          "view",
+          "ResolutionPolicy",
+          "Sprite",
+          "Label",
+          "SpriteFrame",
+          "Texture2D",
+          "ImageAsset",
+          "Color",
+          "math.Vec2",
+          "math.Size",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.on",
+          "PhysicsSystem2D",
+          "PhysicsSystem2D.collisionMatrix",
+          "PhysicsSystem2D.step",
+          "RigidBody2D",
+          "RigidBody2D.enabledContactListener",
+          "Collider2D",
+          "Collider2D.apply",
+          "BoxCollider2D",
+          "CircleCollider2D",
+          "Contact2DType",
+          "PhysicsGroup",
+          "PHYSICS_2D_PTM_RATIO"
+        ]
+      },
+      "capabilities": [
+        "physics-2d"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Ground",
+            "SensorBand",
+            "Box",
+            "Ball",
+            "Mute",
+            "P",
+            "Q",
+            "Status"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）画布任意处一次：一次性手动驱动 490 步的 9 阶段序列（physics.autoSimulation=false，syncSceneToPhysics → step×N → syncPhysicsToScene）",
+            "expected": "画面从「全部方块在 y=130」变为「Box/Ball/Mute 停在地面、P/Q 穿出画面」，frame-diff 可测；physics.step / Collider2D.apply / new Vec2 在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "4ee47e258bda",
+        "source": "49467e2333a8f117",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 27,
+        "attested": 6,
+        "units": 33
+      }
+    },
+    {
+      "dir": "physics-3d-basic",
+      "id": "physics-3d-basic",
+      "version": "1.0.0",
+      "title": "3D Physics Mount, Filters & Queries — builtin backend (V12 LV12-15)",
+      "category": "physics",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：默认发行产物（`AIR_FEATURES` 默认集）里 3D 物理后端是 builtin（cannon/bullet/physx 都没打进 bundle），要把 builtin 的真实能力边界逐 API 钉死——它能挂载碰撞体、能做射线/线段/球盒扫掠查询、能发触发事件，但不做动力学积分，且碰撞过滤是双向与运算、场景→物理的变换同步是惰性的；另外把 `Collider`/`PhysicsMaterial`/`PhysicsSystem`/`PhysicsRayResult` 四个框架类**自身**的构造契约（裸实例默认值、单例与游离实例的关系、池对象与新实例的关系）一并钉死",
+        "points": [
+          "后端身份只能运行时判定：`PhysicsSystem.instance` 要等 `createAirApp()` 之后（`_instance` 由 Director INIT 时的 `constructAndRegister()` 创建，模块顶层取到 null）；扁平 `selector` 导出是 2D 那个（实测 id=box2d、13 个 wrapper），3D builtin selector 无法按名取得 ⇒ 用 `physicsWorld.constructor.name === \"BuiltInWorld\"` 与 `collider.shape.constructor.name` 认后端",
+          "「挂载与查询，不模拟」是 builtin 的事实而非示例设定：`autoSimulation`、`allowSleep` 保持打开，60 轮 `syncSceneToPhysics()+step()` 之后木箱世界 OBB 中心漂移 0、节点位移 0，`applyForce/applyImpulse/applyTorque/setLinearVelocity` 之后速度哨兵 (9,9,9)/(8,8,8) 一字未改（`getLinearVelocity(out)` 连 out 都不写），`mass/useGravity/allowSleep/linearDamping/sleepThreshold/useCCD` 只是组件记账读回原值",
+          "碰撞过滤是双向与运算，且 `Collider.collisionMask` 默认只有 `PhysicsGroup.DEFAULT(1)`：只 `setGroup(2)` 的那一侧会被静默摘出所有配对（第一阶段 enter/stay 恒 0，不是「触发器坏了」），必须 crate 与 sensor 两侧都 `setMask(0xffffffff)` 才拿到 enter/stay/exit = 1/1/1。`emitEvents()` 在 builtin 下只发 trigger ⇒ `onCollisionEnter` 计数恒 0，别指望接触回调",
+          "变换同步是惰性的三态：点击后 `setPosition` 的那一帧，`worldBounds`/三类查询仍旧值（`unsynced` 与点击前 `before` 逐字段全等），只有 `syncSceneToPhysics()` 之后（`now`）才落到新位置 ⇒ 断言必须同时钉住三态，否则会把自己的读回时序当成引擎行为",
+          "查询的能力边界要读回而不是猜：命中法线恒为 `Vec3.ZERO`（`builtin-world.ts` 写死）、`raycast()` 结果按刚体注册序而非距离序、`PhysicsRayResult.segmentIndex` 从不赋值（typeof 为 undefined）、`raycastClosestResult` 是复用的池对象（命中与不命中三处读回 `instanceof PhysicsRayResult` 全为 true）、`sweepBox/sweepBoxClosest` 在 builtin 下恒不命中（传 `new Quat()` 姿态也是 0 条）、`MeshCollider` 进不了世界（`shapeCount` 5 里不含它，`trimeshShapeCtor` 是 Object、`trimeshInWorld` false）",
+          "两个尺寸陷阱：`CapsuleCollider.height` 在 `onLoad` 之前设的值不会传进世界形状（组件读回 1.6，世界胶囊 `2*(halfHeight+radius)` = 1.8）；`primitives.capsule(radiusTop, radiusBottom, height)` 与 `box(opts)`/`sphere(radius)` 签名不对称，照 sphere 的写法 `capsule(0.4, 1.6)` 会算出 `torsoHeight=0` 的退化碗形 ⇒ 视觉对不对只能靠网格 `minPosition/maxPosition` 回读判定",
+          "框架层「类」本身各有契约，不能靠 `instance` 一条路取证：`Collider` 的构造签名是 `new Collider(type: EColliderType)`（可直接 `new`，裸实例 `shape` 仍是 null，但 `worldBounds` 读到的是 `geometry.AABB` 的构造默认值——中心 0、半长 1，不是零盒）；`PhysicsMaterial` 是 `Asset` 子类、默认 friction 0.6 / restitution 0、构造即自动进 `PhysicsMaterial.allMaterials`，而 `BuiltinShape.setMaterial(v){}` 是空实现 ⇒ 材质永远进不了世界形状（`matShapeHasNoMaterial=true`、`matShapeCtorStillBuiltin=\"BuiltinBoxShape\"`），这是「builtin 不模拟」的第 4 条独立证据；`PhysicsSystem` 的单例 `_instance` 由 `constructAndRegister()` 建立且该静态方法幂等（再调一次 `instance` 不变），但它并不禁止 `new PhysicsSystem()`——游离实例的 `physicsWorld` getter 读的是 selector 模块级状态，因此 `sysStraySeesSameWorld=true`（拿到的仍是真世界）；`PhysicsRayResult` 可自构造（新实例 distance 0、collider null、hitPoint 零向量，与池对象同类），`raycastClosestResult` 只是它的字段实例"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 9 节点：Main Camera（PERSPECTIVE fov45 near0.1 far100，SOLID_COLOR clearColor(22,28,40,255)，visibility=Layers.Enum.DEFAULT）、Main Light（DirectionalLight illuminance 20000）、Ground（STATIC + BoxCollider 9×0.3×6，中心 (0,-0.15,0)）、Crate（DYNAMIC + BoxCollider 1.5³，初始 (-2.2,0.75,0)，mass2.5/useGravity/allowSleep/linearDamping0.2/angularDamping0.3）、Ball（STATIC + SphereCollider r0.7，(0,0.7,0)）、Capsule（KINEMATIC + CapsuleCollider r0.4/height1.6 轴向Y，(2.2,0.8,0)）、Sensor（STATIC + BoxCollider 2³、needTriggerEvent，(-2.2,3.6,0)，无网格）、Trimesh（torus 0.5/0.18 + MeshCollider，(4.2,0.9,0)）、PhysicsHost（每帧 readback）。后端读回：worldCtor=BuiltInWorld、flagBuiltin=true、flagCannon/flagBullet/flagPhysx/flagNone=false、flatSelectorId=box2d（扁平 selector 是 2D 那个，wrapper 13 个）、bodyCount=5、shapeCount=5、trimeshInWorld=false、enabled/autoSimulation/allowSleep=true、maxSubSteps=1、fixedTimeStep=0.02、gravity=(0,-10,0)、minVolumeSize=0.00001。形状身份：ground/crate=BuiltinBoxShape、ball=BuiltinSphereShape、capsule=BuiltinCapsuleShape、trimesh=Object；世界几何 groundSize 9/0.3/6、ballWorldRadius0.7、capsuleShapeTotalHeight1.8（组件 height 1.6）、crateObbHalfX0.75。不模拟读回：stepsRun=60 后 crateDrift X/Y/Z=0、crateObbCenterDriftX=0、linearSentinel=(9,9,9)、angularSentinel=(8,8,8) 未被写、massReadBack=2.5、isAwakeReadBack=true、obbCenterPreSyncX=0 而 obbCenterAfterFirstSyncX=-2.2（惰性同步）。触发三态（先复现静默过滤再补 mask）：trigEnterFiltered=0/trigStayFiltered=0 → 两侧 setMask(0xffffffff) 后 trigEnter=1、trigStay=1、trigExit=1、trigCollision=0、trigSelfName=Sensor、trigOtherName=Crate、trigNeedEventSensor=true/trigNeedEventCrate=false、trigMaskAfterFix=trigSensorMaskAfterFix=4294967295。查询读回：raycast((-6,0.75,0)→+X) 命中 Ball,Capsule（注册序，首命中距离 5.3）、crate-only 组 0 命中、穿球内部命中 Ball,Capsule、传感器方向命中 Crate,Sensor（firstDist 3.05）、法线恒 (0,0,0)；raycastClosest 同上首条；lineStripCast 三段命中 Ball,Capsule 且 stripFirstSegType=undefined；sweepBox/sweepBoxClosest 恒 false/0 条。点击后三态：before 与 unsynced 逐字段全等（crateAabbcY=0.75、nearXName=Crate、castXNames=Ball,Capsule,Crate、stripCount=3），now 相对它们只在 33 个字段上变化（crateAabbcY=3.6、nearXName=Ball、castXNames=Ball,Capsule、stripCount=2 等）。框架类构造契约（一次性 memoize，整页各一个）：new Collider(crateCollider.type) 裸实例 type=0 与原 collider 一致、instanceof Collider 与 instanceof Component 均 true、shape===null、sharedMaterial===null、worldBounds 读 geometry.AABB 默认值（center.x=0、halfExtents.x=1）；new PhysicsMaterial() 默认 friction=0.6 / restitution=0、自动进 allMaterials（matInAllMaterials=true），赋给 crateCollider.sharedMaterial 后读回 matSharedIsMine=true、matFrictionOnCollider=0.9，但世界形状上没有材质（matShapeHasNoMaterial=true、matShapeCtorStillBuiltin=BuiltinBoxShape）；new PhysicsSystem() 游离实例 instanceof PhysicsSystem=true 且不是单例（sysStrayNotSingleton=true），其 physicsWorld 与单例同一个（sysStraySeesSameWorld=true，getter 读 selector 模块级状态），PhysicsSystem.constructAndRegister() 再调一次 instance 不变（幂等）；new PhysicsRayResult() distance=0、collider=null、hitPoint=\"0,0,0\"、与池对象 raycastClosestResult 同类（rayResFreshSameClassAsPooled=true），后者 instanceof 成立且就是 PhysicsSystem.instance 的字段实例。V1.2 三引擎矩阵按 304 条 probeEquals（274 顶层 + 15×2 个 before./unsynced. 判别字段）逐路径钉死，实测 0 条跨引擎差、0 条次间漂移。",
+        "visual": "深底一屏：灰色地面长条横贯下方，其上左橙木箱、中绿球、右蓝胶囊、最右紫色圆环四个受光体（DirectionalLight illuminance 20000，与 examples/gltf-viewer 同档）；触发盒无形态。真实点击把木箱瞬移到半空触发盒里——因 builtin 不积分，它停在那儿不下落（截图取点击后状态，frameChanged=false 即此事实）。材质在本例只是让物理状态「看得见」的手段，逐节点 effect/属性取证由 examples/mesh-sphere 的 material-property 承担；本例的判别力全在 304 条物理 probeEquals 上"
+      },
+      "api": {
+        "primary": [
+          "physics.PhysicsSystem",
+          "physics.RigidBody",
+          "physics.Collider"
+        ],
+        "supporting": [
+          "physics.BoxCollider",
+          "physics.SphereCollider",
+          "physics.CapsuleCollider",
+          "physics.MeshCollider",
+          "physics.PhysicsSystem.raycast",
+          "physics.PhysicsSystem.raycastClosest",
+          "physics.PhysicsSystem.lineStripCast",
+          "physics.PhysicsSystem.sweepBox",
+          "physics.PhysicsSystem.syncSceneToPhysics",
+          "physics.PhysicsSystem.step",
+          "physics.PhysicsSystem.emitEvents",
+          "physics.Collider.setGroup",
+          "physics.Collider.setMask",
+          "physics.RigidBody.applyImpulse",
+          "physics.RigidBody.getLinearVelocity",
+          "physics.selector",
+          "primitives.box",
+          "primitives.sphere",
+          "primitives.capsule",
+          "utils.createMesh",
+          "physics.PhysicsSystem.constructAndRegister",
+          "physics.PhysicsMaterial"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.getComponent",
+          "Node.setPosition",
+          "Component",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "Color",
+          "math.Vec3",
+          "math.Quat",
+          "isValid",
+          "input",
+          "Input",
+          "MeshRenderer",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "primitives.sphere",
+          "primitives.capsule",
+          "primitives.torus",
+          "Ray",
+          "PhysicsGroup",
+          "physics.selector",
+          "physics.PhysicsSystem",
+          "physics.PhysicsSystem.constructAndRegister",
+          "physics.PhysicsSystem.syncSceneToPhysics",
+          "physics.PhysicsSystem.step",
+          "physics.PhysicsSystem.emitEvents",
+          "physics.PhysicsSystem.raycast",
+          "physics.PhysicsSystem.raycastClosest",
+          "physics.PhysicsSystem.raycastResults",
+          "physics.PhysicsSystem.raycastClosestResult",
+          "physics.PhysicsSystem.lineStripCast",
+          "physics.PhysicsSystem.lineStripCastResults",
+          "physics.PhysicsSystem.sweepBox",
+          "physics.PhysicsSystem.sweepBoxClosest",
+          "physics.PhysicsSystem.sweepCastResults",
+          "physics.PhysicsSystem.minVolumeSize",
+          "physics.RigidBody",
+          "physics.RigidBody.applyForce",
+          "physics.RigidBody.applyImpulse",
+          "physics.RigidBody.applyTorque",
+          "physics.RigidBody.setLinearVelocity",
+          "physics.RigidBody.getLinearVelocity",
+          "physics.RigidBody.setAngularVelocity",
+          "physics.RigidBody.getAngularVelocity",
+          "physics.RigidBody.wakeUp",
+          "physics.RigidBody.sleep",
+          "physics.RigidBody.clearState",
+          "physics.RigidBody.clearForces",
+          "physics.RigidBody.clearVelocity",
+          "physics.Collider",
+          "physics.Collider.type",
+          "physics.Collider.getGroup",
+          "physics.Collider.setGroup",
+          "physics.Collider.getMask",
+          "physics.Collider.setMask",
+          "physics.BoxCollider",
+          "physics.SphereCollider",
+          "physics.CapsuleCollider",
+          "physics.MeshCollider",
+          "physics.PhysicsRayResult",
+          "physics.PhysicsMaterial"
+        ]
+      },
+      "capabilities": [
+        "physics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Ground",
+            "Crate",
+            "Ball",
+            "Capsule",
+            "Sensor",
+            "Trimesh",
+            "PhysicsHost"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "真实鼠标点击视口中心 (240,180)（`input.on(Input.EventType.TOUCH_START, …)` 在 web 端由 MOUSE_DOWN 合成 touch，因此一次点击即触发）：处理函数先取 `preClick = readback()`，再 `crate.setPosition(CRATE_SENSOR)`，紧接着取 `unsynced = readback()`，最后只调一次 `physics.syncSceneToPhysics()`（不调 step/emitEvents）",
+            "expected": "三态确定性分离：`before` 与 `unsynced` 全部字段逐字节相等（改 node 变换不写世界形状），`now` 相对它们恰好只在 33 个字段上变化（`crateAabbcY` 0.75→3.6、`nearXName` Crate→Ball、`castXNames`/`stripNames` 丢掉 Crate、`castCrateOnlyHit` true→false 等）；V1.2 契约按 `before.*` / `unsynced.*` / 顶层三组 probeEquals 同时钉住这三态。画布像素因木箱瞬移而改变（`interaction:frame-diff` 判据）；此后画面静止（builtin 无积分 ⇒ V1.2 矩阵 `frameChanged:false` 即此事实）。点击可重复派发，但处理函数一次性（`if (preClick) return`），三态快照不被后续点击污染"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "885b85eafe40",
+        "source": "d2497f8e98052058",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 35,
+        "attested": 34,
+        "units": 69
+      }
+    },
+    {
+      "dir": "profiler-overlay",
+      "id": "profiler-overlay",
+      "version": "1.0.0",
+      "title": "Profiler Overlay (V1.2 LV12-02)",
+      "category": "debug",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：Profiler 系统从上游 cocos/profiler 原样回归后可在 Air 单文件产物中开启实时统计面板",
+        "points": [
+          "profiler 单例与 Profiler 系统类",
+          "showStats / setBackgroundColor / setFontColor 的绘制效果叠加在画面上",
+          "stats 计数器（fps / draws / frame / tricount / render / present）逐帧更新"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=3）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*60；profiler.showStats() 已调用，isShowingStats() 为 true，stats 的 12 个计数器可读回且 frame/draws 值随时间变化。",
+        "visual": "画面中央立方体持续自转，左下角叠加半透明统计面板（Framerate/Draw call/Frame time/Triangle/Logic/Physics/Renderer/Present/内存）"
+      },
+      "api": {
+        "primary": [
+          "profiler",
+          "Profiler"
+        ],
+        "supporting": [
+          "Profiler.showStats",
+          "MeshRenderer"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "DirectionalLight",
+          "MeshRenderer",
+          "Component",
+          "Layers",
+          "builtinResMgr",
+          "utils.createMesh",
+          "primitives.box",
+          "math.Vec3",
+          "math.Color",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Node.addComponent",
+          "profiler",
+          "Profiler",
+          "Profiler.showStats",
+          "Profiler.isShowingStats",
+          "Profiler.setBackgroundColor",
+          "Profiler.setFontColor"
+        ]
+      },
+      "capabilities": [
+        "profiler"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Cube"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "66d6546c7a37",
+        "source": "afc5dc805c737985",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 21,
+        "attested": 2,
+        "units": 23
       }
     },
     {
@@ -3372,7 +4390,7 @@
       "promotion": {
         "spec": "86059190543b",
         "source": "9c24eade6728d6e4",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 17,
         "attested": 1,
         "units": 18
@@ -3384,19 +4402,19 @@
       "version": "1.0.0",
       "title": "RC — Create Node",
       "category": "runtime-control",
-      "status": "draft",
+      "status": "stable",
       "specStatus": "frozen",
       "requiresDevTools": true,
       "learning": {
         "goal": "掌握 session.dispatch 的写操作：createNode + setTransform 与 requestId 幂等合同",
         "points": [
-          "dispatch 请求结构（requestId/action/targetId/params）",
-          "createNode 后 inspectScene 核对节点出现",
-          "重复 requestId → 稳定错误码 INVALID_ARGUMENT"
+          "dispatch 请求结构（requestId/action/targetId/params）与响应结构（ok / result / error.code）",
+          "createNode 返回 result.nodeId，setTransform 用它作 targetId 后 inspectNode 读回变换",
+          "重复 requestId → 返回 ok:false + 稳定错误码 INVALID_ARGUMENT（幂等合同，不抛异常）"
         ]
       },
       "effect": {
-        "functional": "dispatch createNode 成功返回 nodeId；setTransform 后 inspectNode 读回 position=[1.8,0.6,0]；重复 requestId 抛 INVALID_ARGUMENT；__rcState.created === true。",
+        "functional": "dispatch createNode 成功返回 result.nodeId；setTransform 后 inspectNode 读回 position=[1.8,0.6,0]；重复 requestId 返回 ok:false + INVALID_ARGUMENT；__rcState.created === true 且 duplicateCode 为页面实际读回值。",
         "visual": "场景右侧出现新方块（橙色系），面板展示 nodeId、节点数变化与幂等错误码"
       },
       "api": {
@@ -3465,6 +4483,14 @@
         ],
         "lifecycle": [],
         "capability": []
+      },
+      "promotion": {
+        "spec": "deb988a9d823",
+        "source": "20070fba85c22df4",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 17,
+        "attested": 3,
+        "units": 20
       }
     },
     {
@@ -3485,7 +4511,7 @@
         ]
       },
       "effect": {
-        "functional": "getRuntimeErrors 返回 {errors:[]} 结构；对不存在 targetId 的 dispatch 抛 STALE_TARGET 且被捕获；__rcState.stableCode === \"STALE_TARGET\"；场景持续运行。",
+        "functional": "getRuntimeErrors 返回 {errors:[]} 结构；对不存在 targetId 的 dispatch 返回 ok:false + code STALE_TARGET（错误码由页面读回、非写死）；__rcState.stableCode === \"STALE_TARGET\"；场景持续运行。",
         "visual": "面板展示错误基线、稳定错误码与\"主循环不受影响\"的核对行；画布场景正常渲染"
       },
       "api": {
@@ -3551,9 +4577,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7bf168d53362",
-        "source": "ff9a1514bf26d523",
-        "candidate": "5612c4c2746f395b",
+        "spec": "2be94727b2c1",
+        "source": "ad473b671a41e764",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -3648,7 +4674,7 @@
       "promotion": {
         "spec": "495816944ba8",
         "source": "b164c0231173bf02",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -3741,7 +4767,7 @@
       "promotion": {
         "spec": "928e831458d2",
         "source": "11c2af5dc6de1137",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -3836,7 +4862,7 @@
       "promotion": {
         "spec": "e5ceb0171281",
         "source": "cf1a4e3b115fd499",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -3924,7 +4950,7 @@
       "promotion": {
         "spec": "509d0ba585c2",
         "source": "84714e6e975fbc32",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 8,
         "attested": 1,
         "units": 9
@@ -4028,7 +5054,7 @@
       "promotion": {
         "spec": "cab0aa290350",
         "source": "63e4502a895fc0fa",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -4131,10 +5157,184 @@
       "promotion": {
         "spec": "801c006d64c7",
         "source": "f45c5c6dcce11ce3",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 25,
         "attested": 0,
         "units": 25
+      }
+    },
+    {
+      "dir": "tiledmap-basic",
+      "id": "tiledmap-basic",
+      "version": "1.0.0",
+      "title": "TiledMap — TMX/TSX 解析 / 正交与等距 / 图层渲染 / object layer 读取 (V12 LV12-08)",
+      "category": "tiledmap",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：小型 `.tmx/.tsx` 资产必须经 `assetManager.loadRemote` 真实加载（计划书 B3 通路），再由 Code First 手搭的 `TiledMapAsset` 喂给 `TiledMap`，走引擎自己的 `parseTMX/parseTSX → TMXTiledMap → TiledLayer/TiledObjectGroup → assembler` 全链；正交与等距两种朝向、图层几何/批次、object layer 五类对象、运行时改图与刷新语义都要在浏览器矩阵里逐字段可回读，并且真的出图",
+        "points": [
+          "Code First 的真实入口不是 `TiledMapAsset` 的 uuid 依赖图而是三个并行数组：`_applyFile`（tiled-map.ts）把 { tmxXmlStr, tsxFileNames/tsxFiles, spriteFrames/spriteFrameNames/spriteFrameSizes } 摊成 parser 的三张查找表再 `new TMXMapInfo(...)`。实测 `loadRemote` 对 `.tmx/.tsx` 返回 `TextAsset`（`downloader.ts:283` downloadText + `factory.ts:123` createTextAsset），对 `.png` 返回 `ImageAsset`，组件都不直接吃 ⇒ 必须自己 new `TiledMapAsset` 并把 TextAsset 塞进 `tsxFiles`",
+          "三张表的键是**纯字符串查表**、不做路径归一：`tsxFileNames[i]` 必须逐字符等于 `<tileset source=\"…\">` 的原样属性值（本例 `tiles.tsx`，写成 `./assets/tiles.tsx` 就查不到），`spriteFrameNames[i]` 必须等于 `<image source=\"…\">`（只把 `\\` 换成 `/`）。对不上的后果是 `sourceImage` 为 null ⇒ 只有一条 `warnID(16406)`，图层一个顶点都不生成（静默空图），实测 `batches[].vertexCount` 直接归 0",
+          "`Orientation` 枚举不是 XML 字面顺序而是 ORTHO=0 / **HEX=1 / ISO=2**（tiled-types.ts:54-72）。只看数字会把等距图误读成 hex，本例把 `2:ISO` 与 `0:ORTHO` 的字符串对一起钉进 probeEquals",
+          "`<object>` 上的 Tiled `type=\"solid\"` 属性**引擎根本不读**（`objectProp.type` 只由子元素与 `gid` 推出，tmx-xml-parser.ts:964-1008）：本例带 `type=\"solid\"` 的矩形与 `<point/>` 都是 `0:RECT`；`type` 这个词只在 `<property type=\"bool\">` 上表示值类型（实测 TSX 里 `solid` 读回真布尔 `false/true`、`slip` 读回 `0.25` 浮点）。`<point/>` 也不是未知类型 ⇒ size 为 [0,0]",
+          "`TiledObjectGroup._init` 会**就地改写** `object.x/y` 成引擎坐标（正交 `y = mapHeight - y`），Tiled 原值只留在 `object.offset`：实测 spawn `engineXY [32,32] / tmxXY [32,96]`。等距的换算分母是 tile **height**（`object.x / tileSize.height`，tiled-object-group.ts:231-232），本例 tile 32×32 看不出差别但它是上游逐字节行为；POLYGON 的 `points` y 分量整体取反（TMX 写 `24,4 8,20` ⇒ 读回 `[24,-4] [8,-20]`）",
+          "只有 TEXT/IMAGE 两类对象会生成节点：实测 markers 组 5 个对象只有 `img3`（gid=2 的 torch）作为子节点存在，RECT/ELLIPSE/POLYGON 全是纯数据。也因此「object layer 读取」的断言必须落在 `getObjects()` 的逐对象字段上，用 `node.children.length` 会得出「对象没解析」的错误结论",
+          "读写不对称（本例最有价值的一条）：CSV 把翻转标记塞在 gid 高位（`2147483649 / 1073741825 / 536870913`），解析后 `getTileFlagsAt` 能读到 1073741824/536870912；但 `setTileGIDAt` 第一行就 `gid & FLIPPED_MASK`（tiled-layer.ts:694）⇒ 把 `TileFlag.DIAGONAL | 2` 当 gid 传进去标记被**静默抹掉**（实测 `flagInGidOnly.flags = 0`），只有第 4 个入参才生效（`flagViaParam.flags = 536870912`）。P5 做了正反两组，光看「写进去了 gid=2」会误判成功",
+          "⚠️ 运行时改图不出图有两种，都零报错：往**空格** `setTileGIDAt` 只置 `_cullingDirty`（tiled-layer.ts:730），而 `Simple.updateRenderData`（assembler/simple.ts:115-121）只在渲染器自身被标脏时重跑 ⇒ 顶点数不变、新 tile 在屏幕上不存在。实测刷新阶梯：写空格后 `verts 60 / filled 16 / dirty true` → 手动 `setCullingDirty(true)` 仍 60 → `node.active=false→true` 后 64、dirty 归 false。本例把「改完立即重激活的 ground（96 顶点）」与「只改不刷新的 diamond（60 顶点）」两组对照钉进合同。⚠️ 重激活的重建被推迟到下一次渲染遍历，所以在点击回调里同步读 `vertsOf` 会是 0，`live.groundVerts` 在 1500 ms 后才读回 96",
+          "⚠️ 往**已占用**格写 gid 也不改像素（只要 `enableCulling` 关着）：`_updateTileForGID → _updateVertex(x,y)` 维护的是裁减簿记（顶点的行列区间、`_hasAniGrid`），不重写 UV/顶点缓冲；`_cullingDirty` 又只在 `_updateCullingOffsets()` 末尾被消费成一次 `_markForUpdateRenderData()`（tiled-layer.ts:865），而该函数只在裁减开启时跑。实测：一版用 `Component.update` 每 20 帧在 (2,2) 上 1↔2 交替，`pulseRunning true / filled 24` 但 `frameChanged false`（E:/AIProMax/cocosair-scratch/v12-diag/matrix-debug-tiledmap-chromium-r2.json）——把「数据改了」当成「图上改了」会得出完全相反的结论",
+          "TSX `<animation>` 是本例唯一真正每帧改图的通路：parser 把 `<frame>` 存进 `_animations`（键=被动画 tile 的 gid，`tileid` 已加 `firstGid`、`duration` 毫秒→秒，tmx-xml-parser.ts:752-764），`TiledMap.lateUpdate` 每帧写 `_texGrids[aniGID] = frames[frameIdx].grid` 并对 `hasAnimation()` 的图层 `_markForUpdateRenderData()`（tiled-map.ts:636-660），assembler 的脏判里 `hasAnimation()` 独立于裁减（simple.ts:119）⇒ 关掉裁减也每帧重建。P8 实测 `animatedGidKeys '1'`、`framesSpec '1@0.5,2@0.5'`、`groundHasAnimation true / diamondHasAnimation false`（等距图是内联 tileset，无 `<animation>` ⇒ `isoAnimatedCount 0`），且 `(1,1)` 格 `cellGid` 恒为 1 而 `liveGrid` 读回 `[2,32,0,0.5,0,1,1]`（草格此刻用石砖 UV）——gid 不变、换的只是 UV 对象。断言只能比 `frames[i].grid`：`_texGrids.get(1)` 已被就地改写成某一帧，拿它和 `_texGrids.get(2)` 比会假阴性判成「两帧相同」",
+          "关掉 `enableCulling`（且必须在赋 `tmxAsset` **之前**关，否则首帧批次已按视口裁好）后批次只由几何决定：实测正交 ground 23 格 = 92 顶点（4 顶点/quad，`batches: [{vertexCount:92, hasTexture:true}]`）、deco 4 格 = 16 顶点、等距 diamond 15 格 = 60 顶点，三引擎/任意视口逐字段一致。图层节点的 `active=false` 会让其 render data 销毁（`decoVerts` 读回 0），这被 P6 当作可见性开关的正面证据",
+          "`layer.tiledDataArray` 的条目是 `{renderData:{vertexCount}, texture}` 或 `{subNodes}`，`texture.name` 对运行时程序化帧恒为 `\"\"` ⇒ 只能断言 `!!texture`；`renderData.indicesCount` 在本版本不存在，不要照抄旧文档字段名",
+          "`tmxAsset` 的 setter 只在 `this._tmxFile !== value` 时 `_applyFile()` ⇒ 同一 asset 改完 XML 再赋回去不会重建，换图必须换 asset 实例（P7 用新 `TiledMapAsset` 重搭一张同图，读回图层清单/尺寸/firstGid/`img3` 全等，验证 reacquire 通路可重入）"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera + Status + OrthoMap(-84,-10) + IsoMap(118,-10)。真实点击一次性跑完 8 阶段序列（无随机、无定步，纯同步读回），结果 8 个 phase 键：P1 类型与头部（`getLayer() instanceof TiledLayer`/`getObjectGroup() instanceof TiledObjectGroup`/`instanceof TiledMap` 全 true；ortho `0:ORTHO` mapSize [6,4] tileSize [32,32] layerNames [ground,deco] childNames [ground,deco,markers] groupNames [markers] mapProperties {author:'cocos-air',level:12} levelProperty 12 uiSize [192,128]；iso `2:ISO` mapSize [4,4] layerNames [diamond] childNames [diamond,isoMarkers]）；P2 TSX（orthoTilesets [{name:'tiles',firstGid:1,sourceImage:true}]、isoTilesets [{name:'tiles_iso',…}]、grass {kind:'grass',solid:false}、stone {kind:'stone',solid:true,slip:0.25}、无主 gid 7 读回 undefined）；P3 图层（ground filled 23 / gidRow1 [2,1,1,0,1,2] / cornerGids [2,2] / pos00 [0,96] / posLast [160,0] / textures 1 / tileset {tiles,firstGid 1,tiles.png,32×32,image 64×32,offset [0,0]} / batches [{92,true}]，越界读 `getTileGIDAt(6,0)` 报 'invalid position'；deco opacity 204 / offset [4,6] / properties {parallax:0.5} / filled 4 / flagsRow1 [0,1073741824,0,0,536870912,0] / batches [{16,true}]；diamond filled 15 / pos00 [50,97] / posLast [50,1] / tileOffset [2,-1] / batches [{60,true}] / uiSize [128,128]）；P4 object layer（markers properties {role:'gameplay'} nodeSize [192,128] childNames ['img3']，5 对象逐字段：spawn 0:RECT engineXY [32,32] tmxXY [32,96] size [0,0]、crate 0:RECT rotation 15 hp 3、torch 4:IMAGE gid 2、trigger 1:ELLIPSE、path 2:POLYGON points [[0,0],[24,-4],[8,-20]]；isoMarkers childNames ['img1']、isoFlag 4:IMAGE engineXY [64,80] tmxXY [48,48]；`getObject('nope')` 为 null）；P5 运行时改图 {before:0, after:2, flagInGidOnly {gid:2,flags:0}, flagViaParam {gid:2,flags:536870912}, filled:24, outOfRange 'ERR:cc.TiledLayer.setTileGIDAt(): invalid position'}；P6 刷新阶梯 {decoActive:false, groundActive:true, isoActive:true, groundFilled:24, diamondFilled:16, groundDirtyFlag:true, diamondDirtyFlag:true}；P7 换 asset 重建 {sameLayerNames ['ground','deco'], groundSize [6,4], firstGid 1, torchSprite true} 且临时节点已 destroy；P8 TSX tile 动画（tiles.tsx 的 tile 0 带 2 帧 500/500 ms `<animation>`，由 `TiledMap.lateUpdate` 驱动）{animatedGidKeys '1', isoAnimatedCount 0, framesSpec '1@0.5,2@0.5', frameIdxInCycle true, dtWithinFrame true, groundHasAnimation true, diamondHasAnimation false, cellGid 1, liveGrid [2,32,0,0.5,0,1,1], gridIsOneOfFrames true, gridIsCurrentFrame true, framesDistinct true, filled 24}。终态 live：orthoChildren 3、isoChildren 2、groundVerts 96、decoVerts 0、diamondVerts 60",
+        "visual": "深蓝底（clearColor 12,16,24）一屏：左侧 6×4 正交石/草地图（外圈蓝色石砖带对角白纹、内圈绿格草砖，deco 层三块带水平/垂直/对角翻转标记的砖明显与正放砖不同朝向），右侧 4×4 等距菱形砖簇（含运行时补写的一格），顶部一行状态文字 `tiledmap ortho=ground+deco iso=2:ISO filled=23 objects=5`。正交图所有草砖（gid 1）由引擎的 tile 动画在草/石两帧之间每 500 ms 交替（帧间唯一持续变化来源，证明渲染循环真的在驱动图层重建 render data）；点击另造成一次性画面变化（deco 层隐藏 + ground 补一格 + 状态行改写）⇒ frame-diff 可测（三引擎矩阵 frameChanged 全 PASS）"
+      },
+      "api": {
+        "primary": [
+          "TiledMap",
+          "TiledMapAsset",
+          "TiledLayer"
+        ],
+        "supporting": [
+          "TiledObjectGroup",
+          "TiledMap.getMapSize",
+          "TiledMap.getTileSize",
+          "TiledMap.getMapOrientation",
+          "TiledMap.getLayers",
+          "TiledMap.getLayer",
+          "TiledMap.getObjectGroups",
+          "TiledMap.getObjectGroup",
+          "TiledMap.getProperties",
+          "TiledMap.getProperty",
+          "TiledMap.getPropertiesForGID",
+          "TiledLayer.getTileGIDAt",
+          "TiledLayer.getTileFlagsAt",
+          "TiledLayer.setTileGIDAt",
+          "TiledLayer.getLayerName",
+          "TiledLayer.getLayerSize",
+          "TiledLayer.getPositionAt",
+          "TiledLayer.getTextures",
+          "TiledLayer.getTileSet",
+          "TiledLayer.isCullingDirty",
+          "TiledLayer.getProperties",
+          "TiledObjectGroup.getObjects",
+          "TiledObjectGroup.getObject",
+          "TiledObjectGroup.getGroupName",
+          "TiledObjectGroup.getProperties",
+          "TiledObjectGroup.getPositionOffset",
+          "assetManager",
+          "Size",
+          "SpriteFrame",
+          "Texture2D",
+          "Node.on"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Canvas",
+          "UITransform",
+          "Layers",
+          "Color",
+          "Label",
+          "Size",
+          "SpriteFrame",
+          "Texture2D",
+          "TiledMap",
+          "TiledMapAsset",
+          "TiledLayer",
+          "TiledObjectGroup",
+          "TiledMap.getMapSize",
+          "TiledMap.getTileSize",
+          "TiledMap.getMapOrientation",
+          "TiledMap.getLayers",
+          "TiledMap.getLayer",
+          "TiledMap.getObjectGroups",
+          "TiledMap.getObjectGroup",
+          "TiledMap.getProperties",
+          "TiledMap.getProperty",
+          "TiledMap.getPropertiesForGID",
+          "TiledLayer.getTileGIDAt",
+          "TiledLayer.getTileFlagsAt",
+          "TiledLayer.setTileGIDAt",
+          "TiledLayer.getLayerName",
+          "TiledLayer.getLayerSize",
+          "TiledLayer.getPositionAt",
+          "TiledLayer.getTextures",
+          "TiledLayer.getTileSet",
+          "TiledLayer.isCullingDirty",
+          "TiledLayer.getProperties",
+          "TiledObjectGroup.getObjects",
+          "TiledObjectGroup.getObject",
+          "TiledObjectGroup.getGroupName",
+          "TiledObjectGroup.getProperties",
+          "TiledObjectGroup.getPositionOffset",
+          "assetManager",
+          "view",
+          "ResolutionPolicy",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.getChildByName",
+          "Node.on"
+        ]
+      },
+      "capabilities": [
+        "tiledmap"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Status",
+            "OrthoMap",
+            "IsoMap"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）画布任意处一次：同步跑完 8 阶段读回序列（头部/TSX/图层/object layer/改图/刷新阶梯/换 asset 重建/tile 动画），末尾隐藏 deco 图层、重激活 ground、销毁临时 SwapMap；草砖由引擎 tile 动画持续在草/石两帧之间切换",
+            "expected": "画面从「两图 + `tiledmap: loading`」变为「deco 层消失 + ground 补上一格 + 状态行改写」，frame-diff 可测；TiledMap / TiledMapAsset / TiledLayer / TiledObjectGroup 与 TMX/TSX 解析在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "48312c2aac4b",
+        "source": "ecbcddc571bb3443",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 46,
+        "attested": 2,
+        "units": 48
       }
     },
     {
@@ -4227,7 +5427,7 @@
       "promotion": {
         "spec": "e9fb4d97b277",
         "source": "b8bf300dc9d60f49",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -4318,10 +5518,556 @@
       "promotion": {
         "spec": "a2b66e97135b",
         "source": "97805d6ae4dda9e7",
-        "candidate": "5612c4c2746f395b",
+        "candidate": "9fa85f88b968d5f1",
         "verified": 14,
         "attested": 1,
         "units": 15
+      }
+    },
+    {
+      "dir": "ui-components",
+      "id": "ui-components",
+      "version": "1.0.0",
+      "title": "UI Components (V1.2 LV12-09)",
+      "category": "ui",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：2D UI 组件基座（canvas/widget/layout/scroll-view/editbox）在 Air 单文件产物里可纯 Code First 组装，并对真实鼠标输入产生引擎侧可回读的状态变化",
+        "points": [
+          "Canvas + Widget 四边对齐 + UI 相机（visibility 含 Layers.Enum.UI_3D）是 UI 出图的最小三件套",
+          "UITransform（width/height/anchor）+ Layout（VERTICAL / GRID）自动排布：子节点位置由布局写出，而不是手写坐标",
+          "Button 的 click 事件、ToggleContainer 的互斥、Slider 的 progress→handle 位移、ScrollView 的 scrollToBottom 偏移、EditBox 的 DOM input 回写，都要在页面外读回而不是自报",
+          "零第三方资产路线：运行时 canvas → ImageAsset → Texture2D → SpriteFrame（本构建下 builtinResMgr 的 default-spriteframe 内存图源上传 GPU 会抛错，已登记）"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas（Widget 四边对齐，尺寸跟随 480x360 视口）+ UICamera（ORTHO，visibility 含 UI_3D）；Stack 用 VERTICAL Layout 排 4 个子节点（Button / Toggles / Slider / EditBox），Grid 用 GRID Layout 排 2x2 色块，ScrollView 用 Mask 裁切并程序化 scrollToBottom（offset y 0→270）；真实鼠标点击 Button 后 click 事件计数 1、文本变为 Clicked x1、Sprite 颜色过渡生效；Slider.progress 0.2→0.75 使 handle x 位移到 42.5；ToggleContainer 互斥（置 B 后 A=false/B=true）；EditBox focus 后 DOM TEXTAREA 输入回写 string='air'。",
+        "visual": "深蓝底上一屏 UI：左上标题、左列按钮/两个开关/滑杆/输入框、右上 2x2 色块网格、右下裁切列表；左下角红点持续脉动（证明每帧真实重绘）"
+      },
+      "api": {
+        "primary": [
+          "Canvas",
+          "Button",
+          "Layout"
+        ],
+        "supporting": [
+          "UITransform",
+          "Widget",
+          "ScrollView",
+          "Slider",
+          "Toggle",
+          "ToggleContainer",
+          "EditBox"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Component",
+          "Layers",
+          "math.Color",
+          "math.Vec3",
+          "Size",
+          "SpriteFrame",
+          "Texture2D",
+          "ImageAsset",
+          "view",
+          "ResolutionPolicy",
+          "Canvas",
+          "UITransform",
+          "Widget",
+          "Label",
+          "Sprite",
+          "Button",
+          "Toggle",
+          "ToggleContainer",
+          "Slider",
+          "ProgressBar",
+          "Layout",
+          "ScrollView",
+          "EditBox",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.setPosition",
+          "Node.setScale",
+          "Node.on",
+          "UITransform.convertToWorldSpaceAR",
+          "ScrollView.scrollToBottom",
+          "ScrollView.getScrollOffset",
+          "EditBox.focus",
+          "EditBox.isFocused"
+        ]
+      },
+      "capabilities": [
+        "ui"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Title",
+            "Stack",
+            "Grid",
+            "ScrollView"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "三浏览器矩阵（tools/v12/browser-matrix-contract.json）在 480x360 视口向 (110,68) 发一次真实鼠标点击（该坐标 = 页面布局完成后实测的 Button 世界坐标换算值，probe 里回读 clickTargets.button 核对）",
+            "expected": "button.realClicks=1、button.labelBefore='Press me' → labelAfterLive='Clicked x1'、COLOR transition 使 sprite 颜色变化"
+          },
+          {
+            "action": "页面加载后程序化驱动（非输入模拟，矩阵逐字段断言）：Slider.progress 0.2→0.75；ToggleContainer 置 ToggleB；ScrollView.scrollToBottom(0)；EditBox.focus() 后向 DOM input 派发 input 事件（value='air'）",
+            "expected": "slider.handleMoved=42.5；toggle.exclusive={a:false,b:true,allowSwitchOff:false} 且 toggle 事件 2 条；scrollView.offsetAfter.y=270（offsetLive 同值）；editBox.dom.found=true、focused=true、string='air'"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "ee9cf6470300",
+        "source": "4d867b64bb82d212",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 36,
+        "attested": 1,
+        "units": 37
+      }
+    },
+    {
+      "dir": "ui-layout",
+      "id": "ui-layout",
+      "version": "1.0.0",
+      "title": "UI Layout & Widget Adaptivity (V1.2 LV12-09)",
+      "category": "ui",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：Widget 多边形对齐 + Layout 重排在 Air 单文件产物里随真实视口变化而重算，几何结果由页面外读回断言而不是示例自报",
+        "points": [
+          "视口变化 → window resize → 重设设计分辨率（EXACT_FIT）→ view 'design-resolution-changed' → widgetManager 重排全部 Widget，是自适应的唯一驱动链；断掉任一环 Widget 就不动",
+          "三边对齐（LEFT+TOP+RIGHT）给出恒等于视口宽的顶栏；LEFT+BOTTOM / RIGHT+BOTTOM 给出贴角徽章——左右徽章的 x 差值就是视口宽变化的尺子",
+          "Layout 与 Widget 叠加才有可测 reflow：容器被 Widget 左右各留 30 拉伸，HORIZONTAL/RIGHT_TO_LEFT 于是逐帧重算每个单元的位置",
+          "本例在 V1.1 链上不声明 input 交互（页面没有输入处理），真实交互 = V1.2 三浏览器矩阵的 resize 步骤；两链各自的断言不要混着引用"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas（Widget 四边对齐，尺寸跟随视口）+ UICamera（ORTHO，visibility 含 Layers.Enum.UI_3D）+ TopBar（LEFT+TOP+RIGHT）+ BadgeL/BadgeR（LEFT/RIGHT+BOTTOM 各留 10）+ Row（Widget 左右各留 30，内含 HORIZONTAL/RIGHT_TO_LEFT Layout、spacingX 10、3 个 90x60 单元）。静置 480x360 下引擎局部变换读回：Canvas(240,180)、TopBar(0,160)、BadgeL(-200,-158)、BadgeR(200,-158)、Row(0,20)、Cell0(165,0)/Cell1(65,0)/Cell2(-35,0)。V1.2 矩阵把视口真实改为 320x240 后世界几何全部重算：canvas 480x360→320x240、topBar 宽 480→320、badgeRight x 440→280（badgeLeft 保持 40,22 证明左下角锚定）、row 宽 420→260、单元 x 405/305/205→245/145/45。",
+        "visual": "深蓝底上一屏响应式布局：顶栏横贯且标题实时写着当前视口尺寸、左下绿徽章、右下橙徽章、中央三个等距色块；视口缩小后顶栏变窄、右徽章左移、色块整体重排、标题数字同步（截图 resize 前后各一张）"
+      },
+      "api": {
+        "primary": [
+          "Canvas",
+          "Widget",
+          "Layout"
+        ],
+        "supporting": [
+          "UITransform",
+          "Sprite",
+          "Label",
+          "Camera"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Component",
+          "Canvas",
+          "UITransform",
+          "Widget",
+          "Layout",
+          "Layers",
+          "view",
+          "ResolutionPolicy",
+          "Sprite",
+          "Label",
+          "SpriteFrame",
+          "Texture2D",
+          "ImageAsset",
+          "Color",
+          "math.Vec3",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.getComponent",
+          "UITransform.convertToWorldSpaceAR"
+        ]
+      },
+      "capabilities": [
+        "ui"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "TopBar",
+            "BadgeL",
+            "BadgeR",
+            "Row",
+            "Cell0",
+            "Cell1",
+            "Cell2"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "f15b913767bc",
+        "source": "77f21c2819021f29",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 22,
+        "attested": 1,
+        "units": 23
+      }
+    },
+    {
+      "dir": "video-basic",
+      "id": "video-basic",
+      "version": "1.0.0",
+      "title": "VideoPlayer — HTMLVideoElement 挂载/透明 video/全屏切换/事件回调 + Code First 运行时 VideoClip (V12 LV12-04)",
+      "category": "video",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：`cocos/video`（11 文件，逐字节同源）的 web 通路必须真实跑通——`assetManager.loadRemote('.mp4')` 经 `video-downloader.ts` 的 downloader/factory 注册项产出运行时 `VideoClip`（`_nativeAsset` 是 `<video>` 元素，Code First 无 .meta/无 uuid）；`VideoPlayer` 把 `<video class=\"cocosVideo\">` 挂进 `game.container` 并按节点世界矩阵逐帧定位，`stayOnBottom` 的透明合成、`screen` 的全屏双向、8 个事件名 + `videoPlayerEvent`（EventHandler）两条回调线都要在 chromium/firefox/webkit 三引擎矩阵里逐字段可回读，并且真的解码出图",
+        "points": [
+          "Code First 入口是 `video-downloader.ts` 往 downloader/factory 注册的两张表（`.mp4/.avi/.mov/.mpg/.mpeg/.rm/.rmvb`）：`loadRemote('./assets/clip.mp4')` 直接返回 `VideoClip`。blob URL 挂在 `<video>` 的**子 `<source>`** 上，所以此刻 `video.currentSrc` 是空串而 `source.src` 才是 `blob:`——把它当成「没拿到数据」是误判（实测 `videoCurrentSrcEmpty true` + `sourceChildSrcScheme 'blob:'`）",
+          "`VideoClip._nativeAsset` 的 setter 顺手把 `clip.duration` 抄进 `_duration`（`video-clip.ts:31-40`）：加载那一刻 `_duration 3`，而 `VideoPlayer.duration` getter 走的是 `_impl.getDuration()`（活元素）。同一个「时长」有两个来源，改播放源不会回头修 `_duration`",
+          "`<video>` 元素由 `createVideoPlayer` 追加到 `game.container`（`video-player-impl-web.ts:254-276`），换源走 `removeVideoPlayer` → 新元素（:239-252）⇒「DOM 里恰好 1 个 video」是真的泄漏计数器：本例 P6 换源两次后 `videoCountInDom 1`、`oldElementDetached true`、`elementRecreated true`，点击阶段临时起第二个播放器又销毁后仍回到 1",
+          "`keepAspectRatio` 会用 `videoWidth/videoHeight` **覆盖 UITransform**（`video-player-impl.ts:237-243`）：160x120 的资产 ⇒ `contentSize '160x120'`。所以资产尺寸本身就是断言值，`objectFit` 在 `keepAspectRatio=true` 时被写成 `'none'`、false 时 `'fill'`（impl-web:392-396）",
+          "「真的解码出图」不能靠 `currentTime` 前进证明：暂停态下播放头也能动（seek）。本例把 `<video>` `drawImage` 到同源 2D 画布再取像素（`mean/nonBlackRatio/colorBins`），并且**采样前先确认 `isPlaying`**——第一版在 P3 收尾的静止态采样两帧得到 `mean` 完全相同，误报成「解码器没出图」，那是取样条件错（现已显式 `player.play()` + 轮询）",
+          "`stayOnBottom=true` 的透明合成写的是**渲染层相机**：`syncMatrix` 取 `impl.UICamera`（`batcher2D.getFirstRenderCamera`）并把它的 `clearColor.w` 置 0、`clearFlag` 置 ALL（impl-web:334-352）。组件上的 `cam.clearColor.w` 实测**恒为 1**（`uiCameraIsComponentCamera false`，同名 `'UICamera'` 的两个对象）⇒ 只回读组件侧会把「引擎做了透明」误判成没做。机检四件套：`macro.ENABLE_TRANSPARENT_CANVAS`（必须在 `createAirApp` **之前**置真，swapchain 只在建立时读一次）、`gl.getContextAttributes().alpha true`、计算样式 z-index `0 → -32768 → 0`、`document.elementFromPoint` 命中层 `VIDEO → CANVAS` 翻转",
+          "`player.volume` 不做区间校验：setter 先落 `_volume` 再直写 DOM（`video-player.ts` → impl:136-140），越界值 `5` 会**抛 DOM 异常而引擎字段已经脏**（实测 `volThrowOutOfRange 'assigned'`? 不，是 `'ERR:...'` 且 `volFieldAfterThrow 5`、DOM 仍 0.4）；`NaN` 同样把字段写脏。对照 `AudioSource.volume` 会 clamp 到 [0,1] 且忽略 NaN——两个组件同名字段语义不一致，本例把三值全部钉进 probe",
+          "事件回调有两条线，都必须单独证明：① 节点事件（`node.on('meta-loaded'…)`，8 个名字由 `__preload` 装进 `componentEventList`）；② 序列化那条 `videoPlayerEvent: EventHandler[]`（`EventHandler` 用**类名字符串**找组件：`js.setClassName('V12VideoEventLog', …)` + `eh.component='V12VideoEventLog'`，`component-event-handler.ts:156-175`）。实测 `eventLog` 里每个原生事件都成对出现 `handler:*` 与裸事件名，且 `dispatchEvent` 只在表里有 key 时才改 `_state` ⇒ `player.state` 的取值序列本身就是回调链跑通的证据",
+          "⚠️ `VideoPlayer.fullScreenOnAwake` 只有在 **clip 装载之前**设置才有效。加载完成后置真走 deprecated 重载 `screen.requestFullScreen(video, cb)`（`video-player-impl-web.ts:214-218`），实测三处连锁失效（chromium/firefox/webkit 一致）：(a) `element` 参数被整个忽略——PAL 的 `requestFullScreen()` 无 element 形参，自己选目标，实测 `document.fullscreenElement === BODY` 而不是 video，`videoRect` 全程 `160x120` 没被放大；(b) `cb` 被 `onFullScreenChange?.call(document)` **零参**调用（`screen.ts:157-158`），而实现把回调写成 `(document) => …` ⇒ 形参 shadow 掉全局，读到 `undefined.fullscreenElement` ⇒ 引擎自己 `console.error` 一条 TypeError；(c) 错误回调把 `impl._fullScreenOnAwake` 写成 false，而组件 getter 又从 impl 回读（`video-player.ts:248-255`），于是后续 `= false` 被 setter 的同值卫兵吞掉 ⇒ **永远退不出全屏**。三引擎矩阵的 `noConsoleError` 不容许这条，所以本例的全屏覆盖走 `screen.requestFullScreen()/exitFullScreen()`（现行签名，`await` + catch：非全屏态直接 `exitFullScreen()` 会 reject `Document not active`）与 awake 几何全屏两路",
+          "awake 路的全屏是**几何全屏**：`syncFullScreenOnAwake(true)` 在未加载时只置 `_waitingFullscreen`，`onLoadedMetadata` 里 `delayedFullScreen()` 因 `readyState!==4` 从 `canFullScreen` 早退 ⇒ 从不碰 DOM 全屏 API（实测 `fsEl 'null'`），但 `impl._fullScreenOnAwake` 保持 true，`syncMatrix` 于是按 `visibleRect` 出尺寸 ⇒ `<video>` 变成 `480x360` 且 `styleWH '480pxx360px'`，同屏另一个播放器不受影响（`mainPlayerUnaffected '160x120'`）。本例用第二个 VideoPlayer 跑这条路，跑完 `destroy()` 并回读 `videoCount` 回到 1"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera + Status + Hint + FrameGuide + Clock + ClockHost + VideoHost（VideoHost 挂 VideoPlayer + V12VideoEventLog）。加载期跑 8 个阶段（全部同步读回 + 轮询延迟，无随机）：P0 运行时资产（`clipCtor 'VideoClip'`、`isVideoClip true`、`nativeTag 'VIDEO'`、`videoCurrentSrcEmpty true`、`sourceChildSrcScheme 'blob:'`、`nativeUrlIsRequestUrl true`、`clipDurationField 3`、`cacheHasUrl true`）；P1 挂载（`videoCount 1`、`className 'cocosVideo'`、`inGameContainer true`、`visibility 'visible'`、`playsinlineAttrs ',,'`（三个属性都在、值为空串）、`videoWidth x Height '160x120'`、`duration 3`、`readyState 4`、`stateAfterMeta 'ready-to-play'`、`contentSize '160x120'`、`domRect` 四项）；P2 回调序列（`firstMetaLoaded 0`、`metaBeforeReady true`、`handlerHitsPositive true`、`lastHandlerArgs {hasPlayer,type,custom}`、`classByNameMatches true`、`stateIsEventTypeEnum true`）；P3 播控（`playingWithinMs>=0`、`advancedWhilePlaying true`、`frozenWhilePaused true`、`resumedFromOffset true`、`seekLandedNear12 true`、`rateReadback [2,2]`、`volOk [0.4,0.4]`、越界/NaN 三值、`loopReadback [true,false]`、`muteReadback [false,true]`）；P4 透明（`macroTransparentCanvas true`、`glContextAlpha true`、`zIndexBefore '0' → zIndexAfterBottom '-32768' → '0'`、scene camera 的 `sceneClearAlphaBefore/AfterBottom` 与 `sceneClearFlagChanged`、`hitTestFlipped true`（VIDEO→CANVAS）、`uiCameraIsComponentCamera false`）；P5 几何与解码出图（`objectFitKeepAspectRatio 'none'`、`contentSizeFromVideo '160x120'`、`playingBeforeSample` 为真时 `decodedFramesAdvance true`、`frameNotBlank true`（mean>20 且 nonBlackRatio>0.5））；P6 换源（`elementRecreated true`、`videoCountAfterEnumOnly 0`、`videoCountAfterSwitch 1`、`oldElementDetached true`、`sameUrlBothPaths true`）；P7/P8 判尾与循环（`completedWithinMs>=0`、`endedDelta 1`、`isPlayingAfterEnd false`、`clampedBeyondDuration` 两项、`wrappedBelowSeekTarget true`、`completedDeltaDuringLoop 0`）；点击阶段 P9（`enterResolved true` + `during.fsEl 'BODY'`、`exitResolved true` + `exitSettledWithinMs>=0` + `after.fsEl 'null'`、`isFullScreen` 双向、awake 第二播放器 `grewToViewport true` / `fsEl 'null'` / `fullScreenOnAwakeReadback true`、销毁后 `awakeAfterDestroy.videoCount 1`、收尾 `endState.stayOnBottomZIndex '-32768'` + `hitTag 'CANVAS'`）。终态 live：`videoCountInDom 1`、`fullscreenElementIsNull true`、`duration 3`、`stayOnBottom true`、`domRect '160x120'`、状态行 `video fullscreen ok`",
+        "visual": "深蓝底（clearColor 10,14,22,255）一屏：顶部状态行依次改写 `video: loading → video meta ok → video controls ok → video transparency ok → video geometry ok → video source switch ok → video loop ok → video ready — click to fullscreen → video fullscreen ok`；中部是一条 160x120 的**真视频**（DOM `<video>`，靠 `stayOnBottom` 压到 canvas 之下并由透明 swapchain 露出），其外叠一圈琥珀色描边矩形标示 VideoPlayer 的世界矩形；下方一条绿色小块 = `Graphics` 画的帧时钟（每 2400 ms 横扫一次，与视频后端无关，保证三引擎都有持续的帧间变化）；底部一行提示 `click the video to toggle fullscreen`。frame-diff 的持续变化来源是绿色帧时钟 + 视频本体像素（实测 mean≈114、colorBins≈250-350 逐帧变化）⇒ 三引擎 frameChanged 全 PASS；「是否真解码出图」由 probe 的 `frameA/frameB/live.frameMeanNow` 独立回读，不用画面替引擎背书"
+      },
+      "api": {
+        "primary": [
+          "VideoPlayer",
+          "VideoClip",
+          "EventHandler"
+        ],
+        "supporting": [
+          "VideoPlayer.play",
+          "VideoPlayer.pause",
+          "VideoPlayer.resume",
+          "VideoPlayer.videoPlayerEvent",
+          "VideoPlayer.REMOTE",
+          "VideoPlayer.LOCAL",
+          "EventHandler.target",
+          "EventHandler.component",
+          "EventHandler.handler",
+          "EventHandler.customEventData",
+          "Screen.requestFullScreen",
+          "Screen.exitFullScreen",
+          "assetManager",
+          "js.setClassName",
+          "macro",
+          "Node.on",
+          "Label",
+          "GraphicsComponent",
+          "GraphicsComponent.rect",
+          "GraphicsComponent.clear",
+          "GraphicsComponent.stroke",
+          "GraphicsComponent.fill"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Camera",
+          "Canvas",
+          "UITransform",
+          "Layers",
+          "Color",
+          "Label",
+          "GraphicsComponent",
+          "GraphicsComponent.rect",
+          "GraphicsComponent.clear",
+          "GraphicsComponent.stroke",
+          "GraphicsComponent.fill",
+          "Component",
+          "EventHandler",
+          "EventHandler.target",
+          "EventHandler.component",
+          "EventHandler.handler",
+          "EventHandler.customEventData",
+          "VideoPlayer",
+          "VideoPlayer.play",
+          "VideoPlayer.pause",
+          "VideoPlayer.resume",
+          "VideoPlayer.videoPlayerEvent",
+          "VideoPlayer.REMOTE",
+          "VideoPlayer.LOCAL",
+          "VideoClip",
+          "assetManager",
+          "screen",
+          "Screen.requestFullScreen",
+          "Screen.exitFullScreen",
+          "js.setClassName",
+          "macro",
+          "view",
+          "ResolutionPolicy",
+          "Node.on"
+        ]
+      },
+      "capabilities": [
+        "video"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Status",
+            "Hint",
+            "FrameGuide",
+            "Clock",
+            "ClockHost",
+            "VideoHost"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（TOUCH_START）画布一次（矩阵 `waitMs=18000` 保证打在整条加载序列之后、点击坐标 240,190 落在 VideoHost 矩形上）：跑全屏双向 + awake 几何全屏 + 收尾把 video 压在 canvas 之下；序列带闩锁，后续点击不会重跑",
+            "expected": "画面从「`video ready — click to fullscreen`」变为「`video fullscreen ok`」且帧时钟持续横扫（frame-diff 可测）；`screen.requestFullScreen()/exitFullScreen()`、`VideoPlayer.fullScreenOnAwake` 的 awake 路、第二个播放器的创建与销毁在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "e4de09333e06",
+        "source": "35f72dfaf054cab5",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 24,
+        "attested": 13,
+        "units": 37
+      }
+    },
+    {
+      "dir": "webview-basic",
+      "id": "webview-basic",
+      "version": "1.0.0",
+      "title": "WebView — DOM overlay iframe 挂载/卸载、load/loading/error 事件、逐帧矩阵几何与输入穿透 (V12 LV12-05)",
+      "category": "ui",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "V1.2 回归：`cocos/web-view`（5 文件，逐字节同源）的 web 通路必须真实跑通——`WebView.__preload` 经 `WebViewImplManager.getImpl` 造出 `WebViewImplWeb`，往 `game.container` 追加 `div#webview-wrapper > iframe#webview`（DOM overlay，不进 WebGL 帧缓冲），`WebView.update` 每帧 `syncMatrix()` 把节点世界矩阵写成 wrapper 的 CSS `matrix()`；`loading/loaded/error` 三个事件名 + `webviewEvents`（EventHandler）两条回调线、`evaluateJS` 的同源双向读写、`enabled` 隐藏期 `syncMatrix` 早退、销毁后 wrapper 归零，都要在 chromium/firefox/webkit 三引擎矩阵里逐字段可回读——并且全程零外网请求（内嵌本地静态页）",
+        "points": [
+          "web 端 WebView 是 **DOM overlay**，不是引擎纹理：`createWebView()` 追加的是 `game.container` 下的 `<iframe>`，所以画布截图里那块网页像素**不来自 WebGL**，v11 的 `visible-frame`/`frame-diff` 只能由画布侧内容背书（本例用 `Graphics` 画的扫描条 + iframe 描边框），iframe 内部动画绝不参与帧差判定",
+          "组件默认 `_url = 'https://cocos.com'`（`web-view.ts:50`），而 `__preload` 末尾无条件 `this._impl.loadURL(this._url)`（`web-view.ts:178`）⇒ 常规「建节点 → addComponent → 设 url」会**先发一次外网请求**（矩阵的 `noFailedRequest` 直接判死）。正确顺序是：inactive 节点上 `addComponent(WebView)` → 设 `url` → 再 `active = true`，让 `__preload` 的第一次 `loadURL` 就是本地同源页（实测三引擎一致：`urlGetter './assets/page.html'`、`iframeSrcHasNoExternalHost true`、`stateBeforeActivate 'none'`、`wrappersAtMount 0`、`loadingWithinMs 0`、`loadedWithinMs 287/114/46 ms` ⇒ `__preload` 的首次 `loadURL` 就是本地同源页，矩阵 `noFailedRequest` 全程绿）",
+          "`error` 事件在 web 端**与网络无关**：`_bindDomEvent` 只有 `iframe.contentDocument.body.innerHTML.includes('404')` 这一条判据（`web-view-impl-web.ts:49-58`），且它在 `load` 之后才嗅探 ⇒ 真 404 页面若正文不含「404」字样就不报错，正文含「404」的 200 页面反而必报 ERROR。本例用同源 200 的 `assets/page-error-like.html` 把这条确定性地跑出来（实测 `errorWithinMs 46/250/62 ms`、`errorEvents 1`、`stateAfterError 'error'`、`urlAfterError './assets/page-error-like.html'`），因此**不需要**任何失败请求；`errorArgLen` 三引擎都是 264，正好等于该页 `innerHTML` 的字节数——它是正文长度而非 API 语义，故只作非空断言",
+          "`state` 只在「事件名已注册进 `componentEventList`」时才变化：`dispatchEvent` 先查表、命中才 `_state = key`（`web-view-impl.ts` 的 `dispatchEvent`），而这张表由 `__preload` 装三行（LOADING/LOADED/ERROR）。所以 `stateSequence 'loading,loaded'` 与 `rawEventLogHead 'cb:loading,loading,cb:loaded,loaded'`（EventHandler 的 `cb:` 前缀行 + `Node.on` 行交错）本身就是两条回调链都跑通的证据，`eventListKeys 'has-events'` 表示表已装好，同时未注册时 `state` 会永远停在 `none`（默认值）",
+          "事件回调的参数形状不对称：`onLoading/onLoaded` 只 `node.emit(type, this)`，`onError(...args)` 拿到的是 impl 传出的**再包一层的数组**（`dispatchEvent` 用 `callback.call(this, args)` 把 rest 参数当单参数转发）⇒ `error` 监听收到的第二参是 `[[innerHTML]]`，`JSON.stringify` 里含 404 但 `Array.isArray` 为真且长度为 1 的嵌套（实测 `errorArgIsArray true`、`errorArgMentions404 true`、`lastHandlerHasView true`、`handlerHits 2`、`updateHookCallable true`）。断言只能按这个真实形状写，别按文档签名写",
+          "`enabled=false` 只是把 wrapper 的 `style.visibility` 置 `hidden`（`enable/disable`），而 `syncMatrix` 在 `visibility === 'hidden'` 时**整帧早退**（`web-view-impl-web.ts:139`）⇒ 隐藏期移动节点，DOM `transform` 保持旧值；重新启用后必须由 `update` 追平。判别点选「只属于旧位置」的坐标：`hitAtOldOnlyPoint` 追平后是 `CANVAS`、没追平是 `IFRAME`（实测 `transformFrozenWhileHidden true`、`transformCaughtUpAfterEnable true`、`visibilityAfterDisable 'hidden'`）",
+          "穿透行为没有开关：web 实现不做任何命中屏蔽，`elementFromPoint` 在 iframe 中心 enabled 时是 `IFRAME`、禁用后是 `CANVAS`；矩阵真实点击落在 iframe 上时页内计数器 `__clicks` +1，而 `engineTouchEvents` 与 `canvasDomClicks` 都是 0 ⇒ 「点进了 iframe 的东西，引擎完全看不见」就是 web 端 WebView 的全部真相",
+          "⚠️ `evaluateJS` 的失败路径不能进示例：`WebViewImplWeb.evaluateJS` 对 `win.eval` 的 catch 里既 `dispatchEvent(ERROR, e)` 又 `error(e)`（`web-view-impl-web.ts:116-128`）⇒ 一条写坏的注入脚本会同时污染 ERROR 事件通道并留下一条 `console.error`（矩阵 `noConsoleError` 必红）。本例只做成功注入（标题/全局变量/dataset 三处回读），失败面单独在诊断脚本里取证（`docs/v12-webview-notes.md`）",
+          "`WebViewImplManager.getImpl()` 每次都 `new WebViewImplWeb(component)`，`WebView` 也从不复用 impl ⇒ DOM 里 `#webview-wrapper` 的个数就是真实泄漏计数器：销毁后必须回 0（`nativeWebView` 同时变 `null`、`state` 回 `none`），重建后必须**恰好 1**（`wrapperCountIsExactlyOne true`，且 `reloadedWithinMs 21/41/58 ms`）。§25 生命周期合同以此复跑「release → 延迟销毁落地 → 泄漏核对 → reacquire」（实测 `isValidAfterDestroy false`、`stateAfterDestroy 'none'`、`hitAfterDestroy 'CANVAS'`）",
+          "两个只 warn 的 API 在 web 端是 no-op：`setJavascriptInterfaceScheme`/`setOnJSCallback` 的 impl 实现体只有 `warn('The platform does not support')`（`web-view-impl-web.ts:130-136`）⇒ 返回值恒 `undefined`、传入的 JS 回调永不被调（`jsCallbackFired 0`）、`state` 不受影响。要断言的是「不抛错、不改状态、回调不触发」，不是「生效」（实测两个 setter 返回 `'undefined'`、`jsCallbackFired 0`、`stateUnchangedAfterNoop true`、`stateAfterNoop 'loaded'`）",
+          "wrapper 的定位**不是挂载即到位**：`__preload` 只把 wrapper append 进 `game.container`，CSS `transform/width/height` 要等第一次 `update → syncMatrix` 才写入。在那之前读几何会拿到 iframe 的内在盒（未显式定尺寸的 `<iframe>` 默认 300×154 ⇒ 中心 (150,281)），把终态几何断言直接判红——本任务 r3 的 chromium `p9Unload.finalCenter '150,281'` 就是这么来的（证据 `matrix-webview-contract-r3.json`）。正确做法：几何断言前先用 `waitMatrixSize()` 轮询 wrapper 的 `style.width` 到目标值（实测 `matrixSizeWithinMs` P1 为 107/0/0 ms、P9 为 0/0/0 ms），再 `nextFrames(2)` 让 `syncMatrix` 的矩阵缓存落定。同理，`wrapperOffsetWH` 只有等到位后才是三引擎一致的 `200x150`。"
+        ]
+      },
+      "effect": {
+        "functional": "Scene 含 Canvas + UICamera + Status + Hint + FrameGuide + Clock + ClockHost + WebViewHost，共 8 个期望节点。加载序列 `results.sequenceMs` 实测 1075/1153/1817 ms，终态 `results.phase 'done'`、`results.sequenceComplete true`（以下 3 斜杠值顺序 = chromium/firefox/webkit，均为 r38 全量矩阵实测；这类挂钟计时逐轮浮动，已排除在三引擎逐字契约之外）：P1 挂载（`wrappersBefore 0`、`iframesBefore 0`、`stateBeforeActivate 'none'`、`wrappersAtMount 0`、`loadingWithinMs 0`、`loadedWithinMs 287/114/46`、`matrixSizeWithinMs 0/0/150`、`mountedWrapperCount 1`、`mountedIframeCount 1`、`wrapperId 'webview-wrapper'`、`iframeTag 'IFRAME'`、`iframeId 'webview'`、`nativeIsSameNode true`、`parentId 'Cocos3dGameContainer'`、`gameContainerId 'Cocos3dGameContainer'`、`stylePosition 'absolute'`、`styleBottom '0px'`、`styleLeft '0px'`、`iframeStyleWH '100%/100%'`、`urlGetter './assets/page.html'`、`iframePathname '/examples/webview-basic/assets/page.html'`、`iframeSrcHasNoExternalHost true`、`contentSize '200x150'`、`wrapperOffsetWH '200x150'`、`stateAfterLoad 'loaded'`；`styleOrigin` 与 `iframeStyleBorder` 因引擎序列化不同，只作存在性断言）；P2 事件（`rawEventLogHead 'cb:loading,loading,cb:loaded,loaded'`、`businessSequence 'loading,loaded'`、`handlerHits 2`、`handlerTypes 'cb:loading,cb:loaded'`、`lastHandlerArgsType 'loaded'`、`lastHandlerArgsCustom 'viaWebViewEvents'`、`lastHandlerHasView true`、`stateSequence 'loading,loaded'`、`eventListKeys 'has-events'`、`lifecycleSurface '__preload=own,onEnable=own,onDisable=own,onDestroy=own,update=own'`、`updateHookCallable true`）；P3 几何（移到 (-70,-30)/160x120 后 `styleBeforeWH '200px/150px'`→`styleAfterWH '160px/120px'`、`transformChanged true`、`centerBefore '240,166'`→`centerAfter '170,210'`、`centerMoved true`，复位后 `restoredWH '200px/150px'`、`finalCenter '240,166'`、`finalWrapperWH '200x150'`）；P4 `evaluateJS`（`sameOriginDoc true`、`pageDatasetReady '1'`、`pageName 'webview-basic-local-page'`、`titleBefore 'AIR WebView Page'`、`clicksBefore 0`、`titleAfter 'AIR-EVAL-42'`、`stampAfter '99'`、`datasetAfter 'injected'`、`stateAfterEval 'loaded'`）；P5 命中与 enabled（`centerPoint '240,166'`、`hitWhenEnabled 'IFRAME'`、`hitOutsideIframe 'CANVAS'`、`wrapperVisibilityBeforeDisable 'visible'`→`visibilityAfterDisable 'hidden'`、`hitWhenDisabled 'CANVAS'`、`transformFrozenWhileHidden true`、`hitAtNewCenter 'IFRAME'`、`hitAtOldOnlyPoint 'CANVAS'`、`transformCaughtUpAfterEnable true`、`hitBackAtFinalCenter 'IFRAME'`）；P6 error 语义（`errorWithinMs 46/250/62`、`errorEvents 1`、`stateAfterError 'error'`、`urlAfterError './assets/page-error-like.html'`、`errorArgIsArray true`、`errorArgMentions404 true`、`errorArgLen 264`、`loadedStillReportedOnce 2`、`recoveredState 'loaded'`、`businessSequenceAfterRecover 'loading,loaded,loading,loaded,error,loading,loaded'`）；P7 web no-op（两个 setter 返回 `'undefined'`、`stateUnchangedAfterNoop true`、`jsCallbackFired 0`、`stateAfterNoop 'loaded'`）；P9 卸载/重建（`wrappersAfterDestroy 0`、`iframesAfterDestroy 0`、`nativeWebViewAfterDestroy 'null'`、`stateAfterDestroy 'none'`、`hitAfterDestroy 'CANVAS'`、`isValidAfterDestroy false`、`reloadedWithinMs 21/41/58`、`matrixSizeWithinMs 0/1/0`、`wrappersAfterRebuild 1`、`iframesAfterRebuild 1`、`stateAfterRebuild 'loaded'`、`hitAfterRebuild 'IFRAME'`、`wrapperCountIsExactlyOne true`、`finalCenter '240,166'`、`contentSizeAfterRebuild '200x150'`）。终态 live：`wrapperCount 1`、`iframeCount 1`、`state 'loaded'`、`hitAtIframeCenter 'IFRAME'`、`centerPoint '240,166'`、`domRect '200x150'`、`wrapperStyleWH '200px/150px'`、`iframeClicks '1'`、`iframeClicksDataset '1'`、`engineTouchEvents 0`、`canvasDomClicks 0`、`url './assets/page.html'`、`titleNow 'AIR WebView Page'`、`engineStampNow 'undefined'`（重建后页面重载，P4 注入的标题与全局量随之消失——这本身是「iframe 生命周期跟随组件」的证据）",
+        "visual": "深蓝底（clearColor 10,14,22,255）一屏：顶部状态行依次改写 `webview: loading → … → webview mounted — clicks land in iframe`；中部是**真 iframe**（本地页，浅灰渐变底 + 一条横扫动画 + 点击计数文本），其外叠一圈琥珀色 2px 描边矩形（`Graphics` 画的 204x154，标示 WebView 节点的世界矩形）；下方一条绿色小块 = `Graphics` 帧时钟（每 2400 ms 横扫一次，与 iframe 无关，保证三引擎都有持续帧间变化）；底部一行提示 `iframe overlay: clicks inside the box never reach the engine`。frame-diff 的变化来源全在 WebGL 画布内 ⇒ 三引擎 frameChanged 可判；iframe 是否真挂载/真出页由 probe 的 `sameOriginDoc/pageName/titleNow/__clicks` 独立回读，不用画面替引擎背书"
+      },
+      "api": {
+        "primary": [
+          "WebView"
+        ],
+        "supporting": [
+          "WebView.webviewEvents",
+          "WebView.evaluateJS",
+          "WebView.setJavascriptInterfaceScheme",
+          "WebView.setOnJSCallback",
+          "WebView.__preload",
+          "WebView.onEnable",
+          "WebView.onDisable",
+          "WebView.onDestroy",
+          "WebView.update",
+          "EventHandler",
+          "EventHandler.target",
+          "EventHandler.component",
+          "EventHandler.handler",
+          "EventHandler.customEventData",
+          "js.setClassName",
+          "game",
+          "isValid",
+          "Node.on"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.on",
+          "Camera",
+          "Canvas",
+          "Component",
+          "EventHandler",
+          "EventHandler.target",
+          "EventHandler.component",
+          "EventHandler.handler",
+          "EventHandler.customEventData",
+          "UITransform",
+          "Layers",
+          "Color",
+          "Label",
+          "GraphicsComponent",
+          "GraphicsComponent.rect",
+          "GraphicsComponent.clear",
+          "GraphicsComponent.stroke",
+          "GraphicsComponent.fill",
+          "WebView",
+          "WebView.webviewEvents",
+          "WebView.evaluateJS",
+          "WebView.setJavascriptInterfaceScheme",
+          "WebView.setOnJSCallback",
+          "WebView.__preload",
+          "WebView.onEnable",
+          "WebView.onDisable",
+          "WebView.onDestroy",
+          "WebView.update",
+          "game",
+          "isValid",
+          "js.setClassName",
+          "view",
+          "ResolutionPolicy"
+        ]
+      },
+      "capabilities": [
+        "webview"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "Status",
+            "Hint",
+            "FrameGuide",
+            "Clock",
+            "ClockHost",
+            "WebViewHost"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click（矩阵 `waitMs` 保证整条加载序列之后）打在 iframe 覆盖区域中心（`live.centerPoint`，终态几何 200x150 @ (0,14) ⇒ 页面坐标 (240,166)）：这一次点击落在 DOM overlay 的 `<iframe>` 上，被页面自己的 click 监听计进 `window.__clicks` / `body.dataset.clicks`",
+            "expected": "`live.iframeClicks` 由 '0' 变 '1'（页内计数器，非示例自报），`live.engineTouchEvents` 与 `live.canvasDomClicks` 保持 0（web 端 WebView 无输入穿透开关，引擎与 canvas 都收不到这一下），`live.hitAtIframeCenter 'IFRAME'`、`live.wrapperCount 1` 不变；帧时钟继续横扫（frame-diff 可测）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "529cf6946419",
+        "source": "9d93e842f1716162",
+        "candidate": "9fa85f88b968d5f1",
+        "verified": 29,
+        "attested": 7,
+        "units": 36
       }
     }
   ],
@@ -4398,6 +6144,36 @@
     ],
     "runtime": [
       "runtime-asset-release"
+    ],
+    "debug": [
+      "profiler-overlay"
+    ],
+    "ui": [
+      "ui-components",
+      "ui-layout",
+      "webview-basic"
+    ],
+    "physics-2d": [
+      "physics-2d-basic",
+      "physics-2d-collision"
+    ],
+    "particle-2d": [
+      "particle-2d-basic"
+    ],
+    "tiledmap": [
+      "tiledmap-basic"
+    ],
+    "audio": [
+      "audio-basic"
+    ],
+    "video": [
+      "video-basic"
+    ],
+    "physics": [
+      "physics-3d-basic"
+    ],
+    "dragon-bones": [
+      "dragonbones-basic"
     ]
   }
 }

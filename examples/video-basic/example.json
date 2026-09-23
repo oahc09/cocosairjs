@@ -1,0 +1,585 @@
+{
+  "id": "video-basic",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "VideoPlayer — HTMLVideoElement 挂载/透明 video/全屏切换/事件回调 + Code First 运行时 VideoClip (V12 LV12-04)",
+  "category": "video",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "UITransform",
+    "Layers",
+    "Color",
+    "Label",
+    "GraphicsComponent",
+    "GraphicsComponent.rect",
+    "GraphicsComponent.clear",
+    "GraphicsComponent.stroke",
+    "GraphicsComponent.fill",
+    "Component",
+    "EventHandler",
+    "EventHandler.target",
+    "EventHandler.component",
+    "EventHandler.handler",
+    "EventHandler.customEventData",
+    "VideoPlayer",
+    "VideoPlayer.play",
+    "VideoPlayer.pause",
+    "VideoPlayer.resume",
+    "VideoPlayer.videoPlayerEvent",
+    "VideoPlayer.REMOTE",
+    "VideoPlayer.LOCAL",
+    "VideoClip",
+    "assetManager",
+    "screen",
+    "Screen.requestFullScreen",
+    "Screen.exitFullScreen",
+    "js.setClassName",
+    "macro",
+    "view",
+    "ResolutionPolicy",
+    "Node.on"
+  ],
+  "capabilities": [
+    "video"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：`cocos/video`（11 文件，逐字节同源）的 web 通路必须真实跑通——`assetManager.loadRemote('.mp4')` 经 `video-downloader.ts` 的 downloader/factory 注册项产出运行时 `VideoClip`（`_nativeAsset` 是 `<video>` 元素，Code First 无 .meta/无 uuid）；`VideoPlayer` 把 `<video class=\"cocosVideo\">` 挂进 `game.container` 并按节点世界矩阵逐帧定位，`stayOnBottom` 的透明合成、`screen` 的全屏双向、8 个事件名 + `videoPlayerEvent`（EventHandler）两条回调线都要在 chromium/firefox/webkit 三引擎矩阵里逐字段可回读，并且真的解码出图",
+    "points": [
+      "Code First 入口是 `video-downloader.ts` 往 downloader/factory 注册的两张表（`.mp4/.avi/.mov/.mpg/.mpeg/.rm/.rmvb`）：`loadRemote('./assets/clip.mp4')` 直接返回 `VideoClip`。blob URL 挂在 `<video>` 的**子 `<source>`** 上，所以此刻 `video.currentSrc` 是空串而 `source.src` 才是 `blob:`——把它当成「没拿到数据」是误判（实测 `videoCurrentSrcEmpty true` + `sourceChildSrcScheme 'blob:'`）",
+      "`VideoClip._nativeAsset` 的 setter 顺手把 `clip.duration` 抄进 `_duration`（`video-clip.ts:31-40`）：加载那一刻 `_duration 3`，而 `VideoPlayer.duration` getter 走的是 `_impl.getDuration()`（活元素）。同一个「时长」有两个来源，改播放源不会回头修 `_duration`",
+      "`<video>` 元素由 `createVideoPlayer` 追加到 `game.container`（`video-player-impl-web.ts:254-276`），换源走 `removeVideoPlayer` → 新元素（:239-252）⇒「DOM 里恰好 1 个 video」是真的泄漏计数器：本例 P6 换源两次后 `videoCountInDom 1`、`oldElementDetached true`、`elementRecreated true`，点击阶段临时起第二个播放器又销毁后仍回到 1",
+      "`keepAspectRatio` 会用 `videoWidth/videoHeight` **覆盖 UITransform**（`video-player-impl.ts:237-243`）：160x120 的资产 ⇒ `contentSize '160x120'`。所以资产尺寸本身就是断言值，`objectFit` 在 `keepAspectRatio=true` 时被写成 `'none'`、false 时 `'fill'`（impl-web:392-396）",
+      "「真的解码出图」不能靠 `currentTime` 前进证明：暂停态下播放头也能动（seek）。本例把 `<video>` `drawImage` 到同源 2D 画布再取像素（`mean/nonBlackRatio/colorBins`），并且**采样前先确认 `isPlaying`**——第一版在 P3 收尾的静止态采样两帧得到 `mean` 完全相同，误报成「解码器没出图」，那是取样条件错（现已显式 `player.play()` + 轮询）",
+      "`stayOnBottom=true` 的透明合成写的是**渲染层相机**：`syncMatrix` 取 `impl.UICamera`（`batcher2D.getFirstRenderCamera`）并把它的 `clearColor.w` 置 0、`clearFlag` 置 ALL（impl-web:334-352）。组件上的 `cam.clearColor.w` 实测**恒为 1**（`uiCameraIsComponentCamera false`，同名 `'UICamera'` 的两个对象）⇒ 只回读组件侧会把「引擎做了透明」误判成没做。机检四件套：`macro.ENABLE_TRANSPARENT_CANVAS`（必须在 `createAirApp` **之前**置真，swapchain 只在建立时读一次）、`gl.getContextAttributes().alpha true`、计算样式 z-index `0 → -32768 → 0`、`document.elementFromPoint` 命中层 `VIDEO → CANVAS` 翻转",
+      "`player.volume` 不做区间校验：setter 先落 `_volume` 再直写 DOM（`video-player.ts` → impl:136-140），越界值 `5` 会**抛 DOM 异常而引擎字段已经脏**（实测 `volThrowOutOfRange 'assigned'`? 不，是 `'ERR:...'` 且 `volFieldAfterThrow 5`、DOM 仍 0.4）；`NaN` 同样把字段写脏。对照 `AudioSource.volume` 会 clamp 到 [0,1] 且忽略 NaN——两个组件同名字段语义不一致，本例把三值全部钉进 probe",
+      "事件回调有两条线，都必须单独证明：① 节点事件（`node.on('meta-loaded'…)`，8 个名字由 `__preload` 装进 `componentEventList`）；② 序列化那条 `videoPlayerEvent: EventHandler[]`（`EventHandler` 用**类名字符串**找组件：`js.setClassName('V12VideoEventLog', …)` + `eh.component='V12VideoEventLog'`，`component-event-handler.ts:156-175`）。实测 `eventLog` 里每个原生事件都成对出现 `handler:*` 与裸事件名，且 `dispatchEvent` 只在表里有 key 时才改 `_state` ⇒ `player.state` 的取值序列本身就是回调链跑通的证据",
+      "⚠️ `VideoPlayer.fullScreenOnAwake` 只有在 **clip 装载之前**设置才有效。加载完成后置真走 deprecated 重载 `screen.requestFullScreen(video, cb)`（`video-player-impl-web.ts:214-218`），实测三处连锁失效（chromium/firefox/webkit 一致）：(a) `element` 参数被整个忽略——PAL 的 `requestFullScreen()` 无 element 形参，自己选目标，实测 `document.fullscreenElement === BODY` 而不是 video，`videoRect` 全程 `160x120` 没被放大；(b) `cb` 被 `onFullScreenChange?.call(document)` **零参**调用（`screen.ts:157-158`），而实现把回调写成 `(document) => …` ⇒ 形参 shadow 掉全局，读到 `undefined.fullscreenElement` ⇒ 引擎自己 `console.error` 一条 TypeError；(c) 错误回调把 `impl._fullScreenOnAwake` 写成 false，而组件 getter 又从 impl 回读（`video-player.ts:248-255`），于是后续 `= false` 被 setter 的同值卫兵吞掉 ⇒ **永远退不出全屏**。三引擎矩阵的 `noConsoleError` 不容许这条，所以本例的全屏覆盖走 `screen.requestFullScreen()/exitFullScreen()`（现行签名，`await` + catch：非全屏态直接 `exitFullScreen()` 会 reject `Document not active`）与 awake 几何全屏两路",
+      "awake 路的全屏是**几何全屏**：`syncFullScreenOnAwake(true)` 在未加载时只置 `_waitingFullscreen`，`onLoadedMetadata` 里 `delayedFullScreen()` 因 `readyState!==4` 从 `canFullScreen` 早退 ⇒ 从不碰 DOM 全屏 API（实测 `fsEl 'null'`），但 `impl._fullScreenOnAwake` 保持 true，`syncMatrix` 于是按 `visibleRect` 出尺寸 ⇒ `<video>` 变成 `480x360` 且 `styleWH '480pxx360px'`，同屏另一个播放器不受影响（`mainPlayerUnaffected '160x120'`）。本例用第二个 VideoPlayer 跑这条路，跑完 `destroy()` 并回读 `videoCount` 回到 1"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas + UICamera + Status + Hint + FrameGuide + Clock + ClockHost + VideoHost（VideoHost 挂 VideoPlayer + V12VideoEventLog）。加载期跑 8 个阶段（全部同步读回 + 轮询延迟，无随机）：P0 运行时资产（`clipCtor 'VideoClip'`、`isVideoClip true`、`nativeTag 'VIDEO'`、`videoCurrentSrcEmpty true`、`sourceChildSrcScheme 'blob:'`、`nativeUrlIsRequestUrl true`、`clipDurationField 3`、`cacheHasUrl true`）；P1 挂载（`videoCount 1`、`className 'cocosVideo'`、`inGameContainer true`、`visibility 'visible'`、`playsinlineAttrs ',,'`（三个属性都在、值为空串）、`videoWidth x Height '160x120'`、`duration 3`、`readyState 4`、`stateAfterMeta 'ready-to-play'`、`contentSize '160x120'`、`domRect` 四项）；P2 回调序列（`firstMetaLoaded 0`、`metaBeforeReady true`、`handlerHitsPositive true`、`lastHandlerArgs {hasPlayer,type,custom}`、`classByNameMatches true`、`stateIsEventTypeEnum true`）；P3 播控（`playingWithinMs>=0`、`advancedWhilePlaying true`、`frozenWhilePaused true`、`resumedFromOffset true`、`seekLandedNear12 true`、`rateReadback [2,2]`、`volOk [0.4,0.4]`、越界/NaN 三值、`loopReadback [true,false]`、`muteReadback [false,true]`）；P4 透明（`macroTransparentCanvas true`、`glContextAlpha true`、`zIndexBefore '0' → zIndexAfterBottom '-32768' → '0'`、scene camera 的 `sceneClearAlphaBefore/AfterBottom` 与 `sceneClearFlagChanged`、`hitTestFlipped true`（VIDEO→CANVAS）、`uiCameraIsComponentCamera false`）；P5 几何与解码出图（`objectFitKeepAspectRatio 'none'`、`contentSizeFromVideo '160x120'`、`playingBeforeSample` 为真时 `decodedFramesAdvance true`、`frameNotBlank true`（mean>20 且 nonBlackRatio>0.5））；P6 换源（`elementRecreated true`、`videoCountAfterEnumOnly 0`、`videoCountAfterSwitch 1`、`oldElementDetached true`、`sameUrlBothPaths true`）；P7/P8 判尾与循环（`completedWithinMs>=0`、`endedDelta 1`、`isPlayingAfterEnd false`、`clampedBeyondDuration` 两项、`wrappedBelowSeekTarget true`、`completedDeltaDuringLoop 0`）；点击阶段 P9（`enterResolved true` + `during.fsEl 'BODY'`、`exitResolved true` + `exitSettledWithinMs>=0` + `after.fsEl 'null'`、`isFullScreen` 双向、awake 第二播放器 `grewToViewport true` / `fsEl 'null'` / `fullScreenOnAwakeReadback true`、销毁后 `awakeAfterDestroy.videoCount 1`、收尾 `endState.stayOnBottomZIndex '-32768'` + `hitTag 'CANVAS'`）。终态 live：`videoCountInDom 1`、`fullscreenElementIsNull true`、`duration 3`、`stayOnBottom true`、`domRect '160x120'`、状态行 `video fullscreen ok`",
+    "visual": "深蓝底（clearColor 10,14,22,255）一屏：顶部状态行依次改写 `video: loading → video meta ok → video controls ok → video transparency ok → video geometry ok → video source switch ok → video loop ok → video ready — click to fullscreen → video fullscreen ok`；中部是一条 160x120 的**真视频**（DOM `<video>`，靠 `stayOnBottom` 压到 canvas 之下并由透明 swapchain 露出），其外叠一圈琥珀色描边矩形标示 VideoPlayer 的世界矩形；下方一条绿色小块 = `Graphics` 画的帧时钟（每 2400 ms 横扫一次，与视频后端无关，保证三引擎都有持续的帧间变化）；底部一行提示 `click the video to toggle fullscreen`。frame-diff 的持续变化来源是绿色帧时钟 + 视频本体像素（实测 mean≈114、colorBins≈250-350 逐帧变化）⇒ 三引擎 frameChanged 全 PASS；「是否真解码出图」由 probe 的 `frameA/frameB/live.frameMeanNow` 独立回读，不用画面替引擎背书"
+  },
+  "api": {
+    "primary": [
+      "VideoPlayer",
+      "VideoClip",
+      "EventHandler"
+    ],
+    "supporting": [
+      "VideoPlayer.play",
+      "VideoPlayer.pause",
+      "VideoPlayer.resume",
+      "VideoPlayer.videoPlayerEvent",
+      "VideoPlayer.REMOTE",
+      "VideoPlayer.LOCAL",
+      "EventHandler.target",
+      "EventHandler.component",
+      "EventHandler.handler",
+      "EventHandler.customEventData",
+      "Screen.requestFullScreen",
+      "Screen.exitFullScreen",
+      "assetManager",
+      "js.setClassName",
+      "macro",
+      "Node.on",
+      "Label",
+      "GraphicsComponent",
+      "GraphicsComponent.rect",
+      "GraphicsComponent.clear",
+      "GraphicsComponent.stroke",
+      "GraphicsComponent.fill"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Canvas",
+      "UITransform",
+      "Layers",
+      "Color",
+      "Label",
+      "GraphicsComponent",
+      "GraphicsComponent.rect",
+      "GraphicsComponent.clear",
+      "GraphicsComponent.stroke",
+      "GraphicsComponent.fill",
+      "Component",
+      "EventHandler",
+      "EventHandler.target",
+      "EventHandler.component",
+      "EventHandler.handler",
+      "EventHandler.customEventData",
+      "VideoPlayer",
+      "VideoPlayer.play",
+      "VideoPlayer.pause",
+      "VideoPlayer.resume",
+      "VideoPlayer.videoPlayerEvent",
+      "VideoPlayer.REMOTE",
+      "VideoPlayer.LOCAL",
+      "VideoClip",
+      "assetManager",
+      "screen",
+      "Screen.requestFullScreen",
+      "Screen.exitFullScreen",
+      "js.setClassName",
+      "macro",
+      "view",
+      "ResolutionPolicy",
+      "Node.on"
+    ],
+    "forbiddenShortcut": [
+      "绕开 `assetManager.loadRemote` 自己 `document.createElement('video')` 或 `new VideoClip()` 塞 `_nativeAsset` 冒充「Code First 运行时 VideoClip」：计划书 LV12-04 要的就是 `video-downloader.ts` 的 downloader/factory 两张注册表这条通路，必须回读 `clipCtor 'VideoClip'`、`nativeTag 'VIDEO'`、`sourceChildSrcScheme 'blob:'`、`nativeUrlIsRequestUrl true`",
+      "把 `currentTime` 前进或 `readyState>=1` 当成「真的解码出图」：暂停态 seek 也会动播放头。必须把 `<video>` `drawImage` 到同源 2D 画布取像素统计（mean/nonBlackRatio/colorBins），且**采样前确认 `isPlaying`**——否则测的是取样条件而不是解码器（第一版就踩了这个：静止态两帧 `mean` 完全相同被误读成解码失效）",
+      "用 `camera.clearColor.w`（组件侧）为 `stayOnBottom` 的透明合成背书：引擎写的是 `impl.UICamera`（渲染层 scene camera），实测两者不同对象、组件侧恒 1。透明链路必须回读 scene camera 的 clearColor/clearFlag，再配 z-index 计算样式与 `elementFromPoint` 命中层翻转，三者缺一即误判",
+      "在加载完成之后设置 `player.fullScreenOnAwake = true` 来演示「全屏切换」：那条 deprecated 重载实测既不全屏 video（`document.fullscreenElement` 是 `BODY`）、又抛一条引擎自己的 TypeError（回调零参 + 形参 shadow），还会把状态写成 false 使后续退出被同值卫兵吞掉 ⇒ 矩阵 `noConsoleError` 必红。全屏双向只能用 `screen.requestFullScreen()/exitFullScreen()`（并 await + catch），`fullScreenOnAwake` 只走 awake 几何路",
+      "把 DOM 全屏的等待写成固定 `sleep`：进入/退出 settle 逐引擎不同（实测 `exitSettledWithinMs 0`，但 Firefox 在退出后把 video 的 `getBoundingClientRect()` 报成 `341.3x256` 而 chromium/webkit 是 `160x120`）⇒ 这类量只能进 probeNonEmpty，不得进 probeEquals",
+      "不做 `player.volume` 的越界/NaN 断言就宣称「音量生效」：引擎字段会先落脏值再被 DOM 抛异常（`volume=5` 后 `player.volume` 读到 5、DOM 仍是 0.4），与 `AudioSource.volume` 的 clamp 语义相反，必须把三组值分别回读",
+      "只 new 组件不读回定死的数值：必须有 `duration 3`、`videoWidth/Height '160x120'`、`contentSize '160x120'`、`state` 名、`zIndex '0'/'-32768'`、`seekLandedNear12`、`endedDelta 1`、`completedDeltaDuringLoop 0` 等可机器比对量",
+      "用 `hostNode.destroy()` 充当「资源已释放」：`loadRemote` 以 URL 为键缓存，且 `impl.destroy()` 之外还有 `<video>` DOM 元素与 `componentEventList` 两条泄漏面 ⇒ §25 合同必须复跑「release → reacquire → 画面复看」，本例另以 `videoCountInDom 1` 作为 DOM 侧的独立泄漏计数"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L100"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L104"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L128"
+      },
+      {
+        "api": "GraphicsComponent",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L156"
+      },
+      {
+        "api": "GraphicsComponent.rect",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L319"
+      },
+      {
+        "api": "GraphicsComponent.clear",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L169"
+      },
+      {
+        "api": "GraphicsComponent.stroke",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L176"
+      },
+      {
+        "api": "GraphicsComponent.fill",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L172"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L166"
+      },
+      {
+        "api": "EventHandler",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L253"
+      },
+      {
+        "api": "EventHandler.target",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L254"
+      },
+      {
+        "api": "EventHandler.component",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L255"
+      },
+      {
+        "api": "EventHandler.handler",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L194"
+      },
+      {
+        "api": "EventHandler.customEventData",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L257"
+      },
+      {
+        "api": "VideoPlayer",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L244"
+      },
+      {
+        "api": "VideoPlayer.play",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L344"
+      },
+      {
+        "api": "VideoPlayer.pause",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L349"
+      },
+      {
+        "api": "VideoPlayer.resume",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L354"
+      },
+      {
+        "api": "VideoPlayer.videoPlayerEvent",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L257"
+      },
+      {
+        "api": "VideoPlayer.REMOTE",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L321"
+      },
+      {
+        "api": "VideoPlayer.LOCAL",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L245"
+      },
+      {
+        "api": "VideoClip",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L283"
+      },
+      {
+        "api": "assetManager",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L94"
+      },
+      {
+        "api": "screen",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L576"
+      },
+      {
+        "api": "Screen.requestFullScreen",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L584"
+      },
+      {
+        "api": "Screen.exitFullScreen",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L592"
+      },
+      {
+        "api": "js.setClassName",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L199"
+      },
+      {
+        "api": "macro",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L62"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L101"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L101"
+      },
+      {
+        "api": "Node.on",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L260"
+      }
+    ]
+  },
+  "assets": [
+    "assets/clip.mp4"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "Hint",
+        "FrameGuide",
+        "Clock",
+        "ClockHost",
+        "VideoHost"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）画布一次（矩阵 `waitMs=18000` 保证打在整条加载序列之后、点击坐标 240,190 落在 VideoHost 矩形上）：跑全屏双向 + awake 几何全屏 + 收尾把 video 压在 canvas 之下；序列带闩锁，后续点击不会重跑",
+        "expected": "画面从「`video ready — click to fullscreen`」变为「`video fullscreen ok`」且帧时钟持续横扫（frame-diff 可测）；`screen.requestFullScreen()/exitFullScreen()`、`VideoPlayer.fullScreenOnAwake` 的 awake 路、第二个播放器的创建与销毁在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：`assets/clip.mp4`（H.264 baseline / yuv420p / 160x120 / 15fps / 3.000 s / 无音频轨 / faststart）由仓库内 `tools/fixtures/make-video-mp4.cjs` 再生成。容器与编码格式是**三引擎真实解码探测**选出来的，不是 `canPlayType`（WebKit 对 vp8 webm 报 `probably` 却 `duration=NaN`、`play()` 仍 resolve、帧恒黑），探测脚本与逐条 JSON：`E:/AIProMax/cocosair-scratch/v12-diag/video-decode-probe.{cjs,json}`。video 模块为 cocos4 上游 TypeScript 端口（`src/cocos/video/**` 逐字节同源，登记在 `docs/upstream-file-map.json`）"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Canvas": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 104,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      },
+      "UICamera": {
+        "position": [
+          0,
+          0,
+          1000
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 113,
+            "text": "cameraNode.setPosition(0, 0, 1000);"
+          }
+        ]
+      },
+      "Status": {
+        "position": [
+          0,
+          148,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 126,
+            "text": "statusNode.setPosition(0, 148, 0);"
+          }
+        ]
+      },
+      "Hint": {
+        "position": [
+          0,
+          -150,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 138,
+            "text": "hintNode.setPosition(0, -150, 0);"
+          }
+        ]
+      },
+      "FrameGuide": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 151,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      },
+      "Clock": {
+        "position": [
+          0,
+          -124,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 162,
+            "text": "clockNode.setPosition(0, -124, 0);"
+          }
+        ]
+      },
+      "ClockHost": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 186,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      },
+      "VideoHost": {
+        "position": [
+          0,
+          -10,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 242,
+            "text": "hostNode.setPosition(0, -10, 0);"
+          }
+        ]
+      }
+    }
+  },
+  "promotion": {
+    "spec": "e4de09333e06",
+    "source": "35f72dfaf054cab5",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 24,
+    "attested": 13,
+    "units": 37
+  }
+}

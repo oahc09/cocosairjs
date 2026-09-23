@@ -9,7 +9,7 @@
 | Catalog | `tools/benchmark/catalog/catalog-iss.ts`（50 项，revision `catalog-iss-r1`） |
 | 领域分布 | Invalid B101–B118（18）· Stress B119–B134（16）· Security B135–B150（16） |
 | Fixtures | `tools/benchmark/fixtures/B1xx/`（由 `tools/benchmark/materialize-iss.cjs` 物化：index.html + src 起点 + assets） |
-| 冻结参考实现 | `tools/benchmark/references/frozen/B1xx.main.ts` |
+| 冻结参考实现 | `tools/benchmark/references/frozen/` 下逐编号一份（ISS 段 `B100.main.ts` … `B150.main.ts`） |
 | 执行器 | `tools/verify/v08-iss-gate.cjs`（复用 run-golden10/TrialRunner Reference Track；`run-golden10.ts` 新增可选 `catalog` 参数，默认仍为 catalog100） |
 | 证据 | `docs/evidence/v08-iss-runtime-gate.json`（**50/50 PASS**，含逐项 validatorResults）+ `.log` |
 

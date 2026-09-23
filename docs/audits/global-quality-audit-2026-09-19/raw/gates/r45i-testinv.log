@@ -1,0 +1,24 @@
+{
+  "ok": false,
+  "mode": "check",
+  "extraJestArgs": [],
+  "manifest": "docs/test-inventory.json",
+  "totals": {
+    "suites": 32,
+    "tests": 262,
+    "passed": 260,
+    "failed": 2
+  },
+  "observedTotals": {
+    "suites": 32,
+    "tests": 262,
+    "passed": 260,
+    "failed": 2
+  },
+  "failures": [
+    "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §15 全部 example.json 达到 frozen 且规格零问题",
+    "test not passed (failed): test/smoke/smoke-29-examples-spec.test.ts :: V1.1 — Example Specification 门禁 §11/§12 证据链符合性零 fail（spec-compliance-audit）",
+    "jest reported 2 failed test(s) / success=false"
+  ],
+  "output": null
+}

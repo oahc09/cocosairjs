@@ -1,0 +1,122 @@
+[
+  {
+    "arm": "P 阳性对照（全部未改副本）",
+    "exit": 0,
+    "wantExit": 0,
+    "hard": 0,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 0,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N1 篡改一条 PASS 记录的截图字节数",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 1,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N2 把一条非白格 firefox 记录改成 FAIL",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 1,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N3 删掉一条记录（漏例必须翻红，不得静默缩分母）",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 2,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N4 清空一份源的 results（反空转）",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 2,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N5 白格意外翻绿 ⇒ 归因过期必须红",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 1,
+    "stale": 2,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N6 白格 unproven 集合漂移（归因只认在册那一组 API）",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 1,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N7 未在册的跨引擎字段漂移",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 1,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N8 白格活体前提撤销（工作树 NC 已不在）⇒ 归因过期必须红",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 0,
+    "stale": 2,
+    "missedMarkers": [],
+    "injected": 0,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  },
+  {
+    "arm": "N9 FAIL 格产物失真但 attempts 不是 2 ⇒ F-133 模型必须拒收",
+    "exit": 1,
+    "wantExit": 1,
+    "hard": 1,
+    "stale": 0,
+    "missedMarkers": [],
+    "injected": 1,
+    "selfProofOk": true,
+    "guardOk": true,
+    "ok": true
+  }
+]

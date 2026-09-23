@@ -94,7 +94,7 @@ Lissajous 指针在两帧 400ms 间隔内可能停在同一格或格间（`hit=-
 **逐三角形精确拾取**（对任意 mesh 求三角命中）与 **GPU picking**（离屏渲染 ID 图）在 AIR 无一等公民入口——
 `Ray`/`AABB` 不导出、无用户 GLSL 做 ID 图（GPU picking 的完整讨论在专门的 [indexed-textures](indexed-textures.md) 一篇，定 PARTIAL）。
 可行升级路：给物体挂物理碰撞体走 `physics.raycastClosest`（本篇未取证），或应用层对三角列表手写 Möller–Trumbore
-（数据自备，指路 [custom-geometry](custom-geometry.md)）。
+（数据自备，指路 [custom-geometry](custom-buffergeometry.md)）。
 
 ## 4. 拾取要点备忘
 

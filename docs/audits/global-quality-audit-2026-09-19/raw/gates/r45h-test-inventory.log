@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "mode": "check",
+  "extraJestArgs": [],
+  "manifest": "docs/test-inventory.json",
+  "totals": {
+    "suites": 32,
+    "tests": 262,
+    "passed": 262,
+    "failed": 0
+  },
+  "observedTotals": {
+    "suites": 32,
+    "tests": 262,
+    "passed": 262,
+    "failed": 0
+  },
+  "failures": [],
+  "output": null
+}

@@ -1,0 +1,592 @@
+{
+  "id": "dragonbones-basic",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "DragonBones — 运行期构造龙骨资产 / REALTIME 骨骼动画 / display 换图 / 资源释放重建 (V12 LV12-11)",
+  "category": "dragon-bones",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "UITransform",
+    "Layers",
+    "Color",
+    "Label",
+    "Texture2D",
+    "assetManager",
+    "view",
+    "ResolutionPolicy",
+    "Director",
+    "director",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.on",
+    "DragonBonesAsset",
+    "DragonBonesAtlasAsset",
+    "ArmatureDisplay",
+    "CCFactory",
+    "AnimationCacheMode",
+    "DragonBonesAsset.init",
+    "DragonBonesAtlasAsset.init",
+    "CCFactory.getInstance",
+    "CCFactory.getDragonBonesDataByUUID",
+    "ArmatureDisplay.playAnimation",
+    "ArmatureDisplay.playTimes",
+    "ArmatureDisplay.setAnimationCacheMode",
+    "ArmatureDisplay.isAnimationCached",
+    "ArmatureDisplay.armature",
+    "Armature.getSlots",
+    "Armature.getBones",
+    "Armature.animation",
+    "Armature.advanceTime",
+    "Armature.name",
+    "Animation.gotoAndStopByFrame",
+    "Animation.isPlaying",
+    "ArmatureData.getSkin",
+    "ArmatureData.animations",
+    "ArmatureData.bones",
+    "ArmatureData.slots",
+    "DragonBonesData.getArmature",
+    "DragonBonesData.armatureNames",
+    "DragonBonesData.version"
+  ],
+  "capabilities": [
+    "dragon-bones"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "animation-playing"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：DragonBones（龙骨）在 Cocos Air Code First 下必须能**不依赖 assetManager 的 uuid 依赖图**、由运行期 `new DragonBonesAsset()` + `new DragonBonesAtlasAsset()` 真实构造资产，经 `CCFactory` 解析、`ArmatureDisplay` 建 armature、走引擎自己的 `assembler/drawList` 出图；并且「骨骼动画在播」「slot 换 display」「资源释放后重建」三件事都要在浏览器矩阵里逐字段可回读、像素可佐证。资产为 `tools/fixtures/make-dragonbones-skeleton.cjs` 生成的手写 DragonBones 5.5 数据，零第三方许可面",
+    "points": [
+      "手工构造的资产 uuid 会**退化成数据里的 name**（`DragonBonesAtlasAsset.init`：uuid 为空则取 `atlasJson.name`；`DragonBonesAsset.init` 同理取 `dbData.name`）。实测本例 `atlasUuid === dragonUuid === 'AirDragon'` ⇒ `armatureKey === 'AirDragon#AirDragon'`（`uuid#atlasUUID` 拼装）。这既是 Code First 可用的原因，也是「同一份数据重复 new 会撞 key」的原因：`init()` 命中已有 `dragonBonesData` 就直接早退",
+      "`ArmatureDisplay` 的运行期形状与文档直觉不符，三处实测：`display.armature` 是**方法**（`typeof display.armature === 'function'`）而不是属性；`display.renderEntity` 没有 `getRenderData()`；`factory.getTextureAtlasData(uuid)` 返回的是 **Array**（`ownKeys ['0']`）而不是 `TextureAtlasData` ⇒ 图集事实只能读 `atlasAsset._textureAtlasData`（实测 ctor `CCTextureAtlasData`，字段 `textures/_renderTexture/width/height/scale/name/imagePath`）。探针里读空不报错，症状与「龙骨根本没解析」完全同形",
+      "运行层事实的采集时机是硬约束：armature 要到 `__preload → _init → _parseDragonAtlasAsset → _refresh → _buildArmature` 才建出来，而 `__preload` 只在场景激活后触发 ⇒ 必须在 `app.run(scene)` 且至少一帧 `Director.EVENT_AFTER_DRAW` 之后采。⚠️ 更隐蔽的一条：Air Code First 的场景入口是 `app.run(scene)`，**不是** `director.runScene(scene)`——后者 `EVENT_AFTER_DRAW` 永不触发，探针只会报 `no rendered frame`，看起来和「龙骨渲染坏了」一模一样（r5 实测踩过后写进合同）",
+      "龙骨的公开**属性 setter**（`dragonAsset` / `dragonAtlasAsset` / `armatureName` / `animationName` / `dragonBonesJson` / `atlasJson` / `texture`）与 vendored 运行层的 `Slot.*` / `Bone.global` 在 `docs/example-api-inventory.json` 的 units 里**根本不存在**（inventory 只收方法/字段单元）。§3 精确绑定门禁（`claim not in example-api-inventory`）因此挡死了「用 setter 当主张」的写法 ⇒ 本例的 claim 面退到 `Armature.getSlots` / `Animation.gotoAndStopByFrame` / `DragonBonesAsset.init` 等确实存在于 inventory 的单元，而 setter 通路只在 `learning` 与 `p1/p6` 事实里留痕。这是 inventory 的覆盖面观察，不是本示例的取舍偏好",
+      "`SlotData` 的层序字段叫 **`zOrder`**（没有 `z`）：实测 `[body 0, wing-left 1, wing-right 2, tail 3]`，与生成器写入顺序一致；`displayIndex` 是第二个字段（本例恒 0）。按 `z` 读会得到一片 null 并被误判成「数据没解析进来」",
+      "`AnimationData` 的时间线**不是**数组而是**按 bone/slot 名字索引的映射**：`boneTimelines` / `slotTimelines`（值 = `TimelineData[]`），`TimelineData` 只有 `type / offset / frameIndicesOffset` 三个字段（实测 flap：`boneTimelines {root:[[11,0,0]], wing-left:[[12,10,25]], wing-right:[[12,18,50]]}`、`slotTimelines {tail:[[20,26,75]]}`）。`type` 语义实测自 `out/dragonBones.js`：11=BoneTranslate、12=BoneRotate、**20=SlotDisplay**（`case 20 → SlotDislayTimelineState`，源码就是这个拼写）。帧的数值本体在 `DragonBonesData.frameIntArray/frameFloatArray` 里，`cacheFrameRate 0` 时 `cachedFrames.length === 0` ⇒ 不要指望 `anim.frames[i]` 这种 UI 文档式取帧",
+      "⚠️ 最容易假通过的一条：**帧数据的旋转角键名是 `skew`，不是 `rotation`**（`out/dragonBones.js:12987`：`_frameFloatArray[..] = _getNumber(rawData, DataParser.SKEW, 0.0) * DEG_RAD`）。生成器早先写 `rotateFrame: {duration, rotation}`，解析器不报错、按默认值 0 收，表现为「时间线确实存在（type 12）但姿态恒为 0」——只有把 `bone.global` 整块逐帧采出来才看得见（r8 实测 `wingSkew` 五帧全 0）。改成 `skew` 后（r9）实测 `wing.global.skew` 在钉帧序列上给出 0.7 / 0.24 / 0.63 / 0.7 / 0.7 rad。骨架**初始**变换走另一条分支（13259-13261：`rotate` 或 `skew` 任一存在即读 `skew` 值），两处键名并不统一",
+      "`bone.global` 实测是 `Transform`，ownKeys 为 `[x, y, skew, rotation, scaleX, scaleY]`：**全局角在 `skew`（弧度）**，`rotation` 恒 0。所以「翅膀有没有转」只能比 `skew`；先按 `skewX`（另一版 dragonBones 的写法）取会拿到 undefined，再退到 `rotation` 就得到一个看起来合理的 0 ⇒ 假阴性。本示例用 `firstDefined(['skewX','skew','rotation'])` 把**实际命中的键名**也记成事实（`wingSkewKey`），避免键名漂移被静默吸收",
+      "`playAnimation(animName, playTimes)` 的第二参不是「第几遍」而是循环次数，且**`0` 在龙骨语义里是「播一次后停」**：早先传 0 使 `anim.isPlaying === false`、姿态停在末帧（r6 归因）。传 `-1`（无限循环）后实测 `afterIdle.isPlaying true`、`backToFlap.isPlaying true`。数据侧 `flap.playTimes 0` / `idle.playTimes -1` 保持原样并被记进 `p3Skeleton.animations`——引擎侧显式覆盖是本合同的一部分",
+      "动画取证的决定性通路是 `Animation.gotoAndStopByFrame(name, frame)`（内部 `gotoAndPlayByFrame(name, frame, 1)` + `state.stop()`）+ `armature.advanceTime(0)`：实测钉帧后 `state.currentTime`（键名由 `stateTimeKey` 事实锁定）精确等于 `frame/frameCount` ⇒ 0/0.25/0.5/0.75/0.96，且同一帧在真实渲染帧前后各读一次姿态全等（`allFramesStable true`）。挂钟相位跨引擎不可复现，钉帧可以",
+      "换图（displayFrame）的双层判据：tail slot 在 default skin 有 2 个 display（`rawDisplayDataNames ['plate','tip']`，`displayList.length 2`），flap 的 `slotTimelines.tail` type 20 驱动 0→1→0。实测帧 6/12 `displayIndex 1 / region 'tip'`，帧 0/18/23 `displayIndex 0 / region 'plate'`；**同一帧的帧缓冲里红色 tip 像素 78、绿色 plate 掉到 21/15**，而 plate 帧 tip 像素恒 0、plate 恒 120 ⇒ 「内部索引变了」与「屏幕真换了 region」同时成立。⚠️ 只用 `slot.display.name` 会永远读到 slot 名（引擎 display 对象的 name 不是 region 名），据此断言换图必假阴性",
+      "崩溃前置条件也要当事实采：`TimelineState.init` 读 `this._animationData.parent.frameRate`，`AnimationData.parent` 为 null（资产已 destroy / 对象池回收后）会直接抛 `Cannot read properties of null (reading 'frameRate')` ⇒ 本合同把 `animationsHaveParent [['flap',true],['idle',true]]` 与 `parentIsArmatureData true` 钉成显式事实，并规定**生命周期释放/重建取证必须排在动画事实冻结之后**（否则 pageerror 会被误读成渲染链坏了）",
+      "缓存模式决定钉帧有没有意义：`_defaultCacheModeValue` 默认即 `AnimationCacheMode.REALTIME`（实测 `_cacheMode REALTIME:0`、`isAnimationCached() false`），本例仍显式 `setAnimationCacheMode(REALTIME)` 把意图写进代码。SHARED_CACHE/PRIVATE_CACHE 下出图由**缓存帧表按挂钟采样**，`gotoAndStopByFrame` 改的是实时状态而不改渲染帧 ⇒ 想用钉帧做确定性像素证据就必须 REALTIME",
+      "矩阵取证只调**一次** `window.__probe()`（`tools/v12/browser-matrix.cjs`：waitMs → 点击 → afterClickMs → probe），所以任何「靠多次采样累积」的事实都不能进 `probeEquals`。实测踩过：`live.tipSeenInLiveSampling`（由 `__probe` 自己那一次像素采样置位）在三引擎上一致为 `false` ⇒ 整条矩阵红（快照 `E:/AIProMax/cocosair-scratch/db-probe/matrix-dry-r1.json`）。同一事实改由钉帧通路的 `live.tipSeenInPerFrameSampling`（帧 6/12 采样累积）给出后三引擎一致 `true`，改判据不改代码即转绿（`matrix-dry-r2.json`，247 条 probeEquals 全 PASS）。`live.tailIndex/tailRegion` 同理属挂钟相位量，只进 `probePresent`",
+      "三引擎决定性实测（当期全量矩阵 `docs/evidence/v12/browser-matrix.json`，`waitMs 9000 / click 240,180 / afterClickMs 2000`）：**钉帧通路逐字段一致**——`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、`regionSequence` 五条、70 条 `goToFrame.*` 姿态读数在 chromium(swiftshader)/firefox/webkit 上全部为 `probeEquals` 且全绿；而**终态 `live.pixels.counts` 属挂钟量**（probe 那一刻 tail 正贴 plate）：chromium/firefox 同为 `{plate:120, wing:137, tip:0, background:0}`，webkit `{plate:117, wing:136, tip:0}`（2 步长采样 + ±24 容差下的光栅化差 ±3 点）⇒ 合同只对它用 `probeNonEmpty`/`probePresent`，不钉数值。截图字节 10898/12867/11521，`minPngBytes` 定 8000（对最小值留 ~27% 余量）。本例龙骨图形只占约 0.6% 采样点（终态 plate+wing = 257 / 43200；`litRatio` 0.0237~0.0252 里还含顶部状态文字），帧间变化来源是龙骨自己的逐帧换图（wing skew + tail display），因此 `frameChanged true` 与钉帧像素事实一起，才构成「三引擎真的出图且出的是同一张图」而不是「都画了点什么」"
+    ],
+    "evidenceMix": "本合同 46 units 的逐 API 证明实测为 15 verified + 31 attested（`docs/evidence/v11-examples-verified.json` 行 `dragonbones-basic`，promotion 三元组见 `examples/files.json` 行 `dragonbones-basic` 的 `promotion`（**规格文本里不印自己的 spec 指纹**：一印就自我作废——本例实测把 `66029ac700c7` 写进这段后，追加一条 learning 就触发 `spec-compliance-audit` 的 `S11-STALE-EVIDENCE fail：证据 specFingerprint ≠ 当前 example.json`，只能重取证据。所有指纹值留在产物里，不留在规格里）。分界不是「证据强弱」而是 tracer 的机制：`tools/verify/api-trace.cjs` 只在**顶层导出的 export table** 上装 wrapper/prototype descriptor（`DragonBonesAsset` 这类挂在 `dragonBones` 命名空间下的类，实测 `notes: 'Animation.gotoAndStopByFrame: no own descriptor on prototype'`、state `unresolved`）⇒ 31 个龙骨侧 unit 只能 attested（bound 到 PASS 的 validator 且出处行号逐字节对得上），15 个 cc 顶层 unit 拿到 executed 计数。⚠️ 另一条实测坑：`spec-evidence.cjs` 与 `spec-expectations.cjs` 写的都是**行号**，改过 `main.js` 之后必须重跑这两步再跑 `v11-examples-verify`，否则 `bound` 会因「L210 未出现 DragonBonesAsset（行内容漂移）」整片退成 unproven（本例 r2 就是这样从 promoted 退回再转绿的）"
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas + UICamera + Status + airdragon 四/五个节点，`ArmatureDisplay` 挂在 `airdragon` 上。P1 构造：`atlasCtor DragonBonesAtlasAsset` / `dragonCtor DragonBonesAsset` / `displayCtor ArmatureDisplay` / `factoryType CCFactory`，`loadRemote` 对 `.png` 回 `ImageAsset`、对两份 `.json` 回 `JsonAsset`；`atlasUuid dragonUuid 'AirDragon'`、`armatureKey 'AirDragon#AirDragon'`、`armatureKeyIsUuidHashAtlas true`、`setterRoundTrip true`、`cacheMode {_cacheMode, REALTIME:0, isAnimationCached false}`、`sameDataFromFactory true`。P2 图集（读 `atlasAsset._textureAtlasData`，ctor `CCTextureAtlasData`）：`{name:'AirDragon', width:64, height:64, imagePath:'AirDragon_atlas.png', scale:1, regionCount:3, textureNames:['plate','tip','wing'], regions:[plate [2,2,20,20], wing [26,2,20,20], tip [2,26,12,28]]（均 rotated false / hasFrame true）, renderTextureAttached true`；`factory.getTextureAtlasData(uuid)` 的形状记为 `factoryReturnShape {ctor:'Array', ownKeys:['0']}`（事实登记，不当访问器用）。P3 骨架数据：`dataName AirDragon`、`dataVersion 5.5`、`armatureNames ['airdragon']`、bones `[root, body, wing-left, wing-right, tail]` 带 parents（root 的 parent 为 null）与 lengths `[0,24,20,20,28]`、slots `[body, wing-left, wing-right, tail]` 的 `zOrder [0,1,2,3]`、`skinDisplays {body:[plate], wing-left:[wing], wing-right:[wing], tail:[plate,tip]}`、`animations`：flap `{duration 1, frameCount 24, playTimes 0, fadeInTime 0, cacheFrameRate 0, boneTimelines {root:[[11,0,0]], wing-left:[[12,10,25]], wing-right:[[12,18,50]]}, slotTimelines {tail:[[20,26,75]]}, cachedFramesLength 0}` / idle `{0.5, 12, -1, boneTimelines {body:[[12,34,100]]}, slotTimelines {tail:[[20,42,-1]]}}`，两条 `parentIsArmatureData true`。P4 运行层（`app.run` + 3 帧之后采）：`armatureIsMethodOnDisplay true`、ctor `Armature`、`name 'airdragon'`、`slotSource 'getSlots()'`、slotNames `[body, wing-left, wing-right, tail]`、boneNames 五条与数据层全等、`drawListLength 1`、`nodeParent 'Canvas'`、`dataSlotCount 4`、逐 slot `displayIndex/region/displayListLength/rawDisplayDataNames`（tail 唯一有 2 个候选 display）。P5 动画：ctor `Animation`，`stateShape.ctor AnimationState`、`stateTimeKey 'currentTime'`、`lastAnimationName 'flap'`、`animationStateNames ['flap','idle']`、`tailDisplayCount 2`；对帧 [0,6,12,18,23] 逐个 `gotoAndStopByFrame` + `advanceTime(0)` → 读姿态 → 真实渲染帧采样像素 → 再读姿态，结果 `allFramesStable true`，`regionSequence [[0,0,'plate'],[6,1,'tip'],[12,1,'tip'],[18,0,'plate'],[23,0,'plate']]`、`displayIndexSwapped true`、`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、`wingSkewKey 'skew'` 且 `wingSkew` 逐帧 0.7/0.24/0.63/0.7/0.7、`rootY` 0/-1.67/8.33/1.67/0、`stateTime` 0/0.25/0.5/0.75/0.96；换到 idle 后 `{animationName idle, playTimesProp -1, isPlaying true, stateName 'idle'}`，切回 flap 仍 `isPlaying true`。P6 生命周期合同面：释放路径 `display.dragonAtlasAsset=null → dragonAsset=null → 三个资产 destroy()`，重建路径 `重新 new + 填 setter → atlasAsset.init(factory) → wireDisplay → dragonAsset.init → playAnimation(-1)`，判定量由 `window.__lifecycle()` 产出（released/leaked/reloaded）。终态 live（当期全量矩阵三引擎）：`slotCount 4`、`drawListLength 1`、`isPlaying true`、`animationName idle`、`tailRegion plate`、像素 counts chromium/firefox `{plate 120, wing 137, tip 0, background 0}`、webkit `{117, 136, 0, 0}`（`litRatio` 0.0237~0.0252）。⚠️ 终态 counts 是 `__probe()` 调用那一刻的挂钟快照：页面级另一次捕获（钉帧停在 tip 帧）读到的是 `{plate 19, wing 146, tip 78}` ⇒ 合同不钉它的数值，像素事实全部由钉帧通路（`tipRenderedAtFrames` / `regionSequence` / `goToFrame.*`）承担",
+    "visual": "深蓝底（clearColor 12,16,24）随窗口大小出图（`view.setDesignResolutionSize(innerWidth, innerHeight, EXACT_FIT)`；矩阵固定 480×360）：中央一只由纯色矩形拼成的会动的「小 Dragon」——绿色 plate 方块做身体、左右两块蓝色 wing 方块随 flap 逐帧摆角（`bone.global.skew` 实测 0.7→0.24→0.63 rad），尾部位移在 plate（绿）与 tip（红）之间按 displayFrame 时间线交替；顶部一行状态文字 `dragonbones: armature=airdragon anim=<flap|idle> slots=4 click=N`。龙骨动画每帧改像素 ⇒ 相邻截图逐字节必不同（animation-playing 与 frame-diff 双判据同源不同层）；点击一次把 flap 切成 idle（摆幅小、周期 12 帧）并改写状态行，再点切回。⚠️ 判「出图」不能只看整体亮度：本例龙骨色块只占约 0.6% 采样点，`minPngBytes` 与 `litRatio` 下界必须按实测留余量"
+  },
+  "api": {
+    "primary": [
+      "ArmatureDisplay",
+      "DragonBonesAsset",
+      "DragonBonesAtlasAsset"
+    ],
+    "supporting": [
+      "CCFactory",
+      "AnimationCacheMode",
+      "DragonBonesAsset.init",
+      "DragonBonesAtlasAsset.init",
+      "CCFactory.getInstance",
+      "CCFactory.getDragonBonesDataByUUID",
+      "ArmatureDisplay.playAnimation",
+      "ArmatureDisplay.playTimes",
+      "ArmatureDisplay.setAnimationCacheMode",
+      "ArmatureDisplay.isAnimationCached",
+      "ArmatureDisplay.armature",
+      "Armature.getSlots",
+      "Armature.getBones",
+      "Armature.animation",
+      "Armature.advanceTime",
+      "Armature.name",
+      "Animation.gotoAndStopByFrame",
+      "Animation.isPlaying",
+      "ArmatureData.getSkin",
+      "ArmatureData.animations",
+      "ArmatureData.bones",
+      "ArmatureData.slots",
+      "DragonBonesData.getArmature",
+      "DragonBonesData.armatureNames",
+      "DragonBonesData.version",
+      "Texture2D",
+      "assetManager",
+      "Node.on"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Canvas",
+      "UITransform",
+      "Layers",
+      "Color",
+      "Label",
+      "Texture2D",
+      "assetManager",
+      "view",
+      "ResolutionPolicy",
+      "Director",
+      "director",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.on",
+      "DragonBonesAsset",
+      "DragonBonesAtlasAsset",
+      "ArmatureDisplay",
+      "CCFactory",
+      "AnimationCacheMode",
+      "DragonBonesAsset.init",
+      "DragonBonesAtlasAsset.init",
+      "CCFactory.getInstance",
+      "CCFactory.getDragonBonesDataByUUID",
+      "ArmatureDisplay.playAnimation",
+      "ArmatureDisplay.playTimes",
+      "ArmatureDisplay.setAnimationCacheMode",
+      "ArmatureDisplay.isAnimationCached",
+      "ArmatureDisplay.armature",
+      "Armature.getSlots",
+      "Armature.getBones",
+      "Armature.animation",
+      "Armature.advanceTime",
+      "Armature.name",
+      "Animation.gotoAndStopByFrame",
+      "Animation.isPlaying",
+      "ArmatureData.getSkin",
+      "ArmatureData.animations",
+      "ArmatureData.bones",
+      "ArmatureData.slots",
+      "DragonBonesData.getArmature",
+      "DragonBonesData.armatureNames",
+      "DragonBonesData.version"
+    ],
+    "forbiddenShortcut": [
+      "用第三方导出的龙骨 `.json/.png`（或任何带 DragonBones Pro 许可面的资产）冒充示例资产：计划书许可要求零第三方资产，本例资产必须由 `tools/fixtures/make-dragonbones-skeleton.cjs` 生成，改完骨架要重跑生成器而不是手改 JSON",
+      "把 armature 的构建事实提前到 `app.run(scene)` 之前采（`__preload` 未跑 ⇒ `drawListLength 0`、`armature()` 为空），或用 `director.runScene(scene)` 代替 `app.run(scene)`（`EVENT_AFTER_DRAW` 永不触发，`no rendered frame` 会被误读成「龙骨不能渲染」）",
+      "按记忆写访问器：`display.armature` 当属性读、`renderEntity.getRenderData()`、`factory.getTextureAtlasData(uuid)` 当 `TextureAtlasData` 用、`SlotData.z`（实为 `zOrder`）、`Transform.skewX`（实为 `skew`，弧度）。每一处都必须同时留下「实测命中的键名」事实（`slotSource` / `wingSkewKey` / `stateTimeKey` / `factoryReturnShape`），否则键名漂移会被静默吸收成 0/null",
+      "用 `rotation` 键写帧旋转角（解析器只读 `skew` ⇒ 时间线恒 0 且不报错），或反过来只凭「timeline 里 type 12 存在」宣布骨骼在动",
+      "用挂钟时间做动画断言（跨引擎/不同帧率相位不可复现）；钉帧必须走 `Animation.gotoAndStopByFrame(name, frame)` + `armature.advanceTime(0)`，并留同帧两读的自一致性判据。缓存模式非 REALTIME 时钉帧不改出图，也要显式声明模式",
+      "用 `slot.display.name` 断言换图（那是 slot 名不是 region 名，永远读回同一个词），必须比 `displayIndex` + `rawDisplayDataNames[displayIndex]`，并与帧缓冲里对应纯色（tip=红）的**出现/缺席**同时对齐到同一帧号",
+      "把 `playAnimation(name, 0)` 当「播放一次」的正确写法或当循环写法用：`0` 会让状态播完即停并让 `isPlaying false`，循环要显式 `-1`；数据侧 `playTimes` 与引擎侧入参是两件事，都要各自留事实",
+      "让画面完全静止、只靠 `minPngBytes` 下界充当出图证据（矩阵 frameChanged 是相邻两帧 PNG 逐字节比较，静态图必然 false）；本例图形只占约 0.65% 像素，`litRatio` 阈值必须按实测留余量，不能照抄大图形示例的下界"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L150"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L151"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L161"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L163"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L175"
+      },
+      {
+        "api": "Texture2D",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L195"
+      },
+      {
+        "api": "assetManager",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L148"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L148"
+      },
+      {
+        "api": "Director",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "director",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L166"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Node.on",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L601"
+      },
+      {
+        "api": "DragonBonesAsset",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L208"
+      },
+      {
+        "api": "DragonBonesAtlasAsset",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L205"
+      },
+      {
+        "api": "ArmatureDisplay",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "CCFactory",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "AnimationCacheMode",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L251"
+      },
+      {
+        "api": "DragonBonesAsset.init",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L230"
+      },
+      {
+        "api": "DragonBonesAtlasAsset.init",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L555"
+      },
+      {
+        "api": "CCFactory.getInstance",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L182"
+      },
+      {
+        "api": "CCFactory.getDragonBonesDataByUUID",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L293"
+      },
+      {
+        "api": "ArmatureDisplay.playAnimation",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L515"
+      },
+      {
+        "api": "ArmatureDisplay.playTimes",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L328"
+      },
+      {
+        "api": "ArmatureDisplay.setAnimationCacheMode",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L219"
+      },
+      {
+        "api": "ArmatureDisplay.isAnimationCached",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L252"
+      },
+      {
+        "api": "ArmatureDisplay.armature",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L389"
+      },
+      {
+        "api": "Armature.getSlots",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L415"
+      },
+      {
+        "api": "Armature.getBones",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L391"
+      },
+      {
+        "api": "Armature.animation",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L389"
+      },
+      {
+        "api": "Armature.advanceTime",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L473"
+      },
+      {
+        "api": "Armature.name",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L76"
+      },
+      {
+        "api": "Animation.gotoAndStopByFrame",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L472"
+      },
+      {
+        "api": "Animation.isPlaying",
+        "source": "main.js",
+        "validator": "animation-playing",
+        "sourceLocation": "L521"
+      },
+      {
+        "api": "ArmatureData.getSkin",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L295"
+      },
+      {
+        "api": "ArmatureData.animations",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L312"
+      },
+      {
+        "api": "ArmatureData.bones",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L302"
+      },
+      {
+        "api": "ArmatureData.slots",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L305"
+      },
+      {
+        "api": "DragonBonesData.getArmature",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L294"
+      },
+      {
+        "api": "DragonBonesData.armatureNames",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L299"
+      },
+      {
+        "api": "DragonBonesData.version",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L298"
+      }
+    ]
+  },
+  "assets": [
+    "assets/AirDragon.json",
+    "assets/AirDragon_atlas.json",
+    "assets/AirDragon_atlas.png"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "airdragon"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_END）画布一次：`display.playAnimation('idle', -1)` 把 24 帧 flap 换成 12 帧 idle（摆幅小、无 display 换图），并改写状态行为 `anim=idle`；探针在此之前已一次性冻结 P1~P6 六组事实",
+        "expected": "画面从「wing 大幅摆 + tail 在 plate/tip 之间换」变为「body 小幅摆动、tail 恒 plate」，状态行文本变化，frame-diff 可测；`live.animationName` 读回 `idle`、`live.tailRegion` 读回 `plate`。再点一次切回 flap（`isPlaying true`）。DragonBonesAsset / DragonBonesAtlasAsset / ArmatureDisplay / CCFactory 与 `Animation.gotoAndStopByFrame` 钉帧通路在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Canvas": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 151,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      },
+      "UICamera": {
+        "position": [
+          0,
+          0,
+          1000
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 160,
+            "text": "cameraNode.setPosition(0, 0, 1000);"
+          }
+        ]
+      },
+      "Status": {
+        "position": [
+          0,
+          150,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 173,
+            "text": "statusNode.setPosition(0, 150, 0);"
+          }
+        ]
+      },
+      "airdragon": {
+        "position": [
+          0,
+          -10,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 216,
+            "text": "displayNode.setPosition(0, -10, 0);"
+          }
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：`AirDragon.json` / `AirDragon_atlas.json` / `AirDragon_atlas.png`（64×64、三个纯色 region）全部由本仓库 `tools/fixtures/make-dragonbones-skeleton.cjs` 现生成（PNG 由工具自带的极简 encoder 写出，无外部图像库）。vendored `@cocos/dragonbones-js@1.0.2`（MIT，DragonBones team）随 bundle 出处已在许可门禁登记；dragon-bones 模块为 cocos4 上游 TypeScript 端口，逐字节同源于 src/cocos/dragon-bones"
+  },
+  "promotion": {
+    "spec": "cfd28d7885f1",
+    "source": "d9ccae6dfd74bdea",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 15,
+    "attested": 31,
+    "units": 46
+  }
+}

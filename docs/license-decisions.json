@@ -1,0 +1,50 @@
+{
+  "schema": "v12-license-decisions-v1",
+  "updated": "2026-09-22",
+  "note": "disposition 取值：accepted（许可清晰，可随默认产物发布）/ pending-owner-decision（须所有者决定，未决定前不得对外发布该组件路径）。门禁 tools/v12/verify-licenses.cjs 读取本文件。",
+  "decisions": {
+    "spine runtime (spine-core.js)": {
+      "disposition": "pending-owner-decision",
+      "recorded": "2026-09-22",
+      "blocking": true,
+      "obligation": "Spine Runtimes License Agreement (2019-05-01)：(a) 集成方产品的每个用户须自备 Spine Editor 许可；(b) 任何形式的再分发必须附带该许可与版权声明。这与仓库根「license: MIT」的单文件引擎发行姿态不是同一套条件。",
+      "currentState": "已随包发布许可原文（licenses/LICENSE_spine.txt，与上游逐字节一致）并已列入发布面；默认 bundle 仍内嵌 spine-core.js 字节。",
+      "optionsForOwner": [
+        "保留 spine 于默认产物：README/THIRD_PARTY 显式声明 Spine Editor 许可条件（当前做法，需你确认）",
+        "把 spine 移到常量/变体构建（如 AIR_FEATURES=spine），默认产物不含其字节",
+        "移除 spine 组（与计划书「16 组全部回归，不再裁剪」冲突，需你显式改口径）"
+      ],
+      "evidence": [
+        "licenses/LICENSE_spine.txt",
+        "src/cocos/spine/lib/spine-core.js（docs/upstream-file-map.json 登记为上游原文）",
+        "docs/audits/ 台账（C1 组登记行）"
+      ]
+    },
+    "@cocos/engine-pal (src/pal/** 原始字节)": {
+      "disposition": "pending-owner-decision",
+      "recorded": "2026-09-22",
+      "blocking": true,
+      "obligation": "@cocos/engine-pal@1.0.4 的 package.json 标注 license=UNLICENSED，README 第 16 行写「UNLICENSED — Cocos 内部使用」。本仓库 src/pal/** 是该包 dist 的原始字节（smoke-30 逐字节断言），因此默认产物内嵌了这段无明示授予的代码。",
+      "currentState": "THIRD_PARTY_LICENSES.md §2 原述「MIT」于 V1.2 审计中被证伪并更正；无许可原文可录（来源包未附文本）。",
+      "optionsForOwner": [
+        "以上游 cocos4（MIT, Copyright 2025 SUD）作为 pal 源码的许可依据并在此登记依据链",
+        "向 Cocos 取得书面澄清/授权后再发布",
+        "改由 cocos4 仓库内的 pal 源码路径抽取（若上游仍含 pal 源），避免引用 UNLICENSED 发包"
+      ],
+      "evidence": [
+        "node_modules/@cocos/engine-pal/package.json（license 字段）",
+        "node_modules/@cocos/engine-pal/README.md:16",
+        "test/smoke/smoke-30-v12-regression.test.ts（src/pal 逐字节断言）"
+      ]
+    },
+    "DragonBonesJS (@cocos/dragonbones-js)": {
+      "disposition": "accepted",
+      "recorded": "2026-09-22",
+      "note": "npm 包不含许可文本，许可原文取自上游 cocos4 licenses/LICENSE_DragonBones.txt（MIT）。已随包发布。",
+      "evidence": [
+        "licenses/LICENSE_DragonBones.txt",
+        "node_modules/@cocos/dragonbones-js/package.json（description 标注为 DragonBonesJS 5.7.0 的 Cocos fork）"
+      ]
+    }
+  }
+}

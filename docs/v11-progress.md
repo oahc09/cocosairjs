@@ -73,7 +73,7 @@
   "非嵌入模式时把主体往右推" 的 `center.x -= radius * 0.6`，Gallery 与独立视图统一用同一居中。
 - 修复后复测：全部示例主体投影 dx=dy≈0；仍偏离者均为设计意图（位移/旋转动画、可切换的 lookAt 目标、
   竖直层级、地面平面拉低像素包围盒），Gallery 模式下峰值偏移 ≤0.03 NDC。
-- 连带影响：`shared/scene-kit.js` 与多个 `src/main.ts` 行号整体下移，§12 apiEvidence 已重跑
+- 连带影响：`shared/scene-kit.js` 与多个 `examples/*/src/main.ts` 行号整体下移，§12 apiEvidence 已重跑
   `spec-evidence.cjs` 回填（772 条，0 漂移 0 脱钩）；light-point / light-spot 的相机证据符号由
   `Node.setRotationFromEuler` 改为 `Node.lookAt`（源码已不再调用前者）。
 
@@ -131,7 +131,7 @@
 本轮已修（原先会产生"看着绿其实空"的假证据）：
 
 - **暂存工作区展平掩盖相对 import 路径**：`prepareWorkspace` 把示例目录整体拷进工作区根，
-  于是 `src/main.ts` 里写 `../shared/x.js` 也能解析，而真实布局 `examples/<dir>/src/` 与
+  于是 `examples/*/src/main.ts` 里写 `../shared/x.js` 也能解析，而真实布局 `examples/<dir>/src/` 与
   Gallery 部署物里它是 404（本次 §25 接线就踩中：Gallery artifact build 直接失败）。
   现在示例源码统一按真实布局写（`src/` 用 `../../shared/`），暂存层按文件深度重算说明符，
   并新增 `S-IMPORT-RESOLVE` fail 级静态门禁：任何相对 import 在真实仓库布局下不可解析即红

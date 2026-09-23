@@ -21,7 +21,7 @@
 | L10 | hello-cube | ✓ | 浏览器实测（playwright 800×600）：标准材质+平行光 cube 渲染（docs/evidence/hello-cube-lit.png）；红色 unlit cube（docs/evidence/hello-cube-unlit-red.png）；旋转验证（三帧 bbox 160→126→164px） |
 | L11 | Engine watch | ✓ | dev-server：src/** 修改 → 自动重建（23.8s）→ 浏览器 reload token 更新 |
 | L12 | static-model | ✓ | 运行时 JSON 资产 → createMesh → assetManager 注册/取回往返；程序化 checkerboard Texture2D；builtin-standard + mainTexture；渲染实测（docs/evidence/static-model.png） |
-| L13 | skinned-animation | ✓ | 三关节骨骼 + 刚性蒙皮 + 骨骼动画实测通过（2026-09-12 二轮修复后）：蒙皮变体编译/链接成功、draw 正常、网格逐帧变形（4 帧 bbox w=142→176→252→234，docs/evidence/skinned-animation-pose1~3.png）。修复链见 §7 |
+| L13 | skinned-animation | ✓ | 三关节骨骼 + 刚性蒙皮 + 骨骼动画实测通过（2026-09-12 二轮修复后）：蒙皮变体编译/链接成功、draw 正常、网格逐帧变形（4 帧 bbox w=142→176→252→234，docs/evidence/skinned-animation-pose1.png / pose2.png / pose3.png）。修复链见 §7 |
 | L14 | cocos4 baseline 回归对比 | ✓ | docs/17-baseline-comparison.md（同一工具链、行为一致性表、闭包对比） |
 
 ## 2. 必答问题（计划书 §30）
@@ -89,7 +89,7 @@
    bone1/bone2 未注册（joint 矩阵为零 → 上半段塌缩、无变形）。修复：examples/skinned-animation/main.js。
 
 验证：蒙皮变体编译链接成功、3 关节全部注册、网格逐帧变形（4 帧 bbox 变化）、
-typecheck/build/build:min/verify:web-only/test 全绿。证据：docs/evidence/skinned-animation-pose1~3.png。
+typecheck/build/build:min/verify:web-only/test 全绿。证据：docs/evidence/skinned-animation-pose1.png / pose2.png / pose3.png。
 
 ## 8. Phase 18 — 第二轮裁剪结论（2026-09-12）
 

@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "alreadyApplied": false,
+  "summary": {
+    "bytesBefore": 219572,
+    "shaBefore": "fff6b58888a3105d",
+    "bytesAfter": 222382,
+    "shaAfter": "9eec4cc659367864",
+    "delta": 2810
+  },
+  "indexUnchanged": {
+    "bytes": 95119,
+    "sha16": "14afb04a5e98f89d",
+    "rows": 82
+  }
+}

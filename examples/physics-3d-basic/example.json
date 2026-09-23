@@ -1,0 +1,831 @@
+{
+  "id": "physics-3d-basic",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "3D Physics Mount, Filters & Queries — builtin backend (V12 LV12-15)",
+  "category": "physics",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.getComponent",
+    "Node.setPosition",
+    "Component",
+    "Camera",
+    "DirectionalLight",
+    "Layers",
+    "Color",
+    "math.Vec3",
+    "math.Quat",
+    "isValid",
+    "input",
+    "Input",
+    "MeshRenderer",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "utils.createMesh",
+    "primitives.box",
+    "primitives.sphere",
+    "primitives.capsule",
+    "primitives.torus",
+    "Ray",
+    "PhysicsGroup",
+    "physics.selector",
+    "physics.PhysicsSystem",
+    "physics.PhysicsSystem.constructAndRegister",
+    "physics.PhysicsSystem.syncSceneToPhysics",
+    "physics.PhysicsSystem.step",
+    "physics.PhysicsSystem.emitEvents",
+    "physics.PhysicsSystem.raycast",
+    "physics.PhysicsSystem.raycastClosest",
+    "physics.PhysicsSystem.raycastResults",
+    "physics.PhysicsSystem.raycastClosestResult",
+    "physics.PhysicsSystem.lineStripCast",
+    "physics.PhysicsSystem.lineStripCastResults",
+    "physics.PhysicsSystem.sweepBox",
+    "physics.PhysicsSystem.sweepBoxClosest",
+    "physics.PhysicsSystem.sweepCastResults",
+    "physics.PhysicsSystem.minVolumeSize",
+    "physics.RigidBody",
+    "physics.RigidBody.applyForce",
+    "physics.RigidBody.applyImpulse",
+    "physics.RigidBody.applyTorque",
+    "physics.RigidBody.setLinearVelocity",
+    "physics.RigidBody.getLinearVelocity",
+    "physics.RigidBody.setAngularVelocity",
+    "physics.RigidBody.getAngularVelocity",
+    "physics.RigidBody.wakeUp",
+    "physics.RigidBody.sleep",
+    "physics.RigidBody.clearState",
+    "physics.RigidBody.clearForces",
+    "physics.RigidBody.clearVelocity",
+    "physics.Collider",
+    "physics.Collider.type",
+    "physics.Collider.getGroup",
+    "physics.Collider.setGroup",
+    "physics.Collider.getMask",
+    "physics.Collider.setMask",
+    "physics.BoxCollider",
+    "physics.SphereCollider",
+    "physics.CapsuleCollider",
+    "physics.MeshCollider",
+    "physics.PhysicsRayResult",
+    "physics.PhysicsMaterial"
+  ],
+  "capabilities": [
+    "physics"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：默认发行产物（`AIR_FEATURES` 默认集）里 3D 物理后端是 builtin（cannon/bullet/physx 都没打进 bundle），要把 builtin 的真实能力边界逐 API 钉死——它能挂载碰撞体、能做射线/线段/球盒扫掠查询、能发触发事件，但不做动力学积分，且碰撞过滤是双向与运算、场景→物理的变换同步是惰性的；另外把 `Collider`/`PhysicsMaterial`/`PhysicsSystem`/`PhysicsRayResult` 四个框架类**自身**的构造契约（裸实例默认值、单例与游离实例的关系、池对象与新实例的关系）一并钉死",
+    "points": [
+      "后端身份只能运行时判定：`PhysicsSystem.instance` 要等 `createAirApp()` 之后（`_instance` 由 Director INIT 时的 `constructAndRegister()` 创建，模块顶层取到 null）；扁平 `selector` 导出是 2D 那个（实测 id=box2d、13 个 wrapper），3D builtin selector 无法按名取得 ⇒ 用 `physicsWorld.constructor.name === \"BuiltInWorld\"` 与 `collider.shape.constructor.name` 认后端",
+      "「挂载与查询，不模拟」是 builtin 的事实而非示例设定：`autoSimulation`、`allowSleep` 保持打开，60 轮 `syncSceneToPhysics()+step()` 之后木箱世界 OBB 中心漂移 0、节点位移 0，`applyForce/applyImpulse/applyTorque/setLinearVelocity` 之后速度哨兵 (9,9,9)/(8,8,8) 一字未改（`getLinearVelocity(out)` 连 out 都不写），`mass/useGravity/allowSleep/linearDamping/sleepThreshold/useCCD` 只是组件记账读回原值",
+      "碰撞过滤是双向与运算，且 `Collider.collisionMask` 默认只有 `PhysicsGroup.DEFAULT(1)`：只 `setGroup(2)` 的那一侧会被静默摘出所有配对（第一阶段 enter/stay 恒 0，不是「触发器坏了」），必须 crate 与 sensor 两侧都 `setMask(0xffffffff)` 才拿到 enter/stay/exit = 1/1/1。`emitEvents()` 在 builtin 下只发 trigger ⇒ `onCollisionEnter` 计数恒 0，别指望接触回调",
+      "变换同步是惰性的三态：点击后 `setPosition` 的那一帧，`worldBounds`/三类查询仍旧值（`unsynced` 与点击前 `before` 逐字段全等），只有 `syncSceneToPhysics()` 之后（`now`）才落到新位置 ⇒ 断言必须同时钉住三态，否则会把自己的读回时序当成引擎行为",
+      "查询的能力边界要读回而不是猜：命中法线恒为 `Vec3.ZERO`（`builtin-world.ts` 写死）、`raycast()` 结果按刚体注册序而非距离序、`PhysicsRayResult.segmentIndex` 从不赋值（typeof 为 undefined）、`raycastClosestResult` 是复用的池对象（命中与不命中三处读回 `instanceof PhysicsRayResult` 全为 true）、`sweepBox/sweepBoxClosest` 在 builtin 下恒不命中（传 `new Quat()` 姿态也是 0 条）、`MeshCollider` 进不了世界（`shapeCount` 5 里不含它，`trimeshShapeCtor` 是 Object、`trimeshInWorld` false）",
+      "两个尺寸陷阱：`CapsuleCollider.height` 在 `onLoad` 之前设的值不会传进世界形状（组件读回 1.6，世界胶囊 `2*(halfHeight+radius)` = 1.8）；`primitives.capsule(radiusTop, radiusBottom, height)` 与 `box(opts)`/`sphere(radius)` 签名不对称，照 sphere 的写法 `capsule(0.4, 1.6)` 会算出 `torsoHeight=0` 的退化碗形 ⇒ 视觉对不对只能靠网格 `minPosition/maxPosition` 回读判定",
+      "框架层「类」本身各有契约，不能靠 `instance` 一条路取证：`Collider` 的构造签名是 `new Collider(type: EColliderType)`（可直接 `new`，裸实例 `shape` 仍是 null，但 `worldBounds` 读到的是 `geometry.AABB` 的构造默认值——中心 0、半长 1，不是零盒）；`PhysicsMaterial` 是 `Asset` 子类、默认 friction 0.6 / restitution 0、构造即自动进 `PhysicsMaterial.allMaterials`，而 `BuiltinShape.setMaterial(v){}` 是空实现 ⇒ 材质永远进不了世界形状（`matShapeHasNoMaterial=true`、`matShapeCtorStillBuiltin=\"BuiltinBoxShape\"`），这是「builtin 不模拟」的第 4 条独立证据；`PhysicsSystem` 的单例 `_instance` 由 `constructAndRegister()` 建立且该静态方法幂等（再调一次 `instance` 不变），但它并不禁止 `new PhysicsSystem()`——游离实例的 `physicsWorld` getter 读的是 selector 模块级状态，因此 `sysStraySeesSameWorld=true`（拿到的仍是真世界）；`PhysicsRayResult` 可自构造（新实例 distance 0、collider null、hitPoint 零向量，与池对象同类），`raycastClosestResult` 只是它的字段实例"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 9 节点：Main Camera（PERSPECTIVE fov45 near0.1 far100，SOLID_COLOR clearColor(22,28,40,255)，visibility=Layers.Enum.DEFAULT）、Main Light（DirectionalLight illuminance 20000）、Ground（STATIC + BoxCollider 9×0.3×6，中心 (0,-0.15,0)）、Crate（DYNAMIC + BoxCollider 1.5³，初始 (-2.2,0.75,0)，mass2.5/useGravity/allowSleep/linearDamping0.2/angularDamping0.3）、Ball（STATIC + SphereCollider r0.7，(0,0.7,0)）、Capsule（KINEMATIC + CapsuleCollider r0.4/height1.6 轴向Y，(2.2,0.8,0)）、Sensor（STATIC + BoxCollider 2³、needTriggerEvent，(-2.2,3.6,0)，无网格）、Trimesh（torus 0.5/0.18 + MeshCollider，(4.2,0.9,0)）、PhysicsHost（每帧 readback）。后端读回：worldCtor=BuiltInWorld、flagBuiltin=true、flagCannon/flagBullet/flagPhysx/flagNone=false、flatSelectorId=box2d（扁平 selector 是 2D 那个，wrapper 13 个）、bodyCount=5、shapeCount=5、trimeshInWorld=false、enabled/autoSimulation/allowSleep=true、maxSubSteps=1、fixedTimeStep=0.02、gravity=(0,-10,0)、minVolumeSize=0.00001。形状身份：ground/crate=BuiltinBoxShape、ball=BuiltinSphereShape、capsule=BuiltinCapsuleShape、trimesh=Object；世界几何 groundSize 9/0.3/6、ballWorldRadius0.7、capsuleShapeTotalHeight1.8（组件 height 1.6）、crateObbHalfX0.75。不模拟读回：stepsRun=60 后 crateDrift X/Y/Z=0、crateObbCenterDriftX=0、linearSentinel=(9,9,9)、angularSentinel=(8,8,8) 未被写、massReadBack=2.5、isAwakeReadBack=true、obbCenterPreSyncX=0 而 obbCenterAfterFirstSyncX=-2.2（惰性同步）。触发三态（先复现静默过滤再补 mask）：trigEnterFiltered=0/trigStayFiltered=0 → 两侧 setMask(0xffffffff) 后 trigEnter=1、trigStay=1、trigExit=1、trigCollision=0、trigSelfName=Sensor、trigOtherName=Crate、trigNeedEventSensor=true/trigNeedEventCrate=false、trigMaskAfterFix=trigSensorMaskAfterFix=4294967295。查询读回：raycast((-6,0.75,0)→+X) 命中 Ball,Capsule（注册序，首命中距离 5.3）、crate-only 组 0 命中、穿球内部命中 Ball,Capsule、传感器方向命中 Crate,Sensor（firstDist 3.05）、法线恒 (0,0,0)；raycastClosest 同上首条；lineStripCast 三段命中 Ball,Capsule 且 stripFirstSegType=undefined；sweepBox/sweepBoxClosest 恒 false/0 条。点击后三态：before 与 unsynced 逐字段全等（crateAabbcY=0.75、nearXName=Crate、castXNames=Ball,Capsule,Crate、stripCount=3），now 相对它们只在 33 个字段上变化（crateAabbcY=3.6、nearXName=Ball、castXNames=Ball,Capsule、stripCount=2 等）。框架类构造契约（一次性 memoize，整页各一个）：new Collider(crateCollider.type) 裸实例 type=0 与原 collider 一致、instanceof Collider 与 instanceof Component 均 true、shape===null、sharedMaterial===null、worldBounds 读 geometry.AABB 默认值（center.x=0、halfExtents.x=1）；new PhysicsMaterial() 默认 friction=0.6 / restitution=0、自动进 allMaterials（matInAllMaterials=true），赋给 crateCollider.sharedMaterial 后读回 matSharedIsMine=true、matFrictionOnCollider=0.9，但世界形状上没有材质（matShapeHasNoMaterial=true、matShapeCtorStillBuiltin=BuiltinBoxShape）；new PhysicsSystem() 游离实例 instanceof PhysicsSystem=true 且不是单例（sysStrayNotSingleton=true），其 physicsWorld 与单例同一个（sysStraySeesSameWorld=true，getter 读 selector 模块级状态），PhysicsSystem.constructAndRegister() 再调一次 instance 不变（幂等）；new PhysicsRayResult() distance=0、collider=null、hitPoint=\"0,0,0\"、与池对象 raycastClosestResult 同类（rayResFreshSameClassAsPooled=true），后者 instanceof 成立且就是 PhysicsSystem.instance 的字段实例。V1.2 三引擎矩阵按 304 条 probeEquals（274 顶层 + 15×2 个 before./unsynced. 判别字段）逐路径钉死，实测 0 条跨引擎差、0 条次间漂移。",
+    "visual": "深底一屏：灰色地面长条横贯下方，其上左橙木箱、中绿球、右蓝胶囊、最右紫色圆环四个受光体（DirectionalLight illuminance 20000，与 examples/gltf-viewer 同档）；触发盒无形态。真实点击把木箱瞬移到半空触发盒里——因 builtin 不积分，它停在那儿不下落（截图取点击后状态，frameChanged=false 即此事实）。材质在本例只是让物理状态「看得见」的手段，逐节点 effect/属性取证由 examples/mesh-sphere 的 material-property 承担；本例的判别力全在 304 条物理 probeEquals 上"
+  },
+  "api": {
+    "primary": [
+      "physics.PhysicsSystem",
+      "physics.RigidBody",
+      "physics.Collider"
+    ],
+    "supporting": [
+      "physics.BoxCollider",
+      "physics.SphereCollider",
+      "physics.CapsuleCollider",
+      "physics.MeshCollider",
+      "physics.PhysicsSystem.raycast",
+      "physics.PhysicsSystem.raycastClosest",
+      "physics.PhysicsSystem.lineStripCast",
+      "physics.PhysicsSystem.sweepBox",
+      "physics.PhysicsSystem.syncSceneToPhysics",
+      "physics.PhysicsSystem.step",
+      "physics.PhysicsSystem.emitEvents",
+      "physics.Collider.setGroup",
+      "physics.Collider.setMask",
+      "physics.RigidBody.applyImpulse",
+      "physics.RigidBody.getLinearVelocity",
+      "physics.selector",
+      "primitives.box",
+      "primitives.sphere",
+      "primitives.capsule",
+      "utils.createMesh",
+      "physics.PhysicsSystem.constructAndRegister",
+      "physics.PhysicsMaterial"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.getComponent",
+      "Node.setPosition",
+      "Component",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "math.Quat",
+      "isValid",
+      "input",
+      "Input",
+      "MeshRenderer",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "primitives.sphere",
+      "primitives.capsule",
+      "primitives.torus",
+      "Ray",
+      "PhysicsGroup",
+      "physics.selector",
+      "physics.PhysicsSystem",
+      "physics.PhysicsSystem.constructAndRegister",
+      "physics.PhysicsSystem.syncSceneToPhysics",
+      "physics.PhysicsSystem.step",
+      "physics.PhysicsSystem.emitEvents",
+      "physics.PhysicsSystem.raycast",
+      "physics.PhysicsSystem.raycastClosest",
+      "physics.PhysicsSystem.raycastResults",
+      "physics.PhysicsSystem.raycastClosestResult",
+      "physics.PhysicsSystem.lineStripCast",
+      "physics.PhysicsSystem.lineStripCastResults",
+      "physics.PhysicsSystem.sweepBox",
+      "physics.PhysicsSystem.sweepBoxClosest",
+      "physics.PhysicsSystem.sweepCastResults",
+      "physics.PhysicsSystem.minVolumeSize",
+      "physics.RigidBody",
+      "physics.RigidBody.applyForce",
+      "physics.RigidBody.applyImpulse",
+      "physics.RigidBody.applyTorque",
+      "physics.RigidBody.setLinearVelocity",
+      "physics.RigidBody.getLinearVelocity",
+      "physics.RigidBody.setAngularVelocity",
+      "physics.RigidBody.getAngularVelocity",
+      "physics.RigidBody.wakeUp",
+      "physics.RigidBody.sleep",
+      "physics.RigidBody.clearState",
+      "physics.RigidBody.clearForces",
+      "physics.RigidBody.clearVelocity",
+      "physics.Collider",
+      "physics.Collider.type",
+      "physics.Collider.getGroup",
+      "physics.Collider.setGroup",
+      "physics.Collider.getMask",
+      "physics.Collider.setMask",
+      "physics.BoxCollider",
+      "physics.SphereCollider",
+      "physics.CapsuleCollider",
+      "physics.MeshCollider",
+      "physics.PhysicsRayResult",
+      "physics.PhysicsMaterial"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene/.prefab 冒充 Code First",
+      "把 builtin 的查询当成 cannon 的行为结论：cannon/bullet/physx 都不在默认 bundle（`flagCannon=false`），本例只证 builtin；自由落体、接触回调、关节属 `physics-3d-collision`（cannon 变体构建）与 D3/R8 的范围",
+      "用 `autoSimulation=false` 冒充『不模拟』：builtin 的 `step()` 本来就不积分（`applyForce` 系列只置脏、`getLinearVelocity(out)` 连 out 都不写），而关掉 autoSimulation 会连帧内的 scene→physics 同步一起关掉，把惰性同步的取证时序搅浑",
+      "只 `setGroup(2)` 就断言『过滤生效/触发器坏了』：过滤是 group 与 mask 的双向与运算，另一侧 mask 仍是默认 1 ⇒ 配对静默消失。必须同时给出过滤态（enter=0）与补 mask 后（enter/stay/exit=1/1/1）两阶段读回",
+      "改完 `setPosition` 立刻读 `worldBounds` 并宣称『引擎已同步』：不显式 `syncSceneToPhysics()` 时读回的是旧世界形状（本例 `unsynced` 与 `before` 全等就是这条的证据），也不得把 `now` 的位移说成物理模拟的结果",
+      "断言命中法线、`segmentIndex`、扫掠命中或 MeshCollider 参与世界：实测恒 (0,0,0)/undefined/0 条/未入世界。写『查询已工作』必须逐条给页面外可读回的命中集，而不是只判 `hit===true`",
+      "给 `crateCollider.sharedMaterial` 赋值就宣称「摩擦/弹性已生效」：builtin 的 `BuiltinShape.setMaterial(v){}` 是空实现，材质只停在组件层（`matShapeHasNoMaterial=true`、世界形状构造器仍是 `BuiltinBoxShape`）；同理不得把 `new PhysicsSystem()` 说成「第二个物理系统」——它的 `physicsWorld` 读的是 selector 模块级状态，与单例看到同一个世界",
+      "在 `onLoad` 之前调 `collider.shape.worldObb` 之类世界形状、或 `RigidBody` 的 get/set 速度接口：会触发 `errorID(9642)`（『has not been call onLoad yet』）；本示例把全部此类读回收敛到首帧之后的惰性块，只允许一条已知良性 error 落在矩阵 `noConsoleError` 之外（`benignConsole` 披露）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L211"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L221"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L197"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L224"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L171"
+      },
+      {
+        "api": "Node.getComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L295"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L199"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L469"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L226"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L239"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L198"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L232"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L199"
+      },
+      {
+        "api": "math.Quat",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L571"
+      },
+      {
+        "api": "isValid",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L191"
+      },
+      {
+        "api": "input",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L690"
+      },
+      {
+        "api": "Input",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L690"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L171"
+      },
+      {
+        "api": "Material",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L163"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L164"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L165"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L179"
+      },
+      {
+        "api": "primitives.box",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L245"
+      },
+      {
+        "api": "primitives.sphere",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L264"
+      },
+      {
+        "api": "primitives.capsule",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L273"
+      },
+      {
+        "api": "primitives.torus",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L293"
+      },
+      {
+        "api": "Ray",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L504"
+      },
+      {
+        "api": "PhysicsGroup",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "physics.selector",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L591"
+      },
+      {
+        "api": "physics.PhysicsSystem",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L459"
+      },
+      {
+        "api": "physics.PhysicsSystem.constructAndRegister",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L461"
+      },
+      {
+        "api": "physics.PhysicsSystem.syncSceneToPhysics",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L360"
+      },
+      {
+        "api": "physics.PhysicsSystem.step",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L364"
+      },
+      {
+        "api": "physics.PhysicsSystem.emitEvents",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L402"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycast",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L505"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycastClosest",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L522"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycastResults",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L508"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycastClosestResult",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L464"
+      },
+      {
+        "api": "physics.PhysicsSystem.lineStripCast",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L555"
+      },
+      {
+        "api": "physics.PhysicsSystem.lineStripCastResults",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L556"
+      },
+      {
+        "api": "physics.PhysicsSystem.sweepBox",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L572"
+      },
+      {
+        "api": "physics.PhysicsSystem.sweepBoxClosest",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L574"
+      },
+      {
+        "api": "physics.PhysicsSystem.sweepCastResults",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L573"
+      },
+      {
+        "api": "physics.PhysicsSystem.minVolumeSize",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L610"
+      },
+      {
+        "api": "physics.RigidBody",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L246"
+      },
+      {
+        "api": "physics.RigidBody.applyForce",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L343"
+      },
+      {
+        "api": "physics.RigidBody.applyImpulse",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L344"
+      },
+      {
+        "api": "physics.RigidBody.applyTorque",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L345"
+      },
+      {
+        "api": "physics.RigidBody.setLinearVelocity",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L346"
+      },
+      {
+        "api": "physics.RigidBody.getLinearVelocity",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L352"
+      },
+      {
+        "api": "physics.RigidBody.setAngularVelocity",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L347"
+      },
+      {
+        "api": "physics.RigidBody.getAngularVelocity",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L353"
+      },
+      {
+        "api": "physics.RigidBody.wakeUp",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L356"
+      },
+      {
+        "api": "physics.RigidBody.sleep",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L357"
+      },
+      {
+        "api": "physics.RigidBody.clearState",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L358"
+      },
+      {
+        "api": "physics.RigidBody.clearForces",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L354"
+      },
+      {
+        "api": "physics.RigidBody.clearVelocity",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L355"
+      },
+      {
+        "api": "physics.Collider",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L450"
+      },
+      {
+        "api": "physics.Collider.type",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L207"
+      },
+      {
+        "api": "physics.Collider.getGroup",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L320"
+      },
+      {
+        "api": "physics.Collider.setGroup",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L316"
+      },
+      {
+        "api": "physics.Collider.getMask",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L321"
+      },
+      {
+        "api": "physics.Collider.setMask",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L418"
+      },
+      {
+        "api": "physics.BoxCollider",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L248"
+      },
+      {
+        "api": "physics.SphereCollider",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L267"
+      },
+      {
+        "api": "physics.CapsuleCollider",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L276"
+      },
+      {
+        "api": "physics.MeshCollider",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L294"
+      },
+      {
+        "api": "physics.PhysicsRayResult",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L463"
+      },
+      {
+        "api": "physics.PhysicsMaterial",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L452"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Ground",
+        "Crate",
+        "Ball",
+        "Capsule",
+        "Sensor",
+        "Trimesh",
+        "PhysicsHost"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "真实鼠标点击视口中心 (240,180)（`input.on(Input.EventType.TOUCH_START, …)` 在 web 端由 MOUSE_DOWN 合成 touch，因此一次点击即触发）：处理函数先取 `preClick = readback()`，再 `crate.setPosition(CRATE_SENSOR)`，紧接着取 `unsynced = readback()`，最后只调一次 `physics.syncSceneToPhysics()`（不调 step/emitEvents）",
+        "expected": "三态确定性分离：`before` 与 `unsynced` 全部字段逐字节相等（改 node 变换不写世界形状），`now` 相对它们恰好只在 33 个字段上变化（`crateAabbcY` 0.75→3.6、`nearXName` Crate→Ball、`castXNames`/`stripNames` 丢掉 Crate、`castCrateOnlyHit` true→false 等）；V1.2 契约按 `before.*` / `unsynced.*` / 顶层三组 probeEquals 同时钉住这三态。画布像素因木箱瞬移而改变（`interaction:frame-diff` 判据）；此后画面静止（builtin 无积分 ⇒ V1.2 矩阵 `frameChanged:false` 即此事实）。点击可重复派发，但处理函数一次性（`if (preClick) return`），三态快照不被后续点击污染"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：7 个网格与材质全部运行时程序化生成（`primitives.box/sphere/capsule/torus` + `utils.createMesh` + `new Material()`）。3D 物理模块为 cocos4 上游 TypeScript 端口（`src/cocos/physics/**`、`src/cocos/physics-2d/**` 逐字节同源，登记在 `docs/upstream-file-map.json`）；builtin 后端是纯 TS 的几何实现，不含 cannon/bullet/physx 原生或 JS 第三方库"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          3.6,
+          9.4
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 223,
+            "text": "makeNode(Main Camera) → position [0,3.6,9.4]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 236,
+            "text": "makeNode(Main Light) → position [0,8,0]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "Ground": {
+        "position": [
+          0,
+          -0.15,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 243,
+            "text": "makeNode(Ground) → position [0,-0.15,0]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "Crate": {
+        "position": [
+          -2.2,
+          0.75,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 253,
+            "text": "makeNode(Crate) → position [-2.2,0.75,0]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "Ball": {
+        "position": [
+          0,
+          0.7,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 262,
+            "text": "makeNode(Ball) → position [0,0.7,0]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "Capsule": {
+        "position": [
+          2.2,
+          0.8,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 271,
+            "text": "makeNode(Capsule) → position [2.2,0.8,0]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "Sensor": {
+        "position": [
+          -2.2,
+          3.6,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 281,
+            "text": "makeNode(Sensor) → position [-2.2,3.6,0]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "Trimesh": {
+        "position": [
+          4.2,
+          0.9,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 291,
+            "text": "makeNode(Trimesh) → position [4.2,0.9,0]（工厂形参见 L199）"
+          }
+        ]
+      },
+      "PhysicsHost": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 699,
+            "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      }
+    }
+  },
+  "promotion": {
+    "spec": "885b85eafe40",
+    "source": "d2497f8e98052058",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 35,
+    "attested": 34,
+    "units": 69
+  }
+}

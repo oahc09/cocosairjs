@@ -1,20 +1,18 @@
 {
-  "generatedAt": "2026-09-19T23:53:01.494Z",
+  "generatedAt": "2026-09-23T01:52:28.743Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
-      "status": "NOT_RUN",
-      "reason": "completed!==true（tools/verify/v11-examples-verify.cjs：中断路径或 --ids 子集运行）",
-      "measuredAt": "2026-09-19T19:01:48.259Z",
+      "status": "COMPLETE",
+      "measuredAt": "2026-09-22T18:49:42.756Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
-      "status": "NOT_RUN",
-      "reason": "completed!==true（tools/verify/v11-devtools-examples.cjs：中断路径或 --ids 子集运行）",
-      "measuredAt": "2026-09-19T19:03:11.848Z",
+      "status": "COMPLETE",
+      "measuredAt": "2026-09-21T22:47:03.629Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -25,18 +23,20 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "d705a2c8b8eadd68",
-  "inventoryFingerprint": "2d10b49ee9c22d24",
+  "candidateFingerprint": "9fa85f88b968d5f1",
+  "inventoryFingerprint": "297d42ae49a868a0",
   "inventoryConsistency": [],
-  "totalUnits": 4729,
-  "totalRequired": 1510,
-  "totalClaimed": 62,
-  "totalAttested": 0,
-  "totalVerified": 0,
-  "totalVerifiedViaCall": 0,
-  "totalVerifiedViaRead": 0,
+  "totalUnits": 8060,
+  "totalRequired": 2589,
+  "totalClaimed": 280,
+  "totalAttested": 98,
+  "totalVerified": 182,
+  "totalVerifiedViaCall": 168,
+  "totalVerifiedViaRead": 14,
   "totalVerifiedViaUnknown": 0,
-  "staleEvidenceExamples": [],
+  "staleEvidenceExamples": [
+    "mesh-sphere"
+  ],
   "claimsNotInInventory": [
     "DevToolsSession.inspectScene",
     "DevToolsSession.dispatch",
@@ -44,176 +44,261 @@
     "DevToolsSession.inspectNode",
     "DevToolsSession.getRuntimeErrors"
   ],
-  "evidenceSchemaGaps": [],
+  "evidenceSchemaGaps": [
+    {
+      "id": "gltf-catalog",
+      "reason": "evidence row has no apiProof[] (pre-v3 schema): claims cannot be counted as verified"
+    }
+  ],
   "examples": [
     {
       "id": "anim-position",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 17,
+        "total": 17,
+        "hash": "307b7b620a9368a7"
+      },
       "claims": 17,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "anim-rotation",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 18,
+        "hash": "b1c37f070d675ec3"
+      },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 18,
         "attested": 0,
-        "claimedOnly": 18,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 1
+      }
+    },
+    {
+      "id": "audio-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 26,
+        "total": 28,
+        "hash": "0ce7d11ed0b28a0b"
+      },
+      "claims": 28,
+      "tally": {
+        "verified": 26,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 22,
+        "verifiedRead": 4
       }
     },
     {
       "id": "automation",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 8,
+        "total": 11,
+        "hash": "569fab09020da183"
+      },
       "claims": 11,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 9,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 8,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 7,
+        "verifiedRead": 1
       }
     },
     {
       "id": "camera",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 12,
+        "total": 13,
+        "hash": "8104a2694f034b65"
+      },
       "claims": 13,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 13,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 12,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 11,
+        "verifiedRead": 1
       }
     },
     {
       "id": "camera-lookat",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 19,
+        "hash": "b8037b860dc6d4bf"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 18,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 2
       }
     },
     {
       "id": "camera-multi",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 19,
+        "total": 19,
+        "hash": "81f2b7ec8fe7fd36"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 19,
         "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 18,
+        "verifiedRead": 1
       }
     },
     {
       "id": "camera-ortho",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 19,
+        "hash": "5872c5ed22b57e71"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 18,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "dragonbones-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 15,
+        "total": 46,
+        "hash": "948011848ab9c99e"
+      },
+      "claims": 46,
+      "tally": {
+        "verified": 15,
+        "attested": 31,
+        "claimedOnly": 0,
+        "verifiedCall": 12,
+        "verifiedRead": 3
       }
     },
     {
       "id": "gltf-basic",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 17,
+        "total": 17,
+        "hash": "ad906399e8801222"
+      },
       "claims": 17,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "gltf-catalog",
-      "result": "no-evidence",
+      "result": "PASS",
       "fresh": false,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
       "hasApiProof": false,
       "instrumentation": null,
@@ -228,415 +313,499 @@
     },
     {
       "id": "gltf-clearcoat",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 15,
+        "total": 15,
+        "hash": "00a5721cb7673ec1"
+      },
       "claims": 15,
       "tally": {
-        "verified": 0,
+        "verified": 15,
         "attested": 0,
-        "claimedOnly": 15,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 14,
+        "verifiedRead": 1
       }
     },
     {
       "id": "gltf-draco",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 14,
+        "total": 14,
+        "hash": "51b7eef843683679"
+      },
       "claims": 14,
       "tally": {
-        "verified": 0,
+        "verified": 14,
         "attested": 0,
-        "claimedOnly": 14,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 13,
+        "verifiedRead": 1
       }
     },
     {
       "id": "gltf-meshopt",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 20,
+        "total": 20,
+        "hash": "fc99f24eccce5ab3"
+      },
       "claims": 20,
       "tally": {
-        "verified": 0,
+        "verified": 20,
         "attested": 0,
-        "claimedOnly": 20,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 19,
+        "verifiedRead": 1
       }
     },
     {
       "id": "gltf-morph",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 20,
+        "total": 20,
+        "hash": "2414f060b69ad2a9"
+      },
       "claims": 20,
       "tally": {
-        "verified": 0,
+        "verified": 20,
         "attested": 0,
-        "claimedOnly": 20,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 3
       }
     },
     {
       "id": "gltf-skin",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 21,
+        "total": 21,
+        "hash": "ebb3cbf37d4e01a0"
+      },
       "claims": 21,
       "tally": {
-        "verified": 0,
+        "verified": 21,
         "attested": 0,
-        "claimedOnly": 21,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 18,
+        "verifiedRead": 3
       }
     },
     {
       "id": "gltf-viewer",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 12,
+        "total": 12,
+        "hash": "199d3cd066a28487"
+      },
       "claims": 12,
       "tally": {
-        "verified": 0,
+        "verified": 12,
         "attested": 0,
-        "claimedOnly": 12,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 10,
+        "verifiedRead": 2
       }
     },
     {
       "id": "hello-cube",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 16,
+        "total": 17,
+        "hash": "cec8a65312ed6a32"
+      },
       "claims": 17,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 16,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 15,
+        "verifiedRead": 1
       }
     },
     {
       "id": "input",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 13,
+        "total": 15,
+        "hash": "e6c9d44195e0cc07"
+      },
       "claims": 15,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 15,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 13,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 11,
+        "verifiedRead": 2
       }
     },
     {
       "id": "interaction-click",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 19,
+        "total": 20,
+        "hash": "63173eafdb6659f1"
+      },
       "claims": 20,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 20,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 19,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 2
       }
     },
     {
       "id": "light-point",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 19,
+        "total": 19,
+        "hash": "627a2b44f9fcefbc"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 19,
         "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 18,
+        "verifiedRead": 1
       }
     },
     {
       "id": "light-sphere",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 18,
+        "hash": "ef4b8b668c322574"
+      },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 18,
         "attested": 0,
-        "claimedOnly": 18,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 1
       }
     },
     {
       "id": "light-spot",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 19,
+        "total": 19,
+        "hash": "d48aad830efc247e"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 19,
         "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 18,
+        "verifiedRead": 1
       }
     },
     {
       "id": "light-two-directional",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 19,
+        "hash": "5872c5ed22b57e71"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 18,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 2
       }
     },
     {
       "id": "material-basic",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 13,
+        "total": 14,
+        "hash": "1d073c87d91b218f"
+      },
       "claims": 14,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 14,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 13,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 12,
+        "verifiedRead": 1
       }
     },
     {
       "id": "material-color",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 16,
+        "total": 16,
+        "hash": "20b6a98e670c5c30"
+      },
       "claims": 16,
       "tally": {
-        "verified": 0,
+        "verified": 16,
         "attested": 0,
-        "claimedOnly": 16,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 15,
+        "verifiedRead": 1
       }
     },
     {
       "id": "material-transparent",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 22,
+        "total": 22,
+        "hash": "74bdc890ff1fc02c"
+      },
       "claims": 22,
       "tally": {
-        "verified": 0,
+        "verified": 22,
         "attested": 0,
-        "claimedOnly": 22,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 21,
+        "verifiedRead": 1
       }
     },
     {
       "id": "material-unlit",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 15,
+        "total": 16,
+        "hash": "296ab240dc3cd602"
+      },
       "claims": 16,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 16,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 15,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 14,
+        "verifiedRead": 1
       }
     },
     {
       "id": "mesh-cylinder",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 18,
+        "hash": "4b0173500353b9ee"
+      },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 18,
         "attested": 0,
-        "claimedOnly": 18,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 1
       }
     },
     {
       "id": "mesh-multi-material",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 16,
+        "total": 16,
+        "hash": "ceaf687ad0d87711"
+      },
       "claims": 16,
       "tally": {
-        "verified": 0,
+        "verified": 16,
         "attested": 0,
-        "claimedOnly": 16,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 14,
+        "verifiedRead": 2
       }
     },
     {
       "id": "mesh-plane",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 19,
+        "total": 19,
+        "hash": "23219d96006f6b70"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 19,
         "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 18,
+        "verifiedRead": 1
       }
     },
     {
       "id": "mesh-sphere",
-      "result": "no-evidence",
+      "result": "PASS",
       "fresh": false,
       "binding": {
         "spec": false,
         "source": false,
-        "candidate": false
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 18,
+        "hash": "ef4b8b668c322574"
+      },
       "claims": 18,
       "tally": {
         "verified": 0,
@@ -648,325 +817,625 @@
     },
     {
       "id": "mesh-torus",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 18,
+        "hash": "201d03e2a3f5f037"
+      },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 18,
         "attested": 0,
-        "claimedOnly": 18,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 1
       }
     },
     {
       "id": "node-active",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 18,
+        "total": 18,
+        "hash": "b1c37f070d675ec3"
+      },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 18,
         "attested": 0,
-        "claimedOnly": 18,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 1
       }
     },
     {
       "id": "node-hierarchy",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 20,
+        "total": 20,
+        "hash": "0b36a490d1b4d22b"
+      },
       "claims": 20,
       "tally": {
-        "verified": 0,
+        "verified": 20,
         "attested": 0,
-        "claimedOnly": 20,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 19,
+        "verifiedRead": 1
       }
     },
     {
       "id": "node-scale",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 19,
+        "total": 19,
+        "hash": "c599459ca74e47e6"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 19,
         "attested": 0,
-        "claimedOnly": 19,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 18,
+        "verifiedRead": 1
+      }
+    },
+    {
+      "id": "particle-2d-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 22,
+        "total": 34,
+        "hash": "355493dfb3407180"
+      },
+      "claims": 34,
+      "tally": {
+        "verified": 22,
+        "attested": 12,
+        "claimedOnly": 0,
+        "verifiedCall": 20,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "physics-2d-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 32,
+        "total": 36,
+        "hash": "450dc1457302afa6"
+      },
+      "claims": 36,
+      "tally": {
+        "verified": 32,
+        "attested": 4,
+        "claimedOnly": 0,
+        "verifiedCall": 28,
+        "verifiedRead": 4
+      }
+    },
+    {
+      "id": "physics-2d-collision",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 27,
+        "total": 33,
+        "hash": "6f98ec13121b5c18"
+      },
+      "claims": 33,
+      "tally": {
+        "verified": 27,
+        "attested": 6,
+        "claimedOnly": 0,
+        "verifiedCall": 23,
+        "verifiedRead": 4
+      }
+    },
+    {
+      "id": "physics-3d-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 35,
+        "total": 69,
+        "hash": "316a3358c530ffcf"
+      },
+      "claims": 69,
+      "tally": {
+        "verified": 35,
+        "attested": 34,
+        "claimedOnly": 0,
+        "verifiedCall": 33,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "profiler-overlay",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 21,
+        "total": 23,
+        "hash": "524dd313ffaf099c"
+      },
+      "claims": 23,
+      "tally": {
+        "verified": 21,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 19,
+        "verifiedRead": 2
       }
     },
     {
       "id": "rc-capture-frame",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 17,
+        "total": 18,
+        "hash": "b6b4080be0a34cf7"
+      },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "rc-create-node",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 17,
+        "total": 20,
+        "hash": "4402ca65b1f8acf4"
+      },
       "claims": 20,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "rc-error-report",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 17,
+        "total": 19,
+        "hash": "d4cb4bc8c63b3ee0"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "rc-inspect-scene",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 17,
+        "total": 19,
+        "hash": "24297c112f7e7d9d"
+      },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "runtime-asset-release",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 16,
+        "total": 16,
+        "hash": "6e22788283a42cd0"
+      },
       "claims": 16,
       "tally": {
-        "verified": 0,
+        "verified": 16,
         "attested": 0,
-        "claimedOnly": 16,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 15,
+        "verifiedRead": 1
       }
     },
     {
       "id": "skinned-animation",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 16,
+        "total": 16,
+        "hash": "3cca46c61406a10f"
+      },
       "claims": 16,
       "tally": {
-        "verified": 0,
+        "verified": 16,
         "attested": 0,
-        "claimedOnly": 16,
-        "verifiedCall": 0,
+        "claimedOnly": 0,
+        "verifiedCall": 16,
         "verifiedRead": 0
       }
     },
     {
       "id": "starter",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 8,
+        "total": 9,
+        "hash": "11b14158ab69349d"
+      },
       "claims": 9,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 9,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 8,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 7,
+        "verifiedRead": 1
       }
     },
     {
       "id": "static-model",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 22,
+        "total": 23,
+        "hash": "dd6eceeb33478ca1"
+      },
       "claims": 23,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 23,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 22,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 21,
+        "verifiedRead": 1
       }
     },
     {
       "id": "texture-basic",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 25,
+        "total": 25,
+        "hash": "9ada18fbe41e6b71"
+      },
       "claims": 25,
       "tally": {
-        "verified": 0,
+        "verified": 25,
         "attested": 0,
-        "claimedOnly": 25,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 24,
+        "verifiedRead": 1
+      }
+    },
+    {
+      "id": "tiledmap-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 46,
+        "total": 48,
+        "hash": "9c93e41db0fba1d2"
+      },
+      "claims": 48,
+      "tally": {
+        "verified": 46,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 42,
+        "verifiedRead": 4
       }
     },
     {
       "id": "transform",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 13,
+        "total": 14,
+        "hash": "4016077d7b089ee4"
+      },
       "claims": 14,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 14,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 13,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 12,
+        "verifiedRead": 1
       }
     },
     {
       "id": "tween-basic",
-      "result": "no-evidence",
-      "fresh": false,
+      "result": "PASS",
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
-        "candidate": false
+        "spec": true,
+        "source": true,
+        "candidate": true
       },
-      "hasApiProof": false,
-      "instrumentation": null,
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 14,
+        "total": 15,
+        "hash": "52099ac11541076c"
+      },
       "claims": 15,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 15,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 14,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 13,
+        "verifiedRead": 1
+      }
+    },
+    {
+      "id": "ui-components",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 36,
+        "total": 37,
+        "hash": "be7fbce1a6bcbb6c"
+      },
+      "claims": 37,
+      "tally": {
+        "verified": 36,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 34,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "ui-layout",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 22,
+        "total": 23,
+        "hash": "ad9d9af5b9652749"
+      },
+      "claims": 23,
+      "tally": {
+        "verified": 22,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 20,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "video-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 24,
+        "total": 37,
+        "hash": "81d0c7a9a2dbcd2c"
+      },
+      "claims": 37,
+      "tally": {
+        "verified": 24,
+        "attested": 13,
+        "claimedOnly": 0,
+        "verifiedCall": 21,
+        "verifiedRead": 3
+      }
+    },
+    {
+      "id": "webview-basic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 29,
+        "total": 36,
+        "hash": "014424cdd364bc54"
+      },
+      "claims": 36,
+      "tally": {
+        "verified": 29,
+        "attested": 7,
+        "claimedOnly": 0,
+        "verifiedCall": 27,
+        "verifiedRead": 2
       }
     }
   ],
   "tiers": {
     "core": {
       "denominator": "coverageRequired",
-      "total": 717,
-      "required": 717,
-      "claimed": 49,
-      "attested": 0,
-      "verified": 0,
-      "requiredClaimed": 49,
-      "requiredVerified": 0,
-      "verifiedViaCall": 0,
-      "verifiedViaRead": 0,
+      "total": 816,
+      "required": 816,
+      "claimed": 61,
+      "attested": 5,
+      "verified": 56,
+      "requiredClaimed": 61,
+      "requiredVerified": 56,
+      "verifiedViaCall": 54,
+      "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 0,
-      "requiredVerifiedViaRead": 0,
+      "requiredVerifiedViaCall": 54,
+      "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0,
-      "claimedRate": 0.068,
-      "verifiedRate": 0,
-      "allUnitsVerifiedRate": 0,
+      "requiredVerifiedViaCallRate": 0.066,
+      "claimedRate": 0.075,
+      "verifiedRate": 0.069,
+      "allUnitsVerifiedRate": 0.069,
       "gate": "100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -974,23 +1443,23 @@
     },
     "important": {
       "denominator": "coverageRequired",
-      "total": 793,
-      "required": 793,
-      "claimed": 6,
-      "attested": 0,
-      "verified": 0,
-      "requiredClaimed": 6,
-      "requiredVerified": 0,
-      "verifiedViaCall": 0,
-      "verifiedViaRead": 0,
+      "total": 1773,
+      "required": 1773,
+      "claimed": 34,
+      "attested": 14,
+      "verified": 20,
+      "requiredClaimed": 34,
+      "requiredVerified": 20,
+      "verifiedViaCall": 18,
+      "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 0,
-      "requiredVerifiedViaRead": 0,
+      "requiredVerifiedViaCall": 18,
+      "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0,
-      "claimedRate": 0.008,
-      "verifiedRate": 0,
-      "allUnitsVerifiedRate": 0,
+      "requiredVerifiedViaCallRate": 0.01,
+      "claimedRate": 0.019,
+      "verifiedRate": 0.011,
+      "allUnitsVerifiedRate": 0.011,
       "gate": ">= 90% verified of coverageRequired",
       "threshold": 0.9,
       "applicable": true,
@@ -998,15 +1467,15 @@
     },
     "advanced": {
       "denominator": "coverageRequired",
-      "total": 3219,
+      "total": 5471,
       "required": 0,
-      "claimed": 7,
-      "attested": 0,
-      "verified": 0,
+      "claimed": 185,
+      "attested": 79,
+      "verified": 106,
       "requiredClaimed": 0,
       "requiredVerified": 0,
-      "verifiedViaCall": 0,
-      "verifiedViaRead": 0,
+      "verifiedViaCall": 96,
+      "verifiedViaRead": 10,
       "verifiedViaUnknown": 0,
       "requiredVerifiedViaCall": 0,
       "requiredVerifiedViaRead": 0,
@@ -1014,27 +1483,28 @@
       "requiredVerifiedViaCallRate": 0,
       "claimedRate": 0,
       "verifiedRate": 0,
-      "allUnitsVerifiedRate": 0,
+      "allUnitsVerifiedRate": 0.019,
       "gate": ">= 80% verified of coverageRequired",
       "threshold": 0.8,
       "applicable": false,
       "pass": true
     }
   },
-  "verifiedList": [],
-  "attestedNotVerified": [],
-  "claimedNotVerified": [
+  "verifiedList": [
     {
       "unit": "createAirApp",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
+        "audio-basic",
         "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
+        "dragonbones-basic",
         "gltf-basic",
         "gltf-clearcoat",
         "gltf-draco",
@@ -1056,11 +1526,15 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1070,21 +1544,29 @@
         "starter",
         "static-model",
         "texture-basic",
+        "tiledmap-basic",
         "transform",
-        "tween-basic"
+        "tween-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "Scene",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
+        "audio-basic",
         "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
+        "dragonbones-basic",
         "gltf-basic",
         "gltf-clearcoat",
         "gltf-draco",
@@ -1106,11 +1588,15 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1120,21 +1606,29 @@
         "starter",
         "static-model",
         "texture-basic",
+        "tiledmap-basic",
         "transform",
-        "tween-basic"
+        "tween-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "Node",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
+        "audio-basic",
         "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
+        "dragonbones-basic",
         "gltf-basic",
         "gltf-clearcoat",
         "gltf-draco",
@@ -1156,11 +1650,15 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1170,13 +1668,19 @@
         "starter",
         "static-model",
         "texture-basic",
+        "tiledmap-basic",
         "transform",
-        "tween-basic"
+        "tween-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "MeshRenderer",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1199,11 +1703,12 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1217,13 +1722,16 @@
     {
       "unit": "Camera",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
+        "audio-basic",
         "camera",
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
+        "dragonbones-basic",
         "gltf-basic",
         "gltf-clearcoat",
         "gltf-draco",
@@ -1244,11 +1752,15 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1258,12 +1770,18 @@
         "starter",
         "static-model",
         "texture-basic",
-        "tween-basic"
+        "tiledmap-basic",
+        "tween-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "DirectionalLight",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1287,11 +1805,12 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1304,9 +1823,11 @@
     {
       "unit": "Component",
       "tier": "advanced",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
+        "audio-basic",
         "hello-cube",
         "input",
         "interaction-click",
@@ -1316,27 +1837,38 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
         "skinned-animation",
         "texture-basic",
-        "transform"
+        "transform",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "Layers",
       "tier": "core",
+      "via": "read",
       "examples": [
         "anim-position",
         "anim-rotation",
+        "audio-basic",
         "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
+        "dragonbones-basic",
         "gltf-basic",
         "gltf-clearcoat",
         "gltf-draco",
@@ -1357,11 +1889,15 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1369,13 +1905,19 @@
         "runtime-asset-release",
         "starter",
         "texture-basic",
+        "tiledmap-basic",
         "transform",
-        "tween-basic"
+        "tween-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "math.Vec3",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1403,11 +1945,12 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1416,12 +1959,15 @@
         "static-model",
         "texture-basic",
         "transform",
-        "tween-basic"
+        "tween-basic",
+        "ui-components",
+        "ui-layout"
       ]
     },
     {
       "unit": "math.Color",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1446,11 +1992,11 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1459,12 +2005,14 @@
         "skinned-animation",
         "starter",
         "static-model",
-        "texture-basic"
+        "texture-basic",
+        "ui-components"
       ]
     },
     {
       "unit": "Material",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1480,11 +2028,11 @@
         "material-transparent",
         "mesh-cylinder",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1497,6 +2045,7 @@
     {
       "unit": "Material.initialize",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1512,11 +2061,11 @@
         "material-transparent",
         "mesh-cylinder",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1528,6 +2077,7 @@
     {
       "unit": "Material.setProperty",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1543,11 +2093,11 @@
         "material-transparent",
         "mesh-cylinder",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1558,6 +2108,7 @@
     {
       "unit": "utils.createMesh",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1579,11 +2130,12 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1597,6 +2149,7 @@
     {
       "unit": "primitives.box",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1616,6 +2169,8 @@
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1628,14 +2183,17 @@
     {
       "unit": "Node.addChild",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
+        "audio-basic",
         "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
+        "dragonbones-basic",
         "gltf-basic",
         "gltf-clearcoat",
         "gltf-draco",
@@ -1657,11 +2215,15 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1671,13 +2233,17 @@
         "starter",
         "static-model",
         "texture-basic",
+        "tiledmap-basic",
         "transform",
-        "tween-basic"
+        "tween-basic",
+        "ui-components",
+        "ui-layout"
       ]
     },
     {
       "unit": "Node.setPosition",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-position",
         "anim-rotation",
@@ -1704,11 +2270,12 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-basic",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1718,12 +2285,14 @@
         "static-model",
         "texture-basic",
         "transform",
-        "tween-basic"
+        "tween-basic",
+        "ui-components"
       ]
     },
     {
       "unit": "Node.setRotationFromEuler",
       "tier": "core",
+      "via": "call",
       "examples": [
         "anim-rotation",
         "camera-lookat",
@@ -1743,11 +2312,11 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
-        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
@@ -1760,22 +2329,224 @@
       ]
     },
     {
-      "unit": "builtinResMgr",
-      "tier": "core",
+      "unit": "Canvas",
+      "tier": "advanced",
+      "via": "call",
       "examples": [
-        "automation",
-        "camera",
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "UITransform",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "Color",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "tiledmap-basic",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "Label",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "ResolutionPolicy",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "AudioSource",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioClip",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioPCMDataView",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioPCMDataView.getData",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioClip.validate",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioClip.getDuration",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioSource.play",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioSource.pause",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioSource.stop",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioSource.playOneShot",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioSource.getPCMData",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "AudioSource.getSampleRate",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "audio-basic"
+      ]
+    },
+    {
+      "unit": "Node.addComponent",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
         "hello-cube",
-        "input",
-        "material-basic",
-        "material-unlit",
-        "transform",
-        "tween-basic"
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-3d-basic",
+        "profiler-overlay",
+        "starter",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Node.on",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "frameObject",
       "tier": "core",
+      "via": "call",
       "examples": [
         "camera",
         "gltf-basic",
@@ -1787,41 +2558,34 @@
       ]
     },
     {
-      "unit": "input",
-      "tier": "core",
-      "examples": [
-        "camera-lookat",
-        "camera-ortho",
-        "input",
-        "interaction-click",
-        "light-two-directional"
-      ]
-    },
-    {
       "unit": "Input",
       "tier": "core",
+      "via": "read",
       "examples": [
         "camera-lookat",
         "camera-ortho",
         "input",
         "interaction-click",
-        "light-two-directional"
+        "light-two-directional",
+        "physics-3d-basic"
       ]
     },
     {
       "unit": "primitives.sphere",
       "tier": "core",
+      "via": "call",
       "examples": [
         "camera-lookat",
         "camera-multi",
         "light-sphere",
         "mesh-plane",
-        "mesh-sphere"
+        "physics-3d-basic"
       ]
     },
     {
       "unit": "Layers.makeMaskInclude",
       "tier": "core",
+      "via": "call",
       "examples": [
         "camera-multi"
       ]
@@ -1829,6 +2593,7 @@
     {
       "unit": "primitives.plane",
       "tier": "core",
+      "via": "call",
       "examples": [
         "camera-multi",
         "light-point",
@@ -1838,8 +2603,33 @@
       ]
     },
     {
+      "unit": "Texture2D",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "static-model",
+        "texture-basic",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Director",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
       "unit": "GLTFLoader",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -1856,6 +2646,7 @@
     {
       "unit": "GLTFLoader.loadAsync",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-basic"
       ]
@@ -1863,6 +2654,7 @@
     {
       "unit": "GLTFAsset.instantiate",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -1877,6 +2669,7 @@
     {
       "unit": "isValid",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -1886,14 +2679,17 @@
         "gltf-viewer",
         "material-transparent",
         "mesh-multi-material",
+        "physics-3d-basic",
         "runtime-asset-release",
         "static-model",
-        "texture-basic"
+        "texture-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "GLTFAsset.destroy",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-basic",
         "gltf-clearcoat",
@@ -1908,6 +2704,7 @@
     {
       "unit": "GLTFLoader.parseAsync",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-clearcoat",
         "gltf-draco",
@@ -1922,6 +2719,7 @@
     {
       "unit": "GLTFLoader.getExtensionSupport",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-draco"
       ]
@@ -1929,6 +2727,7 @@
     {
       "unit": "GLTFLoader.setMeshoptDecoder",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-meshopt"
       ]
@@ -1936,6 +2735,7 @@
     {
       "unit": "createMeshoptDecoder",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-meshopt"
       ]
@@ -1943,6 +2743,7 @@
     {
       "unit": "isMeshoptAvailable",
       "tier": "advanced",
+      "via": "call",
       "examples": [
         "gltf-meshopt"
       ]
@@ -1950,6 +2751,7 @@
     {
       "unit": "Material.destroy",
       "tier": "core",
+      "via": "call",
       "examples": [
         "gltf-meshopt",
         "gltf-skin",
@@ -1960,6 +2762,7 @@
     {
       "unit": "Animation",
       "tier": "important",
+      "via": "read",
       "examples": [
         "gltf-morph",
         "gltf-skin",
@@ -1969,6 +2772,7 @@
     {
       "unit": "Animation.play",
       "tier": "important",
+      "via": "call",
       "examples": [
         "gltf-morph",
         "gltf-skin"
@@ -1977,6 +2781,7 @@
     {
       "unit": "AnimationClip",
       "tier": "important",
+      "via": "read",
       "examples": [
         "gltf-morph",
         "gltf-skin",
@@ -1986,21 +2791,15 @@
     {
       "unit": "AirTransmissionCapture",
       "tier": "advanced",
+      "via": "call",
       "examples": [
         "gltf-viewer"
       ]
     },
     {
-      "unit": "Node.addComponent",
-      "tier": "core",
-      "examples": [
-        "hello-cube",
-        "starter"
-      ]
-    },
-    {
       "unit": "PointLight",
       "tier": "core",
+      "via": "call",
       "examples": [
         "light-point"
       ]
@@ -2008,6 +2807,7 @@
     {
       "unit": "Node.lookAt",
       "tier": "core",
+      "via": "call",
       "examples": [
         "light-point",
         "light-spot"
@@ -2016,6 +2816,7 @@
     {
       "unit": "SpotLight",
       "tier": "core",
+      "via": "call",
       "examples": [
         "light-spot"
       ]
@@ -2023,6 +2824,7 @@
     {
       "unit": "Node.destroy",
       "tier": "core",
+      "via": "call",
       "examples": [
         "material-transparent",
         "static-model",
@@ -2032,6 +2834,7 @@
     {
       "unit": "Mesh.destroy",
       "tier": "core",
+      "via": "call",
       "examples": [
         "material-transparent",
         "static-model",
@@ -2041,6 +2844,7 @@
     {
       "unit": "primitives.cylinder",
       "tier": "core",
+      "via": "call",
       "examples": [
         "mesh-cylinder"
       ]
@@ -2048,6 +2852,7 @@
     {
       "unit": "Node.getComponentInChildren",
       "tier": "core",
+      "via": "call",
       "examples": [
         "mesh-multi-material"
       ]
@@ -2055,29 +2860,388 @@
     {
       "unit": "primitives.torus",
       "tier": "core",
+      "via": "call",
       "examples": [
-        "mesh-torus"
+        "mesh-torus",
+        "physics-3d-basic"
       ]
     },
     {
       "unit": "Node.getChildByName",
       "tier": "core",
+      "via": "call",
       "examples": [
-        "node-hierarchy"
+        "node-hierarchy",
+        "tiledmap-basic"
       ]
     },
     {
       "unit": "Node.setScale",
       "tier": "core",
+      "via": "call",
       "examples": [
         "node-hierarchy",
         "node-scale",
-        "transform"
+        "transform",
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "SpriteFrame",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "ImageAsset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "static-model",
+        "texture-basic",
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.resetSystem",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleAsset",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "math.setRandGenerator",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "math.random",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "Sprite",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "math.Vec2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "math.Size",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "math.Rect",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "Node.getComponent",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-3d-basic",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "PhysicsSystem2D",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "PhysicsSystem2D.testPoint",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "PhysicsSystem2D.testAABB",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "PhysicsSystem2D.raycast",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "RigidBody2D",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "RigidBody2D.getMass",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "Collider2D",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "Collider2D.apply",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "BoxCollider2D",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "CircleCollider2D",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "PolygonCollider2D",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "PhysicsSystem2D.step",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "math.Quat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "primitives.capsule",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.constructAndRegister",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.BoxCollider",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.SphereCollider",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.CapsuleCollider",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.MeshCollider",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsRayResult",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsMaterial",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "Profiler",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "profiler-overlay"
+      ]
+    },
+    {
+      "unit": "Profiler.showStats",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "profiler-overlay"
+      ]
+    },
+    {
+      "unit": "Profiler.isShowingStats",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "profiler-overlay"
+      ]
+    },
+    {
+      "unit": "Profiler.setBackgroundColor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "profiler-overlay"
+      ]
+    },
+    {
+      "unit": "Profiler.setFontColor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "profiler-overlay"
       ]
     },
     {
       "unit": "SkinnedMeshRenderer",
       "tier": "important",
+      "via": "call",
       "examples": [
         "skinned-animation"
       ]
@@ -2085,6 +3249,7 @@
     {
       "unit": "Mesh",
       "tier": "core",
+      "via": "call",
       "examples": [
         "skinned-animation",
         "static-model"
@@ -2093,6 +3258,7 @@
     {
       "unit": "buildSkeletonTree",
       "tier": "important",
+      "via": "call",
       "examples": [
         "skinned-animation"
       ]
@@ -2100,8 +3266,1183 @@
     {
       "unit": "restoreBindPose",
       "tier": "advanced",
+      "via": "call",
       "examples": [
         "skinned-animation"
+      ]
+    },
+    {
+      "unit": "loadAssetAsync",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "static-model"
+      ]
+    },
+    {
+      "unit": "Texture2D.destroy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "Size",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic",
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "TiledMap",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMapAsset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledObjectGroup",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getMapSize",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getTileSize",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getMapOrientation",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getLayers",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getLayer",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getObjectGroups",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getObjectGroup",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getProperties",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getProperty",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledMap.getPropertiesForGID",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getTileGIDAt",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getTileFlagsAt",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.setTileGIDAt",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getLayerName",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getLayerSize",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getPositionAt",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getTextures",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getTileSet",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.isCullingDirty",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledLayer.getProperties",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledObjectGroup.getObjects",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledObjectGroup.getObject",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledObjectGroup.getGroupName",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledObjectGroup.getProperties",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "TiledObjectGroup.getPositionOffset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "tween",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Widget",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Button",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Toggle",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "ToggleContainer",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Slider",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "ProgressBar",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Layout",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "ScrollView",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "EditBox",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UITransform.convertToWorldSpaceAR",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "ScrollView.scrollToBottom",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "ScrollView.getScrollOffset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "EditBox.focus",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "EditBox.isFocused",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "GraphicsComponent",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "GraphicsComponent.rect",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "GraphicsComponent.clear",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "GraphicsComponent.stroke",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "GraphicsComponent.fill",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "EventHandler",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.play",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.pause",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.resume",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoClip",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "js.setClassName",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.evaluateJS",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.setJavascriptInterfaceScheme",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.setOnJSCallback",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.__preload",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.onEnable",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.onDisable",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.onDestroy",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "WebView.update",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "webview-basic"
+      ]
+    }
+  ],
+  "attestedNotVerified": [
+    {
+      "unit": "view",
+      "tier": "advanced",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "assetManager",
+      "tier": "advanced",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "static-model",
+        "tiledmap-basic",
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "builtinResMgr",
+      "tier": "core",
+      "examples": [
+        "automation",
+        "camera",
+        "hello-cube",
+        "input",
+        "material-basic",
+        "material-unlit",
+        "profiler-overlay",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "input",
+      "tier": "core",
+      "examples": [
+        "camera-lookat",
+        "camera-ortho",
+        "input",
+        "interaction-click",
+        "light-two-directional",
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "director",
+      "tier": "core",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAsset",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAtlasAsset",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "CCFactory",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "AnimationCacheMode",
+      "tier": "important",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAsset.init",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAtlasAsset.init",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "CCFactory.getInstance",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "CCFactory.getDragonBonesDataByUUID",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.playAnimation",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.playTimes",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.setAnimationCacheMode",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.isAnimationCached",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.armature",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.getSlots",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.getBones",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.animation",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.advanceTime",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.name",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Animation.gotoAndStopByFrame",
+      "tier": "important",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Animation.isPlaying",
+      "tier": "important",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.getSkin",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.animations",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.bones",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.slots",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesData.getArmature",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesData.armatureNames",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesData.version",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D._simulator",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D._renderSpriteFrame",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.emitterMode",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.gravity",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.speed",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.startSize",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.endSize",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.life",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.emissionRate",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.duration",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.rotationIsDir",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "Collider2D.TYPE",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "PolygonCollider2D.threshold",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "PHYSICS_2D_PTM_RATIO",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "PhysicsSystem2D.collisionMatrix",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "RigidBody2D.enabledContactListener",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "Contact2DType",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "PhysicsGroup",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision",
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "Ray",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.selector",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.syncSceneToPhysics",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.step",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.emitEvents",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycast",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycastClosest",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycastResults",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycastClosestResult",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.lineStripCast",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.lineStripCastResults",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepBox",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepBoxClosest",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepCastResults",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.minVolumeSize",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyForce",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyImpulse",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyTorque",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.setLinearVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.getLinearVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.setAngularVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.getAngularVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.wakeUp",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.sleep",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearState",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearForces",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.type",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.getGroup",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.setGroup",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.getMask",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.setMask",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "profiler",
+      "tier": "advanced",
+      "examples": [
+        "profiler-overlay"
       ]
     },
     {
@@ -2112,52 +4453,859 @@
       ]
     },
     {
-      "unit": "Texture2D",
-      "tier": "core",
+      "unit": "EventHandler.target",
+      "tier": "advanced",
       "examples": [
-        "static-model",
-        "texture-basic"
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
-      "unit": "ImageAsset",
+      "unit": "EventHandler.component",
       "tier": "advanced",
       "examples": [
-        "static-model",
-        "texture-basic"
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "EventHandler.handler",
+      "tier": "advanced",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "EventHandler.customEventData",
+      "tier": "advanced",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.videoPlayerEvent",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.REMOTE",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.LOCAL",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "screen",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "Screen.requestFullScreen",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "Screen.exitFullScreen",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "macro",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "WebView.webviewEvents",
+      "tier": "advanced",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "game",
+      "tier": "core",
+      "examples": [
+        "webview-basic"
+      ]
+    }
+  ],
+  "claimedNotVerified": [
+    {
+      "unit": "view",
+      "tier": "advanced",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "tiledmap-basic",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
       ]
     },
     {
       "unit": "assetManager",
       "tier": "advanced",
       "examples": [
-        "static-model"
+        "audio-basic",
+        "dragonbones-basic",
+        "static-model",
+        "tiledmap-basic",
+        "video-basic"
       ]
     },
     {
-      "unit": "loadAssetAsync",
-      "tier": "advanced",
-      "examples": [
-        "static-model"
-      ]
-    },
-    {
-      "unit": "Texture2D.destroy",
+      "unit": "builtinResMgr",
       "tier": "core",
       "examples": [
-        "static-model",
-        "texture-basic"
+        "automation",
+        "camera",
+        "hello-cube",
+        "input",
+        "material-basic",
+        "material-unlit",
+        "profiler-overlay",
+        "transform",
+        "tween-basic"
       ]
     },
     {
-      "unit": "tween",
+      "unit": "input",
+      "tier": "core",
+      "examples": [
+        "camera-lookat",
+        "camera-ortho",
+        "input",
+        "interaction-click",
+        "light-two-directional",
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "director",
+      "tier": "core",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAsset",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAtlasAsset",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "CCFactory",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "AnimationCacheMode",
       "tier": "important",
       "examples": [
-        "tween-basic"
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAsset.init",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesAtlasAsset.init",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "CCFactory.getInstance",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "CCFactory.getDragonBonesDataByUUID",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.playAnimation",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.playTimes",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.setAnimationCacheMode",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.isAnimationCached",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureDisplay.armature",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.getSlots",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.getBones",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.animation",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.advanceTime",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Armature.name",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Animation.gotoAndStopByFrame",
+      "tier": "important",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "Animation.isPlaying",
+      "tier": "important",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.getSkin",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.animations",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.bones",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ArmatureData.slots",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesData.getArmature",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesData.armatureNames",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "DragonBonesData.version",
+      "tier": "advanced",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D._simulator",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D._renderSpriteFrame",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.emitterMode",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.gravity",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.speed",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.startSize",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.endSize",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.life",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.emissionRate",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.duration",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "ParticleSystem2D.rotationIsDir",
+      "tier": "important",
+      "examples": [
+        "particle-2d-basic"
+      ]
+    },
+    {
+      "unit": "Collider2D.TYPE",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "PolygonCollider2D.threshold",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-basic"
+      ]
+    },
+    {
+      "unit": "PHYSICS_2D_PTM_RATIO",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-basic",
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "PhysicsSystem2D.collisionMatrix",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "RigidBody2D.enabledContactListener",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "Contact2DType",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "PhysicsGroup",
+      "tier": "advanced",
+      "examples": [
+        "physics-2d-collision",
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "Ray",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.selector",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.syncSceneToPhysics",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.step",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.emitEvents",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycast",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycastClosest",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycastResults",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycastClosestResult",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.lineStripCast",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.lineStripCastResults",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepBox",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepBoxClosest",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepCastResults",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.minVolumeSize",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyForce",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyImpulse",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyTorque",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.setLinearVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.getLinearVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.setAngularVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.getAngularVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.wakeUp",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.sleep",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearState",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearForces",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearVelocity",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.type",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.getGroup",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.setGroup",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.getMask",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.setMask",
+      "tier": "advanced",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "profiler",
+      "tier": "advanced",
+      "examples": [
+        "profiler-overlay"
+      ]
+    },
+    {
+      "unit": "Layers.DEFAULT",
+      "tier": "core",
+      "examples": [
+        "starter"
+      ]
+    },
+    {
+      "unit": "EventHandler.target",
+      "tier": "advanced",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "EventHandler.component",
+      "tier": "advanced",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "EventHandler.handler",
+      "tier": "advanced",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "EventHandler.customEventData",
+      "tier": "advanced",
+      "examples": [
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.videoPlayerEvent",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.REMOTE",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "VideoPlayer.LOCAL",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "screen",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "Screen.requestFullScreen",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "Screen.exitFullScreen",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "macro",
+      "tier": "advanced",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
+      "unit": "WebView.webviewEvents",
+      "tier": "advanced",
+      "examples": [
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "game",
+      "tier": "core",
+      "examples": [
+        "webview-basic"
       ]
     }
   ],
   "unclaimedCore": [
+    "MeshBuffer",
+    "MeshBuffer.constructor",
+    "MeshBuffer.initSharedBuffer",
+    "MeshBuffer.syncSharedBufferToNative",
+    "MeshBuffer.initialize",
+    "MeshBuffer.reset",
+    "MeshBuffer.destroy",
+    "MeshBuffer.setDirty",
+    "MeshBuffer.request",
+    "MeshBuffer.requireFreeIA",
+    "MeshBuffer.recycleIA",
+    "MeshBuffer.checkCapacity",
+    "MeshBuffer.uploadBuffers",
+    "MeshRenderData",
+    "MeshRenderData.constructor",
+    "MeshRenderData.add",
+    "MeshRenderData.remove",
+    "MeshRenderData._isMeshBuffer",
+    "MeshRenderData.vData",
+    "MeshRenderData.iData",
+    "MeshRenderData.vertexStart",
+    "MeshRenderData.vertexRange",
+    "MeshRenderData.indexStart",
+    "MeshRenderData.indexRange",
+    "MeshRenderData.lastFilledIndex",
+    "MeshRenderData.lastFilledVertex",
+    "MeshRenderData.frame",
+    "MeshRenderData.request",
+    "MeshRenderData.reserve",
+    "MeshRenderData.resize",
+    "MeshRenderData.updateRange",
+    "MeshRenderData.requestIA",
+    "MeshRenderData.uploadBuffers",
+    "MeshRenderData.freeIAPool",
+    "MeshRenderData.reset",
+    "MeshRenderData.clear",
+    "MeshRenderData.setRenderDrawInfoAttributes",
     "utils.find",
     "utils.toPPM",
     "utils.readMesh",
@@ -2222,7 +5370,6 @@
     "SphereLight.constructor",
     "SpotLight.constructor",
     "PointLight.constructor",
-    "Color",
     "Color.constructor",
     "Color.x",
     "Color.y",
@@ -2318,7 +5465,6 @@
     "math.bits.INT_BITS",
     "math.bits.INT_MAX",
     "math.bits.INT_MIN",
-    "math.Vec2",
     "math.Vec2.constructor",
     "math.Vec2.cross",
     "math.Vec2.x",
@@ -2421,7 +5567,6 @@
     "math.Vec4.scale",
     "math.Vec4.transformMat4",
     "math.v4",
-    "math.Quat",
     "math.Quat.constructor",
     "math.Quat.toAxisX",
     "math.Quat.toAxisY",
@@ -2516,7 +5661,6 @@
     "math.Mat4.fromSRT",
     "math.Mat4.fromQuat",
     "math.mat4",
-    "math.Size",
     "math.Size.constructor",
     "math.Size.width",
     "math.Size.height",
@@ -2526,7 +5670,6 @@
     "math.Size.lerp",
     "math.Size.toString",
     "math.size",
-    "math.Rect",
     "math.Rect.constructor",
     "math.Rect.x",
     "math.Rect.y",
@@ -2575,8 +5718,6 @@
     "math.lerp",
     "math.toRadian",
     "math.toDegree",
-    "math.random",
-    "math.setRandGenerator",
     "math.randomRange",
     "math.randomRangeInt",
     "math.pseudoRandom",
@@ -2613,11 +5754,9 @@
     "Node.removeChild",
     "Node.removeAllChildren",
     "Node.isChildOf",
-    "Node.getComponent",
     "Node.getComponents",
     "Node.getComponentsInChildren",
     "Node.removeComponent",
-    "Node.on",
     "Node.off",
     "Node.once",
     "Node.emit",
@@ -2730,8 +5869,6 @@
     "ModelRenderer",
     "ModelRenderer.constructor",
     "ModelRenderer._collectModels",
-    "director",
-    "game",
     "instantiate",
     "SceneAsset",
     "SceneAsset.constructor",
@@ -2780,7 +5917,6 @@
     "ColorTrack.channels",
     "primitives.cone",
     "primitives.quad",
-    "primitives.capsule",
     "primitives.circle",
     "primitives.translate",
     "primitives.scale",
@@ -2790,6 +5926,68 @@
     "primitives.toWavefrontOBJ",
     "primitives.normals",
     "primitives.applyDefaultGeometryOptions",
+    "ColorTimeline",
+    "ColorTimeline.constructor",
+    "ColorTimeline.slotIndex",
+    "ColorTimeline.frames",
+    "ColorTimeline.getPropertyId",
+    "ColorTimeline.getSlotIndex",
+    "ColorTimeline.setSlotIndex",
+    "ColorTimeline.setFrame",
+    "ColorTimeline.apply",
+    "Color.r",
+    "Color.g",
+    "Color.b",
+    "Color.a",
+    "Color.setFromColor",
+    "Color.setFromString",
+    "Color.add",
+    "Color.clamp",
+    "Color.rgba8888ToColor",
+    "Color.rgb888ToColor",
+    "MeshAttachment",
+    "MeshAttachment.constructor",
+    "MeshAttachment.path",
+    "MeshAttachment.regionUVs",
+    "MeshAttachment.uvs",
+    "MeshAttachment.triangles",
+    "MeshAttachment.color",
+    "MeshAttachment.width",
+    "MeshAttachment.height",
+    "MeshAttachment.hullLength",
+    "MeshAttachment.edges",
+    "MeshAttachment.updateUVs",
+    "MeshAttachment.getParentMesh",
+    "MeshAttachment.setParentMesh",
+    "MeshAttachment.copy",
+    "MeshAttachment.newLinkedMesh",
+    "ColorTransform",
+    "ColorTransform.constructor",
+    "ColorTransform.alphaMultiplier",
+    "ColorTransform.redMultiplier",
+    "ColorTransform.greenMultiplier",
+    "ColorTransform.blueMultiplier",
+    "ColorTransform.alphaOffset",
+    "ColorTransform.redOffset",
+    "ColorTransform.greenOffset",
+    "ColorTransform.blueOffset",
+    "ColorTransform.copyFrom",
+    "ColorTransform.identity",
+    "MeshDisplayData",
+    "MeshDisplayData.constructor",
+    "MeshDisplayData.toString",
+    "MeshDisplayData.inheritDeform",
+    "MeshDisplayData.offset",
+    "MeshDisplayData.weight",
+    "MeshDisplayData.glue",
+    "MeshDisplayData.texture",
+    "ColorGradingPass",
+    "ColorGradingPass.constructor",
+    "ColorGradingPass.checkEnable",
+    "ColorGradingPass.name",
+    "ColorGradingPass.effectName",
+    "ColorGradingPass.outputNames",
+    "ColorGradingPass.render",
     "GLTFAsset",
     "GLTFAsset.constructor",
     "GLTFAsset.owned",
@@ -2827,5 +6025,5 @@
     "LightingStage.destroy",
     "LightingStage.render"
   ],
-  "unclaimedRequired": 1455
+  "unclaimedRequired": 2494
 }

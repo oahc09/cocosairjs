@@ -1,9 +1,11 @@
 {
-  "generatedAt": "2026-09-19T14:38:41.175Z",
+  "generatedAt": "2026-09-23T01:35:32.558Z",
   "suites": [
     {
       "file": "test/smoke/smoke-01-bootstrap.test.ts",
       "tests": [
+        "smoke 1 — createAirApp bootstrap AIR_VERSION appears in the built bundle export table",
+        "smoke 1 — createAirApp bootstrap AIR_VERSION is exported and stays in sync with package.json",
         "smoke 1 — createAirApp bootstrap createAirApp initializes engine and returns app"
       ]
     },
@@ -353,12 +355,79 @@
         "V1.1 — Example Specification 门禁 §23 files.json 只保留 Gallery 字段，规格实现细节不外溢",
         "V1.1 — Example Specification 门禁 §3/§10 规格 validator id 必须真实存在（篡改可检测）"
       ]
+    },
+    {
+      "file": "test/smoke/smoke-30-v12-regression.test.ts",
+      "tests": [
+        "smoke 30 — V1.2 回归组产物面与运行时 A1 profiler 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 A2 audio 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 A2 audio：产物含真实 Web Audio 实现，pal 运行面按官方语义可用",
+        "smoke 30 — V1.2 回归组产物面与运行时 A3 video 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 A4 webview 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 B1 2d 基座 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 B2 particle-2d 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 B3 tiled-map 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 B4 ui 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 C1 spine（命名空间 sp） 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 C2 dragon-bones（命名空间 dragonBones） 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 D1-2 physics-2d framework 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 D3 physics-2d box2d（JS 后端） 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 F-1 deprecated.ts：Root.prototype.ui → batcher2D 别名可解析（纯注册副作用，无引擎初始化依赖）",
+        "smoke 30 — V1.2 回归组产物面与运行时 F-3 簿记完整性：upstream-file-map / extraction-manifest 与磁盘事实一致",
+        "smoke 30 — V1.2 回归组产物面与运行时 G1 physics builtin 3D 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 H post-process（命名空间 postProcess） 的代表符号在产物导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币 产物绑定：矩阵记录的 bundle 与 d.ts 哈希就是当期构建产物",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币 契约绑定：矩阵断言自采证后未被放松",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币 每张截图仍在盘且与记录逐字节一致；断言全部为真",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币 覆盖率：契约里每个示例 × 每个声明引擎都有 PASS 记录（不许静默漏跑）",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币 证据在案且已完成：completed=true（缺标记即 NOT_RUN）",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币 证据目录对账：docs/evidence/v12/ 下每个目录要么被矩阵记录引用，要么在册豁免（不许静默堆积孤儿捕获，也不许留僵尸豁免）",
+        "smoke 30 — V1.2 回归组产物面与运行时 V1.2 新增导出在 .d.ts 发布面中可见（类型与产物同源）",
+        "smoke 30 — V1.2 回归组产物面与运行时 spine 运行时资产缺失走可读降级提示（D2/P2 口径）",
+        "smoke 30 — V1.2 回归组产物面与运行时 src/pal 全部文件是 @cocos/engine-pal dist 的原始字节（无手写替身）",
+        "smoke 30 — V1.2 回归组产物面与运行时 vendored 运行库与已安装 npm 包逐字节一致",
+        "smoke 30 — V1.2 回归组产物面与运行时 产物自包含：无 bare @cocos/* 与 pal/* import",
+        "smoke 30 — V1.2 回归组产物面与运行时 批次 D-4 / G-3（Deviation-05）：三个 wasm 后端子图「已抽取、未接线、暂不类型核对」 82 个抽取文件全部在册且落盘（豁免只作用于类型核对，不改内容）",
+        "smoke 30 — V1.2 回归组产物面与运行时 批次 D-4 / G-3（Deviation-05）：三个 wasm 后端子图「已抽取、未接线、暂不类型核对」 三个 feature unit 已声明但未进默认发行面（默认产物字节货币不受影响）",
+        "smoke 30 — V1.2 回归组产物面与运行时 批次 D-4 / G-3（Deviation-05）：三个 wasm 后端子图「已抽取、未接线、暂不类型核对」 豁免不遮蔽活代码：子图之外没有任何文件把该子图引进口",
+        "smoke 30 — V1.2 回归组产物面与运行时 批次 E / D10：gfx-webgpu 子图的类型核对豁免不外溢 26 个 gfx-webgpu 抽取文件仍与官方逐字节一致（豁免只作用于类型核对，不改内容）",
+        "smoke 30 — V1.2 回归组产物面与运行时 批次 E / D10：gfx-webgpu 子图的类型核对豁免不外溢 类型面与产物面一致：未接线的 gfx-webgpu 不得出现在发布 d.ts 导出表中",
+        "smoke 30 — V1.2 回归组产物面与运行时 批次 E / D10：gfx-webgpu 子图的类型核对豁免不外溢 豁免不遮蔽活代码：子图之外没有任何文件把该子图引进口",
+        "smoke 30 — V1.2 回归组产物面与运行时 批次 E / D10：gfx-webgpu 子图的类型核对豁免不外溢 豁免清单精确锁定：根与 src 两份 tsconfig 的 exclude 只允许已登记的豁免项",
+        "smoke 30 — V1.2 回归组产物面与运行时 运行时（createAirApp 之后） A2 audio：AudioSource 组件可挂载（cc 类注册与装饰器元数据在案）",
+        "smoke 30 — V1.2 回归组产物面与运行时 运行时（createAirApp 之后） D7 默认后端：2D = box2d，3D = builtin",
+        "smoke 30 — V1.2 回归组产物面与运行时 运行时（createAirApp 之后） box2d 后端真实模拟：引擎 createPhysicsWorld() 自由落体 1 秒位移 ≈ 5 m"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-31-pose-graph.test.ts",
+      "tests": [
+        "smoke 31 — LV12-12 pose-graph 单元级 pose node 求值正确（PoseNodeApplyTransform） REPLACE + 半强度：lerp(5, 1, 0.5) = 3 精确插值",
+        "smoke 31 — LV12-12 pose-graph 单元级 pose node 求值正确（PoseNodeApplyTransform） REPLACE + 满强度：目标结点局部位置被精确替换，未绑定名字影响的兄弟结点不动",
+        "smoke 31 — LV12-12 pose-graph 单元级 pose node 求值正确（PoseNodeApplyTransform） rotation ADD + 满强度：结果 = value · inputRotation，位置不受牵连",
+        "smoke 31 — LV12-12 pose-graph 单元级 pose node 求值正确（PoseNodeApplyTransform） 两个 ModifyPose 结点串联：链路遍历与求值顺序正确",
+        "smoke 31 — LV12-12 pose-graph 单元级 pose node 求值正确（PoseNodeApplyTransform） 强度低于 epsilon：modifyPose 早退，姿势保持默认",
+        "smoke 31 — LV12-12 pose-graph 单元级 pose node 求值正确（PoseNodeApplyTransform） 每帧求值稳定：连续 5 帧结果不漂移（无姿势栈泄漏）",
+        "smoke 31 — LV12-12 pose-graph 闭包完整（抽取子树 + 逐文件簿记 + 空替身） pose-graph 子树每个 .ts 都在 upstream-file-map 登记且标记未修改",
+        "smoke 31 — LV12-12 pose-graph 闭包完整（抽取子树 + 逐文件簿记 + 空替身） 运行时导出面被构建期覆盖为 empty（示例级不可达的根因是配置而非缺文件）"
+      ]
+    },
+    {
+      "file": "test/smoke/smoke-32-wasm-fallback.test.ts",
+      "tests": [
+        "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 ASMJS 模式恒走 asm.js：三族只请求 asm 单文件、不碰 wasm 对，且实例真的落地",
+        "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 BOTH 模式按能力探测分流：探测不到 WASM 才回落到 asm.js",
+        "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 WASM 模式无条件走 wasm 分支：.wasm.js 与 .wasm.wasm 成对请求，asm 一支不被引用",
+        "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 bullet 的 asm 工厂为空时早退：不改写 bt、不抛错（上游 initASM 的 null 分支）",
+        "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 三族 loader 在未开 LOAD_*_MANUALLY 时常驻挂在 game.onPostInfrastructureInitDelegate 上（接线面）",
+        "smoke 32 — LV12-14/16：三族 wasm 后端的 asm.js 兜底分支 两支的实例落地方式不对称：bullet 只有 wasm 支写 globalThis.Bullet；physx 的 asm 用 Object.assign、wasm 重绑定 PX"
+      ]
     }
   ],
   "totals": {
-    "suites": 29,
-    "tests": 208,
-    "passed": 208,
+    "suites": 32,
+    "tests": 262,
+    "passed": 262,
     "failed": 0
   }
 }

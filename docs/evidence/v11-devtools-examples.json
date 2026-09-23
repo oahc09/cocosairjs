@@ -1,12 +1,12 @@
 {
-  "measuredAt": "2026-09-19T19:03:11.848Z",
+  "measuredAt": "2026-09-21T22:47:03.629Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "5612c4c2746f395b",
+  "candidateFingerprint": "9fa85f88b968d5f1",
   "apiProofTotals": {
-    "verified": 73,
-    "attested": 14,
+    "verified": 76,
+    "attested": 11,
     "unproven": 0
   },
   "contract": "V0.5.1 DevTools/Agent Session 冻结合同（inspectScene/inspectNode/dispatch/captureFrame/getRuntimeErrors/close）",
@@ -17,13 +17,13 @@
       "result": "PASS",
       "specFingerprint": "c00b9e5f3a5a",
       "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 11,
-        "bytes": 30554,
-        "hash": "ec54c04fa2d7ce21",
+        "bytes": 44571,
+        "hash": "569fab09020da183",
         "notes": [],
         "observed": 8,
         "total": 11
@@ -85,7 +85,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 2,
-          "reads": 91,
+          "reads": 113,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -102,7 +102,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 5,
-          "reads": 74,
+          "reads": 94,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -284,6 +284,11 @@
           "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
         },
         {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
           "validatorId": "captureFrame",
           "state": "PASS",
           "detail": "bytes=8022 viewport=480x360"
@@ -316,7 +321,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→46 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -333,13 +338,13 @@
       "result": "PASS",
       "specFingerprint": "86059190543b",
       "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 18,
-        "bytes": 30866,
-        "hash": "58959b9e074f9cf4",
+        "bytes": 44883,
+        "hash": "b6b4080be0a34cf7",
         "notes": [],
         "observed": 17,
         "total": 18
@@ -434,7 +439,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -762,16 +767,16 @@
     {
       "id": "rc-create-node",
       "requiresDevTools": true,
-      "result": "FAIL",
-      "specFingerprint": "ee91d892f893",
-      "sourceFingerprint": "2b50d6c95a6edc1c",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "result": "PASS",
+      "specFingerprint": "deb988a9d823",
+      "sourceFingerprint": "20070fba85c22df4",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 20,
-        "bytes": 30923,
-        "hash": "26fb99fbbb41f46b",
+        "bytes": 44940,
+        "hash": "4402ca65b1f8acf4",
         "notes": [],
         "observed": 17,
         "total": 20
@@ -782,7 +787,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 28,
+          "reads": 34,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -850,7 +855,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 26,
+          "reads": 32,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -884,7 +889,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 24,
+          "reads": 30,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -900,7 +905,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -935,7 +940,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 93,
+          "reads": 117,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -952,7 +957,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 5,
-          "reads": 86,
+          "reads": 110,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -966,51 +971,51 @@
         },
         {
           "api": "Node.addChild",
-          "proof": "attested",
+          "proof": "verified",
           "state": "executed",
           "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
-          "bound": false,
+          "bound": true,
           "bindings": [
             {
               "validator": "transform-equals",
-              "passed": false,
+              "passed": true,
               "ok": true
             }
           ]
         },
         {
           "api": "Node.setPosition",
-          "proof": "attested",
+          "proof": "verified",
           "state": "executed",
-          "calls": 3,
+          "calls": 4,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
-          "bound": false,
+          "bound": true,
           "bindings": [
             {
               "validator": "transform-equals",
-              "passed": false,
+              "passed": true,
               "ok": true
             }
           ]
         },
         {
           "api": "Node.setRotationFromEuler",
-          "proof": "attested",
+          "proof": "verified",
           "state": "executed",
           "calls": 1,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
-          "bound": false,
+          "bound": true,
           "bindings": [
             {
               "validator": "transform-equals",
-              "passed": false,
+              "passed": true,
               "ok": true
             }
           ]
@@ -1176,8 +1181,8 @@
         },
         {
           "validatorId": "transform-equals",
-          "state": "FAIL",
-          "detail": "AgentGenerated.position=[0,0,0] expected [1.8,0.6,0] (±0.001); AgentGenerated.scale=[1,1,1] expected [0.8,0.8,0.8] (±0.001) | coverage 4/4 nodes authored + 1 grounded exclusions"
+          "state": "PASS",
+          "detail": "7 declared components matched (nodes 4/4 in graph) | coverage 4/4 nodes authored + 1 grounded exclusions"
         },
         {
           "validatorId": "material-property",
@@ -1193,6 +1198,11 @@
           "validatorId": "dispatch:error-code",
           "state": "PASS",
           "detail": "ok=false code=STALE_TARGET nodeCount 6→6 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 6→6"
         },
         {
           "validatorId": "captureFrame",
@@ -1217,7 +1227,12 @@
         {
           "validatorId": "session-self-report",
           "state": "PASS",
-          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\"}"
+          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\",\"dupNodeSuppressed\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "duplicateCode: in-page=INVALID_ARGUMENT gate=INVALID_ARGUMENT"
         },
         {
           "validatorId": "detach:SESSION_CLOSED",
@@ -1227,7 +1242,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1236,23 +1251,21 @@
         "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
-      "errors": [
-        "transform-equals: AgentGenerated.position=[0,0,0] expected [1.8,0.6,0] (±0.001); AgentGenerated.scale=[1,1,1] expected [0.8,0.8,0.8] (±0.001) | coverage 4/4 nodes authored + 1 grounded exclusions"
-      ]
+      "errors": []
     },
     {
       "id": "rc-error-report",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "7bf168d53362",
-      "sourceFingerprint": "ff9a1514bf26d523",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "specFingerprint": "2be94727b2c1",
+      "sourceFingerprint": "ad473b671a41e764",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 19,
-        "bytes": 30897,
-        "hash": "19d0bc6283e733aa",
+        "bytes": 44914,
+        "hash": "d4cb4bc8c63b3ee0",
         "notes": [],
         "observed": 17,
         "total": 19
@@ -1263,7 +1276,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 22,
+          "reads": 28,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -1314,7 +1327,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 20,
+          "reads": 26,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -1348,7 +1361,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 18,
+          "reads": 24,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -1364,7 +1377,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1399,7 +1412,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 66,
+          "reads": 88,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -1416,7 +1429,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 4,
-          "reads": 56,
+          "reads": 76,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -1657,6 +1670,11 @@
           "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
         },
         {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
           "validatorId": "captureFrame",
           "state": "PASS",
           "detail": "bytes=6946 viewport=480x360"
@@ -1679,7 +1697,12 @@
         {
           "validatorId": "session-self-report",
           "state": "PASS",
-          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\"}"
+          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\",\"staleRejected\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "stableCode: in-page=STALE_TARGET gate=STALE_TARGET"
         },
         {
           "validatorId": "detach:SESSION_CLOSED",
@@ -1689,7 +1712,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1706,13 +1729,13 @@
       "result": "PASS",
       "specFingerprint": "495816944ba8",
       "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 19,
-        "bytes": 30896,
-        "hash": "333f745563deefa7",
+        "bytes": 44913,
+        "hash": "24297c112f7e7d9d",
         "notes": [],
         "observed": 17,
         "total": 19
@@ -1824,7 +1847,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -2139,7 +2162,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2158,13 +2181,13 @@
       "result": "PASS",
       "specFingerprint": "c00b9e5f3a5a",
       "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 11,
-        "bytes": 30554,
-        "hash": "ec54c04fa2d7ce21",
+        "bytes": 44571,
+        "hash": "569fab09020da183",
         "notes": [],
         "observed": 8,
         "total": 11
@@ -2226,7 +2249,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 2,
-          "reads": 91,
+          "reads": 113,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -2243,7 +2266,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 5,
-          "reads": 74,
+          "reads": 94,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -2425,6 +2448,11 @@
           "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
         },
         {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
           "validatorId": "captureFrame",
           "state": "PASS",
           "detail": "bytes=8022 viewport=480x360"
@@ -2457,7 +2485,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→46 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2474,13 +2502,13 @@
       "result": "PASS",
       "specFingerprint": "86059190543b",
       "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 18,
-        "bytes": 30866,
-        "hash": "58959b9e074f9cf4",
+        "bytes": 44883,
+        "hash": "b6b4080be0a34cf7",
         "notes": [],
         "observed": 17,
         "total": 18
@@ -2575,7 +2603,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -2903,16 +2931,16 @@
     {
       "id": "rc-create-node",
       "requiresDevTools": true,
-      "result": "FAIL",
-      "specFingerprint": "ee91d892f893",
-      "sourceFingerprint": "2b50d6c95a6edc1c",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "result": "PASS",
+      "specFingerprint": "deb988a9d823",
+      "sourceFingerprint": "20070fba85c22df4",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 20,
-        "bytes": 30923,
-        "hash": "26fb99fbbb41f46b",
+        "bytes": 44940,
+        "hash": "4402ca65b1f8acf4",
         "notes": [],
         "observed": 17,
         "total": 20
@@ -2923,7 +2951,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 28,
+          "reads": 34,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -2991,7 +3019,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 26,
+          "reads": 32,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3025,7 +3053,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 24,
+          "reads": 30,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3041,7 +3069,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -3076,7 +3104,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 93,
+          "reads": 117,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3093,7 +3121,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 5,
-          "reads": 86,
+          "reads": 110,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3107,51 +3135,51 @@
         },
         {
           "api": "Node.addChild",
-          "proof": "attested",
+          "proof": "verified",
           "state": "executed",
           "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
-          "bound": false,
+          "bound": true,
           "bindings": [
             {
               "validator": "transform-equals",
-              "passed": false,
+              "passed": true,
               "ok": true
             }
           ]
         },
         {
           "api": "Node.setPosition",
-          "proof": "attested",
+          "proof": "verified",
           "state": "executed",
-          "calls": 3,
+          "calls": 4,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
-          "bound": false,
+          "bound": true,
           "bindings": [
             {
               "validator": "transform-equals",
-              "passed": false,
+              "passed": true,
               "ok": true
             }
           ]
         },
         {
           "api": "Node.setRotationFromEuler",
-          "proof": "attested",
+          "proof": "verified",
           "state": "executed",
           "calls": 1,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
-          "bound": false,
+          "bound": true,
           "bindings": [
             {
               "validator": "transform-equals",
-              "passed": false,
+              "passed": true,
               "ok": true
             }
           ]
@@ -3317,8 +3345,8 @@
         },
         {
           "validatorId": "transform-equals",
-          "state": "FAIL",
-          "detail": "AgentGenerated.position=[0,0,0] expected [1.8,0.6,0] (±0.001); AgentGenerated.scale=[1,1,1] expected [0.8,0.8,0.8] (±0.001) | coverage 4/4 nodes authored + 1 grounded exclusions"
+          "state": "PASS",
+          "detail": "7 declared components matched (nodes 4/4 in graph) | coverage 4/4 nodes authored + 1 grounded exclusions"
         },
         {
           "validatorId": "material-property",
@@ -3334,6 +3362,11 @@
           "validatorId": "dispatch:error-code",
           "state": "PASS",
           "detail": "ok=false code=STALE_TARGET nodeCount 6→6 leaked=false"
+        },
+        {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 6→6"
         },
         {
           "validatorId": "captureFrame",
@@ -3358,7 +3391,12 @@
         {
           "validatorId": "session-self-report",
           "state": "PASS",
-          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\"}"
+          "detail": "in-page checks green: {\"created\":true,\"nodeCount\":5,\"duplicateCode\":\"INVALID_ARGUMENT\",\"dupNodeSuppressed\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "duplicateCode: in-page=INVALID_ARGUMENT gate=INVALID_ARGUMENT"
         },
         {
           "validatorId": "detach:SESSION_CLOSED",
@@ -3368,7 +3406,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3377,23 +3415,21 @@
         "hash": "33aad0be18da905f"
       },
       "assetDigests": [],
-      "errors": [
-        "transform-equals: AgentGenerated.position=[0,0,0] expected [1.8,0.6,0] (±0.001); AgentGenerated.scale=[1,1,1] expected [0.8,0.8,0.8] (±0.001) | coverage 4/4 nodes authored + 1 grounded exclusions"
-      ]
+      "errors": []
     },
     {
       "id": "rc-error-report",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "7bf168d53362",
-      "sourceFingerprint": "ff9a1514bf26d523",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "specFingerprint": "2be94727b2c1",
+      "sourceFingerprint": "ad473b671a41e764",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 19,
-        "bytes": 30897,
-        "hash": "19d0bc6283e733aa",
+        "bytes": 44914,
+        "hash": "d4cb4bc8c63b3ee0",
         "notes": [],
         "observed": 17,
         "total": 19
@@ -3404,7 +3440,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 22,
+          "reads": 28,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3455,7 +3491,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 20,
+          "reads": 26,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3489,7 +3525,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 18,
+          "reads": 24,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3505,7 +3541,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -3540,7 +3576,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 66,
+          "reads": 88,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3557,7 +3593,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 4,
-          "reads": 56,
+          "reads": 76,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3798,6 +3834,11 @@
           "detail": "ok=false code=STALE_TARGET nodeCount 5→5 leaked=false"
         },
         {
+          "validatorId": "dispatch:duplicate-requestId",
+          "state": "PASS",
+          "detail": "ok=false code=INVALID_ARGUMENT nodeCount 5→5"
+        },
+        {
           "validatorId": "captureFrame",
           "state": "PASS",
           "detail": "bytes=6946 viewport=480x360"
@@ -3820,7 +3861,12 @@
         {
           "validatorId": "session-self-report",
           "state": "PASS",
-          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\"}"
+          "detail": "in-page checks green: {\"baseline\":0,\"stableCode\":\"STALE_TARGET\",\"staleRejected\":true}"
+        },
+        {
+          "validatorId": "session-self-report-codes",
+          "state": "PASS",
+          "detail": "stableCode: in-page=STALE_TARGET gate=STALE_TARGET"
         },
         {
           "validatorId": "detach:SESSION_CLOSED",
@@ -3830,7 +3876,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3847,13 +3893,13 @@
       "result": "PASS",
       "specFingerprint": "495816944ba8",
       "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "5612c4c2746f395b",
+      "candidateFingerprint": "9fa85f88b968d5f1",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 368,
+        "exports": 574,
         "unitCount": 19,
-        "bytes": 30896,
-        "hash": "333f745563deefa7",
+        "bytes": 44913,
+        "hash": "24297c112f7e7d9d",
         "notes": [],
         "observed": 17,
         "total": 19
@@ -3965,7 +4011,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 25,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -4280,7 +4326,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -4300,9 +4346,10 @@
     }
   ],
   "total": 5,
-  "pass": 4,
-  "fail": 1,
+  "pass": 5,
+  "fail": 0,
   "partial": false,
-  "runPass": 4,
+  "completed": true,
+  "runPass": 5,
   "runTotal": 5
 }

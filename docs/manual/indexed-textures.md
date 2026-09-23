@@ -24,7 +24,7 @@ Stage 体系也不给自定义 pass 挂着色器（[post-processing](post-proces
 | --- | --- | --- |
 | `primitives.sphere(radius, sectors, stance)` | d.ts 31865 | 返回 `IGeometry`；本例 `sphere(2, 16, 12)` 实测键集 `positions/indices/normals/uvs/minPos/maxPos/boundingRadius`，`positions.length=3267`（1089 顶点）、`indices.length=6144` → **2048 三角形** |
 | `IGeometry.indices` | d.ts 32078 | 索引绘制用的三角形索引表（每 3 个顶点索引一个三角形） |
-| `utils.createMesh(IGeometry)` | 与 [custom-geometry](custom-geometry.md) 同路 | 同一份 prim 数据既喂渲染又留 CPU 求交，天然对齐 |
+| `utils.createMesh(IGeometry)` | 与 [custom-geometry](custom-buffergeometry.md) 同路 | 同一份 prim 数据既喂渲染又留 CPU 求交，天然对齐 |
 | `Camera.screenPointToRay(x, y, out)` | d.ts 21410 | 左下角原点像素 → 射线（翻转约定见 [picking](picking.md) §2，本例逐字沿用） |
 | `IDynamicGeometry` / 动态网格 | d.ts 32100 起 | 存在逐帧更新顶点数据的类型面；本篇未用到，逐帧改顶点场景指路 [canvas-textures](canvas-textures.md) 的纹理更新思路 |
 

@@ -1,7 +1,7 @@
 /**
  * Smoke 29 — V1.1 Example Specification 门禁（§15 Spec Freeze / §3 API Bind / §23 Manifest 裁剪）。
  *
- * 1. spec-validate.cjs 全量通过：45 个 example.json 均为 frozen 且零问题；
+ * 1. spec-validate.cjs 全量通过：52 个 example.json 均为 frozen 且零问题；
  * 2. spec-evidence.cjs --check：apiEvidence 行号无漂移、validator 绑定不脱钩；
  * 3. spec-compliance-audit.cjs：§11 Stable 公式的当期证据链零 fail；
  * 4. files.json 裁剪合同（§23）：Gallery 字段在、实现细节（evidence 行号等）不在；
@@ -25,11 +25,31 @@ function run (script: string, args: string[] = []): { status: number; stdout: st
     }
 }
 
+// Windows 上「写完后立刻再写同一文件」会被杀软/索引器短暂独占，报 UNKNOWN: unknown error, open。
+// 负控用例要还原原文，遇占用就退避重试；仍失败时把错误抛出（连同重试次数）便于归因。
+function writeWithRetry (file: string, content: string, attempts = 10): void {
+    const fs = nodeRequire('fs') as typeof import('fs');
+    for (let i = 0; i < attempts; i++) {
+        try {
+            fs.writeFileSync(file, content);
+            if (fs.readFileSync(file, 'utf8') !== content) throw new Error('write did not land');
+            return;
+        } catch (error: any) {
+            if (i === attempts - 1) throw new Error(`restore ${file} failed after ${attempts} tries: ${String(error?.message ?? error)}`);
+            Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 200);
+        }
+    }
+}
+
 describe('V1.1 — Example Specification 门禁', () => {
+    // V1.1 交付的 45 个 + V1.2 每落一个示例都要显式改这里（新增示例不许静默进总数）。
+    // 现值 57 = 45 + profiler-overlay + ui-components + ui-layout + physics-2d-basic + physics-2d-collision + particle-2d-basic + tiledmap-basic + audio-basic + video-basic + webview-basic + physics-3d-basic + dragonbones-basic。
+    const EXAMPLE_COUNT = 57;
+
     test('§15 全部 example.json 达到 frozen 且规格零问题', () => {
         const result = run('tools/examples/spec-validate.cjs');
-        expect(result.stdout).toContain('45 examples');
-        expect(result.stdout).toContain('45 frozen / 0 draft / 0 blocked');
+        expect(result.stdout).toContain(`${EXAMPLE_COUNT} examples`);
+        expect(result.stdout).toContain(`${EXAMPLE_COUNT} frozen / 0 draft / 0 blocked`);
         expect(result.status).toBe(0);
     });
 
@@ -50,7 +70,7 @@ describe('V1.1 — Example Specification 门禁', () => {
     test('§23 files.json 只保留 Gallery 字段，规格实现细节不外溢', () => {
         const fs = nodeRequire('fs') as typeof import('fs');
         const manifest = JSON.parse(fs.readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8'));
-        expect(manifest.examples.length).toBe(45);
+        expect(manifest.examples.length).toBe(EXAMPLE_COUNT);
         const trimmedOut = ['evidence', 'forbiddenShortcut', 'license', 'screenshot', 'coverage'];
         for (const ex of manifest.examples) {
             expect(ex.dir).toBeTruthy();
@@ -72,16 +92,25 @@ describe('V1.1 — Example Specification 门禁', () => {
     test('§3/§10 规格 validator id 必须真实存在（篡改可检测）', () => {
         const fs = nodeRequire('fs') as typeof import('fs');
         const target = path.join(REPO, 'examples', 'mesh-sphere', 'example.json');
+        const SENTINEL = 'not-a-real-validator';
         const original = fs.readFileSync(target, 'utf8');
+        const baseline = JSON.parse(original) as { validation?: { functional?: string[] } };
+        // 前置守卫：若上一轮在「注入」与「还原」之间被中断，残留会被本轮当成洁净基线再写回 ⇒ 脏态永久自我复 bake。
+        if (baseline.validation?.functional?.includes(SENTINEL)) {
+            throw new Error('检测到上一轮负控的泄漏残留（哨兵 validator 已在盘上）：它不是洁净基线。先跑 git checkout -- examples/mesh-sphere/example.json 再执行本用例。');
+        }
         try {
             const spec = JSON.parse(original);
-            spec.validation.functional.push('not-a-real-validator');
-            fs.writeFileSync(target, JSON.stringify(spec, null, 2) + '\n');
+            spec.validation.functional.push(SENTINEL);
+            writeWithRetry(target, JSON.stringify(spec, null, 2) + '\n');
             const result = run('tools/examples/spec-validate.cjs');
             expect(result.status).toBe(1);
             expect(result.stdout).toContain('not-a-real-validator');
         } finally {
-            fs.writeFileSync(target, original);
+            writeWithRetry(target, original);
+            // spec-validate 在红态也覆写正典证据（F-132）⇒ 还原规格后必须复跑一次洁净校验，把正典证据刷回当期态。
+            const regen = run('tools/examples/spec-validate.cjs');
+            expect(regen.status).toBe(0);
         }
     });
 });

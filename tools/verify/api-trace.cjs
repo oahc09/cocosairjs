@@ -162,6 +162,11 @@ function generateTraceModule (exportNames, units, realUrl) {
       apply (target, thisArg, args) { hit(key); return Reflect.apply(target, thisArg, args); },
       get (target, prop) {
         if (typeof prop === 'string') { T.reads[key] = (T.reads[key] || 0) + 1; }
+        // 引擎 Node._findComponent 对 @sealed 类走 "comp.constructor === ctor" 身份比较：
+        // Proxy 与原类不是同一对象 ⇒ 插桩页里 getComponent(UITransform)/getComponents(Layout) 假报 null
+        // （实测真页面 1 个组件、插桩页 0 个，示例还会因此重复 addComponent）。
+        // 报 false 让它走 instanceof 分支：Proxy 转发 prototype，instanceof 结果与原类一致。
+        if (prop === '_sealed') { return false; }
         return Reflect.get(target, prop);
       },
     };

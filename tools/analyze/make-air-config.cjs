@@ -12,6 +12,9 @@ const upstream = require(path.join(ROOT, 'cc.config.json'));
 const AIR_FEATURES = [
     'base', 'gfx-webgl', 'gfx-webgl2', 'gfx-empty', '3d', 'animation', 'skeletal-animation',
     'primitive', 'tween', 'custom-pipeline', 'legacy-pipeline',
+    // V1.2 批次 A 回归组（与 tools/build/build.cjs 的 AIR_FEATURES 保持同步）
+    'profiler', 'video', 'webview',
+    '2d', 'physics-2d-framework', 'physics-2d-builtin',
 ];
 
 const features = {};

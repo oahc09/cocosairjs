@@ -832,6 +832,529 @@
       "createdBy": "audit",
       "status": "SHIPPED",
       "note": "Only repo file changed by this wave: tools/verify/v11-gallery-artifact.cjs (+22 lines, assertion added only; no threshold/expectation weakened). docs/evidence/v11-gallery-artifact.json is back to HEAD bytes and is NOT part of the commit."
+    },
+    {
+      "id": "V12-EVIDENCE-DIR-ACCOUNTING-R45G2",
+      "findings": [
+        "F-131"
+      ],
+      "raw": [
+        "raw/gates/r45g2-r45g-newtest-smoke30.log",
+        "raw/gates/r45g2-r45g-nc-stray.log",
+        "raw/gates/r45g2-r45g-nc-ghost.log",
+        "raw/gates/r45g2-r45g-inventory-before.log",
+        "raw/gates/r45g2-r45g-inventory-update.log",
+        "raw/gates/r45g2-r45g-inventory-after.log",
+        "raw/gates/r45g2-r45g-newtest-typecheck.log",
+        "raw/gates/r45g2-r45g-newtest-jest.log",
+        "raw/gates/r45g2-r45g-newtest-consumer.log",
+        "raw/gates/r45g2-r45g-ledger2-docrefs.log",
+        "raw/gates/r45g2-r45g-ledger2-consumer.log",
+        "raw/gates/r45g2-r45g-ledger3-docrefs.log",
+        "raw/gates/r45g2-smoke30.snapshot-before-nc-b.ts",
+        "raw/gates/r45g2-docrefs-final.log",
+        "raw/gates/r45g2-consumer-final.log"
+      ],
+      "commands": [
+        "npx jest test/smoke/smoke-30-v12-regression.test.ts -t '证据目录对账'   # 新用例：正向绿",
+        "mkdir docs/evidence/v12/nc-stray-r45g + 放占位 png → 同一命令 EXIT=1 点名该目录；随后 rmdir（自造物回滚）   # 负控 A",
+        "往 ACCOUNTED 加不存在的键 nc-ghost-r45g → 同一命令 EXIT=1 点名该键；随后 cp 改前快照还原（sha256₁₆ 同为 6ba41e17c41a6e7c，grep 残留 0）   # 负控 B",
+        "node tools/verify/test-inventory.cjs   # 先红：new test not in manifest（门禁自己抓到我没同步簿记）",
+        "node tools/verify/test-inventory.cjs --update && node tools/verify/test-inventory.cjs   # 后绿：totals {32,262,262,0}",
+        "npm run typecheck && npm test && npm run verify:consumer   # EXIT 0 / 0 / 1（失败项仍只 F-85；exportCount 574；tarball 随 docs/test-inventory.json 变动）",
+        "sha256sum build/cocosair.module.{js,min.js,d.ts} | cut -c1-16   # 三产物字节未动 ⇒ 证据货币仍有效"
+      ],
+      "result": "F-131 fixed-and-proven in both directions. Before: no gate/test reconciled directory-level contents of docs/evidence/v12 (grep evidence: only a comment example inside tools/v12/verify-doc-refs.cjs), so 2 unreferenced dirs had silently accumulated (d10 = legitimate D10 diagnostic evidence; LV12-02-profiler-overlay = pre-typing manual capture, a look-alike of the canonical profiler-overlay/ dir). Now smoke-30 asserts: strays == [], ghost exemptions == [], referenced dirs == contract example count (12). Arm A and arm B each flipped the test to EXIT=1 naming the injected token, then were reverted byte-exactly. Product surface untouched: test/ + docs/test-inventory.json only, all three build artifacts still 35496aebda066ab5 / 8795c8685ace28a1 / 6d01c030d85bf86c. Scope conclusion recorded so nobody rebuilds it: the planned matrix-evidence-audit scratch judge is already covered by the 5 pre-existing smoke-30 matrix tests - no duplicate npm gate was created.",
+      "createdBy": "audit",
+      "status": "SHIPPED",
+      "note": "本波改动面：test/smoke/smoke-30-v12-regression.test.ts（+1 用例）、docs/test-inventory.json（--update 再生）、docs/acceptance-report-v12.md（追加 UPDATE）、本台账 3 个文件（findings +1 行、evidence-index +1 行、verification-summary 追加段）。零 stage / 零 commit。",
+      "raw_addendum_r45g2": "同轮补记：2 份改文档后的复跑日志（doc-refs / consumer）已一并搬入。"
+    },
+    {
+      "id": "V12-GUARDRAILS-FULL-RERUN-R45H",
+      "findings": [
+        "F-132"
+      ],
+      "raw": [
+        "raw/gates/r45h-api-coverage.log",
+        "raw/gates/r45h-benchmark.log",
+        "raw/gates/r45h-build-min.log",
+        "raw/gates/r45h-build-snapshot-post.json",
+        "raw/gates/r45h-build-snapshot-pre.json",
+        "raw/gates/r45h-build.log",
+        "raw/gates/r45h-decoder-audit.log",
+        "raw/gates/r45h-jest.log",
+        "raw/gates/r45h-published-artifacts.log",
+        "raw/gates/r45h-readings.json",
+        "raw/gates/r45h-spec-compliance.log",
+        "raw/gates/r45h-spec-validate.log",
+        "raw/gates/r45h-test-inventory.log",
+        "raw/gates/r45h-typecheck.log",
+        "raw/gates/r45h-v11-spec-compliance.json",
+        "raw/gates/r45h-v11-spec-validate.json",
+        "raw/gates/r45h-verify-custom-export-face.log",
+        "raw/gates/r45h-verify-doc-refs.log",
+        "raw/gates/r45h-verify-feature-face.log",
+        "raw/gates/r45h-verify-file-map.log",
+        "raw/gates/r45h-verify-licenses.log",
+        "raw/gates/r45h-verify-wasm-backends.log",
+        "raw/gates/r45h-verify-web-only.log",
+        "raw/gates/r45h2-consumer.log",
+        "raw/gates/r45h2-doc-refs.log"
+      ],
+      "rawBytes_r45h": [
+        "r45h-api-coverage.log 944 B e526548d95cbd010",
+        "r45h-benchmark.log 147 B 64689c4d839d9cc6",
+        "r45h-build-min.log 20990 B 62ad339cb80b95b0",
+        "r45h-build-snapshot-post.json 458 B 2c3be7b5ac0aceed",
+        "r45h-build-snapshot-pre.json 457 B 61fe901358a1351e",
+        "r45h-build.log 20492 B b38edf4fc8cb2b24",
+        "r45h-decoder-audit.log 2939 B d28bd309bbfb5623",
+        "r45h-jest.log 26659 B 14aff2d749162168",
+        "r45h-published-artifacts.log 113 B 65c730e1f2081f55",
+        "r45h-readings.json 4690 B 3a9ce513b0ea4eb7",
+        "r45h-spec-compliance.log 330 B 9e1f0f7de877ed15",
+        "r45h-spec-validate.log 102 B c6277c35e70a6f3c",
+        "r45h-test-inventory.log 325 B 8363779b0c485ea1",
+        "r45h-typecheck.log 55 B 9dbe30ea369bf7c6",
+        "r45h-v11-spec-compliance.json 1178 B 64acaf75b6f233e0",
+        "r45h-v11-spec-validate.json 5412 B 41352ed0b17c9994",
+        "r45h-verify-custom-export-face.log 151 B 717686ce2b7d7132",
+        "r45h-verify-doc-refs.log 176 B 60cbf900a32b70da",
+        "r45h-verify-feature-face.log 580 B 4fa43e36093db74e",
+        "r45h-verify-file-map.log 257 B 899a52a7264a91ad",
+        "r45h-verify-licenses.log 1959 B 4061c606afebe6fc",
+        "r45h-verify-wasm-backends.log 237 B 6569ccbfe2f320fa",
+        "r45h-verify-web-only.log 287 B 2c1dab70bab54e70",
+        "r45h2-consumer.log 318 B d288b2132bc1014d",
+        "r45h2-doc-refs.log 176 B f6c3733108a7e1da"
+      ],
+      "commands": [
+        "npm run build && npm run build:min            # 两个 EXIT=0；重建前后 bundle 字节/哈希见 r45h-build-snapshot-pre/post.json",
+        "npm run typecheck && npm test                 # EXIT=0 / EXIT=0（32 suites, 262 tests, 0 failed, 115.191 s）",
+        "node tools/verify/test-inventory.cjs          # EXIT=0 totals {suites:32,tests:262,passed:262,failed:0} failures: []",
+        "node tools/verify/verify-web-only.cjs         # EXIT=0 reachable 1024 files",
+        "node tools/verify/decoder-audit.cjs           # EXIT=0",
+        "node tools/v12/verify-file-map.cjs            # EXIT=0 rows=1315 modified=28 manifest=1278",
+        "node tools/v12/verify-licenses.cjs            # EXIT=0 10 项登记 0 FAIL / 2 ATTENTION",
+        "node tools/v12/verify-wasm-backends.cjs       # EXIT=0 ok:true seeds:83 closureTotal:764 airByteIdentical:760 errorCount:0",
+        "node tools/v12/verify-custom-export-face.cjs  # EXIT=0 ok:true faces:2 post-process:34/34 custom:25/25",
+        "node tools/v12/verify-feature-face.cjs        # EXIT=0 ok:true declared air:34 upstream:55 missing:22 airEntryReExports:27",
+        "node tools/examples/spec-validate.cjs --strict  # 自跑 EXIT=0（57/57 frozen、issues 全空）⇒ 写出后 52 s 被并行 NC 捕获覆写 = F-132 现场",
+        "node tools/examples/spec-compliance-audit.cjs # EXIT=0；证据除 measuredAt 外与改前快照逐字节同（fail 0 / warn 1）",
+        "npm run verify:benchmark                      # EXIT=0 {\"ok\":true,\"checks\":8}",
+        "npm run verify:api-coverage                   # EXIT=1（两条适用门槛 FAIL，待批 #18）；staleEvidenceExamples [\"mesh-sphere\"] 归因＝并行会话 NC 在写",
+        "node tools/verify/published-artifacts.cjs     # EXIT=0 4 markers x 2 bundles",
+        "node tools/v12/verify-doc-refs.cjs            # 编辑前 EXIT=0 refsChecked 1070；编辑后（r45h2）EXIT=0 refsChecked 1072、baseline 31/31、unresolved 0",
+        "npm run verify:consumer                       # 编辑后（r45h2）EXIT=1，failures 恰 1 条＝README links to missing packaged file: docs/manual/index.md（F-85 已知）、exportCount 574、tarball 10,345,374 B"
+      ],
+      "result": "§2 十六条护栏：13 行换成当期自跑读数；3 处 NOT_RUN（V1.1 浏览器层、三引擎矩阵、行 8 磁盘证据归属）。默认产物与 min 产物由当前树逐字节复现（35496aebda066ab5 / 8795c8685ace28a1）。新抓工具缺陷 F-132（红跑同样覆写 canonical 规格证据、且无消费方断言 issues 为空）。",
+      "createdBy": "r45h-guardrails",
+      "status": "SHIPPED（未提交；本轮零改 src/ 与构建脚本，只加 §2.1 现读节 + 3 处行内追加 + F-132 台账行）",
+      "note": "权威逐轮字节/哈希只住本台账；发布面正文（docs/acceptance-report-v12.md §2.1）只写判据与指针。"
+    },
+    {
+      "id": "V12-F132-ATTRIBUTION-R45H2",
+      "findings": [
+        "F-132"
+      ],
+      "raw": [
+        "raw/gates/r45h2-readings.json",
+        "raw/gates/r45h-spec-validate.log",
+        "raw/gates/r45h-v11-spec-validate.json",
+        "raw/gates/r45h-readings.json"
+      ],
+      "rawBytes_r45h2": {
+        "note": "r45h 三份保留作对照：改前快照 r45h-v11-spec-validate.json（5311 B / f94b21662b9e9825，本会话绿跑）与磁盘现读（5507 B / 91b7d93bb6856e98，并行会话 NC 覆写）之间的差即 F-132 的现象本身"
+      },
+      "commands": [
+        {
+          "cmd": "grep -rn \"is not a runtime validator\" tools/ test/",
+          "exit": 0,
+          "shows": "3 处、模板互不相同 ⇒ 观测文本唯一生产点 spec-validate.cjs:155 每元素 push 一次 ⇒ 重复串非工具行为"
+        },
+        {
+          "cmd": "grep -c not-a-real-validator examples/mesh-sphere/example.json docs/evidence/v11-spec-validate.json",
+          "exit": 0,
+          "shows": "1 / 2 ⇒ 声明面 1 处、证据面 2 处"
+        },
+        {
+          "cmd": "node -e 读 example.json validation.* + fs.statSync 双 mtime",
+          "exit": 0,
+          "shows": "validation.functional 现 1 个 NC 串；两份 mtime 均 01:52:02Z，证据 measuredAt 01:51:59.858Z ⇒ 扫描窗口内被改"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/append-f132-attribution.cjs",
+          "exit": 1,
+          "shows": "写后汇总打印误用 JSON.parse(整份 JSONL) 抛错；追加本身已过守卫并落盘（自伤登记，非零写盘）"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/append-summary-r45h2.cjs",
+          "exit": 0,
+          "shows": "verification-summary.md 176195 8ced513a9636ed3b -> 179176 e273fd361cde6b56"
+        }
+      ],
+      "result": "F-132 两条残留收口：① 「issue 串重复」归因＝并行会话在写态竞态，不是 spec-validate 缺陷 ⇒ 不加重；② 候选修法 (c)（jest 断言 canonical 证据 issues 全空）本轮不可落地——磁盘证据现含 1 条 mesh-sphere issue 且 example.json 仍带未提交 NC，现在加断言会把 npm test 拖红且红归属他人 ⇒ 前置条件登记为「NC 收口 + spec-validate --strict 跑绿」。F-132 仍 OPEN。",
+      "createdBy": "r45h2-f132-attribution",
+      "status": "SHIPPED（未提交：本会话零 stage / 零 commit）",
+      "note": "findings.jsonl 的 F-132 行以追加字段 dup_issue_and_landability_r45h2 固化本条（既有 15 字段逐字段不变）；字节链 414105 7f995bbefb9f6a73 -> 415620 d8c865ff1d6381ac。"
+    },
+    {
+      "id": "V12-EVIDENCE-CURRENCY-R45H3",
+      "findings": [
+        "F-82",
+        "F-132"
+      ],
+      "raw": [
+        "raw/gates/r45h3-currency-audit.cjs",
+        "raw/gates/r45h3-negctl.cjs",
+        "raw/gates/r45h3-currency-readings.json",
+        "raw/gates/r45h3-currency-audit.log",
+        "raw/gates/r45h3-negctl.log",
+        "raw/gates/r45h3-negctl-summary.json"
+      ],
+      "bytesAndHashes_r45h3": {
+        "raw/gates/r45h3-currency-audit.cjs": "5847 B",
+        "raw/gates/r45h3-negctl.cjs": "5494 B",
+        "raw/gates/r45h3-currency-readings.json": "2624 B",
+        "raw/gates/r45h3-negctl-summary.json": "5756 B",
+        "rawGatesDirFiles": "98 -> 104",
+        "reportChain": "docs/acceptance-report-v12.md 114866 e6af4f6cd19f1a0c -> 119285 53e1130130083820（297 -> 305 行，三处纯插入、还原校验通过）",
+        "canonicalEvidenceUntouched": [
+          "docs/evidence/v12/browser-matrix.json 2134220 1a18400038575e46",
+          "docs/evidence/v11-examples-verified.json 631722 49c81e5a1e4054e9"
+        ]
+      },
+      "commands": [
+        {
+          "cmd": "node docs/audits/global-quality-audit-2026-09-19/raw/gates/r45h3-currency-audit.cjs --out=E:/AIProMax/cocosair-scratch/v12-diag/r45h3-currency-readings.json",
+          "exit": 0,
+          "shows": "matrix verdict CURRENT（36 记录、36 PNG 全命中、weakRecords 0）＋ v11chain verdict CURRENT（52/52 逐条 candidateFingerprint == 现算 9fa85f88b968d5f1，completed true 且 partial false）；现算锚 dev 6081668 35496aebda066ab5 / min 3499182 8795c8685ace28a1"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/r45h3-negctl.cjs",
+          "exit": 0,
+          "shows": "passCount 7 / total 7：P 阳性副本 CURRENT/CURRENT、N1 pngHashMismatch 1、N2 recordedBundleMatchesLive false、N3 contractFingerprintMatchesLive false、N4 recordsNotMatchingLiveCandidate 1、N5 partial=true 落 NOT-CURRENT、N6 清空 results 必须 NOT-ASSERTABLE（防空转）。七臂变异副本全写仓库外，零覆写正典证据（F-132 教训落实）"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/apply-accept-r45h3.cjs（首跑）",
+          "exit": 1,
+          "shows": "抛出点在 writeFileSync 之前 ⇒ 零写盘（磁盘复读仍 114866 e6af4f6cd19f1a0c）。原因：字节账守卫用 JS 字符串长度（UTF-16 单元）比 UTF-8 字节数，中文 3 字节/字 ⇒ 差 1572。修正为 Buffer.byteLength 后复跑 EXIT=0"
+        },
+        {
+          "cmd": "npm run verify:doc-refs（报告改后现读）",
+          "exit": 0,
+          "shows": "{\"ok\":true,\"docs\":118,\"refsChecked\":1072 -> 1073,\"unresolvedCount\":0,\"baseline\":{\"entries\":31,\"hits\":31},\"outOfRepo\":0} —— +1 即本轮新增的仓库内路径引用 raw/gates/r45h3-currency-audit.cjs，被解析成功 ⇒ 在册产物不是断链"
+        },
+        {
+          "cmd": "npm run verify:consumer（报告改后现读）",
+          "exit": 1,
+          "shows": "failures 恰 1 条 = F-85（README links to missing packaged file: docs/manual/index.md）、exportCount 574、tarball 10345374 -> 10346755 B（+1381，因 docs/*.md 在 files[]）⇒ 证明「docs/audits/** 不进出货面」的反命题：改 docs 报告必重跑 consumer"
+        }
+      ],
+      "result": "§2.1 两处「浏览器层 NOT_RUN / 三引擎矩阵 NOT_RUN」的**证据货币性**当期化：不改红绿结论、不重采，只用离线复算证明 36 记录矩阵与 52 记录 V1.1 链的在册证据所绑定的产物字节 ≡ 当前树重建出的交付字节（r45h 已证逐字节可复现）。行 1 / 行 9 现读为「采集 NOT_RUN、证据 CURRENT」，行 8 磁盘证据归属仍 NOT_RUN（F-132）。LV12-20 维持 PARTIAL，唯一红门槛仍是 verify:api-coverage（#18）。",
+      "createdBy": "r45h3-evidence-currency",
+      "status": "SHIPPED（未提交：本会话零 stage / 零 commit）",
+      "note": "判据链：candidateFingerprint 离线可重算（tools/verify/api-trace.cjs:84，覆盖 build bundle + .d.ts + examples/shared）⇒ 与 F-82 的发布产物绑定同源；矩阵侧绑定 bundle.sha256_16 + contractFingerprint + 逐记录 pngBytes/pngSha256_16。边界：PNG 本体仍是 2026-09-22T18:2xZ 捕获、V1.1 链是 18:49Z 捕获，本轮零重采；审计器只报判定不改退出码 ⇒ 不得当门禁引用（若要入门禁需另议）。"
+    },
+    {
+      "id": "V12-V11-CHAIN-FACE-GATE-R45H4",
+      "findings": [
+        "F-82",
+        "F-132"
+      ],
+      "createdBy": "r45h4-v11-chain-face-gate",
+      "status": "SHIPPED（未提交：本会话零 stage / 零 commit / 零 push）+ r45h4c 终读与两处发布面门禁已补记",
+      "raw": [
+        "raw/gates/r45h4-chain-negctl.cjs",
+        "raw/gates/r45h4-chain-negctl.log",
+        "raw/gates/r45h4-chain-face-run.log",
+        "raw/gates/apply-accept-r45h4.cjs",
+        "raw/gates/apply-accept-r45h4b.cjs",
+        "raw/gates/append-evidence-index-r45h4.cjs",
+        "raw/gates/fix-evidence-index-r45h4b.cjs",
+        "raw/gates/append-summary-r45h4.cjs",
+        "raw/gates/append-summary-r45h4-final.cjs",
+        "raw/gates/r45h4-docrefs-final.log",
+        "raw/gates/r45h4-consumer-final.log",
+        "raw/gates/patch-evidence-index-r45h4-final.cjs",
+        "raw/gates/r45h4c-docrefs.log",
+        "raw/gates/r45h4c-consumer.log",
+        "raw/gates/verify-r45h4c-revert.cjs",
+        "raw/gates/append-summary-r45h4c.cjs"
+      ],
+      "bytesAndHashes_r45h4": {
+        "tools/v12/verify-v11-chain-face.cjs": "8795 B d405520568b21224（仓库内新门禁）",
+        "raw/gates/r45h4-chain-negctl.cjs": "4835 B",
+        "raw/gates/r45h4-chain-negctl.log": "7583 B",
+        "raw/gates/r45h4-chain-face-run.log": "170 B",
+        "raw/gates/apply-accept-r45h4.cjs": "6123 B",
+        "raw/gates/apply-accept-r45h4b.cjs": "3286 B",
+        "rawGatesDirFiles": "104 -> 116 -> 119 -> 120（r45h4c 共 +4：两条发布面门禁日志 + 还原判据脚本 + ⑤c 追加脚本，均逐字复制）。台账补丁脚本不自列 ⇒ \"记录自己\"到此为止，可复算性由仓库外 scratch 与 completion-summary 承担",
+        "reportChain": "docs/acceptance-report-v12.md 120607 110ad66928bc2b89 -> 123231 32ad69c1af9e21c3 -> 123613 84674600b552777e（305 -> 307 行，四处纯插入：前三处 2624 B、漏落的第四处 382 B 由 r45h4b 单条脚本补齐，两跑还原校验均通过） -> 124026 732066178e348203（r45h4c 净 +413 B、仍 307 行：§1 LV12-20 的 UPDATE-r45h4 句内补「读数出处澄清」并改写原句连接号。**还原判据已跑且命中**：删「。⚠️ 读数出处澄清…合成口径，不是本轮全量现读」并把连接号还原成「，」⇒ 逐字节 == r45h4b 快照 123613 84674600b552777e ⇒ 报告侧改动可逆、已验证，非仅凭断言）",
+        "notesChain": "docs/v12-upstream-regression.md §7.13 现读 124175 B c11245416974ce7e（1029 行）。链：r45h4b 段 122938 7aafdd2b712e9d1c -> 口径订正 123315 14ce7e2bcedc9a64 -> r45h4c 追加自我更正段 770 B + 行内快照标注 89 B。⚠️ 反向还原只到 123316 4916baae265742d4（距 123315 **差 1 B**、未凑平）⇒ 行内标注处原字与替换字未逐字对账，登记为**部分还原**、不主张逐字节可逆；该处判据改用「现读字节+sha16 与两条发布面门禁终读」，不以未成立的还原等式充数",
+        "canonicalEvidenceUntouched": [
+          "docs/evidence/v12/browser-matrix.json 2134220 1a18400038575e46",
+          "docs/evidence/v11-examples-verified.json 631722 49c81e5a1e4054e9",
+          "build/cocosair.module.js 6081668 35496aebda066ab5 / build/cocosair.module.min.js 3499182 8795c8685ace28a1 / build/cocosair.module.d.ts 3082360 6d01c030d85bf86c（三产物逐字节未变 ⇒ 本轮零改 src、零改产物兑现）"
+        ],
+        "ledgerChain": "evidence-index.json 63,117 7d2cc1f7a44d1b80 -> 68,528 6e8f5ab96a621c3e（追加本行）-> 68,930 0b028d6ccb5145d1（④b 口径订正）-> 70,940 f0c7946af803fc43 -> 71,159 4283d4b5a46a3629 -> **74,825 e193644ce2cb2961**（r45h4c 第一格：`raw[]` 12 → 15、`commands[]` 9 → 12、7 处字段扩充由循环外字面量 `EXPECTED_PLAN_COUNT = 7` 与 `applied` 双向钉死）；verification-summary.md 187,750 5d4e890eaba8c515 -> 194,699 ec8ded0ffe5a4992（§10）-> 195,527 50dbf2a98968d308（⑤b）-> **198,253 3b406e5e089a10c0**（⑤c r45h4c 终读补记，1,383 → 1,385 行、纯追加 +2,726 B，判据含纯追加不变量与 UTF-8 字节账）。⚠️ 原先那句\"本行扩充后的终值由脚本 stdout 给出\"是**占位语不是读数**，本轮换成具体链 ⇒ 通则：**台账里不许留\"由某处 stdout 给出\"式占位**，它把可复算性推给一个不保证存在的读取动作。**自指封口说明**：`74,825` 之后本行又自指补记了一次（`raw[]` 16、`commands[]` 13，写后现读 `76,073 c1260690031b1250`，再被本句改写 ⇒ 该数也随即落后），所以这里刻意只登记\"到本条为止的格\"而**不登记\"evidence-index 终值\"**——终值一律由现读命令取得（`node -e` 读盘算 `Buffer.byteLength` + sha256_16），或由仓库外 scratch 与 `verification-summary.md` ⑤c 的\"当时快照\"句承担。⇒ 通则：**自指型台账行只写差值与本条自己的前像锁，不写\"全集终值\"**，否则每补一次就让上一次写的数字变成假话"
+      },
+      "commands": [
+        {
+          "cmd": "node tools/v12/verify-v11-chain-face.cjs",
+          "exit": 0,
+          "shows": "{\"ok\":true,\"records\":52,\"runPass\":\"52/52\",\"fps\":\"9fa85f88b968d5f1\",\"apiProof\":\"verified:1004 attested:129 unproven:0\",\"live\":\"9fa85f88b968d5f1==evidence\",\"errorCount\":0} —— 首跑与报告落表后复跑读数逐字一致；live 段只信息打印、不参与退出码（边界：不逼重采）"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/r45h4-chain-negctl.cjs",
+          "exit": 0,
+          "shows": "passCount 10 / total 10：P 仓库外原样副本 EXIT=0；N1..N9 各 EXIT=1 且只报自己那一层（V1..V7）；N4 清空 results 并同步归零 apiProofTotals ⇒ 只剩反空转守卫可红。首轮曾 9/10（N4 同响 V2+V5），改的是臂不是门禁"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/apply-accept-r45h4.cjs",
+          "exit": 0,
+          "shows": "EXIT=0 但 stdout 的 edits 只有 3 项 != 计划 4 项 ⇒ §2.1 尾部 bullet 静默漏落（EDITS.pop() 后未放回被迭代数组；锚点断言/字节账/还原校验与执行循环同源，恒等式查不出漏项）。发现即停：grep -c 复测该 bullet = 0 命中"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/apply-accept-r45h4b.cjs",
+          "exit": 0,
+          "shows": "单条更正脚本，计划条数由循环外常量 EXPECTED_PLAN_COUNT=1 断言、锁 123231 32ad69c1af9e21c3、Buffer.byteLength 字节账 382 B、删除还原 == 原文 ⇒ 报告 123613 84674600b552777e（306 -> 307 行）"
+        },
+        {
+          "cmd": "npm run verify:doc-refs（§7.13 + 报告改后现读）",
+          "exit": 0,
+          "shows": "{\"ok\":true,\"docs\":118,\"refsChecked\":1078,\"skippedCounts\":{\"glob\":54,\"external\":0,\"outOfRepo\":0},\"baseline\":{\"entries\":31,\"hits\":31},\"unresolvedCount\":0,\"staleBaselineCount\":0} ⇒ 新门禁路径 tools/v12/verify-v11-chain-face.cjs 的文档引用被解析成功，零断链"
+        },
+        {
+          "cmd": "npm run verify:consumer（发布面文档改后现读）",
+          "exit": 1,
+          "shows": "failures 恰 1 条 = F-85（README links to missing packaged file: docs/manual/index.md）、exportCount 574、tarball 10347496 -> 10352297 B（docs/*.md 在 files[] ⇒ 每次文档改动都要重跑）；未新增失败"
+        },
+        {
+          "cmd": "node docs/audits/global-quality-audit-2026-09-19/raw/gates/append-evidence-index-r45h4.cjs",
+          "exit": 0,
+          "shows": "首跑 EXIT=1 于「新元素缩进」断言（成员应 6 空格，初版按 +4/+2 混算）⇒ 抛出点在写盘前 = 真零写盘（锁 sha 复读未变）。改整行统一 +4 后 EXIT=0：79 -> 80 行、+5,411 B、既有 79 行逐条 JSON.stringify 等值、结果 == 规范重序列化"
+        },
+        {
+          "cmd": "npm run verify:doc-refs（台账写入与 §7.13 口径订正之后，raw/gates/r45h4-docrefs-final.log）",
+          "exit": 0,
+          "shows": "{\"ok\":true,\"docs\":118,\"refsChecked\":1079,\"unresolvedCount\":0,\"staleBaselineCount\":0,\"skippedCounts\":{\"glob\":54,\"external\":0,\"outOfRepo\":0}} —— 1078 -> 1079 的 +1 是新引用的 tools/examples/spec-compliance-audit.cjs 解析成功"
+        },
+        {
+          "cmd": "npm run verify:consumer（同上终读，raw/gates/r45h4-consumer-final.log）",
+          "exit": 1,
+          "shows": "failures 恰 1 条 = F-85、exportCount 574、published-artifacts 4 markers x 2 bundles 0 fail、tarball 10,352,297 -> 10,352,450 B ⇒ 本轮第二次 tarball 位移只由 docs/*.md 文字造成；tarball 数按快照引用，不作货币"
+        },
+        {
+          "cmd": "npm run verify:doc-refs（r45h4c 两处发布面改写后，raw/gates/r45h4c-docrefs.log）",
+          "exit": 0,
+          "shows": "{\"ok\":true,\"docs\":118,\"refsChecked\":1079,\"skippedCounts\":{\"glob\":54,\"external\":0,\"outOfRepo\":0},\"baseline\":{\"entries\":31,\"hits\":31},\"unresolvedCount\":0,\"staleBaselineCount\":0} ⇒ 与 r45h4 终读逐字同值（1079 检 / 0 未解析 / 31 基线全命中），零新断链"
+        },
+        {
+          "cmd": "npm run verify:consumer（同上，raw/gates/r45h4c-consumer.log）",
+          "exit": 1,
+          "shows": "failures 数组恰 1 条 = F-85（README links to missing packaged file: docs/manual/index.md）、exportCount 574、published-artifacts 4 markers x 2 bundles 0 fail、tarball 10,352,450 -> 10,353,123 B（+673 B 全由两份 docs/*.md 文字造成）⇒ 未新增失败项，红项仍是 F-85 本体；tarball 数按快照引用、不作货币"
+        },
+        {
+          "cmd": "node docs/audits/global-quality-audit-2026-09-19/raw/gates/verify-r45h4c-revert.cjs（发布面改动还原判据，只读、不改判定阈值）",
+          "exit": 0,
+          "shows": "report {current 124026 732066178e348203, reverted 123613 84674600b552777e, exact true} / notes {current 124175 c11245416974ce7e, reverted 123316 4916baae265742d4, expected 123315 14ce7e2bcedc9a64, exact false, deltaBytes 1, removed {appendedParagraph 770, inlineSnapshotLabel 89}} ⇒ **判据逐处分别报告命中/未命中**：一处成立就写成立，差 1 B 就写差 1 B。脚本自身 EXIT=0 只代表\"跑完并如实打印\"，不代表两处都还原成功（否则退出码就被读成判据结论，混淆了\"执行\"与\"判定\"）"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/append-summary-r45h4c.cjs && node E:/AIProMax/cocosair-scratch/db-probe/patch-evidence-index-r45h4c.cjs",
+          "exit": 0,
+          "shows": "summary 195,527 50dbf2a98968d308 -> 198,253 3b406e5e089a10c0（1,385 行，delta +2,726 B，纯追加不变量在写前与回读两处各验一次）；evidence-index 71,159 4283d4b5a46a3629 -> 74,825 e193644ce2cb2961（80 行不变、rawCount 15、commands 12、applied 7）。两跑均 EXIT=0，且 r45h4c 行之前的 r45h4/r45h4b 记录一字未删"
+        }
+      ],
+      "result": "把「V1.1 证据链发布面 11 篇 / 25 处引用（r45h4 03:36Z 快照口径，含台账则 43 篇 / 102 处）却 test/ 下 0 断言」变成第 17 条只读护栏：V1–V7 七条内部自洽不变量 + 十臂负控 10/10，落点 package.json + tools/v12/verify-v11-chain-face.cjs + docs/v12-upstream-regression.md §7.13 + 报告 §2 行 17。**刻意不含**「证据 == 当期产物」的绑定（那会把 52 例 × 三引擎 ≈1.9 h 重采变成每次改 src 的既成事实，属 owner 决策面 #15/#21/F-132(c)）⇒ F-82 类「绑定当期交付物」缺口在 V1.1 链侧仍未闭合，本行不主张闭合。LV12-20 维持 PARTIAL；唯一红护栏仍是 verify:api-coverage（#18）。",
+      "note": "方法学收获（写进 §7.13 的自我更正段）：批量落表的「独立性」必须来自判据与执行路径不同源——计划条数要用循环外常量钉死，否则「插入后字节 == 插入前 + sum(实际插入)」对漏项零判别力。这是 §7.12 第 2 条「锚点不存在会静默空转」的同族变体：这次锚点断言跑过了，漏在数据流（元素被 pop 出迭代数组）。同轮第二处更正：本行 result 初写的「42 篇引用」是无口径快照数字（现读 11 篇/25 处发布面、43 篇/102 处含台账），已按 r45h4b 就地订正并在 §7.13 补上可复算命令——引用数会因描述它这句话而涨，故只作快照不作货币（§7.12 第 3 条同族）。。同轮第三处更正（r45h4c，写后自查）：§1 那句「对前 16 条仍成立」会被读成\"本轮把 16 条护栏又跑了一遍\"，实际本轮只**抽测** 4 条（`verify:v12-backends` / `verify:v12-feature-face` / `verify:doc-refs` / 新第 17 条 `verify:v11-chain-face`，四条全 `EXIT=0`），其余 12 条沿用 **r45h 01:44–02:05Z 全量复跑**的当期值 ⇒ 已在报告原句后补「读数出处澄清」，并把「16 绿 / 1 红」显式标成「最近一轮全量 + 本轮抽测」的**合成口径**。⇒ 通则：**\"当期绿\"必须能答出是哪一轮跑的**，否则就是替别的轮次宣据（与 §7.10「读数以何为准」、覆盖率数字须声明口径/分母/日期同一条规矩）。附带方法学：还原判据必须**逐处**跑并如实分开\"命中 / 差 N B\"，本次报告侧逐字节命中、notes 侧差 1 B 即如实记为部分还原"
+    },
+    {
+      "id": "V12-LV1201-PILOT11-THREE-ENGINE-R45I",
+      "findings": [
+        "F-131",
+        "F-132",
+        "F-85"
+      ],
+      "createdBy": "r45i（2026-09-23 04:12–04:33Z，LV12-01 取证半边：待批 #15 选项 (a) 的可跑面实测，非正典、零回写、零改判定阈值）",
+      "status": "ADMITTED — 证据已入库为工作树文件（未提交，提交需授权）；LV12-01 第三格由「三引擎 0/52（V1.1 链）」推进为「23/52 有三引擎证据（12 矩阵链 + 11 本批次非正典）」，本格仍不翻绿",
+      "raw": [
+        "raw/gates/r45i-pilot11-firefox.log",
+        "raw/gates/r45i-pilot11-webkit.log",
+        "raw/gates/r45i-cross-engine-reconcile.cjs",
+        "raw/gates/r45i-reconcile.json",
+        "raw/gates/r45i-negctl.cjs",
+        "raw/gates/r45i-negctl-summary.json",
+        "raw/gates/r45i-typecheck.log",
+        "raw/gates/r45i-testinv.log",
+        "raw/gates/r45i-jest.log",
+        "raw/gates/r45i-chainface.log",
+        "raw/gates/r45i-docrefs.log",
+        "raw/gates/r45i-consumer.log",
+        "raw/gates/r45i-gates-batch.log",
+        "raw/gates/r45i-patch-publish-face.cjs",
+        "raw/gates/r45i-patch-report-row4b.cjs",
+        "raw/gates/r45i-final-docrefs.log",
+        "raw/gates/r45i-final-consumer.log",
+        "raw/gates/r45i-final-chainface.log"
+      ],
+      "readings_r45i": {
+        "capture": "firefox 11/11 PASS（100,293 B / 55f57046cf7cebe1，measuredAt 2026-09-23T04:13:50.185Z）· webkit 11/11 PASS（100,280 B / 1b1529572160eaa2，04:17:21.207Z）；两条腿 completed:true partial:true subset:11、FIREFOX_EXIT=0 WEBKIT_EXIT=0、[skip-promote] 各自 1 次",
+        "crossEngine": "33 条记录全检 EXIT=0、fail 0：逐条 PASS ∧ errors [] ∧ candidateFingerprint 全为 9fa85f88b968d5f1 ∧ unproven==0；逐例 specFingerprint / sourceFingerprint / apiProof(verified,attested,unproven,units) / expectationGaps 三引擎逐字段相同；子集汇总三引擎同为 {verified:139, attested:9, unproven:0}（148 units，与 chromium 侧同 11 例现算一致）；33 张在册 PNG 的 bytes+sha256₁₆ 对盘回读逐张一致（本目录 22 张 + 正典 11 张）",
+        "cost": "两腿串行 ≈7 min（本地 12:12→12:19:14；首张→末张 PNG 跨度 ff 70 s / wk 82 s；每腿一次性启动 ≈40 s）⇒ ≈19 s/例/引擎；把 #15 原估「≈63 s/例/引擎（2 例摊不动开销的上限）」下修约 3.3 倍 ⇒ (b) 全量 52 例两腿从 ≈1.9 h 变 ≈17–18 min",
+        "zeroWriteback": "正典 docs/evidence/v11-examples-verified.json 复核仍 631,722 B / 49c81e5a1e4054e9（与捕获前登记逐字节同）；example.json / files.json / 三交付产物（6,081,668 35496aebda066ab5 · 3,499,182 8795c8685ace28a1 · 3,082,360 6d01c030d85bf86c）零变",
+        "gatesFinal_r45i": "typecheck EXIT=0 · smoke-30 38/38 PASS · verify:v11-chain-face EXIT=0（52/52）· verify:doc-refs EXIT=0（ok:true, unresolvedCount 0, staleBaselineCount 0, baseline 31/31；refsChecked 1084 与 skippedCounts.glob 54 只作轮次快照）· verify:consumer EXIT=1 且失败项恰为 F-85 一条、exportCount 574、tarball 10,356,166 B · npm test ⇒ 32 套件 262 用例 260 passed 2 failed（见 notMine）",
+        "notMine": "两条 jest 红全在 smoke-29，逐字：① §15 = spec-validate --strict 的 result.status 期望 0 实得 1；② §11/§12 = [FAIL] mesh-sphere S11-STALE-EVIDENCE: 证据 specFingerprint c0d64a28c555 ≠ 当前 example.json 6a2bfacb3483。现读 git diff examples/mesh-sphere/example.json ⇒ 工作树被注入 \"not-a-real-validator\" ×2（validation.functional）且 promotion.candidate 由 5612c4c2746f395b 改为 9fa85f88b968d5f1；docs/evidence/v11-spec-validate.json:167 带同一 issue ⇒ 归因＝并行会话 F-132 的 NC 未撤，本会话未撤他人 NC、未改 examples/**。verify:test-inventory EXIT=1 同因（它内嵌重跑 jest）",
+        "f132Escalation": "F-132 后果升级（新增事实，不改其判据）：并行 NC 不再只覆写磁盘证据，而是让**共享工作树的 `npm test` 对所有会话转红** ⇒ 任何会话报「jest 全绿」必须现读，引用上一轮数字在此树里必然失真",
+        "negctl": "passCount 8 / 8（P 阳性未改副本 EXIT=0；N1 在册截图哈希、N2 单引擎 specFingerprint、N3 删记录、N4 改 FAIL、N5 清空 results 反空转、N6 删 apiProof 项、N7 在册截图字节 ⇒ 各 EXIT=1 且命中自己那一层）。⚠️ 首轮 **7 臂全 failCount 0 却各自 UNEXPECTED**：负控脚本把覆盖键写成引擎名（firefox/webkit）而对账脚本按仓库相对路径取键 ⇒ 篡改副本从未被读到、七臂其实都在读正典。修好键映射才得 8/8",
+        "observation_noFiling": "V1.1 规格驱动 runner 无 failed-request 维度：两腿日志各 1 次 [bench-404] /gltf-viewer/（tools/benchmark/runner/browser-runtime.cjs 第 197 与 202 行 stderr），记录仍 PASS。三引擎矩阵 runner 有 failedRequests 字段。本轮**不开新 F 号**：判据缺失属覆盖面对称性问题、不判红，且给 runner 加维度＝改判定面（与 #15/#21 同桌子），留 owner"
+      },
+      "commands": [
+        {
+          "cmd": "NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=<11 例> --browser=firefox --out=docs/evidence/v12/pilot12-r45i/v11-pilot12-firefox.json --artifact-dir=docs/evidence/v12/pilot12-r45i/firefox（webkit 同构）",
+          "exit": 0,
+          "shows": "两条腿各 \"== Examples spec-driven verify: 11/11 PASS, 0 promoted / 0 demoted ==\" + [skip-promote]；FIREFOX_EXIT=0 / WEBKIT_EXIT=0（逐字 raw/gates/r45i-pilot11-{firefox,webkit}.log）"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/r45i-cross-engine-reconcile.cjs",
+          "exit": 0,
+          "shows": "ok:true fail:[] + 三文件级快照（readFrom 字段自证读的是正典路径）⇒ 逐字副本 raw/gates/r45i-reconcile.json（含 11 例 × 3 引擎明细表）"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/r45i-negctl.cjs",
+          "exit": 0,
+          "shows": "passCount 8 / 8（首跑 exit 1 抓到覆盖键错配，修好后全中）⇒ 逐字 raw/gates/r45i-negctl-summary.json"
+        },
+        {
+          "cmd": "npx jest test/smoke/smoke-30-v12-regression.test.ts（改在册豁免前先跑一次）",
+          "exit": 1,
+          "shows": "先精确转红：Received array [ \"pilot12-r45i\" ]（F-131 的孤儿捕获守卫按设计抓到本批次新目录）⇒ 加豁免后 38/38 PASS，方向为登记而非放松"
+        },
+        {
+          "cmd": "node E:/AIProMax/cocosair-scratch/db-probe/r45i-patch-publish-face.cjs && node E:/AIProMax/cocosair-scratch/db-probe/r45i-patch-report-row4b.cjs",
+          "exit": 0,
+          "shows": "acceptance-report 124,211 add6cec620b60261 → 126,842 879b57dd8b1906a7（applied 3）→ 129,400 dc6700e30b2fe866（+2,558）；owner-decisions 51,407 716b75ff67c6befb → 52,377 616b097d99eeb9c3。⚠️ 首跑 EXPECTED_PLAN_COUNT=2 而计划 3 ⇒ 守卫抛错零污染（改 3 后通过）"
+        }
+      ],
+      "result": "LV12-01 的取证半边拿到当期三引擎证据（11 例可跑面 × firefox/webkit，非正典、零回写）；判定阈值/契约/源码/产物零触碰；三引擎覆盖账换成可复核口径 52 = 12 + 11 + 29；#15 的成本口径按实测下修且升为「半边已实测、正式批次与是否覆写正典仍待批」",
+      "note": "本格只主张「这 11 例今天确实在三引擎上各跑过一遍且证据互相自洽」，不主张晋升、不主张 #15 已批复、不主张「12 例全绿」（automation 结构性不可达）。台账链：上一行 R45H4 终读 76,715 4e899941e6e2ea95（= 本行写前锁）⇒ 本行写入后的当期值一律现读（陷阱 39：本行不得写自身终值）。",
+      "readings_r45i2": {
+        "at": "2026-09-23T04:46-04:48Z",
+        "what": "同轮追加：验收报告两处诚实性订正（§1 LV12-20 判定格 verified（当期全绿）→ PARTIAL；§4 护栏 bullet 补 UPDATE-r45i2 十七条口径），未新增取证、未改阈值",
+        "reportHashChain": "129,400 dc6700e30b2fe866 → 129,595 173dd7494ba50ebd → 130,393 5d6148122ebc31b7（307 行不变）",
+        "gates": "verify:doc-refs EXIT=0（refsChecked 1084 / unresolved 0 / 棘轮 31 命中）、verify:consumer EXIT=1（failures 恰 1 条＝ F-85，与改前同面），tarball 10,356,166 → 10,356,610 B",
+        "scope": "只动 docs/acceptance-report-v12.md（发布面）。零产品/产物改动，零回写正典证据（docs/evidence/v11-examples-verified.json 仍 631,722 B / 49c81e5a1e4054e9 / 52 records / 单指纹 9fa85f88b968d5f1）。"
+      }
+    },
+    {
+      "id": "V11-CHAIN-52-EXAMPLES-THREE-ENGINE-R45J",
+      "findings": [
+        "F-133",
+        "F-134",
+        "F-135",
+        "F-131",
+        "F-100",
+        "F-132",
+        "F-85"
+      ],
+      "createdBy": "r45j（2026-09-23 04:56–05:46Z 采集，收尾簿记至当日；LV12-01 待批 #15 选项 (b) 全量口径的非正典铺开：余下 41 例 × {firefox, webkit} + 52 例三引擎对账，零改判定阈值/契约/源码/产物）",
+      "status": "ADMITTED — 证据与文档已入库为工作树文件（未提交，提交需 #12/#13 授权）；LV12-01 第三格由「23/52 有三引擎证据」推进为「**52 例 V1.1 链三引擎已铺满，49/52 同绿**」，本格仍不翻绿：非正典捕获 ≠ 晋升，且 4 格红需 owner 决策（见 #15 UPDATE-r45j 的 (b1)/(b2)/(b3)）",
+      "raw": [
+        "raw/gates/r45j-batch.sh",
+        "raw/gates/r45j-batch.out",
+        "raw/gates/r45j-exits.txt",
+        "raw/gates/r45j-firefox-chunkA-garbage.log",
+        "raw/gates/r45j-firefox-chunkA.log",
+        "raw/gates/r45j-firefox-chunkB.log",
+        "raw/gates/r45j-webkit-chunkA.log",
+        "raw/gates/r45j-webkit-chunkB.log",
+        "raw/gates/r45j-mesh-torus-firefox.log",
+        "raw/gates/r45j-mesh-torus-webkit.log",
+        "raw/gates/r45j-webkit-determinism.sh",
+        "raw/gates/r45j-webkit-determinism.log",
+        "raw/gates/r45j-webkit-determinism.out",
+        "raw/gates/r45j-videobasic-wk-repro.log",
+        "raw/gates/r45j-reconcile.cjs",
+        "raw/gates/r45j-reconcile.json",
+        "raw/gates/r45j-reconcile-k.cjs",
+        "raw/gates/r45j-reconcile-k.json",
+        "raw/gates/r45j-reconcile-k-pre.log",
+        "raw/gates/r45j-reconcile-k-final.log",
+        "raw/gates/r45j-negctl.cjs",
+        "raw/gates/r45j-negctl.log",
+        "raw/gates/negctl-summary.json",
+        "raw/gates/r45j-append-findings.cjs",
+        "raw/gates/r45j-verify-findings.cjs",
+        "raw/gates/r45j-verify-findings.log",
+        "raw/gates/r45j-readme.cjs",
+        "raw/gates/r45j-accept-patch.cjs",
+        "raw/gates/r45j-owner-decisions-patch.cjs",
+        "raw/gates/r45j-owner-decisions.log",
+        "raw/gates/r45j-publish-face-verify.cjs",
+        "raw/gates/r45j-publish-face-verify.log",
+        "raw/gates/r45j-jest-f131.log",
+        "raw/gates/r45j-docrefs-after.log",
+        "raw/gates/r45j-consumer-chainface.log",
+        "raw/gates/r45j-consumer-typecheck.log",
+        "raw/gates/r45j-gates-after.log",
+        "raw/gates/r45j-docrefs-final.log",
+        "raw/gates/r45j-archive.cjs",
+        "raw/gates/r45j-fix-archive.cjs",
+        "raw/gates/r45j-archive-2.cjs",
+        "raw/gates/r45j-archive-3.cjs",
+        "raw/gates/r45j-archive-4.cjs",
+        "raw/gates/r45j-fix-archive-5.cjs",
+        "raw/gates/r45j-archive-6.cjs",
+        "raw/gates/r45j-archive-manifest.json"
+      ],
+      "readings_r45j": {
+        "capture": "14 份 JSON / 90 条记录 / 90 张 PNG 落 docs/evidence/v12/v11chain-r45j/（非正典、[skip-promote] 每轮一次、正典三件套零回写）；candidateFingerprint 逐条 9fa85f88b968d5f1 = 当期交付 bundle",
+        "threeEngine": "判据 raw/gates/r45j-reconcile-k.cjs EXIT=0：hard 0 / stale 0 / attributed 4 ⇒ chromium 52/52（apiProof 1004/129/0）、firefox 51/52（1004/129/0，与 chromium 逐字段相等）、webkit 49/52（999/130/4）；三引擎同绿 49/52",
+        "redCells": [
+          "firefox/mesh-sphere＝并行会话在工作树 examples/mesh-sphere/example.json 注入的假 validator（F-132 写盘语义的连带），非引擎差异",
+          "webkit/mesh-sphere＝同 firefox/mesh-sphere：工作树并行 NC，非引擎差异",
+          "webkit/audio-basic＝在册 F-100 在 V1.1 规格驱动链上的跨链显现：webkit 音频 DOM 分支（AudioPlayerDOM）拿不到 PCM ⇒ AudioPCMDataView/getData/playOneShot 恒不执行；3 次复跑 3/3 同签名 FAIL（STRUCTURAL），排除释放竞态",
+          "webkit/video-basic＝F-135：webkit P3 播控段间歇抛断（5 次复跑 2 PASS/3 FAIL，签名恒定），非 F-100/F-103/F-107 在案形态"
+        ],
+        "cost": "四腿 80 例·引擎 / 1,130 s ⇒ ≈14.1 s/例/引擎（分腿 12.8/13.5/15.5/14.7，口径＝相邻腿启动时刻之差 ÷ 该腿记录数，现读自 raw/gates/r45j-batch.out 时间戳）；#15 原估「≈63 s/例/引擎」是 2 例摊不开一次性开销的上限，自本轮起停止引用；r45i 的 ≈19 s 同数量级",
+        "negctl": "passCount undefined/undefined 全 OK。首轮 6/10 的根因在负控自身：ARMS 构造期急求值 clone() ⇒ 共用同一源的多臂互相覆盖；改惰性物化 + 每臂独立子目录 + no-op 注入即抛后收敛（新陷阱 42，与陷阱 40 同族第二种形态）",
+        "findings": "findings.jsonl 现读 135 行 / 425131 B / a9608165949a3748（本轮前 132 行 / 415,620 B / d8c865ff1d6381ac）；新增 F-133/F-134/F-135，三条 blocking 现读全 false；纯追加不变量由 r45j-verify-findings.cjs 逐行回读复算（丢弃末 3 行必须还原前像）",
+        "publishFace": "acceptance-report 134849 B/a0906b6666b3b585（前像 130,393/5d6148122ebc31b7，无 tee 原件 ⇒ 由 r45j-publish-face-verify 只读回执替代）· owner-decisions 54495 B/ef94c2679cad656b（#15 UPDATE-r45j）· 证据 README 11211 B/fa0f805e1aed24b9",
+        "gatesAfter": "typecheck EXIT=0 · smoke-30「证据目录对账」1 passed/38 total（F-131 先红后绿）· verify:v11-chain-face ok:true 52/52 fps 9fa85f88b968d5f1 · verify:doc-refs ok:true docs 118 refs 1087 baseline 31/31 unresolved 0 stale 0（台账写盘后又复跑一次：DOCREFS_EXIT=0、同 118/1087/31，见 raw/gates/r45j-docrefs-final.log）· verify:consumer EXIT=1，失败项恰为 F-85 一条（README→docs/manual/index.md 不在 tarball；HEAD 态即红，非本轮引入），exportCount 574",
+        "debtObserved": "发布面含仓库外 scratch 路径的行数现读：验收报告 12 / 待批面 10，本轮插入段 0/0、新 README 0 ⇒ 本轮零新增，存量归 F-130/#17 一族。另：acceptance-report / owner-decisions / smoke-30 / 本批证据目录在 git 中均 UNTRACKED ⇒「入库」只到「工作树在册」为止",
+        "archive": "raw/gates 的 r45j 归档清单现读 51 件 / 532757 B（六批：批次原件 → 发布面脚本与门禁日志 → F-131 日志 + 第二批脚本 → archive-4 → 受控替换 append-ledger 归档件 + 补档 archive-4 脚本 → archive-5/archive-6 脚本与本行写盘前的最后一份只读门禁日志；两次原地覆盖均记 previousSha256 + 理由，其余条目每批写盘前逐条字节+哈希复核）",
+        "notClaimed": "不主张：晋升、覆写正典、#15/#21 已批复、webkit 已绿、build-dts 已复现。mesh-sphere 的并行 NC 注入本会话未代撤。"
+      },
+      "commands": [
+        {
+          "cmd": "NODE_PATH=<playwright 所在 node_modules> node tools/verify/v11-examples-verify.cjs --ids=<chunk-A 21 例 / chunk-B 19 例 / mesh-torus> --browser=firefox|webkit --out=docs/evidence/v12/v11chain-r45j/... --artifact-dir=...",
+          "exit": "0/1/1/1",
+          "shows": "四腿 EXIT 语义＝该腿有无 FAIL 记录（:820），writeEvidence 仍 completed:true；[skip-promote] 每轮一次；缺 NODE_PATH 时首跑产 0/21 垃圾捕获（raw/gates/r45j-firefox-chunkA-garbage.log 保留、勿当结果）"
+        },
+        {
+          "cmd": "node docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-reconcile-k.cjs",
+          "exit": 0,
+          "shows": "hard 0/stale 0/attributed 4 + 52 例逐格三引擎表（含每格读取层自报）"
+        },
+        {
+          "cmd": "node docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-negctl.cjs",
+          "exit": 0,
+          "shows": "10 臂全 OK（含阳性对照、反空转、注入自证、白格只豁免在册形态四臂专证）"
+        },
+        {
+          "cmd": "node docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-verify-findings.cjs && node docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-publish-face-verify.cjs",
+          "exit": 0,
+          "shows": "台账纯追加复原证明 + 发布面 18 项只读回执（本轮未 tee 的写入 stdout 以可复跑回执替代，不编造日志）"
+        },
+        {
+          "cmd": "R45J_LEDGER_PRE=<写前锁 JSON> node E:/AIProMax/cocosair-scratch/db-probe/r45j-append-ledger.cjs | tee E:/AIProMax/cocosair-scratch/v12-logs/r45j-append-ledger.log",
+          "exit": 0,
+          "shows": "本行与 verification-summary 的 Addendum 同轮落盘；首次运行在写完 summary 后因 raw[] 引用未归档件抛出 ⇒ 留下半应用态，重构为「前置断言全过再写盘 + 可重入」后重跑，summary 走 alreadyApplied 分支只补 index（新陷阱 47）。写后值一律现读，本行不自写终值。"
+        }
+      ],
+      "result": "LV12-01 的 V1.1 链三引擎取证面铺满（52 例 × 三引擎，49/52 同绿，红格逐个归因 + 活体现读前提）；配套三条 runner/示例缺陷入册（F-133/134/135）；F-131 目录对账门禁由红转绿；发布面三处当期化并复跑四条相关门禁",
+      "note": "本格只主张「这 52 例今天确实在三引擎上各跑过、证据互相自洽且与当期交付字节同货币」，不主张晋升。台账链：上一行 R45I 的写后值 = 本行写前锁（85535 B / 4a84f7235406364e / 81 行）⇒ 本行写盘后的当期值一律现读（陷阱 39：本行不得写自身终值）。"
     }
   ],
   "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\". F-67. Counts go stale on every append — recompute with node -e instead of trusting a number written into this note."

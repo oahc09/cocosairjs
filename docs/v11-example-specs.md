@@ -55,7 +55,7 @@ specFingerprint）+ `docs/evidence/examples/<id>.png` 截图工件。
 | `S11-NO-EVIDENCE` / `S11-STALE-EVIDENCE` / `S11-SCREENSHOT` / `S11-PROMOTION-DRIFT` / `S11-LICENSE` | Stable 公式六项：当期两份门禁按 `requiresDevTools` 各自取证；证据 `specFingerprint` 必须等于当前 example.json；截图工件当期 bytes>0 且文件存在；`promotionEvidence` 与当期证据一致；license 声明存在 |
 | `S15-FREEZE` / `S23-MANIFEST` / `S19–S22-GALLERY` | frozen 前置齐备；files.json 只含 Gallery 字段且 status/specStatus/promotionEvidence 与 example.json 一致（防 §23 双份漂移）；Gallery 四段（What you'll learn / APIs Used / Expected Result / Validation Status）逐字段有值 |
 | `S25-LIFECYCLE`（**fail**） / `S25-LIFECYCLE-IMPL` | 资源型示例必须有 `validation.lifecycle: ["resource-released"]`（例外条件机器可读：`capabilityExpectations` 全部非 `supported` → 无已解码资产可释放，降为 warn 并给原因，不伪造 PASS）；且声明必须落到实现——示例源码里要真有 `installAssetLifecycle(...)` / `window.__lifecycle =` 安装点 |
-| `S-IMPORT-RESOLVE`（fail） | 示例源码里的相对 import 必须在**真实仓库布局**下可解析。浏览器矩阵把示例目录展平到暂存工作区根，`src/main.ts` 里写 `../shared/x.js` 在矩阵里恰好能跑、部署后却是 404（"验证器绿、部署物坏"），故用静态解析兜底 |
+| `S-IMPORT-RESOLVE`（fail） | 示例源码里的相对 import 必须在**真实仓库布局**下可解析。浏览器矩阵把示例目录展平到暂存工作区根，`examples/*/src/main.ts` 里写 `../shared/x.js` 在矩阵里恰好能跑、部署后却是 404（"验证器绿、部署物坏"），故用静态解析兜底 |
 
 ## Coverage：claimed / verified 严格分离
 
@@ -169,7 +169,7 @@ G1 不宣称完整**，Draco 正向解码待宿主浏览器 glue 以可哈希固
    `asset-loaded` 单独不构成"资源加载成功"的证明；资源类示例目前由 `node-exists` + 画面非空 +
    lifecycle 合同共同兜底。收紧需要改 validator 合同并重写所有相关示例规格（另轮处理）。
 9. **暂存展平会掩盖相对 import 路径**：`prepareWorkspace` 把示例目录整体拷进工作区根，
-   `src/main.ts` 写 `../shared/x.js` 在矩阵里恰好可解析，而真实布局与 Gallery 部署物里是 404
+   `examples/*/src/main.ts` 写 `../shared/x.js` 在矩阵里恰好可解析，而真实布局与 Gallery 部署物里是 404
    （§25 接线时踩中：artifact build 直接失败）。现示例源码统一按真实布局写 `../../shared/`，
    暂存层按文件深度重算说明符，并加 `S-IMPORT-RESOLVE` fail 门禁兜底；
    但这只覆盖相对 import，`fetch('...')` 等字符串路径仍无同类检查。

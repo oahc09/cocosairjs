@@ -14,6 +14,15 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
 
+    // V1.2 P1（Air 修改）：ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录
+    // 按「全部输入文件的最长公共根」布局。V1.2 把 @cocos/box2d 等运行库 vendored 到
+    // src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 声明闭包 92 MB，
+    // 不进仓库），于是公共根上移到仓库根，emit 结果落到 __dts_before_bundle/src/**，
+    // 而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 →
+    // 解析全空，产出的 cc.d.ts 退化成 `declare module "cc" { export {}; }`。
+    // 显式钉住 rootDir，声明布局恒以引擎根为准。
+    "rootDir": "./",
+
     "baseUrl": "./",
     "paths": {
         "cc.decorator": [
@@ -30,6 +39,7 @@
       "./@types/editor-extends",
       "./@types/webGL.extras",
       "./@types/webGL2.extras",
+      "./@types/webGPU",
 
       // pal
       "./@types/pal/system-info",
@@ -50,6 +60,28 @@
       "external/**/*.ts"
   ],
   "exclude": [
-      "editor"
+      "editor",
+
+      // V1.2 批次 E / D10（与根 tsconfig.json 的同名豁免配对，理由见 UPSTREAM.md Deviation-04）：
+      // dtsBundler 用本配置把 exports/** 全部收进声明图，未接线的 gfx-webgpu 会被并入发布面
+      // （cc.d.ts 多出 `export class WebGPUDevice`，而默认 bundle 的导出表没有它 → 类型/产物不一致，
+      // 实测 +60,649 B）。emscripten-only 子图同时无法在此快照内核对，故整图移出声明与核对闭包。
+      "cocos/gfx/webgpu/**",
+      "cocos/webgpu/**",
+      "exports/gfx-webgpu.ts",
+
+      // V1.2 批次 D-4 / G-3（LV12-14 / LV12-16，与 Deviation-04 同一类，登记为 UPSTREAM.md Deviation-05）：
+      // 这三个 wasm 后端子图已按上游原文抽取并逐字节核对（82 文件），但它们的类型只存在于
+      // `native/external/emscripten/{bullet/bullet,physx/physx,box2d/box2d}.d.ts` —— 该目录不在本引擎快照内
+      // （上游 tsconfig.json 的 types[] 正指着它），故在仓库内**无法**完成类型核对；实测纳入时
+      // typecheck 从 0 红到 118（`Cannot find namespace 'Bullet'/'PhysX'`、`Namespace 'B2' has no exported member …`、
+      // `Cannot find module 'external:emscripten/{bullet,physx}/…'`）。与 gfx-webgpu 同因同治：整图移出核对与声明闭包，
+      // 默认 feature 集不引用它们 ⇒ 三产物逐字节不变。
+      "cocos/physics/bullet/**",
+      "cocos/physics/physx/**",
+      "cocos/physics-2d/box2d-wasm/**",
+      "exports/physics-ammo.ts",
+      "exports/physics-physx.ts",
+      "exports/physics-2d-box2d-wasm.ts"
   ]
 }

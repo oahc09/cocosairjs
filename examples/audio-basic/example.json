@@ -1,0 +1,449 @@
+{
+  "id": "audio-basic",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "AudioSource — 手势解锁播放/暂停/循环/音量/判尾 + Code First 运行时 AudioClip (V12 LV12-03)",
+  "category": "audio",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "UITransform",
+    "Layers",
+    "Color",
+    "Label",
+    "Component",
+    "view",
+    "ResolutionPolicy",
+    "assetManager",
+    "AudioSource",
+    "AudioClip",
+    "AudioPCMDataView",
+    "AudioPCMDataView.getData",
+    "AudioClip.validate",
+    "AudioClip.getDuration",
+    "AudioSource.play",
+    "AudioSource.pause",
+    "AudioSource.stop",
+    "AudioSource.playOneShot",
+    "AudioSource.getPCMData",
+    "AudioSource.getSampleRate",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.on"
+  ],
+  "capabilities": [
+    "audio"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：`cocos/audio` + vendored `pal/audio` 的 web 通路必须真实跑通——`assetManager.loadRemote('.wav')` 经 downloader 的 `.wav` 注册项 → `loadAudioPlayer` → `AudioPlayer.load` →（WebAudio 后端）`decodeAudioData` → factory `createAudioClip`，产出带 `_nativeAsset={player,url,type,duration}` 的运行时 `AudioClip`（Code First，无 .meta/无 uuid 依赖图）；`AudioSource` 的播放/暂停/循环/volume/判尾、手势解锁后的 resume、组件禁用即自动暂停都要在 chromium/firefox/webkit 三引擎矩阵里逐字段可回读，并且真的出图",
+    "points": [
+      "Code First 的真实入口是 downloader/factory 的两张表：`audio-downloader.ts` 给 `.mp3/.ogg/.wav/.m4a` 注册 `loadAudioPlayer`，factory 侧注册 `createAudioClip` ⇒ `loadRemote('./assets/tone.wav')` 直接返回 `AudioClip`（`validate() true`、`getDuration() 1.6`、`nativeUrl` 就是请求 URL）。组件侧不需要 uuid，也不该自己 `new Audio()` 冒充",
+      "`AudioSource.clip` 的 setter **另开一个 `AudioPlayer` 实例**（同一份已解码 buffer，`audioBufferManager` 引用计数缓存）：实测 `clipPlayerIsSourcePlayer false`（clip 自带 player 与 srcA 的 player 不是同一对象）、`twoSourcesShareOneClip true`。所以「两个 AudioSource 播同一 clip」是两个通道共享一次解码，不是两次解码",
+      "`play()` 在 player 尚未 `_isLoaded` 时不会丢操作：`_operationsBeforeLoading` 把它排队（实测调用前 0 → 调用后 1），加载完成由 `_syncStates` 重放，队列随之清空（`opsQueueEmptyAfterLoad true`）。⚠️ 这条队列在 webkit 上永不清空，见下面 DOM 后端一组",
+      "自动播放策略：手势前 `srcA.play()` 不 emit STARTED（`autoplayBlocked true`、`startedCountBeforeGesture 0`、300 ms 后仍 `INIT(0)`）。解锁靠 `AudioContextAgent.runContext()` 往 `#GameCanvas` 挂 **capture 阶段的 `touchend`/`mouseup`** 调 `context.resume()`，`_doPlay()` 走 `onceRunning` 延后。实测三引擎都拦（headless 也拦），但解锁耗时 512/599/1660 ms 逐次不同 ⇒ 判据只能是轮询到的 `waitFor(() => srcB.playing)`，不能是固定 sleep",
+      "`AudioTimer.currentTime` 是 `performance.now()` 换算，不是 AudioContext 时钟，并且 `% duration` 回绕：所以 `pause()` 把它冻住（`frozenWhilePaused 0`）、`seek()` 设偏移、`checkEnded` 用 `setTimeout(duration - currentTime)` 判尾。非循环播完 ⇒ emit ENDED 且状态回 `INIT(0)`、`playing false`、位置归 0；`loop=true` 时实测 `endedDeltaDuringLoop 0`（不判尾，播放头回绕）",
+      "`volume` setter 做 `clamp01` 且 NaN 保留前值（只 warn，不 error）：实测 `0.35` 读回 0.35、`2 → 1`、`NaN → 仍是 1`。WebAudio 后端能顺到 `srcB._player._ccprivate$_player._ccprivate$_gainNode.gain.value`，读回恰好 0.35 ⇒ 「属性生效」有第二路独立证据。`playOneShot(clip, 0.5)` 另开 OneShot 通道，主播放头不受影响（`stillPlayingAfterOneShot true`）",
+      "`seek(999)` 被 `clamp(0, duration)` 夹到 1.6，且因为此时状态已 `INIT(0)`，夹完仍是停的（`stillStoppedAfterClampSeek true`）⇒ 「endTime/越界」不能只看返回值，必须连状态一起断言",
+      "`decodeAudioData` 一定把资产**重采样到 AudioContext 采样率**：8000 Hz 资产在 48 kHz context 下 `getSampleRate() 48000`、`getPCMData(0).length 76800`（= 1.6 × 48000），而 `duration` 仍是 1.6。⇒ 断言 PCM 长度必须按 context 采样率算，照资产头里的数字写期望会永久红。单声道上 `getPCMData(1)` 直接抛 `IndexSizeError`（WebAudio `getChannelData(1)`），越界声道不是返回 undefined",
+      "⚠️ Playwright 的 webkit-2361（Windows）**根本没有 Web Audio API**：`AudioContext / webkitAudioContext / OfflineAudioContext / webkitOfflineAudioContext` 全是 `undefined`（`typeof` 实测，UA `Version/26.5 Safari/605.1.15`）。于是引擎退回 `AudioPlayerDOM`：`clip._nativeAsset.type` 从 `WEB_AUDIO(1)` 变成 `0`、`AudioSource._player` 的 impl 是 `AudioPlayerDOM`、`getPCMData()` 返回 undefined、`sampleRate` getter 恒 0。⇒ 本示例「PCM 解码/峰值/bin 包络」这一组在 webkit 上结构性不可能，只能钉在 chromium/firefox 的 probeNonEmpty，不进 probeEquals",
+      "⚠️ DOM 后端的 `AudioPlayerDOM.getPCMData()` 返回 undefined 而 `AudioSource.getSampleRate()` 返回**永不 settle 的 promise**：不兜底会挂死整条点击序列（实测 `p3Decoded` 只剩 `{playerType:null}`、summary 停在 `audio: loading`、`phaseKeys 3`）。本示例的 `safeAsync(fn, 1200)` 用 `Promise.race` 给每个 await 加硬超时，并把判别写成「像不像 AudioPCMDataView」（`typeof view0.getData === 'function'`）而不是「有没有 length」——错误字符串同样有 `length`，第一版就是被这个坑到抛 `view0.getData is not a function`（pageerror，整段序列废掉）",
+      "⚠️ `AudioPlayerDOM.loadNative()` 只认 `canplaythrough`（iOS 特例 `loadedmetadata`、Firefox 特例 `canplay`），headless webkit 对这支 25 kB 的 WAV **从不触发 `canplaythrough`** ⇒ 每次音频加载都要吃满实现里那个 8000 ms 兜底 `setTimeout`：实测 webkit 模块顶层落在 `performance.now() ≈ 8.5 s`（chromium 0.7 s / firefox 1.1 s）。矩阵的 `waitMs` 必须 ≥ 12000 才可能把点击打在已注册 TOUCH_START 之后，否则 webkit 只会 `phaseKeys 1` 全红",
+      "⚠️ 资产采样率必须是 **PCM16/8000 Hz/mono**：同一支 1.600 s 正弦，webkit 的 `<audio>.duration` 读回 22050→0.3705、44100→0.1853、48000 mono→0.1702、48000 stereo→0.0851、float32→超时，只有 8000→**1.6000** 正确（chromium/firefox 六种封装全对）。`duration` 一错，`AudioClip.getDuration()`、判尾 timeout、loop 回绕点、播放头换算全部跟着错，而且是静默错。实测命令与逐条 JSON：`node E:/AIProMax/cocosair-scratch/v12-logs/wav-dom-durations.cjs` ⇒ `E:/AIProMax/cocosair-scratch/v12-diag/wav-dom-durations.json`（含无 Web Audio 的能力实测 `webkit-audio.json`）",
+      "⚠️ DOM 后端存在**假阳性播放**：`ensurePlaying()` 在 `domAudio.play()` 被拒时改为往 `#GameCanvas` 挂一次性 `touchend/mouseup` 重试，并且**照样 resolve** ⇒ facade `state` 被置成 `PLAYING(1)`，而元素实际 `paused=true`、`currentTime` 冻结在 0（probe 实测 `players.srcB={backend:'dom',facadeState:'PLAYING(1)',paused:true,currentTime:0}`，两次相隔 600 ms 采样 `srcBDelta=0`）。所以「`AudioSource.playing === true`」绝不等于「真的在出声」，三引擎矩阵里能证明渲染循环的必须是与音频后端无关的帧时钟，不能是播放头",
+      "⚠️ `clip.destroy()` 单独调用**不等于释放**：`assetManager.loadRemote` 以 URL 为键把结果缓存在 `assetManager.assets`（`asset-manager.ts:654` 命中即原样回缓存、不再走下载/解析），而 `release-manager._free` 第 235 行对已失效对象直接 `return` ⇒ 缓存条目残留，同 URL 二次 `loadRemote` 取回的是**已销毁实例**，`AudioSource.clip` setter 立刻 `console.error('Invalid audio clip')`（`audio-source.ts:133/433`）。实测：本例 §25 lifecycle 合同先前只写 `clip.destroy()` 时 v11 验证器判 `resource-released` FAIL（`reacquire: toneClip invalid after reacquire`，快照 `E:/AIProMax/cocosair-scratch/v12-diag/pre-audio-v11/v11-examples-verified-FAIL-destroyonly.json`），改成在资产仍有效时 `assetManager.releaseAsset(clip)`（`tryRelease(asset, true)` 的 force 分支才会 `assets.remove` + destroy）后转绿。P1 的 `cacheHasUrl` 把「URL 即缓存键、加载后条目在册」钉进 probe，避免把「销毁了」当成「释放了」"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas + UICamera + Status + Wave + Hint + AudioHost（AudioHost 上挂两个 `playOnAwake=false` 的 AudioSource）。加载期先记 P0/P2：`autoplayBlocked true`、`startedCountBeforeGesture 0`、手势前 300 ms 仍 `INIT(0)`、`opsQueueBeforeCall 0 → opsQueueAfterCall 1`、`isLoadedAtCall false`。真实点击一次性跑完 8 阶段（纯同步读回 + 轮询延迟，无随机）：P1 运行时资产（ctor 'AudioClip'、`assetManager.assets.has(URL) cacheHasUrl true`、`validate true`、`getDuration 1.6`、`_nativeAsset` 键 `duration,player,type,url`、`url === nativeUrl true`、`clipPlayerIsSourcePlayer false`、`twoSourcesShareOneClip true`、`maxAudioChannel 24`）；P3 解码后 PCM（WebAudio 后端：`sampleRate 48000`、`pcmLength 76800`、`pcmViewCtor 'AudioPCMDataView'`、64 bin 包络、前/后半峰值 0.5/0.25、越界声道 `IndexSizeError`；webkit 后端记 `hasAudioContext false` + 两次超时串）；P4 手势解锁（`stateAtGesture INIT(0)` → `PLAYING(1)`、`playingAfterGesture true`、`startedCountAfterUnlock 2`、`unlockLatencyMs` 只入非空集）；P5 播放头即钟（`clockAdvancedWhilePlaying true`、`stateAfterPause PAUSED(2)`、`frozenWhilePaused 0`、`resumedFromOffset true`）；P6 音量（`volReadback 0.35`、`clampedHigh 1`、`afterNaN 1`、`nanKeepsPrevious true`、WebAudio 侧 `gain 0.35`）；P7 seek 与判尾（`seekLandedsInRange true`、`endEventFired true`、`endedDelta 1`、`stateAfterEnd INIT(0)`、`playingAfterEnd false`、`clampedToDuration 1.6`、`stillStoppedAfterClampSeek true`）；P8 循环/OneShot/生命周期（`loopFlagOnPlayer true`、`wrappedBelowSeekTarget true`、`endedDeltaDuringLoop 0`、`stillPlayingAfterOneShot true`、`oneShotVolumeProduct 0.175`、`stateAfterDisable PAUSED(2)`、`playingAfterReEnable false`、`playingAfterExplicitPlay true`）。终态 live：`srcB` 处于 `loop=true, volume=0.35, PLAYING(1)`，`endedCount 1`，状态行 `audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)`（三引擎逐字相同，进 probeEquals）",
+    "visual": "深蓝底（clearColor 12,16,24）一屏：顶部状态行 `audio: loading` → 点击后改写为 `audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)`；中部一条 420×120 的 64 bin 波形（前半 440 Hz 高幅、后半 660 Hz 低幅，2:1 设计肉眼可分），波形上叠一条琥珀色竖线＝播放头（仅 `playing` 时绘制），波形下方一条绿色小块＝帧时钟（每 2400 ms 横扫一次，与音频后端无关）；底部一行提示 `unlocked: playing`。frame-diff 的持续帧间变化来源是绿色帧时钟：三引擎都有牙（chromium/firefox 播放头也在走，webkit 播放头因 DOM 后端假阳性冻结，见 learning 末条）⇒ 三引擎 frameChanged 全 PASS，而「音频是否真出声」由 probe 的 `players.srcB.{backend,paused,currentTime,srcBDelta}` 独立回读，不用画面替引擎背书"
+  },
+  "api": {
+    "primary": [
+      "AudioSource",
+      "AudioClip",
+      "AudioPCMDataView"
+    ],
+    "supporting": [
+      "AudioClip.validate",
+      "AudioClip.getDuration",
+      "AudioPCMDataView.getData",
+      "AudioSource.play",
+      "AudioSource.pause",
+      "AudioSource.stop",
+      "AudioSource.playOneShot",
+      "AudioSource.getPCMData",
+      "AudioSource.getSampleRate",
+      "assetManager",
+      "Component",
+      "Node.on",
+      "Label"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Canvas",
+      "UITransform",
+      "Layers",
+      "Color",
+      "Label",
+      "Component",
+      "view",
+      "ResolutionPolicy",
+      "assetManager",
+      "AudioSource",
+      "AudioClip",
+      "AudioPCMDataView",
+      "AudioPCMDataView.getData",
+      "AudioClip.validate",
+      "AudioClip.getDuration",
+      "AudioSource.play",
+      "AudioSource.pause",
+      "AudioSource.stop",
+      "AudioSource.playOneShot",
+      "AudioSource.getPCMData",
+      "AudioSource.getSampleRate",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.on"
+    ],
+    "forbiddenShortcut": [
+      "绕开 `assetManager.loadRemote` 自己 `new Audio()`/`new AudioContext().decodeAudioData()` 造 buffer 冒充「AudioClip 运行时资产注册（Code First）」：计划书 LV12-03 要的就是 downloader `.wav` → `loadAudioPlayer` → factory `createAudioClip` 这条引擎通路，必须回读 `clip._nativeAsset` 的键与 `url === nativeUrl`",
+      "把 `AudioSource.playing` 或 `state === PLAYING` 当成「真的在出声」：webkit 的 DOM 后端实测 facade 说 PLAYING 而 `<audio>` 元素 `paused=true`、`currentTime` 冻结（`ensurePlaying` 对被拒的 `play()` 也 resolve）。任何「播放生效」的断言都必须带一路独立回读（`srcA/srcB` 的 `players.*.currentTime` 是否真的走表、STARTED/ENDED 事件计数）",
+      "用固定 `sleep(300)` 之类的延时断言手势解锁或判尾：实测解锁耗时 512/599/1660 ms、判尾 101/127/175 ms、回绕 102/135 ms 逐引擎逐次都不同。必须轮询（`waitFor`）并把延迟本身记进证据，只对布尔与状态名做等值断言",
+      "把 PCM 长度/采样率写成资产头里的数字（8000 / 12800）：`decodeAudioData` 会重采样到 context 采样率，实测 `sampleRate 48000`、`pcmLength 76800` 而 `duration` 仍 1.6",
+      "用 22050/44100/48000 采样率的 WAV 资产：webkit 的 `<audio>` 对同一支 1.600 s 音频把 duration 读成 0.3705/0.1853/0.1702，静默错掉整条时间轴 ⇒ 资产钉死 PCM16/8000 Hz/mono（由 `tools/fixtures/make-tone-wav.cjs` 手写 RIFF 生成，无第三方编码依赖）",
+      "让 await 无兜底：`AudioSource.getSampleRate()` 在 DOM 后端永不 settle，会把整条点击序列挂死（实测停在 `phaseKeys 3`、`summary 'audio: loading'`）。所有异步读回必须过带硬超时的 `safeAsync`，且「拿没拿到 PCM」要用能力判别（`typeof view0.getData === 'function'`），不能用 `view0.length`（错误字符串也有 length）",
+      "把 webkit 不可能满足的 WebAudio 专属量（`sampleRate/pcmLength/binPeak*/metaType/typeIsWebAudio/gain`）写进 `probeEquals`：那是环境能力缺口不是产品缺陷，只能进 `probeNonEmpty`/`probePresent`；反之时序量（`*LatencyMs`、`tMs`、`posDelta`、`wallDeltaMs`、`afterSeekPos`、`posAfterEnd`）三引擎虽相近但不是跨引擎不变量，一律不进等值断言",
+      "只 new 组件不读回定死的数值：必须有 `duration 1.6`、`state` 名与码、`volume` 读回与 clamp、`endedDelta`、`oneShotVolumeProduct 0.175`、64 bin 峰值等可机器比对量",
+      "用 `clip.destroy()` 充当「资源已释放」：loadRemote 的 URL 缓存不会随之清掉（`release-manager._free:235` 对失效对象直接 return），二次加载会拿回已销毁实例而只留下一条 `Invalid audio clip`；§25 合同必须走 `assetManager.releaseAsset` 并在 reacquire 后由验证器复看图（post-release `litRatio`）与 `DESTROYED_RESOURCE` 诊断"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L84"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L88"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L98"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L46"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L100"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L217"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L85"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L85"
+      },
+      {
+        "api": "assetManager",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L237"
+      },
+      {
+        "api": "AudioSource",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L248"
+      },
+      {
+        "api": "AudioClip",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L284"
+      },
+      {
+        "api": "AudioPCMDataView",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L310"
+      },
+      {
+        "api": "AudioPCMDataView.getData",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L174"
+      },
+      {
+        "api": "AudioClip.validate",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L285"
+      },
+      {
+        "api": "AudioClip.getDuration",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L228"
+      },
+      {
+        "api": "AudioSource.play",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L265"
+      },
+      {
+        "api": "AudioSource.pause",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L347"
+      },
+      {
+        "api": "AudioSource.stop",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L470"
+      },
+      {
+        "api": "AudioSource.playOneShot",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L428"
+      },
+      {
+        "api": "AudioSource.getPCMData",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L305"
+      },
+      {
+        "api": "AudioSource.getSampleRate",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L304"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "Node.on",
+        "source": "main.js",
+        "validator": "frame-diff",
+        "sourceLocation": "L454"
+      }
+    ]
+  },
+  "assets": [
+    "assets/tone.wav"
+  ],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "Wave",
+        "Hint",
+        "AudioHost"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）画布一次（矩阵 `waitMs=12000` 保证打在 webkit 的模块顶层之后）：跑完 8 阶段读回序列，末尾把 srcB 留在 `loop=true / volume=0.35 / PLAYING` 的持续态；序列带闩锁，后续点击不会重跑（`ensurePlaying` 自己会往 #GameCanvas 挂一次性重试，不闩锁会让 started/ended 计数翻倍）",
+        "expected": "画面从「波形静止 + `audio: loading`」变为「64 bin 波形 + 琥珀播放头 + 绿色帧时钟横扫 + 状态行改写」，frame-diff 可测；AudioSource / AudioClip / AudioPCMDataView 与手势解锁、判尾、循环、音量语义在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Canvas": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 88,
+            "text": "new Node('Canvas') 之后未赋局部变换，合同为引擎默认 identity"
+          }
+        ]
+      },
+      "UICamera": {
+        "position": [
+          0,
+          0,
+          1000
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 97,
+            "text": "cameraNode.setPosition(0, 0, 1000);"
+          }
+        ]
+      },
+      "Status": {
+        "position": [
+          0,
+          148,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 110,
+            "text": "statusNode.setPosition(0, 148, 0);"
+          }
+        ]
+      },
+      "Wave": {
+        "position": [
+          0,
+          -22,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 124,
+            "text": "waveNode.setPosition(0, -22, 0);"
+          }
+        ]
+      },
+      "Hint": {
+        "position": [
+          0,
+          -112,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 132,
+            "text": "hintNode.setPosition(0, -112, 0);"
+          }
+        ]
+      },
+      "AudioHost": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 243,
+            "text": "new Node('AudioHost') 之后未赋局部变换（纯宿主节点，只挂两个 AudioSource）"
+          }
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：`assets/tone.wav`（25,644 B，sha256 前 16 位 744d7e437a5235ac）由仓库内 `tools/fixtures/make-tone-wav.cjs` 手写 RIFF/PCM 生成（mono/16-bit/8000 Hz/1.600 s，前半 440 Hz@0.50、后半 660 Hz@0.25，段首尾 88 样本线性包络），无编码器依赖。audio 模块为 cocos4 上游 TypeScript 端口（`src/cocos/audio/*` 6 文件逐字节同源，登记在 `docs/upstream-file-map.json`），`pal/audio` 为官方发布物 vendored（`src/pal/audio/**`，许可按 UNLICENSED 口径单独登记）"
+  },
+  "promotion": {
+    "spec": "9df8c691b6ad",
+    "source": "002fb0bcb6e664a6",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 26,
+    "attested": 2,
+    "units": 28
+  }
+}

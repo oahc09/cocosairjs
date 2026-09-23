@@ -1,0 +1,537 @@
+{
+  "id": "physics-2d-collision",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "2D Physics Contacts — sensor / 事件门控 / 碰撞过滤 (V12 LV12-13)",
+  "category": "physics-2d",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Camera",
+    "Canvas",
+    "Component",
+    "UITransform",
+    "Layers",
+    "view",
+    "ResolutionPolicy",
+    "Sprite",
+    "Label",
+    "SpriteFrame",
+    "Texture2D",
+    "ImageAsset",
+    "Color",
+    "math.Vec2",
+    "math.Size",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.on",
+    "PhysicsSystem2D",
+    "PhysicsSystem2D.collisionMatrix",
+    "PhysicsSystem2D.step",
+    "RigidBody2D",
+    "RigidBody2D.enabledContactListener",
+    "Collider2D",
+    "Collider2D.apply",
+    "BoxCollider2D",
+    "CircleCollider2D",
+    "Contact2DType",
+    "PhysicsGroup",
+    "PHYSICS_2D_PTM_RATIO"
+  ],
+  "capabilities": [
+    "physics-2d"
+  ],
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "specStatus": "frozen",
+  "learning": {
+    "goal": "V1.2 回归：默认发行产物（box2d 后端）的四类接触事件、sensor 语义、接触回调门控时机与 categoryBits/maskBits 过滤规则，必须在手工确定性驱动下逐字节可复现，并且三引擎一致",
+    "points": [
+      "确定性手工驱动：autoSimulation=false 时由 syncSceneToPhysics() → N × step(fixedTimeStep) → syncPhysicsToScene() 代替帧循环，结果只由 step 次数决定；实测 chromium/firefox/webkit 三份 __probe() 输出逐字节相同（probe-p2d-collision.json allIdentical=true）",
+      "sensor 只发事件不求解：begin/end 正常送达（step 54/69），但 getWorldManifold() 的 points、separations 长度为 0、normal 为 [0,0]、getManifold().type 为 -1、getImpulse() 为 null，Box 直穿 y∈[-54,-18] 的 sensor 带继续落到地面",
+      "实体接触四事件同步骤发生（Box↔Ground 的 begin/pre/post 都在 step 72），manifold type=1、normal=[0,1]；getImpulse() 只在 POST_SOLVE 内非空（begin 时 null，post 时 normalImpulses=[299.93,300.11]、tangentImpulses=[-0.01,0]），静止接触不再产生 END_CONTACT（boxEndStep=-1），而 restitution 0.6 的小球在 step 73 拿到 end 后重新起跳",
+      "摩擦/弹性合成规则实测：friction 取几何平均 sqrt(0.3×0.2)=0.2449、restitution 取较大者 max(0.6,0)=0.6",
+      "接触回调门控发生在 emit 时且逐侧独立：同一 Ground↔Mute 接触，listener 为 true 的 Ground 侧收到 begin（count=1），false 的 Mute 侧一条都没有；落地后再打开 Mute 的 listener，同一接触的 pre-solve/post-solve 从 step 91 起立刻送达，但那次 begin 永远补不回来（muteSideBeginAfterFlip=0）",
+      "过滤位只在创建 fixture 时读一次，且 box2d 判定是双向的：默认 collisionMatrix 只有 1→1（其余全 0），group=2 的 P 直穿地面；只把 matrix[2] 设为 1（地面 matrix[1] 仍不含 2）→ 轨迹与默认矩阵逐字节相同（都是 y=-234），接触数仍为 0；补齐 matrix[1]=3 并 apply() 后 P 才落到 -104.23。事后把 matrix 全清回默认但不 apply() → P/Q 仍被地面托在 -104.23；再 apply() → 同一帧内立刻穿地（-145.57 → -266.9）",
+      "P/Q 精确重叠 5px：互相过滤时 x 间距恒为 25、P|Q begin 数 0；matrix[2]=5、matrix[4]=3 后 begin 出现，重叠沿 x 被推开到 30.77"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 含 Canvas + UICamera + 7 个物理节点：Ground（Static 440×20，上表面 y=-120）、SensorBand（Static sensor 440×36，y∈[-54,-18]）、Box（Dynamic 40×40，friction 0.3）、Ball（Dynamic circle r20，restitution 0.6）、Mute（Dynamic 40×40，enabledContactListener 初始 false）、P（Dynamic 30×30，group 2，x=70）、Q（Dynamic 30×30，group 4，x=95，与 P 重叠 5px）。真实点击一次性跑完 490 步的 9 阶段序列，读回（单位=像素）：backend=box2d、worldCtor=b2PhysicsWorld、ptmRatio=32、autoSimulation=false、fixedTimeStep≈0.02、gravityY=-320、tallyKeys=58；sensor begin@54/end@69 pts=0 sep=0 normal=[0,0] manifoldType=-1 impulse=null；Box↔Ground begin/pre/post 全 @72、manifoldType=1、normal=[0,1]、begin 时 impulse=null、post 时 normalImpulses=[299.93,300.11]、friction 合成 0.24、restitution 合成 0；Ball 的 end@73、restitution 合成 0.6、post normalImpulses=[753.98]；Mute 侧 begin 计数 0（Ground 侧 1）、晚开后 pre/post 各 13 次（首个 @91）；P 默认矩阵穿地到 -234、单向 mask 仍 -234（接触 0）、双向后停 -104.23；P/Q 间距 25→30.77（P|Q begin 0→1）；清空 matrix 不 apply 仍停 -104.23，apply 后穿地到 -145.57/-266.9；终态 Box -99.23、Ball -99.54、Mute -99.23",
+    "visual": "深蓝底一屏：底部灰色地面长条，其上横贯一条青色半透明 sensor 带；左侧橙色方块与绿色圆球静息在地面上（绿球带轻微穿透后的落定高度），中间浅灰方块（listener 晚开的那颗）也停在地面上，右侧蓝色 P 与黄色 Q 在终态已穿过地面落到画面外；顶部状态行写着 `collision step=490 keys=58 P↔Q gap 25px→30.77px`"
+  },
+  "api": {
+    "primary": [
+      "PhysicsSystem2D",
+      "RigidBody2D",
+      "Collider2D"
+    ],
+    "supporting": [
+      "PhysicsSystem2D.collisionMatrix",
+      "PhysicsSystem2D.step",
+      "RigidBody2D.enabledContactListener",
+      "Collider2D.apply",
+      "BoxCollider2D",
+      "CircleCollider2D",
+      "Contact2DType",
+      "PhysicsGroup",
+      "PHYSICS_2D_PTM_RATIO",
+      "math.Vec2",
+      "math.Size",
+      "Node.on"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "Canvas",
+      "Component",
+      "UITransform",
+      "Layers",
+      "view",
+      "ResolutionPolicy",
+      "Sprite",
+      "Label",
+      "SpriteFrame",
+      "Texture2D",
+      "ImageAsset",
+      "Color",
+      "math.Vec2",
+      "math.Size",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.on",
+      "PhysicsSystem2D",
+      "PhysicsSystem2D.collisionMatrix",
+      "PhysicsSystem2D.step",
+      "RigidBody2D",
+      "RigidBody2D.enabledContactListener",
+      "Collider2D",
+      "Collider2D.apply",
+      "BoxCollider2D",
+      "CircleCollider2D",
+      "Contact2DType",
+      "PhysicsGroup",
+      "PHYSICS_2D_PTM_RATIO"
+    ],
+    "forbiddenShortcut": [
+      "加载 .scene/.prefab 冒充 Code First",
+      "依赖帧率/墙钟时间做碰撞断言（必须 autoSimulation=false 手工定步驱动，否则同一浏览器两次跑都可能不同）",
+      "只 addComponent 不接事件，或示例自报『碰撞已工作』而不给页面外可读回的四事件 tally 与 manifold/impulse 数值",
+      "把 sensor 当实体碰撞（sensor 的 world manifold points/separations 长度为 0、getImpulse() 恒为 null）",
+      "在非 POST_SOLVE 回调里读 getImpulse() 并据此断言冲量（该接口只在 post-solve 期间非空）",
+      "改了 collisionMatrix / collider.group 后不 apply() 就断言过滤生效（filter 只在创建 fixture 时读一次）",
+      "假定接触两侧都会收到回调（emit 按各侧 enabledContactListener 独立门控，且 begin 不会补发给晚开的一侧）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L127"
+      },
+      {
+        "api": "Canvas",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L407"
+      },
+      {
+        "api": "UITransform",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "view",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "Sprite",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "Label",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L158"
+      },
+      {
+        "api": "SpriteFrame",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L69"
+      },
+      {
+        "api": "Texture2D",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L67"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L130"
+      },
+      {
+        "api": "math.Vec2",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L240"
+      },
+      {
+        "api": "math.Size",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L98"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L132"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "Node.on",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L405"
+      },
+      {
+        "api": "PhysicsSystem2D",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "PhysicsSystem2D.collisionMatrix",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L246"
+      },
+      {
+        "api": "PhysicsSystem2D.step",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L212"
+      },
+      {
+        "api": "RigidBody2D",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L93"
+      },
+      {
+        "api": "RigidBody2D.enabledContactListener",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L95"
+      },
+      {
+        "api": "Collider2D",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L339"
+      },
+      {
+        "api": "Collider2D.apply",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L234"
+      },
+      {
+        "api": "BoxCollider2D",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L97"
+      },
+      {
+        "api": "CircleCollider2D",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L97"
+      },
+      {
+        "api": "Contact2DType",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L167"
+      },
+      {
+        "api": "PhysicsGroup",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "PHYSICS_2D_PTM_RATIO",
+        "source": "main.js",
+        "validator": "node-exists",
+        "sourceLocation": "L333"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Ground",
+        "SensorBand",
+        "Box",
+        "Ball",
+        "Mute",
+        "P",
+        "Q",
+        "Status"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）画布任意处一次：一次性手动驱动 490 步的 9 阶段序列（physics.autoSimulation=false，syncSceneToPhysics → step×N → syncPhysicsToScene）",
+        "expected": "画面从「全部方块在 y=130」变为「Box/Ball/Mute 停在地面、P/Q 穿出画面」，frame-diff 可测；physics.step / Collider2D.apply / new Vec2 在此期间真实执行（api-executed 以 trace 计数为证，非示例级 PASS 顶包）"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Canvas": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 121,
+            "text": "const canvas = canvasNode.addComponent(Canvas);"
+          }
+        ]
+      },
+      "UICamera": {
+        "position": [
+          0,
+          0,
+          1000
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 133,
+            "text": "canvas.cameraComponent = cam;"
+          }
+        ]
+      },
+      "Ground": {
+        "position": [
+          0,
+          -130,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 136,
+            "text": "const ground = makeBody({ name: 'Ground', static: true, x: 0, y: -130, w: 440, h: 20, color: '#465064', listener: true });"
+          }
+        ]
+      },
+      "SensorBand": {
+        "position": [
+          0,
+          -36,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 137,
+            "text": "const band = makeBody({ name: 'SensorBand', static: true, x: 0, y: -36, w: 440, h: 36, color: '#2f6f7a', sensor: true, listener: true });"
+          }
+        ]
+      },
+      "Box": {
+        "position": [
+          -160,
+          130,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 140,
+            "text": "const box = makeBody({ name: 'Box', x: -160, y: FALL_Y, w: 40, h: 40, color: '#c88c46', friction: 0.3 });"
+          }
+        ]
+      },
+      "Ball": {
+        "position": [
+          -80,
+          130,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 141,
+            "text": "const ball = makeBody({ name: 'Ball', x: -80, y: FALL_Y, w: 40, h: 40, shape: 'circle', color: '#5ac878', restitution: 0.6, friction: 0.1 });"
+          }
+        ]
+      },
+      "Mute": {
+        "position": [
+          0,
+          130,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 142,
+            "text": "const mute = makeBody({ name: 'Mute', x: 0, y: FALL_Y, w: 40, h: 40, color: '#b0b6c0', friction: 0.3, listener: false });"
+          }
+        ]
+      },
+      "P": {
+        "position": [
+          70,
+          130,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 143,
+            "text": "const p = makeBody({ name: 'P', x: 70, y: FALL_Y, w: 30, h: 30, color: '#5aa0f0', group: 2 });"
+          }
+        ]
+      },
+      "Q": {
+        "position": [
+          95,
+          130,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 144,
+            "text": "const q = makeBody({ name: 'Q', x: 95, y: FALL_Y, w: 30, h: 30, color: '#f0c04a', group: 4 });"
+          }
+        ]
+      },
+      "Status": {
+        "position": [
+          -10,
+          158,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "main.js",
+            "line": 156,
+            "text": "node.setPosition(-10, 158, 0);"
+          }
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（纹理运行时程序化生成；box2d 为 cocos4 上游 TypeScript 端口，随 bundle 出处登记）"
+  },
+  "promotion": {
+    "spec": "4ee47e258bda",
+    "source": "49467e2333a8f117",
+    "candidate": "9fa85f88b968d5f1",
+    "verified": 27,
+    "attested": 6,
+    "units": 33
+  }
+}

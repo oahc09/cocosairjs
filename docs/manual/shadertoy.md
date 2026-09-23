@@ -24,7 +24,7 @@
    PARTIAL，色调映射单项）；自建路线见 [post-processing](post-processing.md)（N/A）。
 2. **想要"程序化动画画面"**：不吃 shader 的话，用动态纹理——页面 canvas 逐帧画 2D 再喂 `Texture2D`
    （[canvas-textures](canvas-textures.md)），或 render target + 多相机把场景当"程序化图案发生器"
-   （[render-targets](render-targets.md)）。表现力上限远低于 Shadertoy，但都是实测可跑的路。
+   （[render-targets](rendertargets.md)）。表现力上限远低于 Shadertoy，但都是实测可跑的路。
 3. **想要"改内建材质外观"**：`defines` 宏开关 + `states` 管线覆盖 + `setProperty` 调参，
    这是 AIR 材质创作的全部自由度（各内建 effect 的宏面未在本手册逐一点名）。
 

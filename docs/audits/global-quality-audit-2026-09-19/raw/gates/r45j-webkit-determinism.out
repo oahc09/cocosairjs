@@ -1,0 +1,19 @@
+=== audio-basic run1 05:34:49
+FAIL audio-basic {resource-released,api-executed}
+EXIT_audio-basic_1=1
+=== audio-basic run2 05:37:15
+FAIL audio-basic {resource-released,api-executed}
+EXIT_audio-basic_2=1
+=== audio-basic run3 05:39:41
+FAIL audio-basic {resource-released,api-executed}
+EXIT_audio-basic_3=1
+=== video-basic run1 05:42:07
+FAIL video-basic {resource-released,api-executed}
+EXIT_video-basic_1=1
+=== video-basic run2 05:44:18
+FAIL video-basic {resource-released,api-executed}
+EXIT_video-basic_2=1
+=== video-basic run3 05:46:29
+PASS video-basic
+EXIT_video-basic_3=0
+=== DONE 05:48:40

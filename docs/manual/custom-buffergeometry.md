@@ -70,7 +70,7 @@ waveRenderer.mesh = utils.createMesh(waveGeometry);
 
 `utils.createMesh` 是唯一入口：它把 IGeometry 上传成 GPU 缓冲并返回 `Mesh`，
 之后与 `primitives.*` 产出的 mesh 用法完全相同（赋给 `MeshRenderer.mesh` 即可）。
-想改顶点动画就重建 IGeometry 再 `createMesh`（或走 [动态纹理/顶点动画](dynamic-texture.md) 的思路），
+想改顶点动画就重建 IGeometry 再 `createMesh`（或走 [动态纹理/顶点动画](canvas-textures.md) 的思路），
 AIR 未暴露"就地改写顶点缓冲"的细粒度 API。
 
 ## 3. 实测读图与覆盖层

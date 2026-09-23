@@ -23,7 +23,40 @@ const AIR_FEATURES = [
     'air', // bundle 入口: src/exports/air.ts（含 base/3d/animation/... 与 createAirApp）
     'base', 'gfx-webgl', 'gfx-webgl2', 'gfx-empty', '3d', 'animation', 'skeletal-animation',
     'primitive', 'tween', 'custom-pipeline', 'legacy-pipeline',
+    // V1.2 批次 A 回归组
+    'profiler', 'video', 'webview',
+    // V1.2 批次 B1（2d 基座）/ 批次 D-1（physics-2d framework）
+    // physics-2d-builtin 不入默认集（见下方 V1.2 D-3 注释），仅走 AIR_FEATURES 变体构建。
+    '2d', 'physics-2d-framework',
+    // V1.2 批次 B2/B3/B4 与 C1/C2（骨骼动画与 2D 组件集）
+    'particle-2d', 'tiled-map', 'ui', 'spine-3.8', 'spine-4.2', 'dragon-bones',
+    // V1.2 批次 D-3 / G-1（决策 D7：3D 默认后端 = builtin，2D 默认 = box2d 纯 JS 端口）。
+    // 同族其它后端（cannon / ammo / physx / box2d-wasm / 2D builtin）不入默认 bundle，
+    // 物理选择器一个图中只允许一个后端，其余走 AIR_FEATURES 变体构建验证。
+    'physics-2d-box2d', 'physics-builtin',
+    // V1.2 批次 H
+    'custom-pipeline-post-process',
 ];
+
+// 常量组合构建验证（计划书 GG/GE 口径）：AIR_FEATURES=air,base,... 覆盖默认集合，
+// 与 tools/analyze/dep-graph.cjs 的同名环境变量语义一致。
+const FEATURES = (process.env.AIR_FEATURES || '').split(',').map((s) => s.trim()).filter(Boolean);
+// 变体构建（feature 集被覆盖，或产物被 AIR_OUT_DIR 重定向到仓库外）既不共享默认集合的
+// 增量缓存，也不写 build/ 的发布附属产物，避免污染共用工作树里的默认 bundle。
+const OUT = process.env.AIR_OUT_DIR ? resolve(process.env.AIR_OUT_DIR) : join(ROOT, 'build');
+const VARIANT = FEATURES.length > 0 || OUT !== join(ROOT, 'build');
+
+// r43 实测：ccbuild 对**未在引擎 cc.config.json 里声明**的 feature 名是静默忽略的——
+// 变体构建 EXIT=0、产物与默认逐字节相同，等于什么都没开（变体取证会整批失效）。
+// 故在构建前先按声明面校验，未声明即失败退出，逼使用者先登记 feature unit。
+const EFFECTIVE = FEATURES.length ? FEATURES : AIR_FEATURES;
+const DECLARED = new Set(Object.keys(require(join(ENGINE, 'cc.config.json')).features || {}));
+const UNDECLARED = EFFECTIVE.filter((f) => !DECLARED.has(f));
+if (UNDECLARED.length) {
+    console.error(`[build] FAILED: feature 未在 ${relative(ROOT, join(ENGINE, 'cc.config.json'))} 声明（ccbuild 会静默忽略，产物与默认逐字节相同）: ${UNDECLARED.join(', ')}`);
+    console.error(`[build] 当前已声明 ${DECLARED.size} 个 feature unit；请先按官方原文登记，再构建该变体。`);
+    process.exit(1);
+}
 
 const args = process.argv.slice(2);
 const min = args.includes('--min');
@@ -35,7 +68,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     try {
     // 唯一临时目录：避免 emptyDir 对上一次产物做批量删除（本机 safe-delete shim 会拦截）。
     // 旧 tmp 目录清理失败时静默忽略（build/ 已 gitignore），不阻塞构建。
-    const tmpOut = join(ROOT, 'build', `.tmp-${min ? 'min' : 'dev'}-${Date.now()}`);
+    const tmpOut = join(OUT, `.tmp-${min ? 'min' : 'dev'}-${Date.now()}`);
     await ensureDir(tmpOut);
 
     console.log(`[build] cocosair moduleFormat=${moduleFormat} min=${min}`);
@@ -49,13 +82,13 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         compress: min,
         // V0.2 Task 10（L11）：dev 构建必须附带 source map，浏览器异常可定位 src/**/*.ts。
         sourceMap: true,
-        features: AIR_FEATURES,
+        features: FEATURES.length ? FEATURES : AIR_FEATURES,
         // Air 面向现代浏览器（ESM 产物）。不设 targets 时 ccbuild 的降级变换
         // 会把 `for (let ...)` 闭包转换为 _loop 函数，与 rollup scope 提升组合
         // 会产生 `_i is not defined` 的上游变换 bug（program-lib 布局合并路径）。
         targets: { chrome: '66' },
     });
-    if (!min && moduleFormat === 'esm') await withIncrementalCache(ROOT, build);
+    if (!min && moduleFormat === 'esm' && !VARIANT) await withIncrementalCache(ROOT, build);
     else await build();
     console.log(`[build] ccbuild done in ${((Date.now() - started) / 1000).toFixed(1)}s`);
 
@@ -69,7 +102,7 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
     for (const c of candidates) {
         const p = join(tmpOut, c);
         if (existsSync(p)) {
-            moveSync(p, join(ROOT, 'build', bundleName), { overwrite: true });
+            moveSync(p, join(OUT, bundleName), { overwrite: true });
             moved = true;
             break;
         }
@@ -87,28 +120,30 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
             map.file = bundleName;
             map.sources = map.sources.map((source) => {
                 if (isAbsolute(source) || /^[a-z]+:/i.test(source)) return source;
-                return relative(join(ROOT, 'build'), resolve(dirname(p), source)).replace(/\\/g, '/');
+                return relative(OUT, resolve(dirname(p), source)).replace(/\\/g, '/');
             });
-            fs.writeFileSync(join(ROOT, 'build', bundleName + '.map'), JSON.stringify(map));
+            fs.writeFileSync(join(OUT, bundleName + '.map'), JSON.stringify(map));
             // bundle 内 sourceMappingURL 指向 cc.js.map，需改写为最终产物名
-            const bundlePath = join(ROOT, 'build', bundleName);
+            const bundlePath = join(OUT, bundleName);
             const code = fs.readFileSync(bundlePath, 'utf8');
             const patched = code.replace(/\/\/# sourceMappingURL=.*?(\s*)$/, `//# sourceMappingURL=${bundleName}.map$1`);
             if (patched !== code) { fs.writeFileSync(bundlePath, patched); }
-            console.log('[build] output: build/' + bundleName + '.map (source map)');
+            console.log('[build] output: ' + relative(ROOT, join(OUT, bundleName + '.map')) + ' (source map)');
             break;
         }
     }
-    console.log('[build] output: build/' + bundleName);
+    console.log('[build] output: ' + relative(ROOT, join(OUT, bundleName)) + (VARIANT ? '  [variant]' : ''));
+    if (!VARIANT) {
     // R1（v051 review）：根 package.json 是 type:commonjs（构建工具链需要），
     // 而 build/ 产物是 ESM。随包在 build/ 内发出 {"type":"module"}，
     // Node 按最近 package.json 解析模块格式，tarball 才能真实 import。
-    fs.writeFileSync(join(ROOT, 'build', 'package.json'), JSON.stringify({ type: 'module' }, null, 2) + '\n');
-    console.log('[build] output: build/package.json (type: module)');
+    fs.writeFileSync(join(OUT, 'package.json'), JSON.stringify({ type: 'module' }, null, 2) + '\n');
+    console.log('[build] output: ' + relative(ROOT, join(OUT, 'package.json')) + ' (type: module)');
     // gltf-decoders 内是 CommonJS .js（draco3d 等）：最近 package.json 必须翻回 commonjs
-    fs.mkdirSync(join(ROOT, 'build', 'gltf-decoders'), { recursive: true });
-    fs.writeFileSync(join(ROOT, 'build', 'gltf-decoders', 'package.json'), JSON.stringify({ type: 'commonjs' }, null, 2) + '\n');
-    console.log('[build] output: build/gltf-decoders/package.json (type: commonjs)');
+    fs.mkdirSync(join(OUT, 'gltf-decoders'), { recursive: true });
+    fs.writeFileSync(join(OUT, 'gltf-decoders', 'package.json'), JSON.stringify({ type: 'commonjs' }, null, 2) + '\n');
+    console.log('[build] output: ' + relative(ROOT, OUT) + '/gltf-decoders/package.json (type: commonjs)');
+    }
     // F-83: 成功路径末尾回收中间目录（每次构建泄漏 9-11 MB 孤儿 map）；
     // 失败路径（上方 exit(1)）故意保留 tmpOut 以便诊断，且 build/.tmp-rollup-cache 是另一套持久缓存，不在此域内。
     try {

@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "bytesBefore": 52377,
+  "shaBefore": "616b097d99eeb9c3",
+  "bytesAfter": 54495,
+  "shaAfter": "ef94c2679cad656b",
+  "delta": 2118,
+  "insertedChars": 1171,
+  "secPerExampleEngine": "14.1",
+  "totalSec": 1130,
+  "legSec": [
+    269,
+    256,
+    325,
+    280
+  ],
+  "cells": 80
+}

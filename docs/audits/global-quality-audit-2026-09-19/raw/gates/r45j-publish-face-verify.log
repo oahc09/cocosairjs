@@ -1,0 +1,122 @@
+{
+  "checks": [
+    {
+      "name": "mark:docs/acceptance-report-v12.md",
+      "ok": true,
+      "detail": "134849B/a0906b6666b3b585，标识 r45j 命中 9 处"
+    },
+    {
+      "name": "mark:docs/v12-owner-decisions.md",
+      "ok": true,
+      "detail": "54495B/ef94c2679cad656b，标识 UPDATE-r45j 命中 1 处"
+    },
+    {
+      "name": "mark:docs/evidence/v12/v11chain-r45j/README.md",
+      "ok": true,
+      "detail": "11211B/fa0f805e1aed24b9，标识 v11chain-r45j 命中 6 处"
+    },
+    {
+      "name": "judge.converged",
+      "ok": true,
+      "detail": "hard 0/stale 0/attributed 4"
+    },
+    {
+      "name": "judge.currency",
+      "ok": true,
+      "detail": "52 例三引擎 candFp 全为当期交付指纹"
+    },
+    {
+      "name": "accept.contains:49/52",
+      "ok": true,
+      "detail": "验收报告需含现读数字"
+    },
+    {
+      "name": "accept.contains:51/52",
+      "ok": true,
+      "detail": "验收报告需含现读数字"
+    },
+    {
+      "name": "accept.contains:49/52",
+      "ok": true,
+      "detail": "验收报告需含现读数字"
+    },
+    {
+      "name": "accept.contains:9fa85f88b968d5f1",
+      "ok": true,
+      "detail": "验收报告需含现读数字"
+    },
+    {
+      "name": "accept.literal:29 例仍仅 chromium」自 ",
+      "ok": true,
+      "detail": "验收报告需含该现读/作废措辞"
+    },
+    {
+      "name": "accept.literal:「其余 29 例仅 chromium",
+      "ok": true,
+      "detail": "验收报告需含该现读/作废措辞"
+    },
+    {
+      "name": "accept.literal:49 例三引擎同绿",
+      "ok": true,
+      "detail": "验收报告需含该现读/作废措辞"
+    },
+    {
+      "name": "accept.literal:≈14.1 s/例/引擎",
+      "ok": true,
+      "detail": "验收报告需含该现读/作废措辞"
+    },
+    {
+      "name": "owner.stale-63-marked",
+      "ok": true,
+      "detail": "#15 的 63 s 上限口径须就地标注停止引用"
+    },
+    {
+      "name": "owner.cells",
+      "ok": true,
+      "detail": "#15 需含现读红格账 3 例 / 4 格"
+    },
+    {
+      "name": "f131.accounted",
+      "ok": true,
+      "detail": "smoke-30 的 ACCOUNTED 需含本批次目录键"
+    },
+    {
+      "name": "evidence.counts",
+      "ok": true,
+      "detail": "14 JSON / 90 记录 / 14 目录 / 90 PNG"
+    },
+    {
+      "name": "r45j-segments-clean",
+      "ok": true,
+      "detail": "{\"acceptTotal\":12,\"ownerTotal\":10,\"r45jSegAccept\":0,\"r45jSegOwner\":0,\"readme\":0}"
+    }
+  ],
+  "scratchLines": {
+    "acceptTotal": 12,
+    "ownerTotal": 10,
+    "r45jSegAccept": 0,
+    "r45jSegOwner": 0,
+    "readme": 0
+  },
+  "ok": true,
+  "summary": {
+    "accept": {
+      "bytes": 134849,
+      "sha16": "a0906b6666b3b585"
+    },
+    "owner": {
+      "bytes": 54495,
+      "sha16": "ef94c2679cad656b"
+    },
+    "readme": {
+      "bytes": 11211,
+      "sha16": "fa0f805e1aed24b9"
+    },
+    "judge": {
+      "hard": 0,
+      "stale": 0,
+      "attributed": 4,
+      "threeEnginePass": 49
+    }
+  }
+}

@@ -83,12 +83,14 @@ function bundleDebugSession (repo, esbuild) {
 }
 
 class BrowserRuntime {
-  constructor ({ viewport = { width: 480, height: 360 }, esbuild, repo, browserType } = {}) {
+  constructor ({ viewport = { width: 480, height: 360 }, esbuild, repo, browserType, browserLaunch } = {}) {
     if (!esbuild) { throw new Error('BrowserRuntime requires esbuild injection'); }
     if (!repo) { throw new Error('BrowserRuntime requires repo injection'); }
     this.esbuild = esbuild;
     this.REPO = repo;
     this.browserType = browserType || 'chromium';
+    // browserLaunch 由调用方显式给出时整体接管 executablePath/args（三引擎铺开用）。
+    this.browserLaunch = browserLaunch || null;
     this.viewport = viewport;
     this.generation = 0;
     this.pageErrors = [];
@@ -213,7 +215,9 @@ class BrowserRuntime {
     var pw = require('playwright');
     var launcher = pw[this.browserType] || pw.chromium;
     var launchOpts = { headless: true };
-    if (this.browserType === 'chromium') {
+    if (this.browserLaunch) {
+      Object.assign(launchOpts, this.browserLaunch);
+    } else if (this.browserType === 'chromium') {
       // chromium-1228 是已安装的旧版但可与当前 Playwright 版本配合使用
       launchOpts.executablePath = ['C:', 'Users', 'caosh', 'AppData', 'Local', 'ms-playwright', 'chromium-1228', 'chrome-win64', 'chrome.exe'].join('\\');
       launchOpts.args = ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'];

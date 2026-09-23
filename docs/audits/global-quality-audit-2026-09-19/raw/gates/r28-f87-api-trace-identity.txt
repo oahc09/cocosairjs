@@ -1,0 +1,59 @@
+$ F-87 取证原始输出（r28, 2026-09-21T23:44Z–23:52Z）
+$ 复现脚本：E:/AIProMax/cocosair-scratch/v12-logs/dbg-traced-ui.cjs（在仓库外，服务 ws-ui 暂存工作区 + /build/cocosair.module.js）
+$ 暂存工作区构造方式与 tools/verify/v11-examples-verify.cjs:prepareWorkspace 一致：
+$   apiTrace.writeTraceWorkspace(ws, apiTrace.claimedUnits(...)) + index.html importmap 把 "/build/cocosair.module.js" 换成 "./cocosair.traced.js"
+$ 诊断入口 main.js（ws-ui）：同一页面里同时 import 插桩模块（'cocosair'）与真实 bundle（'/build/cocosair.module.js'），
+$   对 Layout（被 claim ⇒ Proxy 包装）与 UITransform 比较 addComponent / getComponent / getComponents 的结果。
+
+---- 修复前（HEAD 版 tools/verify/api-trace.cjs，wrapExport 只有 construct/apply/get 计数）----
+$ node dbg-traced-ui.cjs
+{
+ "diag": {
+  "addedType": "Layout",
+  "ctorEqProxy": false,
+  "ctorEqReal": true,
+  "proxyEqReal": false,
+  "proxyName": "Layout",
+  "getComponentProxy": false,     <-- 插桩页里 getComponent(Layout) = null
+  "getComponentReal": true,       <-- 同一组件用真实类查得到
+  "instanceofReal": true,
+  "uiCountProxy": 0,              <-- getComponents(UITransform) 少报 1 个
+  "uiCountReal": 1,
+  "uiAddedByProxy": true,
+  "uiCountProxyAfter": 2,         <-- 示例的 "getComponent || addComponent" 守卫因此重复挂组件
+  "uiCountRealAfter": 2
+ }
+}
+[pageerror] TypeError: Cannot set properties of null (setting 'type')
+  → 抛点 examples/ui-components/main.js:  togglesNode.getComponent(Layout).type = Layout.Type.HORIZONTAL
+$ NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=ui-components
+FAIL ui-components ([browser-runtime] bench prelude failed: Error: window.__airApp not set by main.ts (benchmark contract))   # EXIT 1, attempts 2
+
+引擎侧比较分支（只读，未改）：
+  src/cocos/scene-graph/node.ts:297 Node._findComponent — if (cls._sealed) { comp.constructor === constructor } else { comp instanceof constructor }
+  Proxy 转发 get 所以 _sealed 读到 true ⇒ 走身份比较 ⇒ Proxy ≠ 原类 ⇒ 假报 null。
+
+---- 修复后（wrapExport 的 get 陷阱对 '_sealed' 返回 false，强制走 instanceof）----
+$ node --check tools/verify/api-trace.cjs && node tools/verify/api-trace.cjs --selftest
+SYNTAX_OK
+[api-trace] bundle exports: 574 | wrapper bytes: 8293
+[api-trace] selftest PASS (shape + alias/normalize semantics + generated ESM parses)
+$ node dbg-traced-ui.cjs
+{
+ "diag": {
+  "ctorEqProxy": false,
+  "proxyEqReal": false,
+  "getComponentProxy": true,      <-- 与真页面一致
+  "getComponentReal": true,
+  "uiCountProxy": 1,              <-- 与 uiCountReal 相同
+  "uiCountReal": 1,
+  "uiCountProxyAfter": 2,         <-- 这里 2 是诊断脚本故意重复 addComponent 的结果，非守卫误加
+  "uiCountRealAfter": 2
+ }
+}
+$ NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=ui-components
+PASS ui-components
+== Examples spec-driven verify: 1/1 PASS, 1 promoted / 0 demoted ==   # EXIT 0
+examples/ui-components/example.json promotion: verified 36 / attested 1 / units 37
+  唯一 attested = view（mechanism namespace，数据成员不可插桩，如实记 not-instrumentable）
+  apiProof: 36 executed（call/read 计数在案），expectationGaps 见证据文件

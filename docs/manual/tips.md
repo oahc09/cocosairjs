@@ -10,7 +10,7 @@
 WebGL 默认 `preserveDrawingBuffer=false`，在绘制回调之外调 `canvas.toDataURL()` 通常得到空白帧。
 
 本仓库实际可行的截图路是**外部抓帧**：验证器用 Playwright 对页面做 canvas-only 截图，落到 `docs/evidence/examples/<id>.png`
-（见 [验证工具](../tools/verify/manual-examples-verify.cjs)）。要在应用内截图，升级条件是 AIR 暴露 readback/截图 API 或允许配置 preserveDrawingBuffer。
+（见 [验证工具](../../tools/verify/manual-examples-verify.cjs)）。要在应用内截图，升级条件是 AIR 暴露 readback/截图 API 或允许配置 preserveDrawingBuffer。
 
 ## Prevent the Canvas Being Cleared 阻止画布被清除
 

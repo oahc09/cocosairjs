@@ -1,10 +1,10 @@
 {
-  "measuredAt": "2026-09-20T13:44:47.577Z",
+  "measuredAt": "2026-09-20T15:18:05.260Z",
   "status": "BLOCKED",
   "referenceGatePass": true,
   "catalogGatePass": true,
   "revision": {
-    "head": "9d6ac48a1697a91c7dcc7992e6e9652535d20e58",
+    "head": "8f5bc761809b9be68d4eac4200f3f73e4d22c6a7",
     "recorded": [
       "9d6ac48a1697a91c7dcc7992e6e9652535d20e58"
     ],
@@ -29,7 +29,38 @@
     "validatedCount": 30,
     "stableCount": 30
   },
-  "evidenceFailures": [],
+  "evidenceFailures": [
+    "R001: sourceHash mismatch",
+    "R002: sourceHash mismatch",
+    "R003: sourceHash mismatch",
+    "R004: sourceHash mismatch",
+    "R005: sourceHash mismatch",
+    "R006: sourceHash mismatch",
+    "R007: sourceHash mismatch",
+    "R008: sourceHash mismatch",
+    "R009: sourceHash mismatch",
+    "R010: sourceHash mismatch",
+    "R011: sourceHash mismatch",
+    "R012: sourceHash mismatch",
+    "R013: sourceHash mismatch",
+    "R014: sourceHash mismatch",
+    "R015: sourceHash mismatch",
+    "R016: sourceHash mismatch",
+    "R017: sourceHash mismatch",
+    "R018: sourceHash mismatch",
+    "R019: sourceHash mismatch",
+    "R020: sourceHash mismatch",
+    "R021: sourceHash mismatch",
+    "R022: sourceHash mismatch",
+    "R023: sourceHash mismatch",
+    "R024: sourceHash mismatch",
+    "R025: sourceHash mismatch",
+    "R026: sourceHash mismatch",
+    "R027: sourceHash mismatch",
+    "R028: sourceHash mismatch",
+    "R029: sourceHash mismatch",
+    "R030: sourceHash mismatch"
+  ],
   "coverageFailures": [],
   "tests": {
     "suites": 29,
@@ -38,6 +69,8 @@
     "success": false
   },
   "blockers": [
+    "运行证据与当前源码哈希不一致，需要重跑。",
+    "Recipe 完整场景证据未通过：R001: sourceHash mismatch；R002: sourceHash mismatch；R003: sourceHash mismatch；R004: sourceHash mismatch；R005: sourceHash mismatch；R006: sourceHash mismatch；R007: sourceHash mismatch；R008: sourceHash mismatch",
     "本轮 Jest 结果尚未通过或缺失。"
   ]
 }

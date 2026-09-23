@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-09-20T13:44:23.428Z",
-  "total": 45,
-  "frozen": 45,
+  "measuredAt": "2026-09-23T23:27:36.503Z",
+  "total": 57,
+  "frozen": 57,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -12,6 +12,11 @@
     },
     {
       "id": "anim-rotation",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "audio-basic",
       "specStatus": "frozen",
       "issues": []
     },
@@ -37,6 +42,11 @@
     },
     {
       "id": "camera-ortho",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "dragonbones-basic",
       "specStatus": "frozen",
       "issues": []
     },
@@ -153,9 +163,7 @@
     {
       "id": "mesh-sphere",
       "specStatus": "frozen",
-      "issues": [
-        "validation.functional validator \"not-a-real-validator\" is not a runtime validator"
-      ]
+      "issues": []
     },
     {
       "id": "mesh-torus",
@@ -174,6 +182,31 @@
     },
     {
       "id": "node-scale",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "particle-2d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-2d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-2d-collision",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-3d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "profiler-overlay",
       "specStatus": "frozen",
       "issues": []
     },
@@ -223,12 +256,37 @@
       "issues": []
     },
     {
+      "id": "tiledmap-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "transform",
       "specStatus": "frozen",
       "issues": []
     },
     {
       "id": "tween-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-layout",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "video-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "webview-basic",
       "specStatus": "frozen",
       "issues": []
     }

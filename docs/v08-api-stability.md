@@ -33,6 +33,27 @@
 | `tween` / `TweenSystem` | Tween | 补间系统 |
 | `AirApp.canvas`（readonly 属性） | Runtime | V0.5.1 新增 |
 
+## V1.2 增补面（r40 现读，全部暂记 Experimental）
+
+> 收录口径：同时满足 ①出现在默认发布产物导出面（`build/cocosair.module.d.ts`，3,082,360 B 可 grep 到声明），
+> ②被 `examples/**` 的 frozen spec 实际引用。二者缺一不列。
+> 定级依据（为什么不是 Stable）：LV12-15 的行为契约只在 `physics-builtin` 后端下取到证据，
+> 符号语义与后端耦合（`shape.worldObb/worldSphere/worldCapsule` 等只有 builtin 侧有实现）；
+> 且 builtin 3D 实测**不是真模拟器**（详见 `docs/v12-physics3d-notes.md` §1–§9）⇒ 只承诺签名与记账语义，
+> **不承诺仿真响应**。换后端前不升级。
+
+| API | 类别 | 说明 |
+|---|---|---|
+| `PhysicsSystem`（`instance` / `step` / `raycast*` / `sweep*` / `syncSceneToPhysics`） | Physics 3D | 单例构造点为 `constructAndRegister()`，`_instance` 在 `createAirApp()` 之后才存在 |
+| `RigidBody` / `ERigidBodyType` / `PhysicsGroup` | Physics 3D | 属性读回为组件记账（builtin 无写回通道） |
+| `Collider` / `BoxCollider` / `SphereCollider` / `CapsuleCollider` / `MeshCollider` | Physics 3D | `MeshCollider` 在 builtin 下永不进世界；`boundingSphere` 恒为默认球（F-109） |
+| `PhysicsMaterial` / `setDefaultPhysicsMaterial` | Physics 3D | Code First 下 `initDefaultMaterial()` 取不到 internal 资产 ⇒ cannon 侧需先注入默认材质（F-112） |
+| `PhysicsRayResult` | Physics 3D | 可自构造且默认即「未命中」形状 ⇒ 判定必须读返回值；`raycastClosest()` 返回 Boolean |
+| `selector`（`register` / `switchTo` / `backend` / `physicsWorld`） | Physics 3D | 运行时切换要求两个后端同在一个 bundle 内（变体构建见 `docs/17-baseline-comparison.md` §9.4） |
+
+未列入的 V1.2 批次面（不在默认发布类型面上，无可定级对象）：`gfx-webgpu`（D10，子图已移出类型核对与声明图）、
+后处理批（D11）、`box2d-wasm`（LV12-14 blocked）、bullet/physx（LV12-16 blocked，R8 资产不随快照分发）。
+
 ## Internal（不承诺稳定性）
 
 | API | 说明 |
