@@ -1,0 +1,24 @@
+# r45l 两臂负控（两臂均须：非零退出 + 工作树零改动）
+## 臂 A：写前锁给成 r45k 落盘前的旧值（当前真值 137,581/99634ab2ca09fe55 · 57,335/109001542c2d6da5）
+Error: 写前锁不匹配 docs/acceptance-report-v12.md：现读 137581/99634ab2ca09fe55 锁 134849/a0906b6666b3b585
+ARM_A_EXIT=1
+
+## 臂 B：锁给当期真值 ⇒ 六处锚点全部已应用 ⇒ 只能 SKIP，末了反空转守卫必须抛
+SKIP（已应用）: ⇒ 待批 #12 未闭。
+SKIP（已应用）: #18（api-coverage 口径）。
+SKIP（已应用）: 已记为 LV12-21 待补。
+SKIP（已应用）: ⇒ §12 取证层只存在于工作树
+SKIP（已应用）: 是从未 add 过。
+SKIP（已应用）: 需按 F-133 口径读。
+Error: 零插入＝空转，判据未生效
+ARM_B_EXIT=1
+
+## 两臂合跑后工作树（必须仍是 r45l 的 5 个路径、两份文档未被 NC 改动）
+M  docs/acceptance-report-v12.md
+A  docs/audits/global-quality-audit-2026-09-19/raw/gates/r45l-publish-face-update.cjs
+A  docs/audits/global-quality-audit-2026-09-19/raw/gates/r45l-publish-face-update.log
+M  docs/v12-owner-decisions.md
+?? docs/audits/global-quality-audit-2026-09-19/raw/gates/r45l-negctl.log
+## 文档 sha16 复算（与 r45l-publish-face-update.log 的写后值逐字节同）
+137581 99634ab2ca09fe55 docs/acceptance-report-v12.md
+57335 109001542c2d6da5 docs/v12-owner-decisions.md
