@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-23T01:35:32.558Z",
+  "generatedAt": "2026-09-24T13:25:21.920Z",
   "suites": [
     {
       "file": "test/smoke/smoke-01-bootstrap.test.ts",
@@ -349,11 +349,12 @@
     {
       "file": "test/smoke/smoke-29-examples-spec.test.ts",
       "tests": [
+        "V1.1 — Example Specification 门禁 F-132 正典发布证据只由绿跑写出（红跑零覆写）",
         "V1.1 — Example Specification 门禁 §11/§12 证据链符合性零 fail（spec-compliance-audit）",
         "V1.1 — Example Specification 门禁 §12 apiEvidence 行号无漂移（spec-evidence --check）",
         "V1.1 — Example Specification 门禁 §15 全部 example.json 达到 frozen 且规格零问题",
         "V1.1 — Example Specification 门禁 §23 files.json 只保留 Gallery 字段，规格实现细节不外溢",
-        "V1.1 — Example Specification 门禁 §3/§10 规格 validator id 必须真实存在（篡改可检测）"
+        "V1.1 — Example Specification 门禁 §3/§10 规格 validator id 必须真实存在（篡改可检测，负控零改共享树）"
       ]
     },
     {
@@ -426,8 +427,8 @@
   ],
   "totals": {
     "suites": 32,
-    "tests": 262,
-    "passed": 262,
+    "tests": 263,
+    "passed": 263,
     "failed": 0
   }
 }

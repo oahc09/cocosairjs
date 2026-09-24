@@ -19,6 +19,10 @@
   成员表不计为证据，evidence 绑定的 validator 必须在本示例 `ready/validation` 声明集合内
   （否则 DECLARE 补声明或 REBIND 改绑），`--check` 当前 0 drifted / 0 detached / 0 errors。
   冻结门禁 `spec-validate.cjs` 与回填器共用同一 `findSymbolLine` 实现，标准不松于回填器。
+- **写盘纪律（F-132）**：`spec-validate.cjs` 的发布证据 `docs/evidence/v11-spec-validate.json` **只由绿跑写出**——
+  任何 issue（含故意负控与 `--strict` 下的 draft）一律拒绝覆写正典并提示改落 `--out=<非正典路径>`；
+  `--out=` / `--examples-dir=` 供子集与仓库外副本运行（`--examples-dir` 缺 `--out` 直接 `EXIT=2`），
+  扫到 0 例判红（反空转）。消费端断言在 jest `smoke-29`，故负控不再污染共享工作树。
 
 ## 规格驱动验证器（v2）——验证器真正消费 Example Spec
 

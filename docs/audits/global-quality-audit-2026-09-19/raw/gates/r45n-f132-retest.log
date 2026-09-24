@@ -1,0 +1,40 @@
+# r45n F-132 收口复测回执（真树故意红态 ⇒ 正典逐字节未动）
+
+## 性质声明
+- 本跑动**确实写过真树一次**（`examples/mesh-sphere/example.json` 注入哨兵 ⇒ finally 逐字节还原，`restored.exact true`），
+  并在末尾跑了一次绿 `spec-validate`（⇒ `docs/evidence/v11-spec-validate.json` 的 `measuredAt` 被刷新，内容除该行外与 HEAD 逐字节同）。
+- 因此本文件**不是纯只读回执**：重跑会再次改写上述两个文件。判定用的红态臂（R1/R2）本身零写正典，这正是被测命题。
+- 脚本随本轮首入 `raw/gates/r45n-f132-retest.cjs`（与本目录同名副本逐字节同）。
+
+## stdout 原样（RUN_EXIT=0，本会话实跑取码）
+{
+  "canonBefore": "5311/98c3e5c8316beb50",
+  "specBefore": "7332/850069498848e625",
+  "R1": {
+    "exit": 1,
+    "hitF132": true,
+    "tail": "[spec-validate] [F-132] 57 examples / 1 issue(s) ⇒ 本轮判定红，拒绝覆写 docs\\evidence\\v11-spec-validate.json（红态报告请显式 --out=<非正典路径>）",
+    "canonAfter": "5311/98c3e5c8316beb50"
+  },
+  "R2": {
+    "exit": 1,
+    "hitF132": true,
+    "canonAfter": "5311/98c3e5c8316beb50"
+  },
+  "restored": {
+    "after": "7332/850069498848e625",
+    "exact": true
+  },
+  "canonFinal": "5311/98c3e5c8316beb50",
+  "verdict": {
+    "canonicalUntouched": true,
+    "r1Refused": true,
+    "r2Refused": true,
+    "treeRestored": true
+  },
+  "greenRun": {
+    "exit": 0,
+    "line": "[spec-validate] 57 examples: 57 frozen / 0 draft / 0 blocked → docs\\evidence\\v11-spec-validate.json",
+    "canonAfterGreen": "5311/a9a776c2272c3450"
+  }
+}

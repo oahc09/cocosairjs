@@ -9,18 +9,23 @@
  *   - §52 DevTools 边界：使用 DevToolsSession 单元的示例必须 requiresDevTools
  *   - §12 apiEvidence：source 文件存在、sourceLocation 行号上确能找到该 API symbol
  *
- * 执行：node tools/examples/spec-validate.cjs [--strict]
- *   --strict 时任何 specStatus != frozen 视为失败。
+ * 执行：node tools/examples/spec-validate.cjs [--strict] [--out=<path>] [--examples-dir=<path>]
+ *   --strict        任何 specStatus != frozen 视为失败。
+ *   --out=          报告落点（仓库相对或绝对）；默认写发布证据正典。
+ *   --examples-dir= 被校验的 examples 目录（负控/子集用）；必须与 --out= 同时给出。
  * 产出：docs/evidence/v11-spec-validate.json
+ *
+ * F-132 写盘纪律：发布证据正典**只由绿跑写出**。任何 issue（含故意负控、--strict 下的 draft）
+ * 一律不落正典，红态报告必须显式 --out= 到非正典路径。
  */
 const fs = require('fs');
 const path = require('path');
 const Module = require('module');
 
 const REPO = path.resolve(__dirname, '..', '..');
-const EXAMPLES_DIR = path.join(REPO, 'examples');
+const CANONICAL_EXAMPLES_DIR = path.join(REPO, 'examples');
 const INVENTORY_PATH = path.join(REPO, 'docs', 'example-api-inventory.json');
-const OUT_PATH = path.join(REPO, 'docs', 'evidence', 'v11-spec-validate.json');
+const CANONICAL_OUT = path.join(REPO, 'docs', 'evidence', 'v11-spec-validate.json');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
 
 function loadTs (file) {
@@ -51,9 +56,9 @@ const IN_UNITS = new Set([...INVENTORY_UNITS, ...DEVTOOLS_SESSION_UNITS]);
 // 否则「冻结门禁」比回填器更松，evidence 可以指向注释行仍算 frozen 合规。
 const { findSymbolLine, declaredValidatorSet } = require(path.join(__dirname, 'spec-evidence.cjs'));
 
-function validateExample (dirName, spec) {
+function validateExample (examplesDir, dirName, spec) {
   const issues = [];
-  const exampleDir = path.join(EXAMPLES_DIR, dirName);
+  const exampleDir = path.join(examplesDir, dirName);
   const needStr = (v, field) => { if (typeof v !== 'string' || !v.trim()) { issues.push(`${field} required`); } };
   const needArr = (v, field, min) => { if (!Array.isArray(v) || v.length < (min ?? 0)) { issues.push(`${field} must be array${min ? ' >= ' + min : ''}`); return []; } return v; };
 
@@ -269,31 +274,59 @@ function validateExample (dirName, spec) {
 function label2 (unit) { return unit.includes('.') ? 'member' : 'unit'; }
 
 (function main () {
-  const strict = process.argv.includes('--strict');
-  const dirs = fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
+  const argv = process.argv.slice(2);
+  const strict = argv.includes('--strict');
+  const flagValue = (name) => {
+    const prefix = `--${name}=`;
+    const hit = argv.find((a) => a.startsWith(prefix));
+    return hit === undefined ? undefined : hit.slice(prefix.length);
+  };
+  const outArg = flagValue('out');
+  const examplesArg = flagValue('examples-dir');
+  const examplesDir = path.resolve(REPO, examplesArg ?? 'examples');
+  const outPath = path.resolve(REPO, outArg ?? CANONICAL_OUT);
+  const outIsCanonical = path.relative(outPath, CANONICAL_OUT) === '';
+
+  if (examplesArg !== undefined && outArg === undefined) {
+    console.log('[spec-validate] --examples-dir 是子集/外部运行 ⇒ 必须同时给出 --out=<非正典路径>，不得写发布证据');
+    process.exitCode = 2; return;
+  }
+  if (!fs.existsSync(examplesDir)) {
+    console.log(`[spec-validate] --examples-dir 不存在：${examplesDir}`);
+    process.exitCode = 2; return;
+  }
+  const dirs = fs.readdirSync(examplesDir, { withFileTypes: true })
     .filter((e) => e.isDirectory() && e.name !== 'shared' && e.name !== 'node_modules')
     .map((e) => e.name)
     .sort();
   const report = { measuredAt: new Date().toISOString(), total: 0, frozen: 0, draft: 0, blocked: 0, examples: [] };
   let failed = false;
   for (const dir of dirs) {
-    const file = path.join(EXAMPLES_DIR, dir, 'example.json');
+    const file = path.join(examplesDir, dir, 'example.json');
     if (!fs.existsSync(file)) { continue; }
     report.total++;
     let spec;
     try { spec = JSON.parse(fs.readFileSync(file, 'utf8')); } catch (e) { report.examples.push({ id: dir, specStatus: 'invalid', issues: [`invalid JSON: ${e.message}`] }); failed = true; continue; }
-    const issues = validateExample(dir, spec);
+    const issues = validateExample(examplesDir, dir, spec);
     if (spec.specStatus === 'frozen') { report.frozen++; } else if (spec.specStatus === 'blocked') { report.blocked++; } else { report.draft++; }
     if (spec.specStatus === 'frozen' && issues.length > 0) { failed = true; }
     if (strict && spec.specStatus !== 'frozen') { issues.push('specStatus must be frozen (--strict)'); failed = true; }
     if (issues.length > 0) { failed = true; }
     report.examples.push({ id: dir, specStatus: spec.specStatus || 'missing', issues });
   }
-  fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
-  fs.writeFileSync(OUT_PATH, JSON.stringify(report, null, 2) + '\n');
+  // 反空转：扫到 0 例（目录拼错/空目录）不是「全绿」，否则空集合恒真会把「没校验任何东西」写成洁净证据。
+  if (report.total === 0) { failed = true; }
+  const issueCount = report.examples.reduce((n, e) => n + e.issues.length, 0);
   for (const ex of report.examples) {
     for (const issue of ex.issues) { console.log(`[${ex.id}] ${issue}`); }
   }
-  console.log(`[spec-validate] ${report.total} examples: ${report.frozen} frozen / ${report.draft} draft / ${report.blocked} blocked → ${path.relative(REPO, OUT_PATH)}`);
+  // F-132：正典发布证据只由绿跑写出。红跑（含故意负控）保留上一份洁净证据，绝不覆写。
+  if (outIsCanonical && failed) {
+    console.log(`[spec-validate] [F-132] ${report.total} examples / ${issueCount} issue(s) ⇒ 本轮判定红，拒绝覆写 ${path.relative(REPO, CANONICAL_OUT)}（红态报告请显式 --out=<非正典路径>）`);
+  } else {
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, JSON.stringify(report, null, 2) + '\n');
+    console.log(`[spec-validate] ${report.total} examples: ${report.frozen} frozen / ${report.draft} draft / ${report.blocked} blocked → ${path.relative(REPO, outPath)}`);
+  }
   process.exitCode = failed ? 1 : 0;
 })();

@@ -1,0 +1,25 @@
+PASS N0-injection-selfproof :: expect=镜像 applied 三段 true + 注入生效 :: EXIT=0 injection.dir=true applied={"findings":true,"index":true,"summary":true} 三段全变=true rawListed=6
+PASS N1-false-lock :: expect=EXIT!=0 + "写前锁不匹配" + 镜像逐字节不变 :: EXIT=1 命中锁层=true 镜像未动=true
+PASS N2-raw-missing-file :: expect=EXIT!=0 + "raw[] 引用了不在盘的件" :: EXIT=1 命中=true 镜像未动=true
+PASS N3-noncanonical-serialization :: expect=EXIT!=0 + "index 非规范序列化形态" :: EXIT=1 命中序列化层=true（非锁层：锁已按改后内容现算）镜像未动=true
+PASS N4-all-applied-throws :: expect=EXIT!=0 + "三处均已应用" + 二次跑镜像不变 :: EXIT=1 命中=true 镜像未动=true
+PASS N5-half-applied-detected :: expect=EXIT!=0 + "半应用态" :: EXIT=1 命中=true 镜像未动=true
+PASS N6-partial-reentrancy :: expect=applied.index=false 且行数 +1 不 +2 :: EXIT=0 applied={"findings":true,"index":false,"summary":true} 行数 84→84 重复行=1 findings=137
+PASS N7-relative-injection-rejected :: expect=EXIT!=0 + "必须是绝对路径" :: EXIT=1 命中=true
+{
+  "armsPassed": 8,
+  "armsTotal": 8,
+  "realTree": {
+    "before": {
+      "findings.jsonl": "428108/ac48d8b052f137d2",
+      "evidence-index.json": "96894/2a5b390d12b563e8",
+      "verification-summary.md": "227838/f9c45bf24df2170c"
+    },
+    "after": {
+      "findings.jsonl": "428108/ac48d8b052f137d2",
+      "evidence-index.json": "96894/2a5b390d12b563e8",
+      "verification-summary.md": "227838/f9c45bf24df2170c"
+    },
+    "untouched": true
+  }
+}

@@ -1389,6 +1389,27 @@
         "E:/AIProMax/cocosair-scratch/db-probe/（脚本运行副本与丢弃件，仓库外，引用勿当在册证据）"
       ],
       "measuredAt": "2026-09-24T00:29:48.939Z"
+    },
+    {
+      "id": "F132-CLOSURE-R45N",
+      "findings": [
+        "F-132",
+        "F-137"
+      ],
+      "createdBy": "r45n（2026-09-24；F-132 写盘纪律收口：spec-validate 正典只由绿跑写出 + smoke-29 五臂消费端断言 + 负控改仓库外副本；零改判定阈值/契约/源码/产物）",
+      "status": "ADMITTED — 代码与测试面：tools/examples/spec-validate.cjs（拒绝覆写 + --out= / --examples-dir= + total 0 判红）、test/smoke/smoke-29-examples-spec.test.ts（+1 用例 ⇒ jest 262 → 263）、docs/test-inventory.json、发布面六处就地当期化 + docs/v11-example-specs.md 新条款、两份 spec 正典证据由本轮绿跑自写（与 HEAD 只差 measuredAt 一行）。结论边界：LV12-20 仍 PARTIAL（唯一红仍是 verify:api-coverage ＝ 待批 #18），§2.1「3 处 NOT_RUN」只剩 2 处（行 1 采集、行 9 批次），未晋升任何证据、未跑矩阵、#15 / #21 仍待 owner 签。新开 F-137 ＝ 同形状余 5 写手（含姐妹工具 spec-compliance-audit），本轮登记未修。本轮未提交（提交需逐次授权）。",
+      "raw": [
+        "raw/gates/r45n-f132-retest.cjs",
+        "raw/gates/r45n-f132-retest.log",
+        "raw/gates/r45n-gates.log",
+        "raw/gates/r45n-ledger.cjs",
+        "raw/gates/r45n-addendum.md",
+        "raw/gates/r45n-ledger-nc.cjs"
+      ],
+      "scratch": [
+        "E:/AIProMax/cocosair-scratch/db-probe/（脚本运行副本与丢弃件，仓库外，引用勿当在册证据）"
+      ],
+      "measuredAt": "2026-09-24T13:51:52.866Z"
     }
   ],
   "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\". F-67. Counts go stale on every append — recompute with node -e instead of trusting a number written into this note."

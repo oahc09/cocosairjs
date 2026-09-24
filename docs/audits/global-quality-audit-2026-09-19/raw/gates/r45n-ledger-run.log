@@ -1,0 +1,100 @@
+# r45n 台账写盘回执（raw/gates/r45n-ledger-run.log）
+# 生成：2026-09-24T13:54:31.804Z　工作树：d29743c
+
+## 1. 一次性写盘判据（r45n-ledger.cjs）本次跑动回执原样
+{
+  "ok": true,
+  "applied": {
+    "findings": true,
+    "index": true,
+    "summary": true
+  },
+  "deltas": {
+    "findings": 9085,
+    "index": 1577,
+    "summary": 8909
+  },
+  "rawListed": 6,
+  "injection": {
+    "dir": false,
+    "dirUsed": "E:/AIProMax/github/cocosair.js/docs/audits/global-quality-audit-2026-09-19/"
+  },
+  "post": {
+    "findings": {
+      "bytes": 437193,
+      "sha16": "e7e8f850686782b2",
+      "lines": 137
+    },
+    "index": {
+      "bytes": 98471,
+      "sha16": "eca9e50beea2b3fc",
+      "rows": 84
+    },
+    "summary": {
+      "bytes": 236747,
+      "sha16": "bd858e275bb9c202"
+    }
+  }
+}
+
+## 2. 判据负控（r45n-ledger-nc.cjs，8 臂全在仓库外镜像目录）回执原样
+PASS N0-injection-selfproof :: expect=镜像 applied 三段 true + 注入生效 :: EXIT=0 injection.dir=true applied={"findings":true,"index":true,"summary":true} 三段全变=true rawListed=6
+PASS N1-false-lock :: expect=EXIT!=0 + "写前锁不匹配" + 镜像逐字节不变 :: EXIT=1 命中锁层=true 镜像未动=true
+PASS N2-raw-missing-file :: expect=EXIT!=0 + "raw[] 引用了不在盘的件" :: EXIT=1 命中=true 镜像未动=true
+PASS N3-noncanonical-serialization :: expect=EXIT!=0 + "index 非规范序列化形态" :: EXIT=1 命中序列化层=true（非锁层：锁已按改后内容现算）镜像未动=true
+PASS N4-all-applied-throws :: expect=EXIT!=0 + "三处均已应用" + 二次跑镜像不变 :: EXIT=1 命中=true 镜像未动=true
+PASS N5-half-applied-detected :: expect=EXIT!=0 + "半应用态" :: EXIT=1 命中=true 镜像未动=true
+PASS N6-partial-reentrancy :: expect=applied.index=false 且行数 +1 不 +2 :: EXIT=0 applied={"findings":true,"index":false,"summary":true} 行数 84→84 重复行=1 findings=137
+PASS N7-relative-injection-rejected :: expect=EXIT!=0 + "必须是绝对路径" :: EXIT=1 命中=true
+{
+  "armsPassed": 8,
+  "armsTotal": 8,
+  "realTree": {
+    "before": {
+      "findings.jsonl": "428108/ac48d8b052f137d2",
+      "evidence-index.json": "96894/2a5b390d12b563e8",
+      "verification-summary.md": "227838/f9c45bf24df2170c"
+    },
+    "after": {
+      "findings.jsonl": "428108/ac48d8b052f137d2",
+      "evidence-index.json": "96894/2a5b390d12b563e8",
+      "verification-summary.md": "227838/f9c45bf24df2170c"
+    },
+    "untouched": true
+  }
+}
+
+## 3. 写后台账三件独立只读复算（读文件重算，不复用判据自报值）
+  findings.jsonl: 437193 B / e7e8f850686782b2
+  evidence-index.json: 98471 B / eca9e50beea2b3fc
+  verification-summary.md: 236747 B / bd858e275bb9c202
+  findings 行数 137（写前 136 ⇒ +1＝F-137）；F-132 状态含 r45n true；F-137 在册 true；重复 findingId []（期望 []）
+  index 行数 84（写前 83 ⇒ +1）；末行 id F132-CLOSURE-R45N；该行 raw[] 逐件存在 true（6 件）
+  summary Addendum 段数 19（写前 18 ⇒ +1），末段为 r45n：true
+
+## 4. 写盘后门禁复跑（只读，逐条取子进程退出码）
+  verify:doc-refs: EXIT=0
+    > cocosair.js@0.1.0 verify:doc-refs | > node tools/v12/verify-doc-refs.cjs | {"ok":true,"docs":118,"refsChecked":1092,"skippedCounts":{"glob":54,"external":0,"outOfRepo":0},"baseline":{"entries":31,"hits":31},"unresolvedCount":0,"staleBaselineCount":0}
+  verify:v11-chain-face: EXIT=0
+    > cocosair.js@0.1.0 verify:v11-chain-face | > node tools/v12/verify-v11-chain-face.cjs | {"ok":true,"records":52,"runPass":"52/52","fps":"9fa85f88b968d5f1","apiProof":"verified:1004 attested:129 unproven:0","live":"9fa85f88b968d5f1==evidence","errorCount":0}
+  verify:test-inventory: EXIT=0
+        "passed": 263, |     "failed": 0 |   }, |   "failures": [], |   "output": null | }
+  npx jest --silent: EXIT=0
+    PASS test/smoke/smoke-30-v12-regression.test.ts (81.128 s) | PASS test/smoke/smoke-29-examples-spec.test.ts (15.329 s) | Test Suites: 32 passed, 32 total | Tests:       263 passed, 263 total | Snapshots:   0 total | Time:        101.447 s, estimated 926 s
+
+## 5. 归档件字节账（scratch 原件 ↔ raw/gates 在册副本）
+  r45n-f132-retest.cjs: 2856 B / b3fb0a8be098c594 ↔ 2856 B / b3fb0a8be098c594 ⇒ 逐字节等 true
+  r45n-f132-retest.log: 1643 B / 9d7864e1d5c8df73 ↔ 1643 B / 9d7864e1d5c8df73 ⇒ 逐字节等 true
+  r45n-gates.log: 2850 B / ef9a9c0d01e90330 ↔ 2850 B / ef9a9c0d01e90330 ⇒ 逐字节等 true
+  r45n-ledger.cjs: 19931 B / 2e0ad340bb381a1b ↔ 19931 B / 2e0ad340bb381a1b ⇒ 逐字节等 true
+  r45n-addendum.md: 8965 B / 9a22353212ae9cbb ↔ 8965 B / 9a22353212ae9cbb ⇒ 逐字节等 true
+  r45n-ledger-nc.cjs: 9544 B / 94cf641073cd4f28 ↔ 9544 B / 94cf641073cd4f28 ⇒ 逐字节等 true
+  r45n-ledger-nc.log: 1604 B / 56ac864657c1596b ↔ 1604 B / 56ac864657c1596b ⇒ 逐字节等 true
+  r45n-ledger-run.cjs: 4885 B / 74d79d1800440fe9 ↔ 4885 B / 74d79d1800440fe9 ⇒ 逐字节等 true
+  index 行 raw[] 六件逐件存在性已在第 3 节复核；r45n-ledger-run.cjs 与 r45n-ledger-run.log 是本轮运行脚本/回执 ⇒ 不入 raw[]。
+
+## 6. 本回执自身
+  本文件（r45n-ledger-run.log）由本次写盘之后的跑动产生 ⇒ 刻意不列入本轮 index 行 raw[]；第 2 节的负控回执 r45n-ledger-nc.log 同理由写盘前落 raw/gates/ 归档，但也不入 raw[]（判据要求 raw[] 只列「写盘前已在盘且与本轮结论直接相关」的件；两份运行回执在 index 行的 status 文本与本回执里互引）。
+
+## 7. 写盘后自我更正补记
+  ⑤ 写盘前的口头播报把 raw/gates/r45n-ledger-nc.cjs 的字节数复述成 9449，现读 9544（sha16 94cf641073cd4f28 两处一致 ⇒ 只是复述错数，副本没错）。该数字未进入任何在册件，在册字节账以本回执第 5 节现读为准（陷阱 39：数字一律现读，别凭记忆写）。
