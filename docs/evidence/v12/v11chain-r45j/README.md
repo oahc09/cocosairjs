@@ -56,7 +56,7 @@ done; done
 | firefox | 52 | 51 | 1 | 1004 / 129 / 0 | `pilot12-r45i` + 本目录 3 份 |
 | webkit | 52 | 49 | 3 | 999 / 130 / 4 | `pilot12-r45i` + 本目录 3 份 |
 
-- **三引擎同时 PASS 的例数：49 / 52。**
+- **三引擎同时 PASS 的例数：49 / 52。** **UPDATE-r45m**：49 是「按 r45j 当时在册 4 格红」算出的轮次快照，其中 2 格（mesh-sphere × firefox/webkit）经重采确认为注入伪影 ⇒ 「以干净声明面重算」口径为 **50 / 52**（余 `webkit/audio-basic`＝F-100、`webkit/video-basic`＝F-135）。引用 49 时须同时说明口径，原文保留不删。
 - firefox 的 apiProof 合计与 chromium **逐字段相等**（1004/129/0）：firefox 侧唯一的红来自工作树被并行会话注入的假 validator，不是引擎差异。
 - 判据机读输出（`hardCount:0 staleCount:0 attributedCount:4`）与源码：`docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-reconcile-k.{json,cjs}`。
 
@@ -64,7 +64,7 @@ done; done
 
 | 格 | 在册依据 | 归因与现读前提 |
 |---|---|---|
-| `firefox/mesh-sphere`、`webkit/mesh-sphere` | 并行会话在工作树 `examples/mesh-sphere/example.json` 注入的假 validator（F-132 写盘语义的连带） | 非引擎差异。判据每轮现读该文件是否仍含 `not-a-real-validator`，并比对 `specFp`/`srcFp` 与正典**确实不同**（相同即判归因过期）。本仓库不代他人撤除该注入。 |
+| `firefox/mesh-sphere`、`webkit/mesh-sphere` | 并行会话在工作树 `examples/mesh-sphere/example.json` 注入的假 validator（F-132 写盘语义的连带） | 非引擎差异。判据每轮现读该文件是否仍含 `not-a-real-validator`，并比对 `specFp`/`srcFp` 与正典**确实不同**（相同即判归因过期）。本仓库不代他人撤除该注入。 **UPDATE-r45m（2026-09-24）：该活体前提已失效 ⇒ 本行归因过期，两格已重采结案（原文保留不删）。** r45k 提交（`f2acf3e`）把干净声明面固化进 HEAD，本批次判据现读自报 `hardCount:0 staleCount:2 / EXIT=1`（`docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-r45j-judge-rerun.log`）；重采结果与判据见 `docs/evidence/v12/mesh-sphere-r45m/README.md`。 |
 | `webkit/audio-basic` | 在册 **F-100** | 跨链显现。3 次独立复跑 **0 PASS / 3 FAIL**、去重失败签名 **1 种** ⇒ STRUCTURAL，据此排除「释放竞态」解释；`unproven` 集合精确等于 `AudioPCMDataView` / `AudioPCMDataView.getData` / `AudioSource.playOneShot`。 |
 | `webkit/video-basic` | **F-135** | 间歇：5 次复跑 **2 PASS / 3 FAIL**、失败签名恒定 1 种。P3 播控段调用计数现算显示序列确实停在 `pause()` 之后、`resume()` 之前；firefox 同例同链全绿、chromium 正典全绿 ⇒ 只在 webkit。 |
 

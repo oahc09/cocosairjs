@@ -1,0 +1,429 @@
+{
+  "measuredAt": "2026-09-24T00:03:29.318Z",
+  "runner": "tools/verify/v11-examples-verify.cjs",
+  "browser": "webkit",
+  "mode": "spec-driven-v3",
+  "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
+  "candidateFingerprint": "9fa85f88b968d5f1",
+  "apiProofTotals": {
+    "verified": 18,
+    "attested": 0,
+    "unproven": 0
+  },
+  "total": 1,
+  "pass": 1,
+  "fail": 0,
+  "partial": true,
+  "completed": true,
+  "subset": [
+    "mesh-sphere"
+  ],
+  "runPass": 1,
+  "runTotal": 1,
+  "results": [
+    {
+      "id": "mesh-sphere",
+      "result": "PASS",
+      "specFingerprint": "c0d64a28c555",
+      "sourceFingerprint": "cb85b55b88591609",
+      "candidateFingerprint": "9fa85f88b968d5f1",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 574,
+        "unitCount": 18,
+        "bytes": 45244,
+        "hash": "ef4b8b668c322574",
+        "notes": [],
+        "observed": 18,
+        "total": 18
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 12,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Component",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 3,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 10,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 6,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 26,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 26,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 16,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 211,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.sphere",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "expectationGaps": {
+        "transform-equals": {
+          "compared": 3,
+          "graph": 3,
+          "missing": []
+        },
+        "material-property": {
+          "compared": 1,
+          "graph": 3,
+          "missing": [
+            "Main Camera",
+            "Main Light"
+          ]
+        },
+        "asset-loaded": {
+          "paths": 0,
+          "specAssets": 0,
+          "kinds": 0
+        }
+      },
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "no-runtime-error",
+          "material-property",
+          "transform-equals"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "sphere=builtin-standard{mainColor} | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0492"
+        }
+      ],
+      "artifact": {
+        "path": "docs/evidence/v12/mesh-sphere-r45m/webkit-mesh-sphere/mesh-sphere.png",
+        "bytes": 5702,
+        "hash": "fd7876d36e265dd3"
+      },
+      "assetDigests": [],
+      "nodeCount": 0,
+      "errors": []
+    }
+  ]
+}

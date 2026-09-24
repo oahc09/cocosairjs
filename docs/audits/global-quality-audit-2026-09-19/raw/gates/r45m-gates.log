@@ -1,0 +1,30 @@
+# r45m 门禁现读（2026-09-24T00:15:27Z 起）
+=== npm run verify:doc-refs ===
+
+> cocosair.js@0.1.0 verify:doc-refs
+> node tools/v12/verify-doc-refs.cjs
+
+{"ok":true,"docs":118,"refsChecked":1089,"skippedCounts":{"glob":54,"external":0,"outOfRepo":0},"baseline":{"entries":31,"hits":31},"unresolvedCount":0,"staleBaselineCount":0}
+EXIT_verify:doc-refs=0
+=== npm run verify:v11-chain-face ===
+
+> cocosair.js@0.1.0 verify:v11-chain-face
+> node tools/v12/verify-v11-chain-face.cjs
+
+{"ok":true,"records":52,"runPass":"52/52","fps":"9fa85f88b968d5f1","apiProof":"verified:1004 attested:129 unproven:0","live":"9fa85f88b968d5f1==evidence","errorCount":0}
+EXIT_verify:v11-chain-face=0
+=== npm run verify:consumer ===
+
+> cocosair.js@0.1.0 verify:consumer
+> node tools/verify/consumer-acceptance.cjs
+
+[t1] published-artifacts: 4 markers x 2 bundles, 0 fail
+[t1] tarball: cocosair.js-0.1.0.tgz (10364476 bytes)
+{
+  "ok": false,
+  "failures": [
+    "README links to missing packaged file: docs/manual/index.md"
+  ],
+  "exportCount": 574
+}
+EXIT_verify:consumer=1

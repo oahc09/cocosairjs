@@ -1355,6 +1355,40 @@
       ],
       "result": "LV12-01 的 V1.1 链三引擎取证面铺满（52 例 × 三引擎，49/52 同绿，红格逐个归因 + 活体现读前提）；配套三条 runner/示例缺陷入册（F-133/134/135）；F-131 目录对账门禁由红转绿；发布面三处当期化并复跑四条相关门禁",
       "note": "本格只主张「这 52 例今天确实在三引擎上各跑过、证据互相自洽且与当期交付字节同货币」，不主张晋升。台账链：上一行 R45I 的写后值 = 本行写前锁（85535 B / 4a84f7235406364e / 81 行）⇒ 本行写盘后的当期值一律现读（陷阱 39：本行不得写自身终值）。"
+    },
+    {
+      "id": "MESHSPHERE-RECAPTURE-R45M",
+      "findings": [
+        "F-136",
+        "F-132",
+        "F-133",
+        "F-100",
+        "F-135",
+        "F-85"
+      ],
+      "createdBy": "r45m（2026-09-24 00:01–00:2xZ；LV12-01 待批 #15 的 4 格红里 mesh-sphere 两格重采收口 + 一处悬空待批编号 F-136 补行，零改判定阈值/契约/源码/产物）",
+      "status": "ADMITTED — 新证据目录 docs/evidence/v12/mesh-sphere-r45m/（含自带 README）+ 两份判据与负控原件已落工作树（未提交，提交需授权）。结论边界：两格经重采确认为注入伪影（firefox/webkit 各 1/1 PASS 且与正典逐字段等），三引擎事实口径由 49/52 变为「以干净声明面重算 50/52」；LV12-01 第三格仍不翻绿（非正典 ≠ 晋升），#15 / 新补的 #21 仍待 owner 签",
+      "raw": [
+        "raw/gates/r45m-recapture-batch.sh",
+        "raw/gates/r45m-firefox-mesh-sphere.log",
+        "raw/gates/r45m-webkit-mesh-sphere.log",
+        "raw/gates/r45m-r45j-judge-rerun.log",
+        "raw/gates/r45m-recapture-reconcile.cjs",
+        "raw/gates/r45m-recapture-reconcile.json",
+        "raw/gates/r45m-negctl.log",
+        "raw/gates/r45m-publish-face-update.cjs",
+        "raw/gates/r45m-publish-face-negctl.log",
+        "raw/gates/r45m-decision-ref-check.cjs",
+        "raw/gates/r45m-decision-ref-check.log",
+        "raw/gates/r45m-ledger-append.cjs",
+        "raw/gates/r45m-gates.log",
+        "raw/gates/r45m-jest.log",
+        "raw/gates/r45m-ledger2-index-summary.cjs"
+      ],
+      "scratch": [
+        "E:/AIProMax/cocosair-scratch/db-probe/（脚本运行副本与丢弃件，仓库外，引用勿当在册证据）"
+      ],
+      "measuredAt": "2026-09-24T00:29:48.939Z"
     }
   ],
   "rowShapesNote": "Two row shapes live in evidence[]: per-file rows carry \"path\"; per-experiment bundle rows carry {id, findings[], raw[], scratch} and no \"path\". F-67. Counts go stale on every append — recompute with node -e instead of trusting a number written into this note."

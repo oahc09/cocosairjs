@@ -1,0 +1,114 @@
+{
+  "ok": true,
+  "hardCount": 0,
+  "hard": [],
+  "expectCells": 2,
+  "cellsCount": 2,
+  "judgeInject": {
+    "r45mFilesArms": []
+  },
+  "declarationReadFrom": "E:/AIProMax/github/cocosair.js/examples/mesh-sphere/example.json",
+  "canonicalRef": {
+    "result": "PASS",
+    "errors": "[]",
+    "specFp": "c0d64a28c555",
+    "srcFp": "cb85b55b88591609",
+    "candFp": "9fa85f88b968d5f1",
+    "verified": 18,
+    "attested": 0,
+    "unproven": 0,
+    "other": 0,
+    "units": 18,
+    "gaps": "{\"transform-equals\":{\"compared\":3,\"graph\":3,\"missing\":[]},\"material-property\":{\"compared\":1,\"graph\":3,\"missing\":[\"Main Camera\",\"Main Light\"]},\"asset-loaded\":{\"paths\":0,\"specAssets\":0,\"kinds\":0}}",
+    "instr": "{\"name\":\"cocosair.traced.js\",\"exports\":574,\"unitCount\":18,\"bytes\":45244,\"hash\":\"ef4b8b668c322574\",\"notes\":[],\"observed\":18,\"total\":18}",
+    "shot": "docs/evidence/examples/mesh-sphere.png"
+  },
+  "recaptured": {
+    "firefox": {
+      "result": "PASS",
+      "errors": "[]",
+      "specFp": "c0d64a28c555",
+      "srcFp": "cb85b55b88591609",
+      "candFp": "9fa85f88b968d5f1",
+      "verified": 18,
+      "attested": 0,
+      "unproven": 0,
+      "other": 0,
+      "units": 18,
+      "gaps": "{\"transform-equals\":{\"compared\":3,\"graph\":3,\"missing\":[]},\"material-property\":{\"compared\":1,\"graph\":3,\"missing\":[\"Main Camera\",\"Main Light\"]},\"asset-loaded\":{\"paths\":0,\"specAssets\":0,\"kinds\":0}}",
+      "instr": "{\"name\":\"cocosair.traced.js\",\"exports\":574,\"unitCount\":18,\"bytes\":45244,\"hash\":\"ef4b8b668c322574\",\"notes\":[],\"observed\":18,\"total\":18}",
+      "shot": "docs/evidence/v12/mesh-sphere-r45m/firefox-mesh-sphere/mesh-sphere.png",
+      "shotOnDisk": "5903/9f4282940651516f"
+    },
+    "webkit": {
+      "result": "PASS",
+      "errors": "[]",
+      "specFp": "c0d64a28c555",
+      "srcFp": "cb85b55b88591609",
+      "candFp": "9fa85f88b968d5f1",
+      "verified": 18,
+      "attested": 0,
+      "unproven": 0,
+      "other": 0,
+      "units": 18,
+      "gaps": "{\"transform-equals\":{\"compared\":3,\"graph\":3,\"missing\":[]},\"material-property\":{\"compared\":1,\"graph\":3,\"missing\":[\"Main Camera\",\"Main Light\"]},\"asset-loaded\":{\"paths\":0,\"specAssets\":0,\"kinds\":0}}",
+      "instr": "{\"name\":\"cocosair.traced.js\",\"exports\":574,\"unitCount\":18,\"bytes\":45244,\"hash\":\"ef4b8b668c322574\",\"notes\":[],\"observed\":18,\"total\":18}",
+      "shot": "docs/evidence/v12/mesh-sphere-r45m/webkit-mesh-sphere/mesh-sphere.png",
+      "shotOnDisk": "5702/fd7876d36e265dd3"
+    }
+  },
+  "r45jPrecedent": {
+    "firefox": {
+      "result": "FAIL",
+      "specFp": "6a2bfacb3483",
+      "srcFp": "2a9939885f405ae4",
+      "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+    },
+    "webkit": {
+      "result": "FAIL",
+      "specFp": "6a2bfacb3483",
+      "srcFp": "2a9939885f405ae4",
+      "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+    }
+  },
+  "shotSet": {
+    "chromium": "11503/ee4484d24e073e5d",
+    "firefox": "5903/9f4282940651516f",
+    "webkit": "5702/fd7876d36e265dd3"
+  },
+  "locks": {
+    "docs/evidence/v11-examples-verified.json": {
+      "bytes": 631722,
+      "sha16": "49c81e5a1e4054e9",
+      "lock": "631722/49c81e5a1e4054e9"
+    },
+    "docs/evidence/examples/mesh-sphere.png": {
+      "bytes": 11503,
+      "sha16": "ee4484d24e073e5d",
+      "lock": "11503/ee4484d24e073e5d"
+    },
+    "examples/mesh-sphere/example.json": {
+      "bytes": 7332,
+      "sha16": "850069498848e625",
+      "lock": "7332/850069498848e625"
+    },
+    "examples/files.json": {
+      "bytes": 252932,
+      "sha16": "25df4eb37b607351",
+      "lock": "252932/25df4eb37b607351"
+    }
+  },
+  "notes": [
+    "锁成立（零回写）：docs/evidence/v11-examples-verified.json 631722B 49c81e5a1e4054e9",
+    "锁成立（零回写）：docs/evidence/examples/mesh-sphere.png 11503B ee4484d24e073e5d",
+    "锁成立（零回写）：examples/mesh-sphere/example.json 7332B 850069498848e625",
+    "锁成立（零回写）：examples/files.json 252932B 25df4eb37b607351",
+    "三引擎截图互异：{\"chromium\":\"11503/ee4484d24e073e5d\",\"firefox\":\"5903/9f4282940651516f\",\"webkit\":\"5702/fd7876d36e265dd3\"}",
+    "Δ 自证：r45j specFp=6a2bfacb3483 → 新捕获/正典 c0d64a28c555（srcFp 2a9939885f405ae4 → cb85b55b88591609）"
+  ],
+  "sources": {
+    "firefox": "docs/evidence/v12/mesh-sphere-r45m/v11-chain-firefox-mesh-sphere.json ⇒ E:/AIProMax/github/cocosair.js/docs/evidence/v12/mesh-sphere-r45m/v11-chain-firefox-mesh-sphere.json",
+    "webkit": "docs/evidence/v12/mesh-sphere-r45m/v11-chain-webkit-mesh-sphere.json ⇒ E:/AIProMax/github/cocosair.js/docs/evidence/v12/mesh-sphere-r45m/v11-chain-webkit-mesh-sphere.json",
+    "chromium": "docs/evidence/v11-examples-verified.json ⇒ E:/AIProMax/github/cocosair.js/docs/evidence/v11-examples-verified.json"
+  }
+}

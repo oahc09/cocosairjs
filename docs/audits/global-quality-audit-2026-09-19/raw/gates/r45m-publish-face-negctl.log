@@ -1,0 +1,29 @@
+# r45m 发布面插入脚本两臂负控（两臂均须：非零退出 + 三份文档零改动）
+## 臂 A：写前锁给成 r45m 落盘前的旧值（当期真值 61451/0f0f37a71ccffb03 · 139145/20abc8f0bd517fc9 · 11981/5dc1f8e456fbb797）
+## 实际给：owner 54495/ef94…（r45l 前像）、report 137581/99634…（r45m 前像）、README 11211/fa0f…（r45m 前像）
+E:\AIProMax\cocosair-scratch\db-probe\r45m-publish-face-update.cjs:41
+      throw new Error(`写前锁不匹配 ${e.file}：现读 ${buf.length}/${sha16(buf)} 锁 ${l.bytes}/${l.sha16}`);
+      ^
+
+Error: 写前锁不匹配 docs/v12-owner-decisions.md：现读 61451/0f0f37a71ccffb03 锁 54495/ef94c2679cad656b
+
+ARM_A_EXIT=1
+
+## 臂 B：锁给当期真值 ⇒ 五处锚点全部已应用 ⇒ 只能 SKIP，末了反空转守卫必须抛
+SKIP（已应用）: docs/v12-owner-decisions.md :: 锚点应固定为 `candidateFingerp
+SKIP（已应用）: docs/v12-owner-decisions.md :: （F-135 间歇，需连续 8 次全绿才可销案）
+SKIP（已应用）: docs/acceptance-report-v12.md :: 明细、逐文件字节/sha、只读复核配方 `doc
+SKIP（已应用）: docs/evidence/v12/v11chain-r45j/README.md :: 本仓库不代他人撤除该注入。
+SKIP（已应用）: docs/evidence/v12/v11chain-r45j/README.md :: - **三引擎同时 PASS 的例数：49 / 
+E:\AIProMax\cocosair-scratch\db-probe\r45m-publish-face-update.cjs:59
+if (applied === 0) throw new Error('零插入＝空转，判据未生效');
+                   ^
+
+Error: 零插入＝空转，判据未生效
+
+ARM_B_EXIT=1
+
+## 两臂合跑后三份文档 sha16（必须与臂 B 锁内值逐字节同 ⇒ NC 未改动发布面）
+61451 0f0f37a71ccffb03 docs/v12-owner-decisions.md
+139145 20abc8f0bd517fc9 docs/acceptance-report-v12.md
+11981 5dc1f8e456fbb797 docs/evidence/v12/v11chain-r45j/README.md

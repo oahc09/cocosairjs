@@ -1,0 +1,22 @@
+=== N0：注入自证（目标换成 scratch 副本 ⇒ 必须 EXIT=0、injection 三旗标 true、写盘落在副本） ===
+{"ok":true,"targets":{"index":"E:/AIProMax/cocosair-scratch/db-probe/r45m-ledger2-nc/a/index.json","summary":"E:/AIProMax/cocosair-scratch/db-probe/r45m-ledger2-nc/a/summary.md"},"injection":{"rawList":false,"index":true,"summary":true},"index":{"pre":95119,"delta":1775,"rows":{"before":82,"after":83},"applied":true},"summary":{"pre":222382,"delta":5157,"addBytes":5157},"rawListed":15}
+N0_EXIT=0
+=== N1：假锁 ⇒ 决定性层＝写前锁抛，且目标文件必须未动 ===
+Error: index 写前锁不匹配：现读 96894/0d2673d01b3f0e24 锁 1/deadbeefdeadbeef
+N1_EXIT=1  N1_锁不匹配臂 index 字节 before=96894/0d2673d01b3f0e24 after=96894/0d2673d01b3f0e24（须相等）
+=== N2：raw[] 引用缺件 ⇒ 锁给真值（避开共享前置短路），必须抛在盘校验 ===
+Error: raw[] 引用了不在盘的件：raw/gates/r45m-not-a-real-file.log
+N2_EXIT=1  N2_index=96894/0d2673d01b3f0e24（须与 N0 后同＝未再写）
+=== N3：index 非规范序列化（4 空格缩进副本 + 该副本真锁 ⇒ 必须抛「拒绝改写」） ===
+Error: index 非规范序列化形态 ⇒ 本轮拒绝改写
+N3_EXIT=1  N3_before=106388/28fa51fc72410ea0 after=106388/28fa51fc72410ea0（须相等＝抛则未写）
+=== N4：summary 已含 Addendum ⇒ 重入必须抛（不许两段叠加） ===
+Error: summary Addendum 已存在 ⇒ 本轮应整段跳过（重入未净），停手核对
+N4_EXIT=1  N4_before=227539/7326dfbc129216f0 after=227539/7326dfbc129216f0（须相等＝未叠加）
+=== N5：index 行已存在 + summary 干净 ⇒ 打印 SKIP、index 字节不变、只补 summary ===
+SKIP：index 行已存在
+{"ok":true,"targets":{"index":"E:/AIProMax/cocosair-scratch/db-probe/r45m-ledger2-nc/e/index.json","summary":"E:/AIProMax/cocosair-scratch/db-probe/r45m-ledger2-nc/e/summary.md"},"injection":{"rawList":false,"index":true,"summary":true},"index":{"pre":96894,"delta":0,"rows":{"before":83,"after":83},"applied":false,"note":"行已存在，本轮未写 index（盘上现读行数即 after）"},"summary":{"pre":222382,"delta":5157,"addBytes":5157},"rawListed":15}
+N5_EXIT=0  N5_index before=96894/0d2673d01b3f0e24 after=96894/0d2673d01b3f0e24（须相等＝不重复追加）
+=== 全部臂跑完后：仓库真实台账必须逐字节未动 ===
+index   95119/14afb04a5e98f89d（期望 95119/14afb04a5e98f89d）
+summary 222382/9eec4cc659367864（期望 222382/9eec4cc659367864）

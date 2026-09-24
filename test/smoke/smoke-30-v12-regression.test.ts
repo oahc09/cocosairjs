@@ -446,6 +446,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
                 'LV12-02-profiler-overlay': 'LV12-02 定型之前的早期手工捕获，与矩阵正典目录 profiler-overlay/ 重名不同物；保留不删，处置口径见 docs/v12-owner-decisions.md 待批 #13（删除 / 改名并入 / 原样保留，提案为改名并入）【r45h 同轮自我更正：原写「待批 #12」＝证据入库，编号引错】',
                 'pilot12-r45i': 'r45i 批次的 V1.1 规格驱动链 firefox/webkit 两腿捕获（待批 #15 选项 (a) 的 11 例可跑面，非正典、[skip-promote] 零回写），不是矩阵捕获；命令 / 三引擎对账 / 边界见 docs/evidence/v12/pilot12-r45i/README.md',
                 'v11chain-r45j': 'r45j 批次：V1.1 规格驱动链余下 41 例 × firefox/webkit（与 pilot12-r45i 合并成 52 例全量三引擎对账），非正典、[skip-promote] 零回写，不是矩阵捕获；命令原件 / 结果账 / 4 个红格归因 / F-133·F-134·F-135 在册缺陷见 docs/evidence/v12/v11chain-r45j/README.md，判据与 10 臂负控在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-reconcile-k.cjs 与同目录 r45j-negctl.cjs',
+                'mesh-sphere-r45m': 'r45m 批次：mesh-sphere × {firefox, webkit} 单例重采（r45j 那两格的归因前提——工作树注入的假 validator——已随 r45k 提交消失，由 r45j 自家判据现读自报 STALE），非正典、[skip-promote] 零回写、subset=["mesh-sphere"] 且 partial=true ⇒ 不得读成 52 例整批的一部分；口径 / 命令 / 成本订正 / 六臂负控见 docs/evidence/v12/mesh-sphere-r45m/README.md，判据在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-recapture-reconcile.cjs',
             };
             const dirs = readdirSync(EVIDENCE_DIR, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
             expect(dirs.filter((d) => !referenced.has(d) && !(d in ACCOUNTED))).toEqual([]);

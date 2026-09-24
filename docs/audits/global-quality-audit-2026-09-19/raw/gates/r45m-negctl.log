@@ -1,0 +1,186 @@
+# r45m 对账判据负控（六臂：1 阳性 + 5 篡改；每臂判「命中的那一层」，不看 EXIT≠0）
+# 首版四臂（raw/gates 未归档、原件 scratch r45m-negctl-raw.txt）作废：锁值被误给成篡改值 ⇒ 四臂全在同一处「写后锁」提前抛出，EXIT=1 齐但均为假阳性（陷阱 48）。
+# 归档时间 2026-09-24T00:10:59Z
+
+=== ARM POSITIVE（期望：POSITIVE=0 且其余各在自己的判定层为 1）===
+{
+ "ok": true,
+ "hardCount": 0,
+ "hard": [],
+ "cellsCount": 2,
+ "shotSet": {
+  "chromium": "11503/ee4484d24e073e5d",
+  "firefox": "5903/9f4282940651516f",
+  "webkit": "5702/fd7876d36e265dd3"
+ },
+ "precedent": {
+  "firefox": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  },
+  "webkit": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  }
+ },
+ "notes": [
+  "锁成立（零回写）：docs/evidence/v11-examples-verified.json 631722B 49c81e5a1e4054e9",
+  "锁成立（零回写）：docs/evidence/examples/mesh-sphere.png 11503B ee4484d24e073e5d",
+  "锁成立（零回写）：examples/mesh-sphere/example.json 7332B 850069498848e625",
+  "锁成立（零回写）：examples/files.json 252932B 25df4eb37b607351",
+  "三引擎截图互异：{\"chromium\":\"11503/ee4484d24e073e5d\",\"firefox\":\"5903/9f4282940651516f\",\"webkit\":\"5702/fd7876d36e265dd3\"}",
+  "Δ 自证：r45j specFp=6a2bfacb3483 → 新捕获/正典 c0d64a28c555（srcFp 2a9939885f405ae4 → cb85b55b88591609）"
+ ]
+}
+ARM_POSITIVE_EXIT=0
+
+=== ARM E-SENTINEL-RESTORED（期望：POSITIVE=0 且其余各在自己的判定层为 1）===
+{
+ "ok": false,
+ "hardCount": 1,
+ "hard": [
+  "声明面现读仍含 not-a-real-validator ⇒ 重采前提未成立，本轮结论无效（读自 E:\\AIProMax\\cocosair-scratch\\db-probe\\nc-decl-with-sentinel.json）"
+ ],
+ "cellsCount": 2,
+ "shotSet": {
+  "chromium": "11503/ee4484d24e073e5d",
+  "firefox": "5903/9f4282940651516f",
+  "webkit": "5702/fd7876d36e265dd3"
+ },
+ "precedent": {
+  "firefox": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  },
+  "webkit": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  }
+ },
+ "notes": [
+  "锁成立（零回写）：docs/evidence/v11-examples-verified.json 631722B 49c81e5a1e4054e9",
+  "锁成立（零回写）：docs/evidence/examples/mesh-sphere.png 11503B ee4484d24e073e5d",
+  "锁成立（零回写）：examples/mesh-sphere/example.json 7332B 850069498848e625",
+  "锁成立（零回写）：examples/files.json 252932B 25df4eb37b607351",
+  "三引擎截图互异：{\"chromium\":\"11503/ee4484d24e073e5d\",\"firefox\":\"5903/9f4282940651516f\",\"webkit\":\"5702/fd7876d36e265dd3\"}",
+  "Δ 自证：r45j specFp=6a2bfacb3483 → 新捕获/正典 c0d64a28c555（srcFp 2a9939885f405ae4 → cb85b55b88591609）"
+ ]
+}
+ARM_E-SENTINEL-RESTORED_EXIT=1
+
+=== ARM A2-OLD-FAIL-RECORD（期望：POSITIVE=0 且其余各在自己的判定层为 1）===
+{
+ "ok": false,
+ "hardCount": 9,
+ "hard": [
+  "firefox 批次 runPass/runTotal=18/19，本判据只针对单例补采",
+  "firefox subset=[\"mesh-cylinder\",\"mesh-multi-material\",\"mesh-plane\",\"mesh-sphere\",\"node-active\",\"node-hierarchy\",\"node-scale\",\"particle-2d-basic\",\"physics-2d-basic\",\"physics-2d-co
+  "firefox/mesh-sphere 字段 result 与正典不符：firefox=FAIL cc=PASS",
+  "firefox/mesh-sphere 字段 errors 与正典不符：firefox=[\"not-a-real-validator: declared in Example Spec but no executor ran it\"] cc=[]",
+  "firefox/mesh-sphere 字段 specFp 与正典不符：firefox=6a2bfacb3483 cc=c0d64a28c555",
+  "firefox/mesh-sphere 字段 srcFp 与正典不符：firefox=2a9939885f405ae4 cc=cb85b55b88591609",
+  "firefox/mesh-sphere result=FAIL ⇒ 归因过期后仍红，需按引擎差异新立案",
+  "firefox/mesh-sphere 产物失真：盘 5841/40e8a58b7f262d65 != 记录 5893/597e1370bb676962",
+  "firefox 新捕获 specFp 与正典不等（上面 ③ 已报，此处不重复计数）"
+ ],
+ "cellsCount": 2,
+ "shotSet": {
+  "chromium": "11503/ee4484d24e073e5d",
+  "firefox": "5841/40e8a58b7f262d65",
+  "webkit": "5702/fd7876d36e265dd3"
+ },
+ "precedent": {
+  "firefox": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  },
+  "webkit": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  }
+ },
+ "notes": [
+  "锁成立（零回写）：docs/evidence/v11-examples-verified.json 631722B 49c81e5a1e4054e9",
+  "锁成立（零回写）：docs/evidence/examples/mesh-sphere.png 11503B ee4484d24e073e5d",
+  "锁成立（零回写）：examples/mesh-sphere/example.json 7332B 850069498848e625",
+  "锁成立（零回写）：examples/files.json 252932B 25df4eb37b607351",
+  "三引擎截图互异：{\"chromium\":\"11503/ee4484d24e073e5d\",\"firefox\":\"5841/40e8a58b7f262d65\",\"webkit\":\"5702/fd7876d36e265dd3\"}",
+  "Δ 自证：r45j specFp=6a2bfacb3483 → 新捕获/正典 c0d64a28c555（srcFp 2a9939885f405ae4 → cb85b55b88591609）"
+ ]
+}
+ARM_A2-OLD-FAIL-RECORD_EXIT=1
+
+=== ARM B-TAMPERED-LOCK（期望：POSITIVE=0 且其余各在自己的判定层为 1）===
+E:\AIProMax\github\cocosair.js\docs\audits\global-quality-audit-2026-09-19\raw\gates\r45m-recapture-reconcile.cjs:60
+
+Error: 写后锁不匹配 docs/evidence/examples/mesh-sphere.png：现读 11503/ee4484d24e073e5d 锁 11503/ee4482940651516f
+
+ARM_B-TAMPERED-LOCK_EXIT=1
+
+=== ARM C-WRONG-ENGINE（期望：POSITIVE=0 且其余各在自己的判定层为 1）===
+{
+ "ok": false,
+ "hardCount": 2,
+ "hard": [
+  "webkit 批次 browser=firefox 与引擎不符",
+  "三引擎截图字节账存在相同：{\"chromium\":\"11503/ee4484d24e073e5d\",\"firefox\":\"5903/9f4282940651516f\",\"webkit\":\"5903/9f4282940651516f\"} ⇒ 捕获可能未换引擎"
+ ],
+ "cellsCount": 2,
+ "shotSet": {
+  "chromium": "11503/ee4484d24e073e5d",
+  "firefox": "5903/9f4282940651516f",
+  "webkit": "5903/9f4282940651516f"
+ },
+ "precedent": {
+  "firefox": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  },
+  "webkit": {
+   "result": "FAIL",
+   "specFp": "6a2bfacb3483",
+   "srcFp": "2a9939885f405ae4",
+   "errors": "[\"not-a-real-validator: declared in Example Spec but no executor ran it\"]"
+  }
+ },
+ "notes": [
+  "锁成立（零回写）：docs/evidence/v11-examples-verified.json 631722B 49c81e5a1e4054e9",
+  "锁成立（零回写）：docs/evidence/examples/mesh-sphere.png 11503B ee4484d24e073e5d",
+  "锁成立（零回写）：examples/mesh-sphere/example.json 7332B 850069498848e625",
+  "锁成立（零回写）：examples/files.json 252932B 25df4eb37b607351",
+  "三引擎截图互异：{\"chromium\":\"11503/ee4484d24e073e5d\",\"firefox\":\"5903/9f4282940651516f\",\"webkit\":\"5903/9f4282940651516f\"}",
+  "Δ 自证：r45j specFp=6a2bfacb3483 → 新捕获/正典 c0d64a28c555（srcFp 2a9939885f405ae4 → cb85b55b88591609）"
+ ]
+}
+ARM_C-WRONG-ENGINE_EXIT=1
+
+=== ARM D-EMPTY-CELLS（期望：POSITIVE=0 且其余各在自己的判定层为 1）===
+E:\AIProMax\github\cocosair.js\docs\audits\global-quality-audit-2026-09-19\raw\gates\r45m-recapture-reconcile.cjs:132
+  ^
+
+Error: 参与对账的格 1 != 2 ⇒ 判据空转
+
+ARM_D-EMPTY-CELLS_EXIT=1
+
+=== 六臂合跑后工作树（判据只读 ⇒ 不得出现四份锁文件的 M）===
+?? docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-firefox-mesh-sphere.log
+?? docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-negctl.log
+?? docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-r45j-judge-rerun.log
+?? docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-recapture-reconcile.cjs
+?? docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-recapture-reconcile.json
+?? docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-webkit-mesh-sphere.log
+?? docs/evidence/v12/mesh-sphere-r45m/
