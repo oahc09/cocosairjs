@@ -1,0 +1,5 @@
+
+> cocosair.js@0.1.0 verify:v12-custom-face
+> node tools/v12/verify-custom-export-face.cjs
+
+{"ok":true,"faces":2,"dirs":"cocos/rendering/post-process:34/34 cocos/rendering/custom:25/25","featureUnits":2,"defaultAirFeatures":27,"errorCount":0}

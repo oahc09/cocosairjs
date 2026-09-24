@@ -25,6 +25,7 @@
   "build/gltf-decoders/",
   "docs/*.md",
   "docs/*.json",
+  "docs/manual/",
   "README.md",
   "LICENSE",
   "licenses/",

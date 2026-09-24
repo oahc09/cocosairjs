@@ -67,3 +67,11 @@ console.log(JSON.stringify({files:fl.length,same,diff}));"
 ```
 
 日志与快照：`E:/AIProMax/cocosair-scratch/pg-probe/`（本轮 r44 目录）。
+
+## §结案（r46，2026-09-24，owner-decisions #10=(a)、#9 并入）
+
+Owner 批复按计划书自带默认 **D8** 结案：box2d-wasm / bullet / physx（及同因的 spine-wasm、webgpu glslang/twgsl、meshopt）
+维持「代码回归 + 选择器可达 + 降级路径可测」= **部分通过、显著标注、不阻塞 Gate**；从官方 npm/CDN 引入 wasm 资产的 (b) 路线**不执行**。
+计划书 D3 行「来源 = @cocos/box2d 包内资产」的前提（`@cocos/box2d@1.0.2` 包内 `.wasm` 计数为 0）已由本文 §2 实测评证为假，
+更正留痕见 `ai/` 计划书 §15 D3 行 r46 注。asm.js 兜底分支已由 `test/smoke/smoke-32-wasm-fallback.test.ts`（r45d，6 用例）钉住；
+A6 解禁触发器（`verify:v12-backends`）保持有效。

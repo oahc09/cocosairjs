@@ -83,7 +83,7 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 | Spine runtime（`spine-core.js`） | `src/cocos/spine/lib/` | **Spine Runtimes License Agreement 2019-05-01**（Esoteric Software LLC） | `licenses/LICENSE_spine.txt`（= 上游 `licenses/LICENSE_spine.txt`） | 默认 bundle 内嵌 |
 | DragonBonesJS（`@cocos/dragonbones-js@1.0.2`） | `src/node_modules/@cocos/dragonbones-js/` | MIT（c) 2012-2016 DragonBones team | `licenses/LICENSE_DragonBones.txt` | 默认 bundle 内嵌 |
 | Box2D（`@cocos/box2d@1.0.2`） | `src/node_modules/@cocos/box2d/` | MIT（c) 2019 Erin Catto | `licenses/LICENSE_box2d.txt` | 默认 bundle 内嵌（2D 默认后端） |
-| cannon.js（`@cocos/cannon@1.2.8`） | `src/node_modules/@cocos/cannon/` | MIT（c) 2015 cannon.js Authors | `licenses/LICENSE_cannon.txt` | 仅 AIR_FEATURES 变体（默认 3D 后端是 builtin） |
+| cannon.js（`@cocos/cannon@1.2.8`） | `src/node_modules/@cocos/cannon/` | MIT（c) 2015 cannon.js Authors | `licenses/LICENSE_cannon.txt` | 默认 bundle 内嵌（r46，#8(a)：交付期 3D 后端 builtin+cannon 双编入，默认仍 builtin） |
 | zlib.js（`src/external/compression/zlib.min.js`） | 上游原文 | MIT（imaya/zlib.js） | `licenses/LICENSE_zlibjs.txt` | 默认 bundle 内嵌 |
 | notepack.io（`src/external/deserialize/`） | 上游原文 | MIT（c) 2014 Ion Drive Software Ltd. | `licenses/LICENSE_notepack.io.txt` | 默认 bundle 内嵌 |
 | `@cocos/engine-pal@1.0.4` | `src/pal/**` | **UNLICENSED**（见 §2） | 无（来源包未附文本） | 默认 bundle 内嵌 |

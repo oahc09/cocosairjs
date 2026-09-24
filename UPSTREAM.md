@@ -144,6 +144,31 @@
   `verify:v12-custom-face`（LV12-17「custom 导出面一致」半项：两个 `src/exports/custom-pipeline*.ts` 与上游逐字节同、
   `cocos/rendering/post-process` 34/34 与 `cocos/rendering/custom` 25/26 逐字节同且逐张登记在 `docs/upstream-file-map.json`）。
 
+- **UPDATE-r46（2026-09-24，Deviation-04 / Deviation-05 结案注记）**：owner 批复 #7=(b)、#14=(a)、#10=(a)（见 `docs/v12-owner-decisions.md` §4）
+  ⇒ 两个 Deviation 的「待确认」升级为**已批复结案**：gfx-webgpu 维持「三浏览器回退探测证据」交付档（firefox/webkit 探测腿 r46 补齐）；
+  三个 wasm 后端维持「已抽取、未接线、暂不类型核对」豁免（#8(a) 只把 builtin + cannon 接进默认集，不触及本豁免面）；A6 解禁触发器保持有效。
+
+## Deviation-06: D9 残留差集显式豁免（V1.2 批次 F-3 收口 / owner-decisions #1–#4）—— **豁免登记（已批复 2026-09-24）**
+
+Owner 批复「按照建议执行，确保最优」，`docs/v12-d9-residual-triage.md` 全部 14 项残留按**文件**口径显式豁免，不纳入 V1.2：
+
+- **A 组（7 个 `exports/*.ts` 入口门面）**：`affine-transform` / `rich-text` / `ui-skew` / `light-probe` / `xr` / `particle` / `vendor-google`。
+  理由链：实现均在树内（vendor-google 除外，另含第三方 Google Cast SDK 许可面）；各差 1–26 行 re-export 门面；
+  纳入即改产物字节 ⇒ 触发全量证据重采；xr 在 headless 三引擎矩阵下不可取证。
+- **B 组（`cocos/particle/animator/optimized-curve.ts`）**：3D 粒子半纳入态的最后 1 个实现文件，随 A-7 门面同批豁免。
+- **C 组（terrain，5 文件 / 3334 行）**：闭包自封（簇外零静态引用者），不纳入不使任何已纳入文件失去依赖；计划书 16 组未列该子系统。
+- **D 组（`cocos/serialization/deserialize-dynamic-empty.ts`）**：上游零引用桩（全仓无 importer、两侧 config 无该映射），不纳入零功能损失。
+- **平台/编辑器变体点名补全（r46 独立核查）**：`cocos/gfx/base/pipeline-state.editor.ts`、`cocos/gfx/index.ems.ts`、
+  `cocos/native-binding/decorators.ts`、`cocos/rendering/lod-group-editor-utility.ts` —— 非 `*.jsb.ts` 形态的平台（ems）/编辑器（editor）变体，
+  并入本豁免口径，补全 §1.3「其余 54 个 `*.jsb.ts`」的文字缺口（r46 实测：`cocos/` 树官方独有 87 = jsb 77 + 上述 4 + D9 已分类 6 个具体路径）。
+
+本豁免不改变「抽取件与官方逐字节」护栏；`verify:v12-backends` A6 解禁触发器保持有效。
+
+## 发布面 provenance 声明（F-130 / owner-decisions #17）
+
+本文档及发布面 `docs/*.md` 中出现的盘符绝对路径（本机取证 scratch 目录、上游快照 `cocos4` 目录、benchmark 目录）
+**不随 npm 包发布、不保证对收件人可复现**；可复现判据一律以仓库内 `npm run verify:*` 系列门禁为准。
+
 ## 基线快照统计（2026-09-12）
 
 | 项 | 值 |

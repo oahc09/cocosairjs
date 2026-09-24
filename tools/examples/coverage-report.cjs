@@ -254,9 +254,12 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   console.log('[coverage] inventory fingerprint: ' + inventoryFingerprint);
   if (evidenceSchemaGaps.length) { console.log('[coverage] evidence without apiProof (counted as claimed only): ' + evidenceSchemaGaps.length); }
   console.log('[coverage] → ' + path.relative(REPO, OUT_PATH));
-  // 机器可强制：门禁未达标必须以非零退出码阻断，而不只是打印 FAIL；分母自相矛盾同样阻断。
-  var gatesPass = inventoryInconsistencies.length === 0
-    && ['core', 'important', 'advanced'].every(function (n) { return tierReport[n].pass; });
+  // 机器可强制：分母自相矛盾（数据完整性）必须以非零退出码阻断。
+  // r46（owner-decisions #18=(a)）：tier 覆盖率门禁降为信息性输出 —— V1.2 明示不承诺 API 覆盖率，
+  // gate 字段与上方 PASS/FAIL 打印保留，但不再参与退出码；恢复阈值判定见 #18(b) 路线。
+  var gatesPass = inventoryInconsistencies.length === 0;
   process.exitCode = gatesPass ? 0 : 1;
-  console.log('[coverage] gate:', gatesPass ? 'PASS' : 'FAIL');
+  console.log('[coverage] gate:', gatesPass ? 'PASS' : 'FAIL'
+    + ' (tier coverage: informational per owner-decisions #18(a);'
+    + ' tier pass=' + ['core', 'important', 'advanced'].map(function (n) { return n + ':' + tierReport[n].pass; }).join(',') + ')');
 })();

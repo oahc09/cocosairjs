@@ -27,7 +27,7 @@ const ROOT = path.resolve(process.env.AIR_ROOT || path.resolve(__dirname, '..', 
 const UPSTREAM = path.resolve(process.env.COCOS_UPSTREAM || 'E:/AIProMax/github/cocos4');
 
 const EXPECT = {
-    declared: { air: 34, upstream: 55, missing: 22, airOnly: ['air'], defaultAirFeatures: 26 },
+    declared: { air: 34, upstream: 55, missing: 22, airOnly: ['air'], defaultAirFeatures: 27 }, // r46：#8(a) physics-cannon 入默认集，26 → 27
     undeclaredExportNames: [
         'geometry-renderer', 'gfx-webgpu', 'graphics', 'intersection-2d', 'mask',
         'physics-framework', 'sorting', 'sorting-2d', 'spine',

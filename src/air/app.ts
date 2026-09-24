@@ -29,6 +29,12 @@ export interface AirAppOptions {
     canvas: HTMLCanvasElement | string;
     /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
     renderMode?: number;
+    /**
+     * 可选：交付期 3D 物理后端（V1.2 owner 批复 #8(a)，additive；默认 `'builtin'`）。
+     * `'cannon'` 使用 cannon.js 全量刚体模拟（纯 JS，默认 bundle 已编入）；
+     * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
+     */
+    physics?: 'builtin' | 'cannon';
 }
 
 export interface AirApp {

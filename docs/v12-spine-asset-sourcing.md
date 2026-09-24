@@ -45,3 +45,10 @@
 - 补 `examples/spine-basic`（skeletonData json+atlas+texture 三件套 `loadRemote`、动画/皮肤/事件断言）+ 三浏览器矩阵，才可判 LV12-10 PASS。
 
 **许可提醒（R3）**：Spine Runtimes License 非 MIT —— 一旦真实分发 spine 运行时产物，`THIRD_PARTY_LICENSES.md` 必须单列该许可并核对再分发条款；本轮只回归了官方仓库内的 `cocos/spine/LICENSE`（Esoteric Software 声明文件），未分发任何二进制。
+
+## §5. 结案（r46，2026-09-24，owner-decisions #9 并入 #10）
+
+Owner 批复：D2 并入 D3/R8 一次决策，#10 = (a) ⇒ spine 与 bullet/physx/box2d-wasm/webgpu **同一份资产缺口、同一结案口径**
+（「代码回归 + 选择器可达 + 降级可测」= 部分通过；§3 实测的 `spine-core.js` 3,747 B / `wasmUtil` 零实现 / 调用点无守卫维持原判）。
+LV12-10 以「产物面 verified + 示例面 not-delivered（显著标注）」结案；`src/cocos/spine/lib/air-spine-instantiate-js.ts`
+替身（moduleOverrides 顶替）保留，资产到位后按 §4 路径回官方行为。

@@ -1,0 +1,241 @@
+
+> cocosair.js@0.1.0 build:min
+> node tools/build/build.cjs --format esm --min
+
+[build] cocosair moduleFormat=esm min=true
+Module source "internal-constants":
+function tryDefineGlobal (name, value) {
+    const _global = typeof window === 'undefined' ? global : window;
+    if (typeof _global[name] === 'undefined') {
+        return (_global[name] = value);
+    } else {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return _global[name];
+    }
+}
+export const HTML5 = true;
+
+export const NATIVE = false;
+
+export const ANDROID = false;
+
+export const IOS = false;
+
+export const MAC = false;
+
+export const WINDOWS = false;
+
+export const LINUX = false;
+
+export const OHOS = false;
+
+export const OPEN_HARMONY = false;
+
+export const WECHAT = false;
+tryDefineGlobal('CC_WECHAT', false);
+
+export const WECHAT_MINI_PROGRAM = false;
+
+export const XIAOMI = false;
+tryDefineGlobal('CC_XIAOMI', false);
+
+export const ALIPAY = false;
+tryDefineGlobal('CC_ALIPAY', false);
+
+export const TAOBAO = false;
+
+export const TAOBAO_MINIGAME = false;
+
+export const BYTEDANCE = false;
+tryDefineGlobal('CC_BYTEDANCE', false);
+
+export const OPPO = false;
+tryDefineGlobal('CC_OPPO', false);
+
+export const VIVO = false;
+tryDefineGlobal('CC_VIVO', false);
+
+export const HUAWEI = false;
+tryDefineGlobal('CC_HUAWEI', false);
+
+export const MIGU = false;
+tryDefineGlobal('CC_MIGU', false);
+
+export const HONOR = false;
+tryDefineGlobal('CC_HONOR', false);
+
+export const COCOS_RUNTIME = false;
+tryDefineGlobal('CC_COCOS_RUNTIME', false);
+
+export const SUD = false;
+tryDefineGlobal('CC_SUD', false);
+
+export const SUDV2 = false;
+tryDefineGlobal('CC_SUDV2', false);
+
+export const NODEJS = false;
+tryDefineGlobal('CC_NODEJS', false);
+
+export const EDITOR = false;
+tryDefineGlobal('CC_EDITOR', false);
+
+export const EDITOR_NOT_IN_PREVIEW = false;
+
+export const PREVIEW = false;
+tryDefineGlobal('CC_PREVIEW', false);
+
+export const BUILD = true;
+tryDefineGlobal('CC_BUILD', true);
+
+export const TEST = false;
+tryDefineGlobal('CC_TEST', false);
+
+export const DEBUG = true;
+tryDefineGlobal('CC_DEBUG', true);
+
+export const SERVER_MODE = false;
+
+export const DEV = false;
+tryDefineGlobal('CC_DEV', false);
+
+export const MINIGAME = false;
+tryDefineGlobal('CC_MINIGAME', false);
+
+export const RUNTIME_BASED = false;
+tryDefineGlobal('CC_RUNTIME_BASED', false);
+
+export const SUPPORT_JIT = true;
+tryDefineGlobal('CC_SUPPORT_JIT', true);
+
+export const JSB = false;
+tryDefineGlobal('CC_JSB', false);
+
+export const NOT_PACK_PHYSX_LIBS = false;
+
+export const NET_MODE = 0;
+
+export const WEBGPU = false;
+
+export const NATIVE_CODE_BUNDLE_MODE = 2;
+
+export const WASM_SUBPACKAGE = false;
+
+export const CULL_MESHOPT = true;
+
+export const LOAD_SPINE_MANUALLY = false;
+
+export const LOAD_BOX2D_MANUALLY = false;
+
+export const LOAD_BULLET_MANUALLY = false;
+
+export const LOAD_PHYSX_MANUALLY = false;
+
+export const USE_3D = true;
+
+export const USE_UI_SKEW = false;
+
+export const USE_XR = false;
+
+export const USE_SORTING_2D = false;
+
+
+Module source "cc":
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\air.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\base.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgl.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-webgl2.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\gfx-empty.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\3d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\skeletal-animation.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\primitive.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tween.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\legacy-pipeline.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\profiler.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\video.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\webview.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\sorting.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\particle-2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\tiled-map.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\ui.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\spine.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\dragon-bones.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-2d-box2d.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-builtin.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-framework.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\physics-cannon.ts';
+export * from 'E:\\AIProMax\\github\\cocosair.js\\src\\exports\\custom-pipeline-post-process.ts';
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/gamepad-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handheld-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/handle-input.js ) doesn't exist!
+>>> ERROR: noSideEffectFile: ( pal/input/minigame/hmd-input.js ) doesn't exist!
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (92:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (93:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.wasm.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/3d/misc/mesh-codec.ts (99:27): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/meshopt/meshopt_decoder.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/dragon-bones/ArmatureCache.ts (25:45): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/ArmatureDisplay.ts (26:61): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/assembler/simple.ts (25:37): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/AttachUtil.ts (25:34): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCArmatureDisplay.ts (26:63): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCFactory.ts (26:105): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCSlot.ts (25:46): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/CCTextureData.ts (25:59): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/DragonBonesAtlasAsset.ts (26:34): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/dragon-bones/index.ts (105:15): @cocos/rollup-plugin-typescript TS1479: The current file is a CommonJS module whose imports will produce 'require' calls; however, the referenced file is an ECMAScript module and cannot be imported with 'require'. Consider writing a dynamic 'import("@cocos/dragonbones-js")' call instead.
+  To convert this file to an ECMAScript module, change its file extension to '.mts', or add the field `"type": "module"` to 'E:/AIProMax/github/cocosair.js/src/package.json'.
+[plugin @cocos/typescript] src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48:48): @cocos/rollup-plugin-typescript TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
+[plugin @cocos/typescript] src/cocos/physics-2d/box2d/platform/physics-ray-cast-callback.ts (48:65): @cocos/rollup-plugin-typescript TS2833: Cannot find namespace 'B2'. Did you mean 'b2'?
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (34:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (35:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (42:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-3.8.ts (43:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (35:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (36:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (43:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-4.2.ts (44:24): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (55:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (56:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (63:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (64:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/4.2/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (73:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (74:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.wasm' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (81:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.asm.js' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-instantiate-dynamic.ts (82:28): @cocos/rollup-plugin-typescript TS2307: Cannot find module 'external:emscripten/spine/3.8/spine.js.mem' or its corresponding type declarations.
+[plugin @cocos/typescript] src/cocos/spine/lib/spine-wasm-utils.ts (16:19): @cocos/rollup-plugin-typescript TS2503: Cannot find namespace 'SpineWasm'.
+Redirect module pal/system-info to E:\AIProMax\github\cocosair.js\src\pal\system-info\web\system-info.js
+Redirect module internal:native to E:\AIProMax\github\cocosair.js\src\cocos\native-binding\impl.ts
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-version-dynamic.ts
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d.ts to E:\AIProMax\github\cocosair.js\src\cocos\2d\renderer\native-2d-empty.ts
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\runtime-exports.ts to E:\AIProMax\github\cocosair.js\src\cocos\animation\marionette\index-empty.ts
+Redirect module pal/screen-adapter to E:\AIProMax\github\cocosair.js\src\pal\screen-adapter\web\screen-adapter.js
+Redirect module pal/env to E:\AIProMax\github\cocosair.js\src\pal\env\web\env.js
+Redirect module pal/pacer to E:\AIProMax\github\cocosair.js\src\pal\pacer\pacer-web.js
+Redirect module pal/input to E:\AIProMax\github\cocosair.js\src\pal\input\web\index.js
+Redirect module pal/minigame to E:\AIProMax\github\cocosair.js\src\pal\minigame\non-minigame.js
+Redirect module E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\spine-instantiate.ts to E:\AIProMax\github\cocosair.js\src\cocos\spine\lib\air-spine-instantiate-js.ts
+Redirect module pal/audio to E:\AIProMax\github\cocosair.js\src\pal\audio\web\player.js
+Redirect module pal/wasm to E:\AIProMax\github\cocosair.js\src\pal\wasm\wasm-web.js
+Rollup warning 'THIS_IS_UNDEFINED' is omitted for E:\AIProMax\github\cocosair.js\src\node_modules\@cocos\dragonbones-js\out\dragonBones.js
+Rollup warning 'THIS_IS_UNDEFINED' is omitted for E:\AIProMax\github\cocosair.js\src\node_modules\@cocos\dragonbones-js\out\dragonBones.js
+Circular dependency: src/air/assets/gltf/material.ts -> src/air/assets/gltf/material/physical-effect.ts -> src/air/assets/gltf/material.ts
+==== Performance ====
+{"# BUILD":[64772.4802,1083742728,1293261520],"## initialize":[27351.1785,617087200,826616376],"- plugin 6 (node-resolve) - buildStart":[0.560099999999693,7384,209547400],"- plugin 8 (commonjs) - buildStart":[0.5910000000003492,11192,209560040],"- plugin 9 (@cocos/typescript) - buildStart":[27349.311299999998,617052208,826612792],"## generate module graph":[31605.4992,269479608,1096527824],"- plugin 0 (commonjs--resolver) - resolveId":[57.540600000022096,20633600,2495366376],"- plugin 1 (@cocos/ccbuild|external-loader) - resolveId":[22.292399999962072,3032000,2495367576],"- plugin 2 (@cocos/ccbuild|module-overrides) - resolveId":[28.375899999758985,1290336,2495369592],"- plugin 3 (virtual) - resolveId":[53.43810000018857,7651376,2495372112],"- plugin 1 (@cocos/ccbuild|external-loader) - load":[5.6683999999804655,757296,2493069088],"- plugin 2 (@cocos/ccbuild|module-overrides) - load":[13.764400000014575,715776,2493071192],"- plugin 3 (virtual) - load":[4.3294999999779975,401888,2493072544],"- plugin 7 (json) - transform":[10.812400000053458,1192536,2493227384],"- plugin 8 (commonjs) - transform":[317.8886000001148,58844688,2493230928],"- plugin 10 (babel) - transform":[463.3392000001768,11351352,2493282032],"generate ast":[1850.2384999998758,487282328,2493488016],"- plugin 4 (@cocos/ccbuild|module-query-plugin) - resolveId":[32.33200000045326,6233656,2495375432],"- plugin 5 (ts-paths) - resolveId":[18.387000000257103,520352,2495377504],"- plugin 9 (@cocos/typescript) - resolveId":[5985.8149999999005,54220304,2495421256],"- plugin 10 (babel) - resolveId":[4.8632000000507105,223792,2495422856],"- plugin 6 (node-resolve) - resolveId":[19.96479999995063,1748344,2495424816],"- plugin 6 (node-resolve) - load":[4.077099999907659,572528,2493073896],"- plugin 8 (commonjs) - load":[5.434499999952095,295664,2493076288],"- plugin 9 (@cocos/typescript) - load":[46.081100000068545,14078040,2493004312],"- plugin 10 (babel) - load":[449.7201999999743,8806464,2493005984],"## sort and bind modules":[427.99490000000515,56559832,1153087992],"## mark included statements":[5363.747199999998,139534064,1292622320],"treeshaking pass 1":[1290.7615000000078,31308104,1185002168],"treeshaking pass 2":[1326.5866999999998,46034472,1231036904],"treeshaking pass 3":[579.3450999999914,61061472,1292098640],"treeshaking pass 4":[456.6640999999945,-28355904,1263743000],"treeshaking pass 5":[264.64710000000196,21702064,1285445328],"treeshaking pass 6":[274.9403999999922,5624040,1291069632],"treeshaking pass 7":[274.2595000000001,-2726216,1288343680],"treeshaking pass 8":[226.04720000000088,-13531704,1274812240],"treeshaking pass 9":[215.39289999999164,-14899632,1259912872],"treeshaking pass 10":[199.12769999999728,-16949952,1242963184],"treeshaking pass 11":[252.8744000000006,49658208,1292621656],"- plugin 8 (commonjs) - buildEnd":[0.2646999999997206,1744,1292628928],"- plugin 9 (@cocos/typescript) - buildEnd":[22.896099999998114,631168,1293260360]}
+====             ====
+[build] ccbuild done in 103.3s
+[build] output: build\cocosair.module.min.js.map (source map)
+[build] output: build\cocosair.module.min.js
+[build] output: build\package.json (type: module)
+[build] output: build/gltf-decoders/package.json (type: commonjs)
+[build] cleaned: build\.tmp-min-1790268852675

@@ -202,7 +202,7 @@ G0 重建前，`build/cocosair.module.{js,min.js,d.ts,js.map,min.js.map}` 是并
 
 `examples/profiler-overlay`（Code First）已由 V1.1 规格门禁晋升 **stable**：`verified 21 / attested 2 / units 23`，
 promotion 三元组 `spec 66d6546c7a37 / source afc5dc805c737985 / candidate 9fa85f88b968d5f1`；
-三引擎截图在 `docs/evidence/v12/LV12-02-profiler-overlay/`。取证要点：面板状态断言必须写在页面加载路径内，
+三引擎截图在 `docs/evidence/v12/profiler-overlay/`（r46：早期游离捕获改名并入本目录）。取证要点：面板状态断言必须写在页面加载路径内，
 放到 `window.__probe` 里不会被 API trace 观察窗计入（`Profiler` / `isShowingStats` 会退化为 unproven）。
 
 ### 6.3 H 组（post-process / LV12-17）根因：不是示例问题，是 Air 的默认管线选择
@@ -253,7 +253,7 @@ legacy `ForwardPipeline` 无消费 `PostProcess.settings` 的阶段，legacy `De
 `toggle.exclusive {a:false,b:true,allowSwitchOff:false}` + 2 条 toggle 事件、`slider 0.2→0.75` 且 handle 位移到 42.5、
 VERTICAL/GRID Layout 子节点位置非零、`scrollToBottom` 后 offset y 0→270、`EditBox` focus 后 DOM TEXTAREA 输入回写 `string='air'`。
 截图正典路径是 `docs/evidence/v12/<example-id>/matrix-<engine>.png`（由 sha256_16 绑定在证据里）；
-`docs/evidence/v12/LV12-02-profiler-overlay/` 是本工具定型的更早一份手工捕获，保留不删。
+该更早一份手工捕获原存于 `LV12-02-profiler-overlay/`，r46 已按 #13(b) 改名并入 `profiler-overlay/early-manual-capture-chromium.png`。
 
 晋级过程中暴露并修掉一处**取证工具链缺陷（F-87，非引擎缺陷）**：
 逐 API 插桩把被 claim 的类导出成 Proxy，而引擎 `Node._findComponent` 对 `@sealed` 类走
@@ -1026,3 +1026,11 @@ r45g 现读：`npm run verify:v12-feature-face` `EXIT=0`（`pg-probe/r45g-featur
 **同轮自我更正（r45h4b，03:29Z；不另开台账条目，口径同 §7.11 末段）**：本节的报告落表脚本初跑**只落了 4 处中的 3 处**——§2.1 尾部那条 bullet 静默漏落。根因不是锚点没命中（锚点断言确实跑了并通过），而是那条计划被 `EDITS.pop()` 摘出去做「整行锚点」特殊处理后**没有放回被迭代的数组** ⇒ 循环、锚点断言、字节账、纯追加还原四件事**共用同一个 `plan` 来源**，于是「插入后字节 == 插入前 + 各条插入字节之和」对「某条计划压根没进 `plan`」零判别力（恒等式查不出漏项）。这是 §7.12 第 2 条「锚点不存在时静默空转」的**同族但更隐蔽**的一种：那次的判据（逐条 `grep -c` 复测）这次也照常执行并抓到了问题，但抓到的路径是**脚本文本自己打印的计划条数（3）与本轮声明的计划条数（4）不符**，而不是字节差值。⇒ 通则：**计划条数必须由循环外的字面量常量断言**，且结果校验不能只依赖被校验过程自己求出的中间量；批量落表的「独立性」来自判据与执行路径不同源，不来自断言写得多。更正由一次性单条脚本落地（`apply-accept-r45h4b.cjs`，仓库外；本报告的锁 `123,231 / 32ad69c1af9e21c3` 与逐条 `Buffer.byteLength` 判据照旧），报告现读 **123,613 B / 307 行**， sha16 与全部脚本路径登记在证据台账 r45h4 行的 `raw[]`／`commands[]`（上面那个 **123,613 B / 307 行**是 r45h4c 之前的快照，终值见台账行）。
 
 **同轮第三处自我更正（r45h4c，写后自查）**：§1 LV12-20 的 r45h4 追加句里「对前 16 条仍成立」会被读成"本轮把 16 条又跑了一遍"，而实际本轮只**抽测** 4 条（`verify:v12-backends` / `verify:v12-feature-face` / `verify:doc-refs` / 新第 17 条 `verify:v11-chain-face`，四条全 `EXIT=0`），其余 12 条沿用 **r45h 01:44–02:05Z 全量复跑**的当期值 ⇒ 已在报告原句后补「读数出处澄清」，并把「16 绿 / 1 红」显式标成「最近一轮全量 + 本轮抽测」的**合成口径**。⇒ 通则：**"当期绿"必须能答出是哪一轮跑的**，否则就是替别的轮次宣据（与 §7.10「读数以何为准」、覆盖率数字须声明口径/分母/日期同一条规矩）。
+
+## §8. 批复落地与证据重采（r46，2026-09-24）
+
+Owner 批复「按照建议执行，确保最优」逐条登记见 `docs/v12-owner-decisions.md` §4。对本文 §4 残留差集的影响：
+
+- 14 项 D9 残留全部按建议豁免（#1c/#2b/#3a/#4b），总登记 `UPSTREAM.md` Deviation-06；§4 表的「需逐个分类后方可判定」状态终止于「已批复结案」。
+- r46 独立核查补点名的 4 个非 jsb 平台/编辑器变体（`pipeline-state.editor.ts` / `index.ems.ts` / `native-binding/decorators.ts` / `lod-group-editor-utility.ts`）一并入 Deviation-06。
+- **#8(a) 触发 §12 全量重采**：`physics-cannon` 入默认集 + `examples/physics-3d-collision` 新例 ⇒ bundle sha、36 条 V1.2 矩阵记录、52 条 V1.1 记录的 `candidateFingerprint` 全部换血；新基线以重采后的 `docs/evidence/v12/browser-matrix.json` 与 `docs/v12-bundle-budget.md` r46 行为准，本文不再追改历史读数（各 § 小节的旧读数保留为当轮快照）。

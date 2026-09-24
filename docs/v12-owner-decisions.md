@@ -104,3 +104,31 @@
   批 (a) 若含日志 ⇒ 建议照 **F-54→F-64** 的先例加一行例外（`docs/audits/**/raw/**` 就是这么解禁的），形如 `!docs/evidence/**/*.log`，而不是逐份 `git add -f`（后者会让后续重采轮次再次静默漏掉）；**这条例外要 owner 签**，因为例外是全局性的：今后任何工具往 `docs/evidence/**` 丢 `.log` 都会变成 add-可见。
 - 提交对发布面的影响现读：`package.json` 的 `files[]` 只含 `docs/*.md` 与 `docs/*.json`（根级）⇒ **`docs/evidence/**` 不在 tarball 内**，提交它**不会**改变 `npm run verify:consumer` 的任何读数（既不消 F-85 也不新增红项）。反过来，这也说明「证据入库」与「手册是否随包发布」（#11）是两个独立决策，别在一次批复里顺手合并。
 - 纪律：本会话不执行 `git commit` / `push`；获批后按上面目录**逐路径** stage（不用 `git add -A`，同工作树有并行会话改动），并先把 `d10/` 三份日志的例外规则单独成一提交面，便于 owner 事后只回滚规则而不动证据。
+
+## 4. 批复记录（r46，2026-09-24）
+
+> Owner 指令：「按照建议执行，确保最优」。§2 各行「建议」列即被批复选项；本节为逐条落地登记。
+> #11 原无建议列（产品发行姿态），按「确保最优」原则取 **(a1)**（开发手册随包发布，`verify:consumer` 的 F-85 随之清零）。
+> #8(a) 是唯一改变默认 feature 集的批复 ⇒ §1 基线数字（bundle sha / 36 条矩阵 / 52 条 V1.1 记录指纹）按计划书 §12 **全量重采**，新基线登记于 `docs/v12-bundle-budget.md` r46 行与 `docs/evidence/v12/browser-matrix.json`（重采后）。
+
+| # | 批复 | 落地动作（r46） |
+|---|---|---|
+| 1 (D9-A) | (c) 显式豁免 | `UPSTREAM.md` Deviation-06 A 组登记 |
+| 2 (D9-B/C) | (b) 显式豁免 | Deviation-06 B/C 组登记 |
+| 3 (D9-D) | (a) 口径成立 | Deviation-06 D 组登记 |
+| 4 (§1.3) | (b) 按文件对齐 | Deviation-06 总口径；「补 22 项 feature 声明」路线不执行 |
+| 5 (pose-graph) | (b) 维持现状 | `docs/v12-pose-graph-notes.md` §6 批复注记；默认集不动 |
+| 6 (D11/LV12-17) | (b) 变体构建级证据 | 本轮产出 bloom/fxaa/color-grading 开关对照变体证据 + `docs/v12-postprocess-notes.md` 建档 |
+| 7 (D10/LV12-18) | (b) 回退探测证据 | firefox/webkit 探测腿补齐（chromium 已在 `d10/`）；Deviation-04 结案注记 |
+| 8 (D12/LV12-15) | (a) `physics` 选项开放 | `createAirApp` 增 `physics: 'builtin' \| 'cannon'`（additive 登记 `docs/v08-api-stability.md`）；`AIR_FEATURES` 增 `physics-cannon`；新示例 `examples/physics-3d-collision`；全量重采执行 |
+| 9 (D2/spine) | 并入 #10 | `docs/v12-spine-asset-sourcing.md` 结案注记 |
+| 10 (D3/R8) | (a) 按 D8 结案 | `docs/v12-physics-asset-sourcing.md` 结案注记；`ai/` 计划书 D3 行更正留痕 |
+| 11 (F-85) | **(a1)** | `package.json` `files[]` += `docs/manual/`；`verify:consumer` 复跑要求 EXIT=0 |
+| 12 (簿记-1) | (a) | `.gitignore` 增 `!docs/evidence/**/*.log`；3 份 `d10/*.log` 随本轮入库 |
+| 13 (簿记-2) | (b) | `LV12-02-profiler-overlay/matrix-chromium.png` 改名并入 `profiler-overlay/early-manual-capture-chromium.png` |
+| 14 (Deviation-05) | (a) 认可豁免 | Deviation-05 结案注记（#8(a) 只接线 builtin + cannon，不触及 bullet/physx/box2d-wasm 豁免面；A6 触发器保持） |
+| 15 (LV12-01) | (b3) 追认 | r45i/r45j/r45m 非正典批次维持补充证据定位，不覆写正典 |
+| 16 (F-129) | (c) + (a) | `docs/01-web-feature-set.md` §4/§5 快照标注 + WebGL2 陈述更正 |
+| 17 (F-130) | (a) | `README.md` / `UPSTREAM.md` 各加一句 provenance 声明 |
+| 18 (api-coverage) | (a) 降为信息性 | `tools/examples/coverage-report.cjs`：tier 门禁不参与退出码（`gate` 字段与分母自洽守卫保留）；验收报告 §2 第 10 条改述 |
+| 21 | 21-A 不加 / 21-B=(b3) / 21-C 不重跑 | 追认；36 条矩阵的重采是 #8(a) 的 §12 义务，非 21-C 反悔 |

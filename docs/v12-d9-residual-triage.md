@@ -134,3 +134,19 @@ airDangling = []   ← Air 没有任何 feature 指向「已声明但文件不�
   本方法对它们**不能判定文件面**——它们的缺失文件全集只能从 14 项残留反推：8 个 `exports/*.ts` 门面 + 5 个 terrain + 1 个 `optimized-curve.ts` + 1 个构建替换件。
   ⇒ 该断言要么改为「以 feature **声明**为单位对齐」（则 25 项全部需要补声明，r43 已实测其中 2 项的成本：`marionette`+`procedural-animation` 若同时进默认集 = **+339,301 B（+5.58%）未压缩产物**，见 `docs/v12-pose-graph-notes.md` §4.3；其余 23 项多数 `modules: []` 不引文件，但任何默认集变更都要 36 条矩阵记录与 V1.1 证据链全量重采），
   要么按本节 A/C/D 口径逐条豁免；两者都需 owner 定夺，**不该由实现方默认缩小**。
+
+## 6. 批复结果（r46，2026-09-24）—— 本文件从「提案」转「已批复结案」
+
+Owner 指令「按照建议执行，确保最优」，§4 三个决定逐条批复并落地：
+
+1. **A 组（7 项门面）**：批复 (c) ⇒ **显式 Deviation 豁免（不纳入 V1.2）**，登记 `UPSTREAM.md` Deviation-06。
+2. **B+C 组（`optimized-curve` + terrain 5 项）**：批复 (b) ⇒ **显式 Deviation 豁免（不纳入 V1.2）**，登记同上。
+3. **D 组（`deserialize-dynamic-empty.ts`）**：批复 (a) ⇒ **「上游零引用桩 → 显式豁免」口径成立**，登记同上。
+
+§1.3 断言同步关闭（owner-decisions #4 批 (b)）：差集按**文件**口径逐条豁免结案，「以 feature 声明为单位对齐」的 (a) 路线
+（补 22 项声明，r45c 现读 34/55/22）**不执行**；豁免总登记以 `UPSTREAM.md` Deviation-06 为权威源。
+
+**r46 全量比对补充点名**：`cocos/gfx/base/pipeline-state.editor.ts`、`cocos/gfx/index.ems.ts`、
+`cocos/native-binding/decorators.ts`、`cocos/rendering/lod-group-editor-utility.ts` 四个非 jsb 残留属平台/编辑器变体
+（`*.editor.ts` 编辑器面、`*.ems.ts` emscripten 变体、native-binding 装饰器），并入 Deviation-06 平台性排除口径，
+消除「§1.3 只点名 `*.jsb.ts`」的文字缺口（r46 独立核查实测：cocos/ 树官方独有 87 = jsb 77 + 上述 4 + D9 已分类的 6 个具体路径）。

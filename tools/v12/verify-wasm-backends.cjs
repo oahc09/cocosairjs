@@ -54,7 +54,8 @@ const EXPECT = {
     featureUnitsMissing: 22,
     airOnlyFeatures: ['air'],
     wasmBackendFeatures: ['physics-ammo', 'physics-physx', 'physics-2d-box2d-wasm'],
-    defaultAirFeatures: 26,
+    // r46（owner #8(a)）：physics-cannon 入默认集（交付期切换），26 → 27；三个 wasm 后端仍不入。
+    defaultAirFeatures: 27,
     // A7 核对的子树（三 wasm 后端 + 两个已在 Air 的对照后端）
     physicsSubtreeDirs: [...SEED_DIRS, 'cocos/physics/cannon', 'cocos/physics-2d/box2d'],
 };

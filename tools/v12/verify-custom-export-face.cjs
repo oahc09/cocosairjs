@@ -34,7 +34,7 @@ const EXPECT = {
     },
     featureUnitsShared: ['custom-pipeline', 'custom-pipeline-post-process'],
     featureUnitsNotAir: ['custom-pipeline-builtin-scripts'],
-    defaultAirFeatures: 26,
+    defaultAirFeatures: 27,
 };
 
 const errors = [];

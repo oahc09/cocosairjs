@@ -1,0 +1,15 @@
+
+> cocosair.js@0.1.0 verify:api-coverage
+> node tools/examples/coverage-report.cjs
+
+[coverage] core: required 816/816 | claimed 61 | verified 56 (0.069) [call 54 / read 2 / unknown 0] | attested(all-units) 5
+[coverage] important: required 1773/1773 | claimed 34 | verified 20 (0.011) [call 18 / read 2 / unknown 0] | attested(all-units) 14
+[coverage] advanced: required 0/5471 | claimed 0 | verified 0 (0) [call 0 / read 0 / unknown 0] | attested(all-units) 79
+[coverage] core gate (100% verified of coverageRequired): FAIL
+[coverage] important gate (>= 90% verified of coverageRequired): FAIL
+[coverage] advanced gate (>= 80% verified of coverageRequired): NOT_APPLICABLE
+[coverage] stale evidence (source/candidate/spec changed after run): 5 → automation,rc-capture-frame,rc-create-node,rc-error-report,rc-inspect-scene
+[coverage] inventory fingerprint: 15d629f3a2262d01
+[coverage] evidence without apiProof (counted as claimed only): 1
+[coverage] → docs\api-coverage-report.json
+[coverage] gate: PASS

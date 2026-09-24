@@ -33,3 +33,19 @@ cocos4/cocos/gfx/index.ts         → 对 webgpu 零引用；唯一引用 webgpu
 - 默认产物：批次 E 前后三份发布产物**逐字节不变** —— dev `6,081,668 B`（sha256 `35496aebda06…`）/
   min `3,499,182 B`（`8795c8685ace…`）/ d.ts `3,082,360 B`（`sha256sum -c` OK）（护栏 7）。
 - 未做（需 D10 决策）：`WEBGPU=true` 常量通道与 `createAirApp({ device: 'webgpu' })` 探测链路、`examples/webgpu-basic`、Chromium 出图与三浏览器回退矩阵。
+
+## UPDATE-r46（2026-09-24，owner-decisions #7 = D10 批复 (b) 落地）
+
+三浏览器回退探测腿已补齐（工具 `tools/v12/webgpu-fallback-probe.cjs`，共享 `tools/verify/browser-engines.cjs` 引擎表；
+webkit 引擎表自本日起修正为 `webkit-2311`——本机 ms-playwright 缓存安装的是 playwright-core@1.61.0 对应构建，
+原表 `webkit-2361` 在本机不存在，两处表已同步改，符合表头「改这张表时两处都要改」约定）：
+
+| 引擎 | navigator.gpu | requestAdapter | 默认 bundle 后端 | 判定 |
+|---|---|---|---|---|
+| chromium | true | adapter-available | WebGL 2.0（hello-cube 正常出图） | WEBGL2-FALLBACK-OK |
+| firefox | true | adapter-null（flag 门控） | WebGL 2.0 | WEBGL2-FALLBACK-OK |
+| webkit | false | null | WebGL 2.0 | WEBGL2-FALLBACK-OK |
+
+逐引擎证据：`fallback-probe-{chromium,firefox,webkit}.json` + 同名 `.png`（三张截图字节互不相同）+ `fallback-probe-summary.json`。
+结论：三引擎下默认 bundle 均无未捕获错误、WebGL2 回退路径全可用；WebGPU 前向路径维持「已抽取、未接线」
+（Deviation-04 结案注记见 `UPSTREAM.md` UPDATE-r46），与 LV12-18 的 (b) 档交付一致。

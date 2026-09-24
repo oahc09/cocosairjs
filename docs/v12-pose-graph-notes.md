@@ -145,3 +145,9 @@ AIR_FEATURES="$(默认 26 项),marionette,procedural-animation" \
   等仍未有单元级证据。
 - 未在浏览器矩阵契约（`tools/v12/browser-matrix-contract.json`）里登记该示例，因此护栏第 9 条的
   PASS 数不包含它。
+
+## 6. 批复注记（r46，2026-09-24）
+
+Owner 批复 #5 = 建议 **(b)**：`marionette` / `procedural-animation` **不进**默认 `AIR_FEATURES`，发布姿态维持现状。
+本文 §4.3 的 +339,301 B（+5.58%）成本因此不发生；LV12-12 按既定降级口径（闭包完整 + 单元级求值）结案，
+pose-graph 变体构建路径（§4.4）保留为非默认验证通道。

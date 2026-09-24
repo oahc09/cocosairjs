@@ -21,3 +21,7 @@ build/examples/
 
 # F-54：审计原始日志/证据必须入库（覆写上表 *.log 规则），避免逐份 git add -f
 !docs/audits/**/raw/**
+
+# owner-decisions #12(a)：V1.2 证据目录的诊断日志同规则解禁（r46 批复入库）。
+# 范围收敛在 docs/evidence/v12/**（#12 对象是 d10/*.log）；v06/v08 的测试瞬态日志仍按 *.log 忽略。
+!docs/evidence/v12/**/*.log

@@ -1,0 +1,12 @@
+src/cocos/gfx/webgpu/webgpu-define.ts(39,22): error TS2307: Cannot find module 'console' or its corresponding type declarations.
+src/cocos/gfx/webgpu/webgpu-define.ts(271,42): error TS2550: Property 'matchAll' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2020' or later.
+src/cocos/gfx/webgpu/webgpu-define.ts(307,30): error TS2550: Property 'at' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/cocos/gfx/webgpu/webgpu-define.ts(309,37): error TS2550: Property 'at' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/cocos/webgpu/instantiated.ts(2,22): error TS6053: File 'E:/AIProMax/github/cocosair.js/src/native/external/emscripten/external-wasm.d.ts' not found.
+src/cocos/webgpu/instantiated.ts(3,22): error TS6053: File 'E:/AIProMax/github/cocosair.js/src/native/external/emscripten/webgpu/webgpu.d.ts' not found.
+src/cocos/webgpu/instantiated.ts(31,23): error TS2307: Cannot find module 'external:emscripten/webgpu/webgpu_wasm.wasm' or its corresponding type declarations.
+src/cocos/webgpu/instantiated.ts(35,24): error TS2307: Cannot find module 'external:emscripten/webgpu/webgpu_wasm.js' or its corresponding type declarations.
+src/cocos/webgpu/instantiated.ts(63,47): error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'.
+src/cocos/webgpu/instantiated.ts(66,43): error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'.
+src/cocos/webgpu/instantiated.ts(70,42): error TS1343: The 'import.meta' meta-property is only allowed when the '--module' option is 'es2020', 'es2022', 'esnext', 'system', 'node16', or 'nodenext'.
+exit=2

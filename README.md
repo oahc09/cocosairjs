@@ -7,9 +7,12 @@
 > **V0.2 RC**（2026-09-12）：Code First DX & SDK 化，验收矩阵 L0–L17 全部通过，详见 `docs/acceptance-report-v02.md`。
 > **V0.3**（2026-09-12）：完成 V0.2 审查修复、资源 Inspect/Validate、多实例生命周期和独立静态验证，见 [验证记录](docs/11-v03-verification.md)。V0.2 原增量/helper 验收的更正也记录于此。
 > **V1.1**：57 个示例全部带冻结规格与证据链（当期 52 例全量浏览器验证 52/52 PASS、`unproven 0`；逐例证据 JSON 在仓库内证据目录，未随 npm 包发布），口径与陷阱见 `docs/v11-baseline.md`、`docs/v11-example-specs.md`。
-> **V1.2 特性回归（进行中，未验收通过）**：16 组上游能力逐组回归，逐组状态见 `docs/v12-upstream-regression.md` §3，
-> 当期门禁读数与未达项见 `docs/acceptance-report-v12.md`（含一条仍 FAIL 的 `verify:api-coverage`）。
-> 未决口径集中在决策点 **D2**（spine wasm 资产）、**D3/R8**（bullet/physx/box2d-wasm 资产）、**D9**（13 项范围外残留）、**D10**（webgpu 发行姿态）、**D12**（cannon 交付期切换）。
+> **V1.2 特性回归（r46 批复结案口径，2026-09-24）**：16 组上游能力逐组回归，逐组状态见 `docs/v12-upstream-regression.md` §3；
+> 门禁读数与部分通过项见 `docs/acceptance-report-v12.md`。资产缺口档（spine / bullet / physx / box2d-wasm / webgpu-glslang）
+> 与 D9 残留 14 项均已按批复口径结案（`UPSTREAM.md` Deviation-04/05/06）；交付期物理后端切换：
+> `createAirApp({ physics: 'builtin' | 'cannon' })`（默认 builtin，additive 登记 `docs/v08-api-stability.md`）。
+> **发布面 provenance**：文中盘符绝对路径（取证 scratch / 上游快照 / benchmark 目录）不随 npm 包发布、不保证可复现；
+> 可复现判据一律以仓库内 `npm run verify:*` 系列门禁为准（F-130 / owner-decisions #17(a)）。
 > 版本号仍标 `0.1.0`（`package.json` / `AIR_VERSION`）——改它属于发行决策，未获授权前不动。
 
 ```bash

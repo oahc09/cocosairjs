@@ -1,0 +1,9 @@
+{
+  "engine": "chromium",
+  "navigatorGpu": true,
+  "gpuAdapter": "adapter-available",
+  "bundleBackend": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+  "appCreated": true,
+  "consoleErrors": [],
+  "fallback": "WEBGL2-FALLBACK-OK"
+}

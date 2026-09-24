@@ -1,0 +1,9 @@
+{
+  "engine": "webkit",
+  "navigatorGpu": false,
+  "gpuAdapter": null,
+  "bundleBackend": "WebGL 2.0",
+  "appCreated": true,
+  "consoleErrors": [],
+  "fallback": "WEBGL2-FALLBACK-OK"
+}

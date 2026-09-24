@@ -1,0 +1,31 @@
+error TS2688: Cannot find type definition file for './@types/consts'.
+  The file is in the program because:
+    Entry point of type library './@types/consts' specified in compilerOptions
+error TS2688: Cannot find type definition file for './native/external/emscripten/box2d/box2d'.
+  The file is in the program because:
+    Entry point of type library './native/external/emscripten/box2d/box2d' specified in compilerOptions
+error TS2688: Cannot find type definition file for './native/external/emscripten/bullet/bullet'.
+  The file is in the program because:
+    Entry point of type library './native/external/emscripten/bullet/bullet' specified in compilerOptions
+error TS2688: Cannot find type definition file for './native/external/emscripten/external-wasm'.
+  The file is in the program because:
+    Entry point of type library './native/external/emscripten/external-wasm' specified in compilerOptions
+error TS2688: Cannot find type definition file for './native/external/emscripten/meshopt/meshopt_decoder'.
+  The file is in the program because:
+    Entry point of type library './native/external/emscripten/meshopt/meshopt_decoder' specified in compilerOptions
+error TS2688: Cannot find type definition file for './native/external/emscripten/physx/physx'.
+  The file is in the program because:
+    Entry point of type library './native/external/emscripten/physx/physx' specified in compilerOptions
+error TS2688: Cannot find type definition file for './native/external/emscripten/spine/spine'.
+  The file is in the program because:
+    Entry point of type library './native/external/emscripten/spine/spine' specified in compilerOptions
+error TS2688: Cannot find type definition file for './native/external/emscripten/webgpu/webgpu'.
+  The file is in the program because:
+    Entry point of type library './native/external/emscripten/webgpu/webgpu' specified in compilerOptions
+error TS2688: Cannot find type definition file for './node_modules/@cocos/cannon/CANNON'.
+  The file is in the program because:
+    Entry point of type library './node_modules/@cocos/cannon/CANNON' specified in compilerOptions
+error TS2688: Cannot find type definition file for './node_modules/@types/jest/index'.
+  The file is in the program because:
+    Entry point of type library './node_modules/@types/jest/index' specified in compilerOptions
+exit=2

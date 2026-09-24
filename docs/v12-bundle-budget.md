@@ -42,3 +42,17 @@
 - npm 依赖已按 P1 入库：`@cocos/box2d ^1.0.2`、`@cocos/cannon ^1.2.8`、`@cocos/dragonbones-js ^1.0.2`
   （安装使用 `--ignore-scripts`，未引入 postinstall 钩子链，符合 P1 约束）。
   注：计划书要求 `dragonbones-js@^1.0.1`，实际可解析最新版本为 `^1.0.2`；`box2d` 计划书要求精确 `1.0.2`，npm 写入为 `^1.0.2`（待定是否改精确锁）。
+
+## 4. r46 行（2026-09-24，owner 批复 #8(a) = D12 落地）
+
+| 产物 | r45 基线 | r46 新基线 | 增量 |
+|---|---|---|---|
+| `build/cocosair.module.js` | 6,081,668 B / `35496aebda066ab5` | 6,600,516 B / `154c3945e25acafa` | +518,848 B（+8.5%） |
+| `build/cocosair.module.min.js` | 3,499,182 B / `8795c8685ace28a1` | 3,681,015 B / `13fe40b4048a06bc` | +181,833 B（+5.2%） |
+
+- 增量来源：`physics-cannon` 入默认集（vendored `@cocos/cannon` 纯 JS 运行库）+ `src/air/physics-backend.ts`
+  （交付期后端选择 + 默认物理材质种子）+ `src/exports/air.ts` 聚合出口并入 `./physics-cannon`。
+- 默认后端行为不变：仍为 builtin（`createAirApp` 在 `Game.EVENT_PRE_SUBSYSTEM_INIT` 上以
+  最后注册者胜出语义确定性重注册 `'builtin'`）；`createAirApp({ physics: 'cannon' })` 为 additive opt-in。
+- 证据货币：字节变更触发计划书 §12 全量重采（V1.2 矩阵 13 行 × 3 引擎 = 39 格；V1.1 链 53 例正典），
+  本轮执行；`pose-graph`（#5(b)）的 +339 KB 成本未发生，D1 单文件原则维持。

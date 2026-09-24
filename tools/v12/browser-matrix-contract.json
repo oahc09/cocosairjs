@@ -1638,5 +1638,51 @@
         "live.tailRegion"
       ]
     }
+  },
+  "physics-3d-collision": {
+    "group": "LV12-15",
+    "waitMs": 3500,
+    "checks": {
+      "probeEquals": {
+        "backendWorldCtor": "CannonWorld",
+        "sysCannon": true,
+        "sysBuiltin": false,
+        "gravityY": -10,
+        "worldHasGravity": false,
+        "bodyCount": 3,
+        "groundType": "STATIC",
+        "ballAType": "DYNAMIC",
+        "ballBType": "DYNAMIC",
+        "fixedTimeStep": 0.02,
+        "maxSubSteps": 1,
+        "simSteps": 180,
+        "startYA": 3,
+        "startYB": 5.5,
+        "restYA": 0.5,
+        "restYB": 1.5,
+        "restStable": true,
+        "fallDeltaA": 2.5,
+        "enterTotal": 2,
+        "stayTotal": 320,
+        "exitTotal": 0,
+        "enterPairs": "BallA|BallB,BallA|Ground",
+        "contactsAtFirstEnter": 1,
+        "velocityYBAtEnter": 0,
+        "rayHitName": "BallB",
+        "rayHitDist": 8,
+        "rayHitCount": 4,
+        "rayHitNormalY": 1,
+        "rayClosestName": "Ground",
+        "rayClosestDist": 10
+      },
+      "probeNonEmpty": [
+        "frames"
+      ]
+    },
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
   }
 }

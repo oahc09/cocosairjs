@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-09-24T14:32:55.311Z",
-  "total": 57,
-  "frozen": 57,
+  "measuredAt": "2026-09-24T17:18:47.546Z",
+  "total": 58,
+  "frozen": 58,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -202,6 +202,11 @@
     },
     {
       "id": "physics-3d-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "physics-3d-collision",
       "specStatus": "frozen",
       "issues": []
     },

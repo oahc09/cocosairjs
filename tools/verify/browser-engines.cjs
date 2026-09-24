@@ -8,7 +8,7 @@ const path = require('path');
 const ENGINES = {
     chromium: { dir: 'chromium-1228', exe: 'chrome-win64/chrome.exe', args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] },
     firefox: { dir: 'firefox-1543', exe: 'firefox/firefox.exe', args: [] },
-    webkit: { dir: 'webkit-2361', exe: 'Playwright.exe', args: [] },
+    webkit: { dir: 'webkit-2311', exe: 'Playwright.exe', args: [] },
 };
 
 const DEFAULT_LOCAL_APP_DATA = 'C:/Users/caosh/AppData/Local';

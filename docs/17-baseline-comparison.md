@@ -199,3 +199,15 @@ node tools/v12/verify-file-map.cjs                                            # 
    `smoke-30` 又按该 bundle 的 sha256₁₆ 绑定 PNG 字节货币 ⇒ 一切非默认后端目前只有诊断级证据，
    这也是 LV12-14（box2d-wasm）/LV12-16（bullet/physx）取证面停在产物级的同一根因。
 
+## §10 批复落地（r46，2026-09-24）
+
+Owner 批复「按照建议执行，确保最优」（逐条登记 `docs/v12-owner-decisions.md` §4），对本文件的直接影响：
+
+1. **§9.2 / D9**：14 项残留全部按建议豁免结案（#1c/#2b/#3a/#4b），总登记 `UPSTREAM.md` Deviation-06；
+   `v12-d9-residual-triage.md` §6 回写；「差集为空」按**文件**口径成立。
+2. **D12 → 已批复 (a)**：`createAirApp` 增 `physics: 'builtin' | 'cannon'` 交付期切换；`physics-cannon` 编入默认集合
+   （上文 §9.1 第 2 条分析的「前提」成立：双后端同 bundle + web 构建下 `switchTo()` 可用）。
+   代价照单全收：产物字节变更 ⇒ §12 全量证据重采（V1.2 矩阵含新例 `physics-3d-collision` + V1.1 链 52 例），新基线见 bundle 预算 r46 行。
+3. **D10 → (b)**：webgpu 维持「三浏览器回退探测证据」档；**D11 → (b)**：post-process 维持「变体构建级开关对照」档。
+   两者均不改默认产物字节。
+

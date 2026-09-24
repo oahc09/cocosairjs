@@ -549,7 +549,7 @@ F-3 簿记回填：
 |---|---|---|
 | D1 | bundle 组织：单文件 vs 分包 | 维持 three.js 风格单文件 ESM；wasm/大型运行库走运行时资产（P2 模式）；超预算再复议 |
 | D2 | spine 运行时：js(3.8/4.2 dynamic) vs wasm | 默认对齐官方 exports/spine.ts 行为（version-dynamic 自动选择）；wasm 资产就绪后作为增强 |
-| D3 | box2d wasm 资产来源与部署路径 | 来源 @cocos/box2d 包内资产（G1 实测确认）；部署进 P2 运行时资产目录 |
+| D3 | box2d wasm 资产来源与部署路径 | ~~来源 @cocos/box2d 包内资产（G1 实测确认）；部署进 P2 运行时资产目录~~ **〔r46 更正留痕〕该前提已被实测证伪**：`@cocos/box2d@1.0.2` 包内 `.wasm` 计数为 0，`external:emscripten/**` 不在上游快照也不在上游 git（`docs/v12-physics-asset-sourcing.md` §2）。Owner 批复 #10=(a)：按 D8 口径结案（「代码回归+选择器可达+降级可测」部分通过），(b) 引资产路线不执行 |
 | D4 | root.jsb.ts 处置 | 默认不抽取 + 双处 Deviation 登记；评审要求物理对齐则「复制但不接线」 |
 | D5 | air.ts 聚合导出面扩大的范围 | 每特性单独评审：优先并入（与官方 exports 同名导出保持一致），体积/命名冲突项挂到独立出口 |
 | D6 | WebGPU 设备选择 API | createAirApp 增加 device 偏好（'webgl2' 默认/'webgpu'/'auto'），additive 登记 |

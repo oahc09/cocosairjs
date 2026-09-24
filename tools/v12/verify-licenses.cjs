@@ -50,9 +50,9 @@ const REGISTRY = [
         licenseFile: 'licenses/LICENSE_cannon.txt',
         sourceOfTruth: { kind: 'vendored', path: 'src/node_modules/@cocos/cannon/LICENSE' },
         licenseId: 'MIT (c) 2015 cannon.js Authors',
-        ships: 'variant',
-        probes: ['CannonPhysicsWorld'],
-        note: '默认 3D 后端是 builtin，cannon 只在 AIR_FEATURES 变体里进产物；许可仍随仓库文本发布。',
+        ships: 'default', // r46（#8(a)）：cannon 入默认 bundle（交付期 builtin+cannon 双编入，默认仍 builtin）
+        probes: ['CannonWorld'],
+        note: 'r46 起默认产物内嵌（原仅变体）；许可仍随仓库文本发布。',
     },
     {
         component: 'zlib.js (src/external/compression/zlib.min.js)',

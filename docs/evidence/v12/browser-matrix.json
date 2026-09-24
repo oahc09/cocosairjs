@@ -1,17 +1,17 @@
 {
   "schema": "v12-browser-matrix-v1",
   "completed": true,
-  "measuredAt": "2026-09-22T18:28:59.376Z",
+  "measuredAt": "2026-09-24T17:05:28.095Z",
   "subset": false,
-  "runPass": 36,
-  "runTotal": 36,
+  "runPass": 39,
+  "runTotal": 39,
   "bundle": {
     "path": "build/cocosair.module.js",
-    "bytes": 6081668,
-    "sha256_16": "35496aebda066ab5"
+    "bytes": 6600516,
+    "sha256_16": "154c3945e25acafa"
   },
   "contractFile": "tools/v12/browser-matrix-contract.json",
-  "contractFingerprint": "dee8a12fe8b222f5",
+  "contractFingerprint": "194e1b97fbaa92fc",
   "engines": [
     "chromium",
     "firefox",
@@ -35,8 +35,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-chromium.png",
-      "pngBytes": 11061,
-      "pngSha256_16": "fd830d00d691a774",
+      "pngBytes": 11065,
+      "pngSha256_16": "6055296603785bcf",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -52,7 +52,7 @@
         "overlayActive": true,
         "counters": {
           "fps": {
-            "value": 60.01,
+            "value": 60.02,
             "enabled": false
           },
           "draws": {
@@ -64,7 +64,7 @@
             "enabled": false
           },
           "frame": {
-            "value": 0.3,
+            "value": 0.9,
             "enabled": false
           },
           "instances": {
@@ -76,7 +76,7 @@
             "enabled": false
           },
           "logic": {
-            "value": 0,
+            "value": 0.1,
             "enabled": false
           },
           "physics": {
@@ -84,7 +84,7 @@
             "enabled": false
           },
           "render": {
-            "value": 0.2,
+            "value": 0.7,
             "enabled": false
           },
           "present": {
@@ -102,9 +102,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -121,8 +119,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-firefox.png",
-      "pngBytes": 12075,
-      "pngSha256_16": "95f77f0de0eba4d0",
+      "pngBytes": 11982,
+      "pngSha256_16": "0ac1545425ea7174",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -138,7 +136,7 @@
         "overlayActive": true,
         "counters": {
           "fps": {
-            "value": 60.08,
+            "value": 59.96,
             "enabled": false
           },
           "draws": {
@@ -188,9 +186,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -207,8 +203,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-webkit.png",
-      "pngBytes": 10439,
-      "pngSha256_16": "b47bf4b91d9ba022",
+      "pngBytes": 11039,
+      "pngSha256_16": "231228e589c07179",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -224,7 +220,7 @@
         "overlayActive": true,
         "counters": {
           "fps": {
-            "value": 59.76,
+            "value": 57.2,
             "enabled": false
           },
           "draws": {
@@ -274,9 +270,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -293,8 +287,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-chromium.png",
-      "pngBytes": 12766,
-      "pngSha256_16": "4fa4e1fd2be930ae",
+      "pngBytes": 12573,
+      "pngSha256_16": "8d8161c08d409eba",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -436,9 +430,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -455,8 +447,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-firefox.png",
-      "pngBytes": 16000,
-      "pngSha256_16": "85f197024e4a0015",
+      "pngBytes": 15653,
+      "pngSha256_16": "22fa453c8edf109f",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -598,9 +590,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -617,8 +607,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-webkit.png",
-      "pngBytes": 14158,
-      "pngSha256_16": "09c433189cddd139",
+      "pngBytes": 14159,
+      "pngSha256_16": "e303b65e7757a48e",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -760,9 +750,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -923,9 +911,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -1086,9 +1072,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -1249,9 +1233,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -1456,9 +1438,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -1663,9 +1643,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -1870,9 +1848,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -22815,9 +22791,7 @@
         ]
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -43760,9 +43734,7 @@
         ]
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -64705,9 +64677,7 @@
         ]
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -64724,8 +64694,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-chromium.png",
-      "pngBytes": 54056,
-      "pngSha256_16": "4d605c455ab58768",
+      "pngBytes": 53038,
+      "pngSha256_16": "8932a08a91a58f59",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -65291,17 +65261,15 @@
           "randomRestored": true
         },
         "live": {
-          "flame": 151,
-          "ring": 144
+          "flame": 157,
+          "ring": 141
         },
         "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
         "clamp": 0.033333,
         "phaseKeys": 29
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -65318,8 +65286,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-firefox.png",
-      "pngBytes": 64065,
-      "pngSha256_16": "9528596bf9fe9692",
+      "pngBytes": 62657,
+      "pngSha256_16": "5c82352e4ba41f59",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -65885,17 +65853,15 @@
           "randomRestored": true
         },
         "live": {
-          "flame": 152,
-          "ring": 139
+          "flame": 155,
+          "ring": 137
         },
         "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
         "clamp": 0.033333,
         "phaseKeys": 29
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -65912,8 +65878,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-webkit.png",
-      "pngBytes": 57795,
-      "pngSha256_16": "6b48d0f0de0e88dd",
+      "pngBytes": 55432,
+      "pngSha256_16": "8e88f26a30f1ff37",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -66479,17 +66445,15 @@
           "randomRestored": true
         },
         "live": {
-          "flame": 156,
-          "ring": 136
+          "flame": 147,
+          "ring": 144
         },
         "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
         "clamp": 0.033333,
         "phaseKeys": 29
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -66506,8 +66470,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\tiledmap-basic\\matrix-chromium.png",
-      "pngBytes": 12297,
-      "pngSha256_16": "0b7d30543716d15e",
+      "pngBytes": 12460,
+      "pngSha256_16": "de84b91fcd53eb47",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -67060,12 +67024,12 @@
             "diamondHasAnimation": false,
             "cellGid": 1,
             "liveGrid": [
-              2,
-              32,
+              1,
+              0,
+              0,
+              0,
               0,
               0.5,
-              0,
-              1,
               1
             ],
             "gridIsOneOfFrames": true,
@@ -67089,9 +67053,7 @@
         "phaseKeys": 8
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -67691,9 +67653,7 @@
         "phaseKeys": 8
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -67710,8 +67670,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\tiledmap-basic\\matrix-webkit.png",
-      "pngBytes": 13273,
-      "pngSha256_16": "cdff8fb5b6fb04d3",
+      "pngBytes": 13386,
+      "pngSha256_16": "955e66a9b1787a5c",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68264,12 +68224,12 @@
             "diamondHasAnimation": false,
             "cellGid": 1,
             "liveGrid": [
-              2,
-              32,
+              1,
+              0,
+              0,
+              0,
               0,
               0.5,
-              0,
-              1,
               1
             ],
             "gridIsOneOfFrames": true,
@@ -68293,9 +68253,7 @@
         "phaseKeys": 8
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -68312,8 +68270,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-chromium.png",
-      "pngBytes": 12413,
-      "pngSha256_16": "1f1a5551d3b5e3ff",
+      "pngBytes": 12421,
+      "pngSha256_16": "64dd5ab2163552a9",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68333,7 +68291,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 929,
+              "tMs": 1456,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68344,7 +68302,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 1238,
+              "tMs": 1761,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68395,7 +68353,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 803,
+            "unlockLatencyMs": 1220,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68405,7 +68363,7 @@
           },
           "p5TimeMachine": {
             "clockAdvancedWhilePlaying": true,
-            "posDelta": 0.053,
+            "posDelta": 0.052,
             "wallDeltaMs": 53,
             "stateAfterPause": "PAUSED(2)",
             "frozenWhilePaused": 0,
@@ -68425,7 +68383,7 @@
             "seekLatencyMs": 0,
             "afterSeekPos": 1.5,
             "seekLandedsInRange": true,
-            "endLatencyMs": 129,
+            "endLatencyMs": 130,
             "endEventFired": true,
             "endedDelta": 1,
             "stateAfterEnd": "INIT(0)",
@@ -68439,7 +68397,7 @@
             "loopFlagOnPlayer": true,
             "stateWhileLooping": "PLAYING(1)",
             "stillPlaying": true,
-            "wrapLatencyMs": 107,
+            "wrapLatencyMs": 103,
             "wrappedBelowSeekTarget": true,
             "endedDeltaDuringLoop": 0,
             "playingBeforeOneShot": true,
@@ -68455,10 +68413,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22538,
+            "tMs": 23084,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.857,
+            "currentTime": 0.849,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68466,10 +68424,10 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22538,
+            "tMs": 23084,
             "playing": true,
             "state": "PLAYING(1)",
-            "currentTime": 0.067,
+            "currentTime": 1.251,
             "duration": 1.6,
             "volume": 0.35,
             "loop": true,
@@ -68502,15 +68460,13 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@13715|started@13715|started@14004|ended@14319|started@14345|started@14572"
+          "events": "started@14676|started@14676|started@14964|ended@15272|started@15298|started@15525"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -68527,8 +68483,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-firefox.png",
-      "pngBytes": 17892,
-      "pngSha256_16": "4f87169c7ce44190",
+      "pngBytes": 17889,
+      "pngSha256_16": "bd3a8e49c1740bcd",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68548,7 +68504,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 1204,
+              "tMs": 1394,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68559,7 +68515,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 1506,
+              "tMs": 1701,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68610,7 +68566,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 689,
+            "unlockLatencyMs": 739,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68638,7 +68594,7 @@
           },
           "p7SeekEnd": {
             "seekLatencyMs": 0,
-            "afterSeekPos": 1.5,
+            "afterSeekPos": 1.501,
             "seekLandedsInRange": true,
             "endLatencyMs": 101,
             "endEventFired": true,
@@ -68670,10 +68626,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22745,
+            "tMs": 22828,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.818,
+            "currentTime": 0.824,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68681,10 +68637,10 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22745,
+            "tMs": 22828,
             "playing": true,
             "state": "PLAYING(1)",
-            "currentTime": 0.169,
+            "currentTime": 0.14,
             "duration": 1.6,
             "volume": 0.35,
             "loop": true,
@@ -68717,15 +68673,13 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@13815|started@13815|started@14104|ended@14410|started@14411|started@14635"
+          "events": "started@13933|started@13933|started@14230|ended@14532|started@14534|started@14758"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -68742,8 +68696,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-webkit.png",
-      "pngBytes": 13001,
-      "pngSha256_16": "6124f67cb53bf839",
+      "pngBytes": 13003,
+      "pngSha256_16": "6acc0b31e0ed845b",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68763,7 +68717,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 8602,
+              "tMs": 9402,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68774,7 +68728,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 8911,
+              "tMs": 9706,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68825,7 +68779,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 1639,
+            "unlockLatencyMs": 852,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68835,8 +68789,8 @@
           },
           "p5TimeMachine": {
             "clockAdvancedWhilePlaying": true,
-            "posDelta": 0.072,
-            "wallDeltaMs": 73,
+            "posDelta": 0.079,
+            "wallDeltaMs": 430,
             "stateAfterPause": "PAUSED(2)",
             "frozenWhilePaused": 0,
             "resumedState": "PLAYING(1)",
@@ -68855,7 +68809,7 @@
             "seekLatencyMs": 0,
             "afterSeekPos": 1.5,
             "seekLandedsInRange": true,
-            "endLatencyMs": 181,
+            "endLatencyMs": 174,
             "endEventFired": true,
             "endedDelta": 1,
             "stateAfterEnd": "INIT(0)",
@@ -68869,7 +68823,7 @@
             "loopFlagOnPlayer": true,
             "stateWhileLooping": "PLAYING(1)",
             "stillPlaying": true,
-            "wrapLatencyMs": 146,
+            "wrapLatencyMs": 137,
             "wrappedBelowSeekTarget": true,
             "endedDeltaDuringLoop": 0,
             "playingBeforeOneShot": true,
@@ -68885,10 +68839,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22621,
+            "tMs": 23806,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 1.03,
+            "currentTime": 0.919,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68896,7 +68850,7 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22621,
+            "tMs": 23806,
             "playing": true,
             "state": "PLAYING(1)",
             "currentTime": 0,
@@ -68915,7 +68869,7 @@
               "ended": false,
               "seeking": false,
               "readyState": 3,
-              "currentTime": 1.03,
+              "currentTime": 0.919,
               "duration": 1.6,
               "loop": false,
               "errCode": 0,
@@ -68956,15 +68910,13 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@16998|started@17016|started@17358|ended@17735|started@17765|started@18036"
+          "events": "started@17429|started@17429|started@18140|ended@18530|started@18561|started@18825"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -68981,8 +68933,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-chromium.png",
-      "pngBytes": 27940,
-      "pngSha256_16": "e5dba3cb9e530895",
+      "pngBytes": 26282,
+      "pngSha256_16": "b5c7deab5cea4f6a",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68999,7 +68951,7 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 53,
+          "startedAtMs": 133,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
@@ -69012,8 +68964,8 @@
             "cacheHasUrl": true
           },
           "p1Mount": {
-            "metaLoadedWithinMs": 20,
-            "readyToPlayWithinMs": 21,
+            "metaLoadedWithinMs": 45,
+            "readyToPlayWithinMs": 0,
             "videoCount": 1,
             "className": "cocosVideo",
             "inGameContainer": true,
@@ -69045,15 +68997,15 @@
             "logPrefix": "handler:meta-loaded>meta-loaded>handler:ready-to-play"
           },
           "p3Controls": {
-            "playingWithinMs": 22,
-            "startedAt": 0.02,
+            "playingWithinMs": 21,
+            "startedAt": 0.019,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.42,
+            "tAfter400ms": 0.424,
             "pausedWithinMs": 21,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": false,
-            "seekedTo": 0.126,
+            "seekedTo": 0.12,
             "rateReadback": [
               2,
               2
@@ -69110,9 +69062,9 @@
               "colorBins": 242
             },
             "frameB": {
-              "mean": 114.65,
+              "mean": 115.12,
               "nonBlackRatio": 0.999,
-              "colorBins": 305
+              "colorBins": 306
             },
             "decodedFramesAdvance": true,
             "frameNotBlank": true
@@ -69140,14 +69092,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 1901,
-            "wrapWithinMs": 1125,
+            "seekSettledWithinMs": 1917,
+            "wrapWithinMs": 1108,
             "completedDeltaDuringLoop": 0,
             "stateNow": "playing",
-            "currentTimeNow": 0.019
+            "currentTimeNow": 0.02
           },
           "sequenceComplete": true,
-          "sequenceMs": 8483,
+          "sequenceMs": 8768,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69269,16 +69221,14 @@
           "fullscreenElementIsNull": true,
           "stayOnBottom": true,
           "domRect": "160x120",
-          "frameMeanNow": 114.94,
+          "frameMeanNow": 116.32,
           "liveFramesAdvance": true,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 35503
+          "elapsedMs": 35641
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -69295,8 +69245,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-firefox.png",
-      "pngBytes": 27866,
-      "pngSha256_16": "54a28d46607ef472",
+      "pngBytes": 31736,
+      "pngSha256_16": "5d03b2f1be7ebd7f",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -69313,7 +69263,7 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 133,
+          "startedAtMs": 194,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
@@ -69326,8 +69276,8 @@
             "cacheHasUrl": true
           },
           "p1Mount": {
-            "metaLoadedWithinMs": 21,
-            "readyToPlayWithinMs": 0,
+            "metaLoadedWithinMs": 40,
+            "readyToPlayWithinMs": 20,
             "videoCount": 1,
             "className": "cocosVideo",
             "inGameContainer": true,
@@ -69362,8 +69312,8 @@
             "playingWithinMs": 20,
             "startedAt": 0,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.404,
-            "pausedWithinMs": 21,
+            "tAfter400ms": 0.407,
+            "pausedWithinMs": 20,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": true,
@@ -69434,7 +69384,7 @@
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
             "remoteMetaWithinMs": 20,
-            "backToLocalWithinMs": 0,
+            "backToLocalWithinMs": 1,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
             "oldElementDetached": true,
@@ -69454,14 +69404,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 36,
-            "wrapWithinMs": 1026,
+            "seekSettledWithinMs": 41,
+            "wrapWithinMs": 999,
             "completedDeltaDuringLoop": 0,
             "stateNow": "playing",
-            "currentTimeNow": 0.01
+            "currentTimeNow": 0.007
           },
           "sequenceComplete": true,
-          "sequenceMs": 6230,
+          "sequenceMs": 6280,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69484,7 +69434,7 @@
             },
             "awakeVideoCountBeforeClip": 1,
             "awake": {
-              "metaWithinMs": 20,
+              "metaWithinMs": 42,
               "fullScreenOnAwakeReadback": true,
               "videoCount": 2,
               "fsEl": "null",
@@ -69522,6 +69472,8 @@
           "playing",
           "handler:playing",
           "playing",
+          "handler:playing",
+          "playing",
           "handler:meta-loaded",
           "meta-loaded",
           "handler:ready-to-play",
@@ -69551,16 +69503,14 @@
           "fullscreenElementIsNull": true,
           "stayOnBottom": true,
           "domRect": "160x120",
-          "frameMeanNow": 116.87,
+          "frameMeanNow": 116.69,
           "liveFramesAdvance": true,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 35801
+          "elapsedMs": 35703
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -69577,8 +69527,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-webkit.png",
-      "pngBytes": 29158,
-      "pngSha256_16": "b549293d4408b446",
+      "pngBytes": 29157,
+      "pngSha256_16": "e195a45d49965b3a",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -69595,12 +69545,12 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 363,
+          "startedAtMs": 817,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
             "nativeTag": "VIDEO",
-            "videoCurrentSrcEmpty": true,
+            "videoCurrentSrcEmpty": false,
             "sourceChildSrcScheme": "blob:",
             "nativeUrlIsRequestUrl": true,
             "clipDurationField": "NaN",
@@ -69608,7 +69558,7 @@
             "cacheHasUrl": true
           },
           "p1Mount": {
-            "metaLoadedWithinMs": 953,
+            "metaLoadedWithinMs": 1851,
             "readyToPlayWithinMs": -1,
             "videoCount": 1,
             "className": "cocosVideo",
@@ -69641,15 +69591,15 @@
             "logPrefix": "handler:meta-loaded>meta-loaded>handler:completed"
           },
           "p3Controls": {
-            "playingWithinMs": 29,
-            "startedAt": 0,
+            "playingWithinMs": 33,
+            "startedAt": 0.02,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.416,
-            "pausedWithinMs": 39,
+            "tAfter400ms": 0.437,
+            "pausedWithinMs": 30,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": true,
-            "seekedTo": 1.298,
+            "seekedTo": 1.311,
             "rateReadback": [
               2,
               2
@@ -69715,8 +69665,8 @@
           },
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
-            "remoteMetaWithinMs": 281,
-            "backToLocalWithinMs": 1,
+            "remoteMetaWithinMs": 596,
+            "backToLocalWithinMs": 0,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
             "oldElementDetached": true,
@@ -69728,7 +69678,7 @@
             "endedDelta": 0,
             "stateAfterEnd": "meta-loaded",
             "isPlayingAfterEnd": false,
-            "currentTimeAfterEnd": 0.002,
+            "currentTimeAfterEnd": 0.003,
             "clampedBeyondDuration": [
               3,
               3
@@ -69736,14 +69686,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 1926,
-            "wrapWithinMs": 1078,
+            "seekSettledWithinMs": 1918,
+            "wrapWithinMs": 1101,
             "completedDeltaDuringLoop": 0,
-            "stateNow": "playing",
+            "stateNow": "paused",
             "currentTimeNow": 0
           },
           "sequenceComplete": true,
-          "sequenceMs": 13600,
+          "sequenceMs": 15267,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69766,7 +69716,7 @@
             },
             "awakeVideoCountBeforeClip": 1,
             "awake": {
-              "metaWithinMs": 276,
+              "metaWithinMs": 596,
               "fullScreenOnAwakeReadback": true,
               "videoCount": 2,
               "fsEl": "null",
@@ -69802,8 +69752,6 @@
           "playing",
           "handler:playing",
           "playing",
-          "handler:playing",
-          "playing",
           "handler:meta-loaded",
           "meta-loaded",
           "handler:meta-loaded",
@@ -69834,13 +69782,11 @@
           "frameMeanNow": 113.34,
           "liveFramesAdvance": false,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 35857
+          "elapsedMs": 38186
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -69857,8 +69803,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-chromium.png",
-      "pngBytes": 31906,
-      "pngSha256_16": "330b3d5df1a20407",
+      "pngBytes": 31902,
+      "pngSha256_16": "27680b31b9d232f3",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -69875,14 +69821,14 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 837,
+          "startedAtMs": 1253,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 135,
+            "loadedWithinMs": 271,
             "matrixSizeWithinMs": 0,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
@@ -69955,7 +69901,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 22,
+            "errorWithinMs": 45,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -69980,7 +69926,7 @@
             "stateAfterDestroy": "none",
             "hitAfterDestroy": "CANVAS",
             "isValidAfterDestroy": false,
-            "reloadedWithinMs": 20,
+            "reloadedWithinMs": 21,
             "matrixSizeWithinMs": 0,
             "wrappersAfterRebuild": 1,
             "iframesAfterRebuild": 1,
@@ -69991,7 +69937,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 741
+          "sequenceMs": 996
         },
         "eventLog": [
           "cb:loading",
@@ -70029,13 +69975,11 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15204
+          "elapsedMs": 15441
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -70052,8 +69996,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-firefox.png",
-      "pngBytes": 30087,
-      "pngSha256_16": "4b36af7ff8846fb1",
+      "pngBytes": 30129,
+      "pngSha256_16": "93286a3ebd946b70",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -70070,14 +70014,14 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 756,
+          "startedAtMs": 739,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 152,
+            "loadedWithinMs": 121,
             "matrixSizeWithinMs": 0,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
@@ -70150,7 +70094,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 57,
+            "errorWithinMs": 106,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -70175,7 +70119,7 @@
             "stateAfterDestroy": "none",
             "hitAfterDestroy": "CANVAS",
             "isValidAfterDestroy": false,
-            "reloadedWithinMs": 40,
+            "reloadedWithinMs": 41,
             "matrixSizeWithinMs": 0,
             "wrappersAfterRebuild": 1,
             "iframesAfterRebuild": 1,
@@ -70186,7 +70130,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 894
+          "sequenceMs": 1035
         },
         "eventLog": [
           "cb:loading",
@@ -70224,13 +70168,11 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15345
+          "elapsedMs": 15405
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -70247,8 +70189,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-webkit.png",
-      "pngBytes": 25861,
-      "pngSha256_16": "6dc169eb73781719",
+      "pngBytes": 26052,
+      "pngSha256_16": "3702ef124ae7cebf",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -70265,15 +70207,15 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 219,
+          "startedAtMs": 574,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 42,
-            "matrixSizeWithinMs": 66,
+            "loadedWithinMs": 44,
+            "matrixSizeWithinMs": 143,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
             "wrapperId": "webview-wrapper",
@@ -70345,7 +70287,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 40,
+            "errorWithinMs": 58,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -70370,7 +70312,7 @@
             "stateAfterDestroy": "none",
             "hitAfterDestroy": "CANVAS",
             "isValidAfterDestroy": false,
-            "reloadedWithinMs": 30,
+            "reloadedWithinMs": 35,
             "matrixSizeWithinMs": 0,
             "wrappersAfterRebuild": 1,
             "iframesAfterRebuild": 1,
@@ -70381,7 +70323,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 1044
+          "sequenceMs": 1509
         },
         "eventLog": [
           "cb:loading",
@@ -70419,13 +70361,11 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15418
+          "elapsedMs": 15766
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -71326,9 +71266,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -72229,9 +72167,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -73132,9 +73068,7 @@
         }
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -73151,8 +73085,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-chromium.png",
-      "pngBytes": 10898,
-      "pngSha256_16": "3f479b6f59c3974b",
+      "pngBytes": 10855,
+      "pngSha256_16": "3550325fd95f7ddd",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -74163,13 +74097,13 @@
               480,
               360
             ],
-            "litRatio": 0.0252,
+            "litRatio": 0.0254,
             "platePresent": true,
             "wingPresent": true,
             "tipPresent": false,
             "counts": {
-              "plate": 120,
-              "wing": 137,
+              "plate": 116,
+              "wing": 136,
               "tip": 0,
               "background": 0
             }
@@ -74179,9 +74113,7 @@
         "phaseKeys": 6
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -74198,8 +74130,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-firefox.png",
-      "pngBytes": 12867,
-      "pngSha256_16": "ea7321c085f0e731",
+      "pngBytes": 12905,
+      "pngSha256_16": "c68d2e2535f4d003",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -75226,9 +75158,7 @@
         "phaseKeys": 6
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
-      ],
+      "benignConsole": [],
       "failedRequests": []
     },
     {
@@ -75246,7 +75176,7 @@
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-webkit.png",
       "pngBytes": 11521,
-      "pngSha256_16": "63bf43310847543b",
+      "pngSha256_16": "01f839e95b4fc24f",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -76257,13 +76187,13 @@
               480,
               360
             ],
-            "litRatio": 0.0237,
+            "litRatio": 0.0235,
             "platePresent": true,
             "wingPresent": true,
             "tipPresent": false,
             "counts": {
-              "plate": 117,
-              "wing": 136,
+              "plate": 120,
+              "wing": 137,
               "tip": 0,
               "background": 0
             }
@@ -76273,9 +76203,208 @@
         "phaseKeys": 6
       },
       "consoleErrors": [],
-      "benignConsole": [
-        "[Physics] PhysicsSystem initDefaultMaterial() Failed to load builtinMaterial."
+      "benignConsole": [],
+      "failedRequests": []
+    },
+    {
+      "engine": "chromium",
+      "example": "physics-3d-collision",
+      "group": "LV12-15",
+      "result": "PASS",
+      "checks": {
+        "noConsoleError": true,
+        "noFailedRequest": true,
+        "frameChanged": true,
+        "pngBytesAboveFloor": true,
+        "probeAssertions": true
+      },
+      "failedAssertions": [],
+      "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-chromium.png",
+      "pngBytes": 4701,
+      "pngSha256_16": "187c218fe792fb8b",
+      "pngBefore": null,
+      "pngFloors": {
+        "after": 1,
+        "exemptedByEngine": {}
+      },
+      "viewports": [
+        {
+          "width": 480,
+          "height": 360
+        }
       ],
+      "probe": {
+        "backendWorldCtor": "CannonWorld",
+        "sysNone": false,
+        "sysBuiltin": false,
+        "sysCannon": true,
+        "sysBullet": false,
+        "sysPhysx": false,
+        "gravityY": -10,
+        "worldHasGravity": false,
+        "bodyCount": 3,
+        "groundType": "STATIC",
+        "ballAType": "DYNAMIC",
+        "ballBType": "DYNAMIC",
+        "fixedTimeStep": 0.02,
+        "maxSubSteps": 1,
+        "simSteps": 180,
+        "startYA": 3,
+        "startYB": 5.5,
+        "restYA": 0.5,
+        "restYB": 1.5,
+        "restStable": true,
+        "fallDeltaA": 2.5,
+        "enterTotal": 2,
+        "stayTotal": 320,
+        "exitTotal": 0,
+        "enterPairs": "BallA|BallB,BallA|Ground",
+        "contactsAtFirstEnter": 1,
+        "velocityYBAtEnter": 0,
+        "rayHitName": "BallB",
+        "rayHitDist": 8,
+        "rayHitCount": 4,
+        "rayHitNormalY": 1,
+        "rayClosestName": "Ground",
+        "rayClosestDist": 10,
+        "frames": 171
+      },
+      "consoleErrors": [],
+      "benignConsole": [],
+      "failedRequests": []
+    },
+    {
+      "engine": "firefox",
+      "example": "physics-3d-collision",
+      "group": "LV12-15",
+      "result": "PASS",
+      "checks": {
+        "noConsoleError": true,
+        "noFailedRequest": true,
+        "frameChanged": true,
+        "pngBytesAboveFloor": true,
+        "probeAssertions": true
+      },
+      "failedAssertions": [],
+      "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-firefox.png",
+      "pngBytes": 5045,
+      "pngSha256_16": "c91ad38dfd478f49",
+      "pngBefore": null,
+      "pngFloors": {
+        "after": 1,
+        "exemptedByEngine": {}
+      },
+      "viewports": [
+        {
+          "width": 480,
+          "height": 360
+        }
+      ],
+      "probe": {
+        "backendWorldCtor": "CannonWorld",
+        "sysNone": false,
+        "sysBuiltin": false,
+        "sysCannon": true,
+        "sysBullet": false,
+        "sysPhysx": false,
+        "gravityY": -10,
+        "worldHasGravity": false,
+        "bodyCount": 3,
+        "groundType": "STATIC",
+        "ballAType": "DYNAMIC",
+        "ballBType": "DYNAMIC",
+        "fixedTimeStep": 0.02,
+        "maxSubSteps": 1,
+        "simSteps": 180,
+        "startYA": 3,
+        "startYB": 5.5,
+        "restYA": 0.5,
+        "restYB": 1.5,
+        "restStable": true,
+        "fallDeltaA": 2.5,
+        "enterTotal": 2,
+        "stayTotal": 320,
+        "exitTotal": 0,
+        "enterPairs": "BallA|BallB,BallA|Ground",
+        "contactsAtFirstEnter": 1,
+        "velocityYBAtEnter": 0,
+        "rayHitName": "BallB",
+        "rayHitDist": 8,
+        "rayHitCount": 4,
+        "rayHitNormalY": 1,
+        "rayClosestName": "Ground",
+        "rayClosestDist": 10,
+        "frames": 169
+      },
+      "consoleErrors": [],
+      "benignConsole": [],
+      "failedRequests": []
+    },
+    {
+      "engine": "webkit",
+      "example": "physics-3d-collision",
+      "group": "LV12-15",
+      "result": "PASS",
+      "checks": {
+        "noConsoleError": true,
+        "noFailedRequest": true,
+        "frameChanged": true,
+        "pngBytesAboveFloor": true,
+        "probeAssertions": true
+      },
+      "failedAssertions": [],
+      "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-webkit.png",
+      "pngBytes": 5505,
+      "pngSha256_16": "9606db4fbcdfab80",
+      "pngBefore": null,
+      "pngFloors": {
+        "after": 1,
+        "exemptedByEngine": {}
+      },
+      "viewports": [
+        {
+          "width": 480,
+          "height": 360
+        }
+      ],
+      "probe": {
+        "backendWorldCtor": "CannonWorld",
+        "sysNone": false,
+        "sysBuiltin": false,
+        "sysCannon": true,
+        "sysBullet": false,
+        "sysPhysx": false,
+        "gravityY": -10,
+        "worldHasGravity": false,
+        "bodyCount": 3,
+        "groundType": "STATIC",
+        "ballAType": "DYNAMIC",
+        "ballBType": "DYNAMIC",
+        "fixedTimeStep": 0.02,
+        "maxSubSteps": 1,
+        "simSteps": 180,
+        "startYA": 3,
+        "startYB": 5.5,
+        "restYA": 0.5,
+        "restYB": 1.5,
+        "restStable": true,
+        "fallDeltaA": 2.5,
+        "enterTotal": 2,
+        "stayTotal": 320,
+        "exitTotal": 0,
+        "enterPairs": "BallA|BallB,BallA|Ground",
+        "contactsAtFirstEnter": 1,
+        "velocityYBAtEnter": 0,
+        "rayHitName": "BallB",
+        "rayHitDist": 8,
+        "rayHitCount": 4,
+        "rayHitNormalY": 1,
+        "rayClosestName": "Ground",
+        "rayClosestDist": 10,
+        "frames": 169
+      },
+      "consoleErrors": [],
+      "benignConsole": [],
       "failedRequests": []
     }
   ]

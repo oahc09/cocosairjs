@@ -32,7 +32,7 @@ const specCommon = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.c
 const ENGINES = {
   chromium: { dir: 'chromium-1228', exe: 'chrome-win64/chrome.exe', args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] },
   firefox: { dir: 'firefox-1543', exe: 'firefox/firefox.exe', args: [] },
-  webkit: { dir: 'webkit-2361', exe: 'Playwright.exe', args: [] },
+  webkit: { dir: 'webkit-2311', exe: 'Playwright.exe', args: [] },
 };
 // V1.1 全 40 例共同存在的非致命日志，不计入失败（披露在证据 benignConsole 字段）
 const BENIGN_CONSOLE = ['[Physics] PhysicsSystem initDefaultMaterial()'];

@@ -39,6 +39,11 @@
 
 ## 4. 全部 feature 清单与 Air 取舍
 
+> **〔r46 快照标注，owner-decisions #16(c)+(a)〕本节与 §5 是 2026-09-12 立项期（V0.1）的取舍快照，不是当期口径；
+> 当期 feature 面的机器导出读数见 §7 与 `npm run verify:v12-feature-face` / `npm run verify:v12-backends`（A5）。
+> 陈述更正：下表 `gfx-webgl2` 行的「Air V0.1 = No」从未与构建事实一致——`tools/build/build.cjs` 默认集自 V0.1 基线提交
+> `f1bc676` 起即含 `gfx-webgl2` 与入口 unit `air`（§5 列表当时亦漏列二者）；「裁掉 WebGL2」的取舍从未生效，特此承认并留痕。**
+
 Air V0.1 保留能力（计划书 §29）：Core/Math/Scene Graph/Component/Game/Director/Asset/GFX Web/Render Scene/Pipeline/Camera/Light/Mesh/Material/Texture/Animation/Skeleton/Skinning/Web Input/Web PAL。
 
 | Feature | Web build | Air V0.1 | 理由 |
@@ -69,6 +74,10 @@ Air V0.1 保留能力（计划书 §29）：Core/Math/Scene Graph/Component/Game
 > 注：websocket/websocket-server 为 `isNativeOnly`；`marionette`/`procedural-animation` 只贡献 intrinsicFlags（modules 为空），不选则空实现替换生效。
 
 ## 5. Air V0.1 feature 集（构建入口）
+
+> 〔r46 快照标注〕同 §4：本列表为立项期记录，且不完整——实际构建入口自 V0.1 起为
+> `base, gfx-webgl, gfx-webgl2, gfx-empty, 3d, animation, skeletal-animation, primitive, tween,
+> custom-pipeline, legacy-pipeline, air`（12 项，含入口 unit `air`）；当期默认集 26 项见 §7。
 
 ```text
 base, gfx-webgl, gfx-empty, 3d, animation, skeletal-animation,

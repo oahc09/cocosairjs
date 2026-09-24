@@ -14,6 +14,7 @@ import { DebugMode } from '../cocos/core/platform/debug';
 import { AirAppImpl } from './app';
 import type { AirApp, AirAppOptions } from './app';
 import { registerBuiltinAirAssets } from './builtin/register';
+import { selectPhysicsBackend } from './physics-backend';
 
 export type { AirApp, AirAppOptions } from './app';
 
@@ -78,6 +79,12 @@ export async function createAirApp (options: AirAppOptions): Promise<AirApp> {
         throw new Error('[cocosair] createAirApp requires a canvas.');
     }
     ensureCanvasDOM(canvas);
+
+    // 3D 物理后端选择（r46，#8(a)）：官方两个 instantiate 在模块求值期向
+    // Game.EVENT_PRE_SUBSYSTEM_INIT 各挂一个 register 监听器（builtin 先、cannon 后，
+    // 故模块序默认会让 cannon 胜出）。本监听器在两个之后注册 ⇒ 同事件内最后执行，
+    // 用户后端确定性胜出；世界在该事件之后的子系统初始化期才创建，时序安全。
+    game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, () => selectPhysicsBackend(options.physics ?? 'builtin'));
 
     // 注册引擎同源 builtin effects/materials（含 glsl1 降写，见 builtin/register.ts）
     game.on(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);

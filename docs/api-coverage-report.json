@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-23T01:52:28.743Z",
+  "generatedAt": "2026-09-24T17:17:28.978Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-22T18:49:42.756Z",
+      "measuredAt": "2026-09-24T17:12:20.817Z",
       "mode": "spec-driven-v3"
     },
     {
@@ -23,8 +23,8 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "9fa85f88b968d5f1",
-  "inventoryFingerprint": "297d42ae49a868a0",
+  "candidateFingerprint": "927bb491cc9119b1",
+  "inventoryFingerprint": "15d629f3a2262d01",
   "inventoryConsistency": [],
   "totalUnits": 8060,
   "totalRequired": 2589,
@@ -35,7 +35,11 @@
   "totalVerifiedViaRead": 14,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [
-    "mesh-sphere"
+    "automation",
+    "rc-capture-frame",
+    "rc-create-node",
+    "rc-error-report",
+    "rc-inspect-scene"
   ],
   "claimsNotInInventory": [
     "DevToolsSession.inspectScene",
@@ -64,7 +68,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "307b7b620a9368a7"
+        "hash": "b2c3c58b9ac036a2"
       },
       "claims": 17,
       "tally": {
@@ -88,7 +92,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "b1c37f070d675ec3"
+        "hash": "97ab3592c88b765a"
       },
       "claims": 18,
       "tally": {
@@ -112,7 +116,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "0ce7d11ed0b28a0b"
+        "hash": "7bbb57d5a9d421c9"
       },
       "claims": 28,
       "tally": {
@@ -126,11 +130,11 @@
     {
       "id": "automation",
       "result": "PASS",
-      "fresh": true,
+      "fresh": false,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": true
+        "candidate": false
       },
       "hasApiProof": true,
       "instrumentation": {
@@ -140,11 +144,11 @@
       },
       "claims": 11,
       "tally": {
-        "verified": 8,
-        "attested": 1,
-        "claimedOnly": 0,
-        "verifiedCall": 7,
-        "verifiedRead": 1
+        "verified": 0,
+        "attested": 0,
+        "claimedOnly": 9,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
@@ -160,7 +164,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 13,
-        "hash": "8104a2694f034b65"
+        "hash": "689ba079e6454232"
       },
       "claims": 13,
       "tally": {
@@ -184,7 +188,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "b8037b860dc6d4bf"
+        "hash": "72cd5b637267ff8d"
       },
       "claims": 19,
       "tally": {
@@ -208,7 +212,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "81f2b7ec8fe7fd36"
+        "hash": "6690b209e758d51d"
       },
       "claims": 19,
       "tally": {
@@ -232,7 +236,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "5872c5ed22b57e71"
+        "hash": "411a73d88cc4f59e"
       },
       "claims": 19,
       "tally": {
@@ -256,7 +260,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 46,
-        "hash": "948011848ab9c99e"
+        "hash": "0ff1c5751b1a7866"
       },
       "claims": 46,
       "tally": {
@@ -280,7 +284,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "ad906399e8801222"
+        "hash": "f83db20d61b50c1c"
       },
       "claims": 17,
       "tally": {
@@ -324,7 +328,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "00a5721cb7673ec1"
+        "hash": "3df12606f7dcab1d"
       },
       "claims": 15,
       "tally": {
@@ -348,7 +352,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "51b7eef843683679"
+        "hash": "9817c2a96d300b53"
       },
       "claims": 14,
       "tally": {
@@ -372,7 +376,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "fc99f24eccce5ab3"
+        "hash": "0a4ef44985924b66"
       },
       "claims": 20,
       "tally": {
@@ -396,7 +400,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "2414f060b69ad2a9"
+        "hash": "8116ef96ebed0d4d"
       },
       "claims": 20,
       "tally": {
@@ -420,7 +424,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "ebb3cbf37d4e01a0"
+        "hash": "2174385cab56773b"
       },
       "claims": 21,
       "tally": {
@@ -444,7 +448,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 12,
-        "hash": "199d3cd066a28487"
+        "hash": "46628c6fcc22c05c"
       },
       "claims": 12,
       "tally": {
@@ -468,7 +472,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 17,
-        "hash": "cec8a65312ed6a32"
+        "hash": "2b33f90ccc3d451b"
       },
       "claims": 17,
       "tally": {
@@ -492,7 +496,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 15,
-        "hash": "e6c9d44195e0cc07"
+        "hash": "2eb25b91f5eff970"
       },
       "claims": 15,
       "tally": {
@@ -516,7 +520,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "63173eafdb6659f1"
+        "hash": "e50b72aa10b2a682"
       },
       "claims": 20,
       "tally": {
@@ -540,7 +544,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "627a2b44f9fcefbc"
+        "hash": "1ef3403b7cee0bad"
       },
       "claims": 19,
       "tally": {
@@ -564,7 +568,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "ef4b8b668c322574"
+        "hash": "8cc1b25928d3327b"
       },
       "claims": 18,
       "tally": {
@@ -588,7 +592,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "d48aad830efc247e"
+        "hash": "1d5135fb5de44a85"
       },
       "claims": 19,
       "tally": {
@@ -612,7 +616,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "5872c5ed22b57e71"
+        "hash": "411a73d88cc4f59e"
       },
       "claims": 19,
       "tally": {
@@ -636,7 +640,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "1d073c87d91b218f"
+        "hash": "37a500d6211a6161"
       },
       "claims": 14,
       "tally": {
@@ -660,7 +664,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "20b6a98e670c5c30"
+        "hash": "a910127e12b45b63"
       },
       "claims": 16,
       "tally": {
@@ -684,7 +688,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "74bdc890ff1fc02c"
+        "hash": "a3e6e0f50a51a362"
       },
       "claims": 22,
       "tally": {
@@ -708,7 +712,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 16,
-        "hash": "296ab240dc3cd602"
+        "hash": "3d066dfa7e122232"
       },
       "claims": 16,
       "tally": {
@@ -732,7 +736,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "4b0173500353b9ee"
+        "hash": "34e18a46ea9b7070"
       },
       "claims": 18,
       "tally": {
@@ -756,7 +760,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "ceaf687ad0d87711"
+        "hash": "8843427e0c5cb4db"
       },
       "claims": 16,
       "tally": {
@@ -780,7 +784,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "23219d96006f6b70"
+        "hash": "2f8bd786b0feeaba"
       },
       "claims": 19,
       "tally": {
@@ -794,25 +798,25 @@
     {
       "id": "mesh-sphere",
       "result": "PASS",
-      "fresh": false,
+      "fresh": true,
       "binding": {
-        "spec": false,
-        "source": false,
+        "spec": true,
+        "source": true,
         "candidate": true
       },
       "hasApiProof": true,
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "ef4b8b668c322574"
+        "hash": "8cc1b25928d3327b"
       },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 18,
         "attested": 0,
-        "claimedOnly": 18,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 17,
+        "verifiedRead": 1
       }
     },
     {
@@ -828,7 +832,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "201d03e2a3f5f037"
+        "hash": "5c8c55990a7bed70"
       },
       "claims": 18,
       "tally": {
@@ -852,7 +856,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "b1c37f070d675ec3"
+        "hash": "97ab3592c88b765a"
       },
       "claims": 18,
       "tally": {
@@ -876,7 +880,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "0b36a490d1b4d22b"
+        "hash": "edf90fffb91b0ef1"
       },
       "claims": 20,
       "tally": {
@@ -900,7 +904,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "c599459ca74e47e6"
+        "hash": "717124dbd9f72ca5"
       },
       "claims": 19,
       "tally": {
@@ -924,7 +928,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 34,
-        "hash": "355493dfb3407180"
+        "hash": "57ac0d199d59f232"
       },
       "claims": 34,
       "tally": {
@@ -948,7 +952,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 36,
-        "hash": "450dc1457302afa6"
+        "hash": "b59afb94fc4e57e6"
       },
       "claims": 36,
       "tally": {
@@ -972,7 +976,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 33,
-        "hash": "6f98ec13121b5c18"
+        "hash": "9d8522ef4a62c863"
       },
       "claims": 33,
       "tally": {
@@ -996,7 +1000,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 69,
-        "hash": "316a3358c530ffcf"
+        "hash": "b33e61d594a80ea5"
       },
       "claims": 69,
       "tally": {
@@ -1005,6 +1009,30 @@
         "claimedOnly": 0,
         "verifiedCall": 33,
         "verifiedRead": 2
+      }
+    },
+    {
+      "id": "physics-3d-collision",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 25,
+        "total": 31,
+        "hash": "6fa725a92440aee6"
+      },
+      "claims": 31,
+      "tally": {
+        "verified": 25,
+        "attested": 6,
+        "claimedOnly": 0,
+        "verifiedCall": 24,
+        "verifiedRead": 1
       }
     },
     {
@@ -1020,7 +1048,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "524dd313ffaf099c"
+        "hash": "5b320fb0dfe1a6d9"
       },
       "claims": 23,
       "tally": {
@@ -1034,11 +1062,11 @@
     {
       "id": "rc-capture-frame",
       "result": "PASS",
-      "fresh": true,
+      "fresh": false,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": true
+        "candidate": false
       },
       "hasApiProof": true,
       "instrumentation": {
@@ -1048,21 +1076,21 @@
       },
       "claims": 18,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "rc-create-node",
       "result": "PASS",
-      "fresh": true,
+      "fresh": false,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": true
+        "candidate": false
       },
       "hasApiProof": true,
       "instrumentation": {
@@ -1072,21 +1100,21 @@
       },
       "claims": 20,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "rc-error-report",
       "result": "PASS",
-      "fresh": true,
+      "fresh": false,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": true
+        "candidate": false
       },
       "hasApiProof": true,
       "instrumentation": {
@@ -1096,21 +1124,21 @@
       },
       "claims": 19,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
       "id": "rc-inspect-scene",
       "result": "PASS",
-      "fresh": true,
+      "fresh": false,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": true
+        "candidate": false
       },
       "hasApiProof": true,
       "instrumentation": {
@@ -1120,11 +1148,11 @@
       },
       "claims": 19,
       "tally": {
-        "verified": 17,
+        "verified": 0,
         "attested": 0,
-        "claimedOnly": 0,
-        "verifiedCall": 16,
-        "verifiedRead": 1
+        "claimedOnly": 17,
+        "verifiedCall": 0,
+        "verifiedRead": 0
       }
     },
     {
@@ -1140,7 +1168,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "6e22788283a42cd0"
+        "hash": "342d9e58faa45cf5"
       },
       "claims": 16,
       "tally": {
@@ -1164,7 +1192,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "3cca46c61406a10f"
+        "hash": "018b764e652df1d1"
       },
       "claims": 16,
       "tally": {
@@ -1188,7 +1216,7 @@
       "instrumentation": {
         "observed": 8,
         "total": 9,
-        "hash": "11b14158ab69349d"
+        "hash": "09e9bb3fccd43912"
       },
       "claims": 9,
       "tally": {
@@ -1212,7 +1240,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "dd6eceeb33478ca1"
+        "hash": "b28669e102f85a55"
       },
       "claims": 23,
       "tally": {
@@ -1236,7 +1264,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "9ada18fbe41e6b71"
+        "hash": "d4d2b7f44f07226e"
       },
       "claims": 25,
       "tally": {
@@ -1260,7 +1288,7 @@
       "instrumentation": {
         "observed": 46,
         "total": 48,
-        "hash": "9c93e41db0fba1d2"
+        "hash": "24eecc22acc95fa8"
       },
       "claims": 48,
       "tally": {
@@ -1284,7 +1312,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "4016077d7b089ee4"
+        "hash": "c2db299ee1c81a62"
       },
       "claims": 14,
       "tally": {
@@ -1308,7 +1336,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 15,
-        "hash": "52099ac11541076c"
+        "hash": "9427afab4decc81d"
       },
       "claims": 15,
       "tally": {
@@ -1332,7 +1360,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 37,
-        "hash": "be7fbce1a6bcbb6c"
+        "hash": "33b6f18391ad9201"
       },
       "claims": 37,
       "tally": {
@@ -1356,7 +1384,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "ad9d9af5b9652749"
+        "hash": "9167ef5bb46cccdf"
       },
       "claims": 23,
       "tally": {
@@ -1380,7 +1408,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 37,
-        "hash": "81d0c7a9a2dbcd2c"
+        "hash": "de1900aeed6c1304"
       },
       "claims": 37,
       "tally": {
@@ -1404,7 +1432,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "014424cdd364bc54"
+        "hash": "ca2d70f192f5de5b"
       },
       "claims": 36,
       "tally": {
@@ -1499,7 +1527,6 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
-        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1526,6 +1553,7 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
@@ -1534,11 +1562,8 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1561,7 +1586,6 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
-        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1588,6 +1612,7 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
@@ -1596,11 +1621,8 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1623,7 +1645,6 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
-        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1650,6 +1671,7 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
@@ -1658,11 +1680,8 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1684,7 +1703,6 @@
       "examples": [
         "anim-position",
         "anim-rotation",
-        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1703,16 +1721,14 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "static-model",
         "texture-basic",
         "transform",
@@ -1752,6 +1768,7 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
@@ -1760,11 +1777,8 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1805,16 +1819,14 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "texture-basic",
         "tween-basic"
@@ -1837,6 +1849,7 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
@@ -1845,6 +1858,7 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
         "skinned-animation",
         "texture-basic",
@@ -1863,7 +1877,6 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
-        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1889,6 +1902,7 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
@@ -1897,11 +1911,8 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "starter",
         "texture-basic",
@@ -1945,16 +1956,14 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "static-model",
         "texture-basic",
@@ -1992,15 +2001,12 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -2028,15 +2034,13 @@
         "material-transparent",
         "mesh-cylinder",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
+        "physics-3d-collision",
         "skinned-animation",
         "static-model",
         "texture-basic"
@@ -2061,15 +2065,13 @@
         "material-transparent",
         "mesh-cylinder",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
+        "physics-3d-collision",
         "skinned-animation",
         "texture-basic"
       ]
@@ -2093,15 +2095,13 @@
         "material-transparent",
         "mesh-cylinder",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
+        "physics-3d-collision",
         "texture-basic"
       ]
     },
@@ -2112,7 +2112,6 @@
       "examples": [
         "anim-position",
         "anim-rotation",
-        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -2130,16 +2129,14 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "static-model",
         "texture-basic",
         "transform",
@@ -2153,7 +2150,6 @@
       "examples": [
         "anim-position",
         "anim-rotation",
-        "automation",
         "camera",
         "camera-ortho",
         "hello-cube",
@@ -2170,11 +2166,8 @@
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "texture-basic",
         "transform",
         "tween-basic"
@@ -2188,7 +2181,6 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
-        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -2215,6 +2207,7 @@
         "mesh-cylinder",
         "mesh-multi-material",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
@@ -2223,11 +2216,8 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -2270,16 +2260,14 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "static-model",
@@ -2312,15 +2300,13 @@
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
+        "mesh-sphere",
         "mesh-torus",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "physics-3d-collision",
         "profiler-overlay",
-        "rc-capture-frame",
-        "rc-create-node",
-        "rc-error-report",
-        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "texture-basic",
@@ -2373,6 +2359,7 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "tiledmap-basic",
         "ui-layout",
         "video-basic",
@@ -2521,6 +2508,7 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "physics-3d-basic",
+        "physics-3d-collision",
         "profiler-overlay",
         "starter",
         "tiledmap-basic",
@@ -2579,7 +2567,9 @@
         "camera-multi",
         "light-sphere",
         "mesh-plane",
-        "physics-3d-basic"
+        "mesh-sphere",
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -2680,6 +2670,7 @@
         "material-transparent",
         "mesh-multi-material",
         "physics-3d-basic",
+        "physics-3d-collision",
         "runtime-asset-release",
         "static-model",
         "texture-basic",
@@ -2863,7 +2854,8 @@
       "via": "call",
       "examples": [
         "mesh-torus",
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -3139,7 +3131,8 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -3155,7 +3148,8 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -3163,7 +3157,8 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -3860,7 +3855,6 @@
       "unit": "builtinResMgr",
       "tier": "core",
       "examples": [
-        "automation",
         "camera",
         "hello-cube",
         "input",
@@ -4232,35 +4226,40 @@
       "unit": "physics.PhysicsSystem.syncSceneToPhysics",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.step",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.emitEvents",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.raycast",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.raycastClosest",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -4274,7 +4273,8 @@
       "unit": "physics.PhysicsSystem.raycastClosestResult",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -4952,35 +4952,40 @@
       "unit": "physics.PhysicsSystem.syncSceneToPhysics",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.step",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.emitEvents",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.raycast",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.raycastClosest",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {
@@ -4994,7 +4999,8 @@
       "unit": "physics.PhysicsSystem.raycastClosestResult",
       "tier": "advanced",
       "examples": [
-        "physics-3d-basic"
+        "physics-3d-basic",
+        "physics-3d-collision"
       ]
     },
     {

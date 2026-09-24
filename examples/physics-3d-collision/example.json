@@ -1,0 +1,359 @@
+{
+  "id": "physics-3d-collision",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "3D Physics Collision & Gravity — cannon backend via createAirApp({ physics }) (V12 LV12-15 r46)",
+  "category": "physics",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.setPosition",
+    "Node.setRotationFromEuler",
+    "Component",
+    "Camera",
+    "DirectionalLight",
+    "Layers",
+    "Color",
+    "math.Vec3",
+    "isValid",
+    "MeshRenderer",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "utils.createMesh",
+    "primitives.box",
+    "primitives.sphere",
+    "primitives.torus",
+    "physics.PhysicsSystem.raycast",
+    "physics.PhysicsSystem.raycastClosest",
+    "physics.PhysicsSystem.raycastClosestResult",
+    "physics.RigidBody",
+    "physics.BoxCollider",
+    "physics.SphereCollider",
+    "physics.PhysicsSystem.syncSceneToPhysics",
+    "physics.PhysicsSystem.step",
+    "physics.PhysicsSystem.emitEvents"
+  ],
+  "capabilities": [
+    "physics"
+  ],
+  "learning": {
+    "goal": "V1.2 r46（owner 批复 #8(a)=D12）：默认 bundle 同时编入 physics-builtin 与 physics-cannon 后，验证交付期后端切换 `createAirApp({ physics: 'cannon' })` 的真实模拟链路——重力下落、刚体叠稳、碰撞事件对次序、真实命中法线，与 physics-3d-basic 的 builtin「不模拟」面互为对照",
+    "points": [
+      "后端身份运行时判定：`physics.physicsWorld.constructor.name === 'CannonWorld'` + `PhysicsSystem.PHYSICS_CANNON === true`（selector 顶层名在产物里被 2D 侧占用，不用作判据）",
+      "确定性模拟：`physics.enable=false` 冻结帧驱动后按官方 postUpdate 同序手动步进（syncSceneToPhysics→step→emitEvents→syncAfterEvents）180 个固定步 ⇒ 纯 JS 同一数学，三引擎逐位同解",
+      "重力下落与叠稳：BallA 3→~0.5 贴地、BallB 5.5→~1.5 叠上 A，静置后再走 30 步位置逐位不变（restStable）",
+      "碰撞事件：`collider.on('onCollisionEnter', …)` 自动置 _needCollisionEvent；事件对集合恰为 BallA|Ground 与 BallB|BallA，enterTotal=2、exitTotal=0",
+      "真实命中法线：cannon raycast 返回命中面法线 +Y（对照 builtin 恒 Vec3.ZERO）；向下射线先命中 BallB（距离 8），偏轴射线命中 Ground（距离 10）"
+    ]
+  },
+  "effect": {
+    "functional": "Scene 以 createAirApp({ physics: 'cannon' }) 启动：Ground(STATIC, 12×1×12 顶面 y=0) + BallA(DYNAMIC r0.5 起始 y=3) + BallB(DYNAMIC r0.5 起始 y=5.5)。手动步进 180 固定步（1/60s）后 BallA 静置于 y≈0.5、BallB 叠于 y≈1.5 且再走 30 步位置不变；碰撞事件 enterTotal=2（BallA|Ground、BallB|BallA）、exitTotal=0；从 (0,10,0) 向下 raycast 命中 BallB 距离 8 法线 +Y，从 (5,10,0) 向下 raycastClosest 命中 Ground 距离 10。probe 全字段跨引擎逐位相等。",
+    "visual": "深蓝灰底（clearColor 18,26,34）静态三体场景：绿色地面、橙色 BallA、蓝色 BallB 叠放于画面中央，左侧灰色圆环（SpinRing 每帧 yaw+90°/s 持续旋转）为 frameChanged 护栏提供与模拟无关的帧间变化；相机 PERSPECTIVE fov45 (0,4.2,9.8) lookAt (0,1.2,0)。"
+  },
+  "api": {
+    "primary": [
+      "physics.RigidBody",
+      "physics.SphereCollider",
+      "physics.PhysicsSystem.raycast"
+    ],
+    "supporting": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "MeshRenderer",
+      "Material",
+      "math.Vec3",
+      "primitives.box",
+      "primitives.sphere",
+      "primitives.torus",
+      "utils.createMesh"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Component",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "isValid",
+      "MeshRenderer",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "primitives.sphere",
+      "primitives.torus",
+      "physics.PhysicsSystem.raycast",
+      "physics.PhysicsSystem.raycastClosest",
+      "physics.PhysicsSystem.raycastClosestResult",
+      "physics.RigidBody",
+      "physics.BoxCollider",
+      "physics.SphereCollider",
+      "physics.PhysicsSystem.syncSceneToPhysics",
+      "physics.PhysicsSystem.step",
+      "physics.PhysicsSystem.emitEvents"
+    ],
+    "forbiddenShortcut": [
+      "后端身份不得用顶层 selector.id 判定（产物里该名被 2D 侧占用）；模拟证据必须固定步长手动步进，不得依赖引擎帧节拍（三引擎时序不同）。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "Scene",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L97"
+      },
+      {
+        "api": "Node",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L100"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L73"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "Component",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "Camera",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "Layers",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L81"
+      },
+      {
+        "api": "Color",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "isValid",
+        "source": "main.js",
+        "validator": "visible-frame",
+        "sourceLocation": "L297"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L73"
+      },
+      {
+        "api": "Material",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L58"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L59"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "primitives.box",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "primitives.sphere",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L131"
+      },
+      {
+        "api": "primitives.torus",
+        "source": "main.js",
+        "validator": "scene-ready",
+        "sourceLocation": "L149"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycast",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L227"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycastClosest",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L236"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycastClosestResult",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L237"
+      },
+      {
+        "api": "physics.RigidBody",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "physics.BoxCollider",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "physics.SphereCollider",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "physics.PhysicsSystem.syncSceneToPhysics",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L208"
+      },
+      {
+        "api": "physics.PhysicsSystem.step",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L209"
+      },
+      {
+        "api": "physics.PhysicsSystem.emitEvents",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L210"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Ground",
+        "BallA",
+        "BallB",
+        "SpinRing",
+        "FrameHost"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：网格与材质全部运行时程序化生成（primitives.box/sphere/torus + utils.createMesh + new Material）。物理为 cocos4 上游 TypeScript 端口 + vendored @cocos/cannon（MIT，c) 2015 cannon.js Authors，见 THIRD_PARTY_LICENSES.md 与 licenses/LICENSE_cannon.txt）。"
+  },
+  "promotion": {
+    "spec": "31c2e8f2d958",
+    "source": "10386b846b99736a",
+    "candidate": "927bb491cc9119b1",
+    "verified": 25,
+    "attested": 6,
+    "units": 31
+  },
+  "specStatus": "frozen"
+}

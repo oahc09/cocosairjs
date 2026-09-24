@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 28
+    "modifiedCount": 29
   },
   "mapping": [
     {
@@ -9209,6 +9209,13 @@
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": false,
       "reason": "V1.2 批次 D4-physics-2d-box2d-wasm 回归抽取，官方原文"
+    },
+    {
+      "airPath": "src/air/physics-backend.ts",
+      "upstreamPath": null,
+      "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
+      "modified": true,
+      "reason": "AIR 新增（r46，owner 批复 #8(a)/D12）：交付期 3D 物理后端选择 selectPhysicsBackend——官方两个 instantiate 在 Game.EVENT_PRE_SUBSYSTEM_INIT 监听器内 register（builtin 先、cannon 后），本文件在 createAirApp 内向同一事件注册第三个监听器使用户后端确定性最后胜出（默认 builtin）；并预置 default-physics-material（无 Creator 资产包时 initDefaultMaterial 的 errorID 9642 对 cannon 是致命面，材质缺失会令 cannon-shape.setMaterial 崩溃），零引擎改动。世界创建后选择显式报错（官方 switchTo 仅编辑器面放行）。"
     }
   ]
 }

@@ -83,3 +83,13 @@
 | `RecipeDefinition` | Stable |
 | `AgentDriver` / `AgentAction` / `FeedbackPackage` | Stable |
 | `Validator`（12 首批） | Stable |
+
+## r46 additive 登记（2026-09-24，owner 批复 #8(a) = D12）
+
+| 项 | 内容 |
+|---|---|
+| API | `createAirApp(options)` 增可选字段 `physics?: 'builtin' \| 'cannon'`（`AirAppOptions`，src/air/app.ts） |
+| 语义 | 交付期 3D 物理后端选择；默认 `'builtin'`（与既往发行行为逐字节等价）；`'cannon'` 在 `Game.EVENT_PRE_SUBSYSTEM_INIT` 上以官方「最后注册者胜出」语义确定性重注册（src/air/physics-backend.ts，Air 原创，file-map 在册） |
+| 伴随 | `selectPhysicsBackend()` 顶层导出（src/air/index.ts）；默认 bundle 同编入 builtin+cannon（`AIR_FEATURES` + `physics-cannon`）；默认物理材质种子（无 Creator 资产包时修复 errorID 9642 致命面） |
+| 类型 | 纯 additive；无既有符号删除/改签 |
+| 验收 | `examples/physics-3d-collision`（双链 PASS）+ V1.2 矩阵 LV12-15 行 |
