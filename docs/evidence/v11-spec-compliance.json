@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-09-25T07:31:32.892Z",
+  "measuredAt": "2026-09-25T13:18:14.870Z",
   "tool": "tools/examples/spec-compliance-audit.cjs",
   "spec": "ai/Cocos Air V1.1 — Example Specification 补充执行规范.md",
-  "total": 58,
+  "total": 132,
   "examples": [
     {
       "id": "gltf-draco",
@@ -19,7 +19,7 @@
   ],
   "globalFindings": [],
   "summary": {
-    "examples": 58,
+    "examples": 132,
     "withFindings": 1,
     "fail": 0,
     "warn": 1,

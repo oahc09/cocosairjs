@@ -55,9 +55,8 @@ function ncExamplesDir (fs: typeof import('fs'), tmp: string, name: string, sent
 }
 
 describe('V1.1 — Example Specification 门禁', () => {
-    // V1.1 交付的 45 个 + V1.2 每落一个示例都要显式改这里（新增示例不许静默进总数）。
-    // 现值 58 = 45 + profiler-overlay + ui-components + ui-layout + physics-2d-basic + physics-2d-collision + particle-2d-basic + tiledmap-basic + audio-basic + video-basic + webview-basic + physics-3d-basic + dragonbones-basic + physics-3d-collision。
-    const EXAMPLE_COUNT = 58;
+    // r50（F-116 minimalFix 落地）：计数从 files.json 现读——新增示例不再需要手工同步本常数（历史：45→58→动态化）。
+    const EXAMPLE_COUNT = nodeRequire('fs').readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8') && JSON.parse(nodeRequire('fs').readFileSync(path.join(REPO, 'examples', 'files.json'), 'utf8')).examples.length;
 
     test('§15 全部 example.json 达到 frozen 且规格零问题', () => {
         const result = run('tools/examples/spec-validate.cjs');

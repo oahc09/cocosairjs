@@ -165,3 +165,43 @@
 > **〔r49 判定（2026-09-25）〕V1.1 按任务书定义未完成验收**：Core 6.9% / Important 1.1% / Advanced N/A
 > 对 100%/90%/80%，Stable 57/120 —— 四项 Release 门槛全部未达（明细 `docs/v06-v10-release-gates.md`
 > r49 章节）。r48 棘轮是防回归地板，不是验收豁免。DevTools 5 例证据已当期刷新（5/5 PASS）。
+
+---
+
+# r50 — V1.1 Wave 内容生产（2026-09-25）：131 Stable 达标 + Core Coverage 6.9% → 36%
+
+Owner 指令「63 个 stable 示例的内容生产（同时抬覆盖率）」。本轮交付 **74 个新示例**（超额 +11），
+全部经完整规格链（frozen + compliance + apiProof + 双链 verify）晋级 stable。
+
+## 交付面
+
+| 指标 | r49 基线 | r50 现读 | 判定 |
+|---|---|---|---|
+| Stable Examples | 57 | **131** | **≥ 120 达标**（V1.1 任务书 line 1898；唯一非 stable 是既有目录页 gltf-catalog draft） |
+| Core VerifiedRate | 6.9%（56/816） | **36%（294/816）** | 大幅推进；100% 剩余 522 单元（内容工程续波） |
+| Important VerifiedRate | 1.1% | 1.1%（未动） | 本波选题面向 core；important 需下一波定向选题 |
+| Examples 浏览器链 | 53/53 | **127/127 PASS**（0 promoted 剩余，`partial=false`） | `docs/evidence/v11-examples-verified.json` |
+| Gallery 静态工件 | 102/102 | **183/183**（132 示例 + 99 缩略图） | `docs/evidence/v11-gallery-artifact.json` |
+| jest | 32/263 | 32/263（smoke-29 计数动态化后全绿） | EXIT=0 |
+
+## 生产线（可复用）
+
+`tools/production/gen-wave-examples.cjs` + `wave-topics{,-2,-3}.cjs`（选题表 = 事实源）：
+每示例 = 共享脚手架（可见帧 + scene-ready）+ 主题 API 的确定性 `T()` readback（try 兜底 'threw' 哨兵）+
+面向 `core coverageRequired` 未验证单元的 claims 精确映射。选题覆盖：math.bits 全族、Vec2/3/4、
+Quat、Mat3/4、Color、Size/Rect、标量工具、Node 事件/子树/组件查询、Camera 换算族、Mesh 读写、
+Material/Texture2D 生命周期面、Layers、Scene(Globals)、Input、glTF 注册表/资产面、primitives 后处理、BatchingUtility。
+
+## 本轮修掉的工具链问题（顺带收益）
+
+- smoke-29 `EXAMPLE_COUNT` 硬编码 → 从 `files.json` 现读（**F-116 minimalFix 落地**）；
+- spec-evidence 对 `src/main.ts` 形态示例的 source 路径支持（此前只认 main.js）；
+- asset-lifecycle 共享库补非消费探针 `__lifecycleHold()`（r47）在 Wave 示例上全面生效。
+
+## 诚实口径（r49 判定不受影响的残余）
+
+- **V1.1 Release Gate 仍未整体通过**：Core 100% 尚差 522 单元、Important 90% 未启动、Advanced 80% 未启动——
+  数量门槛达标是四项门槛中的第一项达成；
+- gltf-draco warn 维持已知边界（r49 裁定）；
+- 竞态披露：并行会话在建的 7 个无规格示例目录（physics-interaction 等）在门禁窗口期临时移出后**已原位归还**，
+  未触碰其内容；它们不计入本波 stable 数。

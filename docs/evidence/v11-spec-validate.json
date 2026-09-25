@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-09-25T07:31:19.977Z",
-  "total": 58,
-  "frozen": 58,
+  "measuredAt": "2026-09-25T13:18:10.444Z",
+  "total": 132,
+  "frozen": 132,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -26,7 +26,17 @@
       "issues": []
     },
     {
+      "id": "batching-utility",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "camera",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-geometry-extras",
       "specStatus": "frozen",
       "issues": []
     },
@@ -46,7 +56,42 @@
       "issues": []
     },
     {
+      "id": "camera-screen-world",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-second-view",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "camera-viewport-props",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "color-timeline-key",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "colortimeline-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "directional-light-face",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "dragonbones-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-asset-readonly",
       "specStatus": "frozen",
       "issues": []
     },
@@ -67,6 +112,11 @@
     },
     {
       "id": "gltf-draco",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "gltf-loader-registry",
       "specStatus": "frozen",
       "issues": []
     },
@@ -101,7 +151,22 @@
       "issues": []
     },
     {
+      "id": "input-queries",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "interaction-click",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "layers-enum-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "light-attach-cycle",
       "specStatus": "frozen",
       "issues": []
     },
@@ -136,6 +201,16 @@
       "issues": []
     },
     {
+      "id": "material-lifecycle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "material-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "material-transparent",
       "specStatus": "frozen",
       "issues": []
@@ -146,7 +221,222 @@
       "issues": []
     },
     {
+      "id": "math-approx-compare",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-bits",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-bits-constants",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-color-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-color-convert",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-color-models",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-easing-patterns",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-enumerable-props",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-float-encoding",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat3-basics",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat3-elements",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat3-transforms",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-basics",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-compose",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-mat4-transform",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-euler",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-quat-interp",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-random-utils",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-rect-geometry",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-rect-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-scalar-utils",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-size-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-arithmetic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-equality-misc",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-length-angle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec2-tovec3",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-applied",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-arithmetic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-equality-misc",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-length-products",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec3-tovec2",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec4-arithmetic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec4-components",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "math-vec4-length-misc",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-attributes-indices",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "mesh-cylinder",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-lifecycle-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "mesh-morph-bounds",
       "specStatus": "frozen",
       "issues": []
     },
@@ -161,6 +451,11 @@
       "issues": []
     },
     {
+      "id": "mesh-prim-compare",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "mesh-sphere",
       "specStatus": "frozen",
       "issues": []
@@ -171,7 +466,27 @@
       "issues": []
     },
     {
+      "id": "meshrenderer-hooks",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "node-active",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-children-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-component-queries",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-events",
       "specStatus": "frozen",
       "issues": []
     },
@@ -181,7 +496,17 @@
       "issues": []
     },
     {
+      "id": "node-pool",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "node-scale",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "node-scene-id",
       "specStatus": "frozen",
       "issues": []
     },
@@ -207,6 +532,21 @@
     },
     {
       "id": "physics-3d-collision",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "primitives-geometry-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "primitives-shapes-extra",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "primitives-wireframe-obj",
       "specStatus": "frozen",
       "issues": []
     },
@@ -241,6 +581,21 @@
       "issues": []
     },
     {
+      "id": "scene-asset-meta",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "scene-globals-read",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "scene-runtime-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "skinned-animation",
       "specStatus": "frozen",
       "issues": []
@@ -257,6 +612,16 @@
     },
     {
       "id": "texture-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "texture2d-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "texture2d-serialization",
       "specStatus": "frozen",
       "issues": []
     },
@@ -282,6 +647,11 @@
     },
     {
       "id": "ui-layout",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "utils-family",
       "specStatus": "frozen",
       "issues": []
     },

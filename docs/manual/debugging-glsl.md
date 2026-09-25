@@ -1,12 +1,25 @@
 # 调试 GLSL（Debugging GLSL）
 
 > shader 编译/链接出错时怎么定位。
-> 本篇**无配套示例**：AIR V0.1 没有受支持的用户级 GLSL 创作面，无法演示"写错 shader → 看编译日志"的闭环。
+> 配套示例：`shader-custom-gradient` / `shader-dissolve`（staging 试验绿，正典集成待并行线落定）；
+> 探针：`ai/g1-staging/shader-probe/`（F 相位 = 故意编译错误的诊断实测）。
 
-**状态：N/A。** "调试 GLSL"这件事的前提是"用户直接写 GLSL 字符串、浏览器 console 回吐编译/链接日志"；
-AIR 的 effect 是**预编译内建资源**（`builtin-standard` 等），用户代码通过 `material.initialize({ effectName })` 选用，不写 GLSL 源码。
-全 d.ts grep `getShaderInfoLog|programInfoLog|compileShader` **零命中**——引擎没有向用户暴露 shader 编译状态/日志的读回面，
-因此"调试 GLSL"在本仓库没有可操作的对象。
+**状态：PARTIAL（2026-09-25 升级，原 N/A）。** 用户手写 GLSL 的创作面已实测走通
+（见 [custom-shaders](custom-shaders.md) 与 `docs/evidence/g4-shader-probe.json`），
+"写错 shader → 看编译日志"的闭环**在 console 通道可用**，实测三段式诊断（故意语法错误
+`gl_FragColor = vec4(1.0, 0.0;`，WebGL2/WebGL1 双后端一致）：
+
+1. `FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed.`（errorID 16323，含 shader 名）
+2. `Shader source dump:` 带行号的完整源码（errorID 16324——逐行定位的直接依据）
+3. `ERROR: 0:16: ';' : syntax error`（ANGLE 原始 info log，行号 16 与源码 dump 对得上）
+
+且**页面存活**：坏 shader 的 draw 被跳过，同场景其它材质继续渲染（探针 F2 相位断言）。
+实现锚点：`src/cocos/gfx/webgl/webgl-commands.ts` 编译失败分支（COMPILE_STATUS 检查 →
+errorID(16323/16324) + `gl.getShaderInfoLog`）。
+
+仍诚实保留的边界：诊断走 **console.error 通道**，没有可编程的编译状态/日志**读回 API**
+（d.ts grep `getShaderInfoLog|programInfoLog` 对公开面仍零命中）——自动化断言需挂钩 console
+（探针页内挂钩 `console.error` 即此做法，见 shader-probe main.js）。
 
 ## 1. 有什么（边缘面，非创作面）
 

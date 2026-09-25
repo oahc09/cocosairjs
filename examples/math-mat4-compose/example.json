@@ -1,0 +1,293 @@
+{
+  "id": "math-mat4-compose",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "math.Mat4 — RTS 分解合成与四元数来源 (V1.1 Wave)",
+  "category": "math",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.setPosition",
+    "Node.setRotationFromEuler",
+    "Camera",
+    "DirectionalLight",
+    "Layers",
+    "Color",
+    "math.Vec3",
+    "MeshRenderer",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "utils.createMesh",
+    "primitives.box",
+    "math.Mat4.fromRTS",
+    "math.Mat4.fromSRT",
+    "math.Mat4.fromQuat",
+    "math.Mat4.getTranslation",
+    "math.Mat4.getScale",
+    "math.Mat4.getRotation"
+  ],
+  "capabilities": [],
+  "learning": {
+    "goal": "掌握 Mat4 与旋转-平移-缩放的双向：fromRTS/fromSRT/fromQuat 合成，getTranslation/getScale/getRotation 分解往返。",
+    "points": [
+      "fromRTS 后 getTranslation 回到原平移",
+      "getScale 回到原缩放",
+      "fromQuat 的旋转分解回到同角度（余弦回读）"
+    ]
+  },
+  "effect": {
+    "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
+    "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 200,180,240）、方向光、透视相机。"
+  },
+  "api": {
+    "primary": [
+      "math.Mat4.fromRTS",
+      "math.Mat4.getTranslation"
+    ],
+    "supporting": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "math.Mat4.fromRTS",
+      "math.Mat4.fromSRT",
+      "math.Mat4.fromQuat",
+      "math.Mat4.getTranslation",
+      "math.Mat4.getScale",
+      "math.Mat4.getRotation"
+    ],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.Mat4.fromRTS",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "math.Mat4.fromSRT",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "math.Mat4.fromQuat",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L46"
+      },
+      {
+        "api": "math.Mat4.getTranslation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "math.Mat4.getScale",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L43"
+      },
+      {
+        "api": "math.Mat4.getRotation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L44"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "capability": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：立方体网格与材质运行时程序化生成（primitives.box + utils.createMesh + new Material）。"
+  },
+  "specStatus": "frozen",
+  "promotion": {
+    "spec": "30cd3432b226",
+    "source": "ded09d0badcdbecf",
+    "candidate": "f6036adc8526e925",
+    "verified": 23,
+    "attested": 1,
+    "units": 24
+  }
+}

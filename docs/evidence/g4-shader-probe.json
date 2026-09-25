@@ -1,0 +1,414 @@
+{
+  "measuredAt": "2026-09-25T10:53:01.275Z",
+  "runner": "tools/verify/g4-shader-probe.cjs",
+  "mode": "g4-shader-probe-v1",
+  "head": "7a33e11db9a93f2e786cb082847437e810842473",
+  "candidateFingerprint": "f6036adc8526e925",
+  "browser": {
+    "name": "chromium",
+    "headless": true,
+    "viewport": "1280x720",
+    "launchArgs": [
+      "--use-gl=angle",
+      "--enable-unsafe-swiftshader",
+      "--disable-gpu-sandbox"
+    ]
+  },
+  "verdict": "PASS",
+  "runs": [
+    {
+      "mode": "default",
+      "verdict": "PASS",
+      "ms": 5666,
+      "runError": null,
+      "fatal": null,
+      "checks": [
+        {
+          "name": "A1-register-get",
+          "result": "PASS",
+          "detail": "EffectAsset.get(\"probe-unlit\") === 注册实例"
+        },
+        {
+          "name": "A2-getAll-grew",
+          "result": "PASS",
+          "detail": "getAll 21 -> 22"
+        },
+        {
+          "name": "B1-user-frag-on-screen",
+          "result": "PASS",
+          "detail": "center=[253,101,25,255]（预期橙色系 r 主导，背景 (20,24,32)）"
+        },
+        {
+          "name": "C1-uniform-vec4-update",
+          "result": "PASS",
+          "detail": "center=[0,223,56,255]（预期绿色系 g 主导）"
+        },
+        {
+          "name": "D1-time-animation-frame-diff",
+          "result": "PASS",
+          "detail": "maxDiff=41"
+        },
+        {
+          "name": "E1-uniform-float-freeze",
+          "result": "PASS",
+          "detail": "f0=[0,191,48,255] f1=[0,191,48,255]"
+        },
+        {
+          "name": "F1-compile-error-diagnostic",
+          "result": "PASS",
+          "detail": "errors+=3 first=FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed."
+        },
+        {
+          "name": "F2-page-survives-broken-shader",
+          "result": "PASS",
+          "detail": "center=[0,163,41,255]（好盒子仍绿）"
+        },
+        {
+          "name": "G1-remove",
+          "result": "PASS",
+          "detail": "remove 后 get → null"
+        },
+        {
+          "name": "G2-duplicate-register-survives",
+          "result": "PASS",
+          "detail": "threw=null get===effect2: true"
+        },
+        {
+          "name": "G3-reregister-renders",
+          "result": "PASS",
+          "detail": "center=[22,67,222,255]（预期蓝色系 b 主导）"
+        },
+        {
+          "name": "H1-material-destroy-no-crash",
+          "result": "PASS",
+          "detail": "threw=null center=[25,74,246,255]"
+        },
+        {
+          "name": "H2-effect-destroy-no-throw",
+          "result": "PASS",
+          "detail": "threw=null destroy=true get→null: true"
+        },
+        {
+          "name": "H3-page-alive-final",
+          "result": "PASS",
+          "detail": "center=[25,76,255,255]"
+        }
+      ],
+      "info": {
+        "exports": {
+          "EffectAsset": "function",
+          "register": "function",
+          "remove": "function",
+          "get": "function",
+          "getAll": "function"
+        },
+        "registerBeforeBoot": "throws: Cannot read properties of undefined (reading 'capabilities')",
+        "allBefore": 21,
+        "allAfter": 22,
+        "registerGet": true,
+        "glContext": "webgl2",
+        "glVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "glRenderer": "WebKit WebGL",
+        "gfxAPIValue": 7,
+        "gfxAPIName": "WEBGL2",
+        "afterRemoveGet": true,
+        "duplicateRegisterThrew": null,
+        "getAfterDup": true,
+        "materialDestroyReturn": true,
+        "effectDestroyReturn": true,
+        "getAfterEffectDestroy": true
+      },
+      "samples": {
+        "firstFrame": [
+          253,
+          101,
+          25,
+          255
+        ],
+        "afterColorUniform": [
+          0,
+          223,
+          56,
+          255
+        ],
+        "animDiff": {
+          "d0": [
+            0,
+            221,
+            55,
+            255
+          ],
+          "d1": [
+            0,
+            201,
+            50,
+            255
+          ],
+          "d2": [
+            0,
+            180,
+            45,
+            255
+          ],
+          "maxDiff": 41
+        },
+        "frozen": {
+          "f0": [
+            0,
+            191,
+            48,
+            255
+          ],
+          "f1": [
+            0,
+            191,
+            48,
+            255
+          ]
+        },
+        "brokenErrors": [
+          "FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed.",
+          "Shader source dump: \n1 #define CC_DEVICE_SUPPORT_FLOAT_TEXTURE 1\n2 #define CC_ENABLE_CLUSTERED_LIGHT_CULLING 0\n3 #define CC_DEVICE_MAX_VERTEX_UNIFORM_VECTORS 4095\n4 #define CC_DEVICE_MAX_FRAGMENT_UNIFORM_VECTORS 1024\n5 #define CC_DEVICE_CAN_BENEFIT_FROM_INPUT_ATTACHMENT 0\n6 #define CC_PLATFORM_ANDROID_AND_WEBGL 0\n7 #define CC_ENABLE_WEBGL_HIGHP_STRUCT_VALUES 0\n8 #define CC_JOINT_UNIFORM_CAPACITY 256\n9 #define CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS 47\n10 #define CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS 6\n11 precision mediump float;\n12 in mediump vec2 v_uv;\n13 out vec4 cc_FragColor;\n14 void main () {\n15   cc_FragColor = vec4(1.0, 0.0;\n16 }\n17 ",
+          "ERROR: 0:16: ';' : syntax error\n\u0000"
+        ],
+        "afterBroken": [
+          0,
+          163,
+          41,
+          255
+        ],
+        "afterReregister": [
+          22,
+          67,
+          222,
+          255
+        ],
+        "final": [
+          25,
+          76,
+          255,
+          255
+        ]
+      },
+      "pageConsoleErrors": [
+        "FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed.",
+        "Shader source dump: \n1 #define CC_DEVICE_SUPPORT_FLOAT_TEXTURE 1\n2 #define CC_ENABLE_CLUSTERED_LIGHT_CULLING 0\n3 #define CC_DEVICE_MAX_VERTEX_UNIFORM_VECTORS 4095\n4 #define CC_DEVICE_MAX_FRAGMENT_UNIFORM_VECTORS 1024\n5 #define CC_DEVICE_CAN_BENEFIT_FROM_INPUT_ATTACHMENT 0\n6 #define CC_PLATFORM_ANDROID_AND_WEBGL 0\n7 #define CC_ENABLE_WEBGL_HIGHP_STRUCT_VALUES 0\n8 #define CC_JOINT_UNIFORM_CAPACITY 256\n9 #define CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS 47\n10 #define CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS 6\n11 precision mediump float;\n12 in mediump vec2 v_uv;\n13 out vec4 cc_FragColor;\n14 void main () {\n15   cc_FragColor = vec4(1.0, 0.0;\n16 }\n17 ",
+        "ERROR: 0:16: ';' : syntax error\n\u0000"
+      ],
+      "pageConsoleWarns": [],
+      "runnerConsoleErrors": [
+        {
+          "type": "error",
+          "text": "FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed."
+        },
+        {
+          "type": "error",
+          "text": "Shader source dump: \n1 #define CC_DEVICE_SUPPORT_FLOAT_TEXTURE 1\n2 #define CC_ENABLE_CLUSTERED_LIGHT_CULLING 0\n3 #define CC_DEVICE_MAX_VERTEX_UNIFORM_VECTORS 4095\n4 #define CC_DEVICE_MAX_FRAGMENT_UNIFORM_VECTORS 1024\n5 #define CC_DEVICE_CAN_BENEFIT_FROM_INPUT_ATTACHMENT 0\n6 #define CC_PLATFORM_ANDROID_AND_WEBGL 0\n7 #define CC_ENABLE_WEBGL_HIGHP_STRUCT_VALUES 0\n8 #define CC_JOINT_UNIFORM_CAPACITY 256\n9 #define CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS 47\n10 #define CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS 6\n11 precision mediump float;\n12 in mediump vec2 v_uv;\n13 out vec4 cc_FragColor;\n14 void main () {\n15   cc_FragColor = vec4(1.0, 0.0;\n16 }\n17 "
+        },
+        {
+          "type": "error",
+          "text": "ERROR: 0:16: ';' : syntax error\n\u0000"
+        }
+      ],
+      "pageErrors": [],
+      "screenshot": "docs/evidence/examples/g4-shader-probe-default.png"
+    },
+    {
+      "mode": "force-webgl1",
+      "verdict": "PASS",
+      "ms": 5053,
+      "runError": null,
+      "fatal": null,
+      "checks": [
+        {
+          "name": "A1-register-get",
+          "result": "PASS",
+          "detail": "EffectAsset.get(\"probe-unlit\") === 注册实例"
+        },
+        {
+          "name": "A2-getAll-grew",
+          "result": "PASS",
+          "detail": "getAll 21 -> 22"
+        },
+        {
+          "name": "B1-user-frag-on-screen",
+          "result": "PASS",
+          "detail": "center=[179,71,18,255]（预期橙色系 r 主导，背景 (20,24,32)）"
+        },
+        {
+          "name": "C1-uniform-vec4-update",
+          "result": "PASS",
+          "detail": "center=[0,143,36,255]（预期绿色系 g 主导）"
+        },
+        {
+          "name": "D1-time-animation-frame-diff",
+          "result": "PASS",
+          "detail": "maxDiff=14"
+        },
+        {
+          "name": "E1-uniform-float-freeze",
+          "result": "PASS",
+          "detail": "f0=[0,191,48,255] f1=[0,191,48,255]"
+        },
+        {
+          "name": "F1-compile-error-diagnostic",
+          "result": "PASS",
+          "detail": "errors+=3 first=FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed."
+        },
+        {
+          "name": "F2-page-survives-broken-shader",
+          "result": "PASS",
+          "detail": "center=[0,243,61,255]（好盒子仍绿）"
+        },
+        {
+          "name": "G1-remove",
+          "result": "PASS",
+          "detail": "remove 后 get → null"
+        },
+        {
+          "name": "G2-duplicate-register-survives",
+          "result": "PASS",
+          "detail": "threw=null get===effect2: true"
+        },
+        {
+          "name": "G3-reregister-renders",
+          "result": "PASS",
+          "detail": "center=[25,75,251,255]（预期蓝色系 b 主导）"
+        },
+        {
+          "name": "H1-material-destroy-no-crash",
+          "result": "PASS",
+          "detail": "threw=null center=[23,69,232,255]"
+        },
+        {
+          "name": "H2-effect-destroy-no-throw",
+          "result": "PASS",
+          "detail": "threw=null destroy=true get→null: true"
+        },
+        {
+          "name": "H3-page-alive-final",
+          "result": "PASS",
+          "detail": "center=[20,60,201,255]"
+        }
+      ],
+      "info": {
+        "exports": {
+          "EffectAsset": "function",
+          "register": "function",
+          "remove": "function",
+          "get": "function",
+          "getAll": "function"
+        },
+        "registerBeforeBoot": "throws: Cannot read properties of undefined (reading 'capabilities')",
+        "allBefore": 21,
+        "allAfter": 22,
+        "registerGet": true,
+        "glContext": "webgl",
+        "glVersion": "WebGL 1.0 (OpenGL ES 2.0 Chromium)",
+        "glRenderer": "WebKit WebGL",
+        "gfxAPIValue": 6,
+        "gfxAPIName": "WEBGL",
+        "afterRemoveGet": true,
+        "duplicateRegisterThrew": null,
+        "getAfterDup": true,
+        "materialDestroyReturn": true,
+        "effectDestroyReturn": true,
+        "getAfterEffectDestroy": true
+      },
+      "samples": {
+        "firstFrame": [
+          179,
+          71,
+          18,
+          255
+        ],
+        "afterColorUniform": [
+          0,
+          143,
+          36,
+          255
+        ],
+        "animDiff": {
+          "d0": [
+            0,
+            141,
+            35,
+            255
+          ],
+          "d1": [
+            0,
+            130,
+            33,
+            255
+          ],
+          "d2": [
+            0,
+            127,
+            32,
+            255
+          ],
+          "maxDiff": 14
+        },
+        "frozen": {
+          "f0": [
+            0,
+            191,
+            48,
+            255
+          ],
+          "f1": [
+            0,
+            191,
+            48,
+            255
+          ]
+        },
+        "brokenErrors": [
+          "FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed.",
+          "Shader source dump: \n1 #define CC_DEVICE_SUPPORT_FLOAT_TEXTURE 1\n2 #define CC_ENABLE_CLUSTERED_LIGHT_CULLING 0\n3 #define CC_DEVICE_MAX_VERTEX_UNIFORM_VECTORS 4095\n4 #define CC_DEVICE_MAX_FRAGMENT_UNIFORM_VECTORS 1024\n5 #define CC_DEVICE_CAN_BENEFIT_FROM_INPUT_ATTACHMENT 0\n6 #define CC_PLATFORM_ANDROID_AND_WEBGL 0\n7 #define CC_ENABLE_WEBGL_HIGHP_STRUCT_VALUES 0\n8 #define CC_JOINT_UNIFORM_CAPACITY 256\n9 #define CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS 47\n10 #define CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS 6\n11 precision mediump float;\n12 varying mediump vec2 v_uv;\n13 void main () {\n14   gl_FragColor = vec4(1.0, 0.0;\n15 }\n16 ",
+          "ERROR: 0:14: ';' : syntax error\n\u0000"
+        ],
+        "afterBroken": [
+          0,
+          243,
+          61,
+          255
+        ],
+        "afterReregister": [
+          25,
+          75,
+          251,
+          255
+        ],
+        "final": [
+          20,
+          60,
+          201,
+          255
+        ]
+      },
+      "pageConsoleErrors": [
+        "FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed.",
+        "Shader source dump: \n1 #define CC_DEVICE_SUPPORT_FLOAT_TEXTURE 1\n2 #define CC_ENABLE_CLUSTERED_LIGHT_CULLING 0\n3 #define CC_DEVICE_MAX_VERTEX_UNIFORM_VECTORS 4095\n4 #define CC_DEVICE_MAX_FRAGMENT_UNIFORM_VECTORS 1024\n5 #define CC_DEVICE_CAN_BENEFIT_FROM_INPUT_ATTACHMENT 0\n6 #define CC_PLATFORM_ANDROID_AND_WEBGL 0\n7 #define CC_ENABLE_WEBGL_HIGHP_STRUCT_VALUES 0\n8 #define CC_JOINT_UNIFORM_CAPACITY 256\n9 #define CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS 47\n10 #define CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS 6\n11 precision mediump float;\n12 varying mediump vec2 v_uv;\n13 void main () {\n14   gl_FragColor = vec4(1.0, 0.0;\n15 }\n16 ",
+        "ERROR: 0:14: ';' : syntax error\n\u0000"
+      ],
+      "pageConsoleWarns": [],
+      "runnerConsoleErrors": [
+        {
+          "type": "error",
+          "text": "FragmentShader in 'probe-broken|probe-vs:vert|probe-fs:frag' compilation failed."
+        },
+        {
+          "type": "error",
+          "text": "Shader source dump: \n1 #define CC_DEVICE_SUPPORT_FLOAT_TEXTURE 1\n2 #define CC_ENABLE_CLUSTERED_LIGHT_CULLING 0\n3 #define CC_DEVICE_MAX_VERTEX_UNIFORM_VECTORS 4095\n4 #define CC_DEVICE_MAX_FRAGMENT_UNIFORM_VECTORS 1024\n5 #define CC_DEVICE_CAN_BENEFIT_FROM_INPUT_ATTACHMENT 0\n6 #define CC_PLATFORM_ANDROID_AND_WEBGL 0\n7 #define CC_ENABLE_WEBGL_HIGHP_STRUCT_VALUES 0\n8 #define CC_JOINT_UNIFORM_CAPACITY 256\n9 #define CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS 47\n10 #define CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS 6\n11 precision mediump float;\n12 varying mediump vec2 v_uv;\n13 void main () {\n14   gl_FragColor = vec4(1.0, 0.0;\n15 }\n16 "
+        },
+        {
+          "type": "error",
+          "text": "ERROR: 0:14: ';' : syntax error\n\u0000"
+        }
+      ],
+      "pageErrors": [],
+      "screenshot": "docs/evidence/examples/g4-shader-probe-force-webgl1.png"
+    }
+  ]
+}

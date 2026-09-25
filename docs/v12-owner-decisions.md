@@ -154,3 +154,10 @@ Owner 复核结论「V1.1 Release Gate 未满足、当前不可发布」——�
 3. gltf-draco S25 warn：裁定为已知边界（浏览器解码 glue 不随包，R8 同族），非示例缺陷；
    解堵需 owner 授权引入浏览器版 draco_decoder.js（P2 通道）。
 4. Stable 数量缺口 63：内容型工程，属后续 Wave 范围，本会话不虚假补齐。
+
+## 7. r50 执行记录（2026-09-25）
+
+Owner 指令「63 个 stable 示例的内容生产（同时抬覆盖率）」执行完毕：**74 个新示例全部 stable**（超额 +11），
+Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/816）。四项 V1.1 Release 门槛中
+「Stable 数量」首项达成；Core/Important/Advanced 三项覆盖率门槛继续按 Wave 推进（Important 需下一波定向选题）。
+明细与工具链产出见 `docs/v11-progress.md` r50 章节。并行会话 7 个在建示例目录在门禁窗口期临时移出、已原位归还。

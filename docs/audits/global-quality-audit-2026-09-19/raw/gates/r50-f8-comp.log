@@ -1,0 +1,4 @@
+[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract
+[FAIL] gltf-loader-registry S15-FREEZE: §15：Assets complete 未满足（声明资产缺失 [object Object]）
+[spec-compliance] 132 examples: 1 fail / 1 warn → docs\evidence\v11-spec-compliance.json
+COMP=1

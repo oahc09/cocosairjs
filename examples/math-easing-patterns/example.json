@@ -1,0 +1,268 @@
+{
+  "id": "math-easing-patterns",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "math 标量 — 缓动模式组合 (V1.1 Wave)",
+  "category": "math",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.setPosition",
+    "Node.setRotationFromEuler",
+    "Camera",
+    "DirectionalLight",
+    "Layers",
+    "Color",
+    "math.Vec3",
+    "MeshRenderer",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "utils.createMesh",
+    "primitives.box",
+    "math.lerp",
+    "math.clamp01",
+    "math.inverseLerp"
+  ],
+  "capabilities": [],
+  "learning": {
+    "goal": "用标量工具组合三种经典缓动模式：smoothstep（3t²−2t³）、脉冲（pingPong 对称折返）、往返采样（repeat+lerp）。",
+    "points": [
+      "smoothstep(0.5)=0.5 对称",
+      "脉冲峰值在半周期",
+      "repeat 周期采样点恢复"
+    ]
+  },
+  "effect": {
+    "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
+    "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 125,195,215）、方向光、透视相机。"
+  },
+  "api": {
+    "primary": [
+      "math.lerp"
+    ],
+    "supporting": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "math.lerp",
+      "math.clamp01",
+      "math.inverseLerp"
+    ],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.lerp",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "math.clamp01",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "math.inverseLerp",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L43"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "capability": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：立方体网格与材质运行时程序化生成（primitives.box + utils.createMesh + new Material）。"
+  },
+  "specStatus": "frozen",
+  "promotion": {
+    "spec": "b410b1e6fdbc",
+    "source": "8f29c67d016211b9",
+    "candidate": "f6036adc8526e925",
+    "verified": 21,
+    "attested": 0,
+    "units": 21
+  }
+}

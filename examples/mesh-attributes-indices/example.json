@@ -1,0 +1,285 @@
+{
+  "id": "mesh-attributes-indices",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Mesh — 属性与索引读写 (V1.1 Wave)",
+  "category": "mesh",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.setPosition",
+    "Node.setRotationFromEuler",
+    "Camera",
+    "DirectionalLight",
+    "Layers",
+    "Color",
+    "math.Vec3",
+    "MeshRenderer",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "utils.createMesh",
+    "primitives.box",
+    "Mesh.readAttribute",
+    "Mesh.copyAttribute",
+    "Mesh.readIndices",
+    "Mesh.copyIndices",
+    "Mesh.readAttributeFormat"
+  ],
+  "capabilities": [],
+  "learning": {
+    "goal": "掌握 Mesh 数据面 API：读/拷贝顶点属性、读/拷贝索引、读取属性格式（在 primitives.box 产物上确定性回读）。",
+    "points": [
+      "readAttribute 的返回类型与长度>0",
+      "readIndices 得到 Uint16/32Array",
+      "readAttributeFormat 返回属性描述"
+    ]
+  },
+  "effect": {
+    "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
+    "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 180,200,230）、方向光、透视相机。"
+  },
+  "api": {
+    "primary": [
+      "Mesh.readAttribute",
+      "Mesh.readIndices"
+    ],
+    "supporting": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Mesh.readAttribute",
+      "Mesh.copyAttribute",
+      "Mesh.readIndices",
+      "Mesh.copyIndices",
+      "Mesh.readAttributeFormat"
+    ],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Mesh.readAttribute",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "Mesh.copyAttribute",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "Mesh.readIndices",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "Mesh.copyIndices",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L43"
+      },
+      {
+        "api": "Mesh.readAttributeFormat",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L44"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "capability": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：立方体网格与材质运行时程序化生成（primitives.box + utils.createMesh + new Material）。"
+  },
+  "specStatus": "frozen",
+  "promotion": {
+    "spec": "df4938c181e1",
+    "source": "fdaeebfb49cc3866",
+    "candidate": "f6036adc8526e925",
+    "verified": 23,
+    "attested": 0,
+    "units": 23
+  }
+}

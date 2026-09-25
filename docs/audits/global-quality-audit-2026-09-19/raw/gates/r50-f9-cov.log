@@ -1,0 +1,11 @@
+[coverage] core: required 816/816 | claimed 476 | verified 294 (0.36) [call 292 / read 2 / unknown 0] | attested(all-units) 182
+[coverage] important: required 1773/1773 | claimed 34 | verified 20 (0.011) [call 18 / read 2 / unknown 0] | attested(all-units) 14
+[coverage] advanced: required 0/5471 | claimed 0 | verified 0 (0) [call 0 / read 0 / unknown 0] | attested(all-units) 79
+[coverage] core gate (floor 6% verified of coverageRequired (ratchet; V1.1 target 100% retained for disclosure)): PASS
+[coverage] important gate (floor 1% verified of coverageRequired (ratchet; V1.1 target 90% retained for disclosure)): PASS
+[coverage] advanced gate (floor 0% (coverageRequired 为空，NOT_APPLICABLE)): NOT_APPLICABLE
+[coverage] inventory fingerprint: 15d629f3a2262d01
+[coverage] evidence without apiProof (counted as claimed only): 1
+[coverage] → docs\api-coverage-report.json
+[coverage] gate: PASS
+COV=0

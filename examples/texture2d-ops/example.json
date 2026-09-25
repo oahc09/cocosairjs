@@ -1,0 +1,326 @@
+{
+  "id": "texture2d-ops",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Texture2D — 创建/描述/资源释放面 (V1.1 Wave)",
+  "category": "texture",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.setPosition",
+    "Node.setRotationFromEuler",
+    "Camera",
+    "DirectionalLight",
+    "Layers",
+    "Color",
+    "math.Vec3",
+    "MeshRenderer",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "utils.createMesh",
+    "primitives.box",
+    "Texture2D.constructor",
+    "Texture2D.create",
+    "Texture2D.updateMipmaps",
+    "Texture2D.getHtmlElementObj",
+    "Texture2D.toString",
+    "Texture2D.reset",
+    "Texture2D.releaseTexture",
+    "Texture2D.base",
+    "Texture2D.initDefault",
+    "Texture2D.validate"
+  ],
+  "capabilities": [],
+  "learning": {
+    "goal": "掌握 Texture2D 数据面：构造、create 分配、mipmap 更新、HTML 元素获取、描述字符串、reset/release 资源语义与缺省化（多数走 try 兜底）。",
+    "points": [
+      "new Texture2D() 构造即回读",
+      "description/toString 字符串型",
+      "releaseTexture 后可再 initDefault"
+    ]
+  },
+  "effect": {
+    "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
+    "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 210,180,230）、方向光、透视相机。"
+  },
+  "api": {
+    "primary": [
+      "Texture2D.create"
+    ],
+    "supporting": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Texture2D.constructor",
+      "Texture2D.create",
+      "Texture2D.updateMipmaps",
+      "Texture2D.getHtmlElementObj",
+      "Texture2D.toString",
+      "Texture2D.reset",
+      "Texture2D.releaseTexture",
+      "Texture2D.base",
+      "Texture2D.initDefault",
+      "Texture2D.validate"
+    ],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Texture2D.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Texture2D.create",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "Texture2D.updateMipmaps",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "Texture2D.getHtmlElementObj",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L43"
+      },
+      {
+        "api": "Texture2D.toString",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "Texture2D.reset",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L47"
+      },
+      {
+        "api": "Texture2D.releaseTexture",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "Texture2D.base",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L46"
+      },
+      {
+        "api": "Texture2D.initDefault",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "Texture2D.validate",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L50"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "capability": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：立方体网格与材质运行时程序化生成（primitives.box + utils.createMesh + new Material）。"
+  },
+  "specStatus": "frozen",
+  "promotion": {
+    "spec": "65286e65b9e5",
+    "source": "db02dcc4ffa25fa1",
+    "candidate": "f6036adc8526e925",
+    "verified": 27,
+    "attested": 1,
+    "units": 28
+  }
+}

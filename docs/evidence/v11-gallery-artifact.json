@@ -1,22 +1,22 @@
 {
-  "measuredAt": "2026-09-25T03:51:26.104Z",
+  "measuredAt": "2026-09-25T12:55:31.649Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
   "completed": true,
   "scope": {
-    "examples": 58,
-    "booted": 53,
+    "examples": 132,
+    "booted": 127,
     "devToolsPagesServed": 5,
-    "lifecycle": 23
+    "lifecycle": 30
   },
   "artifactBytes": {
     "engineCopySha256_16": "9376e3062269376c",
     "liveBundleSha256_16": "9376e3062269376c",
     "identical": true
   },
-  "total": 102,
-  "pass": 102,
+  "total": 183,
+  "pass": 183,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -56,7 +56,7 @@
     {
       "id": "artifact:thumbnails-all",
       "ok": true,
-      "detail": "53/53 thumbnails reachable"
+      "detail": "127/127 thumbnails reachable"
     },
     {
       "id": "artifact:devtools-page-served:automation",
@@ -86,12 +86,12 @@
     {
       "id": "gallery:list-rendered",
       "ok": true,
-      "detail": "links=58 expected=58"
+      "detail": "links=132 expected=132"
     },
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:57001/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:50924/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -119,9 +119,19 @@
       "detail": "held=1 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:batching-utility",
+      "ok": true,
+      "detail": "booted via /batching-utility/"
+    },
+    {
       "id": "example-boot:camera",
       "ok": true,
       "detail": "booted via /camera/"
+    },
+    {
+      "id": "example-boot:camera-geometry-extras",
+      "ok": true,
+      "detail": "booted via /camera-geometry-extras/"
     },
     {
       "id": "example-boot:camera-lookat",
@@ -139,6 +149,36 @@
       "detail": "booted via /camera-ortho/"
     },
     {
+      "id": "example-boot:camera-screen-world",
+      "ok": true,
+      "detail": "booted via /camera-screen-world/"
+    },
+    {
+      "id": "example-boot:camera-second-view",
+      "ok": true,
+      "detail": "booted via /camera-second-view/"
+    },
+    {
+      "id": "example-boot:camera-viewport-props",
+      "ok": true,
+      "detail": "booted via /camera-viewport-props/"
+    },
+    {
+      "id": "example-boot:color-timeline-key",
+      "ok": true,
+      "detail": "booted via /color-timeline-key/"
+    },
+    {
+      "id": "example-boot:colortimeline-ops",
+      "ok": true,
+      "detail": "booted via /colortimeline-ops/"
+    },
+    {
+      "id": "example-boot:directional-light-face",
+      "ok": true,
+      "detail": "booted via /directional-light-face/"
+    },
+    {
       "id": "example-boot:dragonbones-basic",
       "ok": true,
       "detail": "booted via /dragonbones-basic/"
@@ -147,6 +187,16 @@
       "id": "lifecycle:dragonbones-basic",
       "ok": true,
       "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:gltf-asset-readonly",
+      "ok": true,
+      "detail": "booted via /gltf-asset-readonly/"
+    },
+    {
+      "id": "lifecycle:gltf-asset-readonly",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:gltf-basic",
@@ -187,6 +237,16 @@
       "id": "decoder-state:gltf-draco",
       "ok": true,
       "detail": "__decoderState=decoder-missing-observed"
+    },
+    {
+      "id": "example-boot:gltf-loader-registry",
+      "ok": true,
+      "detail": "booted via /gltf-loader-registry/"
+    },
+    {
+      "id": "lifecycle:gltf-loader-registry",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:gltf-meshopt",
@@ -254,9 +314,24 @@
       "detail": "booted via /input/"
     },
     {
+      "id": "example-boot:input-queries",
+      "ok": true,
+      "detail": "booted via /input-queries/"
+    },
+    {
       "id": "example-boot:interaction-click",
       "ok": true,
       "detail": "booted via /interaction-click/"
+    },
+    {
+      "id": "example-boot:layers-enum-ops",
+      "ok": true,
+      "detail": "booted via /layers-enum-ops/"
+    },
+    {
+      "id": "example-boot:light-attach-cycle",
+      "ok": true,
+      "detail": "booted via /light-attach-cycle/"
     },
     {
       "id": "example-boot:light-point",
@@ -289,6 +364,16 @@
       "detail": "booted via /material-color/"
     },
     {
+      "id": "example-boot:material-lifecycle",
+      "ok": true,
+      "detail": "booted via /material-lifecycle/"
+    },
+    {
+      "id": "example-boot:material-ops",
+      "ok": true,
+      "detail": "booted via /material-ops/"
+    },
+    {
       "id": "example-boot:material-transparent",
       "ok": true,
       "detail": "booted via /material-transparent/"
@@ -304,9 +389,224 @@
       "detail": "booted via /material-unlit/"
     },
     {
+      "id": "example-boot:math-approx-compare",
+      "ok": true,
+      "detail": "booted via /math-approx-compare/"
+    },
+    {
+      "id": "example-boot:math-bits",
+      "ok": true,
+      "detail": "booted via /math-bits/"
+    },
+    {
+      "id": "example-boot:math-bits-constants",
+      "ok": true,
+      "detail": "booted via /math-bits-constants/"
+    },
+    {
+      "id": "example-boot:math-color-applied",
+      "ok": true,
+      "detail": "booted via /math-color-applied/"
+    },
+    {
+      "id": "example-boot:math-color-convert",
+      "ok": true,
+      "detail": "booted via /math-color-convert/"
+    },
+    {
+      "id": "example-boot:math-color-models",
+      "ok": true,
+      "detail": "booted via /math-color-models/"
+    },
+    {
+      "id": "example-boot:math-easing-patterns",
+      "ok": true,
+      "detail": "booted via /math-easing-patterns/"
+    },
+    {
+      "id": "example-boot:math-enumerable-props",
+      "ok": true,
+      "detail": "booted via /math-enumerable-props/"
+    },
+    {
+      "id": "example-boot:math-float-encoding",
+      "ok": true,
+      "detail": "booted via /math-float-encoding/"
+    },
+    {
+      "id": "example-boot:math-mat3-basics",
+      "ok": true,
+      "detail": "booted via /math-mat3-basics/"
+    },
+    {
+      "id": "example-boot:math-mat3-elements",
+      "ok": true,
+      "detail": "booted via /math-mat3-elements/"
+    },
+    {
+      "id": "example-boot:math-mat3-transforms",
+      "ok": true,
+      "detail": "booted via /math-mat3-transforms/"
+    },
+    {
+      "id": "example-boot:math-mat4-applied",
+      "ok": true,
+      "detail": "booted via /math-mat4-applied/"
+    },
+    {
+      "id": "example-boot:math-mat4-basics",
+      "ok": true,
+      "detail": "booted via /math-mat4-basics/"
+    },
+    {
+      "id": "example-boot:math-mat4-compose",
+      "ok": true,
+      "detail": "booted via /math-mat4-compose/"
+    },
+    {
+      "id": "example-boot:math-mat4-transform",
+      "ok": true,
+      "detail": "booted via /math-mat4-transform/"
+    },
+    {
+      "id": "example-boot:math-quat-applied",
+      "ok": true,
+      "detail": "booted via /math-quat-applied/"
+    },
+    {
+      "id": "example-boot:math-quat-components",
+      "ok": true,
+      "detail": "booted via /math-quat-components/"
+    },
+    {
+      "id": "example-boot:math-quat-euler",
+      "ok": true,
+      "detail": "booted via /math-quat-euler/"
+    },
+    {
+      "id": "example-boot:math-quat-interp",
+      "ok": true,
+      "detail": "booted via /math-quat-interp/"
+    },
+    {
+      "id": "example-boot:math-random-utils",
+      "ok": true,
+      "detail": "booted via /math-random-utils/"
+    },
+    {
+      "id": "example-boot:math-rect-geometry",
+      "ok": true,
+      "detail": "booted via /math-rect-geometry/"
+    },
+    {
+      "id": "example-boot:math-rect-ops",
+      "ok": true,
+      "detail": "booted via /math-rect-ops/"
+    },
+    {
+      "id": "example-boot:math-scalar-utils",
+      "ok": true,
+      "detail": "booted via /math-scalar-utils/"
+    },
+    {
+      "id": "example-boot:math-size-ops",
+      "ok": true,
+      "detail": "booted via /math-size-ops/"
+    },
+    {
+      "id": "example-boot:math-vec2-applied",
+      "ok": true,
+      "detail": "booted via /math-vec2-applied/"
+    },
+    {
+      "id": "example-boot:math-vec2-arithmetic",
+      "ok": true,
+      "detail": "booted via /math-vec2-arithmetic/"
+    },
+    {
+      "id": "example-boot:math-vec2-components",
+      "ok": true,
+      "detail": "booted via /math-vec2-components/"
+    },
+    {
+      "id": "example-boot:math-vec2-equality-misc",
+      "ok": true,
+      "detail": "booted via /math-vec2-equality-misc/"
+    },
+    {
+      "id": "example-boot:math-vec2-length-angle",
+      "ok": true,
+      "detail": "booted via /math-vec2-length-angle/"
+    },
+    {
+      "id": "example-boot:math-vec2-tovec3",
+      "ok": true,
+      "detail": "booted via /math-vec2-tovec3/"
+    },
+    {
+      "id": "example-boot:math-vec3-applied",
+      "ok": true,
+      "detail": "booted via /math-vec3-applied/"
+    },
+    {
+      "id": "example-boot:math-vec3-arithmetic",
+      "ok": true,
+      "detail": "booted via /math-vec3-arithmetic/"
+    },
+    {
+      "id": "example-boot:math-vec3-components",
+      "ok": true,
+      "detail": "booted via /math-vec3-components/"
+    },
+    {
+      "id": "example-boot:math-vec3-equality-misc",
+      "ok": true,
+      "detail": "booted via /math-vec3-equality-misc/"
+    },
+    {
+      "id": "example-boot:math-vec3-length-products",
+      "ok": true,
+      "detail": "booted via /math-vec3-length-products/"
+    },
+    {
+      "id": "example-boot:math-vec3-tovec2",
+      "ok": true,
+      "detail": "booted via /math-vec3-tovec2/"
+    },
+    {
+      "id": "example-boot:math-vec4-arithmetic",
+      "ok": true,
+      "detail": "booted via /math-vec4-arithmetic/"
+    },
+    {
+      "id": "example-boot:math-vec4-components",
+      "ok": true,
+      "detail": "booted via /math-vec4-components/"
+    },
+    {
+      "id": "example-boot:math-vec4-length-misc",
+      "ok": true,
+      "detail": "booted via /math-vec4-length-misc/"
+    },
+    {
+      "id": "example-boot:mesh-attributes-indices",
+      "ok": true,
+      "detail": "booted via /mesh-attributes-indices/"
+    },
+    {
       "id": "example-boot:mesh-cylinder",
       "ok": true,
       "detail": "booted via /mesh-cylinder/"
+    },
+    {
+      "id": "example-boot:mesh-lifecycle-ops",
+      "ok": true,
+      "detail": "booted via /mesh-lifecycle-ops/"
+    },
+    {
+      "id": "example-boot:mesh-morph-bounds",
+      "ok": true,
+      "detail": "booted via /mesh-morph-bounds/"
     },
     {
       "id": "example-boot:mesh-multi-material",
@@ -324,6 +624,11 @@
       "detail": "booted via /mesh-plane/"
     },
     {
+      "id": "example-boot:mesh-prim-compare",
+      "ok": true,
+      "detail": "booted via /mesh-prim-compare/"
+    },
+    {
       "id": "example-boot:mesh-sphere",
       "ok": true,
       "detail": "booted via /mesh-sphere/"
@@ -334,9 +639,34 @@
       "detail": "booted via /mesh-torus/"
     },
     {
+      "id": "example-boot:meshrenderer-hooks",
+      "ok": true,
+      "detail": "booted via /meshrenderer-hooks/"
+    },
+    {
       "id": "example-boot:node-active",
       "ok": true,
       "detail": "booted via /node-active/"
+    },
+    {
+      "id": "example-boot:node-children-ops",
+      "ok": true,
+      "detail": "booted via /node-children-ops/"
+    },
+    {
+      "id": "lifecycle:node-children-ops",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:node-component-queries",
+      "ok": true,
+      "detail": "booted via /node-component-queries/"
+    },
+    {
+      "id": "example-boot:node-events",
+      "ok": true,
+      "detail": "booted via /node-events/"
     },
     {
       "id": "example-boot:node-hierarchy",
@@ -344,9 +674,19 @@
       "detail": "booted via /node-hierarchy/"
     },
     {
+      "id": "example-boot:node-pool",
+      "ok": true,
+      "detail": "booted via /node-pool/"
+    },
+    {
       "id": "example-boot:node-scale",
       "ok": true,
       "detail": "booted via /node-scale/"
+    },
+    {
+      "id": "example-boot:node-scene-id",
+      "ok": true,
+      "detail": "booted via /node-scene-id/"
     },
     {
       "id": "example-boot:particle-2d-basic",
@@ -399,6 +739,21 @@
       "detail": "held=8 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:primitives-geometry-ops",
+      "ok": true,
+      "detail": "booted via /primitives-geometry-ops/"
+    },
+    {
+      "id": "example-boot:primitives-shapes-extra",
+      "ok": true,
+      "detail": "booted via /primitives-shapes-extra/"
+    },
+    {
+      "id": "example-boot:primitives-wireframe-obj",
+      "ok": true,
+      "detail": "booted via /primitives-wireframe-obj/"
+    },
+    {
       "id": "example-boot:profiler-overlay",
       "ok": true,
       "detail": "booted via /profiler-overlay/"
@@ -412,6 +767,31 @@
       "id": "lifecycle:runtime-asset-release",
       "ok": true,
       "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:scene-asset-meta",
+      "ok": true,
+      "detail": "booted via /scene-asset-meta/"
+    },
+    {
+      "id": "lifecycle:scene-asset-meta",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:scene-globals-read",
+      "ok": true,
+      "detail": "booted via /scene-globals-read/"
+    },
+    {
+      "id": "example-boot:scene-runtime-ops",
+      "ok": true,
+      "detail": "booted via /scene-runtime-ops/"
+    },
+    {
+      "id": "lifecycle:scene-runtime-ops",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:skinned-animation",
@@ -442,6 +822,26 @@
       "id": "lifecycle:texture-basic",
       "ok": true,
       "detail": "held=5 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:texture2d-ops",
+      "ok": true,
+      "detail": "booted via /texture2d-ops/"
+    },
+    {
+      "id": "lifecycle:texture2d-ops",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:texture2d-serialization",
+      "ok": true,
+      "detail": "booted via /texture2d-serialization/"
+    },
+    {
+      "id": "lifecycle:texture2d-serialization",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:tiledmap-basic",
@@ -484,6 +884,11 @@
       "detail": "held=18 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:utils-family",
+      "ok": true,
+      "detail": "booted via /utils-family/"
+    },
+    {
       "id": "example-boot:video-basic",
       "ok": true,
       "detail": "booted via /video-basic/"
@@ -506,12 +911,12 @@
     {
       "id": "artifact:all-boottable-examples",
       "ok": true,
-      "detail": "53/53 booted under nested mount"
+      "detail": "127/127 booted under nested mount"
     },
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "23 §25 合同示例在部署物内完成释放核对"
+      "detail": "30 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",

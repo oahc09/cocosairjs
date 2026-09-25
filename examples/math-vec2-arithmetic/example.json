@@ -1,0 +1,334 @@
+{
+  "id": "math-vec2-arithmetic",
+  "version": "1.0.0",
+  "status": "stable",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "math.Vec2 — 静态算术族 (V1.1 Wave)",
+  "category": "math",
+  "apiClaims": [
+    "createAirApp",
+    "Scene",
+    "Node",
+    "Node.addChild",
+    "Node.addComponent",
+    "Node.setPosition",
+    "Node.setRotationFromEuler",
+    "Camera",
+    "DirectionalLight",
+    "Layers",
+    "Color",
+    "math.Vec3",
+    "MeshRenderer",
+    "Material",
+    "Material.initialize",
+    "Material.setProperty",
+    "utils.createMesh",
+    "primitives.box",
+    "math.Vec2.add",
+    "math.Vec2.add2f",
+    "math.Vec2.subtract",
+    "math.Vec2.subtract2f",
+    "math.Vec2.multiply",
+    "math.Vec2.multiply2f",
+    "math.Vec2.multiplyScalar",
+    "math.Vec2.divide",
+    "math.Vec2.divide2f",
+    "math.Vec2.negative",
+    "math.Vec2.set"
+  ],
+  "capabilities": [],
+  "learning": {
+    "goal": "掌握 Vec2 静态 out-形算术：加/减/乘/除（向量与标量双形态）、取负、克隆与重置，全部确定性回读。",
+    "points": [
+      "add(out,a,b) 与 add2f(out,ax,ay,bx,by) 等价： (1,2)+(3,4)=(4,6)",
+      "multiplyScalar 是标量广播；negative 得 (-a,-b)",
+      "clone/set 互为往返：set(clone(a), b) 后逐分量相等"
+    ]
+  },
+  "effect": {
+    "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
+    "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 96,160,220）、方向光、透视相机。"
+  },
+  "api": {
+    "primary": [
+      "math.Vec2.add",
+      "math.Vec2.subtract",
+      "math.Vec2.multiply"
+    ],
+    "supporting": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Color",
+      "math.Vec3",
+      "MeshRenderer",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "math.Vec2.add",
+      "math.Vec2.add2f",
+      "math.Vec2.subtract",
+      "math.Vec2.subtract2f",
+      "math.Vec2.multiply",
+      "math.Vec2.multiply2f",
+      "math.Vec2.multiplyScalar",
+      "math.Vec2.divide",
+      "math.Vec2.divide2f",
+      "math.Vec2.negative",
+      "math.Vec2.set"
+    ],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L10"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L13"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.Vec2.add",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "math.Vec2.add2f",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "math.Vec2.subtract",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "math.Vec2.subtract2f",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L43"
+      },
+      {
+        "api": "math.Vec2.multiply",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L44"
+      },
+      {
+        "api": "math.Vec2.multiply2f",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "math.Vec2.multiplyScalar",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L46"
+      },
+      {
+        "api": "math.Vec2.divide",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L47"
+      },
+      {
+        "api": "math.Vec2.divide2f",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "math.Vec2.negative",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "math.Vec2.set",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L51"
+      }
+    ]
+  },
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [],
+    "interaction": [],
+    "visual": [
+      "visible-frame"
+    ],
+    "capability": []
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产：立方体网格与材质运行时程序化生成（primitives.box + utils.createMesh + new Material）。"
+  },
+  "specStatus": "frozen",
+  "promotion": {
+    "spec": "1a508076cd58",
+    "source": "b0455f493a7594be",
+    "candidate": "f6036adc8526e925",
+    "verified": 24,
+    "attested": 5,
+    "units": 29
+  }
+}
