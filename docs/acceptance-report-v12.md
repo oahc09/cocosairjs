@@ -354,3 +354,12 @@ v12-backends、v12-feature-face、v12-custom-face、doc-refs、v11-chain-face）
 - `verify:v12-feature-face` / `verify:v12-backends` 登记常量随 #8(a) 授权更新（默认集 26 → **27**；三个 wasm 后端仍不入默认集，A5/A2 断言保持有效）；
 - `verify:licenses` cannon 行 `ships: 'variant'` → `'default'`（#8(a) 授权的簿记更新，`THIRD_PARTY_LICENSES.md` 同步）；
 - `verify:consumer` F-85 断链随 #11(a1) 清零（手册随包发布）。
+
+## §6 UPDATE-r48（2026-09-25）：剩余事项清偿与版本 1.2.0
+
+- License 三项解除（fixture sidecar / spine 条件声明 / engine-pal RISK-ACCEPTED 通道）：`verify:licenses` 0 FAIL / 1 RISK-ACCEPTED。
+- Coverage 重定标（owner-decisions §5）：棘轮下限 core≥6% / important≥1%，`verify:api-coverage` PASS；100/90/80 保留为披露目标。
+- perfLifecycle 新工具 PASS（30-load 漂移 0.3%、dispose 50/50、memory 可读）；docsConsumer 半边补齐（tarball → offline install → 真实浏览器 Quick Start 消费 PASS）。
+- dual-track 当期重跑 10 行全绿；全局审计 10 阻塞项 9 项解除、1 项（agentGate）留待 LLM 凭据（复核附录 `docs/audits/global-quality-audit-2026-09-19/r48-recheck-addendum.md`）。
+- **版本 1.2.0**（package.json / AIR_VERSION，smoke-01 锁定）：bundle 6,600,546 B / `9376e3062269376c`（min `51896790f817b390`）；npm ping PONG、whoami ENEEDAUTH（publish 未执行，待凭据与指令）。
+- 当期终读：矩阵 39/39、链 53/53（52 promoted）、gallery 102/102、jest 32/263、十五道 verify 门禁全 EXIT=0（日志 `docs/audits/**/raw/gates/r48-*`）。

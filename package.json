@@ -1,6 +1,6 @@
 {
  "name": "cocosair.js",
- "version": "0.1.0",
+ "version": "1.2.0",
  "description": "Cocos AIR — Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
  "license": "MIT",
  "type": "commonjs",
@@ -55,6 +55,8 @@
   "test": "jest",
   "dev": "node tools/dev/dev-server.cjs",
   "verify:consumer": "node tools/verify/consumer-acceptance.cjs",
+  "verify:perf-lifecycle": "node tools/verify/perf-lifecycle.cjs",
+  "verify:tarball-consumer": "node tools/verify/tarball-browser-consumer.cjs",
   "verify:benchmark": "tsc -p tools/benchmark/tsconfig.json && node tools/verify/benchmark-regression.cjs",
   "verify:v06-gate": "node tools/verify/v06-report.cjs",
   "verify:v12-matrix": "node tools/v12/browser-matrix.cjs",

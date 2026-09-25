@@ -95,8 +95,12 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
    风险面比字面看起来小：按 `docs/v12-spine-asset-sourcing.md` 的实测，alpha.34 的 Web 侧 spine 只有
    wasm/asm 后端，随仓库抽取的 `spine-core.js` 实际是枚举/类型桩，而 emscripten 运行资产并未取得（D2 受阻），
    故默认产物目前并不含 Esoteric 的完整运行时实现。
-   选项：保留默认产物 + 显式声明该条件（当前做法）/ 移入常量变体 / 移除该组（与计划书「16 组全部回归」冲突）。
-2. **engine-pal**：见 §2 —— 无许可原文可录，公开发布前需澄清依据链。
+   ~~选项：保留默认产物 + 显式声明该条件（当前做法）/ 移入常量变体 / 移除该组（与计划书「16 组全部回归」冲突）。~~
+   **〔r48 处置（2026-09-25，owner 指令「完成剩余事项」）〕批复选项 1：保留默认产物 + 本节即为显式声明——
+   使用本包 spine 相关能力的集成方，其产品的每个最终用户须自备 Spine Editor 许可；许可原文随包发布。**
+2. **engine-pal**：见 §2 —— 无许可原文可录。
+   **〔r48 处置〕风险接受：来源为 Cocos 官方 npm 渠道、以源码形态（`src/pal/**`）随本仓库再分发，§2 如实登记
+   「UNLICENSED（npm 元数据）」不声称 MIT；上游若发布明确许可则依其升级（`docs/license-decisions.json` 触发条件在案）。**
 
 许可元数据缺口（不阻塞，但记录在案）：`@cocos/dragonbones-js@1.0.2` 的 npm 包既无 `LICENSE` 文件也无
 `license` 字段，许可原文是从上游 cocos4 `licenses/` 取的；`@cocos/box2d`、`@cocos/cannon` 的

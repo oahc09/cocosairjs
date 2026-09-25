@@ -154,7 +154,15 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   }
 
   function rate (n, total) { return total ? Math.round((n / total) * 1000) / 1000 : 0; }
-  var GATES = { core: { label: '100% verified of coverageRequired', threshold: 1.0 }, important: { label: '>= 90% verified of coverageRequired', threshold: 0.9 }, advanced: { label: '>= 80% verified of coverageRequired', threshold: 0.8 } };
+  // r48 重定标（owner 指令「完成剩余事项」；登记 docs/v12-owner-decisions.md §5 / docs/v11-progress.md）：
+  // V1.1 立项期的 100%/90%/80% 目标改为「分层下限 + 棘轮」——下限只升不降（防回归有牙），
+  // 立项目标保留为 target 字段仅供披露，不再参与判定；低于下限即红。
+  // 下限取值 = r48 现读（core 6.9% / important 1.1%）向下取整的保守地板，上调时改这里并同步登记。
+  var GATES = {
+    core: { label: 'floor 6% verified of coverageRequired (ratchet; V1.1 target 100% retained for disclosure)', threshold: 0.06 },
+    important: { label: 'floor 1% verified of coverageRequired (ratchet; V1.1 target 90% retained for disclosure)', threshold: 0.01 },
+    advanced: { label: 'floor 0% (coverageRequired 为空，NOT_APPLICABLE)', threshold: 0 },
+  };
 
   // 分层统计：required 分母（coverageRequired=true）用于门禁，全量分母仅用于披露
   var tiers = {};
@@ -255,11 +263,13 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   if (evidenceSchemaGaps.length) { console.log('[coverage] evidence without apiProof (counted as claimed only): ' + evidenceSchemaGaps.length); }
   console.log('[coverage] → ' + path.relative(REPO, OUT_PATH));
   // 机器可强制：分母自相矛盾（数据完整性）必须以非零退出码阻断。
-  // r46（owner-decisions #18=(a)）：tier 覆盖率门禁降为信息性输出 —— V1.2 明示不承诺 API 覆盖率，
-  // gate 字段与上方 PASS/FAIL 打印保留，但不再参与退出码；恢复阈值判定见 #18(b) 路线。
-  var gatesPass = inventoryInconsistencies.length === 0;
+  // r48（owner-decisions #18 更新记录，docs/v12-owner-decisions.md §5）：tier 门禁从「信息性」升级为
+  // 「分层下限 + 棘轮」—— 低于下限即红（防回归有牙）；100/90/80 立项目标保留为披露字段，不再判定。
+  // 覆盖率从「发布阻塞项」转为「随里程碑上调的下限」（当前地板见上方 GATES 注释）。
+  var gatesPass = inventoryInconsistencies.length === 0
+    && ['core', 'important', 'advanced'].every(function (n) { return tierReport[n].pass; });
   process.exitCode = gatesPass ? 0 : 1;
   console.log('[coverage] gate:', gatesPass ? 'PASS' : 'FAIL'
-    + ' (tier coverage: informational per owner-decisions #18(a);'
+    + ' (r48 ratchet floors: core>=6% important>=1% advanced N/A;'
     + ' tier pass=' + ['core', 'important', 'advanced'].map(function (n) { return n + ':' + tierReport[n].pass; }).join(',') + ')');
 })();

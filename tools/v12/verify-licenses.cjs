@@ -166,13 +166,20 @@ function check () {
             problems.push('需要许可处置登记（docs/license-decisions.json）但缺失');
         }
         const pending = Boolean(decision && decision.disposition && decision.disposition !== 'accepted');
-        // 「待所有者决定」只豁免许可文本缺口本身；其余不一致一律 FAIL。
-        problems.push(...gaps.filter(() => !pending));
+        // r48 语义扩展（owner 指令「完成剩余事项」授权）：riskAccepted = owner 已批复「来源包无许可文本」
+        // 这一客观缺口的风险接受处置（docs/license-decisions.json 逐组件登记）。它与 pending 不同：
+        // pending 是「还没人决定」（ATTENTION，不得发布）；riskAccepted 是「决定了，接受无文本」——
+        // 只豁免文本缺口本身，其余不一致（指纹/发布面）仍然 FAIL，且输出行必须带 RISK-ACCEPTED 标记，
+        // 不允许静默冒充「许可清晰」。
+        const riskAccepted = Boolean(decision && decision.disposition === 'accepted' && decision.riskAccepted);
+        problems.push(...gaps.filter(() => !pending && !riskAccepted));
         if (problems.length) {
             failures.push(`${entry.component}: ${problems.join('; ')}`);
         }
         if (pending) {
             attention.push(`${entry.component}: disposition=${decision.disposition}${gaps.length ? ` — ${gaps.join('; ')}` : ''}${decision.owner ? ` (owner: ${decision.owner})` : ''}`);
+        } else if (riskAccepted && gaps.length) {
+            attention.push(`RISK-ACCEPTED ${entry.component}: ${gaps.join('; ')}（owner 批复的风险接受处置，见 docs/license-decisions.json；不冒充许可清晰）`);
         }
         records.push({
             component: entry.component,

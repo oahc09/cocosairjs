@@ -135929,7 +135929,7 @@ markAsWarning(AudioClip.prototype, 'AudioClip.prototype', ['state', 'play', 'pau
 cclegacy.AudioSourceComponent = AudioSource;
 setClassAlias(AudioSource, 'cc.AudioSourceComponent');
 
-const AIR_VERSION = '0.1.0';
+const AIR_VERSION = '1.2.0';
 class AirAppImpl {
   constructor(canvas) {
     this._started = false;

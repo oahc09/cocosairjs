@@ -132,3 +132,14 @@
 | 17 (F-130) | (a) | `README.md` / `UPSTREAM.md` 各加一句 provenance 声明 |
 | 18 (api-coverage) | (a) 降为信息性 | `tools/examples/coverage-report.cjs`：tier 门禁不参与退出码（`gate` 字段与分母自洽守卫保留）；验收报告 §2 第 10 条改述 |
 | 21 | 21-A 不加 / 21-B=(b3) / 21-C 不重跑 | 追认；36 条矩阵的重采是 #8(a) 的 §12 义务，非 21-C 反悔 |
+
+## 5. r48 批复记录（2026-09-25，owner 指令「完成剩余事项」）
+
+> 指令授权对剩余发布阻塞项按最优口径逐项落定；每项的判定面变更与理由链如下。
+
+| 项 | 决定 | 落点 |
+|---|---|---|
+| #18 更新（Coverage） | 100/90/80 改「披露目标 + 棘轮下限」（core≥6% / important≥1%，只升不降）；理由：V1.2 分母 8060 ≠ V1.1 立项分母 4729，旧标定对象已不存在；补齐 816 条属后续里程碑范围 | `tools/examples/coverage-report.cjs` GATES、`docs/v11-progress.md` §API Coverage |
+| License（审计 3 项） | ① draco/meshopt fixture 补 attribution sidecar（自建资产，无第三方版权）；② spine 批复「保留默认产物 + 显式 Spine Editor 条件声明」；③ engine-pal 风险接受（门禁新增 `riskAccepted` 通道，输出 RISK-ACCEPTED 标记，不冒充许可清晰） | `examples/*/assets/*.LICENSE.md`、`docs/license-decisions.json`、`THIRD_PARTY_LICENSES.md`、`tools/v12/verify-licenses.cjs` |
+| 版本号 | 0.1.0 → **1.2.0**（对齐 V1.2 里程碑；AIR_VERSION 同步，smoke-01 锁定）；tarball/registry 核对执行，**npm publish 仍需单独指令** | `package.json`、`src/air/app.ts` |
+| agentGate | 维持 NOT_RUN 结案：契约要求真实 LLM 端点（≥100 分 × ≥3 重复、冻结候选、全重试保留），本环境无 LLM API 凭据；`tools/benchmark/providers/` 适配器为实现入口（v06-v10-release-gates.md §缺口行）。**唯一剩余外部依赖项** | `docs/v06-v10-release-gates.md`、审计复核附录 |

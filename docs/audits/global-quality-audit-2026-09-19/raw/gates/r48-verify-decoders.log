@@ -1,0 +1,107 @@
+
+> cocosair.js@1.2.0 verify:decoders
+> node tools/verify/decoder-audit.cjs
+
+{
+  "ok": true,
+  "failures": [],
+  "artifacts": [
+    {
+      "file": "meshopt/meshopt_decoder.cjs",
+      "bytes": 29400,
+      "sha256": "fedf06f101ff2ba59d66335578230b7e8f5fac5057dee084be64c67444ac6c12"
+    },
+    {
+      "file": "meshopt/meshopt_decoder.mjs",
+      "bytes": 29059,
+      "sha256": "cb08bf53ad8ad9693d8bb759b2dbade350eb38bcce63d005385e225b564c5f6a"
+    },
+    {
+      "file": "meshopt/meshopt_encoder.js",
+      "bytes": 24348,
+      "sha256": "f82f201a778333291ba1ca63035321f1c6d2770ef52d219e69e13f6cb2098429"
+    },
+    {
+      "file": "meshopt/index.js",
+      "bytes": 199,
+      "sha256": "0afb975db2733391c2d0cabfbe707ee6d9a9651dddc221aeda5d819379958a89"
+    },
+    {
+      "file": "meshopt/LICENSE.md",
+      "bytes": 1079,
+      "sha256": "f03037ca7bad1e3eb7f4a63fa6084a8baabd5ba30d3c239a9a7f35705d873e26"
+    },
+    {
+      "file": "meshopt/meshopt_encoder.mjs",
+      "bytes": 24348,
+      "sha256": "f82f201a778333291ba1ca63035321f1c6d2770ef52d219e69e13f6cb2098429"
+    },
+    {
+      "file": "draco/draco_decoder_nodejs.js",
+      "bytes": 58763,
+      "sha256": "e8049906ef3f8f75d3456c22a3f31bfdfe5b5b5bd09ccdec613b9e9a49d554d8"
+    },
+    {
+      "file": "draco/draco_decoder.wasm",
+      "bytes": 285948,
+      "sha256": "2516a4e43526d71787bf2f678f951329f7f858f8f15f42d4bc9e370b31a0da3a"
+    },
+    {
+      "file": "draco/draco_encoder_nodejs.js",
+      "bytes": 49007,
+      "sha256": "8434adecd1446459601763e499be3697546056bca90b286a538ae0483a00845a"
+    },
+    {
+      "file": "draco/draco_encoder.wasm",
+      "bytes": 370188,
+      "sha256": "d2a3ac80c91980d5d321c116454834ff36264825c6d1794cc84e42288f158958"
+    },
+    {
+      "file": "draco/draco3d.js",
+      "bytes": 246,
+      "sha256": "7bb70f3edb3c32a21fbd3ea90d85f6f816a3394061c445ac4e867d23fa2f9dca"
+    },
+    {
+      "file": "draco/LICENSE.md",
+      "bytes": 12203,
+      "sha256": "e09df5ca32827edf0aa4d9c94a8852cad7353eae00e709204c03ca91db4699b9"
+    },
+    {
+      "file": "basis/basis_transcoder.js",
+      "bytes": 62337,
+      "sha256": "48a0ef319a28bf0224ee88ded34f74eaf97c175bba9eb18b47fb9720510ad6c4"
+    },
+    {
+      "file": "basis/basis_transcoder.wasm",
+      "bytes": 499935,
+      "sha256": "79ae97d781e10a566659c689b7bb1de91726453f55f9f5e3bcc07a4e3904070f"
+    },
+    {
+      "file": "basis/LICENSE.md",
+      "bytes": 12400,
+      "sha256": "08155e638b63603f65012c64ee1ca7dc947934b408ffaaea0f75669160792b9e"
+    },
+    {
+      "file": "package.json",
+      "bytes": 25,
+      "sha256": "8005a3491db7d92f36ac66369861589f9c47123d3a7c71e643fc2c06168cd45a"
+    },
+    {
+      "file": "build/cocosair.module.js",
+      "bytes": 6600546
+    },
+    {
+      "file": "build/cocosair.module.min.js",
+      "bytes": 3681021
+    },
+    {
+      "file": "build/cocosair.module.js.map",
+      "bytes": 20089653
+    },
+    {
+      "file": "build/cocosair.module.min.js.map",
+      "bytes": 16512325
+    }
+  ],
+  "manifestFiles": 16
+}

@@ -1,0 +1,16 @@
+{
+  "runner": "tools/verify/tarball-browser-consumer.cjs",
+  "measuredAt": "2026-09-25T04:16:51.203Z",
+  "tarball": "cocosair.js-1.2.0.tgz",
+  "installed": {
+    "files": 7
+  },
+  "booted": true,
+  "probe": {
+    "apiRoundtrip": "function,Scene,Node,Camera,MeshRenderer,Material,Color",
+    "nonZeroAlphaPixels": 100,
+    "canvasSize": "480x320"
+  },
+  "pageErrors": [],
+  "ok": true
+}

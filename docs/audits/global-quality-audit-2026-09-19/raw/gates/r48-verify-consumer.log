@@ -1,0 +1,11 @@
+
+> cocosair.js@1.2.0 verify:consumer
+> node tools/verify/consumer-acceptance.cjs
+
+[t1] published-artifacts: 4 markers x 2 bundles, 0 fail
+[t1] tarball: cocosair.js-1.2.0.tgz (11183761 bytes)
+{
+  "ok": true,
+  "failures": [],
+  "exportCount": 575
+}

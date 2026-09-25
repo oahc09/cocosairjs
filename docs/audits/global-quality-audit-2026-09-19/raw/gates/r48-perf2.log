@@ -1,0 +1,5 @@
+
+> cocosair.js@1.2.0 verify:perf-lifecycle
+> node tools/verify/perf-lifecycle.cjs
+
+[perf-lifecycle] 30-load median=16.5ms drift=0.6% | dispose 50: 50/50 | memory={"usedJSHeapMB":31} → PASS

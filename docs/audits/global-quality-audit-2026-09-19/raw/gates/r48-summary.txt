@@ -1,0 +1,16 @@
+verify:file-map EXIT=0
+verify:web-only EXIT=0
+verify:licenses EXIT=0
+verify:decoders EXIT=0
+verify:benchmark EXIT=0
+verify:test-inventory EXIT=0
+verify:consumer EXIT=0
+verify:api-coverage EXIT=0
+verify:v12-backends EXIT=0
+verify:v12-feature-face EXIT=0
+verify:v12-custom-face EXIT=0
+verify:doc-refs EXIT=0
+verify:v11-chain-face EXIT=0
+verify:perf-lifecycle EXIT=0 (NODE_PATH 重跑，首轮缺 playwright 环境属启动问题非判定红)
+verify:tarball-consumer EXIT=0 (同上)
+TYPECHECK EXIT=0

@@ -55659,7 +55659,7 @@
      * Cocos 引擎版本），而 `export *` 的同名成员会被 ESM 静默丢弃，因此这里用 `AIR_` 前缀。
      * 里程碑身份（V0.1/V0.2/…）由 git tag 与 `docs/v11-baseline.md` 承载，不写入此常量。
      */
-    export const AIR_VERSION = "0.1.0";
+    export const AIR_VERSION = "1.2.0";
     export interface AirAppOptions {
         /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
         canvas: HTMLCanvasElement | string;

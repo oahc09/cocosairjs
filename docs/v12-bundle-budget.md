@@ -56,3 +56,14 @@
   最后注册者胜出语义确定性重注册 `'builtin'`）；`createAirApp({ physics: 'cannon' })` 为 additive opt-in。
 - 证据货币：字节变更触发计划书 §12 全量重采（V1.2 矩阵 13 行 × 3 引擎 = 39 格；V1.1 链 53 例正典），
   本轮执行；`pose-graph`（#5(b)）的 +339 KB 成本未发生，D1 单文件原则维持。
+
+## 5. r48 终值（2026-09-25，版本 1.2.0）
+
+| 产物 | r46/r47 | r48（1.2.0） | 说明 |
+|---|---|---|---|
+| build/cocosair.module.js | 6,600,546 B / 59ceb804e5795c1c | 6,600,546 B / 9376e3062269376c | 版本串等长（0.1.0→1.2.0），字节量不变、内容随 AIR_VERSION 变 |
+| build/cocosair.module.min.js | 3,681,021 B / 51f3b69414b0d9d4 | 3,681,021 B / 51896790f817b390 | 同上 |
+| build/cocosair.module.d.ts | — | 60d78ef3fb99db53 | |
+
+§12 证据随版本变更全量重采：矩阵 39/39（video-basic webkit 首跑 F-135 间歇红、复跑绿，台账在册）、
+链 53/53、gallery 102/102、jest 32/263、perf-lifecycle PASS、tarball-consumer PASS。

@@ -1,0 +1,24 @@
+
+> cocosair.js@1.2.0 verify:test-inventory
+> node tools/verify/test-inventory.cjs
+
+{
+  "ok": true,
+  "mode": "check",
+  "extraJestArgs": [],
+  "manifest": "docs/test-inventory.json",
+  "totals": {
+    "suites": 32,
+    "tests": 263,
+    "passed": 263,
+    "failed": 0
+  },
+  "observedTotals": {
+    "suites": 32,
+    "tests": 263,
+    "passed": 263,
+    "failed": 0
+  },
+  "failures": [],
+  "output": null
+}

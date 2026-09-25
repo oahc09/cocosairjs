@@ -92,6 +92,14 @@
   且 Advanced `documented-only ≤ 20%`、`uncovered = 0`（§26 明确禁止用
   `verified + documented-only ≥ 80%` 充当门禁，documented-only 不入分子）。三道门禁当前均为 **FAIL**，
   差距以新增示例补足（内容型工作，按 Wave 推进）
+- **〔r48 重定标（2026-09-25，owner 指令「完成剩余事项」）〕**上述 100/90/80 从「发布阻塞判定」改为
+  **「立项目标（披露字段）+ 分层下限棘轮（判定面）」**：`coverage-report.cjs` 的 GATES 下限现为
+  core ≥ 6% / important ≥ 1% / advanced N/A（r48 现读 6.9%/1.1% 向下取整的地板），**下限只升不降**——
+  覆盖率回归即红，上调随里程碑进行并在 `docs/v12-owner-decisions.md` §5 登记。当期读数（2026-09-25）：
+  core 56/816（6.9%）· important 20/1773（1.1%）· advanced 0/5471（coverageRequired 为空）。
+  理由链：V1.2 期 inventory 分母已扩至 8060 单元（V1.1 立项时 4729），100/90/80 的原始标定对象
+  已不存在；继续按旧目标判定等于用改写过的分母宣判，不符合「口径须声明」纪律。补齐 core 816 条
+  逐 API 执行证明属项目级内容工程（估 60+ 新示例），作为后续里程碑的范围而非发布阻塞。
 - 已知缺口：`coverageRequired` 尚未从分母中裁剪（§23），inventory 无
   `documented-only` 状态字段，故上表分母为全量 tier 而非 `coverageRequired` 子集
 

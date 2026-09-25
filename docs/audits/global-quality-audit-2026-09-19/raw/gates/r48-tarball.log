@@ -1,0 +1,4 @@
+(node:9180) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[tarball-consumer] boot=true api=function,Scene,Node,Camera,MeshRenderer,Material,Color pixels=100 → PASS
+TARBALL_EXIT=0
