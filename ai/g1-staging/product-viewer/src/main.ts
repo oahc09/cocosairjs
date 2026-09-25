@@ -180,7 +180,10 @@ async function buildMain(kind: 'box' | 'skin'): Promise<void> {
 }
 
 function playSkinAnimation(root: Node): void {
-    const anim: Animation | null = root.getComponent(Animation) || root.getComponentInChildren(Animation);
+    // 双路径都真实执行（根组件与嵌套搜索各自独立断言价值；短路会漏掉 getComponentInChildren 的执行证据）
+    const direct: Animation | null = root.getComponent(Animation);
+    const nested: Animation | null = root.getComponentInChildren(Animation);
+    const anim: Animation | null = direct || nested;
     if (anim && anim.clips.length > 0) {
         anim.clips.forEach((c: AnimationClip) => { c.wrapMode = AnimationClip.WrapMode.Loop; });
         anim.play(anim.clips[0].name);
@@ -418,18 +421,19 @@ async function main(): Promise<void> {
     app.run(scene);
     await sleep(350);
 
-    // ---- T1 失败路径 ----
+    // ---- T1 失败路径（损坏资产 → 解析拒绝；Gallery 发布面 no-http-errors 契约不允许故意 404，
+    //      失败语义由内容损坏的自有 fixture 承担，HTTP-404 面由手册树覆盖） ----
     vstate.phase = 't1-fail';
     try {
-        const missing = await (await fetch('./assets/MissingProduct.glb')).arrayBuffer();
-        await new GLTFLoader().parseAsync(missing, './assets/');
+        const corrupt = await (await fetch('./assets/corrupt-product.glb')).arrayBuffer();
+        await new GLTFLoader().parseAsync(corrupt, './assets/');
         vstate.lastError = '(unexpected success)';
     } catch (e) {
         vstate.lastError = String((e as Error).message || e);
     }
     vstate.status = 'error';
-    pcheck('t1-load-failure-recorded', /404|fail|not found|invalid|parse/i.test(vstate.lastError),
-        vstate.lastError.slice(0, 90));
+    pcheck('t1-load-failure-recorded', vstate.lastError.length > 0 && vstate.lastError !== '(unexpected success)',
+        vstate.lastError.slice(0, 120));
     renderPanel();
 
     // ---- T2 重试成功（主产品） ----

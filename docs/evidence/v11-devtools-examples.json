@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-09-25T07:29:22.698Z",
+  "measuredAt": "2026-09-25T15:43:17.029Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "f6036adc8526e925",
+  "candidateFingerprint": "45df203a8e6eab03",
   "apiProofTotals": {
     "verified": 76,
     "attested": 11,
@@ -17,7 +17,7 @@
       "result": "PASS",
       "specFingerprint": "c00b9e5f3a5a",
       "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -338,7 +338,7 @@
       "result": "PASS",
       "specFingerprint": "86059190543b",
       "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -753,7 +753,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -770,7 +770,7 @@
       "result": "PASS",
       "specFingerprint": "deb988a9d823",
       "sourceFingerprint": "20070fba85c22df4",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -1259,7 +1259,7 @@
       "result": "PASS",
       "specFingerprint": "2be94727b2c1",
       "sourceFingerprint": "ad473b671a41e764",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -1729,7 +1729,7 @@
       "result": "PASS",
       "specFingerprint": "495816944ba8",
       "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2181,7 +2181,7 @@
       "result": "PASS",
       "specFingerprint": "c00b9e5f3a5a",
       "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2502,7 +2502,7 @@
       "result": "PASS",
       "specFingerprint": "86059190543b",
       "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2917,7 +2917,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2934,7 +2934,7 @@
       "result": "PASS",
       "specFingerprint": "deb988a9d823",
       "sourceFingerprint": "20070fba85c22df4",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -3423,7 +3423,7 @@
       "result": "PASS",
       "specFingerprint": "2be94727b2c1",
       "sourceFingerprint": "ad473b671a41e764",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -3893,7 +3893,7 @@
       "result": "PASS",
       "specFingerprint": "495816944ba8",
       "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "f6036adc8526e925",
+      "candidateFingerprint": "45df203a8e6eab03",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,

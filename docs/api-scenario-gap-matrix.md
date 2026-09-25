@@ -433,3 +433,18 @@ example 侧签名与当期 d.ts 不符——属于并行线的修复范围，本
   为位置参数，`box({width,…})` 为对象参数——类型合同可拦，但手册/范式需点名（已记 G3 文档待办）。
 - **builtin-unlit 纹理宏 USE_TEXTURE**（GAP-M1 复核）：shader-dissolve/product-viewer 全部走
   USE_TEXTURE 路径像素断言通过；`manual-render-targets` 的 USE_ALBEDO_MAP 白 quad 嫌疑维持待手册线复核。
+
+### GAP-I1 renderer.material 读回实例化 → 共享材质更新与画面脱钩（语义陷阱，正典批次实测）
+
+- **现象**：shader-dissolve 页内断言全绿（drawImage 采样见 threshold 动画），但正典 runner 的
+  toDataURL 捕获自 material-property 读回后恒定不变（urlLen 6398 常量、frame-diff 判 static）。
+- **机理**：验证器 readback 访问 `renderer.material` getter → 引擎按设计创建 **MaterialInstance 副本**
+  （misc/renderer.ts：「仅在用户通过 material/materials/getMaterialInstance 获取时创建实例」）→
+  渲染切到实例；示例后续对**共享材质资产**的 `setProperty` 不再影响画面。
+- **对照**：shader-custom-gradient 同被实例化却存活——其动画由着色器内 `cc_time` 驱动（不依赖 CPU 侧
+  uniform 更新），恰好绕开脱钩面。
+- **修复模式**（两例已落地）：持续更新 uniform 的示例一律 `liveMat = renderer.material as Material`
+  取实例后驱动；或整体切换走 `setSharedMaterial`（会销毁旧实例，语义安全）。lifecycle reacquire
+  在 setSharedMaterial 后必须重新取实例。
+- **定性**：非引擎缺陷（实例化是文档化设计），属**验证器×示例交互语义陷阱**；范式文档 §5 已纳入。
+  受影响面：任何「readback 之后还要改共享材质并期待画面变化」的示例。

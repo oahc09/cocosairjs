@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-09-25T13:18:10.444Z",
-  "total": 132,
-  "frozen": 132,
+  "measuredAt": "2026-09-25T16:44:05.669Z",
+  "total": 145,
+  "frozen": 145,
   "draft": 0,
   "blocked": 0,
   "examples": [
@@ -71,12 +71,22 @@
       "issues": []
     },
     {
+      "id": "collector-dodge",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "color-timeline-key",
       "specStatus": "frozen",
       "issues": []
     },
     {
       "id": "colortimeline-ops",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "contra-action",
       "specStatus": "frozen",
       "issues": []
     },
@@ -187,6 +197,11 @@
     },
     {
       "id": "light-two-directional",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "match3-classic",
       "specStatus": "frozen",
       "issues": []
     },
@@ -471,6 +486,11 @@
       "issues": []
     },
     {
+      "id": "model-character-interaction",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "node-active",
       "specStatus": "frozen",
       "issues": []
@@ -536,6 +556,11 @@
       "issues": []
     },
     {
+      "id": "physics-interaction",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "primitives-geometry-ops",
       "specStatus": "frozen",
       "issues": []
@@ -547,6 +572,11 @@
     },
     {
       "id": "primitives-wireframe-obj",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "product-viewer",
       "specStatus": "frozen",
       "issues": []
     },
@@ -576,6 +606,11 @@
       "issues": []
     },
     {
+      "id": "render-composite",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "runtime-asset-release",
       "specStatus": "frozen",
       "issues": []
@@ -596,6 +631,21 @@
       "issues": []
     },
     {
+      "id": "scene-switch-reentry",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-custom-gradient",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "shader-dissolve",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
       "id": "skinned-animation",
       "specStatus": "frozen",
       "issues": []
@@ -607,6 +657,16 @@
     },
     {
       "id": "static-model",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tank-battle",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "tetris-classic",
       "specStatus": "frozen",
       "issues": []
     },
@@ -637,6 +697,11 @@
     },
     {
       "id": "tween-basic",
+      "specStatus": "frozen",
+      "issues": []
+    },
+    {
+      "id": "ui-asset-loading",
       "specStatus": "frozen",
       "issues": []
     },

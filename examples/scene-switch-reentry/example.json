@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "title": "Scene Switch & Re-entry",
   "category": "runtime",
-  "status": "draft",
-  "specStatus": "draft",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
     "goal": "掌握动态场景切换与复入的完整生命周期：app.run(scene) 的销毁语义、组件回调闭环、输入监听退订与全新复入（G1/P01）",
@@ -401,5 +401,13 @@
         "line": "L154"
       }
     }
+  },
+  "promotion": {
+    "spec": "08b0bdf40ebd",
+    "source": "306dd1eed412c7ec",
+    "candidate": "45df203a8e6eab03",
+    "verified": 29,
+    "attested": 3,
+    "units": 32
   }
 }

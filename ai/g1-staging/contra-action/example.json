@@ -59,7 +59,6 @@
       "AudioSource",
       "AudioSource.play",
       "AudioSource.stop",
-      "AudioClip",
       "AudioClip.getDuration"
     ],
     "forbiddenShortcut": [
@@ -109,7 +108,7 @@
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L760"
+        "sourceLocation": "L761"
       },
       {
         "api": "Component",
@@ -211,7 +210,7 @@
         "api": "assetManager",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L584"
+        "sourceLocation": "L760"
       },
       {
         "api": "AudioSource",
@@ -230,12 +229,6 @@
         "source": "src/main.ts",
         "validator": "resource-released",
         "sourceLocation": "L726"
-      },
-      {
-        "api": "AudioClip",
-        "source": "src/main.ts",
-        "validator": "asset-loaded",
-        "sourceLocation": "L584"
       },
       {
         "api": "AudioClip.getDuration",
@@ -414,10 +407,7 @@
             }
           ]
         }
-      ],
-      "kinds": {
-        "AudioClip": 1
-      }
+      ]
     }
   }
 }

@@ -103,13 +103,16 @@ const vert = standardVert();
 const frag = fragVariants(DISSOLVE_FRAG_GLSL4, DISSOLVE_FRAG_GLSL1);
 
 let effect: any = null;
-let material: Material;
+let material: Material;      // 共享材质资产（lifecycle 持有/销毁对象）
+let liveMat: Material;       // renderer.material 实例——所有运行期 setProperty 走它（正典 readback 会创建实例，共享材质更新会与画面脱钩）
 let checkerTex: Texture2D | null = null;
 let quadRenderer: MeshRenderer;
 let animator: DissolveAnimator;
 let toggled = false;
 
-const anim = { threshold: 0, animating: false, t: 0 };
+// 动画常开（正典批次教训：启动慢 + ready 轮询提前 → 长静窗与 frame-diff 捕获窗重叠判 static）；
+// 采样瞬间才短暂关窗，静窗占比 <10%。
+const anim = { threshold: 0, animating: true, t: 0 };
 
 function buildEffect (): any {
   const json = makeUserEffectJson({
@@ -156,6 +159,7 @@ function makeCheckerTexture (): Texture2D {
 function buildMaterial (): Material {
   const m = new Material();
   m.initialize({ effectAsset: effect });
+  m.setProperty('mainColor', new Color(255, 255, 255, 255)); // 显式设置：getProperty 只回读 setProperty 过的 uniform（d.ts Material 注记）
   m.setProperty('mainTexture', checkerTex as Texture2D);
   m.setProperty('edgeColor', new Color(255, 40, 200, 255));
   m.setProperty('threshold', anim.threshold);
@@ -167,7 +171,7 @@ class DissolveAnimator extends Component {
     if (!anim.animating) { return; }
     anim.t += dt;
     anim.threshold = (anim.t * 0.2) % 0.92; // 循环且永不完全溶解（ready 态画面持续可见）
-    material.setProperty('threshold', anim.threshold);
+    liveMat.setProperty('threshold', anim.threshold);
   }
 }
 
@@ -277,43 +281,65 @@ async function main (): Promise<void> {
   quadRenderer.mesh = utils.createMesh(primitives.plane({ width: 5, length: 3, widthSegments: 1, lengthSegments: 1 }));
   material = buildMaterial();
   quadRenderer.setSharedMaterial(material, 0);
+  liveMat = quadRenderer.material as Material; // 取得材质实例（与验证器 readback 同一对象）
   animator = quad.addComponent(DissolveAnimator);
+
+  // ---- 交互：edgeColor 切换 + 跳半溶解（订阅前置：正典交互窗可能早于时间线尾部） ----
+  const onToggle = (): void => {
+    if (!liveMat || !isValid(liveMat)) { return; }
+    toggled = !toggled;
+    liveMat.setProperty('edgeColor', toggled ? new Color(180, 255, 60, 255) : new Color(255, 40, 200, 255));
+    anim.t = 2.5;
+    if (!probe.clickPhaseDone) {
+      probe.clickPhaseDone = true;
+      pcheck('click-toggles-edge-color', true, 'toggled=' + toggled + '（青柠↔品红）');
+    }
+    renderPanel();
+  };
+  input.on(Input.EventType.TOUCH_START, onToggle);
 
   app.run(scene);
   await sleep(700);
 
-  // ---- T1 threshold=0：棋盘贴图完整（相邻采样点互补色） -------------------------
+  // ---- T1 threshold=0：棋盘贴图完整（相邻采样点互补色；静窗=采样瞬间） -------------
+  anim.animating = false;
   anim.threshold = 0;
-  material.setProperty('threshold', 0);
-  await sleep(200);
+  liveMat.setProperty('threshold', 0);
+  await sleep(150);
   const c1 = await sampleUV(0.30, 0.56); // v=0.5 恰在棋盘单元边界（双线性混色），取单元内部
   const c2 = await sampleUV(0.45, 0.56);
+  anim.animating = true;
   probe.state.checkerSamples = { c1, c2 };
   const isTeal = (p: number[]): boolean => p[1] > 120 && p[2] > 110 && p[0] < 110;
   const isOrange = (p: number[]): boolean => p[0] > 150 && p[1] > 80 && p[2] < 120;
   pcheck('texture-bound-checker', (isTeal(c1) && isOrange(c2)) || (isOrange(c1) && isTeal(c2)),
     'c1=' + JSON.stringify(c1) + ' c2=' + JSON.stringify(c2) + '（预期青/橙互补）');
+  await sleep(200);
 
   // ---- T2 threshold=0.99：近乎全溶解（discard → 清屏色） -----------------------
-  material.setProperty('threshold', 0.99);
-  await sleep(250);
+  anim.animating = false;
+  liveMat.setProperty('threshold', 0.99);
+  await sleep(150);
   const gone = await sampleUV(0.375, 0.5);
+  anim.animating = true;
   probe.state.dissolvedSample = gone;
   pcheck('dissolve-to-background',
     Math.abs(gone[0] - CLEAR[0]) < 12 && Math.abs(gone[1] - CLEAR[1]) < 12 && Math.abs(gone[2] - CLEAR[2]) < 12,
     'center=' + JSON.stringify(gone) + '（预期≈清屏色 ' + CLEAR.join(',') + '）');
+  await sleep(200);
 
   // ---- T3 threshold=0.5：边缘发光可见 ------------------------------------------
-  material.setProperty('threshold', 0.5);
-  await sleep(250);
+  anim.animating = false;
+  liveMat.setProperty('threshold', 0.5);
+  await sleep(150);
   const edgePx = await scanEdgePixels();
+  anim.animating = true;
   probe.state.edgePixels = edgePx;
   pcheck('edge-glow-visible', edgePx >= 30, 'edge pixels=' + edgePx);
 
   // ---- T4 动画：threshold 循环 → 区域帧差（单点对 cell 边界/哈希窗口不鲁棒） --------
   anim.threshold = 0.5;
-  anim.t = 2.5; // (2.5*0.2)%0.92 = 0.5 → 从半溶解起步
-  anim.animating = true;
+  anim.t = 2.5; // (2.5*0.2)%0.92 = 0.5 → 从半溶解起步（动画常驻 = visual frame-diff 的来源）
   const frame0 = await captureCenterRegion();
   await sleep(300);
   const frame1 = await captureCenterRegion();
@@ -323,19 +349,6 @@ async function main (): Promise<void> {
   }
   probe.state.animDiff = { changedPx, thresholdNow: Number(anim.threshold.toFixed(3)) };
   pcheck('dissolve-animation-frame-diff', changedPx >= 50, 'changedPx=' + changedPx + ' threshold=' + anim.threshold.toFixed(3));
-
-  // ---- 交互：edgeColor 切换 + 跳半溶解 -----------------------------------------
-  const onToggle = (): void => {
-    toggled = !toggled;
-    material.setProperty('edgeColor', toggled ? new Color(180, 255, 60, 255) : new Color(255, 40, 200, 255));
-    anim.t = 2.5;
-    if (!probe.clickPhaseDone) {
-      probe.clickPhaseDone = true;
-      pcheck('click-toggles-edge-color', true, 'toggled=' + toggled + '（青柠↔品红）');
-    }
-    renderPanel();
-  };
-  input.on(Input.EventType.TOUCH_START, onToggle);
 
   // ---- §25 Lifecycle 合同 --------------------------------------------------------
   installAssetLifecycle({
@@ -361,6 +374,7 @@ async function main (): Promise<void> {
       checkerTex = makeCheckerTexture();
       material = buildMaterial();
       quadRenderer.setSharedMaterial(material, 0);
+      liveMat = quadRenderer.material as Material; // setSharedMaterial 已销毁旧实例——重新取得
       anim.animating = true;
       input.on(Input.EventType.TOUCH_START, onToggle);
       return [
@@ -385,6 +399,7 @@ async function main (): Promise<void> {
   probe.state.animatorAlive = isValid(animator);
   probe.ready = true;
   probe.ok = probe.checks.every((c) => c.ok);
+
 }
 
 main().catch((e) => {

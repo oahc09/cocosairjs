@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-25T12:55:32.310Z",
+  "generatedAt": "2026-09-25T16:15:57.490Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-25T12:51:08.305Z",
+      "measuredAt": "2026-09-25T16:12:58.801Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-25T07:29:22.698Z",
+      "measuredAt": "2026-09-25T15:43:17.029Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -23,15 +23,15 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "f6036adc8526e925",
+  "candidateFingerprint": "45df203a8e6eab03",
   "inventoryFingerprint": "15d629f3a2262d01",
   "inventoryConsistency": [],
   "totalUnits": 8060,
   "totalRequired": 2589,
-  "totalClaimed": 695,
-  "totalAttested": 275,
-  "totalVerified": 420,
-  "totalVerifiedViaCall": 406,
+  "totalClaimed": 720,
+  "totalAttested": 281,
+  "totalVerified": 439,
+  "totalVerifiedViaCall": 425,
   "totalVerifiedViaRead": 14,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
@@ -362,6 +362,30 @@
       }
     },
     {
+      "id": "collector-dodge",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 35,
+        "total": 37,
+        "hash": "bb6fd5218c2e9538"
+      },
+      "claims": 37,
+      "tally": {
+        "verified": 35,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 32,
+        "verifiedRead": 3
+      }
+    },
+    {
       "id": "color-timeline-key",
       "result": "PASS",
       "fresh": true,
@@ -407,6 +431,30 @@
         "claimedOnly": 0,
         "verifiedCall": 17,
         "verifiedRead": 1
+      }
+    },
+    {
+      "id": "contra-action",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 26,
+        "total": 28,
+        "hash": "842ac37fbf0c8881"
+      },
+      "claims": 28,
+      "tally": {
+        "verified": 26,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 24,
+        "verifiedRead": 2
       }
     },
     {
@@ -930,6 +978,30 @@
         "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 16,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "match3-classic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 21,
+        "total": 22,
+        "hash": "69478e10d2c313eb"
+      },
+      "claims": 22,
+      "tally": {
+        "verified": 21,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 19,
         "verifiedRead": 2
       }
     },
@@ -2278,6 +2350,30 @@
       }
     },
     {
+      "id": "model-character-interaction",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 37,
+        "total": 45,
+        "hash": "1ee277bc6d4bfbcf"
+      },
+      "claims": 45,
+      "tally": {
+        "verified": 37,
+        "attested": 8,
+        "claimedOnly": 0,
+        "verifiedCall": 32,
+        "verifiedRead": 5
+      }
+    },
+    {
       "id": "node-active",
       "result": "PASS",
       "fresh": true,
@@ -2590,6 +2686,30 @@
       }
     },
     {
+      "id": "physics-interaction",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 34,
+        "total": 41,
+        "hash": "ad9c877fabcb4cfe"
+      },
+      "claims": 41,
+      "tally": {
+        "verified": 34,
+        "attested": 7,
+        "claimedOnly": 0,
+        "verifiedCall": 31,
+        "verifiedRead": 3
+      }
+    },
+    {
       "id": "primitives-geometry-ops",
       "result": "PASS",
       "fresh": true,
@@ -2659,6 +2779,30 @@
         "claimedOnly": 0,
         "verifiedCall": 21,
         "verifiedRead": 1
+      }
+    },
+    {
+      "id": "product-viewer",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 36,
+        "total": 41,
+        "hash": "b00ad1f36c4a820a"
+      },
+      "claims": 41,
+      "tally": {
+        "verified": 36,
+        "attested": 5,
+        "claimedOnly": 0,
+        "verifiedCall": 32,
+        "verifiedRead": 4
       }
     },
     {
@@ -2782,6 +2926,30 @@
       }
     },
     {
+      "id": "render-composite",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 28,
+        "total": 32,
+        "hash": "e84c8fa3d039bba8"
+      },
+      "claims": 32,
+      "tally": {
+        "verified": 28,
+        "attested": 4,
+        "claimedOnly": 0,
+        "verifiedCall": 26,
+        "verifiedRead": 2
+      }
+    },
+    {
       "id": "runtime-asset-release",
       "result": "PASS",
       "fresh": true,
@@ -2878,6 +3046,78 @@
       }
     },
     {
+      "id": "scene-switch-reentry",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 29,
+        "total": 32,
+        "hash": "f98b9cb7f337c4ce"
+      },
+      "claims": 32,
+      "tally": {
+        "verified": 29,
+        "attested": 3,
+        "claimedOnly": 0,
+        "verifiedCall": 27,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "shader-custom-gradient",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 23,
+        "total": 26,
+        "hash": "6b1e3127398f8f6d"
+      },
+      "claims": 26,
+      "tally": {
+        "verified": 23,
+        "attested": 3,
+        "claimedOnly": 0,
+        "verifiedCall": 21,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "shader-dissolve",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 28,
+        "total": 31,
+        "hash": "8fc2c46ee0c58d7a"
+      },
+      "claims": 31,
+      "tally": {
+        "verified": 28,
+        "attested": 3,
+        "claimedOnly": 0,
+        "verifiedCall": 26,
+        "verifiedRead": 2
+      }
+    },
+    {
       "id": "skinned-animation",
       "result": "PASS",
       "fresh": true,
@@ -2947,6 +3187,54 @@
         "claimedOnly": 0,
         "verifiedCall": 21,
         "verifiedRead": 1
+      }
+    },
+    {
+      "id": "tank-battle",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 25,
+        "total": 27,
+        "hash": "bd4534473e09557a"
+      },
+      "claims": 27,
+      "tally": {
+        "verified": 25,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 23,
+        "verifiedRead": 2
+      }
+    },
+    {
+      "id": "tetris-classic",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 21,
+        "total": 23,
+        "hash": "5e979a56abf18189"
+      },
+      "claims": 23,
+      "tally": {
+        "verified": 21,
+        "attested": 2,
+        "claimedOnly": 0,
+        "verifiedCall": 19,
+        "verifiedRead": 2
       }
     },
     {
@@ -3094,6 +3382,30 @@
       }
     },
     {
+      "id": "ui-asset-loading",
+      "result": "PASS",
+      "fresh": true,
+      "binding": {
+        "spec": true,
+        "source": true,
+        "candidate": true
+      },
+      "hasApiProof": true,
+      "instrumentation": {
+        "observed": 27,
+        "total": 30,
+        "hash": "fa0efaae113f08e2"
+      },
+      "claims": 30,
+      "tally": {
+        "verified": 27,
+        "attested": 3,
+        "claimedOnly": 0,
+        "verifiedCall": 24,
+        "verifiedRead": 3
+      }
+    },
+    {
       "id": "ui-components",
       "result": "PASS",
       "fresh": true,
@@ -3219,21 +3531,21 @@
       "denominator": "coverageRequired",
       "total": 816,
       "required": 816,
-      "claimed": 476,
-      "attested": 182,
-      "verified": 294,
-      "requiredClaimed": 476,
-      "requiredVerified": 294,
-      "verifiedViaCall": 292,
+      "claimed": 478,
+      "attested": 183,
+      "verified": 295,
+      "requiredClaimed": 478,
+      "requiredVerified": 295,
+      "verifiedViaCall": 293,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 292,
+      "requiredVerifiedViaCall": 293,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.358,
-      "claimedRate": 0.583,
-      "verifiedRate": 0.36,
-      "allUnitsVerifiedRate": 0.36,
+      "requiredVerifiedViaCallRate": 0.359,
+      "claimedRate": 0.586,
+      "verifiedRate": 0.362,
+      "allUnitsVerifiedRate": 0.362,
       "gate": "floor 6% verified of coverageRequired (ratchet; V1.1 target 100% retained for disclosure)",
       "threshold": 0.06,
       "applicable": true,
@@ -3243,21 +3555,21 @@
       "denominator": "coverageRequired",
       "total": 1773,
       "required": 1773,
-      "claimed": 34,
-      "attested": 14,
-      "verified": 20,
-      "requiredClaimed": 34,
-      "requiredVerified": 20,
-      "verifiedViaCall": 18,
+      "claimed": 49,
+      "attested": 16,
+      "verified": 33,
+      "requiredClaimed": 49,
+      "requiredVerified": 33,
+      "verifiedViaCall": 31,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 18,
+      "requiredVerifiedViaCall": 31,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.01,
-      "claimedRate": 0.019,
-      "verifiedRate": 0.011,
-      "allUnitsVerifiedRate": 0.011,
+      "requiredVerifiedViaCallRate": 0.017,
+      "claimedRate": 0.028,
+      "verifiedRate": 0.019,
+      "allUnitsVerifiedRate": 0.019,
       "gate": "floor 1% verified of coverageRequired (ratchet; V1.1 target 90% retained for disclosure)",
       "threshold": 0.01,
       "applicable": true,
@@ -3267,12 +3579,12 @@
       "denominator": "coverageRequired",
       "total": 5471,
       "required": 0,
-      "claimed": 185,
-      "attested": 79,
-      "verified": 106,
+      "claimed": 193,
+      "attested": 82,
+      "verified": 111,
       "requiredClaimed": 0,
       "requiredVerified": 0,
-      "verifiedViaCall": 96,
+      "verifiedViaCall": 101,
       "verifiedViaRead": 10,
       "verifiedViaUnknown": 0,
       "requiredVerifiedViaCall": 0,
@@ -3281,7 +3593,7 @@
       "requiredVerifiedViaCallRate": 0,
       "claimedRate": 0,
       "verifiedRate": 0,
-      "allUnitsVerifiedRate": 0.019,
+      "allUnitsVerifiedRate": 0.02,
       "gate": "floor 0% (coverageRequired 为空，NOT_APPLICABLE)",
       "threshold": 0,
       "applicable": false,
@@ -3307,8 +3619,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "dragonbones-basic",
         "gltf-asset-readonly",
@@ -3330,6 +3644,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -3386,6 +3701,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -3399,27 +3715,36 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "starter",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
         "tiledmap-basic",
         "transform",
         "tween-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "utils-family",
@@ -3445,8 +3770,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "dragonbones-basic",
         "gltf-asset-readonly",
@@ -3468,6 +3795,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -3524,6 +3852,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -3537,27 +3866,36 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "starter",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
         "tiledmap-basic",
         "transform",
         "tween-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "utils-family",
@@ -3583,8 +3921,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "dragonbones-basic",
         "gltf-asset-readonly",
@@ -3606,6 +3946,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -3662,6 +4003,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -3675,27 +4017,36 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "starter",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
         "tiledmap-basic",
         "transform",
         "tween-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "utils-family",
@@ -3720,8 +4071,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-loader-registry",
@@ -3735,6 +4088,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -3801,18 +4155,26 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -3838,8 +4200,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "dragonbones-basic",
         "gltf-asset-readonly",
@@ -3860,6 +4224,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -3916,6 +4281,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -3929,26 +4295,35 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "starter",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
         "tiledmap-basic",
         "tween-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "utils-family",
@@ -3971,6 +4346,7 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
         "directional-light-face",
@@ -4045,6 +4421,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -4055,18 +4432,22 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -4082,12 +4463,15 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
+        "collector-dodge",
+        "contra-action",
         "hello-cube",
         "input",
         "interaction-click",
         "light-point",
         "light-sphere",
         "light-spot",
+        "match3-classic",
         "material-unlit",
         "mesh-cylinder",
         "mesh-plane",
@@ -4101,10 +4485,18 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
+        "product-viewer",
         "profiler-overlay",
+        "render-composite",
+        "scene-switch-reentry",
+        "shader-dissolve",
         "skinned-animation",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "transform",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "video-basic",
@@ -4129,8 +4521,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "dragonbones-basic",
         "gltf-asset-readonly",
@@ -4151,6 +4545,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -4207,6 +4602,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -4220,25 +4616,34 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "starter",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
         "tiledmap-basic",
         "transform",
         "tween-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "utils-family",
@@ -4262,8 +4667,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-basic",
@@ -4283,6 +4690,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -4339,6 +4747,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -4349,19 +4758,27 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -4382,6 +4799,8 @@
         "camera-lookat",
         "camera-multi",
         "camera-ortho",
+        "collector-dodge",
+        "contra-action",
         "gltf-basic",
         "gltf-clearcoat",
         "gltf-draco",
@@ -4394,6 +4813,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-color",
         "material-transparent",
         "material-unlit",
@@ -4402,19 +4822,28 @@
         "mesh-plane",
         "mesh-sphere",
         "mesh-torus",
+        "model-character-interaction",
         "node-active",
         "node-hierarchy",
         "node-scale",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "starter",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
+        "ui-asset-loading",
         "ui-components"
       ]
     },
@@ -4433,8 +4862,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-loader-registry",
@@ -4446,6 +4877,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-color",
         "material-lifecycle",
         "material-ops",
@@ -4499,6 +4931,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -4509,18 +4942,26 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -4542,8 +4983,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-loader-registry",
@@ -4555,6 +4998,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-color",
         "material-lifecycle",
         "material-ops",
@@ -4608,6 +5052,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -4618,17 +5063,25 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -4650,8 +5103,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-loader-registry",
@@ -4663,6 +5118,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-color",
         "material-lifecycle",
         "material-ops",
@@ -4716,6 +5172,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -4726,16 +5183,24 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -4759,8 +5224,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-loader-registry",
@@ -4774,6 +5241,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -4839,18 +5307,26 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -4874,6 +5350,7 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
         "directional-light-face",
@@ -4949,6 +5426,7 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
@@ -4957,9 +5435,11 @@
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -4986,8 +5466,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "dragonbones-basic",
         "gltf-asset-readonly",
@@ -5009,6 +5491,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -5065,6 +5548,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -5078,27 +5562,36 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "starter",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
         "tiledmap-basic",
         "transform",
         "tween-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "utils-family"
@@ -5120,8 +5613,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-basic",
@@ -5141,6 +5636,7 @@
         "light-sphere",
         "light-spot",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-color",
         "material-lifecycle",
@@ -5196,6 +5692,7 @@
         "mesh-sphere",
         "mesh-torus",
         "meshrenderer-hooks",
+        "model-character-interaction",
         "node-active",
         "node-children-ops",
         "node-component-queries",
@@ -5206,25 +5703,34 @@
         "node-scene-id",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
         "static-model",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
         "transform",
         "tween-basic",
+        "ui-asset-loading",
         "ui-components",
         "utils-family"
       ]
@@ -5243,8 +5749,10 @@
         "camera-screen-world",
         "camera-second-view",
         "camera-viewport-props",
+        "collector-dodge",
         "color-timeline-key",
         "colortimeline-ops",
+        "contra-action",
         "directional-light-face",
         "gltf-asset-readonly",
         "gltf-basic",
@@ -5261,6 +5769,7 @@
         "light-attach-cycle",
         "light-sphere",
         "light-two-directional",
+        "match3-classic",
         "material-basic",
         "material-lifecycle",
         "material-ops",
@@ -5323,19 +5832,26 @@
         "node-scale",
         "node-scene-id",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
+        "product-viewer",
         "profiler-overlay",
         "rc-capture-frame",
         "rc-create-node",
         "rc-error-report",
         "rc-inspect-scene",
+        "render-composite",
         "runtime-asset-release",
         "scene-asset-meta",
         "scene-globals-read",
         "scene-runtime-ops",
+        "shader-custom-gradient",
+        "shader-dissolve",
         "skinned-animation",
+        "tank-battle",
+        "tetris-classic",
         "texture-basic",
         "texture2d-ops",
         "texture2d-serialization",
@@ -5354,7 +5870,9 @@
         "particle-2d-basic",
         "physics-2d-basic",
         "physics-2d-collision",
+        "physics-interaction",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "video-basic",
@@ -5371,7 +5889,9 @@
         "particle-2d-basic",
         "physics-2d-basic",
         "physics-2d-collision",
+        "physics-interaction",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "video-basic",
@@ -5455,6 +5975,7 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
@@ -5480,7 +6001,9 @@
         "particle-2d-basic",
         "physics-2d-basic",
         "physics-2d-collision",
+        "physics-interaction",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "video-basic",
@@ -5497,7 +6020,9 @@
         "particle-2d-basic",
         "physics-2d-basic",
         "physics-2d-collision",
+        "physics-interaction",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "video-basic",
@@ -5509,7 +6034,10 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "audio-basic"
+        "audio-basic",
+        "collector-dodge",
+        "contra-action",
+        "tank-battle"
       ]
     },
     {
@@ -5549,7 +6077,10 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "audio-basic"
+        "audio-basic",
+        "collector-dodge",
+        "contra-action",
+        "tank-battle"
       ]
     },
     {
@@ -5557,7 +6088,10 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "audio-basic"
+        "audio-basic",
+        "collector-dodge",
+        "contra-action",
+        "tank-battle"
       ]
     },
     {
@@ -5573,7 +6107,10 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "audio-basic"
+        "audio-basic",
+        "collector-dodge",
+        "contra-action",
+        "tank-battle"
       ]
     },
     {
@@ -5678,6 +6215,7 @@
         "physics-2d-collision",
         "physics-3d-basic",
         "physics-3d-collision",
+        "physics-interaction",
         "primitives-geometry-ops",
         "primitives-shapes-extra",
         "primitives-wireframe-obj",
@@ -5705,6 +6243,7 @@
         "particle-2d-basic",
         "physics-2d-collision",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "video-basic",
         "webview-basic"
@@ -5744,6 +6283,7 @@
         "gltf-clearcoat",
         "gltf-morph",
         "gltf-skin",
+        "product-viewer",
         "skinned-animation",
         "static-model"
       ]
@@ -5755,10 +6295,22 @@
       "examples": [
         "camera-lookat",
         "camera-ortho",
+        "collector-dodge",
+        "contra-action",
         "input",
         "interaction-click",
         "light-two-directional",
-        "physics-3d-basic"
+        "match3-classic",
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer",
+        "render-composite",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tank-battle",
+        "tetris-classic"
       ]
     },
     {
@@ -5768,11 +6320,14 @@
       "examples": [
         "camera-lookat",
         "camera-multi",
+        "collector-dodge",
         "light-sphere",
         "mesh-plane",
         "mesh-sphere",
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -5789,10 +6344,19 @@
       "via": "call",
       "examples": [
         "camera-multi",
+        "collector-dodge",
+        "contra-action",
         "light-point",
         "light-spot",
+        "match3-classic",
         "mesh-plane",
-        "static-model"
+        "product-viewer",
+        "render-composite",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "static-model",
+        "tank-battle",
+        "tetris-classic"
       ]
     },
     {
@@ -5801,7 +6365,8 @@
       "via": "call",
       "examples": [
         "camera-screen-world",
-        "camera-second-view"
+        "camera-second-view",
+        "render-composite"
       ]
     },
     {
@@ -5818,7 +6383,10 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "camera-screen-world"
+        "camera-screen-world",
+        "model-character-interaction",
+        "physics-interaction",
+        "product-viewer"
       ]
     },
     {
@@ -5846,6 +6414,131 @@
       ]
     },
     {
+      "unit": "Node.destroy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "collector-dodge",
+        "contra-action",
+        "material-transparent",
+        "physics-interaction",
+        "render-composite",
+        "scene-switch-reentry",
+        "static-model",
+        "texture-basic",
+        "ui-asset-loading"
+      ]
+    },
+    {
+      "unit": "Node.walk",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "collector-dodge",
+        "model-character-interaction",
+        "node-events",
+        "product-viewer",
+        "scene-switch-reentry"
+      ]
+    },
+    {
+      "unit": "Mesh",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "collector-dodge",
+        "skinned-animation",
+        "static-model"
+      ]
+    },
+    {
+      "unit": "Mesh.destroy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "collector-dodge",
+        "material-transparent",
+        "static-model",
+        "texture-basic"
+      ]
+    },
+    {
+      "unit": "primitives.cylinder",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "collector-dodge",
+        "mesh-cylinder"
+      ]
+    },
+    {
+      "unit": "tween",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "collector-dodge",
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.to",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "collector-dodge"
+      ]
+    },
+    {
+      "unit": "Tween.delay",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "collector-dodge"
+      ]
+    },
+    {
+      "unit": "Tween.start",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "collector-dodge"
+      ]
+    },
+    {
+      "unit": "isValid",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "collector-dodge",
+        "contra-action",
+        "gltf-basic",
+        "gltf-clearcoat",
+        "gltf-meshopt",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "match3-classic",
+        "material-transparent",
+        "mesh-multi-material",
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-3d-collision",
+        "physics-interaction",
+        "product-viewer",
+        "render-composite",
+        "runtime-asset-release",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "static-model",
+        "tank-battle",
+        "tetris-classic",
+        "texture-basic",
+        "ui-asset-loading",
+        "webview-basic"
+      ]
+    },
+    {
       "unit": "ColorKey.constructor",
       "tier": "core",
       "via": "call",
@@ -5854,27 +6547,46 @@
       ]
     },
     {
+      "unit": "Texture2D",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "contra-action",
+        "dragonbones-basic",
+        "match3-classic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "render-composite",
+        "shader-dissolve",
+        "static-model",
+        "tank-battle",
+        "tetris-classic",
+        "texture-basic",
+        "tiledmap-basic",
+        "ui-asset-loading",
+        "ui-components",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Texture2D.reset",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "contra-action",
+        "match3-classic",
+        "tank-battle",
+        "tetris-classic",
+        "texture2d-ops"
+      ]
+    },
+    {
       "unit": "DirectionalLight.constructor",
       "tier": "core",
       "via": "call",
       "examples": [
         "directional-light-face"
-      ]
-    },
-    {
-      "unit": "Texture2D",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "dragonbones-basic",
-        "particle-2d-basic",
-        "physics-2d-basic",
-        "physics-2d-collision",
-        "static-model",
-        "texture-basic",
-        "tiledmap-basic",
-        "ui-components",
-        "ui-layout"
       ]
     },
     {
@@ -5890,7 +6602,9 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction",
+        "product-viewer"
       ]
     },
     {
@@ -5898,7 +6612,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
@@ -5906,7 +6621,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
@@ -5914,7 +6630,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
@@ -5922,7 +6639,9 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction",
+        "product-viewer"
       ]
     },
     {
@@ -5939,6 +6658,8 @@
         "gltf-viewer",
         "material-transparent",
         "mesh-multi-material",
+        "model-character-interaction",
+        "product-viewer",
         "runtime-asset-release"
       ]
     },
@@ -5962,28 +6683,9 @@
         "gltf-skin",
         "material-transparent",
         "mesh-multi-material",
+        "model-character-interaction",
+        "product-viewer",
         "runtime-asset-release"
-      ]
-    },
-    {
-      "unit": "isValid",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "gltf-basic",
-        "gltf-clearcoat",
-        "gltf-meshopt",
-        "gltf-morph",
-        "gltf-skin",
-        "gltf-viewer",
-        "material-transparent",
-        "mesh-multi-material",
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "runtime-asset-release",
-        "static-model",
-        "texture-basic",
-        "webview-basic"
       ]
     },
     {
@@ -5998,6 +6700,8 @@
         "gltf-skin",
         "gltf-viewer",
         "mesh-multi-material",
+        "model-character-interaction",
+        "product-viewer",
         "runtime-asset-release"
       ]
     },
@@ -6013,6 +6717,8 @@
         "gltf-skin",
         "material-transparent",
         "mesh-multi-material",
+        "model-character-interaction",
+        "product-viewer",
         "runtime-asset-release"
       ]
     },
@@ -6114,7 +6820,9 @@
       "examples": [
         "gltf-morph",
         "gltf-skin",
-        "gltf-viewer"
+        "gltf-viewer",
+        "model-character-interaction",
+        "product-viewer"
       ]
     },
     {
@@ -6123,7 +6831,9 @@
       "via": "call",
       "examples": [
         "gltf-morph",
-        "gltf-skin"
+        "gltf-skin",
+        "model-character-interaction",
+        "product-viewer"
       ]
     },
     {
@@ -6133,7 +6843,9 @@
       "examples": [
         "gltf-morph",
         "gltf-skin",
-        "gltf-viewer"
+        "gltf-viewer",
+        "model-character-interaction",
+        "product-viewer"
       ]
     },
     {
@@ -6245,7 +6957,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "light-point"
+        "light-point",
+        "render-composite"
       ]
     },
     {
@@ -6343,26 +7056,6 @@
       "via": "call",
       "examples": [
         "material-ops"
-      ]
-    },
-    {
-      "unit": "Node.destroy",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "material-transparent",
-        "static-model",
-        "texture-basic"
-      ]
-    },
-    {
-      "unit": "Mesh.destroy",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "material-transparent",
-        "static-model",
-        "texture-basic"
       ]
     },
     {
@@ -7404,14 +8097,6 @@
       ]
     },
     {
-      "unit": "primitives.cylinder",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "mesh-cylinder"
-      ]
-    },
-    {
       "unit": "Mesh.assign",
       "tier": "core",
       "via": "call",
@@ -7488,7 +8173,9 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "mesh-multi-material"
+        "mesh-multi-material",
+        "model-character-interaction",
+        "product-viewer"
       ]
     },
     {
@@ -7525,7 +8212,8 @@
       "examples": [
         "mesh-torus",
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -7561,11 +8249,76 @@
       ]
     },
     {
+      "unit": "Node.getComponent",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "model-character-interaction",
+        "physics-2d-basic",
+        "physics-3d-basic",
+        "product-viewer",
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Animation.getState",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "Animation.pause",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "Animation.resume",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "SkinnedMeshRenderer",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "model-character-interaction",
+        "skinned-animation"
+      ]
+    },
+    {
+      "unit": "Renderer.setSharedMaterial",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "EventTouch.getLocation",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "model-character-interaction",
+        "physics-interaction",
+        "product-viewer"
+      ]
+    },
+    {
       "unit": "Node.insertChild",
       "tier": "core",
       "via": "call",
       "examples": [
-        "node-children-ops"
+        "node-children-ops",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -7581,7 +8334,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "node-children-ops"
+        "node-children-ops",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -7605,7 +8359,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "node-children-ops"
+        "node-children-ops",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -7653,7 +8408,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "node-events"
+        "node-events",
+        "ui-asset-loading"
       ]
     },
     {
@@ -7681,14 +8437,6 @@
       ]
     },
     {
-      "unit": "Node.walk",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "node-events"
-      ]
-    },
-    {
       "unit": "Node.getComponents",
       "tier": "core",
       "via": "call",
@@ -7709,7 +8457,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "node-events"
+        "node-events",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -7717,7 +8466,8 @@
       "tier": "core",
       "via": "call",
       "examples": [
-        "node-events"
+        "node-events",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -7750,6 +8500,7 @@
       "via": "call",
       "examples": [
         "node-hierarchy",
+        "scene-switch-reentry",
         "tiledmap-basic"
       ]
     },
@@ -7797,6 +8548,7 @@
         "physics-2d-basic",
         "physics-2d-collision",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout"
       ]
@@ -7809,8 +8561,11 @@
         "particle-2d-basic",
         "physics-2d-basic",
         "physics-2d-collision",
+        "render-composite",
+        "shader-dissolve",
         "static-model",
         "texture-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout"
       ]
@@ -7862,6 +8617,7 @@
       "examples": [
         "physics-2d-basic",
         "physics-2d-collision",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout"
       ]
@@ -7890,16 +8646,6 @@
       "via": "call",
       "examples": [
         "physics-2d-basic"
-      ]
-    },
-    {
-      "unit": "Node.getComponent",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "physics-2d-basic",
-        "physics-3d-basic",
-        "ui-layout"
       ]
     },
     {
@@ -8042,7 +8788,8 @@
       "via": "call",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -8059,7 +8806,8 @@
       "via": "call",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -8068,7 +8816,8 @@
       "via": "call",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -8101,6 +8850,17 @@
       "via": "call",
       "examples": [
         "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "Widget",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "physics-interaction",
+        "ui-asset-loading",
+        "ui-components",
+        "ui-layout"
       ]
     },
     {
@@ -8208,6 +8968,22 @@
       ]
     },
     {
+      "unit": "RenderTexture",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "render-composite"
+      ]
+    },
+    {
+      "unit": "RenderTexture.reset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "render-composite"
+      ]
+    },
+    {
       "unit": "SceneAsset.constructor",
       "tier": "core",
       "via": "call",
@@ -8232,20 +9008,75 @@
       ]
     },
     {
-      "unit": "SkinnedMeshRenderer",
-      "tier": "important",
-      "via": "call",
-      "examples": [
-        "skinned-animation"
-      ]
-    },
-    {
-      "unit": "Mesh",
+      "unit": "Scene.destroy",
       "tier": "core",
       "via": "call",
       "examples": [
-        "skinned-animation",
-        "static-model"
+        "scene-switch-reentry"
+      ]
+    },
+    {
+      "unit": "EffectAsset",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "shader-custom-gradient",
+        "shader-dissolve"
+      ]
+    },
+    {
+      "unit": "EffectAsset.onLoaded",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "shader-custom-gradient",
+        "shader-dissolve"
+      ]
+    },
+    {
+      "unit": "EffectAsset.get",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "shader-custom-gradient",
+        "shader-dissolve"
+      ]
+    },
+    {
+      "unit": "EffectAsset.remove",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "shader-custom-gradient",
+        "shader-dissolve"
+      ]
+    },
+    {
+      "unit": "EffectAsset.destroy",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "shader-custom-gradient",
+        "shader-dissolve"
+      ]
+    },
+    {
+      "unit": "Texture2D.destroy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "shader-dissolve",
+        "static-model",
+        "texture-basic",
+        "ui-asset-loading"
+      ]
+    },
+    {
+      "unit": "EffectAsset.validate",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "shader-dissolve"
       ]
     },
     {
@@ -8269,16 +9100,8 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
-        "static-model"
-      ]
-    },
-    {
-      "unit": "Texture2D.destroy",
-      "tier": "core",
-      "via": "call",
-      "examples": [
         "static-model",
-        "texture-basic"
+        "ui-asset-loading"
       ]
     },
     {
@@ -8315,14 +9138,6 @@
     },
     {
       "unit": "Texture2D.toString",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "texture2d-ops"
-      ]
-    },
-    {
-      "unit": "Texture2D.reset",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -8619,20 +9434,11 @@
       ]
     },
     {
-      "unit": "tween",
+      "unit": "SpriteFrame.createWithImage",
       "tier": "important",
       "via": "call",
       "examples": [
-        "tween-basic"
-      ]
-    },
-    {
-      "unit": "Widget",
-      "tier": "important",
-      "via": "call",
-      "examples": [
-        "ui-components",
-        "ui-layout"
+        "ui-asset-loading"
       ]
     },
     {
@@ -8640,7 +9446,16 @@
       "tier": "advanced",
       "via": "call",
       "examples": [
+        "ui-asset-loading",
         "ui-components"
+      ]
+    },
+    {
+      "unit": "AssetManager.releaseAsset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "ui-asset-loading"
       ]
     },
     {
@@ -8943,7 +9758,9 @@
         "particle-2d-basic",
         "physics-2d-basic",
         "physics-2d-collision",
+        "physics-interaction",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "video-basic",
@@ -8955,9 +9772,13 @@
       "tier": "advanced",
       "examples": [
         "audio-basic",
+        "collector-dodge",
+        "contra-action",
         "dragonbones-basic",
         "static-model",
+        "tank-battle",
         "tiledmap-basic",
+        "ui-asset-loading",
         "video-basic"
       ]
     },
@@ -9003,10 +9824,22 @@
       "examples": [
         "camera-lookat",
         "camera-ortho",
+        "collector-dodge",
+        "contra-action",
         "input",
         "interaction-click",
         "light-two-directional",
-        "physics-3d-basic"
+        "match3-classic",
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer",
+        "render-composite",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tank-battle",
+        "tetris-classic"
       ]
     },
     {
@@ -9091,7 +9924,12 @@
       "unit": "director",
       "tier": "core",
       "examples": [
-        "dragonbones-basic"
+        "dragonbones-basic",
+        "render-composite",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tetris-classic"
       ]
     },
     {
@@ -9294,21 +10132,24 @@
       "unit": "GLTFAsset.owned",
       "tier": "core",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
       "unit": "GLTFAsset.sceneNames",
       "tier": "core",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
       "unit": "GLTFAsset.images",
       "tier": "core",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
@@ -10348,6 +11189,40 @@
       ]
     },
     {
+      "unit": "AnimationClip.wrapMode",
+      "tier": "important",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "Ray",
+      "tier": "advanced",
+      "examples": [
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "AABB",
+      "tier": "advanced",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "intersect",
+      "tier": "advanced",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
       "unit": "Node._originalSceneId",
       "tier": "core",
       "examples": [
@@ -10483,13 +11358,6 @@
       ]
     },
     {
-      "unit": "Ray",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
       "unit": "physics.selector",
       "tier": "advanced",
       "examples": [
@@ -10501,7 +11369,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -10509,7 +11378,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -10517,7 +11387,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -10525,7 +11396,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -10720,6 +11592,21 @@
       ]
     },
     {
+      "unit": "Light.destroy",
+      "tier": "core",
+      "examples": [
+        "render-composite"
+      ]
+    },
+    {
+      "unit": "SceneGlobals.ambient",
+      "tier": "core",
+      "examples": [
+        "render-composite",
+        "scene-globals-read"
+      ]
+    },
+    {
       "unit": "SceneAsset.scene",
       "tier": "core",
       "examples": [
@@ -10728,13 +11615,6 @@
     },
     {
       "unit": "Scene._globals",
-      "tier": "core",
-      "examples": [
-        "scene-globals-read"
-      ]
-    },
-    {
-      "unit": "SceneGlobals.ambient",
       "tier": "core",
       "examples": [
         "scene-globals-read"
@@ -10807,7 +11687,8 @@
       "unit": "Scene.autoReleaseAssets",
       "tier": "core",
       "examples": [
-        "scene-runtime-ops"
+        "scene-runtime-ops",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -10815,6 +11696,14 @@
       "tier": "core",
       "examples": [
         "scene-runtime-ops"
+      ]
+    },
+    {
+      "unit": "EffectAsset.shaders",
+      "tier": "important",
+      "examples": [
+        "shader-custom-gradient",
+        "shader-dissolve"
       ]
     },
     {
@@ -10829,6 +11718,13 @@
       "tier": "core",
       "examples": [
         "texture2d-serialization"
+      ]
+    },
+    {
+      "unit": "AssetManager.assets",
+      "tier": "advanced",
+      "examples": [
+        "ui-asset-loading"
       ]
     },
     {
@@ -10937,7 +11833,9 @@
         "particle-2d-basic",
         "physics-2d-basic",
         "physics-2d-collision",
+        "physics-interaction",
         "tiledmap-basic",
+        "ui-asset-loading",
         "ui-components",
         "ui-layout",
         "video-basic",
@@ -10949,9 +11847,13 @@
       "tier": "advanced",
       "examples": [
         "audio-basic",
+        "collector-dodge",
+        "contra-action",
         "dragonbones-basic",
         "static-model",
+        "tank-battle",
         "tiledmap-basic",
+        "ui-asset-loading",
         "video-basic"
       ]
     },
@@ -10997,10 +11899,22 @@
       "examples": [
         "camera-lookat",
         "camera-ortho",
+        "collector-dodge",
+        "contra-action",
         "input",
         "interaction-click",
         "light-two-directional",
-        "physics-3d-basic"
+        "match3-classic",
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer",
+        "render-composite",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tank-battle",
+        "tetris-classic"
       ]
     },
     {
@@ -11085,7 +11999,12 @@
       "unit": "director",
       "tier": "core",
       "examples": [
-        "dragonbones-basic"
+        "dragonbones-basic",
+        "render-composite",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tetris-classic"
       ]
     },
     {
@@ -11288,21 +12207,24 @@
       "unit": "GLTFAsset.owned",
       "tier": "core",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
       "unit": "GLTFAsset.sceneNames",
       "tier": "core",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
       "unit": "GLTFAsset.images",
       "tier": "core",
       "examples": [
-        "gltf-asset-readonly"
+        "gltf-asset-readonly",
+        "model-character-interaction"
       ]
     },
     {
@@ -12342,6 +13264,40 @@
       ]
     },
     {
+      "unit": "AnimationClip.wrapMode",
+      "tier": "important",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "Ray",
+      "tier": "advanced",
+      "examples": [
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "AABB",
+      "tier": "advanced",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "intersect",
+      "tier": "advanced",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
       "unit": "Node._originalSceneId",
       "tier": "core",
       "examples": [
@@ -12477,13 +13433,6 @@
       ]
     },
     {
-      "unit": "Ray",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
       "unit": "physics.selector",
       "tier": "advanced",
       "examples": [
@@ -12495,7 +13444,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -12503,7 +13453,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -12511,7 +13462,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -12519,7 +13471,8 @@
       "tier": "advanced",
       "examples": [
         "physics-3d-basic",
-        "physics-3d-collision"
+        "physics-3d-collision",
+        "physics-interaction"
       ]
     },
     {
@@ -12714,6 +13667,21 @@
       ]
     },
     {
+      "unit": "Light.destroy",
+      "tier": "core",
+      "examples": [
+        "render-composite"
+      ]
+    },
+    {
+      "unit": "SceneGlobals.ambient",
+      "tier": "core",
+      "examples": [
+        "render-composite",
+        "scene-globals-read"
+      ]
+    },
+    {
       "unit": "SceneAsset.scene",
       "tier": "core",
       "examples": [
@@ -12722,13 +13690,6 @@
     },
     {
       "unit": "Scene._globals",
-      "tier": "core",
-      "examples": [
-        "scene-globals-read"
-      ]
-    },
-    {
-      "unit": "SceneGlobals.ambient",
       "tier": "core",
       "examples": [
         "scene-globals-read"
@@ -12801,7 +13762,8 @@
       "unit": "Scene.autoReleaseAssets",
       "tier": "core",
       "examples": [
-        "scene-runtime-ops"
+        "scene-runtime-ops",
+        "scene-switch-reentry"
       ]
     },
     {
@@ -12809,6 +13771,14 @@
       "tier": "core",
       "examples": [
         "scene-runtime-ops"
+      ]
+    },
+    {
+      "unit": "EffectAsset.shaders",
+      "tier": "important",
+      "examples": [
+        "shader-custom-gradient",
+        "shader-dissolve"
       ]
     },
     {
@@ -12823,6 +13793,13 @@
       "tier": "core",
       "examples": [
         "texture2d-serialization"
+      ]
+    },
+    {
+      "unit": "AssetManager.assets",
+      "tier": "advanced",
+      "examples": [
+        "ui-asset-loading"
       ]
     },
     {
@@ -13035,7 +14012,6 @@
     "Camera.detachCamera",
     "ColorTemperatureToRGB",
     "Light.initialize",
-    "Light.destroy",
     "DirectionalLight.initialize",
     "DirectionalLight.update",
     "SphereLight.initialize",
@@ -13136,7 +14112,6 @@
     "Node.resetHasChangedFlags",
     "Node.clearNodeArray",
     "Node.getPathInHierarchy",
-    "Scene.destroy",
     "Scene.addComponent",
     "Scene._onHierarchyChanged",
     "Scene._onPostActivated",
@@ -13263,5 +14238,5 @@
     "LightingStage.destroy",
     "LightingStage.render"
   ],
-  "unclaimedRequired": 2079
+  "unclaimedRequired": 2062
 }

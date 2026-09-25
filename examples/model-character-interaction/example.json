@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "title": "Model Character Interaction",
   "category": "gltf",
-  "status": "draft",
-  "specStatus": "draft",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
     "goal": "掌握同一 glTF 资产的双实例角色交互全链路：独立动画时钟、射线拾取选择、材质反馈隔离与单实例释放（G1/P04+P05）",
@@ -90,19 +90,19 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L154"
+        "sourceLocation": "L156"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L156"
+        "sourceLocation": "L158"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L158"
+        "sourceLocation": "L160"
       },
       {
         "api": "Node.addChild",
@@ -114,7 +114,7 @@
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L160"
+        "sourceLocation": "L162"
       },
       {
         "api": "Node.walk",
@@ -132,13 +132,13 @@
         "api": "Node.getComponentInChildren",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L145"
+        "sourceLocation": "L146"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L162"
+        "sourceLocation": "L164"
       },
       {
         "api": "Camera.screenPointToRay",
@@ -150,13 +150,13 @@
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L176"
+        "sourceLocation": "L178"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L169"
+        "sourceLocation": "L171"
       },
       {
         "api": "math.Vec3",
@@ -192,43 +192,43 @@
         "api": "Animation",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L144"
+        "sourceLocation": "L145"
       },
       {
         "api": "Animation.play",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L149"
+        "sourceLocation": "L151"
       },
       {
         "api": "Animation.getState",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L222"
+        "sourceLocation": "L227"
       },
       {
         "api": "Animation.pause",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L233"
+        "sourceLocation": "L244"
       },
       {
         "api": "Animation.resume",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L239"
+        "sourceLocation": "L250"
       },
       {
         "api": "AnimationClip",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L147"
+        "sourceLocation": "L149"
       },
       {
         "api": "AnimationClip.wrapMode",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L147"
+        "sourceLocation": "L149"
       },
       {
         "api": "SkinnedMeshRenderer",
@@ -264,55 +264,55 @@
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L272"
+        "sourceLocation": "L283"
       },
       {
         "api": "GLTFAsset.owned",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L196"
+        "sourceLocation": "L198"
       },
       {
         "api": "GLTFAsset.animations",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L189"
+        "sourceLocation": "L191"
       },
       {
         "api": "GLTFAsset.meshes",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L190"
+        "sourceLocation": "L192"
       },
       {
         "api": "GLTFAsset.materials",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L191"
+        "sourceLocation": "L193"
       },
       {
         "api": "GLTFAsset.textures",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L192"
+        "sourceLocation": "L194"
       },
       {
         "api": "GLTFAsset.skeletons",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L193"
+        "sourceLocation": "L195"
       },
       {
         "api": "GLTFAsset.images",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L194"
+        "sourceLocation": "L196"
       },
       {
         "api": "GLTFAsset.sceneNames",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L195"
+        "sourceLocation": "L197"
       },
       {
         "api": "Ray",
@@ -336,13 +336,13 @@
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L246"
+        "sourceLocation": "L257"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L246"
+        "sourceLocation": "L257"
       },
       {
         "api": "EventTouch.getLocation",
@@ -430,7 +430,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 160,
+            "line": 162,
             "text": "cameraNode.setPosition(new Vec3(0.5, 1.2, 4.5));"
           }
         ]
@@ -449,12 +449,12 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 174,
+            "line": 176,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 175,
+            "line": 177,
             "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ]
@@ -495,6 +495,36 @@
               "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
             }
           ]
+        },
+        {
+          "path": "assets/SimpleSkin_geometry.bin",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 137,
+              "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
+            }
+          ]
+        },
+        {
+          "path": "assets/SimpleSkin_inverseBindMatrices.bin",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 137,
+              "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
+            }
+          ]
+        },
+        {
+          "path": "assets/SimpleSkin_skinningData.bin",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 137,
+              "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
+            }
+          ]
         }
       ]
     }
@@ -503,8 +533,16 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0.5, 0.5, 0))），position 仍精确断言",
-        "line": "L161"
+        "line": "L163"
       }
     }
+  },
+  "promotion": {
+    "spec": "b652b3f4754e",
+    "source": "072e1c3f3d8d5137",
+    "candidate": "45df203a8e6eab03",
+    "verified": 37,
+    "attested": 8,
+    "units": 45
   }
 }

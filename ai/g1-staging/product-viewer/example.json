@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "title": "Interactive 3D Product Viewer",
   "category": "application",
-  "status": "draft",
-  "specStatus": "draft",
+  "status": "stable",
+  "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
     "goal": "交互式 3D 产品查看器完整应用链路：加载/失败重试、旋转缩放、部件选中、材质切换、信息面板、截图、模型替换、资源释放、尺寸响应与诊断入口（G2 应用场景）",
     "points": [
-      "失败重试：不存在 URL → fetch 404/parse 拒绝如实入面板 → 重试真实资产成功（GLTFAsset 面记录 meshes/animations）",
+      "失败重试：损坏 glb fixture → parseAsync 拒绝如实入面板 → 重试真实资产成功（GLTFAsset 面记录 meshes/animations）",
       "拾取链：TOUCH_END 单击 → screenPointToRay → geometry.intersect.rayAABB 双部件最近命中；拖拽=轨道旋转、滚轮=缩放（dist clamp 2..12）",
       "材质切换：variant 轮换（glTF 原材质恢复 ↔ 三色 standard），选中高亮与 variant 状态解耦",
       "GLTFInstance.dispose() 连带销毁无引用资产（本例实测：swap 后 boxAsset 失效，getter 需 isValid 守卫——所有权语义如实记录）",
@@ -17,7 +17,7 @@
     ]
   },
   "effect": {
-    "functional": "时间线六相位（页内断言，失败即 throw → no-runtime-error 红）：T1 加载 MissingProduct.glb → 拒绝消息入面板（error 态）；T2 重试 BoxTextured.glb → GLTFAsset.meshes≥1 → frameObject 取景 → loaded；T3 SimpleSkin 副件（蒙皮+动画 clips≥1 播放）；T4 材质 variant 轮换 4 次回到原材质（materialSwaps 对账）；T5 合成 resize 事件 → handler 计数 + canvas/camera.rect 尺寸读回（框架 Camera 无 aspect 导出面，GAP-C2 同族，如实记录不冒充）；T6 DOM 按钮链——截图（toDataURL PNG ≥1000B 断言）、换材质、更换模型（旧实例 dispose+settle → isValid=false，新实例就位，modelSwaps=1）。交互：画布中心单击 → rayAABB 命中 ProductMain（选中高亮）；拖拽 → 轨道旋转；滚轮 → 缩放；空闲自转保证持续 frame-diff。__lifecycle()：release=双实例 dispose+变体材质/蒙皮基础材质 destroy+双资产 destroy+输入退订，reacquire=同一 loadProduct 路径重建（含 BoxTextured 资产重取——dispose 连带销毁后的诚实归还）。诊断入口：window.__airApp 绑定 + 面板节点计数。",
+    "functional": "时间线六相位（页内断言，失败即 throw → no-runtime-error 红）：T1 加载损坏 fixture corrupt-product.glb → parseAsync 拒绝、消息入面板（error 态；Gallery 发布面 no-http-errors 契约：失败路径以内容损坏的自有 fixture 承担，非 404）；T2 重试 BoxTextured.glb → GLTFAsset.meshes≥1 → frameObject 取景 → loaded；T3 SimpleSkin 副件（蒙皮+动画 clips≥1 播放）；T4 材质 variant 轮换 4 次回到原材质（materialSwaps 对账）；T5 合成 resize 事件 → handler 计数 + canvas/camera.rect 尺寸读回（框架 Camera 无 aspect 导出面，GAP-C2 同族，如实记录不冒充）；T6 DOM 按钮链——截图（toDataURL PNG ≥1000B 断言）、换材质、更换模型（旧实例 dispose+settle → isValid=false，新实例就位，modelSwaps=1）。交互：画布中心单击 → rayAABB 命中 ProductMain（选中高亮）；拖拽 → 轨道旋转；滚轮 → 缩放；空闲自转保证持续 frame-diff。__lifecycle()：release=双实例 dispose+变体材质/蒙皮基础材质 destroy+双资产 destroy+输入退订，reacquire=同一 loadProduct 路径重建（含 BoxTextured 资产重取——dispose 连带销毁后的诚实归还）。诊断入口：window.__airApp 绑定 + 面板节点计数。",
     "visual": "深色展台场景：中央主产品（BoxTextured 纹理盒 / 更换后为蒙皮动画件）缓慢自转，右侧 SimpleSkin 蒙皮副件持续动画；地面灰蓝平面；左上信息面板（main/selected/swaps/shots/resize/wheel/drags/nodes），左下状态行，右上三枚 DOM 按钮（截图/换材质/更换模型）"
   },
   "api": {
@@ -85,19 +85,19 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L377"
+        "sourceLocation": "L380"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L379"
+        "sourceLocation": "L382"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L381"
+        "sourceLocation": "L384"
       },
       {
         "api": "Node.addChild",
@@ -109,13 +109,13 @@
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L383"
+        "sourceLocation": "L386"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L397"
+        "sourceLocation": "L400"
       },
       {
         "api": "Node.walk",
@@ -133,13 +133,13 @@
         "api": "Node.getComponentInChildren",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L183"
+        "sourceLocation": "L185"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L364"
+        "sourceLocation": "L367"
       },
       {
         "api": "MeshRenderer",
@@ -157,25 +157,25 @@
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L384"
+        "sourceLocation": "L387"
       },
       {
         "api": "Camera.screenPointToRay",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L225"
+        "sourceLocation": "L228"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L398"
+        "sourceLocation": "L401"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L391"
+        "sourceLocation": "L394"
       },
       {
         "api": "math.Vec3",
@@ -211,13 +211,13 @@
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L406"
+        "sourceLocation": "L409"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L406"
+        "sourceLocation": "L409"
       },
       {
         "api": "GLTFLoader",
@@ -241,43 +241,43 @@
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L560"
+        "sourceLocation": "L564"
       },
       {
         "api": "GLTFAsset.meshes",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L440"
+        "sourceLocation": "L444"
       },
       {
         "api": "GLTFAsset.animations",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L441"
+        "sourceLocation": "L445"
       },
       {
         "api": "Animation",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L183"
+        "sourceLocation": "L184"
       },
       {
         "api": "Animation.play",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L186"
+        "sourceLocation": "L189"
       },
       {
         "api": "AnimationClip",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L185"
+        "sourceLocation": "L188"
       },
       {
         "api": "AnimationClip.wrapMode",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L185"
+        "sourceLocation": "L188"
       },
       {
         "api": "frameObject",
@@ -289,37 +289,37 @@
         "api": "Ray",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L225"
+        "sourceLocation": "L228"
       },
       {
         "api": "AABB",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L221"
+        "sourceLocation": "L224"
       },
       {
         "api": "intersect",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L236"
+        "sourceLocation": "L239"
       },
       {
         "api": "EventTouch.getLocation",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L491"
+        "sourceLocation": "L495"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L534"
+        "sourceLocation": "L538"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L534"
+        "sourceLocation": "L538"
       },
       {
         "api": "isValid",
@@ -339,7 +339,8 @@
     "assets/SimpleSkin_animation.bin",
     "assets/SimpleSkin_geometry.bin",
     "assets/SimpleSkin_inverseBindMatrices.bin",
-    "assets/SimpleSkin_skinningData.bin"
+    "assets/SimpleSkin_skinningData.bin",
+    "assets/corrupt-product.glb"
   ],
   "scene": {
     "expectedGraph": {
@@ -414,7 +415,7 @@
   },
   "screenshot": {},
   "license": {
-    "assets": "assets/BoxTextured.glb、assets/SimpleSkin.* — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/*.LICENSE.md"
+    "assets": "assets/BoxTextured.glb、assets/SimpleSkin.* — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/*.LICENSE.md；assets/corrupt-product.glb 为自有生成的故意损坏 fixture（非第三方）"
   },
   "validationExpectations": {
     "transform-equals": {
@@ -432,12 +433,12 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 396,
+            "line": 399,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 397,
+            "line": 400,
             "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ]
@@ -451,7 +452,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 403,
+            "line": 406,
             "text": "groundNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -465,7 +466,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 414,
+            "line": 417,
             "text": "spinNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -493,7 +494,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 194,
+            "line": 197,
             "text": "sideInstance.root.setPosition(new Vec3(2.6, 1.0, 0));"
           }
         ]
@@ -530,6 +531,46 @@
               "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
             }
           ]
+        },
+        {
+          "path": "assets/SimpleSkin_animation.bin",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 154,
+              "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
+            }
+          ]
+        },
+        {
+          "path": "assets/SimpleSkin_inverseBindMatrices.bin",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 154,
+              "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
+            }
+          ]
+        },
+        {
+          "path": "assets/SimpleSkin_skinningData.bin",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 154,
+              "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
+            }
+          ]
+        },
+        {
+          "path": "assets/corrupt-product.glb",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 428,
+              "text": "const corrupt = await (await fetch('./assets/corrupt-product.glb')).arrayBuffer();"
+            }
+          ]
         }
       ]
     }
@@ -541,5 +582,13 @@
         "line": "L177"
       }
     }
+  },
+  "promotion": {
+    "spec": "e85361787308",
+    "source": "79a5158b8afbb4ef",
+    "candidate": "45df203a8e6eab03",
+    "verified": 36,
+    "attested": 5,
+    "units": 41
   }
 }

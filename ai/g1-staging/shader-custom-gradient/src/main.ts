@@ -89,7 +89,8 @@ const vert = standardVert();
 const frag = fragVariants(GRAD_FRAG_GLSL4, GRAD_FRAG_GLSL1);
 
 let effect: any = null;
-let material: Material;
+let material: Material;      // 共享材质资产（lifecycle 持有/销毁对象）
+let liveMat: Material;       // renderer.material 实例——运行期 setProperty 一律走它（正典 readback 实例化教训）
 let quadRenderer: MeshRenderer;
 
 function buildEffect (): any {
@@ -187,6 +188,7 @@ async function main (): Promise<void> {
   quadRenderer.mesh = utils.createMesh(primitives.plane({ width: 5, length: 3, widthSegments: 1, lengthSegments: 1 }));
   material = buildMaterial();
   quadRenderer.setSharedMaterial(material, 0);
+  liveMat = quadRenderer.material as Material;
 
   app.run(scene);
   await sleep(700);
@@ -199,7 +201,7 @@ async function main (): Promise<void> {
     'left=' + JSON.stringify(left) + '（偏红）right=' + JSON.stringify(right) + '（偏蓝）');
 
   // ---- C uniform-vec4：改 colorA → 左半色相变绿 ------------------------------
-  material.setProperty('colorA', new Color(40, 220, 90, 255));
+  liveMat.setProperty('colorA', new Color(40, 220, 90, 255));
   await sleep(250);
   const leftGreen = await sampleUV(0.30, 0.5);
   probe.state.afterColorA = leftGreen;
@@ -207,7 +209,7 @@ async function main (): Promise<void> {
     'left after colorA=green: ' + JSON.stringify(leftGreen));
 
   // ---- D 时间动画：timeScale 提速 + 三采样配对帧差（单区间在正弦极值处导数趋零，不鲁棒） ----
-  material.setProperty('timeScale', 2.5);
+  liveMat.setProperty('timeScale', 2.5);
   const d0 = await sampleUV(0.5, 0.5);
   await sleep(150);
   const d1 = await sampleUV(0.5, 0.5);
@@ -219,20 +221,20 @@ async function main (): Promise<void> {
   pcheck('time-animation-frame-diff', maxDiff >= 2, 'maxDiff=' + maxDiff);
 
   // ---- E uniform-float 冻结：timeScale=0 → 两帧逐位相同 ----------------------
-  material.setProperty('timeScale', 0);
+  liveMat.setProperty('timeScale', 0);
   await sleep(220);
   const f0 = await sampleUV(0.5, 0.5);
   await sleep(200);
   const f1 = await sampleUV(0.5, 0.5);
   probe.state.frozen = { f0, f1 };
   pcheck('uniform-float-freeze', f0.every((v, i) => v === f1[i]), 'f0=' + JSON.stringify(f0) + ' f1=' + JSON.stringify(f1));
-  material.setProperty('timeScale', 1.5);
+  liveMat.setProperty('timeScale', 1.5);
 
   // ---- 交互：点击切换 colorB 色相 -------------------------------------------
   let toggled = false;
   const onToggle = (): void => {
     toggled = !toggled;
-    material.setProperty('colorB', toggled ? new Color(240, 200, 40, 255) : new Color(64, 114, 230, 255));
+    liveMat.setProperty('colorB', toggled ? new Color(240, 200, 40, 255) : new Color(64, 114, 230, 255));
     if (!probe.clickPhaseDone) {
       probe.clickPhaseDone = true;
       pcheck('click-changes-colorB', true, 'toggled=' + toggled);
@@ -260,8 +262,9 @@ async function main (): Promise<void> {
       await sleep(250);
       effect = buildEffect(); // 同一注册路径重建
       material = buildMaterial();
-      material.setProperty('colorA', new Color(40, 220, 90, 255));
+      material.setProperty('colorA', new Color(40, 220, 90, 255)); // 共享材质先行设值：实例化时随拷贝带入
       quadRenderer.setSharedMaterial(material, 0);
+      liveMat = quadRenderer.material as Material; // setSharedMaterial 已销毁旧实例——重新取得
       input.on(Input.EventType.TOUCH_START, onToggle);
       return [{ name: 'EffectAsset(gradient)', ref: effect }, { name: 'Material(gradient)', ref: material }];
     },

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "title": "Custom Shader: Animated Gradient",
   "category": "shader",
-  "status": "draft",
+  "status": "stable",
   "specStatus": "draft",
   "requiresDevTools": false,
   "learning": {
@@ -69,157 +69,157 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L152"
+        "sourceLocation": "L153"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L167"
+        "sourceLocation": "L168"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L168"
+        "sourceLocation": "L169"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L169"
+        "sourceLocation": "L170"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L170"
+        "sourceLocation": "L171"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L184"
+        "sourceLocation": "L185"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L186"
+        "sourceLocation": "L187"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L171"
+        "sourceLocation": "L172"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L178"
+        "sourceLocation": "L179"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L170"
+        "sourceLocation": "L171"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L122"
+        "sourceLocation": "L123"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L120"
+        "sourceLocation": "L121"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L121"
+        "sourceLocation": "L122"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L122"
+        "sourceLocation": "L123"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L187"
+        "sourceLocation": "L188"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L187"
+        "sourceLocation": "L188"
       },
       {
         "api": "EffectAsset",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L111"
+        "sourceLocation": "L112"
       },
       {
         "api": "EffectAsset.onLoaded",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L115"
+        "sourceLocation": "L116"
       },
       {
         "api": "EffectAsset.get",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L157"
+        "sourceLocation": "L158"
       },
       {
         "api": "EffectAsset.remove",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L257"
+        "sourceLocation": "L259"
       },
       {
         "api": "EffectAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L256"
+        "sourceLocation": "L258"
       },
       {
         "api": "EffectAsset.shaders",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L112"
+        "sourceLocation": "L113"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L242"
+        "sourceLocation": "L244"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L242"
+        "sourceLocation": "L244"
       },
       {
         "api": "director",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L130"
+        "sourceLocation": "L131"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L278"
+        "sourceLocation": "L281"
       }
     ]
   },
@@ -287,7 +287,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 170,
+            "line": 171,
             "text": "cameraNode.setPosition(new Vec3(0, 0, 5));"
           }
         ]
@@ -306,12 +306,12 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 183,
+            "line": 184,
             "text": "quad.setPosition(new Vec3(0, 0, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 184,
+            "line": 185,
             "text": "quad.setRotationFromEuler(90, 0, 0);"
           }
         ]
@@ -332,7 +332,7 @@
             "tolerance": 0.01,
             "provenance": {
               "source": "src/main.ts",
-              "line": 202,
+              "line": 265,
               "text": "material.setProperty('colorA', new Color(40, 220, 90, 255));"
             }
           },
@@ -347,12 +347,20 @@
             "tolerance": 0.01,
             "provenance": {
               "source": "src/main.ts",
-              "line": 122,
+              "line": 123,
               "text": "m.setProperty('colorB', new Color(64, 114, 230, 255));"
             }
           }
         }
       }
     }
+  },
+  "promotion": {
+    "spec": "dfe4695c88ed",
+    "source": "e7e4a1241e22eda7",
+    "candidate": "45df203a8e6eab03",
+    "verified": 23,
+    "attested": 3,
+    "units": 26
   }
 }

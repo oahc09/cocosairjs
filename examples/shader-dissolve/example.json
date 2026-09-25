@@ -1,0 +1,409 @@
+{
+  "id": "shader-dissolve",
+  "version": "1.0.0",
+  "title": "Custom Shader: Texture Dissolve",
+  "category": "shader",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "在一级示例（shader-custom-gradient）之上掌握用户 Shader 的贴图采样、逐帧 uniform 动画与交互式效果切换：sampler2D 绑定、discard 溶解、边缘发光（G4 正式交付 · 二级）",
+    "points": [
+      "effect JSON 的 samplerTextures 声明（set=1 MATERIAL、binding 顺延 Constants 块）+ properties 的纹理默认值（'grey'）与 setProperty('mainTexture', Texture2D) 运行期绑定",
+      "片元内 texture2D/texture 采样三变体写法（glsl1 用 texture2D，glsl3/4 用 texture）",
+      "溶解算法：cell hash 噪声 vs threshold uniform → discard；边缘带 [threshold, threshold+0.08) 以 edgeColor 发光；threshold=0 时边缘带必须关闭（完整贴图态）",
+      "逐帧 uniform 更新：Component.update 内 setProperty('threshold', …) 驱动循环溶解动画"
+    ]
+  },
+  "effect": {
+    "functional": "正交相机 + 居中平面贴 8×8 程序化棋盘纹理（青/橙）。时间线断言：T1 threshold=0 → 相邻采样点 (0.30,0.56)/(0.45,0.56) 为棋盘互补色（青↔橙精确值），证明 sampler 绑定与 UV 正确；T2 threshold=0.99 → 采样点回落清屏色 (16,18,24)±12（discard 生效）；T3 threshold=0.5 → 中心区域品红边缘像素 ≥30（实测 12877）；T4 动画 threshold 循环 [0,0.92) → 中心区域 300ms 帧差变化像素 ≥50（实测 23111）。交互点击 → edgeColor 品红↔青柠切换。__lifecycle()：release=material/texture/effect 全链销毁+EffectAsset.remove，reacquire=同一路径重建（重注册+重绑贴图+动画恢复）。EffectAsset.validate()===true 断言注册面完整。任一 pcheck 失败 → throw → no-runtime-error 红。",
+    "visual": "深色背景上青橙棋盘平面自左下向右上循环溶解（黑洞状 discard 单元 + 品红发光边缘带），永不完全消失（threshold<0.92）；点击后边缘带在品红/青柠间切换；左上角面板显示实时 threshold"
+  },
+  "api": {
+    "primary": [
+      "EffectAsset.onLoaded",
+      "Material.setProperty",
+      "Texture2D"
+    ],
+    "supporting": [
+      "EffectAsset.validate",
+      "Component",
+      "ImageAsset"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Component",
+      "MeshRenderer",
+      "Camera",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.plane",
+      "Texture2D",
+      "Texture2D.destroy",
+      "ImageAsset",
+      "EffectAsset",
+      "EffectAsset.onLoaded",
+      "EffectAsset.get",
+      "EffectAsset.remove",
+      "EffectAsset.destroy",
+      "EffectAsset.validate",
+      "EffectAsset.shaders",
+      "input",
+      "Input",
+      "director",
+      "isValid"
+    ],
+    "forbiddenShortcut": [
+      "以节点 active 开关或材质透明度冒充 discard 溶解（溶解必须由用户片元源码的 discard 分支产生）",
+      "以「贴图已绑定」的属性读回顶包像素验证——棋盘互补色必须由两个采样点实测",
+      "边缘发光断言用单点采样（cell 边界/哈希窗口不鲁棒）——必须区域计数",
+      "threshold=0 时残留边缘带冒充完整贴图态（着色器必须显式关闭 edge）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L252"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L261"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L262"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L263"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L264"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L278"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L169"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L280"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L265"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L272"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L264"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L162"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L160"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L161"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L162"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L281"
+      },
+      {
+        "api": "primitives.plane",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L281"
+      },
+      {
+        "api": "Texture2D",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L154"
+      },
+      {
+        "api": "Texture2D.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L367"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "EffectAsset",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L135"
+      },
+      {
+        "api": "EffectAsset.onLoaded",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L139"
+      },
+      {
+        "api": "EffectAsset.get",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L257"
+      },
+      {
+        "api": "EffectAsset.remove",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L369"
+      },
+      {
+        "api": "EffectAsset.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L367"
+      },
+      {
+        "api": "EffectAsset.validate",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L257"
+      },
+      {
+        "api": "EffectAsset.shaders",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L136"
+      },
+      {
+        "api": "input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L299"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L299"
+      },
+      {
+        "api": "director",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L181"
+      },
+      {
+        "api": "isValid",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L289"
+      }
+    ]
+  },
+  "capabilities": [
+    "shader",
+    "rendering"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "DissolveQuad"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click 画布任意处一次",
+        "expected": "edgeColor 在品红(255,40,200)与青柠(180,255,60)间切换 → 溶解边缘带色相突变（frame-diff 可测）；threshold 跳回半溶解；面板文本同步"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "material-property",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（GLSL 与棋盘纹理均为本例手写/程序化生成）"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          0,
+          5
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 264,
+            "text": "cameraNode.setPosition(new Vec3(0, 0, 5));"
+          }
+        ]
+      },
+      "DissolveQuad": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          90,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 277,
+            "text": "quad.setPosition(new Vec3(0, 0, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 278,
+            "text": "quad.setRotationFromEuler(90, 0, 0);"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "DissolveQuad": {
+        "effect": "air-example-dissolve",
+        "props": {
+          "mainColor": {
+            "value": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.01,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 162,
+              "text": "m.setProperty('mainColor', new Color(255, 255, 255, 255));"
+            }
+          },
+          "edgeColor": {
+            "value": [
+              255,
+              40,
+              200,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.01,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 164,
+              "text": "m.setProperty('edgeColor', new Color(255, 40, 200, 255));"
+            }
+          },
+          "mainTexture": {
+            "expect": "object",
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 163,
+              "text": "m.setProperty('mainTexture', checkerTex as Texture2D);"
+            }
+          }
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "2de6e0a943a9",
+    "source": "abcc81bb9e885254",
+    "candidate": "45df203a8e6eab03",
+    "verified": 28,
+    "attested": 3,
+    "units": 31
+  }
+}

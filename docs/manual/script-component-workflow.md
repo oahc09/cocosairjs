@@ -126,6 +126,10 @@ node.destroy(); // ② isValid 兜底（帧末落地）
   `renderer.material` getter 创建 MaterialInstance 副本（改副本不影响资产）。示例断言优先用
   setSharedMaterial（状态可预测）。`sharedMaterial` 在本快照**只有 getter**——赋值走
   `setSharedMaterial`（misc/renderer.ts 实证）。
+- **实例化陷阱（GAP-I1，正典批次实测）**：任何代码（含验证器 readback）访问 `renderer.material`
+  都会创建实例并把渲染切到实例上——此后对**共享材质**的 `setProperty` 与画面脱钩。持续更新
+  uniform 的示例必须 `liveMat = renderer.material as Material` 驱动实例，或整体走 `setSharedMaterial`
+  切换（会销毁旧实例）；lifecycle reacquire 后需重新取实例。
 - **释放链**（所有权谁使用谁登记）：`assetManager.assets.remove(key)` → `assetManager.releaseAsset(tex)`
   → `tex.destroy()`；SpriteFrame 先 `sprite.spriteFrame = null` 摘引用再 destroy。实证：
   `ui-asset-loading` `__lifecycle`（held→released→reloaded 全链 + 画面复原）。

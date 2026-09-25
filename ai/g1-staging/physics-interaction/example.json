@@ -84,79 +84,79 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L200"
+        "sourceLocation": "L226"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L210"
+        "sourceLocation": "L236"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L90"
+        "sourceLocation": "L92"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L272"
+        "sourceLocation": "L278"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L97"
+        "sourceLocation": "L99"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L92"
+        "sourceLocation": "L94"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L248"
+        "sourceLocation": "L155"
       },
       {
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L323"
+        "sourceLocation": "L329"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L245"
+        "sourceLocation": "L152"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L97"
+        "sourceLocation": "L99"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L215"
+        "sourceLocation": "L241"
       },
       {
         "api": "Camera.screenPointToRay",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L175"
+        "sourceLocation": "L201"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L228"
+        "sourceLocation": "L254"
       },
       {
         "api": "Layers",
@@ -168,163 +168,163 @@
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L92"
+        "sourceLocation": "L94"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L121"
+        "sourceLocation": "L123"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L82"
+        "sourceLocation": "L84"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L83"
+        "sourceLocation": "L85"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L84"
+        "sourceLocation": "L86"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L98"
+        "sourceLocation": "L100"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L121"
+        "sourceLocation": "L123"
       },
       {
         "api": "primitives.sphere",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L138"
+        "sourceLocation": "L140"
       },
       {
         "api": "primitives.torus",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L243"
+        "sourceLocation": "L170"
       },
       {
         "api": "Ray",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L175"
+        "sourceLocation": "L201"
       },
       {
         "api": "physics.PhysicsSystem.raycast",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L176"
+        "sourceLocation": "L202"
       },
       {
         "api": "physics.PhysicsSystem.syncSceneToPhysics",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L152"
+        "sourceLocation": "L178"
       },
       {
         "api": "physics.PhysicsSystem.step",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L153"
+        "sourceLocation": "L179"
       },
       {
         "api": "physics.PhysicsSystem.emitEvents",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L154"
+        "sourceLocation": "L180"
       },
       {
         "api": "physics.RigidBody",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L122"
+        "sourceLocation": "L124"
       },
       {
         "api": "physics.BoxCollider",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L124"
+        "sourceLocation": "L126"
       },
       {
         "api": "physics.SphereCollider",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L142"
+        "sourceLocation": "L144"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L340"
+        "sourceLocation": "L346"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L340"
+        "sourceLocation": "L346"
       },
       {
         "api": "EventTouch.getLocation",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L174"
+        "sourceLocation": "L200"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L325"
+        "sourceLocation": "L331"
       },
       {
         "api": "Label",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L288"
+        "sourceLocation": "L294"
       },
       {
         "api": "Canvas",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L261"
+        "sourceLocation": "L267"
       },
       {
         "api": "UITransform",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L259"
+        "sourceLocation": "L265"
       },
       {
         "api": "Widget",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L262"
+        "sourceLocation": "L268"
       },
       {
         "api": "view",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L256"
+        "sourceLocation": "L262"
       },
       {
         "api": "ResolutionPolicy",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L256"
+        "sourceLocation": "L262"
       }
     ]
   },

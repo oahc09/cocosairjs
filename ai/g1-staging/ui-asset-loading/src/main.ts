@@ -6,8 +6,10 @@
  *   P1 注册表往返：运行时生成 Texture2D → assetManager.assets.add('gen/panel') →
  *      loadAssetAsync(path, Texture2D) 命中同一实例 → Preview 显示绿色；
  *   P2 URL 成功加载：loadAssetAsync('assets/panel-manifest.json')（非序列化格式回退纯 JSON）；
- *   P3 HTTP 404 失败：加载不存在的 URL → Promise 拒绝（消息含状态码）→ UI 进入失败态、可重试；
- *   P4 重试：同 URL 再试仍 404（如实），随后注册表回退加载成功 → UI 恢复；
+ *   P3 注册表未命中失败：loadAssetAsync(path,type) 无此键 → Promise 拒绝（消息含 not found）
+ *     → UI 进入失败态、可重试；（HTTP-404 面由手册树 manual-asset-lifecycle 覆盖——Gallery
+ *     发布面契约 artifact:no-http-errors 不允许故意 404，失败路径改用零 HTTP 的注册表未命中）
+ *   P4 重试：同键再试仍未命中（如实），随后注册表回退加载成功 → UI 恢复；
  *   P5 加载锁：3 个并发 requestLoad 只有 1 个真正启动，其余 2 个被状态锁拒绝（幂等，防快速重复点击）；
  *   P6 销毁守卫：临时组件发起注定失败的加载后立即销毁节点，回调落地时 isValid 守卫拦截，
  *      悬空效果计数恒为 0（Node.off 对称退订同步演示）。
@@ -16,7 +18,7 @@
  *   reacquire = 同一实现路径重建（registry → loadAssetAsync → createWithImage → 上屏）。
  *
  * 断言失败路径：任何 pcheck 失败 → throw → pageerror → no-runtime-error 红。
- * 404 为故意失败路径：fetch 拒绝被 try/catch 捕获，不产生 window error / unhandledrejection。
+ * 失败路径为故意拒绝：try/catch 捕获，不产生 window error / unhandledrejection，也不产生 HTTP 错误。
  */
 
 import {
@@ -109,7 +111,7 @@ function renderUI (): void {
   if (statusLabel) { statusLabel.string = 'phase: ' + state.phase + ' · state: ' + state.loadState; }
   if (infoLabel) {
     infoLabel.string = 'loads ' + state.loadStarts + ' · locks ' + state.lockRejects
-      + ' · clicks ' + state.clicks + ' · 404s ' + state.http404s
+      + ' · clicks ' + state.clicks + ' · fails ' + state.http404s
       + (state.lastError ? ' · err: ' + state.lastError.slice(0, 40) : '');
   }
   if (buttonLabel) { buttonLabel.string = state.loadState === 'failed' ? 'Retry load' : 'Load panel'; }
@@ -149,9 +151,9 @@ async function requestLoad (): Promise<boolean> {
   }
 }
 
-async function tryLoadUrl (url: string): Promise<{ ok: boolean; message: string }> {
+async function tryLoadMissing (key: string): Promise<{ ok: boolean; message: string }> {
   try {
-    const asset = await loadAssetAsync(url);
+    await loadAssetAsync(key, Texture2D);
     return { ok: true, message: '' };
   } catch (e) {
     return { ok: false, message: String((e as Error).message || e) };
@@ -179,7 +181,7 @@ class GuardedLoader extends Component {
 
   async loadMissing (): Promise<void> {
     try {
-      await loadAssetAsync('assets/also-missing.json');
+      await loadAssetAsync('gen/also-missing', Texture2D); // 注册表未命中 → 拒绝（零 HTTP 失败路径）
     } catch (e) {
       if (this.cancelled || !isValid(this.node)) { state.guardedCallbacks++; return; } // 已取消/已销毁：不落任何效果
       state.danglingEffects++; // 守卫失效才会到达（合同：恒为 0）
@@ -291,13 +293,13 @@ async function main (): Promise<void> {
   renderUI();
   await sleep(200);
 
-  // ---- P3 HTTP 404 失败路径 --------------------------------------------------
-  state.phase = 'p3-http-404';
-  const fail = await tryLoadUrl('assets/missing-panel.json');
+  // ---- P3 注册表未命中失败路径（零 HTTP；404 面在手册树覆盖） -------------------
+  state.phase = 'p3-registry-miss';
+  const fail = await tryLoadMissing('gen/missing-panel');
   state.http404s++;
   state.lastError = fail.message;
   state.loadState = 'failed';
-  pcheck('p3-404-rejected', fail.ok === false && /404|fail|not found/i.test(fail.message),
+  pcheck('p3-miss-rejected', fail.ok === false && fail.message.length > 0,
     fail.message.slice(0, 90));
   renderUI();
   await sleep(250);
@@ -305,7 +307,7 @@ async function main (): Promise<void> {
   // ---- P4 重试（同 URL 如实再败 → 注册表回退成功） ----------------------------
   state.phase = 'p4-retry';
   state.retries++;
-  const retry = await tryLoadUrl('assets/missing-panel.json');
+  const retry = await tryLoadMissing('gen/missing-panel');
   if (!retry.ok) { state.http404s++; }
   const p4 = await requestLoad();
   pcheck('p4-retry-fallback-success', retry.ok === false && p4 === true && (state.loadState as string) === 'loaded',

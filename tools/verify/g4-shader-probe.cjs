@@ -16,9 +16,9 @@ const http = require('http');
 const { execSync } = require('child_process');
 
 const REPO = path.resolve(__dirname, '..', '..');
-// --root=<shader-probe 所在根>（默认 examples/；staging 期用 ai/g1-staging）
+// --root=<shader-probe 所在根>（默认 ai/g1-staging——探针为隔离诊断页，常驻 staging 不进 Gallery）
 const rootArg = process.argv.slice(2).find((a) => a.startsWith('--root='));
-const WORKSPACE = rootArg ? path.join(path.resolve(REPO, rootArg.slice(7)), 'shader-probe') : path.join(REPO, 'examples', 'shader-probe');
+const WORKSPACE = rootArg ? path.join(path.resolve(REPO, rootArg.slice(7)), 'shader-probe') : path.join(REPO, 'ai', 'g1-staging', 'shader-probe');
 const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'g4-shader-probe.json');
 const TIMEOUT_MS = 180000;
 

@@ -597,7 +597,7 @@ async function main(): Promise<void> {
             if (playerMesh) { held.push({ name: 'Mesh(player)', ref: playerMesh }); }
             if (coinMesh) { held.push({ name: 'Mesh(coin)', ref: coinMesh }); }
             if (enemyMesh) { held.push({ name: 'Mesh(enemy)', ref: enemyMesh }); }
-            if (coinClip) { held.push({ name: 'AudioClip(tone)', ref: coinClip }); }
+            if (coinClip && isValid(coinClip)) { held.push({ name: 'AudioClip(tone)', ref: coinClip }); }
             return held;
         },
         release: () => {
@@ -606,12 +606,21 @@ async function main(): Promise<void> {
             input.off(Input.EventType.TOUCH_START, onClick);
             driver.realtime = false;
             game.state = 'paused';
-            if (audioSrc) { audioSrc.stop(); }
+            if (audioSrc) { audioSrc.stop(); audioSrc.clip = null; }
+            if (coinClip) { assetManager.releaseAsset(coinClip); coinClip = null; } // audio-basic 实证口径
             destroyActors();
         },
         reacquire: async () => {
             await sleep(300);
             buildActors(); // 同一构建路径（材质/网格/池节点全量重建）
+            try {
+                coinClip = await new Promise<AudioClip>((resolve, reject) => {
+                    (assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {
+                        if (err) { reject(err as Error); } else { resolve(clip); }
+                    });
+                });
+                if (audioSrc && coinClip) { audioSrc.clip = coinClip; audioSrc.playOnAwake = false; }
+            } catch (e) { /* 重载失败如实走泄漏核对 */ }
             game.reset();
             driver.realtime = true;
             input.on(Input.EventType.KEY_DOWN, onKeyDown);

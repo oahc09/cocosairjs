@@ -107,7 +107,8 @@ function findSymbolLine (lines, unit) {
 }
 
 function findTextLine (lines, text) {
-  const needle = String(text).trim();
+  // 描述性引文（interaction-click 先例：'代码 —— 说明'）按代码前缀定位
+  const needle = String(text).split('——')[0].trim();
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] && lines[i].indexOf(needle) !== -1) { return i + 1; }
   }

@@ -1,9 +1,25 @@
 # 计划书实施台账（接口场景覆盖、开发范式与 Shader 示例）
 
 > 计划书：`ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md`
-> 本台账记录批次状态、证据指针与集成待办。工作纪律：不触碰并行会话持有的正典文件
-> （examples/files.json、docs/evidence/v11-*）；G1/G2/G4 在制品全部位于 `ai/g1-staging/`。
-> 最后更新：2026-09-25 20:15（并行线仍活跃：files.json 20:07 再生成、全量截图重采中）。
+> **状态：正典集成完成（r52）**。owner 指令「执行（平移目录 → 再生成 manifest → v11 全链采证 →
+> 晋级冻结 → coverage 增量核对）」五步全部落地：
+>
+> 1. **平移**：11+2 目录 → examples/（后裁定：shader-probe/tmp-light-probe 回驻 staging，
+>    Gallery 工件合同不容未登记目录的绝对路径 importmap）；shader-blocks.js → examples/shared/。
+> 2. **manifest**：145 例（144 stable + gltf-catalog draft 既有）。
+> 3. **v11 全链采证**：4 轮 chromium 整批（#1 131/140 诊断 9 败 → 修复 → #3/#4 **140/140，partial=false**）；
+>    DevTools 5/5（candidate 45df203a 刷新）；gallery artifact **209/209**；firefox 补充 **13/13**。
+> 4. **晋级冻结**：13 例 status=stable（证据驱动）+ specStatus=frozen（owner 指令落章，owner-decisions §8）。
+> 5. **coverage 增量核对**：verified 420→**439（+19/-0）**；important 20→33（EffectAsset 族×6、Tween×3、
+>    Animation×3、SpriteFrame.createWithImage）；core +1（Scene.destroy）；advanced 披露 +5；门禁 PASS、stale=0。
+>
+> 全部门禁当期复采：spec-evidence 3470 条 0 漂移 · spec-validate 145 frozen/0 draft ·
+> compliance 0 fail/1 warn（draco 既有）· jest 32/263 · typecheck 0 · file-map PASS。
+> 修复沉淀（正典批次实测教训）：GAP-I1 renderer.material 实例化脱钩→liveMat 模式；音频释放走
+> assetManager.releaseAsset；asset paths 全 author；UICamera z=1000 引擎合同值；动画时钟轮询起步；
+> lifecycle 必须销毁「引用被毁资产的存活渲染器」节点；Gallery 发布面故意失败路径改零 HTTP
+> （注册表未命中/损坏 fixture）。
+> 本 staging 目录 = 探针与诊断页常驻所 + 历史工作区存档；示例正典位置在 examples/。
 
 ## 批次状态总览
 

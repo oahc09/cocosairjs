@@ -72,6 +72,8 @@ let physics: any;
 let world: any;
 let statusLabel: Label;
 let towers: Node[] = [];
+let groundNode: Node | null = null;
+let ringNode: Node | null = null;
 
 const enterPairs = new Set<string>();
 const ownedAssets: { name: string; ref: any }[] = [];
@@ -143,6 +145,30 @@ function spawnStrikeBall (): Node {
   col.radius = 0.45;
   col.on('onCollisionEnter', onEnter);
   return n;
+}
+
+/** Ground + SpinRing 构建（lifecycle release/reacquire 与首次构建共用同一路径）。 */
+let ringYaw = 0;
+class Spinner extends Component {
+  update(dt: number): void {
+    ringYaw += dt * 90;
+    this.node.setRotationFromEuler(0, ringYaw, 0);
+  }
+}
+function buildGroundAndRing(): void {
+  // Ground：静态盒（顶面 y=0）——不订阅事件（接触对由塔/球侧计数，避免双发重复）
+  groundNode = makeNode('Ground', 0, -0.5, 0);
+  scene.addChild(groundNode);
+  bindVisual(groundNode, 'Ground', () => primitives.box({ width: 12, height: 1, length: 12 }), new Color(64, 96, 72, 255));
+  const groundBody = groundNode.addComponent(RigidBody);
+  groundBody.type = ERigidBodyType.STATIC;
+  const groundCollider = groundNode.addComponent(BoxCollider);
+  groundCollider.size = new Vec3(12, 1, 12);
+  // SpinRing：与模拟无关的持续帧间变化（frame-diff 护栏，physics-3d-collision 同款）
+  ringNode = makeNode('SpinRing', -4, 2.4, 0);
+  scene.addChild(ringNode);
+  bindVisual(ringNode, 'SpinRing', () => primitives.torus(0.5, 0.18), new Color(150, 150, 160, 255));
+  ringNode.addComponent(Spinner);
 }
 
 // ---------------------------------------------------------------- 手动步进（官方 postUpdate 同序）
@@ -228,27 +254,7 @@ async function main (): Promise<void> {
   const light = lightNode.addComponent(DirectionalLight);
   light.illuminance = 20000;
 
-  // Ground：静态盒（顶面 y=0）——不订阅事件（接触对由塔/球侧计数，避免双发重复）
-  const groundNode = makeNode('Ground', 0, -0.5, 0);
-  scene.addChild(groundNode);
-  bindVisual(groundNode, 'Ground', () => primitives.box({ width: 12, height: 1, length: 12 }), new Color(64, 96, 72, 255));
-  const groundBody = groundNode.addComponent(RigidBody);
-  groundBody.type = ERigidBodyType.STATIC;
-  const groundCollider = groundNode.addComponent(BoxCollider);
-  groundCollider.size = new Vec3(12, 1, 12);
-
-  // SpinRing：与模拟无关的持续帧间变化（frame-diff 护栏，physics-3d-collision 同款）
-  const ringNode = makeNode('SpinRing', -4, 2.4, 0);
-  scene.addChild(ringNode);
-  bindVisual(ringNode, 'SpinRing', () => primitives.torus(0.5, 0.18), new Color(150, 150, 160, 255));
-  let ringYaw = 0;
-  class Spinner extends Component {
-    update (dt: number): void {
-      ringYaw += dt * 90;
-      this.node.setRotationFromEuler(0, ringYaw, 0);
-    }
-  }
-  ringNode.addComponent(Spinner);
+  buildGroundAndRing();
 
   towers = buildTower();
 
@@ -322,7 +328,7 @@ async function main (): Promise<void> {
   towers = [];
   oldTowers.forEach((n) => n.destroy());
   await sleep(300); // 帧末延迟销毁落地（刚体随 onDestroy 出世界）
-  pcheck('old-towers-destroyed', oldTowers.every((n) => !isValid(n)), 'some tower still valid');
+  pcheck('old-towers-destroyed', oldTowers.every((n) => !isValid(n)), 'isValid 全 false=' + oldTowers.every((n) => !isValid(n)));
   enterPairs.clear();
   towers = buildTower();
   await sleep(120); // 新组件 onLoad 刚体入世界
@@ -347,6 +353,8 @@ async function main (): Promise<void> {
         .filter((a) => isValid(a.ref))
         .map((a) => ({ name: a.name, ref: a.ref }));
       towers.forEach((n, i) => held.push({ name: 'TowerNode' + (i + 1), ref: n }));
+      if (groundNode) { held.push({ name: 'GroundNode', ref: groundNode }); }
+      if (ringNode) { held.push({ name: 'SpinRingNode', ref: ringNode }); }
       return held;
     },
     release: () => {
@@ -354,6 +362,10 @@ async function main (): Promise<void> {
       towers.forEach((n) => n.destroy());
       towers = [];
       scene.children.filter((n) => n.name.startsWith('StrikeBall')).forEach((n) => n.destroy());
+      // Ground/SpinRing 节点必须先于其 mesh/material 资产销毁——否则存活渲染器引用已毁资产，
+      // agent-session inspectRuntimeAssets 会在 mesh.struct=null 上崩（正典批次实测教训）
+      if (groundNode) { groundNode.destroy(); groundNode = null; }
+      if (ringNode) { ringNode.destroy(); ringNode = null; }
       for (const a of ownedAssets) {
         if (isValid(a.ref)) { a.ref.destroy(); }
       }
@@ -361,12 +373,15 @@ async function main (): Promise<void> {
     },
     reacquire: async () => {
       await sleep(300); // 等销毁落地再重建（同名节点不撞车）
+      buildGroundAndRing();
       towers = buildTower();
       await sleep(120);
       input.on(Input.EventType.TOUCH_START, onTouchStart);
       updateStatus();
       const held: { name: string; ref: object }[] = ownedAssets.map((a) => ({ name: a.name, ref: a.ref }));
       towers.forEach((n, i) => held.push({ name: 'TowerNode' + (i + 1), ref: n }));
+      if (groundNode) { held.push({ name: 'GroundNode', ref: groundNode }); }
+      if (ringNode) { held.push({ name: 'SpinRingNode', ref: ringNode }); }
       return held;
     },
   });

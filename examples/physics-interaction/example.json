@@ -1,0 +1,398 @@
+{
+  "id": "physics-interaction",
+  "version": "1.0.0",
+  "title": "Physics Interaction Chain",
+  "category": "physics",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握输入驱动的 3D 物理交互全链路：cannon 后端身份自证、手动步进确定性、碰撞事件对、射线命中与可复现重置（G1/P06+P07）",
+    "points": [
+      "createAirApp({physics:'cannon'}) 交付期后端切换；「真模拟位移>0」断言即后端身份证据（builtin 下恒不动 → 判红）",
+      "physics.enable=false 冻结帧驱动 + 官方 postUpdate 同序手动步进（syncSceneToPhysics → step → emitEvents → syncAfterEvents）= 逐位可复现",
+      "onCollisionEnter 事件对以 Set 去重计数：接触对集合 {Ground|Tower1, Tower1|Tower2, Tower2|Tower3} 与 exit=0 是确定性合同",
+      "重置 = 销毁重建同参箱塔 → 同步数重跑 → 静止高度逐位一致；点击 → screenPointToRay → PhysicsSystem.raycast 命中名 → 投球 → 新增含球接触对"
+    ]
+  },
+  "effect": {
+    "functional": "R1：冻结后手动步进 120+30 步，箱塔堆稳（restY=[0.5,1.5,2.5] 逐位稳定），接触对集合恰为 3 对、exit=0，Tower1 位移>0（后端身份）。R2：销毁箱塔（isValid 全 false）→ 同参重建 → 同步数重跑 → restY 与 R1 逐位一致、接触对复现（重置可复现）。交互点击：event.getLocation → camera.screenPointToRay → physics.raycast 记录首个命中刚体名（results≥1）→ 生成 StrikeBall(v=-7x) → 步进 45 步 → 新增含球接触对 ≥1 → UI 状态行更新。__lifecycle()：release=销毁球/塔节点+mesh/material 资产链，reacquire=同路径重建箱塔。任一 pcheck 失败 → throw → no-runtime-error 红。",
+    "visual": "深色背景下 3 层木色箱塔落在绿色地面上；左侧灰色旋转环持续转动（frame-diff 护栏）；点击后红色投球从右侧飞入撞塔；顶部引擎 Label 状态行实时显示 phase/pairs/clicks/balls/hit"
+  },
+  "api": {
+    "primary": [
+      "physics.PhysicsSystem.step",
+      "physics.PhysicsSystem.raycast",
+      "Camera.screenPointToRay"
+    ],
+    "supporting": [
+      "physics.RigidBody",
+      "physics.BoxCollider",
+      "input"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.addComponent",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Node.destroy",
+      "Component",
+      "MeshRenderer",
+      "Camera",
+      "Camera.screenPointToRay",
+      "DirectionalLight",
+      "Layers",
+      "math.Vec3",
+      "Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "primitives.sphere",
+      "primitives.torus",
+      "Ray",
+      "physics.PhysicsSystem.raycast",
+      "physics.PhysicsSystem.syncSceneToPhysics",
+      "physics.PhysicsSystem.step",
+      "physics.PhysicsSystem.emitEvents",
+      "physics.RigidBody",
+      "physics.BoxCollider",
+      "physics.SphereCollider",
+      "input",
+      "Input",
+      "EventTouch.getLocation",
+      "isValid",
+      "Label",
+      "Canvas",
+      "UITransform",
+      "Widget",
+      "view",
+      "ResolutionPolicy"
+    ],
+    "forbiddenShortcut": [
+      "以 autoSimulation 实时模拟代替手动步进（帧率相关 → 三引擎/跨运行不可复现）",
+      "把距离判断称为物理碰撞（接触对必须来自 onCollisionEnter 事件，名称对入探针）",
+      "后端不标注：physics:'cannon' 是身份前提，位移断言同时是后端证据；builtin 无碰撞事件不得冒充",
+      "以示例级 PASS 顶包重置复现——R2 高度必须与 R1 逐位一致（r2 相等），差一位即红"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L226"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L236"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L278"
+      },
+      {
+        "api": "Node.addComponent",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L99"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L94"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "Node.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L329"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L99"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L241"
+      },
+      {
+        "api": "Camera.screenPointToRay",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L201"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L254"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L94"
+      },
+      {
+        "api": "Color",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L84"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L85"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L86"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L100"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "primitives.sphere",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L140"
+      },
+      {
+        "api": "primitives.torus",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L170"
+      },
+      {
+        "api": "Ray",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L201"
+      },
+      {
+        "api": "physics.PhysicsSystem.raycast",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L202"
+      },
+      {
+        "api": "physics.PhysicsSystem.syncSceneToPhysics",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L178"
+      },
+      {
+        "api": "physics.PhysicsSystem.step",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L179"
+      },
+      {
+        "api": "physics.PhysicsSystem.emitEvents",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L180"
+      },
+      {
+        "api": "physics.RigidBody",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "physics.BoxCollider",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L126"
+      },
+      {
+        "api": "physics.SphereCollider",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L144"
+      },
+      {
+        "api": "input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L346"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L346"
+      },
+      {
+        "api": "EventTouch.getLocation",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L200"
+      },
+      {
+        "api": "isValid",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L331"
+      },
+      {
+        "api": "Label",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L294"
+      },
+      {
+        "api": "Canvas",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L267"
+      },
+      {
+        "api": "UITransform",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L265"
+      },
+      {
+        "api": "Widget",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L268"
+      },
+      {
+        "api": "view",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L262"
+      },
+      {
+        "api": "ResolutionPolicy",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L262"
+      }
+    ]
+  },
+  "capabilities": [
+    "physics"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Ground",
+        "Tower1",
+        "Tower2",
+        "Tower3",
+        "SpinRing",
+        "Canvas",
+        "UICamera",
+        "StatusLabel"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click 画布中心一次",
+        "expected": "screenPointToRay → PhysicsSystem.raycast 命中 ≥1 个刚体（首个命中名入状态行）→ 生成 StrikeBall 水平撞塔 → 手动步进 45 步 → 新增含球接触对 ≥1（事件对入探针）→ UI 状态行更新，frame-diff 可测"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  },
+  "validationExpectations": {},
+  "promotion": {
+    "spec": "48666e065489",
+    "source": "eb16c723bbabce9c",
+    "candidate": "45df203a8e6eab03",
+    "verified": 34,
+    "attested": 7,
+    "units": 41
+  }
+}

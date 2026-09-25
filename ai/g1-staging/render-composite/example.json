@@ -441,6 +441,34 @@
             }
           }
         }
+      },
+      "RTQuad": {
+        "effect": "builtin-unlit",
+        "props": {
+          "mainColor": {
+            "value": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.01,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 147,
+              "text": "matRT = materialWith('builtin-unlit', new Color(255, 255, 255, 255), { USE_TEXTURE: true });"
+            }
+          },
+          "mainTexture": {
+            "expect": "object",
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 149,
+              "text": "matRT.setProperty('mainTexture', rt);"
+            }
+          }
+        }
       }
     }
   },

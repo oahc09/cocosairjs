@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-25T13:20:01.648Z",
-  "revision": "7a33e11",
+  "generatedAt": "2026-09-25T16:12:59.181Z",
+  "revision": "4c4548c",
   "examples": [
     {
       "dir": "anim-position",
@@ -90,7 +90,7 @@
       "promotion": {
         "spec": "8ebd4d7639df",
         "source": "c6fc70109be99971",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -185,7 +185,7 @@
       "promotion": {
         "spec": "fe051d63a498",
         "source": "64c06a98436e9204",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -323,7 +323,7 @@
       "promotion": {
         "spec": "9df8c691b6ad",
         "source": "002fb0bcb6e664a6",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 26,
         "attested": 2,
         "units": 28
@@ -406,7 +406,7 @@
       "promotion": {
         "spec": "c00b9e5f3a5a",
         "source": "4b4c481434e58eab",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 8,
         "attested": 3,
         "units": 11
@@ -510,7 +510,7 @@
       "promotion": {
         "spec": "51720cbada84",
         "source": "694004238940bd57",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -617,7 +617,7 @@
       "promotion": {
         "spec": "678fb005e8ec",
         "source": "78040895699e23e3",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 12,
         "attested": 1,
         "units": 13
@@ -721,7 +721,7 @@
       "promotion": {
         "spec": "9dafd5f7da08",
         "source": "9baac7f47dc56d79",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 3,
         "units": 21
@@ -824,7 +824,7 @@
       "promotion": {
         "spec": "0f969f97ee12",
         "source": "ada3caa09ec5937e",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -923,7 +923,7 @@
       "promotion": {
         "spec": "e1f579ddd6f6",
         "source": "5fec34368f419b87",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1030,7 +1030,7 @@
       "promotion": {
         "spec": "3446e2c5a876",
         "source": "b75a2948236ad40b",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -1136,7 +1136,7 @@
       "promotion": {
         "spec": "ef5a621000c1",
         "source": "79b933df001417a8",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1239,7 +1239,7 @@
       "promotion": {
         "spec": "70498eca2ff6",
         "source": "2cd1ae11353bc6d7",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1347,10 +1347,142 @@
       "promotion": {
         "spec": "784c3add2288",
         "source": "3b0b6ef797053b46",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 3,
         "units": 24
+      }
+    },
+    {
+      "dir": "collector-dodge",
+      "id": "collector-dodge",
+      "version": "1.0.0",
+      "title": "Collector Dodge (Top-Down Mini-Game)",
+      "category": "game",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "俯视角收集与躲避完整循环：开始/暂停/重开、移动、拾取、敌人巡逻、计分、胜负、音效与 HUD、对象复用与场景重置（G2 · manual-mini-game 的 Gallery 升级重构）",
+        "points": [
+          "碰撞如实标注：XZ 平面平方距离判定（勾股免开方，manual-mini-game 同款近似）——非物理后端；组件级物理见 physics-interaction",
+          "对象复用对账：5 节点币池轮转承接 10+ 次拾取（poolRespawns === coinsEaten），场景节点总数恒定（17/17）",
+          "自动演示与键盘共享同一移动入口（cmd 积分路径）；真实按键立即夺回控制权",
+          "固定步长手动步进（演示）与累加器实时驱动（交互）共用 step()；暂停期间位置逐位冻结"
+        ]
+      },
+      "effect": {
+        "functional": "自动演示五相位（页内断言，失败即 throw → no-runtime-error 红）：G1 两次 reset 的种子币位序列逐位一致；G2 自动寻币（contactEnabled=false 演示钩子，如实标注——伤害路径由 G4 独立断言）→ score=100、eaten=10 → WON，且 poolRespawns===coinsEaten、场景节点数与开局一致（对象复用与场景重置）；G3 暂停 60 步玩家位置逐位冻结（px -0.445→-0.445 级）、恢复后位移；G4 贴身敌人巡逻线 → 无敌帧轮转 3 次命中 → hp=0 → OVER（hits=3 精确）；G5 重开 → score/hp/币位序列全复位、节点数不变。交互：WASD/方向键移动（夺回控制权）、P 暂停、R 重开、点击 = 冲刺 0.6s（dashTimer=36 断言）+ 手势内音频 play()。音频：tone.wav loadRemote（回调式）→ getDuration>0 断言；吃币触发 tween 重生脉冲（to→delay→to→start）+ 播放尝试计数（拒绝如实记录）。__lifecycle()：release=输入退订+演员节点/材质/网格全销毁，reacquire=同一 buildActors 路径重建。",
+        "visual": "深色俯视 3D 场景：绿色草地平面、绿色玩家球（受伤闪烁）、5 枚立旋金币（拾取时 tween 缩放脉冲后原地换点位重生）、3 个红色巡逻方块敌人沿固定路线往返；左上角 DOM HUD 显示 state/score/hp/coins/respawns/hits/dash"
+      },
+      "api": {
+        "primary": [
+          "tween",
+          "Material.setProperty",
+          "Component"
+        ],
+        "supporting": [
+          "input",
+          "assetManager",
+          "AudioSource.play"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Node.destroy",
+          "Node.walk",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "Mesh",
+          "Mesh.destroy",
+          "utils.createMesh",
+          "primitives.sphere",
+          "primitives.cylinder",
+          "primitives.plane",
+          "primitives.box",
+          "tween",
+          "Tween.to",
+          "Tween.delay",
+          "Tween.start",
+          "input",
+          "Input",
+          "isValid",
+          "assetManager",
+          "AudioSource",
+          "AudioSource.play",
+          "AudioSource.stop",
+          "AudioClip.getDuration"
+        ]
+      },
+      "capabilities": [
+        "game",
+        "audio"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "DirLight",
+            "Ground",
+            "Player",
+            "Coins",
+            "Enemies",
+            "Driver",
+            "Audio"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心一次（= 冲刺）",
+            "expected": "dashTimer=36（0.6s 双倍速）断言入探针；手势内 AudioSource.play() 尝试（拒绝如实计数）；金币自旋 + 敌人巡逻 + tween 脉冲保证 frame-diff 持续可测"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "7dab6868b99a",
+        "source": "7c1abd6d9cf3dc46",
+        "candidate": "45df203a8e6eab03",
+        "verified": 35,
+        "attested": 2,
+        "units": 37
       }
     },
     {
@@ -1451,7 +1583,7 @@
       "promotion": {
         "spec": "6d94265ec4d6",
         "source": "e402be22fad3da2d",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -1561,10 +1693,131 @@
       "promotion": {
         "spec": "78823e5a0e2f",
         "source": "074e64b8da2435e1",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 8,
         "units": 26
+      }
+    },
+    {
+      "dir": "contra-action",
+      "id": "contra-action",
+      "version": "1.0.0",
+      "title": "Contra-Style Side-Scroll Action",
+      "category": "game",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "横版动作完整循环：横向卷屏、移动跳跃、射击、敌人生成、受伤/无敌帧、关卡终点、死亡与重开、场景复入（G2；原创角色与素材，保留经典玩法结构）",
+        "points": [
+          "角色控制：固定步长积分（重力 22、跳速 9、跑速 5），落地位置吸附地形高度（逐位确定性）",
+          "相机跟随 = scrollX 平移绘制 + clamp(0, levelW-view) 边界钳制；渲染与逻辑分离（视口 canvas → uploadData）",
+          "投射物对象池（玩家 8 / 敌 4）：出界/撞地/命中全路径回池，shotsFired 与 bulletsSpent 对账",
+          "无敌帧语义双向断言：期内接触 invulnSaves 计数且 hp 不变，过期后接触立即掉血",
+          "场景复入走 app.run(重建场景) 真实路径：世代计数 +1、旧场景 isValid=false"
+        ]
+      },
+      "effect": {
+        "functional": "自动演示六相位（页内断言，失败即 throw → no-runtime-error 红）：C1 奔跑至 x≥8，scrollX 与 clamp 公式误差 <0.01 且 state=run、scrollX∈[0,44]；C3 对巡逻兵开火 → 池中 1 发激活 → 命中击毁（kills=1）且弹丸回池（spent 对账）；C2 坑前起跳 → apex>起跳点+0.8 → 落地 onGround 且 py 逐位等于地形高度、x>17.5（跨过 2 格坑）；C4 径直前进吃第一击（hp 3→2、invuln=90）→ 无敌期贴身 walker 30 步 hp 不变（saves≥1，实测 30）→ invuln 清零后贴身 2 步 hp 再减 1；C5 旗前起跑 → x≥56 → WON；重开后贴身 walker 持续接触 → 181 步内 hp=0 → OVER、deaths=1；C6 app.run(重建场景) → generation+1、旧场景 isValid=false。交互模式：方向键移动、↑/空格跳、点击/Z 经公共 fire() 射击（冷却 12 步）+ 手势内音频 play()。__lifecycle()：release=输入退订+Board/材质/纹理销毁+音频停止，reacquire=同路径重建。音频：tone.wav loadRemote → getDuration>0 断言。",
+        "visual": "深色星空背景横向卷屏；绿色草皮+棕色土方地形（含两处深坑与两座台地）；蓝色小人主角（跑步摆腿两帧、枪管指向、受伤闪烁）；红色巡逻兵与紫色炮塔；黄色玩家弹/橙色敌弹；x=56 处白杆黄旗终点；画布内 HUD 显示 hp 心/kills/坐标，左上角 DOM 面板显示全量计数"
+      },
+      "api": {
+        "primary": [
+          "Texture2D.reset",
+          "Component",
+          "AudioSource.play"
+        ],
+        "supporting": [
+          "input",
+          "assetManager",
+          "isValid"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Node.destroy",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "Texture2D",
+          "Texture2D.reset",
+          "input",
+          "Input",
+          "isValid",
+          "assetManager",
+          "AudioSource",
+          "AudioSource.play",
+          "AudioSource.stop",
+          "AudioClip.getDuration"
+        ]
+      },
+      "capabilities": [
+        "game",
+        "audio"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Board",
+            "Driver",
+            "Audio"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心一次（= 射击）",
+            "expected": "经公共 fire() 入口发射（fired=true 或冷却拒绝，二者其一入探针）；玩家弹丸飞行使画面变化（frame-diff）；手势内 AudioSource.play()，状态如实记录"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "material-property",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "b2bc34ccd752",
+        "source": "0532eabdd1936cb8",
+        "candidate": "45df203a8e6eab03",
+        "verified": 26,
+        "attested": 2,
+        "units": 28
       }
     },
     {
@@ -1663,7 +1916,7 @@
       "promotion": {
         "spec": "97d42b5db3ab",
         "source": "b20c4bec70226a9d",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1835,7 +2088,7 @@
       "promotion": {
         "spec": "cfd28d7885f1",
         "source": "d9ccae6dfd74bdea",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 15,
         "attested": 31,
         "units": 46
@@ -1948,7 +2201,7 @@
       "promotion": {
         "spec": "a70f6b03bb31",
         "source": "22820c8b7367c954",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 4,
         "units": 27
@@ -2042,7 +2295,7 @@
       "promotion": {
         "spec": "5589594abdf5",
         "source": "481aee4186a2fcf5",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -2207,7 +2460,7 @@
       "promotion": {
         "spec": "c6b480406f7f",
         "source": "221fa314ef0a2167",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -2303,7 +2556,7 @@
       "promotion": {
         "spec": "a7a345f064ed",
         "source": "3cd1617585064e0d",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -2412,7 +2665,7 @@
       "promotion": {
         "spec": "756eed642826",
         "source": "ff75be88b4c5c73b",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -2526,7 +2779,7 @@
       "promotion": {
         "spec": "dc08e0df3331",
         "source": "fb44e7730d794cc4",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -2627,7 +2880,7 @@
       "promotion": {
         "spec": "594304b3020c",
         "source": "3cfacd5aeece3c7a",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -2728,7 +2981,7 @@
       "promotion": {
         "spec": "efdda98c555e",
         "source": "48524527b8a65b3d",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -2827,7 +3080,7 @@
       "promotion": {
         "spec": "b6adba815b69",
         "source": "8e01d359fbeb0bce",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 12,
         "attested": 0,
         "units": 12
@@ -2921,7 +3174,7 @@
       "promotion": {
         "spec": "b3f13053f440",
         "source": "35b97a8b06d8d399",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 16,
         "attested": 1,
         "units": 17
@@ -3023,7 +3276,7 @@
       "promotion": {
         "spec": "7b79f441a1fe",
         "source": "d955f577fb18256d",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 13,
         "attested": 2,
         "units": 15
@@ -3130,7 +3383,7 @@
       "promotion": {
         "spec": "85fc42b2505e",
         "source": "f56a581b24f366ff",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -3237,7 +3490,7 @@
       "promotion": {
         "spec": "cdf688132cb5",
         "source": "13832355ec662f05",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -3355,7 +3608,7 @@
       "promotion": {
         "spec": "4300a4d31968",
         "source": "5584faf83c95e68c",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 10,
         "units": 34
@@ -3463,7 +3716,7 @@
       "promotion": {
         "spec": "4349a67ad2a8",
         "source": "8b2dd54e0423e97e",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 5,
         "units": 24
@@ -3560,7 +3813,7 @@
       "promotion": {
         "spec": "88951008b00d",
         "source": "ea448f328c7d5108",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -3654,7 +3907,7 @@
       "promotion": {
         "spec": "022251e312e0",
         "source": "2d60ccd6e7859061",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3749,7 +4002,7 @@
       "promotion": {
         "spec": "74538d51cd5a",
         "source": "9e6871b1fb516900",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -3855,10 +4108,120 @@
       "promotion": {
         "spec": "2a5fe86a854b",
         "source": "1b02a2906065565c",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 1,
         "units": 19
+      }
+    },
+    {
+      "dir": "match3-classic",
+      "id": "match3-classic",
+      "version": "1.0.0",
+      "title": "Match-3 Classic",
+      "category": "game",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "经典三消完整循环：相邻交换、三连判定、消除下落补牌、连锁计分、步数目标、胜负与重开，动画队列 + 状态锁 + 确定性种子（G2）",
+        "points": [
+          "纯逻辑核心（种子 RNG / 匹配扫描 / 重力 / 连锁结算）与渲染层（canvas → Texture2D.uploadData）分离；动画只影响绘制插值，逻辑即时结算",
+          "连锁夹具设计：斜向排布（row3[1]=2 + old row4[2..3]=2,2）在重力落下后才成三连——不依赖补牌 RNG 运气即可证明连锁计分",
+          "动画队列非空期间一切交换被拒（lockRejects 计数）= 「动画中重复输入」合同",
+          "无效交换回滚不消耗步数（网格逐格快照对比）；胜/负/重开均为可达成的真实终局（TARGET=250 以种子行为标定：单步连锁 90 < 250 ≤ 夹具连锁 270）"
+        ]
+      },
+      "effect": {
+        "functional": "自动演示八相位（全部页内断言，失败即 throw → no-runtime-error 红）：M1 种子 42 初始盘面无预置匹配且满盘；M8 动画锁——有效交换后立即注入第二次交换被拒（lockRejects=1）；M2 有效交换 score>0（实测 90，chain=2）、步数-1、补牌后满盘；M3 无效交换回滚——网格快照逐格一致且步数不消耗（invalidRollbacks=1）；M4 纯重力连锁夹具：竖交换 (2,3)↔(3,3) → chain≥2、cleared≥6、score≥90（实测 chain=3 cleared=12 score=270，第三波来自同种子补牌、确定但不可手算故用下界）；M5 score≥250 → WON；M6 重开全复位；M7 败局夹具（movesLeft=1 注入，如实标注）→ 单步 90 分未达标 → OVER。之后进入交互模式（种子 777）：点击选格、相邻格交换、双击同格=提示走法（验证器中心双击序列由此获得确定性结果）。__lifecycle()：release=Board 节点/材质/纹理销毁，reacquire=同路径重建+重开局。",
+        "visual": "深色背景上 8×8 彩色宝石棋盘（六色、canvas 动态纹理单 quad）；消除白闪、落下补牌逐波播放；选中格白色呼吸高亮（空闲期持续 frame-diff）；左上角 DOM 面板显示 state/score/moves/chain/locks/rollbacks"
+      },
+      "api": {
+        "primary": [
+          "Texture2D.reset",
+          "Material.setProperty",
+          "Component"
+        ],
+        "supporting": [
+          "input",
+          "utils.createMesh"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "Texture2D",
+          "Texture2D.reset",
+          "input",
+          "Input",
+          "isValid"
+        ]
+      },
+      "capabilities": [
+        "game"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Board",
+            "Driver"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心两次（第一次选中格，第二次同格触发提示走法）",
+            "expected": "hint-swap 执行一个确定性有效交换：消除+计分+下落补牌（画面变化 frame-diff 可测）；若在动画期注入则 lockRejects+1——两者均为逻辑层已处理的确定性结果"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "65d50be7e3b3",
+        "source": "55baa1fcdc066750",
+        "candidate": "45df203a8e6eab03",
+        "verified": 21,
+        "attested": 1,
+        "units": 22
       }
     },
     {
@@ -3946,7 +4309,7 @@
       "promotion": {
         "spec": "d2f18d65ff5f",
         "source": "64a5e60f317d77b8",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -4040,7 +4403,7 @@
       "promotion": {
         "spec": "40bc8fbce245",
         "source": "e4c05344db3660e6",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -4146,7 +4509,7 @@
       "promotion": {
         "spec": "c255ef30b2eb",
         "source": "cd4656ed270c0523",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -4253,7 +4616,7 @@
       "promotion": {
         "spec": "0d20bc534df9",
         "source": "44a5801682f683d0",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -4355,7 +4718,7 @@
       "promotion": {
         "spec": "bfab06f0ff3f",
         "source": "fe359d18cc0d7555",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -4446,7 +4809,7 @@
       "promotion": {
         "spec": "d56c8ac8b8fc",
         "source": "bf83768a54c7e5fb",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 15,
         "attested": 1,
         "units": 16
@@ -4555,7 +4918,7 @@
       "promotion": {
         "spec": "0e7e74e2f326",
         "source": "d7152434b9249d56",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 1,
         "units": 25
@@ -4676,7 +5039,7 @@
       "promotion": {
         "spec": "cc319d9b11e2",
         "source": "01bed96c62bfcf77",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 18,
         "units": 36
@@ -4780,7 +5143,7 @@
       "promotion": {
         "spec": "ae9c07f77998",
         "source": "e3ba204ed533d86e",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 3,
         "units": 21
@@ -4885,7 +5248,7 @@
       "promotion": {
         "spec": "aafe69a02c32",
         "source": "9d719e65fbeadd23",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -4994,7 +5357,7 @@
       "promotion": {
         "spec": "5e81f30bbb9f",
         "source": "b7b95b1c8eaec459",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 3,
         "units": 25
@@ -5107,7 +5470,7 @@
       "promotion": {
         "spec": "15b59a3ace15",
         "source": "c25572b73f1dfa6f",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 7,
         "units": 29
@@ -5211,7 +5574,7 @@
       "promotion": {
         "spec": "b410b1e6fdbc",
         "source": "8f29c67d016211b9",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -5312,7 +5675,7 @@
       "promotion": {
         "spec": "15ea8c28d8cc",
         "source": "c801c43045003650",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -5418,7 +5781,7 @@
       "promotion": {
         "spec": "79ca3bc7eb9b",
         "source": "391fa035023a9afd",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 2,
         "units": 22
@@ -5533,7 +5896,7 @@
       "promotion": {
         "spec": "980e63beebc8",
         "source": "f6ef23d166ab7031",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 29,
         "attested": 1,
         "units": 30
@@ -5645,7 +6008,7 @@
       "promotion": {
         "spec": "1df9e58ad5fb",
         "source": "59a2ec9e69b7edbe",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 10,
         "units": 28
@@ -5759,7 +6122,7 @@
       "promotion": {
         "spec": "0886380084ce",
         "source": "4405584e7b2cb2af",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 9,
         "units": 30
@@ -5866,7 +6229,7 @@
       "promotion": {
         "spec": "9a995206294c",
         "source": "57e231ef18363041",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -5982,7 +6345,7 @@
       "promotion": {
         "spec": "765b3c355604",
         "source": "3dc3f11afa351fd4",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 30,
         "attested": 1,
         "units": 31
@@ -6090,7 +6453,7 @@
       "promotion": {
         "spec": "30cd3432b226",
         "source": "ded09d0badcdbecf",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 1,
         "units": 24
@@ -6204,7 +6567,7 @@
       "promotion": {
         "spec": "8538bc02ff92",
         "source": "a2f8f1f977306aef",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 7,
         "units": 29
@@ -6310,7 +6673,7 @@
       "promotion": {
         "spec": "4f94c982f324",
         "source": "da946bde8e82102d",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -6417,7 +6780,7 @@
       "promotion": {
         "spec": "da91fe8a5d12",
         "source": "071dbd5ab7405106",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 5,
         "units": 23
@@ -6526,7 +6889,7 @@
       "promotion": {
         "spec": "3ec5122f5df2",
         "source": "d700b7a9019f7fc3",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 1,
         "units": 25
@@ -6642,7 +7005,7 @@
       "promotion": {
         "spec": "9b9229625a6a",
         "source": "47cc94cdbe68a5b8",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 26,
         "attested": 6,
         "units": 32
@@ -6743,7 +7106,7 @@
       "promotion": {
         "spec": "5ecc19862d96",
         "source": "c15c81b1aa94b148",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -6850,7 +7213,7 @@
       "promotion": {
         "spec": "6267c996478b",
         "source": "81a79675af0f54e5",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 5,
         "units": 23
@@ -6968,7 +7331,7 @@
       "promotion": {
         "spec": "b9eb6188e51c",
         "source": "f38296627e24982f",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 13,
         "units": 33
@@ -7075,7 +7438,7 @@
       "promotion": {
         "spec": "acd43497454d",
         "source": "d7cf1bf97eb4aa21",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -7185,7 +7548,7 @@
       "promotion": {
         "spec": "0b7f1ca74490",
         "source": "ef6a20c12a68933a",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 6,
         "units": 26
@@ -7292,7 +7655,7 @@
       "promotion": {
         "spec": "44f895a74cd8",
         "source": "9ee5e79bfa483396",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -7406,7 +7769,7 @@
       "promotion": {
         "spec": "1a508076cd58",
         "source": "b0455f493a7594be",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 5,
         "units": 29
@@ -7511,7 +7874,7 @@
       "promotion": {
         "spec": "ef4282c21dc9",
         "source": "eedc77cb620f6e10",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 3,
         "units": 21
@@ -7623,7 +7986,7 @@
       "promotion": {
         "spec": "fd37a266a531",
         "source": "3308991d2530879c",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 6,
         "units": 28
@@ -7735,7 +8098,7 @@
       "promotion": {
         "spec": "b52658d59fc2",
         "source": "4d1345d46dc0f703",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 4,
         "units": 27
@@ -7835,7 +8198,7 @@
       "promotion": {
         "spec": "919b2a6a130c",
         "source": "28ba9a348d0fef57",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -7942,7 +8305,7 @@
       "promotion": {
         "spec": "ca25f13e157f",
         "source": "e697c76c11380faf",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -8056,7 +8419,7 @@
       "promotion": {
         "spec": "2b7256a84477",
         "source": "541528f944d401a1",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 5,
         "units": 29
@@ -8162,7 +8525,7 @@
       "promotion": {
         "spec": "52e643008c59",
         "source": "14660f9eb3b60b14",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 4,
         "units": 22
@@ -8277,7 +8640,7 @@
       "promotion": {
         "spec": "f83263724c2b",
         "source": "cff5d5862790b40c",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 8,
         "units": 30
@@ -8389,7 +8752,7 @@
       "promotion": {
         "spec": "c24adab817f0",
         "source": "b227fd7d7ee1f417",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 26,
         "attested": 1,
         "units": 27
@@ -8489,7 +8852,7 @@
       "promotion": {
         "spec": "40bc363a2237",
         "source": "9bfc189d5c442d68",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -8600,7 +8963,7 @@
       "promotion": {
         "spec": "a55519f8bfd6",
         "source": "c4a11088df12899f",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 25,
         "attested": 1,
         "units": 26
@@ -8707,7 +9070,7 @@
       "promotion": {
         "spec": "9b5aa37f7c26",
         "source": "68fd6513ff85aa61",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 5,
         "units": 23
@@ -8822,7 +9185,7 @@
       "promotion": {
         "spec": "70b17061f5cf",
         "source": "f339dfdf3d63407f",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 25,
         "attested": 5,
         "units": 30
@@ -8929,7 +9292,7 @@
       "promotion": {
         "spec": "df4938c181e1",
         "source": "fdaeebfb49cc3866",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -9024,7 +9387,7 @@
       "promotion": {
         "spec": "c3d9b8dd565b",
         "source": "fd61367663c2b0a1",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -9132,7 +9495,7 @@
       "promotion": {
         "spec": "1ea127b38887",
         "source": "14f81f5ce9df574a",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -9237,7 +9600,7 @@
       "promotion": {
         "spec": "f9c72b35b537",
         "source": "8f51ec189d1b8ee9",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -9332,7 +9695,7 @@
       "promotion": {
         "spec": "03cd6b3c1dff",
         "source": "ec1bfedbbea794d3",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -9428,7 +9791,7 @@
       "promotion": {
         "spec": "2702df7692e6",
         "source": "003d016d9bbdc124",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -9533,7 +9896,7 @@
       "promotion": {
         "spec": "ad95a2bb29ef",
         "source": "49bd0a5fe2290020",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -9628,7 +9991,7 @@
       "promotion": {
         "spec": "c0d64a28c555",
         "source": "cb85b55b88591609",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -9722,7 +10085,7 @@
       "promotion": {
         "spec": "4de78c63719b",
         "source": "abe4881c69f707f5",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -9831,7 +10194,7 @@
       "promotion": {
         "spec": "4ed62247324c",
         "source": "71dd47c248f8828f",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 3,
         "units": 25
@@ -9843,8 +10206,8 @@
       "version": "1.0.0",
       "title": "Model Character Interaction",
       "category": "gltf",
-      "status": "draft",
-      "specStatus": "draft",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
         "goal": "掌握同一 glTF 资产的双实例角色交互全链路：独立动画时钟、射线拾取选择、材质反馈隔离与单实例释放（G1/P04+P05）",
@@ -9965,6 +10328,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "b652b3f4754e",
+        "source": "072e1c3f3d8d5137",
+        "candidate": "45df203a8e6eab03",
+        "verified": 37,
+        "attested": 8,
+        "units": 45
       }
     },
     {
@@ -10055,7 +10426,7 @@
       "promotion": {
         "spec": "9c7cfcdb6c9f",
         "source": "957e34f8616eaf44",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -10165,7 +10536,7 @@
       "promotion": {
         "spec": "0cecb5ad294d",
         "source": "77c9a10235bb11d9",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -10270,7 +10641,7 @@
       "promotion": {
         "spec": "e2e75ca7a981",
         "source": "6a55c6207753a3bf",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -10388,7 +10759,7 @@
       "promotion": {
         "spec": "f43783a95c21",
         "source": "837b8e420e7a880a",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -10486,7 +10857,7 @@
       "promotion": {
         "spec": "72efe2cf6b66",
         "source": "fa2e5f388b65f479",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -10591,7 +10962,7 @@
       "promotion": {
         "spec": "7f5f5dbec32d",
         "source": "9fbd2f186e736626",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -10687,7 +11058,7 @@
       "promotion": {
         "spec": "9c52ef0d0bc2",
         "source": "c3ab3e755cd3f539",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -10788,7 +11159,7 @@
       "promotion": {
         "spec": "2ddf78549071",
         "source": "fb880f39f3a2687b",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -10935,7 +11306,7 @@
       "promotion": {
         "spec": "d8a9dd22b4c3",
         "source": "e87330f4b1d52ba0",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 12,
         "units": 34
@@ -11066,7 +11437,7 @@
       "promotion": {
         "spec": "a74c759a85f8",
         "source": "3f9207b6bac28f9b",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 32,
         "attested": 4,
         "units": 36
@@ -11205,7 +11576,7 @@
       "promotion": {
         "spec": "4ee47e258bda",
         "source": "49467e2333a8f117",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 27,
         "attested": 6,
         "units": 33
@@ -11389,7 +11760,7 @@
       "promotion": {
         "spec": "885b85eafe40",
         "source": "d2497f8e98052058",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 35,
         "attested": 34,
         "units": 69
@@ -11514,10 +11885,145 @@
       "promotion": {
         "spec": "31c2e8f2d958",
         "source": "10386b846b99736a",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 25,
         "attested": 6,
         "units": 31
+      }
+    },
+    {
+      "dir": "physics-interaction",
+      "id": "physics-interaction",
+      "version": "1.0.0",
+      "title": "Physics Interaction Chain",
+      "category": "physics",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握输入驱动的 3D 物理交互全链路：cannon 后端身份自证、手动步进确定性、碰撞事件对、射线命中与可复现重置（G1/P06+P07）",
+        "points": [
+          "createAirApp({physics:'cannon'}) 交付期后端切换；「真模拟位移>0」断言即后端身份证据（builtin 下恒不动 → 判红）",
+          "physics.enable=false 冻结帧驱动 + 官方 postUpdate 同序手动步进（syncSceneToPhysics → step → emitEvents → syncAfterEvents）= 逐位可复现",
+          "onCollisionEnter 事件对以 Set 去重计数：接触对集合 {Ground|Tower1, Tower1|Tower2, Tower2|Tower3} 与 exit=0 是确定性合同",
+          "重置 = 销毁重建同参箱塔 → 同步数重跑 → 静止高度逐位一致；点击 → screenPointToRay → PhysicsSystem.raycast 命中名 → 投球 → 新增含球接触对"
+        ]
+      },
+      "effect": {
+        "functional": "R1：冻结后手动步进 120+30 步，箱塔堆稳（restY=[0.5,1.5,2.5] 逐位稳定），接触对集合恰为 3 对、exit=0，Tower1 位移>0（后端身份）。R2：销毁箱塔（isValid 全 false）→ 同参重建 → 同步数重跑 → restY 与 R1 逐位一致、接触对复现（重置可复现）。交互点击：event.getLocation → camera.screenPointToRay → physics.raycast 记录首个命中刚体名（results≥1）→ 生成 StrikeBall(v=-7x) → 步进 45 步 → 新增含球接触对 ≥1 → UI 状态行更新。__lifecycle()：release=销毁球/塔节点+mesh/material 资产链，reacquire=同路径重建箱塔。任一 pcheck 失败 → throw → no-runtime-error 红。",
+        "visual": "深色背景下 3 层木色箱塔落在绿色地面上；左侧灰色旋转环持续转动（frame-diff 护栏）；点击后红色投球从右侧飞入撞塔；顶部引擎 Label 状态行实时显示 phase/pairs/clicks/balls/hit"
+      },
+      "api": {
+        "primary": [
+          "physics.PhysicsSystem.step",
+          "physics.PhysicsSystem.raycast",
+          "Camera.screenPointToRay"
+        ],
+        "supporting": [
+          "physics.RigidBody",
+          "physics.BoxCollider",
+          "input"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.addComponent",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Node.destroy",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "Camera.screenPointToRay",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "primitives.sphere",
+          "primitives.torus",
+          "Ray",
+          "physics.PhysicsSystem.raycast",
+          "physics.PhysicsSystem.syncSceneToPhysics",
+          "physics.PhysicsSystem.step",
+          "physics.PhysicsSystem.emitEvents",
+          "physics.RigidBody",
+          "physics.BoxCollider",
+          "physics.SphereCollider",
+          "input",
+          "Input",
+          "EventTouch.getLocation",
+          "isValid",
+          "Label",
+          "Canvas",
+          "UITransform",
+          "Widget",
+          "view",
+          "ResolutionPolicy"
+        ]
+      },
+      "capabilities": [
+        "physics"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Ground",
+            "Tower1",
+            "Tower2",
+            "Tower3",
+            "SpinRing",
+            "Canvas",
+            "UICamera",
+            "StatusLabel"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心一次",
+            "expected": "screenPointToRay → PhysicsSystem.raycast 命中 ≥1 个刚体（首个命中名入状态行）→ 生成 StrikeBall 水平撞塔 → 手动步进 45 步 → 新增含球接触对 ≥1（事件对入探针）→ UI 状态行更新，frame-diff 可测"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "48666e065489",
+        "source": "eb16c723bbabce9c",
+        "candidate": "45df203a8e6eab03",
+        "verified": 34,
+        "attested": 7,
+        "units": 41
       }
     },
     {
@@ -11620,7 +12126,7 @@
       "promotion": {
         "spec": "e7794dfb9762",
         "source": "baad02840d35e518",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -11724,7 +12230,7 @@
       "promotion": {
         "spec": "5a6b7032fd08",
         "source": "52e7113be5b77e97",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -11829,10 +12335,161 @@
       "promotion": {
         "spec": "b1e8e7db4f9d",
         "source": "85449a8406472936",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 0,
         "units": 22
+      }
+    },
+    {
+      "dir": "product-viewer",
+      "id": "product-viewer",
+      "version": "1.0.0",
+      "title": "Interactive 3D Product Viewer",
+      "category": "application",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "交互式 3D 产品查看器完整应用链路：加载/失败重试、旋转缩放、部件选中、材质切换、信息面板、截图、模型替换、资源释放、尺寸响应与诊断入口（G2 应用场景）",
+        "points": [
+          "失败重试：损坏 glb fixture → parseAsync 拒绝如实入面板 → 重试真实资产成功（GLTFAsset 面记录 meshes/animations）",
+          "拾取链：TOUCH_END 单击 → screenPointToRay → geometry.intersect.rayAABB 双部件最近命中；拖拽=轨道旋转、滚轮=缩放（dist clamp 2..12）",
+          "材质切换：variant 轮换（glTF 原材质恢复 ↔ 三色 standard），选中高亮与 variant 状态解耦",
+          "GLTFInstance.dispose() 连带销毁无引用资产（本例实测：swap 后 boxAsset 失效，getter 需 isValid 守卫——所有权语义如实记录）",
+          "DOM 按钮（截图/换材质/更换模型）与验证器 buttonText 步骤同一 handler；程序化 .click() 与真实点击等价路径"
+        ]
+      },
+      "effect": {
+        "functional": "时间线六相位（页内断言，失败即 throw → no-runtime-error 红）：T1 加载损坏 fixture corrupt-product.glb → parseAsync 拒绝、消息入面板（error 态；Gallery 发布面 no-http-errors 契约：失败路径以内容损坏的自有 fixture 承担，非 404）；T2 重试 BoxTextured.glb → GLTFAsset.meshes≥1 → frameObject 取景 → loaded；T3 SimpleSkin 副件（蒙皮+动画 clips≥1 播放）；T4 材质 variant 轮换 4 次回到原材质（materialSwaps 对账）；T5 合成 resize 事件 → handler 计数 + canvas/camera.rect 尺寸读回（框架 Camera 无 aspect 导出面，GAP-C2 同族，如实记录不冒充）；T6 DOM 按钮链——截图（toDataURL PNG ≥1000B 断言）、换材质、更换模型（旧实例 dispose+settle → isValid=false，新实例就位，modelSwaps=1）。交互：画布中心单击 → rayAABB 命中 ProductMain（选中高亮）；拖拽 → 轨道旋转；滚轮 → 缩放；空闲自转保证持续 frame-diff。__lifecycle()：release=双实例 dispose+变体材质/蒙皮基础材质 destroy+双资产 destroy+输入退订，reacquire=同一 loadProduct 路径重建（含 BoxTextured 资产重取——dispose 连带销毁后的诚实归还）。诊断入口：window.__airApp 绑定 + 面板节点计数。",
+        "visual": "深色展台场景：中央主产品（BoxTextured 纹理盒 / 更换后为蒙皮动画件）缓慢自转，右侧 SimpleSkin 蒙皮副件持续动画；地面灰蓝平面；左上信息面板（main/selected/swaps/shots/resize/wheel/drags/nodes），左下状态行，右上三枚 DOM 按钮（截图/换材质/更换模型）"
+      },
+      "api": {
+        "primary": [
+          "GLTFLoader.parseAsync",
+          "Camera.screenPointToRay",
+          "frameObject"
+        ],
+        "supporting": [
+          "GLTFAsset.instantiate",
+          "input",
+          "isValid"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Node.walk",
+          "Node.getComponent",
+          "Node.getComponentInChildren",
+          "Component",
+          "MeshRenderer",
+          "Renderer.setSharedMaterial",
+          "Camera",
+          "Camera.screenPointToRay",
+          "DirectionalLight",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "GLTFLoader",
+          "GLTFLoader.parseAsync",
+          "GLTFAsset.instantiate",
+          "GLTFAsset.destroy",
+          "GLTFAsset.meshes",
+          "GLTFAsset.animations",
+          "Animation",
+          "Animation.play",
+          "AnimationClip",
+          "AnimationClip.wrapMode",
+          "frameObject",
+          "Ray",
+          "AABB",
+          "intersect",
+          "EventTouch.getLocation",
+          "input",
+          "Input",
+          "isValid"
+        ]
+      },
+      "capabilities": [
+        "gltf",
+        "animation"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "Ground",
+            "ProductMain",
+            "ProductSide",
+            "Spinner"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心一次（frameObject 已把主产品置于十字线）",
+            "expected": "screenPointToRay → rayAABB 命中 ProductMain → 选中高亮（橙色 variant 材质）+ 面板 selected 更新（frame-diff）"
+          },
+          {
+            "buttonText": "截图",
+            "action": "真实点击 DOM 按钮「截图」",
+            "expected": "canvas.toDataURL('image/png') 长度 ≥1000B 断言入探针；screenshots 计数 +1"
+          },
+          {
+            "buttonText": "换材质",
+            "action": "真实点击 DOM 按钮「换材质」",
+            "expected": "variant 轮换（原材质→橙→蓝→白 循环）；materialSwaps +1；主产品表面色相变化（frame-diff）"
+          },
+          {
+            "buttonText": "更换模型",
+            "action": "真实点击 DOM 按钮「更换模型」",
+            "expected": "旧主产品实例 dispose → settle 后 isValid=false；BoxTextured↔SimpleSkin 互换就位（modelSwaps +1）；画面几何变化（frame-diff）"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "asset-loaded",
+          "animation-playing",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "1b424deb41b9",
+        "source": "a01534e089e675e9",
+        "candidate": "45df203a8e6eab03",
+        "verified": 36,
+        "attested": 5,
+        "units": 41
       }
     },
     {
@@ -11928,7 +12585,7 @@
       "promotion": {
         "spec": "66d6546c7a37",
         "source": "afc5dc805c737985",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 2,
         "units": 23
@@ -12018,7 +12675,7 @@
       "promotion": {
         "spec": "86059190543b",
         "source": "9c24eade6728d6e4",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 17,
         "attested": 1,
         "units": 18
@@ -12115,7 +12772,7 @@
       "promotion": {
         "spec": "deb988a9d823",
         "source": "20070fba85c22df4",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 17,
         "attested": 3,
         "units": 20
@@ -12207,7 +12864,7 @@
       "promotion": {
         "spec": "2be94727b2c1",
         "source": "ad473b671a41e764",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -12302,10 +12959,133 @@
       "promotion": {
         "spec": "495816944ba8",
         "source": "b164c0231173bf02",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 17,
         "attested": 2,
         "units": 19
+      }
+    },
+    {
+      "dir": "render-composite",
+      "id": "render-composite",
+      "version": "1.0.0",
+      "title": "Render Composite Chain",
+      "category": "rendering",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握渲染组合链路：相机/灯光结构 → ambient 环境光可见路径 → 材质/纹理切换 → RenderTexture 捕获上屏 → RT resize，每级以像素断言证明「画面真实变化」（G1/P09+P19）",
+        "points": [
+          "SceneGlobals ambient 原位变更（skyColorHDR.set）是当期唯一像素可观察的全局光照路径（GAP-L1 登记了主光/点光属性同步缺口，本例不冒充）",
+          "运行期增删 PointLight 的结构断言：Light 组件计数 +1 → 组件 destroy + 节点 destroy → 回落且 isValid=false",
+          "camera.targetTexture = RenderTexture 捕获 → builtin-unlit(USE_TEXTURE) 贴 quad 上屏 → rt.reset resize 后重捕获仍上屏",
+          "builtin-unlit 纹理宏是 USE_TEXTURE（USE_ALBEDO_MAP 会被静默忽略渲染成纯色——本例曾实测踩坑并修正）"
+        ]
+      },
+      "effect": {
+        "functional": "P1 基线中心像素蓝色主体（区别于清屏色）。P2a ambient.skyColorHDR 绿偏置 → 像素色相变化 ≥8（断言）→ 恢复（亮度回基线 ±15%）。P2b 运行期 addComponent(PointLight) → Light 计数 2→3 → tmpLight.destroy()+节点 destroy → 计数回落、isValid=false（结构断言）。P2c keyLight.illuminance 1.2→8 的视觉差如实记录入探针（当期 ForwardPipeline 光属性同步缺口 GAP-L1，预期 0，不冒充绿灯）。P3 主体材质换 builtin-unlit+USE_TEXTURE+程序化纹理 → 中心像素变黄（断言 r>170,g>140,b<150）。P4 camera.targetTexture=rt(256) 捕获 → RT 贴 quad → quad 区域非背景像素 ≥50 且暖色快照内容像素 ≥10（断言）。P5 rt.reset(128) → 重捕获 → 内容仍上屏 + width/height 读回=128（断言）。交互点击 → 主体材质蓝↔黄切换 + 点光源开关（frame-diff）。__lifecycle()：release=RTQuad/RT/纹理材质全链销毁（主体先恢复基础材质），reacquire=同一 captureAndShowRT 路径重建。Camera.worldToScreen 运行期输出（当期返回零向量）如实记录入探针。任一 pcheck 失败 → throw → no-runtime-error 红。",
+        "visual": "深蓝背景中蓝色立方体缓慢自转（Spinner，采样窗暂停）；P3 后变黄色纹理盒；左上方出现显示 RT 快照的 quad；点击后主体在蓝色 standard 与黄色纹理 unlit 之间切换、点光源开关；左上角 DOM 面板显示 light/RT 状态"
+      },
+      "api": {
+        "primary": [
+          "RenderTexture",
+          "Camera.worldToScreen",
+          "Material.setProperty"
+        ],
+        "supporting": [
+          "PointLight",
+          "SceneGlobals.ambient",
+          "Light.destroy"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Node.destroy",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "Camera.worldToScreen",
+          "DirectionalLight",
+          "PointLight",
+          "Light.destroy",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.box",
+          "primitives.plane",
+          "Texture2D",
+          "ImageAsset",
+          "RenderTexture",
+          "RenderTexture.reset",
+          "SceneGlobals.ambient",
+          "input",
+          "Input",
+          "director",
+          "isValid"
+        ]
+      },
+      "capabilities": [
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Main Light",
+            "SubjectBox",
+            "PointLightNode",
+            "RTQuad"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心一次",
+            "expected": "主体材质在 builtin-standard 蓝与 builtin-unlit 黄纹理间切换 + PointLightNode.active 翻转（材质切换保证 frame-diff 与 unlit 不受光照影响的可见性）；首次点击断言材质引用真实切换"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "c2e15bda84a8",
+        "source": "0291baa900fee704",
+        "candidate": "45df203a8e6eab03",
+        "verified": 28,
+        "attested": 4,
+        "units": 32
       }
     },
     {
@@ -12395,7 +13175,7 @@
       "promotion": {
         "spec": "928e831458d2",
         "source": "11c2af5dc6de1137",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -12500,7 +13280,7 @@
       "promotion": {
         "spec": "a6666038cab0",
         "source": "4af9775c86397ec9",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -12613,7 +13393,7 @@
       "promotion": {
         "spec": "aa6186546441",
         "source": "f8f9a871fe9a0411",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 18,
         "attested": 11,
         "units": 29
@@ -12720,7 +13500,7 @@
       "promotion": {
         "spec": "6870f7b786e9",
         "source": "febfab14631514d6",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 2,
         "units": 22
@@ -12732,8 +13512,8 @@
       "version": "1.0.0",
       "title": "Scene Switch & Re-entry",
       "category": "runtime",
-      "status": "draft",
-      "specStatus": "draft",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
         "goal": "掌握动态场景切换与复入的完整生命周期：app.run(scene) 的销毁语义、组件回调闭环、输入监听退订与全新复入（G1/P01）",
@@ -12836,6 +13616,249 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "08b0bdf40ebd",
+        "source": "306dd1eed412c7ec",
+        "candidate": "45df203a8e6eab03",
+        "verified": 29,
+        "attested": 3,
+        "units": 32
+      }
+    },
+    {
+      "dir": "shader-custom-gradient",
+      "id": "shader-custom-gradient",
+      "version": "1.0.0",
+      "title": "Custom Shader: Animated Gradient",
+      "category": "shader",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "掌握用户自写 GLSL 的最小完整链路：手写 effect（三 GLSL 变体）→ EffectAsset 注册 → Material 绑定 → uniform 运行期更新 → 像素级验证（G4 正式交付 · 一级）",
+        "points": [
+          "编译后 effect JSON 结构：techniques/passes（program、properties 默认值）+ shaders（builtins set/binding、attributes、Constants 块成员）——与引擎内建 fixtures 同构",
+          "三 GLSL 变体纪律：WebGL2→glsl3、WebGL1→glsl1（UBO 展开为独立 uniform、texture()→texture2D、输出→gl_FragColor）；运行时源码必须自包含（无 chunk include）",
+          "注册时机：EffectAsset.onLoaded / Material.initialize 必须在 createAirApp 之后（GAP-B1）",
+          "uniform 更新语义：vec4（setProperty+Color）即时改色；float timeScale=0 冻结时间动画（逐位相同）；cc_time 由引擎驱动无需逐帧 setProperty"
+        ]
+      },
+      "effect": {
+        "functional": "正交相机 + 居中平面；用户片元按 v_uv.x 在 colorA↔colorB 水平渐变，叠加 cc_time×timeScale 正弦明度波动。时间线断言：注册后 EffectAsset.get 命中；左 30% 采样点偏 colorA、右 70% 偏 colorB（色相相反）；setProperty('colorA',绿) → 左采样点变绿系；timeScale>0 时中点两帧差 ≥2；timeScale=0 → 两帧逐位相同（冻结）；恢复 1.5。交互点击 → colorB 蓝↔黄切换。__lifecycle()：release=材质销毁+EffectAsset.remove/destroy（get→null），reacquire=同一 buildEffect/buildMaterial 路径重建并上屏。任一 pcheck 失败 → throw → no-runtime-error 红。",
+        "visual": "深色背景上横贯画面的水平渐变色带（初始红→蓝，colorA 更新后绿→蓝），整体明度随时间缓慢脉动；点击后右端色相在蓝/黄间切换；左上角面板显示后端与 colorB 状态"
+      },
+      "api": {
+        "primary": [
+          "EffectAsset.onLoaded",
+          "Material.initialize",
+          "Material.setProperty"
+        ],
+        "supporting": [
+          "EffectAsset.get",
+          "EffectAsset.remove",
+          "utils.createMesh"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "MeshRenderer",
+          "Camera",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "EffectAsset",
+          "EffectAsset.onLoaded",
+          "EffectAsset.get",
+          "EffectAsset.remove",
+          "EffectAsset.destroy",
+          "EffectAsset.shaders",
+          "input",
+          "Input",
+          "director",
+          "isValid"
+        ]
+      },
+      "capabilities": [
+        "shader",
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "GradientQuad"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布任意处一次",
+            "expected": "colorB 在蓝(64,114,230)与黄(240,200,40)间切换 → 画面右半色相突变（frame-diff 可测）；面板文本同步"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "bca00e9b5ea0",
+        "source": "f286bd701c0db7a0",
+        "candidate": "45df203a8e6eab03",
+        "verified": 23,
+        "attested": 3,
+        "units": 26
+      }
+    },
+    {
+      "dir": "shader-dissolve",
+      "id": "shader-dissolve",
+      "version": "1.0.0",
+      "title": "Custom Shader: Texture Dissolve",
+      "category": "shader",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "在一级示例（shader-custom-gradient）之上掌握用户 Shader 的贴图采样、逐帧 uniform 动画与交互式效果切换：sampler2D 绑定、discard 溶解、边缘发光（G4 正式交付 · 二级）",
+        "points": [
+          "effect JSON 的 samplerTextures 声明（set=1 MATERIAL、binding 顺延 Constants 块）+ properties 的纹理默认值（'grey'）与 setProperty('mainTexture', Texture2D) 运行期绑定",
+          "片元内 texture2D/texture 采样三变体写法（glsl1 用 texture2D，glsl3/4 用 texture）",
+          "溶解算法：cell hash 噪声 vs threshold uniform → discard；边缘带 [threshold, threshold+0.08) 以 edgeColor 发光；threshold=0 时边缘带必须关闭（完整贴图态）",
+          "逐帧 uniform 更新：Component.update 内 setProperty('threshold', …) 驱动循环溶解动画"
+        ]
+      },
+      "effect": {
+        "functional": "正交相机 + 居中平面贴 8×8 程序化棋盘纹理（青/橙）。时间线断言：T1 threshold=0 → 相邻采样点 (0.30,0.56)/(0.45,0.56) 为棋盘互补色（青↔橙精确值），证明 sampler 绑定与 UV 正确；T2 threshold=0.99 → 采样点回落清屏色 (16,18,24)±12（discard 生效）；T3 threshold=0.5 → 中心区域品红边缘像素 ≥30（实测 12877）；T4 动画 threshold 循环 [0,0.92) → 中心区域 300ms 帧差变化像素 ≥50（实测 23111）。交互点击 → edgeColor 品红↔青柠切换。__lifecycle()：release=material/texture/effect 全链销毁+EffectAsset.remove，reacquire=同一路径重建（重注册+重绑贴图+动画恢复）。EffectAsset.validate()===true 断言注册面完整。任一 pcheck 失败 → throw → no-runtime-error 红。",
+        "visual": "深色背景上青橙棋盘平面自左下向右上循环溶解（黑洞状 discard 单元 + 品红发光边缘带），永不完全消失（threshold<0.92）；点击后边缘带在品红/青柠间切换；左上角面板显示实时 threshold"
+      },
+      "api": {
+        "primary": [
+          "EffectAsset.onLoaded",
+          "Material.setProperty",
+          "Texture2D"
+        ],
+        "supporting": [
+          "EffectAsset.validate",
+          "Component",
+          "ImageAsset"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "Texture2D",
+          "Texture2D.destroy",
+          "ImageAsset",
+          "EffectAsset",
+          "EffectAsset.onLoaded",
+          "EffectAsset.get",
+          "EffectAsset.remove",
+          "EffectAsset.destroy",
+          "EffectAsset.validate",
+          "EffectAsset.shaders",
+          "input",
+          "Input",
+          "director",
+          "isValid"
+        ]
+      },
+      "capabilities": [
+        "shader",
+        "rendering"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "DissolveQuad"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布任意处一次",
+            "expected": "edgeColor 在品红(255,40,200)与青柠(180,255,60)间切换 → 溶解边缘带色相突变（frame-diff 可测）；threshold 跳回半溶解；面板文本同步"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "2de6e0a943a9",
+        "source": "abcc81bb9e885254",
+        "candidate": "45df203a8e6eab03",
+        "verified": 28,
+        "attested": 3,
+        "units": 31
       }
     },
     {
@@ -12927,7 +13950,7 @@
       "promotion": {
         "spec": "e5ceb0171281",
         "source": "cf1a4e3b115fd499",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -13015,7 +14038,7 @@
       "promotion": {
         "spec": "509d0ba585c2",
         "source": "84714e6e975fbc32",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 8,
         "attested": 1,
         "units": 9
@@ -13119,9 +14142,240 @@
       "promotion": {
         "spec": "cab0aa290350",
         "source": "63e4502a895fc0fa",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 1,
+        "units": 23
+      }
+    },
+    {
+      "dir": "tank-battle",
+      "id": "tank-battle",
+      "version": "1.0.0",
+      "title": "Tank Battle",
+      "category": "game",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "经典坦克大战完整循环：玩家移动/射击、障碍与敌人、命中/受伤、关卡胜负、重开；明确的网格碰撞（非物理后端）、弹丸对象池、敌人状态机、音效与资源回收（G2）",
+        "points": [
+          "cell 级网格碰撞如实标注：坦克四角采样格判定、弹丸按所在格判砖/钢/坦克——不冒称物理碰撞",
+          "弹丸对象池：acquire/release 计数闭合（shotsFired 与 bulletsSpent 对账），砖毁/钢挡/出界三路径全部回池",
+          "同时命中：同一步注入两发 → 命中先收集后统一结算（hp 一次扣减全部命中），无重复击杀",
+          "固定步长手动步进（演示）与累加器实时驱动（交互）共用同一 step() 入口——逐位可复现",
+          "音效走 audio-basic 实证链：assetManager.loadRemote(回调式) → AudioClip.getDuration → 手势内 AudioSource.play"
+        ]
+      },
+      "effect": {
+        "functional": "自动演示五相位（页内断言，失败即 throw → no-runtime-error 红）：D1 对象池——开火池激活 1 发，命中砖墙 → 砖格变空、弹丸回池、bricksDestroyed=1、bulletsSpent=1；D2 钢块阻挡——弹丸回池、钢格完好、blockedBySteel=1；D3 同时命中——同步双发双命中 hp2 敌人 → doubleHits=1、击毁、两发全回池；D4 负局——玩家静止于敌巡逻列，敌对齐开火 → playerHitsByEnemy≥1 → hp=0 → OVER → 重开后 hp=3/kills=0/池空/砖墙复原；D5 胜局——冻结巡逻（pause 只挡移动不挡射击，如实标注）+ 逐个双发齐射 → kills=2、玩家 hp≥1 → WON → 重开进入交互模式（方向键移动、空格/点击经公共 fire() 开火含冷却）。音频：tone.wav loadRemote → getDuration>0 断言；点击手势内 play()，状态如实记录。__lifecycle()：release=Board 节点/材质/纹理销毁+音频停止，reacquire=同路径重建+重开。",
+        "visual": "深色战场上砖墙（红棕十字纹）与钢块（灰色）构成对称地图；绿色玩家坦克（白色炮管指向 + hp 点）与两辆橙红敌方坦克沿固定路线巡逻、对齐时停驻射击；白色弹丸飞行；左上角 DOM 面板显示 state/hp/kills/shots/bricks/steel-blocks/pool-spent"
+      },
+      "api": {
+        "primary": [
+          "Texture2D.reset",
+          "AudioSource.play",
+          "Component"
+        ],
+        "supporting": [
+          "assetManager",
+          "input",
+          "AudioClip.getDuration"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "Texture2D",
+          "Texture2D.reset",
+          "input",
+          "Input",
+          "isValid",
+          "assetManager",
+          "AudioSource",
+          "AudioSource.play",
+          "AudioSource.stop",
+          "AudioClip.getDuration"
+        ]
+      },
+      "capabilities": [
+        "game",
+        "audio"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Board",
+            "Driver",
+            "Audio"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心一次（= 开火）",
+            "expected": "经公共 fire() 入口发射（shotsFired+1 或冷却拒绝二者其一，入探针）；弹丸飞行/命中使画面变化（frame-diff）；手势内 AudioSource.play() 触发，音频状态如实记录"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "material-property",
+          "asset-loaded",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "0e25bcd6468a",
+        "source": "87f478e933b48d40",
+        "candidate": "45df203a8e6eab03",
+        "verified": 25,
+        "attested": 2,
+        "units": 27
+      }
+    },
+    {
+      "dir": "tetris-classic",
+      "id": "tetris-classic",
+      "version": "1.0.0",
+      "title": "Tetris Classic",
+      "category": "game",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "经典游戏完整循环：方块生成/移动/旋转/落下锁定/消行计分/胜负判定/重开，网格状态与渲染完全分离，固定步长逻辑 + 确定性种子（G2）",
+        "points": [
+          "纯逻辑核心（TetrisGame：网格/种子袋/碰撞/消行/计分，零引擎依赖）与渲染层（BoardRenderer：网格→2D canvas→Texture2D.uploadData）分离",
+          "固定步长重力：累加器 + level 提速；暂停冻结累加器（steps 计数断言）",
+          "确定性自动演示：O 块脚本铺底双消 → WON（lines=2, score≥300）；中列堆叠 → 顶部溢出 GAME OVER；重开清零",
+          "键盘（方向键/空格/P/R）+ 点击旋转的真实输入链；墙踢（原位→±1→±2）与天花板/边界合法拒绝计数"
+        ]
+      },
+      "effect": {
+        "functional": "自动演示三连：Demo-LOSE（12×O 中列硬降 → 第 10 块后 spawn 冲突 → state=over）→ 像素方位断言（堆叠从画面底部生长，底部采样点非背景）；Demo-WIN（5×O 按列 [0,2,4,6,8] 硬降 → 底部两行铺满 → 双消 lines=2、score≥300、state=won、消行后 rows0-1 全空、底部采样回落背景）；边界断言（x=0 时 move(-1) 拒绝且 wallRejects+1）；Demo-PAUSE（暂停 450ms steps 冻结 → 恢复 700ms steps 推进）。之后进入交互模式（种子袋 777，重力 0.5s/步 × level 提速）。点击画布 = 旋转当前块（成功或被天花板/墙合法拒绝，二者必居其一）。__lifecycle()：release=Board 节点/材质/纹理销毁，reacquire=同路径重建+重开局。任一 pcheck 失败 → throw → no-runtime-error 红。",
+        "visual": "深色背景上竖版 10×20 棋盘（canvas 动态纹理，单 quad + builtin-unlit）；七种方块标准配色；顶部当前块随重力下落、锁定、消行闪烁式清空；左上角 DOM 面板实时显示 state/score/lines/level 与操作说明"
+      },
+      "api": {
+        "primary": [
+          "Texture2D.reset",
+          "Material.setProperty",
+          "Component"
+        ],
+        "supporting": [
+          "input",
+          "utils.createMesh"
+        ],
+        "claims": [
+          "createAirApp",
+          "Scene",
+          "Node",
+          "Node.addChild",
+          "Node.setPosition",
+          "Node.setRotationFromEuler",
+          "Component",
+          "MeshRenderer",
+          "Camera",
+          "Layers",
+          "math.Vec3",
+          "math.Color",
+          "Material",
+          "Material.initialize",
+          "Material.setProperty",
+          "utils.createMesh",
+          "primitives.plane",
+          "Texture2D",
+          "Texture2D.reset",
+          "input",
+          "Input",
+          "isValid",
+          "director"
+        ]
+      },
+      "capabilities": [
+        "game"
+      ],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Main Camera",
+            "Board",
+            "Driver"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": [
+          {
+            "action": "pointer click 画布中心一次",
+            "expected": "当前块旋转一格（墙踢序列 原位→±1→±2），或被天花板/墙合法拒绝（wallRejects+1）——二者必居其一入探针；棋盘纹理与重力动画保证 frame-diff 持续可测"
+          }
+        ]
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "material-property",
+          "no-runtime-error"
+        ],
+        "interaction": [
+          "frame-diff"
+        ],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "800230dc941c",
+        "source": "811e1f4bd9569977",
+        "candidate": "45df203a8e6eab03",
+        "verified": 21,
+        "attested": 2,
         "units": 23
       }
     },
@@ -13222,7 +14476,7 @@
       "promotion": {
         "spec": "801c006d64c7",
         "source": "f45c5c6dcce11ce3",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -13335,7 +14589,7 @@
       "promotion": {
         "spec": "65286e65b9e5",
         "source": "db02dcc4ffa25fa1",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 27,
         "attested": 1,
         "units": 28
@@ -13442,7 +14696,7 @@
       "promotion": {
         "spec": "9290667093b2",
         "source": "fe328285c4156589",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -13616,7 +14870,7 @@
       "promotion": {
         "spec": "48312c2aac4b",
         "source": "ecbcddc571bb3443",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 46,
         "attested": 2,
         "units": 48
@@ -13712,7 +14966,7 @@
       "promotion": {
         "spec": "e9fb4d97b277",
         "source": "b8bf300dc9d60f49",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -13803,7 +15057,7 @@
       "promotion": {
         "spec": "a2b66e97135b",
         "source": "97805d6ae4dda9e7",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 14,
         "attested": 1,
         "units": 15
@@ -13815,21 +15069,21 @@
       "version": "1.0.0",
       "title": "UI + Async Asset Loading",
       "category": "ui",
-      "status": "draft",
-      "specStatus": "draft",
+      "status": "stable",
+      "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
         "goal": "掌握 UI 控件驱动的异步资源加载全链路：成功/404 失败/重试/并发锁/销毁守卫/释放与重建（G1/P08）",
         "points": [
-          "loadAssetAsync 三形态：注册表 (path,type) 命中同一实例、URL JSON 回退、不存在 URL 的 404 拒绝（消息可读）",
+          "loadAssetAsync 三形态：注册表 (path,type) 命中同一实例、URL JSON 回退、注册表未命中的拒绝路径（消息可读）",
           "状态锁防快速重复点击：并发 3 个 requestLoad 只有 1 个真正启动（loadStarts/lockRejects 计数自证）",
           "销毁守卫：加载回调落地时 isValid(node) 拦截，悬空效果计数恒 0；Node.on/off 对称订阅退订",
           "释放链：assets.remove → releaseAsset → destroy，重建走与首次完全相同的实现路径（__lifecycle 合同）"
         ]
       },
       "effect": {
-        "functional": "确定性时间线：P1 注册表往返（loadAssetAsync('gen/panel',Texture2D) 命中 add 的同一实例并上屏）；P2 URL JSON 加载（assets/panel-manifest.json，name/items 字段核对）；P3 加载不存在 URL → 拒绝且消息含 404，UI 进入 failed 态；P4 同 URL 重试如实再败 → 注册表回退成功恢复 loaded；P5 三个并发 requestLoad 仅 1 启动 2 拒绝；P6 临时组件发起失败加载后立即销毁，回调被 isValid 守卫拦截（danglingEffects=0, guardedCallbacks=1）。交互点击 LoadButton → clicks+1 并触发带锁重载。__lifecycle()：release=注册表移除+releaseAsset+destroy（持有引用 invalid），reacquire=同路径重建（画面复原）。所有 404 均为故意失败路径且被 try/catch 捕获——不产生 window error/unhandledrejection；任一 pcheck 失败 → throw → no-runtime-error 红。",
-        "visual": "深蓝 UI 背景；中央蓝色 LoadButton（按下变橙）；上方 Preview 精灵从灰色占位变为绿色纹理；顶部状态行显示 phase/state，底部信息行显示 loads/locks/clicks/404s 实时计数"
+        "functional": "确定性时间线：P1 注册表往返（loadAssetAsync('gen/panel',Texture2D) 命中 add 的同一实例并上屏）；P2 URL JSON 加载（assets/panel-manifest.json，name/items 字段核对）；P3 加载不存在 URL → 拒绝且消息含 404，UI 进入 failed 态；P4 同 URL 重试如实再败 → 注册表回退成功恢复 loaded；P5 三个并发 requestLoad 仅 1 启动 2 拒绝；P6 临时组件发起失败加载后立即销毁，回调被 isValid 守卫拦截（danglingEffects=0, guardedCallbacks=1）。交互点击 LoadButton → clicks+1 并触发带锁重载。__lifecycle()：release=注册表移除+releaseAsset+destroy（持有引用 invalid），reacquire=同路径重建（画面复原）。所有失败路径均为故意拒绝且被 try/catch 捕获——不产生 window error/unhandledrejection，也不产生 HTTP 错误；任一 pcheck 失败 → throw → no-runtime-error 红。",
+        "visual": "深蓝 UI 背景；中央蓝色 LoadButton（按下变橙）；上方 Preview 精灵从灰色占位变为绿色纹理；顶部状态行显示 phase/state，底部信息行显示 loads/locks/clicks/fails 实时计数"
       },
       "api": {
         "primary": [
@@ -13921,6 +15175,14 @@
           "resource-released"
         ],
         "capability": []
+      },
+      "promotion": {
+        "spec": "41de9c2c2349",
+        "source": "35dd32b211b98c1f",
+        "candidate": "45df203a8e6eab03",
+        "verified": 27,
+        "attested": 3,
+        "units": 30
       }
     },
     {
@@ -14051,7 +15313,7 @@
       "promotion": {
         "spec": "ee9cf6470300",
         "source": "4d867b64bb82d212",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 36,
         "attested": 1,
         "units": 37
@@ -14161,7 +15423,7 @@
       "promotion": {
         "spec": "f15b913767bc",
         "source": "77f21c2819021f29",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -14265,7 +15527,7 @@
       "promotion": {
         "spec": "f513e4f5045b",
         "source": "be8aad5628270919",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -14419,7 +15681,7 @@
       "promotion": {
         "spec": "e4de09333e06",
         "source": "35f72dfaf054cab5",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 24,
         "attested": 13,
         "units": 37
@@ -14567,7 +15829,7 @@
       "promotion": {
         "spec": "4312cf66c71f",
         "source": "8aeb640901c44844",
-        "candidate": "f6036adc8526e925",
+        "candidate": "45df203a8e6eab03",
         "verified": 29,
         "attested": 7,
         "units": 36
@@ -14697,7 +15959,8 @@
     ],
     "physics": [
       "physics-3d-basic",
-      "physics-3d-collision"
+      "physics-3d-collision",
+      "physics-interaction"
     ],
     "dragon-bones": [
       "dragonbones-basic"
@@ -14767,6 +16030,23 @@
     "light": [
       "directional-light-face",
       "light-attach-cycle"
+    ],
+    "rendering": [
+      "render-composite"
+    ],
+    "shader": [
+      "shader-custom-gradient",
+      "shader-dissolve"
+    ],
+    "game": [
+      "tetris-classic",
+      "match3-classic",
+      "tank-battle",
+      "contra-action",
+      "collector-dodge"
+    ],
+    "application": [
+      "product-viewer"
     ]
   }
 }

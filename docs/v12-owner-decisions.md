@@ -161,3 +161,17 @@ Owner 指令「63 个 stable 示例的内容生产（同时抬覆盖率）」执
 Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/816）。四项 V1.1 Release 门槛中
 「Stable 数量」首项达成；Core/Important/Advanced 三项覆盖率门槛继续按 Wave 推进（Important 需下一波定向选题）。
 明细与工具链产出见 `docs/v11-progress.md` r50 章节。并行会话 7 个在建示例目录在门禁窗口期临时移出、已原位归还。
+
+## 8. r52 批复记录（2026-09-25/26，owner 指令「执行（平移目录 → 再生成 manifest → v11 全链采证 → 晋级冻结 → coverage 增量核对）」）
+
+> 指令授权对《接口场景覆盖、开发范式与 Shader 示例任务计划书》G0–G4 交付物执行正典集成。判定面变更与理由链：
+
+| 项 | 决定 | 落点 |
+|---|---|---|
+| 13 示例晋级冻结 | specStatus draft→**frozen**（owner 本指令即复核落章）；status 由 v11 证据驱动晋级 stable | `examples/{scene-switch-reentry,ui-asset-loading,model-character-interaction,physics-interaction,render-composite,shader-custom-gradient,shader-dissolve,tetris-classic,match3-classic,tank-battle,contra-action,collector-dodge,product-viewer}/example.json` |
+| 证据重采轮次 | 4 轮 chromium 整批：#1 131/140（9 败诊断）→ 修复（GAP-I1 liveMat、音频 releaseAsset、asset paths、UICamera z=1000 合同值、动画时钟轮询、Ground/SpinRing 入 lifecycle、404→零 HTTP 失败路径）→ #3 140/140 → 冻结/失败路径改造后 #4 **140/140（终态证据）** | `docs/evidence/v11-examples-verified.json`（partial=false, 16:12Z） |
+| Gallery 发布面与故意失败路径 | 裁定：Gallery 工件契约 `artifact:no-http-errors` 不容故意 404 —— 失败语义改由**注册表未命中**（ui-asset-loading）与**自有损坏 fixture**（product-viewer corrupt-product.glb）承担；HTTP-404 面保留在手册树 manual-asset-lifecycle（CONSOLE_ALLOWLIST 机制） | 两例 spec/源码 + `v11-gallery-artifact.json` 209/209 |
+| 探针/诊断页归属 | shader-probe、tmp-light-probe 常驻 `ai/g1-staging/`（不登记 Gallery，规避工件绝对路径合同）；g4 运行器默认根同步 | `tools/verify/g4-shader-probe.cjs` |
+| DevTools 证据 | candidate 指纹因 `examples/shared/shader-blocks.js` 新增而变（f6036adc→45df203a）：按 r49 同口径当期刷新 5/5 | `v11-devtools-examples.json` 15:43Z |
+| GAP-L1（灯光视觉贡献为零） | **登记不修复**：修复面涉上游抽取文件（pipeline-ubo/降写链），需 Deviation 流程与单独估时；本轮示例以结构断言+如实差值记录降级 | `g1-light-contribution-gap.json` + 矩阵 §7 |
+| V1.1 Release Gate | r49 判定维持：Core 36.2% / Important 1.9% / Advanced N/A，距 100/90/80 目标仍远；Stable 144 ≥120 维持达标 | `v06-v10-release-gates.md` 口径不变 |

@@ -697,7 +697,8 @@ async function main(): Promise<void> {
             input.off(Input.EventType.TOUCH_START, onClick);
             driver.realtime = false;
             game.state = 'idle';
-            if (audioSrc) { audioSrc.stop(); }
+            if (audioSrc) { audioSrc.stop(); audioSrc.clip = null; }
+            if (shotClip) { assetManager.releaseAsset(shotClip); shotClip = null; } // audio-basic 实证：releaseAsset 才会 assets.remove + destroy
             if (boardNode) { boardNode.destroy(); boardNode = null; }
             if (boardMaterial) { boardMaterial.destroy(); boardMaterial = null; }
             if (board.texture) { board.texture.destroy(); board.texture = null; }
@@ -705,6 +706,14 @@ async function main(): Promise<void> {
         reacquire: async () => {
             await sleep(300);
             buildBoard();
+            try {
+                shotClip = await new Promise<AudioClip>((resolve, reject) => {
+                    (assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {
+                        if (err) { reject(err as Error); } else { resolve(clip); }
+                    });
+                });
+                if (audioSrc && shotClip) { audioSrc.clip = shotClip; audioSrc.playOnAwake = false; }
+            } catch (e) { /* 重载失败如实走泄漏核对 */ }
             game.reset();
             driver.realtime = true;
             input.on(Input.EventType.KEY_DOWN, onKeyDown);

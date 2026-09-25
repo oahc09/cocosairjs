@@ -205,3 +205,55 @@ Material/Texture2D 生命周期面、Layers、Scene(Globals)、Input、glTF 注�
 - gltf-draco warn 维持已知边界（r49 裁定）；
 - 竞态披露：并行会话在建的 7 个无规格示例目录（physics-interaction 等）在门禁窗口期临时移出后**已原位归还**，
   未触碰其内容；它们不计入本波 stable 数。
+
+# r52 — 接口场景覆盖 Wave（G1 组合场景 ×5 + G2 游戏/应用 ×6 + G4 Shader ×2）：13 新示例全部 frozen/stable
+
+Owner 指令链：`ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md` 实施（/goal）+
+「执行（平移目录 → 再生成 manifest → v11 全链采证 → 晋级冻结 → coverage 增量核对）」。
+本轮交付计划书 G0/G1/G2/G3(主体)/G4 五个批次；13 个新示例全链晋级，探针/诊断页常驻 staging 不进 Gallery。
+
+## 交付面
+
+| 指标 | r50/r51 基线 | r52 现读 | 判定 |
+|---|---|---|---|
+| Stable Examples | 131 | **144**（145 登记 - gltf-catalog draft 既有） | +13（G1×5 + G2×6 + G4×2） |
+| specStatus | 132 frozen / 3 draft | **145 frozen / 0 draft / 0 blocked** | 全冻结（owner 指令落章见 owner-decisions §8） |
+| v11 浏览器链（chromium 整批） | 127/127 | **140/140 PASS**（partial=false） | `docs/evidence/v11-examples-verified.json` 16:12Z |
+| DevTools 链 | 5/5 | **5/5 PASS**（candidate 变更后当期刷新） | `v11-devtools-examples.json` 15:43Z |
+| Gallery 静态工件 | 183/183 | **209/209**（145 例 + 191 缩略图口径内 64 项工件断言） | `v11-gallery-artifact.json` 16:24Z；webview-basic 单次 flake 复跑归零 |
+| Verified 单元 | 420 | **439（+19 / -0）** | core 295（36.2%，+1）· important **33（1.9%，+13）** · advanced 披露 +5 |
+| coverage 门禁 | PASS | **PASS**（棘轮地板；V1.1 100/90 目标仍未达，r49 判定不变） | stale=0；gltf-catalog schema gap 既有保留 |
+| spec 三件套 | — | evidence 3470 条 0 漂移 · validate 0 issues · compliance 0 fail/1 warn（draco 既有） | 当期重采 |
+| jest / typecheck / file-map | 32/263 · 0 · PASS | **32/263 · 0 · PASS** | 无回归 |
+| 跨引擎补充 | — | firefox **13/13 PASS**（webkit 见 §跨引擎补遗） | `--out=` 非正典补充证据（b3 口径，不并 chromium 批次） |
+
+## 新增 verified 单元（+19，逐项）
+
+- **important +13**：`EffectAsset` / `EffectAsset.onLoaded` / `.get` / `.remove` / `.destroy` / `.validate`（G4 用户 Shader 链首次打通）、
+  `Tween.to` / `Tween.delay` / `Tween.start`、`Animation.getState` / `.pause` / `.resume`、`SpriteFrame.createWithImage`
+- **core +1**：`Scene.destroy`
+- **advanced（披露面）+5**：`Renderer.setSharedMaterial`、`EventTouch.getLocation`、`RenderTexture`、`RenderTexture.reset`、`AssetManager.releaseAsset`
+
+## 缺口登记（计划书 §3 G1「先登记缺口再继续」条款执行）
+
+`docs/api-scenario-gap-matrix.md` §7 + `docs/evidence/g1-light-contribution-gap.json`：
+GAP-L1 主光/点光视觉贡献为零（P0，收敛至 UBOCamera MAIN_LIT_* 链路，修复涉上游文件需 Deviation 流程）、
+GAP-C1 worldToScreen 零向量、GAP-C2 Camera 组件无 resize/width/height/aspect 导出面、
+GAP-M1 builtin-unlit 宏为 USE_TEXTURE（manual-render-targets 待复核）、GAP-B1 引导前注册边界、
+GAP-V1 isValid 帧末语义、GAP-I1 renderer.material 读回实例化脱钩（本轮正典批次实测新发现，范式文档 §5 已纳入）。
+示例侧一律如实降级（结构断言/差值记录），未冒充绿灯。
+
+## 生产线（可复用，与 r50 线并存）
+
+`ai/g1-staging/` 全程隔离建设（并发会话工作区纪律）→ `tools/verify/g1-trial-run.cjs`（页内探针 + browser-runtime 同源类型合同，
+证据写仓库外）→ 平移 examples/ → 正典链（manifest → v11 整批 ×N 轮至全绿 → 冻结 → coverage → gallery artifact）。
+Shader 探针：`tools/verify/g4-shader-probe.cjs`（双后端，常驻 `ai/g1-staging/shader-probe/`）。
+
+## 跨引擎补遗（r52）
+
+- **firefox**：本批 13 例 `--browser=firefox --out=`（非正典补充证据，b3 口径）**13/13 PASS**。
+- **webkit**：**环境阻断，非示例缺陷**——外部 Playwright 1.62.1 要求 `webkit-2336`，本机安装为
+  `webkit-2311`（launch 即抛 Executable doesn't exist，24ms）；对照实验（hello-cube/ui-components）
+  同样挂起。批次内 5 例 120s 超时为同一根因。解堵 = 安装匹配版 webkit 浏览器或对齐 Playwright
+  版本（需环境变更授权）。webkit 面的正典权威仍是 v12 矩阵合同（LV12 13 例集），本批未纳入合同
+  （与 r50 74 例同口径）。登记为 r52 唯一环境残余项。

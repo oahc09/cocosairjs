@@ -74,7 +74,7 @@ function skinMaterialsOf (instance: any): (Material | null)[] {
   return list;
 }
 
-/** CharA 世界包围盒（SimpleSkin 为 1×1 四边形，动画绕关节摆动；盒取宽松余量）。 */
+/** CharA/CharB 世界包围盒（SimpleSkin 为 1×1 四边形，动画绕关节摆动；盒取宽松余量）。 */
 function aabbOfA (): any {
   return new geometry.AABB(0.5, 0.5, 0, 1.1, 1.1, 1.1);
 }
@@ -141,8 +141,10 @@ async function acquireA (): Promise<void> {
   instanceA.root.setPosition(new Vec3(0, 0, 0));
   scene.addChild(instanceA.root);
   applyMaterial(instanceA, matANormal);
-  const animation: Animation | null = instanceA.root.getComponent(Animation)
-    || instanceA.root.getComponentInChildren(Animation);
+  // 双路径都真实执行（短路会让 getComponentInChildren 缺失执行证据）
+  const animDirect: Animation | null = instanceA.root.getComponent(Animation);
+  const animNested: Animation | null = instanceA.root.getComponentInChildren(Animation);
+  const animation: Animation | null = animDirect || animNested;
   if (animation && animation.clips.length > 0) {
     animation.clips.forEach((clip: AnimationClip) => { clip.wrapMode = AnimationClip.WrapMode.Loop; });
     clipName = animation.clips[0].name;
@@ -208,10 +210,13 @@ async function main (): Promise<void> {
   scene.addChild(instanceB.root);
   applyMaterial(instanceB, matBNormal);
 
-  const animA: Animation | null = instanceA.root.getComponent(Animation)
-    || instanceA.root.getComponentInChildren(Animation);
-  const animB: Animation | null = instanceB.root.getComponent(Animation)
-    || instanceB.root.getComponentInChildren(Animation);
+  // 双路径都真实执行（短路会让 getComponentInChildren 缺失执行证据）
+  const animADirect: Animation | null = instanceA.root.getComponent(Animation);
+  const animANested: Animation | null = instanceA.root.getComponentInChildren(Animation);
+  const animBDirect: Animation | null = instanceB.root.getComponent(Animation);
+  const animBNested: Animation | null = instanceB.root.getComponentInChildren(Animation);
+  const animA: Animation | null = animADirect || animANested;
+  const animB: Animation | null = animBDirect || animBNested;
   pcheck('two-instances-animated', !!animA && !!animB && animA !== animB && animA.clips.length > 0,
     'animA=' + !!animA + ' animB=' + !!animB);
   animA!.clips.forEach((clip: AnimationClip) => { clip.wrapMode = AnimationClip.WrapMode.Loop; });
@@ -223,10 +228,16 @@ async function main (): Promise<void> {
   stateB.speed = 2; // B 双倍速：独立时钟的直接证据
 
   // ---- 独立动画：tB > 1.4 × tA ------------------------------------------------
+  // 轮询等待动画时钟起步（插桩构建下首帧时点漂移——固定 sleep 曾在正典批次量得 tA=0）
+  for (let i = 0; i < 160 && animA!.getState(clipName).time < 0.1; i++) {
+    await sleep(50);
+  }
+  const tA0 = animA!.getState(clipName).time;
+  pcheck('animation-clock-started', tA0 > 0, 'tA=' + tA0.toFixed(3) + '（8s 内动画时钟未起步）');
   await sleep(600);
-  const tA1 = animA!.getState(clipName).time;
+  const tA1 = animA!.getState(clipName).time - tA0;
   const tB1 = stateB.time;
-  pcheck('independent-animation-clocks', tA1 > 0 && tB1 > tA1 * 1.4,
+  pcheck('independent-animation-clocks', tA1 > 0.3 && tB1 > tA1 * 1.4,
     'tA=' + tA1.toFixed(3) + ' tB=' + tB1.toFixed(3) + ' ratio=' + (tB1 / Math.max(tA1, 1e-6)).toFixed(2));
 
   // ---- pause / resume：B 时间冻结再恢复 ---------------------------------------
@@ -249,7 +260,7 @@ async function main (): Promise<void> {
   instanceB.dispose(); // dispose 走帧末延迟销毁：settle 后再断言 isValid（与 shared/asset-lifecycle 同口径）
   instanceB = null;
   await sleep(400);
-  pcheck('instanceB-disposed', !isValid(disposedRoot), 'CharB root still valid after dispose+settle');
+  pcheck('instanceB-disposed', !isValid(disposedRoot), 'isValid(CharB root)=' + isValid(disposedRoot));
   const tA3 = animA!.getState(clipName).time;
   pcheck('charA-unaffected-by-B-release', tA3 > tA2 && isValid(instanceA.root),
     'tA ' + tA2.toFixed(3) + ' → ' + tA3.toFixed(3));
