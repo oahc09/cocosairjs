@@ -196,21 +196,27 @@ function showSource() {
     '/' + currentExample.dir + '/main.js',
     '/' + currentExample.dir + '/main.ts'
   ];
-  Promise.any(entryCandidates.map(function(p) {
-    return fetch(p).then(function(r) {
-      if (!r.ok) throw new Error('404');
-      return r.text().then(function(t) { return { path: p, text: t }; });
-    });
-  })).then(function(result) {
-    document.getElementById('source-code').textContent = result.text;
+  // 顺序探测（命中即停）：并发 Promise.any 会对不存在的候选各发一次 404，
+  // 部署验收的 no-http-errors 检查把每一次都算部署缺陷（r46 实测 mesh-sphere 4 次 404）。
+  var showSourceText = function (text) {
+    document.getElementById('source-code').textContent = text;
     document.getElementById('preview-frame').style.display = 'none';
     var sv = document.getElementById('source-view');
     sv.style.display = '';
     document.getElementById('btn-source').classList.add('active');
     document.getElementById('btn-preview').classList.remove('active');
-    }).catch(function() {
+  };
+  var probeCandidate = function (i) {
+    if (i >= entryCandidates.length) {
       document.getElementById('source-code').textContent = '// source not available';
-    });
+      return;
+    }
+    fetch(entryCandidates[i]).then(function (r) {
+      if (!r.ok) { throw new Error('404'); }
+      return r.text();
+    }).then(showSourceText).catch(function () { probeCandidate(i + 1); });
+  };
+  probeCandidate(0);
 }
 
 function toggleFullscreen() {

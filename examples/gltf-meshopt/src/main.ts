@@ -75,6 +75,9 @@ async function acquire (): Promise<any[]> {
 }
 
 await acquire();
+// 部署验收探针：配置了解码器的 loader 已真实完成一次 decode（wasm 内嵌形制没有独立 .wasm
+// 网络请求可数，gallery 门禁以此标记为 "wasm 可用" 的机器证明）。
+(window as any).__meshoptConfigured = true;
 
 // §25 Lifecycle Contract：meshopt 解码出的资产与补挂材质全部释放后重新解码重建。
 installAssetLifecycle({

@@ -160,13 +160,13 @@
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L83"
+        "sourceLocation": "L86"
       },
       {
         "api": "Material.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L83"
+        "sourceLocation": "L86"
       },
       {
         "api": "isValid",
@@ -299,9 +299,9 @@
     }
   },
   "promotion": {
-    "spec": "d4312702ec07",
-    "source": "dfc18d7d5f412dd2",
-    "candidate": "927bb491cc9119b1",
+    "spec": "dc08e0df3331",
+    "source": "016556238b580072",
+    "candidate": "a9b46f0bfb9ea025",
     "verified": 20,
     "attested": 0,
     "units": 20

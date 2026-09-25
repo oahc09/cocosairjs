@@ -77,3 +77,9 @@ function seedDefaultPhysicsMaterial (): void {
     material.name = 'default-physics-material';
     builtinResMgr.addAsset('default-physics-material', material);
 }
+
+// 模块求值期播种（幂等）：selectPhysicsBackend 只覆盖 createAirApp 入口，绕过它直接
+// `game.init()` 的 Code First 用户同样会拉入本模块（exports/air.ts 聚合导出），在
+// PhysicsSystem.initDefaultMaterial（POST_PROJECT_INIT 期消费）之前完成预置。未来若接入
+// 真实 builtin 资产包，loadBuiltinAssets 以 asset.name 覆盖同名条目，官方材质仍胜出。
+seedDefaultPhysicsMaterial();

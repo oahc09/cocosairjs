@@ -193,7 +193,10 @@ function checkDecoderSet () {
   const root = path.join(ARTIFACT, 'gltf-decoders');
   const required = [
     'meshopt/meshopt_decoder.mjs',
-    'draco/draco_decoder.js',
+    // draco 的发布形制是 draco3d.js（浏览器侧单文件构建）+ draco_decoder.wasm；
+    // 经典 emscripten 拆分形的 draco_decoder.js 不在本部署合同内（与 tools/verify/decoder-audit.cjs 的
+    // 权威清单一致：draco3d.js / draco_decoder.wasm / basis_transcoder.js / meshopt_decoder.cjs）。
+    'draco/draco3d.js',
     'draco/draco_decoder.wasm',
     'basis/basis_transcoder.js',
   ];
@@ -217,13 +220,19 @@ async function verifyArtifact () {
     const failedRequests = [];
     const externalRequests = [];
     let currentUrl = '';
-    page.on('pageerror', (e) => pageErrors.push(`${path.basename(currentUrl)}: ${String(e).slice(0, 150)}`));
+    page.on('pageerror', (e) => pageErrors.push(`${path.basename(currentUrl)}: ${String(e).slice(0, 150)} :: stack=${String(e.stack || '').split('\n').slice(1, 3).join(' | ').slice(0, 260)}`));
     page.on('response', (res) => {
       const url = res.url();
       // favicon 是浏览器默认探测，不是交付资产；其余 4xx/5xx 一律算部署缺陷。
       if (res.status() >= 400 && !/\/favicon\.ico$/.test(url)) { failedRequests.push(`${res.status()} ${url.replace(base, '')}`); }
     });
-    page.on('requestfailed', (req) => { failedRequests.push(`FAILED ${req.url().replace(base, '')}`); });
+    page.on('requestfailed', (req) => {
+      // ERR_ABORTED = 本 verify 自身的页面导航把在途请求取消（boot 循环逐例 goto 的必然副产品），
+      // 不是部署缺陷；其余网络级失败（DNS/拒绝连接/证书）仍如实计数。
+      const et = (req.failure() && req.failure().errorText) || '';
+      if (/ERR_ABORTED/i.test(et)) { return; }
+      failedRequests.push(`FAILED ${req.url().replace(base, '')}`);
+    });
     page.on('request', (req) => {
       const url = req.url();
       if (url.startsWith(base) || /^(data|blob):/.test(url)) { return; }
@@ -290,7 +299,9 @@ async function verifyArtifact () {
     for (const ex of boottable) {
       currentUrl = `${ex.dir}/`;
       const spec = JSON.parse(fs.readFileSync(path.join(ARTIFACT, ex.dir, 'example.json'), 'utf8'));
-      const probe = page.waitForFunction(() => !!(window).__airApp, undefined, { timeout: 30000 }).then(() => 'booted').catch(() => 'boot-failed');
+      // 引擎示例以 __airApp 为就绪探针；非引擎页（gltf-catalog 目录页）以 __bootReady 为准——
+      // 两者都表示「页面完成自举」，目录页不该为了过探针去伪造一个引擎实例。
+      const probe = page.waitForFunction(() => !!((window).__airApp || (window).__bootReady), undefined, { timeout: 30000 }).then(() => 'booted').catch(() => 'boot-failed');
       await page.goto(`${base}/${ex.dir}/`, { waitUntil: 'load' });
       const booted = await probe;
       if (booted !== 'booted') { bootFail.push(ex.id); }
@@ -298,9 +309,14 @@ async function verifyArtifact () {
       // 8b) 资源释放在独立部署下同样必须成立（§25 合同示例）
       if ((spec.validation && spec.validation.lifecycle || []).includes('resource-released')) {
         // __lifecycle 由示例在异步资产就绪后才安装：立即 evaluate 会把加载竞态读成"钩子不存在"
-        // （同一部署物连续两次跑出 gltf-basic / gltf-skin 互换的假 FAIL）。等待只影响测得准不准，
-        // 钩子真缺失时仍按超时后的 null 判 FAIL。
-        await page.waitForFunction(() => !!(window).__lifecycle, undefined, { timeout: 15000 }).catch(() => null);
+        // （同一部署物连续两次跑出 gltf-basic / gltf-skin 互换的假 FAIL）。r46：等待改用
+        // __lifecycleHold()>0（非消费型探针，见 examples/shared/asset-lifecycle.js）——
+        // 直接轮询 __lifecycle() 会把首调用即运行的拆建轮烧在"资产未就绪"上（幂等报告不可重跑，
+        // video-basic 的 held=0 即此根因）；重资产示例（video 演示序列 ≥15s）由此整段吸收进等待窗口。
+        await page.waitForFunction(() => {
+          const hold = (window).__lifecycleHold;
+          return typeof hold === 'function' && hold() > 0;
+        }, undefined, { timeout: 45000 }).catch(() => null);
         const lc = await page.evaluate(() => (window).__lifecycle ? (window).__lifecycle() : null).catch((e) => ({ error: String(e).slice(0, 80) }));
         const ok = !!lc && lc.released === true && !(lc.errors || []).length;
         lifecycleSeen.push(ex.id);
@@ -313,8 +329,14 @@ async function verifyArtifact () {
         const hit = seen.some((u) => decodeURIComponent(u).indexOf(want) >= 0);
         check(`decoder-request:${ex.id}`, hit, hit ? `${want} 已被部署页请求` : `${want} 未出现在资源计时里`);
         if (ex.id === 'gltf-meshopt') {
-          const wasm = await page.evaluate(() => performance.getEntriesByType('resource').map((e) => e.name).filter((u) => /meshopt_decoder\.base64\.wasm|\.wasm/.test(u)));
-          check('decoder-wasm:meshopt', wasm.length > 0, `wasm requests=${wasm.length}`);
+          // meshopt 的发布形制是 wasm 内嵌（meshopt_decoder.mjs 内含 base64 wasm，无独立 .wasm
+          // 网络请求，资源计时里永远数不到）⇒ "wasm 可用"的机器证明 = 部署页用配置了解码器的
+          // loader 真实完成一次 decode（示例在 acquire() 成功后置 __meshoptConfigured，r46 起
+          // 以形制对齐的断言替代此前的资源计数）。
+          const configured = await page.evaluate(() => (window).__meshoptConfigured === true);
+          check('decoder-wasm:meshopt', configured,
+            configured ? '配置解码器完成真实 decode（wasm 内嵌形制，无独立 .wasm 请求）'
+              : '__meshoptConfigured !== true');
         }
         const state = await page.evaluate(() => (window).__decoderState || null);
         check(`decoder-state:${ex.id}`, state !== null, `__decoderState=${state}`);

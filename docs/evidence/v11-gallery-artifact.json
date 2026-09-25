@@ -1,15 +1,22 @@
 {
-  "measuredAt": "2026-09-19T19:07:10.980Z",
+  "measuredAt": "2026-09-25T02:39:44.362Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
+  "runner": "tools/verify/v11-gallery-artifact.cjs",
+  "completed": true,
   "scope": {
-    "examples": 45,
-    "booted": 40,
+    "examples": 58,
+    "booted": 53,
     "devToolsPagesServed": 5,
-    "lifecycle": 11
+    "lifecycle": 23
   },
-  "total": 76,
-  "pass": 70,
+  "artifactBytes": {
+    "engineCopySha256_16": "59ceb804e5795c1c",
+    "liveBundleSha256_16": "59ceb804e5795c1c",
+    "identical": true
+  },
+  "total": 102,
+  "pass": 102,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -18,8 +25,13 @@
     },
     {
       "id": "artifact:decoder-set",
-      "ok": false,
-      "detail": "missing: draco/draco_decoder.js"
+      "ok": true,
+      "detail": "17 decoder files shipped"
+    },
+    {
+      "id": "artifact:engine-copy-current",
+      "ok": true,
+      "detail": "artifact 59ceb804e5795c1c vs live build 59ceb804e5795c1c"
     },
     {
       "id": "static:index.html",
@@ -44,7 +56,7 @@
     {
       "id": "artifact:thumbnails-all",
       "ok": true,
-      "detail": "40/40 thumbnails reachable"
+      "detail": "53/53 thumbnails reachable"
     },
     {
       "id": "artifact:devtools-page-served:automation",
@@ -74,12 +86,12 @@
     {
       "id": "gallery:list-rendered",
       "ok": true,
-      "detail": "links=45 expected=45"
+      "detail": "links=58 expected=58"
     },
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:53330/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:50635/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -95,6 +107,16 @@
       "id": "example-boot:anim-rotation",
       "ok": true,
       "detail": "booted via /anim-rotation/"
+    },
+    {
+      "id": "example-boot:audio-basic",
+      "ok": true,
+      "detail": "booted via /audio-basic/"
+    },
+    {
+      "id": "lifecycle:audio-basic",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:camera",
@@ -117,6 +139,16 @@
       "detail": "booted via /camera-ortho/"
     },
     {
+      "id": "example-boot:dragonbones-basic",
+      "ok": true,
+      "detail": "booted via /dragonbones-basic/"
+    },
+    {
+      "id": "lifecycle:dragonbones-basic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:gltf-basic",
       "ok": true,
       "detail": "booted via /gltf-basic/"
@@ -128,8 +160,8 @@
     },
     {
       "id": "example-boot:gltf-catalog",
-      "ok": false,
-      "detail": "boot-failed via /gltf-catalog/"
+      "ok": true,
+      "detail": "booted via /gltf-catalog/"
     },
     {
       "id": "example-boot:gltf-clearcoat",
@@ -173,8 +205,8 @@
     },
     {
       "id": "decoder-wasm:meshopt",
-      "ok": false,
-      "detail": "wasm requests=0"
+      "ok": true,
+      "detail": "配置解码器完成真实 decode（wasm 内嵌形制，无独立 .wasm 请求）"
     },
     {
       "id": "decoder-state:gltf-meshopt",
@@ -317,6 +349,61 @@
       "detail": "booted via /node-scale/"
     },
     {
+      "id": "example-boot:particle-2d-basic",
+      "ok": true,
+      "detail": "booted via /particle-2d-basic/"
+    },
+    {
+      "id": "lifecycle:particle-2d-basic",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-2d-basic",
+      "ok": true,
+      "detail": "booted via /physics-2d-basic/"
+    },
+    {
+      "id": "lifecycle:physics-2d-basic",
+      "ok": true,
+      "detail": "held=12 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-2d-collision",
+      "ok": true,
+      "detail": "booted via /physics-2d-collision/"
+    },
+    {
+      "id": "lifecycle:physics-2d-collision",
+      "ok": true,
+      "detail": "held=21 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-3d-basic",
+      "ok": true,
+      "detail": "booted via /physics-3d-basic/"
+    },
+    {
+      "id": "lifecycle:physics-3d-basic",
+      "ok": true,
+      "detail": "held=10 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:physics-3d-collision",
+      "ok": true,
+      "detail": "booted via /physics-3d-collision/"
+    },
+    {
+      "id": "lifecycle:physics-3d-collision",
+      "ok": true,
+      "detail": "held=8 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:profiler-overlay",
+      "ok": true,
+      "detail": "booted via /profiler-overlay/"
+    },
+    {
       "id": "example-boot:runtime-asset-release",
       "ok": true,
       "detail": "booted via /runtime-asset-release/"
@@ -357,6 +444,16 @@
       "detail": "held=5 leaked=0 reloaded=true"
     },
     {
+      "id": "example-boot:tiledmap-basic",
+      "ok": true,
+      "detail": "booted via /tiledmap-basic/"
+    },
+    {
+      "id": "lifecycle:tiledmap-basic",
+      "ok": true,
+      "detail": "held=3 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:transform",
       "ok": true,
       "detail": "booted via /transform/"
@@ -367,24 +464,64 @@
       "detail": "booted via /tween-basic/"
     },
     {
+      "id": "example-boot:ui-components",
+      "ok": true,
+      "detail": "booted via /ui-components/"
+    },
+    {
+      "id": "lifecycle:ui-components",
+      "ok": true,
+      "detail": "held=36 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:ui-layout",
+      "ok": true,
+      "detail": "booted via /ui-layout/"
+    },
+    {
+      "id": "lifecycle:ui-layout",
+      "ok": true,
+      "detail": "held=18 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:video-basic",
+      "ok": true,
+      "detail": "booted via /video-basic/"
+    },
+    {
+      "id": "lifecycle:video-basic",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:webview-basic",
+      "ok": true,
+      "detail": "booted via /webview-basic/"
+    },
+    {
+      "id": "lifecycle:webview-basic",
+      "ok": true,
+      "detail": "held=1 leaked=0 reloaded=true"
+    },
+    {
       "id": "artifact:all-boottable-examples",
-      "ok": false,
-      "detail": "boot failures: gltf-catalog"
+      "ok": true,
+      "detail": "53/53 booted under nested mount"
     },
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "11 §25 合同示例在部署物内完成释放核对"
+      "detail": "23 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",
-      "ok": false,
-      "detail": "6 次 4xx/5xx/失败请求：404 /mesh-sphere/src/main.js | 404 /mesh-sphere/main.js | 404 /mesh-sphere/main.ts | FAILED /mesh-sphere/src/main.js"
+      "ok": true,
+      "detail": "zero non-2xx response"
     },
     {
       "id": "artifact:no-external-requests",
-      "ok": false,
-      "detail": "越界请求 36 次：https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/90d7ede14c7e280af263824604b427a1ca02cb66/Models/Animat | https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/9"
+      "ok": true,
+      "detail": "every request served from the artifact mount"
     },
     {
       "id": "gallery:no-page-errors",
@@ -393,12 +530,5 @@
     }
   ],
   "absolutePathHits": [],
-  "failedRequests": [
-    "404 /mesh-sphere/src/main.js",
-    "404 /mesh-sphere/main.js",
-    "404 /mesh-sphere/main.ts",
-    "FAILED /mesh-sphere/src/main.js",
-    "FAILED /mesh-sphere/main.js",
-    "FAILED /mesh-sphere/main.ts"
-  ]
+  "failedRequests": []
 }

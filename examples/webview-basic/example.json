@@ -301,19 +301,19 @@
         "api": "WebView.evaluateJS",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L392"
+        "sourceLocation": "L398"
       },
       {
         "api": "WebView.setJavascriptInterfaceScheme",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L449"
+        "sourceLocation": "L455"
       },
       {
         "api": "WebView.setOnJSCallback",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L450"
+        "sourceLocation": "L456"
       },
       {
         "api": "WebView.__preload",
@@ -355,7 +355,7 @@
         "api": "isValid",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L466"
+        "sourceLocation": "L472"
       },
       {
         "api": "js.setClassName",
@@ -555,7 +555,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 424,
+            "line": 430,
             "text": "hostNode.setPosition(0, 14, 0);"
           }
         ]
@@ -563,9 +563,9 @@
     }
   },
   "promotion": {
-    "spec": "529cf6946419",
-    "source": "9d93e842f1716162",
-    "candidate": "927bb491cc9119b1",
+    "spec": "4312cf66c71f",
+    "source": "8aeb640901c44844",
+    "candidate": "a9b46f0bfb9ea025",
     "verified": 29,
     "attested": 7,
     "units": 36

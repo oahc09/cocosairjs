@@ -33,8 +33,11 @@ function renderList() {
         button.setAttribute('aria-label', model.label || model.name);
         const thumb = document.createElement('span'); thumb.className = 'thumb'; thumb.textContent = model.name.slice(0, 2).toUpperCase();
         if (model.screenshot) {
-            const image = document.createElement('img'); image.loading = 'lazy'; image.alt = ''; image.referrerPolicy = 'no-referrer';
-            image.src = `${catalog.assetRoot}${encodeURIComponent(model.name)}/${model.screenshot.split('/').map(encodeURIComponent).join('/')}`;
+            // 预览图按需加载：src 只在用户选中该行时才赋值（点击或键盘选择）。
+            // 目录页的静态部署契约是「boot 零外联」——lazy 属性仍会在视口内自动外联 Khronos
+            // 截图（gallery verify 实测 36 次越界请求），因此这里必须 data-src + 选中触发。
+            const image = document.createElement('img'); image.alt = ''; image.referrerPolicy = 'no-referrer';
+            image.dataset.src = `${catalog.assetRoot}${encodeURIComponent(model.name)}/${model.screenshot.split('/').map(encodeURIComponent).join('/')}`;
             image.addEventListener('error', () => image.remove(), { once: true }); thumb.append(image);
         }
         const copy = document.createElement('span'); copy.className = 'model-copy';
@@ -43,9 +46,18 @@ function renderList() {
         if (catalog.local[model.name]) { const local = document.createElement('span'); local.className = 'local-label'; local.textContent = '● LOCAL'; formats.append(local); }
         formats.append(`${Object.keys(model.variants).length} FORMATS${model.tags?.includes('extension') ? ' · EXT' : ''}`);
         copy.append(title, formats); button.append(thumb, copy);
-        button.addEventListener('click', () => selectModel(model)); fragment.append(button);
+        button.addEventListener('click', () => { selectModel(model); loadRowThumb(model); }); fragment.append(button);
     }
     modelList.replaceChildren(fragment);
+    // 目录页不是引擎 App：以 __bootReady 作为部署引导探针的就绪标记（verify 兼容 __airApp || __bootReady）。
+    window.__bootReady = { catalogPage: true, entries: catalog.models.length };
+}
+
+/** 缩略图只在用户点击该行时才外联官方预览（boot 零外联契约，见 renderList 内 data-src 注）。 */
+function loadRowThumb(model) {
+    const row = modelList.querySelector(`button[data-model="${CSS.escape(model.name)}"]`);
+    const img = row && row.querySelector('img[data-src]');
+    if (img) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
 }
 
 function updateLinks() {

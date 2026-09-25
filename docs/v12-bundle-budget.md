@@ -47,8 +47,8 @@
 
 | 产物 | r45 基线 | r46 新基线 | 增量 |
 |---|---|---|---|
-| `build/cocosair.module.js` | 6,081,668 B / `35496aebda066ab5` | 6,600,516 B / `154c3945e25acafa` | +518,848 B（+8.5%） |
-| `build/cocosair.module.min.js` | 3,499,182 B / `8795c8685ace28a1` | 3,681,015 B / `13fe40b4048a06bc` | +181,833 B（+5.2%） |
+| `build/cocosair.module.js` | 6,081,668 B / `35496aebda066ab5` | 6,600,546 B / `59ceb804e5795c1c` | +518,878 B（+8.5%） |
+| `build/cocosair.module.min.js` | 3,499,182 B / `8795c8685ace28a1` | 3,681,021 B / `51f3b69414b0d9d4` | +181,839 B（+5.2%） |
 
 - 增量来源：`physics-cannon` 入默认集（vendored `@cocos/cannon` 纯 JS 运行库）+ `src/air/physics-backend.ts`
   （交付期后端选择 + 默认物理材质种子）+ `src/exports/air.ts` 聚合出口并入 `./physics-cannon`。

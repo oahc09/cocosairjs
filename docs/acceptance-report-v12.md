@@ -319,7 +319,7 @@ Owner 指令「按照建议执行，确保最优」——18 个决策点逐条�
 - `createAirApp({ physics: 'builtin' | 'cannon' })`（additive，登记 `docs/v08-api-stability.md` r46 行）；
   默认仍 builtin；`AIR_FEATURES` 增 `physics-cannon`；`src/air/physics-backend.ts`（Air 原创，file-map 在册）+
   默认物理材质种子（Code First 下 errorID 9642 对 cannon 致命、对 builtin 良性，已消除）。
-- **新基线**：`build/cocosair.module.js` **6,600,516 B / `154c3945e25acafa`**、min **3,681,015 B / `13fe40b4048a06bc`**
+- **新基线**：`build/cocosair.module.js` **6,600,546 B / `59ceb804e5795c1c`**、min **3,681,021 B / `51f3b69414b0d9d4`**
   （§1 表的 `35496aebda066ab5` / 6,081,668 B 为 r45 基线，退役）；预算账 `docs/v12-bundle-budget.md` §4。
 - **新示例 `examples/physics-3d-collision`**（LV12-15 cannon 交付链）：双链 PASS + 1 promoted，
   规格面 58 frozen / compliance 0 fail / 1 warn（既有 gltf-draco warn）。

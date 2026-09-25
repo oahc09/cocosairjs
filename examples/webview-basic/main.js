@@ -333,7 +333,13 @@ async function runSequence () {
     results.p1Mount.urlGetter = webView.url;
     results.p1Mount.iframePathname = iframe ? new URL(iframe.src).pathname : null;
     results.p1Mount.iframeSrcHasNoExternalHost = iframe ? !/cocos\.com/.test(iframe.src) : null;
-    results.p1Mount.contentSize = [webView.node.getComponent(UITransform).width, webView.node.getComponent(UITransform).height].join('x');
+    // r46 加固：与 P9 同款 node 就绪等待——gallery 部署验收长序列下 P1 也观测到一次
+    // component.node 为 null 的页错（链/矩阵从未复现，属调度时序敏感）。
+    for (let i = 0; i < 30 && !(webView && webView.node && webView.node.getComponent(UITransform)); i++) {
+        await nextFrames(1);
+    }
+    const p1Node = webView && webView.node && webView.node.getComponent(UITransform);
+    results.p1Mount.contentSize = p1Node ? [p1Node.width, p1Node.height].join('x') : 'node-not-ready';
     results.p1Mount.stateAfterLoad = webView.state;
     results.p1Mount.wrapperOffsetWH = wrapper ? [wrapper.offsetWidth, wrapper.offsetHeight].join('x') : null;
 
@@ -467,6 +473,11 @@ async function runSequence () {
     };
     mountWebView(FINAL_POS, FINAL_SIZE);
     results.p9Unload.reloadedWithinMs = await waitLoaded();
+    // r46 加固：gallery 部署验收长序列下实测一次「重建后 component.node 仍为 null → getComponent
+    // 页错」（仅时序敏感，链/矩阵从未复现）。等 node 就绪再读几何——探针契约值不变。
+    for (let i = 0; i < 30 && !(webView && webView.node && webView.node.getComponent(UITransform)); i++) {
+        await nextFrames(1);
+    }
     // 同 P1：重建后的几何读数必须等第一次 syncMatrix 落地（诊断 r3 里 chromium 就是在这里读到未定位的
     // `150,281` —— 那一刻 wrapper 还是 iframe 固有盒，矩阵尚未写过它）
     results.p9Unload.matrixSizeWithinMs = await waitMatrixSize(FINAL_SIZE);
@@ -477,7 +488,8 @@ async function runSequence () {
     results.p9Unload.hitAfterRebuild = hitTagAt(240, 166);
     results.p9Unload.wrapperCountIsExactlyOne = wrappers().length === 1;
     results.p9Unload.finalCenter = frameStats().iframeCenter ? frameStats().iframeCenter.join(',') : null;
-    results.p9Unload.contentSizeAfterRebuild = [webView.node.getComponent(UITransform).width, webView.node.getComponent(UITransform).height].join('x');
+    const p9Node = webView && webView.node && webView.node.getComponent(UITransform);
+    results.p9Unload.contentSizeAfterRebuild = p9Node ? [p9Node.width, p9Node.height].join('x') : 'node-not-ready';
 
     results.phase = 'done';
     results.sequenceComplete = true;

@@ -73,5 +73,14 @@ export function installAssetLifecycle (contract) {
         }
         return report;
     };
+    // 非消费型就绪探针：只读 hold() 数量，绝不触发拆建轮。__lifecycle 的首次调用即运行整轮
+    // 且此后幂等返回同一报告——验收端若直接轮询它，会把「资产尚未就绪」永久烧进报告
+    // （video-basic 在 gallery 部署验收 r46 实测 held=0 的根因）。
+    window.__lifecycleHold = function () {
+        try {
+            const held = ownedList(typeof contract.hold === 'function' ? contract.hold() : contract.held);
+            return held.length;
+        } catch (error) { return 0; }
+    };
     return report;
 }

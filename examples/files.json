@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-24T17:12:21.304Z",
-  "revision": "a05a42e",
+  "generatedAt": "2026-09-25T02:29:01.023Z",
+  "revision": "06bb96d",
   "examples": [
     {
       "dir": "anim-position",
@@ -90,7 +90,7 @@
       "promotion": {
         "spec": "8ebd4d7639df",
         "source": "c6fc70109be99971",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -185,7 +185,7 @@
       "promotion": {
         "spec": "fe051d63a498",
         "source": "64c06a98436e9204",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -323,7 +323,7 @@
       "promotion": {
         "spec": "9df8c691b6ad",
         "source": "002fb0bcb6e664a6",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 26,
         "attested": 2,
         "units": 28
@@ -513,7 +513,7 @@
       "promotion": {
         "spec": "678fb005e8ec",
         "source": "78040895699e23e3",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 12,
         "attested": 1,
         "units": 13
@@ -616,7 +616,7 @@
       "promotion": {
         "spec": "0f969f97ee12",
         "source": "ada3caa09ec5937e",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -715,7 +715,7 @@
       "promotion": {
         "spec": "e1f579ddd6f6",
         "source": "5fec34368f419b87",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -822,7 +822,7 @@
       "promotion": {
         "spec": "3446e2c5a876",
         "source": "b75a2948236ad40b",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -994,7 +994,7 @@
       "promotion": {
         "spec": "cfd28d7885f1",
         "source": "d9ccae6dfd74bdea",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 15,
         "attested": 31,
         "units": 46
@@ -1088,7 +1088,7 @@
       "promotion": {
         "spec": "5589594abdf5",
         "source": "481aee4186a2fcf5",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -1253,7 +1253,7 @@
       "promotion": {
         "spec": "c6b480406f7f",
         "source": "221fa314ef0a2167",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -1349,7 +1349,7 @@
       "promotion": {
         "spec": "a7a345f064ed",
         "source": "a8c5968b88c6e9d8",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -1461,9 +1461,9 @@
         ]
       },
       "promotion": {
-        "spec": "d4312702ec07",
-        "source": "dfc18d7d5f412dd2",
-        "candidate": "927bb491cc9119b1",
+        "spec": "dc08e0df3331",
+        "source": "016556238b580072",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1564,7 +1564,7 @@
       "promotion": {
         "spec": "594304b3020c",
         "source": "3cfacd5aeece3c7a",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1665,7 +1665,7 @@
       "promotion": {
         "spec": "efdda98c555e",
         "source": "48524527b8a65b3d",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1764,7 +1764,7 @@
       "promotion": {
         "spec": "b6adba815b69",
         "source": "8e01d359fbeb0bce",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 12,
         "attested": 0,
         "units": 12
@@ -1858,7 +1858,7 @@
       "promotion": {
         "spec": "b3f13053f440",
         "source": "35b97a8b06d8d399",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 16,
         "attested": 1,
         "units": 17
@@ -1960,7 +1960,7 @@
       "promotion": {
         "spec": "7b79f441a1fe",
         "source": "d955f577fb18256d",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 13,
         "attested": 2,
         "units": 15
@@ -2067,7 +2067,7 @@
       "promotion": {
         "spec": "cdf688132cb5",
         "source": "13832355ec662f05",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -2164,7 +2164,7 @@
       "promotion": {
         "spec": "88951008b00d",
         "source": "ea448f328c7d5108",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2258,7 +2258,7 @@
       "promotion": {
         "spec": "022251e312e0",
         "source": "2d60ccd6e7859061",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -2353,7 +2353,7 @@
       "promotion": {
         "spec": "74538d51cd5a",
         "source": "9e6871b1fb516900",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2459,7 +2459,7 @@
       "promotion": {
         "spec": "2a5fe86a854b",
         "source": "1b02a2906065565c",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -2550,7 +2550,7 @@
       "promotion": {
         "spec": "d2f18d65ff5f",
         "source": "64a5e60f317d77b8",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -2644,7 +2644,7 @@
       "promotion": {
         "spec": "40bc8fbce245",
         "source": "e4c05344db3660e6",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -2746,7 +2746,7 @@
       "promotion": {
         "spec": "bfab06f0ff3f",
         "source": "fe359d18cc0d7555",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -2837,7 +2837,7 @@
       "promotion": {
         "spec": "d56c8ac8b8fc",
         "source": "bf83768a54c7e5fb",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 15,
         "attested": 1,
         "units": 16
@@ -2932,7 +2932,7 @@
       "promotion": {
         "spec": "c3d9b8dd565b",
         "source": "fd61367663c2b0a1",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3027,7 +3027,7 @@
       "promotion": {
         "spec": "03cd6b3c1dff",
         "source": "ec1bfedbbea794d3",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -3123,7 +3123,7 @@
       "promotion": {
         "spec": "2702df7692e6",
         "source": "003d016d9bbdc124",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -3218,7 +3218,7 @@
       "promotion": {
         "spec": "c0d64a28c555",
         "source": "cb85b55b88591609",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3312,7 +3312,7 @@
       "promotion": {
         "spec": "4de78c63719b",
         "source": "abe4881c69f707f5",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3406,7 +3406,7 @@
       "promotion": {
         "spec": "9c7cfcdb6c9f",
         "source": "957e34f8616eaf44",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3504,7 +3504,7 @@
       "promotion": {
         "spec": "72efe2cf6b66",
         "source": "fa2e5f388b65f479",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -3600,7 +3600,7 @@
       "promotion": {
         "spec": "9c52ef0d0bc2",
         "source": "c3ab3e755cd3f539",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -3747,7 +3747,7 @@
       "promotion": {
         "spec": "d8a9dd22b4c3",
         "source": "e87330f4b1d52ba0",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 22,
         "attested": 12,
         "units": 34
@@ -3878,7 +3878,7 @@
       "promotion": {
         "spec": "a74c759a85f8",
         "source": "3f9207b6bac28f9b",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 32,
         "attested": 4,
         "units": 36
@@ -4017,7 +4017,7 @@
       "promotion": {
         "spec": "4ee47e258bda",
         "source": "49467e2333a8f117",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 27,
         "attested": 6,
         "units": 33
@@ -4201,7 +4201,7 @@
       "promotion": {
         "spec": "885b85eafe40",
         "source": "d2497f8e98052058",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 35,
         "attested": 34,
         "units": 69
@@ -4326,7 +4326,7 @@
       "promotion": {
         "spec": "31c2e8f2d958",
         "source": "10386b846b99736a",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 25,
         "attested": 6,
         "units": 31
@@ -4425,7 +4425,7 @@
       "promotion": {
         "spec": "66d6546c7a37",
         "source": "afc5dc805c737985",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 21,
         "attested": 2,
         "units": 23
@@ -4892,7 +4892,7 @@
       "promotion": {
         "spec": "928e831458d2",
         "source": "11c2af5dc6de1137",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -4987,7 +4987,7 @@
       "promotion": {
         "spec": "e5ceb0171281",
         "source": "cf1a4e3b115fd499",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -5075,7 +5075,7 @@
       "promotion": {
         "spec": "509d0ba585c2",
         "source": "84714e6e975fbc32",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 8,
         "attested": 1,
         "units": 9
@@ -5179,7 +5179,7 @@
       "promotion": {
         "spec": "cab0aa290350",
         "source": "63e4502a895fc0fa",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -5282,7 +5282,7 @@
       "promotion": {
         "spec": "801c006d64c7",
         "source": "f45c5c6dcce11ce3",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -5456,7 +5456,7 @@
       "promotion": {
         "spec": "48312c2aac4b",
         "source": "ecbcddc571bb3443",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 46,
         "attested": 2,
         "units": 48
@@ -5552,7 +5552,7 @@
       "promotion": {
         "spec": "e9fb4d97b277",
         "source": "b8bf300dc9d60f49",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -5643,7 +5643,7 @@
       "promotion": {
         "spec": "a2b66e97135b",
         "source": "97805d6ae4dda9e7",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 14,
         "attested": 1,
         "units": 15
@@ -5777,7 +5777,7 @@
       "promotion": {
         "spec": "ee9cf6470300",
         "source": "4d867b64bb82d212",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 36,
         "attested": 1,
         "units": 37
@@ -5887,7 +5887,7 @@
       "promotion": {
         "spec": "f15b913767bc",
         "source": "77f21c2819021f29",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -6041,7 +6041,7 @@
       "promotion": {
         "spec": "e4de09333e06",
         "source": "35f72dfaf054cab5",
-        "candidate": "927bb491cc9119b1",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 24,
         "attested": 13,
         "units": 37
@@ -6187,9 +6187,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "529cf6946419",
-        "source": "9d93e842f1716162",
-        "candidate": "927bb491cc9119b1",
+        "spec": "4312cf66c71f",
+        "source": "8aeb640901c44844",
+        "candidate": "a9b46f0bfb9ea025",
         "verified": 29,
         "attested": 7,
         "units": 36
