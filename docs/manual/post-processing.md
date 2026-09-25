@@ -14,9 +14,11 @@
 - **源码侧装配是硬编码**。全量 grep `new PostProcessStage(`：唯一构造点在
   `src/cocos/rendering/deferred/main-flow.ts:69`（延迟管线内部流程）；用户没有注册 stage/flow 的入口
   （grep `registerStage|addStage` 零命中）。
-- **`PostProcess` 本体未导出**。how-to-use 篇实测：`camera.postProcess` 槽位在（d.ts 21372–21375）、
-  `usePostProcess` 开关能读写，但类型 `__private` 未顶层导出，读回 `null` 且无效果创作面；
-  开关两帧像素全同（spike 实锤空转，见 how-to-use 篇台账行）。
+- **~~`PostProcess` 本体未导出~~（V1.2 已过期）**：`postProcess` 命名空间（`PostProcess` 组件 +
+  `BlitScreen/Bloom/ColorGrading/FSR/TAA` 设置类）V1.2 起在默认聚合导出内；G4 探针（2026-09-25）
+  装配 `addSetting` + 挂 `camera.postProcess` 零报错。**但效果应用的像素级 A/B 不可归因**
+  （开/关对照无差异、两次开态非确定差异），状态保持"可装配、效果未证实"——
+  见 [How to use Post Processing](how-to-use-post-processing.md) §2/§3。
 - **兜底路线也缺最后一块**：用 render target 手工合成（[render-targets](rendertargets.md) PARTIAL 走过的路）
   需要"对纹理做像素运算的自定义着色器"，而 AIR 无用户面 GLSL 入口（[debugging-glsl](debugging-glsl.md) N/A 篇的同一结论）。
 

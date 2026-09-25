@@ -6,7 +6,8 @@
 > （键盘小球吃金币、距离判定、tween 消失重生、DOM 计分 HUD——零外部资产）。
 
 做小游戏不必先上框架，AIR 本身就够用了，而且每一件事都有第一等入口：键盘走全局 `input` 单例、游戏循环就是 `Component.update(dt)`、
-判定就是几行 JS。[physics](physics.md) 篇 N/A 时预告的"距离判定近似替代"在这里落地。要点：
+判定就是几行 JS。本小游戏**选择**简单距离判定，是为了把示例保持在"零外部资产、一个 update 跑完整局"的最小闭环——
+AIR 本身带组件级 2D/3D 物理（[physics](physics.md) 篇），需要摩擦/弹性/真实刚体时直接用它。要点：
 
 | 环节 | AIR 做法 | 实测 |
 | --- | --- | --- |
@@ -85,8 +86,9 @@ headless 没有键盘，自动演示模式保证持续变化与吃币事件。�
 
 - **相机跟随**：把相机节点挂到球父级或 update 里 lerp——[camera](cameras.md) 篇的
   `lookAt` 现成可用；本示例保持固定俯视机位。
-- **真物理**：距离判定是近似（无摩擦/弹性/射线），需要刚体时看 [physics](physics.md)
-  篇的能力边界与替代路径。
+- **真物理**：距离判定是本示例的选择性近似（无摩擦/弹性/射线）。AIR 自带组件级 2D/3D 物理
+  （`RigidBody`/`Collider` 族、builtin/cannon/box2d 后端），需要真实刚体时看 [physics](physics.md)
+  篇与 [Physics 2D and 3D](physics-2d-and-3d.md) 专题。
 - **金币很多时**：每币一节点在几十枚量级没问题；上千枚走
   [optimize-lots-of-objects](optimize-lots-of-objects.md) 的合并/实例化路线，
   或像 [voxel-geometry](voxel-geometry.md) 那样自己合几何。
@@ -164,7 +166,7 @@ node tools/verify/manual-doc-consistency.cjs
  *
  * 不用任何游戏框架，纯引擎手写一个"方向键/WASD 移动小球、吃随机出现的
  * 方块、计分"的迷你游戏——碰撞用中心距离判定（勾股免开方），相机固定俯视。
- * AIR 侧全件对上且不依赖物理（physics 篇 N/A 预告的"距离判定"近似替代在这里落地）：
+ * （距离判定是本示例为最小闭环选择的近似；AIR 自带组件级 2D/3D 物理，physics 篇）：
  *   - 输入：window 级 input 单例，input.on(SystemEventType.KEY_DOWN/KEY_UP) + KeyCode
  *     （tips-keyboard 篇同款按下集合模式，源码锚：d.ts 28294 export const input）；
  *   - 移动：update(dt) 里按合成方向平移 + 场地边界 clamp；

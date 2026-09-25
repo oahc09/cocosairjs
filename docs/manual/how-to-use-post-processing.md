@@ -3,18 +3,19 @@
 > bloom/辉光/SSAO 这类全屏后期效果怎么挂。
 > 配套可运行示例：[`examples/manual-post-processing/`](examples/manual-post-processing/)（相机后处理开关 A/B + 槽位读回；实测开关无像素级效果，见 §3）。
 
-**状态：PARTIAL。** AIR 导出面里后处理的**开关与管线类在、效果创作面不在**：
-`camera.usePostProcess` / `camera.postProcess` 两个成员存在（d.ts 21372–21375），
-但 `PostProcess` 类型本身是 `__private`（不在顶层导出），用户代码**拿不到效果实例往槽里放**；
-管线级的 `PostProcessStage` / `BloomStage` 类在导出表里（d.ts 34907；module.js 导出表含 `BloomStage`），
-属于渲染管线内部件，没有用户级装配入口。本篇如实记录"开关可拨、效果不可挂"的现状。
+**状态：PARTIAL。** AIR 导出面里后处理的**开关、装配类在、像素效果证据不在**：
+`camera.usePostProcess` / `camera.postProcess` 两个成员存在（d.ts 21372–21375）；
+V1.2 起 `postProcess` 命名空间已导出（`PostProcess` 组件 + `BlitScreen`/`Bloom`/`ColorGrading`/`FSR`/`TAA`
+设置类，2026-09-25 G4 探针实测装配零报错）；**但效果应用的像素级 A/B 证据未证实**
+（开/关对照不可归因，见 §3 G4 探针）。本篇如实记录"可装配、效果未证实"的现状。
 
 ## 1. 有什么
 
 | 成员 | d.ts | 实测 |
 | --- | --- | --- |
 | `camera.usePostProcess`（bool） | 21372–21373 | 赋值与读回正常（spike 读回 false/true） |
-| `camera.postProcess`（实例槽） | 21374–21375 | 读回 `null`；类型 `__private...PostProcess`，顶层导出无此类 |
+| `camera.postProcess`（实例槽） | 21374–21375 | 可挂 `postProcess.PostProcess` 组件（G4 探针装配成功） |
+| `postProcess` 命名空间（PostProcess 组件 + 设置类） | d.ts:55107 | `addSetting(BlitScreen/Bloom/…)` 装配零报错；效果像素证据缺 |
 | `PostProcessStage` / `BloomStage`（管线 stage 类） | 34907 / 导出表 | 类在导出面，无用户级 effect 列表或装配 API |
 | `scene.globals.postSettings.toneMappingType` | 21149 / 21004 | 见 [颜色管理](color-management.md) §1：两值枚举且本环境无像素效果 |
 
@@ -29,12 +30,21 @@ const ppType = ppInitial === null ? 'null' : typeof ppInitial;
             camera.usePostProcess = on;
 ```
 
-## 2. 没有什么（诚实清单）
+## 2. 有什么、缺什么（诚实清单）
 
-- **没有** `PostProcess` 组件/类的顶层导出 → 无法 `new` 一个后处理配置挂到相机槽；
-- **没有** 用户级效果列表（bloom / tone-mapping effect / FXAA 等的创作入口）；
-- **没有** 用户态后期 stage 组合面（无法把全屏效果逐 pass 串成链）；
-- 因此 `usePostProcess = true` 在槽为 `null` 时是**空转开关**（§3 字节级证实）。
+已具备（V1.2 起）：
+
+- `postProcess.PostProcess` **组件** + `BlitScreen/Bloom/ColorGrading/FSR/TAA` 设置类，
+  `addSetting`/`settings` 装配 API 可用（G4 探针：settings.size=2、挂 `camera.postProcess`、
+  `usePostProcess=true`，全程零报错）。
+
+仍缺（本篇保留 PARTIAL 的原因）：
+
+- **效果应用的像素级证据**：G4 探针 A/B——静态内容 + BlitScreen+Bloom(threshold 0.1/intensity 8)，
+  `usePostProcess` 开/关对照 `on1===off1`（无差异），而两次开态捕获 `on1!==on2`（非确定差异）——
+  无法把像素变化归因于效果参数，"装配成功"不等于"效果生效"；
+- 自定义 pass/材质装配链（官方 render-pipeline/post-process/custom 路线）未验证；
+- 故意编译错误定位（Shader 创作面）未验证，衔接 Shader 计划书。
 
 **当前可行的近似路**：手工 RT 合成——相机渲进 `RenderTexture`、全屏 quad 采样做后期，
 即 [渲染目标](rendertargets.md) 的路线；该路线本环境保真度 PARTIAL（灰 quad 问题在案），
@@ -50,8 +60,8 @@ const ppType = ppInitial === null ? 'null' : typeof ppInitial;
 ```
 post-process: camera.usePostProcess toggles every 3s
 now: usePostProcess=true
-camera.postProcess slot: null (PostProcess type not top-level exported)
-effects list: not exposed — see article §2
+camera.postProcess slot: null (empty slot; settings classes in postProcess namespace)
+effect application unproven (pixel A/B inconclusive) — see article §2/§4
 ```
 
 **A/B spike**（`.tmp-pp-spike.cjs`，静态场景仅 `usePostProcess` 不同，固化为
@@ -61,9 +71,10 @@ effects list: not exposed — see article §2
 
 ## 4. 设计与口径
 
-- AIR 的后处理设计是**引擎内建 PostProcess 组件**（Cocos 3.8 路线），但 AIR V0.1 导出面截断了创作层，只留开关与管线类。
-- 未来若放开创作面，预期是往 `camera.postProcess` 槽放组件化配置——
-  升级信号：`PostProcess` 进入顶层导出（届时本篇升 FULL 并补 bloom 示例）。
+- AIR 的后处理设计是**引擎内建 PostProcess 组件**（Cocos 3.8 路线）；V1.2 已放开装配面
+  （`postProcess` 命名空间），往 `camera.postProcess` 槽放组件化配置的路径已通。
+- 升级 FULL 的剩余信号：**像素级 A/B 可归因**（开/关或参数变化产生确定性像素差异）+
+  一个最小 bloom 示例进验证清单。
 - 色调映射放在 `scene.globals.postSettings`（[颜色管理](color-management.md) §1），
   与后处理开关**互不联动**（两者本环境均无像素效果，证据分别在两篇 §3）。
 
@@ -126,8 +137,9 @@ spike 对照 `docs/evidence/manual/pp-spike-{off,on}.png`（字节相同）；�
  * 配套文章：docs/manual/how-to-use-post-processing.md
  *
  * 实测相机上的后处理开关：camera.usePostProcess（bool）与 camera.postProcess（实例槽位）。
- * PostProcess 类型不在顶层导出（__private），本篇只演示开关与读回，不承诺效果实例可挂；
- * 每 3s 切换 usePostProcess 做 A/B，覆盖层打印读回值；立方体自转保证 frame-diff。
+ * PostProcess 组件与效果设置类已在 `postProcess` 命名空间导出（V1.2 custom-pipeline 出口），
+ * 但效果应用的像素级证据未证实（G4 探针：装配零报错、A/B 对照不可归因）——见文章 §2/§4。
+ * 本篇只演示开关与槽位读回；每 3s 切换 usePostProcess 做 A/B；立方体自转保证 frame-diff。
  */
 
 import {
@@ -214,8 +226,8 @@ class Cycler extends Component {
         info.textContent = [
             'post-process: camera.usePostProcess toggles every 3s',
             `now: usePostProcess=${camera.usePostProcess}`,
-            `camera.postProcess slot: ${ppType} (PostProcess type not top-level exported)`,
-            'effects list: not exposed — see article §2',
+            `camera.postProcess slot: ${ppType} (empty slot; settings classes in postProcess namespace)`,
+            'effect application unproven (pixel A/B inconclusive) — see article §2/§4',
         ].join('\n');
     }
 }

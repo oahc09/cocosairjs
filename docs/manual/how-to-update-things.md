@@ -274,3 +274,5 @@ console.log('[manual/update-things] running on cocosair');
 ---
 
 上一篇：[销毁对象（How to dispose of Objects）](how-to-dispose-of-objects.md) ｜ 下一篇：[后处理（How to use Post Processing）](how-to-use-post-processing.md)
+
+组件生命周期连续教程（onLoad/onEnable/onDisable/onDestroy 与启停、销毁再建）：[Component Lifecycle 组件生命周期](component-lifecycle.md)。

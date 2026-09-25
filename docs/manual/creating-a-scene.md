@@ -242,4 +242,5 @@ API 以 `build/cocosair.module.d.ts` 为准；本篇涉及：`createAirApp`、`S
 
 ## 下一步
 
-下一篇：[Creating Text 创建文字](./creating-text.md)（当前 N/A，会说明原因与替代路径）；想直接看渲染能力，跳到 [Drawing Lines 绘制线条](./drawing-lines.md)。
+下一篇：[Creating Text 创建文字](./creating-text.md)（UI `Label` 可用、3D 文字几何无，按路线说明）；想直接看渲染能力，跳到 [Drawing Lines 绘制线条](./drawing-lines.md)。
+组件从 `onLoad` 到 `onDestroy` 的完整回调序列与启停/销毁语义：[Component Lifecycle 组件生命周期](./component-lifecycle.md)。

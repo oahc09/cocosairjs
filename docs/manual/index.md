@@ -4,12 +4,31 @@
 > 内容全部映射到 AIR 的真实 API（Cocos 组件式 Code First）。
 > 正文中文，篇目标题保留英文原名以便检索。
 
-**条目账**：64 条目 → 60 篇文档（Tips 组 5 个锚点条目并入 [tips.md](./tips.md)）。
+**条目账**：64 条目 → 60 篇骨架文档（Tips 组 5 个锚点条目并入 [tips.md](./tips.md)）+ 索引；
+另有 **8 篇 Cocos 4.0 开发工作流专题**（见下方工作流组）与 1 份
+[覆盖矩阵台账](./cocos4-coverage-matrix.md)——合计磁盘 70 个 .md（69 篇文章 + 索引），
+由 `node tools/verify/manual-doc-consistency.cjs --strict` 核实。
 **状态图例**：`FULL` 能力完整可写 ｜ `PARTIAL` 部分能力，如实标注差距 ｜ `N/A` 当前不包含（诚实说明 + 近似替代）｜ `META` 元信息页（无示例）。
 **示例**：有 `▶` 标记的篇目配专属可运行示例，位于 `docs/manual/examples/manual-<slug>/`，
 `npm run dev` 后访问 `http://127.0.0.1:7454/manual/examples/manual-<slug>/`。
 
 ---
+
+## Cocos 4.0 开发工作流（对照官方指南补缺）
+
+> 官方 Cocos Creator 4.0 指南中 AIR 开发者最常用主题的 Code First 教程；
+> 逐主题「官方锚点 → AIR 三层证据 → 行动」对照见 [Cocos 4.0 覆盖矩阵](./cocos4-coverage-matrix.md)。
+
+| 篇目 | 状态 | 示例 |
+|---|---|---|
+| [Component Lifecycle 组件生命周期](./component-lifecycle.md) | FULL | ▶ `manual-component-lifecycle` |
+| [Input and Events 输入与事件](./input-and-events.md) | FULL | ▶ `manual-input-events` |
+| [Asset Loading and Lifetime 资源加载与生命周期](./asset-loading-and-lifetime.md) | FULL | ▶ `manual-asset-lifecycle` |
+| [2D/UI 快速上手](./2d-ui.md) | FULL | – |
+| [UI Layout and Interaction 布局与交互](./ui-layout-and-interaction.md) | FULL | – |
+| [Physics 2D and 3D 碰撞、层与后端](./physics-2d-and-3d.md) | FULL | – |
+| [音频、视频与 WebView](./audio-video-webview.md) | FULL | – |
+| [2D 资产与效果](./2d-assets-and-effects.md) | PARTIAL | – |
 
 ## Getting Started（入门）
 
@@ -17,7 +36,7 @@
 |---|---|---|
 | [Installation 安装与引入](./installation.md) | FULL | ▶ `manual-installation` |
 | [Creating a Scene 创建场景](./creating-a-scene.md) | FULL | ▶ `manual-creating-a-scene` |
-| [Creating Text 创建文字](./creating-text.md) | N/A | – |
+| [Creating Text 创建文字](./creating-text.md) | PARTIAL | – |
 | [Drawing Lines 绘制线条](./drawing-lines.md) | PARTIAL | ▶ `manual-drawing-lines` |
 | [FAQ 常见问题](./faq.md) | META | – |
 | [Libraries and Plugins 库与插件](./libraries-and-plugins.md) | META | – |
@@ -63,7 +82,7 @@
 | [Fog 雾](./fog.md) | FULL | ▶ `manual-fog` |
 | [Render Targets 渲染目标](./rendertargets.md) | PARTIAL | ▶ `manual-render-targets` |
 | [Custom BufferGeometry 自定义几何](./custom-buffergeometry.md) | FULL | ▶ `manual-custom-geometry` |
-| [Physics 物理](./physics.md) | N/A | – |
+| [Physics 物理](./physics.md) | FULL | – |
 
 ## Tips（技巧）
 
@@ -131,9 +150,15 @@
 
 ## 能力边界总说明
 
-标 `N/A` 的篇目对应 [README §Air V0.1 能力边界](../../README.md)中"不包含"的部分：
-2D/UI、物理、Spine/DragonBones、音视频、地形、XR、WebGPU、MiniGame、Native。
-这些篇目仍保留条目并如实说明现状与近似替代方案，不做能力伪装。
+本手册骨架沿用 three.js manual 的 10 组 64 条目；在此之外，AIR 已按当前公开导出面提供
+**组件生命周期、输入事件、资源加载与释放、2D/UI（Label/Button/Layout 等）、2D/3D 物理、
+音视频、DragonBones/TiledMap/2D 粒子** 等 Cocos 工作流能力。逐主题的
+「官方指南锚点 → AIR 三层证据（源码导出 / 默认 bundle / 浏览器行为）→ 页面/示例」对照见
+[Cocos 4.0 覆盖矩阵](./cocos4-coverage-matrix.md)，各主题的工作流教程见下方「Cocos 4.0 开发工作流」组。
+
+仍不包含（官方指南有此流程，但 AIR 当前发行目标或公开工作流不同）：Creator 编辑器/Inspector/
+Prefab 资源绑定、原生 JSB、各平台发布、地形、XR、WebGPU、MiniGame、Native、Spine（导出面在、
+浏览器验证缺，单列 `待验证`）。相关 `N/A` 篇目如实说明现状与近似替代，不做能力伪装。
 
 ## 运行示例
 

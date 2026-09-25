@@ -32,7 +32,7 @@ PBR 正确行为：金属无漫反射，镜面又需要环境（IBL/天空盒）
 
 ## 怎么做文字？
 
-导出面没有 3D 文字几何也没有 `Label`。用 DOM 覆盖层（本手册做法）、canvas 贴图、或 HTML 对齐到 3D。见 [Creating Text](./creating-text.md)。
+屏幕 UI 文字用 `Label` 组件（挂在 `Canvas` 层级下，`label.string = '...'` 即出字）；世界空间的文字牌用 canvas 贴图；要 DOM 清晰度用 HTML 对齐到 3D。3D 文字几何（字体解析生成 mesh）导出面没有，用 canvas 贴图路替代。见 [Creating Text](./creating-text.md)。
 
 ## 手册示例和引擎示例（examples/）什么关系？
 

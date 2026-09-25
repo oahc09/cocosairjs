@@ -3,8 +3,9 @@
  * 配套文章：docs/manual/how-to-use-post-processing.md
  *
  * 实测相机上的后处理开关：camera.usePostProcess（bool）与 camera.postProcess（实例槽位）。
- * PostProcess 类型不在顶层导出（__private），本篇只演示开关与读回，不承诺效果实例可挂；
- * 每 3s 切换 usePostProcess 做 A/B，覆盖层打印读回值；立方体自转保证 frame-diff。
+ * PostProcess 组件与效果设置类已在 `postProcess` 命名空间导出（V1.2 custom-pipeline 出口），
+ * 但效果应用的像素级证据未证实（G4 探针：装配零报错、A/B 对照不可归因）——见文章 §2/§4。
+ * 本篇只演示开关与槽位读回；每 3s 切换 usePostProcess 做 A/B；立方体自转保证 frame-diff。
  */
 
 import {
@@ -91,8 +92,8 @@ class Cycler extends Component {
         info.textContent = [
             'post-process: camera.usePostProcess toggles every 3s',
             `now: usePostProcess=${camera.usePostProcess}`,
-            `camera.postProcess slot: ${ppType} (PostProcess type not top-level exported)`,
-            'effects list: not exposed — see article §2',
+            `camera.postProcess slot: ${ppType} (empty slot; settings classes in postProcess namespace)`,
+            'effect application unproven (pixel A/B inconclusive) — see article §2/§4',
         ].join('\n');
     }
 }

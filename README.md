@@ -97,7 +97,7 @@ cocosair.js/
 
 ## 文档
 
-- [Cocos AIR 开发手册](docs/manual/index.md) — 对齐 three.js manual 的 60 篇条目与状态、57 个零外部资产可运行示例（23 类，见 `examples/files.json`）、能力边界总说明
+- [Cocos AIR 开发手册](docs/manual/index.md) — 对齐 three.js manual 的 64 条目（60 篇骨架文章 + 索引）+ 8 篇 Cocos 4.0 工作流专题与[覆盖矩阵](docs/manual/cocos4-coverage-matrix.md)；44 个零外部资产手册示例（`docs/manual/examples/`，`manual-examples-verify.cjs` 44/44）+ 58 个主示例（23 类，见 `examples/files.json`）；能力边界总说明
 - [V1.2 特性回归总账](docs/v12-upstream-regression.md) — 16 组逐组状态（verified / 部分交付 / blocked）与护栏现状
 - [V1.2 验收报告](docs/acceptance-report-v12.md) — 门禁逐条现读（含仍 FAIL 项）、证据指针、未达项归因
 - [V1.2 范围外残留差集分类](docs/v12-d9-residual-triage.md) — 14 项逐条理由 + 纳入成本 + 可复跑判据（D9 提案，待批复）

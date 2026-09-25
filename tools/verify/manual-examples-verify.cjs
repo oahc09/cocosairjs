@@ -6,6 +6,12 @@
  *   2. visible-frame：画布非背景像素占比 ≥1%（背景以四角采样自适应，不硬编码清屏色）
  *   3. frame-diff（仅动画类示例声明）：相隔 400ms 双帧 PNG 不同
  *   4. app-contract：window.__airApp 必须在超时内出现（每个手册示例末尾固定挂载）
+ *   5. state-probe（可选契约）：示例可暴露 window.__manualProbe() → { ready, ok, checks }；
+ *      验证器轮询至 ready（30s 上限），ready 后 ok===true 才 PASS。帧差不证明逻辑正确——
+ *      回调次序/监听清理/资源释放这类行为断言由示例自证、本检查读回，计划书 §五.3 的最小扩展。
+ *
+ * 控制台豁免（CONSOLE_ALLOWLIST）：做"故意失败路径"用例的示例（如 404 资产加载）必然产生浏览器
+ * 网络状态 console.error——按示例名单豁免，但计入 detail 与证据（可审计），其余 error 仍判 FAIL。
  *
  * 执行：NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-verify.cjs [--ids=manual-a,manual-b]
  * 产出：docs/evidence/manual-examples-verified.json + docs/evidence/examples/manual-<slug>.png
@@ -30,6 +36,11 @@ const FRAME_GAP_MS = 400;
 const PER_EXAMPLE_TIMEOUT = 120000;
 const GRID = 12; // 12×12 采样网格
 
+// 故意失败路径用例的浏览器网络状态日志豁免（仅网络层 "Failed to load resource"，引擎/页面错误不豁免）
+const CONSOLE_ALLOWLIST = new Map([
+  ['manual-asset-lifecycle', /Failed to load resource:/],
+]);
+
 const args = process.argv.slice(2);
 const idsArg = args.find((a) => a.startsWith('--ids='));
 const targetIds = idsArg ? new Set(idsArg.slice(6).split(',').map((s) => s.trim()).filter(Boolean)) : null;
@@ -43,6 +54,7 @@ const ANIMATED = new Set([
   'manual-post-processing',
   'manual-tips-keyboard', 'manual-picking', 'manual-align-html', 'manual-mini-game',
   'manual-lots-of-objects', 'manual-rendering-on-demand', 'manual-loading-models',
+  'manual-component-lifecycle', 'manual-input-events', 'manual-asset-lifecycle',
 ]);
 
 let playwright;
@@ -217,7 +229,14 @@ async function runOne (id, browser) {
     context = await browser.newContext({ viewport: { width: 640, height: 480 } });
     const page = await context.newPage();
     const consoleErrors = [];
-    page.on('console', (m) => { if (m.type() === 'error') { consoleErrors.push(m.text().slice(0, 300)); } });
+    const allowRe = CONSOLE_ALLOWLIST.get(id) || null;
+    let allowedConsole = 0;
+    page.on('console', (m) => {
+      if (m.type() !== 'error') { return; }
+      const text = m.text().slice(0, 300);
+      if (allowRe && allowRe.test(text)) { allowedConsole++; return; }
+      consoleErrors.push(text);
+    });
     page.on('pageerror', (e) => { errors.push(String(e && e.message || e).slice(0, 300)); });
 
     await page.goto(`http://127.0.0.1:${port}/index.html`, { waitUntil: 'load', timeout: 30000 });
@@ -249,7 +268,9 @@ async function runOne (id, browser) {
 
     const allErrors = [...consoleErrors, ...errors];
     push('no-runtime-error', allErrors.length === 0,
-      allErrors.length === 0 ? 'clean' : allErrors.slice(0, 2).join(' | '));
+      allErrors.length === 0
+        ? (allowedConsole > 0 ? `clean (${allowedConsole} allowed network 404)` : 'clean')
+        : allErrors.slice(0, 2).join(' | '));
 
     let frameDiffers = null;
     if (ANIMATED.has(id)) {
@@ -261,6 +282,38 @@ async function runOne (id, browser) {
     } else {
       artifact = saveArtifact(id, first.png);
     }
+
+    // state-probe（可选契约）：见文件头判据 5。无 __manualProbe 的示例跳过，不影响存量语义。
+    let probePass = true;
+    let probeDetail = 'no __manualProbe (skipped)';
+    try {
+      const hasProbe = await page.evaluate(() => typeof window.__manualProbe === 'function');
+      if (hasProbe) {
+        const deadline = Date.now() + 30000;
+        let probe = null;
+        while (Date.now() < deadline) {
+          probe = await page.evaluate(() => window.__manualProbe());
+          if (probe && probe.ready) { break; }
+          await new Promise((r) => setTimeout(r, 500));
+        }
+        if (!probe) {
+          probePass = false; probeDetail = 'probe returned nothing';
+        } else if (!probe.ready) {
+          probePass = false;
+          probeDetail = `probe not ready within 30s (phase=${probe.phase || '?'}${probe.driverError ? ' driverError=' + String(probe.driverError).slice(0, 160) : ''}${probe.order ? ' order=' + probe.order.join(',') : ''})`;
+        } else {
+          const fails = (probe.checks || []).filter((c) => !c.pass);
+          probePass = probe.ok === true && fails.length === 0;
+          probeDetail = probe.ok === true
+            ? `ok (${(probe.checks || []).length} assertions)`
+            : `ok=${probe.ok} failed=[${fails.map((c) => `${c.name}:${c.detail}`).join(' | ') || '?'}]`;
+        }
+      }
+    } catch (e) {
+      probePass = false;
+      probeDetail = 'probe threw: ' + String(e && e.message || e).slice(0, 120);
+    }
+    push('state-probe', probePass, probeDetail);
 
     const pass = checks.every((c) => c.result === 'PASS');
     return {
