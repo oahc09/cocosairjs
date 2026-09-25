@@ -141723,6 +141723,7 @@ function seedDefaultPhysicsMaterial() {
   material.name = 'default-physics-material';
   builtinResMgr.addAsset('default-physics-material', material);
 }
+seedDefaultPhysicsMaterial();
 
 function ensureCanvasDOM(canvas) {
   if (document.body && !canvas.parentElement) {

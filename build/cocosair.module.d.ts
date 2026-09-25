@@ -55665,6 +55665,12 @@
         canvas: HTMLCanvasElement | string;
         /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
         renderMode?: number;
+        /**
+         * 可选：交付期 3D 物理后端（V1.2 owner 批复 #8(a)，additive；默认 `'builtin'`）。
+         * `'cannon'` 使用 cannon.js 全量刚体模拟（纯 JS，默认 bundle 已编入）；
+         * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
+         */
+        physics?: "builtin" | "cannon";
     }
     export interface AirApp {
         /** @en The canvas this app renders into. @zh 本应用渲染目标画布（构造时传入）。 */
@@ -55706,6 +55712,32 @@
      * ```
      */
     export function createAirApp(options: AirAppOptions): Promise<AirApp>;
+    /**
+     * @en Select the 3D physics backend before engine initialization. Must be called before
+     * `game.init()` (Air does this inside [[createAirApp]]); after the physics world exists
+     * the official `switchTo` is editor-only, so late selection is rejected instead of ignored.
+     * @zh 在引擎初始化前选择 3D 物理后端。必须在 `game.init()` 之前调用（createAirApp 内部已保证）；
+     * 物理世界创建后官方 `switchTo` 仅编辑器面放行，此处显式报错而非静默忽略。
+     *
+     * @throws 当请求的后端不在当前 bundle（未编入对应 feature）时；当选得过晚（物理世界已创建）时。
+     */
+    export function selectPhysicsBackend(backend: AirPhysicsBackend): void;
+    /**
+     * Cocos AIR — 交付期 3D 物理后端选择（V1.2 owner 批复 #8(a) = D12，additive API）。
+     *
+     * 官方 physics-selector 的语义是「初始化前最后注册的后端胜出」。Air 把 builtin 与 cannon
+     * 两个后端同时编入默认 bundle（AIR_FEATURES，r46 起），模块求值顺序决定谁的 register 最后执行，
+     * 因此 createAirApp 必须在 game.init（PhysicsSystem 于 DirectorEvent.INIIT 构造）之前
+     * 显式重注册用户选择的后端，使默认行为不受模块顺序影响。
+     *
+     * 本文件为 Air 原创（上游 cocos4 无同名文件），登记于 docs/upstream-file-map.json（Air 新增行）。
+     */
+    /**
+     * @en Air-level physics backend id. @zh Air 层物理后端标识（交付期可选项）。
+     * - `'builtin'`：官方内置离散碰撞检测器（非完整模拟器，零外部依赖）。
+     * - `'cannon'`：cannon.js 全量刚体模拟（纯 JS，来自 vendored `@cocos/cannon`）。
+     */
+    export type AirPhysicsBackend = "builtin" | "cannon";
     /**
      * @en Promise wrapper for engine asset loading (resources.load when available,
      *     otherwise the Code First global assets registry keyed by path).
