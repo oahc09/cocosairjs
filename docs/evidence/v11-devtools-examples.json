@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-09-21T22:47:03.629Z",
+  "measuredAt": "2026-09-25T07:29:22.698Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "9fa85f88b968d5f1",
+  "candidateFingerprint": "f6036adc8526e925",
   "apiProofTotals": {
     "verified": 76,
     "attested": 11,
@@ -17,13 +17,13 @@
       "result": "PASS",
       "specFingerprint": "c00b9e5f3a5a",
       "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 11,
-        "bytes": 44571,
-        "hash": "569fab09020da183",
+        "bytes": 45010,
+        "hash": "525aa08f3d34cc73",
         "notes": [],
         "observed": 8,
         "total": 11
@@ -321,7 +321,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -338,13 +338,13 @@
       "result": "PASS",
       "specFingerprint": "86059190543b",
       "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 18,
-        "bytes": 44883,
-        "hash": "b6b4080be0a34cf7",
+        "bytes": 45322,
+        "hash": "aea4d2677af37982",
         "notes": [],
         "observed": 17,
         "total": 18
@@ -753,7 +753,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -770,13 +770,13 @@
       "result": "PASS",
       "specFingerprint": "deb988a9d823",
       "sourceFingerprint": "20070fba85c22df4",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 20,
-        "bytes": 44940,
-        "hash": "4402ca65b1f8acf4",
+        "bytes": 45379,
+        "hash": "48ff18f4e9d29254",
         "notes": [],
         "observed": 17,
         "total": 20
@@ -1242,7 +1242,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1259,13 +1259,13 @@
       "result": "PASS",
       "specFingerprint": "2be94727b2c1",
       "sourceFingerprint": "ad473b671a41e764",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 19,
-        "bytes": 44914,
-        "hash": "d4cb4bc8c63b3ee0",
+        "bytes": 45353,
+        "hash": "9a1da61ab854c6ce",
         "notes": [],
         "observed": 17,
         "total": 19
@@ -1712,7 +1712,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1729,13 +1729,13 @@
       "result": "PASS",
       "specFingerprint": "495816944ba8",
       "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 19,
-        "bytes": 44913,
-        "hash": "24297c112f7e7d9d",
+        "bytes": 45352,
+        "hash": "c1d56144f328deb7",
         "notes": [],
         "observed": 17,
         "total": 19
@@ -2181,13 +2181,13 @@
       "result": "PASS",
       "specFingerprint": "c00b9e5f3a5a",
       "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 11,
-        "bytes": 44571,
-        "hash": "569fab09020da183",
+        "bytes": 45010,
+        "hash": "525aa08f3d34cc73",
         "notes": [],
         "observed": 8,
         "total": 11
@@ -2485,7 +2485,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2502,13 +2502,13 @@
       "result": "PASS",
       "specFingerprint": "86059190543b",
       "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 18,
-        "bytes": 44883,
-        "hash": "b6b4080be0a34cf7",
+        "bytes": 45322,
+        "hash": "aea4d2677af37982",
         "notes": [],
         "observed": 17,
         "total": 18
@@ -2917,7 +2917,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2934,13 +2934,13 @@
       "result": "PASS",
       "specFingerprint": "deb988a9d823",
       "sourceFingerprint": "20070fba85c22df4",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 20,
-        "bytes": 44940,
-        "hash": "4402ca65b1f8acf4",
+        "bytes": 45379,
+        "hash": "48ff18f4e9d29254",
         "notes": [],
         "observed": 17,
         "total": 20
@@ -3406,7 +3406,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3423,13 +3423,13 @@
       "result": "PASS",
       "specFingerprint": "2be94727b2c1",
       "sourceFingerprint": "ad473b671a41e764",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 19,
-        "bytes": 44914,
-        "hash": "d4cb4bc8c63b3ee0",
+        "bytes": 45353,
+        "hash": "9a1da61ab854c6ce",
         "notes": [],
         "observed": 17,
         "total": 19
@@ -3876,7 +3876,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3893,13 +3893,13 @@
       "result": "PASS",
       "specFingerprint": "495816944ba8",
       "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "9fa85f88b968d5f1",
+      "candidateFingerprint": "f6036adc8526e925",
       "instrumentation": {
         "name": "cocosair.traced.js",
-        "exports": 574,
+        "exports": 575,
         "unitCount": 19,
-        "bytes": 44913,
-        "hash": "24297c112f7e7d9d",
+        "bytes": 45352,
+        "hash": "c1d56144f328deb7",
         "notes": [],
         "observed": 17,
         "total": 19

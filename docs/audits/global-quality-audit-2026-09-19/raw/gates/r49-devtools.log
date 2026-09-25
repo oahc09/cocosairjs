@@ -1,0 +1,9 @@
+Verifying 5 DevTools examples (spec-driven session contract)...
+PASS automation 
+PASS rc-capture-frame 
+PASS rc-create-node 
+PASS rc-error-report 
+PASS rc-inspect-scene 
+
+== DevTools examples: 5/5 PASS, runtime bundle boundary PASS, 5 promoted / 0 demoted (stable 需逐 API 证明无 unproven) ==
+DEVTOOLS_EXIT=0

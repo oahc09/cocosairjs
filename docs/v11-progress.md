@@ -161,3 +161,7 @@
 - `examples/files.json`（single source of truth，§23 裁剪）：45 examples / 14 categories，
   由 `tools/examples/generate-manifest.cjs` 生成，已含 `bench` 合同字段透传，
   5 个 `requiresDevTools` 示例（automation + rc-*×4）在清单中标记并从浏览器矩阵剔除
+
+> **〔r49 判定（2026-09-25）〕V1.1 按任务书定义未完成验收**：Core 6.9% / Important 1.1% / Advanced N/A
+> 对 100%/90%/80%，Stable 57/120 —— 四项 Release 门槛全部未达（明细 `docs/v06-v10-release-gates.md`
+> r49 章节）。r48 棘轮是防回归地板，不是验收豁免。DevTools 5 例证据已当期刷新（5/5 PASS）。

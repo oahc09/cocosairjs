@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-25T04:11:24.569Z",
+  "generatedAt": "2026-09-25T07:30:02.653Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
@@ -12,7 +12,7 @@
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-21T22:47:03.629Z",
+      "measuredAt": "2026-09-25T07:29:22.698Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -34,13 +34,7 @@
   "totalVerifiedViaCall": 168,
   "totalVerifiedViaRead": 14,
   "totalVerifiedViaUnknown": 0,
-  "staleEvidenceExamples": [
-    "automation",
-    "rc-capture-frame",
-    "rc-create-node",
-    "rc-error-report",
-    "rc-inspect-scene"
-  ],
+  "staleEvidenceExamples": [],
   "claimsNotInInventory": [
     "DevToolsSession.inspectScene",
     "DevToolsSession.dispatch",
@@ -130,25 +124,25 @@
     {
       "id": "automation",
       "result": "PASS",
-      "fresh": false,
+      "fresh": true,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": false
+        "candidate": true
       },
       "hasApiProof": true,
       "instrumentation": {
         "observed": 8,
         "total": 11,
-        "hash": "569fab09020da183"
+        "hash": "525aa08f3d34cc73"
       },
       "claims": 11,
       "tally": {
-        "verified": 0,
-        "attested": 0,
-        "claimedOnly": 9,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "verified": 8,
+        "attested": 1,
+        "claimedOnly": 0,
+        "verifiedCall": 7,
+        "verifiedRead": 1
       }
     },
     {
@@ -1062,97 +1056,97 @@
     {
       "id": "rc-capture-frame",
       "result": "PASS",
-      "fresh": false,
+      "fresh": true,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": false
+        "candidate": true
       },
       "hasApiProof": true,
       "instrumentation": {
         "observed": 17,
         "total": 18,
-        "hash": "b6b4080be0a34cf7"
+        "hash": "aea4d2677af37982"
       },
       "claims": 18,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "rc-create-node",
       "result": "PASS",
-      "fresh": false,
+      "fresh": true,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": false
+        "candidate": true
       },
       "hasApiProof": true,
       "instrumentation": {
         "observed": 17,
         "total": 20,
-        "hash": "4402ca65b1f8acf4"
+        "hash": "48ff18f4e9d29254"
       },
       "claims": 20,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "rc-error-report",
       "result": "PASS",
-      "fresh": false,
+      "fresh": true,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": false
+        "candidate": true
       },
       "hasApiProof": true,
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "d4cb4bc8c63b3ee0"
+        "hash": "9a1da61ab854c6ce"
       },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
       "id": "rc-inspect-scene",
       "result": "PASS",
-      "fresh": false,
+      "fresh": true,
       "binding": {
         "spec": true,
         "source": true,
-        "candidate": false
+        "candidate": true
       },
       "hasApiProof": true,
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "24297c112f7e7d9d"
+        "hash": "c1d56144f328deb7"
       },
       "claims": 19,
       "tally": {
-        "verified": 0,
+        "verified": 17,
         "attested": 0,
-        "claimedOnly": 17,
-        "verifiedCall": 0,
-        "verifiedRead": 0
+        "claimedOnly": 0,
+        "verifiedCall": 16,
+        "verifiedRead": 1
       }
     },
     {
@@ -1527,6 +1521,7 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1564,6 +1559,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1586,6 +1585,7 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1623,6 +1623,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1645,6 +1649,7 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1682,6 +1687,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1703,6 +1712,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1729,6 +1739,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "static-model",
         "texture-basic",
         "transform",
@@ -1779,6 +1793,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -1827,6 +1845,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "texture-basic",
         "tween-basic"
@@ -1877,6 +1899,7 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -1913,6 +1936,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "starter",
         "texture-basic",
@@ -1964,6 +1991,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "static-model",
         "texture-basic",
@@ -2007,6 +2038,10 @@
         "node-hierarchy",
         "node-scale",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -2041,6 +2076,10 @@
         "node-scale",
         "physics-3d-basic",
         "physics-3d-collision",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "skinned-animation",
         "static-model",
         "texture-basic"
@@ -2072,6 +2111,10 @@
         "node-scale",
         "physics-3d-basic",
         "physics-3d-collision",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "skinned-animation",
         "texture-basic"
       ]
@@ -2102,6 +2145,10 @@
         "node-scale",
         "physics-3d-basic",
         "physics-3d-collision",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "texture-basic"
       ]
     },
@@ -2112,6 +2159,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -2137,6 +2185,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "static-model",
         "texture-basic",
         "transform",
@@ -2150,6 +2202,7 @@
       "examples": [
         "anim-position",
         "anim-rotation",
+        "automation",
         "camera",
         "camera-ortho",
         "hello-cube",
@@ -2168,6 +2221,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "texture-basic",
         "transform",
         "tween-basic"
@@ -2181,6 +2238,7 @@
         "anim-position",
         "anim-rotation",
         "audio-basic",
+        "automation",
         "camera",
         "camera-lookat",
         "camera-multi",
@@ -2218,6 +2276,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "starter",
@@ -2268,6 +2330,10 @@
         "physics-3d-basic",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "static-model",
@@ -2307,6 +2373,10 @@
         "node-scale",
         "physics-3d-collision",
         "profiler-overlay",
+        "rc-capture-frame",
+        "rc-create-node",
+        "rc-error-report",
+        "rc-inspect-scene",
         "runtime-asset-release",
         "skinned-animation",
         "texture-basic",
@@ -3855,6 +3925,7 @@
       "unit": "builtinResMgr",
       "tier": "core",
       "examples": [
+        "automation",
         "camera",
         "hello-cube",
         "input",

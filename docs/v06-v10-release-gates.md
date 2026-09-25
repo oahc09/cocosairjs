@@ -72,3 +72,25 @@ Owner 指令「完成剩余事项」（r48 批复登记 `docs/v12-owner-decision
 **发布姿态**：除 agentGate（外部 LLM 凭据依赖）外，全局审计 10 项阻塞中 9 项在当前 HEAD 有机器证据解除
 （逐项判定见 `docs/audits/global-quality-audit-2026-09-19/r48-recheck-addendum.md`）。
 `npm publish` 未执行——需要明确指令与发布凭据。
+
+## r49 治理修正（2026-09-25，owner 复核「V1.1 Release Gate 未满足」判定）
+
+Owner 复核否决「棘轮 PASS 可读作 V1.1 验收通过」的解释。r48 的重定标语义收敛为**防回归地板**
+（下限只升不降），**不构成对 V1.1 任务书验收门槛的满足或豁免**。按任务书原文（§86 / line 1898）：
+
+| V1.1 Release 门槛 | 任务书要求 | 当期实际 | 判定 |
+|---|---|---|---|
+| CoreVerifiedRate | 100% | 6.9%（56/816） | **未达** |
+| ImportantVerifiedRate | ≥ 90% | 1.1%（20/1773） | **未达** |
+| AdvancedVerifiedRate | ≥ 80% | N/A（coverageRequired=0） | **未达**（分母口径另行决策） |
+| Stable Examples | ≥ 120 | 57 | **未达**（缺口 63，内容型工程） |
+
+⇒ **V1.1 Release Gate：未满足。** 当前仓库不处于可发布状态；达成路径 = 63 个新 stable 示例 +
+覆盖率按 Wave 推进（或 owner 正式修订任务书——修订属计划变更，非本文件可自行宣布）。
+
+同轮清偿：DevTools 5 例证据刷新（2026-09-25T07:29Z，5/5 PASS + runtime 边界 + 5 promoted，
+`docs/evidence/v11-devtools-examples.json`）；coverage 报告 staleEvidence 当期为空（用户所引 7 条
+stale 为重采中途快照）。gltf-draco S25 warn 维持为**已知边界**而非缺陷：随包 draco3d.js 为 Node
+形态（CommonJS），浏览器正向解码所需 emscripten glue 不在 shipped 集（与 wasm 资产缺口 R8 同族）；
+能力面无越界宣称（catalog：decoder-required/smoke），解堵路径 = P2 资产通道 vendor 浏览器版
+draco_decoder.js（需 owner 授权资产引入）。

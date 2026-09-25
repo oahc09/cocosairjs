@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-25T03:49:02.150Z",
-  "revision": "dba6a4f",
+  "generatedAt": "2026-09-25T07:29:22.931Z",
+  "revision": "710fb00",
   "examples": [
     {
       "dir": "anim-position",
@@ -406,7 +406,7 @@
       "promotion": {
         "spec": "c00b9e5f3a5a",
         "source": "4b4c481434e58eab",
-        "candidate": "9fa85f88b968d5f1",
+        "candidate": "f6036adc8526e925",
         "verified": 8,
         "attested": 3,
         "units": 11
@@ -4515,7 +4515,7 @@
       "promotion": {
         "spec": "86059190543b",
         "source": "9c24eade6728d6e4",
-        "candidate": "9fa85f88b968d5f1",
+        "candidate": "f6036adc8526e925",
         "verified": 17,
         "attested": 1,
         "units": 18
@@ -4612,7 +4612,7 @@
       "promotion": {
         "spec": "deb988a9d823",
         "source": "20070fba85c22df4",
-        "candidate": "9fa85f88b968d5f1",
+        "candidate": "f6036adc8526e925",
         "verified": 17,
         "attested": 3,
         "units": 20
@@ -4704,7 +4704,7 @@
       "promotion": {
         "spec": "2be94727b2c1",
         "source": "ad473b671a41e764",
-        "candidate": "9fa85f88b968d5f1",
+        "candidate": "f6036adc8526e925",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -4799,7 +4799,7 @@
       "promotion": {
         "spec": "495816944ba8",
         "source": "b164c0231173bf02",
-        "candidate": "9fa85f88b968d5f1",
+        "candidate": "f6036adc8526e925",
         "verified": 17,
         "attested": 2,
         "units": 19

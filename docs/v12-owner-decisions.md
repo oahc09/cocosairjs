@@ -143,3 +143,14 @@
 | License（审计 3 项） | ① draco/meshopt fixture 补 attribution sidecar（自建资产，无第三方版权）；② spine 批复「保留默认产物 + 显式 Spine Editor 条件声明」；③ engine-pal 风险接受（门禁新增 `riskAccepted` 通道，输出 RISK-ACCEPTED 标记，不冒充许可清晰） | `examples/*/assets/*.LICENSE.md`、`docs/license-decisions.json`、`THIRD_PARTY_LICENSES.md`、`tools/v12/verify-licenses.cjs` |
 | 版本号 | 0.1.0 → **1.2.0**（对齐 V1.2 里程碑；AIR_VERSION 同步，smoke-01 锁定）；tarball/registry 核对执行，**npm publish 仍需单独指令** | `package.json`、`src/air/app.ts` |
 | agentGate | 维持 NOT_RUN 结案：契约要求真实 LLM 端点（≥100 分 × ≥3 重复、冻结候选、全重试保留），本环境无 LLM API 凭据；`tools/benchmark/providers/` 适配器为实现入口（v06-v10-release-gates.md §缺口行）。**唯一剩余外部依赖项** | `docs/v06-v10-release-gates.md`、审计复核附录 |
+
+## 6. r49 复核记录（2026-09-25）
+
+Owner 复核结论「V1.1 Release Gate 未满足、当前不可发布」——登记如下并已回写各归属文档：
+
+1. **#18 再更正**：r48 重定标的正确读法 = 防回归地板（棘轮），**不得**读作 V1.1 验收通过或豁免；
+   V1.1 原门槛（100/90/80 + 120 stable）维持任务书效力，达成或正式修订计划前 Release Gate 判 NOT MET。
+2. DevTools 证据过期：已清偿（当期刷新 5/5 PASS，2026-09-25T07:29Z）。
+3. gltf-draco S25 warn：裁定为已知边界（浏览器解码 glue 不随包，R8 同族），非示例缺陷；
+   解堵需 owner 授权引入浏览器版 draco_decoder.js（P2 通道）。
+4. Stable 数量缺口 63：内容型工程，属后续 Wave 范围，本会话不虚假补齐。
