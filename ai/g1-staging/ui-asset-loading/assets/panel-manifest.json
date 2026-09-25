@@ -1,0 +1,6 @@
+{
+  "name": "ui-asset-loading",
+  "tone": "#3a8f4e",
+  "items": 3,
+  "description": "P2 成功路径的 URL 加载资产（loadAssetAsync 非序列化格式回退纯 JSON）"
+}

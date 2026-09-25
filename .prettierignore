@@ -1,0 +1,39 @@
+# G3 格式化范围纪律（计划书 §3 G3）：
+# 首批只覆盖 examples/、docs/manual/examples/、tools 自有新代码与相关文档。
+# src/cocos/** 等逐字节跟踪的上游抽取文件排除（verify:file-map 合同）。
+
+# 依赖与构建产物
+node_modules/
+build/
+output/
+bin/
+package-lock.json
+
+# 上游抽取源码（逐字节跟踪，不得重排）
+src/
+
+# 生成物与证据（由工具再生成，手改即漂移）
+examples/files.json
+examples/gallery.html
+docs/evidence/
+docs/audits/
+docs/api-coverage-report.json
+docs/example-api-inventory.json
+docs/test-inventory.json
+docs/upstream-file-map.json
+docs/extraction-manifest.json
+docs/license-decisions.json
+
+# 许可原文
+licenses/
+THIRD_PARTY_LICENSES.md
+**/*.LICENSE.md
+
+# 既有 tools（触达时再迁移，避免纯格式改动淹没行为改动）
+tools/**
+!tools/verify/g1-trial-run.cjs
+!tools/verify/g4-shader-probe.cjs
+!tools/debug/g1-spec-fixlines.cjs
+
+# 计划/工作区文档（长中文行不强制重排）
+ai/*.md

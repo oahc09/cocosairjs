@@ -1,0 +1,58 @@
+# Cocos Air V0.1
+node_modules/
+# V1.2 P1：引擎根内的 vendored 运行库（tools/v12/vendor-pkg.cjs 逐字节复制，必须入库以满足「源码自包含」）
+!src/node_modules/
+bin/
+build/.tmp-*/
+*.log
+.playwright-cli/
+
+# 本机智能体工作数据
+.workbuddy/
+
+# 瞬态验证产物与构建临时目录（V0.3）
+output/
+build/.dts-*/
+build/.dev-log.txt
+.tmp-basis\n
+
+# V1.1 Gallery 发布 Artifact（可再生，tools/verify/v11-gallery-artifact.cjs build）
+build/examples/
+
+# F-54：审计原始日志/证据必须入库（覆写上表 *.log 规则），避免逐份 git add -f
+!docs/audits/**/raw/**
+
+# owner-decisions #12(a)：V1.2 证据目录的诊断日志同规则解禁（r46 批复入库）。
+# 范围收敛在 docs/evidence/v12/**（#12 对象是 d10/*.log）；v06/v08 的测试瞬态日志仍按 *.log 忽略。
+!docs/evidence/v12/**/*.log
+
+# ===== ↑ 以上同步自 .gitignore（「从 .gitignore 同步」只重写以上部分）=====
+.git/
+.hg/
+.svn/
+bower_components/
+jspm_packages/
+__pycache__/
+site-packages/
+venv/
+coverage/
+htmlcov/
+lcov-report/
+cmakefiles/
+cmake-build-*/
+bazel-*/
+pods/
+deriveddata/
+storybook-static/
+playwright-report/
+test-results/
+allure-results/
+allure-report/
+cdk.out/
+*.egg-info/
+*.dist-info/
+eggs/
+pip-wheel-metadata/
+wheels/
+# ----- ↑ 以上为 ZCode 默认排除规则（自定义规则请写在本行下方，不会被同步/恢复改动）-----
+# 自定义规则写在下方（本行提示可删除）

@@ -66,7 +66,9 @@
   "verify:v12-feature-face": "node tools/v12/verify-feature-face.cjs",
   "verify:v11-chain-face": "node tools/v12/verify-v11-chain-face.cjs",
   "gallery:manifest": "node tools/examples/generate-manifest.cjs",
-  "gallery:api": "node tools/examples/api-inventory.cjs"
+  "gallery:api": "node tools/examples/api-inventory.cjs",
+  "format": "prettier --write \"examples/**/*.{ts,js,json,html,css}\" \"docs/manual/examples/**/*.{ts,js,json,html,css}\" \"ai/g1-staging/**/*.{ts,js,json,html}\" \"tools/verify/g1-trial-run.cjs\" \"tools/verify/g4-shader-probe.cjs\" \"tools/debug/g1-spec-fixlines.cjs\"",
+  "format:check": "prettier --check \"examples/**/*.{ts,js,json,html,css}\" \"docs/manual/examples/**/*.{ts,js,json,html,css}\" \"ai/g1-staging/**/*.{ts,js,json,html}\" \"tools/verify/g1-trial-run.cjs\" \"tools/verify/g4-shader-probe.cjs\" \"tools/debug/g1-spec-fixlines.cjs\""
  },
  "devDependencies": {
   "@babel/preset-env": "^7.29.7",
@@ -80,6 +82,7 @@
   "fs-extra": "^7.0.1",
   "jest": "^28.0.2",
   "jest-environment-jsdom": "^28.0.2",
+  "prettier": "3.9.9",
   "ts-jest": "^28.0.8",
   "tslib": "^2.8.1",
   "typescript": "^4.9.5"

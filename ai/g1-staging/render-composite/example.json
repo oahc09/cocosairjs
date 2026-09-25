@@ -1,0 +1,459 @@
+{
+  "id": "render-composite",
+  "version": "1.0.0",
+  "title": "Render Composite Chain",
+  "category": "rendering",
+  "status": "draft",
+  "specStatus": "draft",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握渲染组合链路：相机/灯光结构 → ambient 环境光可见路径 → 材质/纹理切换 → RenderTexture 捕获上屏 → RT resize，每级以像素断言证明「画面真实变化」（G1/P09+P19）",
+    "points": [
+      "SceneGlobals ambient 原位变更（skyColorHDR.set）是当期唯一像素可观察的全局光照路径（GAP-L1 登记了主光/点光属性同步缺口，本例不冒充）",
+      "运行期增删 PointLight 的结构断言：Light 组件计数 +1 → 组件 destroy + 节点 destroy → 回落且 isValid=false",
+      "camera.targetTexture = RenderTexture 捕获 → builtin-unlit(USE_TEXTURE) 贴 quad 上屏 → rt.reset resize 后重捕获仍上屏",
+      "builtin-unlit 纹理宏是 USE_TEXTURE（USE_ALBEDO_MAP 会被静默忽略渲染成纯色——本例曾实测踩坑并修正）"
+    ]
+  },
+  "effect": {
+    "functional": "P1 基线中心像素蓝色主体（区别于清屏色）。P2a ambient.skyColorHDR 绿偏置 → 像素色相变化 ≥8（断言）→ 恢复（亮度回基线 ±15%）。P2b 运行期 addComponent(PointLight) → Light 计数 2→3 → tmpLight.destroy()+节点 destroy → 计数回落、isValid=false（结构断言）。P2c keyLight.illuminance 1.2→8 的视觉差如实记录入探针（当期 ForwardPipeline 光属性同步缺口 GAP-L1，预期 0，不冒充绿灯）。P3 主体材质换 builtin-unlit+USE_TEXTURE+程序化纹理 → 中心像素变黄（断言 r>170,g>140,b<150）。P4 camera.targetTexture=rt(256) 捕获 → RT 贴 quad → quad 区域非背景像素 ≥50 且暖色快照内容像素 ≥10（断言）。P5 rt.reset(128) → 重捕获 → 内容仍上屏 + width/height 读回=128（断言）。交互点击 → 主体材质蓝↔黄切换 + 点光源开关（frame-diff）。__lifecycle()：release=RTQuad/RT/纹理材质全链销毁（主体先恢复基础材质），reacquire=同一 captureAndShowRT 路径重建。Camera.worldToScreen 运行期输出（当期返回零向量）如实记录入探针。任一 pcheck 失败 → throw → no-runtime-error 红。",
+    "visual": "深蓝背景中蓝色立方体缓慢自转（Spinner，采样窗暂停）；P3 后变黄色纹理盒；左上方出现显示 RT 快照的 quad；点击后主体在蓝色 standard 与黄色纹理 unlit 之间切换、点光源开关；左上角 DOM 面板显示 light/RT 状态"
+  },
+  "api": {
+    "primary": [
+      "RenderTexture",
+      "Camera.worldToScreen",
+      "Material.setProperty"
+    ],
+    "supporting": [
+      "PointLight",
+      "SceneGlobals.ambient",
+      "Light.destroy"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Node.destroy",
+      "Component",
+      "MeshRenderer",
+      "Camera",
+      "Camera.worldToScreen",
+      "DirectionalLight",
+      "PointLight",
+      "Light.destroy",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "primitives.plane",
+      "Texture2D",
+      "ImageAsset",
+      "RenderTexture",
+      "RenderTexture.reset",
+      "SceneGlobals.ambient",
+      "input",
+      "Input",
+      "director",
+      "isValid"
+    ],
+    "forbiddenShortcut": [
+      "以结构断言冒充光照视觉效果：主光/点光属性的像素贡献缺口（GAP-L1）必须如实记录差值，不得把「无变化」写成「已验证」",
+      "用 USE_ALBEDO_MAP 等被静默忽略的宏冒充纹理路径（builtin-unlit 实测只认 USE_TEXTURE；纹理生效必须由像素断言证明）",
+      "RT 内容以「quad 非背景色」弱断言顶包：必须含快照暖色内容像素计数（纯色白 quad 冒充 RT 上屏会被 warm≥10 判红）",
+      "以示例级 PASS 顶包 ambient 变化——色相差 ≥8 与恢复亮度差由页内 pcheck 判定，失败走 pageerror 通道"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L208"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L210"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L151"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L154"
+      },
+      {
+        "api": "Node.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L362"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L69"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L156"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L216"
+      },
+      {
+        "api": "Camera.worldToScreen",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L167"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "PointLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "Light.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L290"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L76"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L77"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L78"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L157"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L238"
+      },
+      {
+        "api": "primitives.plane",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L157"
+      },
+      {
+        "api": "Texture2D",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L126"
+      },
+      {
+        "api": "ImageAsset",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L127"
+      },
+      {
+        "api": "RenderTexture",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L140"
+      },
+      {
+        "api": "RenderTexture.reset",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L141"
+      },
+      {
+        "api": "SceneGlobals.ambient",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L261"
+      },
+      {
+        "api": "input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L345"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L345"
+      },
+      {
+        "api": "director",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L86"
+      },
+      {
+        "api": "isValid",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L146"
+      }
+    ]
+  },
+  "capabilities": [
+    "rendering"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "SubjectBox",
+        "PointLightNode",
+        "RTQuad"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click 画布中心一次",
+        "expected": "主体材质在 builtin-standard 蓝与 builtin-unlit 黄纹理间切换 + PointLightNode.active 翻转（材质切换保证 frame-diff 与 unlit 不受光照影响的可见性）；首次点击断言材质引用真实切换"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "material-property",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（纹理为运行时 canvas 生成）"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          1.6,
+          6
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 214,
+            "text": "cameraNode.setPosition(new Vec3(0, 1.6, 6));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 228,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 229,
+            "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ]
+      },
+      "SubjectBox": {
+        "position": [
+          0,
+          1,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 235,
+            "text": "subjectBox.setPosition(new Vec3(0, 1, 0));"
+          }
+        ]
+      },
+      "PointLightNode": {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 245,
+            "text": "pointLightNode.setPosition(new Vec3(2, 2, 2));"
+          }
+        ]
+      },
+      "RTQuad": {
+        "position": [
+          -2.3,
+          1.7,
+          0.8
+        ],
+        "rotationEuler": [
+          90,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 153,
+            "text": "rtQuadNode.setPosition(new Vec3(-2.3, 1.7, 0.8));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 154,
+            "text": "rtQuadNode.setRotationFromEuler(90, 0, 0);"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "SubjectBox": {
+        "effect": "builtin-unlit",
+        "props": {
+          "mainColor": {
+            "value": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 307,
+              "text": "matTextured = materialWith('builtin-unlit', new Color(255, 255, 255, 255), { USE_TEXTURE: true });"
+            }
+          },
+          "mainTexture": {
+            "expect": "object",
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 308,
+              "text": "matTextured.setProperty('mainTexture', checkerTex);"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 1, 0))），position 仍精确断言",
+        "line": "L215"
+      },
+      "SubjectBox": {
+        "reason": "运行期派生：Spinner 组件在 update 中持续改写 Y 轴欧拉角（this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0)），position 仍精确断言",
+        "line": "L71"
+      }
+    }
+  }
+}

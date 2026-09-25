@@ -1,0 +1,343 @@
+{
+  "id": "tetris-classic",
+  "version": "1.0.0",
+  "title": "Tetris Classic",
+  "category": "game",
+  "status": "draft",
+  "specStatus": "draft",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "经典游戏完整循环：方块生成/移动/旋转/落下锁定/消行计分/胜负判定/重开，网格状态与渲染完全分离，固定步长逻辑 + 确定性种子（G2）",
+    "points": [
+      "纯逻辑核心（TetrisGame：网格/种子袋/碰撞/消行/计分，零引擎依赖）与渲染层（BoardRenderer：网格→2D canvas→Texture2D.uploadData）分离",
+      "固定步长重力：累加器 + level 提速；暂停冻结累加器（steps 计数断言）",
+      "确定性自动演示：O 块脚本铺底双消 → WON（lines=2, score≥300）；中列堆叠 → 顶部溢出 GAME OVER；重开清零",
+      "键盘（方向键/空格/P/R）+ 点击旋转的真实输入链；墙踢（原位→±1→±2）与天花板/边界合法拒绝计数"
+    ]
+  },
+  "effect": {
+    "functional": "自动演示三连：Demo-LOSE（12×O 中列硬降 → 第 10 块后 spawn 冲突 → state=over）→ 像素方位断言（堆叠从画面底部生长，底部采样点非背景）；Demo-WIN（5×O 按列 [0,2,4,6,8] 硬降 → 底部两行铺满 → 双消 lines=2、score≥300、state=won、消行后 rows0-1 全空、底部采样回落背景）；边界断言（x=0 时 move(-1) 拒绝且 wallRejects+1）；Demo-PAUSE（暂停 450ms steps 冻结 → 恢复 700ms steps 推进）。之后进入交互模式（种子袋 777，重力 0.5s/步 × level 提速）。点击画布 = 旋转当前块（成功或被天花板/墙合法拒绝，二者必居其一）。__lifecycle()：release=Board 节点/材质/纹理销毁，reacquire=同路径重建+重开局。任一 pcheck 失败 → throw → no-runtime-error 红。",
+    "visual": "深色背景上竖版 10×20 棋盘（canvas 动态纹理，单 quad + builtin-unlit）；七种方块标准配色；顶部当前块随重力下落、锁定、消行闪烁式清空；左上角 DOM 面板实时显示 state/score/lines/level 与操作说明"
+  },
+  "api": {
+    "primary": [
+      "Texture2D.reset",
+      "Material.setProperty",
+      "Component"
+    ],
+    "supporting": [
+      "input",
+      "utils.createMesh"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "Component",
+      "MeshRenderer",
+      "Camera",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.plane",
+      "Texture2D",
+      "Texture2D.reset",
+      "input",
+      "Input",
+      "isValid",
+      "director"
+    ],
+    "forbiddenShortcut": [
+      "以 setInterval 驱动游戏逻辑冒充固定步长（重力必须走 Component.update 累加器，暂停可冻结）",
+      "用 DOM canvas 直接当画面冒充引擎渲染（棋盘必须经 Texture2D.uploadData → 材质 → MeshRenderer 上屏）",
+      "胜负状态由文案顶包：won/over 必须由纯逻辑状态机产生并可由探针读回",
+      "演示模式使用随机序列（必须固定种子/固定块队列，跨运行逐位可复现）"
+    ],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L528"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L530"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L432"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L436"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L434"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L435"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L443"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L437"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L535"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L433"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L434"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L430"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L428"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L429"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L430"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L438"
+      },
+      {
+        "api": "primitives.plane",
+        "source": "src/main.ts",
+        "validator": "visible-frame",
+        "sourceLocation": "L438"
+      },
+      {
+        "api": "Texture2D",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L352"
+      },
+      {
+        "api": "Texture2D.reset",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L353"
+      },
+      {
+        "api": "input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L600"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "validator": "frame-diff",
+        "sourceLocation": "L600"
+      },
+      {
+        "api": "isValid",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L672"
+      },
+      {
+        "api": "director",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L463"
+      }
+    ]
+  },
+  "capabilities": [
+    "game"
+  ],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": [
+        "Main Camera",
+        "Board",
+        "Driver"
+      ]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click 画布中心一次",
+        "expected": "当前块旋转一格（墙踢序列 原位→±1→±2），或被天花板/墙合法拒绝（wallRejects+1）——二者必居其一入探针；棋盘纹理与重力动画保证 frame-diff 持续可测"
+      }
+    ]
+  },
+  "ready": {
+    "validators": [
+      "scene-ready"
+    ]
+  },
+  "validation": {
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "material-property",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（棋盘纹理为运行时 canvas 生成；玩法为经典俄罗斯方块规则，原创实现）"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [
+          0,
+          0,
+          6
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 534,
+            "text": "cameraNode.setPosition(new Vec3(0, 0, 6));"
+          }
+        ]
+      },
+      "Board": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          90,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 434,
+            "text": "boardNode.setPosition(new Vec3(0, 0, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 435,
+            "text": "boardNode.setRotationFromEuler(90, 0, 0);"
+          }
+        ]
+      },
+      "Driver": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 553,
+            "text": "driverNode.setPosition(new Vec3(0, 0, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Board": {
+        "effect": "builtin-unlit",
+        "props": {
+          "mainColor": {
+            "value": [
+              255,
+              255,
+              255,
+              255
+            ],
+            "encoding": "0-255",
+            "tolerance": 0.01,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 430,
+              "text": "boardMaterial.setProperty('mainColor', new Color(255, 255, 255, 255));"
+            }
+          },
+          "mainTexture": {
+            "expect": "object",
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 431,
+              "text": "boardMaterial.setProperty('mainTexture', board.texture);"
+            }
+          }
+        }
+      }
+    }
+  }
+}
