@@ -1,12 +1,12 @@
 {
-  "measuredAt": "2026-09-26T13:34:37.953Z",
+  "measuredAt": "2026-09-26T14:27:38.124Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "browser": "chromium",
   "mode": "spec-driven-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
   "candidateFingerprint": "8746fc59b6aa0408",
   "apiProofTotals": {
-    "verified": 3170,
+    "verified": 3268,
     "attested": 232,
     "unproven": 0
   },
@@ -214,7 +214,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 242,
+          "calls": 228,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -404,15 +404,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0630"
+          "detail": "litRatio=0.0624"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 8722,
-        "hash": "829321ab563047b6"
+        "bytes": 8382,
+        "hash": "ce35b2829129adc7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -632,7 +632,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 240,
+          "calls": 224,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -822,15 +822,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0361"
+          "detail": "litRatio=0.0354"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 6664,
-        "hash": "4ed45e6601fdab87"
+        "bytes": 6838,
+        "hash": "54e41c0c2b7549ba"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -887,7 +887,7 @@
           "api": "AudioClip.getDuration",
           "proof": "verified",
           "state": "executed",
-          "calls": 310,
+          "calls": 307,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1108,7 +1108,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 913,
+          "calls": 916,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -1435,8 +1435,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/audio-basic.png",
-        "bytes": 19185,
-        "hash": "55474fbb2b3eafc3"
+        "bytes": 19507,
+        "hash": "e2ce67b079627aeb"
       },
       "assetDigests": [
         {
@@ -2587,7 +2587,7 @@
           "api": "renderer.scene.Camera.getClipSpaceMinz",
           "proof": "verified",
           "state": "executed",
-          "calls": 158,
+          "calls": 125,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5775,7 +5775,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 2682,
+          "calls": 2664,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5792,7 +5792,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 1486,
+          "calls": 1476,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5980,7 +5980,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 2873,
+          "calls": 2855,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -6271,8 +6271,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/collector-dodge.png",
-        "bytes": 13874,
-        "hash": "3fa07f1a8f552a03"
+        "bytes": 13930,
+        "hash": "08ee5833e07cbb7b"
       },
       "assetDigests": [
         {
@@ -8796,7 +8796,7 @@
           "api": "dragonBones.Armature.advanceTime",
           "proof": "verified",
           "state": "executed",
-          "calls": 341,
+          "calls": 397,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -8830,7 +8830,7 @@
           "api": "dragonBones.Armature.getBones",
           "proof": "verified",
           "state": "executed",
-          "calls": 361,
+          "calls": 417,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -8983,7 +8983,7 @@
           "api": "dragonBones.ArmatureDisplay.isAnimationCached",
           "proof": "verified",
           "state": "executed",
-          "calls": 958,
+          "calls": 1126,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -9335,15 +9335,15 @@
           "observation": "server-response"
         },
         {
-          "path": "/assets/AirDragon.json",
-          "status": 200,
-          "bytes": 6583,
-          "observation": "server-response"
-        },
-        {
           "path": "/assets/AirDragon_atlas.png",
           "status": 200,
           "bytes": 175,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/AirDragon.json",
+          "status": 200,
+          "bytes": 6583,
           "observation": "server-response"
         },
         {
@@ -9355,8 +9355,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/dragonbones-basic.png",
-        "bytes": 15966,
-        "hash": "00342ce0ed3f1438"
+        "bytes": 15994,
+        "hash": "db00e71a06853ca9"
       },
       "assetDigests": [
         {
@@ -12685,12 +12685,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2072"
+          "detail": "litRatio=0.1854"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.2377 assetUnits=8"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.2321 assetUnits=8"
         }
       ],
       "scenarioProbe": null,
@@ -12704,8 +12704,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-morph.png",
-        "bytes": 7129,
-        "hash": "edffe0e2cf47a644"
+        "bytes": 7157,
+        "hash": "5112b183c9d0d2ea"
       },
       "assetDigests": [
         {
@@ -13199,7 +13199,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1914 assetUnits=11"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1912 assetUnits=11"
         }
       ],
       "scenarioProbe": null,
@@ -13261,8 +13261,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-skin.png",
-        "bytes": 17494,
-        "hash": "f24f180c5f64673a"
+        "bytes": 17481,
+        "hash": "bf4f06d076c528bb"
       },
       "assetDigests": [
         {
@@ -14240,7 +14240,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 185,
+          "calls": 168,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -14445,15 +14445,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0454"
+          "detail": "litRatio=0.0455"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 7078,
-        "hash": "1ed0afde04b7e4a8"
+        "bytes": 7479,
+        "hash": "74bb93776cedc64f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -14823,8 +14823,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/input.png",
-        "bytes": 14864,
-        "hash": "62acc09e7e23b7b4"
+        "bytes": 14869,
+        "hash": "5f45504b420365f3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -15556,7 +15556,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 304,
+          "calls": 295,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16565,7 +16565,7 @@
           "api": "renderer.scene.DirectionalLight.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 157,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16900,7 +16900,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 218,
+          "calls": 193,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17125,8 +17125,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 42412,
-        "hash": "0bd7d7bae77d794c"
+        "bytes": 43169,
+        "hash": "e575b5e20930bc15"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -17346,7 +17346,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 241,
+          "calls": 224,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17545,8 +17545,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 32598,
-        "hash": "c89a2224e8b09021"
+        "bytes": 32421,
+        "hash": "87bcd24704b38f5a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -17749,7 +17749,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 215,
+          "calls": 189,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17967,15 +17967,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.5282"
+          "detail": "litRatio=0.5370"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 16844,
-        "hash": "0e4b60af4e4b7bfb"
+        "bytes": 16165,
+        "hash": "679600fd2da2e045"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -21376,7 +21376,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 421,
+          "calls": 397,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -21577,15 +21577,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1045"
+          "detail": "litRatio=0.1123"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 8566,
-        "hash": "9e35ac4ab3248986"
+        "bytes": 9658,
+        "hash": "b85131cb49802e09"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -24295,15 +24295,15 @@
     {
       "id": "math-color-models",
       "result": "PASS",
-      "specFingerprint": "f5bcae14d814",
-      "sourceFingerprint": "24fcc620834ff250",
+      "specFingerprint": "b5b173f118ac",
+      "sourceFingerprint": "950699d39a4eb2a0",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 26,
-        "bytes": 46636,
-        "hash": "8c6830e9c4a3ba0c",
+        "unitCount": 32,
+        "bytes": 46813,
+        "hash": "0048a779103b4dce",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -24316,8 +24316,8 @@
           "math.Color.toHSV: no own descriptor on static",
           "math.Color.toString: no own descriptor on static"
         ],
-        "observed": 26,
-        "total": 26
+        "observed": 32,
+        "total": 32
       },
       "apiProof": [
         {
@@ -24341,8 +24341,8 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 8,
-          "reads": 5,
+          "calls": 16,
+          "reads": 6,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -24630,7 +24630,7 @@
           "api": "math.Color.lerp",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -24651,6 +24651,108 @@
           "reads": 0,
           "via": "call",
           "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.prototype.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.prototype.fromHEX",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.prototype.lerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.prototype.multiply",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.prototype.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 27,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
           "bound": true,
           "bindings": [
             {
@@ -24826,7 +24928,42 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clone",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lerp",
+            "ok": true,
+            "detail": "50,60,70"
+          },
+          {
+            "name": "fromHEX",
+            "ok": true,
+            "detail": "51,102,153"
+          },
+          {
+            "name": "set",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiply",
+            "ok": true,
+            "detail": "12,34,56"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-color-models.png",
@@ -26197,15 +26334,15 @@
     {
       "id": "math-mat3-basics",
       "result": "PASS",
-      "specFingerprint": "43ef412e782d",
-      "sourceFingerprint": "88de2a60c50a8703",
+      "specFingerprint": "e2b91f157639",
+      "sourceFingerprint": "b3f2e85287dec12f",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 30,
-        "bytes": 46696,
-        "hash": "74acb2e1eb134552",
+        "unitCount": 45,
+        "bytes": 47153,
+        "hash": "37c2156450704f1b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -26215,8 +26352,8 @@
           "Node.setRotationFromEuler: no own descriptor on static",
           "math.Mat3.toString: no own descriptor on static"
         ],
-        "observed": 30,
-        "total": 30
+        "observed": 45,
+        "total": 45
       },
       "apiProof": [
         {
@@ -26495,7 +26632,7 @@
           "api": "math.Mat3.determinant",
           "proof": "verified",
           "state": "executed",
-          "calls": 5,
+          "calls": 8,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -26512,7 +26649,7 @@
           "api": "math.Mat3.equals",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -26529,7 +26666,7 @@
           "api": "math.Mat3.identity",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -26546,7 +26683,7 @@
           "api": "math.Mat3.invert",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -26563,7 +26700,7 @@
           "api": "math.Mat3.multiply",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -26594,6 +26731,261 @@
           ]
         },
         {
+          "api": "math.Mat3.prototype.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.determinant",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.fromQuat",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.identity",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.invert",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.multiply",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.multiplyScalar",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.rotate",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.scale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.strictEquals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.subtract",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat3.prototype.transpose",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Mat3.set",
           "proof": "verified",
           "state": "executed",
@@ -26614,7 +27006,7 @@
           "api": "math.Mat3.strictEquals",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -26682,7 +27074,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -26793,7 +27185,87 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clone",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "set",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "strictEquals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "identity",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "transpose",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "invert",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "determinant",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "add",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "subtract",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiply",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiplyScalar",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "scale",
+            "ok": true,
+            "detail": "2,3,1"
+          },
+          {
+            "name": "rotate",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "fromQuat",
+            "ok": true,
+            "detail": ""
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat3-basics.png",
@@ -28519,15 +28991,15 @@
     {
       "id": "math-mat4-basics",
       "result": "PASS",
-      "specFingerprint": "e9881610708d",
-      "sourceFingerprint": "4ba2e1b5ae85097a",
+      "specFingerprint": "b6f4be16b75b",
+      "sourceFingerprint": "8c344612c32701ab",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 31,
-        "bytes": 46713,
-        "hash": "a945b17f0e8dc3a6",
+        "unitCount": 51,
+        "bytes": 47330,
+        "hash": "a6150ef583f480c7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -28537,8 +29009,8 @@
           "Node.setRotationFromEuler: no own descriptor on static",
           "math.Mat4.toString: no own descriptor on static"
         ],
-        "observed": 31,
-        "total": 31
+        "observed": 51,
+        "total": 51
       },
       "apiProof": [
         {
@@ -28851,7 +29323,7 @@
           "api": "math.Mat4.identity",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -28885,7 +29357,7 @@
           "api": "math.Mat4.multiply",
           "proof": "verified",
           "state": "executed",
-          "calls": 9,
+          "calls": 10,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -28906,6 +29378,346 @@
           "reads": 0,
           "via": "call",
           "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.determinant",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.fromQuat",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.fromSRT",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.getRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.getTranslation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.identity",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.invert",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.multiply",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.multiplyScalar",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.rotate",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.scale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.strictEquals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.subtract",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.transform",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.transpose",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.prototype.zero",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
           "bound": true,
           "bindings": [
             {
@@ -29004,7 +29816,7 @@
           "api": "math.Mat4.zero",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -29021,7 +29833,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 14,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -29132,7 +29944,112 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clone",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "set",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "strictEquals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "identity",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "zero",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "transpose",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "invert",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "determinant",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "add",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "subtract",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiply",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiplyScalar",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "transform",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "scale",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "rotate",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "getTranslation",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "getRotation",
+            "ok": true,
+            "detail": "0.7071067811865475,0.7071067811865476"
+          },
+          {
+            "name": "fromSRT",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "fromQuat",
+            "ok": true,
+            "detail": ""
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat4-basics.png",
@@ -30260,15 +31177,15 @@
     {
       "id": "math-quat-applied",
       "result": "PASS",
-      "specFingerprint": "198648ebab3f",
-      "sourceFingerprint": "844e5399a2b4de0a",
+      "specFingerprint": "c1a3454b55c8",
+      "sourceFingerprint": "0e1daae182c56a6d",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 22,
-        "bytes": 46514,
-        "hash": "d7a043b5c3068aa9",
+        "unitCount": 29,
+        "bytes": 46737,
+        "hash": "db7af1cdef95e38f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -30278,8 +31195,8 @@
           "Node.setRotationFromEuler: no own descriptor on static",
           "math.Quat.length: data property, not instrumentable"
         ],
-        "observed": 22,
-        "total": 22
+        "observed": 29,
+        "total": 29
       },
       "apiProof": [
         {
@@ -30589,10 +31506,129 @@
           ]
         },
         {
-          "api": "math.Quat.slerp",
+          "api": "math.Quat.prototype.clone",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Quat.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Quat.prototype.lengthSqr",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Quat.prototype.lerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Quat.prototype.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Quat.prototype.slerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Quat.prototype.strictEquals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Quat.slerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -30720,7 +31756,47 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clone",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "set",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "strictEquals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lerp",
+            "ok": true,
+            "detail": "0.5,0.5"
+          },
+          {
+            "name": "slerp",
+            "ok": true,
+            "detail": "0.7071067811865475,0.7071067811865475"
+          },
+          {
+            "name": "lengthSqr",
+            "ok": true,
+            "detail": ""
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-quat-applied.png",
@@ -33311,15 +34387,15 @@
     {
       "id": "math-rect-ops",
       "result": "PASS",
-      "specFingerprint": "d0434e11c8bc",
-      "sourceFingerprint": "e942dc8156650d39",
+      "specFingerprint": "027f9c6f22cf",
+      "sourceFingerprint": "7c55d767a20d0caa",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 33,
-        "bytes": 46785,
-        "hash": "b00024e04220cd77",
+        "unitCount": 35,
+        "bytes": 46841,
+        "hash": "4424e6fbbdf205e7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -33344,8 +34420,8 @@
           "math.Rect.y: no own descriptor on static",
           "math.Rect.y: no own descriptor on prototype"
         ],
-        "observed": 29,
-        "total": 33
+        "observed": 31,
+        "total": 35
       },
       "apiProof": [
         {
@@ -33624,7 +34700,7 @@
           "api": "math.Rect.constructor",
           "proof": "verified",
           "state": "executed",
-          "calls": 13,
+          "calls": 18,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Rect",
@@ -33731,6 +34807,40 @@
           "reads": 0,
           "via": "call",
           "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Rect.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Rect.prototype.lerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
           "bound": true,
           "bindings": [
             {
@@ -33974,7 +35084,22 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lerp",
+            "ok": true,
+            "detail": "5,10,15,20"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-rect-ops.png",
@@ -34483,15 +35608,15 @@
     {
       "id": "math-size-ops",
       "result": "PASS",
-      "specFingerprint": "c1bf3006d928",
-      "sourceFingerprint": "4fe2b4c3f9df21bf",
+      "specFingerprint": "5d6a3acc6095",
+      "sourceFingerprint": "c3de2ed1cbe0da9f",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 26,
-        "bytes": 46628,
-        "hash": "811fc70106090881",
+        "unitCount": 28,
+        "bytes": 46684,
+        "hash": "8791f86fc241cd61",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -34507,8 +35632,8 @@
           "math.Size.width: no own descriptor on static",
           "math.Size.width: no own descriptor on prototype"
         ],
-        "observed": 24,
-        "total": 26
+        "observed": 26,
+        "total": 28
       },
       "apiProof": [
         {
@@ -34787,7 +35912,7 @@
           "api": "math.Size.constructor",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 9,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Size",
@@ -34843,6 +35968,40 @@
           "reads": 0,
           "via": "call",
           "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Size.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Size.prototype.lerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
           "bound": true,
           "bindings": [
             {
@@ -35018,7 +36177,22 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lerp",
+            "ok": true,
+            "detail": "5,10"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-size-ops.png",
@@ -35523,15 +36697,15 @@
     {
       "id": "math-vec2-arithmetic",
       "result": "PASS",
-      "specFingerprint": "be4a85769c5a",
-      "sourceFingerprint": "dad5ee6f33e45b82",
+      "specFingerprint": "6cfe531787fc",
+      "sourceFingerprint": "8fbc7122e64e7a73",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 29,
-        "bytes": 46652,
-        "hash": "1a0ab37394a43ee0",
+        "unitCount": 45,
+        "bytes": 47167,
+        "hash": "376352868c85954f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -35545,8 +36719,8 @@
           "math.Vec2.negative: no own descriptor on static",
           "math.Vec2.subtract2f: no own descriptor on static"
         ],
-        "observed": 29,
-        "total": 29
+        "observed": 45,
+        "total": 45
       },
       "apiProof": [
         {
@@ -35941,6 +37115,278 @@
           ]
         },
         {
+          "api": "math.Vec2.prototype.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.angle",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.cross",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.divide",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.dot",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.lengthSqr",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.lerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.multiply",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.multiplyScalar",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.normalize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 8,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.strictEquals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.subtract",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec2.prototype.transformMat4",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec2.set",
           "proof": "verified",
           "state": "executed",
@@ -36106,7 +37552,92 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clone",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "set",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "strictEquals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lerp",
+            "ok": true,
+            "detail": "5,10"
+          },
+          {
+            "name": "add",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "subtract",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiplyScalar",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiply",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "divide",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "dot",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "cross",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lengthSqr",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "normalize",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "angle",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "transformMat4",
+            "ok": true,
+            "detail": "6,8"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec2-arithmetic.png",
@@ -38465,7 +39996,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 158,
+          "calls": 148,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -38640,15 +40171,15 @@
     {
       "id": "math-vec3-arithmetic",
       "result": "PASS",
-      "specFingerprint": "1efca1d9c025",
-      "sourceFingerprint": "13c7aeed662e92e9",
+      "specFingerprint": "30f3848c9bf2",
+      "sourceFingerprint": "7391fe4bff75816e",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 29,
-        "bytes": 46652,
-        "hash": "040c33c7df7a8cbd",
+        "unitCount": 44,
+        "bytes": 47139,
+        "hash": "2de4de3d0065a56a",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -38662,8 +40193,8 @@
           "math.Vec3.negative: no own descriptor on static",
           "math.Vec3.subtract3f: no own descriptor on static"
         ],
-        "observed": 29,
-        "total": 29
+        "observed": 44,
+        "total": 44
       },
       "apiProof": [
         {
@@ -38925,7 +40456,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 7,
+          "calls": 33,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -39076,6 +40607,261 @@
           ]
         },
         {
+          "api": "math.Vec3.prototype.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.cross",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.divide",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.dot",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.lengthSqr",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.lerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.multiply",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.multiplyScalar",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.normalize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 8,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.strictEquals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.subtract",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3.prototype.transformMat4",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec3.set",
           "proof": "verified",
           "state": "executed",
@@ -39096,7 +40882,7 @@
           "api": "math.Vec3.subtract",
           "proof": "verified",
           "state": "executed",
-          "calls": 182,
+          "calls": 181,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -39223,7 +41009,87 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clone",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "set",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "strictEquals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lerp",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "add",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "subtract",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiplyScalar",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiply",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "divide",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "dot",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "cross",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lengthSqr",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "normalize",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "transformMat4",
+            "ok": true,
+            "detail": "6,8,10"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec3-arithmetic.png",
@@ -40687,7 +42553,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 158,
+          "calls": 157,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -41319,15 +43185,15 @@
     {
       "id": "math-vec4-arithmetic",
       "result": "PASS",
-      "specFingerprint": "c6e351f6c1ca",
-      "sourceFingerprint": "712b166e77f42489",
+      "specFingerprint": "9a7f5ae7c9a3",
+      "sourceFingerprint": "2cf519023b63ef4e",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 26,
-        "bytes": 46585,
-        "hash": "9d9a0febfea691f6",
+        "unitCount": 41,
+        "bytes": 47072,
+        "hash": "7547eb34685cf01c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -41337,8 +43203,8 @@
           "Node.setRotationFromEuler: no own descriptor on static",
           "math.Vec4.negative: no own descriptor on static"
         ],
-        "observed": 26,
-        "total": 26
+        "observed": 41,
+        "total": 41
       },
       "apiProof": [
         {
@@ -41700,6 +43566,261 @@
           ]
         },
         {
+          "api": "math.Vec4.prototype.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.divide",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.dot",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.lengthSqr",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.lerp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.multiply",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.multiplyScalar",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.normalize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.scale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 163,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.strictEquals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.subtract",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.prototype.transformMat4",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec4.scale",
           "proof": "verified",
           "state": "executed",
@@ -41847,7 +43968,87 @@
           "detail": "litRatio=1.0000"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clone",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "set",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "equals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "strictEquals",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lerp",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "add",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "subtract",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiplyScalar",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "multiply",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "divide",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "dot",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "lengthSqr",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "normalize",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "scale",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "transformMat4",
+            "ok": true,
+            "detail": "6,8,10,1"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec4-arithmetic.png",
@@ -43680,7 +45881,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 213,
+          "calls": 199,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -43864,15 +46065,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0583"
+          "detail": "litRatio=0.0587"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
-        "bytes": 10857,
-        "hash": "606b2e9f6d819996"
+        "bytes": 10841,
+        "hash": "014b74f50057d2d1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -45474,7 +47675,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 193,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -45682,8 +47883,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 16895,
-        "hash": "5ccf6dd6c091f199"
+        "bytes": 16811,
+        "hash": "ac6d603202c0e8e2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -46359,7 +48560,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 199,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -46543,15 +48744,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0494"
+          "detail": "litRatio=0.0493"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 17129,
-        "hash": "4a9b2ed8edf17600"
+        "bytes": 17219,
+        "hash": "f75ffa8fbd6ca2d8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -46771,7 +48972,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 201,
+          "calls": 200,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -46955,15 +49156,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0424"
+          "detail": "litRatio=0.0427"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 17307,
-        "hash": "0b524784bb9f3e7d"
+        "bytes": 17418,
+        "hash": "6bfbca4a97de344c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -48392,22 +50593,22 @@
           {
             "name": "animation-clock-started",
             "ok": true,
-            "detail": "tA=0.264（8s 内动画时钟未起步）"
+            "detail": "tA=0.255（8s 内动画时钟未起步）"
           },
           {
             "name": "independent-animation-clocks",
             "ok": true,
-            "detail": "tA=0.600 tB=1.728 ratio=2.88"
+            "detail": "tA=0.600 tB=1.709 ratio=2.85"
           },
           {
             "name": "pause-freezes-time",
             "ok": true,
-            "detail": "paused=1.728 after320ms=1.728"
+            "detail": "paused=1.709 after320ms=1.709"
           },
           {
             "name": "resume-advances-time",
             "ok": true,
-            "detail": "still=1.728 resumed=2.361"
+            "detail": "still=1.709 resumed=2.374"
           },
           {
             "name": "instanceB-disposed",
@@ -48417,7 +50618,7 @@
           {
             "name": "charA-unaffected-by-B-release",
             "ok": true,
-            "detail": "tA 1.514 → 1.931"
+            "detail": "tA 1.504 → 1.906"
           }
         ],
         "state": {
@@ -48435,8 +50636,8 @@
           },
           "timeline": {
             "clipName": "animation_0",
-            "tA": 1.93079999999702,
-            "tB": 2.3609999999701965,
+            "tA": 1.9056999999880793,
+            "tB": 2.374,
             "charBValid": false,
             "charAValid": true,
             "clicks": 0
@@ -48507,8 +50708,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/model-character-interaction.png",
-        "bytes": 9599,
-        "hash": "8f15b2732adf2f61"
+        "bytes": 9587,
+        "hash": "6d8bc546d86c1777"
       },
       "assetDigests": [
         {
@@ -51116,7 +53317,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 145,
+          "calls": 143,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -51235,7 +53436,7 @@
           "api": "Node.updateWorldTransform",
           "proof": "verified",
           "state": "executed",
-          "calls": 600,
+          "calls": 592,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -51521,8 +53722,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 5791,
-        "hash": "ab058ae5c5f6b6b5"
+        "bytes": 5783,
+        "hash": "1dc4b8d306a48138"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -52202,7 +54403,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 198,
+          "calls": 210,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -52405,15 +54606,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0579"
+          "detail": "litRatio=0.0601"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 8274,
-        "hash": "825cf0ce9487debb"
+        "bytes": 8118,
+        "hash": "2084e296ca9626d8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -53552,8 +55753,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/particle-2d-basic.png",
-        "bytes": 40176,
-        "hash": "91d3c8de7d6c7111"
+        "bytes": 38248,
+        "hash": "ee99f1f5950c7d90"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -53662,7 +55863,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 558,
+          "reads": 507,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -53884,7 +56085,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 931,
+          "reads": 846,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -53900,7 +56101,7 @@
           "api": "PhysicsSystem2D.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 372,
+          "calls": 338,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -53917,7 +56118,7 @@
           "api": "PhysicsSystem2D.testAABB",
           "proof": "verified",
           "state": "executed",
-          "calls": 186,
+          "calls": 169,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -53934,7 +56135,7 @@
           "api": "PhysicsSystem2D.testPoint",
           "proof": "verified",
           "state": "executed",
-          "calls": 1116,
+          "calls": 1014,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -54019,7 +56220,7 @@
           "api": "RigidBody2D.getMass",
           "proof": "verified",
           "state": "executed",
-          "calls": 186,
+          "calls": 169,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -54138,7 +56339,7 @@
           "api": "math.Rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 186,
+          "calls": 169,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Rect",
@@ -54174,7 +56375,7 @@
           "api": "math.Vec2",
           "proof": "verified",
           "state": "executed",
-          "calls": 1866,
+          "calls": 1696,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec2",
@@ -54392,7 +56593,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 287,
+          "reads": 288,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -54630,7 +56831,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 288,
+          "reads": 289,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -55262,7 +57463,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 308,
+          "calls": 309,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -55348,8 +57549,8 @@
           "api": "geometry.Ray",
           "proof": "verified",
           "state": "executed",
-          "calls": 3744,
-          "reads": 3744,
+          "calls": 3757,
+          "reads": 3757,
           "via": "call",
           "mechanism": "frozen-namespace-class",
           "bound": true,
@@ -55382,7 +57583,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 2106,
+          "calls": 2113,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -55399,7 +57600,7 @@
           "api": "math.Quat",
           "proof": "verified",
           "state": "executed",
-          "calls": 288,
+          "calls": 289,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Quat",
@@ -55417,7 +57618,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 1174,
+          "calls": 1178,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -55680,7 +57881,7 @@
           "api": "physics.PhysicsSystem.lineStripCast",
           "proof": "verified",
           "state": "executed",
-          "calls": 288,
+          "calls": 289,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -55731,7 +57932,7 @@
           "api": "physics.PhysicsSystem.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 3168,
+          "calls": 3179,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -55748,7 +57949,7 @@
           "api": "physics.PhysicsSystem.raycastClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 864,
+          "calls": 867,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -55816,7 +58017,7 @@
           "api": "physics.PhysicsSystem.sweepBox",
           "proof": "verified",
           "state": "executed",
-          "calls": 288,
+          "calls": 289,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -55833,7 +58034,7 @@
           "api": "physics.PhysicsSystem.sweepBoxClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 288,
+          "calls": 289,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56311,8 +58512,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-basic.png",
-        "bytes": 19894,
-        "hash": "adf866954bb53c4a"
+        "bytes": 19891,
+        "hash": "087dbd0230187c89"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -56574,7 +58775,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 217,
+          "calls": 191,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56968,8 +59169,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-collision.png",
-        "bytes": 11008,
-        "hash": "642997f28192c0dc"
+        "bytes": 11018,
+        "hash": "aed8b35d1c0ca206"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -57333,7 +59534,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 301,
+          "calls": 304,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57879,8 +60080,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-interaction.png",
-        "bytes": 12407,
-        "hash": "b35b65557edae551"
+        "bytes": 12376,
+        "hash": "88277a38e0397cb0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -60321,8 +62522,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/product-viewer.png",
-        "bytes": 22160,
-        "hash": "bc8554d77475eab1"
+        "bytes": 22158,
+        "hash": "12b39c7f6c968da9"
       },
       "assetDigests": [
         {
@@ -60575,7 +62776,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 180,
+          "calls": 182,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -60889,8 +63090,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/profiler-overlay.png",
-        "bytes": 19818,
-        "hash": "8d75c5eab3132a2d"
+        "bytes": 19406,
+        "hash": "88c9d14e6928bdce"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -61201,7 +63402,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 313,
+          "calls": 312,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61636,7 +63837,7 @@
           {
             "name": "p4-rendertarget-visible",
             "ok": true,
-            "detail": "quad non-bg=3203px warm(快照内容)=2419px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+            "detail": "quad non-bg=3203px warm(快照内容)=2420px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
           },
           {
             "name": "p5-rt-resize-readback",
@@ -61682,7 +63883,7 @@
           ],
           "quadRegion": {
             "count": 3203,
-            "warm": 2419,
+            "warm": 2420,
             "pixel": [
               195,
               45,
@@ -61725,8 +63926,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/render-composite.png",
-        "bytes": 8952,
-        "hash": "1d16253fe0efc800"
+        "bytes": 9099,
+        "hash": "2d275577e0ad1087"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -64392,7 +66593,7 @@
           {
             "name": "gen1-running",
             "ok": true,
-            "detail": "updates=16"
+            "detail": "updates=17"
           },
           {
             "name": "gen1-lifecycle-once",
@@ -64402,7 +66603,7 @@
           {
             "name": "gen2-running",
             "ok": true,
-            "detail": "updates=27"
+            "detail": "updates=26"
           },
           {
             "name": "autoReleaseAssets-recorded",
@@ -64412,7 +66613,7 @@
           {
             "name": "gen1-frozen",
             "ok": true,
-            "detail": "gen1 updates 16 → 16 after switch"
+            "detail": "gen1 updates 17 → 17 after switch"
           },
           {
             "name": "gen1-scene-destroyed",
@@ -64427,12 +66628,12 @@
           {
             "name": "gen3-running",
             "ok": true,
-            "detail": "updates=28"
+            "detail": "updates=27"
           },
           {
             "name": "gen2-frozen",
             "ok": true,
-            "detail": "gen2 updates 45 → 45"
+            "detail": "gen2 updates 44 → 44"
           },
           {
             "name": "gen2-scene-destroyed",
@@ -64458,7 +66659,7 @@
             {
               "gen": 1,
               "variant": "A",
-              "updates": 16,
+              "updates": 17,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -64466,7 +66667,7 @@
             {
               "gen": 2,
               "variant": "B",
-              "updates": 45,
+              "updates": 44,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -64474,7 +66675,7 @@
             {
               "gen": 3,
               "variant": "A",
-              "updates": 44,
+              "updates": 42,
               "clicks": 0,
               "onDisable": 0,
               "onDestroy": 0
@@ -65068,17 +67269,17 @@
           {
             "name": "gradient-horizontal",
             "ok": true,
-            "detail": "left=[163,79,116,255]（偏红）right=[112,95,171,255]（偏蓝）"
+            "detail": "left=[163,79,117,255]（偏红）right=[112,96,172,255]（偏蓝）"
           },
           {
             "name": "uniform-vec4-colorA",
             "ok": true,
-            "detail": "left after colorA=green: [45,173,127,255]"
+            "detail": "left after colorA=green: [45,174,128,255]"
           },
           {
             "name": "time-animation-frame-diff",
             "ok": true,
-            "detail": "maxDiff=2"
+            "detail": "maxDiff=3"
           },
           {
             "name": "uniform-float-freeze",
@@ -65093,27 +67294,27 @@
             "left": [
               163,
               79,
-              116,
+              117,
               255
             ],
             "right": [
               112,
-              95,
-              171,
+              96,
+              172,
               255
             ]
           },
           "afterColorA": [
             45,
-            173,
-            127,
+            174,
+            128,
             255
           ],
           "animDiff": {
             "d0": [
               37,
-              119,
-              114,
+              120,
+              115,
               255
             ],
             "d1": [
@@ -65124,11 +67325,11 @@
             ],
             "d2": [
               37,
-              119,
-              114,
+              118,
+              113,
               255
             ],
-            "maxDiff": 2
+            "maxDiff": 3
           },
           "frozen": {
             "f0": [
@@ -65150,8 +67351,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-custom-gradient.png",
-        "bytes": 6697,
-        "hash": "c6e676a9847f120b"
+        "bytes": 6699,
+        "hash": "665b60c9e8e61416"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -65428,7 +67629,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 273,
+          "calls": 275,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -66038,7 +68239,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 360,
+          "calls": 314,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -66252,15 +68453,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0648"
+          "detail": "litRatio=0.0642"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 6050,
-        "hash": "f93f4dac95cdd637"
+        "bytes": 6053,
+        "hash": "4e5b89f35d4f9847"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -68605,7 +70806,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 196,
+          "calls": 218,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68842,20 +71043,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0987"
+          "detail": "litRatio=0.0995"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0881 assetUnits=7"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0874 assetUnits=7"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture-basic.png",
-        "bytes": 26500,
-        "hash": "75a194dcc4094e59"
+        "bytes": 26225,
+        "hash": "97629ea5be5942e6"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -70379,7 +72580,7 @@
           "api": "TiledLayer.isCullingDirty",
           "proof": "verified",
           "state": "executed",
-          "calls": 537,
+          "calls": 534,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -70447,7 +72648,7 @@
           "api": "TiledMap.getLayers",
           "proof": "verified",
           "state": "executed",
-          "calls": 582,
+          "calls": 578,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71250,15 +73451,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0473"
+          "detail": "litRatio=0.0481"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 7109,
-        "hash": "83328d8d0e8515df"
+        "bytes": 7180,
+        "hash": "d096e0536a713179"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -71412,7 +73613,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 106,
+          "calls": 107,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71531,7 +73732,7 @@
           "api": "Tween.getTarget",
           "proof": "verified",
           "state": "executed",
-          "calls": 73,
+          "calls": 72,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72036,7 +74237,7 @@
           {
             "name": "pause-freezes",
             "ok": true,
-            "detail": "0.5492999999821186"
+            "detail": "0.5165999999642372"
           },
           {
             "name": "resume-reaches-end",
@@ -72098,8 +74299,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
-        "bytes": 5589,
-        "hash": "1b0397604c54f4a9"
+        "bytes": 5609,
+        "hash": "bae492d73120b0ab"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -73115,7 +75316,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 334,
+          "calls": 333,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73557,8 +75758,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-components.png",
-        "bytes": 18833,
-        "hash": "45e60ac05d6e90e0"
+        "bytes": 18722,
+        "hash": "aeccee55ebe0426c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -73777,7 +75978,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 1634,
+          "calls": 1642,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73881,7 +76082,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 12,
-          "reads": 3062,
+          "reads": 3078,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -73897,7 +76098,7 @@
           "api": "UITransform.convertToWorldSpaceAR",
           "proof": "verified",
           "state": "executed",
-          "calls": 1512,
+          "calls": 1520,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73948,7 +76149,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 3024,
+          "calls": 3040,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -74583,7 +76784,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 989,
+          "calls": 980,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -74719,7 +76920,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 651,
+          "calls": 645,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -74736,7 +76937,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 335,
+          "calls": 332,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -74753,7 +76954,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 986,
+          "calls": 977,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -74770,7 +76971,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 651,
+          "calls": 645,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -75282,8 +77483,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/video-basic.png",
-        "bytes": 14967,
-        "hash": "ebece8d2fa54d1cc"
+        "bytes": 14965,
+        "hash": "9da72c81f86a271e"
       },
       "assetDigests": [
         {
@@ -75376,7 +77577,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 562,
+          "calls": 588,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -75512,7 +77713,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 279,
+          "calls": 292,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -75529,7 +77730,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 279,
+          "calls": 292,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -75546,7 +77747,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 559,
+          "calls": 585,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -75563,7 +77764,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 280,
+          "calls": 293,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -75835,7 +78036,7 @@
           "api": "WebView.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 255,
+          "calls": 264,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -76038,8 +78239,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/webview-basic.png",
-        "bytes": 20417,
-        "hash": "4ba58051a4276a47"
+        "bytes": 20418,
+        "hash": "21e2c22d66152557"
       },
       "assetDigests": [
         {

@@ -36,7 +36,23 @@
     "math.Vec2.divide",
     "math.Vec2.divide2f",
     "math.Vec2.negative",
-    "math.Vec2.set"
+    "math.Vec2.set",
+    "math.Vec2.prototype.clone",
+    "math.Vec2.prototype.set",
+    "math.Vec2.prototype.equals",
+    "math.Vec2.prototype.strictEquals",
+    "math.Vec2.prototype.lerp",
+    "math.Vec2.prototype.add",
+    "math.Vec2.prototype.subtract",
+    "math.Vec2.prototype.multiplyScalar",
+    "math.Vec2.prototype.multiply",
+    "math.Vec2.prototype.divide",
+    "math.Vec2.prototype.dot",
+    "math.Vec2.prototype.cross",
+    "math.Vec2.prototype.lengthSqr",
+    "math.Vec2.prototype.normalize",
+    "math.Vec2.prototype.angle",
+    "math.Vec2.prototype.transformMat4"
   ],
   "capabilities": [],
   "learning": {
@@ -67,7 +83,23 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "math.Vec2.prototype.clone",
+      "math.Vec2.prototype.set",
+      "math.Vec2.prototype.equals",
+      "math.Vec2.prototype.strictEquals",
+      "math.Vec2.prototype.lerp",
+      "math.Vec2.prototype.add",
+      "math.Vec2.prototype.subtract",
+      "math.Vec2.prototype.multiplyScalar",
+      "math.Vec2.prototype.multiply",
+      "math.Vec2.prototype.divide",
+      "math.Vec2.prototype.dot",
+      "math.Vec2.prototype.cross",
+      "math.Vec2.prototype.lengthSqr",
+      "math.Vec2.prototype.normalize",
+      "math.Vec2.prototype.angle",
+      "math.Vec2.prototype.transformMat4"
     ],
     "claims": [
       "createAirApp",
@@ -98,7 +130,23 @@
       "math.Vec2.divide",
       "math.Vec2.divide2f",
       "math.Vec2.negative",
-      "math.Vec2.set"
+      "math.Vec2.set",
+      "math.Vec2.prototype.clone",
+      "math.Vec2.prototype.set",
+      "math.Vec2.prototype.equals",
+      "math.Vec2.prototype.strictEquals",
+      "math.Vec2.prototype.lerp",
+      "math.Vec2.prototype.add",
+      "math.Vec2.prototype.subtract",
+      "math.Vec2.prototype.multiplyScalar",
+      "math.Vec2.prototype.multiply",
+      "math.Vec2.prototype.divide",
+      "math.Vec2.prototype.dot",
+      "math.Vec2.prototype.cross",
+      "math.Vec2.prototype.lengthSqr",
+      "math.Vec2.prototype.normalize",
+      "math.Vec2.prototype.angle",
+      "math.Vec2.prototype.transformMat4"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -275,6 +323,102 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L78"
+      },
+      {
+        "api": "math.Vec2.prototype.clone",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L11"
+      },
+      {
+        "api": "math.Vec2.prototype.set",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "math.Vec2.prototype.equals",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L15"
+      },
+      {
+        "api": "math.Vec2.prototype.strictEquals",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "math.Vec2.prototype.lerp",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "math.Vec2.prototype.add",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L23"
+      },
+      {
+        "api": "math.Vec2.prototype.subtract",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "math.Vec2.prototype.multiplyScalar",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "math.Vec2.prototype.multiply",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "math.Vec2.prototype.divide",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "math.Vec2.prototype.dot",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "math.Vec2.prototype.cross",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "math.Vec2.prototype.lengthSqr",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "math.Vec2.prototype.normalize",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "math.Vec2.prototype.angle",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "math.Vec2.prototype.transformMat4",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L44"
       }
     ]
   },
@@ -307,11 +451,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "be4a85769c5a",
-    "source": "dad5ee6f33e45b82",
+    "spec": "6cfe531787fc",
+    "source": "8fbc7122e64e7a73",
     "candidate": "8746fc59b6aa0408",
-    "verified": 29,
+    "verified": 45,
     "attested": 0,
-    "units": 29
+    "units": 45
   }
 }

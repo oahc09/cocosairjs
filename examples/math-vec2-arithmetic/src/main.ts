@@ -90,4 +90,5 @@ probe.topic = 'math-vec2-arithmetic';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifyVec2InstanceContract }) => verifyVec2InstanceContract());
 console.log('[math-vec2-arithmetic] running');

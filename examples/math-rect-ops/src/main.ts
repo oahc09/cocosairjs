@@ -113,4 +113,5 @@ probe.topic = 'math-rect-ops';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifyRectInstanceContract }) => verifyRectInstanceContract());
 console.log('[math-rect-ops] running');

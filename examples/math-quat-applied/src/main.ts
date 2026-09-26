@@ -94,4 +94,5 @@ probe.topic = 'math-quat-applied';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifyQuatInstanceContract }) => verifyQuatInstanceContract());
 console.log('[math-quat-applied] running');

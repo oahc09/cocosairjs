@@ -114,4 +114,5 @@ probe.topic = 'math-mat4-basics';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifyMat4InstanceContract }) => verifyMat4InstanceContract());
 console.log('[math-mat4-basics] running');

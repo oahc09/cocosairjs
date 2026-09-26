@@ -111,4 +111,5 @@ probe.topic = 'math-mat3-basics';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifyMat3InstanceContract }) => verifyMat3InstanceContract());
 console.log('[math-mat3-basics] running');

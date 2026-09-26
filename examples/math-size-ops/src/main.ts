@@ -90,4 +90,5 @@ probe.topic = 'math-size-ops';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifySizeInstanceContract }) => verifySizeInstanceContract());
 console.log('[math-size-ops] running');

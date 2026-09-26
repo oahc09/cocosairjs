@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-26T13:37:19.510Z",
+  "generatedAt": "2026-09-26T14:30:12.526Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T13:34:37.953Z",
+      "measuredAt": "2026-09-26T14:27:38.124Z",
       "mode": "spec-driven-v3"
     },
     {
@@ -29,10 +29,10 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 738,
+  "totalClaimed": 836,
   "totalAttested": 148,
-  "totalVerified": 590,
-  "totalVerifiedViaCall": 575,
+  "totalVerified": 688,
+  "totalVerifiedViaCall": 673,
   "totalVerifiedViaRead": 15,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
@@ -1276,16 +1276,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
-        "total": 26,
-        "hash": "8c6830e9c4a3ba0c"
+        "observed": 32,
+        "total": 32,
+        "hash": "0048a779103b4dce"
       },
-      "claims": 26,
+      "claims": 32,
       "tally": {
-        "verified": 26,
+        "verified": 32,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 25,
+        "verifiedCall": 31,
         "verifiedRead": 1
       }
     },
@@ -1372,16 +1372,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 30,
-        "total": 30,
-        "hash": "74acb2e1eb134552"
+        "observed": 45,
+        "total": 45,
+        "hash": "37c2156450704f1b"
       },
-      "claims": 30,
+      "claims": 45,
       "tally": {
-        "verified": 30,
+        "verified": 45,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 29,
+        "verifiedCall": 44,
         "verifiedRead": 1
       }
     },
@@ -1468,16 +1468,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 31,
-        "total": 31,
-        "hash": "a945b17f0e8dc3a6"
+        "observed": 51,
+        "total": 51,
+        "hash": "a6150ef583f480c7"
       },
-      "claims": 31,
+      "claims": 51,
       "tally": {
-        "verified": 31,
+        "verified": 51,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 30,
+        "verifiedCall": 50,
         "verifiedRead": 1
       }
     },
@@ -1540,16 +1540,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
-        "total": 22,
-        "hash": "d7a043b5c3068aa9"
+        "observed": 29,
+        "total": 29,
+        "hash": "db7af1cdef95e38f"
       },
-      "claims": 22,
+      "claims": 29,
       "tally": {
-        "verified": 22,
+        "verified": 29,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
+        "verifiedCall": 28,
         "verifiedRead": 1
       }
     },
@@ -1684,16 +1684,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 29,
-        "total": 33,
-        "hash": "b00024e04220cd77"
+        "observed": 31,
+        "total": 35,
+        "hash": "4424e6fbbdf205e7"
       },
-      "claims": 33,
+      "claims": 35,
       "tally": {
-        "verified": 29,
+        "verified": 31,
         "attested": 4,
         "claimedOnly": 0,
-        "verifiedCall": 28,
+        "verifiedCall": 30,
         "verifiedRead": 1
       }
     },
@@ -1732,16 +1732,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
-        "total": 26,
-        "hash": "811fc70106090881"
+        "observed": 26,
+        "total": 28,
+        "hash": "8791f86fc241cd61"
       },
-      "claims": 26,
+      "claims": 28,
       "tally": {
-        "verified": 24,
+        "verified": 26,
         "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 23,
+        "verifiedCall": 25,
         "verifiedRead": 1
       }
     },
@@ -1780,16 +1780,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 29,
-        "total": 29,
-        "hash": "1a0ab37394a43ee0"
+        "observed": 45,
+        "total": 45,
+        "hash": "376352868c85954f"
       },
-      "claims": 29,
+      "claims": 45,
       "tally": {
-        "verified": 29,
+        "verified": 45,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 28,
+        "verifiedCall": 44,
         "verifiedRead": 1
       }
     },
@@ -1924,16 +1924,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 29,
-        "total": 29,
-        "hash": "040c33c7df7a8cbd"
+        "observed": 44,
+        "total": 44,
+        "hash": "2de4de3d0065a56a"
       },
-      "claims": 29,
+      "claims": 44,
       "tally": {
-        "verified": 29,
+        "verified": 44,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 28,
+        "verifiedCall": 43,
         "verifiedRead": 1
       }
     },
@@ -2044,16 +2044,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
-        "total": 26,
-        "hash": "9d9a0febfea691f6"
+        "observed": 41,
+        "total": 41,
+        "hash": "7547eb34685cf01c"
       },
-      "claims": 26,
+      "claims": 41,
       "tally": {
-        "verified": 26,
+        "verified": 41,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 25,
+        "verifiedCall": 40,
         "verifiedRead": 1
       }
     },
@@ -3527,25 +3527,25 @@
       "denominator": "coverageRequired",
       "total": 963,
       "required": 963,
-      "claimed": 418,
+      "claimed": 516,
       "attested": 71,
-      "verified": 347,
-      "requiredClaimed": 418,
-      "requiredVerified": 347,
+      "verified": 445,
+      "requiredClaimed": 516,
+      "requiredVerified": 445,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 616,
-      "unstated": 616,
-      "verifiedViaCall": 345,
+      "uncovered": 518,
+      "unstated": 518,
+      "verifiedViaCall": 443,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 345,
+      "requiredVerifiedViaCall": 443,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.358,
-      "claimedRate": 0.434,
-      "verifiedRate": 0.36,
-      "allUnitsVerifiedRate": 0.36,
+      "requiredVerifiedViaCallRate": 0.46,
+      "claimedRate": 0.536,
+      "verifiedRate": 0.462,
+      "allUnitsVerifiedRate": 0.462,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -7406,6 +7406,54 @@
       ]
     },
     {
+      "unit": "math.Color.prototype.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.prototype.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.prototype.fromHEX",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.prototype.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.prototype.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
       "unit": "math.lerp",
       "tier": "core",
       "via": "call",
@@ -7546,6 +7594,126 @@
     },
     {
       "unit": "math.Mat3.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.identity",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.transpose",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.invert",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.determinant",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.add",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.subtract",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.multiplyScalar",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.scale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.rotate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat3.prototype.fromQuat",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7694,6 +7862,166 @@
       ]
     },
     {
+      "unit": "math.Mat4.prototype.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.identity",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.zero",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.transpose",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.invert",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.determinant",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.add",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.subtract",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.multiplyScalar",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.transform",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.scale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.rotate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.getTranslation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.getRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.fromSRT",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.prototype.fromQuat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
       "unit": "math.Mat4.fromSRT",
       "tier": "core",
       "via": "call",
@@ -7799,6 +8127,62 @@
       "examples": [
         "math-quat-applied",
         "math-quat-interp"
+      ]
+    },
+    {
+      "unit": "math.Quat.prototype.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied"
+      ]
+    },
+    {
+      "unit": "math.Quat.prototype.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied"
+      ]
+    },
+    {
+      "unit": "math.Quat.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied"
+      ]
+    },
+    {
+      "unit": "math.Quat.prototype.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied"
+      ]
+    },
+    {
+      "unit": "math.Quat.prototype.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied"
+      ]
+    },
+    {
+      "unit": "math.Quat.prototype.slerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied"
+      ]
+    },
+    {
+      "unit": "math.Quat.prototype.lengthSqr",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied"
       ]
     },
     {
@@ -8007,6 +8391,22 @@
       ]
     },
     {
+      "unit": "math.Rect.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.prototype.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
       "unit": "math.clamp",
       "tier": "core",
       "via": "call",
@@ -8064,6 +8464,22 @@
     },
     {
       "unit": "math.Size.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.prototype.lerp",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -8181,6 +8597,134 @@
     },
     {
       "unit": "math.Vec2.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.add",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.subtract",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.multiplyScalar",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.divide",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.dot",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.cross",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.lengthSqr",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.normalize",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.angle",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.prototype.transformMat4",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -8449,6 +8993,126 @@
       ]
     },
     {
+      "unit": "math.Vec3.prototype.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.add",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.subtract",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.multiplyScalar",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.divide",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.dot",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.lengthSqr",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.normalize",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.transformMat4",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.prototype.cross",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec3.constructor",
       "tier": "core",
       "via": "call",
@@ -8619,6 +9283,126 @@
     },
     {
       "unit": "math.Vec4.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.add",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.subtract",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.multiplyScalar",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.divide",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.dot",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.lengthSqr",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.normalize",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.transformMat4",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.prototype.scale",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -13347,22 +14131,6 @@
     "math.Vec2.str",
     "math.Vec2.toArray",
     "math.Vec2.fromArray",
-    "math.Vec2.prototype.clone",
-    "math.Vec2.prototype.set",
-    "math.Vec2.prototype.equals",
-    "math.Vec2.prototype.strictEquals",
-    "math.Vec2.prototype.lerp",
-    "math.Vec2.prototype.add",
-    "math.Vec2.prototype.subtract",
-    "math.Vec2.prototype.multiplyScalar",
-    "math.Vec2.prototype.multiply",
-    "math.Vec2.prototype.divide",
-    "math.Vec2.prototype.dot",
-    "math.Vec2.prototype.cross",
-    "math.Vec2.prototype.lengthSqr",
-    "math.Vec2.prototype.normalize",
-    "math.Vec2.prototype.angle",
-    "math.Vec2.prototype.transformMat4",
     "math.v2",
     "math.Vec3.UNIT_X",
     "math.Vec3.UNIT_Y",
@@ -13404,21 +14172,6 @@
     "math.Vec3.project",
     "math.Vec3.moveTowards",
     "math.Vec3.generateOrthogonal",
-    "math.Vec3.prototype.clone",
-    "math.Vec3.prototype.set",
-    "math.Vec3.prototype.equals",
-    "math.Vec3.prototype.strictEquals",
-    "math.Vec3.prototype.lerp",
-    "math.Vec3.prototype.add",
-    "math.Vec3.prototype.subtract",
-    "math.Vec3.prototype.multiplyScalar",
-    "math.Vec3.prototype.multiply",
-    "math.Vec3.prototype.divide",
-    "math.Vec3.prototype.dot",
-    "math.Vec3.prototype.cross",
-    "math.Vec3.prototype.lengthSqr",
-    "math.Vec3.prototype.normalize",
-    "math.Vec3.prototype.transformMat4",
     "math.v3",
     "math.Vec4",
     "math.Vec4.ZERO",
@@ -13449,25 +14202,10 @@
     "math.Vec4.transformQuat",
     "math.Vec4.toArray",
     "math.Vec4.fromArray",
-    "math.Vec4.prototype.clone",
-    "math.Vec4.prototype.set",
-    "math.Vec4.prototype.equals",
-    "math.Vec4.prototype.strictEquals",
-    "math.Vec4.prototype.lerp",
-    "math.Vec4.prototype.add",
     "math.Vec4.add4f",
-    "math.Vec4.prototype.subtract",
     "math.Vec4.subtract4f",
-    "math.Vec4.prototype.multiplyScalar",
-    "math.Vec4.prototype.multiply",
     "math.Vec4.multiply4f",
-    "math.Vec4.prototype.divide",
     "math.Vec4.divide4f",
-    "math.Vec4.prototype.dot",
-    "math.Vec4.prototype.lengthSqr",
-    "math.Vec4.prototype.normalize",
-    "math.Vec4.prototype.scale",
-    "math.Vec4.prototype.transformMat4",
     "math.v4",
     "math.Quat.IDENTITY",
     "math.Quat.clone",
@@ -13497,13 +14235,6 @@
     "math.Quat.fromEuler",
     "math.Quat.fromAngleZ",
     "math.Quat.toArray",
-    "math.Quat.prototype.clone",
-    "math.Quat.prototype.set",
-    "math.Quat.prototype.equals",
-    "math.Quat.prototype.strictEquals",
-    "math.Quat.prototype.lerp",
-    "math.Quat.prototype.slerp",
-    "math.Quat.prototype.lengthSqr",
     "math.quat",
     "math.Mat3",
     "math.Mat3.IDENTITY",
@@ -13522,21 +14253,6 @@
     "math.Mat3.multiplyScalarAndAdd",
     "math.Mat3.toEuler",
     "math.Mat3.constructor",
-    "math.Mat3.prototype.clone",
-    "math.Mat3.prototype.set",
-    "math.Mat3.prototype.equals",
-    "math.Mat3.prototype.strictEquals",
-    "math.Mat3.prototype.identity",
-    "math.Mat3.prototype.transpose",
-    "math.Mat3.prototype.invert",
-    "math.Mat3.prototype.determinant",
-    "math.Mat3.prototype.add",
-    "math.Mat3.prototype.subtract",
-    "math.Mat3.prototype.multiply",
-    "math.Mat3.prototype.multiplyScalar",
-    "math.Mat3.prototype.scale",
-    "math.Mat3.prototype.rotate",
-    "math.Mat3.prototype.fromQuat",
     "math.Mat4",
     "math.Mat4.IDENTITY",
     "math.Mat4.clone",
@@ -13571,33 +14287,11 @@
     "math.Mat4.m13",
     "math.Mat4.m14",
     "math.Mat4.constructor",
-    "math.Mat4.prototype.clone",
-    "math.Mat4.prototype.set",
-    "math.Mat4.prototype.equals",
-    "math.Mat4.prototype.strictEquals",
-    "math.Mat4.prototype.identity",
-    "math.Mat4.prototype.zero",
-    "math.Mat4.prototype.transpose",
-    "math.Mat4.prototype.invert",
-    "math.Mat4.prototype.determinant",
-    "math.Mat4.prototype.add",
-    "math.Mat4.prototype.subtract",
-    "math.Mat4.prototype.multiply",
-    "math.Mat4.prototype.multiplyScalar",
-    "math.Mat4.prototype.transform",
-    "math.Mat4.prototype.scale",
-    "math.Mat4.prototype.rotate",
-    "math.Mat4.prototype.getTranslation",
-    "math.Mat4.prototype.getRotation",
-    "math.Mat4.prototype.fromSRT",
-    "math.Mat4.prototype.fromQuat",
     "math.mat4",
     "math.Size.ZERO",
     "math.Size.ONE",
     "math.Size.x",
     "math.Size.y",
-    "math.Size.prototype.equals",
-    "math.Size.prototype.lerp",
     "math.size",
     "math.Rect.fromMinMax",
     "math.Rect.intersection",
@@ -13611,8 +14305,6 @@
     "math.Rect.size",
     "math.Rect.z",
     "math.Rect.w",
-    "math.Rect.prototype.equals",
-    "math.Rect.prototype.lerp",
     "math.rect",
     "math.Color.WHITE",
     "math.Color.GRAY",
@@ -13644,12 +14336,6 @@
     "math.Color.z",
     "math.Color.w",
     "math.Color.constructor",
-    "math.Color.prototype.clone",
-    "math.Color.prototype.equals",
-    "math.Color.prototype.lerp",
-    "math.Color.prototype.fromHEX",
-    "math.Color.prototype.set",
-    "math.Color.prototype.multiply",
     "math.color",
     "math.toRadian",
     "math.toDegree",
@@ -13779,5 +14465,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3721
+  "unclaimedRequired": 3623
 }

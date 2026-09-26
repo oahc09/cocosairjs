@@ -129,4 +129,5 @@ probe.topic = 'math-color-models';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifyColorInstanceContract }) => verifyColorInstanceContract());
 console.log('[math-color-models] running');

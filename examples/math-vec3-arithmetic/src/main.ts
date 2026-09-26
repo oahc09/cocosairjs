@@ -120,4 +120,5 @@ probe.topic = 'math-vec3-arithmetic';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+void import('./instance-contract.js').then(({ verifyVec3InstanceContract }) => verifyVec3InstanceContract());
 console.log('[math-vec3-arithmetic] running');

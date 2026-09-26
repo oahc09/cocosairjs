@@ -38,7 +38,27 @@
     "math.Mat4.set",
     "math.Mat4.equals",
     "math.Mat4.strictEquals",
-    "math.Mat4.toString"
+    "math.Mat4.toString",
+    "math.Mat4.prototype.clone",
+    "math.Mat4.prototype.set",
+    "math.Mat4.prototype.equals",
+    "math.Mat4.prototype.strictEquals",
+    "math.Mat4.prototype.identity",
+    "math.Mat4.prototype.zero",
+    "math.Mat4.prototype.transpose",
+    "math.Mat4.prototype.invert",
+    "math.Mat4.prototype.determinant",
+    "math.Mat4.prototype.add",
+    "math.Mat4.prototype.subtract",
+    "math.Mat4.prototype.multiply",
+    "math.Mat4.prototype.multiplyScalar",
+    "math.Mat4.prototype.transform",
+    "math.Mat4.prototype.scale",
+    "math.Mat4.prototype.rotate",
+    "math.Mat4.prototype.getTranslation",
+    "math.Mat4.prototype.getRotation",
+    "math.Mat4.prototype.fromSRT",
+    "math.Mat4.prototype.fromQuat"
   ],
   "capabilities": [],
   "learning": {
@@ -65,7 +85,27 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "math.Mat4.prototype.clone",
+      "math.Mat4.prototype.set",
+      "math.Mat4.prototype.equals",
+      "math.Mat4.prototype.strictEquals",
+      "math.Mat4.prototype.identity",
+      "math.Mat4.prototype.zero",
+      "math.Mat4.prototype.transpose",
+      "math.Mat4.prototype.invert",
+      "math.Mat4.prototype.determinant",
+      "math.Mat4.prototype.add",
+      "math.Mat4.prototype.subtract",
+      "math.Mat4.prototype.multiply",
+      "math.Mat4.prototype.multiplyScalar",
+      "math.Mat4.prototype.transform",
+      "math.Mat4.prototype.scale",
+      "math.Mat4.prototype.rotate",
+      "math.Mat4.prototype.getTranslation",
+      "math.Mat4.prototype.getRotation",
+      "math.Mat4.prototype.fromSRT",
+      "math.Mat4.prototype.fromQuat"
     ],
     "claims": [
       "createAirApp",
@@ -98,7 +138,27 @@
       "math.Mat4.set",
       "math.Mat4.equals",
       "math.Mat4.strictEquals",
-      "math.Mat4.toString"
+      "math.Mat4.toString",
+      "math.Mat4.prototype.clone",
+      "math.Mat4.prototype.set",
+      "math.Mat4.prototype.equals",
+      "math.Mat4.prototype.strictEquals",
+      "math.Mat4.prototype.identity",
+      "math.Mat4.prototype.zero",
+      "math.Mat4.prototype.transpose",
+      "math.Mat4.prototype.invert",
+      "math.Mat4.prototype.determinant",
+      "math.Mat4.prototype.add",
+      "math.Mat4.prototype.subtract",
+      "math.Mat4.prototype.multiply",
+      "math.Mat4.prototype.multiplyScalar",
+      "math.Mat4.prototype.transform",
+      "math.Mat4.prototype.scale",
+      "math.Mat4.prototype.rotate",
+      "math.Mat4.prototype.getTranslation",
+      "math.Mat4.prototype.getRotation",
+      "math.Mat4.prototype.fromSRT",
+      "math.Mat4.prototype.fromQuat"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -287,6 +347,126 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L112"
+      },
+      {
+        "api": "math.Mat4.prototype.clone",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "math.Mat4.prototype.set",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "math.Mat4.prototype.equals",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "math.Mat4.prototype.strictEquals",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L16"
+      },
+      {
+        "api": "math.Mat4.prototype.identity",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L21"
+      },
+      {
+        "api": "math.Mat4.prototype.zero",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "math.Mat4.prototype.transpose",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "math.Mat4.prototype.invert",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "math.Mat4.prototype.determinant",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "math.Mat4.prototype.add",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "math.Mat4.prototype.subtract",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "math.Mat4.prototype.multiply",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "math.Mat4.prototype.multiplyScalar",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "math.Mat4.prototype.transform",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "math.Mat4.prototype.scale",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "math.Mat4.prototype.rotate",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L44"
+      },
+      {
+        "api": "math.Mat4.prototype.getTranslation",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "math.Mat4.prototype.getRotation",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "math.Mat4.prototype.fromSRT",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "math.Mat4.prototype.fromQuat",
+        "source": "src/instance-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L62"
       }
     ]
   },
@@ -319,11 +499,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "e9881610708d",
-    "source": "4ba2e1b5ae85097a",
+    "spec": "b6f4be16b75b",
+    "source": "8c344612c32701ab",
     "candidate": "8746fc59b6aa0408",
-    "verified": 31,
+    "verified": 51,
     "attested": 0,
-    "units": 31
+    "units": 51
   }
 }

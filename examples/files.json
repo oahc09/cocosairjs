@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-26T13:36:38.225Z",
-  "revision": "f5dcae4",
+  "generatedAt": "2026-09-26T14:28:57.246Z",
+  "revision": "82909ba",
   "examples": [
     {
       "dir": "anim-position",
@@ -5385,7 +5385,13 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Color.prototype.clone",
+          "math.Color.prototype.equals",
+          "math.Color.prototype.lerp",
+          "math.Color.prototype.fromHEX",
+          "math.Color.prototype.set",
+          "math.Color.prototype.multiply"
         ],
         "claims": [
           "createAirApp",
@@ -5413,7 +5419,13 @@
           "math.Color.set",
           "math.Color.equals",
           "math.Color.toString",
-          "math.Color.getModifiableProperties"
+          "math.Color.getModifiableProperties",
+          "math.Color.prototype.clone",
+          "math.Color.prototype.equals",
+          "math.Color.prototype.lerp",
+          "math.Color.prototype.fromHEX",
+          "math.Color.prototype.set",
+          "math.Color.prototype.multiply"
         ]
       },
       "capabilities": [],
@@ -5447,12 +5459,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f5bcae14d814",
-        "source": "24fcc620834ff250",
+        "spec": "b5b173f118ac",
+        "source": "950699d39a4eb2a0",
         "candidate": "8746fc59b6aa0408",
-        "verified": 26,
+        "verified": 32,
         "attested": 0,
-        "units": 26
+        "units": 32
       }
     },
     {
@@ -5807,7 +5819,22 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Mat3.prototype.clone",
+          "math.Mat3.prototype.set",
+          "math.Mat3.prototype.equals",
+          "math.Mat3.prototype.strictEquals",
+          "math.Mat3.prototype.identity",
+          "math.Mat3.prototype.transpose",
+          "math.Mat3.prototype.invert",
+          "math.Mat3.prototype.determinant",
+          "math.Mat3.prototype.add",
+          "math.Mat3.prototype.subtract",
+          "math.Mat3.prototype.multiply",
+          "math.Mat3.prototype.multiplyScalar",
+          "math.Mat3.prototype.scale",
+          "math.Mat3.prototype.rotate",
+          "math.Mat3.prototype.fromQuat"
         ],
         "claims": [
           "createAirApp",
@@ -5839,7 +5866,22 @@
           "math.Mat3.set",
           "math.Mat3.equals",
           "math.Mat3.strictEquals",
-          "math.Mat3.toString"
+          "math.Mat3.toString",
+          "math.Mat3.prototype.clone",
+          "math.Mat3.prototype.set",
+          "math.Mat3.prototype.equals",
+          "math.Mat3.prototype.strictEquals",
+          "math.Mat3.prototype.identity",
+          "math.Mat3.prototype.transpose",
+          "math.Mat3.prototype.invert",
+          "math.Mat3.prototype.determinant",
+          "math.Mat3.prototype.add",
+          "math.Mat3.prototype.subtract",
+          "math.Mat3.prototype.multiply",
+          "math.Mat3.prototype.multiplyScalar",
+          "math.Mat3.prototype.scale",
+          "math.Mat3.prototype.rotate",
+          "math.Mat3.prototype.fromQuat"
         ]
       },
       "capabilities": [],
@@ -5873,12 +5915,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "43ef412e782d",
-        "source": "88de2a60c50a8703",
+        "spec": "e2b91f157639",
+        "source": "b3f2e85287dec12f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 30,
+        "verified": 45,
         "attested": 0,
-        "units": 30
+        "units": 45
       }
     },
     {
@@ -6255,7 +6297,27 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Mat4.prototype.clone",
+          "math.Mat4.prototype.set",
+          "math.Mat4.prototype.equals",
+          "math.Mat4.prototype.strictEquals",
+          "math.Mat4.prototype.identity",
+          "math.Mat4.prototype.zero",
+          "math.Mat4.prototype.transpose",
+          "math.Mat4.prototype.invert",
+          "math.Mat4.prototype.determinant",
+          "math.Mat4.prototype.add",
+          "math.Mat4.prototype.subtract",
+          "math.Mat4.prototype.multiply",
+          "math.Mat4.prototype.multiplyScalar",
+          "math.Mat4.prototype.transform",
+          "math.Mat4.prototype.scale",
+          "math.Mat4.prototype.rotate",
+          "math.Mat4.prototype.getTranslation",
+          "math.Mat4.prototype.getRotation",
+          "math.Mat4.prototype.fromSRT",
+          "math.Mat4.prototype.fromQuat"
         ],
         "claims": [
           "createAirApp",
@@ -6288,7 +6350,27 @@
           "math.Mat4.set",
           "math.Mat4.equals",
           "math.Mat4.strictEquals",
-          "math.Mat4.toString"
+          "math.Mat4.toString",
+          "math.Mat4.prototype.clone",
+          "math.Mat4.prototype.set",
+          "math.Mat4.prototype.equals",
+          "math.Mat4.prototype.strictEquals",
+          "math.Mat4.prototype.identity",
+          "math.Mat4.prototype.zero",
+          "math.Mat4.prototype.transpose",
+          "math.Mat4.prototype.invert",
+          "math.Mat4.prototype.determinant",
+          "math.Mat4.prototype.add",
+          "math.Mat4.prototype.subtract",
+          "math.Mat4.prototype.multiply",
+          "math.Mat4.prototype.multiplyScalar",
+          "math.Mat4.prototype.transform",
+          "math.Mat4.prototype.scale",
+          "math.Mat4.prototype.rotate",
+          "math.Mat4.prototype.getTranslation",
+          "math.Mat4.prototype.getRotation",
+          "math.Mat4.prototype.fromSRT",
+          "math.Mat4.prototype.fromQuat"
         ]
       },
       "capabilities": [],
@@ -6322,12 +6404,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e9881610708d",
-        "source": "4ba2e1b5ae85097a",
+        "spec": "b6f4be16b75b",
+        "source": "8c344612c32701ab",
         "candidate": "8746fc59b6aa0408",
-        "verified": 31,
+        "verified": 51,
         "attested": 0,
-        "units": 31
+        "units": 51
       }
     },
     {
@@ -6592,7 +6674,14 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Quat.prototype.clone",
+          "math.Quat.prototype.set",
+          "math.Quat.prototype.equals",
+          "math.Quat.prototype.strictEquals",
+          "math.Quat.prototype.lerp",
+          "math.Quat.prototype.slerp",
+          "math.Quat.prototype.lengthSqr"
         ],
         "claims": [
           "createAirApp",
@@ -6616,7 +6705,14 @@
           "math.Quat.slerp",
           "math.Quat.angle",
           "math.Quat.length",
-          "math.Quat.lerp"
+          "math.Quat.lerp",
+          "math.Quat.prototype.clone",
+          "math.Quat.prototype.set",
+          "math.Quat.prototype.equals",
+          "math.Quat.prototype.strictEquals",
+          "math.Quat.prototype.lerp",
+          "math.Quat.prototype.slerp",
+          "math.Quat.prototype.lengthSqr"
         ]
       },
       "capabilities": [],
@@ -6650,12 +6746,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "198648ebab3f",
-        "source": "844e5399a2b4de0a",
+        "spec": "c1a3454b55c8",
+        "source": "0e1daae182c56a6d",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
+        "verified": 29,
         "attested": 0,
-        "units": 22
+        "units": 29
       }
     },
     {
@@ -7239,7 +7335,9 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Rect.prototype.equals",
+          "math.Rect.prototype.lerp"
         ],
         "claims": [
           "createAirApp",
@@ -7274,7 +7372,9 @@
           "math.Rect.contains",
           "math.Rect.containsRect",
           "math.Rect.transformMat4",
-          "math.Rect.transformMat4ToPoints"
+          "math.Rect.transformMat4ToPoints",
+          "math.Rect.prototype.equals",
+          "math.Rect.prototype.lerp"
         ]
       },
       "capabilities": [],
@@ -7308,12 +7408,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "d0434e11c8bc",
-        "source": "e942dc8156650d39",
+        "spec": "027f9c6f22cf",
+        "source": "7c55d767a20d0caa",
         "candidate": "8746fc59b6aa0408",
-        "verified": 29,
+        "verified": 31,
         "attested": 4,
-        "units": 33
+        "units": 35
       }
     },
     {
@@ -7463,7 +7563,9 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Size.prototype.equals",
+          "math.Size.prototype.lerp"
         ],
         "claims": [
           "createAirApp",
@@ -7491,7 +7593,9 @@
           "math.Size.set",
           "math.Size.equals",
           "math.Size.lerp",
-          "math.Size.toString"
+          "math.Size.toString",
+          "math.Size.prototype.equals",
+          "math.Size.prototype.lerp"
         ]
       },
       "capabilities": [],
@@ -7525,12 +7629,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c1bf3006d928",
-        "source": "4fe2b4c3f9df21bf",
+        "spec": "5d6a3acc6095",
+        "source": "c3de2ed1cbe0da9f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 24,
+        "verified": 26,
         "attested": 2,
-        "units": 26
+        "units": 28
       }
     },
     {
@@ -7681,7 +7785,23 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Vec2.prototype.clone",
+          "math.Vec2.prototype.set",
+          "math.Vec2.prototype.equals",
+          "math.Vec2.prototype.strictEquals",
+          "math.Vec2.prototype.lerp",
+          "math.Vec2.prototype.add",
+          "math.Vec2.prototype.subtract",
+          "math.Vec2.prototype.multiplyScalar",
+          "math.Vec2.prototype.multiply",
+          "math.Vec2.prototype.divide",
+          "math.Vec2.prototype.dot",
+          "math.Vec2.prototype.cross",
+          "math.Vec2.prototype.lengthSqr",
+          "math.Vec2.prototype.normalize",
+          "math.Vec2.prototype.angle",
+          "math.Vec2.prototype.transformMat4"
         ],
         "claims": [
           "createAirApp",
@@ -7712,7 +7832,23 @@
           "math.Vec2.divide",
           "math.Vec2.divide2f",
           "math.Vec2.negative",
-          "math.Vec2.set"
+          "math.Vec2.set",
+          "math.Vec2.prototype.clone",
+          "math.Vec2.prototype.set",
+          "math.Vec2.prototype.equals",
+          "math.Vec2.prototype.strictEquals",
+          "math.Vec2.prototype.lerp",
+          "math.Vec2.prototype.add",
+          "math.Vec2.prototype.subtract",
+          "math.Vec2.prototype.multiplyScalar",
+          "math.Vec2.prototype.multiply",
+          "math.Vec2.prototype.divide",
+          "math.Vec2.prototype.dot",
+          "math.Vec2.prototype.cross",
+          "math.Vec2.prototype.lengthSqr",
+          "math.Vec2.prototype.normalize",
+          "math.Vec2.prototype.angle",
+          "math.Vec2.prototype.transformMat4"
         ]
       },
       "capabilities": [],
@@ -7746,12 +7882,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "be4a85769c5a",
-        "source": "dad5ee6f33e45b82",
+        "spec": "6cfe531787fc",
+        "source": "8fbc7122e64e7a73",
         "candidate": "8746fc59b6aa0408",
-        "verified": 29,
+        "verified": 45,
         "attested": 0,
-        "units": 29
+        "units": 45
       }
     },
     {
@@ -8331,7 +8467,22 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Vec3.prototype.clone",
+          "math.Vec3.prototype.set",
+          "math.Vec3.prototype.equals",
+          "math.Vec3.prototype.strictEquals",
+          "math.Vec3.prototype.lerp",
+          "math.Vec3.prototype.add",
+          "math.Vec3.prototype.subtract",
+          "math.Vec3.prototype.multiplyScalar",
+          "math.Vec3.prototype.multiply",
+          "math.Vec3.prototype.divide",
+          "math.Vec3.prototype.dot",
+          "math.Vec3.prototype.lengthSqr",
+          "math.Vec3.prototype.normalize",
+          "math.Vec3.prototype.transformMat4",
+          "math.Vec3.prototype.cross"
         ],
         "claims": [
           "createAirApp",
@@ -8362,7 +8513,22 @@
           "math.Vec3.divide",
           "math.Vec3.divide3f",
           "math.Vec3.negative",
-          "math.Vec3.set"
+          "math.Vec3.set",
+          "math.Vec3.prototype.clone",
+          "math.Vec3.prototype.set",
+          "math.Vec3.prototype.equals",
+          "math.Vec3.prototype.strictEquals",
+          "math.Vec3.prototype.lerp",
+          "math.Vec3.prototype.add",
+          "math.Vec3.prototype.subtract",
+          "math.Vec3.prototype.multiplyScalar",
+          "math.Vec3.prototype.multiply",
+          "math.Vec3.prototype.divide",
+          "math.Vec3.prototype.dot",
+          "math.Vec3.prototype.lengthSqr",
+          "math.Vec3.prototype.normalize",
+          "math.Vec3.prototype.transformMat4",
+          "math.Vec3.prototype.cross"
         ]
       },
       "capabilities": [],
@@ -8396,12 +8562,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1efca1d9c025",
-        "source": "13c7aeed662e92e9",
+        "spec": "30f3848c9bf2",
+        "source": "7391fe4bff75816e",
         "candidate": "8746fc59b6aa0408",
-        "verified": 29,
+        "verified": 44,
         "attested": 0,
-        "units": 29
+        "units": 44
       }
     },
     {
@@ -8878,7 +9044,22 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Vec4.prototype.clone",
+          "math.Vec4.prototype.set",
+          "math.Vec4.prototype.equals",
+          "math.Vec4.prototype.strictEquals",
+          "math.Vec4.prototype.lerp",
+          "math.Vec4.prototype.add",
+          "math.Vec4.prototype.subtract",
+          "math.Vec4.prototype.multiplyScalar",
+          "math.Vec4.prototype.multiply",
+          "math.Vec4.prototype.divide",
+          "math.Vec4.prototype.dot",
+          "math.Vec4.prototype.lengthSqr",
+          "math.Vec4.prototype.normalize",
+          "math.Vec4.prototype.transformMat4",
+          "math.Vec4.prototype.scale"
         ],
         "claims": [
           "createAirApp",
@@ -8906,7 +9087,22 @@
           "math.Vec4.divide",
           "math.Vec4.negative",
           "math.Vec4.scale",
-          "math.Vec4.set"
+          "math.Vec4.set",
+          "math.Vec4.prototype.clone",
+          "math.Vec4.prototype.set",
+          "math.Vec4.prototype.equals",
+          "math.Vec4.prototype.strictEquals",
+          "math.Vec4.prototype.lerp",
+          "math.Vec4.prototype.add",
+          "math.Vec4.prototype.subtract",
+          "math.Vec4.prototype.multiplyScalar",
+          "math.Vec4.prototype.multiply",
+          "math.Vec4.prototype.divide",
+          "math.Vec4.prototype.dot",
+          "math.Vec4.prototype.lengthSqr",
+          "math.Vec4.prototype.normalize",
+          "math.Vec4.prototype.transformMat4",
+          "math.Vec4.prototype.scale"
         ]
       },
       "capabilities": [],
@@ -8940,12 +9136,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c6e351f6c1ca",
-        "source": "712b166e77f42489",
+        "spec": "9a7f5ae7c9a3",
+        "source": "2cf519023b63ef4e",
         "candidate": "8746fc59b6aa0408",
-        "verified": 26,
+        "verified": 41,
         "attested": 0,
-        "units": 26
+        "units": 41
       }
     },
     {
