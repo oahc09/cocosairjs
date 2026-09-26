@@ -191,3 +191,16 @@ Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/
 | 批 #5 中止 | manifest 未随规格改动再生成即启动整批 → 该行证据无效；中止重排（纪律：files.json 先于整批） | 本 session 操作记录 |
 | 冻结规格触达 | match3-classic 补 idle 呼吸高亮源（effect 契约本就声明而源码缺失）、render-composite 光度基准角钉死——两处为示例源码修正，fixlines 回填后 spec-evidence 0 漂移，frozen 状态不变 | 两例 main.ts + example.json |
 | 残余留账 | GAP-C1/C2 导出面决策仍待 owner；light-* 四例正向断言升级列后续批次；clustered-culling 变体范围外 | 矩阵 §7、v11-progress r53 残余 |
+
+## 10. g1-staging 工作区清退（2026-09-26，owner 指令「整个目录清掉」）
+
+> 撤销 §8「探针/诊断页归属」行的落位裁定：`ai/g1-staging/` 整目录移除。清退后示例正典唯一在 `examples/`；
+> 探针/标定页迁 `ai/probes/`，「不登记 Gallery、不进覆盖率门禁」的纪律原样保留。本节为追加式落账，§8 原行作历史记录不回改。
+
+| 项 | 决定 | 落点 |
+| --- | --- | --- |
+| 目录清退 | `ai/g1-staging/` 整目录移除；13 个已晋级示例与 shared 不留在制品存档（与 examples/ 正典逐字节一致，仅 example.json 差登记态） | git 历史可溯（r51 入库、r52 晋级） |
+| 探针新家 | shader-probe、tmp-light-probe、tmp-lights-hdr 迁 `ai/probes/`；g4 运行器默认根同步改；两探针页内运行命令注释同步 | `tools/verify/g4-shader-probe.cjs`、`ai/probes/*/main.js` |
+| 台账归属 | 实施台账移 `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例实施台账.md`，头部补清退记；staging 路径引用按「历史布局」读法 | 该台账 |
+| 引用翻转 | 手册 4 页 / 矩阵 §7 / v11-progress / `g1-light-contribution-gap.json` repro 字段的 staging 指针全部翻转至新位或 examples/ 正典；verify:doc-refs 复绿为判据 | docs/、docs/evidence/ |
+| prettier 范围 | format/format:check glob `ai/g1-staging/**` → `ai/probes/**`（文件集不变，仅换根） | package.json |

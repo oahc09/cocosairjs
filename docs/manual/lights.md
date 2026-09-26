@@ -112,7 +112,7 @@ function showLight (idx: number): void {
 ## 4. 可视贡献实测（r53，GAP-L1 修复后）
 
 示例以 2.5s 为周期轮流点亮四盏光（HDR 量级，§1），覆盖层实时打印当前光型。
-r53 标定页（`ai/g1-staging/tmp-lights-hdr/`，多点像素采样：球心/球侧/球下地面）逐型数据：
+r53 标定页（`ai/probes/tmp-lights-hdr/`，多点像素采样：球心/球侧/球下地面）逐型数据：
 
 | 相位 | 采样点（基线→点亮） | 观察 |
 | --- | --- | --- |

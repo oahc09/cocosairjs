@@ -46,7 +46,7 @@ const args = process.argv.slice(2);
 const idsArg = args.find((a) => a.startsWith('--ids='));
 if (!idsArg) { console.error('[g1-trial] 必须 --ids=<example 目录列表>'); process.exit(2); }
 const ids = idsArg.slice(6).split(',').map((s) => s.trim()).filter(Boolean);
-// --root=<examples 根>（默认 REPO/examples；G1 staging 用 ai/g1-staging，避开并发会话对 examples/ 的清理）
+// --root=<examples 根>（默认 REPO/examples；隔离工作区试验时用 --root= 指向该根，避开对 examples/ 的并发触碰）
 const rootArg = args.find((a) => a.startsWith('--root='));
 const ROOT = rootArg ? path.resolve(REPO, rootArg.slice(7)) : path.join(REPO, 'examples');
 const ROOT_REL = path.relative(REPO, ROOT).split(path.sep).join('/');

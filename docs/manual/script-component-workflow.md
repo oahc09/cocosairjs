@@ -2,8 +2,9 @@
 
 > 状态：**工作文档（G3 范式交付）**。本页只写经当前 SDK（1.2.0，bundle `9376e3062269376c`）
 > 运行验证过的用法；每条纪律都标注了实证出处（G1 staging 示例 / 探针证据 / 既有 Gallery 示例）。
-> 贯穿示例：`scene-switch-reentry`（场景切换与复入，`ai/g1-staging/`，集成后位于 `examples/`）。
-> 集成待办：并入 `docs/manual/index.md` 索引（避免与并行手册线冲突，见 `ai/g1-staging/PROGRESS.md`）。
+> 贯穿示例：`scene-switch-reentry`（场景切换与复入，`examples/` 正典，r52 集成）。
+> 集成待办：并入 `docs/manual/index.md` 索引（避免与并行手册线冲突，见
+> `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例实施台账.md`）。
 
 ## 1. 启动顺序（时机纪律）
 
@@ -25,7 +26,7 @@ mat.initialize({ effectName: "builtin-standard" });
 
 ## 2. Component 类：字段、依赖与生命周期职责
 
-贯穿示例 `scene-switch-reentry` 的 `Ticker` 组件（源码节选语义，完整见 `src/main.ts`）：
+贯穿示例 `scene-switch-reentry` 的 `Ticker` 组件（源码节选语义，完整见 `examples/scene-switch-reentry/src/main.ts`）：
 
 ```ts
 class Ticker extends Component {
@@ -198,7 +199,7 @@ my-app/
 
 - `index.html` 的 importmap 必须**逐字**含 `"/build/cocosair.module.js"`——api-trace 插桩靠
   字符串替换生效；源码直连 bundle 路径 = `trace-bypass` 直接 FAIL（逐 API 证据不可信）。
-- `src/main.ts`（或 `main.ts`/`main.js`）为入口；`.ts` 由 esbuild transform 即时编译，
+- 入口文件 src/main.ts（或 main.ts / main.js）；`.ts` 由 esbuild transform 即时编译，
   类型合同 = 对 `build/cocosair.module.d.ts` 的 tsc 检查（strict:false；`window.__xxx` 需
   `(window as any)`）。**公开 d.ts 面之外的内部 API 会在此层被拦下**（如框架 Camera 无
   resize/width/height——GAP-C2）。

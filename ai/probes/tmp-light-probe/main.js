@@ -1,4 +1,4 @@
-/* GAP-L1 复现页 — 光贡献诊断探针（staging 隔离，不登记 files.json，不进 Gallery/coverage）。
+/* GAP-L1 复现页 — 光贡献诊断探针（ai/probes 隔离，不登记 files.json，不进 Gallery/coverage）。
  *
  * 结论（2026-09-25 实测，chromium headless ANGLE/SwiftShader，bundle 9376e3062269376c）：
  * - 点光源（PointLight）：静态创建/属性变更/active 开关 → 中心像素全程 [7,22,83,255] 零变化；
@@ -9,7 +9,7 @@
  * 判定：主光/点光的视觉贡献与其属性运行期同步在该快照不可观察（GAP-L1）。
  * 证据：docs/evidence/g1-light-contribution-gap.json；登记：docs/api-scenario-gap-matrix.md §7。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/g1-trial-run.cjs --root=ai/g1-staging --ids=tmp-light-probe
+ * 运行：NODE_PATH=<playwright> node tools/verify/g1-trial-run.cjs --root=ai/probes --ids=tmp-light-probe
  */
 import {
     createAirApp,

@@ -1,4 +1,4 @@
-/* manual-lights HDR 量级标定探针（staging 隔离，不登记 files.json，不进 Gallery/coverage）。
+/* manual-lights HDR 量级标定探针（ai/probes 隔离，不登记 files.json，不进 Gallery/coverage）。
  *
  * 目的：GAP-L1 修复（r53）后为 docs/manual/examples/manual-lights 校准四型光源的 HDR 量级参数，
  * 使每一相都有明确可视贡献且不整体饱和。场景与 manual-lights 完全同构（同相机/地面/球/灯位）。
@@ -7,7 +7,7 @@
  *   dir@{2,30000,65000} · point@{40,1700,8000,24000} · spot@{120,1700,8000,24000} · sphere@{900,8000,40000}
  * 判定（写入 checks，不 throw——标定页允许部分相不达标）：每个候选记录 delta 亮度。
  *
- * 运行：NODE_PATH=<playwright> node tools/verify/g1-trial-run.cjs --root=ai/g1-staging --ids=tmp-lights-hdr
+ * 运行：NODE_PATH=<playwright> node tools/verify/g1-trial-run.cjs --root=ai/probes --ids=tmp-lights-hdr
  */
 import {
     createAirApp,

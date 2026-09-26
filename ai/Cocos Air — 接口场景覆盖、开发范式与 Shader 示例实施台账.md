@@ -19,7 +19,9 @@
 > assetManager.releaseAsset；asset paths 全 author；UICamera z=1000 引擎合同值；动画时钟轮询起步；
 > lifecycle 必须销毁「引用被毁资产的存活渲染器」节点；Gallery 发布面故意失败路径改零 HTTP
 > （注册表未命中/损坏 fixture）。
-> 本 staging 目录 = 探针与诊断页常驻所 + 历史工作区存档；示例正典位置在 examples/。
+> 2026-09-26 清退（owner 指令「整个目录清掉」，owner-decisions §10）：原 `ai/g1-staging/` 工作区整目录移除——
+> 探针与标定页现驻 `ai/probes/`，13+1 个已晋级示例不留在制品存档，examples/ 为唯一正典；
+> 本文所引 staging 路径均为清退前历史布局，读法以本注为准。
 
 ## 批次状态总览
 

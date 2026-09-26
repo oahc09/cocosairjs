@@ -1,4 +1,4 @@
-/* G4 Shader 探针运行器 — examples/shader-probe（隔离探针，不进 Gallery/覆盖率门禁）。
+/* G4 Shader 探针运行器 — ai/probes/shader-probe（隔离探针，不进 Gallery/覆盖率门禁）。
  *
  * 任务计划书 §3 G4.1：验证「用户手写 GLSL → EffectAsset 注册 → Material 绑定 →
  * uniform 更新 → WebGL 上屏」与编译错误诊断路径。探针逻辑在示例页内
@@ -16,9 +16,9 @@ const http = require('http');
 const { execSync } = require('child_process');
 
 const REPO = path.resolve(__dirname, '..', '..');
-// --root=<shader-probe 所在根>（默认 ai/g1-staging——探针为隔离诊断页，常驻 staging 不进 Gallery）
+// --root=<shader-probe 所在根>（默认 ai/probes——探针为隔离诊断页，常驻 ai/probes 不进 Gallery）
 const rootArg = process.argv.slice(2).find((a) => a.startsWith('--root='));
-const WORKSPACE = rootArg ? path.join(path.resolve(REPO, rootArg.slice(7)), 'shader-probe') : path.join(REPO, 'ai', 'g1-staging', 'shader-probe');
+const WORKSPACE = rootArg ? path.join(path.resolve(REPO, rootArg.slice(7)), 'shader-probe') : path.join(REPO, 'ai', 'probes', 'shader-probe');
 const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'g4-shader-probe.json');
 const TIMEOUT_MS = 180000;
 

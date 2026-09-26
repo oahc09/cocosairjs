@@ -137,9 +137,9 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 
 | 文件                                    | 内容                                                                                |
 | --------------------------------------- | ----------------------------------------------------------------------------------- |
-| `ai/g1-staging/shader-probe/main.js`    | 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁，双后端）          |
-| `ai/g1-staging/shader-custom-gradient/` | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle             |
-| `ai/g1-staging/shader-dissolve/`        | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画              |
-| `ai/g1-staging/shared/shader-blocks.js` | UBO 块样板 + standardVert + makeUserEffectJson（集成后随示例迁 `examples/shared/`） |
+| `ai/probes/shader-probe/main.js`        | 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁，双后端）          |
+| `examples/shader-custom-gradient/`      | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle             |
+| `examples/shader-dissolve/`             | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画              |
+| `examples/shared/shader-blocks.js`      | UBO 块样板 + standardVert + makeUserEffectJson                                     |
 | `src/air/builtin/register.ts`           | 引擎内建注册路径（glsl4→3/1 降写器 + set/binding 分配的同源参考）                   |
 | `docs/evidence/g4-shader-probe.json`    | 探针证据（28/28 PASS，含 WebGL1/WebGL2 后端与 registerBeforeBoot 边界）             |
