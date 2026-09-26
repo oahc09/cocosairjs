@@ -2,7 +2,7 @@
 
 > shader 编译/链接出错时怎么定位。
 > 配套示例：`shader-custom-gradient` / `shader-dissolve`（`examples/` 正典，r52 集成）；
-> 探针：`ai/probes/shader-probe/`（F 相位 = 故意编译错误的诊断实测）。
+> 探针：`tools/debug/probes/shader-probe/`（F 相位 = 故意编译错误的诊断实测）。
 
 **状态：PARTIAL（2026-09-25 升级，原 N/A）。** 用户手写 GLSL 的创作面已实测走通
 （见 [custom-shaders](custom-shaders.md) 与 `docs/evidence/g4-shader-probe.json`），

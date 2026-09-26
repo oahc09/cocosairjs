@@ -245,10 +245,10 @@ GAP-V1 isValid 帧末语义、GAP-I1 renderer.material 读回实例化脱钩（�
 
 ## 生产线（可复用，与 r50 线并存）
 
-g1-staging 隔离工作区全程隔离建设（并发会话工作区纪律；该工作区已于 2026-09-26 清退，探针现驻 `ai/probes/`）
+g1-staging 隔离工作区全程隔离建设（并发会话工作区纪律；该工作区已于 2026-09-26 清退，探针现驻 `tools/debug/probes/`）
 → `tools/verify/g1-trial-run.cjs`（页内探针 + browser-runtime 同源类型合同，
 证据写仓库外）→ 平移 examples/ → 正典链（manifest → v11 整批 ×N 轮至全绿 → 冻结 → coverage → gallery artifact）。
-Shader 探针：`tools/verify/g4-shader-probe.cjs`（双后端，常驻 `ai/probes/shader-probe/`）。
+Shader 探针：`tools/verify/g4-shader-probe.cjs`（双后端，常驻 `tools/debug/probes/shader-probe/`）。
 
 ## 跨引擎补遗（r52）
 
@@ -314,7 +314,7 @@ p2c 30000→65000：56.6→85.6→56.6（姿态钉死后确定性基线）；g4-
 - `shadows.md`：spike「无方向光照明」归因已定（LDR illuminance=3 被曝光压灭），BLOCKED 判定
   （阴影本体）不受影响、维持；`script-component-workflow.md` §7 增灯光单位纪律；`custom-shaders.md`
   用户 Shader 光照消费指引转正向（HDR 量级）。
-- 标定页常驻 `ai/probes/tmp-lights-hdr/`（不登记、不进 Gallery，与 tmp-light-probe 同纪律）。
+- 标定页常驻 `tools/debug/probes/tmp-lights-hdr/`（不登记、不进 Gallery，与 tmp-light-probe 同纪律）。
 
 ## 残余（如实登记，不冒充收口）
 

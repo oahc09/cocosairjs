@@ -18,8 +18,8 @@
     ]
   },
   "repro": {
-    "page": "ai/probes/tmp-light-probe/main.js",
-    "command": "NODE_PATH=<含 playwright 的 node_modules> node tools/verify/g1-trial-run.cjs --root=ai/probes --ids=tmp-light-probe",
+    "page": "tools/debug/probes/tmp-light-probe/main.js",
+    "command": "NODE_PATH=<含 playwright 的 node_modules> node tools/verify/g1-trial-run.cjs --root=tools/debug/probes --ids=tmp-light-probe",
     "sampling": "EVENT_AFTER_DRAW 内 drawImage→2D canvas→getImageData 中心像素（与 manual-examples-verify 同口径）"
   },
   "scene": "单蓝色 box（builtin-standard, mainColor 70/120/235）+ DirectionalLight(主光) + PointLight；相机 (0,1.6,6) lookAt (0,1,0)；清屏色 (30,40,60)",

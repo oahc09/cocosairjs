@@ -34,6 +34,7 @@ tools/**
 !tools/verify/g1-trial-run.cjs
 !tools/verify/g4-shader-probe.cjs
 !tools/debug/g1-spec-fixlines.cjs
+!tools/debug/probes/**
 
 # 计划/工作区文档（长中文行不强制重排）
 ai/*.md

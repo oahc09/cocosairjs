@@ -195,7 +195,8 @@ Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/
 ## 10. g1-staging 工作区清退（2026-09-26，owner 指令「整个目录清掉」）
 
 > 撤销 §8「探针/诊断页归属」行的落位裁定：`ai/g1-staging/` 整目录移除。清退后示例正典唯一在 `examples/`；
-> 探针/标定页迁 `ai/probes/`，「不登记 Gallery、不进覆盖率门禁」的纪律原样保留。本节为追加式落账，§8 原行作历史记录不回改。
+> 探针/标定页先迁 `ai/probes/`（r54），同日按 owner 反馈落位修正至 `tools/debug/probes/`（见本节末行），
+> 「不登记 Gallery、不进覆盖率门禁」的纪律原样保留。本节为追加式落账，§8 原行作历史记录不回改。
 
 | 项 | 决定 | 落点 |
 | --- | --- | --- |
@@ -204,3 +205,5 @@ Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/
 | 台账归属 | 实施台账移 `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例实施台账.md`，头部补清退记；staging 路径引用按「历史布局」读法 | 该台账 |
 | 引用翻转 | 手册 4 页 / 矩阵 §7 / v11-progress / `g1-light-contribution-gap.json` repro 字段的 staging 指针全部翻转至新位或 examples/ 正典；verify:doc-refs 复绿为判据 | docs/、docs/evidence/ |
 | prettier 范围 | format/format:check glob `ai/g1-staging/**` → `ai/probes/**`（文件集不变，仅换根） | package.json |
+| 清退审计（owner 要求「避免丢失遗漏」） | 全量 70 个被删文件逐一对照 examples/：46 个逐字节一致（含 ui-asset-loading/assets/panel-manifest.json 与 product-viewer/assets/corrupt-product.glb 两个失败语义 fixture）；13 个 example.json 仅差登记态（examples 侧多 promotion 键 + status=stable + specStatus=frozen）；4 个 shared 文件经「prettier(examples 正典) ≡ staging 副本」逐字节证明零独有内容（staging 侧为 r51 已格式化变体）；**结论：零内容丢失** | 本行 + r55 提交 |
+| 落位修正（owner 反馈「ai/probes 放的位置不合适」） | 探针终址 `tools/debug/probes/`（tools/debug=开发工具区，ai/ 回归纯计划书面）；g4 运行器默认根、prettier glob 与 .prettierignore 例外（`!tools/debug/probes/**`）、手册/矩阵/进度/证据/台账指针全链同步；2 个探针 main.js 顺「tools 自有新代码在格式化范围」纪律 --write（format:check 402→400） | `tools/debug/probes/`、`tools/verify/g4-shader-probe.cjs`、package.json、.prettierignore |

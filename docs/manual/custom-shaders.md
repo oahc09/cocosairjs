@@ -137,7 +137,7 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 
 | 文件                                    | 内容                                                                                |
 | --------------------------------------- | ----------------------------------------------------------------------------------- |
-| `ai/probes/shader-probe/main.js`        | 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁，双后端）          |
+| `tools/debug/probes/shader-probe/main.js` | 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁，双后端）  |
 | `examples/shader-custom-gradient/`      | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle             |
 | `examples/shader-dissolve/`             | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画              |
 | `examples/shared/shader-blocks.js`      | UBO 块样板 + standardVert + makeUserEffectJson                                     |
