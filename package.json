@@ -48,6 +48,7 @@
   "verify:decoders": "node tools/verify/decoder-audit.cjs",
   "verify:test-inventory": "node tools/verify/test-inventory.cjs",
   "verify:api-coverage": "node tools/examples/coverage-report.cjs",
+  "verify:release": "node tools/verify/release-readiness.cjs",
   "capabilities": "node tools/verify/update-capabilities.cjs",
   "verify:web-only": "node tools/verify/verify-web-only.cjs",
   "verify:file-map": "node tools/v12/verify-file-map.cjs",
