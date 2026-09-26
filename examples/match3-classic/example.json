@@ -178,19 +178,19 @@
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L620"
+        "sourceLocation": "L625"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L620"
+        "sourceLocation": "L625"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L661"
+        "sourceLocation": "L666"
       }
     ]
   },
@@ -334,9 +334,9 @@
     }
   },
   "promotion": {
-    "spec": "65d50be7e3b3",
-    "source": "55baa1fcdc066750",
-    "candidate": "45df203a8e6eab03",
+    "spec": "7a18ff962562",
+    "source": "d4ec33849a43cbe4",
+    "candidate": "d1cc556759a27943",
     "verified": 21,
     "attested": 1,
     "units": 22

@@ -4,7 +4,7 @@
   "title": "Match-3 Classic",
   "category": "game",
   "status": "draft",
-  "specStatus": "draft",
+  "specStatus": "frozen",
   "requiresDevTools": false,
   "learning": {
     "goal": "经典三消完整循环：相邻交换、三连判定、消除下落补牌、连锁计分、步数目标、胜负与重开，动画队列 + 状态锁 + 确定性种子（G2）",
@@ -178,19 +178,19 @@
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L620"
+        "sourceLocation": "L625"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L620"
+        "sourceLocation": "L625"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L661"
+        "sourceLocation": "L666"
       }
     ]
   },
@@ -332,5 +332,17 @@
         }
       }
     }
+  },
+  "promotion": {
+    "spec": "65d50be7e3b3",
+    "source": "55baa1fcdc066750",
+    "candidate": "d1cc556759a27943",
+    "verified": 21,
+    "attested": 1,
+    "units": 22
+  },
+  "stableReview": {
+    "demotedAt": "2026-09-26T02:44:44.166Z",
+    "reason": "current run FAIL"
   }
 }

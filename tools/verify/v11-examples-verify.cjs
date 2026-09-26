@@ -662,6 +662,22 @@ async function verifyApp (example, workspace, html, spec, prepared) {
     const channel = await runtime.start({ paths: { workspace } });
     await new Promise((resolve) => setTimeout(resolve, SETTLE_MS));
 
+    // 页面自报就绪门（r53）：暴露 __trialProbe 的示例以 probe.ready 为功能读回前置
+    // （main() 末尾置位 = 场景已到达规格读回的目标状态）。消除「节点计数稳定」启发式与
+    // 页内长采样链的竞态——r53 教训：render-composite 光度断言链拉长 RTQuad 创建时点，
+    // 稳定启发式提前 break，读回落在全功能场景之前（node-exists/material-property/transform 假红）。
+    // 未暴露探针的示例走原启发式不变；本门只增加等待、不减少后续检查。
+    const probeDir = path.join(REPO, 'examples', example.dir);
+    const hasProbeContract = fs.readdirSync(probeDir, { recursive: true })
+      .some((f) => /\.(ts|js)$/.test(String(f))
+        && fs.readFileSync(path.join(probeDir, String(f)), 'utf8').includes('__trialProbe'));
+    if (hasProbeContract) {
+      await runtime.page.waitForFunction(
+        () => !!(window.__trialProbe && window.__trialProbe.ready === true),
+        null, { timeout: 60000 },
+      ).catch(() => { /* 探针超时：回退节点计数启发式；main() 若挂死将由 no-runtime-error/功能检查显性红 */ });
+    }
+
     // Ready 轮询（§9）：等待 expectedGraph 节点在场，或节点数连续两次稳定（延迟加载示例）
     const graph = (spec.scene.expectedGraph && spec.scene.expectedGraph.nodes) || [];
     if (graph.length > 0) {

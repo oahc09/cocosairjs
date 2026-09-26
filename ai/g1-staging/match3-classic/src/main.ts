@@ -575,6 +575,11 @@ async function main(): Promise<void> {
     pcheck('m7-lose-state', ((game.state as string) === 'over' && game.score < TARGET_SCORE) || (game.state as string) === 'won',
         'state=' + game.state + ' score=' + game.score + '（小分交换若意外达标判 won 亦为合法终局）');
     game.reset(777); // 交互模式（换种子，自由游玩）
+    // 空闲期持续变化源：预选一个提示格（呼吸高亮即 effect 契约声明的「选中格白色呼吸高亮
+    // （空闲期持续 frame-diff）」）——probe-ready 门控下 frame-diff 采样落在 main() 完成后，
+    // 静态棋盘需要显式 idle 动画源（r53 整批实测教训）。
+    const idleHint = game.findAnyValidSwap();
+    if (idleHint) { board.selected = idleHint[0]; }
 
     // ---- 交互：点击选格 → 相邻交换；双击同格 = 提示走法（保证验证器单击序列有确定性结果） ----
     let pending: Cell | null = null;

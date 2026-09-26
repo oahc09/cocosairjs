@@ -32,7 +32,7 @@ const specCommon = require(path.join(REPO, 'tools', 'verify', 'v11-spec-common.c
 const ENGINES = {
   chromium: { dir: 'chromium-1228', exe: 'chrome-win64/chrome.exe', args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] },
   firefox: { dir: 'firefox-1543', exe: 'firefox/firefox.exe', args: [] },
-  webkit: { dir: 'webkit-2311', exe: 'Playwright.exe', args: [] },
+  webkit: { dir: 'webkit-2336', exe: 'Playwright.exe', args: [] }, // r53：外部 playwright 1.62.1 协议要求 webkit-2336（2311 组合挂起，r52 环境阻断项已解堵：安装匹配构建 + 钉版更新，披露于 v11-progress r53）
 };
 // V1.1 全 40 例共同存在的非致命日志，不计入失败（披露在证据 benignConsole 字段）
 const BENIGN_CONSOLE = ['[Physics] PhysicsSystem initDefaultMaterial()'];
@@ -119,7 +119,15 @@ async function runOne (pw, id, contract, port, engines) {
       if (probe && probeBefore) { probe.before = probeBefore; }
       const shotA = await page.screenshot();
       await page.waitForTimeout(500);
-      const shotB = await page.screenshot();
+      let shotB = await page.screenshot();
+      // 反 flake 补拍（r53）：firefox headless 偶发合成缓存使 500ms 双帧逐字节同（tiledmap-basic 实测
+      // 同码一过一败）。补拍不改断言语义——仍要求最终观测到真实帧间差异；补拍次数入证据。
+      let frameShotAttempts = 2;
+      while (shotB.equals(shotA) && frameShotAttempts < 6) {
+        await page.waitForTimeout(400);
+        shotB = await page.screenshot();
+        frameShotAttempts++;
+      }
       const dir = path.join(OUT_DIR, id);
       fs.mkdirSync(dir, { recursive: true });
       const pngRel = path.join('docs', 'evidence', 'v12', id, `matrix-${engine}.png`);
@@ -147,6 +155,7 @@ async function runOne (pw, id, contract, port, engines) {
       if (shotBefore) { checks.beforePngBytesAboveFloor = shotBefore.length >= beforeFloor; }
       records.push({
         ...rec,
+        frameShotAttempts,
         result: Object.values(checks).every(Boolean) ? 'PASS' : 'FAIL',
         checks,
         failedAssertions: assertions.filter((a) => !a.ok),

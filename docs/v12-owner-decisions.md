@@ -175,3 +175,19 @@ Stable 计数 **131 ≥ 120 达标**；Core VerifiedRate **6.9% → 36%**（294/
 | DevTools 证据 | candidate 指纹因 `examples/shared/shader-blocks.js` 新增而变（f6036adc→45df203a）：按 r49 同口径当期刷新 5/5 | `v11-devtools-examples.json` 15:43Z |
 | GAP-L1（灯光视觉贡献为零） | **登记不修复**：修复面涉上游抽取文件（pipeline-ubo/降写链），需 Deviation 流程与单独估时；本轮示例以结构断言+如实差值记录降级 | `g1-light-contribution-gap.json` + 矩阵 §7 |
 | V1.1 Release Gate | r49 判定维持：Core 36.2% / Important 1.9% / Advanced N/A，距 100/90/80 目标仍远；Stable 144 ≥120 维持达标 | `v06-v10-release-gates.md` 口径不变 |
+
+## 9. r53 批复执行记录（2026-09-26，owner 指令「批准 GAP-L1 修复，按 Deviation 流程执行」）
+
+> 批复范围：GAP-L1（矩阵 §7 P0）修复 + 其引发的正典链全量重采证。执行中的派生判定逐项落账：
+
+| 项 | 决定 | 落点 |
+| --- | --- | --- |
+| 修复落点 | AIR 原创 fixture `src/air/builtin/builtin-glsl4.ts` 9 处判别对齐上游 4.0 语义。**未触碰任何上游跟踪文件 → 无新增 Deviation 行、无 file-map 扰动**（Deviation 流程在「修复面不涉上游」的分支内闭环） | 矩阵 §7 GAP-L1、`g1-light-contribution-gap.json` resolution |
+| 主光根因定性 | 单位语义陷阱（isHDR 默认 true / exposure=1/38400），**非缺陷**；以文档与示例 HDR 量级纪律收口，不改引擎默认值（改默认值会波及全部既有示例的视觉基线，收益风险比劣） | lights.md §1、范式文档 §7、custom-shaders、render-composite p2c |
+| 手册树漂移 | lights.md「point/spot 无可视贡献（PARTIAL）」与 shadows.md「归因未定」在修复后成为事实漂移 → 同轮重写/归因（手册线纪律：修复必须同轮收文档） | lights.md 全页、shadows.md §3、manual-lights 示例 |
+| 验证器加固一 | v11 runner 增页面自报就绪门（`__trialProbe.ready`）：批 #6 实测「节点计数稳定」启发式与长采样链竞态致 render-composite 假红级联；门控只增等待不减检查 | `v11-examples-verify.cjs` verifyApp |
+| 验证器加固二 | V12 矩阵 frameChanged 反 flake 补拍（firefox 合成缓存，tiledmap-basic 同码一过一败）；补拍次数入证据，断言语义不变 | `browser-matrix.cjs` |
+| 环境变更（披露） | 安装 playwright 匹配构建 **webkit-2336**（r52 登记的环境阻断项）+ 矩阵钉版同步更新。属 r52 已披露待授权项，本轮为收口正典链所必需，执行并在此落账；未改动仓库外其他环境 | `browser-matrix.cjs` ENGINES、ms-playwright 缓存 |
+| 批 #5 中止 | manifest 未随规格改动再生成即启动整批 → 该行证据无效；中止重排（纪律：files.json 先于整批） | 本 session 操作记录 |
+| 冻结规格触达 | match3-classic 补 idle 呼吸高亮源（effect 契约本就声明而源码缺失）、render-composite 光度基准角钉死——两处为示例源码修正，fixlines 回填后 spec-evidence 0 漂移，frozen 状态不变 | 两例 main.ts + example.json |
+| 残余留账 | GAP-C1/C2 导出面决策仍待 owner；light-* 四例正向断言升级列后续批次；clustered-culling 变体范围外 | 矩阵 §7、v11-progress r53 残余 |

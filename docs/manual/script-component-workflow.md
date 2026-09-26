@@ -173,8 +173,12 @@ app.run(sceneB); // = director.runSceneImmediate(sceneB)
 - **确定性**：物理示例冻结帧驱动手动步进（`physics.enable=false` +
   `syncSceneToPhysics → step → emitEvents → syncAfterEvents`，官方 postUpdate 同序）→ 跨引擎逐位同解
   （`physics-interaction` 重置后高度逐位一致 [0.5,1.5,2.5]）。
-- 已知缺口对照表见 `docs/api-scenario-gap-matrix.md` §7（GAP-L1 灯光视觉贡献、GAP-C1
-  worldToScreen 零向量、GAP-M1 USE_TEXTURE 宏名等）——写断言前先查表，别把缺口当自己的 bug 调。
+- **灯光单位纪律（r53 起）**：`pipelineSceneData.isHDR` 默认 **true**（exposure=1/38400）——
+  `illuminance`/`luminance` 必须用 HDR 量级（主光 ~30000–65000 lux、点光 ~千级以上）；
+  LDR 量级（2/40/120）× exposure ≈ 0 = 视觉不可见。GAP-L1（点/球光 att≡0）已修复
+  （fixture 对齐上游 4.0 判别语义），四型光源均有真实可视贡献。
+- 已知缺口对照表见 `docs/api-scenario-gap-matrix.md` §7（GAP-C1 worldToScreen 零向量、
+  GAP-C2 Camera 组件 resize 导出面、GAP-M1 USE_TEXTURE 宏名等）——写断言前先查表，别把缺口当自己的 bug 调。
 
 ## 8. 项目结构与发布
 

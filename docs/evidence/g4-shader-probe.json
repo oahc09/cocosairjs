@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-09-25T10:53:01.275Z",
+  "measuredAt": "2026-09-26T01:55:27.225Z",
   "runner": "tools/verify/g4-shader-probe.cjs",
   "mode": "g4-shader-probe-v1",
-  "head": "7a33e11db9a93f2e786cb082847437e810842473",
-  "candidateFingerprint": "f6036adc8526e925",
+  "head": "be9f1f048e56dfb153f4009fb683df119b5919fb",
+  "candidateFingerprint": "d1cc556759a27943",
   "browser": {
     "name": "chromium",
     "headless": true,
@@ -19,7 +19,7 @@
     {
       "mode": "default",
       "verdict": "PASS",
-      "ms": 5666,
+      "ms": 5509,
       "runError": null,
       "fatal": null,
       "checks": [
@@ -41,12 +41,12 @@
         {
           "name": "C1-uniform-vec4-update",
           "result": "PASS",
-          "detail": "center=[0,223,56,255]（预期绿色系 g 主导）"
+          "detail": "center=[0,222,56,255]（预期绿色系 g 主导）"
         },
         {
           "name": "D1-time-animation-frame-diff",
           "result": "PASS",
-          "detail": "maxDiff=41"
+          "detail": "maxDiff=42"
         },
         {
           "name": "E1-uniform-float-freeze",
@@ -61,7 +61,7 @@
         {
           "name": "F2-page-survives-broken-shader",
           "result": "PASS",
-          "detail": "center=[0,163,41,255]（好盒子仍绿）"
+          "detail": "center=[0,162,41,255]（好盒子仍绿）"
         },
         {
           "name": "G1-remove",
@@ -76,12 +76,12 @@
         {
           "name": "G3-reregister-renders",
           "result": "PASS",
-          "detail": "center=[22,67,222,255]（预期蓝色系 b 主导）"
+          "detail": "center=[22,66,220,255]（预期蓝色系 b 主导）"
         },
         {
           "name": "H1-material-destroy-no-crash",
           "result": "PASS",
-          "detail": "threw=null center=[25,74,246,255]"
+          "detail": "threw=null center=[24,73,245,255]"
         },
         {
           "name": "H2-effect-destroy-no-throw",
@@ -127,30 +127,30 @@
         ],
         "afterColorUniform": [
           0,
-          223,
+          222,
           56,
           255
         ],
         "animDiff": {
           "d0": [
             0,
-            221,
+            220,
             55,
             255
           ],
           "d1": [
             0,
-            201,
+            199,
             50,
             255
           ],
           "d2": [
             0,
-            180,
+            178,
             45,
             255
           ],
-          "maxDiff": 41
+          "maxDiff": 42
         },
         "frozen": {
           "f0": [
@@ -173,14 +173,14 @@
         ],
         "afterBroken": [
           0,
-          163,
+          162,
           41,
           255
         ],
         "afterReregister": [
           22,
-          67,
-          222,
+          66,
+          220,
           255
         ],
         "final": [
@@ -216,7 +216,7 @@
     {
       "mode": "force-webgl1",
       "verdict": "PASS",
-      "ms": 5053,
+      "ms": 5187,
       "runError": null,
       "fatal": null,
       "checks": [
@@ -233,17 +233,17 @@
         {
           "name": "B1-user-frag-on-screen",
           "result": "PASS",
-          "detail": "center=[179,71,18,255]（预期橙色系 r 主导，背景 (20,24,32)）"
+          "detail": "center=[169,68,17,255]（预期橙色系 r 主导，背景 (20,24,32)）"
         },
         {
           "name": "C1-uniform-vec4-update",
           "result": "PASS",
-          "detail": "center=[0,143,36,255]（预期绿色系 g 主导）"
+          "detail": "center=[0,137,34,255]（预期绿色系 g 主导）"
         },
         {
           "name": "D1-time-animation-frame-diff",
           "result": "PASS",
-          "detail": "maxDiff=14"
+          "detail": "maxDiff=8"
         },
         {
           "name": "E1-uniform-float-freeze",
@@ -258,7 +258,7 @@
         {
           "name": "F2-page-survives-broken-shader",
           "result": "PASS",
-          "detail": "center=[0,243,61,255]（好盒子仍绿）"
+          "detail": "center=[0,250,63,255]（好盒子仍绿）"
         },
         {
           "name": "G1-remove",
@@ -273,12 +273,12 @@
         {
           "name": "G3-reregister-renders",
           "result": "PASS",
-          "detail": "center=[25,75,251,255]（预期蓝色系 b 主导）"
+          "detail": "center=[24,73,245,255]（预期蓝色系 b 主导）"
         },
         {
           "name": "H1-material-destroy-no-crash",
           "result": "PASS",
-          "detail": "threw=null center=[23,69,232,255]"
+          "detail": "threw=null center=[22,66,219,255]"
         },
         {
           "name": "H2-effect-destroy-no-throw",
@@ -288,7 +288,7 @@
         {
           "name": "H3-page-alive-final",
           "result": "PASS",
-          "detail": "center=[20,60,201,255]"
+          "detail": "center=[19,56,186,255]"
         }
       ],
       "info": {
@@ -317,37 +317,37 @@
       },
       "samples": {
         "firstFrame": [
-          179,
-          71,
-          18,
+          169,
+          68,
+          17,
           255
         ],
         "afterColorUniform": [
           0,
-          143,
-          36,
+          137,
+          34,
           255
         ],
         "animDiff": {
           "d0": [
             0,
-            141,
-            35,
+            136,
+            34,
             255
           ],
           "d1": [
             0,
-            130,
-            33,
+            128,
+            32,
             255
           ],
           "d2": [
             0,
-            127,
+            129,
             32,
             255
           ],
-          "maxDiff": 14
+          "maxDiff": 8
         },
         "frozen": {
           "f0": [
@@ -370,20 +370,20 @@
         ],
         "afterBroken": [
           0,
-          243,
-          61,
+          250,
+          63,
           255
         ],
         "afterReregister": [
-          25,
-          75,
-          251,
+          24,
+          73,
+          245,
           255
         ],
         "final": [
-          20,
-          60,
-          201,
+          19,
+          56,
+          186,
           255
         ]
       },

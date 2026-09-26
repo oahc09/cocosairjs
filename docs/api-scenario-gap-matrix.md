@@ -373,7 +373,27 @@ example 侧签名与当期 d.ts 不符——属于并行线的修复范围，本
 > 计划书 §3 G1：「若某条链的公开接口尚不可用，先登记最小功能缺口、复现用例和修复依赖，再继续示例」。
 > 以下缺口均有可复现探针与当期证据，示例侧一律如实降级（结构断言/记录差值），不冒充绿灯。
 
-### GAP-L1 主光/点光视觉贡献为零（P0，阻断 P10/P19 的视觉断言面）
+### GAP-L1 主光/点光视觉贡献为零（P0）—— **r53 已修复（owner 批准 Deviation 流程执行）**
+
+> **修复结论（2026-09-26）**：拆分为两个独立根因，处置不同：
+> 1. **主光（DirectionalLight）＝单位语义陷阱，非引擎缺陷**：isHDR 默认 true（pipeline-scene-data.ts:138），
+>    exposure=1/38400（camera.ts:413）——LDR 量级 illuminance（1.2/8）× exposure ≈ 3e-5 不可见；
+>    HDR 量级（65000=组件默认）下颜色/开关/渐变全部实测生效（探针 HDR_A/B/C/F 相位：
+>    白 65000→[154,160,165]、红→[154,76,84]、关→[32,49,65]、20000→[86,98,109]）。
+>    处置：文档/示例单位纪律（范式文档 + render-composite p2c 升级为正向断言），无引擎改动。
+> 2. **点光/球光（PointLight/SphereLight）＝fixture 着色器版本失配，真实缺陷，已修复**：
+>    AIR fixture `src/air/builtin/builtin-glsl4.ts`（AIR 原创文件）携带 3.8 代语义
+>    `if (cc_lightPos[i].w > 0.0)`（w>0 一律走 spot 角衰减），而 4.0 同源队列写入
+>    `w = LightType.POINT(3)/SPHERE(1)` → 点/球光落入以未写入 cc_lightDir 计算的角衰减 → att≡0；
+>    叠加 POINT 的 `illum = 0²/max(0²,d²) ≡ 0`（4.0 上游对 POINT/RANGED 取 1.0）。修复＝对齐上游 4.0
+>    `shading-standard-additive.chunk` 语义：9 处替换（spot 判别 ×3、spot-shadow 判别 ×3、POINT/RANGED illum ×3），
+>    数值窗口 ±0.5 精确匹配整数 LightType。**未触碰任何上游跟踪文件**（file-map 无新增 Deviation 行；
+>    修复位于 AIR 原创 fixture，glsl3/glsl1 由 register.ts 降写自动跟随）。clustered-culling 变体
+>    （CC_ENABLE_CLUSTERED_LIGHT_CULLING=1 路径）未在 AIR 启用，不在本次范围，如实登记。
+>    验证：探针 HDR_D/E/G 相位——点光开启 [255,255,255]（饱和）vs 关闭 [154,160,165]，delta=472；
+>    render-composite p2b 正向断言 35.0→255.0→35.0；g4-shader-probe 新 bundle 双后端回归 28/28 PASS。
+>
+> 原登记内容（保留存档）：
 
 - **现象**：DirectionalLight illuminance 1.2→8、color→纯红、PointLight luminance 0↔900、active 开关、
   新场景静态红光配置——中心像素全程不变；对照组（材质 setProperty、ambient.skyColorHDR.set）立即生效。

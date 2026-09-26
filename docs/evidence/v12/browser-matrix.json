@@ -1,14 +1,14 @@
 {
   "schema": "v12-browser-matrix-v1",
   "completed": true,
-  "measuredAt": "2026-09-25T04:05:13.477Z",
+  "measuredAt": "2026-09-26T04:13:53.099Z",
   "subset": false,
   "runPass": 39,
   "runTotal": 39,
   "bundle": {
     "path": "build/cocosair.module.js",
-    "bytes": 6600546,
-    "sha256_16": "9376e3062269376c"
+    "bytes": 6600855,
+    "sha256_16": "cef2756486b073d1"
   },
   "contractFile": "tools/v12/browser-matrix-contract.json",
   "contractFingerprint": "194e1b97fbaa92fc",
@@ -25,6 +25,7 @@
       "engine": "chromium",
       "example": "profiler-overlay",
       "group": "LV12-02",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -35,8 +36,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-chromium.png",
-      "pngBytes": 11178,
-      "pngSha256_16": "d903493724be13dc",
+      "pngBytes": 10945,
+      "pngSha256_16": "e0063c35b4f62fcd",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -52,7 +53,7 @@
         "overlayActive": true,
         "counters": {
           "fps": {
-            "value": 60.02,
+            "value": 59.87,
             "enabled": false
           },
           "draws": {
@@ -88,7 +89,7 @@
             "enabled": false
           },
           "present": {
-            "value": 0.1,
+            "value": 0,
             "enabled": false
           },
           "textureMemory": {
@@ -109,6 +110,7 @@
       "engine": "firefox",
       "example": "profiler-overlay",
       "group": "LV12-02",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -119,8 +121,93 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-firefox.png",
-      "pngBytes": 12032,
-      "pngSha256_16": "0f543340c0d1ceb9",
+      "pngBytes": 11939,
+      "pngSha256_16": "a67d38ee3fe6b607",
+      "pngBefore": null,
+      "pngFloors": {
+        "after": 5000,
+        "exemptedByEngine": {}
+      },
+      "viewports": [
+        {
+          "width": 480,
+          "height": 360
+        }
+      ],
+      "probe": {
+        "overlayActive": true,
+        "counters": {
+          "fps": {
+            "value": 59.88,
+            "enabled": false
+          },
+          "draws": {
+            "value": 2,
+            "enabled": false
+          },
+          "dispatches": {
+            "value": 0,
+            "enabled": false
+          },
+          "frame": {
+            "value": 0,
+            "enabled": false
+          },
+          "instances": {
+            "value": 0,
+            "enabled": false
+          },
+          "tricount": {
+            "value": 208,
+            "enabled": false
+          },
+          "logic": {
+            "value": 0,
+            "enabled": false
+          },
+          "physics": {
+            "value": 0,
+            "enabled": false
+          },
+          "render": {
+            "value": 0,
+            "enabled": false
+          },
+          "present": {
+            "value": 0,
+            "enabled": false
+          },
+          "textureMemory": {
+            "value": 0.32,
+            "enabled": false
+          },
+          "bufferMemory": {
+            "value": 6.82,
+            "enabled": false
+          }
+        }
+      },
+      "consoleErrors": [],
+      "benignConsole": [],
+      "failedRequests": []
+    },
+    {
+      "engine": "webkit",
+      "example": "profiler-overlay",
+      "group": "LV12-02",
+      "frameShotAttempts": 2,
+      "result": "PASS",
+      "checks": {
+        "noConsoleError": true,
+        "noFailedRequest": true,
+        "frameChanged": true,
+        "pngBytesAboveFloor": true,
+        "probeAssertions": true
+      },
+      "failedAssertions": [],
+      "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-webkit.png",
+      "pngBytes": 10376,
+      "pngSha256_16": "08c2f6f202c8316b",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -148,90 +235,6 @@
             "enabled": false
           },
           "frame": {
-            "value": 2,
-            "enabled": false
-          },
-          "instances": {
-            "value": 0,
-            "enabled": false
-          },
-          "tricount": {
-            "value": 208,
-            "enabled": false
-          },
-          "logic": {
-            "value": 1,
-            "enabled": false
-          },
-          "physics": {
-            "value": 1,
-            "enabled": false
-          },
-          "render": {
-            "value": 0,
-            "enabled": false
-          },
-          "present": {
-            "value": 0,
-            "enabled": false
-          },
-          "textureMemory": {
-            "value": 0.32,
-            "enabled": false
-          },
-          "bufferMemory": {
-            "value": 6.82,
-            "enabled": false
-          }
-        }
-      },
-      "consoleErrors": [],
-      "benignConsole": [],
-      "failedRequests": []
-    },
-    {
-      "engine": "webkit",
-      "example": "profiler-overlay",
-      "group": "LV12-02",
-      "result": "PASS",
-      "checks": {
-        "noConsoleError": true,
-        "noFailedRequest": true,
-        "frameChanged": true,
-        "pngBytesAboveFloor": true,
-        "probeAssertions": true
-      },
-      "failedAssertions": [],
-      "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-webkit.png",
-      "pngBytes": 10533,
-      "pngSha256_16": "ac3fa65496dd9b52",
-      "pngBefore": null,
-      "pngFloors": {
-        "after": 5000,
-        "exemptedByEngine": {}
-      },
-      "viewports": [
-        {
-          "width": 480,
-          "height": 360
-        }
-      ],
-      "probe": {
-        "overlayActive": true,
-        "counters": {
-          "fps": {
-            "value": 59.85,
-            "enabled": false
-          },
-          "draws": {
-            "value": 2,
-            "enabled": false
-          },
-          "dispatches": {
-            "value": 0,
-            "enabled": false
-          },
-          "frame": {
             "value": 0,
             "enabled": false
           },
@@ -277,6 +280,7 @@
       "engine": "chromium",
       "example": "ui-components",
       "group": "LV12-09",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -287,8 +291,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-chromium.png",
-      "pngBytes": 12661,
-      "pngSha256_16": "6086d665096e9fcf",
+      "pngBytes": 12640,
+      "pngSha256_16": "5e02a74182dd25f2",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -437,6 +441,7 @@
       "engine": "firefox",
       "example": "ui-components",
       "group": "LV12-09",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -447,8 +452,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-firefox.png",
-      "pngBytes": 16000,
-      "pngSha256_16": "85f197024e4a0015",
+      "pngBytes": 15633,
+      "pngSha256_16": "3e12bb5c39d23e56",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -597,6 +602,7 @@
       "engine": "webkit",
       "example": "ui-components",
       "group": "LV12-09",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -607,8 +613,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-webkit.png",
-      "pngBytes": 14207,
-      "pngSha256_16": "5f759bd9663eaa2e",
+      "pngBytes": 14129,
+      "pngSha256_16": "73ba6e42f28f745d",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -757,6 +763,7 @@
       "engine": "chromium",
       "example": "ui-layout",
       "group": "LV12-09",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -768,11 +775,11 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-layout\\matrix-chromium.png",
-      "pngBytes": 6471,
-      "pngSha256_16": "9f61dad64968ab5e",
+      "pngBytes": 6448,
+      "pngSha256_16": "9c12762c192bcf2a",
       "pngBefore": "docs\\evidence\\v12\\ui-layout\\matrix-chromium-before.png",
-      "pngBeforeBytes": 7384,
-      "pngBeforeSha256_16": "e2dcd499c8ecdcd5",
+      "pngBeforeBytes": 7395,
+      "pngBeforeSha256_16": "e08388d9966b8761",
       "pngFloors": {
         "after": 3500,
         "before": 3500,
@@ -918,6 +925,7 @@
       "engine": "firefox",
       "example": "ui-layout",
       "group": "LV12-09",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -929,11 +937,11 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-layout\\matrix-firefox.png",
-      "pngBytes": 7961,
-      "pngSha256_16": "c11826738dfc5ea8",
+      "pngBytes": 7969,
+      "pngSha256_16": "3693d1a28447b76b",
       "pngBefore": "docs\\evidence\\v12\\ui-layout\\matrix-firefox-before.png",
-      "pngBeforeBytes": 9256,
-      "pngBeforeSha256_16": "530654169190550b",
+      "pngBeforeBytes": 9281,
+      "pngBeforeSha256_16": "10a8da62db6b4f71",
       "pngFloors": {
         "after": 3500,
         "before": 3500,
@@ -1079,6 +1087,7 @@
       "engine": "webkit",
       "example": "ui-layout",
       "group": "LV12-09",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -1240,6 +1249,7 @@
       "engine": "chromium",
       "example": "physics-2d-basic",
       "group": "LV12-13",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -1250,8 +1260,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-basic\\matrix-chromium.png",
-      "pngBytes": 10259,
-      "pngSha256_16": "03f1e7008ad5ddee",
+      "pngBytes": 10209,
+      "pngSha256_16": "f7a89851c033e337",
       "pngBefore": null,
       "pngFloors": {
         "after": 3500,
@@ -1445,6 +1455,7 @@
       "engine": "firefox",
       "example": "physics-2d-basic",
       "group": "LV12-13",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -1455,8 +1466,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-basic\\matrix-firefox.png",
-      "pngBytes": 12439,
-      "pngSha256_16": "a2beabf66092f7f0",
+      "pngBytes": 12256,
+      "pngSha256_16": "a46c5c8a5ba16e00",
       "pngBefore": null,
       "pngFloors": {
         "after": 3500,
@@ -1650,6 +1661,7 @@
       "engine": "webkit",
       "example": "physics-2d-basic",
       "group": "LV12-13",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -1855,6 +1867,7 @@
       "engine": "chromium",
       "example": "physics-2d-collision",
       "group": "LV12-13",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -1865,8 +1878,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-collision\\matrix-chromium.png",
-      "pngBytes": 10883,
-      "pngSha256_16": "3774bf5e15c6b567",
+      "pngBytes": 10845,
+      "pngSha256_16": "2ab2e808c62920c2",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -22798,6 +22811,7 @@
       "engine": "firefox",
       "example": "physics-2d-collision",
       "group": "LV12-13",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -22808,8 +22822,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-collision\\matrix-firefox.png",
-      "pngBytes": 12760,
-      "pngSha256_16": "a2bb552cfbab1b92",
+      "pngBytes": 12585,
+      "pngSha256_16": "18060357726201a7",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -43741,6 +43755,7 @@
       "engine": "webkit",
       "example": "physics-2d-collision",
       "group": "LV12-13",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -64684,6 +64699,7 @@
       "engine": "chromium",
       "example": "particle-2d-basic",
       "group": "LV12-07",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -64694,8 +64710,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-chromium.png",
-      "pngBytes": 54037,
-      "pngSha256_16": "fc0cbdefe2ca377c",
+      "pngBytes": 51607,
+      "pngSha256_16": "2dd1f27bc8a73657",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -65261,8 +65277,8 @@
           "randomRestored": true
         },
         "live": {
-          "flame": 158,
-          "ring": 147
+          "flame": 149,
+          "ring": 148
         },
         "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
         "clamp": 0.033333,
@@ -65276,6 +65292,7 @@
       "engine": "firefox",
       "example": "particle-2d-basic",
       "group": "LV12-07",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -65286,8 +65303,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-firefox.png",
-      "pngBytes": 62472,
-      "pngSha256_16": "42e5de479d6256db",
+      "pngBytes": 61794,
+      "pngSha256_16": "b7adf9bdb26cf3f1",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -65853,7 +65870,7 @@
           "randomRestored": true
         },
         "live": {
-          "flame": 156,
+          "flame": 150,
           "ring": 144
         },
         "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
@@ -65868,6 +65885,7 @@
       "engine": "webkit",
       "example": "particle-2d-basic",
       "group": "LV12-07",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -65878,8 +65896,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-webkit.png",
-      "pngBytes": 54822,
-      "pngSha256_16": "fd9ecacd7a054d80",
+      "pngBytes": 57920,
+      "pngSha256_16": "fd36e11a67cec7af",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -66446,7 +66464,7 @@
         },
         "live": {
           "flame": 152,
-          "ring": 140
+          "ring": 141
         },
         "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
         "clamp": 0.033333,
@@ -66460,6 +66478,7 @@
       "engine": "chromium",
       "example": "tiledmap-basic",
       "group": "LV12-08",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -66470,8 +66489,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\tiledmap-basic\\matrix-chromium.png",
-      "pngBytes": 12297,
-      "pngSha256_16": "0b7d30543716d15e",
+      "pngBytes": 12170,
+      "pngSha256_16": "cfe3a7628b98decf",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -67060,6 +67079,7 @@
       "engine": "firefox",
       "example": "tiledmap-basic",
       "group": "LV12-08",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -67070,8 +67090,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\tiledmap-basic\\matrix-firefox.png",
-      "pngBytes": 16267,
-      "pngSha256_16": "95593b5988aa50e2",
+      "pngBytes": 16113,
+      "pngSha256_16": "06ab2cb7c4b70e64",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -67660,6 +67680,7 @@
       "engine": "webkit",
       "example": "tiledmap-basic",
       "group": "LV12-08",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -68260,6 +68281,7 @@
       "engine": "chromium",
       "example": "audio-basic",
       "group": "LV12-03",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -68270,8 +68292,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-chromium.png",
-      "pngBytes": 12425,
-      "pngSha256_16": "d59e2ef9b30f57fd",
+      "pngBytes": 12467,
+      "pngSha256_16": "f14456ffea248c78",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68291,7 +68313,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 676,
+              "tMs": 734,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68302,7 +68324,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 984,
+              "tMs": 1049,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68353,7 +68375,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 594,
+            "unlockLatencyMs": 282,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68383,7 +68405,7 @@
             "seekLatencyMs": 0,
             "afterSeekPos": 1.5,
             "seekLandedsInRange": true,
-            "endLatencyMs": 128,
+            "endLatencyMs": 132,
             "endEventFired": true,
             "endedDelta": 1,
             "stateAfterEnd": "INIT(0)",
@@ -68397,7 +68419,7 @@
             "loopFlagOnPlayer": true,
             "stateWhileLooping": "PLAYING(1)",
             "stillPlaying": true,
-            "wrapLatencyMs": 103,
+            "wrapLatencyMs": 105,
             "wrappedBelowSeekTarget": true,
             "endedDeltaDuringLoop": 0,
             "playingBeforeOneShot": true,
@@ -68413,10 +68435,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22292,
+            "tMs": 22362,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.857,
+            "currentTime": 0.869,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68424,10 +68446,10 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22292,
+            "tMs": 22362,
             "playing": true,
             "state": "PLAYING(1)",
-            "currentTime": 0.267,
+            "currentTime": 0.566,
             "duration": 1.6,
             "volume": 0.35,
             "loop": true,
@@ -68460,7 +68482,7 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@13252|started@13252|started@13543|ended@13853|started@13879|started@14110"
+          "events": "started@13006|started@13006|started@13298|ended@13615|started@13642|started@13876"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
@@ -68473,6 +68495,7 @@
       "engine": "firefox",
       "example": "audio-basic",
       "group": "LV12-03",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -68483,8 +68506,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-firefox.png",
-      "pngBytes": 18250,
-      "pngSha256_16": "c1e146c317b94a9a",
+      "pngBytes": 18192,
+      "pngSha256_16": "3d911db9f3f7e316",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68504,7 +68527,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 1110,
+              "tMs": 1271,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68515,7 +68538,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 1412,
+              "tMs": 1578,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68566,7 +68589,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 510,
+            "unlockLatencyMs": 509,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68576,8 +68599,8 @@
           },
           "p5TimeMachine": {
             "clockAdvancedWhilePlaying": true,
-            "posDelta": 0.053,
-            "wallDeltaMs": 53,
+            "posDelta": 0.051,
+            "wallDeltaMs": 51,
             "stateAfterPause": "PAUSED(2)",
             "frozenWhilePaused": 0,
             "resumedState": "PLAYING(1)",
@@ -68596,7 +68619,7 @@
             "seekLatencyMs": 0,
             "afterSeekPos": 1.5,
             "seekLandedsInRange": true,
-            "endLatencyMs": 102,
+            "endLatencyMs": 101,
             "endEventFired": true,
             "endedDelta": 1,
             "stateAfterEnd": "INIT(0)",
@@ -68626,10 +68649,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22689,
+            "tMs": 22810,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.831,
+            "currentTime": 0.86,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68637,10 +68660,10 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22689,
+            "tMs": 22810,
             "playing": true,
             "state": "PLAYING(1)",
-            "currentTime": 0.341,
+            "currentTime": 0.348,
             "duration": 1.6,
             "volume": 0.35,
             "loop": true,
@@ -68673,7 +68696,7 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@13573|started@13573|started@13862|ended@14178|started@14179|started@14404"
+          "events": "started@13687|started@13687|started@13992|ended@14321|started@14323|started@14547"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
@@ -68686,6 +68709,7 @@
       "engine": "webkit",
       "example": "audio-basic",
       "group": "LV12-03",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -68697,7 +68721,7 @@
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-webkit.png",
       "pngBytes": 12995,
-      "pngSha256_16": "ff5d6584bf2144f6",
+      "pngSha256_16": "9b7b0188b0f66805",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68717,7 +68741,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 8549,
+              "tMs": 8508,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68728,7 +68752,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 8856,
+              "tMs": 8815,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68779,7 +68803,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 1302,
+            "unlockLatencyMs": 1580,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68789,8 +68813,8 @@
           },
           "p5TimeMachine": {
             "clockAdvancedWhilePlaying": true,
-            "posDelta": 0.067,
-            "wallDeltaMs": 309,
+            "posDelta": 0.06,
+            "wallDeltaMs": 75,
             "stateAfterPause": "PAUSED(2)",
             "frozenWhilePaused": 0,
             "resumedState": "PLAYING(1)",
@@ -68809,7 +68833,7 @@
             "seekLatencyMs": 0,
             "afterSeekPos": 1.5,
             "seekLandedsInRange": true,
-            "endLatencyMs": 160,
+            "endLatencyMs": 159,
             "endEventFired": true,
             "endedDelta": 1,
             "stateAfterEnd": "INIT(0)",
@@ -68823,7 +68847,7 @@
             "loopFlagOnPlayer": true,
             "stateWhileLooping": "PLAYING(1)",
             "stillPlaying": true,
-            "wrapLatencyMs": 137,
+            "wrapLatencyMs": 154,
             "wrappedBelowSeekTarget": true,
             "endedDeltaDuringLoop": 0,
             "playingBeforeOneShot": true,
@@ -68839,10 +68863,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22514,
+            "tMs": 22439,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.753,
+            "currentTime": 0.783,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68850,7 +68874,7 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22514,
+            "tMs": 22439,
             "playing": true,
             "state": "PLAYING(1)",
             "currentTime": 0,
@@ -68869,7 +68893,7 @@
               "ended": false,
               "seeking": false,
               "readyState": 3,
-              "currentTime": 0.753,
+              "currentTime": 0.783,
               "duration": 1.6,
               "loop": false,
               "errCode": 0,
@@ -68910,7 +68934,7 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@16575|started@16576|started@17165|ended@17524|started@17553|started@17817"
+          "events": "started@16812|started@16812|started@17136|ended@17498|started@17525|started@17821"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
@@ -68923,6 +68947,7 @@
       "engine": "chromium",
       "example": "video-basic",
       "group": "LV12-04",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -68933,8 +68958,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-chromium.png",
-      "pngBytes": 27947,
-      "pngSha256_16": "482f6f5528eb1b5e",
+      "pngBytes": 27984,
+      "pngSha256_16": "cc028d7176a62f39",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68951,7 +68976,7 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 52,
+          "startedAtMs": 54,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
@@ -69000,12 +69025,12 @@
             "playingWithinMs": 21,
             "startedAt": 0.02,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.421,
-            "pausedWithinMs": 21,
+            "tAfter400ms": 0.424,
+            "pausedWithinMs": 20,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": false,
-            "seekedTo": 0.123,
+            "seekedTo": 0.125,
             "rateReadback": [
               2,
               2
@@ -69057,12 +69082,12 @@
             "contentSizeUnchangedByToggle": true,
             "playingBeforeSample": false,
             "frameA": {
-              "mean": 113.71,
+              "mean": 113.68,
               "nonBlackRatio": 0.999,
               "colorBins": 242
             },
             "frameB": {
-              "mean": 114.65,
+              "mean": 114.62,
               "nonBlackRatio": 0.999,
               "colorBins": 305
             },
@@ -69071,7 +69096,7 @@
           },
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
-            "remoteMetaWithinMs": 20,
+            "remoteMetaWithinMs": 21,
             "backToLocalWithinMs": 0,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
@@ -69092,14 +69117,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 1916,
-            "wrapWithinMs": 1107,
+            "seekSettledWithinMs": 1905,
+            "wrapWithinMs": 1109,
             "completedDeltaDuringLoop": 0,
             "stateNow": "playing",
-            "currentTimeNow": 0.02
+            "currentTimeNow": 0.01
           },
           "sequenceComplete": true,
-          "sequenceMs": 8461,
+          "sequenceMs": 8449,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69122,7 +69147,7 @@
             },
             "awakeVideoCountBeforeClip": 1,
             "awake": {
-              "metaWithinMs": 22,
+              "metaWithinMs": 21,
               "fullScreenOnAwakeReadback": true,
               "videoCount": 2,
               "fsEl": "null",
@@ -69207,6 +69232,8 @@
           "handler:playing",
           "playing",
           "handler:playing",
+          "playing",
+          "handler:playing",
           "playing"
         ],
         "live": {
@@ -69221,10 +69248,10 @@
           "fullscreenElementIsNull": true,
           "stayOnBottom": true,
           "domRect": "160x120",
-          "frameMeanNow": 114.94,
+          "frameMeanNow": 113.68,
           "liveFramesAdvance": true,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 35521
+          "elapsedMs": 35529
         }
       },
       "consoleErrors": [],
@@ -69235,6 +69262,7 @@
       "engine": "firefox",
       "example": "video-basic",
       "group": "LV12-04",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -69245,8 +69273,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-firefox.png",
-      "pngBytes": 27869,
-      "pngSha256_16": "d88b5b0a633b3732",
+      "pngBytes": 27217,
+      "pngSha256_16": "6bcef91ba0172c6b",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -69263,7 +69291,7 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 117,
+          "startedAtMs": 210,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
@@ -69309,11 +69337,11 @@
             "logPrefix": "handler:meta-loaded>meta-loaded>handler:ready-to-play"
           },
           "p3Controls": {
-            "playingWithinMs": 21,
+            "playingWithinMs": 20,
             "startedAt": 0,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.409,
-            "pausedWithinMs": 21,
+            "tAfter400ms": 0.404,
+            "pausedWithinMs": 22,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": true,
@@ -69383,7 +69411,7 @@
           },
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
-            "remoteMetaWithinMs": 21,
+            "remoteMetaWithinMs": 20,
             "backToLocalWithinMs": 0,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
@@ -69404,14 +69432,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 45,
-            "wrapWithinMs": 1002,
+            "seekSettledWithinMs": 20,
+            "wrapWithinMs": 1025,
             "completedDeltaDuringLoop": 0,
             "stateNow": "playing",
-            "currentTimeNow": 0.017
+            "currentTimeNow": 0.016
           },
           "sequenceComplete": true,
-          "sequenceMs": 6194,
+          "sequenceMs": 6232,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69504,7 +69532,7 @@
           "frameMeanNow": 116.73,
           "liveFramesAdvance": true,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 35765
+          "elapsedMs": 35796
         }
       },
       "consoleErrors": [],
@@ -69515,6 +69543,7 @@
       "engine": "webkit",
       "example": "video-basic",
       "group": "LV12-04",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -69525,8 +69554,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-webkit.png",
-      "pngBytes": 29151,
-      "pngSha256_16": "a5dcc1bbfac5b7dd",
+      "pngBytes": 29157,
+      "pngSha256_16": "870664320d17c3cc",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -69543,12 +69572,12 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 294,
+          "startedAtMs": 301,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
             "nativeTag": "VIDEO",
-            "videoCurrentSrcEmpty": false,
+            "videoCurrentSrcEmpty": true,
             "sourceChildSrcScheme": "blob:",
             "nativeUrlIsRequestUrl": true,
             "clipDurationField": "NaN",
@@ -69556,7 +69585,7 @@
             "cacheHasUrl": true
           },
           "p1Mount": {
-            "metaLoadedWithinMs": 872,
+            "metaLoadedWithinMs": 465,
             "readyToPlayWithinMs": -1,
             "videoCount": 1,
             "className": "cocosVideo",
@@ -69593,11 +69622,11 @@
             "startedAt": 0,
             "advancedWhilePlaying": true,
             "tAfter400ms": 0.402,
-            "pausedWithinMs": 32,
+            "pausedWithinMs": 29,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": true,
-            "seekedTo": 1.315,
+            "seekedTo": 1.299,
             "rateReadback": [
               2,
               2
@@ -69654,16 +69683,16 @@
               "colorBins": 333
             },
             "frameB": {
-              "mean": 115.49,
+              "mean": 115.42,
               "nonBlackRatio": 1,
-              "colorBins": 337
+              "colorBins": 353
             },
             "decodedFramesAdvance": true,
             "frameNotBlank": true
           },
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
-            "remoteMetaWithinMs": 320,
+            "remoteMetaWithinMs": 174,
             "backToLocalWithinMs": 0,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
@@ -69684,14 +69713,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 1935,
-            "wrapWithinMs": 1090,
+            "seekSettledWithinMs": 64,
+            "wrapWithinMs": 987,
             "completedDeltaDuringLoop": 0,
             "stateNow": "paused",
-            "currentTimeNow": 0.001
+            "currentTimeNow": 0.002
           },
           "sequenceComplete": true,
-          "sequenceMs": 13430,
+          "sequenceMs": 10961,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69714,7 +69743,7 @@
             },
             "awakeVideoCountBeforeClip": 1,
             "awake": {
-              "metaWithinMs": 344,
+              "metaWithinMs": 136,
               "fullScreenOnAwakeReadback": true,
               "videoCount": 2,
               "fsEl": "null",
@@ -69744,8 +69773,6 @@
           "playing",
           "handler:playing",
           "playing",
-          "handler:playing",
-          "playing",
           "handler:paused",
           "paused",
           "handler:playing",
@@ -69756,8 +69783,6 @@
           "meta-loaded",
           "handler:meta-loaded",
           "meta-loaded",
-          "handler:playing",
-          "playing",
           "handler:playing",
           "playing",
           "handler:playing",
@@ -69782,7 +69807,7 @@
           "frameMeanNow": 113.34,
           "liveFramesAdvance": false,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 36635
+          "elapsedMs": 35783
         }
       },
       "consoleErrors": [],
@@ -69793,6 +69818,7 @@
       "engine": "chromium",
       "example": "webview-basic",
       "group": "LV12-05",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -69803,8 +69829,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-chromium.png",
-      "pngBytes": 31900,
-      "pngSha256_16": "c02bc937a75416b8",
+      "pngBytes": 31950,
+      "pngSha256_16": "d77048c888f3608a",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -69821,14 +69847,14 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 1143,
+          "startedAtMs": 675,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 301,
+            "loadedWithinMs": 101,
             "matrixSizeWithinMs": 0,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
@@ -69901,7 +69927,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 43,
+            "errorWithinMs": 21,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -69937,7 +69963,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 1046
+          "sequenceMs": 678
         },
         "eventLog": [
           "cb:loading",
@@ -69975,7 +70001,7 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15490
+          "elapsedMs": 15113
         }
       },
       "consoleErrors": [],
@@ -69986,6 +70012,7 @@
       "engine": "firefox",
       "example": "webview-basic",
       "group": "LV12-05",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -69996,8 +70023,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-firefox.png",
-      "pngBytes": 30187,
-      "pngSha256_16": "a3ed4eca8fa96a5a",
+      "pngBytes": 30049,
+      "pngSha256_16": "3f666d6520dba1e7",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -70014,7 +70041,7 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 964,
+          "startedAtMs": 768,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
@@ -70094,7 +70121,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 221,
+            "errorWithinMs": 39,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -70130,7 +70157,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 1137
+          "sequenceMs": 938
         },
         "eventLog": [
           "cb:loading",
@@ -70168,7 +70195,7 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15422
+          "elapsedMs": 15400
         }
       },
       "consoleErrors": [],
@@ -70179,6 +70206,7 @@
       "engine": "webkit",
       "example": "webview-basic",
       "group": "LV12-05",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -70189,8 +70217,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-webkit.png",
-      "pngBytes": 26051,
-      "pngSha256_16": "c3ef8bcc146ea223",
+      "pngBytes": 25854,
+      "pngSha256_16": "6e294ce6e7891b7b",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -70207,15 +70235,15 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 590,
+          "startedAtMs": 240,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 45,
-            "matrixSizeWithinMs": 140,
+            "loadedWithinMs": 80,
+            "matrixSizeWithinMs": 0,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
             "wrapperId": "webview-wrapper",
@@ -70287,7 +70315,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 64,
+            "errorWithinMs": 31,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -70312,7 +70340,7 @@
             "stateAfterDestroy": "none",
             "hitAfterDestroy": "CANVAS",
             "isValidAfterDestroy": false,
-            "reloadedWithinMs": 38,
+            "reloadedWithinMs": 30,
             "matrixSizeWithinMs": 0,
             "wrappersAfterRebuild": 1,
             "iframesAfterRebuild": 1,
@@ -70323,7 +70351,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 1459
+          "sequenceMs": 902
         },
         "eventLog": [
           "cb:loading",
@@ -70361,7 +70389,7 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15721
+          "elapsedMs": 15305
         }
       },
       "consoleErrors": [],
@@ -70372,6 +70400,7 @@
       "engine": "chromium",
       "example": "physics-3d-basic",
       "group": "LV12-15",
+      "frameShotAttempts": 5,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -70382,8 +70411,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-basic\\matrix-chromium.png",
-      "pngBytes": 11402,
-      "pngSha256_16": "d1aaeb5bc0e179ce",
+      "pngBytes": 11340,
+      "pngSha256_16": "41346f907df70f66",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -71273,6 +71302,7 @@
       "engine": "firefox",
       "example": "physics-3d-basic",
       "group": "LV12-15",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -71283,8 +71313,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-basic\\matrix-firefox.png",
-      "pngBytes": 13690,
-      "pngSha256_16": "3107a3292153d018",
+      "pngBytes": 13727,
+      "pngSha256_16": "6c090650134d3103",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -72174,6 +72204,7 @@
       "engine": "webkit",
       "example": "physics-3d-basic",
       "group": "LV12-15",
+      "frameShotAttempts": 6,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -73075,6 +73106,7 @@
       "engine": "chromium",
       "example": "dragonbones-basic",
       "group": "LV12-11",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -73085,8 +73117,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-chromium.png",
-      "pngBytes": 10876,
-      "pngSha256_16": "da7d207995fd714c",
+      "pngBytes": 10764,
+      "pngSha256_16": "aaf2320c319bc36d",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -74120,6 +74152,7 @@
       "engine": "firefox",
       "example": "dragonbones-basic",
       "group": "LV12-11",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -74130,8 +74163,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-firefox.png",
-      "pngBytes": 12867,
-      "pngSha256_16": "ea7321c085f0e731",
+      "pngBytes": 12677,
+      "pngSha256_16": "dfc9132db3f0140b",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -74846,7 +74879,7 @@
                     480,
                     360
                   ],
-                  "litRatio": 0.0182,
+                  "litRatio": 0.0183,
                   "platePresent": true,
                   "wingPresent": true,
                   "tipPresent": false,
@@ -74886,7 +74919,7 @@
                     480,
                     360
                   ],
-                  "litRatio": 0.0185,
+                  "litRatio": 0.0186,
                   "platePresent": true,
                   "wingPresent": true,
                   "tipPresent": true,
@@ -75040,7 +75073,7 @@
                     480,
                     360
                   ],
-                  "litRatio": 0.0182,
+                  "litRatio": 0.0183,
                   "platePresent": true,
                   "wingPresent": true,
                   "tipPresent": false,
@@ -75142,7 +75175,7 @@
               480,
               360
             ],
-            "litRatio": 0.0238,
+            "litRatio": 0.0239,
             "platePresent": true,
             "wingPresent": true,
             "tipPresent": false,
@@ -75165,6 +75198,7 @@
       "engine": "webkit",
       "example": "dragonbones-basic",
       "group": "LV12-11",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -75175,8 +75209,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-webkit.png",
-      "pngBytes": 11538,
-      "pngSha256_16": "e193aa9702f2c004",
+      "pngBytes": 11478,
+      "pngSha256_16": "8eaa3ea499796af4",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -76210,6 +76244,7 @@
       "engine": "chromium",
       "example": "physics-3d-collision",
       "group": "LV12-15",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -76220,8 +76255,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-chromium.png",
-      "pngBytes": 4695,
-      "pngSha256_16": "eb2f79bde537d39c",
+      "pngBytes": 4679,
+      "pngSha256_16": "1e89e01c6655c359",
       "pngBefore": null,
       "pngFloors": {
         "after": 1,
@@ -76267,7 +76302,7 @@
         "rayHitNormalY": 1,
         "rayClosestName": "Ground",
         "rayClosestDist": 10,
-        "frames": 170
+        "frames": 198
       },
       "consoleErrors": [],
       "benignConsole": [],
@@ -76277,6 +76312,7 @@
       "engine": "firefox",
       "example": "physics-3d-collision",
       "group": "LV12-15",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -76287,8 +76323,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-firefox.png",
-      "pngBytes": 5057,
-      "pngSha256_16": "dbeec95435b985e8",
+      "pngBytes": 5025,
+      "pngSha256_16": "869b267663a43698",
       "pngBefore": null,
       "pngFloors": {
         "after": 1,
@@ -76334,7 +76370,7 @@
         "rayHitNormalY": 1,
         "rayClosestName": "Ground",
         "rayClosestDist": 10,
-        "frames": 176
+        "frames": 201
       },
       "consoleErrors": [],
       "benignConsole": [],
@@ -76344,6 +76380,7 @@
       "engine": "webkit",
       "example": "physics-3d-collision",
       "group": "LV12-15",
+      "frameShotAttempts": 2,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -76354,8 +76391,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-webkit.png",
-      "pngBytes": 5515,
-      "pngSha256_16": "457a93a8ac4a5156",
+      "pngBytes": 5496,
+      "pngSha256_16": "a9f518bd0b287a81",
       "pngBefore": null,
       "pngFloors": {
         "after": 1,
@@ -76401,7 +76438,7 @@
         "rayHitNormalY": 1,
         "rayClosestName": "Ground",
         "rayClosestDist": 10,
-        "frames": 188
+        "frames": 195
       },
       "consoleErrors": [],
       "benignConsole": [],

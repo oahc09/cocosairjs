@@ -257,3 +257,68 @@ Shader 探针：`tools/verify/g4-shader-probe.cjs`（双后端，常驻 `ai/g1-s
   同样挂起。批次内 5 例 120s 超时为同一根因。解堵 = 安装匹配版 webkit 浏览器或对齐 Playwright
   版本（需环境变更授权）。webkit 面的正典权威仍是 v12 矩阵合同（LV12 13 例集），本批未纳入合同
   （与 r50 74 例同口径）。登记为 r52 唯一环境残余项。
+
+# r53 — GAP-L1 修复轮（owner 批准 Deviation 流程执行）：灯光视觉贡献打通 + 手册/证据全链重采证
+
+Owner 指令：「批准 GAP-L1 修复，按 Deviation 流程执行」。本轮修复 r52 登记的 P0 缺口 GAP-L1
+（主光/点光视觉贡献为零），并将 bundle 指纹变更引发的全链证据过期一次性重采证收口。
+
+## 修复定性（双根因，处置不同）
+
+| 根因 | 定性 | 处置 |
+| --- | --- | --- |
+| 主光（DirectionalLight）LDR 量级数值视觉归零 | **单位语义陷阱，非引擎缺陷**：isHDR 默认 true、exposure=1/38400（camera.ts:413）；HDR 量级（≈65000）下颜色/开关/渐变全实测生效 | 文档/示例 HDR 单位纪律（lights.md §1、范式文档 §7、custom-shaders §已知缺口、render-composite p2c 正向断言化） |
+| 点/球光（POINT/SPHERE）att≡0 | **真实缺陷：fixture 版本失配**。AIR 原创 fixture `src/air/builtin/builtin-glsl4.ts` 携带 3.8 代语义（`w>0.0` 一律 spot 角衰减 + POINT illum 恒 0），与 4.0 同源队列写入 `w=LightType` 冲突 | fixture 9 处判别对齐上游 4.0 `shading-standard-additive.chunk`（IS_SPOT=\|w-2\|<0.5 ×3、spot-shadow 同判别 ×3、POINT/RANGED illum=1.0 ×3）。**AIR 原创文件（file-map upstreamPath=null）：无上游跟踪文件改动、无新增 Deviation 行** |
+| 附带发现：聚光 `lookAt` 正上→正下万向锁退化 | 用法陷阱（node.ts:2265 fromViewUp 视线∥up 退化 → 光锥水平） | lights.md 坑三 + manual-lights 改欧拉角；标定页实测复现与修复 |
+
+验证数据：探针点光 delta=472（[255,255,255] vs [154,160,165]）；主光 白@65000=[154,160,165] /
+红=[154,76,84] / 关=[32,49,65] / 20000=[86,98,109]；render-composite p2b 35.0→255.0→35.0、
+p2c 30000→65000：56.6→85.6→56.6（姿态钉死后确定性基线）；g4-shader-probe 新 bundle 双后端 28/28 PASS。
+修复记录：`docs/evidence/g1-light-contribution-gap.json` resolution、矩阵 §7 GAP-L1 条目。
+
+## 交付面（当期重采证）
+
+| 指标 | r52 基线 | r53 现读 | 判定 |
+| --- | --- | --- | --- |
+| Bundle | 6,600,546 B / 9376e306 | **6,600,855 B / cef2756486b073d1** | 重建（fixture 修复），published-artifacts PASS |
+| Stable Examples | 144 | **144**（145 登记 - gltf-catalog 既有 draft；批 #7 2 promoted 回补批 #5/#6 的 2 demoted） | 无增减 |
+| v11 chromium 整批 | 140/140 | **140/140 PASS**（partial=false，03:16Z；轮次 #5→#6→#7，见下） | `v11-examples-verified.json` |
+| manual 树 | 44/44（旧 bundle） | **44/44 PASS**（partial=false，03:23Z） | `manual-examples-verified.json` |
+| DevTools 链 | 5/5 | **5/5 PASS**（candidate 变更当期刷新） | `v11-devtools-examples.json` |
+| Gallery 工件 | 209/209 | **209/209 PASS** | `v11-gallery-artifact.json` |
+| V12 三浏览器矩阵 | 39/39（webkit-2311 时代） | **39/39 PASS × 3 引擎（completed=true）** | `v12/browser-matrix.json`；webkit 解堵见下 |
+| Verified 单元 | 439 | **439（+0/-0）** stale=0 | core 295 · important 33 · advanced 111 |
+| spec 三件套 | 0 漂移 | **3470 条 0 漂移 · 145 frozen/0 draft · 0 fail/1 warn（draco 既有）** | 当期 |
+| jest / typecheck / file-map | 263/263 · 0 · PASS | **263/263 · 0 · PASS** | smoke-30 经矩阵刷新转绿 |
+
+## 验证器加固（两处竞态/环境项，均为工具侧、不改断言语义）
+
+1. **v11 页面自报就绪门**：暴露 `__trialProbe` 的 13 例以 `probe.ready` 为功能读回前置。
+   起因：批 #6 中 render-composite 的「节点计数连续稳定」启发式在 r53 光度采样链拉长后提前 break，
+   读回落在全功能场景之前（node-exists/material-property/transform 假红 + p2b throw 级联）。
+   只增加等待、不减少检查；未暴露探针的示例路径不变。
+2. **V12 矩阵**：① webkit 钉版 webkit-2311→**2336**（外部 playwright 1.62.1 协议要求；2311 组合
+   协议级挂起，r52 登记的环境阻断项——已安装匹配构建解堵，环境变更如实披露）；② frameChanged
+   反 flake 补拍（firefox headless 偶发合成缓存致 500ms 双帧逐字节同，tiledmap-basic 同码一过一败；
+   补拍次数入证据字段 frameShotAttempts，断言仍要求观测到真实帧间差异）。
+3. 批 #5 中止教训：`examples/files.json` 必须在源码/规格改动后、整批启动前再生成（批 #5 绑旧规格跑
+   render-composite 行无效，及时中止重排）。
+
+## 手册树联动（GAP-L1 修复的文档面）
+
+- `docs/manual/lights.md` 全页重写：§1 四型可视贡献全部转正向 + HDR 单位纪律；§3 新增坑三（lookAt
+  万向锁）；§4 由 PARTIAL 转 r53 实测表（标定页多点采样数据），历史观察归因如实保留。
+- `docs/manual/examples/manual-lights/main.ts`：强度升 HDR 量级（dir 30000 / point 1700 /
+  spot 24000 / sphere 900）+ spot 改欧拉角；44/44 批次含本例 PASS，证据截图为明确点亮画面。
+- `shadows.md`：spike「无方向光照明」归因已定（LDR illuminance=3 被曝光压灭），BLOCKED 判定
+  （阴影本体）不受影响、维持；`script-component-workflow.md` §7 增灯光单位纪律；`custom-shaders.md`
+  用户 Shader 光照消费指引转正向（HDR 量级）。
+- 标定页常驻 `ai/g1-staging/tmp-lights-hdr/`（不登记、不进 Gallery，与 tmp-light-probe 同纪律）。
+
+## 残余（如实登记，不冒充收口）
+
+- GAP-C1（worldToScreen 零向量）/ GAP-C2（Camera 组件 resize 导出面）仍待 owner 决策；
+- `examples/light-point/light-spot/light-sphere/light-two-directional` 维持 LDR 量级数值与结构断言
+  （冻结规格不动）——其「灯光效果」叙事在修复后仍只有结构证据，升级正向断言列为后续批次；
+- clustered-light-culling 变体（宏=1 路径）未在 AIR 启用，范围外；
+- V1.1 Release Gate 判定不变（Core 36.2% 量级 / Important 33 / Advanced 披露面）。

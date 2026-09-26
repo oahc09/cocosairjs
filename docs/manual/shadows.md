@@ -46,9 +46,13 @@ spike 页结构：灰色地面 plane + 橙色球（`primitives.sphere(1.0, …)`
 | `enabled = false`（对照） | `docs/evidence/manual/shadows-spike-off.png` | **同样**无方向光照明、地面不亮 |
 
 对照帧说明：该 spike 页即使关掉阴影也复现不了方向光照明（与 `manual-lights` /
-`manual-cameras` 里方向光明显生效形成反差，归因未定——旋转与 `addChild` 的先后顺序是嫌疑之一，
-未继续追）。因此**不能**断言"启用阴影导致光照消失"；能断言的只有一句：
-**两种 ShadowType 在本环境均未产出可见阴影**，本篇按 BLOCKED 记录，不配示例。
+`manual-cameras` 里方向光明显生效形成反差）。**归因已定（r53，GAP-L1 修复轮）**：spike 用了
+`illuminance = 3` 的 LDR 量级数值，而管线 `isHDR` 默认 true（exposure=1/38400）——3/38400 ≈ 8e-5，
+方向光贡献被曝光压灭，属单位语义陷阱而非渲染缺陷（HDR 量级 30000–65000 下方向光照明实测生效，
+见 `docs/manual/lights.md` §4 与 `docs/evidence/g1-light-contribution-gap.json` 修复记录）。
+因此**不能**断言"启用阴影导致光照消失"；能断言的只有一句：
+**两种 ShadowType 在本环境均未产出可见阴影**（该结论不受光照归因影响——阴影判定基于三帧互差），
+本篇按 BLOCKED 记录，不配示例。后续重跑 spike 时应改用 HDR 量级 illuminance。
 
 ## 4. 行为要点与修复预期
 

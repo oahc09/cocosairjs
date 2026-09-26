@@ -3,13 +3,14 @@
  *
  * 效果契约（effect.functional 的可执行来源）——每一级组合以「画面真实变化」或结构断言证明：
  * - P1 基线：中心像素为蓝色主体（区别于清屏色 (30,40,60)）；
- * - P2 环境与灯光（如实区分「可见路径」与「登记缺口」）：
+ * - P2 环境与灯光（r53 起全部为正向视觉断言；历史 GAP-L1 已修复，见矩阵 §7 与
+ *   docs/evidence/g1-light-contribution-gap.json 修复记录）：
  *   a) SceneGlobals ambient 原位变更（skyColorHDR.set）→ 画面色相真实变化（断言）→ 恢复；
- *   b) 运行期增删点光源：addComponent(PointLight) → Light 组件计数 +1 → 组件 destroy +
- *      节点 destroy → 计数回落、isValid=false（结构断言）；
- *   c) 主光/点光属性（illuminance/luminance/color）运行期变更的**视觉贡献**：当期快照
- *      ForwardPipeline 下像素不可观察（GAP-L1，复现与数据见 docs/api-scenario-gap-matrix.md §7、
- *      诊断页 examples-history tmp-light-probe 数据已归档证据）——只记录差值入探针，不冒充绿灯；
+ *   b) 点光源开关（HDR 量级 luminance=24000）→ 中心亮度上升 ≥15%（断言）→ 运行期增删
+ *      临时点光源：Light 组件计数 +1 → 组件 destroy + 节点 destroy → 计数回落、isValid=false；
+ *   c) 主光 illuminance 30000→65000（HDR 量级）→ 中心亮度上升（断言）→ 恢复；
+ *   单位语义纪律：isHDR 默认 true（exposure=1/38400），illuminance/luminance 必须用 HDR
+ *   量级（主光 ~65000 lux、点光 ~24000）；LDR 量级（1.2/8/900）× exposure ≈ 0 = 不可见；
  * - P3 材质/纹理：SubjectBox 换 builtin-unlit + 程序化纹理（USE_TEXTURE）→ 中心像素变黄（断言）；
  * - P4 渲染目标：camera.targetTexture = rt（256×256）捕获 → 恢复屏幕 → RT 贴到 RTQuad 上屏，
  *   worldToScreen 定位采样点，像素非背景（RT 内容真实可见，断言）；
@@ -63,12 +64,13 @@ let checkerTex: Texture2D | null = null;
 let matBase: Material;
 let matTextured: Material | null = null;
 let spinEnabled = true;
+let spinMaster = true; // P1–P2c 光度对比区间总开关：主光生效后旋转面明暗随角度变化，跨采样比较必须冻结自旋
 let tmpLightVisualDelta = 0;
 let lightPropVisualDelta = 0;
 
 class Spinner extends Component {
   update (dt: number): void {
-    if (spinEnabled) { this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0); }
+    if (spinEnabled && spinMaster) { this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0); }
   }
 }
 
@@ -105,7 +107,7 @@ async function stillSample (x: number, y: number): Promise<number[]> {
   spinEnabled = false;
   await sleep(180);
   const px = await sampleAt(x, y);
-  spinEnabled = true;
+  spinEnabled = spinMaster;
   return px;
 }
 
@@ -228,7 +230,7 @@ async function main (): Promise<void> {
   lightNode.setPosition(new Vec3(0, 8, 0));
   lightNode.setRotationFromEuler(-45, -30, 0);
   keyLight = lightNode.addComponent(DirectionalLight);
-  keyLight.illuminance = 1.2;
+  keyLight.illuminance = 30000; // HDR 量级（isHDR 默认 true；LDR 量级会被 exposure=1/38400 压灭）
 
   subjectBox = new Node('SubjectBox');
   subjectBox.layer = Layers.Enum.DEFAULT;
@@ -245,13 +247,17 @@ async function main (): Promise<void> {
   pointLightNode.setPosition(new Vec3(2, 2, 2));
   scene.addChild(pointLightNode);
   pointLight = pointLightNode.addComponent(PointLight);
-  pointLight.luminance = 900;
+  pointLight.luminance = 24000; // HDR 量级（组件默认标定同量级）
   pointLight.range = 12;
+  pointLightNode.active = false; // P2b 开启并断言亮度上升
 
   app.run(scene);
   await sleep(600);
 
-  // ---- P1 基线 ----------------------------------------------------------------
+  // ---- P1 基线（P1–P2c 为光度对比区间：冻结自旋，主光生效后旋转面明暗随角度变化） ----
+  spinMaster = false;
+  subjectBox.setRotationFromEuler(0, 0, 0); // 光度基准角钉死：冻结相位随负载漂移曾致 baseLum 35→56 漂移、p2b 假红（r53 批次实测）
+  await sleep(220); // 姿态落定
   const base = await stillSampleCenter();
   pcheck('p1-baseline-visible', base[2] > base[0] + 25 && base[2] > base[1] + 25,
     'center=' + JSON.stringify(base) + '（预期蓝色主体，clear=(30,40,60)）');
@@ -273,14 +279,24 @@ async function main (): Promise<void> {
     Math.abs(lum(ambBack) - baseLum) < baseLum * 0.15 + 3,
     'baseLum=' + baseLum.toFixed(1) + ' restoredLum=' + lum(ambBack).toFixed(1));
 
-  // ---- P2b 灯光结构生命周期（运行期增删，结构断言） -------------------------------
+  // ---- P2b 点光源：开关视觉断言（HDR 量级）+ 运行期增删结构断言 -------------------
+  pointLightNode.active = true;
+  await sleep(250);
+  const pointOn = await stillSampleCenter();
+  pcheck('p2b-pointlight-brightens', lum(pointOn) > baseLum * 1.15,
+    'baseLum=' + baseLum.toFixed(1) + ' pointOnLum=' + lum(pointOn).toFixed(1));
+  pointLightNode.active = false; // P2c 主光断言前关闭点光（避免叠加饱和污染基线）
+  await sleep(250);
+  const pointOff = await stillSampleCenter();
+  pcheck('p2b-pointlight-off-restores', Math.abs(lum(pointOff) - baseLum) < baseLum * 0.15 + 3,
+    'pointOffLum=' + lum(pointOff).toFixed(1) + ' baseLum=' + baseLum.toFixed(1));
   const lightsBefore = countLights();
   const tmpNode = new Node('TempLight');
   tmpNode.layer = Layers.Enum.DEFAULT;
   tmpNode.setPosition(new Vec3(-2, 2, 2));
   scene.addChild(tmpNode);
   const tmpLight = tmpNode.addComponent(PointLight);
-  tmpLight.luminance = 300;
+  tmpLight.luminance = 24000; // HDR 量级
   tmpLight.range = 8;
   await sleep(150);
   pcheck('p2b-light-count-plus-one', countLights() === lightsBefore + 1,
@@ -293,14 +309,19 @@ async function main (): Promise<void> {
   pcheck('p2b-light-count-restored', countLights() === lightsBefore && !isValid(tmpNode),
     'now=' + countLights() + ' tmpValid=' + isValid(tmpNode));
 
-  // ---- P2c 光属性视觉贡献探针（GAP-L1 如实记录，不冒充绿灯） ----------------------
-  keyLight.illuminance = 8;
+  // ---- P2c 主光属性视觉断言（HDR 量级渐变；GAP-L1 修复后的正向证明） ----------------
+  keyLight.illuminance = 65000;
   await sleep(300);
   const keyBright = await stillSampleCenter();
   lightPropVisualDelta = Math.round(lum(keyBright) - baseLum);
-  keyLight.illuminance = 1.2;
-  pcheck('p2c-light-prop-change-survives', keyBright[3] > 0,
-    'illuminance 1.2→8 视觉差=' + lightPropVisualDelta + '（当期 ForwardPipeline 光属性同步缺口 GAP-L1 的现场复核）');
+  pcheck('p2c-mainlight-brightens', lum(keyBright) > baseLum * 1.15,
+    'illuminance 30000→65000: baseLum=' + baseLum.toFixed(1) + ' brightLum=' + lum(keyBright).toFixed(1));
+  keyLight.illuminance = 30000;
+  await sleep(250);
+  const keyBack = await stillSampleCenter();
+  pcheck('p2c-mainlight-restores', Math.abs(lum(keyBack) - baseLum) < baseLum * 0.15 + 3,
+    'restoredLum=' + lum(keyBack).toFixed(1) + ' baseLum=' + baseLum.toFixed(1));
+  spinMaster = true; // 光度对比区间结束，恢复自旋（visual frame-diff 的持续变化源）
 
   // ---- P3 材质/纹理 -------------------------------------------------------------
   checkerTex = makeCheckerTexture();
@@ -410,7 +431,7 @@ async function main (): Promise<void> {
     maxTextureSize: gl ? Number(gl.getParameter(gl.MAX_TEXTURE_SIZE)) : 0,
     rtValid: !!rt && isValid(rt),
     rtSize: rt ? [(rt as any).width, (rt as any).height] : null,
-    gapRef: 'GAP-L1（光属性视觉贡献）与 Camera 组件 resize 导出面缺口见 docs/api-scenario-gap-matrix.md §7',
+    gapRef: 'GAP-L1 已于 r53 修复（fixture 4.0 语义对齐）；Camera 组件 resize 导出面缺口（GAP-C2）见 docs/api-scenario-gap-matrix.md §7',
   };
   probe.ready = true;
   probe.ok = probe.checks.every((c) => c.ok);

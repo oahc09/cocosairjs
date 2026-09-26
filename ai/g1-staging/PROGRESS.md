@@ -60,8 +60,12 @@ product-viewer 11。G4 探针双后端 28/28。GAP-L1 光照诊断页（tmp-ligh
 
 ## 缺口登记（详见矩阵 §7 + g1-light-contribution-gap.json）
 
-- **GAP-L1（P0）**：主光/点光视觉贡献为零（静态+动态均不可观察；ambient 原位变更有效、材质 uniform 有效）。
-  收敛：UBOCamera MAIN_LIT_* 写入-上传一致性或 builtin-standard 降写变体消费路径。修复涉上游抽取文件 → Deviation 流程。
+- ~~**GAP-L1（P0）**：主光/点光视觉贡献为零~~ **r53 已修复（owner 批准 Deviation 流程）**：拆为两根因——
+  (a) 主光＝HDR 单位语义陷阱（isHDR 默认 true，exposure=1/38400，LDR 量级 illuminance 视觉归零），非缺陷，
+  HDR 量级（≈65000）下颜色/开关/渐变全实测生效；(b) 点/球光＝fixture 版本失配（builtin-glsl4.ts 为 3.8 代
+  `w>0.0 即 spot` 判别，与 4.0 同源队列写入 `w=LightType` 冲突 → POINT/SPHERE att≡0），已在 AIR 原创 fixture
+  9 处对齐上游 4.0 语义修复（无上游跟踪文件改动）。验证：探针点光 delta=472；render-composite P2 全正向断言；
+  g4-probe 双后端回归 PASS。详见 docs/evidence/g1-light-contribution-gap.json resolution + 矩阵 §7。
 - **GAP-C1**：Camera.worldToScreen 运行期输出零向量（执行计数正常）。
 - **GAP-C2（扩展）**：框架 Camera 组件无 resize/width/height/aspect 导出面（inventory Camera.resize 为内部面单元）。
 - **GAP-M1**：builtin-unlit 纹理宏为 USE_TEXTURE；USE_ALBEDO_MAP 静默忽略（manual-render-targets 潜在白 quad，待手册线复核）。
@@ -89,7 +93,16 @@ product-viewer 11。G4 探针双后端 28/28。GAP-L1 光照诊断页（tmp-ligh
    cocos4-coverage-matrix.md 相关行回填新证据；manual-render-targets 的 USE_ALBEDO_MAP 复核（GAP-M1）。
 8. 格式批量：按 `format:check` 410 文件基线分批机械重写（每批后跑 spec-evidence --check 修漂移 +
    相关 jest/verify），先 examples/ 非冻结新增，后存量。
-9. 矩阵 §7 缺口提交 owner 决策：GAP-L1 修复批次（上游 Deviation 流程）或披露性保留；
+9. ~~矩阵 §7 缺口提交 owner 决策：GAP-L1 修复批次（上游 Deviation 流程）或披露性保留~~ **r53 已执行**：
+   owner 批复「批准 GAP-L1 修复，按 Deviation 流程执行」→ 修复落点为 AIR 原创 fixture
+   src/air/builtin/builtin-glsl4.ts（file-map upstreamPath=null，**无上游跟踪文件改动、无新增 Deviation 行**），
+   9 处判别对齐上游 4.0 shading-standard-additive.chunk 语义（IS_SPOT=|w-2|<0.5 ×3、spot-shadow 同判别 ×3、
+   POINT/RANGED illum=1.0 ×3）；主光侧定性为单位语义陷阱（isHDR 默认 true、exposure=1/38400 → HDR 量级纪律），
+   非引擎缺陷。验证：探针点光 delta=472（[255,255,255] vs [154,160,165]）；render-composite P2 全部升级
+   正向视觉断言（点光 35.0→255.0→35.0、主光 30000→65000：35.0→48.1→35.0）；g4-shader-probe 新 bundle
+   双后端 28/28 PASS。矩阵 §7 GAP-L1 与 g1-light-contribution-gap.json 已附修复记录；bundle 重建
+   （6,600,855B）→ 正典全链重采证进行中（candidateFingerprint 变更使全部旧证据过期）。
+   余项：GAP-C1/C2 导出面决策仍待 owner；
    GAP-C1/C2 导出面决策（补导出 or 从 required 分母重分类——均需单列证据与评审记录，不得静默改分母）。
 10. G2 手册联动：manual-mini-game ↔ collector-dodge 的「升级重构」互链（game.md 引用更新）。
 
