@@ -7,44 +7,62 @@
 
 ## 核心对象速查
 
-| Cocos AIR | 说明 |
-|---|---|
-| `await createAirApp({ canvas })` | AIR 的 app 只暴露 `run` / `getScene` 两个方法，渲染循环由 app 托管 |
-| `new Scene('name')` | 名字用于调试与场景切换 |
-| `scene.addChild(node)` | **没有 `appendChild`** |
-| `node.addComponent(Camera)` + 逐个赋值 `projection/fov/near/far` | 相机是组件，宽高比由引擎按画布自动处理，不用手工维护 |
-| `node.addComponent(DirectionalLight)` + `light.illuminance` | 亮度主控是标量 `illuminance` |
-| `node.addComponent(MeshRenderer)` + `renderer.mesh` / `renderer.material` | 几何来自 `utils.createMesh(primitives.box(...))` |
-| `class X extends Component { update (dt) {} }` | 逐帧更新挂在节点的组件上，`dt` 单位为秒 |
+| Cocos AIR                                                                 | 说明                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `await createAirApp({ canvas })`                                          | AIR 的 app 只暴露 `run` / `getScene` 两个方法，渲染循环由 app 托管 |
+| `new Scene('name')`                                                       | 名字用于调试与场景切换                                             |
+| `scene.addChild(node)`                                                    | **没有 `appendChild`**                                             |
+| `node.addComponent(Camera)` + 逐个赋值 `projection/fov/near/far`          | 相机是组件，宽高比由引擎按画布自动处理，不用手工维护               |
+| `node.addComponent(DirectionalLight)` + `light.illuminance`               | 亮度主控是标量 `illuminance`                                       |
+| `node.addComponent(MeshRenderer)` + `renderer.mesh` / `renderer.material` | 几何来自 `utils.createMesh(primitives.box(...))`                   |
+| `class X extends Component { update (dt) {} }`                            | 逐帧更新挂在节点的组件上，`dt` 单位为秒                            |
 
 ## 1. HTML 骨架：canvas 必须在引擎之前
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Creating a Scene — 创建场景（docs/manual/creating-a-scene.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; height: 100%; display: block; }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -58,7 +76,7 @@
 ```ts
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('creating-a-scene');
+const scene = new Scene("creating-a-scene");
 ```
 
 `createAirApp` 是异步的（内部要等渲染后端与内置资源就绪），所以手册示例的 `main.ts` 都是**顶层 await 的 ES module**。
@@ -67,7 +85,7 @@ const scene = new Scene('creating-a-scene');
 ## 3. 相机
 
 ```js
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 2, 6));
 cameraNode.lookAt(new Vec3(0, 0, 0));
@@ -91,7 +109,7 @@ camera.priority = 0;
 ## 4. 光源
 
 ```js
-const lightNode = new Node('Main Light');
+const lightNode = new Node("Main Light");
 scene.addChild(lightNode);
 lightNode.setPosition(new Vec3(0, 10, 0));
 lightNode.setRotationFromEuler(-45, -30, 0);
@@ -105,12 +123,12 @@ light.illuminance = 2;
 ## 5. 网格与材质
 
 ```js
-const cubeNode = new Node('Cube');
+const cubeNode = new Node("Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(cubeNode);
 const meshRenderer = cubeNode.addComponent(MeshRenderer);
 meshRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-meshRenderer.material = builtinResMgr.get('builtin-standard-material');
+meshRenderer.material = builtinResMgr.get("builtin-standard-material");
 ```
 
 - `primitives.box(...)` 返回的是几何描述对象，必须经 `utils.createMesh(...)` 才成为可渲染的 `Mesh` 资产。可用图元清单见 [Primitives](./primitives.md)。
@@ -122,9 +140,9 @@ meshRenderer.material = builtinResMgr.get('builtin-standard-material');
 ```ts
 // 每帧让 cube 自转：自定义组件的 update(dt) 是 AIR 的"逐帧更新"入口
 class Rotator extends Component {
-    update (dt: number): void {
-        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0);
-    }
+  update(dt: number): void {
+    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0);
+  }
 }
 ```
 
@@ -134,7 +152,7 @@ cubeNode.addComponent(Rotator);
 window.__airApp = app; // 每个手册示例末尾固定，供控制台探查与验证器使用
 app.run(scene);
 
-console.log('[manual/creating-a-scene] running on cocosair');
+console.log("[manual/creating-a-scene] running on cocosair");
 ```
 
 `update(dt)` 里的 `dt` 是秒（不是毫秒），所以 `dt * 45` 表示每秒转 45 度。
@@ -151,35 +169,35 @@ console.log('[manual/creating-a-scene] running on cocosair');
  */
 
 import {
-    Layers,
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Component,
-    builtinResMgr,
-    utils,
-    primitives,
-    Vec3,
-    Color,
-} from 'cocosair';
+  Layers,
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Component,
+  builtinResMgr,
+  utils,
+  primitives,
+  Vec3,
+  Color,
+} from "cocosair";
 
 // 每帧让 cube 自转：自定义组件的 update(dt) 是 AIR 的"逐帧更新"入口
 class Rotator extends Component {
-    update (dt: number): void {
-        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0);
-    }
+  update(dt: number): void {
+    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0);
+  }
 }
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('creating-a-scene');
+const scene = new Scene("creating-a-scene");
 
 // ---- 1. 相机：看到场景的窗口 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 2, 6));
 cameraNode.lookAt(new Vec3(0, 0, 0));
@@ -194,7 +212,7 @@ camera.visibility = Layers.Enum.DEFAULT; // 4.0-alpha 默认 undefined，不设�
 camera.priority = 0;
 
 // ---- 2. 光源：让 standard 材质有明暗 ----
-const lightNode = new Node('Main Light');
+const lightNode = new Node("Main Light");
 scene.addChild(lightNode);
 lightNode.setPosition(new Vec3(0, 10, 0));
 lightNode.setRotationFromEuler(-45, -30, 0);
@@ -202,18 +220,18 @@ const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 3. 网格：几何 + 材质挂到 MeshRenderer ----
-const cubeNode = new Node('Cube');
+const cubeNode = new Node("Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(cubeNode);
 const meshRenderer = cubeNode.addComponent(MeshRenderer);
 meshRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-meshRenderer.material = builtinResMgr.get('builtin-standard-material');
+meshRenderer.material = builtinResMgr.get("builtin-standard-material");
 cubeNode.addComponent(Rotator);
 
 window.__airApp = app; // 每个手册示例末尾固定，供控制台探查与验证器使用
 app.run(scene);
 
-console.log('[manual/creating-a-scene] running on cocosair');
+console.log("[manual/creating-a-scene] running on cocosair");
 ```
 
 ## 运行示例
@@ -228,12 +246,12 @@ npm run dev
 
 ## 常见空画面排查
 
-| 现象 | 原因 | 修法 |
-|---|---|---|
-| 只有清屏色，无物体 | 相机 `visibility` 未设 | `camera.visibility = Layers.Enum.DEFAULT` |
-| 只有清屏色，无物体 | 节点 `layer` 与相机掩码不交 | `node.layer = Layers.Enum.DEFAULT` |
-| 物体全黑 | 场景里没有光源 | 加 `DirectionalLight` 并设 `illuminance` |
-| 物体是全平的单色 | 材质是 unlit 或没有光照通道 | 用 `builtin-standard-material` |
+| 现象                 | 原因                               | 修法                                         |
+| -------------------- | ---------------------------------- | -------------------------------------------- |
+| 只有清屏色，无物体   | 相机 `visibility` 未设             | `camera.visibility = Layers.Enum.DEFAULT`    |
+| 只有清屏色，无物体   | 节点 `layer` 与相机掩码不交        | `node.layer = Layers.Enum.DEFAULT`           |
+| 物体全黑             | 场景里没有光源                     | 加 `DirectionalLight` 并设 `illuminance`     |
+| 物体是全平的单色     | 材质是 unlit 或没有光照通道        | 用 `builtin-standard-material`               |
 | 控制台报画布相关错误 | import 时 `#GameCanvas` 还不在 DOM | 把 canvas 放到 `<script type="module">` 之前 |
 
 ## API 参考

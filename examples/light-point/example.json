@@ -15,17 +15,12 @@
     ]
   },
   "effect": {
-    "functional": "名为 PointLightNode 的节点挂 PointLight（illuminance=40, range=8），每帧绕场景中心轨道运动；三块板与地板受单一点光源照明。",
+    "functional": "名为 PointLightNode 的节点挂 PointLight（luminance=24000, range=8），每帧绕场景中心轨道运动；三块板与地板受单一点光源照明。",
     "visual": "三块彩色板与灰地板仅被一个游走的点光源照亮，板上明暗随光源靠近/远离实时流动，形成明显距离衰减"
   },
   "api": {
-    "primary": [
-      "PointLight"
-    ],
-    "supporting": [
-      "Component",
-      "Node.setPosition"
-    ],
+    "primary": ["PointLight"],
+    "supporting": ["Component", "Node.setPosition"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -47,162 +42,141 @@
       "Node.setPosition",
       "Node.lookAt"
     ],
-    "forbiddenShortcut": [
-      "用贴图烘焙的假光斑冒充动态点光源",
-      "保留场景默认灯光参与照明（会掩盖单光源语义）"
-    ],
+    "forbiddenShortcut": ["用贴图烘焙的假光斑冒充动态点光源", "保留场景默认灯光参与照明（会掩盖单光源语义）"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L8"
+        "sourceLocation": "L26"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L10"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L37"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L63"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L21"
+        "sourceLocation": "L41"
       },
       {
         "api": "PointLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L30"
+        "sourceLocation": "L55"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L54"
+        "sourceLocation": "L88"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L48"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L20"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L47"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L31"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L14"
+        "sourceLocation": "L32"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L36"
+        "sourceLocation": "L64"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L41"
+        "sourceLocation": "L71"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L36"
+        "sourceLocation": "L64"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L19"
+        "sourceLocation": "L38"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L20"
+        "sourceLocation": "L39"
       },
       {
         "api": "Node.lookAt",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L20"
+        "sourceLocation": "L40"
       }
     ]
   },
-  "capabilities": [
-    "lights"
-  ],
+  "capabilities": ["lights"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "PointLightNode",
-        "Floor",
-        "Left",
-        "Center",
-        "Right"
-      ]
+      "nodes": ["Main Camera", "PointLightNode", "Floor", "Left", "Center", "Right"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -217,16 +191,12 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.6,
-          7.5
-        ],
+        "position": [0, 2.6, 7.5],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 20,
-            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lookAt(new Vec3(0, 0.4, 0));"
+            "line": 39,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5));"
           }
         ]
       },
@@ -234,81 +204,56 @@
         "position": {
           "vary": true,
           "range": [
-            [
-              -2.2,
-              2.2
-            ],
-            [
-              3.2,
-              3.2
-            ],
-            [
-              -2.2,
-              2.2
-            ]
+            [-2.2, 2.2],
+            [3.2, 3.2],
+            [-2.2, 2.2]
           ],
           "minDelta": 0.0001
         },
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 58,
+            "line": 92,
             "text": "正弦包络 Math.sin(this.t * 0.8) * 2.2,3.2,Math.cos(this.t * 0.8) * 2.2：三角项取 [-1,1]，其余为字面量算术"
           }
         ]
       },
       "Floor": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 34,
+            "line": 62,
             "text": "Floor.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Left": {
-        "position": [
-          -2.2,
-          0.4,
-          0
-        ],
+        "position": [-2.2, 0.4, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 39,
+            "line": 69,
             "text": "Left.setPosition(new Vec3(-2.2, 0.4, 0));"
           }
         ]
       },
       "Center": {
-        "position": [
-          0,
-          0.4,
-          0
-        ],
+        "position": [0, 0.4, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 44,
+            "line": 76,
             "text": "Center.setPosition(new Vec3(0, 0.4, 0));"
           }
         ]
       },
       "Right": {
-        "position": [
-          2.2,
-          0.4,
-          0
-        ],
+        "position": [2.2, 0.4, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 49,
+            "line": 83,
             "text": "Right.setPosition(new Vec3(2.2, 0.4, 0));"
           }
         ]
@@ -319,17 +264,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              80,
-              90,
-              110,
-              255
-            ],
+            "value": [80, 90, 110, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 37,
+              "line": 65,
               "text": "new Color(80, 90, 110, 255)"
             }
           }
@@ -339,17 +279,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              65,
-              155,
-              235,
-              255
-            ],
+            "value": [65, 155, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 42,
+              "line": 72,
               "text": "new Color(65, 155, 235, 255)"
             }
           }
@@ -359,17 +294,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              95,
-              205,
-              120,
-              255
-            ],
+            "value": [95, 205, 120, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 47,
+              "line": 79,
               "text": "new Color(95, 205, 120, 255)"
             }
           }
@@ -379,17 +309,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              125,
-              65,
-              255
-            ],
+            "value": [235, 125, 65, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 52,
+              "line": 86,
               "text": "new Color(235, 125, 65, 255)"
             }
           }
@@ -401,14 +326,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
-        "line": "L20"
+        "line": "L39"
       }
     }
   },
   "promotion": {
-    "spec": "88951008b00d",
-    "source": "ea448f328c7d5108",
-    "candidate": "d1cc556759a27943",
+    "spec": "957212499be3",
+    "source": "ede6040c16f088b8",
+    "candidate": "8746fc59b6aa0408",
     "verified": 19,
     "attested": 0,
     "units": 19

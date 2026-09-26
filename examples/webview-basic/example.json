@@ -45,24 +45,12 @@
     "view",
     "ResolutionPolicy"
   ],
-  "capabilities": [
-    "webview"
-  ],
+  "capabilities": ["webview"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -87,9 +75,7 @@
     "visual": "深蓝底（clearColor 10,14,22,255）一屏：顶部状态行依次改写 `webview: loading → … → webview mounted — clicks land in iframe`；中部是**真 iframe**（本地页，浅灰渐变底 + 一条横扫动画 + 点击计数文本），其外叠一圈琥珀色 2px 描边矩形（`Graphics` 画的 204x154，标示 WebView 节点的世界矩形）；下方一条绿色小块 = `Graphics` 帧时钟（每 2400 ms 横扫一次，与 iframe 无关，保证三引擎都有持续帧间变化）；底部一行提示 `iframe overlay: clicks inside the box never reach the engine`。frame-diff 的变化来源全在 WebGL 画布内 ⇒ 三引擎 frameChanged 可判；iframe 是否真挂载/真出页由 probe 的 `sameOriginDoc/pageName/titleNow/__clicks` 独立回读，不用画面替引擎背书"
   },
   "api": {
-    "primary": [
-      "WebView"
-    ],
+    "primary": ["WebView"],
     "supporting": [
       "WebView.webviewEvents",
       "WebView.evaluateJS",
@@ -163,79 +149,79 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L111"
+        "sourceLocation": "L120"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L114"
+        "sourceLocation": "L123"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L115"
+        "sourceLocation": "L124"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L251"
+        "sourceLocation": "L260"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L125"
+        "sourceLocation": "L134"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L119"
+        "sourceLocation": "L128"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L177"
+        "sourceLocation": "L186"
       },
       {
         "api": "EventHandler",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L243"
+        "sourceLocation": "L252"
       },
       {
         "api": "EventHandler.target",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L244"
+        "sourceLocation": "L253"
       },
       {
         "api": "EventHandler.component",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L245"
+        "sourceLocation": "L254"
       },
       {
         "api": "EventHandler.handler",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L246"
+        "sourceLocation": "L255"
       },
       {
         "api": "EventHandler.customEventData",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L247"
+        "sourceLocation": "L256"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L117"
+        "sourceLocation": "L126"
       },
       {
         "api": "Layers",
@@ -247,73 +233,73 @@
         "api": "Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L127"
+        "sourceLocation": "L136"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L139"
+        "sourceLocation": "L148"
       },
       {
         "api": "GraphicsComponent",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L167"
+        "sourceLocation": "L176"
       },
       {
         "api": "GraphicsComponent.rect",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L182"
+        "sourceLocation": "L191"
       },
       {
         "api": "GraphicsComponent.clear",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L180"
+        "sourceLocation": "L189"
       },
       {
         "api": "GraphicsComponent.stroke",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L187"
+        "sourceLocation": "L196"
       },
       {
         "api": "GraphicsComponent.fill",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L183"
+        "sourceLocation": "L192"
       },
       {
         "api": "WebView",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L241"
+        "sourceLocation": "L250"
       },
       {
         "api": "WebView.webviewEvents",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L248"
+        "sourceLocation": "L257"
       },
       {
         "api": "WebView.evaluateJS",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L398"
+        "sourceLocation": "L434"
       },
       {
         "api": "WebView.setJavascriptInterfaceScheme",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L455"
+        "sourceLocation": "L496"
       },
       {
         "api": "WebView.setOnJSCallback",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L456"
+        "sourceLocation": "L498"
       },
       {
         "api": "WebView.__preload",
@@ -343,56 +329,44 @@
         "api": "WebView.update",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L178"
+        "sourceLocation": "L187"
       },
       {
         "api": "game",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L326"
+        "sourceLocation": "L349"
       },
       {
         "api": "isValid",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L472"
+        "sourceLocation": "L517"
       },
       {
         "api": "js.setClassName",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L210"
+        "sourceLocation": "L219"
       },
       {
         "api": "view",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L112"
+        "sourceLocation": "L121"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L112"
+        "sourceLocation": "L121"
       }
     ]
   },
-  "assets": [
-    "assets/page.html",
-    "assets/page-error-like.html"
-  ],
+  "assets": ["assets/page.html", "assets/page-error-like.html"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "Status",
-        "Hint",
-        "FrameGuide",
-        "Clock",
-        "ClockHost",
-        "WebViewHost"
-      ]
+      "nodes": ["Canvas", "UICamera", "Status", "Hint", "FrameGuide", "Clock", "ClockHost", "WebViewHost"]
     }
   },
   "interaction": {
@@ -404,9 +378,7 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -419,143 +391,87 @@
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "main.js",
-            "line": 115,
+            "line": 124,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
-            "line": 124,
+            "line": 133,
             "text": "cameraNode.setPosition(0, 0, 1000);"
           }
         ]
       },
       "Status": {
-        "position": [
-          0,
-          160,
-          0
-        ],
+        "position": [0, 160, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 137,
+            "line": 146,
             "text": "statusNode.setPosition(0, 160, 0);"
           }
         ]
       },
       "Hint": {
-        "position": [
-          0,
-          -162,
-          0
-        ],
+        "position": [0, -162, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 149,
+            "line": 158,
             "text": "hintNode.setPosition(0, -162, 0);"
           }
         ]
       },
       "FrameGuide": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "main.js",
-            "line": 162,
+            "line": 171,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
       },
       "Clock": {
-        "position": [
-          0,
-          -132,
-          0
-        ],
+        "position": [0, -132, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 173,
+            "line": 182,
             "text": "clockNode.setPosition(0, -132, 0);"
           }
         ]
       },
       "ClockHost": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "main.js",
-            "line": 190,
+            "line": 199,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
       },
       "WebViewHost": {
-        "position": [
-          0,
-          14,
-          0
-        ],
+        "position": [0, 14, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 430,
+            "line": 468,
             "text": "hostNode.setPosition(0, 14, 0);"
           }
         ]
@@ -563,9 +479,9 @@
     }
   },
   "promotion": {
-    "spec": "4312cf66c71f",
-    "source": "8aeb640901c44844",
-    "candidate": "d1cc556759a27943",
+    "spec": "f6efbe2a2c12",
+    "source": "b955ded66d1a7898",
+    "candidate": "8746fc59b6aa0408",
     "verified": 29,
     "attested": 7,
     "units": 36

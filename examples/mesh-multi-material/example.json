@@ -19,14 +19,8 @@
     "visual": "一个物体左半红色粗糙、右半蓝色金属，两个材质区域属于同一 MeshRenderer"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync",
-      "GLTFAsset.instantiate"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "Node.getComponentInChildren"
-    ],
+    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate"],
+    "supporting": ["MeshRenderer", "Node.getComponentInChildren"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -45,145 +39,124 @@
       "GLTFAsset.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": [
-      "用两个完全独立 Mesh 冒充 multiple material",
-      "用两台 MeshRenderer 挂同一节点伪装"
-    ],
+    "forbiddenShortcut": ["用两个完全独立 Mesh 冒充 multiple material", "用两台 MeshRenderer 挂同一节点伪装"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L25"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L29"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L107"
+        "sourceLocation": "L162"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L33"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L46"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L22"
+        "sourceLocation": "L40"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L17"
+        "sourceLocation": "L31"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L39"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L100"
+        "sourceLocation": "L155"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L100"
+        "sourceLocation": "L155"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L101"
+        "sourceLocation": "L156"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L16"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.getComponentInChildren",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L107"
+        "sourceLocation": "L162"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L121"
+        "sourceLocation": "L178"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       }
     ]
   },
-  "capabilities": [
-    "materials"
-  ],
+  "capabilities": ["materials"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "MultiMaterialCube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "MultiMaterialCube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "material-property",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "asset-loaded", "material-property", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -197,67 +170,43 @@
   "validationExpectations": {
     "transform-equals": {
       "MultiMaterialCube": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 82,
+            "line": 134,
             "text": "nodes: [{ name: 'MultiMaterialCube', mesh: 0 }] —— 内联 glTF 未声明 TRS，局部变换为引擎默认 identity"
           },
           {
             "source": "src/main.ts",
-            "line": 102,
+            "line": 157,
             "text": "scene.addChild(instance.root);（根包装节点未再赋局部变换，位姿合同整体为 identity）"
           }
         ],
         "handAuthored": true
       },
       "Main Camera": {
-        "position": [
-          0,
-          0.9,
-          3.4
-        ],
+        "position": [0, 0.9, 3.4],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 104,
+            "line": 159,
             "text": "cameraNode.setPosition(new Vec3(0, 0.9, 3.4));"
           }
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 24,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 44,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "material-property": {
@@ -268,17 +217,12 @@
             "materialName": "red-half",
             "props": {
               "albedo": {
-                "value": [
-                  0.85,
-                  0.2,
-                  0.2,
-                  1
-                ],
+                "value": [0.85, 0.2, 0.2, 1],
                 "encoding": "0-1",
                 "tolerance": 0.002,
                 "provenance": {
                   "source": "src/main.ts",
-                  "line": 75,
+                  "line": 117,
                   "text": "materials[0]={name:'red-half', baseColorFactor:[0.85,0.2,0.2,1]}（L75）→ material.ts L347 setProperty('albedo', …)；slot 0 = primitives[0].material=0（L79）"
                 }
               }
@@ -289,17 +233,12 @@
             "materialName": "blue-half",
             "props": {
               "albedo": {
-                "value": [
-                  0.2,
-                  0.45,
-                  0.85,
-                  1
-                ],
+                "value": [0.2, 0.45, 0.85, 1],
                 "encoding": "0-1",
                 "tolerance": 0.002,
                 "provenance": {
                   "source": "src/main.ts",
-                  "line": 76,
+                  "line": 121,
                   "text": "materials[1]={name:'blue-half', baseColorFactor:[0.2,0.45,0.85,1]}（L76）→ slot 1 = primitives[1].material=1（L80）；只断言 slot 0 时『多材质』合同为空判"
                 }
               }
@@ -309,7 +248,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 78,
+            "line": 126,
             "text": "meshes:[{primitives:[{material:0},{material:1}]}] ⇒ 同一 MeshRenderer 两个材质槽，两槽名字与基色各自独立"
           }
         ],
@@ -324,7 +263,7 @@
       "provenance": [
         {
           "source": "src/main.ts",
-          "line": 74,
+          "line": 116,
           "text": "materials: [red-half, blue-half] —— 两个材质槽都必须被导入器建立，否则「单网格多材质」不成立"
         }
       ]
@@ -334,14 +273,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0, 0));）",
-        "line": "L105"
+        "line": "L160"
       }
     }
   },
   "promotion": {
-    "spec": "03cd6b3c1dff",
-    "source": "ec1bfedbbea794d3",
-    "candidate": "d1cc556759a27943",
+    "spec": "aaa92922c830",
+    "source": "3248cf0cb2aab8c6",
+    "candidate": "8746fc59b6aa0408",
     "verified": 16,
     "attested": 0,
     "units": 16

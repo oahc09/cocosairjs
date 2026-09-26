@@ -83,17 +83,17 @@ cubeRenderer.material = cubeMaterial;
 // ---- 覆盖层：阶段 + 秒表 ----
 const info = document.querySelector('#info') as HTMLElement;
 let stage: string = 'idle';
-function showStage (name: string): void {
+function showStage(name: string): void {
     stage = name;
 }
 class Clock extends Component {
     private _t = 0;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         info.textContent = [
             'animation: tween sequence + pulse + code-first clip (orbit, stop@6s)',
@@ -130,8 +130,16 @@ clip.duration = 2.0;
 clip.wrapMode = AnimationClip.WrapMode.Loop;
 const track = new animation.VectorTrack();
 track.path = new animation.TrackPath().toProperty('position');
-track.channels()[0].curve.assignSorted([[0, 0], [1, 0.9], [2, 0]]); // x: 0 → 0.9 → 0
-track.channels()[1].curve.assignSorted([[0, 0], [1, 0], [2, 0.7]]); // y: 0 → 0 → 0.7
+track.channels()[0].curve.assignSorted([
+    [0, 0],
+    [1, 0.9],
+    [2, 0],
+]); // x: 0 → 0.9 → 0
+track.channels()[1].curve.assignSorted([
+    [0, 0],
+    [1, 0],
+    [2, 0.7],
+]); // y: 0 → 0 → 0.7
 clip.addTrack(track);
 
 const orbNode = new Node('Orb');
@@ -149,7 +157,7 @@ const orbAnim = orbNode.addComponent(Animation);
 orbAnim.defaultClip = clip;
 // play 必须等组件激活后再调（app.run 前场景未激活，play 会被激活流程重置）——start() 是规范位置
 class OrbStart extends Component {
-    start (): void {
+    start(): void {
         orbAnim.play(clip.name);
     }
 }
@@ -158,15 +166,19 @@ orbNode.addComponent(OrbStart);
 // ---- 行为断言：Orb 在动（位置越界）+ stop 后冻结 ----
 type Check = { name: string; pass: boolean; detail: string };
 const clipChecks: Check[] = [];
-let orbMinX = Infinity; let orbMaxX = -Infinity;
-let stoppedAt = -1; let frozenX = 0; let stillMoving = false;
+let orbMinX = Infinity;
+let orbMaxX = -Infinity;
+let stoppedAt = -1;
+let frozenX = 0;
+let stillMoving = false;
 class ClipProbe extends Component {
     private _t = 0;
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         const x = orbNode.position.x;
         if (stoppedAt < 0) {
-            orbMinX = Math.min(orbMinX, x); orbMaxX = Math.max(orbMaxX, x);
+            orbMinX = Math.min(orbMinX, x);
+            orbMaxX = Math.max(orbMaxX, x);
             if (this._t >= 6) {
                 orbAnim.stop();
                 stoppedAt = this._t;
@@ -180,11 +192,21 @@ class ClipProbe extends Component {
 orbNode.addComponent(ClipProbe);
 
 window.__manualProbe = () => {
-    if (stoppedAt < 0) { return { ready: false, ok: false, name: 'animation-system' }; }
+    if (stoppedAt < 0) {
+        return { ready: false, ok: false, name: 'animation-system' };
+    }
     if (clipChecks.length === 0) {
         clipChecks.push(
-            { name: 'clip-orb-moved', pass: orbMaxX - orbMinX > 0.5, detail: `x range [${orbMinX.toFixed(2)}, ${orbMaxX.toFixed(2)}]` },
-            { name: 'clip-stop-froze', pass: !stillMoving, detail: `stopped at ${stoppedAt.toFixed(1)}s, frozen x=${frozenX.toFixed(2)}` },
+            {
+                name: 'clip-orb-moved',
+                pass: orbMaxX - orbMinX > 0.5,
+                detail: `x range [${orbMinX.toFixed(2)}, ${orbMaxX.toFixed(2)}]`,
+            },
+            {
+                name: 'clip-stop-froze',
+                pass: !stillMoving,
+                detail: `stopped at ${stoppedAt.toFixed(1)}s, frozen x=${frozenX.toFixed(2)}`,
+            },
         );
     }
     return {

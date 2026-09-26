@@ -25,7 +25,7 @@ Cocos AIR 的导出面**没有 WebXR 会话层**：全 d.ts grep `XRSession|WebX
 1. 导出面出现 XR 会话入口（`requestSession` 封装或 `xr` 命名空间）与每帧 view/projection 矩阵供给；
 2. 控制器/手柄输入组件或 `EventHMD` 的实际派发源接通；
 3. 验证器可在 headless 环境 mock XR 设备（否则示例只能退化为桌面回退路径）。
-三条齐备后：补 `manual-vr-basics` 示例（桌面回退 + XR 增强双路径）、同步索引状态列与台账。
+   三条齐备后：补 `manual-vr-basics` 示例（桌面回退 + XR 增强双路径）、同步索引状态列与台账。
 
 ## 4. 能力边界备忘
 

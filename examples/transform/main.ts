@@ -19,14 +19,16 @@ import {
     Vec3,
     utils,
     primitives,
-    builtinResMgr, frameObject } from 'cocosair';
+    builtinResMgr,
+    frameObject,
+} from 'cocosair';
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
 
 /** root 旋转带动整个子层级；child 自身再摆动。 */
 class HierarchyAnimator extends Component {
     private time = 0;
 
-    update (dt: number): void {
+    update(dt: number): void {
         this.time += dt;
         this.node.setRotationFromEuler(0, this.time * 40, 0);
         const child = this.node.getChildByName('child');
@@ -41,19 +43,25 @@ class HierarchyAnimator extends Component {
 class Reporter extends Component {
     private elapsed = 0;
 
-    update (dt: number): void {
+    update(dt: number): void {
         this.elapsed += dt;
-        if (this.elapsed < 1) { return; }
+        if (this.elapsed < 1) {
+            return;
+        }
         this.elapsed = 0;
         const grandchild = this.node.getChildByName('child')?.getChildByName('grandchild');
         if (grandchild) {
-            console.log('[transform] grandchild local =', grandchild.position.toString(),
-                'world =', grandchild.worldPosition.toString());
+            console.log(
+                '[transform] grandchild local =',
+                grandchild.position.toString(),
+                'world =',
+                grandchild.worldPosition.toString(),
+            );
         }
     }
 }
 
-function addCube (parent: Node, name: string, size: number): Node {
+function addCube(parent: Node, name: string, size: number): Node {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     parent.addChild(node);

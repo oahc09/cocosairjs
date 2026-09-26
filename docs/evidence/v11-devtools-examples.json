@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-09-26T04:17:43.178Z",
+  "measuredAt": "2026-09-26T07:04:48.433Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "d1cc556759a27943",
+  "candidateFingerprint": "8746fc59b6aa0408",
   "apiProofTotals": {
     "verified": 76,
     "attested": 11,
@@ -15,9 +15,9 @@
       "id": "automation",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "c00b9e5f3a5a",
-      "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "735d00cae975",
+      "sourceFingerprint": "e89d32ce3ed3bbb6",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -291,12 +291,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=8022 viewport=480x360"
+          "detail": "bytes=11166 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[46,72,93] differs from clear color"
+          "detail": "center rgb=[172,178,184] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -326,8 +326,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/automation.png",
-        "bytes": 6000,
-        "hash": "f6cfe95fdea1be98"
+        "bytes": 8358,
+        "hash": "a4bb751336c280d6"
       },
       "assetDigests": [],
       "errors": []
@@ -336,9 +336,9 @@
       "id": "rc-capture-frame",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "86059190543b",
-      "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4daffe289d95",
+      "sourceFingerprint": "14dcaa1b1f04abd7",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -723,12 +723,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=8466 viewport=480x360"
+          "detail": "bytes=10818 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[19,77,40] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -758,8 +758,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-capture-frame.png",
-        "bytes": 6331,
-        "hash": "a3edb2ec44c8fc0a"
+        "bytes": 8095,
+        "hash": "ad28144c8ffb7a53"
       },
       "assetDigests": [],
       "errors": []
@@ -768,9 +768,9 @@
       "id": "rc-create-node",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "deb988a9d823",
-      "sourceFingerprint": "20070fba85c22df4",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4533f62e9a73",
+      "sourceFingerprint": "adc7fb751d03f149",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -1207,12 +1207,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=6946 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[48,144,78] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -1247,8 +1247,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 5193,
-        "hash": "33aad0be18da905f"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -1257,9 +1257,9 @@
       "id": "rc-error-report",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "2be94727b2c1",
-      "sourceFingerprint": "ad473b671a41e764",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "01b9b4271da2",
+      "sourceFingerprint": "8d42f5b915ecd42a",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -1677,12 +1677,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=6946 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[48,144,78] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -1712,13 +1712,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 5193,
-        "hash": "33aad0be18da905f"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -1727,9 +1727,9 @@
       "id": "rc-inspect-scene",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "495816944ba8",
-      "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "dc7942ac2896",
+      "sourceFingerprint": "8dbf1e634cee45fa",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2132,12 +2132,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=6946 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[48,144,78] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -2162,13 +2162,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→49 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-inspect-scene.png",
-        "bytes": 5193,
-        "hash": "33aad0be18da905f"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -2179,9 +2179,9 @@
       "id": "automation",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "c00b9e5f3a5a",
-      "sourceFingerprint": "4b4c481434e58eab",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "735d00cae975",
+      "sourceFingerprint": "e89d32ce3ed3bbb6",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2455,12 +2455,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=8022 viewport=480x360"
+          "detail": "bytes=11166 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[46,72,93] differs from clear color"
+          "detail": "center rgb=[172,178,184] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -2490,8 +2490,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/automation.png",
-        "bytes": 6000,
-        "hash": "f6cfe95fdea1be98"
+        "bytes": 8358,
+        "hash": "a4bb751336c280d6"
       },
       "assetDigests": [],
       "errors": []
@@ -2500,9 +2500,9 @@
       "id": "rc-capture-frame",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "86059190543b",
-      "sourceFingerprint": "9c24eade6728d6e4",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4daffe289d95",
+      "sourceFingerprint": "14dcaa1b1f04abd7",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2887,12 +2887,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=8466 viewport=480x360"
+          "detail": "bytes=10818 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[19,77,40] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -2922,8 +2922,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-capture-frame.png",
-        "bytes": 6331,
-        "hash": "a3edb2ec44c8fc0a"
+        "bytes": 8095,
+        "hash": "ad28144c8ffb7a53"
       },
       "assetDigests": [],
       "errors": []
@@ -2932,9 +2932,9 @@
       "id": "rc-create-node",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "deb988a9d823",
-      "sourceFingerprint": "20070fba85c22df4",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4533f62e9a73",
+      "sourceFingerprint": "adc7fb751d03f149",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -3371,12 +3371,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=6946 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[48,144,78] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -3411,8 +3411,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 5193,
-        "hash": "33aad0be18da905f"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -3421,9 +3421,9 @@
       "id": "rc-error-report",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "2be94727b2c1",
-      "sourceFingerprint": "ad473b671a41e764",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "01b9b4271da2",
+      "sourceFingerprint": "8d42f5b915ecd42a",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -3841,12 +3841,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=6946 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[48,144,78] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -3876,13 +3876,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 5193,
-        "hash": "33aad0be18da905f"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -3891,9 +3891,9 @@
       "id": "rc-inspect-scene",
       "requiresDevTools": true,
       "result": "PASS",
-      "specFingerprint": "495816944ba8",
-      "sourceFingerprint": "b164c0231173bf02",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "dc7942ac2896",
+      "sourceFingerprint": "8dbf1e634cee45fa",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -4296,12 +4296,12 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=6946 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "center rgb=[11,51,29] differs from clear color"
+          "detail": "center rgb=[48,144,78] differs from clear color"
         },
         {
           "validatorId": "getRuntimeErrors",
@@ -4326,13 +4326,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→49 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-inspect-scene.png",
-        "bytes": 5193,
-        "hash": "33aad0be18da905f"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []

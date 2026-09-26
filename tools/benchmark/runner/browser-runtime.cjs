@@ -178,7 +178,22 @@ class BrowserRuntime {
     assertActive();
     // 2) 静态服务
     const workspaceDir = workspace.paths.workspace;
+    this.resourceResponses = [];
     this.server = http.createServer((req, res) => {
+      // WebKit media loads can bypass both ResourceTiming and Playwright's
+      // response events. Record bytes actually sent for the browser's request.
+      if (/\.(wav|mp3|ogg|mp4|glb|gltf|bin|json|png|jpe?g|webp|ktx2|basis)(?:[?#]|$)/i.test(req.url || '')) {
+        const end = res.end;
+        res.end = (...args) => {
+          const body = args[0];
+          const size = Buffer.isBuffer(body) || body instanceof Uint8Array ? body.length
+            : typeof body === 'string' ? Buffer.byteLength(body) : 0;
+          res.once('finish', () => this.resourceResponses.push({
+            url: `http://127.0.0.1:${this.port}${req.url}`, status: res.statusCode, size, observation: 'server-response',
+          }));
+          return end.apply(res, args);
+        };
+      }
       try {
         const p = decodeURIComponent((req.url || '/').split('?')[0]);
         if (p === '/__bench-prelude.js') {

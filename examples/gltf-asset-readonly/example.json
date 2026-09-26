@@ -39,21 +39,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握解析后 GLTFAsset 的九个只读集合面（在本地 fixture 上确定性回读基数）。",
-    "points": [
-      "meshes/materials 等集合存在且可数",
-      "sceneNames 含缺省场景名",
-      "owned 标志回读"
-    ]
+    "points": ["meshes/materials 等集合存在且可数", "sceneNames 含缺省场景名", "owned 标志回读"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 210,240,220）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "GLTFAsset.meshes",
-      "GLTFAsset.sceneNames"
-    ],
+    "primary": ["GLTFAsset.meshes", "GLTFAsset.sceneNames"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -99,207 +92,190 @@
       "GLTFAsset.images",
       "GLTFAsset.meshMaterials"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L26"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L45"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L46"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L40"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L31"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L55"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L56"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L53"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L53"
       },
       {
         "api": "GLTFAsset.owned",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L43"
+        "sourceLocation": "L81"
       },
       {
         "api": "GLTFAsset.meshes",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L44"
+        "sourceLocation": "L82"
       },
       {
         "api": "GLTFAsset.materials",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L45"
+        "sourceLocation": "L83"
       },
       {
         "api": "GLTFAsset.textures",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L46"
+        "sourceLocation": "L84"
       },
       {
         "api": "GLTFAsset.skeletons",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L48"
+        "sourceLocation": "L86"
       },
       {
         "api": "GLTFAsset.animations",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L49"
+        "sourceLocation": "L87"
       },
       {
         "api": "GLTFAsset.sceneNames",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L50"
+        "sourceLocation": "L88"
       },
       {
         "api": "GLTFAsset.images",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L47"
+        "sourceLocation": "L85"
       },
       {
         "api": "GLTFAsset.meshMaterials",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L51"
+        "sourceLocation": "L89"
       }
     ]
   },
-  "assets": [
-    "assets/BoxTextured.glb"
-  ],
+  "assets": ["assets/BoxTextured.glb"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "lifecycle": ["resource-released"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -311,9 +287,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "a70f6b03bb31",
-    "source": "22820c8b7367c954",
-    "candidate": "d1cc556759a27943",
+    "spec": "07da80d1aa5b",
+    "source": "8b0e6869870468c5",
+    "candidate": "8746fc59b6aa0408",
     "verified": 23,
     "attested": 4,
     "units": 27

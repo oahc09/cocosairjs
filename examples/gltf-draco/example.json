@@ -19,12 +19,8 @@
     "visual": "画面为相机/灯光骨架 + 左上角状态面板，面板展示扩展状态、稳定错误码与宿主接入示例代码"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.getExtensionSupport"
-    ],
-    "supporting": [
-      "GLTFLoader.parseAsync"
-    ],
+    "primary": ["GLTFLoader.getExtensionSupport"],
+    "supporting": ["GLTFLoader.parseAsync"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -50,131 +46,112 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L24"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L17"
+        "sourceLocation": "L28"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L19"
+        "sourceLocation": "L32"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L26"
+        "sourceLocation": "L45"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L23"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L30"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L38"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L53"
       },
       {
         "api": "GLTFLoader.getExtensionSupport",
         "source": "src/main.ts",
         "validator": "capability-status",
-        "sourceLocation": "L35"
+        "sourceLocation": "L56"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L44"
+        "sourceLocation": "L69"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L17"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L18"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L18"
+        "sourceLocation": "L31"
       }
     ],
     "claimsNote": "claims / evidence / primary 只保留示例源码真实调用的 API；GLTFLoader.setDRACODecoder / createDracoDecoder 在源码中仅出现在面板教学字符串（src/main.ts L56-57）内，不构成执行证据；教学表述仍保留在 learning.points 与 README。Draco 正向解码路径因 shipped bundle 无浏览器端 draco3d glue 而未覆盖（独立缺口）。"
   },
-  "capabilities": [
-    "gltf"
-  ],
-  "assets": [
-    "assets/draco.glb"
-  ],
+  "capabilities": ["gltf"],
+  "assets": ["assets/draco.glb"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light"
-      ]
+      "nodes": ["Main Camera", "Main Light"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "capability-status",
-      "no-runtime-error",
-      "asset-loaded",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "capability-status", "no-runtime-error", "asset-loaded", "transform-equals"],
     "interaction": [],
     "visual": [],
     "lifecycle": [],
-    "capability": [
-      "capability-status"
-    ],
+    "capability": ["capability-status"],
     "capabilityExpectations": [
       {
         "extension": "KHR_draco_mesh_compression",
-        "statuses": [
-          "decoder-required"
-        ]
+        "statuses": ["decoder-required"]
       }
     ]
   },
@@ -189,42 +166,26 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          1.8,
-          5.5
-        ],
+        "position": [0, 1.8, 5.5],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 18,
-            "text": "cameraNode.setPosition(new Vec3(0, 1.8, 5.5)); cameraNode.setRotationFromEuler(-15, 0, 0);"
+            "line": 30,
+            "text": "cameraNode.setPosition(new Vec3(0, 1.8, 5.5));"
           }
         ],
-        "rotationEuler": [
-          -15,
-          0,
-          0
-        ]
+        "rotationEuler": [-15, 0, 0]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 25,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 43,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "asset-loaded": {
@@ -234,7 +195,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 43,
+              "line": 68,
               "text": "var bytes = await (await fetch('./assets/draco.glb')).arrayBuffer();"
             }
           ]
@@ -243,9 +204,9 @@
     }
   },
   "promotion": {
-    "spec": "a7a345f064ed",
-    "source": "3cd1617585064e0d",
-    "candidate": "d1cc556759a27943",
+    "spec": "c40482afd5b5",
+    "source": "3a80645a70f5b245",
+    "candidate": "8746fc59b6aa0408",
     "verified": 14,
     "attested": 0,
     "units": 14

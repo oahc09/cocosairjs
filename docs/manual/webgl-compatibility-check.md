@@ -8,11 +8,11 @@
 
 ## 概念要点
 
-| Cocos AIR | 说明 |
-|---|---|
-| `!!canvas.getContext('webgl2')` | 浏览器原生探针，不经过引擎 |
-| `device.capabilities.maxTextureSize` | 注意是 `capabilities`，**不是** `caps` |
-| `device.numDrawCalls` / `numTris` / `capabilities` | 见 [Drawing Lines](./drawing-lines.md) 成本对照 |
+| Cocos AIR                                                 | 说明                                                             |
+| --------------------------------------------------------- | ---------------------------------------------------------------- |
+| `!!canvas.getContext('webgl2')`                           | 浏览器原生探针，不经过引擎                                       |
+| `device.capabilities.maxTextureSize`                      | 注意是 `capabilities`，**不是** `caps`                           |
+| `device.numDrawCalls` / `numTris` / `capabilities`        | 见 [Drawing Lines](./drawing-lines.md) 成本对照                  |
 | `device.constructor.name`（`WebGL2Device` / WebGPU 设备） | `game.renderType` 在 AIR 里是 `-1`，**不可用**，判后端看设备类名 |
 
 ## 1. 三层检测
@@ -20,15 +20,15 @@
 **第一层：浏览器原生能力。** 不经过引擎，直接问 DOM：
 
 ```js
-const probeCanvas = document.createElement('canvas');
-const nativeGL2 = safe(() => !!probeCanvas.getContext('webgl2'), false);
+const probeCanvas = document.createElement("canvas");
+const nativeGL2 = safe(() => !!probeCanvas.getContext("webgl2"), false);
 ```
 
 **第二层：引擎枚举。** `gfx.API` 是"有哪些后端可选"的定义，不是"当前用了哪个"：
 
 ```js
-const apiWebgl2 = safe(() => gfx.API.WEBGL2, 'n/a');
-const apiWebgpu = safe(() => gfx.API.WEBGPU, 'n/a');
+const apiWebgl2 = safe(() => gfx.API.WEBGL2, "n/a");
+const apiWebgpu = safe(() => gfx.API.WEBGPU, "n/a");
 ```
 
 **第三层：实际后端 + 硬件上限。** 这才是"当前设备到底能干什么"：
@@ -36,7 +36,7 @@ const apiWebgpu = safe(() => gfx.API.WEBGPU, 'n/a');
 ```ts
 const device = safe(() => director.root && director.root.device, null);
 const caps: Record<string, any> = safe(() => device && device.capabilities, {}) || {};
-const cap = (k: string) => (caps[k] === undefined ? 'n/a' : caps[k]);
+const cap = (k: string) => (caps[k] === undefined ? "n/a" : caps[k]);
 ```
 
 把三层拼进覆盖层：
@@ -93,38 +93,65 @@ npm run dev
 ## 完整 index.html
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>WebGL Compatibility Check — WebGL 兼容性检查（docs/manual/webgl-compatibility-check.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -146,31 +173,31 @@ npm run dev
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-    gfx,
-    sys,
-    screen,
-    director,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+  gfx,
+  sys,
+  screen,
+  director,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('webgl-compat');
+const scene = new Scene("webgl-compat");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.6, 5.2));
 cameraNode.lookAt(new Vec3(0, 0.4, 0));
@@ -184,33 +211,33 @@ camera.clearColor = new Color(18, 24, 34, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node('Main Light');
+const lightNode = new Node("Main Light");
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 一个参照 cube + 地面（保证画面非空且颜色足够，visible-frame 可验） ----
-const cubeNode = new Node('Reference Cube');
+const cubeNode = new Node("Reference Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.5, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: 'builtin-standard' });
-cubeMaterial.setProperty('mainColor', new Color(230, 130, 50, 255));
+cubeMaterial.initialize({ effectName: "builtin-standard" });
+cubeMaterial.setProperty("mainColor", new Color(230, 130, 50, 255));
 cubeRenderer.material = cubeMaterial;
 
-const groundNode = new Node('Ground');
+const groundNode = new Node("Ground");
 groundNode.layer = Layers.Enum.DEFAULT;
 groundNode.setPosition(new Vec3(0, -0.02, 0));
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
 groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
 const groundMaterial = new Material();
-groundMaterial.initialize({ effectName: 'builtin-standard' });
-groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
+groundMaterial.initialize({ effectName: "builtin-standard" });
+groundMaterial.setProperty("mainColor", new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
 window.__airApp = app;
@@ -218,40 +245,40 @@ app.run(scene);
 
 // ============ 兼容性报告（覆盖层） ============
 
-function safe (fn: () => any, fallback: any): any {
-    try {
-        const v = fn();
-        return v === undefined || v === null ? fallback : v;
-    } catch (e) {
-        return fallback;
-    }
+function safe(fn: () => any, fallback: any): any {
+  try {
+    const v = fn();
+    return v === undefined || v === null ? fallback : v;
+  } catch (e) {
+    return fallback;
+  }
 }
 
 // 1) 浏览器原生 WebGL2 探针（不经过引擎）
-const probeCanvas = document.createElement('canvas');
-const nativeGL2 = safe(() => !!probeCanvas.getContext('webgl2'), false);
+const probeCanvas = document.createElement("canvas");
+const nativeGL2 = safe(() => !!probeCanvas.getContext("webgl2"), false);
 
 // 2) 引擎枚举（定义，非当前设备）
-const apiWebgl2 = safe(() => gfx.API.WEBGL2, 'n/a');
-const apiWebgpu = safe(() => gfx.API.WEBGPU, 'n/a');
+const apiWebgl2 = safe(() => gfx.API.WEBGL2, "n/a");
+const apiWebgpu = safe(() => gfx.API.WEBGPU, "n/a");
 
 // 3) 引擎实际后端 + 硬件上限
 const device = safe(() => director.root && director.root.device, null);
 const caps: Record<string, any> = safe(() => device && device.capabilities, {}) || {};
-const cap = (k: string) => (caps[k] === undefined ? 'n/a' : caps[k]);
+const cap = (k: string) => (caps[k] === undefined ? "n/a" : caps[k]);
 
-(document.querySelector('#info') as HTMLElement).textContent = [
-    '--- WebGL compatibility check ---',
-    `native canvas.getContext('webgl2'): ${nativeGL2}`,
-    `gfx.API.WEBGL2=${apiWebgl2}  gfx.API.WEBGPU=${apiWebgpu}`,
-    `active device: ${safe(() => device.constructor.name, 'n/a')}`,
-    `sys: ${sys.platform} / ${sys.browserType} / ${sys.os} / mobile=${sys.isMobile}`,
-    `maxTextureSize=${cap('maxTextureSize')}  maxColorRenderTargets=${cap('maxColorRenderTargets')}`,
-    `maxVertexAttributes=${cap('maxVertexAttributes')}  dpr=${screen.devicePixelRatio}`,
-    `caps keys: ${Object.keys(caps).join(',')}`,
-].join('\n');
+(document.querySelector("#info") as HTMLElement).textContent = [
+  "--- WebGL compatibility check ---",
+  `native canvas.getContext('webgl2'): ${nativeGL2}`,
+  `gfx.API.WEBGL2=${apiWebgl2}  gfx.API.WEBGPU=${apiWebgpu}`,
+  `active device: ${safe(() => device.constructor.name, "n/a")}`,
+  `sys: ${sys.platform} / ${sys.browserType} / ${sys.os} / mobile=${sys.isMobile}`,
+  `maxTextureSize=${cap("maxTextureSize")}  maxColorRenderTargets=${cap("maxColorRenderTargets")}`,
+  `maxVertexAttributes=${cap("maxVertexAttributes")}  dpr=${screen.devicePixelRatio}`,
+  `caps keys: ${Object.keys(caps).join(",")}`,
+].join("\n");
 
-console.log('[manual/webgl-compat] running on cocosair');
+console.log("[manual/webgl-compat] running on cocosair");
 ```
 
 ## API 参考

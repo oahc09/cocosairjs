@@ -6,31 +6,55 @@
  *  2. dispatch 不存在的目标 → 返回 { ok:false, error:{ code:'STALE_TARGET' } }（稳定错误码，不抛为崩溃）；
  *  3. 面板展示两类信息，业务主循环不受影响。
  */
-import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, Material, utils, primitives } from 'cocosair';
+import {
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    DirectionalLight,
+    Layers,
+    Vec3,
+    Color,
+    Material,
+    utils,
+    primitives,
+} from 'cocosair';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
 var scene = new Scene('rc-error-report');
 
-function materialWith (color: Color): Material {
-  var material = new Material();
-  material.initialize({ effectName: 'builtin-standard' });
-  material.setProperty('mainColor', color);
-  return material;
+function materialWith(color: Color): Material {
+    var material = new Material();
+    material.initialize({ effectName: 'builtin-standard' });
+    material.setProperty('mainColor', color);
+    return material;
 }
 
-var cameraNode = new Node('Main Camera'); scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lookAt(new Vec3(0, 0.6, 0));
+var cameraNode = new Node('Main Camera');
+scene.addChild(cameraNode);
+cameraNode.setPosition(new Vec3(0, 2.2, 6.5));
+cameraNode.lookAt(new Vec3(0, 0.6, 0));
 var camera = cameraNode.addComponent(Camera);
-camera.projection = Camera.ProjectionType.PERSPECTIVE; camera.fov = 45;
-camera.near = 0.1; camera.far = 1000;
-camera.clearFlags = Camera.ClearFlag.SOLID_COLOR; camera.clearColor = new Color(30, 40, 60, 255);
-camera.visibility = Layers.Enum.DEFAULT; camera.priority = 0;
-var lightNode = new Node('Main Light'); scene.addChild(lightNode);
-lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);
-var light = lightNode.addComponent(DirectionalLight); light.illuminance = 2;
+camera.projection = Camera.ProjectionType.PERSPECTIVE;
+camera.fov = 45;
+camera.near = 0.1;
+camera.far = 1000;
+camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+camera.clearColor = new Color(30, 40, 60, 255);
+camera.visibility = Layers.Enum.DEFAULT;
+camera.priority = 0;
+var lightNode = new Node('Main Light');
+scene.addChild(lightNode);
+lightNode.setPosition(new Vec3(0, 8, 0));
+lightNode.setRotationFromEuler(-45, -30, 0);
+var light = lightNode.addComponent(DirectionalLight);
+light.illuminance = 50000;
 
-var demoCube = new Node('DemoCube'); demoCube.layer = Layers.Enum.DEFAULT; scene.addChild(demoCube);
+var demoCube = new Node('DemoCube');
+demoCube.layer = Layers.Enum.DEFAULT;
+scene.addChild(demoCube);
 demoCube.setPosition(new Vec3(0, 0.6, 0));
 var demoRenderer = demoCube.addComponent(MeshRenderer);
 demoRenderer.mesh = utils.createMesh(primitives.box({ width: 1.4, height: 1.4, length: 1.4 }));
@@ -41,33 +65,49 @@ app.run(scene);
 // Agent Session 绑定入口：bench/devtools 宿主注入 __benchSession；
 // 直开页面时退化为动态加载 debug 工件自建 session（V0.5.1 会话合同）。
 async function getSession(): Promise<any> {
-  for (var i = 0; i < 100; i++) {
-    if ((window as any).__benchSession) { return (window as any).__benchSession; }
-    await new Promise(function (r) { setTimeout(r, 100); });
-  }
-  var debugBase: string = (window as any).__debugBase || '/__debug';
-  var mod = await import(/* bundle-ignore */ String(debugBase + '/agent-session.js'));
-  return mod.createAgentSession({ app: app, writableScenes: [app.getScene()] });
+    for (var i = 0; i < 100; i++) {
+        if ((window as any).__benchSession) {
+            return (window as any).__benchSession;
+        }
+        await new Promise(function (r) {
+            setTimeout(r, 100);
+        });
+    }
+    var debugBase: string = (window as any).__debugBase || '/__debug';
+    var mod = await import(/* bundle-ignore */ String(debugBase + '/agent-session.js'));
+    return mod.createAgentSession({ app: app, writableScenes: [app.getScene()] });
 }
 
 var panel = document.createElement('div');
-panel.style.cssText = 'position:fixed;left:10px;top:8px;right:10px;color:#9cd;font:11px monospace;white-space:pre;background:rgba(0,0,0,.5);padding:6px 8px;border-radius:4px;max-height:45%;overflow:auto';
+panel.style.cssText =
+    'position:fixed;left:10px;top:8px;right:10px;color:#9cd;font:11px monospace;white-space:pre;background:rgba(0,0,0,.5);padding:6px 8px;border-radius:4px;max-height:45%;overflow:auto';
 document.body.appendChild(panel);
 
 (async function demo() {
-  var session = await getSession();
-  var baseline = session.getRuntimeErrors({ limit: 50 });
-  var lines = ['runtime errors baseline: ' + baseline.errors.length + ' 条'];
-  baseline.errors.slice(0, 3).forEach(function (e: any) { lines.push('  · ' + String(e.message).slice(0, 80)); });
+    var session = await getSession();
+    var baseline = session.getRuntimeErrors({ limit: 50 });
+    var lines = ['runtime errors baseline: ' + baseline.errors.length + ' 条'];
+    baseline.errors.slice(0, 3).forEach(function (e: any) {
+        lines.push('  · ' + String(e.message).slice(0, 80));
+    });
 
-  // dispatch 不抛异常：稳定错误码在返回值的 error.code 里，必须读回来而不是写死。
-  var stale: any = await session.dispatch({ requestId: 'rc-error-1', action: 'addComponent', targetId: 'no-such-node-id', params: { component: 'MeshRenderer' } });
-  var stableCode: string = stale.ok ? 'NO-ERROR' : String(stale.error.code);
-  lines.push('---');
-  lines.push('dispatch to stale target → ' + stableCode + ' (stable error code)');
+    // dispatch 不抛异常：稳定错误码在返回值的 error.code 里，必须读回来而不是写死。
+    var stale: any = await session.dispatch({
+        requestId: 'rc-error-1',
+        action: 'addComponent',
+        targetId: 'no-such-node-id',
+        params: { component: 'MeshRenderer' },
+    });
+    var stableCode: string = stale.ok ? 'NO-ERROR' : String(stale.error.code);
+    lines.push('---');
+    lines.push('dispatch to stale target → ' + stableCode + ' (stable error code)');
 
-  var after = session.getRuntimeErrors({ limit: 50 });
-  lines.push('runtime errors after: ' + after.errors.length + ' 条（主循环不受影响）');
-  panel.textContent = lines.join('\n');
-  (window as any).__rcState = { baseline: baseline.errors.length, stableCode: stableCode, staleRejected: stale.ok === false };
+    var after = session.getRuntimeErrors({ limit: 50 });
+    lines.push('runtime errors after: ' + after.errors.length + ' 条（主循环不受影响）');
+    panel.textContent = lines.join('\n');
+    (window as any).__rcState = {
+        baseline: baseline.errors.length,
+        stableCode: stableCode,
+        staleRejected: stale.ok === false,
+    };
 })();

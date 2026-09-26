@@ -43,24 +43,12 @@
     "Node.addComponent",
     "Node.on"
   ],
-  "capabilities": [
-    "particle-2d"
-  ],
+  "capabilities": ["particle-2d"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -86,10 +74,7 @@
     "visual": "深蓝底（clearColor 10,14,26）一屏：左下橙色火焰柱（gravity 型，相加混合，底部亮黄向上渐红渐隐），右中蓝色环形烟花（radius 型，绕心旋转的散点环），顶部一行状态文字 `particle plist step=30 count=4 p0=(24,-8.3333) verts=16`。点击前画面只有状态行与深蓝底，点击后两团粒子真实出图（frame-diff 可测，三引擎矩阵 frameChanged 全 PASS，PNG 54–64 KB ≫ 5000 B 地板）"
   },
   "api": {
-    "primary": [
-      "ParticleSystem2D",
-      "ParticleAsset"
-    ],
+    "primary": ["ParticleSystem2D", "ParticleAsset"],
     "supporting": [
       "ParticleSystem2D.resetSystem",
       "ParticleSystem2D._simulator",
@@ -162,43 +147,43 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L116"
+        "sourceLocation": "L143"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L122"
+        "sourceLocation": "L149"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L123"
+        "sourceLocation": "L150"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L133"
+        "sourceLocation": "L160"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L127"
+        "sourceLocation": "L154"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L446"
+        "sourceLocation": "L623"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L125"
+        "sourceLocation": "L152"
       },
       {
         "api": "Layers",
@@ -210,172 +195,164 @@
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L135"
+        "sourceLocation": "L162"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L147"
+        "sourceLocation": "L174"
       },
       {
         "api": "SpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L105"
+        "sourceLocation": "L124"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L103"
+        "sourceLocation": "L122"
       },
       {
         "api": "ImageAsset",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L102"
+        "sourceLocation": "L121"
       },
       {
         "api": "ParticleSystem2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L167"
+        "sourceLocation": "L194"
       },
       {
         "api": "ParticleSystem2D.resetSystem",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L280"
+        "sourceLocation": "L380"
       },
       {
         "api": "ParticleSystem2D._simulator",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L218"
+        "sourceLocation": "L313"
       },
       {
         "api": "ParticleSystem2D._renderSpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L400"
+        "sourceLocation": "L570"
       },
       {
         "api": "ParticleSystem2D.emitterMode",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L236"
+        "sourceLocation": "L331"
       },
       {
         "api": "ParticleSystem2D.gravity",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L238"
+        "sourceLocation": "L333"
       },
       {
         "api": "ParticleSystem2D.speed",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L178"
+        "sourceLocation": "L212"
       },
       {
         "api": "ParticleSystem2D.startSize",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L240"
+        "sourceLocation": "L335"
       },
       {
         "api": "ParticleSystem2D.endSize",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L241"
+        "sourceLocation": "L336"
       },
       {
         "api": "ParticleSystem2D.life",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L233"
+        "sourceLocation": "L328"
       },
       {
         "api": "ParticleSystem2D.emissionRate",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L178"
+        "sourceLocation": "L208"
       },
       {
         "api": "ParticleSystem2D.duration",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L178"
+        "sourceLocation": "L209"
       },
       {
         "api": "ParticleSystem2D.rotationIsDir",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L386"
+        "sourceLocation": "L551"
       },
       {
         "api": "ParticleAsset",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L81"
+        "sourceLocation": "L96"
       },
       {
         "api": "math.setRandGenerator",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L274"
+        "sourceLocation": "L374"
       },
       {
         "api": "math.random",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L434"
+        "sourceLocation": "L611"
       },
       {
         "api": "view",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L117"
+        "sourceLocation": "L144"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L117"
+        "sourceLocation": "L144"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L138"
+        "sourceLocation": "L165"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L125"
+        "sourceLocation": "L152"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L444"
+        "sourceLocation": "L621"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "Status",
-        "Rig",
-        "Flame",
-        "Ring",
-        "Probe"
-      ]
+      "nodes": ["Canvas", "UICamera", "Status", "Rig", "Flame", "Ring", "Probe"]
     }
   },
   "interaction": {
@@ -387,116 +364,78 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "main.js",
-            "line": 123,
+            "line": 150,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
-            "line": 132,
+            "line": 159,
             "text": "cameraNode.setPosition(0, 0, 1000);"
           }
         ]
       },
       "Status": {
-        "position": [
-          0,
-          162,
-          0
-        ],
+        "position": [0, 162, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 145,
+            "line": 172,
             "text": "statusNode.setPosition(0, 162, 0);"
           }
         ]
       },
       "Rig": {
-        "position": [
-          30,
-          -20,
-          0
-        ],
+        "position": [30, -20, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 157,
+            "line": 184,
             "text": "rig.setPosition(30, -20, 0);"
           }
         ]
       },
       "Flame": {
-        "position": [
-          -140,
-          -120,
-          0
-        ],
+        "position": [-140, -120, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 172,
+            "line": 199,
             "text": "makeParticle(Flame) → position [-140,-120,0]（工厂形参见 L173）"
           }
         ]
       },
       "Ring": {
-        "position": [
-          140,
-          -60,
-          0
-        ],
+        "position": [140, -60, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 173,
+            "line": 200,
             "text": "makeParticle(Ring) → position [140,-60,0]（工厂形参见 L173）"
           }
         ]
       },
       "Probe": {
-        "position": [
-          0,
-          40,
-          0
-        ],
+        "position": [0, 40, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 174,
+            "line": 201,
             "text": "makeParticle(Probe) → position [0,40,0]（工厂形参见 L173）"
           }
         ]
@@ -512,9 +451,9 @@
     "assets": "无第三方资产（粒子贴图为运行时 canvas 程序化绘制；plist 文本运行时程序化生成；particle-2d 模块为 cocos4 上游 TypeScript 端口，逐字节同源于 src/cocos/particle-2d，随 bundle 出处登记）"
   },
   "promotion": {
-    "spec": "d8a9dd22b4c3",
-    "source": "e87330f4b1d52ba0",
-    "candidate": "d1cc556759a27943",
+    "spec": "dc33c48be26c",
+    "source": "af9084853704646e",
+    "candidate": "8746fc59b6aa0408",
     "verified": 22,
     "attested": 12,
     "units": 34

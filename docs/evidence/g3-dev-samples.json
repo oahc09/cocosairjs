@@ -1,0 +1,30 @@
+{
+  "measuredAt": "2026-09-26T06:55:41.082Z",
+  "results": [
+    {
+      "id": "starter",
+      "result": "PASS",
+      "modules": []
+    },
+    {
+      "id": "hello-cube",
+      "result": "PASS",
+      "modules": [
+        {
+          "path": "/hello-cube/src/components/Rotator.js",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "id": "scene-switch-reentry",
+      "result": "PASS",
+      "modules": [
+        {
+          "path": "/scene-switch-reentry/src/components/Ticker.js",
+          "status": 200
+        }
+      ]
+    }
+  ]
+}

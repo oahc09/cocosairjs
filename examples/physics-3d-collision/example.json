@@ -40,9 +40,7 @@
     "physics.PhysicsSystem.step",
     "physics.PhysicsSystem.emitEvents"
   ],
-  "capabilities": [
-    "physics"
-  ],
+  "capabilities": ["physics"],
   "learning": {
     "goal": "V1.2 r46（owner 批复 #8(a)=D12）：默认 bundle 同时编入 physics-builtin 与 physics-cannon 后，验证交付期后端切换 `createAirApp({ physics: 'cannon' })` 的真实模拟链路——重力下落、刚体叠稳、碰撞事件对次序、真实命中法线，与 physics-3d-basic 的 builtin「不模拟」面互为对照",
     "points": [
@@ -58,11 +56,7 @@
     "visual": "深蓝灰底（clearColor 18,26,34）静态三体场景：绿色地面、橙色 BallA、蓝色 BallB 叠放于画面中央，左侧灰色圆环（SpinRing 每帧 yaw+90°/s 持续旋转）为 frameChanged 护栏提供与模拟无关的帧间变化；相机 PERSPECTIVE fov45 (0,4.2,9.8) lookAt (0,1.2,0)。"
   },
   "api": {
-    "primary": [
-      "physics.RigidBody",
-      "physics.SphereCollider",
-      "physics.PhysicsSystem.raycast"
-    ],
+    "primary": ["physics.RigidBody", "physics.SphereCollider", "physics.PhysicsSystem.raycast"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -154,13 +148,13 @@
         "api": "Node.setRotationFromEuler",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L155"
+        "sourceLocation": "L160"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L152"
+        "sourceLocation": "L157"
       },
       {
         "api": "Camera",
@@ -196,7 +190,7 @@
         "api": "isValid",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L297"
+        "sourceLocation": "L306"
       },
       {
         "api": "MeshRenderer",
@@ -232,112 +226,94 @@
         "api": "primitives.box",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L121"
+        "sourceLocation": "L124"
       },
       {
         "api": "primitives.sphere",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L131"
+        "sourceLocation": "L136"
       },
       {
         "api": "primitives.torus",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L149"
+        "sourceLocation": "L154"
       },
       {
         "api": "physics.PhysicsSystem.raycast",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L227"
+        "sourceLocation": "L236"
       },
       {
         "api": "physics.PhysicsSystem.raycastClosest",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L236"
+        "sourceLocation": "L245"
       },
       {
         "api": "physics.PhysicsSystem.raycastClosestResult",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L237"
+        "sourceLocation": "L246"
       },
       {
         "api": "physics.RigidBody",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L122"
+        "sourceLocation": "L127"
       },
       {
         "api": "physics.BoxCollider",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L124"
+        "sourceLocation": "L129"
       },
       {
         "api": "physics.SphereCollider",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L134"
+        "sourceLocation": "L139"
       },
       {
         "api": "physics.PhysicsSystem.syncSceneToPhysics",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L208"
+        "sourceLocation": "L217"
       },
       {
         "api": "physics.PhysicsSystem.step",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L209"
+        "sourceLocation": "L218"
       },
       {
         "api": "physics.PhysicsSystem.emitEvents",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L210"
+        "sourceLocation": "L219"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Ground",
-        "BallA",
-        "BallB",
-        "SpinRing",
-        "FrameHost"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Ground", "BallA", "BallB", "SpinRing", "FrameHost"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -348,9 +324,9 @@
     "assets": "无第三方资产：网格与材质全部运行时程序化生成（primitives.box/sphere/torus + utils.createMesh + new Material）。物理为 cocos4 上游 TypeScript 端口 + vendored @cocos/cannon（MIT，c) 2015 cannon.js Authors，见 THIRD_PARTY_LICENSES.md 与 licenses/LICENSE_cannon.txt）。"
   },
   "promotion": {
-    "spec": "31c2e8f2d958",
-    "source": "10386b846b99736a",
-    "candidate": "d1cc556759a27943",
+    "spec": "3ff3f3d53ed9",
+    "source": "6f5ec74fcc298655",
+    "candidate": "8746fc59b6aa0408",
     "verified": 25,
     "attested": 6,
     "units": 31

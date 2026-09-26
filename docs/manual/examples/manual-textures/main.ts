@@ -53,7 +53,7 @@ const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 程序化像素：32×32 棋盘格（8×8 个 4px 色块） ----
-function checkerboardPixels (): Uint8Array {
+function checkerboardPixels(): Uint8Array {
     const size = 32;
     const data = new Uint8Array(size * size * 4);
     for (let y = 0; y < size; y++) {
@@ -110,7 +110,7 @@ cubeMaterial.setProperty('roughness', 0.5);
 cubeRenderer.material = cubeMaterial;
 
 class Rotator extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
     }
 }

@@ -24,7 +24,7 @@
 > 13+1 个已晋级示例不留在制品存档，examples/ 为唯一正典；
 > 本文所引 staging 路径均为清退前历史布局，读法以本注为准。
 
-## 批次状态总览
+## r52 历史批次状态总览（当前收口见文末）
 
 | 批次            | 状态                                                                                                        | 关键产物                                                                                                                                                                     |
 | --------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -77,7 +77,7 @@ product-viewer 11。G4 探针双后端 28/28。GAP-L1 光照诊断页（tmp-ligh
 - **GLTFAsset getter 防御缺口**：dispose 连带销毁资产后 `asset.meshes` 抛 null 异常（使用侧 isValid 守卫已入范式文档）。
 - **loadRemote 回调式**（await Promise 形态静默 undefined）——范式文档待补一行。
 
-## 集成待办（并行线落定后执行，顺序敏感）
+## r52 历史集成待办（当前状态见文末）
 
 1. 与并行线核对 examples/ 目录与 files.json 归属；确认其覆盖战役收口（smoke-29 EXAMPLE_COUNT、
    其新目录的规格冻结）。**注意：并行线曾清理 examples/ 未跟踪目录（17:50 事件）——迁移前先确认其验证批次结束。**
@@ -116,3 +116,27 @@ product-viewer 11。G4 探针双后端 28/28。GAP-L1 光照诊断页（tmp-ligh
 - 404/编译错误等故意失败路径均被 catch，不污染 no-runtime-error；console 网络日志不在计数通道。
 - 负控与试验证据写仓库外临时路径（%TEMP%/cocosair-g1-trial、/tmp/g1-spec-*）；
   正典新增仅限三个新文件：g4-shader-probe.json、g1-light-contribution-gap.json、api-scenario-gap-matrix.md。
+
+## 2026-09-26 验收修复轮（统一验收完成）
+
+- G3：统一自有示例格式，保留第三方 assets 和根目录 src 原文；修正 ignore 中 src/ 误排除所有示例 src 的范围问题。新增格式 CI。
+- 样板：starter 迁到 src/main.ts；hello-cube 的 Rotator、scene-switch-reentry 的 Ticker 拆为独立 TypeScript 组件。开发服务器支持标准 .js 导入解析到 .ts 源。
+- 验证器：递归绑定 src/** 指纹，新增模块修改负控；场景探针超时、空断言或 ok=false 均阻断，成功证据保存完整 probe。
+- 文档：手册索引收录脚本组件与 Shader 工作流，game 与 collector-dodge 建立导航，格式化源码与全文示例同步。
+- 接口：GAP-C1 参数顺序修正、GAP-C2 公开 camera getter 路径说明、GAP-M1 RT 纹理宏和像素断言修复；详见差距矩阵修复轮。
+- 浏览器环境：本轮采用外部 Playwright 1.61.0，与已装 WebKit 2311 配套；三个引擎启动探针通过。后续逐例运行结果单独记录，不以旧版本阻断记录代替当前状态。
+
+### 最终验收
+
+- G0–G4 本轮计划交付收口，详见 `docs/interface-scenarios-repair-report.md`。上方 r52 历史表中的“试验级/待集成/延后”不再代表当前状态。
+- Chromium 140/140、DevTools 5/5、Gallery 209/209、手册 44/44；新增 13 例 Firefox/WebKit 各 13/13；Shader 双后端 28/28。
+- `format:check` / `typecheck` / `verify:file-map` / `verify:g3-tooling` / `verify:g3-dev` 全部通过；Jest 31 套全量通过，加修复后的规格套件 6/6，合计 32 套/263 用例已核验。
+- 145 例规格冻结、3470 API 引用零漂移；verified 439，stale=0，schema gap=0；分母与既有覆盖门槛未改。
+- 另修复四个棋盘游戏整图倒置和 WebKit 媒体请求证据漏报；组件导入在 dev server 与独立部署包都已实跑。
+- 本轮未达到也未宣称达到 Core 100% / Important 90% 的全量覆盖目标。
+
+历史收尾变更：并发任务曾继续修改灯光、相机与 shared，使上一轮证据过期；已在下述统一复验中重新采证。
+
+### 合并后的统一复验
+
+候选 `8746fc59b6aa0408` 全程稳定。Chromium 140/140、DevTools 5/5、Gallery 209/209、手册 44/44、Shader 双后端 28/28、Firefox/WebKit 扩展矩阵各 21/21；单次 Jest 32 套/263 用例全绿。format/typecheck/file-map/证据链均通过。verified 439、stale 0、schema gap 0，API 分母和门槛未变。详见 `docs/evidence/g3-unified-summary.json` 与验收修复报告。

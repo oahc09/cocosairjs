@@ -21,10 +21,29 @@
  */
 
 import {
-    createAirApp, Scene, Node, MeshRenderer, Camera, Component, Layers, Vec3, Color, Material,
-    utils, primitives, Texture2D, input, Input, KeyCode, isValid, assetManager, AudioSource, AudioClip,
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    Material,
+    utils,
+    primitives,
+    Texture2D,
+    input,
+    Input,
+    KeyCode,
+    isValid,
+    assetManager,
+    AudioSource,
+    AudioClip,
 } from 'cocosair';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
+import { copyCanvasRows } from '../../shared/canvas-texture.js';
 
 const probe = {
     id: 'contra-action',
@@ -65,8 +84,12 @@ function buildTerrain(): number[] {
     h[17] = 0; // 坑 1（跳跃演示）
     h[40] = 0;
     h[41] = 0; // 坑 2
-    for (let x = 22; x <= 26; x++) { h[x] = 3; } // 台地 1（Δ1 可跳上）
-    for (let x = 32; x <= 36; x++) { h[x] = 3; } // 台地 2
+    for (let x = 22; x <= 26; x++) {
+        h[x] = 3;
+    } // 台地 1（Δ1 可跳上）
+    for (let x = 32; x <= 36; x++) {
+        h[x] = 3;
+    } // 台地 2
     return h;
 }
 
@@ -147,9 +170,13 @@ class ContraGame {
             { kind: 'walker', x: 48, y: 2, home: 48, dir: 1, alive: true, cooldown: 0 },
         ];
         this.pBullets = [];
-        for (let i = 0; i < POOL_P; i++) { this.pBullets.push({ active: false, x: 0, y: 0, dx: 0 }); }
+        for (let i = 0; i < POOL_P; i++) {
+            this.pBullets.push({ active: false, x: 0, y: 0, dx: 0 });
+        }
         this.eBullets = [];
-        for (let i = 0; i < POOL_E; i++) { this.eBullets.push({ active: false, x: 0, y: 0, dx: 0 }); }
+        for (let i = 0; i < POOL_E; i++) {
+            this.eBullets.push({ active: false, x: 0, y: 0, dx: 0 });
+        }
         this.emit();
     }
 
@@ -167,8 +194,14 @@ class ContraGame {
 
         // 水平移动
         this.vx = 0;
-        if (this.cmd.left) { this.vx = -RUN_SPEED; this.facing = -1; }
-        if (this.cmd.right) { this.vx = RUN_SPEED; this.facing = 1; }
+        if (this.cmd.left) {
+            this.vx = -RUN_SPEED;
+            this.facing = -1;
+        }
+        if (this.cmd.right) {
+            this.vx = RUN_SPEED;
+            this.facing = 1;
+        }
         // 跳跃（仅地面起跳——落地/跳跃边界）
         if (this.cmd.jump && this.onGround) {
             this.vy = JUMP_V;
@@ -203,13 +236,17 @@ class ContraGame {
         }
 
         // 射击（公共入口语义：冷却 + 对象池）
-        if (this.fireCd > 0) { this.fireCd--; }
+        if (this.fireCd > 0) {
+            this.fireCd--;
+        }
         if (this.cmd.fire && this.fireCd === 0) {
             this.fire();
         }
 
         // 动画状态机
-        if (this.invuln > 0) { this.invuln--; }
+        if (this.invuln > 0) {
+            this.invuln--;
+        }
         if (!this.onGround) {
             this.state = 'air';
         } else if (this.vx !== 0) {
@@ -343,7 +380,11 @@ class ContraGame {
         }
     }
 
-    runUntil(pred: () => boolean, maxSteps: number, cmd?: Partial<{ left: boolean; right: boolean; jump: boolean; fire: boolean }>): boolean {
+    runUntil(
+        pred: () => boolean,
+        maxSteps: number,
+        cmd?: Partial<{ left: boolean; right: boolean; jump: boolean; fire: boolean }>,
+    ): boolean {
         if (cmd) {
             Object.assign(this.cmd, cmd);
         }
@@ -377,7 +418,7 @@ class ContraGame {
 
 const PX = 32;
 const VIEW_W = VIEW_CELLS * PX; // 512
-const VIEW_H = 9 * PX;           // 288
+const VIEW_H = 9 * PX; // 288
 
 class ViewRenderer {
     canvas: HTMLCanvasElement;
@@ -406,7 +447,7 @@ class ViewRenderer {
         ctx.fillRect(0, 0, VIEW_W, VIEW_H);
         ctx.fillStyle = '#1b2a40';
         for (let i = 0; i < 24; i++) {
-            const sx = ((i * 97) % VIEW_W + VIEW_W - (game.scrollX * PX * 0.3) % VIEW_W) % VIEW_W;
+            const sx = (((i * 97) % VIEW_W) + VIEW_W - ((game.scrollX * PX * 0.3) % VIEW_W)) % VIEW_W;
             ctx.fillRect(sx, (i * 53) % (VIEW_H * 0.5), 2, 2);
         }
         const wx = (worldX: number): number => (worldX - game.scrollX) * PX;
@@ -469,10 +510,14 @@ class ViewRenderer {
         }
         ctx.fillStyle = '#9cd';
         ctx.font = '12px monospace';
-        ctx.fillText(`${game.gameState.toUpperCase()} kills:${game.kills} x:${game.px.toFixed(1)}/${game.flagX}`, 70, 18);
+        ctx.fillText(
+            `${game.gameState.toUpperCase()} kills:${game.kills} x:${game.px.toFixed(1)}/${game.flagX}`,
+            70,
+            18,
+        );
         if (this.texture) {
             const img = ctx.getImageData(0, 0, VIEW_W, VIEW_H);
-            this.pixels.set(img.data);
+            copyCanvasRows(img, this.pixels);
             this.texture.uploadData(this.pixels);
         }
     }
@@ -514,7 +559,9 @@ function buildBoard(): void {
     boardNode.setRotationFromEuler(90, 0, 0);
     scene.addChild(boardNode);
     const renderer = boardNode.addComponent(MeshRenderer);
-    renderer.mesh = utils.createMesh(primitives.plane({ width: 6.8, length: 3.83, widthSegments: 1, lengthSegments: 1 }));
+    renderer.mesh = utils.createMesh(
+        primitives.plane({ width: 6.8, length: 3.83, widthSegments: 1, lengthSegments: 1 }),
+    );
     renderer.setSharedMaterial(boardMaterial, 0);
 }
 
@@ -562,7 +609,9 @@ async function main(): Promise<void> {
 
     game = new ContraGame();
     view = new ViewRenderer();
-    game.onChange = () => { /* 渲染由 ViewDriver 每帧驱动；逻辑变更仅触发面板 */ };
+    game.onChange = () => {
+        /* 渲染由 ViewDriver 每帧驱动；逻辑变更仅触发面板 */
+    };
 
     scene = buildScene('contra-action');
     buildBoard();
@@ -573,7 +622,10 @@ async function main(): Promise<void> {
     const audioNode = new Node('Audio');
     audioNode.setPosition(new Vec3(0, 0, 0));
     scene.addChild(audioNode);
+    audioNode.active = false; // 防止 onEnable 在配置前排入自动播放。
     audioSrc = audioNode.addComponent(AudioSource);
+    audioSrc.playOnAwake = false;
+    audioNode.active = true;
 
     app.run(scene);
     await sleep(350);
@@ -582,14 +634,22 @@ async function main(): Promise<void> {
     try {
         shotClip = await new Promise<AudioClip>((resolve, reject) => {
             (assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {
-                if (err) { reject(err as Error); } else { resolve(clip); }
+                if (err) {
+                    reject(err as Error);
+                } else {
+                    resolve(clip);
+                }
             });
         });
         if (audioSrc && shotClip) {
             audioSrc.clip = shotClip;
             audioSrc.playOnAwake = false;
         }
-        pcheck('audio-clip-loaded', !!shotClip && shotClip.getDuration() > 0, 'duration=' + (shotClip ? shotClip.getDuration() : -1));
+        pcheck(
+            'audio-clip-loaded',
+            !!shotClip && shotClip.getDuration() > 0,
+            'duration=' + (shotClip ? shotClip.getDuration() : -1),
+        );
     } catch (e) {
         pcheck('audio-clip-loaded', false, 'loadRemote 失败: ' + String((e as Error).message || e));
     }
@@ -600,8 +660,18 @@ async function main(): Promise<void> {
     // C1 奔跑 + 相机跟随/边界
     game.runUntil(() => game.px >= 8, 600, { right: true });
     const scrollErr = Math.abs(game.scrollX - Math.max(0, Math.min(LEVEL_W - VIEW_CELLS, game.px - VIEW_CELLS / 2)));
-    pcheck('c1-camera-follows', game.px >= 8 && scrollErr < 0.01 && game.state === 'run',
-        'px=' + game.px.toFixed(2) + ' scrollX=' + game.scrollX.toFixed(2) + ' err=' + scrollErr.toFixed(3) + ' state=' + game.state);
+    pcheck(
+        'c1-camera-follows',
+        game.px >= 8 && scrollErr < 0.01 && game.state === 'run',
+        'px=' +
+            game.px.toFixed(2) +
+            ' scrollX=' +
+            game.scrollX.toFixed(2) +
+            ' err=' +
+            scrollErr.toFixed(3) +
+            ' state=' +
+            game.state,
+    );
     pcheck('c1-camera-bounds', game.scrollX >= 0 && game.scrollX <= LEVEL_W - VIEW_CELLS, 'scrollX=' + game.scrollX);
 
     // C3 射击巡逻兵（x=12 的 walker 在路径上）——先于跳跃，按关卡顺序
@@ -611,11 +681,17 @@ async function main(): Promise<void> {
     const spentBefore = game.bulletsSpent;
     game.runSteps(2, { fire: true });
     game.clearCmd();
-    pcheck('c3-shot-from-pool', game.shotsFired === shotsBefore + 1 && game.activeP() === 1,
-        'shots=' + game.shotsFired + ' activeP=' + game.activeP());
+    pcheck(
+        'c3-shot-from-pool',
+        game.shotsFired === shotsBefore + 1 && game.activeP() === 1,
+        'shots=' + game.shotsFired + ' activeP=' + game.activeP(),
+    );
     game.runUntil(() => !game.enemies[0].alive, 180, {});
-    pcheck('c3-kill-and-recycle', game.kills === 1 && !game.enemies[0].alive && game.activeP() === 0 && game.bulletsSpent === spentBefore + 1,
-        'kills=' + game.kills + ' activeP=' + game.activeP() + ' spent=' + game.bulletsSpent);
+    pcheck(
+        'c3-kill-and-recycle',
+        game.kills === 1 && !game.enemies[0].alive && game.activeP() === 0 && game.bulletsSpent === spentBefore + 1,
+        'kills=' + game.kills + ' activeP=' + game.activeP() + ' spent=' + game.bulletsSpent,
+    );
 
     // C2 跳跃坑（16-17）：跑至 14 起跳 → apex → 落地边界
     game.runUntil(() => game.px >= 14, 600, { right: true });
@@ -624,9 +700,20 @@ async function main(): Promise<void> {
     game.cmd.jump = false;
     game.runUntil(() => game.onGround && game.px > 17.5, 240, { right: true });
     game.clearCmd();
-    pcheck('c2-jump-apex-and-landing',
+    pcheck(
+        'c2-jump-apex-and-landing',
         game.apexY > py0 + 0.8 && game.onGround && game.py === game.groundAt(game.px) && game.px > 17.5,
-        'apex=' + game.apexY.toFixed(2) + ' py0=' + py0.toFixed(2) + ' landed y=' + game.py + ' ground=' + game.groundAt(game.px) + ' x=' + game.px.toFixed(2));
+        'apex=' +
+            game.apexY.toFixed(2) +
+            ' py0=' +
+            py0.toFixed(2) +
+            ' landed y=' +
+            game.py +
+            ' ground=' +
+            game.groundAt(game.px) +
+            ' x=' +
+            game.px.toFixed(2),
+    );
 
     // C4 受伤 + 无敌帧：径直走向炮塔（x=44）吃弹 → 无敌期接触敌人不掉血 → 过期后再掉
     game.hp = 3;
@@ -634,8 +721,11 @@ async function main(): Promise<void> {
     game.runUntil(() => game.hitsTaken >= 1, 3600, { right: true }); // 途中接触敌人/吃弹都算
     game.clearCmd();
     const hpAfterFirst = game.hp;
-    pcheck('c4-first-hit-damages', hpAfterFirst === 2 && game.invuln > 0,
-        'hp=' + hpAfterFirst + ' invuln=' + game.invuln + ' hitsTaken=' + game.hitsTaken);
+    pcheck(
+        'c4-first-hit-damages',
+        hpAfterFirst === 2 && game.invuln > 0,
+        'hp=' + hpAfterFirst + ' invuln=' + game.invuln + ' hitsTaken=' + game.hitsTaken,
+    );
     // 无敌期内强制接触（把玩家放到存活 walker 身上）——hp 不得再掉
     const liveWalker = game.enemies.find((e) => e.alive && e.kind === 'walker');
     if (liveWalker) {
@@ -643,8 +733,11 @@ async function main(): Promise<void> {
         game.py = liveWalker.y;
         const savesBefore = game.invulnSaves;
         game.runSteps(30, {});
-        pcheck('c4-invuln-immunity', game.hp === hpAfterFirst && game.invulnSaves > savesBefore,
-            'hp=' + game.hp + ' saves=' + game.invulnSaves);
+        pcheck(
+            'c4-invuln-immunity',
+            game.hp === hpAfterFirst && game.invulnSaves > savesBefore,
+            'hp=' + game.hp + ' saves=' + game.invulnSaves,
+        );
         // 无敌过期后接触 → 再掉血
         game.invuln = 0;
         game.px = liveWalker.x;
@@ -662,8 +755,11 @@ async function main(): Promise<void> {
     game.px = game.flagX - 2;
     game.py = game.groundAt(game.flagX - 2);
     game.runUntil(() => game.gameState === 'won', 300, { right: true });
-    pcheck('c5-reach-goal-won', game.gameState === 'won' && game.px >= game.flagX,
-        'state=' + game.gameState + ' x=' + game.px.toFixed(2));
+    pcheck(
+        'c5-reach-goal-won',
+        game.gameState === 'won' && game.px >= game.flagX,
+        'state=' + game.gameState + ' x=' + game.px.toFixed(2),
+    );
 
     // 重开 → 死亡演示（贴身 walker 持续接触至 hp=0）
     game.reset();
@@ -675,15 +771,24 @@ async function main(): Promise<void> {
         game.step();
         guard++;
     }
-    pcheck('c5-death-and-over', game.gameState === 'over' && game.hp === 0 && game.deaths === 1,
-        'state=' + game.gameState + ' hp=' + game.hp + ' deaths=' + game.deaths + ' steps=' + guard);
+    pcheck(
+        'c5-death-and-over',
+        game.gameState === 'over' && game.hp === 0 && game.deaths === 1,
+        'state=' + game.gameState + ' hp=' + game.hp + ' deaths=' + game.deaths + ' steps=' + guard,
+    );
 
     // C6 场景复入（app.run 重建同构场景 → 世代全新；旧渲染资产先行显式释放，不留孤儿）
     const genBefore = generation;
     game.reset();
     const oldScene = scene;
-    if (view.texture) { view.texture.destroy(); view.texture = null; }
-    if (boardMaterial) { boardMaterial.destroy(); boardMaterial = null; }
+    if (view.texture) {
+        view.texture.destroy();
+        view.texture = null;
+    }
+    if (boardMaterial) {
+        boardMaterial.destroy();
+        boardMaterial = null;
+    }
     scene = buildScene('contra-action');
     buildBoard();
     const driverNode2 = new Node('Driver');
@@ -693,31 +798,46 @@ async function main(): Promise<void> {
     const audioNode2 = new Node('Audio');
     audioNode2.setPosition(new Vec3(0, 0, 0));
     scene.addChild(audioNode2);
+    audioNode2.active = false; // 防止 onEnable 在配置前排入自动播放。
     audioSrc = audioNode2.addComponent(AudioSource);
+    audioSrc.playOnAwake = false;
+    audioNode2.active = true;
     if (shotClip) {
         audioSrc.clip = shotClip;
         audioSrc.playOnAwake = false;
     }
     app.run(scene);
     await sleep(300);
-    pcheck('c6-scene-reentry-fresh', generation === genBefore + 1 && !isValid(oldScene) && isValid(scene) && game.steps >= 0,
-        'gen ' + genBefore + '→' + generation + ' oldSceneValid=' + isValid(oldScene));
+    pcheck(
+        'c6-scene-reentry-fresh',
+        generation === genBefore + 1 && !isValid(oldScene) && isValid(scene) && game.steps >= 0,
+        'gen ' + genBefore + '→' + generation + ' oldSceneValid=' + isValid(oldScene),
+    );
     game.reset();
     driver.realtime = true;
 
     // ---- 交互 ----
     const onKeyDown = (event: any): void => {
         const code = event.keyCode;
-        if (code === KeyCode.ARROW_LEFT) { game.cmd.left = true; }
-        else if (code === KeyCode.ARROW_RIGHT) { game.cmd.right = true; }
-        else if (code === KeyCode.ARROW_UP || code === KeyCode.SPACE) { game.cmd.jump = true; }
-        else if (code === KeyCode.KEY_Z) { onFire(); }
+        if (code === KeyCode.ARROW_LEFT) {
+            game.cmd.left = true;
+        } else if (code === KeyCode.ARROW_RIGHT) {
+            game.cmd.right = true;
+        } else if (code === KeyCode.ARROW_UP || code === KeyCode.SPACE) {
+            game.cmd.jump = true;
+        } else if (code === KeyCode.KEY_Z) {
+            onFire();
+        }
     };
     const onKeyUp = (event: any): void => {
         const code = event.keyCode;
-        if (code === KeyCode.ARROW_LEFT) { game.cmd.left = false; }
-        else if (code === KeyCode.ARROW_RIGHT) { game.cmd.right = false; }
-        else if (code === KeyCode.ARROW_UP || code === KeyCode.SPACE) { game.cmd.jump = false; }
+        if (code === KeyCode.ARROW_LEFT) {
+            game.cmd.left = false;
+        } else if (code === KeyCode.ARROW_RIGHT) {
+            game.cmd.right = false;
+        } else if (code === KeyCode.ARROW_UP || code === KeyCode.SPACE) {
+            game.cmd.jump = false;
+        }
     };
     function onFire(): void {
         const fired = game.fire();
@@ -725,16 +845,23 @@ async function main(): Promise<void> {
             try {
                 audioSrc.stop();
                 audioSrc.play(); // 手势回调内播放（audio-basic 实证口径）
-            } catch (e) { /* 如实忽略：浏览器策略拒绝入 state */ }
+            } catch (e) {
+                /* 如实忽略：浏览器策略拒绝入 state */
+            }
             probe.state.audioState = String((audioSrc as any).state);
         }
         if (!probe.clickPhaseDone) {
             probe.clickPhaseDone = true;
-            pcheck('click-fires-through-public-entry', fired || game.fireCd > 0,
-                'fired=' + fired + ' cooldown=' + game.fireCd + ' shots=' + game.shotsFired);
+            pcheck(
+                'click-fires-through-public-entry',
+                fired || game.fireCd > 0,
+                'fired=' + fired + ' cooldown=' + game.fireCd + ' shots=' + game.shotsFired,
+            );
         }
     }
-    const onClick = (): void => { onFire(); };
+    const onClick = (): void => {
+        onFire();
+    };
     input.on(Input.EventType.KEY_DOWN, onKeyDown);
     input.on(Input.EventType.KEY_UP, onKeyUp);
     input.on(Input.EventType.TOUCH_START, onClick);
@@ -744,10 +871,18 @@ async function main(): Promise<void> {
         label: 'contra-action',
         hold: () => {
             const held: { name: string; ref: object }[] = [];
-            if (view.texture) { held.push({ name: 'Texture2D(view)', ref: view.texture }); }
-            if (boardMaterial) { held.push({ name: 'Material(board)', ref: boardMaterial }); }
-            if (boardNode) { held.push({ name: 'BoardNode', ref: boardNode }); }
-            if (shotClip) { held.push({ name: 'AudioClip(tone)', ref: shotClip }); }
+            if (view.texture) {
+                held.push({ name: 'Texture2D(view)', ref: view.texture });
+            }
+            if (boardMaterial) {
+                held.push({ name: 'Material(board)', ref: boardMaterial });
+            }
+            if (boardNode) {
+                held.push({ name: 'BoardNode', ref: boardNode });
+            }
+            if (shotClip) {
+                held.push({ name: 'AudioClip(tone)', ref: shotClip });
+            }
             return held;
         },
         release: () => {
@@ -756,11 +891,26 @@ async function main(): Promise<void> {
             input.off(Input.EventType.TOUCH_START, onClick);
             driver.realtime = false;
             game.gameState = 'over';
-            if (audioSrc) { audioSrc.stop(); audioSrc.clip = null; }
-            if (shotClip) { assetManager.releaseAsset(shotClip); shotClip = null; } // audio-basic 实证口径
-            if (boardNode) { boardNode.destroy(); boardNode = null; }
-            if (boardMaterial) { boardMaterial.destroy(); boardMaterial = null; }
-            if (view.texture) { view.texture.destroy(); view.texture = null; }
+            if (audioSrc) {
+                audioSrc.stop();
+                audioSrc.clip = null;
+            }
+            if (shotClip) {
+                assetManager.releaseAsset(shotClip);
+                shotClip = null;
+            } // audio-basic 实证口径
+            if (boardNode) {
+                boardNode.destroy();
+                boardNode = null;
+            }
+            if (boardMaterial) {
+                boardMaterial.destroy();
+                boardMaterial = null;
+            }
+            if (view.texture) {
+                view.texture.destroy();
+                view.texture = null;
+            }
         },
         reacquire: async () => {
             await sleep(300);
@@ -768,11 +918,20 @@ async function main(): Promise<void> {
             try {
                 shotClip = await new Promise<AudioClip>((resolve, reject) => {
                     (assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {
-                        if (err) { reject(err as Error); } else { resolve(clip); }
+                        if (err) {
+                            reject(err as Error);
+                        } else {
+                            resolve(clip);
+                        }
                     });
                 });
-                if (audioSrc && shotClip) { audioSrc.clip = shotClip; audioSrc.playOnAwake = false; }
-            } catch (e) { /* 重载失败如实走泄漏核对 */ }
+                if (audioSrc && shotClip) {
+                    audioSrc.clip = shotClip;
+                    audioSrc.playOnAwake = false;
+                }
+            } catch (e) {
+                /* 重载失败如实走泄漏核对 */
+            }
             game.reset();
             driver.realtime = true;
             input.on(Input.EventType.KEY_DOWN, onKeyDown);
@@ -783,7 +942,9 @@ async function main(): Promise<void> {
                 { name: 'Material(board)', ref: boardMaterial as object },
                 { name: 'BoardNode', ref: boardNode as object },
             ];
-            if (shotClip) { held.push({ name: 'AudioClip(tone)', ref: shotClip }); }
+            if (shotClip) {
+                held.push({ name: 'AudioClip(tone)', ref: shotClip });
+            }
             return held;
         },
     });

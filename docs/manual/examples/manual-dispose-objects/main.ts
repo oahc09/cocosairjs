@@ -61,7 +61,7 @@ const cubeMaterial = new Material();
 cubeMaterial.initialize({ effectName: 'builtin-standard' });
 cubeMaterial.setProperty('mainColor', new Color(95, 205, 120, 255));
 let spawned = 0;
-function makeCube (): Node {
+function makeCube(): Node {
     const node = new Node(`Cube-${spawned++}`);
     node.layer = Layers.Enum.DEFAULT;
     scene.addChild(node);
@@ -73,7 +73,7 @@ function makeCube (): Node {
 }
 
 class Spinner extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
     }
 }
@@ -96,7 +96,7 @@ let releaseNote = 'ok';
 try {
     assetManager.releaseAsset(throwaway);
 } catch (e) {
-    releaseNote = `throw: ${String(e && e.message || e).slice(0, 60)}`;
+    releaseNote = `throw: ${String((e && e.message) || e).slice(0, 60)}`;
 }
 
 // ---- 回收池 + 生长/排空循环 ----
@@ -110,12 +110,12 @@ let phase = 'grow';
 class Cycler extends Component {
     private _t = 0;
     private _tick = 0;
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._tick = 0;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         if (this._t < 1.2) return;
         this._t = 0;
@@ -147,7 +147,7 @@ class Cycler extends Component {
 
 // ---- 覆盖层 ----
 const info = document.querySelector('#info') as HTMLElement;
-function showDispose (): void {
+function showDispose(): void {
     info.textContent = [
         'dispose: NodePool put/get + node.destroy() + assetManager.releaseAsset',
         `alive: ${alive.length}  pooled: ${pool.size()}  spawned: ${spawned}  destroyed: ${destroyedTotal}  phase: ${phase}`,

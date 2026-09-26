@@ -19,13 +19,8 @@
     "visual": "左侧绿色基准立方体，右侧蓝色被 X 拉伸一倍的父块，其上浮动橙色小块；父块缓慢旋转带动子块"
   },
   "api": {
-    "primary": [
-      "Node.setScale"
-    ],
-    "supporting": [
-      "Node.addChild",
-      "primitives.box"
-    ],
+    "primary": ["Node.setScale"],
+    "supporting": ["Node.addChild", "primitives.box"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -47,160 +42,141 @@
       "Node.setScale",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用加大尺寸的 primitives 参数冒充节点缩放"
-    ],
+    "forbiddenShortcut": ["用加大尺寸的 primitives 参数冒充节点缩放"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L16"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L40"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L39"
+        "sourceLocation": "L65"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L27"
+        "sourceLocation": "L44"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L57"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L57"
+        "sourceLocation": "L87"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L31"
+        "sourceLocation": "L51"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L42"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L50"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L19"
+        "sourceLocation": "L34"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L20"
+        "sourceLocation": "L35"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L21"
+        "sourceLocation": "L36"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L40"
+        "sourceLocation": "L66"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L40"
+        "sourceLocation": "L66"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L50"
+        "sourceLocation": "L80"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L26"
+        "sourceLocation": "L42"
       },
       {
         "api": "Node.setScale",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L45"
+        "sourceLocation": "L73"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L26"
+        "sourceLocation": "L43"
       }
     ]
   },
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Base",
-        "ScaledParent",
-        "ScaledChild"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Base", "ScaledParent", "ScaledChild"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -215,93 +191,65 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 33,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 55,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "Base": {
-        "position": [
-          -2,
-          0.5,
-          0
-        ],
+        "position": [-2, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 38,
+            "line": 64,
             "text": "base.setPosition(new Vec3(-2, 0.5, 0));"
           }
         ]
       },
       "ScaledParent": {
-        "position": [
-          2,
-          0.5,
-          0
-        ],
+        "position": [2, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 44,
+            "line": 72,
             "text": "scaledParent.setPosition(new Vec3(2, 0.5, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 59,
+            "line": 89,
             "text": "0,this.node.eulerAngles.y + dt * 25,0"
           },
           {
             "source": "src/main.ts",
-            "line": 45,
+            "line": 73,
             "text": "scaledParent.setScale(new Vec3(2, 1, 1));"
           }
         ],
         "rotationEuler": {
           "vary": true
         },
-        "scale": [
-          2,
-          1,
-          1
-        ]
+        "scale": [2, 1, 1]
       },
       "ScaledChild": {
-        "position": [
-          0,
-          1,
-          0
-        ],
+        "position": [0, 1, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 51,
+            "line": 81,
             "text": "child.setPosition(new Vec3(0, 1, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 52,
+            "line": 82,
             "text": "child.setScale(new Vec3(0.5, 0.5, 0.5));"
           }
         ],
-        "scale": [
-          0.5,
-          0.5,
-          0.5
-        ]
+        "scale": [0.5, 0.5, 0.5]
       }
     },
     "material-property": {
@@ -309,17 +257,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              95,
-              205,
-              120,
-              255
-            ],
+            "value": [95, 205, 120, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 41,
+              "line": 67,
               "text": "new Color(95, 205, 120, 255)"
             }
           }
@@ -329,17 +272,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              65,
-              155,
-              235,
-              255
-            ],
+            "value": [65, 155, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 48,
+              "line": 76,
               "text": "new Color(65, 155, 235, 255)"
             }
           }
@@ -349,17 +287,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              125,
-              65,
-              255
-            ],
+            "value": [235, 125, 65, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 55,
+              "line": 85,
               "text": "new Color(235, 125, 65, 255)"
             }
           }
@@ -371,14 +304,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, scene);）",
-        "line": "L63"
+        "line": "L93"
       }
     }
   },
   "promotion": {
-    "spec": "9c52ef0d0bc2",
-    "source": "c3ab3e755cd3f539",
-    "candidate": "d1cc556759a27943",
+    "spec": "adcedee647c1",
+    "source": "58438f35cfba2029",
+    "candidate": "8746fc59b6aa0408",
     "verified": 19,
     "attested": 0,
     "units": 19

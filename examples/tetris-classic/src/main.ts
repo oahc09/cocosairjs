@@ -7,7 +7,7 @@
  * 架构纪律（G3 范式）：
  * - TetrisGame = 纯逻辑（网格/袋/判定/计分），零引擎依赖 → 可单测、可脚本化；
  * - BoardRenderer = 渲染分离：网格 → 2D canvas → Texture2D.uploadData（manual-dynamic-texture
- *   实证路径；uploadData 不做 Y 翻转 → 绘制时按行倒序）；
+ *   实证路径；逻辑格转 Canvas 坐标，上传时另做纹理行翻转）；
  * - main.ts 只负责启动与组装 + 确定性自动演示 + 交互订阅。
  *
  * 确定性自动演示（无需输入即可完整到达胜/负并重开）：
@@ -20,10 +20,28 @@
  */
 
 import {
-    createAirApp, Scene, Node, MeshRenderer, Camera, Component, Layers, Vec3, Color, Material,
-    utils, primitives, Texture2D, input, Input, KeyCode, isValid, director, Director,
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    Material,
+    utils,
+    primitives,
+    Texture2D,
+    input,
+    Input,
+    KeyCode,
+    isValid,
+    director,
+    Director,
 } from 'cocosair';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
+import { copyCanvasRows } from '../../shared/canvas-texture.js';
 
 const probe = {
     id: 'tetris-classic',
@@ -56,46 +74,186 @@ type PieceId = 'I' | 'O' | 'T' | 'S' | 'Z' | 'J' | 'L';
 /** 方块形状：每种 4 旋转态的占据格 [dx,dy]（dy 向上为正，生成基点为左下）。 */
 const SHAPES: Record<PieceId, number[][][]> = {
     I: [
-        [[0, 0], [1, 0], [2, 0], [3, 0]],
-        [[0, 0], [0, 1], [0, 2], [0, 3]],
-        [[0, 0], [1, 0], [2, 0], [3, 0]],
-        [[0, 0], [0, 1], [0, 2], [0, 3]],
+        [
+            [0, 0],
+            [1, 0],
+            [2, 0],
+            [3, 0],
+        ],
+        [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3],
+        ],
+        [
+            [0, 0],
+            [1, 0],
+            [2, 0],
+            [3, 0],
+        ],
+        [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [0, 3],
+        ],
     ],
     O: [
-        [[0, 0], [1, 0], [0, 1], [1, 1]],
-        [[0, 0], [1, 0], [0, 1], [1, 1]],
-        [[0, 0], [1, 0], [0, 1], [1, 1]],
-        [[0, 0], [1, 0], [0, 1], [1, 1]],
+        [
+            [0, 0],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+        ],
+        [
+            [0, 0],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+        ],
+        [
+            [0, 0],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+        ],
+        [
+            [0, 0],
+            [1, 0],
+            [0, 1],
+            [1, 1],
+        ],
     ],
     T: [
-        [[0, 0], [1, 0], [2, 0], [1, 1]],
-        [[1, 0], [1, 1], [1, 2], [0, 1]],
-        [[1, 0], [0, 1], [1, 1], [2, 1]],
-        [[0, 0], [0, 1], [0, 2], [1, 1]],
+        [
+            [0, 0],
+            [1, 0],
+            [2, 0],
+            [1, 1],
+        ],
+        [
+            [1, 0],
+            [1, 1],
+            [1, 2],
+            [0, 1],
+        ],
+        [
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [2, 1],
+        ],
+        [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [1, 1],
+        ],
     ],
     S: [
-        [[1, 0], [2, 0], [0, 1], [1, 1]],
-        [[0, 0], [0, 1], [1, 1], [1, 2]],
-        [[1, 0], [2, 0], [0, 1], [1, 1]],
-        [[0, 0], [0, 1], [1, 1], [1, 2]],
+        [
+            [1, 0],
+            [2, 0],
+            [0, 1],
+            [1, 1],
+        ],
+        [
+            [0, 0],
+            [0, 1],
+            [1, 1],
+            [1, 2],
+        ],
+        [
+            [1, 0],
+            [2, 0],
+            [0, 1],
+            [1, 1],
+        ],
+        [
+            [0, 0],
+            [0, 1],
+            [1, 1],
+            [1, 2],
+        ],
     ],
     Z: [
-        [[0, 0], [1, 0], [1, 1], [2, 1]],
-        [[1, 0], [0, 1], [1, 1], [0, 2]],
-        [[0, 0], [1, 0], [1, 1], [2, 1]],
-        [[1, 0], [0, 1], [1, 1], [0, 2]],
+        [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [2, 1],
+        ],
+        [
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [0, 2],
+        ],
+        [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [2, 1],
+        ],
+        [
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [0, 2],
+        ],
     ],
     J: [
-        [[0, 0], [0, 1], [1, 0], [2, 0]],
-        [[0, 0], [1, 0], [1, 1], [1, 2]],
-        [[0, 2], [0, 1], [1, 1], [2, 1]],
-        [[0, 0], [0, 1], [0, 2], [1, 2]],
+        [
+            [0, 0],
+            [0, 1],
+            [1, 0],
+            [2, 0],
+        ],
+        [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [1, 2],
+        ],
+        [
+            [0, 2],
+            [0, 1],
+            [1, 1],
+            [2, 1],
+        ],
+        [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [1, 2],
+        ],
     ],
     L: [
-        [[0, 0], [1, 0], [2, 0], [2, 1]],
-        [[0, 0], [1, 0], [1, 1], [1, 2]],
-        [[0, 0], [0, 1], [0, 2], [1, 0]],
-        [[1, 0], [1, 1], [1, 2], [2, 2]],
+        [
+            [0, 0],
+            [1, 0],
+            [2, 0],
+            [2, 1],
+        ],
+        [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [1, 2],
+        ],
+        [
+            [0, 0],
+            [0, 1],
+            [0, 2],
+            [1, 0],
+        ],
+        [
+            [1, 0],
+            [1, 1],
+            [1, 2],
+            [2, 2],
+        ],
     ],
 };
 
@@ -176,7 +334,9 @@ class TetrisGame {
     }
 
     canPlace(id: PieceId, rot: number, x: number, y: number): boolean {
-        return this.cellsOf(id, rot, x, y).every(([cx, cy]) => cx >= 0 && cx < COLS && cy >= 0 && cy < ROWS && this.grid[cy][cx] === 0);
+        return this.cellsOf(id, rot, x, y).every(
+            ([cx, cy]) => cx >= 0 && cx < COLS && cy >= 0 && cy < ROWS && this.grid[cy][cx] === 0,
+        );
     }
 
     spawn(): boolean {
@@ -397,7 +557,7 @@ class BoardRenderer {
         }
         if (this.texture) {
             const img = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-            this.pixels.set(img.data);
+            copyCanvasRows(img, this.pixels);
             this.texture.uploadData(this.pixels);
         }
     }
@@ -435,7 +595,9 @@ function buildBoard(): void {
     boardNode.setRotationFromEuler(90, 0, 0);
     scene.addChild(boardNode);
     const renderer = boardNode.addComponent(MeshRenderer);
-    renderer.mesh = utils.createMesh(primitives.plane({ width: 2.6, length: 5.2, widthSegments: 1, lengthSegments: 1 }));
+    renderer.mesh = utils.createMesh(
+        primitives.plane({ width: 2.6, length: 5.2, widthSegments: 1, lengthSegments: 1 }),
+    );
     renderer.setSharedMaterial(boardMaterial, 0);
 }
 
@@ -491,16 +653,27 @@ async function demoWin(): Promise<void> {
     const rejects0 = game.wallRejects;
     game.current!.x = 0;
     game.move(-1);
-    pcheck('boundary-reject', game.wallRejects === rejects0 + 1 && game.current!.x === 0, 'wallRejects=' + game.wallRejects);
+    pcheck(
+        'boundary-reject',
+        game.wallRejects === rejects0 + 1 && game.current!.x === 0,
+        'wallRejects=' + game.wallRejects,
+    );
     for (let i = 0; i < 5; i++) {
         game.current!.x = WIN_COLS[i];
         game.hardDrop();
         await sleep(30);
     }
-    pcheck('demo-win-double-clear', game.state === 'won' && game.lines === 2 && game.score >= 300,
-        `state=${game.state} lines=${game.lines} score=${game.score}`);
+    pcheck(
+        'demo-win-double-clear',
+        game.state === 'won' && game.lines === 2 && game.score >= 300,
+        `state=${game.state} lines=${game.lines} score=${game.score}`,
+    );
     // 消行后网格底部两行应为空
-    pcheck('grid-rows-cleared', game.grid[0].every((v) => v === 0) && game.grid[1].every((v) => v === 0), 'rows 0-1 not empty');
+    pcheck(
+        'grid-rows-cleared',
+        game.grid[0].every((v) => v === 0) && game.grid[1].every((v) => v === 0),
+        'rows 0-1 not empty',
+    );
 }
 
 async function demoLose(): Promise<void> {
@@ -563,15 +736,19 @@ async function main(): Promise<void> {
     const canvasEl = document.getElementById('GameCanvas') as HTMLCanvasElement;
     const bottomPx = await sampleAt(canvasEl.width * 0.52, canvasEl.height * 0.82); // x 偏轴心少许：避开列 4/5 单元边界
     const topPx = await sampleAt(canvasEl.width * 0.52, canvasEl.height * 0.18);
-    const isBg = (p: number[]): boolean => Math.abs(p[0] - 20) < 14 && Math.abs(p[1] - 24) < 14 && Math.abs(p[2] - 33) < 16;
+    const isBg = (p: number[]): boolean =>
+        Math.abs(p[0] - 20) < 14 && Math.abs(p[1] - 24) < 14 && Math.abs(p[2] - 33) < 16;
     pcheck('render-orientation-bottom-stack', !isBg(bottomPx), `bottom=${JSON.stringify(bottomPx)}（应有色块）`);
     // 顶部：12 个 O 堆到顶（over），顶部也应有块——改为断言中部与底部一致性由 bottom 承担；
     // 顶部在 WIN 演示（底部消空）时必须是背景：
     await demoWin();
     await sleep(250);
     const bottomAfterWin = await sampleAt(canvasEl.width * 0.52, canvasEl.height * 0.82);
-    pcheck('render-orientation-cleared-bottom', isBg(bottomAfterWin) || game.grid[0].some((v) => v !== 0),
-        `after-win bottom=${JSON.stringify(bottomAfterWin)}`);
+    pcheck(
+        'render-orientation-cleared-bottom',
+        isBg(bottomAfterWin) || game.grid[0].some((v) => v !== 0),
+        `after-win bottom=${JSON.stringify(bottomAfterWin)}`,
+    );
     void topPx;
 
     // ---- 暂停/恢复 ----
@@ -606,8 +783,11 @@ async function main(): Promise<void> {
         if (!probe.clickPhaseDone) {
             probe.clickPhaseDone = true;
             const after = game.current ? `${game.current.id}${game.current.rot}` : 'none';
-            pcheck('click-rotates-or-rejects', before !== after || game.wallRejects > wr0,
-                `${before} → ${after} wallRejects ${wr0}→${game.wallRejects}（顶部旋转受天花板限制属合法拒绝）`);
+            pcheck(
+                'click-rotates-or-rejects',
+                before !== after || game.wallRejects > wr0,
+                `${before} → ${after} wallRejects ${wr0}→${game.wallRejects}（顶部旋转受天花板限制属合法拒绝）`,
+            );
         }
     };
     input.on(Input.EventType.TOUCH_START, onClick);

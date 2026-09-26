@@ -91,7 +91,7 @@ input.on(SystemEventType.KEY_UP, (e) => {
 
 const info = document.querySelector('#info') as HTMLElement;
 class KeyboardMover extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         let dx = 0;
         let dz = 0;
         if (pressed.has(KeyCode.KEY_A) || pressed.has(KeyCode.ARROW_LEFT)) dx -= 1;

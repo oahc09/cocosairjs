@@ -10,11 +10,11 @@
 
 DRACO / meshopt / KTX2 的**解码器二进制不内置**（体积与许可证原因）。模型若用了相应扩展，必须在解析前注入：
 
-| 扩展 | 注入 |
-|---|---|
-| `KHR_draco_mesh_compression` | `loader.setDRACODecoder(decoder)` |
-| `EXT_meshopt_compression` | `loader.setMeshoptDecoder(decoder)` |
-| KTX2 纹理 | `loader.setKTX2Transcoder(transcoder)` |
+| 扩展                         | 注入                                   |
+| ---------------------------- | -------------------------------------- |
+| `KHR_draco_mesh_compression` | `loader.setDRACODecoder(decoder)`      |
+| `EXT_meshopt_compression`    | `loader.setMeshoptDecoder(decoder)`    |
+| KTX2 纹理                    | `loader.setKTX2Transcoder(transcoder)` |
 
 不注入则解析如实报 decoder required。仓库 `examples/gltf-meshopt/` 演示 meshopt 注入回路。**默认构建下 draco/ktx2 链路为 BLOCKED**（缺解码器二进制），与 `decoder-required` 能力合同一致；不要假设"装了 cocosair 就能开 draco 模型"。进程级默认值用 `configureGLTFLoaderDefaults(options)`。
 

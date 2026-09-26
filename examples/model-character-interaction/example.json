@@ -20,18 +20,8 @@
     "visual": "深蓝背景下两个蒙皮四边形角色（A 灰白、B 淡蓝）随骨骼动画摆动（B 明显更快）；点击 A 后 A 变橙色高亮；B 销毁后画面只剩 A 继续动画；左上角面板显示 selected/clicks/B 状态"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync",
-      "GLTFAsset.instantiate",
-      "Camera.screenPointToRay"
-    ],
-    "supporting": [
-      "Animation.getState",
-      "input",
-      "intersect",
-      "AnimationClip.wrapMode",
-      "isValid"
-    ],
+    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "Camera.screenPointToRay"],
+    "supporting": ["Animation.getState", "input", "intersect", "AnimationClip.wrapMode", "isValid"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -90,278 +80,275 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L156"
+        "sourceLocation": "L189"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L158"
+        "sourceLocation": "L191"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L160"
+        "sourceLocation": "L193"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L142"
+        "sourceLocation": "L173"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L162"
+        "sourceLocation": "L195"
       },
       {
         "api": "Node.walk",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L62"
+        "sourceLocation": "L78"
       },
       {
         "api": "Node.getComponent",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L63"
+        "sourceLocation": "L79"
       },
       {
         "api": "Node.getComponentInChildren",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L146"
+        "sourceLocation": "L177"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L164"
+        "sourceLocation": "L197"
       },
       {
         "api": "Camera.screenPointToRay",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L89"
+        "sourceLocation": "L109"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L178"
+        "sourceLocation": "L211"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L171"
+        "sourceLocation": "L204"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L141"
+        "sourceLocation": "L172"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L56"
+        "sourceLocation": "L72"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L54"
+        "sourceLocation": "L70"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L55"
+        "sourceLocation": "L71"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L56"
+        "sourceLocation": "L72"
       },
       {
         "api": "Animation",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L145"
+        "sourceLocation": "L176"
       },
       {
         "api": "Animation.play",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L151"
+        "sourceLocation": "L184"
       },
       {
         "api": "Animation.getState",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L227"
+        "sourceLocation": "L267"
       },
       {
         "api": "Animation.pause",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L244"
+        "sourceLocation": "L287"
       },
       {
         "api": "Animation.resume",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L250"
+        "sourceLocation": "L296"
       },
       {
         "api": "AnimationClip",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L149"
+        "sourceLocation": "L180"
       },
       {
         "api": "AnimationClip.wrapMode",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L149"
+        "sourceLocation": "L181"
       },
       {
         "api": "SkinnedMeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L63"
+        "sourceLocation": "L79"
       },
       {
         "api": "Renderer.setSharedMaterial",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L64"
+        "sourceLocation": "L81"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L137"
+        "sourceLocation": "L168"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L137"
+        "sourceLocation": "L168"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L139"
+        "sourceLocation": "L170"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L283"
+        "sourceLocation": "L342"
       },
       {
         "api": "GLTFAsset.owned",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L198"
+        "sourceLocation": "L231"
       },
       {
         "api": "GLTFAsset.animations",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L191"
+        "sourceLocation": "L224"
       },
       {
         "api": "GLTFAsset.meshes",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L192"
+        "sourceLocation": "L225"
       },
       {
         "api": "GLTFAsset.materials",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L193"
+        "sourceLocation": "L226"
       },
       {
         "api": "GLTFAsset.textures",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L194"
+        "sourceLocation": "L227"
       },
       {
         "api": "GLTFAsset.skeletons",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L195"
+        "sourceLocation": "L228"
       },
       {
         "api": "GLTFAsset.images",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L196"
+        "sourceLocation": "L229"
       },
       {
         "api": "GLTFAsset.sceneNames",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L197"
+        "sourceLocation": "L230"
       },
       {
         "api": "Ray",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L89"
+        "sourceLocation": "L109"
       },
       {
         "api": "AABB",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L79"
+        "sourceLocation": "L99"
       },
       {
         "api": "intersect",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L91"
+        "sourceLocation": "L111"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L257"
+        "sourceLocation": "L306"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L257"
+        "sourceLocation": "L306"
       },
       {
         "api": "EventTouch.getLocation",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L88"
+        "sourceLocation": "L108"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L91"
+        "sourceLocation": "L111"
       }
     ]
   },
-  "capabilities": [
-    "gltf",
-    "animation"
-  ],
+  "capabilities": ["gltf", "animation"],
   "assets": [
     "assets/SimpleSkin.gltf",
     "assets/SimpleSkin_animation.bin",
@@ -371,11 +358,7 @@
   ],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "CharA"
-      ]
+      "nodes": ["Main Camera", "Main Light", "CharA"]
     }
   },
   "interaction": {
@@ -387,28 +370,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "asset-loaded",
-      "animation-playing",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "asset-loaded", "animation-playing", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -422,53 +390,37 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0.5,
-          1.2,
-          4.5
-        ],
+        "position": [0.5, 1.2, 4.5],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 162,
+            "line": 195,
             "text": "cameraNode.setPosition(new Vec3(0.5, 1.2, 4.5));"
           }
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ],
+        "position": [0, 8, 0],
+        "rotationEuler": [-45, -30, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 176,
+            "line": 209,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 177,
+            "line": 210,
             "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ]
       },
       "CharA": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 141,
+            "line": 172,
             "text": "instanceA.root.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -481,7 +433,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 136,
+              "line": 167,
               "text": "const jsonText = await (await fetch('./assets/SimpleSkin.gltf')).text();"
             }
           ]
@@ -491,7 +443,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 137,
+              "line": 168,
               "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
             }
           ]
@@ -501,7 +453,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 137,
+              "line": 168,
               "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
             }
           ]
@@ -511,7 +463,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 137,
+              "line": 168,
               "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
             }
           ]
@@ -521,7 +473,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 137,
+              "line": 168,
               "text": "asset = await new GLTFLoader().parseAsync(jsonText, './assets/');"
             }
           ]
@@ -533,14 +485,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0.5, 0.5, 0))），position 仍精确断言",
-        "line": "L163"
+        "line": "L196"
       }
     }
   },
   "promotion": {
-    "spec": "b652b3f4754e",
-    "source": "072e1c3f3d8d5137",
-    "candidate": "d1cc556759a27943",
+    "spec": "7bc28ca313c2",
+    "source": "1b699dee9a45eaae",
+    "candidate": "8746fc59b6aa0408",
     "verified": 37,
     "attested": 8,
     "units": 45

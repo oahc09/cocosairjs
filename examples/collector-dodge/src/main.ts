@@ -22,9 +22,28 @@
  */
 
 import {
-    createAirApp, Scene, Node, MeshRenderer, Camera, Component, DirectionalLight, Layers, Vec3, Color,
-    Material, Mesh, utils, primitives, tween, input, Input, KeyCode, isValid,
-    assetManager, AudioSource, AudioClip,
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    Component,
+    DirectionalLight,
+    Layers,
+    Vec3,
+    Color,
+    Material,
+    Mesh,
+    utils,
+    primitives,
+    tween,
+    input,
+    Input,
+    KeyCode,
+    isValid,
+    assetManager,
+    AudioSource,
+    AudioClip,
 } from 'cocosair';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
@@ -50,7 +69,7 @@ const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms
 // 纯逻辑核心
 // ---------------------------------------------------------------------------
 
-const ARENA = 5;          // 可动半宽
+const ARENA = 5; // 可动半宽
 const PLAYER_R = 0.55;
 const COIN_R = 0.35;
 const ENEMY_R = 0.5;
@@ -59,8 +78,16 @@ const INVULN_STEPS = 90;
 const WIN_SCORE = 100;
 const COIN_COUNT = 5;
 
-interface CoinSlot { x: number; z: number; }
-interface EnemyDef { ax: number; az: number; bx: number; bz: number; }
+interface CoinSlot {
+    x: number;
+    z: number;
+}
+interface EnemyDef {
+    ax: number;
+    az: number;
+    bx: number;
+    bz: number;
+}
 
 const ENEMY_ROUTES: EnemyDef[] = [
     { ax: -4, az: -3, bx: 4, bz: -3 },
@@ -82,7 +109,7 @@ class CollectorGame {
     state: 'playing' | 'paused' | 'won' | 'over' = 'playing';
     seed = 20260925;
     private rngState = 20260925;
-    private rngPlan: CoinSlot[] = [];   // 种子币位序列（G1 确定性断言对象）
+    private rngPlan: CoinSlot[] = []; // 种子币位序列（G1 确定性断言对象）
     private rngIdx = 0;
     coins: CoinSlot[] = [];
     enemies: { x: number; z: number; route: EnemyDef; phase: number }[] = [];
@@ -144,7 +171,10 @@ class CollectorGame {
     }
 
     coinPlanSnapshot(): string {
-        return this.rngPlan.slice(0, 12).map((c) => c.x + ',' + c.z).join('|');
+        return this.rngPlan
+            .slice(0, 12)
+            .map((c) => c.x + ',' + c.z)
+            .join('|');
     }
 
     dash(): void {
@@ -231,7 +261,9 @@ class CollectorGame {
         this.emit();
     }
 
-    onCoinEaten: () => void = () => { /* 表现层挂钩（音频/tween），由 main 注入 */ };
+    onCoinEaten: () => void = () => {
+        /* 表现层挂钩（音频/tween），由 main 注入 */
+    };
 
     runSteps(n: number): void {
         for (let i = 0; i < n && this.state === 'playing'; i++) {
@@ -329,19 +361,50 @@ function buildActors(): void {
 }
 
 function destroyActors(): void {
-    if (playerNode) { playerNode.destroy(); playerNode = null; }
-    for (const n of coinNodes) { n.destroy(); }
+    if (playerNode) {
+        playerNode.destroy();
+        playerNode = null;
+    }
+    for (const n of coinNodes) {
+        n.destroy();
+    }
     coinNodes = [];
-    for (const n of enemyNodes) { n.destroy(); }
+    for (const n of enemyNodes) {
+        n.destroy();
+    }
     enemyNodes = [];
-    if (coinsRoot) { coinsRoot.destroy(); coinsRoot = null; }
-    if (enemiesRoot) { enemiesRoot.destroy(); enemiesRoot = null; }
-    if (playerMat) { playerMat.destroy(); playerMat = null; }
-    if (coinMat) { coinMat.destroy(); coinMat = null; }
-    if (enemyMat) { enemyMat.destroy(); enemyMat = null; }
-    if (playerMesh) { playerMesh.destroy(); playerMesh = null; }
-    if (coinMesh) { coinMesh.destroy(); coinMesh = null; }
-    if (enemyMesh) { enemyMesh.destroy(); enemyMesh = null; }
+    if (coinsRoot) {
+        coinsRoot.destroy();
+        coinsRoot = null;
+    }
+    if (enemiesRoot) {
+        enemiesRoot.destroy();
+        enemiesRoot = null;
+    }
+    if (playerMat) {
+        playerMat.destroy();
+        playerMat = null;
+    }
+    if (coinMat) {
+        coinMat.destroy();
+        coinMat = null;
+    }
+    if (enemyMat) {
+        enemyMat.destroy();
+        enemyMat = null;
+    }
+    if (playerMesh) {
+        playerMesh.destroy();
+        playerMesh = null;
+    }
+    if (coinMesh) {
+        coinMesh.destroy();
+        coinMesh = null;
+    }
+    if (enemyMesh) {
+        enemyMesh.destroy();
+        enemyMesh = null;
+    }
 }
 
 function syncNodes(dt: number): void {
@@ -352,15 +415,21 @@ function syncNodes(dt: number): void {
     }
     for (let i = 0; i < coinNodes.length; i++) {
         const n = coinNodes[i];
-        if (!n) { continue; }
+        if (!n) {
+            continue;
+        }
         const c = game.coins[i];
-        if (!c) { continue; } // reset 前的帧：逻辑数组尚空
+        if (!c) {
+            continue;
+        } // reset 前的帧：逻辑数组尚空
         n.setPosition(new Vec3(c.x, 0.5, c.z));
         n.setRotationFromEuler(90, n.eulerAngles.y + dt * 180, 0); // 立着自旋
     }
     for (let i = 0; i < enemyNodes.length; i++) {
         const e = game.enemies[i];
-        if (!e) { continue; }
+        if (!e) {
+            continue;
+        }
         enemyNodes[i].setPosition(new Vec3(e.x, 0.45, e.z));
     }
 }
@@ -408,7 +477,7 @@ async function main(): Promise<void> {
     dirNode.setRotationFromEuler(-40, 25, 0);
     scene.addChild(dirNode);
     const dir = dirNode.addComponent(DirectionalLight);
-    dir.illuminance = 14;
+    dir.illuminance = 50000; // 默认 HDR 曝光下使用 lux 量级。
 
     const cameraNode = new Node('Main Camera');
     scene.addChild(cameraNode);
@@ -441,7 +510,11 @@ async function main(): Promise<void> {
         // 找到刚重生的槽位（poolRespawns 计数指向的槽）——所有槽统一脉冲一次成本更低且可见
         for (const n of coinNodes) {
             if (n && isValid(n)) {
-                tween(n).to(0.12, { scale: new Vec3(0.2, 0.2, 0.2) }).delay(0.02).to(0.15, { scale: new Vec3(1, 1, 1) }).start();
+                tween(n)
+                    .to(0.12, { scale: new Vec3(0.2, 0.2, 0.2) })
+                    .delay(0.02)
+                    .to(0.15, { scale: new Vec3(1, 1, 1) })
+                    .start();
             }
         }
         if (coinClip && audioSrc) {
@@ -462,7 +535,10 @@ async function main(): Promise<void> {
     const audioNode = new Node('Audio');
     audioNode.setPosition(new Vec3(0, 0, 0));
     scene.addChild(audioNode);
+    audioNode.active = false; // 防止 onEnable 在配置前排入自动播放。
     audioSrc = audioNode.addComponent(AudioSource);
+    audioSrc.playOnAwake = false;
+    audioNode.active = true;
 
     app.run(scene);
     await sleep(400);
@@ -471,21 +547,31 @@ async function main(): Promise<void> {
     try {
         coinClip = await new Promise<AudioClip>((resolve, reject) => {
             (assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {
-                if (err) { reject(err as Error); } else { resolve(clip); }
+                if (err) {
+                    reject(err as Error);
+                } else {
+                    resolve(clip);
+                }
             });
         });
         if (audioSrc && coinClip) {
             audioSrc.clip = coinClip;
             audioSrc.playOnAwake = false;
         }
-        pcheck('audio-clip-loaded', !!coinClip && coinClip.getDuration() > 0, 'duration=' + (coinClip ? coinClip.getDuration() : -1));
+        pcheck(
+            'audio-clip-loaded',
+            !!coinClip && coinClip.getDuration() > 0,
+            'duration=' + (coinClip ? coinClip.getDuration() : -1),
+        );
     } catch (e) {
         pcheck('audio-clip-loaded', false, 'loadRemote 失败: ' + String((e as Error).message || e));
     }
 
     const nodeCount = (): number => {
         let n = 0;
-        scene.walk(() => { n++; });
+        scene.walk(() => {
+            n++;
+        });
         return n;
     };
     const nodesAtStart = nodeCount();
@@ -502,10 +588,16 @@ async function main(): Promise<void> {
     game.runSteps(20000);
     game.navEnabled = false;
     game.contactEnabled = true;
-    pcheck('g2-auto-nav-win', (game.state as string) === 'won' && game.score >= WIN_SCORE && game.coinsEaten >= 10,
-        'state=' + game.state + ' score=' + game.score + ' eaten=' + game.coinsEaten);
-    pcheck('g2-pool-reuse-accounting', game.poolRespawns === game.coinsEaten && coinNodes.length === COIN_COUNT && nodeCount() === nodesAtStart,
-        'respawns=' + game.poolRespawns + ' eaten=' + game.coinsEaten + ' nodes=' + nodeCount() + '/' + nodesAtStart);
+    pcheck(
+        'g2-auto-nav-win',
+        (game.state as string) === 'won' && game.score >= WIN_SCORE && game.coinsEaten >= 10,
+        'state=' + game.state + ' score=' + game.score + ' eaten=' + game.coinsEaten,
+    );
+    pcheck(
+        'g2-pool-reuse-accounting',
+        game.poolRespawns === game.coinsEaten && coinNodes.length === COIN_COUNT && nodeCount() === nodesAtStart,
+        'respawns=' + game.poolRespawns + ' eaten=' + game.coinsEaten + ' nodes=' + nodeCount() + '/' + nodesAtStart,
+    );
 
     // ---- G3 暂停冻结 / 恢复 ----
     game.reset();
@@ -516,14 +608,20 @@ async function main(): Promise<void> {
     const frozenZ = game.pz;
     game.togglePause();
     game.runSteps(60);
-    pcheck('g3-pause-freezes-position', game.px === frozenX && game.pz === frozenZ && (game.state as string) === 'paused',
-        'px ' + frozenX.toFixed(3) + '→' + game.px.toFixed(3) + ' state=' + game.state);
+    pcheck(
+        'g3-pause-freezes-position',
+        game.px === frozenX && game.pz === frozenZ && (game.state as string) === 'paused',
+        'px ' + frozenX.toFixed(3) + '→' + game.px.toFixed(3) + ' state=' + game.state,
+    );
     game.togglePause();
     game.navEnabled = true;
     game.runSteps(60);
     game.navEnabled = false;
-    pcheck('g3-resume-advances', game.px !== frozenX || game.pz !== frozenZ,
-        'px=' + game.px.toFixed(3) + ' pz=' + game.pz.toFixed(3));
+    pcheck(
+        'g3-resume-advances',
+        game.px !== frozenX || game.pz !== frozenZ,
+        'px=' + game.px.toFixed(3) + ' pz=' + game.pz.toFixed(3),
+    );
 
     // ---- G4 负局（贴身敌人巡逻线，无敌帧轮转至 hp=0） ----
     game.reset();
@@ -535,25 +633,50 @@ async function main(): Promise<void> {
         game.step();
         guard++;
     }
-    pcheck('g4-death-by-enemy', (game.state as string) === 'over' && game.hp === 0 && game.hitsByEnemy === 3,
-        'state=' + game.state + ' hp=' + game.hp + ' hits=' + game.hitsByEnemy + ' steps=' + guard);
+    pcheck(
+        'g4-death-by-enemy',
+        (game.state as string) === 'over' && game.hp === 0 && game.hitsByEnemy === 3,
+        'state=' + game.state + ' hp=' + game.hp + ' hits=' + game.hitsByEnemy + ' steps=' + guard,
+    );
 
     // ---- G5 重开 / 场景重置 ----
     game.reset();
-    pcheck('g5-restart-scene-reset',
-        game.score === 0 && game.hp === 3 && game.coinsEaten === 0 && game.state === 'playing'
-        && game.coinPlanSnapshot() === plan1 && nodeCount() === nodesAtStart
-        && game.px === 0 && game.pz === 0,
-        'score=' + game.score + ' hp=' + game.hp + ' nodes=' + nodeCount() + ' planSame=' + (game.coinPlanSnapshot() === plan1));
+    pcheck(
+        'g5-restart-scene-reset',
+        game.score === 0 &&
+            game.hp === 3 &&
+            game.coinsEaten === 0 &&
+            game.state === 'playing' &&
+            game.coinPlanSnapshot() === plan1 &&
+            nodeCount() === nodesAtStart &&
+            game.px === 0 &&
+            game.pz === 0,
+        'score=' +
+            game.score +
+            ' hp=' +
+            game.hp +
+            ' nodes=' +
+            nodeCount() +
+            ' planSame=' +
+            (game.coinPlanSnapshot() === plan1),
+    );
     driver.realtime = true;
 
     // ---- 交互 ----
     const setCmd = (event: any, down: boolean): void => {
         const code = event.keyCode;
-        if (code === KeyCode.KEY_W || code === KeyCode.ARROW_UP) { game.cmd.z = down ? -1 : (game.cmd.z === -1 ? 0 : game.cmd.z); }
-        if (code === KeyCode.KEY_S || code === KeyCode.ARROW_DOWN) { game.cmd.z = down ? 1 : (game.cmd.z === 1 ? 0 : game.cmd.z); }
-        if (code === KeyCode.KEY_A || code === KeyCode.ARROW_LEFT) { game.cmd.x = down ? -1 : (game.cmd.x === -1 ? 0 : game.cmd.x); }
-        if (code === KeyCode.KEY_D || code === KeyCode.ARROW_RIGHT) { game.cmd.x = down ? 1 : (game.cmd.x === 1 ? 0 : game.cmd.x); }
+        if (code === KeyCode.KEY_W || code === KeyCode.ARROW_UP) {
+            game.cmd.z = down ? -1 : game.cmd.z === -1 ? 0 : game.cmd.z;
+        }
+        if (code === KeyCode.KEY_S || code === KeyCode.ARROW_DOWN) {
+            game.cmd.z = down ? 1 : game.cmd.z === 1 ? 0 : game.cmd.z;
+        }
+        if (code === KeyCode.KEY_A || code === KeyCode.ARROW_LEFT) {
+            game.cmd.x = down ? -1 : game.cmd.x === -1 ? 0 : game.cmd.x;
+        }
+        if (code === KeyCode.KEY_D || code === KeyCode.ARROW_RIGHT) {
+            game.cmd.x = down ? 1 : game.cmd.x === 1 ? 0 : game.cmd.x;
+        }
         if (down) {
             game.navEnabled = false; // 真实按键立即夺回控制权（manual-mini-game 同款语义）
         }
@@ -561,10 +684,16 @@ async function main(): Promise<void> {
     const onKeyDown = (event: any): void => {
         setCmd(event, true);
         const code = event.keyCode;
-        if (code === KeyCode.KEY_P) { game.togglePause(); }
-        else if (code === KeyCode.KEY_R) { game.reset(); driver.realtime = true; }
+        if (code === KeyCode.KEY_P) {
+            game.togglePause();
+        } else if (code === KeyCode.KEY_R) {
+            game.reset();
+            driver.realtime = true;
+        }
     };
-    const onKeyUp = (event: any): void => { setCmd(event, false); };
+    const onKeyUp = (event: any): void => {
+        setCmd(event, false);
+    };
     const onClick = (): void => {
         game.dash();
         if (coinClip && audioSrc) {
@@ -591,13 +720,27 @@ async function main(): Promise<void> {
         label: 'collector-dodge',
         hold: () => {
             const held: { name: string; ref: object }[] = [];
-            if (playerMat) { held.push({ name: 'Material(player)', ref: playerMat }); }
-            if (coinMat) { held.push({ name: 'Material(coin)', ref: coinMat }); }
-            if (enemyMat) { held.push({ name: 'Material(enemy)', ref: enemyMat }); }
-            if (playerMesh) { held.push({ name: 'Mesh(player)', ref: playerMesh }); }
-            if (coinMesh) { held.push({ name: 'Mesh(coin)', ref: coinMesh }); }
-            if (enemyMesh) { held.push({ name: 'Mesh(enemy)', ref: enemyMesh }); }
-            if (coinClip && isValid(coinClip)) { held.push({ name: 'AudioClip(tone)', ref: coinClip }); }
+            if (playerMat) {
+                held.push({ name: 'Material(player)', ref: playerMat });
+            }
+            if (coinMat) {
+                held.push({ name: 'Material(coin)', ref: coinMat });
+            }
+            if (enemyMat) {
+                held.push({ name: 'Material(enemy)', ref: enemyMat });
+            }
+            if (playerMesh) {
+                held.push({ name: 'Mesh(player)', ref: playerMesh });
+            }
+            if (coinMesh) {
+                held.push({ name: 'Mesh(coin)', ref: coinMesh });
+            }
+            if (enemyMesh) {
+                held.push({ name: 'Mesh(enemy)', ref: enemyMesh });
+            }
+            if (coinClip && isValid(coinClip)) {
+                held.push({ name: 'AudioClip(tone)', ref: coinClip });
+            }
             return held;
         },
         release: () => {
@@ -606,8 +749,14 @@ async function main(): Promise<void> {
             input.off(Input.EventType.TOUCH_START, onClick);
             driver.realtime = false;
             game.state = 'paused';
-            if (audioSrc) { audioSrc.stop(); audioSrc.clip = null; }
-            if (coinClip) { assetManager.releaseAsset(coinClip); coinClip = null; } // audio-basic 实证口径
+            if (audioSrc) {
+                audioSrc.stop();
+                audioSrc.clip = null;
+            }
+            if (coinClip) {
+                assetManager.releaseAsset(coinClip);
+                coinClip = null;
+            } // audio-basic 实证口径
             destroyActors();
         },
         reacquire: async () => {
@@ -616,11 +765,20 @@ async function main(): Promise<void> {
             try {
                 coinClip = await new Promise<AudioClip>((resolve, reject) => {
                     (assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {
-                        if (err) { reject(err as Error); } else { resolve(clip); }
+                        if (err) {
+                            reject(err as Error);
+                        } else {
+                            resolve(clip);
+                        }
                     });
                 });
-                if (audioSrc && coinClip) { audioSrc.clip = coinClip; audioSrc.playOnAwake = false; }
-            } catch (e) { /* 重载失败如实走泄漏核对 */ }
+                if (audioSrc && coinClip) {
+                    audioSrc.clip = coinClip;
+                    audioSrc.playOnAwake = false;
+                }
+            } catch (e) {
+                /* 重载失败如实走泄漏核对 */
+            }
             game.reset();
             driver.realtime = true;
             input.on(Input.EventType.KEY_DOWN, onKeyDown);

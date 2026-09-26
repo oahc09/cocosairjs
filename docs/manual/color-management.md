@@ -16,9 +16,9 @@ toArray / fromArray / fromUint32 / toUint32 / strictEquals / equals / hex`（另
 实例面：`r g b a`（别名 `x y z w`）、`clone / equals / lerp / toString / toCSS / fromHEX / toHEX / toRGBValue / fromHSV / toHSV / set / multiply`。
 
 ```js
-    const c = new Color();
-    c.fromHEX(hex);
-    patch.material.setProperty('mainColor', c);
+const c = new Color();
+c.fromHEX(hex);
+patch.material.setProperty("mainColor", c);
 ```
 
 **实测坑两条**：
@@ -30,9 +30,9 @@ toArray / fromArray / fromUint32 / toUint32 / strictEquals / equals / hex`（另
 逐帧插值用静态 `Color.lerp(out, from, to, ratio)`（示例下排渐变带，每帧写回 `mainColor`）：
 
 ```js
-            const t = Math.min(1, Math.max(0, lastPing + (i - 3.5) * 0.06));
-            Color.lerp(this._tmp, RAMP_A, RAMP_B, t);
-            rampPatches[i].material.setProperty('mainColor', this._tmp);
+const t = Math.min(1, Math.max(0, lastPing + (i - 3.5) * 0.06));
+Color.lerp(this._tmp, RAMP_A, RAMP_B, t);
+rampPatches[i].material.setProperty("mainColor", this._tmp);
 ```
 
 色调映射入口（场景级，与 `fog` / `shadows` 同在 `scene.globals`，d.ts 21149 / 21004）：
@@ -48,14 +48,14 @@ post.toneMappingType = 0;
 
 ## 2. 没有什么（诚实清单）
 
-| 能力项 | AIR 现状 |
-| --- | --- |
-| 颜色管理总开关 | 无对应物（导出面不存在） |
-| 线性工作空间 | 无用户级开关；管线内部行为不暴露 |
-| 输出色彩空间（sRGB 编码） | 无对应物 |
-| 贴图色彩空间标注（sRGB/Linear） | `Texture2D` 上无 colorSpace 字段（grep 零命中） |
-| HSL 取色 | 只有 HSV（`fromHSV` / `toHSV`） |
-| 色调映射算子 | 仅 `postSettings.toneMappingType` 的 DEFAULT/LINEAR 两值，无 ACES/Reinhard 等预设 |
+| 能力项                          | AIR 现状                                                                          |
+| ------------------------------- | --------------------------------------------------------------------------------- |
+| 颜色管理总开关                  | 无对应物（导出面不存在）                                                          |
+| 线性工作空间                    | 无用户级开关；管线内部行为不暴露                                                  |
+| 输出色彩空间（sRGB 编码）       | 无对应物                                                                          |
+| 贴图色彩空间标注（sRGB/Linear） | `Texture2D` 上无 colorSpace 字段（grep 零命中）                                   |
+| HSL 取色                        | 只有 HSV（`fromHSV` / `toHSV`）                                                   |
+| 色调映射算子                    | 仅 `postSettings.toneMappingType` 的 DEFAULT/LINEAR 两值，无 ACES/Reinhard 等预设 |
 
 实践含义：**把 `Color` 的 0–255 分量当作显示参考值（display-referred）直接用**——
 示例上排 unlit 色板的截图色相与 hex 意图目检一致（§3），没有可见的二次空间转换；
@@ -108,38 +108,65 @@ tone spike 对照 `docs/evidence/manual/tone-spike-{default,linear}.png`（字�
 `examples/manual-color-management/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Color Management — 颜色管理（docs/manual/color-management.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -157,27 +184,27 @@ tone spike 对照 `docs/evidence/manual/tone-spike-{default,linear}.png`（字�
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('color-management');
+const scene = new Scene("color-management");
 
 // ---- 相机：正对色板墙 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.5, 8.5));
 cameraNode.lookAt(new Vec3(0, 1.5, 0));
@@ -194,27 +221,27 @@ const quadMesh = utils.createMesh(primitives.quad());
 
 type Patch = { node: Node; material: Material };
 
-function makePatch (name: string, x: number, y: number, w: number, h: number): Patch {
-    const node = new Node(name);
-    node.layer = Layers.Enum.DEFAULT;
-    node.setPosition(new Vec3(x, y, 0));
-    node.setScale(new Vec3(w, h, 1));
-    scene.addChild(node);
-    const renderer = node.addComponent(MeshRenderer);
-    renderer.mesh = quadMesh;
-    const material = new Material();
-    material.initialize({ effectName: 'builtin-unlit' });
-    renderer.material = material;
-    return { node, material };
+function makePatch(name: string, x: number, y: number, w: number, h: number): Patch {
+  const node = new Node(name);
+  node.layer = Layers.Enum.DEFAULT;
+  node.setPosition(new Vec3(x, y, 0));
+  node.setScale(new Vec3(w, h, 1));
+  scene.addChild(node);
+  const renderer = node.addComponent(MeshRenderer);
+  renderer.mesh = quadMesh;
+  const material = new Material();
+  material.initialize({ effectName: "builtin-unlit" });
+  renderer.material = material;
+  return { node, material };
 }
 
 // ---- 上排：hex 色板（fromHEX → mainColor） ----
-const HEXES: string[] = ['#eb7d41', '#5fcd78', '#419beb', '#cd5fcd', '#f0c85a', '#78dca0'];
+const HEXES: string[] = ["#eb7d41", "#5fcd78", "#419beb", "#cd5fcd", "#f0c85a", "#78dca0"];
 HEXES.forEach((hex, i) => {
-    const patch = makePatch(`Hex-${i}`, (i - 2.5) * 1.35, 2.3, 1.15, 1.15);
-    const c = new Color();
-    c.fromHEX(hex);
-    patch.material.setProperty('mainColor', c);
+  const patch = makePatch(`Hex-${i}`, (i - 2.5) * 1.35, 2.3, 1.15, 1.15);
+  const c = new Color();
+  c.fromHEX(hex);
+  patch.material.setProperty("mainColor", c);
 });
 
 // ---- 下排：lerp 渐变带（逐帧 Color.lerp） ----
@@ -223,27 +250,27 @@ const RAMP_B = new Color(250, 220, 90, 255);
 let lastPing = 0;
 const rampPatches: Patch[] = [];
 for (let i = 0; i < 8; i++) {
-    rampPatches.push(makePatch(`Lerp-${i}`, (i - 3.5) * 1.05, 0.7, 0.95, 0.95));
+  rampPatches.push(makePatch(`Lerp-${i}`, (i - 3.5) * 1.05, 0.7, 0.95, 0.95));
 }
 
 class Ramp extends Component {
-    private _t = 0;
-    private _tmp: Color;
+  private _t = 0;
+  private _tmp: Color;
 
-    constructor () {
-        super();
-        this._t = 0;
-        this._tmp = new Color();
+  constructor() {
+    super();
+    this._t = 0;
+    this._tmp = new Color();
+  }
+  update(dt: number): void {
+    this._t += dt;
+    lastPing = (Math.sin(this._t * 0.8) + 1) * 0.5;
+    for (let i = 0; i < rampPatches.length; i++) {
+      const t = Math.min(1, Math.max(0, lastPing + (i - 3.5) * 0.06));
+      Color.lerp(this._tmp, RAMP_A, RAMP_B, t);
+      rampPatches[i].material.setProperty("mainColor", this._tmp);
     }
-    update (dt: number): void {
-        this._t += dt;
-        lastPing = (Math.sin(this._t * 0.8) + 1) * 0.5;
-        for (let i = 0; i < rampPatches.length; i++) {
-            const t = Math.min(1, Math.max(0, lastPing + (i - 3.5) * 0.06));
-            Color.lerp(this._tmp, RAMP_A, RAMP_B, t);
-            rampPatches[i].material.setProperty('mainColor', this._tmp);
-        }
-    }
+  }
 }
 
 // ---- 色调映射 A/B：postSettings.toneMappingType 0=DEFAULT 1=LINEAR ----
@@ -251,39 +278,39 @@ const post = scene.globals.postSettings;
 post.toneMappingType = 0;
 
 // ---- 覆盖层 ----
-const info = document.querySelector('#info') as HTMLElement;
+const info = document.querySelector("#info") as HTMLElement;
 const probe = new Color();
-probe.fromHEX('#eb7d41');
+probe.fromHEX("#eb7d41");
 const hexRoundTrip = probe.toHEX();
 const hsv = probe.toHSV({ h: 0, s: 0, v: 0 });
-function showColor (ping: number, tone: number): void {
-    info.textContent = [
-        'exports: Color / ColorKey / color only — no ColorManagement, no ColorSpace',
-        `hex row: ${HEXES.join(' ')} (instance fromHEX → mainColor)`,
-        `hex roundtrip: #eb7d41 → ${hexRoundTrip}   hsv: h=${hsv.h.toFixed(2)} s=${hsv.s.toFixed(2)} v=${hsv.v.toFixed(2)}`,
-        `lerp ramp: Color.lerp(A,B,t) ping-pong t=${ping.toFixed(2)} (per-frame)`,
-        `toneMapping: postSettings.toneMappingType=${tone} (0=DEFAULT 1=LINEAR, toggles every 3s)`,
-    ].join('\n');
+function showColor(ping: number, tone: number): void {
+  info.textContent = [
+    "exports: Color / ColorKey / color only — no ColorManagement, no ColorSpace",
+    `hex row: ${HEXES.join(" ")} (instance fromHEX → mainColor)`,
+    `hex roundtrip: #eb7d41 → ${hexRoundTrip}   hsv: h=${hsv.h.toFixed(2)} s=${hsv.s.toFixed(2)} v=${hsv.v.toFixed(2)}`,
+    `lerp ramp: Color.lerp(A,B,t) ping-pong t=${ping.toFixed(2)} (per-frame)`,
+    `toneMapping: postSettings.toneMappingType=${tone} (0=DEFAULT 1=LINEAR, toggles every 3s)`,
+  ].join("\n");
 }
 
 class Cycler extends Component {
-    private _t = 0;
-    private _tone = 0;
+  private _t = 0;
+  private _tone = 0;
 
-    constructor () {
-        super();
-        this._t = 0;
-        this._tone = 0;
+  constructor() {
+    super();
+    this._t = 0;
+    this._tone = 0;
+  }
+  update(dt: number): void {
+    this._t += dt;
+    const tone = Math.floor(this._t / 3) % 2;
+    if (tone !== this._tone) {
+      this._tone = tone;
+      post.toneMappingType = tone;
     }
-    update (dt: number): void {
-        this._t += dt;
-        const tone = Math.floor(this._t / 3) % 2;
-        if (tone !== this._tone) {
-            this._tone = tone;
-            post.toneMappingType = tone;
-        }
-        showColor(lastPing, this._tone);
-    }
+    showColor(lastPing, this._tone);
+  }
 }
 cameraNode.addComponent(Ramp);
 cameraNode.addComponent(Cycler);
@@ -292,7 +319,7 @@ showColor(0, 0);
 window.__airApp = app;
 app.run(scene);
 
-console.log('[manual/color-management] running on cocosair');
+console.log("[manual/color-management] running on cocosair");
 ```
 
 ---

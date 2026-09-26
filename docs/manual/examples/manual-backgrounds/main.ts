@@ -63,7 +63,7 @@ material.setProperty('mainColor', new Color(235, 125, 65, 255));
 renderer.material = material;
 
 // ---- 页面内现造 cubemap：6 张单色 canvas ----
-function faceAsset (css: string): ImageAsset {
+function faceAsset(css: string): ImageAsset {
     const c = document.createElement('canvas');
     c.width = c.height = 64;
     const g = c.getContext('2d') as CanvasRenderingContext2D;
@@ -75,14 +75,16 @@ let cubeMap: TextureCube | null = null;
 let cubeMapError = '—';
 try {
     cubeMap = new TextureCube();
-    cubeMap.mipmaps = [{
-        front: faceAsset('#c04030'),
-        back: faceAsset('#30a050'),
-        left: faceAsset('#3060c0'),
-        right: faceAsset('#c0a030'),
-        top: faceAsset('#40b0c0'),
-        bottom: faceAsset('#8040a0'),
-    }];
+    cubeMap.mipmaps = [
+        {
+            front: faceAsset('#c04030'),
+            back: faceAsset('#30a050'),
+            left: faceAsset('#3060c0'),
+            right: faceAsset('#c0a030'),
+            top: faceAsset('#40b0c0'),
+            bottom: faceAsset('#8040a0'),
+        },
+    ];
 } catch (e) {
     cubeMap = null;
     cubeMapError = `${e.name}: ${e.message}`;
@@ -92,7 +94,7 @@ try {
 const info = document.querySelector('#info') as HTMLElement;
 let mode = 'skybox-cubemap';
 let modeError = '—';
-function applyMode (next: string): void {
+function applyMode(next: string): void {
     mode = next;
     try {
         if (next === 'solid') {
@@ -123,7 +125,7 @@ applyMode('skybox-cubemap');
 
 // ---- 覆盖层 ----
 class Overlay extends Component {
-    update (): void {
+    update(): void {
         info.textContent = [
             `background mode: ${mode}`,
             `clearFlags: ${camera.clearFlags} (SKYBOX=${Camera.ClearFlag.SKYBOX}, SOLID=${Camera.ClearFlag.SOLID_COLOR})`,
@@ -135,7 +137,14 @@ class Overlay extends Component {
 cameraNode.addComponent(Overlay);
 
 window.__airApp = app;
-window.__inspect = { get mode () { return mode; }, scene, camera, applyMode };
+window.__inspect = {
+    get mode() {
+        return mode;
+    },
+    scene,
+    camera,
+    applyMode,
+};
 app.run(scene);
 
 console.log('[manual/backgrounds] running on cocosair');

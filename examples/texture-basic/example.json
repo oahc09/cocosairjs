@@ -19,14 +19,8 @@
     "visual": "立方体六个面呈现灰白棋盘格纹理，随自转可确认纹理 UV 正确包裹（非纯色、非渐变）"
   },
   "api": {
-    "primary": [
-      "Texture2D",
-      "ImageAsset"
-    ],
-    "supporting": [
-      "Material.initialize",
-      "Material.setProperty"
-    ],
+    "primary": ["Texture2D", "ImageAsset"],
+    "supporting": ["Material.initialize", "Material.setProperty"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -54,198 +48,178 @@
       "Texture2D.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": [
-      "从外网 URL 拉图（示例必须离线可跑）",
-      "用纯色 mainColor 冒充贴图效果"
-    ],
+    "forbiddenShortcut": ["从外网 URL 拉图（示例必须离线可跑）", "用纯色 mainColor 冒充贴图效果"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L11"
+        "sourceLocation": "L27"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L13"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L65"
+        "sourceLocation": "L90"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L67"
+        "sourceLocation": "L94"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L76"
+        "sourceLocation": "L105"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L83"
+        "sourceLocation": "L118"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L36"
+        "sourceLocation": "L55"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L65"
+        "sourceLocation": "L91"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L66"
+        "sourceLocation": "L93"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L79"
+        "sourceLocation": "L111"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L59"
+        "sourceLocation": "L84"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L60"
+        "sourceLocation": "L85"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L61"
+        "sourceLocation": "L86"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L56"
+        "sourceLocation": "L81"
       },
       {
         "api": "ImageAsset",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L55"
+        "sourceLocation": "L74"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L63"
+        "sourceLocation": "L88"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L63"
+        "sourceLocation": "L88"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L65"
+        "sourceLocation": "L92"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L66"
+        "sourceLocation": "L93"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L82"
+        "sourceLocation": "L117"
       },
       {
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L92"
+        "sourceLocation": "L128"
       },
       {
         "api": "Mesh.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L93"
+        "sourceLocation": "L129"
       },
       {
         "api": "Material.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L94"
+        "sourceLocation": "L130"
       },
       {
         "api": "Texture2D.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L95"
+        "sourceLocation": "L131"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       }
     ]
   },
-  "capabilities": [
-    "materials"
-  ],
+  "capabilities": ["materials"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "TexturedCube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "TexturedCube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "material-property",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "material-property", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -259,53 +233,37 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.4,
-          6.5
-        ],
+        "position": [0, 2.4, 6.5],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 75,
-            "text": "cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lookAt(new Vec3(0, 0.5, 0));"
+            "line": 103,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.4, 6.5));"
           }
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 82,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 116,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "TexturedCube": {
-        "position": [
-          0,
-          0.5,
-          0
-        ],
+        "position": [0, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 66,
+            "line": 93,
             "text": "texturedCube.setPosition(new Vec3(0, 0.5, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 38,
+            "line": 57,
             "text": "0,this.node.eulerAngles.y + dt * 35,0"
           }
         ],
@@ -324,7 +282,7 @@
             "tolerance": null,
             "provenance": {
               "source": "src/main.ts",
-              "line": 61,
+              "line": 86,
               "text": "texture"
             }
           }
@@ -336,14 +294,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lo）",
-        "line": "L75"
+        "line": "L103"
       }
     }
   },
   "promotion": {
-    "spec": "801c006d64c7",
-    "source": "f45c5c6dcce11ce3",
-    "candidate": "d1cc556759a27943",
+    "spec": "f412ce14bc94",
+    "source": "0bcebbb30e15ca1d",
+    "candidate": "8746fc59b6aa0408",
     "verified": 25,
     "attested": 0,
     "units": 25

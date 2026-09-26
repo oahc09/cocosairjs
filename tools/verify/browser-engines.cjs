@@ -1,9 +1,10 @@
 /* 三引擎 Playwright 二进制定位（win32）。
- * Playwright 包版本与 ms-playwright 缓存构建号不一致 ⇒ 必须显式指路，不能靠默认解析。
+ * 优先使用当前 Playwright 包匹配且已安装的二进制；缺失时保留既有缓存回退。
  * 注：tools/v12/browser-matrix.cjs 目前仍带自己的一份同表副本（它是顶层 IIFE 脚本、被证据链引用，
  * 迁移要等下一次矩阵重采窗口一起做，见 docs/v12-upstream-regression.md §7.6）。改这张表时两处都要改。
  */
 const path = require('path');
+const fs = require('fs');
 
 const ENGINES = {
     chromium: { dir: 'chromium-1228', exe: 'chrome-win64/chrome.exe', args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] },
@@ -16,6 +17,14 @@ const DEFAULT_LOCAL_APP_DATA = 'C:/Users/caosh/AppData/Local';
 function launchOptions (engine, localAppData = process.env.LOCALAPPDATA || DEFAULT_LOCAL_APP_DATA) {
     const conf = ENGINES[engine];
     if (!conf) { throw new Error(`未知浏览器引擎: ${engine}（可选 ${Object.keys(ENGINES).join('/')}）`); }
+    // Prefer the revision required by the installed Playwright package. A pinned
+    // WebKit from a different revision can launch but hang at the protocol layer.
+    if (arguments.length < 2) {
+        try {
+            const executablePath = require('playwright')[engine].executablePath();
+            if (fs.existsSync(executablePath)) { return { executablePath, args: conf.args.slice() }; }
+        } catch (error) { /* Preserve the existing explicit cache fallback. */ }
+    }
     return { executablePath: path.join(localAppData, 'ms-playwright', conf.dir, conf.exe.replace(/\//g, path.sep)), args: conf.args.slice() };
 }
 

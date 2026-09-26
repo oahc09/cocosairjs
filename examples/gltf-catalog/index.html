@@ -1,63 +1,127 @@
 <!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Cocos AIR · 官方模型目录</title><link rel="icon" href="data:,">
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <header class="masthead">
-        <a class="brand" href="../gltf-viewer/"><span class="brand-mark">CA</span><span>COCOS AIR<small>MODEL OBSERVATORY</small></span></a>
-        <div class="edition"><span class="live-dot"></span> Khronos 官方模型 <span id="total-count">—</span></div>
-        <a class="source-link" href="https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/src/main.js" target="_blank" rel="noopener noreferrer">参考 Viewer ↗</a>
-    </header>
-    <div class="workspace">
-        <aside class="library" aria-label="官方模型目录">
-            <div class="library-heading"><span class="eyebrow">COLLECTION / 01</span><h1>选择一个模型。</h1><p>同一份 glTF，两种渲染视角。</p></div>
-            <div class="filters">
-                <label class="sr-only" for="search">搜索官方模型</label>
-                <input id="search" type="search" placeholder="搜索名称、标签…" autocomplete="off">
-                <label class="sr-only" for="filter">模型分类</label>
-                <select id="filter"><option value="all">全部模型</option><option value="local">本地已核验</option><option value="core">核心功能</option><option value="extension">包含扩展</option><option value="testing">测试用例</option><option value="showcase">展示模型</option></select>
-                <div class="list-caption"><span id="result-count" aria-live="polite">正在读取目录</span><span>NAME / FORMAT</span></div>
-            </div>
-            <nav id="model-list" aria-label="模型列表"></nav>
-            <p id="empty" hidden>没有匹配的模型。试试其他名称或分类。</p>
-            <footer class="library-footer"><a id="catalog-source" href="https://github.com/KhronosGroup/glTF-Sample-Assets" target="_blank" rel="noopener noreferrer">Khronos glTF-Sample-Assets ↗</a><span id="snapshot-date"></span></footer>
-        </aside>
-        <main>
-            <section class="selection" aria-labelledby="model-title">
-                <div class="model-identity"><span class="eyebrow">SELECTED MODEL</span><h2 id="model-title">正在加载目录…</h2><p id="model-description"></p></div>
-                <div class="selection-actions">
-                    <label for="variant">文件格式</label><select id="variant" disabled></select>
-                    <button id="compare" class="primary" aria-pressed="false" disabled>开启官方对照</button>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Cocos AIR · 官方模型目录</title>
+        <link rel="icon" href="data:," />
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <header class="masthead">
+            <a class="brand" href="../gltf-viewer/"
+                ><span class="brand-mark">CA</span><span>COCOS AIR<small>MODEL OBSERVATORY</small></span></a
+            >
+            <div class="edition"><span class="live-dot"></span> Khronos 官方模型 <span id="total-count">—</span></div>
+            <a
+                class="source-link"
+                href="https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/src/main.js"
+                target="_blank"
+                rel="noopener noreferrer"
+                >参考 Viewer ↗</a
+            >
+        </header>
+        <div class="workspace">
+            <aside class="library" aria-label="官方模型目录">
+                <div class="library-heading">
+                    <span class="eyebrow">COLLECTION / 01</span>
+                    <h1>选择一个模型。</h1>
+                    <p>同一份 glTF，两种渲染视角。</p>
                 </div>
-            </section>
-            <section id="stages" class="stages" aria-label="模型预览与对照">
-                <article class="stage air-stage">
-                    <div class="stage-heading"><span><i class="live-dot"></i> COCOS AIR</span><span id="air-state">等待模型</span></div>
-                    <iframe id="air-preview" title="Cocos AIR 模型预览" allow="fullscreen" src="about:blank"></iframe>
-                    <div class="stage-footer"><span>拖动旋转 · 滚轮缩放</span><button id="reset-camera" disabled>重置视角</button></div>
-                </article>
-                <article class="stage reference-stage" id="reference-stage" hidden>
-                    <div class="stage-heading"><span><i class="reference-dot"></i> KHRONOS VIEWER</span><a id="reference-external" target="_blank" rel="noopener noreferrer">新窗口 ↗</a></div>
-                    <div class="reference-placeholder" id="reference-placeholder"><span class="eyebrow">OFFICIAL REFERENCE</span><p>正在请求官方 Viewer…</p><small>若网络或嵌入受限，请使用右上角的新窗口入口。</small></div>
-                    <iframe id="reference-preview" title="Khronos 官方模型预览" allow="fullscreen" src="about:blank"></iframe>
-                    <div class="stage-footer"><span>官方相机、环境与色调映射独立控制</span></div>
-                </article>
-            </section>
-            <section class="details">
-                <div id="load-status" role="status" aria-live="polite">目录就绪后会加载本地纹理立方体。</div>
-                <div class="detail-links"><a id="official-link" target="_blank" rel="noopener noreferrer">官方预览 ↗</a><a id="model-source" target="_blank" rel="noopener noreferrer">模型说明 / 许可 ↗</a><a id="asset-link" target="_blank" rel="noopener noreferrer">源文件 ↗</a></div>
-                <details id="capabilities"><summary>扩展支持矩阵（由 capabilities.json 生成）</summary>
-                <div id="capability-rows"></div>
-                <p id="capability-meta"></p>
-            </details>
-            <p>目录收录不等于引擎已支持。压缩与高级扩展以实际加载结果为准；相机、环境和曝光差异也会影响两侧观感。</p>
-                <button id="retry" hidden>重新加载 AIR</button>
-            </section>
-        </main>
-    </div>
-    <script type="module" src="./main.js"></script>
-</body>
+                <div class="filters">
+                    <label class="sr-only" for="search">搜索官方模型</label>
+                    <input id="search" type="search" placeholder="搜索名称、标签…" autocomplete="off" />
+                    <label class="sr-only" for="filter">模型分类</label>
+                    <select id="filter">
+                        <option value="all">全部模型</option>
+                        <option value="local">本地已核验</option>
+                        <option value="core">核心功能</option>
+                        <option value="extension">包含扩展</option>
+                        <option value="testing">测试用例</option>
+                        <option value="showcase">展示模型</option>
+                    </select>
+                    <div class="list-caption">
+                        <span id="result-count" aria-live="polite">正在读取目录</span><span>NAME / FORMAT</span>
+                    </div>
+                </div>
+                <nav id="model-list" aria-label="模型列表"></nav>
+                <p id="empty" hidden>没有匹配的模型。试试其他名称或分类。</p>
+                <footer class="library-footer">
+                    <a
+                        id="catalog-source"
+                        href="https://github.com/KhronosGroup/glTF-Sample-Assets"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Khronos glTF-Sample-Assets ↗</a
+                    ><span id="snapshot-date"></span>
+                </footer>
+            </aside>
+            <main>
+                <section class="selection" aria-labelledby="model-title">
+                    <div class="model-identity">
+                        <span class="eyebrow">SELECTED MODEL</span>
+                        <h2 id="model-title">正在加载目录…</h2>
+                        <p id="model-description"></p>
+                    </div>
+                    <div class="selection-actions">
+                        <label for="variant">文件格式</label
+                        ><select id="variant" disabled></select>
+                        <button id="compare" class="primary" aria-pressed="false" disabled>开启官方对照</button>
+                    </div>
+                </section>
+                <section id="stages" class="stages" aria-label="模型预览与对照">
+                    <article class="stage air-stage">
+                        <div class="stage-heading">
+                            <span><i class="live-dot"></i> COCOS AIR</span><span id="air-state">等待模型</span>
+                        </div>
+                        <iframe
+                            id="air-preview"
+                            title="Cocos AIR 模型预览"
+                            allow="fullscreen"
+                            src="about:blank"
+                        ></iframe>
+                        <div class="stage-footer">
+                            <span>拖动旋转 · 滚轮缩放</span><button id="reset-camera" disabled>重置视角</button>
+                        </div>
+                    </article>
+                    <article class="stage reference-stage" id="reference-stage" hidden>
+                        <div class="stage-heading">
+                            <span><i class="reference-dot"></i> KHRONOS VIEWER</span
+                            ><a id="reference-external" target="_blank" rel="noopener noreferrer">新窗口 ↗</a>
+                        </div>
+                        <div class="reference-placeholder" id="reference-placeholder">
+                            <span class="eyebrow">OFFICIAL REFERENCE</span>
+                            <p>正在请求官方 Viewer…</p>
+                            <small>若网络或嵌入受限，请使用右上角的新窗口入口。</small>
+                        </div>
+                        <iframe
+                            id="reference-preview"
+                            title="Khronos 官方模型预览"
+                            allow="fullscreen"
+                            src="about:blank"
+                        ></iframe>
+                        <div class="stage-footer"><span>官方相机、环境与色调映射独立控制</span></div>
+                    </article>
+                </section>
+                <section class="details">
+                    <div id="load-status" role="status" aria-live="polite">目录就绪后会加载本地纹理立方体。</div>
+                    <div class="detail-links">
+                        <a id="official-link" target="_blank" rel="noopener noreferrer">官方预览 ↗</a
+                        ><a id="model-source" target="_blank" rel="noopener noreferrer">模型说明 / 许可 ↗</a
+                        ><a id="asset-link" target="_blank" rel="noopener noreferrer">源文件 ↗</a>
+                    </div>
+                    <details id="capabilities">
+                        <summary>扩展支持矩阵（由 capabilities.json 生成）</summary>
+                        <div id="capability-rows"></div>
+                        <p id="capability-meta"></p>
+                    </details>
+                    <p>
+                        目录收录不等于引擎已支持。压缩与高级扩展以实际加载结果为准；相机、环境和曝光差异也会影响两侧观感。
+                    </p>
+                    <button id="retry" hidden>重新加载 AIR</button>
+                </section>
+            </main>
+        </div>
+        <script type="module" src="./main.js"></script>
+    </body>
 </html>

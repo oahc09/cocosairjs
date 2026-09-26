@@ -13,7 +13,6 @@ import {
     Camera,
     DirectionalLight,
     MeshRenderer,
-    Component,
     builtinResMgr,
     utils,
     primitives,
@@ -21,13 +20,9 @@ import {
     Color,
 } from 'cocosair';
 
-class Rotator extends Component {
-    update (dt) {
-        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0);
-    }
-}
+import { Rotator } from './components/Rotator.js';
 
-const canvas = document.querySelector('#GameCanvas');
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 
 const app = await createAirApp({ canvas });
 
@@ -55,7 +50,7 @@ scene.addChild(lightNode);
 lightNode.setPosition(new Vec3(0, 10, 0));
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
-light.illuminance = 2;
+light.illuminance = 50000;
 
 // Cube
 const cubeNode = new Node('Cube');
@@ -66,7 +61,7 @@ meshRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, lengt
 meshRenderer.material = builtinResMgr.get('builtin-standard-material');
 cubeNode.addComponent(Rotator);
 
-window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
+(window as any).__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 app.run(scene);
 
 console.log('[hello-cube] running on cocosair');

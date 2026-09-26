@@ -20,20 +20,11 @@
     "Profiler.setBackgroundColor",
     "Profiler.setFontColor"
   ],
-  "capabilities": [
-    "profiler"
-  ],
+  "capabilities": ["profiler"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
     "lifecycle": [],
     "capability": []
   },
@@ -47,18 +38,12 @@
     ]
   },
   "effect": {
-    "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=3）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*60；profiler.showStats() 已调用，isShowingStats() 为 true，stats 的 12 个计数器可读回且 frame/draws 值随时间变化。",
+    "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=75000）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*60；profiler.showStats() 已调用，isShowingStats() 为 true，stats 的 12 个计数器可读回且 frame/draws 值随时间变化。",
     "visual": "画面中央立方体持续自转，左下角叠加半透明统计面板（Framerate/Draw call/Frame time/Triangle/Logic/Physics/Renderer/Present/内存）"
   },
   "api": {
-    "primary": [
-      "profiler",
-      "Profiler"
-    ],
-    "supporting": [
-      "Profiler.showStats",
-      "MeshRenderer"
-    ],
+    "primary": ["profiler", "Profiler"],
+    "supporting": ["Profiler.showStats", "MeshRenderer"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -233,20 +218,14 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -268,9 +247,9 @@
     }
   },
   "promotion": {
-    "spec": "66d6546c7a37",
-    "source": "afc5dc805c737985",
-    "candidate": "d1cc556759a27943",
+    "spec": "7452de8c11ca",
+    "source": "86784386074fa41c",
+    "candidate": "8746fc59b6aa0408",
     "verified": 21,
     "attested": 2,
     "units": 23

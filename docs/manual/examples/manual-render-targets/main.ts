@@ -22,6 +22,8 @@ import {
     utils,
     primitives,
     RenderTexture,
+    director,
+    Director,
 } from 'cocosair';
 
 const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
@@ -48,7 +50,7 @@ const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
-dir.illuminance = 2;
+dir.illuminance = 30000;
 
 // ---- 右侧：实时自转立方体 ----
 const cubeNode = new Node('LiveCube');
@@ -63,7 +65,7 @@ cubeMaterial.setProperty('mainColor', new Color(65, 155, 235, 255));
 cubeRenderer.material = cubeMaterial;
 
 class Spinner extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 60, 0);
     }
 }
@@ -75,7 +77,32 @@ rt.reset({ width: 256, height: 256 });
 
 // ---- 左侧：贴 RT 的 quad（快照完成后才创建） ----
 let quadNode: Node | null = null;
-function showSnapshot (): void {
+const snapshotProbe = { ready: false, ok: false, checks: [] as { name: string; pass: boolean; detail: string }[] };
+(window as any).__manualProbe = () => snapshotProbe;
+
+function verifySnapshot(): void {
+    const corners = [-1, 1].flatMap((x) =>
+        [-1, 1].map((y) => camera.worldToScreen(new Vec3(-1.7 + x * 1.1, 1.2 + y * 1.1, 1.2))),
+    );
+    const left = Math.max(0, Math.floor(Math.min(...corners.map((p) => p.x))));
+    const right = Math.min(canvas.width, Math.ceil(Math.max(...corners.map((p) => p.x))));
+    const top = Math.max(0, Math.floor(canvas.height - Math.max(...corners.map((p) => p.y))));
+    const bottom = Math.min(canvas.height, Math.ceil(canvas.height - Math.min(...corners.map((p) => p.y))));
+    const sample = document.createElement('canvas');
+    sample.width = canvas.width;
+    sample.height = canvas.height;
+    const ctx = sample.getContext('2d')!;
+    ctx.drawImage(canvas, 0, 0);
+    const data = ctx.getImageData(left, top, right - left, bottom - top).data;
+    let blue = 0;
+    for (let i = 0; i < data.length; i += 4) {
+        if (data[i + 2] > data[i] + 30 && data[i + 2] > 60) blue++;
+    }
+    snapshotProbe.checks.push({ name: 'snapshot-contains-blue-cube', pass: blue > 20, detail: 'blue pixels=' + blue });
+    snapshotProbe.ok = snapshotProbe.checks.every((c) => c.pass);
+    snapshotProbe.ready = true;
+}
+function showSnapshot(): void {
     quadNode = new Node('SnapshotQuad');
     quadNode.layer = Layers.Enum.DEFAULT;
     quadNode.setPosition(new Vec3(-1.7, 1.2, 1.2));
@@ -84,13 +111,14 @@ function showSnapshot (): void {
     const renderer = quadNode.addComponent(MeshRenderer);
     renderer.mesh = utils.createMesh(primitives.plane({ width: 2.2, length: 2.2 }));
     const material = new Material();
-    material.initialize({ effectName: 'builtin-unlit', defines: { USE_ALBEDO_MAP: true } });
+    material.initialize({ effectName: 'builtin-unlit', defines: { USE_TEXTURE: true } });
     material.setProperty('mainTexture', rt);
     renderer.material = material;
+    director.once(Director.EVENT_AFTER_DRAW, verifySnapshot);
 }
 
 const info = document.querySelector('#info') as HTMLElement;
-function showState (phase: string): void {
+function showState(phase: string): void {
     info.textContent = [
         'rendertargets: 256x256 RenderTexture via camera.targetTexture',
         `phase: ${phase}`,
@@ -103,12 +131,12 @@ class Capture extends Component {
     private _t = 0;
     private _stage = 0;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._stage = 0;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         if (this._stage === 0 && this._t >= 1.2) {
             this._stage = 1;

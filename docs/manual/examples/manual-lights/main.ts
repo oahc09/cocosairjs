@@ -73,7 +73,7 @@ ballRenderer.material = ballMaterial;
 const rig = new Node('LightRig');
 scene.addChild(rig);
 class Spinner extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
     }
 }
@@ -136,8 +136,10 @@ const entries: [string, Node, string][] = [
 ];
 
 const info = document.querySelector('#info') as HTMLElement;
-function showLight (idx: number): void {
-    entries.forEach((e, i) => { e[1].active = (i === idx); });
+function showLight(idx: number): void {
+    entries.forEach((e, i) => {
+        e[1].active = i === idx;
+    });
     info.textContent = [
         'lights: cycling 4 types every 2.5s',
         `now: ${entries[idx][0]} — ${entries[idx][2]}`,
@@ -150,12 +152,12 @@ class Cycler extends Component {
     private _t: number;
     private _idx: number;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._idx = -1;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         const idx = Math.floor(this._t / 2.5) % entries.length;
         if (idx !== this._idx) {

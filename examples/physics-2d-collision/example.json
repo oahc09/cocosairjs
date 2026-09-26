@@ -42,24 +42,12 @@
     "PhysicsGroup",
     "PHYSICS_2D_PTM_RATIO"
   ],
-  "capabilities": [
-    "physics-2d"
-  ],
+  "capabilities": ["physics-2d"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -80,11 +68,7 @@
     "visual": "深蓝底一屏：底部灰色地面长条，其上横贯一条青色半透明 sensor 带；左侧橙色方块与绿色圆球静息在地面上（绿球带轻微穿透后的落定高度），中间浅灰方块（listener 晚开的那颗）也停在地面上，右侧蓝色 P 与黄色 Q 在终态已穿过地面落到画面外；顶部状态行写着 `collision step=490 keys=58 P↔Q gap 25px→30.77px`"
   },
   "api": {
-    "primary": [
-      "PhysicsSystem2D",
-      "RigidBody2D",
-      "Collider2D"
-    ],
+    "primary": ["PhysicsSystem2D", "RigidBody2D", "Collider2D"],
     "supporting": [
       "PhysicsSystem2D.collisionMatrix",
       "PhysicsSystem2D.step",
@@ -148,43 +132,43 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L109"
+        "sourceLocation": "L139"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L116"
+        "sourceLocation": "L146"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L80"
+        "sourceLocation": "L96"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L127"
+        "sourceLocation": "L157"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L121"
+        "sourceLocation": "L151"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L407"
+        "sourceLocation": "L522"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L82"
+        "sourceLocation": "L98"
       },
       {
         "api": "Layers",
@@ -196,169 +180,158 @@
         "api": "view",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L110"
+        "sourceLocation": "L140"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L110"
+        "sourceLocation": "L140"
       },
       {
         "api": "Sprite",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L87"
+        "sourceLocation": "L103"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L158"
+        "sourceLocation": "L226"
       },
       {
         "api": "SpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L69"
+        "sourceLocation": "L85"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L67"
+        "sourceLocation": "L83"
       },
       {
         "api": "ImageAsset",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L66"
+        "sourceLocation": "L82"
       },
       {
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L130"
+        "sourceLocation": "L160"
       },
       {
         "api": "math.Vec2",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L240"
+        "sourceLocation": "L328"
       },
       {
         "api": "math.Size",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L98"
+        "sourceLocation": "L125"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L132"
+        "sourceLocation": "L162"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L82"
+        "sourceLocation": "L98"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L405"
+        "sourceLocation": "L520"
       },
       {
         "api": "PhysicsSystem2D",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L112"
+        "sourceLocation": "L142"
       },
       {
         "api": "PhysicsSystem2D.collisionMatrix",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L246"
+        "sourceLocation": "L334"
       },
       {
         "api": "PhysicsSystem2D.step",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L212"
+        "sourceLocation": "L293"
       },
       {
         "api": "RigidBody2D",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L93"
+        "sourceLocation": "L117"
       },
       {
         "api": "RigidBody2D.enabledContactListener",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L95"
+        "sourceLocation": "L119"
       },
       {
         "api": "Collider2D",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L339"
+        "sourceLocation": "L454"
       },
       {
         "api": "Collider2D.apply",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L234"
+        "sourceLocation": "L321"
       },
       {
         "api": "BoxCollider2D",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L97"
+        "sourceLocation": "L121"
       },
       {
         "api": "CircleCollider2D",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L97"
+        "sourceLocation": "L121"
       },
       {
         "api": "Contact2DType",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L167"
+        "sourceLocation": "L236"
       },
       {
         "api": "PhysicsGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L102"
+        "sourceLocation": "L130"
       },
       {
         "api": "PHYSICS_2D_PTM_RATIO",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L333"
+        "sourceLocation": "L448"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "Ground",
-        "SensorBand",
-        "Box",
-        "Ball",
-        "Mute",
-        "P",
-        "Q",
-        "Status"
-      ]
+      "nodes": ["Canvas", "UICamera", "Ground", "SensorBand", "Box", "Ball", "Mute", "P", "Q", "Status"]
     }
   },
   "interaction": {
@@ -370,148 +343,106 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 121,
+            "line": 151,
             "text": "const canvas = canvasNode.addComponent(Canvas);"
           }
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
-            "line": 133,
+            "line": 163,
             "text": "canvas.cameraComponent = cam;"
           }
         ]
       },
       "Ground": {
-        "position": [
-          0,
-          -130,
-          0
-        ],
+        "position": [0, -130, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 136,
-            "text": "const ground = makeBody({ name: 'Ground', static: true, x: 0, y: -130, w: 440, h: 20, color: '#465064', listener: true });"
+            "line": 166,
+            "text": "const ground = makeBody({"
           }
         ]
       },
       "SensorBand": {
-        "position": [
-          0,
-          -36,
-          0
-        ],
+        "position": [0, -36, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 137,
-            "text": "const band = makeBody({ name: 'SensorBand', static: true, x: 0, y: -36, w: 440, h: 36, color: '#2f6f7a', sensor: true, listener: true });"
+            "line": 176,
+            "text": "const band = makeBody({"
           }
         ]
       },
       "Box": {
-        "position": [
-          -160,
-          130,
-          0
-        ],
+        "position": [-160, 130, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 140,
+            "line": 189,
             "text": "const box = makeBody({ name: 'Box', x: -160, y: FALL_Y, w: 40, h: 40, color: '#c88c46', friction: 0.3 });"
           }
         ]
       },
       "Ball": {
-        "position": [
-          -80,
-          130,
-          0
-        ],
+        "position": [-80, 130, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 141,
-            "text": "const ball = makeBody({ name: 'Ball', x: -80, y: FALL_Y, w: 40, h: 40, shape: 'circle', color: '#5ac878', restitution: 0.6, friction: 0.1 });"
+            "line": 190,
+            "text": "const ball = makeBody({"
           }
         ]
       },
       "Mute": {
-        "position": [
-          0,
-          130,
-          0
-        ],
+        "position": [0, 130, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 142,
-            "text": "const mute = makeBody({ name: 'Mute', x: 0, y: FALL_Y, w: 40, h: 40, color: '#b0b6c0', friction: 0.3, listener: false });"
+            "line": 201,
+            "text": "const mute = makeBody({"
           }
         ]
       },
       "P": {
-        "position": [
-          70,
-          130,
-          0
-        ],
+        "position": [70, 130, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 143,
+            "line": 211,
             "text": "const p = makeBody({ name: 'P', x: 70, y: FALL_Y, w: 30, h: 30, color: '#5aa0f0', group: 2 });"
           }
         ]
       },
       "Q": {
-        "position": [
-          95,
-          130,
-          0
-        ],
+        "position": [95, 130, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 144,
+            "line": 212,
             "text": "const q = makeBody({ name: 'Q', x: 95, y: FALL_Y, w: 30, h: 30, color: '#f0c04a', group: 4 });"
           }
         ]
       },
       "Status": {
-        "position": [
-          -10,
-          158,
-          0
-        ],
+        "position": [-10, 158, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 156,
+            "line": 224,
             "text": "node.setPosition(-10, 158, 0);"
           }
         ]
@@ -527,9 +458,9 @@
     "assets": "无第三方资产（纹理运行时程序化生成；box2d 为 cocos4 上游 TypeScript 端口，随 bundle 出处登记）"
   },
   "promotion": {
-    "spec": "4ee47e258bda",
-    "source": "49467e2333a8f117",
-    "candidate": "d1cc556759a27943",
+    "spec": "1146afbe7bfc",
+    "source": "651f615374c33ffe",
+    "candidate": "8746fc59b6aa0408",
     "verified": 27,
     "attested": 6,
     "units": 33

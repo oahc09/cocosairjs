@@ -23,9 +23,27 @@
  */
 
 import {
-    createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Component, Animation, AnimationClip,
-    Layers, Vec3, Color, Material, utils, primitives, geometry, GLTFLoader, frameObject,
-    input, Input, isValid,
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    DirectionalLight,
+    Component,
+    Animation,
+    AnimationClip,
+    Layers,
+    Vec3,
+    Color,
+    Material,
+    utils,
+    primitives,
+    geometry,
+    GLTFLoader,
+    frameObject,
+    input,
+    Input,
+    isValid,
 } from 'cocosair';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
@@ -185,7 +203,9 @@ function playSkinAnimation(root: Node): void {
     const nested: Animation | null = root.getComponentInChildren(Animation);
     const anim: Animation | null = direct || nested;
     if (anim && anim.clips.length > 0) {
-        anim.clips.forEach((c: AnimationClip) => { c.wrapMode = AnimationClip.WrapMode.Loop; });
+        anim.clips.forEach((c: AnimationClip) => {
+            c.wrapMode = AnimationClip.WrapMode.Loop;
+        });
         anim.play(anim.clips[0].name);
     }
 }
@@ -302,8 +322,11 @@ const btnMaterial = makeButton('换材质', () => {
     cycleVariant();
     if (!materialBtnDone) {
         materialBtnDone = true;
-        pcheck('material-variant-cycled', vstate.variantIdx === 1 && vstate.materialSwaps >= 1,
-            'variantIdx=' + vstate.variantIdx + ' swaps=' + vstate.materialSwaps);
+        pcheck(
+            'material-variant-cycled',
+            vstate.variantIdx === 1 && vstate.materialSwaps >= 1,
+            'variantIdx=' + vstate.variantIdx + ' swaps=' + vstate.materialSwaps,
+        );
     }
 });
 
@@ -318,9 +341,15 @@ const btnSwap = makeButton('更换模型', () => {
         vstate.modelSwaps++;
         if (!swapDone) {
             swapDone = true;
-            pcheck('model-swap-disposes-old',
-                !!oldInstance && !isValid(oldInstance.root) && !!mainNode && isValid(mainNode) && vstate.mainKind === (nextKind === 'box' ? 'BoxTextured' : 'SimpleSkin'),
-                'oldValid=' + (oldInstance ? isValid(oldInstance.root) : 'n/a') + ' newKind=' + vstate.mainKind);
+            pcheck(
+                'model-swap-disposes-old',
+                !!oldInstance &&
+                    !isValid(oldInstance.root) &&
+                    !!mainNode &&
+                    isValid(mainNode) &&
+                    vstate.mainKind === (nextKind === 'box' ? 'BoxTextured' : 'SimpleSkin'),
+                'oldValid=' + (oldInstance ? isValid(oldInstance.root) : 'n/a') + ' newKind=' + vstate.mainKind,
+            );
         }
         void oldRoot;
         renderPanel();
@@ -330,7 +359,9 @@ const btnSwap = makeButton('更换模型', () => {
 function renderPanel(): void {
     let nodeCount = 0;
     if (scene && isValid(scene)) {
-        scene.walk(() => { nodeCount++; });
+        scene.walk(() => {
+            nodeCount++;
+        });
     }
     panel.textContent = [
         `product-viewer · ${vstate.phase} · ${vstate.status}`,
@@ -356,11 +387,13 @@ function syncOrbitFromCamera(): void {
 
 function applyOrbit(): void {
     const cp = Math.cos(orbit.pitch);
-    camera.node.setPosition(new Vec3(
-        orbit.target.x + orbit.dist * cp * Math.sin(orbit.yaw),
-        orbit.target.y + orbit.dist * Math.sin(orbit.pitch),
-        orbit.target.z + orbit.dist * cp * Math.cos(orbit.yaw),
-    ));
+    camera.node.setPosition(
+        new Vec3(
+            orbit.target.x + orbit.dist * cp * Math.sin(orbit.yaw),
+            orbit.target.y + orbit.dist * Math.sin(orbit.pitch),
+            orbit.target.z + orbit.dist * cp * Math.cos(orbit.yaw),
+        ),
+    );
     camera.node.lookAt(orbit.target);
 }
 
@@ -399,7 +432,7 @@ async function main(): Promise<void> {
     lightNode.setPosition(new Vec3(0, 8, 0));
     lightNode.setRotationFromEuler(-45, -30, 0);
     const light = lightNode.addComponent(DirectionalLight);
-    light.illuminance = 2.4;
+    light.illuminance = 60000;
 
     const groundNode = new Node('Ground');
     groundNode.layer = Layers.Enum.DEFAULT;
@@ -432,35 +465,51 @@ async function main(): Promise<void> {
         vstate.lastError = String((e as Error).message || e);
     }
     vstate.status = 'error';
-    pcheck('t1-load-failure-recorded', vstate.lastError.length > 0 && vstate.lastError !== '(unexpected success)',
-        vstate.lastError.slice(0, 120));
+    pcheck(
+        't1-load-failure-recorded',
+        vstate.lastError.length > 0 && vstate.lastError !== '(unexpected success)',
+        vstate.lastError.slice(0, 120),
+    );
     renderPanel();
 
     // ---- T2 重试成功（主产品） ----
     vstate.phase = 't2-retry';
     await buildMain('box');
     vstate.status = 'loaded';
-    pcheck('t2-retry-load-success',
+    pcheck(
+        't2-retry-load-success',
         !!boxAsset && isValid(boxAsset) && !!mainNode && isValid(mainNode) && (boxAsset.meshes || []).length > 0,
-        'meshes=' + (boxAsset.meshes || []).length + ' animations=' + (boxAsset.animations || []).length);
+        'meshes=' + (boxAsset.meshes || []).length + ' animations=' + (boxAsset.animations || []).length,
+    );
 
     // ---- T3 副件（蒙皮 + 动画） ----
     vstate.phase = 't3-side';
     await buildSide();
-    const sideAnim: Animation | null = sideNode ? (sideNode.getComponent(Animation) || sideNode.getComponentInChildren(Animation)) : null;
-    pcheck('t3-side-animated', !!sideAnim && sideAnim.clips.length > 0 && isValid(sideNode as Node),
-        'clips=' + (sideAnim ? sideAnim.clips.length : -1));
+    const sideAnim: Animation | null = sideNode
+        ? sideNode.getComponent(Animation) || sideNode.getComponentInChildren(Animation)
+        : null;
+    pcheck(
+        't3-side-animated',
+        !!sideAnim && sideAnim.clips.length > 0 && isValid(sideNode as Node),
+        'clips=' + (sideAnim ? sideAnim.clips.length : -1),
+    );
 
     // ---- T4 材质切换 ----
     vstate.phase = 't4-material';
     cycleVariant();
-    pcheck('t4-material-variant-applied', vstate.variantIdx === 1 && vstate.materialSwaps === 1,
-        'variantIdx=' + vstate.variantIdx);
+    pcheck(
+        't4-material-variant-applied',
+        vstate.variantIdx === 1 && vstate.materialSwaps === 1,
+        'variantIdx=' + vstate.variantIdx,
+    );
     cycleVariant();
     cycleVariant();
     cycleVariant(); // 回到 variantIdx=0（原材质恢复路径）
-    pcheck('t4-variant-cycle-restores', vstate.variantIdx === 0 && vstate.materialSwaps === 4,
-        'variantIdx=' + vstate.variantIdx + ' swaps=' + vstate.materialSwaps);
+    pcheck(
+        't4-variant-cycle-restores',
+        vstate.variantIdx === 0 && vstate.materialSwaps === 4,
+        'variantIdx=' + vstate.variantIdx + ' swaps=' + vstate.materialSwaps,
+    );
 
     // ---- T5 尺寸响应（合成事件如实记录） ----
     vstate.phase = 't5-resize';
@@ -474,8 +523,18 @@ async function main(): Promise<void> {
     window.addEventListener('resize', onResize);
     window.dispatchEvent(new Event('resize'));
     await sleep(120);
-    pcheck('t5-resize-handler-ran', vstate.resizeEvents >= 1 && cvs.width > 0 && camera.rect.width > 0,
-        'resizeEvents=' + vstate.resizeEvents + ' canvas=' + cvs.width + 'x' + cvs.height + ' rect.w=' + camera.rect.width);
+    pcheck(
+        't5-resize-handler-ran',
+        vstate.resizeEvents >= 1 && cvs.width > 0 && camera.rect.width > 0,
+        'resizeEvents=' +
+            vstate.resizeEvents +
+            ' canvas=' +
+            cvs.width +
+            'x' +
+            cvs.height +
+            ' rect.w=' +
+            camera.rect.width,
+    );
 
     // ---- T6 DOM 按钮链（程序化 .click() 与真实点击同一 handler） ----
     vstate.phase = 't6-buttons';
@@ -483,8 +542,11 @@ async function main(): Promise<void> {
     btnMaterial.click();
     btnSwap.click();
     await sleep(600); // 换模型含异步 instantiate
-    pcheck('t6-buttons-processed', vstate.screenshots >= 1 && vstate.materialSwaps >= 5 && vstate.modelSwaps >= 1,
-        'shots=' + vstate.screenshots + ' matSwaps=' + vstate.materialSwaps + ' modelSwaps=' + vstate.modelSwaps);
+    pcheck(
+        't6-buttons-processed',
+        vstate.screenshots >= 1 && vstate.materialSwaps >= 5 && vstate.modelSwaps >= 1,
+        'shots=' + vstate.screenshots + ' matSwaps=' + vstate.materialSwaps + ' modelSwaps=' + vstate.modelSwaps,
+    );
 
     // ---- 交互：单击拾取 / 拖拽轨道 / 滚轮缩放 ----
     let downX = 0;
@@ -524,8 +586,11 @@ async function main(): Promise<void> {
             selectProduct(hit);
             if (!probe.clickPhaseDone) {
                 probe.clickPhaseDone = true;
-                pcheck('click-picks-product', hit === 'ProductMain' || hit === 'ProductSide' || hit === null,
-                    'pick=' + hit + '（画布中心预期 ProductMain；空白处为 null 亦合法）');
+                pcheck(
+                    'click-picks-product',
+                    hit === 'ProductMain' || hit === 'ProductSide' || hit === null,
+                    'pick=' + hit + '（画布中心预期 ProductMain；空白处为 null 亦合法）',
+                );
             }
         }
     };
@@ -545,11 +610,21 @@ async function main(): Promise<void> {
         label: 'product-viewer',
         hold: () => {
             const held: { name: string; ref: object }[] = [];
-            if (boxAsset) { held.push({ name: 'GLTFAsset(BoxTextured)', ref: boxAsset }); }
-            if (skinAsset) { held.push({ name: 'GLTFAsset(SimpleSkin)', ref: skinAsset }); }
-            if (skinBaseMat) { held.push({ name: 'Material(skinBase)', ref: skinBaseMat }); }
-            if (mainInstance) { held.push({ name: 'mainInstance.root', ref: mainInstance.root }); }
-            if (sideInstance) { held.push({ name: 'sideInstance.root', ref: sideInstance.root }); }
+            if (boxAsset) {
+                held.push({ name: 'GLTFAsset(BoxTextured)', ref: boxAsset });
+            }
+            if (skinAsset) {
+                held.push({ name: 'GLTFAsset(SimpleSkin)', ref: skinAsset });
+            }
+            if (skinBaseMat) {
+                held.push({ name: 'Material(skinBase)', ref: skinBaseMat });
+            }
+            if (mainInstance) {
+                held.push({ name: 'mainInstance.root', ref: mainInstance.root });
+            }
+            if (sideInstance) {
+                held.push({ name: 'sideInstance.root', ref: sideInstance.root });
+            }
             variantMats.forEach((m, i) => held.push({ name: 'variantMat' + i, ref: m }));
             return held;
         },
@@ -560,11 +635,26 @@ async function main(): Promise<void> {
             input.off(Input.EventType.MOUSE_WHEEL, onWheel);
             window.removeEventListener('resize', onResize);
             disposeMain();
-            if (sideInstance) { sideInstance.dispose(); sideInstance = null; sideNode = null; }
-            for (const m of variantMats) { m.destroy(); }
-            if (skinBaseMat) { skinBaseMat.destroy(); skinBaseMat = null; }
-            if (boxAsset) { boxAsset.destroy(); boxAsset = null; }
-            if (skinAsset) { skinAsset.destroy(); skinAsset = null; }
+            if (sideInstance) {
+                sideInstance.dispose();
+                sideInstance = null;
+                sideNode = null;
+            }
+            for (const m of variantMats) {
+                m.destroy();
+            }
+            if (skinBaseMat) {
+                skinBaseMat.destroy();
+                skinBaseMat = null;
+            }
+            if (boxAsset) {
+                boxAsset.destroy();
+                boxAsset = null;
+            }
+            if (skinAsset) {
+                skinAsset.destroy();
+                skinAsset = null;
+            }
             vstate.status = 'released';
             renderPanel();
         },

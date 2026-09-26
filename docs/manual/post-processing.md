@@ -24,7 +24,7 @@
 
 ## 2. 与 how-to-use 篇的分工
 
-后处理在本手册分两篇讲：*How to use Post Processing*（用现成内建槽位）与 *Post Processing*
+后处理在本手册分两篇讲：_How to use Post Processing_（用现成内建槽位）与 _Post Processing_
 （本篇，自己搭管线）。前者见 [how-to-use-post-processing](how-to-use-post-processing.md)
 （内建槽位 PARTIAL：色调映射单项可用、composer 类效果缺）；本篇自建管线，**N/A**（上节四条证据）。
 

@@ -7,16 +7,16 @@
 
 ## 1. 能力地图
 
-| 维度 | 3D 物理 | 2D 物理 |
-| --- | --- | --- |
-| 系统单例 | `PhysicsSystem.instance` | `PhysicsSystem2D.instance` |
-| 刚体 | `RigidBody`（`ERigidBodyType.STATIC/DYNAMIC/KINEMATIC`） | `RigidBody2D`（`ERigidBody2DType.Static/Dynamic/Kinematic`） |
-| 碰撞体 | `BoxCollider` `SphereCollider` `CapsuleCollider` `CylinderCollider` `ConeCollider` `MeshCollider` `PlaneCollider` `TerrainCollider` `SimplexCollider` | `BoxCollider2D` `CircleCollider2D` `PolygonCollider2D` |
-| 事件订阅 | `collider.on('onCollisionEnter' \| 'onTriggerEnter', cb)`（字符串事件名） | `collider.on(Contact2DType.BEGIN_CONTACT, cb)`（枚举键） |
-| 查询 | `PhysicsSystem.instance.raycast / raycastClosest` → `PhysicsRayResult`（法线字段是 `hitNormal`） | `PhysicsSystem2D.instance.testPoint / testAABB / raycast`（`ERaycast2DType`） |
-| 过滤 | `PhysicsGroup` + `collider.setMask` | `PhysicsGroup` + `maskBits` |
-| 默认后端 | **builtin**（默认）/ cannon（可切） | **box2d**（`@cocos/box2d` 纯 JS 端口） |
-| 后端切换 | `createAirApp({ physics: 'builtin' \| 'cannon' })` | 默认集即 box2d；builtin-2d 等其他后端走 feature-variant 构建 |
+| 维度     | 3D 物理                                                                                                                                               | 2D 物理                                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| 系统单例 | `PhysicsSystem.instance`                                                                                                                              | `PhysicsSystem2D.instance`                                                    |
+| 刚体     | `RigidBody`（`ERigidBodyType.STATIC/DYNAMIC/KINEMATIC`）                                                                                              | `RigidBody2D`（`ERigidBody2DType.Static/Dynamic/Kinematic`）                  |
+| 碰撞体   | `BoxCollider` `SphereCollider` `CapsuleCollider` `CylinderCollider` `ConeCollider` `MeshCollider` `PlaneCollider` `TerrainCollider` `SimplexCollider` | `BoxCollider2D` `CircleCollider2D` `PolygonCollider2D`                        |
+| 事件订阅 | `collider.on('onCollisionEnter' \| 'onTriggerEnter', cb)`（字符串事件名）                                                                             | `collider.on(Contact2DType.BEGIN_CONTACT, cb)`（枚举键）                      |
+| 查询     | `PhysicsSystem.instance.raycast / raycastClosest` → `PhysicsRayResult`（法线字段是 `hitNormal`）                                                      | `PhysicsSystem2D.instance.testPoint / testAABB / raycast`（`ERaycast2DType`） |
+| 过滤     | `PhysicsGroup` + `collider.setMask`                                                                                                                   | `PhysicsGroup` + `maskBits`                                                   |
+| 默认后端 | **builtin**（默认）/ cannon（可切）                                                                                                                   | **box2d**（`@cocos/box2d` 纯 JS 端口）                                        |
+| 后端切换 | `createAirApp({ physics: 'builtin' \| 'cannon' })`                                                                                                    | 默认集即 box2d；builtin-2d 等其他后端走 feature-variant 构建                  |
 
 两个默认后端的能力差异必须分清：
 
@@ -33,7 +33,7 @@
 以下片段与 `examples/physics-3d-collision/main.js` 逐字节一致（cannon 后端，地面静态盒 + 动态球）：
 
 ```js
-const app = await createAirApp({ canvas: '#GameCanvas', physics: 'cannon' });
+const app = await createAirApp({ canvas: "#GameCanvas", physics: "cannon" });
 ```
 
 ```js
@@ -41,7 +41,7 @@ const groundBody = groundNode.addComponent(RigidBody);
 groundBody.type = ERigidBodyType.STATIC;
 const groundCollider = groundNode.addComponent(BoxCollider);
 groundCollider.size = new Vec3(12, 1, 12);
-groundCollider.on('onCollisionEnter', onEnter);
+groundCollider.on("onCollisionEnter", onEnter);
 ```
 
 ```js

@@ -19,12 +19,8 @@
     "visual": "从左到右三个球体表面第二层镜面高光逐渐增强，基础色与光照完全一致"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync"
-    ],
-    "supporting": [
-      "GLTFAsset.instantiate"
-    ],
+    "primary": ["GLTFLoader.parseAsync"],
+    "supporting": ["GLTFAsset.instantiate"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -42,126 +38,112 @@
       "GLTFAsset.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": [
-      "用贴图/环境球伪造清漆高光",
-      "三球使用不同 baseColor 使对照失效"
-    ],
+    "forbiddenShortcut": ["用贴图/环境球伪造清漆高光", "三球使用不同 baseColor 使对照失效"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L23"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L25"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L27"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L31"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L26"
+        "sourceLocation": "L45"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L22"
+        "sourceLocation": "L38"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L17"
+        "sourceLocation": "L29"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L37"
       },
       {
         "api": "frameObject",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L101"
+        "sourceLocation": "L162"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L98"
+        "sourceLocation": "L159"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L98"
+        "sourceLocation": "L159"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L99"
+        "sourceLocation": "L160"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L16"
+        "sourceLocation": "L28"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L119"
+        "sourceLocation": "L190"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       }
     ]
   },
-  "capabilities": [
-    "materials"
-  ],
+  "capabilities": ["materials"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Fill Light",
-        "Sphere-Co-0",
-        "Sphere-Co-0_5",
-        "Sphere-Co-1"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Fill Light", "Sphere-Co-0", "Sphere-Co-0_5", "Sphere-Co-1"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
     "functional": [
@@ -173,21 +155,13 @@
       "transform-equals"
     ],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
-    "capability": [
-      "capability-status"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": ["capability-status"],
     "capabilityExpectations": [
       {
         "extension": "KHR_materials_clearcoat",
-        "statuses": [
-          "supported"
-        ]
+        "statuses": ["supported"]
       }
     ]
   },
@@ -202,117 +176,65 @@
   "validationExpectations": {
     "transform-equals": {
       "Sphere-Co-0": {
-        "position": [
-          -2.6,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [-2.6, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 88,
+            "line": 143,
             "text": "translation: [(i - 1) * 2.6, 0, 0] 且 name: 'Sphere-Co-' + String(factors[i]).replace('.', '_') —— factors=[0,0.5,1]，i=0 ⇒ Sphere-Co-0 / [-2.6,0,0]；nodes[] 未声明 rotation/scale ⇒ identity"
           }
         ],
         "handAuthored": true
       },
       "Sphere-Co-0_5": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 88,
+            "line": 143,
             "text": "同上 i=1 ⇒ String(0.5) 的点号替换为下划线得 Sphere-Co-0_5，translation [(1-1)*2.6,0,0] = [0,0,0]"
           }
         ],
         "handAuthored": true
       },
       "Sphere-Co-1": {
-        "position": [
-          2.6,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [2.6, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 88,
+            "line": 143,
             "text": "同上 i=2 ⇒ Sphere-Co-1，translation [(2-1)*2.6,0,0] = [2.6,0,0]"
           }
         ],
         "handAuthored": true
       },
       "Main Light": {
-        "position": [
-          0,
-          6,
-          4
-        ],
+        "position": [0, 6, 4],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 25,
-            "text": "keyNode.setPosition(new Vec3(0, 6, 4)); keyNode.setRotationFromEuler(-50, 0, 0);"
+            "line": 43,
+            "text": "keyNode.setPosition(new Vec3(0, 6, 4));"
           }
         ],
-        "rotationEuler": [
-          -50,
-          0,
-          0
-        ]
+        "rotationEuler": [-50, 0, 0]
       },
       "Fill Light": {
-        "position": [
-          -5,
-          2,
-          -4
-        ],
+        "position": [-5, 2, -4],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 28,
-            "text": "fillNode.setPosition(new Vec3(-5, 2, -4)); fillNode.setRotationFromEuler(-5, 60, 0);"
+            "line": 49,
+            "text": "fillNode.setPosition(new Vec3(-5, 2, -4));"
           }
         ],
-        "rotationEuler": [
-          -5,
-          60,
-          0
-        ]
+        "rotationEuler": [-5, 60, 0]
       }
     },
     "material-property": {
@@ -321,17 +243,12 @@
         "effect": "air-gltf-standard",
         "props": {
           "albedo": {
-            "value": [
-              0.55,
-              0.62,
-              0.72,
-              1
-            ],
+            "value": [0.55, 0.62, 0.72, 1],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 83,
+              "line": 132,
               "text": "pbrMetallicRoughness.baseColorFactor [0.55,0.62,0.72,1]（三球共用）→ 引擎 material.ts L347 setProperty('albedo', Vec4(factor))；encoding 固定 0-1，不允许 0-255 归一化旁路"
             }
           },
@@ -339,7 +256,7 @@
             "expect": "unset",
             "provenance": {
               "source": "src/main.ts",
-              "line": 84,
+              "line": 137,
               "text": "clearcoatFactor: 0（factors[0]）→ 引擎 material.ts L285/L304 clearcoatScalar=false，不走 physical 通道（effect=air-gltf-standard），故 airClearcoat 必须缺席；断言『扩展为 0 时不生效』"
             }
           }
@@ -347,7 +264,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 82,
+            "line": 131,
             "text": "name: 'clearcoat-' + f ⇒ factors[0]=0 得 'clearcoat-0'，clearcoatFactor=0 不升级 physical ⇒ effect 仍为 air-gltf-standard；名取自共享材质 getMaterial(0).name，非 MaterialInstance（F-69）"
           }
         ],
@@ -358,30 +275,22 @@
         "effect": "air-gltf-physical",
         "props": {
           "albedo": {
-            "value": [
-              0.55,
-              0.62,
-              0.72,
-              1
-            ],
+            "value": [0.55, 0.62, 0.72, 1],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 83,
+              "line": 132,
               "text": "同上 f=0.5 球体基色一致（只差清漆强度）"
             }
           },
           "airClearcoat": {
-            "value": [
-              0.5,
-              0.12
-            ],
+            "value": [0.5, 0.12],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 84,
+              "line": 137,
               "text": "extensions.KHR_materials_clearcoat { clearcoatFactor: 0.5, clearcoatRoughnessFactor: 0.12 } → material.ts L355 setProperty('airClearcoat', Vec4(factor, roughness, normalScale, 1))；只断言源码声明的前两分量，normalScale 默认值属引擎侧，不写进示例合同"
             }
           }
@@ -389,7 +298,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 82,
+            "line": 131,
             "text": "name: 'clearcoat-' + f ⇒ 'clearcoat-0.5'；clearcoatFactor>0 ⇒ 走 physical 通道（effect=air-gltf-physical）"
           }
         ],
@@ -400,30 +309,22 @@
         "effect": "air-gltf-physical",
         "props": {
           "albedo": {
-            "value": [
-              0.55,
-              0.62,
-              0.72,
-              1
-            ],
+            "value": [0.55, 0.62, 0.72, 1],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 83,
+              "line": 132,
               "text": "同上 f=1 球体基色一致"
             }
           },
           "airClearcoat": {
-            "value": [
-              1,
-              0.12
-            ],
+            "value": [1, 0.12],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 84,
+              "line": 137,
               "text": "clearcoatFactor 1.0 / roughness 0.12 ⇒ airClearcoat 前两分量为 [1, 0.12]"
             }
           }
@@ -431,7 +332,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 82,
+            "line": 131,
             "text": "name: 'clearcoat-' + f ⇒ 'clearcoat-1'；clearcoatFactor=1 ⇒ physical 通道"
           }
         ],
@@ -446,7 +347,7 @@
       "provenance": [
         {
           "source": "src/main.ts",
-          "line": 79,
+          "line": 124,
           "text": "materials: factors.map(...) 且 factors=[0,0.5,1] ⇒ 三个材质对象必须各自建立；buffer 为 data URI，无外部文件可取，故以唯一材质对象数而非 HTTP 取回为合同"
         }
       ]
@@ -456,14 +357,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, instance.root);）",
-        "line": "L101"
+        "line": "L162"
       }
     }
   },
   "promotion": {
-    "spec": "c6b480406f7f",
-    "source": "221fa314ef0a2167",
-    "candidate": "d1cc556759a27943",
+    "spec": "e12caf84b432",
+    "source": "9b899fb6acdb4dc8",
+    "candidate": "8746fc59b6aa0408",
     "verified": 15,
     "attested": 0,
     "units": 15

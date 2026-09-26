@@ -7,16 +7,10 @@
   "requiresDevTools": false,
   "title": "glTF Catalog",
   "category": "gltf",
-  "apiClaims": [
-    "GLTFLoader"
-  ],
-  "capabilities": [
-    "gltf"
-  ],
+  "apiClaims": ["GLTFLoader"],
+  "capabilities": ["gltf"],
   "validation": {
-    "functional": [
-      "no-runtime-error"
-    ],
+    "functional": ["no-runtime-error"],
     "interaction": [],
     "visual": [],
     "lifecycle": [],
@@ -44,24 +38,17 @@
     "primary": [],
     "supporting": [],
     "claims": [],
-    "forbiddenShortcut": [
-      "把 Khronos 在线 viewer 结果冒充引擎渲染",
-      "目录页直接内嵌引擎（必须经 iframe + URL 参数）"
-    ],
+    "forbiddenShortcut": ["把 Khronos 在线 viewer 结果冒充引擎渲染", "目录页直接内嵌引擎（必须经 iframe + URL 参数）"],
     "evidence": []
   },
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "#model-list .model-row"
-      ],
+      "nodes": ["#model-list .model-row"],
       "dom": true
     }
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "assets": [],
   "coverage": {

@@ -40,20 +40,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Texture2D 数据面：构造、create 分配、mipmap 更新、HTML 元素获取、描述字符串、reset/release 资源语义与缺省化（多数走 try 兜底）。",
-    "points": [
-      "new Texture2D() 构造即回读",
-      "description/toString 字符串型",
-      "releaseTexture 后可再 initDefault"
-    ]
+    "points": ["new Texture2D() 构造即回读", "description/toString 字符串型", "releaseTexture 后可再 initDefault"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 210,180,230）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "Texture2D.create"
-    ],
+    "primary": ["Texture2D.create"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -100,211 +94,196 @@
       "Texture2D.initDefault",
       "Texture2D.validate"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L26"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L45"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L46"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L40"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L31"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L55"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L56"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L53"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L53"
       },
       {
         "api": "Texture2D.constructor",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L34"
+        "sourceLocation": "L61"
       },
       {
         "api": "Texture2D.create",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L41"
+        "sourceLocation": "L81"
       },
       {
         "api": "Texture2D.updateMipmaps",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L42"
+        "sourceLocation": "L89"
       },
       {
         "api": "Texture2D.getHtmlElementObj",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L43"
+        "sourceLocation": "L97"
       },
       {
         "api": "Texture2D.toString",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L45"
+        "sourceLocation": "L111"
       },
       {
         "api": "Texture2D.reset",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L47"
+        "sourceLocation": "L121"
       },
       {
         "api": "Texture2D.releaseTexture",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L48"
+        "sourceLocation": "L129"
       },
       {
         "api": "Texture2D.base",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L46"
+        "sourceLocation": "L112"
       },
       {
         "api": "Texture2D.initDefault",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L49"
+        "sourceLocation": "L137"
       },
       {
         "api": "Texture2D.validate",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L50"
+        "sourceLocation": "L145"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "lifecycle": ["resource-released"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -316,9 +295,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "65286e65b9e5",
-    "source": "db02dcc4ffa25fa1",
-    "candidate": "d1cc556759a27943",
+    "spec": "2644a73fb04f",
+    "source": "d5b512b6239cdb75",
+    "candidate": "8746fc59b6aa0408",
     "verified": 27,
     "attested": 1,
     "units": 28

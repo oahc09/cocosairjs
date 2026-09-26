@@ -7,52 +7,27 @@
   "requiresDevTools": false,
   "title": "Camera Controls",
   "category": "camera",
-  "apiClaims": [
-    "Camera.projection",
-    "Camera.orthoHeight",
-    "frameObject"
-  ],
-  "capabilities": [
-    "camera"
-  ],
+  "apiClaims": ["Camera.projection", "Camera.orthoHeight", "frameObject"],
+  "capabilities": ["camera"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "相机控制与取景：PERSPECTIVE/ORTHO 切换 + frameObject 自动取景（E003）",
-    "points": [
-      "Camera.ProjectionType 切换",
-      "orthoHeight 与 fov 的语义差异",
-      "utils.frameObject 按包围盒自动取景"
-    ]
+    "points": ["Camera.ProjectionType 切换", "orthoHeight 与 fov 的语义差异", "utils.frameObject 按包围盒自动取景"]
   },
   "effect": {
     "functional": "场景 group 含多个方块；按钮切换 camera.projection；frameObject 使相机完整包围 group 包围盒；切换后画面明显变化。",
     "visual": "整组方块完整居中显示（无裁切）；切到正交后近大远小消失"
   },
   "api": {
-    "primary": [
-      "Camera",
-      "frameObject"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "primitives.box"
-    ],
+    "primary": ["Camera", "frameObject"],
+    "supporting": ["MeshRenderer", "primitives.box"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -68,9 +43,7 @@
       "Node.addChild",
       "Node.setPosition"
     ],
-    "forbiddenShortcut": [
-      "手动试凑相机位置冒充 frameObject 自动取景"
-    ],
+    "forbiddenShortcut": ["手动试凑相机位置冒充 frameObject 自动取景"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -100,7 +73,7 @@
         "api": "Camera",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L63"
+        "sourceLocation": "L65"
       },
       {
         "api": "Layers",
@@ -136,7 +109,7 @@
         "api": "frameObject",
         "source": "main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L68"
+        "sourceLocation": "L47"
       },
       {
         "api": "Node.addChild",
@@ -155,16 +128,7 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "group",
-        "cube-0",
-        "cube-1",
-        "cube-2",
-        "cube-3",
-        "cube-4"
-      ]
+      "nodes": ["Main Camera", "Main Light", "group", "cube-0", "cube-1", "cube-2", "cube-3", "cube-4"]
     }
   },
   "interaction": {
@@ -182,9 +146,7 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -197,40 +159,20 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "examples/shared/scene-kit.js",
-            "line": 53,
+            "line": 57,
             "text": "position 默认值 [0,8,0]（shared 形参默认值）"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "group": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "main.ts",
@@ -240,11 +182,7 @@
         ]
       },
       "cube-0": {
-        "position": [
-          -2.4,
-          0,
-          0
-        ],
+        "position": [-2.4, 0, 0],
         "provenance": [
           {
             "source": "main.ts",
@@ -254,11 +192,7 @@
         ]
       },
       "cube-1": {
-        "position": [
-          -1.2,
-          0,
-          -1.2
-        ],
+        "position": [-1.2, 0, -1.2],
         "provenance": [
           {
             "source": "main.ts",
@@ -268,11 +202,7 @@
         ]
       },
       "cube-2": {
-        "position": [
-          0,
-          0,
-          -2.4
-        ],
+        "position": [0, 0, -2.4],
         "provenance": [
           {
             "source": "main.ts",
@@ -282,11 +212,7 @@
         ]
       },
       "cube-3": {
-        "position": [
-          1.2,
-          0,
-          -3.6
-        ],
+        "position": [1.2, 0, -3.6],
         "provenance": [
           {
             "source": "main.ts",
@@ -296,11 +222,7 @@
         ]
       },
       "cube-4": {
-        "position": [
-          2.4,
-          0,
-          -4.8
-        ],
+        "position": [2.4, 0, -4.8],
         "provenance": [
           {
             "source": "main.ts",
@@ -352,14 +274,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（button('frameObject 取景', () => { frameObject(camera, group);）",
-        "line": "L67"
+        "line": "L47"
       }
     }
   },
   "promotion": {
-    "spec": "678fb005e8ec",
-    "source": "78040895699e23e3",
-    "candidate": "d1cc556759a27943",
+    "spec": "d314861ea3a2",
+    "source": "0af7f6b33b45bf6e",
+    "candidate": "8746fc59b6aa0408",
     "verified": 12,
     "attested": 1,
     "units": 13

@@ -46,21 +46,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Layers 位掩码系统：内置层常量、makeMaskExclude 排除掩码、addLayer/deleteLayer 动态注册、nameToLayer/layerToName 双向查表。",
-    "points": [
-      "NONE=0、DEFAULT 非零",
-      "nameToLayer 与 layerToName 互逆",
-      "makeMaskExclude 得到排除位掩码"
-    ]
+    "points": ["NONE=0、DEFAULT 非零", "nameToLayer 与 layerToName 互逆", "makeMaskExclude 得到排除位掩码"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 170,210,190）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "Layers.makeMaskExclude",
-      "Layers.nameToLayer"
-    ],
+    "primary": ["Layers.makeMaskExclude", "Layers.nameToLayer"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -113,245 +106,232 @@
       "Layers.nameToLayer",
       "Layers.layerToName"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L23"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L25"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L42"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L30"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L43"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L37"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L36"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L49"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L51"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L53"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L50"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L50"
       },
       {
         "api": "Layers.NONE",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L39"
+        "sourceLocation": "L74"
       },
       {
         "api": "Layers.IGNORE_RAYCAST",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L48"
+        "sourceLocation": "L91"
       },
       {
         "api": "Layers.GIZMOS",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L43"
+        "sourceLocation": "L78"
       },
       {
         "api": "Layers.EDITOR",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L42"
+        "sourceLocation": "L77"
       },
       {
         "api": "Layers.UI_3D",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L45"
+        "sourceLocation": "L83"
       },
       {
         "api": "Layers.SCENE_GIZMO",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L46"
+        "sourceLocation": "L86"
       },
       {
         "api": "Layers.UI_2D",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L41"
+        "sourceLocation": "L76"
       },
       {
         "api": "Layers.PROFILER",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L44"
+        "sourceLocation": "L81"
       },
       {
         "api": "Layers.DEFAULT",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L19"
+        "sourceLocation": "L37"
       },
       {
         "api": "Layers.ALL",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L47"
+        "sourceLocation": "L88"
       },
       {
         "api": "Layers.init",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L51"
+        "sourceLocation": "L118"
       },
       {
         "api": "Layers.makeMaskExclude",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L48"
+        "sourceLocation": "L91"
       },
       {
         "api": "Layers.addLayer",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L52"
+        "sourceLocation": "L126"
       },
       {
         "api": "Layers.deleteLayer",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L52"
+        "sourceLocation": "L128"
       },
       {
         "api": "Layers.nameToLayer",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L49"
+        "sourceLocation": "L100"
       },
       {
         "api": "Layers.layerToName",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L50"
+        "sourceLocation": "L110"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -363,9 +343,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "4300a4d31968",
-    "source": "5584faf83c95e68c",
-    "candidate": "d1cc556759a27943",
+    "spec": "b3f0cc42328a",
+    "source": "55effe6c1c4bebda",
+    "candidate": "8746fc59b6aa0408",
     "verified": 24,
     "attested": 10,
     "units": 34

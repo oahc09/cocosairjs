@@ -59,9 +59,15 @@ const SPACING = 1.7;
 const sharedMesh = utils.createMesh(primitives.box({ width: HALF * 2, height: HALF * 2, length: HALF * 2 }));
 const cubes: { node: Node; mat: Material; base: number[]; center: Vec3 }[] = [];
 const palette = [
-    [220, 90, 90], [90, 200, 120], [90, 140, 230],
-    [225, 190, 80], [170, 110, 220], [90, 195, 200],
-    [230, 130, 70], [150, 210, 90], [210, 100, 170],
+    [220, 90, 90],
+    [90, 200, 120],
+    [90, 140, 230],
+    [225, 190, 80],
+    [170, 110, 220],
+    [90, 195, 200],
+    [230, 130, 70],
+    [150, 210, 90],
+    [210, 100, 170],
 ];
 let idx = 0;
 for (let gz = -1; gz <= 1; gz++) {
@@ -83,7 +89,7 @@ for (let gz = -1; gz <= 1; gz++) {
 }
 
 // ---- 应用层射线 vs AABB（slab 相交，无第三方依赖） ----
-function rayHitsAABB (o: Vec3, d: Vec3, center: Vec3, half: number): number {
+function rayHitsAABB(o: Vec3, d: Vec3, center: Vec3, half: number): number {
     let tMin = -Infinity;
     let tMax = Infinity;
     const ax = [center.x - half, center.y - half, center.z - half];
@@ -96,13 +102,17 @@ function rayHitsAABB (o: Vec3, d: Vec3, center: Vec3, half: number): number {
         } else {
             let t0 = (ax[i] - oc[i]) / dc[i];
             let t1 = (bx[i] - oc[i]) / dc[i];
-            if (t0 > t1) { const t = t0; t0 = t1; t1 = t; }
+            if (t0 > t1) {
+                const t = t0;
+                t0 = t1;
+                t1 = t;
+            }
             if (t0 > tMin) tMin = t0;
             if (t1 < tMax) tMax = t1;
             if (tMin > tMax) return -1;
         }
     }
-    return tMax < 0 ? -1 : (tMin >= 0 ? tMin : tMax);
+    return tMax < 0 ? -1 : tMin >= 0 ? tMin : tMax;
 }
 
 // ---- 指针：有鼠标用鼠标，否则 Lissajous 自动扫 ----
@@ -132,7 +142,7 @@ const ray: { o: Vec3; d: Vec3 } = { o: new Vec3(), d: new Vec3() };
 class Picker extends Component {
     private _t = 0;
 
-    update (dt: number): void {
+    update(dt: number): void {
         this._t = (this._t || 0) + dt;
         if (pointer.source === 'auto') {
             pointer.x = 0.5 + 0.22 * Math.sin(this._t * 0.6) * Math.cos(this._t * 0.23);
@@ -153,7 +163,10 @@ class Picker extends Component {
         let bestT = Infinity;
         for (let i = 0; i < cubes.length; i++) {
             const t = rayHitsAABB(ray.o, ray.d, cubes[i].center, HALF);
-            if (t >= 0 && t < bestT) { bestT = t; best = i; }
+            if (t >= 0 && t < bestT) {
+                bestT = t;
+                best = i;
+            }
         }
         hitIndex = best;
         for (let i = 0; i < cubes.length; i++) {

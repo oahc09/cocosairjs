@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-26T04:19:39.397Z",
+  "generatedAt": "2026-09-26T07:05:31.010Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T03:16:48.425Z",
+      "measuredAt": "2026-09-26T07:03:46.229Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T04:17:43.178Z",
+      "measuredAt": "2026-09-26T07:04:48.433Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -23,7 +23,7 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "d1cc556759a27943",
+  "candidateFingerprint": "8746fc59b6aa0408",
   "inventoryFingerprint": "15d629f3a2262d01",
   "inventoryConsistency": [],
   "totalUnits": 8060,
@@ -42,12 +42,7 @@
     "DevToolsSession.inspectNode",
     "DevToolsSession.getRuntimeErrors"
   ],
-  "evidenceSchemaGaps": [
-    {
-      "id": "gltf-catalog",
-      "reason": "evidence row has no apiProof[] (pre-v3 schema): claims cannot be counted as verified"
-    }
-  ],
+  "evidenceSchemaGaps": [],
   "examples": [
     {
       "id": "anim-position",
@@ -556,13 +551,13 @@
     {
       "id": "gltf-catalog",
       "result": "PASS",
-      "fresh": false,
+      "fresh": true,
       "binding": {
         "spec": true,
         "source": true,
         "candidate": true
       },
-      "hasApiProof": false,
+      "hasApiProof": true,
       "instrumentation": null,
       "claims": 0,
       "tally": {

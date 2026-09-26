@@ -15,15 +15,18 @@ import { Node, Camera, DirectionalLight, Layers, Vec3, Color } from 'cocosair';
  *   主体落在地面之上（y=半高）会让画面整体偏上，对准中心才与视口宽高比无关。
  * @returns {Camera} 挂载在新建节点上的 Camera 组件
  */
-export function setupCamera (scene, {
-    position = [0, 2.4, 6.5],
-    rotationEuler = [-20, 0, 0],
-    lookAt = null,
-    fov = 45,
-    near = 0.1,
-    far = 1000,
-    clearColor = [30, 40, 60, 255],
-} = {}) {
+export function setupCamera(
+    scene,
+    {
+        position = [0, 2.4, 6.5],
+        rotationEuler = [-20, 0, 0],
+        lookAt = null,
+        fov = 45,
+        near = 0.1,
+        far = 1000,
+        clearColor = [30, 40, 60, 255],
+    } = {},
+) {
     const cameraNode = new Node('Main Camera');
     scene.addChild(cameraNode);
     cameraNode.setPosition(new Vec3(position[0], position[1], position[2]));
@@ -45,15 +48,15 @@ export function setupCamera (scene, {
 
 /**
  * 创建标准平行光。
+ * illuminance 使用默认 HDR 管线的 lux 量级（50000）；不要传入 LDR 强度 2。
  * @param {Scene} scene
  * @param {object} [opts] position/rotationEuler/illuminance
  * @returns {DirectionalLight}
  */
-export function setupDirectionalLight (scene, {
-    position = [0, 8, 0],
-    rotationEuler = [-45, -30, 0],
-    illuminance = 2,
-} = {}) {
+export function setupDirectionalLight(
+    scene,
+    { position = [0, 8, 0], rotationEuler = [-45, -30, 0], illuminance = 50000 } = {},
+) {
     const lightNode = new Node('Main Light');
     scene.addChild(lightNode);
     lightNode.setPosition(new Vec3(position[0], position[1], position[2]));

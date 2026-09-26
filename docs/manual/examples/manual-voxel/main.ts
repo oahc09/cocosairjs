@@ -59,15 +59,15 @@ const GRID = 12;
 const heights = new Int16Array(GRID * GRID);
 for (let z = 0; z < GRID; z++) {
     for (let x = 0; x < GRID; x++) {
-        const wave = 0.5 + 0.5 * Math.sin(x * 0.55 + 0.3) * Math.cos(z * 0.42)
-            + 0.5 * (0.5 + 0.5 * Math.sin(z * 0.6 - x * 0.2));
+        const wave =
+            0.5 + 0.5 * Math.sin(x * 0.55 + 0.3) * Math.cos(z * 0.42) + 0.5 * (0.5 + 0.5 * Math.sin(z * 0.6 - x * 0.2));
         heights[z * GRID + x] = 1 + Math.floor(3.2 * wave); // 1..8 名义区间，实测本波形 1..5
     }
 }
 const maxH = Math.max(...heights);
 
 // 体素占据判定：网格外=空；y<0 视为实心（底面永不暴露，通用地面约定）
-function solid (x: number, y: number, z: number): boolean {
+function solid(x: number, y: number, z: number): boolean {
     if (y < 0) return true;
     if (x < 0 || x >= GRID || z < 0 || z >= GRID) return false;
     return y < heights[z * GRID + x];
@@ -117,7 +117,8 @@ for (let z = 0; z < GRID; z++) {
                 if (solid(x + face.dir[0], y + face.dir[1], z + face.dir[2])) continue; // 邻居挡住 → 丢面
                 const base = positions.length / 3;
                 const c = PALETTE[y % PALETTE.length];
-                for (let k = 0; k < 4; k++) { // 4 顶点：平移复制 + 法线 + uv + 色
+                for (let k = 0; k < 4; k++) {
+                    // 4 顶点：平移复制 + 法线 + uv + 色
                     const vp = (face.vbase + k) * 3;
                     positions.push(
                         boxPrim.positions[vp] + x - OFF,
@@ -129,7 +130,8 @@ for (let z = 0; z < GRID; z++) {
                     uvs.push(boxPrim.uvs[vt], boxPrim.uvs[vt + 1]);
                     colors.push(c[0], c[1], c[2], 1); // RGBA32F 归一浮点（见 PALETTE 处实测坑注释）
                 }
-                for (let k = 0; k < 6; k++) { // 6 索引：面内局部索引重映射到合并缓冲
+                for (let k = 0; k < 6; k++) {
+                    // 6 索引：面内局部索引重映射到合并缓冲
                     indices.push(base + boxPrim.indices[face.idxStart + k] - face.vbase);
                 }
                 exposedFaces++;
@@ -167,7 +169,7 @@ const info = document.querySelector('#info') as HTMLElement;
 
 class Spin extends Component {
     private _a = 0;
-    update (dt: number): void {
+    update(dt: number): void {
         this._a = ((this._a || 0) + 16 * dt) % 360;
         this.node.setRotationFromEuler(0, this._a, 0);
         info.textContent = [

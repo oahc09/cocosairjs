@@ -70,7 +70,7 @@ texture.reset({
 });
 texture.setWrapMode(Texture2D.WrapMode.CLAMP_TO_EDGE, Texture2D.WrapMode.CLAMP_TO_EDGE);
 
-function drawPaint (frame: number, t: number): void {
+function drawPaint(frame: number, t: number): void {
     // 实测坑：uploadData(canvas) 不做 y 翻转（引擎固定 UNPACK_FLIP_Y_WEBGL=false，
     // build js 78228/82958），画布顶行落在 v=0 = 面片下缘 → 画面上下颠倒。
     // 解法：作画时整体预翻转，让画布内容"倒着画"、上屏正好"正着看"。
@@ -105,7 +105,7 @@ function drawPaint (frame: number, t: number): void {
 }
 
 // ---- 贴动态纹理的竖直面（quad）+ 自转立方体（同一纹理两用） ----
-function textured (name: string, mesh: Mesh, pos: Vec3, rotX: number): { node: Node; mat: Material } {
+function textured(name: string, mesh: Mesh, pos: Vec3, rotX: number): { node: Node; mat: Material } {
     const n = new Node(name);
     n.layer = Layers.Enum.DEFAULT;
     n.setPosition(pos);
@@ -122,10 +122,18 @@ function textured (name: string, mesh: Mesh, pos: Vec3, rotX: number): { node: N
     r.material = m;
     return { node: n, mat: m };
 }
-const quad = textured('DynQuad', utils.createMesh(primitives.plane({ width: 3.4, length: 3.4 })),
-    new Vec3(-1.9, 1.5, 0), 90);
-const cube = textured('DynCube', utils.createMesh(primitives.box({ width: 1.6, height: 1.6, length: 1.6 })),
-    new Vec3(1.9, 1.5, 0), 0);
+const quad = textured(
+    'DynQuad',
+    utils.createMesh(primitives.plane({ width: 3.4, length: 3.4 })),
+    new Vec3(-1.9, 1.5, 0),
+    90,
+);
+const cube = textured(
+    'DynCube',
+    utils.createMesh(primitives.box({ width: 1.6, height: 1.6, length: 1.6 })),
+    new Vec3(1.9, 1.5, 0),
+    0,
+);
 cube.node.lookAt(new Vec3(4.5, 3.5, 6));
 
 // ---- 每帧：作画 → uploadData → 覆盖层读数 ----
@@ -136,7 +144,7 @@ let frame = 0;
 class DynTex extends Component {
     private _t = 0;
 
-    update (dt: number): void {
+    update(dt: number): void {
         this._t = (this._t || 0) + dt;
         frame++;
         drawPaint(frame, this._t);

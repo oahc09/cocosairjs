@@ -44,11 +44,13 @@ for (let i = 0; i < 5; i++) {
 
 window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 app.run(scene);
+frameObject(camera, group); // 首帧就对准整组模型，按钮仍可重新取景。
 
 // ---- DOM 控制条（v051 面板之外的普通页面元素）----
 const bar = document.createElement('div');
-bar.style.cssText = 'position:fixed;left:12px;bottom:12px;display:flex;gap:8px;z-index:10;'
-    + 'font:13px system-ui;background:rgba(20,20,40,.8);padding:8px;border-radius:8px';
+bar.style.cssText =
+    'position:fixed;left:12px;bottom:12px;display:flex;gap:8px;z-index:10;' +
+    'font:13px system-ui;background:rgba(20,20,40,.8);padding:8px;border-radius:8px';
 const button = (label: string, onClick: () => void): void => {
     const b = document.createElement('button');
     b.textContent = label;
@@ -61,7 +63,9 @@ let ortho = false;
 button('切换正交/透视', () => {
     ortho = !ortho;
     camera.projection = ortho ? Camera.ProjectionType.ORTHO : Camera.ProjectionType.PERSPECTIVE;
-    if (ortho) { camera.orthoHeight = 4; }
+    if (ortho) {
+        camera.orthoHeight = 4;
+    }
     bar.dataset.mode = ortho ? 'ortho' : 'perspective';
 });
 button('frameObject 取景', () => {

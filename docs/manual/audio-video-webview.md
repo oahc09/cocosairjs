@@ -16,12 +16,16 @@ Web 环境自动播放受限：**只有在用户手势回调内启动的播放�
 资产加载与组件挂接（逐字节）：
 
 ```js
-function loadRemote (url) {
-    return new Promise((resolve, reject) => {
-        assetManager.loadRemote(url, (err, asset) => {
-            if (err) { reject(err); } else { resolve(asset); }
-        });
+function loadRemote(url) {
+  return new Promise((resolve, reject) => {
+    assetManager.loadRemote(url, (err, asset) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(asset);
+      }
     });
+  });
 }
 
 clip = await loadRemote(CLIP_URL);
@@ -31,8 +35,8 @@ clip = await loadRemote(CLIP_URL);
 srcA = audioNode.addComponent(AudioSource);
 srcB = audioNode.addComponent(AudioSource);
 for (const s of [srcA, srcB]) {
-    s.playOnAwake = false;
-    s.clip = clip;
+  s.playOnAwake = false;
+  s.clip = clip;
 }
 ```
 
@@ -46,13 +50,13 @@ for (const s of [srcA, srcB]) {
 （`macro.ENABLE_TRANSPARENT_CANVAS`）/解码出图/换源/判尾/循环/全屏双向，8+1 阶段逐字段读回。
 
 ```js
-    player = hostNode.addComponent(VideoPlayer);
-    player.resourceType = VideoPlayer.ResourceType.LOCAL;
+player = hostNode.addComponent(VideoPlayer);
+player.resourceType = VideoPlayer.ResourceType.LOCAL;
 ```
 
 ```js
-    player.clip = c;                 // LOCAL 分支：syncClip → createVideoPlayer(clip.nativeUrl)
-    await waitFor(() => player.state === VideoPlayer.EventType.READY_TO_PLAY, 1000);
+player.clip = c; // LOCAL 分支：syncClip → createVideoPlayer(clip.nativeUrl)
+await waitFor(() => player.state === VideoPlayer.EventType.READY_TO_PLAY, 1000);
 ```
 
 全屏注意（实测）：`player.fullScreenOnAwake` 只有在 **clip 装载之前**设置才有效（awake 路在
@@ -77,11 +81,11 @@ for (const s of [srcA, srcB]) {
 
 ## 4. 验证与运行
 
-| 示例 | 内容 | 条件 |
-| --- | --- | --- |
-| [examples/audio-basic/](../../examples/audio-basic/) | 手势解锁→8 阶段读回 | 需要真实手势事件（矩阵 pointer click）；`assets/tone.wav` 自产 |
-| [examples/video-basic/](../../examples/video-basic/) | 挂载/回调/播控/透明/全屏 | 编解码依赖浏览器；`assets/clip.mp4` 自产 |
-| [examples/webview-basic/](../../examples/webview-basic/) | iframe 挂载/事件/几何/卸载重建 | `assets/page.html` 自产 |
+| 示例                                                     | 内容                           | 条件                                                           |
+| -------------------------------------------------------- | ------------------------------ | -------------------------------------------------------------- |
+| [examples/audio-basic/](../../examples/audio-basic/)     | 手势解锁→8 阶段读回            | 需要真实手势事件（矩阵 pointer click）；`assets/tone.wav` 自产 |
+| [examples/video-basic/](../../examples/video-basic/)     | 挂载/回调/播控/透明/全屏       | 编解码依赖浏览器；`assets/clip.mp4` 自产                       |
+| [examples/webview-basic/](../../examples/webview-basic/) | iframe 挂载/事件/几何/卸载重建 | `assets/page.html` 自产                                        |
 
 运行：`npm run dev` 后访问 `http://127.0.0.1:7454/examples/<id>/`。
 video-basic 的 webkit 行在三引擎矩阵是 F-135 在册间歇（复跑即绿），非能力缺陷。

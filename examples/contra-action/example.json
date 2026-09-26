@@ -21,16 +21,8 @@
     "visual": "深色星空背景横向卷屏；绿色草皮+棕色土方地形（含两处深坑与两座台地）；蓝色小人主角（跑步摆腿两帧、枪管指向、受伤闪烁）；红色巡逻兵与紫色炮塔；黄色玩家弹/橙色敌弹；x=56 处白杆黄旗终点；画布内 HUD 显示 hp 心/kills/坐标，左上角 DOM 面板显示全量计数"
   },
   "api": {
-    "primary": [
-      "Texture2D.reset",
-      "Component",
-      "AudioSource.play"
-    ],
-    "supporting": [
-      "input",
-      "assetManager",
-      "isValid"
-    ],
+    "primary": ["Texture2D.reset", "Component", "AudioSource.play"],
+    "supporting": ["input", "assetManager", "isValid"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -72,187 +64,177 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L560"
+        "sourceLocation": "L607"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L542"
+        "sourceLocation": "L589"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L511"
+        "sourceLocation": "L556"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L515"
+        "sourceLocation": "L560"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L513"
+        "sourceLocation": "L558"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L514"
+        "sourceLocation": "L559"
       },
       {
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L761"
+        "sourceLocation": "L897"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L521"
+        "sourceLocation": "L568"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L516"
+        "sourceLocation": "L561"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L547"
+        "sourceLocation": "L594"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L512"
+        "sourceLocation": "L557"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L513"
+        "sourceLocation": "L558"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L509"
+        "sourceLocation": "L554"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L507"
+        "sourceLocation": "L552"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L508"
+        "sourceLocation": "L553"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L509"
+        "sourceLocation": "L554"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L517"
+        "sourceLocation": "L562"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L517"
+        "sourceLocation": "L563"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L397"
+        "sourceLocation": "L438"
       },
       {
         "api": "Texture2D.reset",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L398"
+        "sourceLocation": "L439"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L738"
+        "sourceLocation": "L859"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L738"
+        "sourceLocation": "L859"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L703"
+        "sourceLocation": "L807"
       },
       {
         "api": "assetManager",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L760"
+        "sourceLocation": "L893"
       },
       {
         "api": "AudioSource",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L576"
+        "sourceLocation": "L625"
       },
       {
         "api": "AudioSource.play",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L727"
+        "sourceLocation": "L841"
       },
       {
         "api": "AudioSource.stop",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L726"
+        "sourceLocation": "L840"
       },
       {
         "api": "AudioClip.getDuration",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L592"
+        "sourceLocation": "L647"
       }
     ]
   },
-  "capabilities": [
-    "game",
-    "audio"
-  ],
-  "assets": [
-    "assets/tone.wav"
-  ],
+  "capabilities": ["game", "audio"],
+  "assets": ["assets/tone.wav"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Board",
-        "Driver",
-        "Audio"
-      ]
+      "nodes": ["Main Camera", "Board", "Driver", "Audio"]
     }
   },
   "interaction": {
@@ -264,28 +246,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "material-property",
-      "asset-loaded",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "material-property", "asset-loaded", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -299,67 +266,47 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          0,
-          6
-        ],
+        "position": [0, 0, 6],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 546,
+            "line": 593,
             "text": "cameraNode.setPosition(new Vec3(0, 0, 6));"
           }
         ]
       },
       "Board": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          90,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [90, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 513,
+            "line": 558,
             "text": "boardNode.setPosition(new Vec3(0, 0, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 514,
+            "line": 559,
             "text": "boardNode.setRotationFromEuler(90, 0, 0);"
           }
         ]
       },
       "Driver": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 570,
+            "line": 619,
             "text": "driverNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Audio": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 574,
+            "line": 623,
             "text": "audioNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -370,17 +317,12 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [
-              255,
-              255,
-              255,
-              255
-            ],
+            "value": [255, 255, 255, 255],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {
               "source": "src/main.ts",
-              "line": 509,
+              "line": 554,
               "text": "boardMaterial.setProperty('mainColor', new Color(255, 255, 255, 255));"
             }
           },
@@ -388,7 +330,7 @@
             "expect": "object",
             "provenance": {
               "source": "src/main.ts",
-              "line": 510,
+              "line": 555,
               "text": "boardMaterial.setProperty('mainTexture', view.texture);"
             }
           }
@@ -402,7 +344,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 584,
+              "line": 633,
               "text": "(assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {"
             }
           ]
@@ -411,9 +353,9 @@
     }
   },
   "promotion": {
-    "spec": "b2bc34ccd752",
-    "source": "0532eabdd1936cb8",
-    "candidate": "d1cc556759a27943",
+    "spec": "70226909db1a",
+    "source": "2ce4f5dc9c17474d",
+    "candidate": "8746fc59b6aa0408",
     "verified": 26,
     "attested": 2,
     "units": 28

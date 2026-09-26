@@ -42,22 +42,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Vec4 度量与杂项：dot/叉积、长度族、归一化、lerp/clampf、Mat4 变换与相等语义。",
-    "points": [
-      "dot 正交基为零",
-      "normalize 后长度为 1（取整回读）",
-      "变换后 w 分量语义保持"
-    ]
+    "points": ["dot 正交基为零", "normalize 后长度为 1（取整回读）", "变换后 w 分量语义保持"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 150,200,170）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "math.Vec4.dot",
-      "math.Vec4.normalize",
-      "math.Vec4.transformMat4"
-    ],
+    "primary": ["math.Vec4.dot", "math.Vec4.normalize", "math.Vec4.transformMat4"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -106,221 +98,208 @@
       "math.Vec4.strictEquals",
       "math.Vec4.strictEquals4f"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L25"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L32"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L44"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L32"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L45"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L39"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L38"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L30"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L51"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L53"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L55"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L52"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L52"
       },
       {
         "api": "math.Vec4.dot",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L40"
+        "sourceLocation": "L81"
       },
       {
         "api": "math.Vec4.length",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L41"
+        "sourceLocation": "L82"
       },
       {
         "api": "math.Vec4.lengthSqr",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L42"
+        "sourceLocation": "L83"
       },
       {
         "api": "math.Vec4.normalize",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L43"
+        "sourceLocation": "L85"
       },
       {
         "api": "math.Vec4.lerp",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L44"
+        "sourceLocation": "L89"
       },
       {
         "api": "math.Vec4.clampf",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L45"
+        "sourceLocation": "L93"
       },
       {
         "api": "math.Vec4.transformMat4",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L46"
+        "sourceLocation": "L99"
       },
       {
         "api": "math.Vec4.toString",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L47"
+        "sourceLocation": "L102"
       },
       {
         "api": "math.Vec4.equals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L48"
+        "sourceLocation": "L103"
       },
       {
         "api": "math.Vec4.equals4f",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L49"
+        "sourceLocation": "L104"
       },
       {
         "api": "math.Vec4.strictEquals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L50"
+        "sourceLocation": "L105"
       },
       {
         "api": "math.Vec4.strictEquals4f",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L51"
+        "sourceLocation": "L106"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -332,9 +311,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "70b17061f5cf",
-    "source": "f339dfdf3d63407f",
-    "candidate": "d1cc556759a27943",
+    "spec": "aba2d336dced",
+    "source": "2195ae9a8f079347",
+    "candidate": "8746fc59b6aa0408",
     "verified": 25,
     "attested": 5,
     "units": 30

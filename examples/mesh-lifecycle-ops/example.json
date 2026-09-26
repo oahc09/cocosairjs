@@ -36,21 +36,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Mesh 生命周期数据操作：assign 结构注入、reset 复位、静态 merge 与合并合法性校验、子网格更新与初始化（全部 try 兜底确定性回读）。",
-    "points": [
-      "validateMergingMesh 返回布尔",
-      "merge 静态入口存在性",
-      "assign/reset 后结构可再读"
-    ]
+    "points": ["validateMergingMesh 返回布尔", "merge 静态入口存在性", "assign/reset 后结构可再读"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 190,210,240）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "Mesh.merge",
-      "Mesh.assign"
-    ],
+    "primary": ["Mesh.merge", "Mesh.assign"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -93,185 +86,172 @@
       "Mesh.updateSubMesh",
       "Mesh.initialize"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L24"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L43"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L31"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L44"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L38"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L37"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L50"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L53"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L54"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L51"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L51"
       },
       {
         "api": "Mesh.assign",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L43"
+        "sourceLocation": "L98"
       },
       {
         "api": "Mesh.reset",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L44"
+        "sourceLocation": "L106"
       },
       {
         "api": "Mesh.merge",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L42"
+        "sourceLocation": "L89"
       },
       {
         "api": "Mesh.validateMergingMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L41"
+        "sourceLocation": "L80"
       },
       {
         "api": "Mesh.updateSubMesh",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L46"
+        "sourceLocation": "L123"
       },
       {
         "api": "Mesh.initialize",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L28"
+        "sourceLocation": "L53"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -283,9 +263,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "1ea127b38887",
-    "source": "14f81f5ce9df574a",
-    "candidate": "d1cc556759a27943",
+    "spec": "d1fe84ce4d4d",
+    "source": "f6949b013e9f3653",
+    "candidate": "8746fc59b6aa0408",
     "verified": 24,
     "attested": 0,
     "units": 24

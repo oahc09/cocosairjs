@@ -6,11 +6,11 @@
 
 ## 1. 两层边界，各有一篇实测证据
 
-| 层 | AIR 现状 | 证据去处 |
-| --- | --- | --- |
-| 后端 | 构建只带 `WebGL2Device`，`RenderType.WEBGPU` 有枚举无实现 | [webgpurenderer](webgpurenderer.md) §1 |
-| 管线 | Stage 类全导出，但 `PostProcessStage.initialize(IRenderStageInfo)` 是元数据初始化，没有"把自定义 stage 插进 RenderFlow"的公开装配面 | [post-processing](post-processing.md) §1 |
-| 效果编写 | 无用户 GLSL 入口，效果集是 builtin-effects 编译期定死的 | [shadertoy](shadertoy.md)、[debugging-glsl](debugging-glsl.md) |
+| 层       | AIR 现状                                                                                                                            | 证据去处                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| 后端     | 构建只带 `WebGL2Device`，`RenderType.WEBGPU` 有枚举无实现                                                                           | [webgpurenderer](webgpurenderer.md) §1                         |
+| 管线     | Stage 类全导出，但 `PostProcessStage.initialize(IRenderStageInfo)` 是元数据初始化，没有"把自定义 stage 插进 RenderFlow"的公开装配面 | [post-processing](post-processing.md) §1                       |
+| 效果编写 | 无用户 GLSL 入口，效果集是 builtin-effects 编译期定死的                                                                             | [shadertoy](shadertoy.md)、[debugging-glsl](debugging-glsl.md) |
 
 ## 2. 现在能做的（不是这级别的需求先别急着要 WebGPU）
 

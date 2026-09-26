@@ -64,7 +64,7 @@ camera.visibility = Layers.Enum.DEFAULT;
 // ---- 场地：14×14 草地平面（Cocos plane 默认躺 XZ、法线 +Y，无需旋转） ----
 const ARENA = 5; // 可动半宽（球心 clamp 到 ±ARENA）
 
-function stdMesh (name: string, mesh: Mesh, color: Color, roughness: number): { node: Node; mat: Material } {
+function stdMesh(name: string, mesh: Mesh, color: Color, roughness: number): { node: Node; mat: Material } {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     scene.addChild(node);
@@ -78,10 +78,13 @@ function stdMesh (name: string, mesh: Mesh, color: Color, roughness: number): { 
     return { node, mat };
 }
 
-const ground = stdMesh('Ground', utils.createMesh(primitives.plane({ width: 14, length: 14 })),
-    new Color(104, 148, 114, 255), 0.9);
-const ballPart = stdMesh('Ball', utils.createMesh(primitives.sphere(0.4, 20, 14)),
-    new Color(120, 180, 255, 255), 0.4);
+const ground = stdMesh(
+    'Ground',
+    utils.createMesh(primitives.plane({ width: 14, length: 14 })),
+    new Color(104, 148, 114, 255),
+    0.9,
+);
+const ballPart = stdMesh('Ball', utils.createMesh(primitives.sphere(0.4, 20, 14)), new Color(120, 180, 255, 255), 0.4);
 ballPart.node.setPosition(new Vec3(0, 0.4, 0));
 
 // ---- 金币：共享一个 Mesh + 一个 Material（6 个节点各自变换，资源只一份） ----
@@ -99,9 +102,10 @@ coinMat.setProperty('roughness', 0.35);
 coinMat.setProperty('metallic', 0.0);
 
 // 固定种子随机：取证可复现（mulberry32，seed 打进覆盖层）
-function mulberry32 (a: number): () => number {
+function mulberry32(a: number): () => number {
     return function (): number {
-        a |= 0; a = (a + 0x6D2B79F5) | 0;
+        a |= 0;
+        a = (a + 0x6d2b79f5) | 0;
         let t = Math.imul(a ^ (a >>> 15), 1 | a);
         t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
         return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
@@ -120,21 +124,28 @@ for (let i = 0; i < COIN_N; i++) {
     r.material = coinMat; // 共享材质：只读不毁（materials 篇红线）
     coins.push({ node, x: 0, z: 0, caught: false });
 }
-function placeCoin (c: { node: Node; x: number; z: number; caught: boolean }): void {
+function placeCoin(c: { node: Node; x: number; z: number; caught: boolean }): void {
     c.caught = false;
     c.x = rand() * (ARENA * 2 - 1.5) - (ARENA - 0.75);
     c.z = rand() * (ARENA * 2 - 1.5) - (ARENA - 0.75);
     c.node.setPosition(new Vec3(c.x, 0.42, c.z));
     c.node.setScale(new Vec3(0.001, 0.001, 0.001));
-    tween(c.node).to(0.3, { scale: new Vec3(1, 1, 1) }).start();
+    tween(c.node)
+        .to(0.3, { scale: new Vec3(1, 1, 1) })
+        .start();
 }
 coins.forEach(placeCoin);
 
 // ---- 键盘：按下集合 + 最近按键时刻（tips-keyboard 同款） ----
 const pressed = new Set<number>();
 let lastKeyAt = -100; // 自动演示判定用；初始 = "很久没按" → 开局即自动演示
-input.on(SystemEventType.KEY_DOWN, (e) => { pressed.add(e.keyCode); lastKeyAt = performance.now() / 1000; });
-input.on(SystemEventType.KEY_UP, (e) => { pressed.delete(e.keyCode); });
+input.on(SystemEventType.KEY_DOWN, (e) => {
+    pressed.add(e.keyCode);
+    lastKeyAt = performance.now() / 1000;
+});
+input.on(SystemEventType.KEY_UP, (e) => {
+    pressed.delete(e.keyCode);
+});
 const KEYS: number[][] = [
     [KeyCode.KEY_A, KeyCode.ARROW_LEFT, -1, 0],
     [KeyCode.KEY_D, KeyCode.ARROW_RIGHT, 1, 0],
@@ -163,21 +174,29 @@ class MiniGame extends Component {
     private _spin = 0;
     stats: MiniGameStats | null = null;
 
-    update (dt: number): void {
+    update(dt: number): void {
         const t = performance.now() / 1000;
-        this.mode = (t - lastKeyAt) < 3.5 ? 'keyboard' : 'auto-demo';
+        this.mode = t - lastKeyAt < 3.5 ? 'keyboard' : 'auto-demo';
 
-        let dx = 0; let dz = 0;
+        let dx = 0;
+        let dz = 0;
         if (this.mode === 'keyboard') {
             for (const [k1, k2, ax, az] of KEYS) {
-                if (pressed.has(k1) || pressed.has(k2)) { dx += ax; dz += az; }
+                if (pressed.has(k1) || pressed.has(k2)) {
+                    dx += ax;
+                    dz += az;
+                }
             }
         } else {
             // 自动演示：直扑最近金币（headless 无键盘也持续产生吃币事件）
-            let best = null; let bestD = Infinity;
+            let best = null;
+            let bestD = Infinity;
             for (const c of coins) {
                 const d = (c.x - this.node.position.x) ** 2 + (c.z - this.node.position.z) ** 2;
-                if (!c.caught && d < bestD) { bestD = d; best = c; }
+                if (!c.caught && d < bestD) {
+                    bestD = d;
+                    best = c;
+                }
             }
             if (best && bestD > 1e-6) {
                 const inv = 1 / Math.sqrt(bestD);
@@ -203,7 +222,8 @@ class MiniGame extends Component {
             alive++;
             const d2 = (c.x - nx) ** 2 + (c.z - nz) ** 2;
             if (d2 < nearest) nearest = d2;
-            if (d2 < CATCH2) { // 吃到：平方距离过阈值即命中，免开方
+            if (d2 < CATCH2) {
+                // 吃到：平方距离过阈值即命中，免开方
                 c.caught = true;
                 this.score++;
                 this.catches++;
@@ -216,10 +236,13 @@ class MiniGame extends Component {
         }
 
         this.stats = {
-            mode: this.mode, score: this.score, catches: this.catches,
+            mode: this.mode,
+            score: this.score,
+            catches: this.catches,
             ball: [nx.toFixed(2), nz.toFixed(2)],
             nearestCoin: Math.sqrt(nearest).toFixed(2),
-            pressed: pressed.size, alive,
+            pressed: pressed.size,
+            alive,
         };
         info.textContent = [
             'mini-game: WASD/arrows move the ball, distance-check "collision", tween respawn, DOM score HUD',
@@ -243,11 +266,15 @@ window.__inspect = {
     getStats: () => rig.stats || null,
     // 取证辅助：把球瞬移到最近未吃金币旁，让下一帧自然触发吃币（验证判定回路）
     forceCatchNearest: () => {
-        let best = null; let bestD = Infinity;
+        let best = null;
+        let bestD = Infinity;
         for (const c of coins) {
             if (c.caught) continue;
             const d = c.x ** 2 + c.z ** 2;
-            if (d < bestD) { bestD = d; best = c; }
+            if (d < bestD) {
+                bestD = d;
+                best = c;
+            }
         }
         if (best) {
             ballPart.node.setPosition(new Vec3(best.x, BALL_R, best.z));

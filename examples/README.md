@@ -25,10 +25,10 @@ npm run dev -- --example hello-cube --port 7500
 
 两个入口页：
 
-| 页面 | URL | 说明 |
-|---|---|---|
-| 简单导航页 | `http://127.0.0.1:7454/index.html` | 手写链接列表（当前只收录部分示例） |
-| Gallery | `http://127.0.0.1:7454/gallery.html` | 搜索 / 分类 / iframe 预览 / 源码查看，数据源 `files.json` |
+| 页面       | URL                                  | 说明                                                      |
+| ---------- | ------------------------------------ | --------------------------------------------------------- |
+| 简单导航页 | `http://127.0.0.1:7454/index.html`   | 手写链接列表（当前只收录部分示例）                        |
+| Gallery    | `http://127.0.0.1:7454/gallery.html` | 搜索 / 分类 / iframe 预览 / 源码查看，数据源 `files.json` |
 
 `--example` 的取值合法性由 `examples/files.json` 清单校验。改过任意 `example.json` 后重新生成清单：
 
@@ -68,11 +68,11 @@ examples/<id>/
 
 ## 4. 开发回路（三频道 + 错误可见性）
 
-| 改动位置 | 行为 |
-|---|---|
-| `examples/**` | 只 bump reload token，浏览器自动刷新，**绝不触发构建**（<1ms） |
-| `src/air/**` | air 频道 rebuild |
-| `src/cocos` / `src/pal` / `src/exports` | engine 频道 rebuild |
+| 改动位置                                | 行为                                                           |
+| --------------------------------------- | -------------------------------------------------------------- |
+| `examples/**`                           | 只 bump reload token，浏览器自动刷新，**绝不触发构建**（<1ms） |
+| `src/air/**`                            | air 频道 rebuild                                               |
+| `src/cocos` / `src/pal` / `src/exports` | engine 频道 rebuild                                            |
 
 - 构建失败：页面顶部红色错误横幅，机读状态在 `/__build_status`（不清 reloadToken，保留上一个可用 bundle）。
 - 各频道耗时：`/__stats`。
@@ -118,13 +118,13 @@ NODE_PATH=<含 playwright 的 node_modules 路径> node tools/verify/examples-sm
 
 状态不再在本文件手维护（易腐），改由机器证据给出：
 
-| 事实 | 来源 |
-|---|---|
-| 规格冻结 / 校验问题 | `node tools/examples/spec-validate.cjs` → `docs/evidence/v11-spec-validate.json`（当前 45 frozen / 0 draft / 0 blocked） |
-| 浏览器验证 | `node tools/verify/v11-examples-verify.cjs` → `docs/evidence/v11-examples-verified.json`（当前 40/40 PASS） |
-| DevTools 会话验证 | `node tools/verify/v11-devtools-examples.cjs` → `docs/evidence/v11-devtools-examples.json`（当前 5/5 PASS：`automation` + `rc-*`×4） |
-| 缩略图 / 逐步 validator | `docs/evidence/examples/<id>.png`（45 张） |
-| API 覆盖（verified 口径） | `node tools/examples/coverage-report.cjs` → `docs/api-coverage-report.json`（core 49/717 · important 6/793 · advanced 8/3219，claimed=verified 零冒充，但三道门禁仍 FAIL，需按 Wave 扩量） |
+| 事实                        | 来源                                                                                                                                                                                                                                            |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 规格冻结 / 校验问题         | `node tools/examples/spec-validate.cjs` → `docs/evidence/v11-spec-validate.json`（当前 45 frozen / 0 draft / 0 blocked）                                                                                                                        |
+| 浏览器验证                  | `node tools/verify/v11-examples-verify.cjs` → `docs/evidence/v11-examples-verified.json`（当前 40/40 PASS）                                                                                                                                     |
+| DevTools 会话验证           | `node tools/verify/v11-devtools-examples.cjs` → `docs/evidence/v11-devtools-examples.json`（当前 5/5 PASS：`automation` + `rc-*`×4）                                                                                                            |
+| 缩略图 / 逐步 validator     | `docs/evidence/examples/<id>.png`（45 张）                                                                                                                                                                                                      |
+| API 覆盖（verified 口径）   | `node tools/examples/coverage-report.cjs` → `docs/api-coverage-report.json`（core 49/717 · important 6/793 · advanced 8/3219，claimed=verified 零冒充，但三道门禁仍 FAIL，需按 Wave 扩量）                                                      |
 | 规范符合性（§1-§26 证据链） | `node tools/examples/spec-compliance-audit.cjs` → `docs/evidence/v11-spec-compliance.json`（当前 0 fail / 1 warn；唯一 warn 是 gltf-draco 缺 Lifecycle Contract 的机器可读豁免——解码器不在随包工件内，无已解码资产可释放，如实 BLOCKED 不伪造） |
 
 新增示例后：写 `example.json`（§24 全量规格）→ `npm run gallery:manifest` → `node tools/examples/spec-validate.cjs`

@@ -1,44 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
-    <title>Optimizing Lots of Objects — 优化大量对象（docs/manual/optimize-lots-of-objects.md）</title>
-    <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
-        #ui {
-            position: absolute; left: 8px; bottom: 8px; z-index: 10;
-            font: 12px/1.4 ui-monospace, Consolas, monospace;
-        }
-        #ui button {
-            margin-right: 6px; padding: 4px 10px; cursor: pointer;
-            font: inherit; color: #0b1018; background: #d7e3f2; border: 1px solid #8fa4bd; border-radius: 4px;
-        }
-    </style>
-    <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-</head>
-<body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
+    <head>
+        <meta charset="utf-8" />
+        <title>Optimizing Lots of Objects — 优化大量对象（docs/manual/optimize-lots-of-objects.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+            #ui {
+                position: absolute;
+                left: 8px;
+                bottom: 8px;
+                z-index: 10;
+                font:
+                    12px/1.4 ui-monospace,
+                    Consolas,
+                    monospace;
+            }
+            #ui button {
+                margin-right: 6px;
+                padding: 4px 10px;
+                cursor: pointer;
+                font: inherit;
+                color: #0b1018;
+                background: #d7e3f2;
+                border: 1px solid #8fa4bd;
+                border-radius: 4px;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
         </div>
-    </div>
-    <div id="info">loading…</div>
-    <div id="ui">
-        <button id="btn-batch" type="button">Batch: OFF</button>
-    </div>
-    <script type="module" src="./main.ts"></script>
-</body>
+        <div id="info">loading…</div>
+        <div id="ui">
+            <button id="btn-batch" type="button">Batch: OFF</button>
+        </div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>

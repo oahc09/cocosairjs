@@ -44,11 +44,11 @@ camera.visibility = Layers.Enum.DEFAULT;
 class Strafe extends Component {
     private _t: number;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         this.node.setPosition(new Vec3(Math.sin(this._t * 0.6) * 2.0, 1.6, 3.0));
         this.node.lookAt(new Vec3(0, 1.0, -8.0));
@@ -90,7 +90,7 @@ fog.fogStart = 4;
 fog.fogEnd = 12;
 
 const info = document.querySelector('#info') as HTMLElement;
-function showFog (): void {
+function showFog(): void {
     info.textContent = [
         'fog: LINEAR, fogColor=magenta, start=4 end=12',
         `now: fog.enabled=${fog.enabled} (toggles every 3s)`,
@@ -103,12 +103,12 @@ class Cycler extends Component {
     private _t: number;
     private _on: boolean;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._on = true;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         const on = Math.floor(this._t / 3) % 2 === 0;
         if (on !== this._on) {

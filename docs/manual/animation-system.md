@@ -6,9 +6,9 @@
 AIR 里有**两条**动画路线，本篇以 code-first 的 `tween` 为主线（零资产、最短路径），
 clip 路线（`Animation` + `AnimationClip`）**同样可全代码驱动**（§2，play/stop/loop 行为断言实测）：
 
-| 路线 | 入口 | 适用 |
-| --- | --- | --- |
-| 代码补间 | 顶层 `tween(target)`（d.ts 32323）返回 `Tween`（d.ts 32370） | 程序化位移/缩放/旋转/属性序列，无需资产 |
+| 路线     | 入口                                                           | 适用                                               |
+| -------- | -------------------------------------------------------------- | -------------------------------------------------- |
+| 代码补间 | 顶层 `tween(target)`（d.ts 32323）返回 `Tween`（d.ts 32370）   | 程序化位移/缩放/旋转/属性序列，无需资产            |
 | 剪辑播放 | `Animation` 组件 + `AnimationClip`（代码构造或 glTF 内嵌，§2） | 曲线剪辑循环/切换、骨骼动画（`SkeletalAnimation`） |
 
 clip 路线需要构造或加载 `AnimationClip` 资产（曲线/关键帧数据），本篇示例不依赖任何外部资产，
@@ -18,18 +18,18 @@ clip 路线需要构造或加载 `AnimationClip` 资产（曲线/关键帧数据
 
 链式调用，每个方法返回 `Tween` 自身：
 
-| 方法 | d.ts | 语义 |
-| --- | --- | --- |
-| `to(duration, props, opts?)` | 32517 | 在 duration 秒内把目标属性**插值到** props（绝对值） |
-| `by(duration, props, opts?)` | 32531 | 插值**增量**（相对当前值） |
-| `set(props)` | 32558 | 瞬时赋值，不插值 |
-| `delay(duration)` | 32568 | 空等 |
-| `call(cb, this?, data?)` | 32580 | 插入回调（示例用它打阶段标记） |
-| `sequence(...tweens)` | 32590 | 子 tween 串行 |
-| `parallel(...tweens)` | 32600 | 子 tween 并行 |
-| `repeat(n)` / `repeatForever()` | 32633 / 32644 | 重复 n 次 / 无限循环 |
-| `start()` / `stop()` / `pause()` / `resume()` | 32457–32477 | 生命周期控制 |
-| `union()` | 32503 | 把链上动作合并为一个整体（供 repeat 整段重复） |
+| 方法                                          | d.ts          | 语义                                                 |
+| --------------------------------------------- | ------------- | ---------------------------------------------------- |
+| `to(duration, props, opts?)`                  | 32517         | 在 duration 秒内把目标属性**插值到** props（绝对值） |
+| `by(duration, props, opts?)`                  | 32531         | 插值**增量**（相对当前值）                           |
+| `set(props)`                                  | 32558         | 瞬时赋值，不插值                                     |
+| `delay(duration)`                             | 32568         | 空等                                                 |
+| `call(cb, this?, data?)`                      | 32580         | 插入回调（示例用它打阶段标记）                       |
+| `sequence(...tweens)`                         | 32590         | 子 tween 串行                                        |
+| `parallel(...tweens)`                         | 32600         | 子 tween 并行                                        |
+| `repeat(n)` / `repeatForever()`               | 32633 / 32644 | 重复 n 次 / 无限循环                                 |
+| `start()` / `stop()` / `pause()` / `resume()` | 32457–32477   | 生命周期控制                                         |
+| `union()`                                     | 32503         | 把链上动作合并为一个整体（供 repeat 整段重复）       |
 
 `opts.easing` 接收缓动函数或 lambda（d.ts 32514 注释）。属性写法是**直接给属性名与目标值对象**
 （`{ position: new Vec3(...) }`、`{ scale: new Vec3(...) }`），这是 AIR tween 唯一的属性给法，没有字符串路径形式。
@@ -45,13 +45,21 @@ clip 路线需要构造或加载 `AnimationClip` 资产（曲线/关键帧数据
 
 ```ts
 const clip = new AnimationClip();
-clip.name = 'orbit';
+clip.name = "orbit";
 clip.duration = 2.0;
 clip.wrapMode = AnimationClip.WrapMode.Loop;
 const track = new animation.VectorTrack();
-track.path = new animation.TrackPath().toProperty('position');
-track.channels()[0].curve.assignSorted([[0, 0], [1, 0.9], [2, 0]]); // x: 0 → 0.9 → 0
-track.channels()[1].curve.assignSorted([[0, 0], [1, 0], [2, 0.7]]); // y: 0 → 0 → 0.7
+track.path = new animation.TrackPath().toProperty("position");
+track.channels()[0].curve.assignSorted([
+  [0, 0],
+  [1, 0.9],
+  [2, 0],
+]); // x: 0 → 0.9 → 0
+track.channels()[1].curve.assignSorted([
+  [0, 0],
+  [1, 0],
+  [2, 0.7],
+]); // y: 0 → 0 → 0.7
 clip.addTrack(track);
 ```
 
@@ -60,9 +68,9 @@ const orbAnim = orbNode.addComponent(Animation);
 orbAnim.defaultClip = clip;
 // play 必须等组件激活后再调（app.run 前场景未激活，play 会被激活流程重置）——start() 是规范位置
 class OrbStart extends Component {
-    start (): void {
-        orbAnim.play(clip.name);
-    }
+  start(): void {
+    orbAnim.play(clip.name);
+  }
 }
 orbNode.addComponent(OrbStart);
 ```
@@ -72,24 +80,24 @@ orbNode.addComponent(OrbStart);
 
 三条已验证的剪辑来源：
 
-| 来源 | 入口 | 证据 |
-| --- | --- | --- |
-| 代码构造 | `new AnimationClip()` + `animation.VectorTrack`（上文） | `manual-animation-system` state-probe（play/stop/loop） |
-| glTF 内嵌 | `GLTFLoader` 加载 → `Animation.play(clipName)`（`WrapMode.Loop`） | `examples/gltf-viewer`（下拉切换剪辑、播放/暂停，浏览器矩阵） |
-| 骨骼动画 | `SkeletalAnimation` 组件；程序化骨骼树 `buildSkeletonTree` + `restoreBindPose` | `examples/skinned-animation`（骨骼链驱动网格逐帧变形） |
+| 来源      | 入口                                                                           | 证据                                                          |
+| --------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| 代码构造  | `new AnimationClip()` + `animation.VectorTrack`（上文）                        | `manual-animation-system` state-probe（play/stop/loop）       |
+| glTF 内嵌 | `GLTFLoader` 加载 → `Animation.play(clipName)`（`WrapMode.Loop`）              | `examples/gltf-viewer`（下拉切换剪辑、播放/暂停，浏览器矩阵） |
+| 骨骼动画  | `SkeletalAnimation` 组件；程序化骨骼树 `buildSkeletonTree` + `restoreBindPose` | `examples/skinned-animation`（骨骼链驱动网格逐帧变形）        |
 
 ## 3. 示例拆解
 
 ```js
 tween(cubeNode)
-    .call(() => showStage('move right'))
-    .to(1.2, { position: new Vec3(2.2, 1.0, 0) })
-    .call(() => showStage('move up'))
-    .to(0.8, { position: new Vec3(2.2, 2.2, 0) })
-    .call(() => showStage('return home'))
-    .to(1.4, { position: new Vec3(0.6, 1.0, 0) })
-    .repeatForever()
-    .start();
+  .call(() => showStage("move right"))
+  .to(1.2, { position: new Vec3(2.2, 1.0, 0) })
+  .call(() => showStage("move up"))
+  .to(0.8, { position: new Vec3(2.2, 2.2, 0) })
+  .call(() => showStage("return home"))
+  .to(1.4, { position: new Vec3(0.6, 1.0, 0) })
+  .repeatForever()
+  .start();
 ```
 
 一条链 = 一个 sequence：`call` 是零时长动作，`to` 是插值动作，`repeatForever()` 让整段循环。
@@ -146,7 +154,7 @@ tween 系统时钟与组件 `update` 累加时钟存在约半秒相位差（起�
 ## 5. 实现备忘
 
 - **clip 路线是组件式的**：播放控制集中在 `Animation` 组件与 `AnimationState` 上
- （d.ts 30500 / 30313，`play` / `crossFade` 等见 d.ts 30500 起），引擎没有独立的 mixer 中间层。
+  （d.ts 30500 / 30313，`play` / `crossFade` 等见 d.ts 30500 起），引擎没有独立的 mixer 中间层。
 - **代码补间内置**：顶层 `tween` 不依赖任何第三方库，且与节点生命周期联动（§1 末条）——
   目标节点失活自动 pause、激活自动 resume、销毁自动清理。
 - **自动步进**：tween 由 `TweenSystem`（d.ts 32262）随 director 自动推进，用户代码不碰 dt。
@@ -168,38 +176,65 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-animation-system/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Animation System — 动画系统（docs/manual/animation-system.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -219,32 +254,32 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-    tween,
-    AnimationClip,
-    Animation,
-    animation,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+  tween,
+  AnimationClip,
+  Animation,
+  animation,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('animation-system');
+const scene = new Scene("animation-system");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(2.4, 3.0, 7.4));
 cameraNode.lookAt(new Vec3(0, 1.3, 0));
@@ -258,155 +293,177 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 静态锚点立方体：斜视三面受光，保证 visible-frame 与动画相位无关 ----
-const anchorNode = new Node('Anchor');
+const anchorNode = new Node("Anchor");
 anchorNode.layer = Layers.Enum.DEFAULT;
 anchorNode.setPosition(new Vec3(-1.8, 1.0, 0));
 scene.addChild(anchorNode);
 const anchorRenderer = anchorNode.addComponent(MeshRenderer);
 anchorRenderer.mesh = utils.createMesh(primitives.box({ width: 1.0, height: 1.0, length: 1.0 }));
 const anchorMaterial = new Material();
-anchorMaterial.initialize({ effectName: 'builtin-standard' });
-anchorMaterial.setProperty('mainColor', new Color(95, 165, 225, 255));
+anchorMaterial.initialize({ effectName: "builtin-standard" });
+anchorMaterial.setProperty("mainColor", new Color(95, 165, 225, 255));
 anchorRenderer.material = anchorMaterial;
 
 // ---- 主角立方体 ----
-const cubeNode = new Node('Dancer');
+const cubeNode = new Node("Dancer");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0.6, 1.0, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1.0, height: 1.0, length: 1.0 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: 'builtin-standard' });
-cubeMaterial.setProperty('mainColor', new Color(235, 125, 65, 255));
+cubeMaterial.initialize({ effectName: "builtin-standard" });
+cubeMaterial.setProperty("mainColor", new Color(235, 125, 65, 255));
 cubeRenderer.material = cubeMaterial;
 
 // ---- 覆盖层：阶段 + 秒表 ----
-const info = document.querySelector('#info') as HTMLElement;
-let stage: string = 'idle';
-function showStage (name: string): void {
-    stage = name;
+const info = document.querySelector("#info") as HTMLElement;
+let stage: string = "idle";
+function showStage(name: string): void {
+  stage = name;
 }
 class Clock extends Component {
-    private _t = 0;
+  private _t = 0;
 
-    constructor () {
-        super();
-        this._t = 0;
-    }
-    update (dt: number): void {
-        this._t += dt;
-        info.textContent = [
-            'animation: tween sequence + pulse + code-first clip (orbit, stop@6s)',
-            `stage: ${stage}`,
-            `elapsed: ${this._t.toFixed(1)}s`,
-            'path: (0.6,1,0) → (2.2,1,0) → (2.2,2.2,0) → back, loop',
-        ].join('\n');
-    }
+  constructor() {
+    super();
+    this._t = 0;
+  }
+  update(dt: number): void {
+    this._t += dt;
+    info.textContent = [
+      "animation: tween sequence + pulse + code-first clip (orbit, stop@6s)",
+      `stage: ${stage}`,
+      `elapsed: ${this._t.toFixed(1)}s`,
+      "path: (0.6,1,0) → (2.2,1,0) → (2.2,2.2,0) → back, loop",
+    ].join("\n");
+  }
 }
 cameraNode.addComponent(Clock);
 
 // ---- 主序列：右移 → 上移 → 回原点，循环 ----
 tween(cubeNode)
-    .call(() => showStage('move right'))
-    .to(1.2, { position: new Vec3(2.2, 1.0, 0) })
-    .call(() => showStage('move up'))
-    .to(0.8, { position: new Vec3(2.2, 2.2, 0) })
-    .call(() => showStage('return home'))
-    .to(1.4, { position: new Vec3(0.6, 1.0, 0) })
-    .repeatForever()
-    .start();
+  .call(() => showStage("move right"))
+  .to(1.2, { position: new Vec3(2.2, 1.0, 0) })
+  .call(() => showStage("move up"))
+  .to(0.8, { position: new Vec3(2.2, 2.2, 0) })
+  .call(() => showStage("return home"))
+  .to(1.4, { position: new Vec3(0.6, 1.0, 0) })
+  .repeatForever()
+  .start();
 
 // ---- 并行脉冲：缩放 1 → 1.25 → 1 ----
 tween(cubeNode)
-    .to(0.6, { scale: new Vec3(1.25, 1.25, 1.25) })
-    .to(0.6, { scale: new Vec3(1, 1, 1) })
-    .repeatForever()
-    .start();
+  .to(0.6, { scale: new Vec3(1.25, 1.25, 1.25) })
+  .to(0.6, { scale: new Vec3(1, 1, 1) })
+  .repeatForever()
+  .start();
 
 // ---- 剪辑路线：代码构造 AnimationClip（VectorTrack + TrackPath），Loop 播放、6s 后 stop 冻结 ----
 const clip = new AnimationClip();
-clip.name = 'orbit';
+clip.name = "orbit";
 clip.duration = 2.0;
 clip.wrapMode = AnimationClip.WrapMode.Loop;
 const track = new animation.VectorTrack();
-track.path = new animation.TrackPath().toProperty('position');
-track.channels()[0].curve.assignSorted([[0, 0], [1, 0.9], [2, 0]]); // x: 0 → 0.9 → 0
-track.channels()[1].curve.assignSorted([[0, 0], [1, 0], [2, 0.7]]); // y: 0 → 0 → 0.7
+track.path = new animation.TrackPath().toProperty("position");
+track.channels()[0].curve.assignSorted([
+  [0, 0],
+  [1, 0.9],
+  [2, 0],
+]); // x: 0 → 0.9 → 0
+track.channels()[1].curve.assignSorted([
+  [0, 0],
+  [1, 0],
+  [2, 0.7],
+]); // y: 0 → 0 → 0.7
 clip.addTrack(track);
 
-const orbNode = new Node('Orb');
+const orbNode = new Node("Orb");
 orbNode.layer = Layers.Enum.DEFAULT;
 orbNode.setPosition(new Vec3(-1.8, 1.0, 0));
 scene.addChild(orbNode);
 const orbRenderer = orbNode.addComponent(MeshRenderer);
 orbRenderer.mesh = utils.createMesh(primitives.sphere({ radius: 0.28 }));
 const orbMaterial = new Material();
-orbMaterial.initialize({ effectName: 'builtin-standard' });
-orbMaterial.setProperty('mainColor', new Color(150, 220, 120, 255));
+orbMaterial.initialize({ effectName: "builtin-standard" });
+orbMaterial.setProperty("mainColor", new Color(150, 220, 120, 255));
 orbRenderer.material = orbMaterial;
 
 const orbAnim = orbNode.addComponent(Animation);
 orbAnim.defaultClip = clip;
 // play 必须等组件激活后再调（app.run 前场景未激活，play 会被激活流程重置）——start() 是规范位置
 class OrbStart extends Component {
-    start (): void {
-        orbAnim.play(clip.name);
-    }
+  start(): void {
+    orbAnim.play(clip.name);
+  }
 }
 orbNode.addComponent(OrbStart);
 
 // ---- 行为断言：Orb 在动（位置越界）+ stop 后冻结 ----
 type Check = { name: string; pass: boolean; detail: string };
 const clipChecks: Check[] = [];
-let orbMinX = Infinity; let orbMaxX = -Infinity;
-let stoppedAt = -1; let frozenX = 0; let stillMoving = false;
+let orbMinX = Infinity;
+let orbMaxX = -Infinity;
+let stoppedAt = -1;
+let frozenX = 0;
+let stillMoving = false;
 class ClipProbe extends Component {
-    private _t = 0;
-    update (dt: number): void {
-        this._t += dt;
-        const x = orbNode.position.x;
-        if (stoppedAt < 0) {
-            orbMinX = Math.min(orbMinX, x); orbMaxX = Math.max(orbMaxX, x);
-            if (this._t >= 6) {
-                orbAnim.stop();
-                stoppedAt = this._t;
-                frozenX = orbNode.position.x;
-            }
-        } else if (Math.abs(orbNode.position.x - frozenX) > 1e-4) {
-            stillMoving = true;
-        }
+  private _t = 0;
+  update(dt: number): void {
+    this._t += dt;
+    const x = orbNode.position.x;
+    if (stoppedAt < 0) {
+      orbMinX = Math.min(orbMinX, x);
+      orbMaxX = Math.max(orbMaxX, x);
+      if (this._t >= 6) {
+        orbAnim.stop();
+        stoppedAt = this._t;
+        frozenX = orbNode.position.x;
+      }
+    } else if (Math.abs(orbNode.position.x - frozenX) > 1e-4) {
+      stillMoving = true;
     }
+  }
 }
 orbNode.addComponent(ClipProbe);
 
 window.__manualProbe = () => {
-    if (stoppedAt < 0) { return { ready: false, ok: false, name: 'animation-system' }; }
-    if (clipChecks.length === 0) {
-        clipChecks.push(
-            { name: 'clip-orb-moved', pass: orbMaxX - orbMinX > 0.5, detail: `x range [${orbMinX.toFixed(2)}, ${orbMaxX.toFixed(2)}]` },
-            { name: 'clip-stop-froze', pass: !stillMoving, detail: `stopped at ${stoppedAt.toFixed(1)}s, frozen x=${frozenX.toFixed(2)}` },
-        );
-    }
-    return {
-        ready: true,
-        ok: clipChecks.every((c) => c.pass),
-        name: 'animation-system',
-        checks: [...clipChecks],
-    };
+  if (stoppedAt < 0) {
+    return { ready: false, ok: false, name: "animation-system" };
+  }
+  if (clipChecks.length === 0) {
+    clipChecks.push(
+      {
+        name: "clip-orb-moved",
+        pass: orbMaxX - orbMinX > 0.5,
+        detail: `x range [${orbMinX.toFixed(2)}, ${orbMaxX.toFixed(2)}]`,
+      },
+      {
+        name: "clip-stop-froze",
+        pass: !stillMoving,
+        detail: `stopped at ${stoppedAt.toFixed(1)}s, frozen x=${frozenX.toFixed(2)}`,
+      },
+    );
+  }
+  return {
+    ready: true,
+    ok: clipChecks.every((c) => c.pass),
+    name: "animation-system",
+    checks: [...clipChecks],
+  };
 };
 
 window.__airApp = app;
 app.run(scene);
 
-console.log('[manual/animation-system] running on cocosair');
+console.log("[manual/animation-system] running on cocosair");
 ```
 
 ---

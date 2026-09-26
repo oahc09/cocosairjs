@@ -153,13 +153,13 @@ const r2 = (v) => Math.round(v * 100) / 100;
 const ALL_MASK = 0xffffffff;
 const FIXED_STEP = 1 / 60;
 const GROUP_CRATE = PhysicsGroup.DEFAULT << 1; // 2
-const GROUP_BALL = PhysicsGroup.DEFAULT << 2;  // 4
+const GROUP_BALL = PhysicsGroup.DEFAULT << 2; // 4
 
 // ---- 视觉资源：全部运行时程序化生成（零第三方资产），登记给资源生命周期合同 ----
 const renderSlots = [];
 const ownedAssets = [];
 
-function standardMaterial (label, color) {
+function standardMaterial(label, color) {
     const material = new Material();
     material.initialize({ effectName: 'builtin-standard' });
     material.setProperty('mainColor', color);
@@ -167,7 +167,7 @@ function standardMaterial (label, color) {
     return material;
 }
 
-function bindVisual (node, label, buildData, color) {
+function bindVisual(node, label, buildData, color) {
     const renderer = node.addComponent(MeshRenderer);
     const slot = { node, label, renderer, buildData, color };
     renderSlots.push(slot);
@@ -175,7 +175,7 @@ function bindVisual (node, label, buildData, color) {
     return renderer;
 }
 
-function assignVisual (slot) {
+function assignVisual(slot) {
     const mesh = utils.createMesh(slot.buildData());
     ownedAssets.push({ name: `Mesh:${slot.label}`, ref: mesh });
     slot.mesh = mesh;
@@ -184,7 +184,7 @@ function assignVisual (slot) {
 }
 
 // 见文件头 13)：primitives 的签名不对称，视觉是否正确只能靠网格包围盒回读判定
-function meshBound (label, which) {
+function meshBound(label, which) {
     const slot = renderSlots.find((entry) => entry.label === label);
     // 资源生命周期合同的 release 会把网格 destroy 掉：那时读它的数据会抛
     // 「Cannot read properties of null (reading 'maxPosition')」，故先 isValid 判活，读不到给 -999
@@ -193,7 +193,7 @@ function meshBound (label, which) {
     return { x: v ? r2(v.x) : -999, y: v ? r2(v.y) : -999, z: v ? r2(v.z) : -999 };
 }
 
-function makeNode (name, x, y, z) {
+function makeNode(name, x, y, z) {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     node.setPosition(new Vec3(x, y, z));
@@ -203,7 +203,7 @@ function makeNode (name, x, y, z) {
 // Collider.type 由子类在构造期写死（EColliderType：BOX 0 / SPHERE 1 / CAPSULE 2 / MESH 3），
 // 与 RigidBody.type（STATIC/DYNAMIC/KINEMATIC）同名不同物。形状类型一律经此读取器取证，
 // 免得两条 claim 在源码里塌到同一个词的首次出现行（词相同、语义无关）。
-function colliderTypeOf (collider) {
+function colliderTypeOf(collider) {
     return collider.type;
 }
 
@@ -252,7 +252,12 @@ groundCollider.size = new Vec3(9, 0.3, 6);
 // 位置写字面量（不引常量）：spec-expectations 只能静态提取字面量，常量会让该节点变成 gap
 const crate = makeNode('Crate', -2.2, 0.75, 0);
 scene.addChild(crate);
-bindVisual(crate, 'Crate', () => primitives.box({ width: 1.5, height: 1.5, length: 1.5 }), new Color(200, 140, 70, 255));
+bindVisual(
+    crate,
+    'Crate',
+    () => primitives.box({ width: 1.5, height: 1.5, length: 1.5 }),
+    new Color(200, 140, 70, 255),
+);
 const crateBody = crate.addComponent(RigidBody);
 crateBody.type = ERigidBodyType.DYNAMIC;
 const crateCollider = crate.addComponent(BoxCollider);
@@ -297,7 +302,7 @@ trimeshCollider.mesh = trimesh.getComponent(MeshRenderer).mesh;
 // ---- 触发器：注册即置 needTriggerEvent（builtin 只认这一条事件通道）----
 const triggerCounts = { enter: 0, stay: 0, exit: 0, collision: 0, trigger: 0 };
 const triggerPair = { selfName: '', otherName: '' };
-function onTrigger (event) {
+function onTrigger(event) {
     triggerCounts[event.type === 'onTriggerEnter' ? 'enter' : event.type === 'onTriggerStay' ? 'stay' : 'exit']++;
     triggerCounts.trigger++;
     triggerPair.selfName = event.selfCollider ? event.selfCollider.node.name : '';
@@ -307,12 +312,16 @@ sensorCollider.on('onTriggerEnter', onTrigger);
 sensorCollider.on('onTriggerStay', onTrigger);
 sensorCollider.on('onTriggerExit', onTrigger);
 // 碰撞事件通道在 builtin 下永不触发（下面读回恒为 0）
-crateCollider.on('onCollisionEnter', () => { triggerCounts.collision++; });
+crateCollider.on('onCollisionEnter', () => {
+    triggerCounts.collision++;
+});
 
 // ---- 分组过滤：必须等 onLoad（见文件头约束），故惰性做一次 ----
 let filterSetup = null;
-function setupFilters () {
-    if (filterSetup) { return filterSetup; }
+function setupFilters() {
+    if (filterSetup) {
+        return filterSetup;
+    }
     crateCollider.setGroup(GROUP_CRATE);
     ballCollider.setGroup(GROUP_BALL);
     filterSetup = {
@@ -332,8 +341,10 @@ function setupFilters () {
 
 // ---- 「不模拟」实证：全部动力学入口调一遍 + 手动 60 步，位移必须为 0 ----
 let simProof = null;
-function proveNoSimulation () {
-    if (simProof) { return simProof; }
+function proveNoSimulation() {
+    if (simProof) {
+        return simProof;
+    }
     const startPos = crate.worldPosition.clone();
     crateBody.mass = 2.5;
     crateBody.useGravity = true;
@@ -396,13 +407,15 @@ function proveNoSimulation () {
 // ---- 触发器三态：在一次同步调用内用受控步进跑出 enter/stay/exit 各 1 次 ----
 // 先复现「只改 group 不改 mask ⇒ 配对被静默过滤」，再补 mask 得到三态（见文件头 10)）。
 let triggerRun = null;
-function stepAndEmit () {
+function stepAndEmit() {
     physics.syncSceneToPhysics();
     physics.step(FIXED_STEP);
     physics.emitEvents();
 }
-function exerciseTriggers () {
-    if (triggerRun) { return triggerRun; }
+function exerciseTriggers() {
+    if (triggerRun) {
+        return triggerRun;
+    }
     const restore = crate.position.clone();
     const countsBefore = { ...triggerCounts };
     triggerCounts.enter = 0;
@@ -444,8 +457,10 @@ function exerciseTriggers () {
 
 // ---- 框架层「类」本身的构造契约（见文件头 14)）：一次性、memoize，整页每种各一个 ----
 let classProof = null;
-function proveFrameworkClasses () {
-    if (classProof) { return classProof; }
+function proveFrameworkClasses() {
+    if (classProof) {
+        return classProof;
+    }
     // Collider 基类：构造签名 (type: EColliderType)。不挂节点 ⇒ 不进物理世界。
     const bare = new Collider(crateCollider.type);
     // PhysicsMaterial：Asset 子类，先读默认值再改，改完才挂到碰撞体上（避开 EVENT_UPDATE 通道）
@@ -496,11 +511,14 @@ function proveFrameworkClasses () {
 }
 
 // ---- 查询：单位方向射线（见文件头 3)：distance 以 ray.d 长度为单位）----
-function namesOfResults () {
-    return [...physics.raycastResults].map((r) => r.collider.node.name).sort().join(',');
+function namesOfResults() {
+    return [...physics.raycastResults]
+        .map((r) => r.collider.node.name)
+        .sort()
+        .join(',');
 }
 
-function castSummary (label, ox, oy, oz, dx, dy, dz, mask, maxDistance, queryTrigger) {
+function castSummary(label, ox, oy, oz, dx, dy, dz, mask, maxDistance, queryTrigger) {
     const ray = new geometry.Ray(ox, oy, oz, dx, dy, dz);
     const hit = physics.raycast(ray, mask, maxDistance, queryTrigger);
     const out = {};
@@ -517,7 +535,7 @@ function castSummary (label, ox, oy, oz, dx, dy, dz, mask, maxDistance, queryTri
     return out;
 }
 
-function castClosestSummary (label, ox, oy, oz, dx, dy, dz, mask, maxDistance) {
+function castClosestSummary(label, ox, oy, oz, dx, dy, dz, mask, maxDistance) {
     const ray = new geometry.Ray(ox, oy, oz, dx, dy, dz);
     const hit = physics.raycastClosest(ray, mask, maxDistance);
     const res = physics.raycastClosestResult;
@@ -533,7 +551,7 @@ function castClosestSummary (label, ox, oy, oz, dx, dy, dz, mask, maxDistance) {
     return out;
 }
 
-function queryBlock () {
+function queryBlock() {
     return {
         ...castSummary('castX', -6, 0.75, 0, 1, 0, 0, ALL_MASK, 20, true),
         ...castSummary('castCrateOnly', -6, 0.75, 0, 1, 0, 0, GROUP_CRATE, 20, true),
@@ -550,7 +568,7 @@ function queryBlock () {
     };
 }
 
-function lineStripBlock () {
+function lineStripBlock() {
     const points = [new Vec3(-6, 0.75, 0), new Vec3(6, 0.75, 0), new Vec3(6, 3.6, 0)];
     const hit = physics.lineStripCast(points, ALL_MASK, 20, true);
     const results = physics.lineStripCastResults;
@@ -558,14 +576,17 @@ function lineStripBlock () {
     return {
         stripHit: hit,
         stripCount: results.length,
-        stripNames: [...results].map((r) => r.collider.node.name).sort().join(','),
+        stripNames: [...results]
+            .map((r) => r.collider.node.name)
+            .sort()
+            .join(','),
         // builtin 从不给 segmentIndex 赋值（见文件头 12)）⇒ 这里读回的是 typeof 结果
         stripFirstSegType: first ? typeof first.segmentIndex : 'none',
         stripFirstDist: first ? r2(first.distance) : -1,
     };
 }
 
-function sweepBlock () {
+function sweepBlock() {
     const ray = new geometry.Ray(-6, 0.75, 0, 1, 0, 0);
     const half = new Vec3(0.2, 0.2, 0.2);
     const orientation = new Quat();
@@ -575,7 +596,7 @@ function sweepBlock () {
     return { sweepAll: all, sweepAllCount: allCount, sweepClosest: closest };
 }
 
-function readback () {
+function readback() {
     const filters = setupFilters();
     const proof = proveNoSimulation();
     const triggers = exerciseTriggers();
@@ -631,8 +652,11 @@ function readback () {
         ballColliderType: ballCollider.type,
         capsuleColliderType: capsuleCollider.type,
         trimeshColliderType: trimeshCollider.type,
-        colliderInheritsBase: crateCollider instanceof Collider && ballCollider instanceof Collider
-            && capsuleCollider instanceof Collider && trimeshCollider instanceof Collider,
+        colliderInheritsBase:
+            crateCollider instanceof Collider &&
+            ballCollider instanceof Collider &&
+            capsuleCollider instanceof Collider &&
+            trimeshCollider instanceof Collider,
         crateBodyType: ERigidBodyType[crateBody.type],
         groundBodyType: ERigidBodyType[groundBody.type],
         ballBodyType: ERigidBodyType[ballBody.type],
@@ -661,7 +685,9 @@ function readback () {
         capsuleDirection: capsuleCollider.direction,
         capsuleShapeRadius: r2(capsuleCollider.shape.worldCapsule.radius),
         capsuleShapeHalfHeight: r2(capsuleCollider.shape.worldCapsule.halfHeight),
-        capsuleShapeTotalHeight: r2((capsuleCollider.shape.worldCapsule.halfHeight + capsuleCollider.shape.worldCapsule.radius) * 2),
+        capsuleShapeTotalHeight: r2(
+            (capsuleCollider.shape.worldCapsule.halfHeight + capsuleCollider.shape.worldCapsule.radius) * 2,
+        ),
         sensorAabbhx: r2(sensorBounds.halfExtents.x),
         trimeshAabbcX: r2(trimeshBounds.center.x),
         trimeshAabbhx: r2(trimeshBounds.halfExtents.x),
@@ -680,8 +706,10 @@ function readback () {
 // ---- 交互：真实点击把木箱挪进触发盒，读回「改变换 → 未同步 → 已同步」三态 ----
 let preClick = null;
 let unsynced = null;
-function moveCrateIntoSensor () {
-    if (preClick) { return; }
+function moveCrateIntoSensor() {
+    if (preClick) {
+        return;
+    }
     preClick = readback();
     crate.setPosition(new Vec3(CRATE_SENSOR.x, CRATE_SENSOR.y, CRATE_SENSOR.z));
     unsynced = readback();
@@ -690,7 +718,7 @@ function moveCrateIntoSensor () {
 input.on(Input.EventType.TOUCH_START, moveCrateIntoSensor);
 
 class PhysicsFrameCount extends Component {
-    update () {
+    update() {
         window.__frames = (window.__frames || 0) + 1;
         window.__geom = readback();
     }
@@ -708,11 +736,15 @@ installAssetLifecycle({
             slot.renderer.mesh = null;
             slot.renderer.material = null;
         }
-        for (const asset of ownedAssets) { asset.ref.destroy(); }
+        for (const asset of ownedAssets) {
+            asset.ref.destroy();
+        }
         ownedAssets.length = 0;
     },
     reacquire: () => {
-        for (const slot of renderSlots) { assignVisual(slot); }
+        for (const slot of renderSlots) {
+            assignVisual(slot);
+        }
         return ownedAssets;
     },
 });

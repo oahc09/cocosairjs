@@ -20,16 +20,8 @@
     "visual": "深色俯视 3D 场景：绿色草地平面、绿色玩家球（受伤闪烁）、5 枚立旋金币（拾取时 tween 缩放脉冲后原地换点位重生）、3 个红色巡逻方块敌人沿固定路线往返；左上角 DOM HUD 显示 state/score/hp/coins/respawns/hits/dash"
   },
   "api": {
-    "primary": [
-      "tween",
-      "Material.setProperty",
-      "Component"
-    ],
-    "supporting": [
-      "input",
-      "assetManager",
-      "AudioSource.play"
-    ],
+    "primary": ["tween", "Material.setProperty", "Component"],
+    "supporting": ["input", "assetManager", "AudioSource.play"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -80,245 +72,231 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L402"
+        "sourceLocation": "L471"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L404"
+        "sourceLocation": "L473"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L296"
+        "sourceLocation": "L328"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L310"
+        "sourceLocation": "L342"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L349"
+        "sourceLocation": "L412"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L359"
+        "sourceLocation": "L426"
       },
       {
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L332"
+        "sourceLocation": "L365"
       },
       {
         "api": "Node.walk",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L488"
+        "sourceLocation": "L569"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L379"
+        "sourceLocation": "L448"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L299"
+        "sourceLocation": "L331"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L417"
+        "sourceLocation": "L486"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L410"
+        "sourceLocation": "L479"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L297"
+        "sourceLocation": "L329"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L304"
+        "sourceLocation": "L336"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L283"
+        "sourceLocation": "L315"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L281"
+        "sourceLocation": "L313"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L282"
+        "sourceLocation": "L314"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L283"
+        "sourceLocation": "L315"
       },
       {
         "api": "Mesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L597"
+        "sourceLocation": "L730"
       },
       {
         "api": "Mesh.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L342"
+        "sourceLocation": "L397"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L292"
+        "sourceLocation": "L324"
       },
       {
         "api": "primitives.sphere",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L292"
+        "sourceLocation": "L324"
       },
       {
         "api": "primitives.cylinder",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L293"
+        "sourceLocation": "L325"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L432"
+        "sourceLocation": "L501"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L294"
+        "sourceLocation": "L326"
       },
       {
         "api": "tween",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L444"
+        "sourceLocation": "L513"
       },
       {
         "api": "Tween.to",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L444"
+        "sourceLocation": "L514"
       },
       {
         "api": "Tween.delay",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L444"
+        "sourceLocation": "L515"
       },
       {
         "api": "Tween.start",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L444"
+        "sourceLocation": "L517"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L585"
+        "sourceLocation": "L711"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L585"
+        "sourceLocation": "L711"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L443"
+        "sourceLocation": "L512"
       },
       {
         "api": "assetManager",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L610"
+        "sourceLocation": "L754"
       },
       {
         "api": "AudioSource",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L465"
+        "sourceLocation": "L538"
       },
       {
         "api": "AudioSource.play",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L451"
+        "sourceLocation": "L524"
       },
       {
         "api": "AudioSource.stop",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L450"
+        "sourceLocation": "L523"
       },
       {
         "api": "AudioClip.getDuration",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L481"
+        "sourceLocation": "L560"
       }
     ]
   },
-  "capabilities": [
-    "game",
-    "audio"
-  ],
-  "assets": [
-    "assets/tone.wav"
-  ],
+  "capabilities": ["game", "audio"],
+  "assets": ["assets/tone.wav"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "DirLight",
-        "Ground",
-        "Player",
-        "Coins",
-        "Enemies",
-        "Driver",
-        "Audio"
-      ]
+      "nodes": ["Main Camera", "DirLight", "Ground", "Player", "Coins", "Enemies", "Driver", "Audio"]
     }
   },
   "interaction": {
@@ -330,27 +308,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "asset-loaded",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "asset-loaded", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -364,109 +328,77 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          10.5,
-          12.5
-        ],
+        "position": [0, 10.5, 12.5],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 415,
+            "line": 484,
             "text": "cameraNode.setPosition(new Vec3(0, 10.5, 12.5));"
           }
         ]
       },
       "DirLight": {
-        "position": [
-          0,
-          8,
-          0
-        ],
-        "rotationEuler": [
-          -40,
-          25,
-          0
-        ],
+        "position": [0, 8, 0],
+        "rotationEuler": [-40, 25, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 407,
+            "line": 476,
             "text": "dirNode.setPosition(new Vec3(0, 8, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 408,
+            "line": 477,
             "text": "dirNode.setRotationFromEuler(-40, 25, 0);"
           }
         ]
       },
       "Ground": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 429,
+            "line": 498,
             "text": "groundNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Coins": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 304,
+            "line": 336,
             "text": "coinsRoot.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Enemies": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 317,
+            "line": 349,
             "text": "enemiesRoot.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Driver": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 459,
+            "line": 532,
             "text": "driverNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Audio": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 463,
+            "line": 536,
             "text": "audioNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -479,7 +411,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 473,
+              "line": 546,
               "text": "(assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {"
             }
           ]
@@ -491,18 +423,18 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0, 0))），position 仍精确断言",
-        "line": "L416"
+        "line": "L485"
       },
       "Player": {
         "reason": "运行期派生：syncNodes 每帧以游戏状态改写位置（playerNode.setPosition(new Vec3(game.px, PLAYER_R, game.pz))），暂停/重开的确定性由页内逐位断言承担",
-        "line": "L349"
+        "line": "L412"
       }
     }
   },
   "promotion": {
-    "spec": "7dab6868b99a",
-    "source": "7c1abd6d9cf3dc46",
-    "candidate": "d1cc556759a27943",
+    "spec": "c78aff993ad8",
+    "source": "930880f0bb6826bd",
+    "candidate": "8746fc59b6aa0408",
     "verified": 35,
     "attested": 2,
     "units": 37

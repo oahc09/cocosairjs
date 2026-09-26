@@ -21,16 +21,8 @@
     "visual": "深色展台场景：中央主产品（BoxTextured 纹理盒 / 更换后为蒙皮动画件）缓慢自转，右侧 SimpleSkin 蒙皮副件持续动画；地面灰蓝平面；左上信息面板（main/selected/swaps/shots/resize/wheel/drags/nodes），左下状态行，右上三枚 DOM 按钮（截图/换材质/更换模型）"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync",
-      "Camera.screenPointToRay",
-      "frameObject"
-    ],
-    "supporting": [
-      "GLTFAsset.instantiate",
-      "input",
-      "isValid"
-    ],
+    "primary": ["GLTFLoader.parseAsync", "Camera.screenPointToRay", "frameObject"],
+    "supporting": ["GLTFAsset.instantiate", "input", "isValid"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -85,254 +77,251 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L380"
+        "sourceLocation": "L413"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L382"
+        "sourceLocation": "L415"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L384"
+        "sourceLocation": "L417"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L164"
+        "sourceLocation": "L182"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L386"
+        "sourceLocation": "L419"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L400"
+        "sourceLocation": "L433"
       },
       {
         "api": "Node.walk",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L96"
+        "sourceLocation": "L114"
       },
       {
         "api": "Node.getComponent",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L97"
+        "sourceLocation": "L115"
       },
       {
         "api": "Node.getComponentInChildren",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L185"
+        "sourceLocation": "L203"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L367"
+        "sourceLocation": "L400"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L97"
+        "sourceLocation": "L115"
       },
       {
         "api": "Renderer.setSharedMaterial",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L100"
+        "sourceLocation": "L118"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L387"
+        "sourceLocation": "L420"
       },
       {
         "api": "Camera.screenPointToRay",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L228"
+        "sourceLocation": "L248"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L401"
+        "sourceLocation": "L434"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L394"
+        "sourceLocation": "L427"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L83"
+        "sourceLocation": "L101"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L88"
+        "sourceLocation": "L106"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L86"
+        "sourceLocation": "L104"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L87"
+        "sourceLocation": "L105"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L88"
+        "sourceLocation": "L106"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L409"
+        "sourceLocation": "L442"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L409"
+        "sourceLocation": "L442"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L148"
+        "sourceLocation": "L166"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L148"
+        "sourceLocation": "L166"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L161"
+        "sourceLocation": "L179"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L564"
+        "sourceLocation": "L644"
       },
       {
         "api": "GLTFAsset.meshes",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L444"
+        "sourceLocation": "L481"
       },
       {
         "api": "GLTFAsset.animations",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L445"
+        "sourceLocation": "L482"
       },
       {
         "api": "Animation",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L184"
+        "sourceLocation": "L202"
       },
       {
         "api": "Animation.play",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L189"
+        "sourceLocation": "L209"
       },
       {
         "api": "AnimationClip",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L188"
+        "sourceLocation": "L206"
       },
       {
         "api": "AnimationClip.wrapMode",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L188"
+        "sourceLocation": "L207"
       },
       {
         "api": "frameObject",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L177"
+        "sourceLocation": "L195"
       },
       {
         "api": "Ray",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L228"
+        "sourceLocation": "L248"
       },
       {
         "api": "AABB",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L224"
+        "sourceLocation": "L244"
       },
       {
         "api": "intersect",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L239"
+        "sourceLocation": "L259"
       },
       {
         "api": "EventTouch.getLocation",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L495"
+        "sourceLocation": "L557"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L538"
+        "sourceLocation": "L603"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L538"
+        "sourceLocation": "L603"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L146"
+        "sourceLocation": "L164"
       }
     ]
   },
-  "capabilities": [
-    "gltf",
-    "animation"
-  ],
+  "capabilities": ["gltf", "animation"],
   "assets": [
     "assets/BoxTextured.glb",
     "assets/SimpleSkin.gltf",
@@ -344,14 +333,7 @@
   ],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Ground",
-        "ProductMain",
-        "ProductSide",
-        "Spinner"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Ground", "ProductMain", "ProductSide", "Spinner"]
     }
   },
   "interaction": {
@@ -378,40 +360,18 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "asset-loaded",
-      "animation-playing",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "asset-loaded", "animation-playing", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
     "benchmarkRefs": [],
-    "recipeRefs": [
-      "R006",
-      "R007",
-      "R009",
-      "R010",
-      "R011",
-      "R019"
-    ]
+    "recipeRefs": ["R006", "R007", "R009", "R010", "R011", "R019"]
   },
   "screenshot": {},
   "license": {
@@ -420,81 +380,57 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ],
+        "position": [0, 8, 0],
+        "rotationEuler": [-45, -30, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 399,
+            "line": 432,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 400,
+            "line": 433,
             "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ]
       },
       "Ground": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 406,
+            "line": 439,
             "text": "groundNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Spinner": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 417,
+            "line": 450,
             "text": "spinNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "ProductMain": {
-        "position": [
-          0,
-          0.6,
-          0
-        ],
+        "position": [0, 0.6, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 163,
+            "line": 181,
             "text": "mainInstance.root.setPosition(new Vec3(0, 0.6, 0));"
           }
         ]
       },
       "ProductSide": {
-        "position": [
-          2.6,
-          1,
-          0
-        ],
+        "position": [2.6, 1, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 197,
+            "line": 217,
             "text": "sideInstance.root.setPosition(new Vec3(2.6, 1.0, 0));"
           }
         ]
@@ -507,7 +443,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 147,
+              "line": 165,
               "text": "const bytes = await (await fetch('./assets/BoxTextured.glb')).arrayBuffer();"
             }
           ]
@@ -517,7 +453,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 153,
+              "line": 171,
               "text": "const text = await (await fetch('./assets/SimpleSkin.gltf')).text();"
             }
           ]
@@ -527,7 +463,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 154,
+              "line": 172,
               "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
             }
           ]
@@ -537,7 +473,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 154,
+              "line": 172,
               "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
             }
           ]
@@ -547,7 +483,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 154,
+              "line": 172,
               "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
             }
           ]
@@ -557,7 +493,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 154,
+              "line": 172,
               "text": "skinAsset = await new GLTFLoader().parseAsync(text, './assets/');"
             }
           ]
@@ -567,7 +503,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 428,
+              "line": 461,
               "text": "const corrupt = await (await fetch('./assets/corrupt-product.glb')).arrayBuffer();"
             }
           ]
@@ -579,14 +515,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 取景与轨道拖拽/缩放改写位姿（frameObject(camera, mainNode)），部件位置仍精确断言",
-        "line": "L177"
+        "line": "L195"
       }
     }
   },
   "promotion": {
-    "spec": "1b424deb41b9",
-    "source": "a01534e089e675e9",
-    "candidate": "d1cc556759a27943",
+    "spec": "4bf3f38b6e50",
+    "source": "f56183e5669f6304",
+    "candidate": "8746fc59b6aa0408",
     "verified": 36,
     "attested": 5,
     "units": 41

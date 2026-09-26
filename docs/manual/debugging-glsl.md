@@ -23,11 +23,11 @@ errorID(16323/16324) + `gl.getShaderInfoLog`）。
 
 ## 1. 有什么（边缘面，非创作面）
 
-| 成员 | d.ts | 说明 |
-| --- | --- | --- |
-| `EffectAsset`（register/get/getAll） | 23514 / 23521 / 23536 / 23542 | effect 资源容器；`shaders: IShaderInfo[]` 内含 `glsl1/glsl3/glsl4` 源码字段（23700–23710） |
-| `pass.recompileShaders(overrides, passIdx?)` | 7608 | 用宏重编译既有 pass——改宏，不改 GLSL 文本 |
-| `Material.initialize({ effectName \| effectAsset })` | 23740–23744 | 选 effect 的入口；可传 `effectAsset` 引用 |
+| 成员                                                 | d.ts                          | 说明                                                                                       |
+| ---------------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------ |
+| `EffectAsset`（register/get/getAll）                 | 23514 / 23521 / 23536 / 23542 | effect 资源容器；`shaders: IShaderInfo[]` 内含 `glsl1/glsl3/glsl4` 源码字段（23700–23710） |
+| `pass.recompileShaders(overrides, passIdx?)`         | 7608                          | 用宏重编译既有 pass——改宏，不改 GLSL 文本                                                  |
+| `Material.initialize({ effectName \| effectAsset })` | 23740–23744                   | 选 effect 的入口；可传 `effectAsset` 引用                                                  |
 
 理论上可以手工 `new EffectAsset()` 填 `shaders[].glsl*` 再 `register`，让 WebGL 在 console 回吐编译错误——
 但 `IShaderInfo` 需要完整的 attributes/blocks/samplers 描述，属未测试的重路径；本篇**不承诺**该路可跑，只指路。

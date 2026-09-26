@@ -3,24 +3,58 @@
  *
  * 掌握顶层标量工具：区间钳制、插值与逆插值、循环折返、角度弧度互转、绝对值极值。
  */
-import { createAirApp, Scene, Node, Camera, DirectionalLight, MeshRenderer, Material, Layers, Color, Vec3, Vec2, utils, primitives, clamp, clamp01, lerp, repeat, pingPong, inverseLerp, toRadian, toDegree, absMax, absMaxComponent } from 'cocosair';
-
+import {
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Layers,
+    Color,
+    Vec3,
+    Vec2,
+    utils,
+    primitives,
+    clamp,
+    clamp01,
+    lerp,
+    repeat,
+    pingPong,
+    inverseLerp,
+    toRadian,
+    toDegree,
+    absMax,
+    absMaxComponent,
+} from 'cocosair';
 
 // ---- 共享脚手架：可见帧 + 场景就绪（math-scalar-utils）----
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
 var scene = new Scene('wave-math-scalar-utils');
-var cameraNode = new Node('Main Camera'); scene.addChild(cameraNode);
-cameraNode.setPosition(new Vec3(0, 2.2, 6.2)); cameraNode.lookAt(new Vec3(0, 0.6, 0));
+var cameraNode = new Node('Main Camera');
+scene.addChild(cameraNode);
+cameraNode.setPosition(new Vec3(0, 2.2, 6.2));
+cameraNode.lookAt(new Vec3(0, 0.6, 0));
 var camera = cameraNode.addComponent(Camera);
-camera.projection = Camera.ProjectionType.PERSPECTIVE; camera.fov = 45;
-camera.near = 0.1; camera.far = 1000;
-camera.clearFlags = Camera.ClearFlag.SOLID_COLOR; camera.clearColor = new Color(28, 36, 52, 255);
-camera.visibility = Layers.Enum.DEFAULT; camera.priority = 0;
-var lightNode = new Node('Main Light'); scene.addChild(lightNode);
-lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);
-var light = lightNode.addComponent(DirectionalLight); light.illuminance = 2;
-var cube = new Node('Cube'); cube.layer = Layers.Enum.DEFAULT; scene.addChild(cube);
+camera.projection = Camera.ProjectionType.PERSPECTIVE;
+camera.fov = 45;
+camera.near = 0.1;
+camera.far = 1000;
+camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+camera.clearColor = new Color(28, 36, 52, 255);
+camera.visibility = Layers.Enum.DEFAULT;
+camera.priority = 0;
+var lightNode = new Node('Main Light');
+scene.addChild(lightNode);
+lightNode.setPosition(new Vec3(0, 8, 0));
+lightNode.setRotationFromEuler(-45, -30, 0);
+var light = lightNode.addComponent(DirectionalLight);
+light.illuminance = 50000;
+var cube = new Node('Cube');
+cube.layer = Layers.Enum.DEFAULT;
+scene.addChild(cube);
 cube.setPosition(new Vec3(0, 0.6, 0));
 var cubeRenderer = cube.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
@@ -32,9 +66,20 @@ cubeRenderer.material = cubeMaterial;
 // ---- 主题：math 标量工具 — clamp/lerp/repeat/approx 族（确定性 readback，全部进 __probe）----
 var probe: any = {};
 probe.ctorHook = Vec2.prototype.hasOwnProperty('constructor'); // constructor 字面 token（constructor 类 claims 的绑定锚点）
-function T (name: string, fn: () => any): void { try { probe[name] = fn(); } catch (e) { probe[name] = 'threw'; } }
-function cocoEnum (o: any): string { var ep: any = (cocosairNS as any).enumerableProps; return ep ? ep(o).join(',') : Object.keys(o).join(','); }
-function Vec3Ctor (): any { return (cocosairNS as any).Vec3; }
+function T(name: string, fn: () => any): void {
+    try {
+        probe[name] = fn();
+    } catch (e) {
+        probe[name] = 'threw';
+    }
+}
+function cocoEnum(o: any): string {
+    var ep: any = (cocosairNS as any).enumerableProps;
+    return ep ? ep(o).join(',') : Object.keys(o).join(',');
+}
+function Vec3Ctor(): any {
+    return (cocosairNS as any).Vec3;
+}
 import * as cocosairNS from 'cocosair';
 T('clamp', () => clamp(5, 0, 3));
 T('clamp01', () => clamp01(-0.5));
@@ -45,7 +90,14 @@ T('inverseLerp', () => inverseLerp(0, 10, 5));
 T('toRadian', () => Math.round(toRadian(180) * 100) / 100);
 T('toDegree', () => Math.round((cocosairNS as any).toDegree(Math.PI) * 100) / 100);
 T('absMax', () => absMax(-7, 3));
-T('absMaxComponent', () => { try { var v = (cocosairNS as any).absMaxComponent; return typeof v; } catch (e) { return 'threw'; } });
+T('absMaxComponent', () => {
+    try {
+        var v = (cocosairNS as any).absMaxComponent;
+        return typeof v;
+    } catch (e) {
+        return 'threw';
+    }
+});
 probe.topic = 'math-scalar-utils';
 (window as any).__probe = async () => probe;
 

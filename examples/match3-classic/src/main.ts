@@ -26,10 +26,27 @@
  */
 
 import {
-    createAirApp, Scene, Node, MeshRenderer, Camera, Component, Layers, Vec3, Color, Material,
-    utils, primitives, Texture2D, input, Input, isValid, director, Director,
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    Material,
+    utils,
+    primitives,
+    Texture2D,
+    input,
+    Input,
+    isValid,
+    director,
+    Director,
 } from 'cocosair';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
+import { copyCanvasRows } from '../../shared/canvas-texture.js';
 
 const probe = {
     id: 'match3-classic',
@@ -113,14 +130,27 @@ class Match3Game {
     }
 
     private makesMatchAt(r: number, c: number, v: number): boolean {
-        const at = (rr: number, cc: number): number => (rr >= 0 && rr < N && cc >= 0 && cc < N ? this.grid[rr][cc] : -1);
+        const at = (rr: number, cc: number): number =>
+            rr >= 0 && rr < N && cc >= 0 && cc < N ? this.grid[rr][cc] : -1;
         // 水平：左侧两格 / 夹心 / 右侧两格
-        if (at(r, c - 1) === v && at(r, c - 2) === v) { return true; }
-        if (at(r, c - 1) === v && at(r, c + 1) === v) { return true; }
-        if (at(r, c + 1) === v && at(r, c + 2) === v) { return true; }
-        if (at(r - 1, c) === v && at(r - 2, c) === v) { return true; }
-        if (at(r - 1, c) === v && at(r + 1, c) === v) { return true; }
-        if (at(r + 1, c) === v && at(r + 2, c) === v) { return true; }
+        if (at(r, c - 1) === v && at(r, c - 2) === v) {
+            return true;
+        }
+        if (at(r, c - 1) === v && at(r, c + 1) === v) {
+            return true;
+        }
+        if (at(r, c + 1) === v && at(r, c + 2) === v) {
+            return true;
+        }
+        if (at(r - 1, c) === v && at(r - 2, c) === v) {
+            return true;
+        }
+        if (at(r - 1, c) === v && at(r + 1, c) === v) {
+            return true;
+        }
+        if (at(r + 1, c) === v && at(r + 2, c) === v) {
+            return true;
+        }
         return false;
     }
 
@@ -133,7 +163,9 @@ class Match3Game {
                     run++;
                 } else {
                     if (run >= 3) {
-                        for (let k = c - run; k < c; k++) { hit.add(r + ',' + k); }
+                        for (let k = c - run; k < c; k++) {
+                            hit.add(r + ',' + k);
+                        }
                     }
                     run = 1;
                 }
@@ -146,7 +178,9 @@ class Match3Game {
                     run++;
                 } else {
                     if (run >= 3) {
-                        for (let k = r - run; k < r; k++) { hit.add(k + ',' + c); }
+                        for (let k = r - run; k < r; k++) {
+                            hit.add(k + ',' + c);
+                        }
                     }
                     run = 1;
                 }
@@ -263,10 +297,15 @@ class Match3Game {
     findAnyValidSwap(): [Cell, Cell] | null {
         for (let r = 0; r < N; r++) {
             for (let c = 0; c < N; c++) {
-                for (const [dr, dc] of [[0, 1], [1, 0]]) {
+                for (const [dr, dc] of [
+                    [0, 1],
+                    [1, 0],
+                ]) {
                     const r2 = r + dr;
                     const c2 = c + dc;
-                    if (r2 >= N || c2 >= N) { continue; }
+                    if (r2 >= N || c2 >= N) {
+                        continue;
+                    }
                     const a = this.grid[r][c];
                     const b = this.grid[r2][c2];
                     this.grid[r][c] = b;
@@ -275,7 +314,10 @@ class Match3Game {
                     this.grid[r][c] = a;
                     this.grid[r2][c2] = b;
                     if (m) {
-                        return [[r, c], [r2, c2]];
+                        return [
+                            [r, c],
+                            [r2, c2],
+                        ];
                     }
                 }
             }
@@ -319,7 +361,9 @@ class BoardRenderer {
     }
 
     draw(game: Match3Game, now: number): void {
-        if (game.grid.length !== N) { return; } // reset 前的帧：无盘面可画
+        if (game.grid.length !== N) {
+            return;
+        } // reset 前的帧：无盘面可画
         const ctx = this.ctx;
         ctx.fillStyle = '#10141c';
         ctx.fillRect(0, 0, BOARD_PX, BOARD_PX);
@@ -328,7 +372,9 @@ class BoardRenderer {
         for (let r = 0; r < N; r++) {
             for (let c = 0; c < N; c++) {
                 const v = game.grid[r][c];
-                if (v === 0) { continue; }
+                if (v === 0) {
+                    continue;
+                }
                 // 画布 y 倒序（row0=底部；uploadData 不翻转，同 tetris 口径）
                 const y = (N - 1 - r) * CELL;
                 const x = c * CELL;
@@ -357,7 +403,7 @@ class BoardRenderer {
         }
         if (this.texture) {
             const img = ctx.getImageData(0, 0, BOARD_PX, BOARD_PX);
-            this.pixels.set(img.data);
+            copyCanvasRows(img, this.pixels);
             this.texture.uploadData(this.pixels);
         }
     }
@@ -399,7 +445,9 @@ function buildBoard(): void {
     boardNode.setRotationFromEuler(90, 0, 0);
     scene.addChild(boardNode);
     const renderer = boardNode.addComponent(MeshRenderer);
-    renderer.mesh = utils.createMesh(primitives.plane({ width: QUAD, length: QUAD, widthSegments: 1, lengthSegments: 1 }));
+    renderer.mesh = utils.createMesh(
+        primitives.plane({ width: QUAD, length: QUAD, widthSegments: 1, lengthSegments: 1 }),
+    );
     renderer.setSharedMaterial(boardMaterial, 0);
 }
 
@@ -463,7 +511,11 @@ function loadCascadeFixture(): void {
     game.grid[4][2] = 2;
     game.grid[4][3] = 2;
     game.grid[4][4] = 5;
-    pcheck('fixture-no-prematch', game.findMatches().size === 0, '夹具盘面存在预置匹配: ' + [...game.findMatches()].join(';'));
+    pcheck(
+        'fixture-no-prematch',
+        game.findMatches().size === 0,
+        '夹具盘面存在预置匹配: ' + [...game.findMatches()].join(';'),
+    );
 }
 
 async function main(): Promise<void> {
@@ -498,8 +550,11 @@ async function main(): Promise<void> {
 
     // ---- M1 初始盘面（种子 42，无预置匹配） ----
     game.reset(42);
-    pcheck('m1-initial-board-clean', game.findMatches().size === 0 && game.state === 'playing',
-        'matches=' + game.findMatches().size + ' state=' + game.state);
+    pcheck(
+        'm1-initial-board-clean',
+        game.findMatches().size === 0 && game.state === 'playing',
+        'matches=' + game.findMatches().size + ' state=' + game.state,
+    );
     const full0 = game.grid.every((row) => row.every((v) => v >= 1 && v <= NCOLORS));
     pcheck('m1-board-full', full0, '盘面存在空格/越界色');
 
@@ -508,11 +563,17 @@ async function main(): Promise<void> {
     pcheck('m8-precondition-has-move', !!swap0, '种子盘面无可消除交换（演示前提不成立）');
     const probeSwap = game.trySwap(swap0![0], swap0![1]);
     const immediate = game.trySwap([0, 0], [0, 1]); // 动画队列非空 → 必须被锁拒绝
-    pcheck('m8-input-lock-during-anim', immediate.accepted === false && game.lockRejects === 1,
-        'accepted=' + immediate.accepted + ' lockRejects=' + game.lockRejects);
+    pcheck(
+        'm8-input-lock-during-anim',
+        immediate.accepted === false && game.lockRejects === 1,
+        'accepted=' + immediate.accepted + ' lockRejects=' + game.lockRejects,
+    );
     await drainAnims();
-    pcheck('m2-valid-swap-scores', probeSwap.matched === true && probeSwap.chain >= 1 && game.score > 0 && game.movesLeft === MOVES_LIMIT - 1,
-        'score=' + game.score + ' chain=' + probeSwap.chain + ' moves=' + game.movesLeft);
+    pcheck(
+        'm2-valid-swap-scores',
+        probeSwap.matched === true && probeSwap.chain >= 1 && game.score > 0 && game.movesLeft === MOVES_LIMIT - 1,
+        'score=' + game.score + ' chain=' + probeSwap.chain + ' moves=' + game.movesLeft,
+    );
     const fullAfter = game.grid.every((row) => row.every((v) => v >= 1 && v <= NCOLORS));
     pcheck('m2-refill-full-board', fullAfter, '消除补牌后盘面不满');
 
@@ -531,7 +592,10 @@ async function main(): Promise<void> {
             game.grid[r][c] = a;
             game.grid[r][c + 1] = b;
             if (!m) {
-                invalidPair = [[r, c], [r, c + 1]];
+                invalidPair = [
+                    [r, c],
+                    [r, c + 1],
+                ];
                 break outer;
             }
         }
@@ -540,9 +604,15 @@ async function main(): Promise<void> {
     const snapBefore = gridSnapshot();
     const movesBefore = game.movesLeft;
     const res3 = game.trySwap(invalidPair![0], invalidPair![1]);
-    pcheck('m3-invalid-swap-rollback', res3.accepted === true && res3.matched === false
-        && gridSnapshot() === snapBefore && game.movesLeft === movesBefore && game.invalidRollbacks === 1,
-        'matched=' + res3.matched + ' rollback=' + game.invalidRollbacks + ' moves=' + game.movesLeft);
+    pcheck(
+        'm3-invalid-swap-rollback',
+        res3.accepted === true &&
+            res3.matched === false &&
+            gridSnapshot() === snapBefore &&
+            game.movesLeft === movesBefore &&
+            game.invalidRollbacks === 1,
+        'matched=' + res3.matched + ' rollback=' + game.invalidRollbacks + ' moves=' + game.movesLeft,
+    );
     await drainAnims();
 
     // ---- M4 连锁夹具（纯重力双波） ----
@@ -551,20 +621,32 @@ async function main(): Promise<void> {
     game.movesLeft = MOVES_LIMIT;
     game.state = 'playing';
     const res4 = game.trySwap([2, 3], [3, 3]);
-    pcheck('m4-cascade-chain-2', res4.chain >= 2 && res4.cleared >= 6,
-        'chain=' + res4.chain + ' cleared=' + res4.cleared + '（夹具保证 ≥2 波 ≥6 格；RNG 补牌可追加）');
-    pcheck('m4-chain-scoring', game.score >= 3 * 10 * 1 + 3 * 10 * 2,
-        'score=' + game.score + '（≥ 30 + 60 连锁加成下界）');
+    pcheck(
+        'm4-cascade-chain-2',
+        res4.chain >= 2 && res4.cleared >= 6,
+        'chain=' + res4.chain + ' cleared=' + res4.cleared + '（夹具保证 ≥2 波 ≥6 格；RNG 补牌可追加）',
+    );
+    pcheck(
+        'm4-chain-scoring',
+        game.score >= 3 * 10 * 1 + 3 * 10 * 2,
+        'score=' + game.score + '（≥ 30 + 60 连锁加成下界）',
+    );
     await drainAnims();
 
     // ---- M5 胜局 ----
-    pcheck('m5-win-state', (game.state as string) === 'won' && game.score >= TARGET_SCORE,
-        'state=' + game.state + ' score=' + game.score + '/' + TARGET_SCORE);
+    pcheck(
+        'm5-win-state',
+        (game.state as string) === 'won' && game.score >= TARGET_SCORE,
+        'state=' + game.state + ' score=' + game.score + '/' + TARGET_SCORE,
+    );
 
     // ---- M6 重开 ----
     game.reset(42);
-    pcheck('m6-restart-fresh', game.score === 0 && game.movesLeft === MOVES_LIMIT && game.state === 'playing'
-        && game.findMatches().size === 0, 'score=' + game.score + ' moves=' + game.movesLeft);
+    pcheck(
+        'm6-restart-fresh',
+        game.score === 0 && game.movesLeft === MOVES_LIMIT && game.state === 'playing' && game.findMatches().size === 0,
+        'score=' + game.score + ' moves=' + game.movesLeft,
+    );
 
     // ---- M7 负局（movesLeft=1 注入 = 败局夹具，如实标注） ----
     game.movesLeft = 1;
@@ -572,28 +654,47 @@ async function main(): Promise<void> {
     pcheck('m7-precondition', !!lastSwap && game.score < TARGET_SCORE, 'score=' + game.score);
     game.trySwap(lastSwap![0], lastSwap![1]);
     await drainAnims();
-    pcheck('m7-lose-state', ((game.state as string) === 'over' && game.score < TARGET_SCORE) || (game.state as string) === 'won',
-        'state=' + game.state + ' score=' + game.score + '（小分交换若意外达标判 won 亦为合法终局）');
+    pcheck(
+        'm7-lose-state',
+        ((game.state as string) === 'over' && game.score < TARGET_SCORE) || (game.state as string) === 'won',
+        'state=' + game.state + ' score=' + game.score + '（小分交换若意外达标判 won 亦为合法终局）',
+    );
     game.reset(777); // 交互模式（换种子，自由游玩）
     // 空闲期持续变化源：预选一个提示格（呼吸高亮即 effect 契约声明的「选中格白色呼吸高亮
     // （空闲期持续 frame-diff）」）——probe-ready 门控下 frame-diff 采样落在 main() 完成后，
     // 静态棋盘需要显式 idle 动画源（r53 整批实测教训）。
     const idleHint = game.findAnyValidSwap();
-    if (idleHint) { board.selected = idleHint[0]; }
+    if (idleHint) {
+        board.selected = idleHint[0];
+    }
 
     // ---- 交互：点击选格 → 相邻交换；双击同格 = 提示走法（保证验证器单击序列有确定性结果） ----
     let pending: Cell | null = null;
     const finishClickCheck = (how: string): void => {
         if (!probe.clickPhaseDone) {
             probe.clickPhaseDone = true;
-            pcheck('click-swap-processed', game.state === 'playing' || game.state === 'won' || game.state === 'over',
-                '交换请求已进入逻辑层（' + how + '；state=' + game.state + ' locks=' + game.lockRejects + ' rollbacks=' + game.invalidRollbacks + '）');
+            pcheck(
+                'click-swap-processed',
+                game.state === 'playing' || game.state === 'won' || game.state === 'over',
+                '交换请求已进入逻辑层（' +
+                    how +
+                    '；state=' +
+                    game.state +
+                    ' locks=' +
+                    game.lockRejects +
+                    ' rollbacks=' +
+                    game.invalidRollbacks +
+                    '）',
+            );
         }
     };
     const onClick = (event: any): void => {
         const loc = event.getLocation();
         const canvas = document.getElementById('GameCanvas') as HTMLCanvasElement;
-        const cell = screenToCell(loc.x * (canvas.width / window.innerWidth), loc.y * (canvas.height / window.innerHeight));
+        const cell = screenToCell(
+            loc.x * (canvas.width / window.innerWidth),
+            loc.y * (canvas.height / window.innerHeight),
+        );
         if (!cell) {
             pending = null;
             board.selected = null;
@@ -629,17 +730,32 @@ async function main(): Promise<void> {
         label: 'match3-classic',
         hold: () => {
             const held: { name: string; ref: object }[] = [];
-            if (board.texture) { held.push({ name: 'Texture2D(board)', ref: board.texture }); }
-            if (boardMaterial) { held.push({ name: 'Material(board)', ref: boardMaterial }); }
-            if (boardNode) { held.push({ name: 'BoardNode', ref: boardNode }); }
+            if (board.texture) {
+                held.push({ name: 'Texture2D(board)', ref: board.texture });
+            }
+            if (boardMaterial) {
+                held.push({ name: 'Material(board)', ref: boardMaterial });
+            }
+            if (boardNode) {
+                held.push({ name: 'BoardNode', ref: boardNode });
+            }
             return held;
         },
         release: () => {
             input.off(Input.EventType.TOUCH_START, onClick);
             game.state = 'idle';
-            if (boardNode) { boardNode.destroy(); boardNode = null; }
-            if (boardMaterial) { boardMaterial.destroy(); boardMaterial = null; }
-            if (board.texture) { board.texture.destroy(); board.texture = null; }
+            if (boardNode) {
+                boardNode.destroy();
+                boardNode = null;
+            }
+            if (boardMaterial) {
+                boardMaterial.destroy();
+                boardMaterial = null;
+            }
+            if (board.texture) {
+                board.texture.destroy();
+                board.texture = null;
+            }
         },
         reacquire: async () => {
             await sleep(300);

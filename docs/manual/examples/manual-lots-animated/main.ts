@@ -94,14 +94,14 @@ class WaveField extends Component {
     private _emaMs = 0;
     private _v: Vec3;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._frames = 0;
         this._emaMs = 0;
         this._v = new Vec3();
     }
-    update (dt: number): void {
+    update(dt: number): void {
         const t0 = performance.now();
         this._t += dt;
         this._frames++;

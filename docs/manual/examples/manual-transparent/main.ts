@@ -52,11 +52,7 @@ const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 后排：三颗不透明色块（被遮挡物） ----
-const opaqueColors = [
-    new Color(220, 60, 60, 255),
-    new Color(60, 200, 90, 255),
-    new Color(70, 120, 235, 255),
-];
+const opaqueColors = [new Color(220, 60, 60, 255), new Color(60, 200, 90, 255), new Color(70, 120, 235, 255)];
 const sharedBox = utils.createMesh(primitives.box({ width: 1.1, height: 1.1, length: 1.1 }));
 opaqueColors.forEach((col, i) => {
     const n = new Node(`Opaque-${i}`);
@@ -101,7 +97,7 @@ const glassMats: Material[] = [];
 
 // ---- 覆盖层：读回 pass 混合状态 ----
 const info = document.querySelector('#info') as HTMLElement;
-function blendReadout (m: Material): string {
+function blendReadout(m: Material): string {
     try {
         const t = m.passes[0].blendState.targets[0];
         return `blend=${t.blend} src=${t.blendSrc} dst=${t.blendDst}`;
@@ -112,18 +108,18 @@ function blendReadout (m: Material): string {
 class Spinner extends Component {
     private _a = 0;
     private _readout = '';
-    constructor () {
+    constructor() {
         super();
         this._a = 0;
         this._readout = blendReadout(glassMats[1]);
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._a += dt * 30;
-        rig.setRotationFromEuler(0, Math.sin(this._a * Math.PI / 180) * 35, 0);
+        rig.setRotationFromEuler(0, Math.sin((this._a * Math.PI) / 180) * 35, 0);
         info.textContent = [
             'transparency: mainColor.a = 64/128/192 + initialize({states.blendState}) (per-sphere private Material)',
             `pass[0].blendState.targets[0]: ${this._readout} (2=SRC_ALPHA, 4=ONE_MINUS_SRC_ALPHA)`,
-            `rig yaw: ${(Math.sin(this._a * Math.PI / 180) * 35).toFixed(1)}° (swings to reveal overlap order)`,
+            `rig yaw: ${(Math.sin((this._a * Math.PI) / 180) * 35).toFixed(1)}° (swings to reveal overlap order)`,
             'opaque row behind: red/green/blue cubes; glass spheres in front',
         ].join('\n');
     }

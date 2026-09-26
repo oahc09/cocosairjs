@@ -50,19 +50,35 @@ import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 
 const UI_LAYER = Layers.Enum.UI_3D;
 const r2 = (v) => Math.round(v * 100) / 100;
-const safe = (fn) => { try { const v = fn(); return v === undefined ? 'undefined' : v; } catch (e) { return 'ERR:' + e.message; } };
+const safe = (fn) => {
+    try {
+        const v = fn();
+        return v === undefined ? 'undefined' : v;
+    } catch (e) {
+        return 'ERR:' + e.message;
+    }
+};
 
 // ---- 运行期生成贴图（零第三方资产）----
 const frameCache = new Map();
 const spriteSlots = [];
 
-function createFrame (key, cssColor, w, h, radius) {
-    if (frameCache.has(key)) { return frameCache.get(key).spriteFrame; }
+function createFrame(key, cssColor, w, h, radius) {
+    if (frameCache.has(key)) {
+        return frameCache.get(key).spriteFrame;
+    }
     const cvs = document.createElement('canvas');
-    cvs.width = w; cvs.height = h;
+    cvs.width = w;
+    cvs.height = h;
     const ctx = cvs.getContext('2d');
     ctx.fillStyle = cssColor;
-    if (radius > 0) { ctx.beginPath(); ctx.roundRect(0, 0, w, h, radius); ctx.fill(); } else { ctx.fillRect(0, 0, w, h); }
+    if (radius > 0) {
+        ctx.beginPath();
+        ctx.roundRect(0, 0, w, h, radius);
+        ctx.fill();
+    } else {
+        ctx.fillRect(0, 0, w, h);
+    }
     const image = new ImageAsset(cvs);
     const texture = new Texture2D();
     texture.image = image;
@@ -72,11 +88,11 @@ function createFrame (key, cssColor, w, h, radius) {
     return spriteFrame;
 }
 
-function assignFrame (slot) {
+function assignFrame(slot) {
     slot.sprite.spriteFrame = createFrame(slot.key, slot.color, slot.w, slot.h, slot.radius);
 }
 
-function makeBody (spec) {
+function makeBody(spec) {
     const node = new Node(spec.name);
     node.layer = UI_LAYER;
     const t = node.addComponent(UITransform);
@@ -86,7 +102,15 @@ function makeBody (spec) {
     node.parent = canvasNode;
     const sprite = node.addComponent(Sprite);
     sprite.sizeMode = Sprite.SizeMode.CUSTOM;
-    const slot = { name: spec.name, key: spec.name, color: spec.color, w: spec.w, h: spec.h, radius: spec.shape === 'circle' ? spec.w / 2 : 6, sprite };
+    const slot = {
+        name: spec.name,
+        key: spec.name,
+        color: spec.color,
+        w: spec.w,
+        h: spec.h,
+        radius: spec.shape === 'circle' ? spec.w / 2 : 6,
+        sprite,
+    };
     spriteSlots.push(slot);
     assignFrame(slot);
 
@@ -95,12 +119,18 @@ function makeBody (spec) {
     body.enabledContactListener = spec.listener !== false;
 
     const collider = spec.shape === 'circle' ? node.addComponent(CircleCollider2D) : node.addComponent(BoxCollider2D);
-    if (spec.shape === 'circle') { collider.radius = spec.w / 2; } else { collider.size = new Size(spec.w, spec.h); }
+    if (spec.shape === 'circle') {
+        collider.radius = spec.w / 2;
+    } else {
+        collider.size = new Size(spec.w, spec.h);
+    }
     collider.density = spec.density === undefined ? 1 : spec.density;
     collider.friction = spec.friction === undefined ? 0.2 : spec.friction;
     collider.restitution = spec.restitution === undefined ? 0 : spec.restitution;
     collider.group = spec.group === undefined ? PhysicsGroup.DEFAULT : spec.group;
-    if (spec.sensor) { collider.sensor = true; }
+    if (spec.sensor) {
+        collider.sensor = true;
+    }
     return { name: spec.name, node, body, collider, start: [spec.x, spec.y], slot };
 }
 
@@ -133,13 +163,51 @@ canvasNode.addChild(cameraNode);
 canvas.cameraComponent = cam;
 
 // Ground 上表面 y=-120；SensorBand 覆盖 y∈[-54,-18]
-const ground = makeBody({ name: 'Ground', static: true, x: 0, y: -130, w: 440, h: 20, color: '#465064', listener: true });
-const band = makeBody({ name: 'SensorBand', static: true, x: 0, y: -36, w: 440, h: 36, color: '#2f6f7a', sensor: true, listener: true });
+const ground = makeBody({
+    name: 'Ground',
+    static: true,
+    x: 0,
+    y: -130,
+    w: 440,
+    h: 20,
+    color: '#465064',
+    listener: true,
+});
+const band = makeBody({
+    name: 'SensorBand',
+    static: true,
+    x: 0,
+    y: -36,
+    w: 440,
+    h: 36,
+    color: '#2f6f7a',
+    sensor: true,
+    listener: true,
+});
 
 const FALL_Y = 130;
 const box = makeBody({ name: 'Box', x: -160, y: FALL_Y, w: 40, h: 40, color: '#c88c46', friction: 0.3 });
-const ball = makeBody({ name: 'Ball', x: -80, y: FALL_Y, w: 40, h: 40, shape: 'circle', color: '#5ac878', restitution: 0.6, friction: 0.1 });
-const mute = makeBody({ name: 'Mute', x: 0, y: FALL_Y, w: 40, h: 40, color: '#b0b6c0', friction: 0.3, listener: false });
+const ball = makeBody({
+    name: 'Ball',
+    x: -80,
+    y: FALL_Y,
+    w: 40,
+    h: 40,
+    shape: 'circle',
+    color: '#5ac878',
+    restitution: 0.6,
+    friction: 0.1,
+});
+const mute = makeBody({
+    name: 'Mute',
+    x: 0,
+    y: FALL_Y,
+    w: 40,
+    h: 40,
+    color: '#b0b6c0',
+    friction: 0.3,
+    listener: false,
+});
 const p = makeBody({ name: 'P', x: 70, y: FALL_Y, w: 30, h: 30, color: '#5aa0f0', group: 2 });
 const q = makeBody({ name: 'Q', x: 95, y: FALL_Y, w: 30, h: 30, color: '#f0c04a', group: 4 });
 
@@ -164,11 +232,16 @@ const statusLabel = (() => {
 })();
 
 // ---- 事件记录：按 (类型|A|B) 计数，每种最多留 2 条样本 ----
-const EVENTS = [Contact2DType.BEGIN_CONTACT, Contact2DType.END_CONTACT, Contact2DType.PRE_SOLVE, Contact2DType.POST_SOLVE];
+const EVENTS = [
+    Contact2DType.BEGIN_CONTACT,
+    Contact2DType.END_CONTACT,
+    Contact2DType.PRE_SOLVE,
+    Contact2DType.POST_SOLVE,
+];
 const tally = {};
 let stepIndex = 0;
 
-function sampleContact (contact) {
+function sampleContact(contact) {
     const wm = safe(() => contact.getWorldManifold());
     const md = safe(() => contact.getManifold());
     const imp = safe(() => contact.getImpulse());
@@ -187,54 +260,69 @@ function sampleContact (contact) {
     };
 }
 
-function onContact (type) {
+function onContact(type) {
     return (self, other, contact) => {
         // 方向键：接收方在前。同一接触的两侧是否收到事件，取决于各自刚体的 enabledContactListener。
         const key = `${type}|${self.node.name}<->${other.node.name}`;
         let entry = tally[key];
-        if (!entry) { entry = tally[key] = { count: 0, firstStep: stepIndex, lastStep: stepIndex, samples: [] }; }
+        if (!entry) {
+            entry = tally[key] = { count: 0, firstStep: stepIndex, lastStep: stepIndex, samples: [] };
+        }
         entry.count += 1;
         entry.lastStep = stepIndex;
-        if (entry.samples.length < 2) { entry.samples.push(sampleContact(contact)); }
+        if (entry.samples.length < 2) {
+            entry.samples.push(sampleContact(contact));
+        }
     };
 }
 
 for (const item of tracked) {
-    for (const type of EVENTS) { item.collider.on(type, onContact(type)); }
+    for (const type of EVENTS) {
+        item.collider.on(type, onContact(type));
+    }
 }
 
 // ---- 手工驱动 ----
 const world = physics.physicsWorld;
 const dt = physics.fixedTimeStep;
 
-function drive (n) {
+function drive(n) {
     world.syncSceneToPhysics();
-    for (let i = 0; i < n; i++) { stepIndex += 1; physics.step(dt); }
+    for (let i = 0; i < n; i++) {
+        stepIndex += 1;
+        physics.step(dt);
+    }
     world.syncPhysicsToScene();
 }
 
-function velocityOf (item) {
+function velocityOf(item) {
     const v = safe(() => item.body.linearVelocity);
     return v && typeof v === 'object' && v.x !== undefined ? [r2(v.x), r2(v.y)] : String(v);
 }
 
-function positions () {
+function positions() {
     const out = {};
-    for (const item of tracked) { out[item.name] = [r2(item.node.position.x), r2(item.node.position.y)]; }
+    for (const item of tracked) {
+        out[item.name] = [r2(item.node.position.x), r2(item.node.position.y)];
+    }
     return out;
 }
 
-function velocities () {
+function velocities() {
     const out = {};
-    for (const item of tracked) { out[item.name] = velocityOf(item); }
+    for (const item of tracked) {
+        out[item.name] = velocityOf(item);
+    }
     return out;
 }
 
-function applyFilter (...items) {
-    for (const item of items) { item.collider.apply(); }
+function applyFilter(...items) {
+    for (const item of items) {
+        item.collider.apply();
+    }
 }
 
-function resetBodies (items) {
+function resetBodies(items) {
     for (const item of items) {
         item.node.setPosition(item.start[0], item.start[1], 0);
         item.body.linearVelocity = new Vec2(0, 0);
@@ -247,23 +335,45 @@ const matrix = physics.collisionMatrix;
 const defaultMatrix = Object.assign({}, matrix);
 const phases = [];
 
-function snapshot (index, name, note) {
-    phases[index] = { index, name, note, stepIndex, positions: positions(), velocities: velocities(), tally: JSON.parse(JSON.stringify(tally)) };
+function snapshot(index, name, note) {
+    phases[index] = {
+        index,
+        name,
+        note,
+        stepIndex,
+        positions: positions(),
+        velocities: velocities(),
+        tally: JSON.parse(JSON.stringify(tally)),
+    };
 }
 
-function at (phaseIdx, type, self, other) {
+function at(phaseIdx, type, self, other) {
     const t = phases[phaseIdx] ? phases[phaseIdx].tally[`${type}|${self}<->${other}`] : null;
     return t || { count: 0, firstStep: -1, lastStep: -1, samples: [{}] };
 }
-function cnt (phaseIdx, type, self, other) { return at(phaseIdx, type, self, other).count; }
-function fst (phaseIdx, type, self, other) { return at(phaseIdx, type, self, other).firstStep; }
-function smp (phaseIdx, type, self, other) { return at(phaseIdx, type, self, other).samples[0]; }
-function posY (phaseIdx, name) { return phases[phaseIdx] ? phases[phaseIdx].positions[name][1] : 0; }
-function posX (phaseIdx, name) { return phases[phaseIdx] ? phases[phaseIdx].positions[name][0] : 0; }
-function gap (phaseIdx) { return r2(posX(phaseIdx, 'Q') - posX(phaseIdx, 'P')); }
+function cnt(phaseIdx, type, self, other) {
+    return at(phaseIdx, type, self, other).count;
+}
+function fst(phaseIdx, type, self, other) {
+    return at(phaseIdx, type, self, other).firstStep;
+}
+function smp(phaseIdx, type, self, other) {
+    return at(phaseIdx, type, self, other).samples[0];
+}
+function posY(phaseIdx, name) {
+    return phases[phaseIdx] ? phases[phaseIdx].positions[name][1] : 0;
+}
+function posX(phaseIdx, name) {
+    return phases[phaseIdx] ? phases[phaseIdx].positions[name][0] : 0;
+}
+function gap(phaseIdx) {
+    return r2(posX(phaseIdx, 'Q') - posX(phaseIdx, 'P'));
+}
 
-function runSequence () {
-    if (phases.length) { return; }
+function runSequence() {
+    if (phases.length) {
+        return;
+    }
     snapshot(0, 'initial', '未模拟：全部在起始高度 y=130');
 
     // 1) 默认 collisionMatrix 下自由落体。Box/Ball/Mute（category 1，mask[1]=1）穿过 sensor 带落到地面；
@@ -320,15 +430,20 @@ function runSequence () {
 
 const preClickPositions = positions();
 
-function summary () {
+function summary() {
     const pos = phases.length ? phases[phases.length - 1].positions : preClickPositions;
     const boxSensor = smp(1, Contact2DType.BEGIN_CONTACT, 'Box', 'SensorBand');
     const boxBegin = smp(1, Contact2DType.BEGIN_CONTACT, 'Box', 'Ground');
     const boxPost = smp(1, Contact2DType.POST_SOLVE, 'Box', 'Ground');
     const ballPost = smp(1, Contact2DType.POST_SOLVE, 'Ball', 'Ground');
     return {
-        backend: PhysicsSystem2D.PHYSICS_BOX2D ? 'box2d'
-            : (PhysicsSystem2D.PHYSICS_BUILTIN ? 'builtin' : (PhysicsSystem2D.PHYSICS_BOX2D_WASM ? 'box2d-wasm' : 'none')),
+        backend: PhysicsSystem2D.PHYSICS_BOX2D
+            ? 'box2d'
+            : PhysicsSystem2D.PHYSICS_BUILTIN
+              ? 'builtin'
+              : PhysicsSystem2D.PHYSICS_BOX2D_WASM
+                ? 'box2d-wasm'
+                : 'none',
         worldCtor: physics.physicsWorld.constructor.name,
         ptmRatio: PHYSICS_2D_PTM_RATIO,
         autoSimulation: !!physics.autoSimulation,
@@ -405,20 +520,24 @@ function summary () {
 canvasNode.on(Node.EventType.TOUCH_START, runSequence);
 
 class CollisionReadout extends Component {
-    update () {
+    update() {
         window.__geom = readback();
     }
 }
 canvasNode.addComponent(CollisionReadout);
 
-function readback () {
+function readback() {
     return {
         summary: summary(),
         before: preClickPositions,
         contactTypes: EVENTS.slice(),
         defaultMatrix: Object.assign({}, defaultMatrix),
         matrix: Object.assign({}, matrix),
-        masses: { Ground: safe(() => ground.body.getMass()), Box: safe(() => box.body.getMass()), Ball: safe(() => ball.body.getMass()) },
+        masses: {
+            Ground: safe(() => ground.body.getMass()),
+            Box: safe(() => box.body.getMass()),
+            Ball: safe(() => ball.body.getMass()),
+        },
         positions: positions(),
         velocities: velocities(),
         tally,
@@ -426,7 +545,7 @@ function readback () {
     };
 }
 
-function ownedAssets () {
+function ownedAssets() {
     return [...frameCache.entries()].flatMap(([name, entry]) => [
         { name: `SpriteFrame:${name}`, ref: entry.spriteFrame },
         { name: `Texture2D:${name}`, ref: entry.texture },
@@ -438,12 +557,18 @@ installAssetLifecycle({
     label: 'physics-2d-collision',
     hold: ownedAssets,
     release: () => {
-        for (const slot of spriteSlots) { slot.sprite.spriteFrame = null; }
-        for (const asset of ownedAssets()) { asset.ref.destroy(); }
+        for (const slot of spriteSlots) {
+            slot.sprite.spriteFrame = null;
+        }
+        for (const asset of ownedAssets()) {
+            asset.ref.destroy();
+        }
         frameCache.clear();
     },
     reacquire: () => {
-        for (const slot of spriteSlots) { assignFrame(slot); }
+        for (const slot of spriteSlots) {
+            assignFrame(slot);
+        }
         return ownedAssets();
     },
 });

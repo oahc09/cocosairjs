@@ -7,22 +7,22 @@
 AIR 的背景分两层：**相机清除策略**（`camera.clearFlags` + `clearColor`）与
 **场景环境层**（`scene.globals.skybox`）。要点：
 
-| AIR | 实测 |
-| --- | --- |
-| 纯色背景：`clearFlags = SOLID_COLOR` + `clearColor` | ✓（本手册几乎每个示例都在用） |
-| 2D 贴图背景：无纹理槽位 | **缺**——本篇 PARTIAL 主因之一 |
-| cubemap 天空盒：`scene.globals.skybox.envmap = TextureCube` | ✓ 实测（canvas 现造 6 面可上屏） |
-| 程序化大气：无内置对应物；`setSkyboxMaterial`（d.ts 6114）是自定义材质入口，但本构建无用户面 GLSL（见 [debugging-glsl](debugging-glsl.md) N/A） | 缺 |
+| AIR                                                                                                                                             | 实测                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| 纯色背景：`clearFlags = SOLID_COLOR` + `clearColor`                                                                                             | ✓（本手册几乎每个示例都在用）    |
+| 2D 贴图背景：无纹理槽位                                                                                                                         | **缺**——本篇 PARTIAL 主因之一    |
+| cubemap 天空盒：`scene.globals.skybox.envmap = TextureCube`                                                                                     | ✓ 实测（canvas 现造 6 面可上屏） |
+| 程序化大气：无内置对应物；`setSkyboxMaterial`（d.ts 6114）是自定义材质入口，但本构建无用户面 GLSL（见 [debugging-glsl](debugging-glsl.md) N/A） | 缺                               |
 
 ## 1. 背景入口（实测 API 面）
 
-| 入口 | 锚点 | 语义（实测） |
-| --- | --- | --- |
-| `Camera.ClearFlag.SOLID_COLOR` / `SKYBOX` / `DEPTH_ONLY` / `DONT_CLEAR` | module.js 43870–43873 | 位组合枚举，实测值 SOLID=7、SKYBOX=14（覆盖层读回） |
-| `scene.globals` | d.ts 19400 | `SceneGlobals`（d.ts 21104 起）：`skybox: SkyboxInfo`、`ambient: AmbientInfo` 等 |
-| `SkyboxInfo.enabled / envmap / useIBL / useHDR / envLightingType / applyDiffuseMap` | d.ts 20662 起 | 场景级天空盒配置；`envmap` 类型为 `TextureCube`（可置 null） |
-| `renderer.scene.Skybox.setSkyboxMaterial / rotation 角` | d.ts 6114 / 6123 | 渲染层：自定义天空盒材质与旋转 |
-| `TextureCube.mipmaps` | d.ts 23404 起 | `ITextureCubeMipmap[]`，六面 `{front, back, left, right, top, bottom}`，每面收 `ImageAsset`（canvas 可直接构造） |
+| 入口                                                                                | 锚点                  | 语义（实测）                                                                                                     |
+| ----------------------------------------------------------------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `Camera.ClearFlag.SOLID_COLOR` / `SKYBOX` / `DEPTH_ONLY` / `DONT_CLEAR`             | module.js 43870–43873 | 位组合枚举，实测值 SOLID=7、SKYBOX=14（覆盖层读回）                                                              |
+| `scene.globals`                                                                     | d.ts 19400            | `SceneGlobals`（d.ts 21104 起）：`skybox: SkyboxInfo`、`ambient: AmbientInfo` 等                                 |
+| `SkyboxInfo.enabled / envmap / useIBL / useHDR / envLightingType / applyDiffuseMap` | d.ts 20662 起         | 场景级天空盒配置；`envmap` 类型为 `TextureCube`（可置 null）                                                     |
+| `renderer.scene.Skybox.setSkyboxMaterial / rotation 角`                             | d.ts 6114 / 6123      | 渲染层：自定义天空盒材质与旋转                                                                                   |
+| `TextureCube.mipmaps`                                                               | d.ts 23404 起         | `ITextureCubeMipmap[]`，六面 `{front, back, left, right, top, bottom}`，每面收 `ImageAsset`（canvas 可直接构造） |
 
 **开发期踩坑（实测）**：`scene.skybox` **不存在**——首版照 cocos 编辑器文档写 `scene.skybox.enabled = true`，
 页面直接 `TypeError: Cannot set properties of undefined (setting 'enabled')`、一帧不画
@@ -33,29 +33,31 @@ AIR 的背景分两层：**相机清除策略**（`camera.clearFlags` + `clearCo
 cubemap 用 6 张 64×64 单色 canvas 现造，每面包一张 `ImageAsset`：
 
 ```ts
-function faceAsset (css: string): ImageAsset {
-    const c = document.createElement('canvas');
-    c.width = c.height = 64;
-    const g = c.getContext('2d') as CanvasRenderingContext2D;
-    g.fillStyle = css;
-    g.fillRect(0, 0, 64, 64);
-    return new ImageAsset(c);
+function faceAsset(css: string): ImageAsset {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d") as CanvasRenderingContext2D;
+  g.fillStyle = css;
+  g.fillRect(0, 0, 64, 64);
+  return new ImageAsset(c);
 }
 let cubeMap: TextureCube | null = null;
-let cubeMapError = '—';
+let cubeMapError = "—";
 try {
-    cubeMap = new TextureCube();
-    cubeMap.mipmaps = [{
-        front: faceAsset('#c04030'),
-        back: faceAsset('#30a050'),
-        left: faceAsset('#3060c0'),
-        right: faceAsset('#c0a030'),
-        top: faceAsset('#40b0c0'),
-        bottom: faceAsset('#8040a0'),
-    }];
+  cubeMap = new TextureCube();
+  cubeMap.mipmaps = [
+    {
+      front: faceAsset("#c04030"),
+      back: faceAsset("#30a050"),
+      left: faceAsset("#3060c0"),
+      right: faceAsset("#c0a030"),
+      top: faceAsset("#40b0c0"),
+      bottom: faceAsset("#8040a0"),
+    },
+  ];
 } catch (e) {
-    cubeMap = null;
-    cubeMapError = `${e.name}: ${e.message}`;
+  cubeMap = null;
+  cubeMapError = `${e.name}: ${e.message}`;
 }
 ```
 
@@ -143,51 +145,90 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-backgrounds/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Add a Background or Skybox — 背景与天空盒（docs/manual/backgrounds.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
-        #ui {
-            position: absolute; left: 8px; bottom: 8px; z-index: 10;
-            font: 12px/1.4 ui-monospace, Consolas, monospace;
-        }
-        #ui button {
-            margin-right: 6px; padding: 4px 10px; cursor: pointer;
-            font: inherit; color: #0b1018; background: #d7e3f2; border: 1px solid #8fa4bd; border-radius: 4px;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
+      #ui {
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+        z-index: 10;
+        font:
+          12px/1.4 ui-monospace,
+          Consolas,
+          monospace;
+      }
+      #ui button {
+        margin-right: 6px;
+        padding: 4px 10px;
+        cursor: pointer;
+        font: inherit;
+        color: #0b1018;
+        background: #d7e3f2;
+        border: 1px solid #8fa4bd;
+        border-radius: 4px;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <div id="ui">
-        <button id="btn-solid" type="button">bg: solid</button>
-        <button id="btn-sky-def" type="button">bg: skybox default</button>
-        <button id="btn-sky-cube" type="button">bg: skybox cubemap</button>
+      <button id="btn-solid" type="button">bg: solid</button>
+      <button id="btn-sky-def" type="button">bg: skybox default</button>
+      <button id="btn-sky-cube" type="button">bg: skybox cubemap</button>
     </div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -205,30 +246,30 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    TextureCube,
-    ImageAsset,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  TextureCube,
+  ImageAsset,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('backgrounds');
+const scene = new Scene("backgrounds");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(2.8, 2.2, 5.2));
 cameraNode.lookAt(new Vec3(0, 0.8, 0));
@@ -240,101 +281,110 @@ camera.far = 200;
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 主角立方体（斜视三面受光） ----
-const cubeNode = new Node('Hero');
+const cubeNode = new Node("Hero");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.8, 0));
 scene.addChild(cubeNode);
 const renderer = cubeNode.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1.2, height: 1.2, length: 1.2 }));
 const material = new Material();
-material.initialize({ effectName: 'builtin-standard' });
-material.setProperty('mainColor', new Color(235, 125, 65, 255));
+material.initialize({ effectName: "builtin-standard" });
+material.setProperty("mainColor", new Color(235, 125, 65, 255));
 renderer.material = material;
 
 // ---- 页面内现造 cubemap：6 张单色 canvas ----
-function faceAsset (css: string): ImageAsset {
-    const c = document.createElement('canvas');
-    c.width = c.height = 64;
-    const g = c.getContext('2d') as CanvasRenderingContext2D;
-    g.fillStyle = css;
-    g.fillRect(0, 0, 64, 64);
-    return new ImageAsset(c);
+function faceAsset(css: string): ImageAsset {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d") as CanvasRenderingContext2D;
+  g.fillStyle = css;
+  g.fillRect(0, 0, 64, 64);
+  return new ImageAsset(c);
 }
 let cubeMap: TextureCube | null = null;
-let cubeMapError = '—';
+let cubeMapError = "—";
 try {
-    cubeMap = new TextureCube();
-    cubeMap.mipmaps = [{
-        front: faceAsset('#c04030'),
-        back: faceAsset('#30a050'),
-        left: faceAsset('#3060c0'),
-        right: faceAsset('#c0a030'),
-        top: faceAsset('#40b0c0'),
-        bottom: faceAsset('#8040a0'),
-    }];
+  cubeMap = new TextureCube();
+  cubeMap.mipmaps = [
+    {
+      front: faceAsset("#c04030"),
+      back: faceAsset("#30a050"),
+      left: faceAsset("#3060c0"),
+      right: faceAsset("#c0a030"),
+      top: faceAsset("#40b0c0"),
+      bottom: faceAsset("#8040a0"),
+    },
+  ];
 } catch (e) {
-    cubeMap = null;
-    cubeMapError = `${e.name}: ${e.message}`;
+  cubeMap = null;
+  cubeMapError = `${e.name}: ${e.message}`;
 }
 
 // ---- 三种背景模式 ----
-const info = document.querySelector('#info') as HTMLElement;
-let mode = 'skybox-cubemap';
-let modeError = '—';
-function applyMode (next: string): void {
-    mode = next;
-    try {
-        if (next === 'solid') {
-            camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-            camera.clearColor = new Color(24, 60, 70, 255);
-            scene.globals.skybox.enabled = false;
-        } else if (next === 'skybox-default') {
-            camera.clearFlags = Camera.ClearFlag.SKYBOX;
-            scene.globals.skybox.enabled = true;
-            scene.globals.skybox.envmap = null;
-        } else {
-            camera.clearFlags = Camera.ClearFlag.SKYBOX;
-            scene.globals.skybox.enabled = true;
-            scene.globals.skybox.envmap = cubeMap;
-        }
-        modeError = '—';
-    } catch (e) {
-        modeError = `${e.name}: ${e.message}`;
-        camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-        scene.globals.skybox.enabled = false;
-        mode = `${next} (failed, fell back to solid)`;
+const info = document.querySelector("#info") as HTMLElement;
+let mode = "skybox-cubemap";
+let modeError = "—";
+function applyMode(next: string): void {
+  mode = next;
+  try {
+    if (next === "solid") {
+      camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+      camera.clearColor = new Color(24, 60, 70, 255);
+      scene.globals.skybox.enabled = false;
+    } else if (next === "skybox-default") {
+      camera.clearFlags = Camera.ClearFlag.SKYBOX;
+      scene.globals.skybox.enabled = true;
+      scene.globals.skybox.envmap = null;
+    } else {
+      camera.clearFlags = Camera.ClearFlag.SKYBOX;
+      scene.globals.skybox.enabled = true;
+      scene.globals.skybox.envmap = cubeMap;
     }
+    modeError = "—";
+  } catch (e) {
+    modeError = `${e.name}: ${e.message}`;
+    camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+    scene.globals.skybox.enabled = false;
+    mode = `${next} (failed, fell back to solid)`;
+  }
 }
-(document.querySelector('#btn-solid') as HTMLElement).addEventListener('click', () => applyMode('solid'));
-(document.querySelector('#btn-sky-def') as HTMLElement).addEventListener('click', () => applyMode('skybox-default'));
-(document.querySelector('#btn-sky-cube') as HTMLElement).addEventListener('click', () => applyMode('skybox-cubemap'));
-applyMode('skybox-cubemap');
+(document.querySelector("#btn-solid") as HTMLElement).addEventListener("click", () => applyMode("solid"));
+(document.querySelector("#btn-sky-def") as HTMLElement).addEventListener("click", () => applyMode("skybox-default"));
+(document.querySelector("#btn-sky-cube") as HTMLElement).addEventListener("click", () => applyMode("skybox-cubemap"));
+applyMode("skybox-cubemap");
 
 // ---- 覆盖层 ----
 class Overlay extends Component {
-    update (): void {
-        info.textContent = [
-            `background mode: ${mode}`,
-            `clearFlags: ${camera.clearFlags} (SKYBOX=${Camera.ClearFlag.SKYBOX}, SOLID=${Camera.ClearFlag.SOLID_COLOR})`,
-            `skybox.enabled: ${scene.globals.skybox.enabled}, useHDR: ${scene.globals.skybox.useHDR}, envmap: ${scene.globals.skybox.envmap ? 'TextureCube' : 'null'}, err: ${modeError}`,
-            `cubemap build: ${cubeMap ? 'ok (6 canvas faces)' : cubeMapError}`,
-        ].join('\n');
-    }
+  update(): void {
+    info.textContent = [
+      `background mode: ${mode}`,
+      `clearFlags: ${camera.clearFlags} (SKYBOX=${Camera.ClearFlag.SKYBOX}, SOLID=${Camera.ClearFlag.SOLID_COLOR})`,
+      `skybox.enabled: ${scene.globals.skybox.enabled}, useHDR: ${scene.globals.skybox.useHDR}, envmap: ${scene.globals.skybox.envmap ? "TextureCube" : "null"}, err: ${modeError}`,
+      `cubemap build: ${cubeMap ? "ok (6 canvas faces)" : cubeMapError}`,
+    ].join("\n");
+  }
 }
 cameraNode.addComponent(Overlay);
 
 window.__airApp = app;
-window.__inspect = { get mode () { return mode; }, scene, camera, applyMode };
+window.__inspect = {
+  get mode() {
+    return mode;
+  },
+  scene,
+  camera,
+  applyMode,
+};
 app.run(scene);
 
-console.log('[manual/backgrounds] running on cocosair');
+console.log("[manual/backgrounds] running on cocosair");
 ```
 
 ---

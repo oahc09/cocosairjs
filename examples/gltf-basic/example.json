@@ -19,14 +19,8 @@
     "visual": "带纹理的立方体模型完整居中显示，纹理清晰可辨，无裁切"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.loadAsync",
-      "GLTFAsset.instantiate"
-    ],
-    "supporting": [
-      "frameObject",
-      "GLTFLoader"
-    ],
+    "primary": ["GLTFLoader.loadAsync", "GLTFAsset.instantiate"],
+    "supporting": ["frameObject", "GLTFLoader"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -55,142 +49,124 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L21"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L12"
+        "sourceLocation": "L23"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L25"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L16"
+        "sourceLocation": "L29"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L23"
+        "sourceLocation": "L42"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L20"
+        "sourceLocation": "L36"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L27"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L35"
       },
       {
         "api": "frameObject",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L35"
+        "sourceLocation": "L55"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L46"
       },
       {
         "api": "GLTFLoader.loadAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L32"
+        "sourceLocation": "L52"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L33"
+        "sourceLocation": "L53"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L14"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L15"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L15"
+        "sourceLocation": "L28"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L47"
+        "sourceLocation": "L75"
       }
     ]
   },
-  "capabilities": [
-    "gltf"
-  ],
-  "assets": [
-    "assets/BoxTextured.glb"
-  ],
+  "capabilities": ["gltf"],
+  "assets": ["assets/BoxTextured.glb"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light"
-      ]
+      "nodes": ["Main Camera", "Main Light"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "asset-loaded", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -204,23 +180,15 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 22,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 40,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "asset-loaded": {
@@ -230,7 +198,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 32,
+              "line": 52,
               "text": "asset = await loader.loadAsync('./assets/BoxTextured.glb');"
             }
           ]
@@ -242,14 +210,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, instance.root);）",
-        "line": "L35"
+        "line": "L55"
       }
     }
   },
   "promotion": {
-    "spec": "5589594abdf5",
-    "source": "481aee4186a2fcf5",
-    "candidate": "d1cc556759a27943",
+    "spec": "ee8c608d946f",
+    "source": "59577d7d6b6c60e8",
+    "candidate": "8746fc59b6aa0408",
     "verified": 17,
     "attested": 0,
     "units": 17

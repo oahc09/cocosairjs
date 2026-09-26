@@ -17,46 +17,26 @@
     "utils.createMesh",
     "primitives.box"
   ],
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "第一个完整 3D 场景：相机 + 平行光 + 旋转立方体（E001 basic-cube）",
-    "points": [
-      "Camera 组件与投影参数",
-      "DirectionalLight 照明",
-      "Component.update 驱动自转"
-    ]
+    "points": ["Camera 组件与投影参数", "DirectionalLight 照明", "Component.update 驱动自转"]
   },
   "effect": {
     "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=2）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*45。",
     "visual": "画面中央立方体持续缓慢自转，三个可见面呈现不同明暗，背景深蓝"
   },
   "api": {
-    "primary": [
-      "createAirApp",
-      "MeshRenderer",
-      "Component"
-    ],
-    "supporting": [
-      "Camera",
-      "DirectionalLight"
-    ],
+    "primary": ["createAirApp", "MeshRenderer", "Component"],
+    "supporting": ["Camera", "DirectionalLight"],
     "claims": [
       "Layers",
       "createAirApp",
@@ -76,132 +56,123 @@
       "Node.setRotationFromEuler",
       "Node.addComponent"
     ],
-    "forbiddenShortcut": [
-      "加载 .scene 文件冒充 Code First",
-      "用贴图立方体图片冒充实时渲染"
-    ],
+    "forbiddenShortcut": ["加载 .scene 文件冒充 Code First", "用贴图立方体图片冒充实时渲染"],
     "evidence": [
       {
         "api": "Layers",
-        "source": "main.js",
+        "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L49"
+        "sourceLocation": "L44"
       },
       {
         "api": "createAirApp",
-        "source": "main.js",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
         "validator": "scene-ready",
         "sourceLocation": "L32"
       },
       {
-        "api": "Scene",
-        "source": "main.js",
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L52"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L59"
+      },
+      {
+        "api": "Component",
+        "source": "src/components/Rotator.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L4"
+      },
+      {
+        "api": "builtinResMgr",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
         "validator": "node-exists",
         "sourceLocation": "L34"
       },
       {
-        "api": "Node",
-        "source": "main.js",
-        "validator": "scene-ready",
-        "sourceLocation": "L37"
-      },
-      {
-        "api": "Camera",
-        "source": "main.js",
-        "validator": "node-exists",
-        "sourceLocation": "L41"
-      },
-      {
-        "api": "DirectionalLight",
-        "source": "main.js",
-        "validator": "node-exists",
-        "sourceLocation": "L57"
-      },
-      {
-        "api": "MeshRenderer",
-        "source": "main.js",
-        "validator": "node-exists",
-        "sourceLocation": "L64"
-      },
-      {
-        "api": "Component",
-        "source": "main.js",
-        "validator": "node-exists",
-        "sourceLocation": "L24"
-      },
-      {
-        "api": "builtinResMgr",
-        "source": "main.js",
-        "validator": "material-property",
-        "sourceLocation": "L66"
-      },
-      {
-        "api": "utils.createMesh",
-        "source": "main.js",
-        "validator": "material-property",
-        "sourceLocation": "L65"
-      },
-      {
-        "api": "primitives.box",
-        "source": "main.js",
-        "validator": "material-property",
-        "sourceLocation": "L65"
-      },
-      {
-        "api": "math.Vec3",
-        "source": "main.js",
-        "validator": "scene-ready",
-        "sourceLocation": "L39"
-      },
-      {
-        "api": "math.Color",
-        "source": "main.js",
-        "validator": "scene-ready",
-        "sourceLocation": "L47"
-      },
-      {
-        "api": "Node.addChild",
-        "source": "main.js",
-        "validator": "node-exists",
-        "sourceLocation": "L38"
-      },
-      {
-        "api": "Node.setPosition",
-        "source": "main.js",
-        "validator": "node-exists",
-        "sourceLocation": "L39"
-      },
-      {
         "api": "Node.setRotationFromEuler",
-        "source": "main.js",
+        "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L56"
+        "sourceLocation": "L51"
       },
       {
         "api": "Node.addComponent",
-        "source": "main.js",
+        "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L41"
+        "sourceLocation": "L36"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -223,9 +194,9 @@
     }
   },
   "promotion": {
-    "spec": "b3f13053f440",
-    "source": "35b97a8b06d8d399",
-    "candidate": "d1cc556759a27943",
+    "spec": "1eec40a9fdad",
+    "source": "037467dd34348936",
+    "candidate": "8746fc59b6aa0408",
     "verified": 16,
     "attested": 1,
     "units": 17

@@ -13,7 +13,7 @@ UI 层级需要一个 `Canvas` 组件节点（全屏 Widget 对齐）和一台 `
 以下片段与 `examples/ui-components/main.js` 逐字节一致：
 
 ```js
-const canvasNode = makeUINode('Canvas', null, 480, 360, 240, 180);
+const canvasNode = makeUINode("Canvas", null, 480, 360, 240, 180);
 const canvas = canvasNode.addComponent(Canvas);
 const canvasWidget = canvasNode.addComponent(Widget);
 canvasWidget.isAlignLeft = canvasWidget.isAlignRight = true;
@@ -24,7 +24,7 @@ scene.addChild(canvasNode);
 ```
 
 ```js
-const cameraNode = makeUINode('UICamera', canvasNode, 1, 1, 0, 0);
+const cameraNode = makeUINode("UICamera", canvasNode, 1, 1, 0, 0);
 const uiCamera = cameraNode.addComponent(Camera);
 uiCamera.projection = Camera.ProjectionType.ORTHO;
 uiCamera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
@@ -38,18 +38,18 @@ canvas.cameraComponent = uiCamera;
 其中 `makeUINode` 是"建节点 + UI 层 + UITransform"的常规封装（同文件逐字节）：
 
 ```js
-function makeUINode (name, parent, width, height, x = 0, y = 0, anchorX = 0.5, anchorY = 0.5) {
-    const node = new Node(name);
-    node.layer = UI_LAYER;
-    let transform = node.getComponent(UITransform);
-    if (!transform) transform = node.addComponent(UITransform);
-    transform.width = width;
-    transform.height = height;
-    transform.anchorX = anchorX;
-    transform.anchorY = anchorY;
-    node.setPosition(new Vec3(x, y, 0));
-    if (parent) parent.addChild(node);
-    return node;
+function makeUINode(name, parent, width, height, x = 0, y = 0, anchorX = 0.5, anchorY = 0.5) {
+  const node = new Node(name);
+  node.layer = UI_LAYER;
+  let transform = node.getComponent(UITransform);
+  if (!transform) transform = node.addComponent(UITransform);
+  transform.width = width;
+  transform.height = height;
+  transform.anchorX = anchorX;
+  transform.anchorY = anchorY;
+  node.setPosition(new Vec3(x, y, 0));
+  if (parent) parent.addChild(node);
+  return node;
 }
 ```
 
@@ -69,14 +69,14 @@ sprite.sizeMode = Sprite.SizeMode.CUSTOM; // 必须在赋 spriteFrame 之前，�
 文本用 `Label`（专题见 [Creating Text](./creating-text.md)）：
 
 ```js
-function addLabel (node, text, fontSize, color) {
-    const label = node.addComponent(Label);
-    label.string = text;
-    label.fontSize = fontSize;
-    label.lineHeight = Math.round(fontSize * 1.25);
-    label.color = color || Color.WHITE;
-    label.overflow = Label.Overflow.NONE;
-    return label;
+function addLabel(node, text, fontSize, color) {
+  const label = node.addComponent(Label);
+  label.string = text;
+  label.fontSize = fontSize;
+  label.lineHeight = Math.round(fontSize * 1.25);
+  label.color = color || Color.WHITE;
+  label.overflow = Label.Overflow.NONE;
+  return label;
 }
 ```
 

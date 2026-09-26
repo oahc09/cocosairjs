@@ -9,22 +9,22 @@ AIR 的拾取套路是：读鼠标坐标 → **相机组件自带的 `screenPoin
 `Ray` / `AABB` 类都不在顶层导出表里（实测：`geometry` 命名空间导出，`Ray`/`AABB` 单独名不导出）。
 所以 AIR 拾取 = `screenPointToRay` + **应用层自己求交**。要点：
 
-| AIR | 实测 |
-| --- | --- |
-| `camera.screenPointToRay(sx, sy, outRay)` | ✓（本示例核心） |
-| 无引擎级网格求交；应用层手写射线×AABB | ✓（本示例 slab 相交） |
+| AIR                                                                                     | 实测                    |
+| --------------------------------------------------------------------------------------- | ----------------------- |
+| `camera.screenPointToRay(sx, sy, outRay)`                                               | ✓（本示例核心）         |
+| 无引擎级网格求交；应用层手写射线×AABB                                                   | ✓（本示例 slab 相交）   |
 | 逐三角形精确拾取 / GPU picking：无一等公民入口（`Ray`/`AABB` 不导出、无用户 GLSL 可做） | 缺（属进阶变体，见 §3） |
-| 物理射线 `physics.raycastClosest` 存在（d.ts 35590），但需碰撞体 + 物理后端 | 契约在，本篇未取证 |
+| 物理射线 `physics.raycastClosest` 存在（d.ts 35590），但需碰撞体 + 物理后端             | 契约在，本篇未取证      |
 
 ## 1. 拾取相关 API 面（实测锚点）
 
-| 入口 | 锚点 | 语义（实测） |
-| --- | --- | --- |
-| `Camera.screenPointToRay(x, y, out?)` | d.ts 21410 | 屏幕空间（**左下角原点**，见 §2 踩坑）→ 射线；`out` 省略时内部 `Ray.create()` 新建 |
-| `Camera.screenToWorld(screenPos, out?)` | d.ts 21426 | 屏幕点 → 世界点（本例用射线×平面更直观，未走这条） |
-| `geometry.Ray`（`.o` 起点 / `.d` 方向） | d.ts 12299 起 | 仅 `geometry` 命名空间导出，`Ray` 非顶层名——用 `{o:Vec3, d:Vec3}` 对象承接即可 |
-| `input.on(SystemEventType.MOUSE_MOVE, cb)` | d.ts 26756 | 事件对象 `getUILocation()` 给 UI 坐标（**左上角 y 向下**） |
-| `physics.PhysicsSystem.raycastClosest(ray, mask, dist)` | d.ts 35590 | 需给立方体挂碰撞体并启用物理后端；纯几何拾取不必 |
+| 入口                                                    | 锚点          | 语义（实测）                                                                       |
+| ------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------- |
+| `Camera.screenPointToRay(x, y, out?)`                   | d.ts 21410    | 屏幕空间（**左下角原点**，见 §2 踩坑）→ 射线；`out` 省略时内部 `Ray.create()` 新建 |
+| `Camera.screenToWorld(screenPos, out?)`                 | d.ts 21426    | 屏幕点 → 世界点（本例用射线×平面更直观，未走这条）                                 |
+| `geometry.Ray`（`.o` 起点 / `.d` 方向）                 | d.ts 12299 起 | 仅 `geometry` 命名空间导出，`Ray` 非顶层名——用 `{o:Vec3, d:Vec3}` 对象承接即可     |
+| `input.on(SystemEventType.MOUSE_MOVE, cb)`              | d.ts 26756    | 事件对象 `getUILocation()` 给 UI 坐标（**左上角 y 向下**）                         |
+| `physics.PhysicsSystem.raycastClosest(ray, mask, dist)` | d.ts 35590    | 需给立方体挂碰撞体并启用物理后端；纯几何拾取不必                                   |
 
 ## 2. 示例拆解 + 坐标系踩坑
 
@@ -33,11 +33,11 @@ AIR 的拾取套路是：读鼠标坐标 → **相机组件自带的 `screenPoin
 不翻转就会得到上下颠倒的命中。示例里统一用归一化 `pointer.y`（0=顶、1=底），传入前翻转：
 
 ```js
-        const sx = pointer.x * window.innerWidth;
-        // screenPointToRay 的 y 是左下角原点（d.ts 21403 注释 + 探针实测：小 y → 命中更近的排），
-        // 而 getUILocation 是左上角 y 向下，故此处翻转。
-        const sy = (1 - pointer.y) * window.innerHeight;
-        camera.screenPointToRay(sx, sy, ray);
+const sx = pointer.x * window.innerWidth;
+// screenPointToRay 的 y 是左下角原点（d.ts 21403 注释 + 探针实测：小 y → 命中更近的排），
+// 而 getUILocation 是左上角 y 向下，故此处翻转。
+const sy = (1 - pointer.y) * window.innerHeight;
+camera.screenPointToRay(sx, sy, ray);
 ```
 
 求交用应用层 slab 法（射线 vs 轴对齐立方体 AABB，无第三方依赖）：
@@ -121,38 +121,65 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-picking/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Picking Objects with the Mouse — 鼠标拾取（docs/manual/picking.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -171,30 +198,30 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    input,
-    SystemEventType,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  input,
+  SystemEventType,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('picking');
+const scene = new Scene("picking");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(4.5, 5.5, 8.5));
 cameraNode.lookAt(new Vec3(0, 0, 0));
@@ -208,7 +235,7 @@ camera.clearColor = new Color(16, 20, 28, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-45, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -220,120 +247,133 @@ const SPACING = 1.7;
 const sharedMesh = utils.createMesh(primitives.box({ width: HALF * 2, height: HALF * 2, length: HALF * 2 }));
 const cubes: { node: Node; mat: Material; base: number[]; center: Vec3 }[] = [];
 const palette = [
-    [220, 90, 90], [90, 200, 120], [90, 140, 230],
-    [225, 190, 80], [170, 110, 220], [90, 195, 200],
-    [230, 130, 70], [150, 210, 90], [210, 100, 170],
+  [220, 90, 90],
+  [90, 200, 120],
+  [90, 140, 230],
+  [225, 190, 80],
+  [170, 110, 220],
+  [90, 195, 200],
+  [230, 130, 70],
+  [150, 210, 90],
+  [210, 100, 170],
 ];
 let idx = 0;
 for (let gz = -1; gz <= 1; gz++) {
-    for (let gx = -1; gx <= 1; gx++) {
-        const n = new Node(`Cube-${idx}`);
-        n.layer = Layers.Enum.DEFAULT;
-        n.setPosition(new Vec3(gx * SPACING, 0, gz * SPACING));
-        scene.addChild(n);
-        const r = n.addComponent(MeshRenderer);
-        r.mesh = sharedMesh;
-        const m = new Material();
-        m.initialize({ effectName: 'builtin-standard' });
-        const base = palette[idx];
-        m.setProperty('mainColor', new Color(base[0], base[1], base[2], 255));
-        r.material = m;
-        cubes.push({ node: n, mat: m, base, center: new Vec3(gx * SPACING, 0, gz * SPACING) });
-        idx++;
-    }
+  for (let gx = -1; gx <= 1; gx++) {
+    const n = new Node(`Cube-${idx}`);
+    n.layer = Layers.Enum.DEFAULT;
+    n.setPosition(new Vec3(gx * SPACING, 0, gz * SPACING));
+    scene.addChild(n);
+    const r = n.addComponent(MeshRenderer);
+    r.mesh = sharedMesh;
+    const m = new Material();
+    m.initialize({ effectName: "builtin-standard" });
+    const base = palette[idx];
+    m.setProperty("mainColor", new Color(base[0], base[1], base[2], 255));
+    r.material = m;
+    cubes.push({ node: n, mat: m, base, center: new Vec3(gx * SPACING, 0, gz * SPACING) });
+    idx++;
+  }
 }
 
 // ---- 应用层射线 vs AABB（slab 相交，无第三方依赖） ----
-function rayHitsAABB (o: Vec3, d: Vec3, center: Vec3, half: number): number {
-    let tMin = -Infinity;
-    let tMax = Infinity;
-    const ax = [center.x - half, center.y - half, center.z - half];
-    const bx = [center.x + half, center.y + half, center.z + half];
-    const oc = [o.x, o.y, o.z];
-    const dc = [d.x, d.y, d.z];
-    for (let i = 0; i < 3; i++) {
-        if (Math.abs(dc[i]) < 1e-8) {
-            if (oc[i] < ax[i] || oc[i] > bx[i]) return -1;
-        } else {
-            let t0 = (ax[i] - oc[i]) / dc[i];
-            let t1 = (bx[i] - oc[i]) / dc[i];
-            if (t0 > t1) { const t = t0; t0 = t1; t1 = t; }
-            if (t0 > tMin) tMin = t0;
-            if (t1 < tMax) tMax = t1;
-            if (tMin > tMax) return -1;
-        }
+function rayHitsAABB(o: Vec3, d: Vec3, center: Vec3, half: number): number {
+  let tMin = -Infinity;
+  let tMax = Infinity;
+  const ax = [center.x - half, center.y - half, center.z - half];
+  const bx = [center.x + half, center.y + half, center.z + half];
+  const oc = [o.x, o.y, o.z];
+  const dc = [d.x, d.y, d.z];
+  for (let i = 0; i < 3; i++) {
+    if (Math.abs(dc[i]) < 1e-8) {
+      if (oc[i] < ax[i] || oc[i] > bx[i]) return -1;
+    } else {
+      let t0 = (ax[i] - oc[i]) / dc[i];
+      let t1 = (bx[i] - oc[i]) / dc[i];
+      if (t0 > t1) {
+        const t = t0;
+        t0 = t1;
+        t1 = t;
+      }
+      if (t0 > tMin) tMin = t0;
+      if (t1 < tMax) tMax = t1;
+      if (tMin > tMax) return -1;
     }
-    return tMax < 0 ? -1 : (tMin >= 0 ? tMin : tMax);
+  }
+  return tMax < 0 ? -1 : tMin >= 0 ? tMin : tMax;
 }
 
 // ---- 指针：有鼠标用鼠标，否则 Lissajous 自动扫 ----
-const info = document.querySelector('#info') as HTMLElement;
-const pointer: { x: number; y: number; source: string } = { x: 0.5, y: 0.5, source: 'auto' };
+const info = document.querySelector("#info") as HTMLElement;
+const pointer: { x: number; y: number; source: string } = { x: 0.5, y: 0.5, source: "auto" };
 input.on(SystemEventType.MOUSE_MOVE, (e) => {
-    const loc = e.getUILocation();
-    pointer.x = loc.x / window.innerWidth;
-    pointer.y = loc.y / window.innerHeight;
-    pointer.source = 'mouse';
+  const loc = e.getUILocation();
+  pointer.x = loc.x / window.innerWidth;
+  pointer.y = loc.y / window.innerHeight;
+  pointer.source = "mouse";
 });
 
 // ---- 光标标记：射线与地面 y=0 的交点处一颗亮黄小球，持续可见指针落点 ----
-const cursorNode = new Node('Cursor');
+const cursorNode = new Node("Cursor");
 cursorNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(cursorNode);
 const cursorR = cursorNode.addComponent(MeshRenderer);
 cursorR.mesh = utils.createMesh(primitives.sphere(0.16, 16, 12));
 const cursorMat = new Material();
-cursorMat.initialize({ effectName: 'builtin-unlit' });
-cursorMat.setProperty('mainColor', new Color(255, 230, 60, 255));
+cursorMat.initialize({ effectName: "builtin-unlit" });
+cursorMat.setProperty("mainColor", new Color(255, 230, 60, 255));
 cursorR.material = cursorMat;
 
 let hitIndex = -1;
 const ray: { o: Vec3; d: Vec3 } = { o: new Vec3(), d: new Vec3() };
 
 class Picker extends Component {
-    private _t = 0;
+  private _t = 0;
 
-    update (dt: number): void {
-        this._t = (this._t || 0) + dt;
-        if (pointer.source === 'auto') {
-            pointer.x = 0.5 + 0.22 * Math.sin(this._t * 0.6) * Math.cos(this._t * 0.23);
-            pointer.y = 0.5 + 0.18 * Math.sin(this._t * 0.42);
-        }
-        const sx = pointer.x * window.innerWidth;
-        // screenPointToRay 的 y 是左下角原点（d.ts 21403 注释 + 探针实测：小 y → 命中更近的排），
-        // 而 getUILocation 是左上角 y 向下，故此处翻转。
-        const sy = (1 - pointer.y) * window.innerHeight;
-        camera.screenPointToRay(sx, sy, ray);
-        // 光标落在水平面 y=CURSOR_Y 上（高于放大后的立方体顶，避免被遮挡）
-        const CURSOR_Y = 0.95;
-        if (ray.d.y < -1e-6) {
-            const tc = (CURSOR_Y - ray.o.y) / ray.d.y;
-            cursorNode.setPosition(new Vec3(ray.o.x + ray.d.x * tc, CURSOR_Y, ray.o.z + ray.d.z * tc));
-        }
-        let best = -1;
-        let bestT = Infinity;
-        for (let i = 0; i < cubes.length; i++) {
-            const t = rayHitsAABB(ray.o, ray.d, cubes[i].center, HALF);
-            if (t >= 0 && t < bestT) { bestT = t; best = i; }
-        }
-        hitIndex = best;
-        for (let i = 0; i < cubes.length; i++) {
-            const on = i === best;
-            const c = cubes[i];
-            const s = on ? 1.4 : 1;
-            c.node.setScale(new Vec3(s, s, s));
-            const b = c.base;
-            const col = on ? new Color(255, 255, 255, 255) : new Color(b[0], b[1], b[2], 255);
-            c.mat.setProperty('mainColor', col);
-        }
-        info.textContent = [
-            'picking: camera.screenPointToRay(x, y) + app-layer ray/AABB slab test',
-            `pointer: (${(pointer.x * 100).toFixed(0)}%, ${(pointer.y * 100).toFixed(0)}%) source=${pointer.source}`,
-            `ray origin=(${ray.o.x.toFixed(2)}, ${ray.o.y.toFixed(2)}, ${ray.o.z.toFixed(2)}) dir=(${ray.d.x.toFixed(2)}, ${ray.d.y.toFixed(2)}, ${ray.d.z.toFixed(2)})`,
-            `hit cube index: ${hitIndex} (-1 = none) — highlighted white & scaled 1.4x`,
-            `cursor (ray×plane y=0.95): (${cursorNode.position.x.toFixed(2)}, ${cursorNode.position.z.toFixed(2)})`,
-        ].join('\n');
+  update(dt: number): void {
+    this._t = (this._t || 0) + dt;
+    if (pointer.source === "auto") {
+      pointer.x = 0.5 + 0.22 * Math.sin(this._t * 0.6) * Math.cos(this._t * 0.23);
+      pointer.y = 0.5 + 0.18 * Math.sin(this._t * 0.42);
     }
+    const sx = pointer.x * window.innerWidth;
+    // screenPointToRay 的 y 是左下角原点（d.ts 21403 注释 + 探针实测：小 y → 命中更近的排），
+    // 而 getUILocation 是左上角 y 向下，故此处翻转。
+    const sy = (1 - pointer.y) * window.innerHeight;
+    camera.screenPointToRay(sx, sy, ray);
+    // 光标落在水平面 y=CURSOR_Y 上（高于放大后的立方体顶，避免被遮挡）
+    const CURSOR_Y = 0.95;
+    if (ray.d.y < -1e-6) {
+      const tc = (CURSOR_Y - ray.o.y) / ray.d.y;
+      cursorNode.setPosition(new Vec3(ray.o.x + ray.d.x * tc, CURSOR_Y, ray.o.z + ray.d.z * tc));
+    }
+    let best = -1;
+    let bestT = Infinity;
+    for (let i = 0; i < cubes.length; i++) {
+      const t = rayHitsAABB(ray.o, ray.d, cubes[i].center, HALF);
+      if (t >= 0 && t < bestT) {
+        bestT = t;
+        best = i;
+      }
+    }
+    hitIndex = best;
+    for (let i = 0; i < cubes.length; i++) {
+      const on = i === best;
+      const c = cubes[i];
+      const s = on ? 1.4 : 1;
+      c.node.setScale(new Vec3(s, s, s));
+      const b = c.base;
+      const col = on ? new Color(255, 255, 255, 255) : new Color(b[0], b[1], b[2], 255);
+      c.mat.setProperty("mainColor", col);
+    }
+    info.textContent = [
+      "picking: camera.screenPointToRay(x, y) + app-layer ray/AABB slab test",
+      `pointer: (${(pointer.x * 100).toFixed(0)}%, ${(pointer.y * 100).toFixed(0)}%) source=${pointer.source}`,
+      `ray origin=(${ray.o.x.toFixed(2)}, ${ray.o.y.toFixed(2)}, ${ray.o.z.toFixed(2)}) dir=(${ray.d.x.toFixed(2)}, ${ray.d.y.toFixed(2)}, ${ray.d.z.toFixed(2)})`,
+      `hit cube index: ${hitIndex} (-1 = none) — highlighted white & scaled 1.4x`,
+      `cursor (ray×plane y=0.95): (${cursorNode.position.x.toFixed(2)}, ${cursorNode.position.z.toFixed(2)})`,
+    ].join("\n");
+  }
 }
 cameraNode.addComponent(Picker);
 
@@ -341,7 +381,7 @@ window.__airApp = app;
 window.__inspect = { camera, cubes, pointer, getHitIndex: () => hitIndex, ray };
 app.run(scene);
 
-console.log('[manual/picking] running on cocosair');
+console.log("[manual/picking] running on cocosair");
 ```
 
 ---

@@ -23,7 +23,7 @@ import {
 } from 'cocosair';
 
 class Rotator extends Component {
-    update (dt) {
+    update(dt) {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 60, 0);
     }
 }
@@ -49,7 +49,7 @@ scene.addChild(lightNode);
 lightNode.setPosition(new Vec3(0, 10, 0));
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
-light.illuminance = 3;
+light.illuminance = 75000;
 
 const cubeNode = new Node('Cube');
 cubeNode.layer = Layers.Enum.DEFAULT;
@@ -69,13 +69,18 @@ profiler.showStats();
 // 自检：面板状态必须来自引擎 Profiler 系统本身（DOM 徽标只报告布尔值，数值仍由引擎面板绘制）
 const overlayActive = profiler instanceof Profiler && profiler.isShowingStats();
 const badge = document.querySelector('#ProfilerBadge');
-if (badge) { badge.textContent = `Profiler overlay: ${overlayActive ? 'showing' : 'hidden'}`; }
+if (badge) {
+    badge.textContent = `Profiler overlay: ${overlayActive ? 'showing' : 'hidden'}`;
+}
 
 window.__probe = async () => {
     const stats = profiler.stats;
     const counters = {};
     for (const [k, v] of Object.entries(stats || {})) {
-        counters[k] = { value: v && v.counter ? Number(v.counter.value.toFixed(2)) : null, enabled: !!(v && v.enabled) };
+        counters[k] = {
+            value: v && v.counter ? Number(v.counter.value.toFixed(2)) : null,
+            enabled: !!(v && v.enabled),
+        };
     }
     return { overlayActive, counters };
 };

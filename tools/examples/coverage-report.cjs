@@ -118,7 +118,10 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
       candidate: !!run && !!run.candidateFingerprint && run.candidateFingerprint === currentCandidate,
     };
     var pass = !!run && run.result === 'PASS';
-    var hasApiProof = !!run && Array.isArray(run.apiProof) && run.apiProof.length > 0;
+    // A DOM-only catalog makes no engine API claims: an explicit empty proof
+    // array is a valid schema, not missing evidence. It adds no verified units.
+    var hasApiProof = !!run && Array.isArray(run.apiProof)
+      && (run.apiProof.length > 0 || (claims.length === 0 && ex.bench && ex.bench.mode === 'ui-shell'));
     var fresh = pass && binding.spec && binding.source && binding.candidate && hasApiProof;
     if (run && pass && (!binding.spec || !binding.source || !binding.candidate)) { staleEvidence.push(ex.id); }
     if (run && pass && !hasApiProof) { evidenceSchemaGaps.push({ id: ex.id, reason: 'evidence row has no apiProof[] (pre-v3 schema): claims cannot be counted as verified' }); }

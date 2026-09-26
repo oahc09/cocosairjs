@@ -7,28 +7,12 @@
   "requiresDevTools": false,
   "title": "Skinned Animation",
   "category": "animation",
-  "apiClaims": [
-    "SkinnedMeshRenderer",
-    "SkeletalAnimation",
-    "AnimationClip"
-  ],
-  "capabilities": [
-    "animation",
-    "skeleton"
-  ],
+  "apiClaims": ["SkinnedMeshRenderer", "SkeletalAnimation", "AnimationClip"],
+  "capabilities": ["animation", "skeleton"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "animation-playing",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "animation-playing", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
     "lifecycle": [],
     "capability": []
   },
@@ -46,14 +30,8 @@
     "visual": "程序化\"触手\"网格随骨骼摆动弯曲变形，顶点位置逐帧变化（帧差可测）"
   },
   "api": {
-    "primary": [
-      "buildSkeletonTree",
-      "SkinnedMeshRenderer"
-    ],
-    "supporting": [
-      "restoreBindPose",
-      "Component"
-    ],
+    "primary": ["buildSkeletonTree", "SkinnedMeshRenderer"],
+    "supporting": ["restoreBindPose", "Component"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -72,9 +50,7 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用整体旋转网格冒充蒙皮变形（顶点必须随关节移动）"
-    ],
+    "forbiddenShortcut": ["用整体旋转网格冒充蒙皮变形（顶点必须随关节移动）"],
     "evidence": [
       {
         "api": "createAirApp",
@@ -86,111 +62,105 @@
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L181"
+        "sourceLocation": "L193"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L139"
+        "sourceLocation": "L151"
       },
       {
         "api": "Camera",
         "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L38"
       },
       {
         "api": "SkinnedMeshRenderer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L168"
+        "sourceLocation": "L180"
       },
       {
         "api": "Mesh",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L116"
+        "sourceLocation": "L121"
       },
       {
         "api": "Material",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L173"
+        "sourceLocation": "L185"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L154"
+        "sourceLocation": "L166"
       },
       {
         "api": "buildSkeletonTree",
         "source": "main.js",
         "validator": "animation-playing",
-        "sourceLocation": "L165"
+        "sourceLocation": "L177"
       },
       {
         "api": "restoreBindPose",
         "source": "main.js",
         "validator": "animation-playing",
-        "sourceLocation": "L188"
+        "sourceLocation": "L200"
       },
       {
         "api": "frameObject",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L190"
+        "sourceLocation": "L202"
       },
       {
         "api": "math.Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L175"
+        "sourceLocation": "L187"
       },
       {
         "api": "Material.initialize",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L174"
+        "sourceLocation": "L186"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L142"
+        "sourceLocation": "L154"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L143"
+        "sourceLocation": "L155"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L158"
+        "sourceLocation": "L170"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Armature"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Armature"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -203,44 +173,24 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 183,
+            "line": 195,
             "text": "position 默认值 [0,8,0]（示例显式传入）"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "Armature": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "main.js",
-            "line": 139,
+            "line": 151,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
@@ -251,17 +201,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              240,
-              160,
-              40,
-              255
-            ],
+            "value": [240, 160, 40, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "main.js",
-              "line": 175,
+              "line": 187,
               "text": "new Color(240, 160, 40, 255)"
             }
           }
@@ -273,14 +218,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, armature);）",
-        "line": "L190"
+        "line": "L202"
       }
     }
   },
   "promotion": {
-    "spec": "e5ceb0171281",
-    "source": "cf1a4e3b115fd499",
-    "candidate": "d1cc556759a27943",
+    "spec": "b05a5b26c639",
+    "source": "efb9ef263634cf5c",
+    "candidate": "8746fc59b6aa0408",
     "verified": 16,
     "attested": 0,
     "units": 16

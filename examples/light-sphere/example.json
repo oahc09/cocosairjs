@@ -19,13 +19,8 @@
     "visual": "浅色球体在画面中央自转，球面从亮面到暗面有平滑明暗过渡，明暗交界位置固定于光源方向"
   },
   "api": {
-    "primary": [
-      "DirectionalLight"
-    ],
-    "supporting": [
-      "Node.setRotationFromEuler",
-      "primitives.sphere"
-    ],
+    "primary": ["DirectionalLight"],
+    "supporting": ["Node.setRotationFromEuler", "primitives.sphere"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -46,153 +41,135 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用环境光把球照成平面色，掩盖方向光照"
-    ],
+    "forbiddenShortcut": ["用环境光把球照成平面色，掩盖方向光照"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L8"
+        "sourceLocation": "L27"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L10"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L38"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L64"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L21"
+        "sourceLocation": "L42"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L30"
+        "sourceLocation": "L57"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L39"
+        "sourceLocation": "L68"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L49"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L20"
+        "sourceLocation": "L40"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L48"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L32"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L14"
+        "sourceLocation": "L33"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L15"
+        "sourceLocation": "L34"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L36"
+        "sourceLocation": "L65"
       },
       {
         "api": "primitives.sphere",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L36"
+        "sourceLocation": "L65"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L19"
+        "sourceLocation": "L39"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L20"
+        "sourceLocation": "L40"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L20"
+        "sourceLocation": "L41"
       }
     ]
   },
-  "capabilities": [
-    "lights"
-  ],
+  "capabilities": ["lights"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "ShadingSphere"
-      ]
+      "nodes": ["Main Camera", "Main Light", "ShadingSphere"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
     "lifecycle": [],
     "capability": []
   },
@@ -207,39 +184,27 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 29,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 55,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "ShadingSphere": {
-        "position": [
-          0,
-          0.8,
-          0
-        ],
+        "position": [0, 0.8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 34,
+            "line": 63,
             "text": "shadingSphere.setPosition(new Vec3(0, 0.8, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 41,
+            "line": 70,
             "text": "0,this.node.eulerAngles.y + dt * 50,0"
           }
         ],
@@ -253,17 +218,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              230,
-              230,
-              235,
-              255
-            ],
+            "value": [230, 230, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 37,
+              "line": 66,
               "text": "new Color(230, 230, 235, 255)"
             }
           }
@@ -275,14 +235,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, shadingSphere);）",
-        "line": "L45"
+        "line": "L74"
       }
     }
   },
   "promotion": {
-    "spec": "022251e312e0",
-    "source": "2d60ccd6e7859061",
-    "candidate": "d1cc556759a27943",
+    "spec": "13f2c79f770f",
+    "source": "181f839e3048d2fe",
+    "candidate": "8746fc59b6aa0408",
     "verified": 18,
     "attested": 0,
     "units": 18

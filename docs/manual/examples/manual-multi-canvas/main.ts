@@ -41,15 +41,11 @@ dir.illuminance = 6;
 // ---- 三条"子场景"：各占一个自定义层位，几何与转速都不同 ----
 const sharedBox = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 const layerBits = [1 << 1, 1 << 2, 1 << 3];
-const clusterColors = [
-    new Color(235, 110, 105, 255),
-    new Color(110, 225, 140, 255),
-    new Color(120, 170, 245, 255),
-];
+const clusterColors = [new Color(235, 110, 105, 255), new Color(110, 225, 140, 255), new Color(120, 170, 245, 255)];
 const spinSpeeds = [22, -34, 48];
 const rigs: Node[] = [];
 
-function makeCube (parent: Node, layer: number, x: number, y: number, z: number): MeshRenderer {
+function makeCube(parent: Node, layer: number, x: number, y: number, z: number): MeshRenderer {
     const n = new Node('Cube');
     n.layer = layer;
     n.setPosition(new Vec3(x, y, z));
@@ -70,7 +66,12 @@ layerBits.forEach((layer, i) => {
     if (i === 0) {
         makeCube(rig, layer, 0, 0, 0).material = mat;
     } else if (i === 1) {
-        [[-0.6, -0.6], [0.6, -0.6], [-0.6, 0.6], [0.6, 0.6]].forEach(([x, z]) => {
+        [
+            [-0.6, -0.6],
+            [0.6, -0.6],
+            [-0.6, 0.6],
+            [0.6, 0.6],
+        ].forEach(([x, z]) => {
             makeCube(rig, layer, x, 0, z).material = mat;
         });
     } else {
@@ -106,14 +107,17 @@ layerBits.forEach((layer, i) => {
 // ---- 覆盖层：读回三台相机的 rect / visibility ----
 const info = document.querySelector('#info') as HTMLElement;
 class Overlay extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         rigs.forEach((rig, i) => {
             const e = rig.eulerAngles;
             rig.setRotationFromEuler(0, e.y + spinSpeeds[i] * dt, 0);
         });
         info.textContent = [
             'AIR multi-scene = one Scene + N Cameras (rect strip + visibility layer mask)',
-            ...cameras.map((c, i) => `cam${i}: rect.x=${c.rect.x.toFixed(2)} w=${c.rect.width.toFixed(2)} vis=${c.visibility} (layer ${layerBits[i]})`),
+            ...cameras.map(
+                (c, i) =>
+                    `cam${i}: rect.x=${c.rect.x.toFixed(2)} w=${c.rect.width.toFixed(2)} vis=${c.visibility} (layer ${layerBits[i]})`,
+            ),
             'each strip shows a different cluster (single / 2x2 / stacked) at a different spin',
         ].join('\n');
     }

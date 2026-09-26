@@ -37,21 +37,14 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 MeshRenderer 高级面：ON/OFF 常量、bakeSettings 读取、蒙皮权重 set/get（无蒙皮下走兜底路径）与实例属性写入通道。",
-    "points": [
-      "ON/OFF 数值常量回读",
-      "bakeSettings 为对象/空",
-      "setWeight 无蒙皮时安全（try 兜底）"
-    ]
+    "points": ["ON/OFF 数值常量回读", "bakeSettings 为对象/空", "setWeight 无蒙皮时安全（try 兜底）"]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 200,220,250）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "MeshRenderer.setWeight",
-      "MeshRenderer.getWeight"
-    ],
+    "primary": ["MeshRenderer.setWeight", "MeshRenderer.getWeight"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -95,191 +88,178 @@
       "MeshRenderer.setWeights",
       "MeshRenderer.setInstancedAttribute"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L23"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L25"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L42"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L30"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L43"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L37"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L36"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L49"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L51"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L53"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L50"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L50"
       },
       {
         "api": "MeshRenderer.ON",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L39"
+        "sourceLocation": "L74"
       },
       {
         "api": "MeshRenderer.OFF",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L39"
+        "sourceLocation": "L74"
       },
       {
         "api": "MeshRenderer.bakeSettings",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L40"
+        "sourceLocation": "L77"
       },
       {
         "api": "MeshRenderer.setWeight",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L42"
+        "sourceLocation": "L92"
       },
       {
         "api": "MeshRenderer.getWeight",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L41"
+        "sourceLocation": "L84"
       },
       {
         "api": "MeshRenderer.setWeights",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L43"
+        "sourceLocation": "L100"
       },
       {
         "api": "MeshRenderer.setInstancedAttribute",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L44"
+        "sourceLocation": "L109"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -291,9 +271,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "4ed62247324c",
-    "source": "71dd47c248f8828f",
-    "candidate": "d1cc556759a27943",
+    "spec": "68f9cf1085f5",
+    "source": "814f6ef0a5c013ad",
+    "candidate": "8746fc59b6aa0408",
     "verified": 22,
     "attested": 3,
     "units": 25

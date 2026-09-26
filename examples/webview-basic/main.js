@@ -80,19 +80,28 @@ const T0 = performance.now();
 const r = (v, n = 3) => Math.round(v * 10 ** n) / 10 ** n;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 /** 等两帧：`syncMatrix()` 在 `WebView.update()` 里跑，几何断言必须排在渲染帧之后。 */
-const nextFrames = (n = 2) => new Promise((resolve) => {
-    let left = n;
-    const tick = () => (--left > 0 ? requestAnimationFrame(tick) : resolve());
-    requestAnimationFrame(tick);
-});
+const nextFrames = (n = 2) =>
+    new Promise((resolve) => {
+        let left = n;
+        const tick = () => (--left > 0 ? requestAnimationFrame(tick) : resolve());
+        requestAnimationFrame(tick);
+    });
 
-async function waitFor (fn, timeoutMs = 4000, stepMs = 20) {
+async function waitFor(fn, timeoutMs = 4000, stepMs = 20) {
     const t0 = performance.now();
     for (;;) {
         let hit = false;
-        try { hit = !!fn(); } catch (e) { hit = false; }
-        if (hit) { return Math.round(performance.now() - t0); }
-        if (performance.now() - t0 > timeoutMs) { return -1; }
+        try {
+            hit = !!fn();
+        } catch (e) {
+            hit = false;
+        }
+        if (hit) {
+            return Math.round(performance.now() - t0);
+        }
+        if (performance.now() - t0 > timeoutMs) {
+            return -1;
+        }
         await sleep(stepMs);
     }
 }
@@ -101,7 +110,7 @@ async function waitFor (fn, timeoutMs = 4000, stepMs = 20) {
 const wrappers = () => document.querySelectorAll('#webview-wrapper');
 const iframes = () => document.querySelectorAll('#webview');
 /** 命中测试：某个页面坐标最上面的元素是谁（穿透行为的机器证据）。 */
-function hitTagAt (x, y) {
+function hitTagAt(x, y) {
     const el = document.elementFromPoint(x, y);
     return el ? el.tagName : 'NULL';
 }
@@ -175,7 +184,7 @@ canvasNode.addChild(clockNode);
 const clockGfx = clockNode.addComponent(GraphicsComponent);
 
 class FrameClock extends Component {
-    update () {
+    update() {
         const phase = (performance.now() % 2400) / 2400;
         clockGfx.clear();
         clockGfx.fillColor = new Color(28, 200, 120, 255);
@@ -201,7 +210,7 @@ guide.stroke();
 
 /** `webviewEvents` 的目标组件：EventHandler 用**类名字符串**找组件（component-event-handler.ts:156-175）。 */
 class WebViewEventLog extends Component {
-    onWebViewEvent (viewArg, evtType, customData) {
+    onWebViewEvent(viewArg, evtType, customData) {
         eventLog.push('cb:' + evtType);
         handlerHits++;
         lastHandlerArgs = { hasView: !!viewArg, type: evtType, custom: customData };
@@ -232,7 +241,7 @@ const results = { phase: 'init', startedAtMs: 0 };
  * 监听同理必须排在激活之前：`loading` 事件在 `__preload` 那一帧就已发出，晚一行注册就永远收不到
  * （诊断 r1 的 `loadingWithinMs -1`、`businessSequence 'loaded'` 缺 `loading` 即此缺陷的现场）。
  */
-function mountWebView (pos, size) {
+function mountWebView(pos, size) {
     hostNode = new Node('WebViewHost');
     hostNode.layer = UI_LAYER;
     hostNode.active = false;
@@ -257,8 +266,12 @@ function mountWebView (pos, size) {
             }
         });
     }
-    hostNode.on(Node.EventType.TOUCH_START, () => { engineTouchEvents++; });
-    hostNode.on(Node.EventType.TOUCH_END, () => { engineTouchEvents++; });
+    hostNode.on(Node.EventType.TOUCH_START, () => {
+        engineTouchEvents++;
+    });
+    hostNode.on(Node.EventType.TOUCH_END, () => {
+        engineTouchEvents++;
+    });
     canvasNode.addChild(hostNode);
     // 已挂进 active 父节点，但 `hostNode.active === false` 仍压着 ⇒ activeInHierarchy 为假：
     // 此刻既没有 `#webview-wrapper`，`state` 也还是默认的 `none`（下面两行就是这条时序的读数）。
@@ -269,21 +282,28 @@ function mountWebView (pos, size) {
     return webView;
 }
 
-function frameStats () {
+function frameStats() {
     const iframe = webView ? webView.nativeWebView : null;
     const domRect = iframe ? iframe.getBoundingClientRect() : null;
     return {
         wrapperCount: wrappers().length,
         iframeCount: iframes().length,
-        iframeCenter: domRect ? [Math.round(domRect.left + domRect.width / 2), Math.round(domRect.top + domRect.height / 2)] : null,
+        iframeCenter: domRect
+            ? [Math.round(domRect.left + domRect.width / 2), Math.round(domRect.top + domRect.height / 2)]
+            : null,
     };
 }
 
 /** 只认「本次挂载之后」的 loaded；epoch 由 mountWebView 推进，避免拿到上一实例的残留状态。 */
-async function waitLoaded () {
-    return waitFor(() => webView && webView.state === WebView.EventType.LOADED && eventLog.filter((e) => e === 'loaded').length > eventLogEpoch);
+async function waitLoaded() {
+    return waitFor(
+        () =>
+            webView &&
+            webView.state === WebView.EventType.LOADED &&
+            eventLog.filter((e) => e === 'loaded').length > eventLogEpoch,
+    );
 }
-async function waitError (epoch) {
+async function waitError(epoch) {
     return waitFor(() => errorEvents > epoch, 4000);
 }
 /**
@@ -292,13 +312,16 @@ async function waitError (epoch) {
  * 且宽度 auto ⇒ 300x154），各引擎走到读数那一行时所过的帧数不同 ⇒ 不等稳态就是在测调度时机，
  * 不是在测引擎行为（诊断 r3 的 chromium `p9Unload.finalCenter '150,281'` 即此现场）。
  */
-async function waitMatrixSize (size) {
+async function waitMatrixSize(size) {
     const want = size[0] + 'px';
-    return waitFor(() => { const w = wrappers()[0]; return !!w && w.style.width === want; }, 3000);
+    return waitFor(() => {
+        const w = wrappers()[0];
+        return !!w && w.style.width === want;
+    }, 3000);
 }
 
 // ---------------------------------------------------------------- 阶段序列
-async function runSequence () {
+async function runSequence() {
     results.startedAtMs = Math.round(T0);
 
     // ---- P1 iframe 挂载
@@ -355,20 +378,32 @@ async function runSequence () {
         stateSequence: stateLog.join(','),
         eventListKeys: eventLog.length > 0 ? 'has-events' : 'none',
         // 生命周期钩子确实是 WebView 自己定义的（不是继承来的同名物）：见 `LIFECYCLE_HOOKS` 的逐项回读。
-        lifecycleSurface: LIFECYCLE_HOOKS
-            .map((k) => k + '=' + (Object.prototype.hasOwnProperty.call(WebView.prototype, k) ? 'own' : 'inherited:' + typeof webView[k])).join(','),
+        lifecycleSurface: LIFECYCLE_HOOKS.map(
+            (k) =>
+                k +
+                '=' +
+                (Object.prototype.hasOwnProperty.call(WebView.prototype, k) ? 'own' : 'inherited:' + typeof webView[k]),
+        ).join(','),
         updateHookCallable: hasUpdateHook(webView),
     };
 
     // ---- P3 几何由 syncMatrix 驱动（节点变换 → DOM transform）
     await nextFrames(3);
     const before = frameStats();
-    const styleBefore = { w: wrappers()[0].style.width, h: wrappers()[0].style.height, t: wrappers()[0].style.transform };
+    const styleBefore = {
+        w: wrappers()[0].style.width,
+        h: wrappers()[0].style.height,
+        t: wrappers()[0].style.transform,
+    };
     hostNode.setPosition(-70, -30, 0);
     hostNode.getComponent(UITransform).setContentSize(160, 120);
     await nextFrames(4);
     const after = frameStats();
-    const styleAfter = { w: wrappers()[0].style.width, h: wrappers()[0].style.height, t: wrappers()[0].style.transform };
+    const styleAfter = {
+        w: wrappers()[0].style.width,
+        h: wrappers()[0].style.height,
+        t: wrappers()[0].style.transform,
+    };
     results.p3Geometry = {
         styleBeforeWH: [styleBefore.w, styleBefore.h].join('/'),
         styleAfterWH: [styleAfter.w, styleAfter.h].join('/'),
@@ -376,7 +411,8 @@ async function runSequence () {
         transformAfterPrefix: String(styleAfter.t).slice(0, 24),
         centerBefore: before.iframeCenter ? before.iframeCenter.join(',') : null,
         centerAfter: after.iframeCenter ? after.iframeCenter.join(',') : null,
-        centerMoved: !!before.iframeCenter && !!after.iframeCenter && before.iframeCenter.join() !== after.iframeCenter.join(),
+        centerMoved:
+            !!before.iframeCenter && !!after.iframeCenter && before.iframeCenter.join() !== after.iframeCenter.join(),
     };
     // 复位到最终几何（矩阵的 click 坐标按它算）
     hostNode.setPosition(FINAL_POS[0], FINAL_POS[1], 0);
@@ -395,7 +431,9 @@ async function runSequence () {
         titleBefore: webView.nativeWebView.contentDocument.title,
         clicksBefore: webView.nativeWebView.contentWindow.__clicks,
     };
-    webView.evaluateJS("document.title = 'AIR-EVAL-' + (6 * 7); window.__engineStamp = 99; document.body.dataset.fromEngine = 'injected';");
+    webView.evaluateJS(
+        "document.title = 'AIR-EVAL-' + (6 * 7); window.__engineStamp = 99; document.body.dataset.fromEngine = 'injected';",
+    );
     const doc1 = webView.nativeWebView.contentDocument;
     results.p4EvalJS.titleAfter = doc1.title;
     results.p4EvalJS.stampAfter = String(doc1.defaultView.__engineStamp);
@@ -429,7 +467,10 @@ async function runSequence () {
     // 最后一次字面量赋值取终态几何（中途探测用的 MOVE_A/MOVE_B 走变量，不参与静态推断）。
     hostNode.setPosition(0, 14, 0);
     await nextFrames(4);
-    results.p5HitTest.hitBackAtFinalCenter = (() => { const p = frameStats().iframeCenter; return p ? hitTagAt(p[0], p[1]) : null; })();
+    results.p5HitTest.hitBackAtFinalCenter = (() => {
+        const p = frameStats().iframeCenter;
+        return p ? hitTagAt(p[0], p[1]) : null;
+    })();
 
     // ---- P6 error 事件的真实语义（正文嗅探，HTTP 200）
     const errEventsBefore = errorEvents;
@@ -445,7 +486,7 @@ async function runSequence () {
         loadedStillReportedOnce: eventLog.filter((e) => e === 'loaded').length,
     };
     webView.url = PAGE_URL;
-    results.p6ErrorBranch.recoveredState = await waitLoaded() >= 0 ? webView.state : 'timeout';
+    results.p6ErrorBranch.recoveredState = (await waitLoaded()) >= 0 ? webView.state : 'timeout';
     results.p6ErrorBranch.businessSequenceAfterRecover = eventLog.filter((e) => !e.startsWith('cb:')).join(',');
 
     // ---- P7 web 端的 no-op API（只 warn，不抛错、不改状态）
@@ -453,7 +494,11 @@ async function runSequence () {
     const jsCallbackHits = { n: 0 };
     results.p7WebNoopApis = {
         setJavascriptInterfaceSchemeReturn: String(webView.setJavascriptInterfaceScheme('js://air')),
-        setOnJSCallbackReturn: String(webView.setOnJSCallback(() => { jsCallbackHits.n++; })),
+        setOnJSCallbackReturn: String(
+            webView.setOnJSCallback(() => {
+                jsCallbackHits.n++;
+            }),
+        ),
         stateUnchangedAfterNoop: webView.state === stateBeforeNoop,
         jsCallbackFired: jsCallbackHits.n,
         stateAfterNoop: webView.state,
@@ -498,7 +543,7 @@ async function runSequence () {
 }
 
 // ---------------------------------------------------------------- §25 生命周期合同：真卸载 + 真重建
-function heldAssets () {
+function heldAssets() {
     return webView ? [{ name: 'webViewComponent', ref: webView }] : [];
 }
 
@@ -562,6 +607,8 @@ window.__probe = async () => {
     };
 };
 
-canvasEl.addEventListener('click', () => { canvasDomClicks++; });
+canvasEl.addEventListener('click', () => {
+    canvasDomClicks++;
+});
 
 await runSequence();

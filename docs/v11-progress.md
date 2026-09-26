@@ -323,3 +323,7 @@ p2c 30000→65000：56.6→85.6→56.6（姿态钉死后确定性基线）；g4-
   （冻结规格不动）——其「灯光效果」叙事在修复后仍只有结构证据，升级正向断言列为后续批次；
 - clustered-light-culling 变体（宏=1 路径）未在 AIR 启用，范围外；
 - V1.1 Release Gate 判定不变（Core 36.2% 量级 / Important 33 / Advanced 披露面）。
+
+## 2026-09-26 接口场景验收修复
+
+本计划新增 13 例在 Chromium/Firefox/WebKit 下全部通过；WebKit 采用与 Playwright 1.61.0 配套的 2311 构建，r52 的环境阻断记录为历史状态。完整修复与验证清单见 `docs/interface-scenarios-repair-report.md`。Core/Important 分母和原有门槛均未调整，verified 保持 439。

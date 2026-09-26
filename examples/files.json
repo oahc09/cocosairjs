@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-26T04:17:43.302Z",
-  "revision": "be9f1f0",
+  "generatedAt": "2026-09-26T07:05:29.776Z",
+  "revision": "b07a191",
   "examples": [
     {
       "dir": "anim-position",
@@ -88,9 +88,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "8ebd4d7639df",
-        "source": "c6fc70109be99971",
-        "candidate": "d1cc556759a27943",
+        "spec": "d54c488cb2db",
+        "source": "f29ae313c67d510b",
+        "candidate": "8746fc59b6aa0408",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -183,9 +183,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "fe051d63a498",
-        "source": "64c06a98436e9204",
-        "candidate": "d1cc556759a27943",
+        "spec": "87b16f3be7f8",
+        "source": "e354b22cadf41979",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -321,9 +321,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9df8c691b6ad",
-        "source": "002fb0bcb6e664a6",
-        "candidate": "d1cc556759a27943",
+        "spec": "314a178a8b05",
+        "source": "f643036bfb2f575b",
+        "candidate": "8746fc59b6aa0408",
         "verified": 26,
         "attested": 2,
         "units": 28
@@ -404,9 +404,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c00b9e5f3a5a",
-        "source": "4b4c481434e58eab",
-        "candidate": "d1cc556759a27943",
+        "spec": "735d00cae975",
+        "source": "e89d32ce3ed3bbb6",
+        "candidate": "8746fc59b6aa0408",
         "verified": 8,
         "attested": 3,
         "units": 11
@@ -508,9 +508,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "51720cbada84",
-        "source": "694004238940bd57",
-        "candidate": "d1cc556759a27943",
+        "spec": "921b2d2f111e",
+        "source": "bd7f192ce097290b",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -615,9 +615,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "678fb005e8ec",
-        "source": "78040895699e23e3",
-        "candidate": "d1cc556759a27943",
+        "spec": "d314861ea3a2",
+        "source": "0af7f6b33b45bf6e",
+        "candidate": "8746fc59b6aa0408",
         "verified": 12,
         "attested": 1,
         "units": 13
@@ -719,9 +719,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9dafd5f7da08",
-        "source": "9baac7f47dc56d79",
-        "candidate": "d1cc556759a27943",
+        "spec": "6e6f27f11498",
+        "source": "cf5dcaf721166120",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 3,
         "units": 21
@@ -822,9 +822,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0f969f97ee12",
-        "source": "ada3caa09ec5937e",
-        "candidate": "d1cc556759a27943",
+        "spec": "466cfd2b2403",
+        "source": "ef1843dfdc0ab7c7",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -921,9 +921,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e1f579ddd6f6",
-        "source": "5fec34368f419b87",
-        "candidate": "d1cc556759a27943",
+        "spec": "4cc883e74e9f",
+        "source": "d5f77480d1490d5e",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -1028,9 +1028,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "3446e2c5a876",
-        "source": "b75a2948236ad40b",
-        "candidate": "d1cc556759a27943",
+        "spec": "91aa75cbfdff",
+        "source": "376aa633d7649377",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -1134,9 +1134,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ef5a621000c1",
-        "source": "79b933df001417a8",
-        "candidate": "d1cc556759a27943",
+        "spec": "98df9ed498e9",
+        "source": "04ea132be64e31c5",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -1237,9 +1237,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "70498eca2ff6",
-        "source": "2cd1ae11353bc6d7",
-        "candidate": "d1cc556759a27943",
+        "spec": "7aed442e9832",
+        "source": "1c0678748c512bc0",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -1345,9 +1345,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "784c3add2288",
-        "source": "3b0b6ef797053b46",
-        "candidate": "d1cc556759a27943",
+        "spec": "598241d45feb",
+        "source": "735eed7dc083aba9",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 3,
         "units": 24
@@ -1477,9 +1477,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7dab6868b99a",
-        "source": "7c1abd6d9cf3dc46",
-        "candidate": "d1cc556759a27943",
+        "spec": "c78aff993ad8",
+        "source": "930880f0bb6826bd",
+        "candidate": "8746fc59b6aa0408",
         "verified": 35,
         "attested": 2,
         "units": 37
@@ -1581,9 +1581,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "6d94265ec4d6",
-        "source": "e402be22fad3da2d",
-        "candidate": "d1cc556759a27943",
+        "spec": "e7bad608d89c",
+        "source": "1db43e4634e91227",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -1691,9 +1691,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "78823e5a0e2f",
-        "source": "074e64b8da2435e1",
-        "candidate": "d1cc556759a27943",
+        "spec": "2134116accb0",
+        "source": "557dece4c7386b13",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 8,
         "units": 26
@@ -1812,9 +1812,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b2bc34ccd752",
-        "source": "0532eabdd1936cb8",
-        "candidate": "d1cc556759a27943",
+        "spec": "70226909db1a",
+        "source": "2ce4f5dc9c17474d",
+        "candidate": "8746fc59b6aa0408",
         "verified": 26,
         "attested": 2,
         "units": 28
@@ -1914,9 +1914,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "97d42b5db3ab",
-        "source": "b20c4bec70226a9d",
-        "candidate": "d1cc556759a27943",
+        "spec": "455a02a48175",
+        "source": "aa06a11253115b53",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -2086,9 +2086,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "cfd28d7885f1",
-        "source": "d9ccae6dfd74bdea",
-        "candidate": "d1cc556759a27943",
+        "spec": "768644d07b66",
+        "source": "17a0a6d6b66e1faa",
+        "candidate": "8746fc59b6aa0408",
         "verified": 15,
         "attested": 31,
         "units": 46
@@ -2199,9 +2199,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "a70f6b03bb31",
-        "source": "22820c8b7367c954",
-        "candidate": "d1cc556759a27943",
+        "spec": "07da80d1aa5b",
+        "source": "8b0e6869870468c5",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 4,
         "units": 27
@@ -2293,9 +2293,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "5589594abdf5",
-        "source": "481aee4186a2fcf5",
-        "candidate": "d1cc556759a27943",
+        "spec": "ee8c608d946f",
+        "source": "59577d7d6b6c60e8",
+        "candidate": "8746fc59b6aa0408",
         "verified": 17,
         "attested": 0,
         "units": 17
@@ -2458,9 +2458,9 @@
         ]
       },
       "promotion": {
-        "spec": "c6b480406f7f",
-        "source": "221fa314ef0a2167",
-        "candidate": "d1cc556759a27943",
+        "spec": "e12caf84b432",
+        "source": "9b899fb6acdb4dc8",
+        "candidate": "8746fc59b6aa0408",
         "verified": 15,
         "attested": 0,
         "units": 15
@@ -2554,9 +2554,9 @@
         ]
       },
       "promotion": {
-        "spec": "a7a345f064ed",
-        "source": "3cd1617585064e0d",
-        "candidate": "d1cc556759a27943",
+        "spec": "c40482afd5b5",
+        "source": "3a80645a70f5b245",
+        "candidate": "8746fc59b6aa0408",
         "verified": 14,
         "attested": 0,
         "units": 14
@@ -2663,9 +2663,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "756eed642826",
-        "source": "ff75be88b4c5c73b",
-        "candidate": "d1cc556759a27943",
+        "spec": "02884be29324",
+        "source": "e8bc35c4e2e91bae",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -2777,9 +2777,9 @@
         ]
       },
       "promotion": {
-        "spec": "dc08e0df3331",
-        "source": "fb44e7730d794cc4",
-        "candidate": "d1cc556759a27943",
+        "spec": "e3b586ec08c7",
+        "source": "815ef7631c5affe0",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -2878,9 +2878,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "594304b3020c",
-        "source": "3cfacd5aeece3c7a",
-        "candidate": "d1cc556759a27943",
+        "spec": "893b7107261d",
+        "source": "21bd135b88e06777",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -2979,9 +2979,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "efdda98c555e",
-        "source": "48524527b8a65b3d",
-        "candidate": "d1cc556759a27943",
+        "spec": "010a7e23807e",
+        "source": "dcb70602a02a0180",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -3078,9 +3078,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b6adba815b69",
-        "source": "8e01d359fbeb0bce",
-        "candidate": "d1cc556759a27943",
+        "spec": "d0b257740b12",
+        "source": "de5f1509aa4ecbfc",
+        "candidate": "8746fc59b6aa0408",
         "verified": 12,
         "attested": 0,
         "units": 12
@@ -3172,9 +3172,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b3f13053f440",
-        "source": "35b97a8b06d8d399",
-        "candidate": "d1cc556759a27943",
+        "spec": "1eec40a9fdad",
+        "source": "037467dd34348936",
+        "candidate": "8746fc59b6aa0408",
         "verified": 16,
         "attested": 1,
         "units": 17
@@ -3274,9 +3274,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7b79f441a1fe",
-        "source": "d955f577fb18256d",
-        "candidate": "d1cc556759a27943",
+        "spec": "aeed6a7d4db8",
+        "source": "37642ffb95c12375",
+        "candidate": "8746fc59b6aa0408",
         "verified": 13,
         "attested": 2,
         "units": 15
@@ -3381,9 +3381,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "85fc42b2505e",
-        "source": "f56a581b24f366ff",
-        "candidate": "d1cc556759a27943",
+        "spec": "d42be4ea4580",
+        "source": "9104caa57f0c51c0",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -3488,9 +3488,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "cdf688132cb5",
-        "source": "13832355ec662f05",
-        "candidate": "d1cc556759a27943",
+        "spec": "e5337b3cc8f9",
+        "source": "286de09ae2f442c2",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -3606,9 +3606,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4300a4d31968",
-        "source": "5584faf83c95e68c",
-        "candidate": "d1cc556759a27943",
+        "spec": "b3f0cc42328a",
+        "source": "55effe6c1c4bebda",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 10,
         "units": 34
@@ -3714,9 +3714,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4349a67ad2a8",
-        "source": "8b2dd54e0423e97e",
-        "candidate": "d1cc556759a27943",
+        "spec": "d2fbe339dee3",
+        "source": "947eed98bd636042",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 5,
         "units": 24
@@ -3740,7 +3740,7 @@
         ]
       },
       "effect": {
-        "functional": "名为 PointLightNode 的节点挂 PointLight（illuminance=40, range=8），每帧绕场景中心轨道运动；三块板与地板受单一点光源照明。",
+        "functional": "名为 PointLightNode 的节点挂 PointLight（luminance=24000, range=8），每帧绕场景中心轨道运动；三块板与地板受单一点光源照明。",
         "visual": "三块彩色板与灰地板仅被一个游走的点光源照亮，板上明暗随光源靠近/远离实时流动，形成明显距离衰减"
       },
       "api": {
@@ -3811,9 +3811,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "88951008b00d",
-        "source": "ea448f328c7d5108",
-        "candidate": "d1cc556759a27943",
+        "spec": "957212499be3",
+        "source": "ede6040c16f088b8",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -3905,9 +3905,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "022251e312e0",
-        "source": "2d60ccd6e7859061",
-        "candidate": "d1cc556759a27943",
+        "spec": "13f2c79f770f",
+        "source": "181f839e3048d2fe",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -3925,13 +3925,13 @@
       "learning": {
         "goal": "掌握 SpotLight 聚光灯：锥形照射范围、主光斑 size 与衰减参数",
         "points": [
-          "SpotLight 的 illuminance/range/size",
+          "SpotLight 的 luminance/range/size",
           "聚光灯光锥随光源位置移动在地面上扫动",
           "与 PointLight 的照射形态差异"
         ]
       },
       "effect": {
-        "functional": "名为 SpotLightNode 的节点挂 SpotLight（illuminance=120, range=12, size=0.15）垂直向下；每帧小幅轨道运动；地板出现移动的圆形光斑。",
+        "functional": "名为 SpotLightNode 的节点挂 SpotLight（luminance=24000, range=12, size=0.15）垂直向下；每帧小幅轨道运动；地板出现移动的圆形光斑。",
         "visual": "灰地板上有一团边界清晰的圆形亮斑缓慢环绕中央紫色展台扫动，光斑外区域明显更暗"
       },
       "api": {
@@ -4000,9 +4000,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "74538d51cd5a",
-        "source": "9e6871b1fb516900",
-        "candidate": "d1cc556759a27943",
+        "spec": "9743cdd62ff4",
+        "source": "b3534e04dd7d198f",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -4026,7 +4026,7 @@
         ]
       },
       "effect": {
-        "functional": "Key Light（illuminance=2）+ Fill Light（0.4）同时存在；点击画面后 keyLight.luminance 依次 2→0.5→0 循环，__lightState 记录当前档位。",
+        "functional": "Key Light（illuminance=20000 lux）+ Fill Light（4000 lux）同时存在；点击画面后 keyLight.illuminance 依次 20000→5000→0 循环，__lightState 记录当前档位。",
         "visual": "点击画面时黄色方块从正常照明变暗直至只剩补光的蓝色微光，左上角状态文字同步显示当前档位"
       },
       "api": {
@@ -4106,9 +4106,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2a5fe86a854b",
-        "source": "1b02a2906065565c",
-        "candidate": "d1cc556759a27943",
+        "spec": "248ee78d5a9e",
+        "source": "84e2d6b201f643d3",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -4216,9 +4216,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7a18ff962562",
-        "source": "d4ec33849a43cbe4",
-        "candidate": "d1cc556759a27943",
+        "spec": "691785c7d88e",
+        "source": "ccc6fc2c4637ea1e",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -4307,9 +4307,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "d2f18d65ff5f",
-        "source": "64a5e60f317d77b8",
-        "candidate": "d1cc556759a27943",
+        "spec": "3dc08a803d09",
+        "source": "77978071ea70ce35",
+        "candidate": "8746fc59b6aa0408",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -4401,9 +4401,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "40bc8fbce245",
-        "source": "e4c05344db3660e6",
-        "candidate": "d1cc556759a27943",
+        "spec": "d332c2a0874b",
+        "source": "1c35d1d3e8c24f0e",
+        "candidate": "8746fc59b6aa0408",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -4507,9 +4507,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c255ef30b2eb",
-        "source": "cd4656ed270c0523",
-        "candidate": "d1cc556759a27943",
+        "spec": "03d09d051045",
+        "source": "8c2c756a8e99932b",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -4614,9 +4614,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0d20bc534df9",
-        "source": "44a5801682f683d0",
-        "candidate": "d1cc556759a27943",
+        "spec": "645e1af87d97",
+        "source": "67bc705e7b6e2602",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -4716,9 +4716,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "bfab06f0ff3f",
-        "source": "fe359d18cc0d7555",
-        "candidate": "d1cc556759a27943",
+        "spec": "0e56120cfac1",
+        "source": "dabc87c41be93d5e",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -4807,9 +4807,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "d56c8ac8b8fc",
-        "source": "bf83768a54c7e5fb",
-        "candidate": "d1cc556759a27943",
+        "spec": "57a35450dc95",
+        "source": "7517caefdbe8802f",
+        "candidate": "8746fc59b6aa0408",
         "verified": 15,
         "attested": 1,
         "units": 16
@@ -4916,9 +4916,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0e7e74e2f326",
-        "source": "d7152434b9249d56",
-        "candidate": "d1cc556759a27943",
+        "spec": "22fbdb446ecc",
+        "source": "aa8f177850fc8b75",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 1,
         "units": 25
@@ -5037,9 +5037,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "cc319d9b11e2",
-        "source": "01bed96c62bfcf77",
-        "candidate": "d1cc556759a27943",
+        "spec": "7715860acf04",
+        "source": "8ddf903c55618ac1",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 18,
         "units": 36
@@ -5141,9 +5141,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ae9c07f77998",
-        "source": "e3ba204ed533d86e",
-        "candidate": "d1cc556759a27943",
+        "spec": "f459d4a2b5f6",
+        "source": "5e1be191a2b0cf66",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 3,
         "units": 21
@@ -5246,9 +5246,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "aafe69a02c32",
-        "source": "9d719e65fbeadd23",
-        "candidate": "d1cc556759a27943",
+        "spec": "f2bd11247de3",
+        "source": "8d183eb8d031b279",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -5355,9 +5355,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "5e81f30bbb9f",
-        "source": "b7b95b1c8eaec459",
-        "candidate": "d1cc556759a27943",
+        "spec": "4e2e445e2a98",
+        "source": "ce052ed83cc90a95",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 3,
         "units": 25
@@ -5468,9 +5468,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "15b59a3ace15",
-        "source": "c25572b73f1dfa6f",
-        "candidate": "d1cc556759a27943",
+        "spec": "d40a003d46b4",
+        "source": "7e880273577db792",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 7,
         "units": 29
@@ -5572,9 +5572,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b410b1e6fdbc",
-        "source": "8f29c67d016211b9",
-        "candidate": "d1cc556759a27943",
+        "spec": "203f4f311c0b",
+        "source": "fd979e704b0fa6c1",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -5673,9 +5673,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "15ea8c28d8cc",
-        "source": "c801c43045003650",
-        "candidate": "d1cc556759a27943",
+        "spec": "abe438ba1222",
+        "source": "f83475ba04b23763",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -5779,9 +5779,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "79ca3bc7eb9b",
-        "source": "391fa035023a9afd",
-        "candidate": "d1cc556759a27943",
+        "spec": "e647cf23199c",
+        "source": "9f895aa61ce574a1",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 2,
         "units": 22
@@ -5894,9 +5894,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "980e63beebc8",
-        "source": "f6ef23d166ab7031",
-        "candidate": "d1cc556759a27943",
+        "spec": "43ef412e782d",
+        "source": "88de2a60c50a8703",
+        "candidate": "8746fc59b6aa0408",
         "verified": 29,
         "attested": 1,
         "units": 30
@@ -6006,9 +6006,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1df9e58ad5fb",
-        "source": "59a2ec9e69b7edbe",
-        "candidate": "d1cc556759a27943",
+        "spec": "31de2c390b2d",
+        "source": "a632d38095b1c3f4",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 10,
         "units": 28
@@ -6120,9 +6120,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0886380084ce",
-        "source": "4405584e7b2cb2af",
-        "candidate": "d1cc556759a27943",
+        "spec": "6c31008b566b",
+        "source": "5c9f18341c661804",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 9,
         "units": 30
@@ -6227,9 +6227,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9a995206294c",
-        "source": "57e231ef18363041",
-        "candidate": "d1cc556759a27943",
+        "spec": "414e57637b2f",
+        "source": "23ff32f2b04abb5a",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -6343,9 +6343,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "765b3c355604",
-        "source": "3dc3f11afa351fd4",
-        "candidate": "d1cc556759a27943",
+        "spec": "e9881610708d",
+        "source": "4ba2e1b5ae85097a",
+        "candidate": "8746fc59b6aa0408",
         "verified": 30,
         "attested": 1,
         "units": 31
@@ -6451,9 +6451,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "30cd3432b226",
-        "source": "ded09d0badcdbecf",
-        "candidate": "d1cc556759a27943",
+        "spec": "679348ba6ca7",
+        "source": "f804e3c7d90ac938",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 1,
         "units": 24
@@ -6565,9 +6565,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "8538bc02ff92",
-        "source": "a2f8f1f977306aef",
-        "candidate": "d1cc556759a27943",
+        "spec": "b2387018b204",
+        "source": "c8f8e75fec62af9a",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 7,
         "units": 29
@@ -6671,9 +6671,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4f94c982f324",
-        "source": "da946bde8e82102d",
-        "candidate": "d1cc556759a27943",
+        "spec": "2ba550844695",
+        "source": "9fa7e79898d2782c",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -6778,9 +6778,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "da91fe8a5d12",
-        "source": "071dbd5ab7405106",
-        "candidate": "d1cc556759a27943",
+        "spec": "eb9e9de757e9",
+        "source": "a51696c718c2af5c",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 5,
         "units": 23
@@ -6887,9 +6887,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "3ec5122f5df2",
-        "source": "d700b7a9019f7fc3",
-        "candidate": "d1cc556759a27943",
+        "spec": "ba5cfcc9eb5b",
+        "source": "a8aa732d8837e6c8",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 1,
         "units": 25
@@ -7003,9 +7003,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9b9229625a6a",
-        "source": "47cc94cdbe68a5b8",
-        "candidate": "d1cc556759a27943",
+        "spec": "64864da48407",
+        "source": "b76e61dcf47c1481",
+        "candidate": "8746fc59b6aa0408",
         "verified": 26,
         "attested": 6,
         "units": 32
@@ -7104,9 +7104,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "5ecc19862d96",
-        "source": "c15c81b1aa94b148",
-        "candidate": "d1cc556759a27943",
+        "spec": "79c65346c480",
+        "source": "cfd361f0e1369cc3",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -7211,9 +7211,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "6267c996478b",
-        "source": "81a79675af0f54e5",
-        "candidate": "d1cc556759a27943",
+        "spec": "00c5e8366ce2",
+        "source": "af2f3dd62a273028",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 5,
         "units": 23
@@ -7329,9 +7329,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b9eb6188e51c",
-        "source": "f38296627e24982f",
-        "candidate": "d1cc556759a27943",
+        "spec": "d0434e11c8bc",
+        "source": "0106719f35a017c3",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 13,
         "units": 33
@@ -7436,9 +7436,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "acd43497454d",
-        "source": "d7cf1bf97eb4aa21",
-        "candidate": "d1cc556759a27943",
+        "spec": "dbe73acd98c1",
+        "source": "92b4a147ff81428a",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -7546,9 +7546,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0b7f1ca74490",
-        "source": "ef6a20c12a68933a",
-        "candidate": "d1cc556759a27943",
+        "spec": "c1bf3006d928",
+        "source": "4fe2b4c3f9df21bf",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 6,
         "units": 26
@@ -7653,9 +7653,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "44f895a74cd8",
-        "source": "9ee5e79bfa483396",
-        "candidate": "d1cc556759a27943",
+        "spec": "8fb0300091bb",
+        "source": "88b75665869be4e9",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -7767,9 +7767,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1a508076cd58",
-        "source": "b0455f493a7594be",
-        "candidate": "d1cc556759a27943",
+        "spec": "49523ddcb972",
+        "source": "fc9a5900ceb65606",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 5,
         "units": 29
@@ -7872,9 +7872,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ef4282c21dc9",
-        "source": "eedc77cb620f6e10",
-        "candidate": "d1cc556759a27943",
+        "spec": "df85dd1e8123",
+        "source": "1e97ac75f2a9f38f",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 3,
         "units": 21
@@ -7984,9 +7984,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "fd37a266a531",
-        "source": "3308991d2530879c",
-        "candidate": "d1cc556759a27943",
+        "spec": "2077aead34e2",
+        "source": "dd5eb3c11a754a36",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 6,
         "units": 28
@@ -8096,9 +8096,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b52658d59fc2",
-        "source": "4d1345d46dc0f703",
-        "candidate": "d1cc556759a27943",
+        "spec": "5e9a56f9e4d6",
+        "source": "f2a25ee3942e0b87",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 4,
         "units": 27
@@ -8196,9 +8196,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "919b2a6a130c",
-        "source": "28ba9a348d0fef57",
-        "candidate": "d1cc556759a27943",
+        "spec": "359302f37ee8",
+        "source": "e51cdd77f9733ba4",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -8303,9 +8303,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ca25f13e157f",
-        "source": "e697c76c11380faf",
-        "candidate": "d1cc556759a27943",
+        "spec": "42ac85f4d283",
+        "source": "888e4f69808a0c53",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -8417,9 +8417,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2b7256a84477",
-        "source": "541528f944d401a1",
-        "candidate": "d1cc556759a27943",
+        "spec": "ffe5f8f18708",
+        "source": "ec63006daef5076b",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 5,
         "units": 29
@@ -8523,9 +8523,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "52e643008c59",
-        "source": "14660f9eb3b60b14",
-        "candidate": "d1cc556759a27943",
+        "spec": "09efb0d2382c",
+        "source": "ba28a0e1f5ed04ad",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 4,
         "units": 22
@@ -8638,9 +8638,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f83263724c2b",
-        "source": "cff5d5862790b40c",
-        "candidate": "d1cc556759a27943",
+        "spec": "ce18d88226fc",
+        "source": "f35a14e3a1341566",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 8,
         "units": 30
@@ -8750,9 +8750,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c24adab817f0",
-        "source": "b227fd7d7ee1f417",
-        "candidate": "d1cc556759a27943",
+        "spec": "4f8bbed4c64f",
+        "source": "b991bc0d2aa6dfb8",
+        "candidate": "8746fc59b6aa0408",
         "verified": 26,
         "attested": 1,
         "units": 27
@@ -8850,9 +8850,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "40bc363a2237",
-        "source": "9bfc189d5c442d68",
-        "candidate": "d1cc556759a27943",
+        "spec": "39e4aa1ca1b9",
+        "source": "6c8ab2b84ba00630",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -8961,9 +8961,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "a55519f8bfd6",
-        "source": "c4a11088df12899f",
-        "candidate": "d1cc556759a27943",
+        "spec": "1945d8214fb6",
+        "source": "db7b2fcd410fb399",
+        "candidate": "8746fc59b6aa0408",
         "verified": 25,
         "attested": 1,
         "units": 26
@@ -9068,9 +9068,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9b5aa37f7c26",
-        "source": "68fd6513ff85aa61",
-        "candidate": "d1cc556759a27943",
+        "spec": "8d3ecabd9775",
+        "source": "f63c8c756aa249fa",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 5,
         "units": 23
@@ -9183,9 +9183,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "70b17061f5cf",
-        "source": "f339dfdf3d63407f",
-        "candidate": "d1cc556759a27943",
+        "spec": "aba2d336dced",
+        "source": "2195ae9a8f079347",
+        "candidate": "8746fc59b6aa0408",
         "verified": 25,
         "attested": 5,
         "units": 30
@@ -9290,9 +9290,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "df4938c181e1",
-        "source": "fdaeebfb49cc3866",
-        "candidate": "d1cc556759a27943",
+        "spec": "7331fcb3f758",
+        "source": "27a3e28361542221",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 0,
         "units": 23
@@ -9385,9 +9385,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c3d9b8dd565b",
-        "source": "fd61367663c2b0a1",
-        "candidate": "d1cc556759a27943",
+        "spec": "facc0dffdcae",
+        "source": "368e3df77b65f7b7",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -9493,9 +9493,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1ea127b38887",
-        "source": "14f81f5ce9df574a",
-        "candidate": "d1cc556759a27943",
+        "spec": "d1fe84ce4d4d",
+        "source": "f6949b013e9f3653",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -9598,9 +9598,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f9c72b35b537",
-        "source": "8f51ec189d1b8ee9",
-        "candidate": "d1cc556759a27943",
+        "spec": "d84e10888320",
+        "source": "e269d7b6ad864d3d",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -9693,9 +9693,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "03cd6b3c1dff",
-        "source": "ec1bfedbbea794d3",
-        "candidate": "d1cc556759a27943",
+        "spec": "aaa92922c830",
+        "source": "3248cf0cb2aab8c6",
+        "candidate": "8746fc59b6aa0408",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -9789,9 +9789,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2702df7692e6",
-        "source": "003d016d9bbdc124",
-        "candidate": "d1cc556759a27943",
+        "spec": "2a0473dbdd79",
+        "source": "c58257e3098e3e82",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -9894,9 +9894,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ad95a2bb29ef",
-        "source": "49bd0a5fe2290020",
-        "candidate": "d1cc556759a27943",
+        "spec": "ea18270871e1",
+        "source": "013fd4d57716343e",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -9989,9 +9989,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c0d64a28c555",
-        "source": "cb85b55b88591609",
-        "candidate": "d1cc556759a27943",
+        "spec": "5e1972835b36",
+        "source": "f5b889e8a655bb9c",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -10083,9 +10083,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4de78c63719b",
-        "source": "abe4881c69f707f5",
-        "candidate": "d1cc556759a27943",
+        "spec": "4ada25082207",
+        "source": "10bae6c176697a46",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -10192,9 +10192,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4ed62247324c",
-        "source": "71dd47c248f8828f",
-        "candidate": "d1cc556759a27943",
+        "spec": "68f9cf1085f5",
+        "source": "814f6ef0a5c013ad",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 3,
         "units": 25
@@ -10330,9 +10330,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b652b3f4754e",
-        "source": "072e1c3f3d8d5137",
-        "candidate": "d1cc556759a27943",
+        "spec": "7bc28ca313c2",
+        "source": "1b699dee9a45eaae",
+        "candidate": "8746fc59b6aa0408",
         "verified": 37,
         "attested": 8,
         "units": 45
@@ -10424,9 +10424,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9c7cfcdb6c9f",
-        "source": "957e34f8616eaf44",
-        "candidate": "d1cc556759a27943",
+        "spec": "1600f4b3bd82",
+        "source": "5a3ed945031356f0",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 0,
         "units": 18
@@ -10534,9 +10534,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0cecb5ad294d",
-        "source": "77c9a10235bb11d9",
-        "candidate": "d1cc556759a27943",
+        "spec": "f434218d7b1e",
+        "source": "04d21d6a2f961c24",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 0,
         "units": 24
@@ -10639,9 +10639,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e2e75ca7a981",
-        "source": "6a55c6207753a3bf",
-        "candidate": "d1cc556759a27943",
+        "spec": "1e951dea23af",
+        "source": "143ddfb3b88e6fa4",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -10757,9 +10757,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f43783a95c21",
-        "source": "837b8e420e7a880a",
-        "candidate": "d1cc556759a27943",
+        "spec": "349a6cfe97c5",
+        "source": "e7104fac7b11ed58",
+        "candidate": "8746fc59b6aa0408",
         "verified": 33,
         "attested": 0,
         "units": 33
@@ -10855,9 +10855,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "72efe2cf6b66",
-        "source": "fa2e5f388b65f479",
-        "candidate": "d1cc556759a27943",
+        "spec": "e11498af6216",
+        "source": "6cb8913624985ef6",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -10960,9 +10960,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7f5f5dbec32d",
-        "source": "9fbd2f186e736626",
-        "candidate": "d1cc556759a27943",
+        "spec": "d86a708ca70d",
+        "source": "76793cbeacb700ba",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -11056,9 +11056,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9c52ef0d0bc2",
-        "source": "c3ab3e755cd3f539",
-        "candidate": "d1cc556759a27943",
+        "spec": "adcedee647c1",
+        "source": "58438f35cfba2029",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 0,
         "units": 19
@@ -11157,9 +11157,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2ddf78549071",
-        "source": "fb880f39f3a2687b",
-        "candidate": "d1cc556759a27943",
+        "spec": "4b30e4fbe723",
+        "source": "734a03c5b92dfce8",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 1,
         "units": 19
@@ -11304,9 +11304,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "d8a9dd22b4c3",
-        "source": "e87330f4b1d52ba0",
-        "candidate": "d1cc556759a27943",
+        "spec": "dc33c48be26c",
+        "source": "af9084853704646e",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 12,
         "units": 34
@@ -11435,9 +11435,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "a74c759a85f8",
-        "source": "3f9207b6bac28f9b",
-        "candidate": "d1cc556759a27943",
+        "spec": "2992f3827c45",
+        "source": "0c29ffa9f366c5cf",
+        "candidate": "8746fc59b6aa0408",
         "verified": 32,
         "attested": 4,
         "units": 36
@@ -11574,9 +11574,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4ee47e258bda",
-        "source": "49467e2333a8f117",
-        "candidate": "d1cc556759a27943",
+        "spec": "1146afbe7bfc",
+        "source": "651f615374c33ffe",
+        "candidate": "8746fc59b6aa0408",
         "verified": 27,
         "attested": 6,
         "units": 33
@@ -11758,9 +11758,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "885b85eafe40",
-        "source": "d2497f8e98052058",
-        "candidate": "d1cc556759a27943",
+        "spec": "2dae8fd94551",
+        "source": "1b6ad95a984fffb3",
+        "candidate": "8746fc59b6aa0408",
         "verified": 35,
         "attested": 34,
         "units": 69
@@ -11883,9 +11883,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "31c2e8f2d958",
-        "source": "10386b846b99736a",
-        "candidate": "d1cc556759a27943",
+        "spec": "3ff3f3d53ed9",
+        "source": "6f5ec74fcc298655",
+        "candidate": "8746fc59b6aa0408",
         "verified": 25,
         "attested": 6,
         "units": 31
@@ -12018,9 +12018,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "48666e065489",
-        "source": "eb16c723bbabce9c",
-        "candidate": "d1cc556759a27943",
+        "spec": "ca48ced6399e",
+        "source": "b5e309975cb0a963",
+        "candidate": "8746fc59b6aa0408",
         "verified": 34,
         "attested": 7,
         "units": 41
@@ -12124,9 +12124,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e7794dfb9762",
-        "source": "baad02840d35e518",
-        "candidate": "d1cc556759a27943",
+        "spec": "50bc153ddb1c",
+        "source": "0fda4c96ce7a51a5",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -12228,9 +12228,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "5a6b7032fd08",
-        "source": "52e7113be5b77e97",
-        "candidate": "d1cc556759a27943",
+        "spec": "e76a8b021e50",
+        "source": "047accd37ce78909",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
         "units": 21
@@ -12333,9 +12333,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b1e8e7db4f9d",
-        "source": "85449a8406472936",
-        "candidate": "d1cc556759a27943",
+        "spec": "924c2a4ebd0a",
+        "source": "5f322ef65443e136",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 0,
         "units": 22
@@ -12484,9 +12484,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1b424deb41b9",
-        "source": "a01534e089e675e9",
-        "candidate": "d1cc556759a27943",
+        "spec": "4bf3f38b6e50",
+        "source": "f56183e5669f6304",
+        "candidate": "8746fc59b6aa0408",
         "verified": 36,
         "attested": 5,
         "units": 41
@@ -12510,7 +12510,7 @@
         ]
       },
       "effect": {
-        "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=3）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*60；profiler.showStats() 已调用，isShowingStats() 为 true，stats 的 12 个计数器可读回且 frame/draws 值随时间变化。",
+        "functional": "Scene 含 Main Camera（PERSPECTIVE, fov45, SOLID_COLOR 清屏）、Main Light（illuminance=75000）与 Cube（box 图元 + builtin-standard）；Cube 的 Y 欧拉角逐帧增加 dt*60；profiler.showStats() 已调用，isShowingStats() 为 true，stats 的 12 个计数器可读回且 frame/draws 值随时间变化。",
         "visual": "画面中央立方体持续自转，左下角叠加半透明统计面板（Framerate/Draw call/Frame time/Triangle/Logic/Physics/Renderer/Present/内存）"
       },
       "api": {
@@ -12583,9 +12583,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "66d6546c7a37",
-        "source": "afc5dc805c737985",
-        "candidate": "d1cc556759a27943",
+        "spec": "7452de8c11ca",
+        "source": "86784386074fa41c",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 2,
         "units": 23
@@ -12673,9 +12673,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "86059190543b",
-        "source": "9c24eade6728d6e4",
-        "candidate": "d1cc556759a27943",
+        "spec": "4daffe289d95",
+        "source": "14dcaa1b1f04abd7",
+        "candidate": "8746fc59b6aa0408",
         "verified": 17,
         "attested": 1,
         "units": 18
@@ -12770,9 +12770,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "deb988a9d823",
-        "source": "20070fba85c22df4",
-        "candidate": "d1cc556759a27943",
+        "spec": "4533f62e9a73",
+        "source": "adc7fb751d03f149",
+        "candidate": "8746fc59b6aa0408",
         "verified": 17,
         "attested": 3,
         "units": 20
@@ -12862,9 +12862,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2be94727b2c1",
-        "source": "ad473b671a41e764",
-        "candidate": "d1cc556759a27943",
+        "spec": "01b9b4271da2",
+        "source": "8d42f5b915ecd42a",
+        "candidate": "8746fc59b6aa0408",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -12957,9 +12957,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "495816944ba8",
-        "source": "b164c0231173bf02",
-        "candidate": "d1cc556759a27943",
+        "spec": "dc7942ac2896",
+        "source": "8dbf1e634cee45fa",
+        "candidate": "8746fc59b6aa0408",
         "verified": 17,
         "attested": 2,
         "units": 19
@@ -13080,9 +13080,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2f1c7cda0809",
-        "source": "fc304b3f4e6df1f8",
-        "candidate": "d1cc556759a27943",
+        "spec": "f2a8eecaa3c9",
+        "source": "f3bc5f329a814950",
+        "candidate": "8746fc59b6aa0408",
         "verified": 28,
         "attested": 4,
         "units": 32
@@ -13173,9 +13173,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "928e831458d2",
-        "source": "11c2af5dc6de1137",
-        "candidate": "d1cc556759a27943",
+        "spec": "f628bd4d35b5",
+        "source": "4a9f2c0d68b5473f",
+        "candidate": "8746fc59b6aa0408",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -13278,9 +13278,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "a6666038cab0",
-        "source": "4af9775c86397ec9",
-        "candidate": "d1cc556759a27943",
+        "spec": "6e068a897412",
+        "source": "da38bbe3d694f92f",
+        "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 1,
         "units": 20
@@ -13391,9 +13391,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "aa6186546441",
-        "source": "f8f9a871fe9a0411",
-        "candidate": "d1cc556759a27943",
+        "spec": "a9702becc446",
+        "source": "ea8fcfd16e2050b1",
+        "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 11,
         "units": 29
@@ -13498,9 +13498,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "6870f7b786e9",
-        "source": "febfab14631514d6",
-        "candidate": "d1cc556759a27943",
+        "spec": "e0a9561573a7",
+        "source": "cba3d9332bbd4582",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 2,
         "units": 22
@@ -13618,9 +13618,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "08b0bdf40ebd",
-        "source": "306dd1eed412c7ec",
-        "candidate": "d1cc556759a27943",
+        "spec": "df4aafe4741e",
+        "source": "fd48cef4ffe8c97f",
+        "candidate": "8746fc59b6aa0408",
         "verified": 29,
         "attested": 3,
         "units": 32
@@ -13733,9 +13733,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "bca00e9b5ea0",
-        "source": "f286bd701c0db7a0",
-        "candidate": "d1cc556759a27943",
+        "spec": "b96b45bc2180",
+        "source": "35462f213c12decb",
+        "candidate": "8746fc59b6aa0408",
         "verified": 23,
         "attested": 3,
         "units": 26
@@ -13853,9 +13853,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2de6e0a943a9",
-        "source": "abcc81bb9e885254",
-        "candidate": "d1cc556759a27943",
+        "spec": "7cada7a1d2e8",
+        "source": "d5ef856a78549703",
+        "candidate": "8746fc59b6aa0408",
         "verified": 28,
         "attested": 3,
         "units": 31
@@ -13948,9 +13948,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e5ceb0171281",
-        "source": "cf1a4e3b115fd499",
-        "candidate": "d1cc556759a27943",
+        "spec": "b05a5b26c639",
+        "source": "efb9ef263634cf5c",
+        "candidate": "8746fc59b6aa0408",
         "verified": 16,
         "attested": 0,
         "units": 16
@@ -14036,9 +14036,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "509d0ba585c2",
-        "source": "84714e6e975fbc32",
-        "candidate": "d1cc556759a27943",
+        "spec": "4efbf96c2741",
+        "source": "5643bb4d6e2b8540",
+        "candidate": "8746fc59b6aa0408",
         "verified": 8,
         "attested": 1,
         "units": 9
@@ -14140,9 +14140,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "cab0aa290350",
-        "source": "63e4502a895fc0fa",
-        "candidate": "d1cc556759a27943",
+        "spec": "1c8e43051896",
+        "source": "a7fbfefe053020bf",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -14260,9 +14260,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "0e25bcd6468a",
-        "source": "87f478e933b48d40",
-        "candidate": "d1cc556759a27943",
+        "spec": "4864fea4e269",
+        "source": "11b8e2e140a094de",
+        "candidate": "8746fc59b6aa0408",
         "verified": 25,
         "attested": 2,
         "units": 27
@@ -14371,9 +14371,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "800230dc941c",
-        "source": "811e1f4bd9569977",
-        "candidate": "d1cc556759a27943",
+        "spec": "67d84f00e67a",
+        "source": "3ec71c4754dfb103",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 2,
         "units": 23
@@ -14474,9 +14474,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "801c006d64c7",
-        "source": "f45c5c6dcce11ce3",
-        "candidate": "d1cc556759a27943",
+        "spec": "f412ce14bc94",
+        "source": "0bcebbb30e15ca1d",
+        "candidate": "8746fc59b6aa0408",
         "verified": 25,
         "attested": 0,
         "units": 25
@@ -14587,9 +14587,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "65286e65b9e5",
-        "source": "db02dcc4ffa25fa1",
-        "candidate": "d1cc556759a27943",
+        "spec": "2644a73fb04f",
+        "source": "d5b512b6239cdb75",
+        "candidate": "8746fc59b6aa0408",
         "verified": 27,
         "attested": 1,
         "units": 28
@@ -14694,9 +14694,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9290667093b2",
-        "source": "fe328285c4156589",
-        "candidate": "d1cc556759a27943",
+        "spec": "bfa4c738187b",
+        "source": "6512223704e49e45",
+        "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 1,
         "units": 22
@@ -14868,9 +14868,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "48312c2aac4b",
-        "source": "ecbcddc571bb3443",
-        "candidate": "d1cc556759a27943",
+        "spec": "7cc79446c2a9",
+        "source": "d190ac5740586673",
+        "candidate": "8746fc59b6aa0408",
         "verified": 46,
         "attested": 2,
         "units": 48
@@ -14964,9 +14964,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e9fb4d97b277",
-        "source": "b8bf300dc9d60f49",
-        "candidate": "d1cc556759a27943",
+        "spec": "80b0c3becc83",
+        "source": "1a37f130b093f25a",
+        "candidate": "8746fc59b6aa0408",
         "verified": 13,
         "attested": 1,
         "units": 14
@@ -15055,9 +15055,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "a2b66e97135b",
-        "source": "97805d6ae4dda9e7",
-        "candidate": "d1cc556759a27943",
+        "spec": "7c414aa0e623",
+        "source": "afb6b00fc4627a34",
+        "candidate": "8746fc59b6aa0408",
         "verified": 14,
         "attested": 1,
         "units": 15
@@ -15177,9 +15177,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "41de9c2c2349",
-        "source": "35dd32b211b98c1f",
-        "candidate": "d1cc556759a27943",
+        "spec": "ac1d1fe9483f",
+        "source": "cbda0eef993792c8",
+        "candidate": "8746fc59b6aa0408",
         "verified": 27,
         "attested": 3,
         "units": 30
@@ -15311,9 +15311,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ee9cf6470300",
-        "source": "4d867b64bb82d212",
-        "candidate": "d1cc556759a27943",
+        "spec": "a5330ec56a6c",
+        "source": "6fbbbf57ed1a5002",
+        "candidate": "8746fc59b6aa0408",
         "verified": 36,
         "attested": 1,
         "units": 37
@@ -15421,9 +15421,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f15b913767bc",
-        "source": "77f21c2819021f29",
-        "candidate": "d1cc556759a27943",
+        "spec": "41b52d169c05",
+        "source": "8188d8511c8c2b98",
+        "candidate": "8746fc59b6aa0408",
         "verified": 22,
         "attested": 1,
         "units": 23
@@ -15525,9 +15525,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f513e4f5045b",
-        "source": "be8aad5628270919",
-        "candidate": "d1cc556759a27943",
+        "spec": "a8faeac6500a",
+        "source": "b4fadffb071fd409",
+        "candidate": "8746fc59b6aa0408",
         "verified": 20,
         "attested": 0,
         "units": 20
@@ -15679,9 +15679,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e4de09333e06",
-        "source": "35f72dfaf054cab5",
-        "candidate": "d1cc556759a27943",
+        "spec": "db60ff8c7e06",
+        "source": "a2cc5d2b37a6dd0b",
+        "candidate": "8746fc59b6aa0408",
         "verified": 24,
         "attested": 13,
         "units": 37
@@ -15827,9 +15827,9 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4312cf66c71f",
-        "source": "8aeb640901c44844",
-        "candidate": "d1cc556759a27943",
+        "spec": "f6efbe2a2c12",
+        "source": "b955ded66d1a7898",
+        "candidate": "8746fc59b6aa0408",
         "verified": 29,
         "attested": 7,
         "units": 36

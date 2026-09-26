@@ -8,11 +8,11 @@
 
 阴影是**场景级开关 + 光源级开关 + 渲染器级投射开关**三层：
 
-| 层 | 入口 | 关键字段 |
-| --- | --- | --- |
+| 层   | 入口                                                 | 关键字段                                                                                       |
+| ---- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | 场景 | `scene.globals.shadows`（`ShadowsInfo`，d.ts 20853） | `enabled`、`type`、`shadowColor`、`planeDirection`、`planeHeight`、`planeBias`、最大接收光源数 |
-| 光源 | `DirectionalLight` / `SpotLight` 组件 | `shadowEnabled`、`shadowPcf`、`shadowBias`、`shadowNormalBias`、`shadowDistance` |
-| 物体 | `MeshRenderer`（Model，d.ts 647） | `shadowCastingMode`（0=OFF，1=ON） |
+| 光源 | `DirectionalLight` / `SpotLight` 组件                | `shadowEnabled`、`shadowPcf`、`shadowBias`、`shadowNormalBias`、`shadowDistance`               |
+| 物体 | `MeshRenderer`（Model，d.ts 647）                    | `shadowCastingMode`（0=OFF，1=ON）                                                             |
 
 两个必须知道的口径：
 
@@ -25,9 +25,9 @@
 
 ```js
 scene.globals.shadows.enabled = true;
-scene.globals.shadows.type = 1;          // ShadowMap=1 / Planar=0（枚举未顶层导出）
-dir.shadowEnabled = true;                // dir: DirectionalLight 组件
-renderer.shadowCastingMode = 1;          // MeshRenderer：ON=1 / OFF=0
+scene.globals.shadows.type = 1; // ShadowMap=1 / Planar=0（枚举未顶层导出）
+dir.shadowEnabled = true; // dir: DirectionalLight 组件
+renderer.shadowCastingMode = 1; // MeshRenderer：ON=1 / OFF=0
 ```
 
 Planar 模式还需给接收平面：`shadows.planeDirection = new Vec3(0, 1, 0)`、`shadows.planeHeight = 0`、
@@ -39,11 +39,11 @@ Planar 模式还需给接收平面：`shadows.planeDirection = new Vec3(0, 1, 0)
 spike 页结构：灰色地面 plane + 橙色球（`primitives.sphere(1.0, …)` 位置参数签名）+
 方向光 `illuminance = 3`（`setRotationFromEuler(-55, -25, 0)`），相机俯视。三种配置各截一帧：
 
-| 配置 | 截图 | 观察 |
-| --- | --- | --- |
-| `type = 1`（ShadowMap） | `docs/evidence/manual/shadows-spike-map.png` | 地面无阴影；球仅环境光微亮 |
-| `type = 0`（Planar） | `docs/evidence/manual/shadows-spike-planar.png` | 与 ShadowMap 帧几乎逐像素同：无阴影 |
-| `enabled = false`（对照） | `docs/evidence/manual/shadows-spike-off.png` | **同样**无方向光照明、地面不亮 |
+| 配置                      | 截图                                            | 观察                                |
+| ------------------------- | ----------------------------------------------- | ----------------------------------- |
+| `type = 1`（ShadowMap）   | `docs/evidence/manual/shadows-spike-map.png`    | 地面无阴影；球仅环境光微亮          |
+| `type = 0`（Planar）      | `docs/evidence/manual/shadows-spike-planar.png` | 与 ShadowMap 帧几乎逐像素同：无阴影 |
+| `enabled = false`（对照） | `docs/evidence/manual/shadows-spike-off.png`    | **同样**无方向光照明、地面不亮      |
 
 对照帧说明：该 spike 页即使关掉阴影也复现不了方向光照明（与 `manual-lights` /
 `manual-cameras` 里方向光明显生效形成反差）。**归因已定（r53，GAP-L1 修复轮）**：spike 用了

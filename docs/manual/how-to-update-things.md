@@ -8,13 +8,13 @@ AIR 是游戏引擎式**常驻渲染循环**
 
 ## 1. 四个钩子与一个调度器
 
-| 钩子 | 位置 | 适用 |
-| --- | --- | --- |
-| `start()` | 首帧 update 前一次 | 初始化里依赖"其它组件已 onLoad"的部分 |
-| `update(dt)` | 每帧，组件相位 | 常规每帧逻辑；dt 单位**秒** |
-| `lateUpdate(dt)` | 每帧，**全部 update 之后**、渲染前 | 跟随相机/读取本帧最终变换（d.ts 19926，protected 可选） |
-| `this.schedule(cb, interval, repeat?, delay?)` | 调度器间隔回调 | 不需要每帧的周期任务（示例 0.5s 脉冲）；另有 `scheduleOnce(cb, delay)`（d.ts 19875/19889） |
-| `director.getScheduler()` | 系统级 `Scheduler`（d.ts 21966/16479） | 给非组件对象挂调度；组件直接用上面的便利方法即可 |
+| 钩子                                           | 位置                                   | 适用                                                                                       |
+| ---------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `start()`                                      | 首帧 update 前一次                     | 初始化里依赖"其它组件已 onLoad"的部分                                                      |
+| `update(dt)`                                   | 每帧，组件相位                         | 常规每帧逻辑；dt 单位**秒**                                                                |
+| `lateUpdate(dt)`                               | 每帧，**全部 update 之后**、渲染前     | 跟随相机/读取本帧最终变换（d.ts 19926，protected 可选）                                    |
+| `this.schedule(cb, interval, repeat?, delay?)` | 调度器间隔回调                         | 不需要每帧的周期任务（示例 0.5s 脉冲）；另有 `scheduleOnce(cb, delay)`（d.ts 19875/19889） |
+| `director.getScheduler()`                      | 系统级 `Scheduler`（d.ts 21966/16479） | 给非组件对象挂调度；组件直接用上面的便利方法即可                                           |
 
 组件执行优先级可配（d.ts 14994：优先级影响 `onLoad/onEnable/start/update/lateUpdate` 的组件间顺序，
 不影响 `onDisable/onDestroy`）——同相位内谁先谁后默认不保证，**跨相位顺序才保证**（示例 §2 验证的就是这个）。
@@ -58,7 +58,7 @@ order update→lateUpdate verified: true
 - `update`/`lateUpdate`/`schedule` 全部由 director 统一推进，用户代码**不碰 rAF**——
   不需要自己写 `requestAnimationFrame` 循环来驱动每帧逻辑。
 - 常驻循环下想省算力，手段是**让 update 早退**
- （状态没变就 return）或关掉节点 `active`（组件 update 随之停摆，见 [销毁对象](how-to-dispose-of-objects.md) §1 的 active 语义）。
+  （状态没变就 return）或关掉节点 `active`（组件 update 随之停摆，见 [销毁对象](how-to-dispose-of-objects.md) §1 的 active 语义）。
 - `dt` 单位是秒；首帧尖峰明显（shader 编译在首帧内），做计时 UI 时建议前几帧丢弃或 clamp。
 
 ## 5. 跑示例与验证记录
@@ -79,38 +79,65 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-update-things/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Update Things — 每帧更新（docs/manual/how-to-update-things.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -129,28 +156,28 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('update-things');
+const scene = new Scene("update-things");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 3.0, 6.4));
 cameraNode.lookAt(new Vec3(0, 1.1, 0));
@@ -164,7 +191,7 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -173,102 +200,102 @@ dir.illuminance = 2;
 // ---- 共享 mesh/material ----
 const cubeMesh = utils.createMesh(primitives.box({ width: 0.9, height: 0.9, length: 0.9 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: 'builtin-standard' });
-cubeMaterial.setProperty('mainColor', new Color(65, 155, 235, 255));
+cubeMaterial.initialize({ effectName: "builtin-standard" });
+cubeMaterial.setProperty("mainColor", new Color(65, 155, 235, 255));
 
-function makeCube (name: string, x: number): Node {
-    const node = new Node(name);
-    node.layer = Layers.Enum.DEFAULT;
-    node.setPosition(new Vec3(x, 1.0, 0));
-    scene.addChild(node);
-    const renderer = node.addComponent(MeshRenderer);
-    renderer.mesh = cubeMesh;
-    renderer.material = cubeMaterial;
-    return node;
+function makeCube(name: string, x: number): Node {
+  const node = new Node(name);
+  node.layer = Layers.Enum.DEFAULT;
+  node.setPosition(new Vec3(x, 1.0, 0));
+  scene.addChild(node);
+  const renderer = node.addComponent(MeshRenderer);
+  renderer.mesh = cubeMesh;
+  renderer.material = cubeMaterial;
+  return node;
 }
 
 // ---- 统计 ----
 const stats = {
-    frames: 0,
-    dtMin: Infinity,
-    dtMax: 0,
-    dtSum: 0,
-    updateTicks: 0,
-    lateTicks: 0,
-    schedTicks: 0,
-    orderOk: false,
-    sawUpdateThisFrame: false,
+  frames: 0,
+  dtMin: Infinity,
+  dtMax: 0,
+  dtSum: 0,
+  updateTicks: 0,
+  lateTicks: 0,
+  schedTicks: 0,
+  orderOk: false,
+  sawUpdateThisFrame: false,
 };
 
 // ---- 1) update(dt) 自转 ----
 class SpinByUpdate extends Component {
-    update (dt: number): void {
-        stats.updateTicks++;
-        stats.sawUpdateThisFrame = true;
-        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 60, 0);
-    }
+  update(dt: number): void {
+    stats.updateTicks++;
+    stats.sawUpdateThisFrame = true;
+    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 60, 0);
+  }
 }
 
 // ---- 2) lateUpdate(dt) 浮动 ----
 class BobByLateUpdate extends Component {
-    private _t = 0;
-    constructor () {
-        super();
-        this._t = 0;
-    }
-    lateUpdate (dt: number): void {
-        stats.lateTicks++;
-        if (stats.sawUpdateThisFrame) stats.orderOk = true;
-        stats.sawUpdateThisFrame = false;
-        this._t += dt;
-        this.node.setPosition(new Vec3(0, 1.0 + Math.sin(this._t * 2.0) * 0.45, 0));
-    }
+  private _t = 0;
+  constructor() {
+    super();
+    this._t = 0;
+  }
+  lateUpdate(dt: number): void {
+    stats.lateTicks++;
+    if (stats.sawUpdateThisFrame) stats.orderOk = true;
+    stats.sawUpdateThisFrame = false;
+    this._t += dt;
+    this.node.setPosition(new Vec3(0, 1.0 + Math.sin(this._t * 2.0) * 0.45, 0));
+  }
 }
 
 // ---- 3) schedule 间隔脉冲 ----
 class PulseBySchedule extends Component {
-    private _big = false;
-    start (): void {
-        this._big = false;
-        this.schedule(this.pulse, 0.5);
-    }
-    pulse (): void {
-        stats.schedTicks++;
-        this._big = !this._big;
-        const s = this._big ? 1.3 : 1.0;
-        this.node.setScale(new Vec3(s, s, s));
-    }
+  private _big = false;
+  start(): void {
+    this._big = false;
+    this.schedule(this.pulse, 0.5);
+  }
+  pulse(): void {
+    stats.schedTicks++;
+    this._big = !this._big;
+    const s = this._big ? 1.3 : 1.0;
+    this.node.setScale(new Vec3(s, s, s));
+  }
 }
 
-const cubeA = makeCube('A-update', -1.8);
+const cubeA = makeCube("A-update", -1.8);
 cubeA.addComponent(SpinByUpdate);
-const cubeB = makeCube('B-lateUpdate', 0);
+const cubeB = makeCube("B-lateUpdate", 0);
 cubeB.addComponent(BobByLateUpdate);
-const cubeC = makeCube('C-schedule', 1.8);
+const cubeC = makeCube("C-schedule", 1.8);
 cubeC.addComponent(PulseBySchedule);
 
 // ---- 覆盖层 + dt 统计 ----
-const info = document.querySelector('#info') as HTMLElement;
+const info = document.querySelector("#info") as HTMLElement;
 class Overseer extends Component {
-    update (dt: number): void {
-        stats.frames++;
-        stats.dtMin = Math.min(stats.dtMin, dt);
-        stats.dtMax = Math.max(stats.dtMax, dt);
-        stats.dtSum += dt;
-        info.textContent = [
-            'drive: update(dt) spin | lateUpdate(dt) bob | schedule(cb, 0.5) pulse',
-            `frames: ${stats.frames}  dt ms: min=${(stats.dtMin * 1000).toFixed(1)} max=${(stats.dtMax * 1000).toFixed(1)} avg=${(stats.dtSum / stats.frames * 1000).toFixed(1)}`,
-            `ticks: update=${stats.updateTicks} lateUpdate=${stats.lateTicks} schedule=${stats.schedTicks}`,
-            `order update→lateUpdate verified: ${stats.orderOk}`,
-        ].join('\n');
-    }
+  update(dt: number): void {
+    stats.frames++;
+    stats.dtMin = Math.min(stats.dtMin, dt);
+    stats.dtMax = Math.max(stats.dtMax, dt);
+    stats.dtSum += dt;
+    info.textContent = [
+      "drive: update(dt) spin | lateUpdate(dt) bob | schedule(cb, 0.5) pulse",
+      `frames: ${stats.frames}  dt ms: min=${(stats.dtMin * 1000).toFixed(1)} max=${(stats.dtMax * 1000).toFixed(1)} avg=${((stats.dtSum / stats.frames) * 1000).toFixed(1)}`,
+      `ticks: update=${stats.updateTicks} lateUpdate=${stats.lateTicks} schedule=${stats.schedTicks}`,
+      `order update→lateUpdate verified: ${stats.orderOk}`,
+    ].join("\n");
+  }
 }
 cameraNode.addComponent(Overseer);
 
 window.__airApp = app;
 app.run(scene);
 
-console.log('[manual/update-things] running on cocosair');
+console.log("[manual/update-things] running on cocosair");
 ```
 
 ---

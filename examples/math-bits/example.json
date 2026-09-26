@@ -59,11 +59,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 96,170,220）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "math.bits.sign",
-      "math.bits.nextPow2",
-      "math.bits.popCount"
-    ],
+    "primary": ["math.bits.sign", "math.bits.nextPow2", "math.bits.popCount"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -118,257 +114,244 @@
       "math.bits.deinterleave3",
       "math.bits.nextCombination"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L24"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L43"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L31"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L44"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L38"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L37"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L50"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L53"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L54"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L51"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L51"
       },
       {
         "api": "math.bits.sign",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L39"
+        "sourceLocation": "L75"
       },
       {
         "api": "math.bits.abs",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L41"
+        "sourceLocation": "L77"
       },
       {
         "api": "math.bits.min",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L42"
+        "sourceLocation": "L78"
       },
       {
         "api": "math.bits.max",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L43"
+        "sourceLocation": "L79"
       },
       {
         "api": "math.bits.isPow2",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L44"
+        "sourceLocation": "L80"
       },
       {
         "api": "math.bits.log2",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L48"
+        "sourceLocation": "L84"
       },
       {
         "api": "math.bits.log10",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L49"
+        "sourceLocation": "L85"
       },
       {
         "api": "math.bits.popCount",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L50"
+        "sourceLocation": "L86"
       },
       {
         "api": "math.bits.countTrailingZeros",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L51"
+        "sourceLocation": "L87"
       },
       {
         "api": "math.bits.nextPow2",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L46"
+        "sourceLocation": "L82"
       },
       {
         "api": "math.bits.prevPow2",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L47"
+        "sourceLocation": "L83"
       },
       {
         "api": "math.bits.parity",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L52"
+        "sourceLocation": "L88"
       },
       {
         "api": "math.bits.reverse",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L53"
+        "sourceLocation": "L89"
       },
       {
         "api": "math.bits.interleave2",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L54"
+        "sourceLocation": "L90"
       },
       {
         "api": "math.bits.deinterleave2",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L55"
+        "sourceLocation": "L91"
       },
       {
         "api": "math.bits.interleave3",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L57"
+        "sourceLocation": "L93"
       },
       {
         "api": "math.bits.deinterleave3",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L58"
+        "sourceLocation": "L94"
       },
       {
         "api": "math.bits.nextCombination",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L59"
+        "sourceLocation": "L95"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -380,9 +363,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "cc319d9b11e2",
-    "source": "01bed96c62bfcf77",
-    "candidate": "d1cc556759a27943",
+    "spec": "7715860acf04",
+    "source": "8ddf903c55618ac1",
+    "candidate": "8746fc59b6aa0408",
     "verified": 18,
     "attested": 18,
     "units": 36

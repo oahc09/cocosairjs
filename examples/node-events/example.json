@@ -56,11 +56,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 214,148,96）、方向光、透视相机。"
   },
   "api": {
-    "primary": [
-      "Node.emit",
-      "Node.on",
-      "Node.hasEventListener"
-    ],
+    "primary": ["Node.emit", "Node.on", "Node.hasEventListener"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -112,239 +108,226 @@
       "Node.getSiblingIndex",
       "Node.setSiblingIndex"
     ],
-    "forbiddenShortcut": [
-      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
-    ],
+    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L24"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L58"
+        "sourceLocation": "L110"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L43"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L15"
+        "sourceLocation": "L31"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L44"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L38"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L18"
+        "sourceLocation": "L37"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L50"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L53"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L54"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L51"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L51"
       },
       {
         "api": "Node.on",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L42"
+        "sourceLocation": "L81"
       },
       {
         "api": "Node.once",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L43"
+        "sourceLocation": "L82"
       },
       {
         "api": "Node.emit",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L44"
+        "sourceLocation": "L85"
       },
       {
         "api": "Node.off",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L48"
+        "sourceLocation": "L92"
       },
       {
         "api": "Node.hasEventListener",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L47"
+        "sourceLocation": "L91"
       },
       {
         "api": "Node.targetOff",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L52"
+        "sourceLocation": "L100"
       },
       {
         "api": "Node.dispatchEvent",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L56"
+        "sourceLocation": "L107"
       },
       {
         "api": "Node.walk",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L71"
+        "sourceLocation": "L125"
       },
       {
         "api": "Node.getComponents",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L68"
+        "sourceLocation": "L122"
       },
       {
         "api": "Node.getChildByPath",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L60"
+        "sourceLocation": "L113"
       },
       {
         "api": "Node.setParent",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L66"
+        "sourceLocation": "L120"
       },
       {
         "api": "Node.getParent",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L65"
+        "sourceLocation": "L118"
       },
       {
         "api": "Node.isChildOf",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L61"
+        "sourceLocation": "L114"
       },
       {
         "api": "Node.getSiblingIndex",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L62"
+        "sourceLocation": "L115"
       },
       {
         "api": "Node.setSiblingIndex",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L63"
+        "sourceLocation": "L116"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "lifecycle": [],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "capability": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -356,9 +339,9 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "f43783a95c21",
-    "source": "837b8e420e7a880a",
-    "candidate": "d1cc556759a27943",
+    "spec": "349a6cfe97c5",
+    "source": "e7104fac7b11ed58",
+    "candidate": "8746fc59b6aa0408",
     "verified": 33,
     "attested": 0,
     "units": 33

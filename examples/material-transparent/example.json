@@ -19,14 +19,8 @@
     "visual": "半透明青色面板悬浮在红色实心立方体前，透过面板可隐约看到后方立方体的轮廓与颜色"
   },
   "api": {
-    "primary": [
-      "GLTFLoader.parseAsync",
-      "GLTFAsset.instantiate"
-    ],
-    "supporting": [
-      "Material",
-      "MeshRenderer"
-    ],
+    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate"],
+    "supporting": ["Material", "MeshRenderer"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -51,182 +45,160 @@
       "Mesh.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": [
-      "用 opacity 贴图外挂冒充 alphaMode BLEND",
-      "把面板放到方块后方伪造遮挡关系"
-    ],
+    "forbiddenShortcut": ["用 opacity 贴图外挂冒充 alphaMode BLEND", "把面板放到方块后方伪造遮挡关系"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L11"
+        "sourceLocation": "L25"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L36"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L54"
+        "sourceLocation": "L79"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L24"
+        "sourceLocation": "L40"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L31"
+        "sourceLocation": "L53"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L47"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L23"
+        "sourceLocation": "L38"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L46"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L30"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L17"
+        "sourceLocation": "L31"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L18"
+        "sourceLocation": "L32"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L55"
+        "sourceLocation": "L80"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L55"
+        "sourceLocation": "L80"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L109"
+        "sourceLocation": "L139"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L109"
+        "sourceLocation": "L139"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L110"
+        "sourceLocation": "L140"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L22"
+        "sourceLocation": "L37"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L23"
+        "sourceLocation": "L38"
       },
       {
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L123"
+        "sourceLocation": "L153"
       },
       {
         "api": "Mesh.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L124"
+        "sourceLocation": "L154"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       }
     ]
   },
-  "capabilities": [
-    "materials"
-  ],
+  "capabilities": ["materials"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "SolidReference",
-        "BlendPanel"
-      ]
+      "nodes": ["Main Camera", "Main Light", "SolidReference", "BlendPanel"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "material-property",
-      "asset-loaded",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "material-property", "asset-loaded", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -240,78 +212,50 @@
   "validationExpectations": {
     "transform-equals": {
       "BlendPanel": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 98,
+            "line": 127,
             "text": "nodes: [{ name: 'BlendPanel', mesh: 0 }] —— 内联 glTF 未声明 TRS，局部变换为引擎默认 identity"
           },
           {
             "source": "src/main.ts",
-            "line": 111,
+            "line": 141,
             "text": "instance.root.setPosition(new Vec3(0, 0.9, 0.8)) —— 偏移落在 glTF 场景根的无名包装节点上（不在 expectedGraph），不落在 BlendPanel 上；上一轮把该偏移误记为 BlendPanel 期望，本轮更正"
           }
         ],
         "handAuthored": true
       },
       "Main Camera": {
-        "position": [
-          0,
-          2,
-          6
-        ],
+        "position": [0, 2, 6],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 23,
-            "text": "cameraNode.setPosition(new Vec3(0, 2, 6)); cameraNode.lookAt(new Vec3(0, 0.7, 0));"
+            "line": 38,
+            "text": "cameraNode.setPosition(new Vec3(0, 2, 6));"
           }
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 30,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 51,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "SolidReference": {
-        "position": [
-          0,
-          0.5,
-          -0.8
-        ],
+        "position": [0, 0.5, -0.8],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 53,
+            "line": 78,
             "text": "solid.setPosition(new Vec3(0, 0.5, -0.8));"
           }
         ]
@@ -322,17 +266,12 @@
         "materialName": "glass-panel",
         "props": {
           "albedo": {
-            "value": [
-              0.3,
-              0.75,
-              0.95,
-              0.45
-            ],
+            "value": [0.3, 0.75, 0.95, 0.45],
             "encoding": "0-1",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 95,
+              "line": 123,
               "text": "materials[0] = { name:'glass-panel', alphaMode:'BLEND', pbrMetallicRoughness:{ baseColorFactor:[0.3,0.75,0.95,0.45] } }（L92-95）→ 引擎 material.ts L347 setProperty('albedo', Vec4(factor))"
             }
           }
@@ -340,7 +279,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 92,
+            "line": 120,
             "text": "name: 'glass-panel' —— 半透明材质必须是这一个，否则比对的是别的材质"
           }
         ],
@@ -350,17 +289,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              230,
-              90,
-              60,
-              255
-            ],
+            "value": [230, 90, 60, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 57,
+              "line": 82,
               "text": "new Color(230, 90, 60, 255)"
             }
           }
@@ -375,7 +309,7 @@
       "provenance": [
         {
           "source": "src/main.ts",
-          "line": 91,
+          "line": 118,
           "text": "materials: [{ name: 'glass-panel', alphaMode: 'BLEND' }]"
         }
       ]
@@ -385,14 +319,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2, 6)); cameraNode.lookAt）",
-        "line": "L23"
+        "line": "L38"
       }
     }
   },
   "promotion": {
-    "spec": "bfab06f0ff3f",
-    "source": "fe359d18cc0d7555",
-    "candidate": "d1cc556759a27943",
+    "spec": "0e56120cfac1",
+    "source": "dabc87c41be93d5e",
+    "candidate": "8746fc59b6aa0408",
     "verified": 22,
     "attested": 0,
     "units": 22

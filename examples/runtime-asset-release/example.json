@@ -19,13 +19,8 @@
     "visual": "面板输出每轮 cycle 的 load/dispose/reload 状态行；场景中模型随 dispose 消失、随 reload 重新出现"
   },
   "api": {
-    "primary": [
-      "GLTFAsset.instantiate",
-      "isValid"
-    ],
-    "supporting": [
-      "GLTFLoader.parseAsync"
-    ],
+    "primary": ["GLTFAsset.instantiate", "isValid"],
+    "supporting": ["GLTFLoader.parseAsync"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -44,146 +39,124 @@
       "Node.setRotationFromEuler",
       "GLTFAsset.destroy"
     ],
-    "forbiddenShortcut": [
-      "只把节点 removeFromParent 不释放资产冒充 dispose",
-      "统计 no-runtime-error 冒充生命周期验证"
-    ],
+    "forbiddenShortcut": ["只把节点 removeFromParent 不释放资产冒充 dispose", "统计 no-runtime-error 冒充生命周期验证"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L12"
+        "sourceLocation": "L23"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L25"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L27"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L31"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L44"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L22"
+        "sourceLocation": "L38"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L17"
+        "sourceLocation": "L29"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L21"
+        "sourceLocation": "L37"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L59"
+        "sourceLocation": "L88"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L42"
+        "sourceLocation": "L68"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L42"
+        "sourceLocation": "L68"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L43"
+        "sourceLocation": "L69"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L16"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L17"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L24"
+        "sourceLocation": "L43"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L64"
+        "sourceLocation": "L95"
       }
     ]
   },
-  "capabilities": [
-    "lifecycle"
-  ],
-  "assets": [
-    "assets/BoxTextured.glb"
-  ],
+  "capabilities": ["lifecycle"],
+  "assets": ["assets/BoxTextured.glb"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light"
-      ]
+      "nodes": ["Main Camera", "Main Light"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "resource-released",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "asset-loaded", "resource-released", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -197,37 +170,25 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          1.8,
-          5
-        ],
+        "position": [0, 1.8, 5],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 17,
-            "text": "cameraNode.setPosition(new Vec3(0, 1.8, 5)); cameraNode.lookAt(new Vec3(0, 0, 0));"
+            "line": 29,
+            "text": "cameraNode.setPosition(new Vec3(0, 1.8, 5));"
           }
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 24,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 42,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       }
     },
     "asset-loaded": {
@@ -237,7 +198,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 104,
+              "line": 137,
               "text": "gltfBytes = await (await fetch('./assets/BoxTextured.glb')).arrayBuffer();"
             }
           ]
@@ -249,14 +210,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 1.8, 5)); cameraNode.look）",
-        "line": "L17"
+        "line": "L29"
       }
     }
   },
   "promotion": {
-    "spec": "928e831458d2",
-    "source": "11c2af5dc6de1137",
-    "candidate": "d1cc556759a27943",
+    "spec": "f628bd4d35b5",
+    "source": "4a9f2c0d68b5473f",
+    "candidate": "8746fc59b6aa0408",
     "verified": 16,
     "attested": 0,
     "units": 16

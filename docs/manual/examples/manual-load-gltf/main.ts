@@ -50,21 +50,72 @@ const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 现造最小 glTF：立方体 24 顶点 / 36 索引，buffer 内嵌 data URI ----
-function buildCubeGLTFText (): string {
+function buildCubeGLTFText(): string {
     const h = 0.6;
     const faces: { n: number[]; c: number[][] }[] = [
-        { n: [0, 0, 1], c: [[-h, -h, h], [h, -h, h], [h, h, h], [-h, h, h]] },
-        { n: [0, 0, -1], c: [[h, -h, -h], [-h, -h, -h], [-h, h, -h], [h, h, -h]] },
-        { n: [1, 0, 0], c: [[h, -h, h], [h, -h, -h], [h, h, -h], [h, h, h]] },
-        { n: [-1, 0, 0], c: [[-h, -h, -h], [-h, -h, h], [-h, h, h], [-h, h, -h]] },
-        { n: [0, 1, 0], c: [[-h, h, h], [h, h, h], [h, h, -h], [-h, h, -h]] },
-        { n: [0, -1, 0], c: [[-h, -h, -h], [h, -h, -h], [h, -h, h], [-h, -h, h]] },
+        {
+            n: [0, 0, 1],
+            c: [
+                [-h, -h, h],
+                [h, -h, h],
+                [h, h, h],
+                [-h, h, h],
+            ],
+        },
+        {
+            n: [0, 0, -1],
+            c: [
+                [h, -h, -h],
+                [-h, -h, -h],
+                [-h, h, -h],
+                [h, h, -h],
+            ],
+        },
+        {
+            n: [1, 0, 0],
+            c: [
+                [h, -h, h],
+                [h, -h, -h],
+                [h, h, -h],
+                [h, h, h],
+            ],
+        },
+        {
+            n: [-1, 0, 0],
+            c: [
+                [-h, -h, -h],
+                [-h, -h, h],
+                [-h, h, h],
+                [-h, h, -h],
+            ],
+        },
+        {
+            n: [0, 1, 0],
+            c: [
+                [-h, h, h],
+                [h, h, h],
+                [h, h, -h],
+                [-h, h, -h],
+            ],
+        },
+        {
+            n: [0, -1, 0],
+            c: [
+                [-h, -h, -h],
+                [h, -h, -h],
+                [h, -h, h],
+                [-h, -h, h],
+            ],
+        },
     ];
     const positions: number[] = [];
     const normals: number[] = [];
     const indices: number[] = [];
     faces.forEach((f, fi) => {
-        f.c.forEach((p) => { positions.push(...p); normals.push(...f.n); });
+        f.c.forEach((p) => {
+            positions.push(...p);
+            normals.push(...f.n);
+        });
         const b = fi * 4;
         indices.push(b, b + 1, b + 2, b, b + 2, b + 3);
     });
@@ -84,14 +135,22 @@ function buildCubeGLTFText (): string {
         scene: 0,
         scenes: [{ name: 'ManualScene', nodes: [0] }],
         nodes: [{ name: 'InMemoryCube', mesh: 0 }],
-        meshes: [{
-            name: 'CubeMesh',
-            primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
-        }],
-        materials: [{
-            name: 'CubeMat',
-            pbrMetallicRoughness: { baseColorFactor: [0.85, 0.45, 0.2, 1], metallicFactor: 0, roughnessFactor: 0.7 },
-        }],
+        meshes: [
+            {
+                name: 'CubeMesh',
+                primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
+            },
+        ],
+        materials: [
+            {
+                name: 'CubeMat',
+                pbrMetallicRoughness: {
+                    baseColorFactor: [0.85, 0.45, 0.2, 1],
+                    metallicFactor: 0,
+                    roughnessFactor: 0.7,
+                },
+            },
+        ],
         buffers: [{ byteLength: buf.length, uri: `data:application/octet-stream;base64,${btoa(bin)}` }],
         bufferViews: [
             { buffer: 0, byteOffset: 0, byteLength: posF.byteLength },
@@ -133,7 +192,7 @@ info.textContent = report;
 
 // ---- 实例自转，便于肉眼确认加载结果在场景里 ----
 class Spin extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         if (instance) {
             instance.root.setRotationFromEuler(0, instance.root.eulerAngles.y + dt * 24, 0);
         }
@@ -142,7 +201,14 @@ class Spin extends Component {
 cameraNode.addComponent(Spin);
 
 window.__airApp = app;
-window.__inspect = { get asset () { return asset; }, get instance () { return instance; } };
+window.__inspect = {
+    get asset() {
+        return asset;
+    },
+    get instance() {
+        return instance;
+    },
+};
 app.run(scene);
 
 console.log('[manual/load-gltf] running on cocosair');

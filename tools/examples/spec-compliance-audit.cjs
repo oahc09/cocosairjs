@@ -193,7 +193,7 @@ function auditExample (dir, spec, ctx) {
     source.lines.forEach((code, i) => {
       if (/^\s*(\/\/|\*|\/\*)/.test(code)) { return; } // 注释里的示例路径不作判定
       for (const m of code.matchAll(/(?:from|import)\s*\(?\s*['"]((?:\.\.?\/)[^'"]*)['"]/g)) {
-        const target = path.resolve(path.dirname(source.file), m[1]);
+        const target = require('../dev/resolve-script.cjs').resolveScript(path.resolve(path.dirname(source.file), m[1]));
         if (!fs.existsSync(target)) {
           add('S-IMPORT-RESOLVE', 'fail', `${source.rel}:L${i + 1} 相对 import "${m[1]}" 在真实仓库布局下不可解析（部署后 404；暂存展平会掩盖它）`);
         }

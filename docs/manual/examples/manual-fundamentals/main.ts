@@ -81,7 +81,7 @@ cubeRenderer.material = cubeMaterial;
 
 // 自定义 Component：逐帧更新是 AIR 的"动画"入口
 class Rotator extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0);
     }
 }
@@ -103,7 +103,7 @@ window.__airApp = app;
 app.run(scene);
 
 // ============ 覆盖层：打印运行时结构树 ============
-function describe (node: Node, depth: number): string {
+function describe(node: Node, depth: number): string {
     const comps = node.components.map((c) => c.constructor.name).join('+');
     let out = `${'  '.repeat(depth)}${node.name} [${comps || 'no-component'}]`;
     for (const child of node.children) {

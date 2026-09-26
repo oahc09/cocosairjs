@@ -6,12 +6,12 @@
 
 ## 三条路线总览
 
-| 路线 | 用什么 | 状态 | 适用 |
-| --- | --- | --- | --- |
-| 屏幕 UI 文字 | `Label` 组件（挂在 Canvas 子节点上） | **可用**（浏览器已验证） | HUD、计分、按钮文字、任何屏幕空间文本 |
-| Canvas 纹理文字 | 2D canvas 画字 → `Texture2D` → 贴平面 | **可用** | 世界空间里"文字牌"（跟随物体、受透视） |
-| HTML 元素对齐 3D | 每帧投影 3D 坐标 → 移动 DOM 元素 | **可用** | 要 DOM 清晰度/可选中，又要贴住 3D 物体 |
-| 3D 文字网格 | 字体解析 + 三角化生成 mesh | **N/A** | AIR 不内置字体库职责；需要时用 Canvas 贴图路替代 |
+| 路线             | 用什么                                | 状态                     | 适用                                             |
+| ---------------- | ------------------------------------- | ------------------------ | ------------------------------------------------ |
+| 屏幕 UI 文字     | `Label` 组件（挂在 Canvas 子节点上）  | **可用**（浏览器已验证） | HUD、计分、按钮文字、任何屏幕空间文本            |
+| Canvas 纹理文字  | 2D canvas 画字 → `Texture2D` → 贴平面 | **可用**                 | 世界空间里"文字牌"（跟随物体、受透视）           |
+| HTML 元素对齐 3D | 每帧投影 3D 坐标 → 移动 DOM 元素      | **可用**                 | 要 DOM 清晰度/可选中，又要贴住 3D 物体           |
+| 3D 文字网格      | 字体解析 + 三角化生成 mesh            | **N/A**                  | AIR 不内置字体库职责；需要时用 Canvas 贴图路替代 |
 
 ## 路线一：屏幕 UI 文字（`Label`，推荐）
 
@@ -19,14 +19,14 @@
 最小用法（与 `examples/ui-components` 逐字节一致）：
 
 ```js
-function addLabel (node, text, fontSize, color) {
-    const label = node.addComponent(Label);
-    label.string = text;
-    label.fontSize = fontSize;
-    label.lineHeight = Math.round(fontSize * 1.25);
-    label.color = color || Color.WHITE;
-    label.overflow = Label.Overflow.NONE;
-    return label;
+function addLabel(node, text, fontSize, color) {
+  const label = node.addComponent(Label);
+  label.string = text;
+  label.fontSize = fontSize;
+  label.lineHeight = Math.round(fontSize * 1.25);
+  label.color = color || Color.WHITE;
+  label.overflow = Label.Overflow.NONE;
+  return label;
 }
 ```
 

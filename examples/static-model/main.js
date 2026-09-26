@@ -38,7 +38,7 @@ setupDirectionalLight(scene, { position: [0, 10, 0], illuminance: 20000 });
 
 // ---------- 1. 程序化 checkerboard 纹理（Texture Reference） ----------
 const SIZE = 64;
-function checkerboardPixels () {
+function checkerboardPixels() {
     const pixelData = new Uint8Array(SIZE * SIZE * 4);
     for (let y = 0; y < SIZE; y++) {
         for (let x = 0; x < SIZE; x++) {
@@ -64,7 +64,7 @@ let groundMat;
 let groundNode;
 
 /** 本示例持有的全部自建资源（Mesh 与缓存项同源，故只列一份）。 */
-function owned () {
+function owned() {
     return [
         { name: 'ImageAsset', ref: imgAsset },
         { name: 'Texture2D', ref: checkerTexture },
@@ -78,7 +78,7 @@ function owned () {
 }
 
 /** 2) 纹理 + loadAssetAsync 往返 3) 材质 4) 场景组装：首帧与 §25 合同共用同一路径。 */
-async function acquire () {
+async function acquire() {
     imgAsset = new ImageAsset({
         width: SIZE,
         height: SIZE,
@@ -91,11 +91,15 @@ async function acquire () {
 
     const assetResp = await fetch('./assets/model.json');
     const modelAsset = await assetResp.json(); // {positions, normals, uvs, indices}
-    sourceMesh = utils.createMesh({
-        positions: modelAsset.positions,
-        normals: modelAsset.normals,
-        uvs: modelAsset.uvs,
-    }, undefined, { calculateBounds: true });
+    sourceMesh = utils.createMesh(
+        {
+            positions: modelAsset.positions,
+            normals: modelAsset.normals,
+            uvs: modelAsset.uvs,
+        },
+        undefined,
+        { calculateBounds: true },
+    );
     // 注册进 assetManager 全局缓存（以 path 为键），loadAssetAsync 按约定解析
     assetManager.assets.add('models/pyramid', sourceMesh);
     const restoredMesh = await loadAssetAsync('models/pyramid', Mesh);

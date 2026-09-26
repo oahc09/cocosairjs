@@ -32,15 +32,20 @@ const app = await createAirApp({ canvas });
 window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
 
 // ---------------- 1. 蒙皮网格（程序化"触手"） ----------------
-const ROWS = 9;           // 顶点行数（y = row * 0.5，0..4）
-const COLS = 4;           // 每行 4 个角点
+const ROWS = 9; // 顶点行数（y = row * 0.5，0..4）
+const COLS = 4; // 每行 4 个角点
 const SEG_H = 0.5;
-const corners = [[-0.25, -0.25], [0.25, -0.25], [0.25, 0.25], [-0.25, 0.25]];
+const corners = [
+    [-0.25, -0.25],
+    [0.25, -0.25],
+    [0.25, 0.25],
+    [-0.25, 0.25],
+];
 
 const positions = [];
 const normals = [];
-const joints = [];   // 每顶点 4 个关节索引
-const weights = [];  // 每顶点 4 个权重（刚性绑定）
+const joints = []; // 每顶点 4 个关节索引
+const weights = []; // 每顶点 4 个权重（刚性绑定）
 for (let r = 0; r < ROWS; r++) {
     const y = r * SEG_H;
     for (let c = 0; c < COLS; c++) {
@@ -75,7 +80,7 @@ joints.push(2, 0, 0, 0);
 weights.push(1, 0, 0, 0);
 for (let c = 0; c < COLS; c++) {
     const a = (ROWS - 1) * COLS + c;
-    const b = (ROWS - 1) * COLS + (c + 1) % COLS;
+    const b = (ROWS - 1) * COLS + ((c + 1) % COLS);
     indices.push(topCenter, b, a);
 }
 
@@ -117,18 +122,25 @@ const mesh = new Mesh();
 mesh.reset({
     struct: {
         vertexBundles: [vertexBundle],
-        primitives: [{
-            primitiveMode: TRIANGLE_LIST,
-            vertexBundelIndices: [0],
-            indexView: { offset: vertexData.byteLength, length: indexData.byteLength, count: indices.length, stride: 2 },
-        }],
+        primitives: [
+            {
+                primitiveMode: TRIANGLE_LIST,
+                vertexBundelIndices: [0],
+                indexView: {
+                    offset: vertexData.byteLength,
+                    length: indexData.byteLength,
+                    count: indices.length,
+                    stride: 2,
+                },
+            },
+        ],
         minPosition: { x: -0.25, y: 0, z: -0.25 },
         maxPosition: { x: 0.25, y: (ROWS - 1) * SEG_H, z: 0.25 },
     },
     data: new Uint8Array(joinBuffers(vertexData.buffer, indexData.buffer)),
 });
 
-function joinBuffers (a, b) {
+function joinBuffers(a, b) {
     const out = new Uint8Array(a.byteLength + b.byteLength);
     out.set(new Uint8Array(a), 0);
     out.set(new Uint8Array(b), a.byteLength);
@@ -153,7 +165,7 @@ bone2.setPosition(0, 1.5, 0);
 // 骨骼动画驱动：bone1/bone2 绕 Z 摆动 → 网格蒙皮变形
 class TentacleDriver extends Component {
     _t = 0;
-    update (dt) {
+    update(dt) {
         this._t = (this._t || 0) + dt;
         bone1.setRotationFromEuler(0, 0, Math.sin(this._t * 1.6) * 40);
         bone2.setRotationFromEuler(0, 0, Math.sin(this._t * 1.6 + 0.9) * 50);
@@ -180,7 +192,7 @@ armature.addComponent(TentacleDriver);
 // ---------------- 5. 场景 ----------------
 const scene = new Scene('skinned-animation');
 const camera = setupCamera(scene, { position: [0, 2.4, 6.5] });
-setupDirectionalLight(scene, { position: [0, 8, 0], illuminance: 2.2 });
+setupDirectionalLight(scene, { position: [0, 8, 0], illuminance: 55000 });
 
 scene.addChild(armature);
 

@@ -23,11 +23,29 @@
  */
 
 import {
-    createAirApp, Scene, Node, MeshRenderer, Camera, Component, Layers, Vec3, Color, Material,
-    utils, primitives, Texture2D, input, Input, KeyCode, isValid,
-    assetManager, AudioSource, AudioClip,
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    Material,
+    utils,
+    primitives,
+    Texture2D,
+    input,
+    Input,
+    KeyCode,
+    isValid,
+    assetManager,
+    AudioSource,
+    AudioClip,
 } from 'cocosair';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
+import { copyCanvasRows } from '../../shared/canvas-texture.js';
 
 const probe = {
     id: 'tank-battle',
@@ -96,7 +114,12 @@ interface Tank {
     pause: number;
 }
 
-const DIRV = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+const DIRV = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
+];
 
 class TankGame {
     grid: string[][] = [];
@@ -128,8 +151,18 @@ class TankGame {
         }
         this.player = this.makeTank(1.5, 0.5, 0, 3, []);
         this.enemies = [
-            this.makeTank(13.5, 10.5, 2, 2, [[13.5, 6.5], [9.5, 6.5], [9.5, 10.5], [13.5, 10.5]]),
-            this.makeTank(13.5, 1.5, 0, 2, [[13.5, 5.5], [9.5, 5.5], [9.5, 1.5], [13.5, 1.5]]),
+            this.makeTank(13.5, 10.5, 2, 2, [
+                [13.5, 6.5],
+                [9.5, 6.5],
+                [9.5, 10.5],
+                [13.5, 10.5],
+            ]),
+            this.makeTank(13.5, 1.5, 0, 2, [
+                [13.5, 5.5],
+                [9.5, 5.5],
+                [9.5, 1.5],
+                [13.5, 1.5],
+            ]),
         ];
         this.state = 'playing';
         this.steps = 0;
@@ -156,7 +189,12 @@ class TankGame {
     blockedForTank(x: number, y: number): boolean {
         // 坦克占 0.9 格：四角采样
         const h = 0.45;
-        for (const [sx, sy] of [[-h, -h], [h, -h], [-h, h], [h, h]]) {
+        for (const [sx, sy] of [
+            [-h, -h],
+            [h, -h],
+            [-h, h],
+            [h, h],
+        ]) {
             const cell = this.cellAt(x + sx, y + sy);
             if (cell !== '.') {
                 return true;
@@ -203,7 +241,19 @@ class TankGame {
         if (p.alive) {
             let dx = 0;
             let dy = 0;
-            if (this.cmd.up) { dy = 1; p.dir = 0; } else if (this.cmd.down) { dy = -1; p.dir = 2; } else if (this.cmd.left) { dx = -1; p.dir = 3; } else if (this.cmd.right) { dx = 1; p.dir = 1; }
+            if (this.cmd.up) {
+                dy = 1;
+                p.dir = 0;
+            } else if (this.cmd.down) {
+                dy = -1;
+                p.dir = 2;
+            } else if (this.cmd.left) {
+                dx = -1;
+                p.dir = 3;
+            } else if (this.cmd.right) {
+                dx = 1;
+                p.dir = 1;
+            }
             if (dx !== 0 || dy !== 0) {
                 const nx = p.x + dx * PLAYER_SPEED * FIXED_DT;
                 const ny = p.y + dy * PLAYER_SPEED * FIXED_DT;
@@ -212,7 +262,9 @@ class TankGame {
                     p.y = ny;
                 }
             }
-            if (p.cooldown > 0) { p.cooldown--; }
+            if (p.cooldown > 0) {
+                p.cooldown--;
+            }
         }
         // 敌人状态机：巡逻 → 对齐玩家则转向并射击
         for (const e of this.enemies) {
@@ -226,7 +278,7 @@ class TankGame {
                 const alignedCol = Math.abs(e.x - p.x) < 0.4;
                 const alignedRow = Math.abs(e.y - p.y) < 0.4;
                 if (alignedCol || alignedRow) {
-                    e.dir = alignedCol ? (p.y > e.y ? 0 : 2) : (p.x > e.x ? 1 : 3);
+                    e.dir = alignedCol ? (p.y > e.y ? 0 : 2) : p.x > e.x ? 1 : 3;
                     if (e.cooldown === 0) {
                         this.fire(e, true);
                     }
@@ -394,7 +446,7 @@ class BoardRenderer {
             const bh = PX * 0.16;
             ctx.save();
             ctx.translate(x, y);
-            ctx.rotate(-t.dir * Math.PI / 2); // dir0=上 → 画布 -y
+            ctx.rotate((-t.dir * Math.PI) / 2); // dir0=上 → 画布 -y
             ctx.fillRect(-bh / 2, -PX * 0.4 - bw + PX * 0.4, bh, bw);
             ctx.restore();
             // hp 点
@@ -415,7 +467,7 @@ class BoardRenderer {
         }
         if (this.texture) {
             const img = ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-            this.pixels.set(img.data);
+            copyCanvasRows(img, this.pixels);
             this.texture.uploadData(this.pixels);
         }
     }
@@ -456,7 +508,9 @@ function buildBoard(): void {
     boardNode.setRotationFromEuler(90, 0, 0);
     scene.addChild(boardNode);
     const renderer = boardNode.addComponent(MeshRenderer);
-    renderer.mesh = utils.createMesh(primitives.plane({ width: 6.4, length: 4.8, widthSegments: 1, lengthSegments: 1 }));
+    renderer.mesh = utils.createMesh(
+        primitives.plane({ width: 6.4, length: 4.8, widthSegments: 1, lengthSegments: 1 }),
+    );
     renderer.setSharedMaterial(boardMaterial, 0);
 }
 
@@ -512,7 +566,10 @@ async function main(): Promise<void> {
     const audioNode = new Node('Audio');
     audioNode.setPosition(new Vec3(0, 0, 0));
     scene.addChild(audioNode);
+    audioNode.active = false; // 防止 onEnable 在配置前排入自动播放。
     audioSrc = audioNode.addComponent(AudioSource);
+    audioSrc.playOnAwake = false;
+    audioNode.active = true;
 
     app.run(scene);
     await sleep(350);
@@ -538,7 +595,11 @@ async function main(): Promise<void> {
     } catch (e) {
         probe.state.audioLoadError = String((e as Error).message || e);
     }
-    pcheck('audio-clip-loaded', audioLoaded, 'clip=' + !!shotClip + ' duration=' + (shotClip ? shotClip.getDuration() : -1));
+    pcheck(
+        'audio-clip-loaded',
+        audioLoaded,
+        'clip=' + !!shotClip + ' duration=' + (shotClip ? shotClip.getDuration() : -1),
+    );
 
     const activeCount = (): number => game.pool.filter((b) => b.active).length;
 
@@ -558,9 +619,18 @@ async function main(): Promise<void> {
     pcheck('d1-shot-acquired-from-pool', fired1 && activeCount() === 1, 'fired=' + fired1 + ' active=' + activeCount());
     // 手动步进至弹丸命中 row4 砖（距离 ~1 格 → <10 步）
     game.runSteps(30);
-    pcheck('d1-brick-destroyed-bullet-recycled',
+    pcheck(
+        'd1-brick-destroyed-bullet-recycled',
         game.bricksDestroyed === 1 && activeCount() === 0 && game.bulletsSpent === 1 && game.grid[4][4] === '.',
-        'bricks=' + game.bricksDestroyed + ' active=' + activeCount() + ' spent=' + game.bulletsSpent + ' cell=' + game.grid[4][4]);
+        'bricks=' +
+            game.bricksDestroyed +
+            ' active=' +
+            activeCount() +
+            ' spent=' +
+            game.bulletsSpent +
+            ' cell=' +
+            game.grid[4][4],
+    );
 
     // ---- D2 钢块阻挡 ----
     game.reset();
@@ -572,9 +642,11 @@ async function main(): Promise<void> {
     game.player.cooldown = 0;
     game.fire(game.player, false);
     game.runSteps(30);
-    pcheck('d2-steel-blocks-bullet',
+    pcheck(
+        'd2-steel-blocks-bullet',
         game.blockedBySteel === 1 && game.bricksDestroyed === 0 && activeCount() === 0 && game.grid[7][7] === 'S',
-        'steelBlocks=' + game.blockedBySteel + ' cell=' + game.grid[7][7] + ' active=' + activeCount());
+        'steelBlocks=' + game.blockedBySteel + ' cell=' + game.grid[7][7] + ' active=' + activeCount(),
+    );
 
     // ---- D3 同时命中（同一步注入两发 → 同步双命中） ----
     game.reset();
@@ -593,9 +665,18 @@ async function main(): Promise<void> {
     const b2 = game.acquireBullet(game.player.x, game.player.y, 0, false); // 脚本齐射第二发（绕过冷却＝测试钩子，如实标注）
     pcheck('d3-two-bullets-in-flight', activeCount() === 2 && !!b2, 'active=' + activeCount());
     game.runSteps(200);
-    pcheck('d3-simultaneous-double-hit',
+    pcheck(
+        'd3-simultaneous-double-hit',
         game.simultaneousDoubleHit >= 1 && !victim.alive && game.enemyKills === 1 && activeCount() === 0,
-        'doubleHits=' + game.simultaneousDoubleHit + ' victimAlive=' + victim.alive + ' kills=' + game.enemyKills + ' active=' + activeCount());
+        'doubleHits=' +
+            game.simultaneousDoubleHit +
+            ' victimAlive=' +
+            victim.alive +
+            ' kills=' +
+            game.enemyKills +
+            ' active=' +
+            activeCount(),
+    );
 
     // ---- D4 负局：敌弹命中玩家 → OVER → 重开复位 ----
     game.reset();
@@ -609,14 +690,28 @@ async function main(): Promise<void> {
         game.step();
         guardSteps++;
     }
-    pcheck('d4-player-hit-by-enemy', game.playerHitsByEnemy >= 1, 'hitsByEnemy=' + game.playerHitsByEnemy + ' steps=' + guardSteps);
-    pcheck('d4-lose-state', game.state === 'over' && game.player.hp <= 0,
-        'state=' + game.state + ' hp=' + game.player.hp);
+    pcheck(
+        'd4-player-hit-by-enemy',
+        game.playerHitsByEnemy >= 1,
+        'hitsByEnemy=' + game.playerHitsByEnemy + ' steps=' + guardSteps,
+    );
+    pcheck(
+        'd4-lose-state',
+        game.state === 'over' && game.player.hp <= 0,
+        'state=' + game.state + ' hp=' + game.player.hp,
+    );
     game.reset();
-    pcheck('d4-restart-fresh',
-        game.state === 'playing' && game.player.hp === 3 && game.enemyKills === 0 && game.bulletsSpent === 0
-        && activeCount() === 0 && game.grid[7][13] === '#' && game.enemies.every((e) => e.alive),
-        'hp=' + game.player.hp + ' kills=' + game.enemyKills + ' brick-restored=' + (game.grid[7][13] === '#'));
+    pcheck(
+        'd4-restart-fresh',
+        game.state === 'playing' &&
+            game.player.hp === 3 &&
+            game.enemyKills === 0 &&
+            game.bulletsSpent === 0 &&
+            activeCount() === 0 &&
+            game.grid[7][13] === '#' &&
+            game.enemies.every((e) => e.alive),
+        'hp=' + game.player.hp + ' kills=' + game.enemyKills + ' brick-restored=' + (game.grid[7][13] === '#'),
+    );
 
     // ---- D5 胜局：冻结巡逻 + 逐个齐射（演示脚本特权如实标注）→ WON → 重开进入交互 ----
     for (const enemy of game.enemies) {
@@ -636,26 +731,40 @@ async function main(): Promise<void> {
             break;
         }
     }
-    pcheck('d5-win-state', game.state === 'won' && game.enemyKills === 2 && game.player.hp > 0,
-        'state=' + game.state + ' kills=' + game.enemyKills + ' hp=' + game.player.hp);
+    pcheck(
+        'd5-win-state',
+        game.state === 'won' && game.enemyKills === 2 && game.player.hp > 0,
+        'state=' + game.state + ' kills=' + game.enemyKills + ' hp=' + game.player.hp,
+    );
     game.reset();
     driver.realtime = true; // 交互模式：实时固定步长
 
     // ---- 交互：键盘 + 点击开火 ----
     const onKeyDown = (event: any): void => {
         const code = event.keyCode;
-        if (code === KeyCode.ARROW_LEFT) { game.cmd.left = true; }
-        else if (code === KeyCode.ARROW_UP) { game.cmd.up = true; }
-        else if (code === KeyCode.ARROW_RIGHT) { game.cmd.right = true; }
-        else if (code === KeyCode.ARROW_DOWN) { game.cmd.down = true; }
-        else if (code === KeyCode.SPACE) { onFire(); }
+        if (code === KeyCode.ARROW_LEFT) {
+            game.cmd.left = true;
+        } else if (code === KeyCode.ARROW_UP) {
+            game.cmd.up = true;
+        } else if (code === KeyCode.ARROW_RIGHT) {
+            game.cmd.right = true;
+        } else if (code === KeyCode.ARROW_DOWN) {
+            game.cmd.down = true;
+        } else if (code === KeyCode.SPACE) {
+            onFire();
+        }
     };
     const onKeyUp = (event: any): void => {
         const code = event.keyCode;
-        if (code === KeyCode.ARROW_LEFT) { game.cmd.left = false; }
-        else if (code === KeyCode.ARROW_UP) { game.cmd.up = false; }
-        else if (code === KeyCode.ARROW_RIGHT) { game.cmd.right = false; }
-        else if (code === KeyCode.ARROW_DOWN) { game.cmd.down = false; }
+        if (code === KeyCode.ARROW_LEFT) {
+            game.cmd.left = false;
+        } else if (code === KeyCode.ARROW_UP) {
+            game.cmd.up = false;
+        } else if (code === KeyCode.ARROW_RIGHT) {
+            game.cmd.right = false;
+        } else if (code === KeyCode.ARROW_DOWN) {
+            game.cmd.down = false;
+        }
     };
     let audioStateRecorded = '';
     function onFire(): void {
@@ -666,16 +775,23 @@ async function main(): Promise<void> {
             try {
                 audioSrc.stop();
                 audioSrc.play();
-            } catch (e) { /* 播放失败如实记录 */ }
+            } catch (e) {
+                /* 播放失败如实记录 */
+            }
             audioStateRecorded = String((audioSrc as any).state);
         }
         if (!probe.clickPhaseDone) {
             probe.clickPhaseDone = true;
-            pcheck('fire-through-public-entry', game.shotsFired > before || game.player.cooldown > 0,
-                'shotsFired=' + game.shotsFired + ' cooldown=' + game.player.cooldown);
+            pcheck(
+                'fire-through-public-entry',
+                game.shotsFired > before || game.player.cooldown > 0,
+                'shotsFired=' + game.shotsFired + ' cooldown=' + game.player.cooldown,
+            );
         }
     }
-    const onClick = (): void => { onFire(); };
+    const onClick = (): void => {
+        onFire();
+    };
     input.on(Input.EventType.KEY_DOWN, onKeyDown);
     input.on(Input.EventType.KEY_UP, onKeyUp);
     input.on(Input.EventType.TOUCH_START, onClick);
@@ -685,10 +801,18 @@ async function main(): Promise<void> {
         label: 'tank-battle',
         hold: () => {
             const held: { name: string; ref: object }[] = [];
-            if (board.texture) { held.push({ name: 'Texture2D(board)', ref: board.texture }); }
-            if (boardMaterial) { held.push({ name: 'Material(board)', ref: boardMaterial }); }
-            if (boardNode) { held.push({ name: 'BoardNode', ref: boardNode }); }
-            if (shotClip) { held.push({ name: 'AudioClip(tone)', ref: shotClip }); }
+            if (board.texture) {
+                held.push({ name: 'Texture2D(board)', ref: board.texture });
+            }
+            if (boardMaterial) {
+                held.push({ name: 'Material(board)', ref: boardMaterial });
+            }
+            if (boardNode) {
+                held.push({ name: 'BoardNode', ref: boardNode });
+            }
+            if (shotClip) {
+                held.push({ name: 'AudioClip(tone)', ref: shotClip });
+            }
             return held;
         },
         release: () => {
@@ -697,11 +821,26 @@ async function main(): Promise<void> {
             input.off(Input.EventType.TOUCH_START, onClick);
             driver.realtime = false;
             game.state = 'idle';
-            if (audioSrc) { audioSrc.stop(); audioSrc.clip = null; }
-            if (shotClip) { assetManager.releaseAsset(shotClip); shotClip = null; } // audio-basic 实证：releaseAsset 才会 assets.remove + destroy
-            if (boardNode) { boardNode.destroy(); boardNode = null; }
-            if (boardMaterial) { boardMaterial.destroy(); boardMaterial = null; }
-            if (board.texture) { board.texture.destroy(); board.texture = null; }
+            if (audioSrc) {
+                audioSrc.stop();
+                audioSrc.clip = null;
+            }
+            if (shotClip) {
+                assetManager.releaseAsset(shotClip);
+                shotClip = null;
+            } // audio-basic 实证：releaseAsset 才会 assets.remove + destroy
+            if (boardNode) {
+                boardNode.destroy();
+                boardNode = null;
+            }
+            if (boardMaterial) {
+                boardMaterial.destroy();
+                boardMaterial = null;
+            }
+            if (board.texture) {
+                board.texture.destroy();
+                board.texture = null;
+            }
         },
         reacquire: async () => {
             await sleep(300);
@@ -709,11 +848,20 @@ async function main(): Promise<void> {
             try {
                 shotClip = await new Promise<AudioClip>((resolve, reject) => {
                     (assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {
-                        if (err) { reject(err as Error); } else { resolve(clip); }
+                        if (err) {
+                            reject(err as Error);
+                        } else {
+                            resolve(clip);
+                        }
                     });
                 });
-                if (audioSrc && shotClip) { audioSrc.clip = shotClip; audioSrc.playOnAwake = false; }
-            } catch (e) { /* 重载失败如实走泄漏核对 */ }
+                if (audioSrc && shotClip) {
+                    audioSrc.clip = shotClip;
+                    audioSrc.playOnAwake = false;
+                }
+            } catch (e) {
+                /* 重载失败如实走泄漏核对 */
+            }
             game.reset();
             driver.realtime = true;
             input.on(Input.EventType.KEY_DOWN, onKeyDown);
@@ -724,7 +872,9 @@ async function main(): Promise<void> {
                 { name: 'Material(board)', ref: boardMaterial as object },
                 { name: 'BoardNode', ref: boardNode as object },
             ];
-            if (shotClip) { held.push({ name: 'AudioClip(tone)', ref: shotClip }); }
+            if (shotClip) {
+                held.push({ name: 'AudioClip(tone)', ref: shotClip });
+            }
             return held;
         },
     });

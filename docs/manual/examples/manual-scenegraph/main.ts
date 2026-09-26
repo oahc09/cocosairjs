@@ -59,7 +59,7 @@ groundMaterial.initialize({ effectName: 'builtin-standard' });
 groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
-function addCube (name: string, parent: Node, x: number, y: number, z: number, color: Color, size: number = 0.8): Node {
+function addCube(name: string, parent: Node, x: number, y: number, z: number, color: Color, size: number = 0.8): Node {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     node.setPosition(new Vec3(x, y, z)); // 局部坐标：相对父节点
@@ -80,7 +80,7 @@ rig.setPosition(new Vec3(0, 1.0, 0));
 scene.addChild(rig);
 
 class Spinner extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 30, 0);
     }
 }

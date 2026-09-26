@@ -9,15 +9,15 @@
 
 ## 1. 有什么
 
-| 成员 | d.ts | 说明 |
-| --- | --- | --- |
-| `director.getScene()` | 21933 | 运行时拿回当前场景根节点 |
-| `node.children` | 18321 | 子节点数组，递归遍历层级 |
-| `node.components` | 18293 | 节点上挂的组件数组（`c.constructor.name` 取类型名） |
-| `node.name` | 18308 | 节点名，dump 时的标签 |
-| `node.walk(pre, post?)` | 18520 | 引擎自带的深度遍历回调 |
-| `node.getWorldPosition(out?)` | 19254 | 世界坐标，验证层级合成是否正确 |
-| `window.__airApp` | 约定 | 示例统一把 app 挂到 window，供 devtools 控制台取用 |
+| 成员                          | d.ts  | 说明                                                |
+| ----------------------------- | ----- | --------------------------------------------------- |
+| `director.getScene()`         | 21933 | 运行时拿回当前场景根节点                            |
+| `node.children`               | 18321 | 子节点数组，递归遍历层级                            |
+| `node.components`             | 18293 | 节点上挂的组件数组（`c.constructor.name` 取类型名） |
+| `node.name`                   | 18308 | 节点名，dump 时的标签                               |
+| `node.walk(pre, post?)`       | 18520 | 引擎自带的深度遍历回调                              |
+| `node.getWorldPosition(out?)` | 19254 | 世界坐标，验证层级合成是否正确                      |
+| `window.__airApp`             | 约定  | 示例统一把 app 挂到 window，供 devtools 控制台取用  |
 
 ## 2. 三个手段
 
@@ -38,13 +38,13 @@
 **守卫探针**：把可疑调用包进 try/catch，把异常消息打到覆盖层而不是让它未捕获崩溃。这样既能复现错误、又不会把整个渲染循环带崩（验证器的 `no-runtime-error` 门禁只盯未捕获异常）。
 
 ```js
-    try {
-        // 故意调用不存在的方法，演示"把崩溃变成可读消息"
-        cubeNode.thisMethodDoesNotExist();
-        msg = 'probe: no error (unexpected)';
-    } catch (e) {
-        msg = `probe caught: ${e && e.name}: ${e && e.message}`;
-    }
+try {
+  // 故意调用不存在的方法，演示"把崩溃变成可读消息"
+  cubeNode.thisMethodDoesNotExist();
+  msg = "probe: no error (unexpected)";
+} catch (e) {
+  msg = `probe caught: ${e && e.name}: ${e && e.message}`;
+}
 ```
 
 **暴露给 devtools**：把场景与常用节点挂到 window，控制台里直接 `__debug.cubeNode.getWorldPosition()` 交互式排查。
@@ -96,50 +96,89 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-debugging-js/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Debugging JavaScript — 调试 JS（docs/manual/debugging-javascript.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
-        #ui {
-            position: absolute; left: 8px; bottom: 8px; z-index: 10;
-            font: 12px/1.4 ui-monospace, Consolas, monospace;
-        }
-        #ui button {
-            margin-right: 6px; padding: 4px 10px; cursor: pointer;
-            font: inherit; color: #0b1018; background: #d7e3f2; border: 1px solid #8fa4bd; border-radius: 4px;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
+      #ui {
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+        z-index: 10;
+        font:
+          12px/1.4 ui-monospace,
+          Consolas,
+          monospace;
+      }
+      #ui button {
+        margin-right: 6px;
+        padding: 4px 10px;
+        cursor: pointer;
+        font: inherit;
+        color: #0b1018;
+        background: #d7e3f2;
+        border: 1px solid #8fa4bd;
+        border-radius: 4px;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <div id="ui">
-        <button id="btn-probe" type="button">Guarded probe (try/catch)</button>
-        <button id="btn-dump" type="button">Dump scene graph</button>
+      <button id="btn-probe" type="button">Guarded probe (try/catch)</button>
+      <button id="btn-dump" type="button">Dump scene graph</button>
     </div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -159,29 +198,29 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-    director,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+  director,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('debugging-javascript');
+const scene = new Scene("debugging-javascript");
 
 // ---- 相机（斜视，保证三面受光 distinctColors>=3）----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 3.0, 6.4));
 cameraNode.lookAt(new Vec3(0, 1.0, 0));
@@ -195,73 +234,73 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 立方体 + 子标记节点（演示层级内省）----
-const cubeNode = new Node('Cube');
+const cubeNode = new Node("Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 1.0, 0));
 scene.addChild(cubeNode);
 const renderer = cubeNode.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1.2, height: 1.2, length: 1.2 }));
 const material = new Material();
-material.initialize({ effectName: 'builtin-standard' });
-material.setProperty('mainColor', new Color(225, 165, 75, 255));
+material.initialize({ effectName: "builtin-standard" });
+material.setProperty("mainColor", new Color(225, 165, 75, 255));
 renderer.material = material;
 
-const marker = new Node('Marker');
+const marker = new Node("Marker");
 marker.layer = Layers.Enum.DEFAULT;
 marker.setPosition(new Vec3(0, 0.9, 0));
 cubeNode.addChild(marker);
 
 class Spinner extends Component {
-    update (dt: number): void {
-        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 20, 0);
-    }
+  update(dt: number): void {
+    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 20, 0);
+  }
 }
 cubeNode.addComponent(Spinner);
 
 // ---- 场景图内省 ----
 const wp = new Vec3();
-function graphLines (node: Node, depth: number, out: string[]): string[] {
-    const comps = node.components.map((c) => c.constructor.name).join(',');
-    node.getWorldPosition(wp);
-    out.push(
-        `${'  '.repeat(depth)}${node.name} [${comps || '-'}]` +
-        ` @(${wp.x.toFixed(1)},${wp.y.toFixed(1)},${wp.z.toFixed(1)})`
-    );
-    for (const child of node.children) graphLines(child, depth + 1, out);
-    return out;
+function graphLines(node: Node, depth: number, out: string[]): string[] {
+  const comps = node.components.map((c) => c.constructor.name).join(",");
+  node.getWorldPosition(wp);
+  out.push(
+    `${"  ".repeat(depth)}${node.name} [${comps || "-"}]` +
+      ` @(${wp.x.toFixed(1)},${wp.y.toFixed(1)},${wp.z.toFixed(1)})`,
+  );
+  for (const child of node.children) graphLines(child, depth + 1, out);
+  return out;
 }
-function dumpGraph (): void {
-    const root = director.getScene() || scene;
-    const lines = graphLines(root, 0, []);
-    info.textContent = ['scene graph (director.getScene()):', ...lines].join('\n');
-    console.log('[manual/debugging-js] scene graph:\n' + lines.join('\n'));
+function dumpGraph(): void {
+  const root = director.getScene() || scene;
+  const lines = graphLines(root, 0, []);
+  info.textContent = ["scene graph (director.getScene()):", ...lines].join("\n");
+  console.log("[manual/debugging-js] scene graph:\n" + lines.join("\n"));
 }
 
-const info = document.querySelector('#info') as HTMLElement;
+const info = document.querySelector("#info") as HTMLElement;
 
 // ---- 守卫探针：可疑调用包 try/catch，异常打覆盖层不崩溃 ----
-function guardedProbe (): void {
-    let msg: string;
-    try {
-        // 故意调用不存在的方法，演示"把崩溃变成可读消息"
-        cubeNode.thisMethodDoesNotExist();
-        msg = 'probe: no error (unexpected)';
-    } catch (e) {
-        msg = `probe caught: ${e && e.name}: ${e && e.message}`;
-    }
-    info.textContent = msg + '\n(click "Dump scene graph" to restore)';
-    console.log('[manual/debugging-js] ' + msg);
+function guardedProbe(): void {
+  let msg: string;
+  try {
+    // 故意调用不存在的方法，演示"把崩溃变成可读消息"
+    cubeNode.thisMethodDoesNotExist();
+    msg = "probe: no error (unexpected)";
+  } catch (e) {
+    msg = `probe caught: ${e && e.name}: ${e && e.message}`;
+  }
+  info.textContent = msg + '\n(click "Dump scene graph" to restore)';
+  console.log("[manual/debugging-js] " + msg);
 }
 
-document.querySelector('#btn-probe')!.addEventListener('click', guardedProbe);
-document.querySelector('#btn-dump')!.addEventListener('click', dumpGraph);
+document.querySelector("#btn-probe")!.addEventListener("click", guardedProbe);
+document.querySelector("#btn-dump")!.addEventListener("click", dumpGraph);
 
 // 暴露给 devtools 控制台
 window.__airApp = app;
@@ -270,7 +309,7 @@ window.__debug = { scene, cubeNode, marker, dumpGraph, guardedProbe };
 app.run(scene);
 dumpGraph();
 
-console.log('[manual/debugging-javascript] running on cocosair');
+console.log("[manual/debugging-javascript] running on cocosair");
 ```
 
 ---

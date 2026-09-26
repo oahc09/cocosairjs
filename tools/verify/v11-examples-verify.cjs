@@ -291,6 +291,12 @@ async function runSpecChecks (example, runtime, channel, spec) {
   const resources = (await runtime.page.evaluate(() => performance.getEntriesByType('resource')
     .map((e) => ({ url: e.name, status: e.responseStatus || 0, size: e.transferSize || 0, duration: Math.round(e.duration) }))))
     .map((r) => ({ ...r, decoded: safeDecode(r.url.split('?')[0]) }));
+  for (const response of runtime.resourceResponses || []) {
+    const decoded = safeDecode(response.url.split('?')[0]);
+    const timing = resources.find((r) => r.decoded === decoded);
+    if (!timing) { resources.push({ ...response, decoded }); }
+    else if (!(timing.size > 0)) { Object.assign(timing, response); }
+  }
 
   // --- Ready / 结构合同 ---
   if (want('scene-ready')) {
@@ -671,11 +677,17 @@ async function verifyApp (example, workspace, html, spec, prepared) {
     const hasProbeContract = fs.readdirSync(probeDir, { recursive: true })
       .some((f) => /\.(ts|js)$/.test(String(f))
         && fs.readFileSync(path.join(probeDir, String(f)), 'utf8').includes('__trialProbe'));
+    let scenarioProbe = null;
     if (hasProbeContract) {
       await runtime.page.waitForFunction(
         () => !!(window.__trialProbe && window.__trialProbe.ready === true),
         null, { timeout: 60000 },
-      ).catch(() => { /* 探针超时：回退节点计数启发式；main() 若挂死将由 no-runtime-error/功能检查显性红 */ });
+      );
+      scenarioProbe = await runtime.page.evaluate(() => window.__trialProbe);
+      if (scenarioProbe.ok !== true || !Array.isArray(scenarioProbe.checks)
+        || scenarioProbe.checks.length === 0 || scenarioProbe.checks.some((c) => c.ok !== true)) {
+        throw new Error('scenario probe did not complete all behavioral assertions');
+      }
     }
 
     // Ready 轮询（§9）：等待 expectedGraph 节点在场，或节点数连续两次稳定（延迟加载示例）
@@ -762,6 +774,10 @@ async function verifyApp (example, workspace, html, spec, prepared) {
         lifecycle: validation.lifecycle, capability: validation.capability,
       },
       validatorResults: all,
+      scenarioProbe,
+      networkAssets: (runtime.resourceResponses || []).map((r) => ({
+        path: new URL(r.url).pathname, status: r.status, bytes: r.size, observation: r.observation,
+      })),
       artifact,
       assetDigests: assetDigestsOf(exampleDir, spec.assets),
       nodeCount: 0,

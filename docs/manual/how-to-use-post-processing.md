@@ -11,23 +11,23 @@ V1.2 起 `postProcess` 命名空间已导出（`PostProcess` 组件 + `BlitScree
 
 ## 1. 有什么
 
-| 成员 | d.ts | 实测 |
-| --- | --- | --- |
-| `camera.usePostProcess`（bool） | 21372–21373 | 赋值与读回正常（spike 读回 false/true） |
-| `camera.postProcess`（实例槽） | 21374–21375 | 可挂 `postProcess.PostProcess` 组件（G4 探针装配成功） |
-| `postProcess` 命名空间（PostProcess 组件 + 设置类） | d.ts:55107 | `addSetting(BlitScreen/Bloom/…)` 装配零报错；效果像素证据缺 |
-| `PostProcessStage` / `BloomStage`（管线 stage 类） | 34907 / 导出表 | 类在导出面，无用户级 effect 列表或装配 API |
-| `scene.globals.postSettings.toneMappingType` | 21149 / 21004 | 见 [颜色管理](color-management.md) §1：两值枚举且本环境无像素效果 |
+| 成员                                                | d.ts           | 实测                                                              |
+| --------------------------------------------------- | -------------- | ----------------------------------------------------------------- |
+| `camera.usePostProcess`（bool）                     | 21372–21373    | 赋值与读回正常（spike 读回 false/true）                           |
+| `camera.postProcess`（实例槽）                      | 21374–21375    | 可挂 `postProcess.PostProcess` 组件（G4 探针装配成功）            |
+| `postProcess` 命名空间（PostProcess 组件 + 设置类） | d.ts:55107     | `addSetting(BlitScreen/Bloom/…)` 装配零报错；效果像素证据缺       |
+| `PostProcessStage` / `BloomStage`（管线 stage 类）  | 34907 / 导出表 | 类在导出面，无用户级 effect 列表或装配 API                        |
+| `scene.globals.postSettings.toneMappingType`        | 21149 / 21004  | 见 [颜色管理](color-management.md) §1：两值枚举且本环境无像素效果 |
 
 ```js
 const ppInitial = camera.postProcess;
-const ppType = ppInitial === null ? 'null' : typeof ppInitial;
+const ppType = ppInitial === null ? "null" : typeof ppInitial;
 ```
 
 开关拨动（示例每 3s 一次 A/B）：
 
 ```js
-            camera.usePostProcess = on;
+camera.usePostProcess = on;
 ```
 
 ## 2. 有什么、缺什么（诚实清单）
@@ -94,38 +94,65 @@ spike 对照 `docs/evidence/manual/pp-spike-{off,on}.png`（字节相同）；�
 `examples/manual-post-processing/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Post Processing — 后处理开关（docs/manual/how-to-use-post-processing.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -143,28 +170,28 @@ spike 对照 `docs/evidence/manual/pp-spike-{off,on}.png`（字节相同）；�
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('post-processing');
+const scene = new Scene("post-processing");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 3.0, 6.4));
 cameraNode.lookAt(new Vec3(0, 1.1, 0));
@@ -178,66 +205,66 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 立方体 ----
-const cubeNode = new Node('Cube');
+const cubeNode = new Node("Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 1.0, 0));
 scene.addChild(cubeNode);
 const renderer = cubeNode.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1.2, height: 1.2, length: 1.2 }));
 const material = new Material();
-material.initialize({ effectName: 'builtin-standard' });
-material.setProperty('mainColor', new Color(205, 95, 205, 255));
+material.initialize({ effectName: "builtin-standard" });
+material.setProperty("mainColor", new Color(205, 95, 205, 255));
 renderer.material = material;
 
 class Spinner extends Component {
-    update (dt: number): void {
-        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
-    }
+  update(dt: number): void {
+    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
+  }
 }
 cubeNode.addComponent(Spinner);
 
 // ---- 后处理开关读回 ----
 const ppInitial = camera.postProcess;
-const ppType = ppInitial === null ? 'null' : typeof ppInitial;
+const ppType = ppInitial === null ? "null" : typeof ppInitial;
 
 class Cycler extends Component {
-    private _t = 0;
-    private _on = false;
+  private _t = 0;
+  private _on = false;
 
-    constructor () {
-        super();
-        this._t = 0;
-        this._on = false;
+  constructor() {
+    super();
+    this._t = 0;
+    this._on = false;
+  }
+  update(dt: number): void {
+    this._t += dt;
+    const on = Math.floor(this._t / 3) % 2 === 1;
+    if (on !== this._on) {
+      this._on = on;
+      camera.usePostProcess = on;
     }
-    update (dt: number): void {
-        this._t += dt;
-        const on = Math.floor(this._t / 3) % 2 === 1;
-        if (on !== this._on) {
-            this._on = on;
-            camera.usePostProcess = on;
-        }
-        info.textContent = [
-            'post-process: camera.usePostProcess toggles every 3s',
-            `now: usePostProcess=${camera.usePostProcess}`,
-            `camera.postProcess slot: ${ppType} (empty slot; settings classes in postProcess namespace)`,
-            'effect application unproven (pixel A/B inconclusive) — see article §2/§4',
-        ].join('\n');
-    }
+    info.textContent = [
+      "post-process: camera.usePostProcess toggles every 3s",
+      `now: usePostProcess=${camera.usePostProcess}`,
+      `camera.postProcess slot: ${ppType} (empty slot; settings classes in postProcess namespace)`,
+      "effect application unproven (pixel A/B inconclusive) — see article §2/§4",
+    ].join("\n");
+  }
 }
-const info = document.querySelector('#info') as HTMLElement;
+const info = document.querySelector("#info") as HTMLElement;
 cameraNode.addComponent(Cycler);
 
 window.__airApp = app;
 app.run(scene);
 
-console.log('[manual/post-processing] running on cocosair');
+console.log("[manual/post-processing] running on cocosair");
 ```
 
 ---

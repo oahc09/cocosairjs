@@ -469,3 +469,13 @@ example 侧签名与当期 d.ts 不符——属于并行线的修复范围，本
   在 setSharedMaterial 后必须重新取实例。
 - **定性**：非引擎缺陷（实例化是文档化设计），属**验证器×示例交互语义陷阱**；范式文档 §5 已纳入。
   受影响面：任何「readback 之后还要改共享材质并期待画面变化」的示例。
+
+## 2026-09-26 修复轮：剩余缺口裁定
+
+- **GAP-C1 已关闭（调用错误）**：公开组件签名为 `camera.worldToScreen(worldPos, out?)`，原探针传反了参数。已修正 `render-composite`，用真实投影坐标取 RT 像素，删除硬编码采样位置。实测屏幕点约 [252.92,463.83,0.9816]，转换深度后往返恢复 [-2.3,1.7,0.8]，误差 <0.01。透视投影输出 z 是非线性深度；`screenToWorld` 输入 z 是 near→far 的线性比例，不能直接传回。
+- **GAP-C2 已关闭（组件与渲染相机混淆）**：公开 `Camera.camera` getter 返回渲染相机；`width/height/aspect/resize` 属于该对象，组件自身通过 `rect/targetTexture` 等管理常用行为。修复轮增加公开访问的尺寸断言。无需新增重复包装或改 API 分母；coverage 对同名类型的归属仍按现有稳定 ID 披露。
+- **GAP-M1 已修复**：`manual-render-targets` 改用 `USE_TEXTURE`，补 HDR 主光与针对左侧快照的蓝色立方体像素断言，纯白材质不能通过。
+- **GAP-B1 / GAP-V1**：作为生命周期边界闭合到 `script-component-workflow.md`（引导后初始化、显式取消 token、销毁后不再访问资产）。
+- **GLTFAsset 销毁后读取**：遵循资产生命周期合同，调用方必须用 `isValid` 守卫；本轮不把已销毁资产访问改为静默空值。
+
+§7 的原始观察保留为历史排查记录，当前结论以本节及本轮验收记录为准。

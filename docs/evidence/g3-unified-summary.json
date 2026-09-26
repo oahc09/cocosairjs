@@ -1,0 +1,47 @@
+{
+  "measuredAt": "2026-09-26T07:09:02.266Z",
+  "completed": true,
+  "candidateFingerprint": "8746fc59b6aa0408",
+  "baselineRevision": "b07a191",
+  "scope": "G0-G4 repair and merged lighting/camera example changes",
+  "unchanged": {
+    "examples": 145,
+    "verificationTools": 11
+  },
+  "checks": {
+    "chromium": "140/140",
+    "firefox": "21/21 (targeted)",
+    "webkit": "21/21 (targeted)",
+    "devtools": "5/5",
+    "gallery": "209/209",
+    "manual": "44/44",
+    "shader": "28/28 (WebGL1 + WebGL2)",
+    "jest": {
+      "suites": 32,
+      "tests": 263,
+      "passed": 263
+    },
+    "format": "PASS",
+    "typecheck": "PASS",
+    "fileMap": "PASS",
+    "evidenceChain": "PASS"
+  },
+  "coverage": {
+    "verified": 439,
+    "stale": 0,
+    "schemaGaps": 0,
+    "core": {
+      "verified": 295,
+      "required": 816
+    },
+    "important": {
+      "verified": 33,
+      "required": 1773
+    }
+  },
+  "limitations": [
+    "Firefox/WebKit scope is 21 targeted examples, not the entire Gallery.",
+    "Existing Draco decoder-required warning remains documented.",
+    "Core 100% and Important 90% full-coverage targets remain future work."
+  ]
+}

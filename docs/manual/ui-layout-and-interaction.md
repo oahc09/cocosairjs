@@ -13,11 +13,11 @@ Button = Sprite 底 + Label 文本 + `Button` 组件（COLOR 过渡），点击�
 以下片段与 `examples/ui-components/main.js` 逐字节一致：
 
 ```js
-const buttonNode = makeUINode('Button', stackNode, 150, 36);
-const buttonSprite = addSprite(buttonNode, '#ffffff', 150, 36, 10);
+const buttonNode = makeUINode("Button", stackNode, 150, 36);
+const buttonSprite = addSprite(buttonNode, "#ffffff", 150, 36, 10);
 buttonSprite.color = new Color(52, 120, 246, 255);
-const buttonLabelNode = makeUINode('Label', buttonNode, 140, 28);
-const buttonLabel = addLabel(buttonLabelNode, 'Press me', 16);
+const buttonLabelNode = makeUINode("Label", buttonNode, 140, 28);
+const buttonLabel = addLabel(buttonLabelNode, "Press me", 16);
 const button = buttonNode.addComponent(Button);
 button.transition = Button.Transition.COLOR;
 button.normalColor = new Color(52, 120, 246, 255);
@@ -27,11 +27,11 @@ button.targetColor = buttonSprite.color.clone();
 ```
 
 ```js
-buttonNode.on('click', () => {
-    observed.buttonRealClicks += 1;
-    buttonLabel.string = `Clicked x${observed.buttonRealClicks}`;
-    observed.buttonLabelAfter = buttonLabel.string;
-    observed.buttonColorAfter = buttonSprite.color.toString();
+buttonNode.on("click", () => {
+  observed.buttonRealClicks += 1;
+  buttonLabel.string = `Clicked x${observed.buttonRealClicks}`;
+  observed.buttonLabelAfter = buttonLabel.string;
+  observed.buttonColorAfter = buttonSprite.color.toString();
 });
 ```
 
@@ -49,8 +49,8 @@ view.setDesignResolutionSize(window.innerWidth, window.innerHeight, ResolutionPo
 
 // "match window" 适配策略：视口变化时重设设计分辨率（EXACT_FIT 下 visibleRect 才会跟随视口，
 // 触发 view 'design-resolution-changed' → widgetManager 重排所有 Widget）。
-window.addEventListener('resize', () => {
-    view.setDesignResolutionSize(window.innerWidth, window.innerHeight, ResolutionPolicy.EXACT_FIT);
+window.addEventListener("resize", () => {
+  view.setDesignResolutionSize(window.innerWidth, window.innerHeight, ResolutionPolicy.EXACT_FIT);
 });
 ```
 

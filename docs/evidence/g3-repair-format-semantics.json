@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-26T06:24:23.526Z",
+  "method": "esbuild normalized JavaScript comparison, same compiler and options before/after",
+  "equivalent": 181,
+  "intentional": [
+    "docs/manual/examples/manual-render-targets/main.ts",
+    "examples/contra-action/src/main.ts",
+    "examples/match3-classic/src/main.ts",
+    "examples/render-composite/src/main.ts",
+    "examples/scene-switch-reentry/src/main.ts",
+    "examples/tank-battle/src/main.ts",
+    "examples/tetris-classic/src/main.ts"
+  ],
+  "unexpected": []
+}

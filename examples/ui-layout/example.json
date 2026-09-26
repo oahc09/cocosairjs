@@ -19,22 +19,12 @@
     "Sprite",
     "Label"
   ],
-  "capabilities": [
-    "ui"
-  ],
+  "capabilities": ["ui"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -52,17 +42,8 @@
     "visual": "深蓝底上一屏响应式布局：顶栏横贯且标题实时写着当前视口尺寸、左下绿徽章、右下橙徽章、中央三个等距色块；视口缩小后顶栏变窄、右徽章左移、色块整体重排、标题数字同步（截图 resize 前后各一张）"
   },
   "api": {
-    "primary": [
-      "Canvas",
-      "Widget",
-      "Layout"
-    ],
-    "supporting": [
-      "UITransform",
-      "Sprite",
-      "Label",
-      "Camera"
-    ],
+    "primary": ["Canvas", "Widget", "Layout"],
+    "supporting": ["UITransform", "Sprite", "Label", "Camera"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -99,55 +80,55 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L95"
+        "sourceLocation": "L104"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L104"
+        "sourceLocation": "L113"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L61"
+        "sourceLocation": "L70"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L115"
+        "sourceLocation": "L124"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L191"
+        "sourceLocation": "L200"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L107"
+        "sourceLocation": "L116"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L63"
+        "sourceLocation": "L72"
       },
       {
         "api": "Widget",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L108"
+        "sourceLocation": "L117"
       },
       {
         "api": "Layout",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L153"
+        "sourceLocation": "L162"
       },
       {
         "api": "Layers",
@@ -159,230 +140,182 @@
         "api": "view",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L96"
+        "sourceLocation": "L105"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L96"
+        "sourceLocation": "L105"
       },
       {
         "api": "Sprite",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L71"
+        "sourceLocation": "L80"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L86"
+        "sourceLocation": "L95"
       },
       {
         "api": "SpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L53"
+        "sourceLocation": "L62"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L51"
+        "sourceLocation": "L60"
       },
       {
         "api": "ImageAsset",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L50"
+        "sourceLocation": "L59"
       },
       {
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L118"
+        "sourceLocation": "L127"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L172"
+        "sourceLocation": "L181"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L66"
+        "sourceLocation": "L75"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L63"
+        "sourceLocation": "L72"
       },
       {
         "api": "Node.getComponent",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L63"
+        "sourceLocation": "L72"
       },
       {
         "api": "UITransform.convertToWorldSpaceAR",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L172"
+        "sourceLocation": "L181"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "TopBar",
-        "BadgeL",
-        "BadgeR",
-        "Row",
-        "Cell0",
-        "Cell1",
-        "Cell2"
-      ]
+      "nodes": ["Canvas", "UICamera", "TopBar", "BadgeL", "BadgeR", "Row", "Cell0", "Cell1", "Cell2"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          240,
-          180,
-          0
-        ],
+        "position": [240, 180, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 110,
+            "line": 119,
             "text": "cw.left = cw.right = cw.top = cw.bottom = 0;"
           }
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
-            "line": 120,
+            "line": 129,
             "text": "canvas.cameraComponent = cam;"
           }
         ]
       },
       "TopBar": {
-        "position": [
-          0,
-          160,
-          0
-        ],
+        "position": [0, 160, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 129,
+            "line": 138,
             "text": "tw.top = 0;"
           }
         ]
       },
       "BadgeL": {
-        "position": [
-          -200,
-          -158,
-          0
-        ],
+        "position": [-200, -158, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 138,
+            "line": 147,
             "text": "bl.left = bl.bottom = 10;"
           }
         ]
       },
       "BadgeR": {
-        "position": [
-          200,
-          -158,
-          0
-        ],
+        "position": [200, -158, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 146,
+            "line": 155,
             "text": "br.right = br.bottom = 10;"
           }
         ]
       },
       "Row": {
-        "position": [
-          0,
-          20,
-          0
-        ],
+        "position": [0, 20, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 167,
+            "line": 176,
             "text": "rw.verticalCenter = 20;"
           }
         ]
       },
       "Cell0": {
-        "position": [
-          165,
-          0,
-          0
-        ],
+        "position": [165, 0, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 158,
+            "line": 167,
             "text": "rowLayout.horizontalDirection = Layout.HorizontalDirection.RIGHT_TO_LEFT;"
           }
         ]
       },
       "Cell1": {
-        "position": [
-          65,
-          0,
-          0
-        ],
+        "position": [65, 0, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 156,
+            "line": 165,
             "text": "rowLayout.spacingX = 10;"
           }
         ]
       },
       "Cell2": {
-        "position": [
-          -35,
-          0,
-          0
-        ],
+        "position": [-35, 0, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 160,
+            "line": 169,
             "text": "const cell = makeUINode(`Cell${i}`, rowNode, 90, 60);"
           }
         ]
@@ -398,9 +331,9 @@
     "assets": "无第三方资产（纹理运行时程序化生成）"
   },
   "promotion": {
-    "spec": "f15b913767bc",
-    "source": "77f21c2819021f29",
-    "candidate": "d1cc556759a27943",
+    "spec": "41b52d169c05",
+    "source": "8188d8511c8c2b98",
+    "candidate": "8746fc59b6aa0408",
     "verified": 22,
     "attested": 1,
     "units": 23

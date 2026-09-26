@@ -62,18 +62,32 @@ import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 
 const UI_LAYER = Layers.Enum.UI_3D;
 const r = (v, n = 4) => Math.round(v * 10 ** n) / 10 ** n;
-const safe = (fn) => { try { return fn(); } catch (e) { return 'ERR:' + e.message; } };
+const safe = (fn) => {
+    try {
+        return fn();
+    } catch (e) {
+        return 'ERR:' + e.message;
+    }
+};
 const ORIENT = TiledMap.Orientation;
 const OBJT = TiledMap.TMXObjectType;
 const enumName = (dict, value) => {
-    for (const k of Object.keys(dict)) { if (dict[k] === value) { return k; } }
+    for (const k of Object.keys(dict)) {
+        if (dict[k] === value) {
+            return k;
+        }
+    }
     return `UNKNOWN(${value})`;
 };
 
-function loadRemote (url, ext) {
+function loadRemote(url, ext) {
     return new Promise((resolve, reject) => {
         assetManager.loadRemote(url, { ext }, (err, asset) => {
-            if (err) { reject(err); } else { resolve(asset); }
+            if (err) {
+                reject(err);
+            } else {
+                resolve(asset);
+            }
         });
     });
 }
@@ -114,7 +128,7 @@ status.color = new Color(220, 228, 240, 255);
 status.fontSize = 15;
 status.lineHeight = 18;
 
-function makeMapNode (name, x, y) {
+function makeMapNode(name, x, y) {
     const node = new Node(name);
     node.layer = UI_LAYER;
     node.addComponent(UITransform);
@@ -135,9 +149,16 @@ const tsxText = await loadRemote('./assets/tiles.tsx', '.tsx');
 const isoTmxText = await loadRemote('./assets/isometric.tmx', '.tmx');
 const pngLoaded = await loadRemote('./assets/tiles.png', '.png');
 
-const texture = pngLoaded instanceof Texture2D ? pngLoaded : (() => { const t = new Texture2D(); t.image = pngLoaded; return t; })();
+const texture =
+    pngLoaded instanceof Texture2D
+        ? pngLoaded
+        : (() => {
+              const t = new Texture2D();
+              t.image = pngLoaded;
+              return t;
+          })();
 
-function makeFrame () {
+function makeFrame() {
     const sf = new SpriteFrame();
     sf.texture = texture;
     return sf;
@@ -147,7 +168,7 @@ function makeFrame () {
  * `TiledMapAsset` 只当"字段袋"用：`_applyFile` 读 tmxXmlStr + 三张并行数组，
  * 不会去碰 assetManager 的 uuid/依赖图，所以这里 new 完直接填。
  */
-function makeMapAsset (tmxXmlStr, spriteFrame, extra) {
+function makeMapAsset(tmxXmlStr, spriteFrame, extra) {
     const asset = new TiledMapAsset();
     asset.tmxXmlStr = tmxXmlStr;
     asset.spriteFrames = [spriteFrame];
@@ -169,9 +190,11 @@ orthoMap.tmxAsset = orthoAsset;
 isoMap.tmxAsset = isoAsset;
 
 // ---------------------------------------------------------------- 探针
-function layerSnap (tm, layerName) {
+function layerSnap(tm, layerName) {
     const layer = tm.getLayer(layerName);
-    if (!layer) { return { missing: true }; }
+    if (!layer) {
+        return { missing: true };
+    }
     const size = layer.getLayerSize();
     const gids = [];
     const flags = [];
@@ -184,7 +207,10 @@ function layerSnap (tm, layerName) {
     const batches = [];
     for (const entry of layer.tiledDataArray) {
         const rd = entry.renderData;
-        if (!rd) { batches.push({ subNodes: entry.subNodes ? entry.subNodes.length : 0 }); continue; }
+        if (!rd) {
+            batches.push({ subNodes: entry.subNodes ? entry.subNodes.length : 0 });
+            continue;
+        }
         batches.push({ vertexCount: rd.vertexCount, hasTexture: !!entry.texture });
     }
     return {
@@ -201,23 +227,49 @@ function layerSnap (tm, layerName) {
         flagsRow1: flags.slice(size.width, size.width * 2),
         cornerGids: [layer.getTileGIDAt(0, 0), layer.getTileGIDAt(size.width - 1, size.height - 1)],
         invalidGid: safe(() => layer.getTileGIDAt(size.width, 0)),
-        pos00: (() => { const p = layer.getPositionAt(0, 0); return p ? [r(p.x), r(p.y)] : null; })(),
-        posLast: (() => { const p = layer.getPositionAt(size.width - 1, size.height - 1); return p ? [r(p.x), r(p.y)] : null; })(),
+        pos00: (() => {
+            const p = layer.getPositionAt(0, 0);
+            return p ? [r(p.x), r(p.y)] : null;
+        })(),
+        posLast: (() => {
+            const p = layer.getPositionAt(size.width - 1, size.height - 1);
+            return p ? [r(p.x), r(p.y)] : null;
+        })(),
         textures: layer.getTextures().length,
-        tileset: (() => { const ts = layer.getTileSet(0); return ts ? { name: ts.name, firstGid: ts.firstGid, imageName: ts.imageName, tileSize: [r(ts._tileSize.width), r(ts._tileSize.height)], imageSize: [r(ts.imageSize.width), r(ts.imageSize.height)], tileOffset: [r(ts.tileOffset.x), r(ts.tileOffset.y)] } : null; })(),
+        tileset: (() => {
+            const ts = layer.getTileSet(0);
+            return ts
+                ? {
+                      name: ts.name,
+                      firstGid: ts.firstGid,
+                      imageName: ts.imageName,
+                      tileSize: [r(ts._tileSize.width), r(ts._tileSize.height)],
+                      imageSize: [r(ts.imageSize.width), r(ts.imageSize.height)],
+                      tileOffset: [r(ts.tileOffset.x), r(ts.tileOffset.y)],
+                  }
+                : null;
+        })(),
         batches,
-        uiSize: (() => { const t = layer.node.getComponent(UITransform); return t ? [r(t.width), r(t.height)] : null; })(),
+        uiSize: (() => {
+            const t = layer.node.getComponent(UITransform);
+            return t ? [r(t.width), r(t.height)] : null;
+        })(),
     };
 }
 
-function objectSnap (tm, groupName) {
+function objectSnap(tm, groupName) {
     const group = tm.getObjectGroup(groupName);
-    if (!group) { return { missing: true }; }
+    if (!group) {
+        return { missing: true };
+    }
     return {
         groupName: group.getGroupName(),
         properties: group.getProperties(),
         positionOffset: [r(group.getPositionOffset().x), r(group.getPositionOffset().y)],
-        nodeSize: (() => { const t = group.node.getComponent(UITransform); return [r(t.width), r(t.height)]; })(),
+        nodeSize: (() => {
+            const t = group.node.getComponent(UITransform);
+            return [r(t.width), r(t.height)];
+        })(),
         childNames: group.node.children.map((c) => c.name),
         objects: group.getObjects().map((o) => ({
             id: o.id,
@@ -233,7 +285,10 @@ function objectSnap (tm, groupName) {
             points: o.points ? o.points.map((p) => [r(p.x), r(p.y)]) : null,
             properties: o.properties,
         })),
-        byName: (() => { const o = group.getObject('crate'); return o ? { name: o.name, hp: o.properties.hp } : null; })(),
+        byName: (() => {
+            const o = group.getObject('crate');
+            return o ? { name: o.name, hp: o.properties.hp } : null;
+        })(),
         missing: group.getObject('nope'),
     };
 }
@@ -241,24 +296,24 @@ function objectSnap (tm, groupName) {
 const results = {};
 
 /** 图层当帧的顶点总数（4 顶点/quad）：批次数与顶点数随几何变化，是「图层渲染」可机器回读的代理量 */
-function vertsOf (tm, layerName) {
+function vertsOf(tm, layerName) {
     const layer = tm.getLayer(layerName);
     return layer ? layer.tiledDataArray.reduce((sum, e) => sum + (e.renderData ? e.renderData.vertexCount : 0), 0) : -1;
 }
 
 /** `_texGrids[gid]` 的 UV 四边 + 图内原点：动画换的就是这个对象引用 */
-function texGridOf (tm, gid) {
+function texGridOf(tm, gid) {
     const g = tm['_texGrids'].get(gid);
     return g ? [g.gid, r(g.x), r(g.y), r(g.l, 6), r(g.t, 6), r(g.r, 6), r(g.b, 6)] : null;
 }
-function gridKey (g) {
+function gridKey(g) {
     return g ? `${g.gid}|${g.x}|${g.y}|${g.l}|${g.t}|${g.r}|${g.b}` : null;
 }
-function sameGrid (a, b) {
+function sameGrid(a, b) {
     return !!a && !!b && gridKey(a) === gridKey(b);
 }
 
-function runSequence () {
+function runSequence() {
     // P1 TMX 头部 + 图层清单
     results.p1Header = {
         types: {
@@ -276,7 +331,10 @@ function runSequence () {
             mapProperties: orthoMap.getProperties(),
             levelProperty: orthoMap.getProperty('level'),
             missingProperty: orthoMap.getProperty('nope'),
-            uiSize: (() => { const t = orthoMap.node.getComponent(UITransform); return [r(t.width), r(t.height)]; })(),
+            uiSize: (() => {
+                const t = orthoMap.node.getComponent(UITransform);
+                return [r(t.width), r(t.height)];
+            })(),
         },
         iso: {
             orientation: `${isoMap.getMapOrientation()}:${enumName(ORIENT, isoMap.getMapOrientation())}`,
@@ -288,8 +346,16 @@ function runSequence () {
 
     // P2 TSX：外部 tileset 的 image/tile 属性是否解析进来
     results.p2Tsx = {
-        orthoTilesets: orthoMap['_tilesets'].map((ts) => ({ name: ts.name, firstGid: Number(ts.firstGid), sourceImage: !!ts.sourceImage })),
-        isoTilesets: isoMap['_tilesets'].map((ts) => ({ name: ts.name, firstGid: Number(ts.firstGid), sourceImage: !!ts.sourceImage })),
+        orthoTilesets: orthoMap['_tilesets'].map((ts) => ({
+            name: ts.name,
+            firstGid: Number(ts.firstGid),
+            sourceImage: !!ts.sourceImage,
+        })),
+        isoTilesets: isoMap['_tilesets'].map((ts) => ({
+            name: ts.name,
+            firstGid: Number(ts.firstGid),
+            sourceImage: !!ts.sourceImage,
+        })),
         grass: orthoMap.getPropertiesForGID(1),
         stone: orthoMap.getPropertiesForGID(2),
         none: orthoMap.getPropertiesForGID(7),
@@ -354,7 +420,10 @@ function runSequence () {
     swapMap.enableCulling = false;
     results.p7Rebuild = {
         sameLayerNames: swapMap.getLayers().map((l) => l.getLayerName()),
-        groundSize: (() => { const s = swapMap.getLayer('ground').getLayerSize(); return [s.width, s.height]; })(),
+        groundSize: (() => {
+            const s = swapMap.getLayer('ground').getLayerSize();
+            return [s.width, s.height];
+        })(),
         firstGid: swapMap['_tilesets'][0].firstGid,
         torchSprite: !!swapMap.getObjectGroup('markers').node.getChildByName('img3'),
     };
@@ -382,7 +451,8 @@ function runSequence () {
         // 改写成某一帧的对象，所以「帧不同」只能比 `frames[i].grid`，比 `_texGrids` 两项会得到假阴性。
         gridIsOneOfFrames: !!ani && ani.frames.some((f) => sameGrid(f.grid, liveGridObj)),
         gridIsCurrentFrame: !!ani && sameGrid(ani.frames[ani.frameIdx].grid, liveGridObj),
-        framesDistinct: !!ani && ani.frames.every((f, i) => ani.frames.every((g, k) => k === i || !sameGrid(f.grid, g.grid))),
+        framesDistinct:
+            !!ani && ani.frames.every((f, i) => ani.frames.every((g, k) => k === i || !sameGrid(f.grid, g.grid))),
         filled: ground.tiles.filter((g) => g !== 0).length,
     };
 
@@ -393,7 +463,7 @@ function runSequence () {
 canvasNode.on(Node.EventType.TOUCH_START, runSequence);
 
 // ---------------------------------------------------------------- 资源生命周期（§25 合同）
-function heldAssets () {
+function heldAssets() {
     return [
         { name: 'orthoAsset', ref: orthoAsset },
         { name: 'isoAsset', ref: isoAsset },
@@ -405,7 +475,9 @@ installAssetLifecycle({
     label: 'tiledmap-basic',
     hold: heldAssets,
     release: () => {
-        for (const { ref } of heldAssets()) { ref.destroy(); }
+        for (const { ref } of heldAssets()) {
+            ref.destroy();
+        }
     },
     reacquire: () => {
         tileFrame = makeFrame();
@@ -424,7 +496,10 @@ window.__assets = () => ({
     tmxAssetType: tmxText.constructor.name,
     tsxAssetType: tsxText.constructor.name,
     pngAssetType: pngLoaded.constructor.name,
-    frameRect: (() => { const rc = tileFrame.rect; return [rc.x, rc.y, rc.width, rc.height]; })(),
+    frameRect: (() => {
+        const rc = tileFrame.rect;
+        return [rc.x, rc.y, rc.width, rc.height];
+    })(),
     held: heldAssets().map((e) => e.name),
 });
 app.run(scene);

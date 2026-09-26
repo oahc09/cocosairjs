@@ -1,9 +1,9 @@
 # 自定义 Shader 开发（Custom Shaders）
 
-> 状态：**PARTIAL（工作文档，2026-09-25）**。用户手写 GLSL 的完整链路已双后端实测
+> 状态：**FULL（2026-09-26）**。用户手写 GLSL 的完整链路已双后端实测
 > （`docs/evidence/g4-shader-probe.json`，WebGL2 + 强制 WebGL1 共 28/28 PASS）；
 > 两级示例 `shader-custom-gradient`（渐变 + uniform）与 `shader-dissolve`（贴图 + 溶解 + 交互）
-> 已过 staging 试验，Gallery 正典集成后升 FULL。
+> 已进入 Gallery，具备正典 API、像素变化及资源释放证据。
 > 相关篇目：[shadertoy](shadertoy.md)（Shadertoy 移植语义）、[debugging-glsl](debugging-glsl.md)（编译错误诊断）。
 
 ## 0. 一分钟结论
@@ -135,11 +135,11 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 
 ## 6. 参考实现索引
 
-| 文件                                    | 内容                                                                                |
-| --------------------------------------- | ----------------------------------------------------------------------------------- |
-| `tools/debug/probes/shader-probe/main.js` | 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁，双后端）  |
-| `examples/shader-custom-gradient/`      | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle             |
-| `examples/shader-dissolve/`             | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画              |
-| `examples/shared/shader-blocks.js`      | UBO 块样板 + standardVert + makeUserEffectJson                                     |
-| `src/air/builtin/register.ts`           | 引擎内建注册路径（glsl4→3/1 降写器 + set/binding 分配的同源参考）                   |
-| `docs/evidence/g4-shader-probe.json`    | 探针证据（28/28 PASS，含 WebGL1/WebGL2 后端与 registerBeforeBoot 边界）             |
+| 文件                                      | 内容                                                                       |
+| ----------------------------------------- | -------------------------------------------------------------------------- |
+| `tools/debug/probes/shader-probe/main.js` | 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁，双后端） |
+| `examples/shader-custom-gradient/`        | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle    |
+| `examples/shader-dissolve/`               | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画     |
+| `examples/shared/shader-blocks.js`        | UBO 块样板 + standardVert + makeUserEffectJson                             |
+| `src/air/builtin/register.ts`             | 引擎内建注册路径（glsl4→3/1 降写器 + set/binding 分配的同源参考）          |
+| `docs/evidence/g4-shader-probe.json`      | 探针证据（28/28 PASS，含 WebGL1/WebGL2 后端与 registerBeforeBoot 边界）    |

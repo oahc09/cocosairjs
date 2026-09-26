@@ -10,14 +10,7 @@
  * 查找画布，因此 HTML 中 canvas id 必须为 'GameCanvas'（与官方 Web 模板一致）。
  */
 
-import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    Layers,
-    Color,
-} from 'cocosair';
+import { createAirApp, Scene, Node, Camera, Layers, Color } from 'cocosair';
 
 const app = await createAirApp({
     canvas: '#GameCanvas',

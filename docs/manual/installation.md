@@ -7,12 +7,12 @@
 
 ## 引入要点
 
-| 做法 | 说明 |
-|---|---|
-| `npm install && npm run build` | AIR 目前从源码构建，产物是 `build/cocosair.module.js`（package.json `version: 0.1.0`） |
-| `importmap: { "cocosair": "/build/cocosair.module.js" }` | 裸说明符统一叫 `cocosair` |
-| `import { createAirApp, Scene, Node } from 'cocosair'` | AIR 导出 368 个具名符号，**没有默认导出**，不要写 `import cc from 'cocosair'` |
-| `await createAirApp({ canvas })` | 异步；渲染器由 app 托管，你拿不到 renderer 对象 |
+| 做法                                                     | 说明                                                                                   |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `npm install && npm run build`                           | AIR 目前从源码构建，产物是 `build/cocosair.module.js`（package.json `version: 0.1.0`） |
+| `importmap: { "cocosair": "/build/cocosair.module.js" }` | 裸说明符统一叫 `cocosair`                                                              |
+| `import { createAirApp, Scene, Node } from 'cocosair'`   | AIR 导出 368 个具名符号，**没有默认导出**，不要写 `import cc from 'cocosair'`          |
+| `await createAirApp({ canvas })`                         | 异步；渲染器由 app 托管，你拿不到 renderer 对象                                        |
 
 ## 1. 获取构建产物
 
@@ -48,9 +48,9 @@ npm run build          # → build/cocosair.module.js（+ .d.ts / .map）
 浏览器侧统一用 importmap，把裸说明符 `cocosair` 映射到产物路径：
 
 ```html
-    <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
+<script type="importmap">
+  { "imports": { "cocosair": "/build/cocosair.module.js" } }
+</script>
 ```
 
 之后代码里就可以写 `from 'cocosair'`。本仓库的 dev server（`npm run dev`）已经把 `/build/*` 挂在 web 根上，所以手册示例里的这个 importmap 在 `http://127.0.0.1:7454/manual/examples/...` 下能直接解析；换成任何以仓库根为 web 根的静态服务器同样成立。
@@ -60,38 +60,65 @@ npm run build          # → build/cocosair.module.js（+ .d.ts / .map）
 ## 3. HTML 骨架与 GameCanvas 约束
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Installation — 安装与引入（docs/manual/installation.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .72); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.72);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -105,20 +132,20 @@ npm run build          # → build/cocosair.module.js（+ .d.ts / .map）
 ## 4. createAirApp 的选项
 
 ```ts
-    export interface AirAppOptions {
-        /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
-        canvas: HTMLCanvasElement | string;
-        /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
-        renderMode?: number;
-    }
+export interface AirAppOptions {
+  /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
+  canvas: HTMLCanvasElement | string;
+  /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
+  renderMode?: number;
+}
 ```
 
 就两个字段：
 
-| 选项 | 类型 | 说明 |
-|---|---|---|
-| `canvas` | `HTMLCanvasElement \| string` | 传字符串时按 CSS selector 查；查不到 `<canvas>` 会抛 `createAirApp: selector '...' did not match a <canvas> element.` |
-| `renderMode` | `number?` | 只在无头/测试场景用（`3` = HEADLESS）。浏览器里正常渲染不要传 |
+| 选项         | 类型                          | 说明                                                                                                                  |
+| ------------ | ----------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `canvas`     | `HTMLCanvasElement \| string` | 传字符串时按 CSS selector 查；查不到 `<canvas>` 会抛 `createAirApp: selector '...' did not match a <canvas> element.` |
+| `renderMode` | `number?`                     | 只在无头/测试场景用（`3` = HEADLESS）。浏览器里正常渲染不要传                                                         |
 
 `createAirApp` 内部还会用固定参数初始化引擎：`debugMode: DebugMode.ERROR`、`settingsPath: ''`（无远程 settings.json）、默认 legacy 渲染管线。也就是说 **AIR 不读项目配置文件**，一切都在代码里。
 
@@ -139,22 +166,22 @@ const app = await createAirApp({ canvas });
 const device = director.root && director.root.device;
 const caps = device && device.capabilities;
 const facts = {
-    VERSION,
-    'sys.platform': sys.platform,
-    'sys.browserType': sys.browserType,
-    'sys.os': sys.os,
-    'sys.isMobile': sys.isMobile,
-    device: device && device.constructor && device.constructor.name,
-    maxTextureSize: caps && caps.maxTextureSize,
-    maxColorRenderTargets: caps && caps.maxColorRenderTargets,
-    canvas: `${canvas.width}x${canvas.height}`,
-    devicePixelRatio: screen.devicePixelRatio,
-    frameRate: game.frameRate,
+  VERSION,
+  "sys.platform": sys.platform,
+  "sys.browserType": sys.browserType,
+  "sys.os": sys.os,
+  "sys.isMobile": sys.isMobile,
+  device: device && device.constructor && device.constructor.name,
+  maxTextureSize: caps && caps.maxTextureSize,
+  maxColorRenderTargets: caps && caps.maxColorRenderTargets,
+  canvas: `${canvas.width}x${canvas.height}`,
+  devicePixelRatio: screen.devicePixelRatio,
+  frameRate: game.frameRate,
 };
-(document.querySelector('#info') as HTMLElement).textContent = Object.entries(facts)
-    .filter(([, v]) => v !== undefined && v !== null && v !== '')
-    .map(([k, v]) => `${k}: ${v}`)
-    .join('\n');
+(document.querySelector("#info") as HTMLElement).textContent = Object.entries(facts)
+  .filter(([, v]) => v !== undefined && v !== null && v !== "")
+  .map(([k, v]) => `${k}: ${v}`)
+  .join("\n");
 ```
 
 在桌面 Chrome + 软件光栅化下，这段实测输出（`docs/evidence/examples/manual-installation.png` 里可见）：
@@ -196,32 +223,32 @@ frameRate: 60
  */
 
 import {
-    VERSION,
-    sys,
-    screen,
-    game,
-    director,
-    Layers,
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    builtinResMgr,
-    utils,
-    primitives,
-    Vec3,
-    Color,
-} from 'cocosair';
+  VERSION,
+  sys,
+  screen,
+  game,
+  director,
+  Layers,
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  builtinResMgr,
+  utils,
+  primitives,
+  Vec3,
+  Color,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('installation');
+const scene = new Scene("installation");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.6, 5));
 cameraNode.lookAt(new Vec3(0, 0, 0));
@@ -235,19 +262,19 @@ camera.clearColor = new Color(24, 32, 48, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node('Main Light');
+const lightNode = new Node("Main Light");
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 一个静止的 cube（本篇不转动：证明"装好了"就够） ----
-const cubeNode = new Node('Cube');
+const cubeNode = new Node("Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(cubeNode);
 const meshRenderer = cubeNode.addComponent(MeshRenderer);
 meshRenderer.mesh = utils.createMesh(primitives.box({ width: 1.4, height: 1.4, length: 1.4 }));
-meshRenderer.material = builtinResMgr.get('builtin-standard-material');
+meshRenderer.material = builtinResMgr.get("builtin-standard-material");
 
 window.__airApp = app;
 app.run(scene);
@@ -256,24 +283,24 @@ app.run(scene);
 const device = director.root && director.root.device;
 const caps = device && device.capabilities;
 const facts = {
-    VERSION,
-    'sys.platform': sys.platform,
-    'sys.browserType': sys.browserType,
-    'sys.os': sys.os,
-    'sys.isMobile': sys.isMobile,
-    device: device && device.constructor && device.constructor.name,
-    maxTextureSize: caps && caps.maxTextureSize,
-    maxColorRenderTargets: caps && caps.maxColorRenderTargets,
-    canvas: `${canvas.width}x${canvas.height}`,
-    devicePixelRatio: screen.devicePixelRatio,
-    frameRate: game.frameRate,
+  VERSION,
+  "sys.platform": sys.platform,
+  "sys.browserType": sys.browserType,
+  "sys.os": sys.os,
+  "sys.isMobile": sys.isMobile,
+  device: device && device.constructor && device.constructor.name,
+  maxTextureSize: caps && caps.maxTextureSize,
+  maxColorRenderTargets: caps && caps.maxColorRenderTargets,
+  canvas: `${canvas.width}x${canvas.height}`,
+  devicePixelRatio: screen.devicePixelRatio,
+  frameRate: game.frameRate,
 };
-(document.querySelector('#info') as HTMLElement).textContent = Object.entries(facts)
-    .filter(([, v]) => v !== undefined && v !== null && v !== '')
-    .map(([k, v]) => `${k}: ${v}`)
-    .join('\n');
+(document.querySelector("#info") as HTMLElement).textContent = Object.entries(facts)
+  .filter(([, v]) => v !== undefined && v !== null && v !== "")
+  .map(([k, v]) => `${k}: ${v}`)
+  .join("\n");
 
-console.log('[manual/installation] running on cocosair', VERSION);
+console.log("[manual/installation] running on cocosair", VERSION);
 ```
 
 ## 运行示例

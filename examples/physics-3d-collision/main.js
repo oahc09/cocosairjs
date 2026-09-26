@@ -53,7 +53,7 @@ const SIM_STEPS = 180; // 3 模拟秒：A 落地 + B 叠上 + 双双入睡
 const renderSlots = [];
 const ownedAssets = [];
 
-function standardMaterial (label, color) {
+function standardMaterial(label, color) {
     const material = new Material();
     material.initialize({ effectName: 'builtin-standard' });
     material.setProperty('mainColor', color);
@@ -61,7 +61,7 @@ function standardMaterial (label, color) {
     return material;
 }
 
-function assignVisual (slot) {
+function assignVisual(slot) {
     const mesh = utils.createMesh(slot.buildData());
     ownedAssets.push({ name: `Mesh:${slot.label}`, ref: mesh });
     slot.mesh = mesh;
@@ -69,14 +69,14 @@ function assignVisual (slot) {
     slot.renderer.material = standardMaterial(slot.label, slot.color);
 }
 
-function bindVisual (node, label, buildData, color) {
+function bindVisual(node, label, buildData, color) {
     const renderer = node.addComponent(MeshRenderer);
     const slot = { node, label, renderer, buildData, color, mesh: null };
     renderSlots.push(slot);
     assignVisual(slot);
 }
 
-function makeNode (name, x, y, z) {
+function makeNode(name, x, y, z) {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     node.setPosition(new Vec3(x, y, z));
@@ -118,7 +118,12 @@ light.illuminance = 20000;
 // Ground：静态盒（顶面 y=0）
 const groundNode = makeNode('Ground', 0, -0.5, 0);
 scene.addChild(groundNode);
-bindVisual(groundNode, 'Ground', () => primitives.box({ width: 12, height: 1, length: 12 }), new Color(64, 96, 72, 255));
+bindVisual(
+    groundNode,
+    'Ground',
+    () => primitives.box({ width: 12, height: 1, length: 12 }),
+    new Color(64, 96, 72, 255),
+);
 const groundBody = groundNode.addComponent(RigidBody);
 groundBody.type = ERigidBodyType.STATIC;
 const groundCollider = groundNode.addComponent(BoxCollider);
@@ -150,7 +155,7 @@ bindVisual(ringNode, 'SpinRing', () => primitives.torus(0.5, 0.18), new Color(15
 
 let ringYaw = 0;
 class SpinRing extends Component {
-    update (dt) {
+    update(dt) {
         ringYaw += dt * 90;
         this.node.setRotationFromEuler(0, ringYaw, 0);
     }
@@ -165,13 +170,13 @@ let exitTotal = 0;
 let contactsAtFirstEnter = -1;
 let velocityYBAtEnter = 0;
 
-function pairName (event) {
+function pairName(event) {
     const a = event.selfCollider.node.name;
     const b = event.otherCollider.node.name;
     return [a, b].sort().join('|');
 }
 
-function onEnter (event) {
+function onEnter(event) {
     enterTotal += 1;
     enterPairs.push(pairName(event));
     if (contactsAtFirstEnter === -1) {
@@ -186,8 +191,12 @@ function onEnter (event) {
         }
     }
 }
-ballACollider.on('onCollisionStay', () => { stayTotal += 1; });
-ballACollider.on('onCollisionExit', () => { exitTotal += 1; });
+ballACollider.on('onCollisionStay', () => {
+    stayTotal += 1;
+});
+ballACollider.on('onCollisionExit', () => {
+    exitTotal += 1;
+});
 
 // ---- 手动预模拟：按官方 postUpdate 同序步进（freeze 帧驱动 ⇒ 三引擎逐位同解） ----
 // 必须在场景启动（组件 onLoad 挂体进世界）之后执行，因此放进首个 update 钩子。
@@ -203,7 +212,7 @@ let restYB = 0;
 let restStable = false;
 let simDone = false;
 
-function stepWorld (steps) {
+function stepWorld(steps) {
     for (let i = 0; i < steps; i++) {
         physics.syncSceneToPhysics();
         physics.step(FIXED_STEP);
@@ -212,7 +221,7 @@ function stepWorld (steps) {
     }
 }
 
-function runSimulation () {
+function runSimulation() {
     physics.enable = false;
     stepWorld(SIM_STEPS);
     restYA = r2(ballANode.position.y);
@@ -240,7 +249,7 @@ function runSimulation () {
     physics.enable = true;
 }
 
-function readback () {
+function readback() {
     return {
         backendWorldCtor: world.constructor.name,
         sysNone: physicsNS.PhysicsSystem.PHYSICS_NONE,
@@ -279,7 +288,7 @@ function readback () {
 }
 
 class FrameCount extends Component {
-    update () {
+    update() {
         window.__frames = (window.__frames || 0) + 1;
         if (!simDone) {
             simDone = true;
@@ -300,11 +309,15 @@ installAssetLifecycle({
             slot.renderer.mesh = null;
             slot.renderer.material = null;
         }
-        for (const asset of ownedAssets) { asset.ref.destroy(); }
+        for (const asset of ownedAssets) {
+            asset.ref.destroy();
+        }
         ownedAssets.length = 0;
     },
     reacquire: () => {
-        for (const slot of renderSlots) { assignVisual(slot); }
+        for (const slot of renderSlots) {
+            assignVisual(slot);
+        }
         return ownedAssets;
     },
 });

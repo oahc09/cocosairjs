@@ -66,12 +66,12 @@ material.setProperty('mainColor', new Color(90, 170, 235, 255));
 renderer.material = material;
 
 // ---- 按需渲染核心 ----
-let dirty = true;          // 初始请求一帧，保证画布有内容
-let framesRendered = 0;    // 只在真正 step 时 +1
-let autoMode = true;       // 默认开：周期性"变脏"→ step，演示按需节奏（可点按钮关成冻结态）
+let dirty = true; // 初始请求一帧，保证画布有内容
+let framesRendered = 0; // 只在真正 step 时 +1
+let autoMode = true; // 默认开：周期性"变脏"→ step，演示按需节奏（可点按钮关成冻结态）
 
 const info = document.querySelector('#info') as HTMLElement;
-function updateOverlay (): void {
+function updateOverlay(): void {
     info.textContent = [
         'rendering on demand: game.pause() + game.step()',
         `main loop paused: ${game.isPaused()}`,

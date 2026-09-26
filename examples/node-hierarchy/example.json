@@ -19,14 +19,8 @@
     "visual": "机械臂式三节结构（蓝根/绿臂/橙手）绕中心缓慢旋转，子节点的位移轨迹随父节点转动"
   },
   "api": {
-    "primary": [
-      "Node.addChild",
-      "Node.getChildByName"
-    ],
-    "supporting": [
-      "Node.setScale",
-      "Component"
-    ],
+    "primary": ["Node.addChild", "Node.getChildByName"],
+    "supporting": ["Node.setScale", "Component"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -49,167 +43,147 @@
       "Node.setScale",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用三个平级独立节点冒充父子层级",
-      "直接设置 world 变换绕过 parent × local 合成"
-    ],
+    "forbiddenShortcut": ["用三个平级独立节点冒充父子层级", "直接设置 world 变换绕过 parent × local 合成"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L16"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L50"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L31"
+        "sourceLocation": "L55"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L39"
+        "sourceLocation": "L65"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L46"
+        "sourceLocation": "L78"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L53"
+        "sourceLocation": "L86"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L27"
+        "sourceLocation": "L51"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L53"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L42"
+        "sourceLocation": "L71"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L19"
+        "sourceLocation": "L33"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L20"
+        "sourceLocation": "L34"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L21"
+        "sourceLocation": "L35"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L32"
+        "sourceLocation": "L56"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L32"
+        "sourceLocation": "L56"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L28"
+        "sourceLocation": "L52"
       },
       {
         "api": "Node.getChildByName",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L60"
+        "sourceLocation": "L93"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L29"
+        "sourceLocation": "L53"
       },
       {
         "api": "Node.setScale",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L30"
+        "sourceLocation": "L54"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L55"
+        "sourceLocation": "L88"
       }
     ]
   },
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Root",
-        "Arm",
-        "Hand"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Root", "Arm", "Hand"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -224,94 +198,58 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          3.2,
-          8
-        ],
+        "position": [0, 3.2, 8],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 38,
-            "text": "cameraNode.setPosition(new Vec3(0, 3.2, 8)); cameraNode.lookAt(new Vec3(0, 1.26, 0));"
+            "line": 63,
+            "text": "cameraNode.setPosition(new Vec3(0, 3.2, 8));"
           }
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 45,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 76,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "Root": {
-        "position": [
-          0,
-          0.4,
-          0
-        ],
+        "position": [0, 0.4, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 49,
+            "line": 82,
             "text": "boxNode(Root) → position [0,0.4,0]（工厂形参见 L29）"
           }
         ],
-        "scale": [
-          0.6,
-          0.6,
-          0.6
-        ]
+        "scale": [0.6, 0.6, 0.6]
       },
       "Arm": {
-        "position": [
-          0,
-          1.2,
-          0
-        ],
+        "position": [0, 1.2, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 50,
+            "line": 83,
             "text": "boxNode(Arm) → position [0,1.2,0]（工厂形参见 L29）"
           }
         ],
-        "scale": [
-          0.4,
-          1.6,
-          0.4
-        ]
+        "scale": [0.4, 1.6, 0.4]
       },
       "Hand": {
-        "position": [
-          0,
-          1.2,
-          0
-        ],
+        "position": [0, 1.2, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 51,
+            "line": 84,
             "text": "boxNode(Hand) → position [0,1.2,0]（工厂形参见 L29）"
           }
         ],
-        "scale": [
-          0.7,
-          0.4,
-          0.7
-        ]
+        "scale": [0.7, 0.4, 0.7]
       }
     },
     "material-property": {
@@ -319,17 +257,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              65,
-              155,
-              235,
-              255
-            ],
+            "value": [65, 155, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 49,
+              "line": 82,
               "text": "new Color(65, 155, 235, 255)"
             }
           }
@@ -339,17 +272,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              95,
-              205,
-              120,
-              255
-            ],
+            "value": [95, 205, 120, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 50,
+              "line": 83,
               "text": "new Color(95, 205, 120, 255)"
             }
           }
@@ -359,17 +287,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              125,
-              65,
-              255
-            ],
+            "value": [235, 125, 65, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 51,
+              "line": 84,
               "text": "new Color(235, 125, 65, 255)"
             }
           }
@@ -381,14 +304,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 3.2, 8)); cameraNode.look）",
-        "line": "L38"
+        "line": "L63"
       }
     }
   },
   "promotion": {
-    "spec": "72efe2cf6b66",
-    "source": "fa2e5f388b65f479",
-    "candidate": "d1cc556759a27943",
+    "spec": "e11498af6216",
+    "source": "6cb8913624985ef6",
+    "candidate": "8746fc59b6aa0408",
     "verified": 20,
     "attested": 0,
     "units": 20

@@ -6,11 +6,11 @@
 AIR 的答案是**静态合批**：`BatchingUtility.batchStaticModel` 把一棵子树下的所有网格合并成一个 mesh、
 禁用原来的每个渲染组件、把合并结果挂到目标节点上。实测对照：
 
-| 路线 | 入口 | 实测 |
-| --- | --- | --- |
+| 路线                 | 入口                                                                            | 实测                               |
+| -------------------- | ------------------------------------------------------------------------------- | ---------------------------------- |
 | 静态合批（整棵子树） | `BatchingUtility.batchStaticModel`（d.ts 91）/ `unbatchStaticModel`（d.ts 101） | 可用，返回 `true`，可逆（§3 探针） |
-| 细粒度合并 | `Mesh.merge`（d.ts 220） | 入口存在，本篇不展开 |
-| 实例化绘制 | **无**用户面 `InstancedMesh` | N/A —— 本篇标 PARTIAL 的主因 |
+| 细粒度合并           | `Mesh.merge`（d.ts 220）                                                        | 入口存在，本篇不展开               |
+| 实例化绘制           | **无**用户面 `InstancedMesh`                                                    | N/A —— 本篇标 PARTIAL 的主因       |
 
 ## 1. BatchingUtility 的实测契约
 
@@ -19,7 +19,7 @@ d.ts 注释承诺四件事：收集 `staticModelRoot` 下的 Model；把所有 m
 把新 Model 挂到 `batchedRoot` 上，且每个模型的世界变换保留。`unbatchStaticModel`（d.ts 101）承诺全部回退。
 
 示例里用 `window.__inspect` 暴露了 `grid` / `batchedRoot`，探针在按钮两次点击前后各拍一次场景图快照，
-四件承诺逐条对账（§3  dump）：合批后 `grid` 下 100 个 `MeshRenderer` 的 `enabled` 全变 `false`、
+四件承诺逐条对账（§3 dump）：合批后 `grid` 下 100 个 `MeshRenderer` 的 `enabled` 全变 `false`、
 `batchedRoot` 上多出一个 `MeshRenderer` 组件且其 `mesh` 是合并产物（`subMeshCount=1`，与共享 mesh 不同对象）；
 unbatch 后 100 个渲染组件全部复活、`batchedRoot` 恢复空节点。**注释与实测一致**。
 
@@ -42,42 +42,42 @@ unbatch 后 100 个渲染组件全部复活、`batchedRoot` 恢复空节点。**
 ```js
 const sharedMesh = utils.createMesh(primitives.box({ width: 1.0, height: 1.0, length: 1.0 }));
 const sharedMaterial = new Material();
-sharedMaterial.initialize({ effectName: 'builtin-standard' });
-sharedMaterial.setProperty('mainColor', new Color(150, 215, 165, 255));
+sharedMaterial.initialize({ effectName: "builtin-standard" });
+sharedMaterial.setProperty("mainColor", new Color(150, 215, 165, 255));
 
 let cubeCount = 0;
 for (let ix = 0; ix < GRID; ix++) {
-    for (let iz = 0; iz < GRID; iz++) {
-        const cubeNode = new Node(`Cube-${ix}-${iz}`);
-        cubeNode.layer = Layers.Enum.DEFAULT;
-        const x = (ix - (GRID - 1) / 2) * SPACING;
-        const z = (iz - (GRID - 1) / 2) * SPACING;
-        cubeNode.setPosition(new Vec3(x, 0.5, z));
-        grid.addChild(cubeNode);
-        const renderer = cubeNode.addComponent(MeshRenderer);
-        renderer.mesh = sharedMesh;
-        renderer.material = sharedMaterial;
-        cubeCount++;
-    }
+  for (let iz = 0; iz < GRID; iz++) {
+    const cubeNode = new Node(`Cube-${ix}-${iz}`);
+    cubeNode.layer = Layers.Enum.DEFAULT;
+    const x = (ix - (GRID - 1) / 2) * SPACING;
+    const z = (iz - (GRID - 1) / 2) * SPACING;
+    cubeNode.setPosition(new Vec3(x, 0.5, z));
+    grid.addChild(cubeNode);
+    const renderer = cubeNode.addComponent(MeshRenderer);
+    renderer.mesh = sharedMesh;
+    renderer.material = sharedMaterial;
+    cubeCount++;
+  }
 }
 ```
 
 按钮回调里做合批/还原，返回值直接打进覆盖层（`true`/`false` 肉眼可见，失败走 catch）：
 
 ```js
-btnBatch.addEventListener('click', () => {
-    try {
-        if (!batched) {
-            batchResult = `batchStaticModel → ${BatchingUtility.batchStaticModel(grid, batchedRoot)}`;
-            batched = true;
-        } else {
-            batchResult = `unbatchStaticModel → ${BatchingUtility.unbatchStaticModel(grid, batchedRoot)}`;
-            batched = false;
-        }
-    } catch (e) {
-        batchResult = `error: ${e.name}: ${e.message}`;
+btnBatch.addEventListener("click", () => {
+  try {
+    if (!batched) {
+      batchResult = `batchStaticModel → ${BatchingUtility.batchStaticModel(grid, batchedRoot)}`;
+      batched = true;
+    } else {
+      batchResult = `unbatchStaticModel → ${BatchingUtility.unbatchStaticModel(grid, batchedRoot)}`;
+      batched = false;
     }
-    btnBatch.textContent = `Batch: ${batched ? 'ON' : 'OFF'}`;
+  } catch (e) {
+    batchResult = `error: ${e.name}: ${e.message}`;
+  }
+  btnBatch.textContent = `Batch: ${batched ? "ON" : "OFF"}`;
 });
 ```
 
@@ -142,49 +142,88 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-lots-of-objects/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Optimizing Lots of Objects — 优化大量对象（docs/manual/optimize-lots-of-objects.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
-        #ui {
-            position: absolute; left: 8px; bottom: 8px; z-index: 10;
-            font: 12px/1.4 ui-monospace, Consolas, monospace;
-        }
-        #ui button {
-            margin-right: 6px; padding: 4px 10px; cursor: pointer;
-            font: inherit; color: #0b1018; background: #d7e3f2; border: 1px solid #8fa4bd; border-radius: 4px;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
+      #ui {
+        position: absolute;
+        left: 8px;
+        bottom: 8px;
+        z-index: 10;
+        font:
+          12px/1.4 ui-monospace,
+          Consolas,
+          monospace;
+      }
+      #ui button {
+        margin-right: 6px;
+        padding: 4px 10px;
+        cursor: pointer;
+        font: inherit;
+        color: #0b1018;
+        background: #d7e3f2;
+        border: 1px solid #8fa4bd;
+        border-radius: 4px;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <div id="ui">
-        <button id="btn-batch" type="button">Batch: OFF</button>
+      <button id="btn-batch" type="button">Batch: OFF</button>
     </div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -202,29 +241,29 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    BatchingUtility,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  BatchingUtility,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('lots-of-objects');
+const scene = new Scene("lots-of-objects");
 
 // ---- 相机（公转） ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 const camera = cameraNode.addComponent(Camera);
 camera.projection = Camera.ProjectionType.PERSPECTIVE;
@@ -236,7 +275,7 @@ camera.clearColor = new Color(16, 20, 28, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-55, -35, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -246,75 +285,75 @@ dir.illuminance = 4.5;
 const GRID = 10;
 const SPACING = 1.6;
 
-const world = new Node('World');
+const world = new Node("World");
 scene.addChild(world);
-const grid = new Node('Grid');
+const grid = new Node("Grid");
 world.addChild(grid);
-const batchedRoot = new Node('BatchedRoot');
+const batchedRoot = new Node("BatchedRoot");
 world.addChild(batchedRoot);
 
 const sharedMesh = utils.createMesh(primitives.box({ width: 1.0, height: 1.0, length: 1.0 }));
 const sharedMaterial = new Material();
-sharedMaterial.initialize({ effectName: 'builtin-standard' });
-sharedMaterial.setProperty('mainColor', new Color(150, 215, 165, 255));
+sharedMaterial.initialize({ effectName: "builtin-standard" });
+sharedMaterial.setProperty("mainColor", new Color(150, 215, 165, 255));
 
 let cubeCount = 0;
 for (let ix = 0; ix < GRID; ix++) {
-    for (let iz = 0; iz < GRID; iz++) {
-        const cubeNode = new Node(`Cube-${ix}-${iz}`);
-        cubeNode.layer = Layers.Enum.DEFAULT;
-        const x = (ix - (GRID - 1) / 2) * SPACING;
-        const z = (iz - (GRID - 1) / 2) * SPACING;
-        cubeNode.setPosition(new Vec3(x, 0.5, z));
-        grid.addChild(cubeNode);
-        const renderer = cubeNode.addComponent(MeshRenderer);
-        renderer.mesh = sharedMesh;
-        renderer.material = sharedMaterial;
-        cubeCount++;
-    }
+  for (let iz = 0; iz < GRID; iz++) {
+    const cubeNode = new Node(`Cube-${ix}-${iz}`);
+    cubeNode.layer = Layers.Enum.DEFAULT;
+    const x = (ix - (GRID - 1) / 2) * SPACING;
+    const z = (iz - (GRID - 1) / 2) * SPACING;
+    cubeNode.setPosition(new Vec3(x, 0.5, z));
+    grid.addChild(cubeNode);
+    const renderer = cubeNode.addComponent(MeshRenderer);
+    renderer.mesh = sharedMesh;
+    renderer.material = sharedMaterial;
+    cubeCount++;
+  }
 }
 
 // ---- 合批开关 ----
-const btnBatch = document.querySelector('#btn-batch') as HTMLButtonElement;
+const btnBatch = document.querySelector("#btn-batch") as HTMLButtonElement;
 let batched = false;
-let batchResult = '—';
-btnBatch.addEventListener('click', () => {
-    try {
-        if (!batched) {
-            batchResult = `batchStaticModel → ${BatchingUtility.batchStaticModel(grid, batchedRoot)}`;
-            batched = true;
-        } else {
-            batchResult = `unbatchStaticModel → ${BatchingUtility.unbatchStaticModel(grid, batchedRoot)}`;
-            batched = false;
-        }
-    } catch (e) {
-        batchResult = `error: ${e.name}: ${e.message}`;
+let batchResult = "—";
+btnBatch.addEventListener("click", () => {
+  try {
+    if (!batched) {
+      batchResult = `batchStaticModel → ${BatchingUtility.batchStaticModel(grid, batchedRoot)}`;
+      batched = true;
+    } else {
+      batchResult = `unbatchStaticModel → ${BatchingUtility.unbatchStaticModel(grid, batchedRoot)}`;
+      batched = false;
     }
-    btnBatch.textContent = `Batch: ${batched ? 'ON' : 'OFF'}`;
+  } catch (e) {
+    batchResult = `error: ${e.name}: ${e.message}`;
+  }
+  btnBatch.textContent = `Batch: ${batched ? "ON" : "OFF"}`;
 });
 
 // ---- 相机公转 + 覆盖层 ----
-const info = document.querySelector('#info') as HTMLElement;
+const info = document.querySelector("#info") as HTMLElement;
 class Orbit extends Component {
-    private _angle = 30;
+  private _angle = 30;
 
-    constructor () {
-        super();
-        this._angle = 30;
-    }
-    update (dt: number): void {
-        this._angle += dt * 12;
-        const rad = this._angle * Math.PI / 180;
-        const r = 19;
-        this.node.setPosition(new Vec3(Math.sin(rad) * r, 8.5, Math.cos(rad) * r));
-        this.node.lookAt(new Vec3(0, 0.5, 0));
-        info.textContent = [
-            `cubes: ${cubeCount} (${GRID}×${GRID}, shared mesh+material)`,
-            `batched: ${batched ? 'ON' : 'OFF'}  (${batchResult})`,
-            `orbit: ${this._angle.toFixed(0)}°`,
-            'click [Batch] to toggle BatchingUtility.batchStaticModel',
-        ].join('\n');
-    }
+  constructor() {
+    super();
+    this._angle = 30;
+  }
+  update(dt: number): void {
+    this._angle += dt * 12;
+    const rad = (this._angle * Math.PI) / 180;
+    const r = 19;
+    this.node.setPosition(new Vec3(Math.sin(rad) * r, 8.5, Math.cos(rad) * r));
+    this.node.lookAt(new Vec3(0, 0.5, 0));
+    info.textContent = [
+      `cubes: ${cubeCount} (${GRID}×${GRID}, shared mesh+material)`,
+      `batched: ${batched ? "ON" : "OFF"}  (${batchResult})`,
+      `orbit: ${this._angle.toFixed(0)}°`,
+      "click [Batch] to toggle BatchingUtility.batchStaticModel",
+    ].join("\n");
+  }
 }
 cameraNode.addComponent(Orbit);
 
@@ -322,7 +361,7 @@ window.__airApp = app;
 window.__inspect = { grid, batchedRoot, sharedMesh, sharedMaterial };
 app.run(scene);
 
-console.log('[manual/lots-of-objects] running on cocosair');
+console.log("[manual/lots-of-objects] running on cocosair");
 ```
 
 ---

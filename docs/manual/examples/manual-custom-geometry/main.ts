@@ -54,7 +54,7 @@ const FREQ = 1.6;
 const SEG = 24;
 const HALF = 2.0;
 
-function heightAt (x: number, z: number): number {
+function heightAt(x: number, z: number): number {
     return AMP * Math.sin(FREQ * x) * Math.cos(FREQ * z);
 }
 
@@ -106,7 +106,7 @@ waveMaterial.setProperty('roughness', 0.5);
 waveRenderer.material = waveMaterial;
 
 class Spinner extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 20, 0);
     }
 }

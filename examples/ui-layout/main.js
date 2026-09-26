@@ -40,13 +40,22 @@ const UI_LAYER = Layers.Enum.UI_3D;
 const frameCache = new Map();
 const spriteSlots = [];
 
-function createFrame (key, cssColor, w, h, radius) {
-    if (frameCache.has(key)) { return frameCache.get(key); }
+function createFrame(key, cssColor, w, h, radius) {
+    if (frameCache.has(key)) {
+        return frameCache.get(key);
+    }
     const cvs = document.createElement('canvas');
-    cvs.width = w; cvs.height = h;
+    cvs.width = w;
+    cvs.height = h;
     const ctx = cvs.getContext('2d');
     ctx.fillStyle = cssColor;
-    if (radius > 0) { ctx.beginPath(); ctx.roundRect(0, 0, w, h, radius); ctx.fill(); } else { ctx.fillRect(0, 0, w, h); }
+    if (radius > 0) {
+        ctx.beginPath();
+        ctx.roundRect(0, 0, w, h, radius);
+        ctx.fill();
+    } else {
+        ctx.fillRect(0, 0, w, h);
+    }
     const image = new ImageAsset(cvs);
     const texture = new Texture2D();
     texture.image = image;
@@ -57,7 +66,7 @@ function createFrame (key, cssColor, w, h, radius) {
     return entry;
 }
 
-function makeUINode (name, parent, width, height) {
+function makeUINode(name, parent, width, height) {
     const node = new Node(name);
     node.layer = UI_LAYER;
     const t = node.getComponent(UITransform) || node.addComponent(UITransform);
@@ -67,7 +76,7 @@ function makeUINode (name, parent, width, height) {
     return node;
 }
 
-function addSprite (node, cssColor, w, h, r) {
+function addSprite(node, cssColor, w, h, r) {
     const sprite = node.addComponent(Sprite);
     sprite.sizeMode = Sprite.SizeMode.CUSTOM;
     const slot = { name: node.name, sprite, color: cssColor, w, h, r };
@@ -78,11 +87,11 @@ function addSprite (node, cssColor, w, h, r) {
 
 // 一个槽位的取用与挂接：首次构建与生命周期合同「重新获取」共用同一条路径，
 // 因此 reloaded 与画面复原是同一件事，不是两个各自成立的说法。
-function assignFrame (slot) {
+function assignFrame(slot) {
     slot.sprite.spriteFrame = createFrame(slot.name, slot.color, slot.w, slot.h, slot.r).spriteFrame;
 }
 
-function addLabel (node, text, fontSize) {
+function addLabel(node, text, fontSize) {
     const label = node.addComponent(Label);
     label.string = text;
     label.fontSize = fontSize;
@@ -167,13 +176,13 @@ rw.isAlignVerticalCenter = true;
 rw.verticalCenter = 20;
 rw.alignMode = Widget.AlignMode.ON_WINDOW_RESIZE;
 
-function geom (node) {
+function geom(node) {
     const t = node.getComponent(UITransform);
     const p = t.convertToWorldSpaceAR(new Vec3(0, 0, 0), new Vec3());
     return { w: Math.round(t.width), h: Math.round(t.height), x: Math.round(p.x), y: Math.round(p.y) };
 }
 
-function collectGeom () {
+function collectGeom() {
     return {
         viewport: { innerWidth: window.innerWidth, innerHeight: window.innerHeight },
         visible: { width: Math.round(visibleRect.width), height: Math.round(visibleRect.height) },
@@ -189,7 +198,7 @@ function collectGeom () {
 // 顶栏标题实时跟随视口；几何每帧回读写入 window.__geom：自适应是页面自己的持续行为，
 // 不等页面外的探针来触发。（Widget 对齐发生在组件 update 之后，所以这里天然滞后一帧，稳态即正确。）
 class LayoutReadout extends Component {
-    update () {
+    update() {
         const title = `TOP BAR ${window.innerWidth}x${window.innerHeight}`;
         if (title !== this._title) {
             this._title = title;
@@ -208,7 +217,7 @@ app.run(scene);
 // §25 资源 Lifecycle Contract：持有物即本示例运行期真实创建的 SpriteFrame/Texture2D/ImageAsset。
 // 释放先断开组件引用再销毁本体；重新获取复用与首帧同一条 assignFrame 路径，
 // 因此「拆得掉」与「建得回、画面复原」由同一份实现承担，不是两条各自成立的说法。
-function ownedAssets () {
+function ownedAssets() {
     return [...frameCache.entries()].flatMap(([name, entry]) => [
         { name: `SpriteFrame:${name}`, ref: entry.spriteFrame },
         { name: `Texture2D:${name}`, ref: entry.texture },
@@ -220,12 +229,18 @@ installAssetLifecycle({
     label: 'ui-layout',
     hold: ownedAssets,
     release: () => {
-        for (const slot of spriteSlots) { slot.sprite.spriteFrame = null; }
-        for (const asset of ownedAssets()) { asset.ref.destroy(); }
+        for (const slot of spriteSlots) {
+            slot.sprite.spriteFrame = null;
+        }
+        for (const asset of ownedAssets()) {
+            asset.ref.destroy();
+        }
         frameCache.clear();
     },
     reacquire: () => {
-        for (const slot of spriteSlots) { assignFrame(slot); }
+        for (const slot of spriteSlots) {
+            assignFrame(slot);
+        }
         return ownedAssets();
     },
 });

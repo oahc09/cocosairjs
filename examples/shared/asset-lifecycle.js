@@ -7,23 +7,25 @@
  */
 import { isValid } from 'cocosair';
 
-function messageOf (error) {
+function messageOf(error) {
     return String((error && error.message) || error || 'unknown error');
 }
 
 /** CCObject.destroy() 于帧末落地：等两帧 + 短延时，避免把 ToDestroy 误判为泄漏。 */
-function settle () {
+function settle() {
     return new Promise((resolve) => {
         requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 250)));
     });
 }
 
-function ownedList (list) {
+function ownedList(list) {
     return (list || []).filter((entry) => entry && entry.ref);
 }
 
-function leakedNames (list) {
-    return ownedList(list).filter((entry) => isValid(entry.ref)).map((entry) => entry.name || 'unnamed');
+function leakedNames(list) {
+    return ownedList(list)
+        .filter((entry) => isValid(entry.ref))
+        .map((entry) => entry.name || 'unnamed');
 }
 
 /**
@@ -33,7 +35,7 @@ function leakedNames (list) {
  * @param {() => (void | Promise<void>)} contract.release                 真实释放路径
  * @param {() => Promise<Array<{name: string, ref: object}>>} contract.reacquire  重新获取并挂回场景
  */
-export function installAssetLifecycle (contract) {
+export function installAssetLifecycle(contract) {
     const report = {
         label: contract.label || 'asset-lifecycle',
         held: 0,
@@ -45,7 +47,9 @@ export function installAssetLifecycle (contract) {
     };
     window.__lifecycle = async () => {
         report.runs++;
-        if (report.runs > 1) { return report; } // 幂等：一轮运行只拆建一次，重复调用回报同一结果
+        if (report.runs > 1) {
+            return report;
+        } // 幂等：一轮运行只拆建一次，重复调用回报同一结果
         const held = ownedList(typeof contract.hold === 'function' ? contract.hold() : contract.held);
         report.held = held.length;
         if (held.length === 0) {
@@ -66,7 +70,12 @@ export function installAssetLifecycle (contract) {
             const invalid = reacquired.filter((entry) => !isValid(entry.ref)).map((entry) => entry.name || 'unnamed');
             report.reloaded = reacquired.length > 0 && invalid.length === 0;
             if (!report.reloaded) {
-                report.errors.push('reacquire: ' + (reacquired.length === 0 ? 'returned no resources' : invalid.join(',') + ' invalid after reacquire'));
+                report.errors.push(
+                    'reacquire: ' +
+                        (reacquired.length === 0
+                            ? 'returned no resources'
+                            : invalid.join(',') + ' invalid after reacquire'),
+                );
             }
         } catch (error) {
             report.errors.push('reacquire: ' + messageOf(error));
@@ -80,7 +89,9 @@ export function installAssetLifecycle (contract) {
         try {
             const held = ownedList(typeof contract.hold === 'function' ? contract.hold() : contract.held);
             return held.length;
-        } catch (error) { return 0; }
+        } catch (error) {
+            return 0;
+        }
     };
     return report;
 }

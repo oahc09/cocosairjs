@@ -25,23 +25,12 @@
     "ScrollView",
     "EditBox"
   ],
-  "capabilities": [
-    "ui"
-  ],
+  "capabilities": ["ui"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -59,20 +48,8 @@
     "visual": "深蓝底上一屏 UI：左上标题、左列按钮/两个开关/滑杆/输入框、右上 2x2 色块网格、右下裁切列表；左下角红点持续脉动（证明每帧真实重绘）"
   },
   "api": {
-    "primary": [
-      "Canvas",
-      "Button",
-      "Layout"
-    ],
-    "supporting": [
-      "UITransform",
-      "Widget",
-      "ScrollView",
-      "Slider",
-      "Toggle",
-      "ToggleContainer",
-      "EditBox"
-    ],
+    "primary": ["Canvas", "Button", "Layout"],
+    "supporting": ["UITransform", "Widget", "ScrollView", "Slider", "Toggle", "ToggleContainer", "EditBox"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -123,13 +100,13 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L161"
+        "sourceLocation": "L162"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L166"
+        "sourceLocation": "L167"
       },
       {
         "api": "Node",
@@ -141,13 +118,13 @@
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L180"
+        "sourceLocation": "L181"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L267"
+        "sourceLocation": "L268"
       },
       {
         "api": "Layers",
@@ -159,7 +136,7 @@
         "api": "math.Color",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L183"
+        "sourceLocation": "L184"
       },
       {
         "api": "math.Vec3",
@@ -171,43 +148,43 @@
         "api": "Size",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L311"
+        "sourceLocation": "L317"
       },
       {
         "api": "SpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L115"
+        "sourceLocation": "L116"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L112"
+        "sourceLocation": "L113"
       },
       {
         "api": "ImageAsset",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L113"
+        "sourceLocation": "L114"
       },
       {
         "api": "view",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L164"
+        "sourceLocation": "L165"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L164"
+        "sourceLocation": "L165"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L170"
+        "sourceLocation": "L171"
       },
       {
         "api": "UITransform",
@@ -219,67 +196,67 @@
         "api": "Widget",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L171"
+        "sourceLocation": "L172"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L137"
+        "sourceLocation": "L138"
       },
       {
         "api": "Sprite",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L122"
+        "sourceLocation": "L123"
       },
       {
         "api": "Button",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L210"
+        "sourceLocation": "L211"
       },
       {
         "api": "Toggle",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L239"
+        "sourceLocation": "L240"
       },
       {
         "api": "ToggleContainer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L228"
+        "sourceLocation": "L229"
       },
       {
         "api": "Slider",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L262"
+        "sourceLocation": "L263"
       },
       {
         "api": "ProgressBar",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L257"
+        "sourceLocation": "L258"
       },
       {
         "api": "Layout",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L198"
+        "sourceLocation": "L199"
       },
       {
         "api": "ScrollView",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L326"
+        "sourceLocation": "L332"
       },
       {
         "api": "EditBox",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L282"
+        "sourceLocation": "L288"
       },
       {
         "api": "Node.addChild",
@@ -303,57 +280,50 @@
         "api": "Node.setScale",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L295"
+        "sourceLocation": "L301"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L219"
+        "sourceLocation": "L220"
       },
       {
         "api": "UITransform.convertToWorldSpaceAR",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L148"
+        "sourceLocation": "L149"
       },
       {
         "api": "ScrollView.scrollToBottom",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L388"
+        "sourceLocation": "L400"
       },
       {
         "api": "ScrollView.getScrollOffset",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L386"
+        "sourceLocation": "L398"
       },
       {
         "api": "EditBox.focus",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L403"
+        "sourceLocation": "L419"
       },
       {
         "api": "EditBox.isFocused",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L423"
+        "sourceLocation": "L441"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "Title",
-        "Stack",
-        "Grid",
-        "ScrollView"
-      ]
+      "nodes": ["Canvas", "UICamera", "Title", "Stack", "Grid", "ScrollView"]
     }
   },
   "interaction": {
@@ -369,9 +339,7 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -383,9 +351,9 @@
   },
   "validationExpectations": {},
   "promotion": {
-    "spec": "ee9cf6470300",
-    "source": "4d867b64bb82d212",
-    "candidate": "d1cc556759a27943",
+    "spec": "a5330ec56a6c",
+    "source": "6fbbbf57ed1a5002",
+    "candidate": "8746fc59b6aa0408",
     "verified": 36,
     "attested": 1,
     "units": 37

@@ -7,13 +7,13 @@
 
 ## 1. 件清单：缺什么、有什么
 
-| 所需构件 | AIR | 证据/去处 |
-| --- | --- | --- |
-| XR 控制器会话 | ✗ 无 | XR 层零命中（[basics](webxr-basics.md) §1） |
-| 控制器模型加载（gltf + 骨骼） | 模型加载本身有 | `GLTFLoader` 全流程见 [load-gltf](load-gltf.md)——只是没有"XR 输入源"去驱动它 |
-| 控制器射线（pose → ray） | ✓ 半边 | `screenPointToRay`（d.ts 21410）是"屏幕坐标→射线"；给定世界原点+方向的射线求交逻辑同款（[picking](picking.md) 应用层 slab 相交） |
-| 控制器 `select` 事件 | ✓ 等价 | 鼠标 `MOUSE_DOWN`：全局 `input.on(SystemEventType.MOUSE_DOWN, …)`（tips-keyboard 同款 input 单例，键盘→鼠标同一族事件） |
-| 射线可视化 | ✓ | 细长 cylinder/line 从"手"画到命中点（[drawing-lines](drawing-lines.md)、[primitives](primitives.md)） |
+| 所需构件                      | AIR            | 证据/去处                                                                                                                        |
+| ----------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| XR 控制器会话                 | ✗ 无           | XR 层零命中（[basics](webxr-basics.md) §1）                                                                                      |
+| 控制器模型加载（gltf + 骨骼） | 模型加载本身有 | `GLTFLoader` 全流程见 [load-gltf](load-gltf.md)——只是没有"XR 输入源"去驱动它                                                     |
+| 控制器射线（pose → ray）      | ✓ 半边         | `screenPointToRay`（d.ts 21410）是"屏幕坐标→射线"；给定世界原点+方向的射线求交逻辑同款（[picking](picking.md) 应用层 slab 相交） |
+| 控制器 `select` 事件          | ✓ 等价         | 鼠标 `MOUSE_DOWN`：全局 `input.on(SystemEventType.MOUSE_DOWN, …)`（tips-keyboard 同款 input 单例，键盘→鼠标同一族事件）          |
+| 射线可视化                    | ✓              | 细长 cylinder/line 从"手"画到命中点（[drawing-lines](drawing-lines.md)、[primitives](primitives.md)）                            |
 
 ## 2. 桌面等价配方
 

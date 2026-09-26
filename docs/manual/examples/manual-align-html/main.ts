@@ -52,7 +52,7 @@ const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 6;
 
 // ---- 中心遮挡体 + 两颗轨道锚点立方体 ----
-function makeCube (name: string, size: number, pos: Vec3, rgb: number[]): Node {
+function makeCube(name: string, size: number, pos: Vec3, rgb: number[]): Node {
     const n = new Node(name);
     n.layer = Layers.Enum.DEFAULT;
     n.setPosition(pos);
@@ -67,12 +67,22 @@ function makeCube (name: string, size: number, pos: Vec3, rgb: number[]): Node {
 }
 const blocker = makeCube('Blocker', 2.2, new Vec3(0, 0.8, 0), [205, 210, 220]);
 const anchors: { node: Node; el: HTMLElement; phase: number; label: string }[] = [
-    { node: makeCube('Anchor-orange', 0.55, new Vec3(0, 0.8, 0), [242, 178, 107]), el: document.querySelector('#tag-orange') as HTMLElement, phase: 0, label: 'ORANGE' },
-    { node: makeCube('Anchor-teal', 0.55, new Vec3(0, 0.8, 0), [127, 216, 207]), el: document.querySelector('#tag-teal') as HTMLElement, phase: Math.PI, label: 'TEAL' },
+    {
+        node: makeCube('Anchor-orange', 0.55, new Vec3(0, 0.8, 0), [242, 178, 107]),
+        el: document.querySelector('#tag-orange') as HTMLElement,
+        phase: 0,
+        label: 'ORANGE',
+    },
+    {
+        node: makeCube('Anchor-teal', 0.55, new Vec3(0, 0.8, 0), [127, 216, 207]),
+        el: document.querySelector('#tag-teal') as HTMLElement,
+        phase: Math.PI,
+        label: 'TEAL',
+    },
 ];
 
 // ---- 射线 × AABB（picking 篇同款 slab 法，用于遮挡判定） ----
-function rayHitsAABB (o: Vec3, d: Vec3, center: Vec3, half: number): number {
+function rayHitsAABB(o: Vec3, d: Vec3, center: Vec3, half: number): number {
     let tMin = -Infinity;
     let tMax = Infinity;
     const ax = [center.x - half, center.y - half, center.z - half];
@@ -85,13 +95,17 @@ function rayHitsAABB (o: Vec3, d: Vec3, center: Vec3, half: number): number {
         } else {
             let t0 = (ax[i] - oc[i]) / dc[i];
             let t1 = (bx[i] - oc[i]) / dc[i];
-            if (t0 > t1) { const t = t0; t0 = t1; t1 = t; }
+            if (t0 > t1) {
+                const t = t0;
+                t0 = t1;
+                t1 = t;
+            }
             if (t0 > tMin) tMin = t0;
             if (t1 < tMax) tMax = t1;
             if (tMin > tMax) return -1;
         }
     }
-    return tMax < 0 ? -1 : (tMin >= 0 ? tMin : tMax);
+    return tMax < 0 ? -1 : tMin >= 0 ? tMin : tMax;
 }
 
 // ---- 每帧：轨道运动 → worldToScreen 摆标签 → 遮挡淡出 ----
@@ -104,7 +118,7 @@ const blockCenter = new Vec3(0, 0.8, 0);
 class Aligner extends Component {
     private _t = 0;
 
-    update (dt: number): void {
+    update(dt: number): void {
         this._t = (this._t || 0) + dt;
         const camPos = cameraNode.position;
         const lines: string[] = [
@@ -126,7 +140,9 @@ class Aligner extends Component {
             const tHit = rayHitsAABB(camPos, toAnchor, blockCenter, BLOCK_HALF);
             const occluded = tHit >= 0 && tHit < dist - 0.2;
             a.el.style.opacity = occluded ? '0' : '1';
-            lines.push(`${a.label}: screen=(${screenPos.x.toFixed(0)}, ${cssTop.toFixed(0)}) dist=${dist.toFixed(1)} occluded=${occluded}`);
+            lines.push(
+                `${a.label}: screen=(${screenPos.x.toFixed(0)}, ${cssTop.toFixed(0)}) dist=${dist.toFixed(1)} occluded=${occluded}`,
+            );
         });
         info.textContent = lines.join('\n');
     }

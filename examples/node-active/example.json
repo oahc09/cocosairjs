@@ -8,25 +8,15 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "理解 node.active 停用语义：停用后不渲染不更新，但节点仍在场景树中",
-    "points": [
-      "用 active 属性开关节点",
-      "停用期间 getChildByName 仍可命中",
-      "Component.update 中驱动定时切换"
-    ]
+    "points": ["用 active 属性开关节点", "停用期间 getChildByName 仍可命中", "Component.update 中驱动定时切换"]
   },
   "effect": {
     "functional": "Blinker 每 1.5s 切换一次 active；停用期间画面回到清屏色，节点仍可通过 getChildByName 找到。",
     "visual": "黄色方块以 1.5s 周期出现/消失（闪烁），消失时仅剩背景色"
   },
   "api": {
-    "primary": [
-      "Node",
-      "Component"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "primitives.box"
-    ],
+    "primary": ["Node", "Component"],
+    "supporting": ["MeshRenderer", "primitives.box"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -47,152 +37,135 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "用 scale=0 或移出相机视锥冒充停用"
-    ],
+    "forbiddenShortcut": ["用 scale=0 或移出相机视锥冒充停用"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L29"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L16"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L40"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L38"
+        "sourceLocation": "L64"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L27"
+        "sourceLocation": "L44"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L57"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L44"
+        "sourceLocation": "L71"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L31"
+        "sourceLocation": "L51"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L42"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L50"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L19"
+        "sourceLocation": "L34"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L20"
+        "sourceLocation": "L35"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L21"
+        "sourceLocation": "L36"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L39"
+        "sourceLocation": "L65"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L39"
+        "sourceLocation": "L65"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L25"
+        "sourceLocation": "L41"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L26"
+        "sourceLocation": "L42"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L26"
+        "sourceLocation": "L43"
       }
     ]
   },
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Blinker"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Blinker"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -207,34 +180,22 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 33,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 55,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "Blinker": {
-        "position": [
-          0,
-          0.6,
-          0
-        ],
+        "position": [0, 0.6, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 37,
+            "line": 63,
             "text": "blinker.setPosition(new Vec3(0, 0.6, 0));"
           }
         ]
@@ -245,17 +206,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              205,
-              75,
-              255
-            ],
+            "value": [235, 205, 75, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 40,
+              "line": 66,
               "text": "new Color(235, 205, 75, 255)"
             }
           }
@@ -267,14 +223,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, blinker);）",
-        "line": "L59"
+        "line": "L86"
       }
     }
   },
   "promotion": {
-    "spec": "9c7cfcdb6c9f",
-    "source": "957e34f8616eaf44",
-    "candidate": "d1cc556759a27943",
+    "spec": "1600f4b3bd82",
+    "source": "5a3ed945031356f0",
+    "candidate": "8746fc59b6aa0408",
     "verified": 18,
     "attested": 0,
     "units": 18

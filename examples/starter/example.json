@@ -18,18 +18,11 @@
     "Layers.DEFAULT",
     "math.Color"
   ],
-  "capabilities": [
-    "basics"
-  ],
+  "capabilities": ["basics"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -49,19 +42,8 @@
     "visual": "整屏为引擎清屏色 (20,60,120) 的纯蓝画面，无任何几何体、无文字、无 DOM 覆盖物；页面 body 背景是白色，因此只要画布呈蓝色就证明这一帧来自 WebGL 帧缓冲而不是 CSS 背景。"
   },
   "api": {
-    "primary": [
-      "createAirApp",
-      "Scene"
-    ],
-    "supporting": [
-      "Node",
-      "Node.addChild",
-      "Camera",
-      "Node.addComponent",
-      "Layers",
-      "Layers.DEFAULT",
-      "math.Color"
-    ],
+    "primary": ["createAirApp", "Scene"],
+    "supporting": ["Node", "Node.addChild", "Camera", "Node.addComponent", "Layers", "Layers.DEFAULT", "math.Color"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -81,75 +63,71 @@
     "evidence": [
       {
         "api": "createAirApp",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L22"
+        "sourceLocation": "L15"
       },
       {
         "api": "Scene",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L19"
       },
       {
         "api": "Node",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L29"
+        "sourceLocation": "L22"
       },
       {
         "api": "Node.addChild",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L30"
+        "sourceLocation": "L23"
       },
       {
         "api": "Camera",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L31"
+        "sourceLocation": "L24"
       },
       {
         "api": "Node.addComponent",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L31"
+        "sourceLocation": "L24"
       },
       {
         "api": "Layers",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L35"
+        "sourceLocation": "L28"
       },
       {
         "api": "Layers.DEFAULT",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L35"
+        "sourceLocation": "L28"
       },
       {
         "api": "math.Color",
-        "source": "main.ts",
+        "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L34"
+        "sourceLocation": "L27"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera"
-      ]
+      "nodes": ["Main Camera"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -160,9 +138,9 @@
     "assets": "无第三方资产（程序化场景，代码随仓库 MIT 授权）"
   },
   "promotion": {
-    "spec": "509d0ba585c2",
-    "source": "84714e6e975fbc32",
-    "candidate": "d1cc556759a27943",
+    "spec": "4efbf96c2741",
+    "source": "5643bb4d6e2b8540",
+    "candidate": "8746fc59b6aa0408",
     "verified": 8,
     "attested": 1,
     "units": 9

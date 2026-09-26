@@ -66,7 +66,18 @@ function sourceFingerprint (exampleDir) {
   };
   push('example.json');
   push('index.html');
-  for (const rel of ['src/main.ts', 'src/main.js', 'main.ts', 'main.js']) { push(rel); }
+  for (const rel of ['main.ts', 'main.js']) { push(rel); }
+  // Components and other imported modules must invalidate evidence just like the entry.
+  const src = path.join(exampleDir, 'src');
+  if (fs.existsSync(src)) {
+    (function walkSource (dir) {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const abs = path.join(dir, entry.name);
+        if (entry.isDirectory()) { walkSource(abs); }
+        else { push(path.relative(exampleDir, abs).replace(/\\/g, '/')); }
+      }
+    })(src);
+  }
   const assets = path.join(exampleDir, 'assets');
   if (fs.existsSync(assets)) {
     (function walk (dir) {

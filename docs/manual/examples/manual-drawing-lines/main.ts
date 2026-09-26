@@ -67,7 +67,7 @@ light.illuminance = 2;
  * @param {MeshRenderer} renderer 目标渲染器
  * @param {number[]} rgba 主色 [r, g, b, a]，0..255
  */
-function attachLineMaterial (renderer: MeshRenderer, rgba: number[]) {
+function attachLineMaterial(renderer: MeshRenderer, rgba: number[]) {
     const material = new Material();
     material.initialize({ effectName: 'builtin-unlit', defines: { USE_COLOR: false } });
     material.setProperty('mainColor', new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
@@ -81,7 +81,7 @@ function attachLineMaterial (renderer: MeshRenderer, rgba: number[]) {
  * 用线段表（每两个顶点一段）建一个 LINE_LIST mesh。
  * @param {number[][]} segments 每项 [x1, y1, z1, x2, y2, z2]
  */
-function lineListMesh (segments: number[][]) {
+function lineListMesh(segments: number[][]) {
     const positions: number[] = [];
     for (const s of segments) {
         positions.push(s[0], s[1], s[2], s[3], s[4], s[5]);
@@ -92,7 +92,7 @@ function lineListMesh (segments: number[][]) {
     });
 }
 
-function addLineNode (name: string, segments: number[][], rgba: number[]): Node {
+function addLineNode(name: string, segments: number[][], rgba: number[]): Node {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     scene.addChild(node);
@@ -122,13 +122,28 @@ addLineNode('Grid', gridSegments, [120, 160, 185, 255]);
 // 立方体边线框：12 条边手工列出，一个 mesh
 const H = 0.5;
 const C: number[][] = [
-    [-H, -H, -H], [H, -H, -H], [H, -H, H], [-H, -H, H],
-    [-H, H, -H], [H, H, -H], [H, H, H], [-H, H, H],
+    [-H, -H, -H],
+    [H, -H, -H],
+    [H, -H, H],
+    [-H, -H, H],
+    [-H, H, -H],
+    [H, H, -H],
+    [H, H, H],
+    [-H, H, H],
 ];
 const EDGES: number[][] = [
-    [0, 1], [1, 2], [2, 3], [3, 0],
-    [4, 5], [5, 6], [6, 7], [7, 4],
-    [0, 4], [1, 5], [2, 6], [3, 7],
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 0],
+    [4, 5],
+    [5, 6],
+    [6, 7],
+    [7, 4],
+    [0, 4],
+    [1, 5],
+    [2, 6],
+    [3, 7],
 ];
 const wireNode = addLineNode(
     'Cube Wireframe',
@@ -147,7 +162,7 @@ wireNode.setPosition(new Vec3(-2.2, 1.1, 0));
  * @param {number} thickness 截面边长
  * @param {Color} color 材质主色
  */
-function addBeam (name: string, from: number[], to: number[], thickness: number, color: Color): Node {
+function addBeam(name: string, from: number[], to: number[], thickness: number, color: Color): Node {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     scene.addChild(node);

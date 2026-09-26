@@ -71,7 +71,7 @@ marker.setPosition(new Vec3(0, 0.9, 0));
 cubeNode.addChild(marker);
 
 class Spinner extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 20, 0);
     }
 }
@@ -79,17 +79,17 @@ cubeNode.addComponent(Spinner);
 
 // ---- 场景图内省 ----
 const wp = new Vec3();
-function graphLines (node: Node, depth: number, out: string[]): string[] {
+function graphLines(node: Node, depth: number, out: string[]): string[] {
     const comps = node.components.map((c) => c.constructor.name).join(',');
     node.getWorldPosition(wp);
     out.push(
         `${'  '.repeat(depth)}${node.name} [${comps || '-'}]` +
-        ` @(${wp.x.toFixed(1)},${wp.y.toFixed(1)},${wp.z.toFixed(1)})`
+            ` @(${wp.x.toFixed(1)},${wp.y.toFixed(1)},${wp.z.toFixed(1)})`,
     );
     for (const child of node.children) graphLines(child, depth + 1, out);
     return out;
 }
-function dumpGraph (): void {
+function dumpGraph(): void {
     const root = director.getScene() || scene;
     const lines = graphLines(root, 0, []);
     info.textContent = ['scene graph (director.getScene()):', ...lines].join('\n');
@@ -99,7 +99,7 @@ function dumpGraph (): void {
 const info = document.querySelector('#info') as HTMLElement;
 
 // ---- 守卫探针：可疑调用包 try/catch，异常打覆盖层不崩溃 ----
-function guardedProbe (): void {
+function guardedProbe(): void {
     let msg: string;
     try {
         // 故意调用不存在的方法，演示"把崩溃变成可读消息"

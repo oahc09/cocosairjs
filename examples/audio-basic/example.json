@@ -37,24 +37,12 @@
     "Node.addComponent",
     "Node.on"
   ],
-  "capabilities": [
-    "audio"
-  ],
+  "capabilities": ["audio"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -82,11 +70,7 @@
     "visual": "深蓝底（clearColor 12,16,24）一屏：顶部状态行 `audio: loading` → 点击后改写为 `audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)`；中部一条 420×120 的 64 bin 波形（前半 440 Hz 高幅、后半 660 Hz 低幅，2:1 设计肉眼可分），波形上叠一条琥珀色竖线＝播放头（仅 `playing` 时绘制），波形下方一条绿色小块＝帧时钟（每 2400 ms 横扫一次，与音频后端无关）；底部一行提示 `unlocked: playing`。frame-diff 的持续帧间变化来源是绿色帧时钟：三引擎都有牙（chromium/firefox 播放头也在走，webkit 播放头因 DOM 后端假阳性冻结，见 learning 末条）⇒ 三引擎 frameChanged 全 PASS，而「音频是否真出声」由 probe 的 `players.srcB.{backend,paused,currentTime,srcBDelta}` 独立回读，不用画面替引擎背书"
   },
   "api": {
-    "primary": [
-      "AudioSource",
-      "AudioClip",
-      "AudioPCMDataView"
-    ],
+    "primary": ["AudioSource", "AudioClip", "AudioPCMDataView"],
     "supporting": [
       "AudioClip.validate",
       "AudioClip.getDuration",
@@ -148,37 +132,37 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L84"
+        "sourceLocation": "L104"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L87"
+        "sourceLocation": "L107"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L88"
+        "sourceLocation": "L108"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L98"
+        "sourceLocation": "L118"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L92"
+        "sourceLocation": "L112"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L90"
+        "sourceLocation": "L110"
       },
       {
         "api": "Layers",
@@ -190,143 +174,134 @@
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L100"
+        "sourceLocation": "L120"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L112"
+        "sourceLocation": "L132"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L217"
+        "sourceLocation": "L245"
       },
       {
         "api": "view",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L85"
+        "sourceLocation": "L105"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L85"
+        "sourceLocation": "L105"
       },
       {
         "api": "assetManager",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L237"
+        "sourceLocation": "L269"
       },
       {
         "api": "AudioSource",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L248"
+        "sourceLocation": "L284"
       },
       {
         "api": "AudioClip",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L284"
+        "sourceLocation": "L322"
       },
       {
         "api": "AudioPCMDataView",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L310"
+        "sourceLocation": "L349"
       },
       {
         "api": "AudioPCMDataView.getData",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L174"
+        "sourceLocation": "L194"
       },
       {
         "api": "AudioClip.validate",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L285"
+        "sourceLocation": "L323"
       },
       {
         "api": "AudioClip.getDuration",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L228"
+        "sourceLocation": "L260"
       },
       {
         "api": "AudioSource.play",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L265"
+        "sourceLocation": "L301"
       },
       {
         "api": "AudioSource.pause",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L347"
+        "sourceLocation": "L391"
       },
       {
         "api": "AudioSource.stop",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L470"
+        "sourceLocation": "L516"
       },
       {
         "api": "AudioSource.playOneShot",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L428"
+        "sourceLocation": "L472"
       },
       {
         "api": "AudioSource.getPCMData",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L305"
+        "sourceLocation": "L343"
       },
       {
         "api": "AudioSource.getSampleRate",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L304"
+        "sourceLocation": "L342"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L103"
+        "sourceLocation": "L123"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L90"
+        "sourceLocation": "L110"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L454"
+        "sourceLocation": "L498"
       }
     ]
   },
-  "assets": [
-    "assets/tone.wav"
-  ],
+  "assets": ["assets/tone.wav"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "Status",
-        "Wave",
-        "Hint",
-        "AudioHost"
-      ]
+      "nodes": ["Canvas", "UICamera", "Status", "Wave", "Hint", "AudioHost"]
     }
   },
   "interaction": {
@@ -338,92 +313,66 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 88,
+            "line": 108,
             "text": "new Node('Canvas') 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
-            "line": 97,
+            "line": 117,
             "text": "cameraNode.setPosition(0, 0, 1000);"
           }
         ]
       },
       "Status": {
-        "position": [
-          0,
-          148,
-          0
-        ],
+        "position": [0, 148, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 110,
+            "line": 130,
             "text": "statusNode.setPosition(0, 148, 0);"
           }
         ]
       },
       "Wave": {
-        "position": [
-          0,
-          -22,
-          0
-        ],
+        "position": [0, -22, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 124,
+            "line": 144,
             "text": "waveNode.setPosition(0, -22, 0);"
           }
         ]
       },
       "Hint": {
-        "position": [
-          0,
-          -112,
-          0
-        ],
+        "position": [0, -112, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 132,
+            "line": 152,
             "text": "hintNode.setPosition(0, -112, 0);"
           }
         ]
       },
       "AudioHost": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 243,
+            "line": 279,
             "text": "new Node('AudioHost') 之后未赋局部变换（纯宿主节点，只挂两个 AudioSource）"
           }
         ]
@@ -439,9 +388,9 @@
     "assets": "无第三方资产：`assets/tone.wav`（25,644 B，sha256 前 16 位 744d7e437a5235ac）由仓库内 `tools/fixtures/make-tone-wav.cjs` 手写 RIFF/PCM 生成（mono/16-bit/8000 Hz/1.600 s，前半 440 Hz@0.50、后半 660 Hz@0.25，段首尾 88 样本线性包络），无编码器依赖。audio 模块为 cocos4 上游 TypeScript 端口（`src/cocos/audio/*` 6 文件逐字节同源，登记在 `docs/upstream-file-map.json`），`pal/audio` 为官方发布物 vendored（`src/pal/audio/**`，许可按 UNLICENSED 口径单独登记）"
   },
   "promotion": {
-    "spec": "9df8c691b6ad",
-    "source": "002fb0bcb6e664a6",
-    "candidate": "d1cc556759a27943",
+    "spec": "314a178a8b05",
+    "source": "f643036bfb2f575b",
+    "candidate": "8746fc59b6aa0408",
     "verified": 26,
     "attested": 2,
     "units": 28

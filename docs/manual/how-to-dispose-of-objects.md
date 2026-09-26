@@ -9,30 +9,30 @@
 
 ## 1. 三条路径与 API 面
 
-| 路径 | API | d.ts | 语义 |
-| --- | --- | --- | --- |
-| 回收复用 | `NodePool`：`size()` / `put(node)` / `get(...)` / `clear()` | 26643 起（26672/26677/26690/26700） | 节点摘离场景进池，`get` 再挂回；**不触发 destroy**，组件状态保留 |
-| 真销毁 | `node.destroy()`（`CCObject.destroy`） | 185 / 517 | **延迟到帧末**生效；当帧内 `isValid` 仍为 true，下一周期读回才为 false（实测，§2） |
-| 资产释放 | `Asset.addRef()` / `decRef()` / `refCount`；`assetManager.releaseAsset(asset)` | 23006 / 23017 / 22994 / 24477 | 引用计数归零可自动释放；`releaseAsset` 直接销毁资产（**不在缓存里也照毁**，实测，§2） |
+| 路径     | API                                                                            | d.ts                                | 语义                                                                                  |
+| -------- | ------------------------------------------------------------------------------ | ----------------------------------- | ------------------------------------------------------------------------------------- |
+| 回收复用 | `NodePool`：`size()` / `put(node)` / `get(...)` / `clear()`                    | 26643 起（26672/26677/26690/26700） | 节点摘离场景进池，`get` 再挂回；**不触发 destroy**，组件状态保留                      |
+| 真销毁   | `node.destroy()`（`CCObject.destroy`）                                         | 185 / 517                           | **延迟到帧末**生效；当帧内 `isValid` 仍为 true，下一周期读回才为 false（实测，§2）    |
+| 资产释放 | `Asset.addRef()` / `decRef()` / `refCount`；`assetManager.releaseAsset(asset)` | 23006 / 23017 / 22994 / 24477       | 引用计数归零可自动释放；`releaseAsset` 直接销毁资产（**不在缓存里也照毁**，实测，§2） |
 
 示例的排空分支把前两条路径交替跑：
 
 ```ts
-            if (this._tick % 2 === 0) {
-                pool.put(node); // 回收复用：不 destroy
-            } else {
-                node.destroy(); // 真销毁：帧末生效
-                destroyedTotal++;
-                lastDestroyed = node;
-            }
+if (this._tick % 2 === 0) {
+  pool.put(node); // 回收复用：不 destroy
+} else {
+  node.destroy(); // 真销毁：帧末生效
+  destroyedTotal++;
+  lastDestroyed = node;
+}
 ```
 
 取回时池优先、无池才新建：
 
 ```js
-            const node = pool.size() > 0 ? pool.get() : makeCube();
-            if (!node.parent) scene.addChild(node);
-            node.active = true;
+const node = pool.size() > 0 ? pool.get() : makeCube();
+if (!node.parent) scene.addChild(node);
+node.active = true;
 ```
 
 ## 2. 实测读数（覆盖层探针 dump，t≈9s）
@@ -62,8 +62,8 @@ lastDestroyed.isValid (read next cycle): false
 ```js
 const cubeMesh = utils.createMesh(primitives.box({ width: 0.9, height: 0.9, length: 0.9 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: 'builtin-standard' });
-cubeMaterial.setProperty('mainColor', new Color(95, 205, 120, 255));
+cubeMaterial.initialize({ effectName: "builtin-standard" });
+cubeMaterial.setProperty("mainColor", new Color(95, 205, 120, 255));
 ```
 
 反过来：**每个节点私有一份 Material/Texture 的写法，节点 destroy 并不会释放那份资产**
@@ -94,38 +94,65 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-dispose-objects/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Dispose Objects — 销毁对象（docs/manual/how-to-dispose-of-objects.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -144,32 +171,32 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-    NodePool,
-    ImageAsset,
-    Texture2D,
-    assetManager,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+  NodePool,
+  ImageAsset,
+  Texture2D,
+  assetManager,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('dispose-objects');
+const scene = new Scene("dispose-objects");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 3.2, 6.2));
 cameraNode.lookAt(new Vec3(0, 1.2, 0));
@@ -183,7 +210,7 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -192,45 +219,45 @@ dir.illuminance = 2;
 // ---- 立方体工厂（mesh 与 material 全例共享：节点销毁不牵动共享资产） ----
 const cubeMesh = utils.createMesh(primitives.box({ width: 0.9, height: 0.9, length: 0.9 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: 'builtin-standard' });
-cubeMaterial.setProperty('mainColor', new Color(95, 205, 120, 255));
+cubeMaterial.initialize({ effectName: "builtin-standard" });
+cubeMaterial.setProperty("mainColor", new Color(95, 205, 120, 255));
 let spawned = 0;
-function makeCube (): Node {
-    const node = new Node(`Cube-${spawned++}`);
-    node.layer = Layers.Enum.DEFAULT;
-    scene.addChild(node);
-    const renderer = node.addComponent(MeshRenderer);
-    renderer.mesh = cubeMesh;
-    renderer.material = cubeMaterial;
-    node.addComponent(Spinner);
-    return node;
+function makeCube(): Node {
+  const node = new Node(`Cube-${spawned++}`);
+  node.layer = Layers.Enum.DEFAULT;
+  scene.addChild(node);
+  const renderer = node.addComponent(MeshRenderer);
+  renderer.mesh = cubeMesh;
+  renderer.material = cubeMaterial;
+  node.addComponent(Spinner);
+  return node;
 }
 
 class Spinner extends Component {
-    update (dt: number): void {
-        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
-    }
+  update(dt: number): void {
+    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
+  }
 }
 
 // ---- 资产侧实测：引用计数 + releaseAsset ----
 const throwaway = new Texture2D();
 throwaway.image = new ImageAsset({
-    width: 4,
-    height: 4,
-    _data: new Uint8Array(4 * 4 * 4),
-    _compressed: false,
-    format: Texture2D.PixelFormat.RGBA8888,
+  width: 4,
+  height: 4,
+  _data: new Uint8Array(4 * 4 * 4),
+  _compressed: false,
+  format: Texture2D.PixelFormat.RGBA8888,
 });
 const refBase = throwaway.refCount;
 throwaway.addRef();
 const refAdded = throwaway.refCount;
 throwaway.decRef();
 const refBack = throwaway.refCount;
-let releaseNote = 'ok';
+let releaseNote = "ok";
 try {
-    assetManager.releaseAsset(throwaway);
+  assetManager.releaseAsset(throwaway);
 } catch (e) {
-    releaseNote = `throw: ${String(e && e.message || e).slice(0, 60)}`;
+  releaseNote = `throw: ${String((e && e.message) || e).slice(0, 60)}`;
 }
 
 // ---- 回收池 + 生长/排空循环 ----
@@ -238,57 +265,57 @@ const pool = new NodePool();
 const alive: Node[] = [];
 let destroyedTotal = 0;
 let lastDestroyed: Node | null = null;
-let lastDestroyedValid = 'n/a';
-let phase = 'grow';
+let lastDestroyedValid = "n/a";
+let phase = "grow";
 
 class Cycler extends Component {
-    private _t = 0;
-    private _tick = 0;
-    constructor () {
-        super();
-        this._t = 0;
-        this._tick = 0;
+  private _t = 0;
+  private _tick = 0;
+  constructor() {
+    super();
+    this._t = 0;
+    this._tick = 0;
+  }
+  update(dt: number): void {
+    this._t += dt;
+    if (this._t < 1.2) return;
+    this._t = 0;
+    this._tick++;
+    if (lastDestroyed) {
+      lastDestroyedValid = String(lastDestroyed.isValid);
     }
-    update (dt: number): void {
-        this._t += dt;
-        if (this._t < 1.2) return;
-        this._t = 0;
-        this._tick++;
-        if (lastDestroyed) {
-            lastDestroyedValid = String(lastDestroyed.isValid);
-        }
-        if (phase === 'grow') {
-            const node = pool.size() > 0 ? pool.get() : makeCube();
-            if (!node.parent) scene.addChild(node);
-            node.active = true;
-            node.setPosition(new Vec3((alive.length - 2) * 1.4, 0.9, 0));
-            alive.push(node);
-            if (alive.length >= 5) phase = 'drain';
-        } else {
-            const node = alive.shift() as Node;
-            if (this._tick % 2 === 0) {
-                pool.put(node); // 回收复用：不 destroy
-            } else {
-                node.destroy(); // 真销毁：帧末生效
-                destroyedTotal++;
-                lastDestroyed = node;
-            }
-            if (alive.length <= 1) phase = 'grow';
-        }
-        showDispose();
+    if (phase === "grow") {
+      const node = pool.size() > 0 ? pool.get() : makeCube();
+      if (!node.parent) scene.addChild(node);
+      node.active = true;
+      node.setPosition(new Vec3((alive.length - 2) * 1.4, 0.9, 0));
+      alive.push(node);
+      if (alive.length >= 5) phase = "drain";
+    } else {
+      const node = alive.shift() as Node;
+      if (this._tick % 2 === 0) {
+        pool.put(node); // 回收复用：不 destroy
+      } else {
+        node.destroy(); // 真销毁：帧末生效
+        destroyedTotal++;
+        lastDestroyed = node;
+      }
+      if (alive.length <= 1) phase = "grow";
     }
+    showDispose();
+  }
 }
 
 // ---- 覆盖层 ----
-const info = document.querySelector('#info') as HTMLElement;
-function showDispose (): void {
-    info.textContent = [
-        'dispose: NodePool put/get + node.destroy() + assetManager.releaseAsset',
-        `alive: ${alive.length}  pooled: ${pool.size()}  spawned: ${spawned}  destroyed: ${destroyedTotal}  phase: ${phase}`,
-        `texture refCount: base=${refBase} addRef→${refAdded} decRef→${refBack}`,
-        `after releaseAsset: isValid=${throwaway.isValid} (${releaseNote})`,
-        `lastDestroyed.isValid (read next cycle): ${lastDestroyedValid}`,
-    ].join('\n');
+const info = document.querySelector("#info") as HTMLElement;
+function showDispose(): void {
+  info.textContent = [
+    "dispose: NodePool put/get + node.destroy() + assetManager.releaseAsset",
+    `alive: ${alive.length}  pooled: ${pool.size()}  spawned: ${spawned}  destroyed: ${destroyedTotal}  phase: ${phase}`,
+    `texture refCount: base=${refBase} addRef→${refAdded} decRef→${refBack}`,
+    `after releaseAsset: isValid=${throwaway.isValid} (${releaseNote})`,
+    `lastDestroyed.isValid (read next cycle): ${lastDestroyedValid}`,
+  ].join("\n");
 }
 cameraNode.addComponent(Cycler);
 showDispose();
@@ -296,7 +323,7 @@ showDispose();
 window.__airApp = app;
 app.run(scene);
 
-console.log('[manual/dispose-objects] running on cocosair');
+console.log("[manual/dispose-objects] running on cocosair");
 ```
 
 ---

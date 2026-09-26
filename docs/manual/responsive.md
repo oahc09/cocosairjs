@@ -7,13 +7,13 @@
 
 ## 要点对照
 
-| 关注点 | Cocos AIR | 说明 |
-|---|---|---|
-| canvas 尺寸同步 | **无需手动 setSize**（screen-adapter 自动） | 不要改 canvas 的 width/height 属性，引擎会持续同步 |
-| 相机纵横比 | **无需手动更新**（自动跟随 canvas） | 相机投影由引擎按当前 canvas 维护 |
-| 窗口变化事件 | `screen.on('window-resize', cb)` / `screen.on('canvas-resize', cb)` | 事件源是 `screen`；`screen.off(type, cb)` 退订 |
-| 设备像素比 | `screen.devicePixelRatio`（只读） | AIR 暴露 dpr 供你读，清晰度策略由引擎按 dpr 处理 |
-| 渲染分辨率读数 | `canvas.width/height` + `screen.resolution` | `resolution` 是引擎认定的渲染分辨率（对象 `{width,height}`） |
+| 关注点          | Cocos AIR                                                           | 说明                                                         |
+| --------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ |
+| canvas 尺寸同步 | **无需手动 setSize**（screen-adapter 自动）                         | 不要改 canvas 的 width/height 属性，引擎会持续同步           |
+| 相机纵横比      | **无需手动更新**（自动跟随 canvas）                                 | 相机投影由引擎按当前 canvas 维护                             |
+| 窗口变化事件    | `screen.on('window-resize', cb)` / `screen.on('canvas-resize', cb)` | 事件源是 `screen`；`screen.off(type, cb)` 退订               |
+| 设备像素比      | `screen.devicePixelRatio`（只读）                                   | AIR 暴露 dpr 供你读，清晰度策略由引擎按 dpr 处理             |
+| 渲染分辨率读数  | `canvas.width/height` + `screen.resolution`                         | `resolution` 是引擎认定的渲染分辨率（对象 `{width,height}`） |
 
 **没有 `cc.view`**：老 Cocos 教程里的 `cc.view.setDesignResolutionSize` 一类在 AIR 不存在，视口一律走 `screen`。
 
@@ -29,8 +29,14 @@ HTML 里 `#GameCanvas` 的 CSS 是 `width:100%; height:100%`（见示例 index.h
 `window resize` → screen-adapter 重算布局尺寸 → 更新 canvas 像素尺寸 → 触发 `screen` 的 `window-resize` / `canvas-resize` 事件 → 渲染管线按新尺寸重建渲染目标 → 相机按新纵横比投影。整条链自动跑；示例订阅事件只是为了把"当前尺寸"打到覆盖层给你看：
 
 ```js
-screen.on('window-resize', () => { resizeCount++; renderInfo(); });
-screen.on('canvas-resize', () => { resizeCount++; renderInfo(); });
+screen.on("window-resize", () => {
+  resizeCount++;
+  renderInfo();
+});
+screen.on("canvas-resize", () => {
+  resizeCount++;
+  renderInfo();
+});
 ```
 
 ## 3. devicePixelRatio 与清晰度
@@ -72,38 +78,65 @@ npm run dev
 ## 完整 index.html
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Responsive Design — 响应式设计（docs/manual/responsive.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -125,28 +158,28 @@ npm run dev
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-    screen,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+  screen,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('responsive');
+const scene = new Scene("responsive");
 
 // ---- 相机（纵横比由引擎按 canvas 自动维护，无需手动 aspect） ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 2.2, 4.2));
 cameraNode.lookAt(new Vec3(0, 0.5, 0));
@@ -160,32 +193,32 @@ camera.clearColor = new Color(20, 26, 38, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node('Main Light');
+const lightNode = new Node("Main Light");
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 地面 + 参照 cube（cube 非正方形轮廓，拉伸与否一眼可辨） ----
-const groundNode = new Node('Ground');
+const groundNode = new Node("Ground");
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
 groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
 const groundMaterial = new Material();
-groundMaterial.initialize({ effectName: 'builtin-standard' });
-groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
+groundMaterial.initialize({ effectName: "builtin-standard" });
+groundMaterial.setProperty("mainColor", new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
-const cubeNode = new Node('Reference Cube');
+const cubeNode = new Node("Reference Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.6, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1.4, length: 1 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: 'builtin-standard' });
-cubeMaterial.setProperty('mainColor', new Color(230, 130, 50, 255));
+cubeMaterial.initialize({ effectName: "builtin-standard" });
+cubeMaterial.setProperty("mainColor", new Color(230, 130, 50, 255));
 cubeRenderer.material = cubeMaterial;
 
 window.__airApp = app;
@@ -193,24 +226,30 @@ app.run(scene);
 
 // ============ 覆盖层：实时尺寸 + resize 事件订阅 ============
 let resizeCount = 0;
-function renderInfo (): void {
-    const ws = screen.windowSize || { width: -1, height: -1 };
-    const res = screen.resolution || { width: -1, height: -1 };
-    (document.querySelector('#info') as HTMLElement).textContent = [
-        'responsive: drag the window to resize',
-        `screen.windowSize : ${ws.width}x${ws.height}`,
-        `screen.resolution : ${res.width}x${res.height}`,
-        `devicePixelRatio  : ${screen.devicePixelRatio}`,
-        `canvas pixels     : ${canvas.width}x${canvas.height}`,
-        `resize events     : ${resizeCount}`,
-    ].join('\n');
+function renderInfo(): void {
+  const ws = screen.windowSize || { width: -1, height: -1 };
+  const res = screen.resolution || { width: -1, height: -1 };
+  (document.querySelector("#info") as HTMLElement).textContent = [
+    "responsive: drag the window to resize",
+    `screen.windowSize : ${ws.width}x${ws.height}`,
+    `screen.resolution : ${res.width}x${res.height}`,
+    `devicePixelRatio  : ${screen.devicePixelRatio}`,
+    `canvas pixels     : ${canvas.width}x${canvas.height}`,
+    `resize events     : ${resizeCount}`,
+  ].join("\n");
 }
 renderInfo();
 
-screen.on('window-resize', () => { resizeCount++; renderInfo(); });
-screen.on('canvas-resize', () => { resizeCount++; renderInfo(); });
+screen.on("window-resize", () => {
+  resizeCount++;
+  renderInfo();
+});
+screen.on("canvas-resize", () => {
+  resizeCount++;
+  renderInfo();
+});
 
-console.log('[manual/responsive] running on cocosair');
+console.log("[manual/responsive] running on cocosair");
 ```
 
 ## API 参考

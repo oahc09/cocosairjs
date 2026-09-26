@@ -23,7 +23,7 @@ import {
 
 // 每帧让 cube 自转：自定义组件的 update(dt) 是 AIR 的"逐帧更新"入口
 class Rotator extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 45, 0);
     }
 }

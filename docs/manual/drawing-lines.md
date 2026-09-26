@@ -7,13 +7,13 @@
 
 ## 画线要点
 
-| Cocos AIR 做法 | 说明 |
-|---|---|
-| `utils.createMesh({ positions, primitiveMode: gfx.PrimitiveMode.LINE_LIST })` | 几何侧支持线拓扑 |
-| `MeshRenderer` + 材质实例 `overridePipelineStates({ primitive: LINE_LIST })` | **不做这一步，线顶点会被按 TRIANGLE_LIST 画成填充面**（见坑 1） |
-| `builtin-unlit` + `setProperty('mainColor', ...)` | 线不受光，用 unlit |
-| **无可变线宽的线组件** | 想要粗线只能用细长方盒（途径 2） |
-| 手工边表，或 `primitives.wireframed()` | 立方体线框的做法，见途径 1 |
+| Cocos AIR 做法                                                                | 说明                                                            |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `utils.createMesh({ positions, primitiveMode: gfx.PrimitiveMode.LINE_LIST })` | 几何侧支持线拓扑                                                |
+| `MeshRenderer` + 材质实例 `overridePipelineStates({ primitive: LINE_LIST })`  | **不做这一步，线顶点会被按 TRIANGLE_LIST 画成填充面**（见坑 1） |
+| `builtin-unlit` + `setProperty('mainColor', ...)`                             | 线不受光，用 unlit                                              |
+| **无可变线宽的线组件**                                                        | 想要粗线只能用细长方盒（途径 2）                                |
+| 手工边表，或 `primitives.wireframed()`                                        | 立方体线框的做法，见途径 1                                      |
 
 ## 坑 1：mesh 的 primitiveMode 会被 PSO 覆盖
 
@@ -22,14 +22,14 @@
 后果很直观：把 6 个线顶点（3 段线）交给默认 pass，会画出 2 个三角形；把 11×11 的网格顶点交出去，会画出一团放射状填充面。修法是在**材质实例**上覆盖管线状态：
 
 ```ts
-function attachLineMaterial (renderer: MeshRenderer, rgba: number[]) {
-    const material = new Material();
-    material.initialize({ effectName: 'builtin-unlit', defines: { USE_COLOR: false } });
-    material.setProperty('mainColor', new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
-    renderer.material = material;
-    const instance = renderer.getMaterialInstance(0);
-    instance.overridePipelineStates({ primitive: gfx.PrimitiveMode.LINE_LIST });
-    return instance;
+function attachLineMaterial(renderer: MeshRenderer, rgba: number[]) {
+  const material = new Material();
+  material.initialize({ effectName: "builtin-unlit", defines: { USE_COLOR: false } });
+  material.setProperty("mainColor", new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
+  renderer.material = material;
+  const instance = renderer.getMaterialInstance(0);
+  instance.overridePipelineStates({ primitive: gfx.PrimitiveMode.LINE_LIST });
+  return instance;
 }
 ```
 
@@ -48,32 +48,32 @@ function attachLineMaterial (renderer: MeshRenderer, rgba: number[]) {
  * 用线段表（每两个顶点一段）建一个 LINE_LIST mesh。
  * @param {number[][]} segments 每项 [x1, y1, z1, x2, y2, z2]
  */
-function lineListMesh (segments: number[][]) {
-    const positions: number[] = [];
-    for (const s of segments) {
-        positions.push(s[0], s[1], s[2], s[3], s[4], s[5]);
-    }
-    return utils.createMesh({
-        positions,
-        primitiveMode: gfx.PrimitiveMode.LINE_LIST,
-    });
+function lineListMesh(segments: number[][]) {
+  const positions: number[] = [];
+  for (const s of segments) {
+    positions.push(s[0], s[1], s[2], s[3], s[4], s[5]);
+  }
+  return utils.createMesh({
+    positions,
+    primitiveMode: gfx.PrimitiveMode.LINE_LIST,
+  });
 }
 
-function addLineNode (name: string, segments: number[][], rgba: number[]): Node {
-    const node = new Node(name);
-    node.layer = Layers.Enum.DEFAULT;
-    scene.addChild(node);
-    const renderer = node.addComponent(MeshRenderer);
-    renderer.mesh = lineListMesh(segments);
-    attachLineMaterial(renderer, rgba);
-    return node;
+function addLineNode(name: string, segments: number[][], rgba: number[]): Node {
+  const node = new Node(name);
+  node.layer = Layers.Enum.DEFAULT;
+  scene.addChild(node);
+  const renderer = node.addComponent(MeshRenderer);
+  renderer.mesh = lineListMesh(segments);
+  attachLineMaterial(renderer, rgba);
+  return node;
 }
 
 // 三根坐标轴：X 红 / Y 绿 / Z 蓝，各一个 mesh（颜色由各自 mainColor 保证）
 const AXIS = 2.4;
-addLineNode('Axis X', [[-AXIS, 0, 0, AXIS, 0, 0]], [255, 70, 50, 255]);
-addLineNode('Axis Y', [[0, -AXIS * 0.4, 0, 0, AXIS, 0]], [80, 230, 110, 255]);
-addLineNode('Axis Z', [[0, 0, -AXIS, 0, 0, AXIS]], [80, 150, 255, 255]);
+addLineNode("Axis X", [[-AXIS, 0, 0, AXIS, 0, 0]], [255, 70, 50, 255]);
+addLineNode("Axis Y", [[0, -AXIS * 0.4, 0, 0, AXIS, 0]], [80, 230, 110, 255]);
+addLineNode("Axis Z", [[0, 0, -AXIS, 0, 0, AXIS]], [80, 150, 255, 255]);
 ```
 
 地面网格：**一个 mesh 一次 draw call**（121 段线 = 242 顶点），这是真线拓扑相对细盒的最大优势：
@@ -84,11 +84,11 @@ const gridSegments: number[][] = [];
 const GRID = 3;
 const STEP = 0.6;
 for (let i = -GRID; i <= GRID + 0.001; i += STEP) {
-    const t = Math.round(i * 100) / 100;
-    gridSegments.push([t, 0, -GRID, t, 0, GRID]);
-    gridSegments.push([-GRID, 0, t, GRID, 0, t]);
+  const t = Math.round(i * 100) / 100;
+  gridSegments.push([t, 0, -GRID, t, 0, GRID]);
+  gridSegments.push([-GRID, 0, t, GRID, 0, t]);
 }
-addLineNode('Grid', gridSegments, [120, 160, 185, 255]);
+addLineNode("Grid", gridSegments, [120, 160, 185, 255]);
 ```
 
 立方体线框本可以直接用 `primitives.wireframed` 把实心 mesh 转成线框 mesh，但本篇实测中，把它与上面的 LINE_LIST 覆盖路径组合时**画面里没有出线**（截图证据见台账），原因未定位；因此示例改用手工边表 —— 12 条边的表写一次就够，后续增删边也直观。若你在自己的项目里让 `wireframed` 跑通了，欢迎回补本篇。
@@ -97,18 +97,33 @@ addLineNode('Grid', gridSegments, [120, 160, 185, 255]);
 // 立方体边线框：12 条边手工列出，一个 mesh
 const H = 0.5;
 const C: number[][] = [
-    [-H, -H, -H], [H, -H, -H], [H, -H, H], [-H, -H, H],
-    [-H, H, -H], [H, H, -H], [H, H, H], [-H, H, H],
+  [-H, -H, -H],
+  [H, -H, -H],
+  [H, -H, H],
+  [-H, -H, H],
+  [-H, H, -H],
+  [H, H, -H],
+  [H, H, H],
+  [-H, H, H],
 ];
 const EDGES: number[][] = [
-    [0, 1], [1, 2], [2, 3], [3, 0],
-    [4, 5], [5, 6], [6, 7], [7, 4],
-    [0, 4], [1, 5], [2, 6], [3, 7],
+  [0, 1],
+  [1, 2],
+  [2, 3],
+  [3, 0],
+  [4, 5],
+  [5, 6],
+  [6, 7],
+  [7, 4],
+  [0, 4],
+  [1, 5],
+  [2, 6],
+  [3, 7],
 ];
 const wireNode = addLineNode(
-    'Cube Wireframe',
-    EDGES.map(([a, b]) => [...C[a], ...C[b]]),
-    [255, 190, 80, 255],
+  "Cube Wireframe",
+  EDGES.map(([a, b]) => [...C[a], ...C[b]]),
+  [255, 190, 80, 255],
 );
 wireNode.setPosition(new Vec3(-2.2, 1.1, 0));
 ```
@@ -126,30 +141,30 @@ wireNode.setPosition(new Vec3(-2.2, 1.1, 0));
  * @param {number} thickness 截面边长
  * @param {Color} color 材质主色
  */
-function addBeam (name: string, from: number[], to: number[], thickness: number, color: Color): Node {
-    const node = new Node(name);
-    node.layer = Layers.Enum.DEFAULT;
-    scene.addChild(node);
-    node.setWorldPosition(new Vec3((from[0] + to[0]) / 2, (from[1] + to[1]) / 2, (from[2] + to[2]) / 2));
-    const dx = to[0] - from[0];
-    const dy = to[1] - from[1];
-    const dz = to[2] - from[2];
-    const length = Math.sqrt(dx * dx + dy * dy + dz * dz);
-    const renderer = node.addComponent(MeshRenderer);
-    renderer.mesh = utils.createMesh(primitives.box({ width: thickness, height: thickness, length }));
-    const material = new Material();
-    material.initialize({ effectName: 'builtin-standard' });
-    material.setProperty('mainColor', color);
-    renderer.material = material;
-    // box 的长边是 +Z：lookAt 终点即把长边转到线段方向
-    node.lookAt(new Vec3(to[0], to[1], to[2]));
-    return node;
+function addBeam(name: string, from: number[], to: number[], thickness: number, color: Color): Node {
+  const node = new Node(name);
+  node.layer = Layers.Enum.DEFAULT;
+  scene.addChild(node);
+  node.setWorldPosition(new Vec3((from[0] + to[0]) / 2, (from[1] + to[1]) / 2, (from[2] + to[2]) / 2));
+  const dx = to[0] - from[0];
+  const dy = to[1] - from[1];
+  const dz = to[2] - from[2];
+  const length = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  const renderer = node.addComponent(MeshRenderer);
+  renderer.mesh = utils.createMesh(primitives.box({ width: thickness, height: thickness, length }));
+  const material = new Material();
+  material.initialize({ effectName: "builtin-standard" });
+  material.setProperty("mainColor", color);
+  renderer.material = material;
+  // box 的长边是 +Z：lookAt 终点即把长边转到线段方向
+  node.lookAt(new Vec3(to[0], to[1], to[2]));
+  return node;
 }
 
 // 三条粗棱从同一角出发，与真线并排对比粗细
-addBeam('Beam X', [0, 1.2, 0], [2.0, 1.2, 0], 0.07, new Color(255, 90, 70, 255));
-addBeam('Beam Y', [0, 1.2, 0], [0, 3.0, 0], 0.07, new Color(90, 230, 120, 255));
-addBeam('Beam Z', [0, 1.2, 0], [0, 1.2, 2.0], 0.07, new Color(90, 150, 255, 255));
+addBeam("Beam X", [0, 1.2, 0], [2.0, 1.2, 0], 0.07, new Color(255, 90, 70, 255));
+addBeam("Beam Y", [0, 1.2, 0], [0, 3.0, 0], 0.07, new Color(90, 230, 120, 255));
+addBeam("Beam Z", [0, 1.2, 0], [0, 1.2, 2.0], 0.07, new Color(90, 150, 255, 255));
 ```
 
 `primitives.box` 的长边是 **+Z**（`length` 对应 z 轴），所以 `node.lookAt(to)` 一步就把长边转到线段方向上；先 `setWorldPosition` 到中点，`lookAt` 才不会顺带改掉长度方向。想拿它做 3D 里任意两点间的连线，这套"中点 + lookAt + length 距离"就是完整配方，不需要四元数手搓。代价是每根 12 个三角形 + 一次独立 draw call，见下节成本对照。
@@ -171,38 +186,65 @@ npm run dev
 ## 完整 index.html
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Drawing Lines — 绘制线条（docs/manual/drawing-lines.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .72); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.72);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -228,29 +270,29 @@ npm run dev
  */
 
 import {
-    gfx,
-    Layers,
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    builtinResMgr,
-    utils,
-    primitives,
-    Vec3,
-    Color,
-} from 'cocosair';
+  gfx,
+  Layers,
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  builtinResMgr,
+  utils,
+  primitives,
+  Vec3,
+  Color,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('drawing-lines');
+const scene = new Scene("drawing-lines");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(4.2, 3.4, 5.6));
 cameraNode.lookAt(new Vec3(0, 0.6, 0));
@@ -264,7 +306,7 @@ camera.clearColor = new Color(18, 24, 36, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源（只影响 standard 材质；unlit 线条不受光） ----
-const lightNode = new Node('Main Light');
+const lightNode = new Node("Main Light");
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
@@ -280,73 +322,88 @@ light.illuminance = 2;
  * @param {MeshRenderer} renderer 目标渲染器
  * @param {number[]} rgba 主色 [r, g, b, a]，0..255
  */
-function attachLineMaterial (renderer: MeshRenderer, rgba: number[]) {
-    const material = new Material();
-    material.initialize({ effectName: 'builtin-unlit', defines: { USE_COLOR: false } });
-    material.setProperty('mainColor', new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
-    renderer.material = material;
-    const instance = renderer.getMaterialInstance(0);
-    instance.overridePipelineStates({ primitive: gfx.PrimitiveMode.LINE_LIST });
-    return instance;
+function attachLineMaterial(renderer: MeshRenderer, rgba: number[]) {
+  const material = new Material();
+  material.initialize({ effectName: "builtin-unlit", defines: { USE_COLOR: false } });
+  material.setProperty("mainColor", new Color(rgba[0], rgba[1], rgba[2], rgba[3]));
+  renderer.material = material;
+  const instance = renderer.getMaterialInstance(0);
+  instance.overridePipelineStates({ primitive: gfx.PrimitiveMode.LINE_LIST });
+  return instance;
 }
 
 /**
  * 用线段表（每两个顶点一段）建一个 LINE_LIST mesh。
  * @param {number[][]} segments 每项 [x1, y1, z1, x2, y2, z2]
  */
-function lineListMesh (segments: number[][]) {
-    const positions: number[] = [];
-    for (const s of segments) {
-        positions.push(s[0], s[1], s[2], s[3], s[4], s[5]);
-    }
-    return utils.createMesh({
-        positions,
-        primitiveMode: gfx.PrimitiveMode.LINE_LIST,
-    });
+function lineListMesh(segments: number[][]) {
+  const positions: number[] = [];
+  for (const s of segments) {
+    positions.push(s[0], s[1], s[2], s[3], s[4], s[5]);
+  }
+  return utils.createMesh({
+    positions,
+    primitiveMode: gfx.PrimitiveMode.LINE_LIST,
+  });
 }
 
-function addLineNode (name: string, segments: number[][], rgba: number[]): Node {
-    const node = new Node(name);
-    node.layer = Layers.Enum.DEFAULT;
-    scene.addChild(node);
-    const renderer = node.addComponent(MeshRenderer);
-    renderer.mesh = lineListMesh(segments);
-    attachLineMaterial(renderer, rgba);
-    return node;
+function addLineNode(name: string, segments: number[][], rgba: number[]): Node {
+  const node = new Node(name);
+  node.layer = Layers.Enum.DEFAULT;
+  scene.addChild(node);
+  const renderer = node.addComponent(MeshRenderer);
+  renderer.mesh = lineListMesh(segments);
+  attachLineMaterial(renderer, rgba);
+  return node;
 }
 
 // 三根坐标轴：X 红 / Y 绿 / Z 蓝，各一个 mesh（颜色由各自 mainColor 保证）
 const AXIS = 2.4;
-addLineNode('Axis X', [[-AXIS, 0, 0, AXIS, 0, 0]], [255, 70, 50, 255]);
-addLineNode('Axis Y', [[0, -AXIS * 0.4, 0, 0, AXIS, 0]], [80, 230, 110, 255]);
-addLineNode('Axis Z', [[0, 0, -AXIS, 0, 0, AXIS]], [80, 150, 255, 255]);
+addLineNode("Axis X", [[-AXIS, 0, 0, AXIS, 0, 0]], [255, 70, 50, 255]);
+addLineNode("Axis Y", [[0, -AXIS * 0.4, 0, 0, AXIS, 0]], [80, 230, 110, 255]);
+addLineNode("Axis Z", [[0, 0, -AXIS, 0, 0, AXIS]], [80, 150, 255, 255]);
 
 // 地面网格：XZ 平面上每 0.6 一根线，一个 mesh 一次 draw call
 const gridSegments: number[][] = [];
 const GRID = 3;
 const STEP = 0.6;
 for (let i = -GRID; i <= GRID + 0.001; i += STEP) {
-    const t = Math.round(i * 100) / 100;
-    gridSegments.push([t, 0, -GRID, t, 0, GRID]);
-    gridSegments.push([-GRID, 0, t, GRID, 0, t]);
+  const t = Math.round(i * 100) / 100;
+  gridSegments.push([t, 0, -GRID, t, 0, GRID]);
+  gridSegments.push([-GRID, 0, t, GRID, 0, t]);
 }
-addLineNode('Grid', gridSegments, [120, 160, 185, 255]);
+addLineNode("Grid", gridSegments, [120, 160, 185, 255]);
 
 // 立方体边线框：12 条边手工列出，一个 mesh
 const H = 0.5;
 const C: number[][] = [
-    [-H, -H, -H], [H, -H, -H], [H, -H, H], [-H, -H, H],
-    [-H, H, -H], [H, H, -H], [H, H, H], [-H, H, H],
+  [-H, -H, -H],
+  [H, -H, -H],
+  [H, -H, H],
+  [-H, -H, H],
+  [-H, H, -H],
+  [H, H, -H],
+  [H, H, H],
+  [-H, H, H],
 ];
 const EDGES: number[][] = [
-    [0, 1], [1, 2], [2, 3], [3, 0],
-    [4, 5], [5, 6], [6, 7], [7, 4],
-    [0, 4], [1, 5], [2, 6], [3, 7],
+  [0, 1],
+  [1, 2],
+  [2, 3],
+  [3, 0],
+  [4, 5],
+  [5, 6],
+  [6, 7],
+  [7, 4],
+  [0, 4],
+  [1, 5],
+  [2, 6],
+  [3, 7],
 ];
 const wireNode = addLineNode(
-    'Cube Wireframe',
-    EDGES.map(([a, b]) => [...C[a], ...C[b]]),
-    [255, 190, 80, 255],
+  "Cube Wireframe",
+  EDGES.map(([a, b]) => [...C[a], ...C[b]]),
+  [255, 190, 80, 255],
 );
 wireNode.setPosition(new Vec3(-2.2, 1.1, 0));
 
@@ -360,50 +417,50 @@ wireNode.setPosition(new Vec3(-2.2, 1.1, 0));
  * @param {number} thickness 截面边长
  * @param {Color} color 材质主色
  */
-function addBeam (name: string, from: number[], to: number[], thickness: number, color: Color): Node {
-    const node = new Node(name);
-    node.layer = Layers.Enum.DEFAULT;
-    scene.addChild(node);
-    node.setWorldPosition(new Vec3((from[0] + to[0]) / 2, (from[1] + to[1]) / 2, (from[2] + to[2]) / 2));
-    const dx = to[0] - from[0];
-    const dy = to[1] - from[1];
-    const dz = to[2] - from[2];
-    const length = Math.sqrt(dx * dx + dy * dy + dz * dz);
-    const renderer = node.addComponent(MeshRenderer);
-    renderer.mesh = utils.createMesh(primitives.box({ width: thickness, height: thickness, length }));
-    const material = new Material();
-    material.initialize({ effectName: 'builtin-standard' });
-    material.setProperty('mainColor', color);
-    renderer.material = material;
-    // box 的长边是 +Z：lookAt 终点即把长边转到线段方向
-    node.lookAt(new Vec3(to[0], to[1], to[2]));
-    return node;
+function addBeam(name: string, from: number[], to: number[], thickness: number, color: Color): Node {
+  const node = new Node(name);
+  node.layer = Layers.Enum.DEFAULT;
+  scene.addChild(node);
+  node.setWorldPosition(new Vec3((from[0] + to[0]) / 2, (from[1] + to[1]) / 2, (from[2] + to[2]) / 2));
+  const dx = to[0] - from[0];
+  const dy = to[1] - from[1];
+  const dz = to[2] - from[2];
+  const length = Math.sqrt(dx * dx + dy * dy + dz * dz);
+  const renderer = node.addComponent(MeshRenderer);
+  renderer.mesh = utils.createMesh(primitives.box({ width: thickness, height: thickness, length }));
+  const material = new Material();
+  material.initialize({ effectName: "builtin-standard" });
+  material.setProperty("mainColor", color);
+  renderer.material = material;
+  // box 的长边是 +Z：lookAt 终点即把长边转到线段方向
+  node.lookAt(new Vec3(to[0], to[1], to[2]));
+  return node;
 }
 
 // 三条粗棱从同一角出发，与真线并排对比粗细
-addBeam('Beam X', [0, 1.2, 0], [2.0, 1.2, 0], 0.07, new Color(255, 90, 70, 255));
-addBeam('Beam Y', [0, 1.2, 0], [0, 3.0, 0], 0.07, new Color(90, 230, 120, 255));
-addBeam('Beam Z', [0, 1.2, 0], [0, 1.2, 2.0], 0.07, new Color(90, 150, 255, 255));
+addBeam("Beam X", [0, 1.2, 0], [2.0, 1.2, 0], 0.07, new Color(255, 90, 70, 255));
+addBeam("Beam Y", [0, 1.2, 0], [0, 3.0, 0], 0.07, new Color(90, 230, 120, 255));
+addBeam("Beam Z", [0, 1.2, 0], [0, 1.2, 2.0], 0.07, new Color(90, 150, 255, 255));
 
 // 中心参照物：一个受光的实心 cube，用来确认三条轴的方向
-const cubeNode = new Node('Reference Cube');
+const cubeNode = new Node("Reference Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.5, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
-cubeRenderer.material = builtinResMgr.get('builtin-standard-material');
+cubeRenderer.material = builtinResMgr.get("builtin-standard-material");
 
 window.__airApp = app;
 app.run(scene);
 
-document.querySelector('#info')!.textContent = [
-    'lines: LINE_LIST + overridePipelineStates',
-    'beams: thin boxes (width 0.07)',
-    `nodes: ${scene.children.length}`,
-].join('\n');
+document.querySelector("#info")!.textContent = [
+  "lines: LINE_LIST + overridePipelineStates",
+  "beams: thin boxes (width 0.07)",
+  `nodes: ${scene.children.length}`,
+].join("\n");
 
-console.log('[manual/drawing-lines] running on cocosair');
+console.log("[manual/drawing-lines] running on cocosair");
 ```
 
 ## API 参考

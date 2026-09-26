@@ -93,7 +93,7 @@ const faceMat = new Material();
 faceMat.initialize({ effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } });
 faceMat.setProperty('mainTexture', faceTexture);
 
-function makeQuad (name: string, x: number): Node {
+function makeQuad(name: string, x: number): Node {
     const root = new Node(name);
     root.layer = Layers.Enum.DEFAULT;
     root.setPosition(new Vec3(x, 1.4, 0));
@@ -117,13 +117,13 @@ const info = document.querySelector('#info') as HTMLElement;
 class Rig extends Component {
     private _yaw = 0;
 
-    update (dt: number): void {
+    update(dt: number): void {
         if (!faceUploaded) {
             faceTexture.uploadData(paint); // 一次性上传，放 run 之后的 update 里
             faceUploaded = true;
         }
         this._yaw = ((this._yaw || 0) + 26 * dt) % 360;
-        const r = this._yaw * Math.PI / 180;
+        const r = (this._yaw * Math.PI) / 180;
         cameraNode.setPosition(new Vec3(Math.sin(r) * 8.5, 2.2, Math.cos(r) * 8.5));
         cameraNode.lookAt(new Vec3(0, 1.4, 0));
         // 球面公告板：整份抄相机世界旋转 → 面片恒平行于视平面

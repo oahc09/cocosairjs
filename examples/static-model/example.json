@@ -7,30 +7,13 @@
   "requiresDevTools": false,
   "title": "Static Model",
   "category": "mesh",
-  "apiClaims": [
-    "MeshRenderer",
-    "Material",
-    "Texture2D"
-  ],
-  "capabilities": [
-    "gltf",
-    "assets"
-  ],
+  "apiClaims": ["MeshRenderer", "Material", "Texture2D"],
+  "capabilities": ["gltf", "assets"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "asset-loaded",
-      "material-property",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "asset-loaded", "material-property", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -47,14 +30,8 @@
     "visual": "棋盘格贴图的金字塔/方块置于绿色地面上，纹理随视角变化清晰可辨"
   },
   "api": {
-    "primary": [
-      "loadAssetAsync",
-      "assetManager"
-    ],
-    "supporting": [
-      "Texture2D",
-      "ImageAsset"
-    ],
+    "primary": ["loadAssetAsync", "assetManager"],
+    "supporting": ["Texture2D", "ImageAsset"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -101,25 +78,25 @@
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L108"
+        "sourceLocation": "L112"
       },
       {
         "api": "Camera",
         "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L38"
       },
       {
         "api": "MeshRenderer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L111"
+        "sourceLocation": "L115"
       },
       {
         "api": "Material",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L104"
+        "sourceLocation": "L108"
       },
       {
         "api": "Texture2D",
@@ -137,7 +114,7 @@
         "api": "Mesh",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L101"
+        "sourceLocation": "L105"
       },
       {
         "api": "utils.createMesh",
@@ -149,100 +126,93 @@
         "api": "primitives.plane",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L120"
+        "sourceLocation": "L124"
       },
       {
         "api": "assetManager",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L100"
+        "sourceLocation": "L104"
       },
       {
         "api": "loadAssetAsync",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L101"
+        "sourceLocation": "L105"
       },
       {
         "api": "frameObject",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L128"
+        "sourceLocation": "L132"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L110"
+        "sourceLocation": "L114"
       },
       {
         "api": "math.Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L124"
+        "sourceLocation": "L128"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L109"
+        "sourceLocation": "L113"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L110"
+        "sourceLocation": "L114"
       },
       {
         "api": "Node.destroy",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L139"
+        "sourceLocation": "L143"
       },
       {
         "api": "Mesh.destroy",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L142"
+        "sourceLocation": "L146"
       },
       {
         "api": "Material.destroy",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L144"
+        "sourceLocation": "L148"
       },
       {
         "api": "Texture2D.destroy",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L146"
+        "sourceLocation": "L150"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "StaticBox",
-        "Ground"
-      ]
+      "nodes": ["Main Camera", "Main Light", "StaticBox", "Ground"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -255,11 +225,7 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          10,
-          0
-        ],
+        "position": [0, 10, 0],
         "provenance": [
           {
             "source": "main.js",
@@ -267,36 +233,24 @@
             "text": "position 默认值 [0,10,0]（示例显式传入）"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "StaticBox": {
-        "position": [
-          0,
-          -0.8,
-          0
-        ],
+        "position": [0, -0.8, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 110,
+            "line": 114,
             "text": "boxNode.setPosition(new Vec3(0, -0.8, 0));"
           }
         ]
       },
       "Ground": {
-        "position": [
-          0,
-          -2,
-          0
-        ],
+        "position": [0, -2, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 118,
+            "line": 122,
             "text": "groundNode.setPosition(new Vec3(0, -2, 0));"
           }
         ]
@@ -312,7 +266,7 @@
             "tolerance": null,
             "provenance": {
               "source": "main.js",
-              "line": 106,
+              "line": 110,
               "text": "checkerTexture"
             }
           }
@@ -322,17 +276,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              90,
-              110,
-              90,
-              255
-            ],
+            "value": [90, 110, 90, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "main.js",
-              "line": 124,
+              "line": 128,
               "text": "new Color(90, 110, 90, 255)"
             }
           }
@@ -358,14 +307,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, boxNode);）",
-        "line": "L128"
+        "line": "L132"
       }
     }
   },
   "promotion": {
-    "spec": "cab0aa290350",
-    "source": "63e4502a895fc0fa",
-    "candidate": "d1cc556759a27943",
+    "spec": "1c8e43051896",
+    "source": "a7fbfefe053020bf",
+    "candidate": "8746fc59b6aa0408",
     "verified": 22,
     "attested": 1,
     "units": 23

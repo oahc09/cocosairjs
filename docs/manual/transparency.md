@@ -5,25 +5,25 @@
 
 在 Cocos AIR 里，透明不是一个布尔开关，而是一条**管线状态**（`blendState`），必须在材质初始化时显式声明。要点：
 
-| AIR | 实测 |
-| --- | --- |
-| `material.initialize({ states: { blendState: ... } })`（开启混合） | ✓（本示例核心，见 §2） |
-| `mainColor` 的 `a` 分量控透明度（0–255 字节域，0.5≈128） | ✓ 但**单独设 a 不混合**，见 §3 踩坑 1 |
-| `states.depthStencilState`（同一 `IPassStates` 槽位控深度写入） | 契约在（d.ts 23589），本篇未取证 |
-| `model.priority`（透明队列排序优先级，d.ts 5407–5411） | 契约在，页面内未取证 |
-| "挖洞"双 pass：两私有材质 + 两 renderer 叠加，`states` 各自给 | 路线可行，本篇未取证 |
+| AIR                                                                | 实测                                  |
+| ------------------------------------------------------------------ | ------------------------------------- |
+| `material.initialize({ states: { blendState: ... } })`（开启混合） | ✓（本示例核心，见 §2）                |
+| `mainColor` 的 `a` 分量控透明度（0–255 字节域，0.5≈128）           | ✓ 但**单独设 a 不混合**，见 §3 踩坑 1 |
+| `states.depthStencilState`（同一 `IPassStates` 槽位控深度写入）    | 契约在（d.ts 23589），本篇未取证      |
+| `model.priority`（透明队列排序优先级，d.ts 5407–5411）             | 契约在，页面内未取证                  |
+| "挖洞"双 pass：两私有材质 + 两 renderer 叠加，`states` 各自给      | 路线可行，本篇未取证                  |
 
 ## 1. 透明相关 API 面（实测锚点）
 
-| 入口 | 锚点 | 语义（实测） |
-| --- | --- | --- |
-| `Material.initialize` 的 `states?: renderer.PassOverrides \| PassOverrides[]` | d.ts 23773 | 覆盖 effect 声明的管线状态；`PassOverrides = RecursivePartial<EffectAsset.IPassStates>`（d.ts 7321） |
-| `IPassStates`：`priority / rasterizerState / depthStencilState / blendState / phase` | d.ts 23585–23596 | 可覆盖的 pass 状态全集 |
-| `gfx.BlendState` 构造器 `(blend?, blendSrc?, blendDst?, blendEq?, ...)` | d.ts 3973 / 4005 | 每 target 一组混合参数 |
-| `gfx.BlendFactor`：`ZERO=0, ONE=1, SRC_ALPHA=2, ONE_MINUS_SRC_ALPHA=4` | d.ts 2664–2680 | 标准 alpha 混合即 `src=2, dst=4` |
-| `material.passes[0].blendState.targets[0]` | d.ts 23830 / 7552 / 3998 | 读回当前 pass 混合状态（覆盖层的证据来源） |
-| `material.overridePipelineStates(overrides, passIdx?)` | d.ts 23885 | 运行时改管线状态——**实测对本构建的 builtin-standard 不生效**，见 §3 踩坑 3 |
-| `model.priority`（Model 在透明队列中的排序优先级） | d.ts 5407–5411 | 透明队列按此值排序；取 model 的公开路径未取证 |
+| 入口                                                                                 | 锚点                     | 语义（实测）                                                                                         |
+| ------------------------------------------------------------------------------------ | ------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `Material.initialize` 的 `states?: renderer.PassOverrides \| PassOverrides[]`        | d.ts 23773               | 覆盖 effect 声明的管线状态；`PassOverrides = RecursivePartial<EffectAsset.IPassStates>`（d.ts 7321） |
+| `IPassStates`：`priority / rasterizerState / depthStencilState / blendState / phase` | d.ts 23585–23596         | 可覆盖的 pass 状态全集                                                                               |
+| `gfx.BlendState` 构造器 `(blend?, blendSrc?, blendDst?, blendEq?, ...)`              | d.ts 3973 / 4005         | 每 target 一组混合参数                                                                               |
+| `gfx.BlendFactor`：`ZERO=0, ONE=1, SRC_ALPHA=2, ONE_MINUS_SRC_ALPHA=4`               | d.ts 2664–2680           | 标准 alpha 混合即 `src=2, dst=4`                                                                     |
+| `material.passes[0].blendState.targets[0]`                                           | d.ts 23830 / 7552 / 3998 | 读回当前 pass 混合状态（覆盖层的证据来源）                                                           |
+| `material.overridePipelineStates(overrides, passIdx?)`                               | d.ts 23885               | 运行时改管线状态——**实测对本构建的 builtin-standard 不生效**，见 §3 踩坑 3                           |
+| `model.priority`（Model 在透明队列中的排序优先级）                                   | d.ts 5407–5411           | 透明队列按此值排序；取 model 的公开路径未取证                                                        |
 
 ## 2. 示例拆解
 
@@ -32,24 +32,24 @@ alpha 64/128/192 递减，混合状态在 `initialize` 里一次给齐：
 
 ```js
 [64, 128, 192].forEach((alpha, i) => {
-    const n = new Node(`Glass-${i}`);
-    n.layer = Layers.Enum.DEFAULT;
-    n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
-    rig.addChild(n);
-    const r = n.addComponent(MeshRenderer);
-    r.mesh = sphereMesh;
-    const m = new Material();
-    m.initialize({
-        effectName: 'builtin-standard',
-        states: {
-            blendState: {
-                targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
-            },
-        },
-    });
-    m.setProperty('mainColor', new Color(245, 245, 250, alpha));
-    r.material = m;
-    glassMats.push(m);
+  const n = new Node(`Glass-${i}`);
+  n.layer = Layers.Enum.DEFAULT;
+  n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
+  rig.addChild(n);
+  const r = n.addComponent(MeshRenderer);
+  r.mesh = sphereMesh;
+  const m = new Material();
+  m.initialize({
+    effectName: "builtin-standard",
+    states: {
+      blendState: {
+        targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
+      },
+    },
+  });
+  m.setProperty("mainColor", new Color(245, 245, 250, alpha));
+  r.material = m;
+  glassMats.push(m);
 });
 ```
 
@@ -84,14 +84,15 @@ rig yaw: 26.0° (swings to reveal overlap order)
 
 1. **`mainColor.a < 255` 不会自动开启混合**。默认 `builtin-standard` 的三条 pass 读回为：
 
-   | pass | phase | blend | src / dst | 判读 |
-   | --- | --- | --- | --- | --- |
-   | 0 | 16 | false | ONE / ZERO | 主 pass：直接替换，**不透明** |
-   | 1 | 2 | true | ONE / ONE | 附加光 forward-add 累加 pass |
-   | 2 | 8 | false | ONE / ZERO | 收尾 pass |
+   | pass | phase | blend | src / dst  | 判读                          |
+   | ---- | ----- | ----- | ---------- | ----------------------------- |
+   | 0    | 16    | false | ONE / ZERO | 主 pass：直接替换，**不透明** |
+   | 1    | 2     | true  | ONE / ONE  | 附加光 forward-add 累加 pass  |
+   | 2    | 8     | false | ONE / ZERO | 收尾 pass                     |
 
    只设 alpha 时球体画得严严实实（首版示例截图实锤：立方体只在球边缘露出，并非透视）。
    与 cocos 编辑器文档印象不同的地方在此。
+
 2. **直接改 `pass.blendState.targets[0]` 的字段：读回变了、画面不变**
    （`t.blend = true; t.blendSrc = 2; t.blendDst = 4` 后读回 `blend=true src=2 dst=4`，截图仍不透明）——
    管线状态被设备层缓存，事后改对象不触发重建。别用。
@@ -124,38 +125,65 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-transparent/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>How to Draw Transparent Objects — 绘制透明对象（docs/manual/transparency.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -174,28 +202,28 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('transparent');
+const scene = new Scene("transparent");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.8, 8.5));
 cameraNode.lookAt(new Vec3(0, 1.2, 0));
@@ -209,88 +237,84 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-40, -25, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 后排：三颗不透明色块（被遮挡物） ----
-const opaqueColors = [
-    new Color(220, 60, 60, 255),
-    new Color(60, 200, 90, 255),
-    new Color(70, 120, 235, 255),
-];
+const opaqueColors = [new Color(220, 60, 60, 255), new Color(60, 200, 90, 255), new Color(70, 120, 235, 255)];
 const sharedBox = utils.createMesh(primitives.box({ width: 1.1, height: 1.1, length: 1.1 }));
 opaqueColors.forEach((col, i) => {
-    const n = new Node(`Opaque-${i}`);
-    n.layer = Layers.Enum.DEFAULT;
-    n.setPosition(new Vec3((i - 1) * 1.6, 1.2, -0.6));
-    scene.addChild(n);
-    const r = n.addComponent(MeshRenderer);
-    r.mesh = sharedBox;
-    const m = new Material();
-    m.initialize({ effectName: 'builtin-standard' });
-    m.setProperty('mainColor', col);
-    r.material = m;
+  const n = new Node(`Opaque-${i}`);
+  n.layer = Layers.Enum.DEFAULT;
+  n.setPosition(new Vec3((i - 1) * 1.6, 1.2, -0.6));
+  scene.addChild(n);
+  const r = n.addComponent(MeshRenderer);
+  r.mesh = sharedBox;
+  const m = new Material();
+  m.initialize({ effectName: "builtin-standard" });
+  m.setProperty("mainColor", col);
+  r.material = m;
 });
 
 // ---- 前排：三个半透明球（alpha 64/128/192），挂 rig 下整体旋转 ----
-const rig = new Node('Rig');
+const rig = new Node("Rig");
 rig.setPosition(new Vec3(0, 1.2, 0.9));
 scene.addChild(rig);
 
 const sphereMesh = utils.createMesh(primitives.sphere(0.75, 24, 16));
 const glassMats: Material[] = [];
 [64, 128, 192].forEach((alpha, i) => {
-    const n = new Node(`Glass-${i}`);
-    n.layer = Layers.Enum.DEFAULT;
-    n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
-    rig.addChild(n);
-    const r = n.addComponent(MeshRenderer);
-    r.mesh = sphereMesh;
-    const m = new Material();
-    m.initialize({
-        effectName: 'builtin-standard',
-        states: {
-            blendState: {
-                targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
-            },
-        },
-    });
-    m.setProperty('mainColor', new Color(245, 245, 250, alpha));
-    r.material = m;
-    glassMats.push(m);
+  const n = new Node(`Glass-${i}`);
+  n.layer = Layers.Enum.DEFAULT;
+  n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
+  rig.addChild(n);
+  const r = n.addComponent(MeshRenderer);
+  r.mesh = sphereMesh;
+  const m = new Material();
+  m.initialize({
+    effectName: "builtin-standard",
+    states: {
+      blendState: {
+        targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
+      },
+    },
+  });
+  m.setProperty("mainColor", new Color(245, 245, 250, alpha));
+  r.material = m;
+  glassMats.push(m);
 });
 
 // ---- 覆盖层：读回 pass 混合状态 ----
-const info = document.querySelector('#info') as HTMLElement;
-function blendReadout (m: Material): string {
-    try {
-        const t = m.passes[0].blendState.targets[0];
-        return `blend=${t.blend} src=${t.blendSrc} dst=${t.blendDst}`;
-    } catch (e) {
-        return `readout failed: ${e.name}`;
-    }
+const info = document.querySelector("#info") as HTMLElement;
+function blendReadout(m: Material): string {
+  try {
+    const t = m.passes[0].blendState.targets[0];
+    return `blend=${t.blend} src=${t.blendSrc} dst=${t.blendDst}`;
+  } catch (e) {
+    return `readout failed: ${e.name}`;
+  }
 }
 class Spinner extends Component {
-    private _a = 0;
-    private _readout = '';
-    constructor () {
-        super();
-        this._a = 0;
-        this._readout = blendReadout(glassMats[1]);
-    }
-    update (dt: number): void {
-        this._a += dt * 30;
-        rig.setRotationFromEuler(0, Math.sin(this._a * Math.PI / 180) * 35, 0);
-        info.textContent = [
-            'transparency: mainColor.a = 64/128/192 + initialize({states.blendState}) (per-sphere private Material)',
-            `pass[0].blendState.targets[0]: ${this._readout} (2=SRC_ALPHA, 4=ONE_MINUS_SRC_ALPHA)`,
-            `rig yaw: ${(Math.sin(this._a * Math.PI / 180) * 35).toFixed(1)}° (swings to reveal overlap order)`,
-            'opaque row behind: red/green/blue cubes; glass spheres in front',
-        ].join('\n');
-    }
+  private _a = 0;
+  private _readout = "";
+  constructor() {
+    super();
+    this._a = 0;
+    this._readout = blendReadout(glassMats[1]);
+  }
+  update(dt: number): void {
+    this._a += dt * 30;
+    rig.setRotationFromEuler(0, Math.sin((this._a * Math.PI) / 180) * 35, 0);
+    info.textContent = [
+      "transparency: mainColor.a = 64/128/192 + initialize({states.blendState}) (per-sphere private Material)",
+      `pass[0].blendState.targets[0]: ${this._readout} (2=SRC_ALPHA, 4=ONE_MINUS_SRC_ALPHA)`,
+      `rig yaw: ${(Math.sin((this._a * Math.PI) / 180) * 35).toFixed(1)}° (swings to reveal overlap order)`,
+      "opaque row behind: red/green/blue cubes; glass spheres in front",
+    ].join("\n");
+  }
 }
 cameraNode.addComponent(Spinner);
 
@@ -298,7 +322,7 @@ window.__airApp = app;
 window.__inspect = { glassMats, rig };
 app.run(scene);
 
-console.log('[manual/transparent] running on cocosair');
+console.log("[manual/transparent] running on cocosair");
 ```
 
 ---

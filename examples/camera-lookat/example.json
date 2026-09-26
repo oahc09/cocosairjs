@@ -19,14 +19,8 @@
     "visual": "初始画面以蓝色球为中心，点击后取景中心跳到橙色球，相机角度切换干脆无插值"
   },
   "api": {
-    "primary": [
-      "Camera",
-      "Node.setRotationFromEuler"
-    ],
-    "supporting": [
-      "input",
-      "Input"
-    ],
+    "primary": ["Camera", "Node.setRotationFromEuler"],
+    "supporting": ["input", "Input"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -48,139 +42,129 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "移动相机位置冒充朝向变化",
-      "调用不存在的 Camera.lookAt（当前 Inventory 无此 API）"
-    ],
+    "forbiddenShortcut": ["移动相机位置冒充朝向变化", "调用不存在的 Camera.lookAt（当前 Inventory 无此 API）"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L11"
+        "sourceLocation": "L27"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L13"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L23"
+        "sourceLocation": "L38"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L36"
+        "sourceLocation": "L61"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L41"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L32"
+        "sourceLocation": "L54"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L63"
+        "sourceLocation": "L94"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L63"
+        "sourceLocation": "L94"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L29"
+        "sourceLocation": "L48"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L40"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L47"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L16"
+        "sourceLocation": "L32"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L17"
+        "sourceLocation": "L33"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L18"
+        "sourceLocation": "L34"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L37"
+        "sourceLocation": "L62"
       },
       {
         "api": "primitives.sphere",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L37"
+        "sourceLocation": "L62"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L23"
+        "sourceLocation": "L39"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L24"
+        "sourceLocation": "L40"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L51"
+        "sourceLocation": "L80"
       }
     ]
   },
-  "capabilities": [
-    "camera"
-  ],
+  "capabilities": ["camera"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "TargetLeft",
-        "TargetRight"
-      ]
+      "nodes": ["Main Camera", "Main Light", "TargetLeft", "TargetRight"]
     }
   },
   "interaction": {
@@ -192,23 +176,12 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -223,62 +196,42 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.5,
-          7
-        ],
+        "position": [0, 2.5, 7],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 24,
+            "line": 40,
             "text": "cameraNode.setPosition(new Vec3(0, 2.5, 7));"
           }
         ]
       },
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 31,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
+            "line": 52,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "TargetLeft": {
-        "position": [
-          -3,
-          0.6,
-          0
-        ],
+        "position": [-3, 0.6, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 35,
+            "line": 60,
             "text": "leftSphere.setPosition(new Vec3(-3, 0.6, 0));"
           }
         ]
       },
       "TargetRight": {
-        "position": [
-          3,
-          0.6,
-          0
-        ],
+        "position": [3, 0.6, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 41,
+            "line": 68,
             "text": "rightSphere.setPosition(new Vec3(3, 0.6, 0));"
           }
         ]
@@ -289,17 +242,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              65,
-              155,
-              235,
-              255
-            ],
+            "value": [65, 155, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 38,
+              "line": 63,
               "text": "new Color(65, 155, 235, 255)"
             }
           }
@@ -309,17 +257,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              125,
-              65,
-              255
-            ],
+            "value": [235, 125, 65, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 44,
+              "line": 71,
               "text": "new Color(235, 125, 65, 255)"
             }
           }
@@ -328,9 +271,9 @@
     }
   },
   "promotion": {
-    "spec": "0f969f97ee12",
-    "source": "ada3caa09ec5937e",
-    "candidate": "d1cc556759a27943",
+    "spec": "466cfd2b2403",
+    "source": "ef1843dfdc0ab7c7",
+    "candidate": "8746fc59b6aa0408",
     "verified": 18,
     "attested": 1,
     "units": 19

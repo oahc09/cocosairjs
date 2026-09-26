@@ -1,10 +1,8 @@
 # 脚本组件开发流程（Code First）
 
-> 状态：**工作文档（G3 范式交付）**。本页只写经当前 SDK（1.2.0，bundle `9376e3062269376c`）
-> 运行验证过的用法；每条纪律都标注了实证出处（G1 staging 示例 / 探针证据 / 既有 Gallery 示例）。
-> 贯穿示例：`scene-switch-reentry`（场景切换与复入，`examples/` 正典，r52 集成）。
-> 集成待办：并入 `docs/manual/index.md` 索引（避免与并行手册线冲突，见
-> `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例实施台账.md`）。
+> 状态：**FULL（2026-09-26 修复轮）**。配套示例位于 Gallery 的 `examples/`。
+> 独立组件样板：`hello-cube/src/components/Rotator.ts` 与 `scene-switch-reentry/src/components/Ticker.ts`；
+> 生命周期、事件退订和复入由场景探针验证。
 
 ## 1. 启动顺序（时机纪律）
 
@@ -93,12 +91,14 @@ class GuardedLoader extends Component {
   cancelled = false;
   async loadMissing(): Promise<void> {
     try {
-      await loadAssetAsync(url);
+      const result = await loadAssetAsync(url);
+      if (this.cancelled || !isValid(this.node)) return;
+      this.applyResult(result);
     } catch (e) {
       if (this.cancelled || !isValid(this.node)) {
         return;
       } // 双守卫：不落任何效果
-      this.applyResult();
+      this.showError(e);
     }
   }
 }
@@ -178,8 +178,8 @@ app.run(sceneB); // = director.runSceneImmediate(sceneB)
   `illuminance`/`luminance` 必须用 HDR 量级（主光 ~30000–65000 lux、点光 ~千级以上）；
   LDR 量级（2/40/120）× exposure ≈ 0 = 视觉不可见。GAP-L1（点/球光 att≡0）已修复
   （fixture 对齐上游 4.0 判别语义），四型光源均有真实可视贡献。
-- 已知缺口对照表见 `docs/api-scenario-gap-matrix.md` §7（GAP-C1 worldToScreen 零向量、
-  GAP-C2 Camera 组件 resize 导出面、GAP-M1 USE_TEXTURE 宏名等）——写断言前先查表，别把缺口当自己的 bug 调。
+- 已知缺口对照表见 `docs/api-scenario-gap-matrix.md` §7（worldToScreen 的参数顺序与深度口径、
+  Camera 组件与渲染相机的接口区别、USE_TEXTURE 宏名等）——写断言前先查表，别把缺口当自己的 bug 调。
 
 ## 8. 项目结构与发布
 
@@ -190,7 +190,7 @@ my-app/
 ├── index.html          # 官方模板：GameDiv/Cocos3dGameContainer/GameCanvas + importmap
 ├── src/
 │   ├── main.ts         # 只负责启动与组装：createAirApp → build scene → app.run
-│   └── components/     # 交互与业务组件（G2 游戏示例采用；单文件示例可内联）
+│   └── components/     # 交互与业务组件（hello-cube / scene-switch-reentry 已采用）
 ├── assets/             # glb/png/json 等，许可随附（*.LICENSE.md）
 └── example.json        # Gallery 示例规格（效果契约 + claims/evidence + validators）
 ```
@@ -217,3 +217,14 @@ my-app/
 - [ ] 行为断言失败会 `throw`（而不是 console.log）？
 - [ ] 状态探针（`__trialProbe`/`__lifecycle` 等）就位且纯读不副作用？
 - [ ] `example.json` 的 evidence 行号与最终源码一致（`node tools/examples/spec-evidence.cjs --check`）？
+
+## 9. 从样板到组件的开发循环
+
+1. 以 `examples/starter/index.html` 与 `examples/starter/src/main.ts` 建立启动入口，确认画布先于引擎导入。
+2. 在 `src/components/` 创建原生 `Component` 子类；使用 `hello-cube` 的 `Rotator` 作为最小模板。
+3. TypeScript 源码的相对导入写 `.js` 后缀，例如 `./components/Rotator.js`。TypeScript/esbuild 解析对应 `.ts`；开发服务器按同一规则提供模块。
+4. 在未激活节点上添加组件并注入依赖，随后挂入场景；`Ticker` 展示记录集合和点击回调注入。
+5. `npm run dev -- --example hello-cube` 启动；运行 `npm run format:check`、`npm run verify:g3-tooling` 和该例浏览器验证。
+6. 发布用户应用前由 bundler 打包 TypeScript，运行期依赖 `cocosair`；开发服务器的 `.js` 到 `.ts` 映射不是生产服务器要求。
+
+新组件的 `src/**` 内容全部进入源码指纹。移动组件或修改行为后，应更新规格证据行号并重采对应浏览器证据；不可复用旧指纹。格式化仅覆盖项目自有示例与指定工具，第三方资产与根目录 `src/` 保持原字节。

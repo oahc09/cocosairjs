@@ -46,38 +46,58 @@ import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 const UI_LAYER = Layers.Enum.UI_3D;
 const r = (v, n = 4) => Math.round(v * 10 ** n) / 10 ** n;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const safe = (fn) => { try { return fn(); } catch (e) { return 'ERR:' + e.message; } };
+const safe = (fn) => {
+    try {
+        return fn();
+    } catch (e) {
+        return 'ERR:' + e.message;
+    }
+};
 
 /**
  * 带硬超时的 await。DOM 播放器通路（webkit-2361 没有 Web Audio API ⇒ 引擎退回 `<audio>`）上
  * `getSampleRate()/getPCMData()` 的 promise 可能**永不 settle**，不兜底会挂死整条序列
  * （实测 r3：p3Decoded 只剩 `{playerType:null}`，summary 停在 'audio: loading'）。
  */
-async function safeAsync (fn, timeoutMs = 1200) {
+async function safeAsync(fn, timeoutMs = 1200) {
     try {
         return await Promise.race([
             Promise.resolve().then(fn),
-            sleep(timeoutMs).then(() => { throw new Error(`never-settled-in-${timeoutMs}ms`); }),
+            sleep(timeoutMs).then(() => {
+                throw new Error(`never-settled-in-${timeoutMs}ms`);
+            }),
         ]);
-    } catch (e) { return 'ERR:' + e.message; }
+    } catch (e) {
+        return 'ERR:' + e.message;
+    }
 }
 
 /** 轮询到条件成立返回实际耗时（ms），超时返回 -1 —— 播放解锁/判尾的真实落地时刻不靠猜延时 */
-async function waitFor (fn, timeoutMs = 2000, stepMs = 25) {
+async function waitFor(fn, timeoutMs = 2000, stepMs = 25) {
     const t0 = performance.now();
     for (;;) {
         let hit = false;
-        try { hit = !!fn(); } catch (e) { hit = false; }
-        if (hit) { return Math.round(performance.now() - t0); }
-        if (performance.now() - t0 > timeoutMs) { return -1; }
+        try {
+            hit = !!fn();
+        } catch (e) {
+            hit = false;
+        }
+        if (hit) {
+            return Math.round(performance.now() - t0);
+        }
+        if (performance.now() - t0 > timeoutMs) {
+            return -1;
+        }
         await sleep(stepMs);
     }
 }
 
 const AUDIO_STATE = AudioSource.AudioState || {};
 const STATE_NAME = {};
-for (const key of Object.keys(AUDIO_STATE)) { STATE_NAME[AUDIO_STATE[key]] = key; }
-const stateOf = (v) => (`${STATE_NAME[v] === undefined ? 'UNKNOWN' : STATE_NAME[v]}(${v})`);
+for (const key of Object.keys(AUDIO_STATE)) {
+    STATE_NAME[AUDIO_STATE[key]] = key;
+}
+const stateOf = (v) => `${STATE_NAME[v] === undefined ? 'UNKNOWN' : STATE_NAME[v]}(${v})`;
 
 // ---------------------------------------------------------------- 场景
 const canvasEl = document.querySelector('#GameCanvas');
@@ -148,7 +168,7 @@ const results = {};
 const events = [];
 
 /** 一次可回读的完整外部状态快照（只经 public getter，不碰私有字段） */
-function snap (src, tag) {
+function snap(src, tag) {
     return {
         tag,
         tMs: Math.round(performance.now()),
@@ -163,7 +183,7 @@ function snap (src, tag) {
 }
 
 /** 64 个 bin 的包络（|max|）+ 前后半段各自峰值（资产里是 2:1） */
-function computeBins (view0, count) {
+function computeBins(view0, count) {
     bins.length = 0;
     const per = Math.floor(view0.length / count);
     const seg = Math.floor(view0.length / 2);
@@ -172,8 +192,16 @@ function computeBins (view0, count) {
         let peak = 0;
         for (let i = b * per; i < (b + 1) * per; i++) {
             const v = Math.abs(view0.getData(i));
-            if (v > peak) { peak = v; }
-            if (i < seg) { if (v > out.maxFirst) { out.maxFirst = v; } } else if (v > out.maxSecond) { out.maxSecond = v; }
+            if (v > peak) {
+                peak = v;
+            }
+            if (i < seg) {
+                if (v > out.maxFirst) {
+                    out.maxFirst = v;
+                }
+            } else if (v > out.maxSecond) {
+                out.maxSecond = v;
+            }
         }
         bins.push(peak);
     }
@@ -182,7 +210,7 @@ function computeBins (view0, count) {
 
 const FRAME_CYCLE_MS = 2400;
 
-function drawWave (playhead) {
+function drawWave(playhead) {
     wave.clear();
     wave.strokeColor = new Color(60, 74, 96, 255);
     wave.lineWidth = 1;
@@ -215,16 +243,20 @@ function drawWave (playhead) {
 }
 
 class WaveDriver extends Component {
-    update () {
-        if (!srcB || !clip) { return; }
+    update() {
+        if (!srcB || !clip) {
+            return;
+        }
         const dur = srcB.duration || 1.6;
         drawWave(srcB.playing ? srcB.currentTime / dur : null);
     }
 }
 waveNode.addComponent(WaveDriver);
 
-function summary () {
-    if (!clip) { return status.string; }
+function summary() {
+    if (!clip) {
+        return status.string;
+    }
     status.string = `audio clip=${r(clip.getDuration(), 2)}s vol=${r(srcB.volume, 2)} loop=${srcB.loop} ended=${endedCount} state=${stateOf(srcB.state)}`;
     return status.string;
 }
@@ -232,10 +264,14 @@ function summary () {
 // ---------------------------------------------------------------- 资源加载 + 手势前的首次播放
 const CLIP_URL = './assets/tone.wav';
 
-function loadRemote (url) {
+function loadRemote(url) {
     return new Promise((resolve, reject) => {
         assetManager.loadRemote(url, (err, asset) => {
-            if (err) { reject(err); } else { resolve(asset); }
+            if (err) {
+                reject(err);
+            } else {
+                resolve(asset);
+            }
         });
     });
 }
@@ -243,6 +279,7 @@ function loadRemote (url) {
 clip = await loadRemote(CLIP_URL);
 
 const audioNode = new Node('AudioHost');
+audioNode.active = false; // 配置完成前不触发 AudioSource 默认的 playOnAwake。
 audioNode.layer = UI_LAYER;
 canvasNode.addChild(audioNode);
 srcA = audioNode.addComponent(AudioSource);
@@ -251,6 +288,7 @@ for (const s of [srcA, srcB]) {
     s.playOnAwake = false;
     s.clip = clip;
 }
+audioNode.active = true;
 audioNode.on(AudioSource.EventType.STARTED, (src) => {
     startedCount++;
     events.push(`started@${Math.round(performance.now())}`);
@@ -276,8 +314,15 @@ results.p2PreGesture.autoplayBlocked = startedCount === 0;
 results.p2PreGesture.stateBeforeGesture = results.p2PreGesture.later.state;
 
 // ---------------------------------------------------------------- 交互：一次点击跑完 8 阶段
-async function runSequence () {
-    if (!clip) { return summary(); }
+async function runSequence() {
+    if (!clip) {
+        return summary();
+    }
+
+    // 必须在手势调用栈内启动，不能等 decode/PCM 的异步读取结束后再请求解锁。
+    const atGesture = snap(srcB, 'atGesture');
+    srcB.play();
+    const rightAfter = snap(srcB, 'rightAfterPlay');
 
     results.p1Asset = {
         ctor: clip.constructor.name,
@@ -304,27 +349,30 @@ async function runSequence () {
     results.p3Decoded.sampleRate = await safeAsync(() => srcB.getSampleRate());
     const view0 = await safeAsync(() => srcB.getPCMData(0));
     // 判别必须是「像 AudioPCMDataView」而不是「有 length」：safeAsync 兜出来的错误串同样有 length
-    const ok0 = !!view0 && typeof view0 === 'object' && typeof view0.getData === 'function' && typeof view0.length === 'number';
+    const ok0 =
+        !!view0 && typeof view0 === 'object' && typeof view0.getData === 'function' && typeof view0.length === 'number';
     const peaks = ok0 ? computeBins(view0, 64) : { maxFirst: 0, maxSecond: 0 };
     results.p3Decoded.pcmViewCtor = ok0 ? view0.constructor.name : null;
-    results.p3Decoded.isAudioPCMDataView = ok0 ? (view0 instanceof AudioPCMDataView) : null;
+    results.p3Decoded.isAudioPCMDataView = ok0 ? view0 instanceof AudioPCMDataView : null;
     results.p3Decoded.pcmLength = ok0 ? view0.length : 0;
     results.p3Decoded.firstSample = ok0 ? r(view0.getData(0), 4) : null;
     results.p3Decoded.bins = bins.length;
     results.p3Decoded.binPeakFirstHalf = r(peaks.maxFirst, 3);
     results.p3Decoded.binPeakSecondHalf = r(peaks.maxSecond, 3);
     results.p3Decoded.peakInRange = peaks.maxFirst > 0.4 && peaks.maxFirst < 0.6;
-    results.p3Decoded.secondHalfQuieter = peaks.maxSecond > 0 && (peaks.maxFirst / peaks.maxSecond) > 1.5;
+    results.p3Decoded.secondHalfQuieter = peaks.maxSecond > 0 && peaks.maxFirst / peaks.maxSecond > 1.5;
     results.p3Decoded.lengthPositive = peaks.maxFirst > 0;
     results.p3Decoded.channel1 = ok0
-        ? await safeAsync(() => srcB.getPCMData(1).then((v) => (v ? `ok(len=${v.length})` : 'undefined'), (e) => String((e && e.name) || e)))
+        ? await safeAsync(() =>
+              srcB.getPCMData(1).then(
+                  (v) => (v ? `ok(len=${v.length})` : 'undefined'),
+                  (e) => String((e && e.name) || e),
+              ),
+          )
         : String(view0);
 
     // srcB：在手势回调内 play()（文档给的第一条合法通路）。
     // 解锁时刻不靠猜延时：轮询到真的 PLAYING 才记耗时（无音频输出的 headless 里 resume() 可慢到 1 s 级）。
-    const atGesture = snap(srcB, 'atGesture');
-    srcB.play();
-    const rightAfter = snap(srcB, 'rightAfterPlay');
     const unlockMs = await waitFor(() => srcB.playing, 2500);
     const afterGesture = snap(srcB, 'afterUnlock');
     hint.string = afterGesture.playing ? 'unlocked: playing' : 'unlocked: AudioContext never reached running';
@@ -452,13 +500,15 @@ async function runSequence () {
 // 不加闩锁的话第二次点击会整段重跑（started/ended 计数翻倍 ⇒ summary 与 probeEquals 全飘）。
 let sequenceStarted = false;
 canvasNode.on(Node.EventType.TOUCH_START, () => {
-    if (sequenceStarted) { return summary(); }
+    if (sequenceStarted) {
+        return summary();
+    }
     sequenceStarted = true;
     return runSequence();
 });
 
 // ---------------------------------------------------------------- 资源生命周期（§25 合同）
-function heldAssets () {
+function heldAssets() {
     return [{ name: 'toneClip', ref: clip }];
 }
 
@@ -504,9 +554,11 @@ app.run(scene);
  * webkit 走 DOM 分支（`_ccprivate$_domAudio`），chromium/firefox 走 WebAudio 分支。
  * 两次采样差 `srcBDelta` 用来判别「AudioSource 报 PLAYING 但媒体元素没走表」这类假播放。
  */
-function playerView (src) {
+function playerView(src) {
     const facade = src['_player'];
-    if (!facade) { return null; }
+    if (!facade) {
+        return null;
+    }
     const impl = facade['_ccprivate$_player'];
     const dom = safe(() => impl['_ccprivate$_domAudio']);
     const out = {
@@ -547,7 +599,10 @@ window.__probe = async () => {
                 srcA: safe(() => playerView(srcA)),
                 srcB: b1,
                 srcBAtT0: b0,
-                srcBDelta: (b0 && b1 && typeof b0.currentTime === 'number' && typeof b1.currentTime === 'number') ? r(b1.currentTime - b0.currentTime, 3) : null,
+                srcBDelta:
+                    b0 && b1 && typeof b0.currentTime === 'number' && typeof b1.currentTime === 'number'
+                        ? r(b1.currentTime - b0.currentTime, 3)
+                        : null,
             },
             canvasChildren: canvasNode.children.length,
             endedCount,

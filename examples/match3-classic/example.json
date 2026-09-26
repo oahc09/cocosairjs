@@ -20,15 +20,8 @@
     "visual": "深色背景上 8×8 彩色宝石棋盘（六色、canvas 动态纹理单 quad）；消除白闪、落下补牌逐波播放；选中格白色呼吸高亮（空闲期持续 frame-diff）；左上角 DOM 面板显示 state/score/moves/chain/locks/rollbacks"
   },
   "api": {
-    "primary": [
-      "Texture2D.reset",
-      "Material.setProperty",
-      "Component"
-    ],
-    "supporting": [
-      "input",
-      "utils.createMesh"
-    ],
+    "primary": ["Texture2D.reset", "Material.setProperty", "Component"],
+    "supporting": ["input", "utils.createMesh"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -64,147 +57,141 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L470"
+        "sourceLocation": "L522"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L472"
+        "sourceLocation": "L524"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L396"
+        "sourceLocation": "L442"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L400"
+        "sourceLocation": "L446"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L398"
+        "sourceLocation": "L444"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L399"
+        "sourceLocation": "L445"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L407"
+        "sourceLocation": "L455"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L401"
+        "sourceLocation": "L447"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L477"
+        "sourceLocation": "L529"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L397"
+        "sourceLocation": "L443"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L398"
+        "sourceLocation": "L444"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L394"
+        "sourceLocation": "L440"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L392"
+        "sourceLocation": "L438"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L393"
+        "sourceLocation": "L439"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L394"
+        "sourceLocation": "L440"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L402"
+        "sourceLocation": "L448"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L402"
+        "sourceLocation": "L449"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L316"
+        "sourceLocation": "L358"
       },
       {
         "api": "Texture2D.reset",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L317"
+        "sourceLocation": "L359"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L625"
+        "sourceLocation": "L726"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L625"
+        "sourceLocation": "L726"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L666"
+        "sourceLocation": "L782"
       }
     ]
   },
-  "capabilities": [
-    "game"
-  ],
+  "capabilities": ["game"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Board",
-        "Driver"
-      ]
+      "nodes": ["Main Camera", "Board", "Driver"]
     }
   },
   "interaction": {
@@ -216,27 +203,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "material-property",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "material-property", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -250,53 +223,37 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          0,
-          6
-        ],
+        "position": [0, 0, 6],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 476,
+            "line": 528,
             "text": "cameraNode.setPosition(new Vec3(0, 0, 6));"
           }
         ]
       },
       "Board": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          90,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [90, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 398,
+            "line": 444,
             "text": "boardNode.setPosition(new Vec3(0, 0, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 399,
+            "line": 445,
             "text": "boardNode.setRotationFromEuler(90, 0, 0);"
           }
         ]
       },
       "Driver": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 492,
+            "line": 544,
             "text": "driverNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -307,17 +264,12 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [
-              255,
-              255,
-              255,
-              255
-            ],
+            "value": [255, 255, 255, 255],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {
               "source": "src/main.ts",
-              "line": 394,
+              "line": 440,
               "text": "boardMaterial.setProperty('mainColor', new Color(255, 255, 255, 255));"
             }
           },
@@ -325,7 +277,7 @@
             "expect": "object",
             "provenance": {
               "source": "src/main.ts",
-              "line": 395,
+              "line": 441,
               "text": "boardMaterial.setProperty('mainTexture', board.texture);"
             }
           }
@@ -334,9 +286,9 @@
     }
   },
   "promotion": {
-    "spec": "7a18ff962562",
-    "source": "d4ec33849a43cbe4",
-    "candidate": "d1cc556759a27943",
+    "spec": "691785c7d88e",
+    "source": "ccc6fc2c4637ea1e",
+    "candidate": "8746fc59b6aa0408",
     "verified": 21,
     "attested": 1,
     "units": 22

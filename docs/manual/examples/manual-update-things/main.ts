@@ -57,7 +57,7 @@ const cubeMaterial = new Material();
 cubeMaterial.initialize({ effectName: 'builtin-standard' });
 cubeMaterial.setProperty('mainColor', new Color(65, 155, 235, 255));
 
-function makeCube (name: string, x: number): Node {
+function makeCube(name: string, x: number): Node {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     node.setPosition(new Vec3(x, 1.0, 0));
@@ -83,7 +83,7 @@ const stats = {
 
 // ---- 1) update(dt) 自转 ----
 class SpinByUpdate extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         stats.updateTicks++;
         stats.sawUpdateThisFrame = true;
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 60, 0);
@@ -93,11 +93,11 @@ class SpinByUpdate extends Component {
 // ---- 2) lateUpdate(dt) 浮动 ----
 class BobByLateUpdate extends Component {
     private _t = 0;
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
     }
-    lateUpdate (dt: number): void {
+    lateUpdate(dt: number): void {
         stats.lateTicks++;
         if (stats.sawUpdateThisFrame) stats.orderOk = true;
         stats.sawUpdateThisFrame = false;
@@ -109,11 +109,11 @@ class BobByLateUpdate extends Component {
 // ---- 3) schedule 间隔脉冲 ----
 class PulseBySchedule extends Component {
     private _big = false;
-    start (): void {
+    start(): void {
         this._big = false;
         this.schedule(this.pulse, 0.5);
     }
-    pulse (): void {
+    pulse(): void {
         stats.schedTicks++;
         this._big = !this._big;
         const s = this._big ? 1.3 : 1.0;
@@ -131,14 +131,14 @@ cubeC.addComponent(PulseBySchedule);
 // ---- 覆盖层 + dt 统计 ----
 const info = document.querySelector('#info') as HTMLElement;
 class Overseer extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         stats.frames++;
         stats.dtMin = Math.min(stats.dtMin, dt);
         stats.dtMax = Math.max(stats.dtMax, dt);
         stats.dtSum += dt;
         info.textContent = [
             'drive: update(dt) spin | lateUpdate(dt) bob | schedule(cb, 0.5) pulse',
-            `frames: ${stats.frames}  dt ms: min=${(stats.dtMin * 1000).toFixed(1)} max=${(stats.dtMax * 1000).toFixed(1)} avg=${(stats.dtSum / stats.frames * 1000).toFixed(1)}`,
+            `frames: ${stats.frames}  dt ms: min=${(stats.dtMin * 1000).toFixed(1)} max=${(stats.dtMax * 1000).toFixed(1)} avg=${((stats.dtSum / stats.frames) * 1000).toFixed(1)}`,
             `ticks: update=${stats.updateTicks} lateUpdate=${stats.lateTicks} schedule=${stats.schedTicks}`,
             `order update→lateUpdate verified: ${stats.orderOk}`,
         ].join('\n');

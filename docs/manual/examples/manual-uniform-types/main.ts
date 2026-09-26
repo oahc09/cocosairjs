@@ -64,7 +64,7 @@ light.illuminance = 2;
 
 // ---- 程序化棋盘纹理（给 3 号 cube 演示 sampler2D + tilingOffset） ----
 const SIZE = 32;
-function checkerboardPixels (): Uint8Array {
+function checkerboardPixels(): Uint8Array {
     const pixels = new Uint8Array(SIZE * SIZE * 4);
     for (let y = 0; y < SIZE; y++) {
         for (let x = 0; x < SIZE; x++) {
@@ -90,9 +90,12 @@ const checkerTexture = new Texture2D();
 checkerTexture.image = imageAsset;
 
 // ---- 四个 cube，每个一个独立材质（不碰共享 builtin 材质） ----
-function addCube (name: string, x: number,
+function addCube(
+    name: string,
+    x: number,
     initOptions: { effectName: string; defines?: Record<string, boolean> },
-    configure: (m: Material) => void): Node {
+    configure: (m: Material) => void,
+): Node {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     node.setPosition(new Vec3(x, 0.5, 0));
@@ -120,11 +123,10 @@ addCube('Color: mainColor', -1.2, { effectName: 'builtin-standard' }, (m) => {
 });
 
 // 3) Texture2D + Vec4：mainTexture + tilingOffset（需打开 USE_ALBEDO_MAP）
-addCube('Vec4+Tex: tilingOffset', 1.2,
-    { effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } }, (m) => {
-        m.setProperty('mainTexture', checkerTexture);
-        m.setProperty('tilingOffset', new Vec4(2, 2, 0, 0));
-    });
+addCube('Vec4+Tex: tilingOffset', 1.2, { effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } }, (m) => {
+    m.setProperty('mainTexture', checkerTexture);
+    m.setProperty('tilingOffset', new Vec4(2, 2, 0, 0));
+});
 
 // 4) Color + Vec3：emissive + emissiveScale
 addCube('Color+Vec3: emissive', 3.6, { effectName: 'builtin-standard' }, (m) => {

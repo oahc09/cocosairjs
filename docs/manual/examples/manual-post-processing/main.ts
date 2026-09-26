@@ -63,7 +63,7 @@ material.setProperty('mainColor', new Color(205, 95, 205, 255));
 renderer.material = material;
 
 class Spinner extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
     }
 }
@@ -77,12 +77,12 @@ class Cycler extends Component {
     private _t = 0;
     private _on = false;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._on = false;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         const on = Math.floor(this._t / 3) % 2 === 1;
         if (on !== this._on) {

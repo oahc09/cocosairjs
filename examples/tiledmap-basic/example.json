@@ -57,24 +57,12 @@
     "Node.getChildByName",
     "Node.on"
   ],
-  "capabilities": [
-    "tiledmap"
-  ],
+  "capabilities": ["tiledmap"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -101,11 +89,7 @@
     "visual": "深蓝底（clearColor 12,16,24）一屏：左侧 6×4 正交石/草地图（外圈蓝色石砖带对角白纹、内圈绿格草砖，deco 层三块带水平/垂直/对角翻转标记的砖明显与正放砖不同朝向），右侧 4×4 等距菱形砖簇（含运行时补写的一格），顶部一行状态文字 `tiledmap ortho=ground+deco iso=2:ISO filled=23 objects=5`。正交图所有草砖（gid 1）由引擎的 tile 动画在草/石两帧之间每 500 ms 交替（帧间唯一持续变化来源，证明渲染循环真的在驱动图层重建 render data）；点击另造成一次性画面变化（deco 层隐藏 + ground 补一格 + 状态行改写）⇒ frame-diff 可测（三引擎矩阵 frameChanged 全 PASS）"
   },
   "api": {
-    "primary": [
-      "TiledMap",
-      "TiledMapAsset",
-      "TiledLayer"
-    ],
+    "primary": ["TiledMap", "TiledMapAsset", "TiledLayer"],
     "supporting": [
       "TiledObjectGroup",
       "TiledMap.getMapSize",
@@ -205,37 +189,37 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L83"
+        "sourceLocation": "L97"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L86"
+        "sourceLocation": "L100"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L87"
+        "sourceLocation": "L101"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L97"
+        "sourceLocation": "L111"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L91"
+        "sourceLocation": "L105"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L89"
+        "sourceLocation": "L103"
       },
       {
         "api": "Layers",
@@ -247,265 +231,254 @@
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L99"
+        "sourceLocation": "L113"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L111"
+        "sourceLocation": "L125"
       },
       {
         "api": "Size",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L155"
+        "sourceLocation": "L176"
       },
       {
         "api": "SpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L141"
+        "sourceLocation": "L162"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L138"
+        "sourceLocation": "L156"
       },
       {
         "api": "TiledMap",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L123"
+        "sourceLocation": "L137"
       },
       {
         "api": "TiledMapAsset",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L151"
+        "sourceLocation": "L172"
       },
       {
         "api": "TiledLayer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L265"
+        "sourceLocation": "L320"
       },
       {
         "api": "TiledObjectGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L266"
+        "sourceLocation": "L321"
       },
       {
         "api": "TiledMap.getMapSize",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L271"
+        "sourceLocation": "L326"
       },
       {
         "api": "TiledMap.getTileSize",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L272"
+        "sourceLocation": "L327"
       },
       {
         "api": "TiledMap.getMapOrientation",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L270"
+        "sourceLocation": "L325"
       },
       {
         "api": "TiledMap.getLayers",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L273"
+        "sourceLocation": "L328"
       },
       {
         "api": "TiledMap.getLayer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L173"
+        "sourceLocation": "L194"
       },
       {
         "api": "TiledMap.getObjectGroups",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L275"
+        "sourceLocation": "L330"
       },
       {
         "api": "TiledMap.getObjectGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L214"
+        "sourceLocation": "L261"
       },
       {
         "api": "TiledMap.getProperties",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L197"
+        "sourceLocation": "L223"
       },
       {
         "api": "TiledMap.getProperty",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L277"
+        "sourceLocation": "L332"
       },
       {
         "api": "TiledMap.getPropertiesForGID",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L293"
+        "sourceLocation": "L359"
       },
       {
         "api": "TiledLayer.getTileGIDAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L180"
+        "sourceLocation": "L203"
       },
       {
         "api": "TiledLayer.getTileFlagsAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L181"
+        "sourceLocation": "L204"
       },
       {
         "api": "TiledLayer.setTileGIDAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L314"
+        "sourceLocation": "L380"
       },
       {
         "api": "TiledLayer.getLayerName",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L191"
+        "sourceLocation": "L217"
       },
       {
         "api": "TiledLayer.getLayerSize",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L175"
+        "sourceLocation": "L198"
       },
       {
         "api": "TiledLayer.getPositionAt",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L204"
+        "sourceLocation": "L231"
       },
       {
         "api": "TiledLayer.getTextures",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L206"
+        "sourceLocation": "L238"
       },
       {
         "api": "TiledLayer.getTileSet",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L207"
+        "sourceLocation": "L240"
       },
       {
         "api": "TiledLayer.isCullingDirty",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L346"
+        "sourceLocation": "L412"
       },
       {
         "api": "TiledLayer.getProperties",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L197"
+        "sourceLocation": "L223"
       },
       {
         "api": "TiledObjectGroup.getObjects",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L222"
+        "sourceLocation": "L274"
       },
       {
         "api": "TiledObjectGroup.getObject",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L236"
+        "sourceLocation": "L289"
       },
       {
         "api": "TiledObjectGroup.getGroupName",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L217"
+        "sourceLocation": "L266"
       },
       {
         "api": "TiledObjectGroup.getProperties",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L197"
+        "sourceLocation": "L223"
       },
       {
         "api": "TiledObjectGroup.getPositionOffset",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L219"
+        "sourceLocation": "L268"
       },
       {
         "api": "assetManager",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L75"
+        "sourceLocation": "L85"
       },
       {
         "api": "view",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L84"
+        "sourceLocation": "L98"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L84"
+        "sourceLocation": "L98"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L102"
+        "sourceLocation": "L116"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L89"
+        "sourceLocation": "L103"
       },
       {
         "api": "Node.getChildByName",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L359"
+        "sourceLocation": "L428"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L393"
+        "sourceLocation": "L463"
       }
     ]
   },
-  "assets": [
-    "assets/orthogonal.tmx",
-    "assets/isometric.tmx",
-    "assets/tiles.tsx",
-    "assets/tiles.png"
-  ],
+  "assets": ["assets/orthogonal.tmx", "assets/isometric.tmx", "assets/tiles.tsx", "assets/tiles.png"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "Status",
-        "OrthoMap",
-        "IsoMap"
-      ]
+      "nodes": ["Canvas", "UICamera", "Status", "OrthoMap", "IsoMap"]
     }
   },
   "interaction": {
@@ -517,88 +490,58 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          0,
-          0,
-          0
-        ],
-        "scale": [
-          1,
-          1,
-          1
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [0, 0, 0],
+        "scale": [1, 1, 1],
         "provenance": [
           {
             "source": "main.js",
-            "line": 83,
+            "line": 97,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
-            "line": 96,
+            "line": 110,
             "text": "cameraNode.setPosition(0, 0, 1000);"
           }
         ]
       },
       "Status": {
-        "position": [
-          0,
-          162,
-          0
-        ],
+        "position": [0, 162, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 109,
+            "line": 123,
             "text": "statusNode.setPosition(0, 162, 0);"
           }
         ]
       },
       "OrthoMap": {
-        "position": [
-          -84,
-          -10,
-          0
-        ],
+        "position": [-84, -10, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 125,
+            "line": 139,
             "text": "makeMapNode(OrthoMap) → position [-84,-10,0]（工厂形参见 L117）"
           }
         ]
       },
       "IsoMap": {
-        "position": [
-          118,
-          -10,
-          0
-        ],
+        "position": [118, -10, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 126,
+            "line": 140,
             "text": "makeMapNode(IsoMap) → position [118,-10,0]（工厂形参见 L117）"
           }
         ]
@@ -614,9 +557,9 @@
     "assets": "无第三方资产（.tmx/.tsx 为本示例手写的最小 Tiled XML，tiles.png 为自制 64×32 双砖图；tiledmap 模块为 cocos4 上游 TypeScript 端口，11 文件逐字节同源于 src/cocos/tiledmap，随 bundle 出处登记）"
   },
   "promotion": {
-    "spec": "48312c2aac4b",
-    "source": "ecbcddc571bb3443",
-    "candidate": "d1cc556759a27943",
+    "spec": "7cc79446c2a9",
+    "source": "d190ac5740586673",
+    "candidate": "8746fc59b6aa0408",
     "verified": 46,
     "attested": 2,
     "units": 48

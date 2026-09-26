@@ -20,16 +20,8 @@
     "visual": "深蓝 UI 背景；中央蓝色 LoadButton（按下变橙）；上方 Preview 精灵从灰色占位变为绿色纹理；顶部状态行显示 phase/state，底部信息行显示 loads/locks/clicks/fails 实时计数"
   },
   "api": {
-    "primary": [
-      "loadAssetAsync",
-      "AssetManager.releaseAsset",
-      "SpriteFrame.createWithImage"
-    ],
-    "supporting": [
-      "assetManager",
-      "Button",
-      "isValid"
-    ],
+    "primary": ["loadAssetAsync", "AssetManager.releaseAsset", "SpriteFrame.createWithImage"],
+    "supporting": ["assetManager", "Button", "isValid"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -73,201 +65,189 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L196"
+        "sourceLocation": "L251"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L201"
+        "sourceLocation": "L256"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L53"
+        "sourceLocation": "L73"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L59"
+        "sourceLocation": "L80"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L58"
+        "sourceLocation": "L78"
       },
       {
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L339"
+        "sourceLocation": "L412"
       },
       {
         "api": "Node.on",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L173"
+        "sourceLocation": "L220"
       },
       {
         "api": "Node.off",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L177"
+        "sourceLocation": "L226"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L214"
+        "sourceLocation": "L269"
       },
       {
         "api": "Canvas",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L205"
+        "sourceLocation": "L260"
       },
       {
         "api": "UITransform",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L55"
+        "sourceLocation": "L75"
       },
       {
         "api": "Widget",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L206"
+        "sourceLocation": "L261"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L31"
+        "sourceLocation": "L49"
       },
       {
         "api": "view",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L199"
+        "sourceLocation": "L254"
       },
       {
         "api": "ResolutionPolicy",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L199"
+        "sourceLocation": "L254"
       },
       {
         "api": "Label",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L75"
+        "sourceLocation": "L98"
       },
       {
         "api": "Sprite",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L229"
+        "sourceLocation": "L284"
       },
       {
         "api": "SpriteFrame",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L391"
+        "sourceLocation": "L481"
       },
       {
         "api": "SpriteFrame.createWithImage",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L122"
+        "sourceLocation": "L156"
       },
       {
         "api": "Button",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L243"
+        "sourceLocation": "L298"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L277"
+        "sourceLocation": "L337"
       },
       {
         "api": "Texture2D.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L123"
+        "sourceLocation": "L158"
       },
       {
         "api": "ImageAsset",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L71"
+        "sourceLocation": "L94"
       },
       {
         "api": "assetManager",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L279"
+        "sourceLocation": "L339"
       },
       {
         "api": "AssetManager.assets",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L279"
+        "sourceLocation": "L339"
       },
       {
         "api": "AssetManager.releaseAsset",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L358"
+        "sourceLocation": "L439"
       },
       {
         "api": "loadAssetAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L138"
+        "sourceLocation": "L180"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L167"
+        "sourceLocation": "L213"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L123"
+        "sourceLocation": "L157"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L217"
+        "sourceLocation": "L272"
       }
     ]
   },
-  "capabilities": [
-    "ui",
-    "lifecycle"
-  ],
-  "assets": [
-    "assets/panel-manifest.json"
-  ],
+  "capabilities": ["ui", "lifecycle"],
+  "assets": ["assets/panel-manifest.json"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "StatusLabel",
-        "Preview",
-        "LoadButton",
-        "InfoLabel"
-      ]
+      "nodes": ["Canvas", "UICamera", "StatusLabel", "Preview", "LoadButton", "InfoLabel"]
     }
   },
   "interaction": {
@@ -279,26 +259,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "asset-loaded",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "asset-loaded", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -312,71 +279,51 @@
   "validationExpectations": {
     "transform-equals": {
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 221,
+            "line": 276,
             "text": "canvasComp.cameraComponent = uiCamera; —— Canvas 组件派生：引擎自动把 UI 相机安置在 z=1000（引擎合同值，正典批次实测读回）"
           }
         ]
       },
       "StatusLabel": {
-        "position": [
-          0,
-          270,
-          0
-        ],
+        "position": [0, 270, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 224,
+            "line": 279,
             "text": "const statusNode = makeUINode('StatusLabel', canvasNode, 700, 30, 0, 270);"
           }
         ]
       },
       "Preview": {
-        "position": [
-          0,
-          130,
-          0
-        ],
+        "position": [0, 130, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 228,
+            "line": 283,
             "text": "const previewNode = makeUINode('Preview', canvasNode, 140, 140, 0, 130);"
           }
         ]
       },
       "LoadButton": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 235,
+            "line": 290,
             "text": "buttonNode = makeUINode('LoadButton', canvasNode, 260, 90, 0, 0);"
           }
         ]
       },
       "InfoLabel": {
-        "position": [
-          0,
-          -160,
-          0
-        ],
+        "position": [0, -160, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 250,
+            "line": 305,
             "text": "const infoNode = makeUINode('InfoLabel', canvasNode, 700, 24, 0, -160);"
           }
         ]
@@ -389,8 +336,8 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 289,
-              "text": "const manifest = await loadAssetAsync('assets/panel-manifest.json') as Record<string, unknown>;"
+              "line": 352,
+              "text": "const manifest = (await loadAssetAsync('assets/panel-manifest.json')) as Record<string, unknown>;"
             }
           ]
         }
@@ -401,14 +348,14 @@
     "transform-equals": {
       "Canvas": {
         "reason": "运行期派生：设计分辨率随窗口（view.setDesignResolutionSize(window.innerWidth, window.innerHeight, ResolutionPolicy.EXACT_FIT)）+ Widget 全对齐重写 Canvas 位置/尺寸；子节点局部坐标仍精确断言",
-        "line": "L199"
+        "line": "L254"
       }
     }
   },
   "promotion": {
-    "spec": "41de9c2c2349",
-    "source": "35dd32b211b98c1f",
-    "candidate": "d1cc556759a27943",
+    "spec": "ac1d1fe9483f",
+    "source": "cbda0eef993792c8",
+    "candidate": "8746fc59b6aa0408",
     "verified": 27,
     "attested": 3,
     "units": 30

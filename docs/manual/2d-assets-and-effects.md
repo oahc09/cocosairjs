@@ -14,7 +14,7 @@ const { DragonBonesAsset, DragonBonesAtlasAsset, ArmatureDisplay, CCFactory, Ani
 ```
 
 ```js
-    atlasAsset = new DragonBonesAtlasAsset(NAME);
+atlasAsset = new DragonBonesAtlasAsset(NAME);
 ```
 
 - `new dragonBones.DragonBonesAtlasAsset()` 填 `atlasJson` + `texture`；
@@ -54,20 +54,20 @@ plist 文本在运行时**程序化生成**，交给引擎自己的解析器（`
 
 ## 4. Spine：导出面在、浏览器验证缺（待验证）
 
-| 项 | 现状 |
-| --- | --- |
-| 导出面 | `sp` 命名空间 + `loadWasmModuleSpine` 在默认聚合导出内（d.ts 在册） |
-| 浏览器证据 | **无**——仓库没有任何已验证的 Spine 示例 |
-| 阻断点 | ① wasm 模块装载路径未在浏览器实跑（`loadWasmModuleSpine` 需要可用 wasm 二进制来源）；② 无自产最小 Spine 资产（.json/.skel + atlas）；③ Skeleton 组件装配链路无样例 |
-| 结论 | **待验证**——不由 DragonBones 的可用性推断；待最小样例 + 探针后再升级状态（衔接 `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md` 的示例批次） |
+| 项         | 现状                                                                                                                                                               |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 导出面     | `sp` 命名空间 + `loadWasmModuleSpine` 在默认聚合导出内（d.ts 在册）                                                                                                |
+| 浏览器证据 | **无**——仓库没有任何已验证的 Spine 示例                                                                                                                            |
+| 阻断点     | ① wasm 模块装载路径未在浏览器实跑（`loadWasmModuleSpine` 需要可用 wasm 二进制来源）；② 无自产最小 Spine 资产（.json/.skel + atlas）；③ Skeleton 组件装配链路无样例 |
+| 结论       | **待验证**——不由 DragonBones 的可用性推断；待最小样例 + 探针后再升级状态（衔接 `ai/Cocos Air — 接口场景覆盖、开发范式与 Shader 示例任务计划书.md` 的示例批次）     |
 
 ## 5. 验证与运行
 
-| 示例 | 内容 |
-| --- | --- |
-| [examples/dragonbones-basic/](../../examples/dragonbones-basic/) | 运行期构造/REALTIME 动画/换图/释放重建 |
-| [examples/tiledmap-basic/](../../examples/tiledmap-basic/) | TMX/TSX/正交+等距/图层/object layer/tile 动画 |
-| [examples/particle-2d-basic/](../../examples/particle-2d-basic/) | 程序化 plist/定步模拟/出图 |
+| 示例                                                             | 内容                                          |
+| ---------------------------------------------------------------- | --------------------------------------------- |
+| [examples/dragonbones-basic/](../../examples/dragonbones-basic/) | 运行期构造/REALTIME 动画/换图/释放重建        |
+| [examples/tiledmap-basic/](../../examples/tiledmap-basic/)       | TMX/TSX/正交+等距/图层/object layer/tile 动画 |
+| [examples/particle-2d-basic/](../../examples/particle-2d-basic/) | 程序化 plist/定步模拟/出图                    |
 
 运行：`npm run dev` 后访问 `http://127.0.0.1:7454/examples/<id>/`。资产均为工具生成
 （`tools/` 生成 DragonBones JSON/图集与 TMX），零第三方许可面。

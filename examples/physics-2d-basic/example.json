@@ -45,22 +45,12 @@
     "PolygonCollider2D.threshold",
     "PHYSICS_2D_PTM_RATIO"
   ],
-  "capabilities": [
-    "physics-2d"
-  ],
+  "capabilities": ["physics-2d"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -78,11 +68,7 @@
     "visual": "深蓝底一屏：灰色地面长条横贯下方，其上左橙（盒木箱）、中绿（圆球）、右蓝（六边形宝石）四个色块等间距排布，顶部状态行实时写着后端类型与木箱坐标；点击后橙木箱瞬移到地面上表面（截图取点击后状态）"
   },
   "api": {
-    "primary": [
-      "PhysicsSystem2D",
-      "RigidBody2D",
-      "Collider2D"
-    ],
+    "primary": ["PhysicsSystem2D", "RigidBody2D", "Collider2D"],
     "supporting": [
       "BoxCollider2D",
       "CircleCollider2D",
@@ -149,43 +135,43 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L113"
+        "sourceLocation": "L122"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L120"
+        "sourceLocation": "L129"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L80"
+        "sourceLocation": "L89"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L131"
+        "sourceLocation": "L140"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L125"
+        "sourceLocation": "L134"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L270"
+        "sourceLocation": "L299"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L82"
+        "sourceLocation": "L91"
       },
       {
         "api": "Layers",
@@ -197,290 +183,252 @@
         "api": "view",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L114"
+        "sourceLocation": "L123"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L114"
+        "sourceLocation": "L123"
       },
       {
         "api": "Sprite",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L87"
+        "sourceLocation": "L96"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L103"
+        "sourceLocation": "L112"
       },
       {
         "api": "SpriteFrame",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L69"
+        "sourceLocation": "L78"
       },
       {
         "api": "Texture2D",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L67"
+        "sourceLocation": "L76"
       },
       {
         "api": "ImageAsset",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L66"
+        "sourceLocation": "L75"
       },
       {
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L134"
+        "sourceLocation": "L143"
       },
       {
         "api": "math.Vec2",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L182"
+        "sourceLocation": "L191"
       },
       {
         "api": "math.Size",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L149"
+        "sourceLocation": "L158"
       },
       {
         "api": "math.Rect",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L247"
+        "sourceLocation": "L274"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L136"
+        "sourceLocation": "L145"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L82"
+        "sourceLocation": "L91"
       },
       {
         "api": "Node.getComponent",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L124"
+        "sourceLocation": "L133"
       },
       {
         "api": "PhysicsSystem2D",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L116"
+        "sourceLocation": "L125"
       },
       {
         "api": "PhysicsSystem2D.testPoint",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L241"
+        "sourceLocation": "L268"
       },
       {
         "api": "PhysicsSystem2D.testAABB",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L247"
+        "sourceLocation": "L274"
       },
       {
         "api": "PhysicsSystem2D.raycast",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L248"
+        "sourceLocation": "L275"
       },
       {
         "api": "RigidBody2D",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L145"
+        "sourceLocation": "L154"
       },
       {
         "api": "RigidBody2D.getMass",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L220"
+        "sourceLocation": "L245"
       },
       {
         "api": "Collider2D",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L214"
+        "sourceLocation": "L239"
       },
       {
         "api": "Collider2D.apply",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L265"
+        "sourceLocation": "L294"
       },
       {
         "api": "Collider2D.TYPE",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L212"
+        "sourceLocation": "L234"
       },
       {
         "api": "BoxCollider2D",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L147"
+        "sourceLocation": "L156"
       },
       {
         "api": "CircleCollider2D",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L170"
+        "sourceLocation": "L179"
       },
       {
         "api": "PolygonCollider2D",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L178"
+        "sourceLocation": "L187"
       },
       {
         "api": "PolygonCollider2D.threshold",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L185"
+        "sourceLocation": "L194"
       },
       {
         "api": "PHYSICS_2D_PTM_RATIO",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L203"
+        "sourceLocation": "L225"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Canvas",
-        "UICamera",
-        "Ground",
-        "Crate",
-        "Ball",
-        "Gem",
-        "Status"
-      ]
+      "nodes": ["Canvas", "UICamera", "Ground", "Crate", "Ball", "Gem", "Status"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 125,
+            "line": 134,
             "text": "const canvas = canvasNode.addComponent(Canvas);"
           }
         ]
       },
       "UICamera": {
-        "position": [
-          0,
-          0,
-          1000
-        ],
+        "position": [0, 0, 1000],
         "provenance": [
           {
             "source": "main.js",
-            "line": 137,
+            "line": 146,
             "text": "canvas.cameraComponent = cam;"
           }
         ]
       },
       "Ground": {
-        "position": [
-          0,
-          -120,
-          0
-        ],
+        "position": [0, -120, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 143,
+            "line": 152,
             "text": "const ground = makeBox('Ground', canvasNode, 0, -120, 360, 20);"
           }
         ]
       },
       "Crate": {
-        "position": [
-          -120,
-          40,
-          0
-        ],
+        "position": [-120, 40, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 152,
+            "line": 161,
             "text": "const crate = makeBox('Crate', canvasNode, CRATE_START.x, CRATE_START.y, 48, 48);"
           }
         ]
       },
       "Ball": {
-        "position": [
-          0,
-          40,
-          0
-        ],
+        "position": [0, 40, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 165,
+            "line": 174,
             "text": "const ball = makeBox('Ball', canvasNode, 0, 40, 56, 56);"
           }
         ]
       },
       "Gem": {
-        "position": [
-          120,
-          40,
-          0
-        ],
+        "position": [120, 40, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 174,
+            "line": 183,
             "text": "const gem = makeBox('Gem', canvasNode, 120, 40, 60, 60);"
           }
         ]
       },
       "Status": {
-        "position": [
-          -10,
-          150,
-          0
-        ],
+        "position": [-10, 150, 0],
         "provenance": [
           {
             "source": "main.js",
-            "line": 187,
+            "line": 196,
             "text": "const statusLabel = addLabel(canvasNode, 'physics-2d (box2d backend) — mount + queries only, gravityScale=0', -10, 150);"
           }
         ]
@@ -496,9 +444,9 @@
     "assets": "无第三方资产（纹理运行时程序化生成；box2d 为 cocos4 上游 TypeScript 端口，随 bundle 出处登记）"
   },
   "promotion": {
-    "spec": "a74c759a85f8",
-    "source": "3f9207b6bac28f9b",
-    "candidate": "d1cc556759a27943",
+    "spec": "2992f3827c45",
+    "source": "0c29ffa9f366c5cf",
+    "candidate": "8746fc59b6aa0408",
     "verified": 32,
     "attested": 4,
     "units": 36

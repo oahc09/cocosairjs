@@ -7,7 +7,7 @@
  *   example: examples/**               → Dev Server only → Browser reload（不触发任何构建）
  *
  * 其他 V0.2 增强:
- *   - example .ts 即时编译（esbuild transform，mtime 缓存）→ starter/main.ts 直接可用
+ *   - example .ts 即时编译（esbuild transform，mtime 缓存）→ starter/src/main.ts 直接可用
  *   - importmap 注入：example 里 `from 'cocosair'` 解析到 /build/cocosair.module.js
  *   - 构建错误可见性（Task 13）：/__build_status + 浏览器顶部错误横幅
  *   - 频道耗时记录（Task 8/17）：/__stats 暴露 Cold/Warm/Air/Example 计时
@@ -380,7 +380,7 @@ b.onclick=function(){
             return;
         }
         const manualIsDir = fs.existsSync(manualResolved) && fs.statSync(manualResolved).isDirectory();
-        const manualFile = manualIsDir ? path.join(manualResolved, 'index.html') : manualResolved;
+        const manualFile = require('./resolve-script.cjs').resolveScript(manualIsDir ? path.join(manualResolved, 'index.html') : manualResolved);
         if (fs.existsSync(manualFile) && fs.statSync(manualFile).isFile()) {
             if (manualFile.endsWith('.html')) {
                 const html = fs.readFileSync(manualFile, 'utf8');
@@ -397,6 +397,7 @@ b.onclick=function(){
                 res.end(fs.readFileSync(manualFile, 'utf8'));
                 return;
             }
+            if (manualFile.endsWith('.ts')) return serveExampleTs(res, manualFile);
             return serveFile(res, manualFile);
         }
         res.writeHead(404); res.end('not found (manual?)');
@@ -415,7 +416,7 @@ b.onclick=function(){
         : path.join(EXAMPLES_DIR, rel);
     const resolved = path.resolve(candidate);
     const resolvedIsDir = fs.existsSync(resolved) && fs.statSync(resolved).isDirectory();
-    const finalFile = resolvedIsDir ? path.join(resolved, 'index.html') : resolved;
+    const finalFile = require('./resolve-script.cjs').resolveScript(resolvedIsDir ? path.join(resolved, 'index.html') : resolved);
     if (finalFile.startsWith(EXAMPLES_DIR) && fs.existsSync(finalFile) && fs.statSync(finalFile).isFile()) {
         if (finalFile.endsWith('index.html')) {
             const html = fs.readFileSync(finalFile, 'utf8');

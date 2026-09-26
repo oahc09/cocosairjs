@@ -7,23 +7,12 @@
   "requiresDevTools": true,
   "title": "Agent Automation",
   "category": "devtools",
-  "apiClaims": [
-    "createAgentSession",
-    "dispatch"
-  ],
-  "capabilities": [
-    "runtime-control"
-  ],
+  "apiClaims": ["createAgentSession", "dispatch"],
+  "capabilities": ["runtime-control"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -41,10 +30,7 @@
     "visual": "基础场景 + agent 生成的节点；面板/工具侧展示会话观察数据"
   },
   "api": {
-    "primary": [
-      "DevToolsSession.inspectScene",
-      "DevToolsSession.dispatch"
-    ],
+    "primary": ["DevToolsSession.inspectScene", "DevToolsSession.dispatch"],
     "supporting": [],
     "claims": [
       "createAirApp",
@@ -59,96 +45,87 @@
       "DevToolsSession.dispatch",
       "Node.addChild"
     ],
-    "forbiddenShortcut": [
-      "在 Runtime-only 包内预置 DevTools 代码",
-      "绕过 session 合同直接改内部状态"
-    ],
+    "forbiddenShortcut": ["在 Runtime-only 包内预置 DevTools 代码", "绕过 session 合同直接改内部状态"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L18"
       },
       {
         "api": "Scene",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L19"
       },
       {
         "api": "Node",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L33"
+        "sourceLocation": "L24"
       },
       {
         "api": "MeshRenderer",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L36"
+        "sourceLocation": "L27"
       },
       {
         "api": "Layers",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L25"
       },
       {
         "api": "utils.createMesh",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L37"
+        "sourceLocation": "L28"
       },
       {
         "api": "primitives.box",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L37"
+        "sourceLocation": "L28"
       },
       {
         "api": "builtinResMgr",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L38"
+        "sourceLocation": "L29"
       },
       {
         "api": "DevToolsSession.inspectScene",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L66"
+        "sourceLocation": "L58"
       },
       {
         "api": "DevToolsSession.dispatch",
         "source": "main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L70"
+        "sourceLocation": "L72"
       },
       {
         "api": "Node.addChild",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L26"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "existing-cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "existing-cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -170,9 +147,9 @@
     }
   },
   "promotion": {
-    "spec": "c00b9e5f3a5a",
-    "source": "4b4c481434e58eab",
-    "candidate": "d1cc556759a27943",
+    "spec": "735d00cae975",
+    "source": "e89d32ce3ed3bbb6",
+    "candidate": "8746fc59b6aa0408",
     "verified": 8,
     "attested": 3,
     "units": 11

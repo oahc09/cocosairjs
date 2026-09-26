@@ -46,7 +46,7 @@ const quadMesh = utils.createMesh(primitives.quad());
 
 type Patch = { node: Node; material: Material };
 
-function makePatch (name: string, x: number, y: number, w: number, h: number): Patch {
+function makePatch(name: string, x: number, y: number, w: number, h: number): Patch {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     node.setPosition(new Vec3(x, y, 0));
@@ -82,12 +82,12 @@ class Ramp extends Component {
     private _t = 0;
     private _tmp: Color;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._tmp = new Color();
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         lastPing = (Math.sin(this._t * 0.8) + 1) * 0.5;
         for (let i = 0; i < rampPatches.length; i++) {
@@ -108,7 +108,7 @@ const probe = new Color();
 probe.fromHEX('#eb7d41');
 const hexRoundTrip = probe.toHEX();
 const hsv = probe.toHSV({ h: 0, s: 0, v: 0 });
-function showColor (ping: number, tone: number): void {
+function showColor(ping: number, tone: number): void {
     info.textContent = [
         'exports: Color / ColorKey / color only — no ColorManagement, no ColorSpace',
         `hex row: ${HEXES.join(' ')} (instance fromHEX → mainColor)`,
@@ -122,12 +122,12 @@ class Cycler extends Component {
     private _t = 0;
     private _tone = 0;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._tone = 0;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         const tone = Math.floor(this._t / 3) % 2;
         if (tone !== this._tone) {

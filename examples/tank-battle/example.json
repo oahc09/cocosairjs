@@ -21,16 +21,8 @@
     "visual": "深色战场上砖墙（红棕十字纹）与钢块（灰色）构成对称地图；绿色玩家坦克（白色炮管指向 + hp 点）与两辆橙红敌方坦克沿固定路线巡逻、对齐时停驻射击；白色弹丸飞行；左上角 DOM 面板显示 state/hp/kills/shots/bricks/steel-blocks/pool-spent"
   },
   "api": {
-    "primary": [
-      "Texture2D.reset",
-      "AudioSource.play",
-      "Component"
-    ],
-    "supporting": [
-      "assetManager",
-      "input",
-      "AudioClip.getDuration"
-    ],
+    "primary": ["Texture2D.reset", "AudioSource.play", "Component"],
+    "supporting": ["assetManager", "input", "AudioClip.getDuration"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -71,181 +63,171 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L485"
+        "sourceLocation": "L539"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L487"
+        "sourceLocation": "L541"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L453"
+        "sourceLocation": "L505"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L457"
+        "sourceLocation": "L509"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L455"
+        "sourceLocation": "L507"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L456"
+        "sourceLocation": "L508"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L464"
+        "sourceLocation": "L518"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L458"
+        "sourceLocation": "L510"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L492"
+        "sourceLocation": "L546"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L454"
+        "sourceLocation": "L506"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L455"
+        "sourceLocation": "L507"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L451"
+        "sourceLocation": "L503"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L449"
+        "sourceLocation": "L501"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L450"
+        "sourceLocation": "L502"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L451"
+        "sourceLocation": "L503"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L459"
+        "sourceLocation": "L511"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L459"
+        "sourceLocation": "L512"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L355"
+        "sourceLocation": "L407"
       },
       {
         "api": "Texture2D.reset",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L356"
+        "sourceLocation": "L408"
       },
       {
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L679"
+        "sourceLocation": "L792"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L679"
+        "sourceLocation": "L792"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L746"
+        "sourceLocation": "L893"
       },
       {
         "api": "assetManager",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L701"
+        "sourceLocation": "L826"
       },
       {
         "api": "AudioSource",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L515"
+        "sourceLocation": "L569"
       },
       {
         "api": "AudioSource.play",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L668"
+        "sourceLocation": "L774"
       },
       {
         "api": "AudioSource.stop",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L667"
+        "sourceLocation": "L773"
       },
       {
         "api": "AudioClip.getDuration",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L533"
+        "sourceLocation": "L587"
       }
     ]
   },
-  "capabilities": [
-    "game",
-    "audio"
-  ],
-  "assets": [
-    "assets/tone.wav"
-  ],
+  "capabilities": ["game", "audio"],
+  "assets": ["assets/tone.wav"],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Board",
-        "Driver",
-        "Audio"
-      ]
+      "nodes": ["Main Camera", "Board", "Driver", "Audio"]
     }
   },
   "interaction": {
@@ -257,28 +239,13 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "material-property",
-      "asset-loaded",
-      "no-runtime-error"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
-    "lifecycle": [
-      "resource-released"
-    ],
+    "functional": ["node-exists", "transform-equals", "material-property", "asset-loaded", "no-runtime-error"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -292,67 +259,47 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          0,
-          6
-        ],
+        "position": [0, 0, 6],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 491,
+            "line": 545,
             "text": "cameraNode.setPosition(new Vec3(0, 0, 6));"
           }
         ]
       },
       "Board": {
-        "position": [
-          0,
-          0,
-          0
-        ],
-        "rotationEuler": [
-          90,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
+        "rotationEuler": [90, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 455,
+            "line": 507,
             "text": "boardNode.setPosition(new Vec3(0, 0, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 456,
+            "line": 508,
             "text": "boardNode.setRotationFromEuler(90, 0, 0);"
           }
         ]
       },
       "Driver": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 507,
+            "line": 561,
             "text": "driverNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
       },
       "Audio": {
-        "position": [
-          0,
-          0,
-          0
-        ],
+        "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 513,
+            "line": 567,
             "text": "audioNode.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -363,17 +310,12 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [
-              255,
-              255,
-              255,
-              255
-            ],
+            "value": [255, 255, 255, 255],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {
               "source": "src/main.ts",
-              "line": 451,
+              "line": 503,
               "text": "boardMaterial.setProperty('mainColor', new Color(255, 255, 255, 255));"
             }
           },
@@ -381,7 +323,7 @@
             "expect": "object",
             "provenance": {
               "source": "src/main.ts",
-              "line": 452,
+              "line": 504,
               "text": "boardMaterial.setProperty('mainTexture', board.texture);"
             }
           }
@@ -395,7 +337,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 525,
+              "line": 579,
               "text": "(assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {"
             }
           ]
@@ -404,9 +346,9 @@
     }
   },
   "promotion": {
-    "spec": "0e25bcd6468a",
-    "source": "87f478e933b48d40",
-    "candidate": "d1cc556759a27943",
+    "spec": "4864fea4e269",
+    "source": "11b8e2e140a094de",
+    "candidate": "8746fc59b6aa0408",
     "verified": 25,
     "attested": 2,
     "units": 27

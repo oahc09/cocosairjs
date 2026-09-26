@@ -13,7 +13,20 @@
  *
  * 页面在 window.__benchReady 上暴露结果，供 tools/verify/v051-runtime-baseline.cjs 采集。
  */
-import { createAirApp, Scene, Node, MeshRenderer, Camera, DirectionalLight, Layers, Vec3, Color, utils, primitives, builtinResMgr } from 'cocosair';
+import {
+    createAirApp,
+    Scene,
+    Node,
+    MeshRenderer,
+    Camera,
+    DirectionalLight,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+    builtinResMgr,
+} from 'cocosair';
 
 const t0 = performance.now();
 const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
@@ -39,7 +52,7 @@ const lightNode = new Node('Main Light');
 scene.addChild(lightNode);
 lightNode.setPosition(new Vec3(0, 10, 0));
 lightNode.setRotationFromEuler(-45, -30, 0);
-(lightNode.addComponent(DirectionalLight) as { illuminance: number }).illuminance = 2;
+(lightNode.addComponent(DirectionalLight) as { illuminance: number }).illuminance = 50000;
 const cube = new Node('Cube');
 cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
@@ -57,11 +70,26 @@ const firstFrame = await new Promise<number>((resolve, reject) => {
     const deadline = performance.now() + 15000;
     const poll = (): void => {
         const pixels = new Uint8Array(4);
-        gl.readPixels(Math.floor(canvas.width / 2), Math.floor(canvas.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+        gl.readPixels(
+            Math.floor(canvas.width / 2),
+            Math.floor(canvas.height / 2),
+            1,
+            1,
+            gl.RGBA,
+            gl.UNSIGNED_BYTE,
+            pixels,
+        );
         const bg = [30, 40, 60]; // clearColor
-        const isForeground = Math.abs(pixels[0] - bg[0]) + Math.abs(pixels[1] - bg[1]) + Math.abs(pixels[2] - bg[2]) > 24;
-        if (isForeground) { resolve(performance.now()); return; }
-        if (performance.now() > deadline) { reject(new Error('first visible frame timeout')); return; }
+        const isForeground =
+            Math.abs(pixels[0] - bg[0]) + Math.abs(pixels[1] - bg[1]) + Math.abs(pixels[2] - bg[2]) > 24;
+        if (isForeground) {
+            resolve(performance.now());
+            return;
+        }
+        if (performance.now() > deadline) {
+            reject(new Error('first visible frame timeout'));
+            return;
+        }
         requestAnimationFrame(poll);
     };
     requestAnimationFrame(poll);
@@ -96,13 +124,19 @@ for (let i = 0; i < 5; i++) {
 
 // ---- debug overhead：同一操作序列，面板关/开 ----
 const panelModule = await import('/__debug/panel.js');
-const ops = (session: { inspectScene (): unknown; inspectNode (id: string): unknown }, rootId: string): number => {
+const ops = (session: { inspectScene(): unknown; inspectNode(id: string): unknown }, rootId: string): number => {
     const start = performance.now();
-    for (let i = 0; i < 50; i++) { session.inspectScene(); session.inspectNode(rootId); }
+    for (let i = 0; i < 50; i++) {
+        session.inspectScene();
+        session.inspectNode(rootId);
+    }
     return performance.now() - start;
 };
 const probe = panelModule.createDebugPanel({}); // 先建一个 probe session 用于拿到 rootId 形态
-const rootNodeId = probe.session.inspectScene().nodes.map((n: { id: string; name: string }) => n).find((n: { name: string }) => n.name === 'Cube')?.id as string;
+const rootNodeId = probe.session
+    .inspectScene()
+    .nodes.map((n: { id: string; name: string }) => n)
+    .find((n: { name: string }) => n.name === 'Cube')?.id as string;
 const opsOff1 = ops(probe.session, rootNodeId);
 probe.close(); // 面板完全关闭（DOM/rAF/session 清理）
 
@@ -117,7 +151,11 @@ const fpsOn = await new Promise<number>((resolve) => {
     const start = performance.now();
     const count = (): void => {
         frames++;
-        if (performance.now() - start < 2000) { requestAnimationFrame(count); } else { resolve(frames * 1000 / (performance.now() - start)); }
+        if (performance.now() - start < 2000) {
+            requestAnimationFrame(count);
+        } else {
+            resolve((frames * 1000) / (performance.now() - start));
+        }
     };
     requestAnimationFrame(count);
 });
@@ -127,7 +165,11 @@ const fpsOff = await new Promise<number>((resolve) => {
     const start = performance.now();
     const count = (): void => {
         frames++;
-        if (performance.now() - start < 2000) { requestAnimationFrame(count); } else { resolve(frames * 1000 / (performance.now() - start)); }
+        if (performance.now() - start < 2000) {
+            requestAnimationFrame(count);
+        } else {
+            resolve((frames * 1000) / (performance.now() - start));
+        }
     };
     requestAnimationFrame(count);
 });

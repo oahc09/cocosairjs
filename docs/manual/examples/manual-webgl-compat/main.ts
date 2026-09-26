@@ -85,7 +85,7 @@ app.run(scene);
 
 // ============ 兼容性报告（覆盖层） ============
 
-function safe (fn: () => any, fallback: any): any {
+function safe(fn: () => any, fallback: any): any {
     try {
         const v = fn();
         return v === undefined || v === null ? fallback : v;

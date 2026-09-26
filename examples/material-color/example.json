@@ -19,14 +19,8 @@
     "visual": "画面并排三个纯色立方体（红/绿/蓝），形状光照完全一致，仅颜色不同"
   },
   "api": {
-    "primary": [
-      "Material.initialize",
-      "Material.setProperty"
-    ],
-    "supporting": [
-      "math.Color",
-      "MeshRenderer"
-    ],
+    "primary": ["Material.initialize", "Material.setProperty"],
+    "supporting": ["math.Color", "MeshRenderer"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -45,143 +39,123 @@
       "Node.addChild",
       "Node.setPosition"
     ],
-    "forbiddenShortcut": [
-      "用顶点色或贴图冒充材质主色",
-      "共享同一 Material 实例再临时改色"
-    ],
+    "forbiddenShortcut": ["用顶点色或贴图冒充材质主色", "共享同一 Material 实例再临时改色"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L8"
+        "sourceLocation": "L22"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L10"
+        "sourceLocation": "L24"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L19"
+        "sourceLocation": "L33"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L36"
+        "sourceLocation": "L62"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L21"
+        "sourceLocation": "L37"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L29"
+        "sourceLocation": "L51"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L44"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L20"
+        "sourceLocation": "L35"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L43"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L15"
+        "sourceLocation": "L29"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L37"
+        "sourceLocation": "L63"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L37"
+        "sourceLocation": "L63"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L19"
+        "sourceLocation": "L34"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L20"
+        "sourceLocation": "L35"
       }
     ]
   },
-  "capabilities": [
-    "materials"
-  ],
+  "capabilities": ["materials"],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "Red",
-        "Green",
-        "Blue"
-      ]
+      "nodes": ["Main Camera", "Main Light", "Red", "Green", "Blue"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "validation": {
-    "functional": [
-      "node-exists",
-      "material-property",
-      "no-runtime-error",
-      "transform-equals"
-    ],
+    "functional": ["node-exists", "material-property", "no-runtime-error", "transform-equals"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
@@ -196,76 +170,52 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [
-          0,
-          2.6,
-          7.5
-        ],
-        "provenance": [
-          {
-            "source": "src/main.ts",
-            "line": 20,
-            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lookAt(new Vec3(0, 0.5, 0));"
-          }
-        ]
-      },
-      "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
-        "provenance": [
-          {
-            "source": "src/main.ts",
-            "line": 28,
-            "text": "lightNode.setPosition(new Vec3(0, 8, 0)); lightNode.setRotationFromEuler(-45, -30, 0);"
-          }
-        ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
-      },
-      "Red": {
-        "position": [
-          -2.4,
-          0.5,
-          0
-        ],
+        "position": [0, 2.6, 7.5],
         "provenance": [
           {
             "source": "src/main.ts",
             "line": 35,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [0, 8, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 49,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          }
+        ],
+        "rotationEuler": [-45, -30, 0]
+      },
+      "Red": {
+        "position": [-2.4, 0.5, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 60,
             "text": "node.setPosition(new Vec3(-2.4, 0.5, 0)); x += 2.4;"
           }
         ]
       },
       "Green": {
-        "position": [
-          0,
-          0.5,
-          0
-        ],
+        "position": [0, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 35,
+            "line": 60,
             "text": "node.setPosition(new Vec3(0, 0.5, 0)); x += 2.4;"
           }
         ]
       },
       "Blue": {
-        "position": [
-          2.4,
-          0.5,
-          0
-        ],
+        "position": [2.4, 0.5, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 35,
+            "line": 60,
             "text": "node.setPosition(new Vec3(2.4, 0.5, 0)); x += 2.4;"
           }
         ]
@@ -276,17 +226,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              235,
-              70,
-              70,
-              255
-            ],
+            "value": [235, 70, 70, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 40,
+              "line": 66,
               "text": "new Color(235, 70, 70, 255)"
             }
           }
@@ -296,17 +241,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              70,
-              200,
-              90,
-              255
-            ],
+            "value": [70, 200, 90, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 40,
+              "line": 66,
               "text": "new Color(70, 200, 90, 255)"
             }
           }
@@ -316,17 +256,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [
-              70,
-              120,
-              235,
-              255
-            ],
+            "value": [70, 120, 235, 255],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 40,
+              "line": 66,
               "text": "new Color(70, 120, 235, 255)"
             }
           }
@@ -338,14 +273,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
-        "line": "L20"
+        "line": "L35"
       }
     }
   },
   "promotion": {
-    "spec": "40bc8fbce245",
-    "source": "e4c05344db3660e6",
-    "candidate": "d1cc556759a27943",
+    "spec": "d332c2a0874b",
+    "source": "1c35d1d3e8c24f0e",
+    "candidate": "8746fc59b6aa0408",
     "verified": 16,
     "attested": 0,
     "units": 16

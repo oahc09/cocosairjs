@@ -28,11 +28,11 @@ npm run dev -- --example starter --port 7454
 
 dev server（`tools/dev/dev-server.cjs`）用 `fs.watch` 监听三组目录，**分工不同**：
 
-| 频道 | 监听范围 | 触发动作 |
-|---|---|---|
-| engine | `src/cocos/**`、`src/pal/**`、`src/exports/**`（及其余 `src/` 非 air 部分） | 跑 `tools/build/build.cjs --format esm` 全量重建 → bump reload token → 浏览器刷新 |
-| air | `src/air/**` | 同上（重建 + 刷新），耗时单独记入 `/__stats` 的 `airRebuilds` |
-| example / debug-tool / manual | `examples/**`、`tools/debug/**`、`docs/manual/**` | **只 bump reload token（reload only），绝不触发 engine build** |
+| 频道                          | 监听范围                                                                    | 触发动作                                                                          |
+| ----------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| engine                        | `src/cocos/**`、`src/pal/**`、`src/exports/**`（及其余 `src/` 非 air 部分） | 跑 `tools/build/build.cjs --format esm` 全量重建 → bump reload token → 浏览器刷新 |
+| air                           | `src/air/**`                                                                | 同上（重建 + 刷新），耗时单独记入 `/__stats` 的 `airRebuilds`                     |
+| example / debug-tool / manual | `examples/**`、`tools/debug/**`、`docs/manual/**`                           | **只 bump reload token（reload only），绝不触发 engine build**                    |
 
 也就是说：改手册示例、改文章、改 examples，浏览器秒刷；改引擎源码才会重建 bundle。含 `.tmp` 的路径与非代码后缀（非 `.ts/.js/.json/.html/.css`）会被忽略。
 
@@ -40,11 +40,11 @@ dev server（`tools/dev/dev-server.cjs`）用 `fs.watch` 监听三组目录，**
 
 dev server 暴露三个诊断端点：
 
-| 端点 | 内容 |
-|---|---|
-| `/__reload_token` | `{ token }`，浏览器轮询比对，变了就 `location.reload()` |
+| 端点              | 内容                                                      |
+| ----------------- | --------------------------------------------------------- |
+| `/__reload_token` | `{ token }`，浏览器轮询比对，变了就 `location.reload()`   |
 | `/__build_status` | 最近一次构建 `lastBuild = { channel, ok, ms, error, at }` |
-| `/__stats` | 冷/热构建耗时、engine/air 重建记录、示例 reload 计数 |
+| `/__stats`        | 冷/热构建耗时、engine/air 重建记录、示例 reload 计数      |
 
 关键设计（Task 13"构建错误可见性"）：
 
@@ -73,38 +73,65 @@ canvas: 640x480
 ## 完整 index.html
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Setup — 环境搭建（docs/manual/setup.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -121,27 +148,27 @@ canvas: 640x480
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    MeshRenderer,
-    Material,
-    Layers,
-    Vec3,
-    Color,
-    utils,
-    primitives,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  MeshRenderer,
+  Material,
+  Layers,
+  Vec3,
+  Color,
+  utils,
+  primitives,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('setup');
+const scene = new Scene("setup");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.6, 5.0));
 cameraNode.lookAt(new Vec3(0, 0.5, 0));
@@ -155,32 +182,32 @@ camera.clearColor = new Color(20, 26, 38, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node('Main Light');
+const lightNode = new Node("Main Light");
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 地面 + hello cube ----
-const groundNode = new Node('Ground');
+const groundNode = new Node("Ground");
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
 groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
 const groundMaterial = new Material();
-groundMaterial.initialize({ effectName: 'builtin-standard' });
-groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
+groundMaterial.initialize({ effectName: "builtin-standard" });
+groundMaterial.setProperty("mainColor", new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
-const cubeNode = new Node('Hello Cube');
+const cubeNode = new Node("Hello Cube");
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.6, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: 'builtin-standard' });
-cubeMaterial.setProperty('mainColor', new Color(90, 200, 220, 255));
+cubeMaterial.initialize({ effectName: "builtin-standard" });
+cubeMaterial.setProperty("mainColor", new Color(90, 200, 220, 255));
 cubeRenderer.material = cubeMaterial;
 
 window.__airApp = app;
@@ -189,13 +216,13 @@ app.run(scene);
 // ============ 覆盖层：starter 自检 ============
 // 注：/​__build_status 通道由 dev server 注入的 reload 脚本轮询（见文章 §3），
 // 示例自身不去 fetch 它 —— 纯静态部署下该路径 404 会产生控制台噪声。
-(document.querySelector('#info') as HTMLElement).textContent = [
-    'setup: minimal starter running',
-    `scene: ${scene.name}  nodes: ${scene.children.length}`,
-    `canvas: ${canvas.width}x${canvas.height}`,
-].join('\n');
+(document.querySelector("#info") as HTMLElement).textContent = [
+  "setup: minimal starter running",
+  `scene: ${scene.name}  nodes: ${scene.children.length}`,
+  `canvas: ${canvas.width}x${canvas.height}`,
+].join("\n");
 
-console.log('[manual/setup] running on cocosair');
+console.log("[manual/setup] running on cocosair");
 ```
 
 ## API 参考

@@ -81,7 +81,7 @@ app.run(scene);
 
 // ============ 覆盖层：实时尺寸 + resize 事件订阅 ============
 let resizeCount = 0;
-function renderInfo (): void {
+function renderInfo(): void {
     const ws = screen.windowSize || { width: -1, height: -1 };
     const res = screen.resolution || { width: -1, height: -1 };
     (document.querySelector('#info') as HTMLElement).textContent = [
@@ -95,7 +95,13 @@ function renderInfo (): void {
 }
 renderInfo();
 
-screen.on('window-resize', () => { resizeCount++; renderInfo(); });
-screen.on('canvas-resize', () => { resizeCount++; renderInfo(); });
+screen.on('window-resize', () => {
+    resizeCount++;
+    renderInfo();
+});
+screen.on('canvas-resize', () => {
+    resizeCount++;
+    renderInfo();
+});
 
 console.log('[manual/responsive] running on cocosair');

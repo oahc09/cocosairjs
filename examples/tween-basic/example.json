@@ -4,53 +4,30 @@
   "title": "Tween Basic",
   "category": "animation",
   "status": "stable",
-  "apiClaims": [
-    "Node.setPosition",
-    "Scene",
-    "Camera"
-  ],
-  "capabilities": [
-    "animation"
-  ],
+  "apiClaims": ["Node.setPosition", "Scene", "Camera"],
+  "capabilities": ["animation"],
   "benchmarkRefs": [],
   "recipeRefs": [],
   "requiresDevTools": false,
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
     "interaction": [],
-    "visual": [
-      "visible-frame",
-      "frame-diff"
-    ],
+    "visual": ["visible-frame", "frame-diff"],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "tween() 补间链：.to 多段 + 缓动 + onComplete 循环续接",
-    "points": [
-      "tween(target) 工厂与链式 .to",
-      "easing: \"sineInOut\" 缓动",
-      "onComplete 自续接形成往返循环"
-    ]
+    "points": ["tween(target) 工厂与链式 .to", "easing: \"sineInOut\" 缓动", "onComplete 自续接形成往返循环"]
   },
   "effect": {
     "functional": "tween-cube 的 position 由补间驱动在 x=-3 与 x=3 之间往返（sineInOut），onComplete 续接实现持续运动；非 setInterval 覆盖。",
     "visual": "立方体在左右两端之间平滑往返，两端缓入缓出"
   },
   "api": {
-    "primary": [
-      "tween"
-    ],
-    "supporting": [
-      "MeshRenderer",
-      "primitives.box"
-    ],
+    "primary": ["tween"],
+    "supporting": ["MeshRenderer", "primitives.box"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -68,120 +45,111 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "setInterval 线性改写位置冒充补间",
-      "在 update 中手写插值替代 tween 合同"
-    ],
+    "forbiddenShortcut": ["setInterval 线性改写位置冒充补间", "在 update 中手写插值替代 tween 合同"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L10"
+        "sourceLocation": "L23"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L12"
+        "sourceLocation": "L25"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L13"
+        "sourceLocation": "L26"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L21"
+        "sourceLocation": "L40"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L30"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L18"
+        "sourceLocation": "L35"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L15"
+        "sourceLocation": "L30"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "tween",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L26"
+        "sourceLocation": "L45"
       },
       {
         "api": "builtinResMgr",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L23"
+        "sourceLocation": "L42"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L22"
+        "sourceLocation": "L41"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L22"
+        "sourceLocation": "L41"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L13"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L34"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "cam",
-        "light",
-        "tween-cube"
-      ]
+      "nodes": ["cam", "light", "tween-cube"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -194,66 +162,41 @@
   "validationExpectations": {
     "transform-equals": {
       "cam": {
-        "position": [
-          0,
-          3,
-          9
-        ],
+        "position": [0, 3, 9],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 14,
-            "text": "cam.setPosition(new Vec3(0, 3, 9)); cam.setRotationFromEuler(-18, 0, 0);"
+            "line": 28,
+            "text": "cam.setPosition(new Vec3(0, 3, 9));"
           }
         ],
-        "rotationEuler": [
-          -18,
-          0,
-          0
-        ]
+        "rotationEuler": [-18.43494882292201, 0, 0]
       },
       "light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 17,
-            "text": "light.setPosition(new Vec3(0, 8, 0)); light.setRotationFromEuler(-45, -30, 0);"
+            "line": 33,
+            "text": "light.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "tween-cube": {
         "position": {
           "vary": true,
           "range": [
-            [
-              -3,
-              3
-            ],
-            [
-              0,
-              0
-            ],
-            [
-              0,
-              0
-            ]
+            [-3, 3],
+            [0, 0],
+            [0, 0]
           ],
           "minDelta": 0.0001
         },
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 27,
+            "line": 46,
             "text": "补间端点 L27（同轴全部端点见源码 tween 链）"
           }
         ]
@@ -270,9 +213,9 @@
     }
   },
   "promotion": {
-    "spec": "a2b66e97135b",
-    "source": "97805d6ae4dda9e7",
-    "candidate": "d1cc556759a27943",
+    "spec": "7c414aa0e623",
+    "source": "afb6b00fc4627a34",
+    "candidate": "8746fc59b6aa0408",
     "verified": 14,
     "attested": 1,
     "units": 15

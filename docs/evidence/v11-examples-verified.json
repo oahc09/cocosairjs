@@ -1,10 +1,10 @@
 {
-  "measuredAt": "2026-09-26T03:16:48.425Z",
+  "measuredAt": "2026-09-26T07:03:46.229Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "browser": "chromium",
   "mode": "spec-driven-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
-  "candidateFingerprint": "d1cc556759a27943",
+  "candidateFingerprint": "8746fc59b6aa0408",
   "apiProofTotals": {
     "verified": 2997,
     "attested": 386,
@@ -21,9 +21,9 @@
     {
       "id": "anim-position",
       "result": "PASS",
-      "specFingerprint": "8ebd4d7639df",
-      "sourceFingerprint": "c6fc70109be99971",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d54c488cb2db",
+      "sourceFingerprint": "f29ae313c67d510b",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -209,7 +209,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 241,
+          "calls": 253,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -278,7 +278,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -399,13 +399,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0620"
+          "detail": "litRatio=0.0602"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 5086,
-        "hash": "a168030f3738328c"
+        "bytes": 6965,
+        "hash": "d49ab06b583526be"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -414,9 +416,9 @@
     {
       "id": "anim-rotation",
       "result": "PASS",
-      "specFingerprint": "fe051d63a498",
-      "sourceFingerprint": "64c06a98436e9204",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "87b16f3be7f8",
+      "sourceFingerprint": "e354b22cadf41979",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -619,7 +621,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 227,
+          "calls": 242,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -809,13 +811,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0366"
+          "detail": "litRatio=0.0433"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 5882,
-        "hash": "25adbcd266e8be8d"
+        "bytes": 6102,
+        "hash": "d4dfbc257e8ace7c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -824,9 +828,9 @@
     {
       "id": "audio-basic",
       "result": "PASS",
-      "specFingerprint": "9df8c691b6ad",
-      "sourceFingerprint": "002fb0bcb6e664a6",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "314a178a8b05",
+      "sourceFingerprint": "f643036bfb2f575b",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -859,7 +863,7 @@
           "api": "AudioClip.getDuration",
           "proof": "verified",
           "state": "executed",
-          "calls": 260,
+          "calls": 312,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1080,7 +1084,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 766,
+          "calls": 936,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -1396,10 +1400,19 @@
           "detail": "held=1 leaked=0 reloaded=true litRatio=0.9999 assetUnits=7"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/tone.wav",
+          "status": 200,
+          "bytes": 25644,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/audio-basic.png",
-        "bytes": 19504,
-        "hash": "017a4b39714d3dbb"
+        "bytes": 19509,
+        "hash": "7e81996b9a48160d"
       },
       "assetDigests": [
         {
@@ -1416,9 +1429,9 @@
     {
       "id": "batching-utility",
       "result": "PASS",
-      "specFingerprint": "51720cbada84",
-      "sourceFingerprint": "694004238940bd57",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "921b2d2f111e",
+      "sourceFingerprint": "bd7f192ce097290b",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -1852,13 +1865,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/batching-utility.png",
-        "bytes": 5065,
-        "hash": "c9223f41fa1643e8"
+        "bytes": 7050,
+        "hash": "5ddff6b3a6222fa1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1867,9 +1882,9 @@
     {
       "id": "camera",
       "result": "PASS",
-      "specFingerprint": "678fb005e8ec",
-      "sourceFingerprint": "78040895699e23e3",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d314861ea3a2",
+      "sourceFingerprint": "0af7f6b33b45bf6e",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2038,7 +2053,7 @@
           "api": "frameObject",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -2175,12 +2190,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0386"
+          "detail": "litRatio=0.0360"
         },
         {
           "validatorId": "interaction:button-click",
           "state": "PASS",
-          "detail": "点击「切换正交/透视」已执行 lit=0.0483 differs=true"
+          "detail": "点击「切换正交/透视」已执行 lit=0.0467 differs=true"
         },
         {
           "validatorId": "interaction:button-click",
@@ -2193,10 +2208,12 @@
           "detail": "canvas state changed after real input"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera.png",
-        "bytes": 5141,
-        "hash": "02c350a54732ab66"
+        "bytes": 6705,
+        "hash": "995c7ae846c97749"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2205,9 +2222,9 @@
     {
       "id": "camera-geometry-extras",
       "result": "PASS",
-      "specFingerprint": "9dafd5f7da08",
-      "sourceFingerprint": "9baac7f47dc56d79",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "6e6f27f11498",
+      "sourceFingerprint": "cf5dcaf721166120",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -2644,13 +2661,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-geometry-extras.png",
-        "bytes": 5060,
-        "hash": "4c35bbb7379287b8"
+        "bytes": 6846,
+        "hash": "a203663923a74394"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -2659,9 +2678,9 @@
     {
       "id": "camera-lookat",
       "result": "PASS",
-      "specFingerprint": "0f969f97ee12",
-      "sourceFingerprint": "ada3caa09ec5937e",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "466cfd2b2403",
+      "sourceFingerprint": "ef1843dfdc0ab7c7",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -3075,10 +3094,12 @@
           "detail": "canvas state changed after real input"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-lookat.png",
-        "bytes": 9494,
-        "hash": "e30a7f28c3cad37d"
+        "bytes": 12580,
+        "hash": "91ddbed4407ecead"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -3087,9 +3108,9 @@
     {
       "id": "camera-multi",
       "result": "PASS",
-      "specFingerprint": "e1f579ddd6f6",
-      "sourceFingerprint": "5fec34368f419b87",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4cc883e74e9f",
+      "sourceFingerprint": "d5f77480d1490d5e",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -3502,13 +3523,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.6013"
+          "detail": "litRatio=0.5989"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-multi.png",
-        "bytes": 14573,
-        "hash": "8861a9a209a97a48"
+        "bytes": 32711,
+        "hash": "da34c20bf84d96c8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -3517,9 +3540,9 @@
     {
       "id": "camera-ortho",
       "result": "PASS",
-      "specFingerprint": "3446e2c5a876",
-      "sourceFingerprint": "b75a2948236ad40b",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "91aa75cbfdff",
+      "sourceFingerprint": "376aa633d7649377",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -3925,7 +3948,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0397"
+          "detail": "litRatio=0.0399"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -3933,10 +3956,12 @@
           "detail": "canvas state changed after real input"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-ortho.png",
-        "bytes": 4931,
-        "hash": "a5cd8b935006433b"
+        "bytes": 7439,
+        "hash": "b8e96a786b4c79ba"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -3945,9 +3970,9 @@
     {
       "id": "camera-screen-world",
       "result": "PASS",
-      "specFingerprint": "ef5a621000c1",
-      "sourceFingerprint": "79b933df001417a8",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "98df9ed498e9",
+      "sourceFingerprint": "04ea132be64e31c5",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -4380,10 +4405,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-screen-world.png",
-        "bytes": 5064,
-        "hash": "d96323e297ea5323"
+        "bytes": 7000,
+        "hash": "b009c767c0576acd"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -4392,9 +4419,9 @@
     {
       "id": "camera-second-view",
       "result": "PASS",
-      "specFingerprint": "70498eca2ff6",
-      "sourceFingerprint": "2cd1ae11353bc6d7",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7aed442e9832",
+      "sourceFingerprint": "1c0678748c512bc0",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -4810,10 +4837,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-second-view.png",
-        "bytes": 5504,
-        "hash": "04fa66e921717333"
+        "bytes": 6884,
+        "hash": "9f42f55f7a2e23a2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -4822,9 +4851,9 @@
     {
       "id": "camera-viewport-props",
       "result": "PASS",
-      "specFingerprint": "784c3add2288",
-      "sourceFingerprint": "3b0b6ef797053b46",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "598241d45feb",
+      "sourceFingerprint": "735eed7dc083aba9",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -5312,13 +5341,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-viewport-props.png",
-        "bytes": 5068,
-        "hash": "cdb7dc510311c654"
+        "bytes": 7046,
+        "hash": "3c4bacdf0af4ad29"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -5327,9 +5358,9 @@
     {
       "id": "collector-dodge",
       "result": "PASS",
-      "specFingerprint": "7dab6868b99a",
-      "sourceFingerprint": "7c1abd6d9cf3dc46",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "c78aff993ad8",
+      "sourceFingerprint": "930880f0bb6826bd",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -5651,7 +5682,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 2529,
+          "calls": 2682,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5668,7 +5699,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 1401,
+          "calls": 1486,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5856,7 +5887,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 2720,
+          "calls": 2873,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -6070,10 +6101,85 @@
           "detail": "held=7 leaked=0 reloaded=true litRatio=1.0000 assetUnits=25"
         }
       ],
+      "scenarioProbe": {
+        "id": "collector-dodge",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "audio-clip-loaded",
+            "ok": true,
+            "detail": "duration=1.6"
+          },
+          {
+            "name": "g1-seed-determinism",
+            "ok": true,
+            "detail": "plan 快照两次 reset 一致"
+          },
+          {
+            "name": "g2-auto-nav-win",
+            "ok": true,
+            "detail": "state=won score=100 eaten=10"
+          },
+          {
+            "name": "g2-pool-reuse-accounting",
+            "ok": true,
+            "detail": "respawns=10 eaten=10 nodes=17/17"
+          },
+          {
+            "name": "g3-pause-freezes-position",
+            "ok": true,
+            "detail": "px -0.445→-0.445 state=paused"
+          },
+          {
+            "name": "g3-resume-advances",
+            "ok": true,
+            "detail": "px=2.451 pz=-0.413"
+          },
+          {
+            "name": "g4-death-by-enemy",
+            "ok": true,
+            "detail": "state=over hp=0 hits=3 steps=181"
+          },
+          {
+            "name": "g5-restart-scene-reset",
+            "ok": true,
+            "detail": "score=0 hp=3 nodes=17 planSame=true"
+          }
+        ],
+        "state": {
+          "game": {
+            "state": "playing",
+            "score": 0,
+            "hp": 3,
+            "coinsEaten": 0,
+            "poolRespawns": 0,
+            "hitsByEnemy": 0,
+            "audioPlayAttempts": 19,
+            "audioPlayErrors": 0,
+            "nodes": 17
+          }
+        }
+      },
+      "networkAssets": [
+        {
+          "path": "/assets/tone.wav",
+          "status": 200,
+          "bytes": 25644,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/tone.wav",
+          "status": 200,
+          "bytes": 25644,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/collector-dodge.png",
-        "bytes": 10532,
-        "hash": "ac36c48f30061ce6"
+        "bytes": 13926,
+        "hash": "bb7df51f766084d4"
       },
       "assetDigests": [
         {
@@ -6090,9 +6196,9 @@
     {
       "id": "color-timeline-key",
       "result": "PASS",
-      "specFingerprint": "6d94265ec4d6",
-      "sourceFingerprint": "e402be22fad3da2d",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e7bad608d89c",
+      "sourceFingerprint": "1db43e4634e91227",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -6509,10 +6615,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/color-timeline-key.png",
-        "bytes": 5082,
-        "hash": "6760f7805e3665a8"
+        "bytes": 7036,
+        "hash": "307692cb84e9255c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -6521,9 +6629,9 @@
     {
       "id": "colortimeline-ops",
       "result": "PASS",
-      "specFingerprint": "78823e5a0e2f",
-      "sourceFingerprint": "074e64b8da2435e1",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "2134116accb0",
+      "sourceFingerprint": "557dece4c7386b13",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -7041,10 +7149,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/colortimeline-ops.png",
-        "bytes": 5062,
-        "hash": "ac2bdd6c78c3f54a"
+        "bytes": 7112,
+        "hash": "23ea8e31d3c434e1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -7053,9 +7163,9 @@
     {
       "id": "contra-action",
       "result": "PASS",
-      "specFingerprint": "b2bc34ccd752",
-      "sourceFingerprint": "0532eabdd1936cb8",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "70226909db1a",
+      "sourceFingerprint": "2ce4f5dc9c17474d",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -7629,7 +7739,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=0.9998"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -7639,13 +7749,107 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.9994 assetUnits=8"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.9998 assetUnits=8"
+        }
+      ],
+      "scenarioProbe": {
+        "id": "contra-action",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "audio-clip-loaded",
+            "ok": true,
+            "detail": "duration=1.6"
+          },
+          {
+            "name": "c1-camera-follows",
+            "ok": true,
+            "detail": "px=8.08 scrollX=0.08 err=0.000 state=run"
+          },
+          {
+            "name": "c1-camera-bounds",
+            "ok": true,
+            "detail": "scrollX=0.08333333333332327"
+          },
+          {
+            "name": "c3-shot-from-pool",
+            "ok": true,
+            "detail": "shots=1 activeP=1"
+          },
+          {
+            "name": "c3-kill-and-recycle",
+            "ok": true,
+            "detail": "kills=1 activeP=0 spent=1"
+          },
+          {
+            "name": "c2-jump-apex-and-landing",
+            "ok": true,
+            "detail": "apex=3.77 py0=2.00 landed y=2 ground=2 x=18.08"
+          },
+          {
+            "name": "c4-first-hit-damages",
+            "ok": true,
+            "detail": "hp=2 invuln=90 hitsTaken=1"
+          },
+          {
+            "name": "c4-invuln-immunity",
+            "ok": true,
+            "detail": "hp=2 saves=30"
+          },
+          {
+            "name": "c4-damage-after-invuln",
+            "ok": true,
+            "detail": "hp=1"
+          },
+          {
+            "name": "c5-reach-goal-won",
+            "ok": true,
+            "detail": "state=won x=56.00"
+          },
+          {
+            "name": "c5-death-and-over",
+            "ok": true,
+            "detail": "state=over hp=0 deaths=1 steps=181"
+          },
+          {
+            "name": "c6-scene-reentry-fresh",
+            "ok": true,
+            "detail": "gen 1→2 oldSceneValid=false"
+          }
+        ],
+        "state": {
+          "game": {
+            "gameState": "playing",
+            "hp": 3,
+            "kills": 0,
+            "shotsFired": 0,
+            "bulletsSpent": 0,
+            "invulnSaves": 0,
+            "deaths": 1,
+            "generation": 2
+          }
+        }
+      },
+      "networkAssets": [
+        {
+          "path": "/assets/tone.wav",
+          "status": 200,
+          "bytes": 25644,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/tone.wav",
+          "status": 200,
+          "bytes": 25644,
+          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/contra-action.png",
-        "bytes": 11243,
-        "hash": "c7bc555e09b20b00"
+        "bytes": 11236,
+        "hash": "b68d557eac7c4b74"
       },
       "assetDigests": [
         {
@@ -7662,9 +7866,9 @@
     {
       "id": "directional-light-face",
       "result": "PASS",
-      "specFingerprint": "97d42b5db3ab",
-      "sourceFingerprint": "b20c4bec70226a9d",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "455a02a48175",
+      "sourceFingerprint": "aa06a11253115b53",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -8064,6 +8268,8 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/directional-light-face.png",
         "bytes": 5552,
@@ -8076,9 +8282,9 @@
     {
       "id": "dragonbones-basic",
       "result": "PASS",
-      "specFingerprint": "cfd28d7885f1",
-      "sourceFingerprint": "d9ccae6dfd74bdea",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "768644d07b66",
+      "sourceFingerprint": "17a0a6d6b66e1faa",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -8963,10 +9169,43 @@
           "detail": "held=3 leaked=0 reloaded=true litRatio=1.0000 assetUnits=5"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/AirDragon.json",
+          "status": 200,
+          "bytes": 6583,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/AirDragon_atlas.json",
+          "status": 200,
+          "bytes": 768,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/AirDragon.json",
+          "status": 200,
+          "bytes": 6583,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/AirDragon_atlas.png",
+          "status": 200,
+          "bytes": 175,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/AirDragon_atlas.json",
+          "status": 200,
+          "bytes": 768,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/dragonbones-basic.png",
-        "bytes": 15989,
-        "hash": "68f6d0d0a112cc1c"
+        "bytes": 15962,
+        "hash": "c7846f39af540553"
       },
       "assetDigests": [
         {
@@ -8997,9 +9236,9 @@
     {
       "id": "gltf-asset-readonly",
       "result": "PASS",
-      "specFingerprint": "a70f6b03bb31",
-      "sourceFingerprint": "22820c8b7367c954",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "07da80d1aa5b",
+      "sourceFingerprint": "8b0e6869870468c5",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -9542,18 +9781,33 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=1 leaked=0 reloaded=true litRatio=0.9997 assetUnits=6"
+          "detail": "held=1 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
+        }
+      ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-asset-readonly.png",
-        "bytes": 5077,
-        "hash": "6d2f21f037a45dac"
+        "bytes": 7194,
+        "hash": "b5df8e4369198552"
       },
       "assetDigests": [
         {
@@ -9577,9 +9831,9 @@
     {
       "id": "gltf-basic",
       "result": "PASS",
-      "specFingerprint": "5589594abdf5",
-      "sourceFingerprint": "481aee4186a2fcf5",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "ee8c608d946f",
+      "sourceFingerprint": "59577d7d6b6c60e8",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -9961,10 +10215,25 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=0.2546 assetUnits=9"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-basic.png",
-        "bytes": 22056,
-        "hash": "d9db6723f2806d2a"
+        "bytes": 23254,
+        "hash": "8e28535637431097"
       },
       "assetDigests": [
         {
@@ -9989,8 +10258,8 @@
       "id": "gltf-catalog",
       "result": "PASS",
       "specFingerprint": "fe5b5218178e",
-      "sourceFingerprint": "ffcf0b1b73c24ac7",
-      "candidateFingerprint": "d1cc556759a27943",
+      "sourceFingerprint": "87d5611160f76b33",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "apiProof": [],
       "validatorResults": [
         {
@@ -10015,9 +10284,9 @@
     {
       "id": "gltf-clearcoat",
       "result": "PASS",
-      "specFingerprint": "c6b480406f7f",
-      "sourceFingerprint": "221fa314ef0a2167",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e12caf84b432",
+      "sourceFingerprint": "9b899fb6acdb4dc8",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -10372,18 +10641,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9992"
+          "detail": "litRatio=0.9995"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.9992 assetUnits=14"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.9995 assetUnits=14"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/gltf-clearcoat.png",
-        "bytes": 17674,
-        "hash": "0cf1ffb794c52b0f"
+        "bytes": 20141,
+        "hash": "3f5017983bf23ccb"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -10392,9 +10663,9 @@
     {
       "id": "gltf-draco",
       "result": "PASS",
-      "specFingerprint": "a7a345f064ed",
-      "sourceFingerprint": "3cd1617585064e0d",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "c40482afd5b5",
+      "sourceFingerprint": "3a80645a70f5b245",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -10717,6 +10988,15 @@
           "detail": "KHR_draco_mesh_compression=decoder-required"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/draco.glb",
+          "status": 200,
+          "bytes": 992,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-draco.png",
         "bytes": 4786,
@@ -10744,9 +11024,9 @@
     {
       "id": "gltf-loader-registry",
       "result": "PASS",
-      "specFingerprint": "756eed642826",
-      "sourceFingerprint": "ff75be88b4c5c73b",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "02884be29324",
+      "sourceFingerprint": "e8bc35c4e2e91bae",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -11229,18 +11509,33 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=1 leaked=0 reloaded=true litRatio=0.9997 assetUnits=6"
+          "detail": "held=1 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
+        }
+      ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-loader-registry.png",
-        "bytes": 5077,
-        "hash": "1eef9b33e408d1bc"
+        "bytes": 7163,
+        "hash": "0d6c9bcfefc321c5"
       },
       "assetDigests": [
         {
@@ -11264,9 +11559,9 @@
     {
       "id": "gltf-meshopt",
       "result": "PASS",
-      "specFingerprint": "dc08e0df3331",
-      "sourceFingerprint": "fb44e7730d794cc4",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e3b586ec08c7",
+      "sourceFingerprint": "815ef7631c5affe0",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -11697,18 +11992,27 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1574"
+          "detail": "litRatio=0.1606"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1574 assetUnits=7"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1606 assetUnits=7"
+        }
+      ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/meshopt-khr.glb",
+          "status": 200,
+          "bytes": 1428,
+          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-meshopt.png",
-        "bytes": 5094,
-        "hash": "751918d75a6cdfdd"
+        "bytes": 13552,
+        "hash": "a66c78e3cde2ba28"
       },
       "assetDigests": [
         {
@@ -11732,9 +12036,9 @@
     {
       "id": "gltf-morph",
       "result": "PASS",
-      "specFingerprint": "594304b3020c",
-      "sourceFingerprint": "3cfacd5aeece3c7a",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "893b7107261d",
+      "sourceFingerprint": "21bd135b88e06777",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -12171,7 +12475,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1752"
+          "detail": "litRatio=0.1801"
         },
         {
           "validatorId": "resource-released",
@@ -12179,10 +12483,19 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=0.2373 assetUnits=8"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/AnimatedMorphCube.glb",
+          "status": 200,
+          "bytes": 6752,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-morph.png",
-        "bytes": 5887,
-        "hash": "6b4fc9d0dbfb2ee5"
+        "bytes": 7122,
+        "hash": "033d33d39a3b5109"
       },
       "assetDigests": [
         {
@@ -12206,9 +12519,9 @@
     {
       "id": "gltf-skin",
       "result": "PASS",
-      "specFingerprint": "efdda98c555e",
-      "sourceFingerprint": "48524527b8a65b3d",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "010a7e23807e",
+      "sourceFingerprint": "dcb70602a02a0180",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -12662,18 +12975,75 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1951"
+          "detail": "litRatio=0.1957"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1906 assetUnits=11"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1912 assetUnits=11"
+        }
+      ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/SimpleSkin.gltf",
+          "status": 200,
+          "bytes": 2386,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-skin.png",
-        "bytes": 7120,
-        "hash": "6f39b37f37187030"
+        "bytes": 17494,
+        "hash": "a1c7997f192e2e1b"
       },
       "assetDigests": [
         {
@@ -12725,9 +13095,9 @@
     {
       "id": "gltf-viewer",
       "result": "PASS",
-      "specFingerprint": "b6adba815b69",
-      "sourceFingerprint": "8e01d359fbeb0bce",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d0b257740b12",
+      "sourceFingerprint": "de5f1509aa4ecbfc",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -13037,6 +13407,75 @@
           "validatorId": "resource-released",
           "state": "PASS",
           "detail": "held=2 leaked=0 reloaded=true litRatio=1.0000 assetUnits=13"
+        }
+      ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin.gltf",
+          "status": 200,
+          "bytes": 2386,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin.gltf",
+          "status": 200,
+          "bytes": 2386,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
         }
       ],
       "artifact": {
@@ -13402,9 +13841,9 @@
     {
       "id": "hello-cube",
       "result": "PASS",
-      "specFingerprint": "b3f13053f440",
-      "sourceFingerprint": "35b97a8b06d8d399",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "1eec40a9fdad",
+      "sourceFingerprint": "037467dd34348936",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -13573,7 +14012,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 172,
+          "calls": 180,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -13778,13 +14217,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0442"
+          "detail": "litRatio=0.0453"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 5466,
-        "hash": "324e84dc7e942205"
+        "bytes": 6582,
+        "hash": "9ab7fb4368f98070"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -13793,9 +14234,9 @@
     {
       "id": "input",
       "result": "PASS",
-      "specFingerprint": "7b79f441a1fe",
-      "sourceFingerprint": "d955f577fb18256d",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "aeed6a7d4db8",
+      "sourceFingerprint": "37642ffb95c12375",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -13947,7 +14388,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 8,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -14146,10 +14587,12 @@
           "detail": "跨交互两次读回：2 declared components matched (nodes 1/0 in graph)"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/input.png",
-        "bytes": 8904,
-        "hash": "c711cdcabe3f2278"
+        "bytes": 14869,
+        "hash": "5f45504b420365f3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -14158,9 +14601,9 @@
     {
       "id": "input-queries",
       "result": "PASS",
-      "specFingerprint": "85fc42b2505e",
-      "sourceFingerprint": "f56a581b24f366ff",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d42be4ea4580",
+      "sourceFingerprint": "9104caa57f0c51c0",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -14624,13 +15067,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/input-queries.png",
-        "bytes": 5067,
-        "hash": "96372f5bc3dfb3c7"
+        "bytes": 7028,
+        "hash": "bd71643b04907cdc"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -14639,9 +15084,9 @@
     {
       "id": "interaction-click",
       "result": "PASS",
-      "specFingerprint": "cdf688132cb5",
-      "sourceFingerprint": "13832355ec662f05",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e5337b3cc8f9",
+      "sourceFingerprint": "286de09ae2f442c2",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -14861,7 +15306,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 290,
+          "calls": 301,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -15077,10 +15522,12 @@
           "detail": "跨交互两次读回：1 declared components matched (nodes 1/0 in graph)"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/interaction-click.png",
-        "bytes": 5429,
-        "hash": "0888cf04e87afd23"
+        "bytes": 9149,
+        "hash": "f61010ceca097160"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -15089,9 +15536,9 @@
     {
       "id": "layers-enum-ops",
       "result": "PASS",
-      "specFingerprint": "4300a4d31968",
-      "sourceFingerprint": "5584faf83c95e68c",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "b3f0cc42328a",
+      "sourceFingerprint": "55effe6c1c4bebda",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -15769,13 +16216,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/layers-enum-ops.png",
-        "bytes": 5060,
-        "hash": "1881c1089de853d0"
+        "bytes": 7050,
+        "hash": "beb261e28b0bc395"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -15784,9 +16233,9 @@
     {
       "id": "light-attach-cycle",
       "result": "PASS",
-      "specFingerprint": "4349a67ad2a8",
-      "sourceFingerprint": "8b2dd54e0423e97e",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d2fbe339dee3",
+      "sourceFingerprint": "947eed98bd636042",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -16281,6 +16730,8 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-attach-cycle.png",
         "bytes": 5590,
@@ -16293,9 +16744,9 @@
     {
       "id": "light-point",
       "result": "PASS",
-      "specFingerprint": "88951008b00d",
-      "sourceFingerprint": "ea448f328c7d5108",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "957212499be3",
+      "sourceFingerprint": "ede6040c16f088b8",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -16481,7 +16932,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 194,
+          "calls": 191,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16699,13 +17150,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.5402"
+          "detail": "litRatio=0.5856"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 52392,
-        "hash": "afbb8456a4d09e2e"
+        "bytes": 43537,
+        "hash": "22bba03b7f489d93"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16714,9 +17167,9 @@
     {
       "id": "light-sphere",
       "result": "PASS",
-      "specFingerprint": "022251e312e0",
-      "sourceFingerprint": "2d60ccd6e7859061",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "13f2c79f770f",
+      "sourceFingerprint": "181f839e3048d2fe",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -17114,10 +17567,12 @@
           "detail": "litRatio=0.1318"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 17492,
-        "hash": "50f8164a97e874ad"
+        "bytes": 32765,
+        "hash": "5601c1b38d22e64c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -17126,9 +17581,9 @@
     {
       "id": "light-spot",
       "result": "PASS",
-      "specFingerprint": "74538d51cd5a",
-      "sourceFingerprint": "9e6871b1fb516900",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "9743cdd62ff4",
+      "sourceFingerprint": "b3534e04dd7d198f",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -17314,7 +17769,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 202,
+          "calls": 191,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17532,13 +17987,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.5748"
+          "detail": "litRatio=0.5395"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 5743,
-        "hash": "7164b8e437a7d030"
+        "bytes": 15882,
+        "hash": "8bc1e364355fae0c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -17547,9 +18004,9 @@
     {
       "id": "light-two-directional",
       "result": "PASS",
-      "specFingerprint": "2a5fe86a854b",
-      "sourceFingerprint": "1b02a2906065565c",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "248ee78d5a9e",
+      "sourceFingerprint": "84e2d6b201f643d3",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -17964,10 +18421,12 @@
           "detail": "canvas state changed after real input"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-two-directional.png",
-        "bytes": 5096,
-        "hash": "7ba457176ffb627d"
+        "bytes": 5168,
+        "hash": "3f91eb68bbb0010e"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -17976,9 +18435,9 @@
     {
       "id": "match3-classic",
       "result": "PASS",
-      "specFingerprint": "7a18ff962562",
-      "sourceFingerprint": "d4ec33849a43cbe4",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "691785c7d88e",
+      "sourceFingerprint": "ccc6fc2c4637ea1e",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -18456,10 +18915,105 @@
           "detail": "held=3 leaked=0 reloaded=true litRatio=1.0000 assetUnits=7"
         }
       ],
+      "scenarioProbe": {
+        "id": "match3-classic",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "m1-initial-board-clean",
+            "ok": true,
+            "detail": "matches=0 state=playing"
+          },
+          {
+            "name": "m1-board-full",
+            "ok": true,
+            "detail": "盘面存在空格/越界色"
+          },
+          {
+            "name": "m8-precondition-has-move",
+            "ok": true,
+            "detail": "种子盘面无可消除交换（演示前提不成立）"
+          },
+          {
+            "name": "m8-input-lock-during-anim",
+            "ok": true,
+            "detail": "accepted=false lockRejects=1"
+          },
+          {
+            "name": "m2-valid-swap-scores",
+            "ok": true,
+            "detail": "score=90 chain=2 moves=7"
+          },
+          {
+            "name": "m2-refill-full-board",
+            "ok": true,
+            "detail": "消除补牌后盘面不满"
+          },
+          {
+            "name": "m3-precondition-invalid-pair",
+            "ok": true,
+            "detail": "找不到无效交换对（演示前提不成立）"
+          },
+          {
+            "name": "m3-invalid-swap-rollback",
+            "ok": true,
+            "detail": "matched=false rollback=1 moves=8"
+          },
+          {
+            "name": "fixture-no-prematch",
+            "ok": true,
+            "detail": "夹具盘面存在预置匹配: "
+          },
+          {
+            "name": "m4-cascade-chain-2",
+            "ok": true,
+            "detail": "chain=3 cleared=12（夹具保证 ≥2 波 ≥6 格；RNG 补牌可追加）"
+          },
+          {
+            "name": "m4-chain-scoring",
+            "ok": true,
+            "detail": "score=270（≥ 30 + 60 连锁加成下界）"
+          },
+          {
+            "name": "m5-win-state",
+            "ok": true,
+            "detail": "state=won score=270/250"
+          },
+          {
+            "name": "m6-restart-fresh",
+            "ok": true,
+            "detail": "score=0 moves=8"
+          },
+          {
+            "name": "m7-precondition",
+            "ok": true,
+            "detail": "score=0"
+          },
+          {
+            "name": "m7-lose-state",
+            "ok": true,
+            "detail": "state=over score=90（小分交换若意外达标判 won 亦为合法终局）"
+          }
+        ],
+        "state": {
+          "game": {
+            "state": "playing",
+            "score": 0,
+            "movesLeft": 8,
+            "lockRejects": 0,
+            "invalidRollbacks": 0,
+            "seed": 777
+          },
+          "boardValid": true
+        }
+      },
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/match3-classic.png",
-        "bytes": 12428,
-        "hash": "9a0b695fba823241"
+        "bytes": 12658,
+        "hash": "2db4fcac8fe077b5"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -18468,9 +19022,9 @@
     {
       "id": "material-basic",
       "result": "PASS",
-      "specFingerprint": "d2f18d65ff5f",
-      "sourceFingerprint": "64a5e60f317d77b8",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "3dc08a803d09",
+      "sourceFingerprint": "77978071ea70ce35",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -18605,7 +19159,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 1,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -18673,7 +19227,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 5,
+          "calls": 6,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -18791,10 +19345,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-basic.png",
-        "bytes": 5963,
-        "hash": "3ea0be6251e38e5e"
+        "bytes": 8201,
+        "hash": "9f9c0bacbf3e3cfd"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -18803,9 +19359,9 @@
     {
       "id": "material-color",
       "result": "PASS",
-      "specFingerprint": "40bc8fbce245",
-      "sourceFingerprint": "e4c05344db3660e6",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d332c2a0874b",
+      "sourceFingerprint": "1c35d1d3e8c24f0e",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -19158,13 +19714,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0831"
+          "detail": "litRatio=0.0832"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-color.png",
-        "bytes": 6098,
-        "hash": "d04aa73d45bd276e"
+        "bytes": 8625,
+        "hash": "3782de0f71a2e1d7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19173,9 +19731,9 @@
     {
       "id": "material-lifecycle",
       "result": "PASS",
-      "specFingerprint": "c255ef30b2eb",
-      "sourceFingerprint": "cd4656ed270c0523",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "03d09d051045",
+      "sourceFingerprint": "8c2c756a8e99932b",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -19642,10 +20200,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-lifecycle.png",
-        "bytes": 5064,
-        "hash": "d9154c49a8c7e76a"
+        "bytes": 7055,
+        "hash": "64594c791abd1dc6"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19654,9 +20214,9 @@
     {
       "id": "material-ops",
       "result": "PASS",
-      "specFingerprint": "0d20bc534df9",
-      "sourceFingerprint": "44a5801682f683d0",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "645e1af87d97",
+      "sourceFingerprint": "67bc705e7b6e2602",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -20125,10 +20685,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-ops.png",
-        "bytes": 5063,
-        "hash": "ee57b5a265d67ab4"
+        "bytes": 6939,
+        "hash": "9972843a462ab127"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -20137,9 +20699,9 @@
     {
       "id": "material-transparent",
       "result": "PASS",
-      "specFingerprint": "bfab06f0ff3f",
-      "sourceFingerprint": "fe359d18cc0d7555",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "0e56120cfac1",
+      "sourceFingerprint": "dabc87c41be93d5e",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -20610,10 +21172,12 @@
           "detail": "held=5 leaked=0 reloaded=true litRatio=0.2191 assetUnits=10"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-transparent.png",
-        "bytes": 5672,
-        "hash": "411d153f6fcea967"
+        "bytes": 7599,
+        "hash": "40e33e351e226cd4"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -20622,9 +21186,9 @@
     {
       "id": "material-unlit",
       "result": "PASS",
-      "specFingerprint": "d56c8ac8b8fc",
-      "sourceFingerprint": "bf83768a54c7e5fb",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "57a35450dc95",
+      "sourceFingerprint": "7517caefdbe8802f",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -20776,7 +21340,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 399,
+          "calls": 419,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -20977,13 +21541,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1124"
+          "detail": "litRatio=0.1068"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 6998,
-        "hash": "4ebc14bd80e824ad"
+        "bytes": 9435,
+        "hash": "ff41cb70e53a0d21"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -20992,9 +21558,9 @@
     {
       "id": "math-approx-compare",
       "result": "PASS",
-      "specFingerprint": "0e7e74e2f326",
-      "sourceFingerprint": "d7152434b9249d56",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "22fbdb446ecc",
+      "sourceFingerprint": "aa8f177850fc8b75",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -21498,13 +22064,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-approx-compare.png",
-        "bytes": 5070,
-        "hash": "2bb7709bbd5f9d24"
+        "bytes": 6949,
+        "hash": "b4d3637448a1155a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -21513,9 +22081,9 @@
     {
       "id": "math-bits",
       "result": "PASS",
-      "specFingerprint": "cc319d9b11e2",
-      "sourceFingerprint": "01bed96c62bfcf77",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7715860acf04",
+      "sourceFingerprint": "8ddf903c55618ac1",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -22219,13 +22787,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-bits.png",
-        "bytes": 5088,
-        "hash": "1152f320510f8227"
+        "bytes": 6667,
+        "hash": "99b62eba4b571058"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -22234,9 +22804,9 @@
     {
       "id": "math-bits-constants",
       "result": "PASS",
-      "specFingerprint": "ae9c07f77998",
-      "sourceFingerprint": "e3ba204ed533d86e",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "f459d4a2b5f6",
+      "sourceFingerprint": "5e1be191a2b0cf66",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -22670,13 +23240,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-bits-constants.png",
-        "bytes": 5071,
-        "hash": "aac60eb40ec3654b"
+        "bytes": 6830,
+        "hash": "956930f94b618ee3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -22685,9 +23257,9 @@
     {
       "id": "math-color-applied",
       "result": "PASS",
-      "specFingerprint": "aafe69a02c32",
-      "sourceFingerprint": "9d719e65fbeadd23",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "f2bd11247de3",
+      "sourceFingerprint": "8d183eb8d031b279",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -23120,10 +23692,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-color-applied.png",
-        "bytes": 5056,
-        "hash": "e4e5c0b17b72c0e9"
+        "bytes": 7104,
+        "hash": "e916799fb1cf3c5c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -23132,9 +23706,9 @@
     {
       "id": "math-color-convert",
       "result": "PASS",
-      "specFingerprint": "5e81f30bbb9f",
-      "sourceFingerprint": "b7b95b1c8eaec459",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4e2e445e2a98",
+      "sourceFingerprint": "ce052ed83cc90a95",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -23639,10 +24213,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-color-convert.png",
-        "bytes": 5062,
-        "hash": "ce9e6d4c5ca693b0"
+        "bytes": 7037,
+        "hash": "7ab1903f34936372"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -23651,9 +24227,9 @@
     {
       "id": "math-color-models",
       "result": "PASS",
-      "specFingerprint": "15b59a3ace15",
-      "sourceFingerprint": "c25572b73f1dfa6f",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d40a003d46b4",
+      "sourceFingerprint": "7e880273577db792",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -24230,10 +24806,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-color-models.png",
-        "bytes": 5067,
-        "hash": "9095b1a6a1ab5ce2"
+        "bytes": 7051,
+        "hash": "bf0731b7d20f7cc1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -24242,9 +24820,9 @@
     {
       "id": "math-easing-patterns",
       "result": "PASS",
-      "specFingerprint": "b410b1e6fdbc",
-      "sourceFingerprint": "8f29c67d016211b9",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "203f4f311c0b",
+      "sourceFingerprint": "fd979e704b0fa6c1",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -24677,13 +25255,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-easing-patterns.png",
-        "bytes": 5076,
-        "hash": "ebbc50b19c669334"
+        "bytes": 6817,
+        "hash": "58d7475211d25e32"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -24692,9 +25272,9 @@
     {
       "id": "math-enumerable-props",
       "result": "PASS",
-      "specFingerprint": "15ea8c28d8cc",
-      "sourceFingerprint": "c801c43045003650",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "abe438ba1222",
+      "sourceFingerprint": "f83475ba04b23763",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -25091,13 +25671,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-enumerable-props.png",
-        "bytes": 5063,
-        "hash": "ae0c9e2a0584d1ef"
+        "bytes": 6843,
+        "hash": "6316bd8e66659778"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -25106,9 +25688,9 @@
     {
       "id": "math-float-encoding",
       "result": "PASS",
-      "specFingerprint": "79ca3bc7eb9b",
-      "sourceFingerprint": "391fa035023a9afd",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e647cf23199c",
+      "sourceFingerprint": "9f895aa61ce574a1",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -25557,13 +26139,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-float-encoding.png",
-        "bytes": 5079,
-        "hash": "478e84fa1418fd15"
+        "bytes": 7017,
+        "hash": "a7129c0d68f0936f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -25572,9 +26156,9 @@
     {
       "id": "math-mat3-basics",
       "result": "PASS",
-      "specFingerprint": "980e63beebc8",
-      "sourceFingerprint": "f6ef23d166ab7031",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "43ef412e782d",
+      "sourceFingerprint": "88de2a60c50a8703",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -26159,13 +26743,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat3-basics.png",
-        "bytes": 5072,
-        "hash": "9d7c5f045e2cff47"
+        "bytes": 7126,
+        "hash": "10730227b8b771ea"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -26174,9 +26760,9 @@
     {
       "id": "math-mat3-elements",
       "result": "PASS",
-      "specFingerprint": "1df9e58ad5fb",
-      "sourceFingerprint": "59a2ec9e69b7edbe",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "31de2c390b2d",
+      "sourceFingerprint": "a632d38095b1c3f4",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -26736,13 +27322,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat3-elements.png",
-        "bytes": 5054,
-        "hash": "6ccb71b1c429a477"
+        "bytes": 7024,
+        "hash": "be89db915bbea802"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -26751,9 +27339,9 @@
     {
       "id": "math-mat3-transforms",
       "result": "PASS",
-      "specFingerprint": "0886380084ce",
-      "sourceFingerprint": "4405584e7b2cb2af",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "6c31008b566b",
+      "sourceFingerprint": "5c9f18341c661804",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -27346,13 +27934,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat3-transforms.png",
-        "bytes": 5072,
-        "hash": "71c1a8d3c17545a1"
+        "bytes": 7063,
+        "hash": "f953858c3e86badf"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -27361,9 +27951,9 @@
     {
       "id": "math-mat4-applied",
       "result": "PASS",
-      "specFingerprint": "9a995206294c",
-      "sourceFingerprint": "57e231ef18363041",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "414e57637b2f",
+      "sourceFingerprint": "23ff32f2b04abb5a",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -27827,13 +28417,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat4-applied.png",
-        "bytes": 5073,
-        "hash": "f5a45504808826e2"
+        "bytes": 6948,
+        "hash": "d7db30eaf17a6194"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -27842,9 +28434,9 @@
     {
       "id": "math-mat4-basics",
       "result": "PASS",
-      "specFingerprint": "765b3c355604",
-      "sourceFingerprint": "3dc3f11afa351fd4",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e9881610708d",
+      "sourceFingerprint": "4ba2e1b5ae85097a",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -28446,13 +29038,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat4-basics.png",
-        "bytes": 5064,
-        "hash": "713f7d02d58411fa"
+        "bytes": 6980,
+        "hash": "76e70e0802b42221"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -28461,9 +29055,9 @@
     {
       "id": "math-mat4-compose",
       "result": "PASS",
-      "specFingerprint": "30cd3432b226",
-      "sourceFingerprint": "ded09d0badcdbecf",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "679348ba6ca7",
+      "sourceFingerprint": "f804e3c7d90ac938",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -28946,13 +29540,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat4-compose.png",
-        "bytes": 5083,
-        "hash": "1ccf483e7b16a2f6"
+        "bytes": 7148,
+        "hash": "48fdaab84f9f1dcd"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -28961,9 +29557,9 @@
     {
       "id": "math-mat4-transform",
       "result": "PASS",
-      "specFingerprint": "8538bc02ff92",
-      "sourceFingerprint": "a2f8f1f977306aef",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "b2387018b204",
+      "sourceFingerprint": "c8f8e75fec62af9a",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -29537,13 +30133,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-mat4-transform.png",
-        "bytes": 5073,
-        "hash": "f5a45504808826e2"
+        "bytes": 6948,
+        "hash": "d7db30eaf17a6194"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -29552,9 +30150,9 @@
     {
       "id": "math-quat-applied",
       "result": "PASS",
-      "specFingerprint": "4f94c982f324",
-      "sourceFingerprint": "da946bde8e82102d",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "2ba550844695",
+      "sourceFingerprint": "9fa7e79898d2782c",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -30003,13 +30601,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-quat-applied.png",
-        "bytes": 5069,
-        "hash": "936c7368a36783dd"
+        "bytes": 7187,
+        "hash": "d44155ea0204d25f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -30018,9 +30618,9 @@
     {
       "id": "math-quat-components",
       "result": "PASS",
-      "specFingerprint": "da91fe8a5d12",
-      "sourceFingerprint": "071dbd5ab7405106",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "eb9e9de757e9",
+      "sourceFingerprint": "a51696c718c2af5c",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -30490,13 +31090,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-quat-components.png",
-        "bytes": 5074,
-        "hash": "04285759089e6959"
+        "bytes": 7081,
+        "hash": "6259a49824dd51ec"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -30505,9 +31107,9 @@
     {
       "id": "math-quat-euler",
       "result": "PASS",
-      "specFingerprint": "3ec5122f5df2",
-      "sourceFingerprint": "d700b7a9019f7fc3",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "ba5cfcc9eb5b",
+      "sourceFingerprint": "a8aa732d8837e6c8",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -31007,13 +31609,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-quat-euler.png",
-        "bytes": 5069,
-        "hash": "0d6e728012d2630e"
+        "bytes": 7031,
+        "hash": "dfac047b15354e68"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -31022,9 +31626,9 @@
     {
       "id": "math-quat-interp",
       "result": "PASS",
-      "specFingerprint": "9b9229625a6a",
-      "sourceFingerprint": "47cc94cdbe68a5b8",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "64864da48407",
+      "sourceFingerprint": "b76e61dcf47c1481",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -31648,13 +32252,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-quat-interp.png",
-        "bytes": 5069,
-        "hash": "936c7368a36783dd"
+        "bytes": 7187,
+        "hash": "d44155ea0204d25f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -31663,9 +32269,9 @@
     {
       "id": "math-random-utils",
       "result": "PASS",
-      "specFingerprint": "5ecc19862d96",
-      "sourceFingerprint": "c15c81b1aa94b148",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "79c65346c480",
+      "sourceFingerprint": "cfd361f0e1369cc3",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -32044,13 +32650,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-random-utils.png",
-        "bytes": 5069,
-        "hash": "0f2c19e758b27f17"
+        "bytes": 6897,
+        "hash": "a20cdc95cb506998"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -32059,9 +32667,9 @@
     {
       "id": "math-rect-geometry",
       "result": "PASS",
-      "specFingerprint": "6267c996478b",
-      "sourceFingerprint": "81a79675af0f54e5",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "00c5e8366ce2",
+      "sourceFingerprint": "af2f3dd62a273028",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -32531,13 +33139,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-rect-geometry.png",
-        "bytes": 5068,
-        "hash": "11fd6f8b3d2a3429"
+        "bytes": 7117,
+        "hash": "7dd8a7451c44c63c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -32546,9 +33156,9 @@
     {
       "id": "math-rect-ops",
       "result": "PASS",
-      "specFingerprint": "b9eb6188e51c",
-      "sourceFingerprint": "f38296627e24982f",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d0434e11c8bc",
+      "sourceFingerprint": "0106719f35a017c3",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -33196,13 +33806,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-rect-ops.png",
-        "bytes": 5055,
-        "hash": "3b17e8ded8c7332c"
+        "bytes": 7106,
+        "hash": "9a6a93b29adde033"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -33211,9 +33823,9 @@
     {
       "id": "math-scalar-utils",
       "result": "PASS",
-      "specFingerprint": "acd43497454d",
-      "sourceFingerprint": "d7cf1bf97eb4aa21",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "dbe73acd98c1",
+      "sourceFingerprint": "92b4a147ff81428a",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -33682,13 +34294,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-scalar-utils.png",
-        "bytes": 5083,
-        "hash": "223fc911e3cd379a"
+        "bytes": 6887,
+        "hash": "939b9bfc1392e156"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -33697,9 +34311,9 @@
     {
       "id": "math-size-ops",
       "result": "PASS",
-      "specFingerprint": "0b7f1ca74490",
-      "sourceFingerprint": "ef6a20c12a68933a",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "c1bf3006d928",
+      "sourceFingerprint": "4fe2b4c3f9df21bf",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -34221,13 +34835,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-size-ops.png",
-        "bytes": 5067,
-        "hash": "327b01b1e8496340"
+        "bytes": 6893,
+        "hash": "7ef923706466cd66"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -34236,9 +34852,9 @@
     {
       "id": "math-vec2-applied",
       "result": "PASS",
-      "specFingerprint": "44f895a74cd8",
-      "sourceFingerprint": "9ee5e79bfa483396",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "8fb0300091bb",
+      "sourceFingerprint": "88b75665869be4e9",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -34704,13 +35320,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec2-applied.png",
-        "bytes": 5065,
-        "hash": "e4853b9a48938c63"
+        "bytes": 6813,
+        "hash": "84f6a457f352eabd"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -34719,9 +35337,9 @@
     {
       "id": "math-vec2-arithmetic",
       "result": "PASS",
-      "specFingerprint": "1a508076cd58",
-      "sourceFingerprint": "b0455f493a7594be",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "49523ddcb972",
+      "sourceFingerprint": "fc9a5900ceb65606",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -35293,13 +35911,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec2-arithmetic.png",
-        "bytes": 5087,
-        "hash": "155749eb86b2fe43"
+        "bytes": 6696,
+        "hash": "9bd8dd2162983c27"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -35308,9 +35928,9 @@
     {
       "id": "math-vec2-components",
       "result": "PASS",
-      "specFingerprint": "ef4282c21dc9",
-      "sourceFingerprint": "eedc77cb620f6e10",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "df85dd1e8123",
+      "sourceFingerprint": "1e97ac75f2a9f38f",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -35744,13 +36364,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec2-components.png",
-        "bytes": 5063,
-        "hash": "4e4886fd5649a30c"
+        "bytes": 6822,
+        "hash": "730f390146800082"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -35759,9 +36381,9 @@
     {
       "id": "math-vec2-equality-misc",
       "result": "PASS",
-      "specFingerprint": "fd37a266a531",
-      "sourceFingerprint": "3308991d2530879c",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "2077aead34e2",
+      "sourceFingerprint": "dd5eb3c11a754a36",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -36317,13 +36939,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec2-equality-misc.png",
-        "bytes": 5063,
-        "hash": "020c1efe14143698"
+        "bytes": 6817,
+        "hash": "130c301646dc964e"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -36332,9 +36956,9 @@
     {
       "id": "math-vec2-length-angle",
       "result": "PASS",
-      "specFingerprint": "b52658d59fc2",
-      "sourceFingerprint": "4d1345d46dc0f703",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "5e9a56f9e4d6",
+      "sourceFingerprint": "f2a25ee3942e0b87",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -36871,13 +37495,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec2-length-angle.png",
-        "bytes": 5085,
-        "hash": "08158cf7a034a6f9"
+        "bytes": 6838,
+        "hash": "b79bfdc3b6126e32"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -36886,9 +37512,9 @@
     {
       "id": "math-vec2-tovec3",
       "result": "PASS",
-      "specFingerprint": "919b2a6a130c",
-      "sourceFingerprint": "28ba9a348d0fef57",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "359302f37ee8",
+      "sourceFingerprint": "e51cdd77f9733ba4",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -37286,13 +37912,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec2-tovec3.png",
-        "bytes": 5087,
-        "hash": "81d35b8e172299ed"
+        "bytes": 6735,
+        "hash": "0c688b37bcf1d502"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -37301,9 +37929,9 @@
     {
       "id": "math-vec3-applied",
       "result": "PASS",
-      "specFingerprint": "ca25f13e157f",
-      "sourceFingerprint": "e697c76c11380faf",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "42ac85f4d283",
+      "sourceFingerprint": "888e4f69808a0c53",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -37611,7 +38239,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 156,
+          "calls": 155,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -37772,10 +38400,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec3-applied.png",
-        "bytes": 5071,
-        "hash": "cf8bc7bcc68c054e"
+        "bytes": 7064,
+        "hash": "81db500c21c30137"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -37784,9 +38414,9 @@
     {
       "id": "math-vec3-arithmetic",
       "result": "PASS",
-      "specFingerprint": "2b7256a84477",
-      "sourceFingerprint": "541528f944d401a1",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "ffe5f8f18708",
+      "sourceFingerprint": "ec63006daef5076b",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -38234,7 +38864,7 @@
           "api": "math.Vec3.subtract",
           "proof": "verified",
           "state": "executed",
-          "calls": 167,
+          "calls": 181,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -38361,10 +38991,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec3-arithmetic.png",
-        "bytes": 5069,
-        "hash": "dd19b8babcc4c051"
+        "bytes": 6913,
+        "hash": "55ceab95acc011c9"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -38373,9 +39005,9 @@
     {
       "id": "math-vec3-components",
       "result": "PASS",
-      "specFingerprint": "52e643008c59",
-      "sourceFingerprint": "14660f9eb3b60b14",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "09efb0d2382c",
+      "sourceFingerprint": "ba28a0e1f5ed04ad",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -38830,10 +39462,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec3-components.png",
-        "bytes": 5065,
-        "hash": "def7b161c8384030"
+        "bytes": 6843,
+        "hash": "1e495c37a79b4a74"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -38842,9 +39476,9 @@
     {
       "id": "math-vec3-equality-misc",
       "result": "PASS",
-      "specFingerprint": "f83263724c2b",
-      "sourceFingerprint": "cff5d5862790b40c",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "ce18d88226fc",
+      "sourceFingerprint": "f35a14e3a1341566",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -39439,10 +40073,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec3-equality-misc.png",
-        "bytes": 5082,
-        "hash": "e1e306205a3e6779"
+        "bytes": 6924,
+        "hash": "18554261768b98c1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -39451,9 +40087,9 @@
     {
       "id": "math-vec3-length-products",
       "result": "PASS",
-      "specFingerprint": "c24adab817f0",
-      "sourceFingerprint": "b227fd7d7ee1f417",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4f8bbed4c64f",
+      "sourceFingerprint": "b991bc0d2aa6dfb8",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -39990,10 +40626,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec3-length-products.png",
-        "bytes": 5067,
-        "hash": "027c2accefdd7a99"
+        "bytes": 6841,
+        "hash": "9dcc3c15ac8f816b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -40002,9 +40640,9 @@
     {
       "id": "math-vec3-tovec2",
       "result": "PASS",
-      "specFingerprint": "40bc363a2237",
-      "sourceFingerprint": "9bfc189d5c442d68",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "39e4aa1ca1b9",
+      "sourceFingerprint": "6c8ab2b84ba00630",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -40405,10 +41043,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec3-tovec2.png",
-        "bytes": 5068,
-        "hash": "2beed0cf3f4f57a3"
+        "bytes": 7047,
+        "hash": "f7ec92511043c3cf"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -40417,9 +41057,9 @@
     {
       "id": "math-vec4-arithmetic",
       "result": "PASS",
-      "specFingerprint": "a55519f8bfd6",
-      "sourceFingerprint": "c4a11088df12899f",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "1945d8214fb6",
+      "sourceFingerprint": "db7b2fcd410fb399",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -40939,10 +41579,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec4-arithmetic.png",
-        "bytes": 5063,
-        "hash": "6444142f9c90c973"
+        "bytes": 6727,
+        "hash": "39b8cc63a7908b27"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -40951,9 +41593,9 @@
     {
       "id": "math-vec4-components",
       "result": "PASS",
-      "specFingerprint": "9b5aa37f7c26",
-      "sourceFingerprint": "68fd6513ff85aa61",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "8d3ecabd9775",
+      "sourceFingerprint": "f63c8c756aa249fa",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -41426,10 +42068,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec4-components.png",
-        "bytes": 5078,
-        "hash": "ee6ee3a96fb71c00"
+        "bytes": 7133,
+        "hash": "c59b32d8b1821601"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -41438,9 +42082,9 @@
     {
       "id": "math-vec4-length-misc",
       "result": "PASS",
-      "specFingerprint": "70b17061f5cf",
-      "sourceFingerprint": "f339dfdf3d63407f",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "aba2d336dced",
+      "sourceFingerprint": "2195ae9a8f079347",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -42032,10 +42676,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/math-vec4-length-misc.png",
-        "bytes": 5064,
-        "hash": "042f8615f5083608"
+        "bytes": 6859,
+        "hash": "3e669f5f42b232b5"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -42044,9 +42690,9 @@
     {
       "id": "mesh-attributes-indices",
       "result": "PASS",
-      "specFingerprint": "df4938c181e1",
-      "sourceFingerprint": "fdaeebfb49cc3866",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7331fcb3f758",
+      "sourceFingerprint": "27a3e28361542221",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -42510,13 +43156,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-attributes-indices.png",
-        "bytes": 5059,
-        "hash": "2918aab731e958e8"
+        "bytes": 7121,
+        "hash": "cb1da146799ca08b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -42525,9 +43173,9 @@
     {
       "id": "mesh-cylinder",
       "result": "PASS",
-      "specFingerprint": "c3d9b8dd565b",
-      "sourceFingerprint": "fd61367663c2b0a1",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "facc0dffdcae",
+      "sourceFingerprint": "368e3df77b65f7b7",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -42914,13 +43562,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0583"
+          "detail": "litRatio=0.0585"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
-        "bytes": 5526,
-        "hash": "0adf59307676c37a"
+        "bytes": 10744,
+        "hash": "009f4099d49ad9f0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -42929,9 +43579,9 @@
     {
       "id": "mesh-lifecycle-ops",
       "result": "PASS",
-      "specFingerprint": "1ea127b38887",
-      "sourceFingerprint": "14f81f5ce9df574a",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d1fe84ce4d4d",
+      "sourceFingerprint": "f6949b013e9f3653",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -43412,13 +44062,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-lifecycle-ops.png",
-        "bytes": 5086,
-        "hash": "c532d71f4c80a6f3"
+        "bytes": 7053,
+        "hash": "5133b19b0f331e5f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -43427,9 +44079,9 @@
     {
       "id": "mesh-morph-bounds",
       "result": "PASS",
-      "specFingerprint": "f9c72b35b537",
-      "sourceFingerprint": "8f51ec189d1b8ee9",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d84e10888320",
+      "sourceFingerprint": "e269d7b6ad864d3d",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -43880,13 +44532,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-morph-bounds.png",
-        "bytes": 5053,
-        "hash": "a049534f31e37efe"
+        "bytes": 7078,
+        "hash": "b75610fd87fe4834"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -43895,9 +44549,9 @@
     {
       "id": "mesh-multi-material",
       "result": "PASS",
-      "specFingerprint": "03cd6b3c1dff",
-      "sourceFingerprint": "ec1bfedbbea794d3",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "aaa92922c830",
+      "sourceFingerprint": "3248cf0cb2aab8c6",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -44266,10 +44920,12 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=0.2699 assetUnits=8"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-multi-material.png",
-        "bytes": 5639,
-        "hash": "d4ee708fb3fbc837"
+        "bytes": 7682,
+        "hash": "185da9cc96b58a94"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -44278,9 +44934,9 @@
     {
       "id": "mesh-plane",
       "result": "PASS",
-      "specFingerprint": "2702df7692e6",
-      "sourceFingerprint": "003d016d9bbdc124",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "2a0473dbdd79",
+      "sourceFingerprint": "c58257e3098e3e82",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -44483,7 +45139,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 199,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -44684,13 +45340,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.4087"
+          "detail": "litRatio=0.4089"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 9032,
-        "hash": "0ccd28bf45f27630"
+        "bytes": 16866,
+        "hash": "39c6378360573104"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -44699,9 +45357,9 @@
     {
       "id": "mesh-prim-compare",
       "result": "PASS",
-      "specFingerprint": "ad95a2bb29ef",
-      "sourceFingerprint": "49bd0a5fe2290020",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "ea18270871e1",
+      "sourceFingerprint": "013fd4d57716343e",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -45134,10 +45792,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-prim-compare.png",
-        "bytes": 5071,
-        "hash": "b3bdd56bf3bb8cc7"
+        "bytes": 6997,
+        "hash": "40d1c47b979a38a8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -45146,9 +45806,9 @@
     {
       "id": "mesh-sphere",
       "result": "PASS",
-      "specFingerprint": "c0d64a28c555",
-      "sourceFingerprint": "cb85b55b88591609",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "5e1972835b36",
+      "sourceFingerprint": "f5b889e8a655bb9c",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -45351,7 +46011,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 199,
+          "calls": 195,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -45535,13 +46195,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0492"
+          "detail": "litRatio=0.0493"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 11562,
-        "hash": "b76c873e3e5c8421"
+        "bytes": 17242,
+        "hash": "af5bb8577b3ee00b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -45550,9 +46212,9 @@
     {
       "id": "mesh-torus",
       "result": "PASS",
-      "specFingerprint": "4de78c63719b",
-      "sourceFingerprint": "abe4881c69f707f5",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4ada25082207",
+      "sourceFingerprint": "10bae6c176697a46",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -45755,7 +46417,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 200,
+          "calls": 195,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -45942,10 +46604,12 @@
           "detail": "litRatio=0.0427"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 9690,
-        "hash": "718ac6b33315ef0b"
+        "bytes": 17425,
+        "hash": "8261634d98ee4833"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -45954,9 +46618,9 @@
     {
       "id": "meshrenderer-hooks",
       "result": "PASS",
-      "specFingerprint": "4ed62247324c",
-      "sourceFingerprint": "71dd47c248f8828f",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "68f9cf1085f5",
+      "sourceFingerprint": "814f6ef0a5c013ad",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -46461,13 +47125,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/meshrenderer-hooks.png",
-        "bytes": 5087,
-        "hash": "e171c6997a534ba7"
+        "bytes": 7043,
+        "hash": "e68f6c58d362f1f4"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -46476,9 +47142,9 @@
     {
       "id": "model-character-interaction",
       "result": "PASS",
-      "specFingerprint": "b652b3f4754e",
-      "sourceFingerprint": "072e1c3f3d8d5137",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7bc28ca313c2",
+      "sourceFingerprint": "1b699dee9a45eaae",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -47351,7 +48017,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0556"
+          "detail": "litRatio=0.0557"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -47361,13 +48027,140 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0559 assetUnits=11"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0564 assetUnits=11"
+        }
+      ],
+      "scenarioProbe": {
+        "id": "model-character-interaction",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "two-instances-animated",
+            "ok": true,
+            "detail": "animA=true animB=true"
+          },
+          {
+            "name": "animation-clock-started",
+            "ok": true,
+            "detail": "tA=0.209（8s 内动画时钟未起步）"
+          },
+          {
+            "name": "independent-animation-clocks",
+            "ok": true,
+            "detail": "tA=0.599 tB=1.615 ratio=2.70"
+          },
+          {
+            "name": "pause-freezes-time",
+            "ok": true,
+            "detail": "paused=1.615 after320ms=1.615"
+          },
+          {
+            "name": "resume-advances-time",
+            "ok": true,
+            "detail": "still=1.615 resumed=2.283"
+          },
+          {
+            "name": "instanceB-disposed",
+            "ok": true,
+            "detail": "isValid(CharB root)=false"
+          },
+          {
+            "name": "charA-unaffected-by-B-release",
+            "ok": true,
+            "detail": "tA 1.458 → 1.858"
+          }
+        ],
+        "state": {
+          "assetFace": {
+            "animations": 1,
+            "meshes": 1,
+            "materials": 1,
+            "textures": 0,
+            "skeletons": 1,
+            "images": 0,
+            "sceneNames": [
+              "scene_0"
+            ],
+            "owned": "object"
+          },
+          "timeline": {
+            "clipName": "animation_0",
+            "tA": 1.8575999999940394,
+            "tB": 2.2829999999999986,
+            "charBValid": false,
+            "charAValid": true,
+            "clicks": 0
+          }
+        }
+      },
+      "networkAssets": [
+        {
+          "path": "/assets/SimpleSkin.gltf",
+          "status": 200,
+          "bytes": 3520,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin.gltf",
+          "status": 200,
+          "bytes": 3520,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/model-character-interaction.png",
-        "bytes": 6097,
-        "hash": "82114dd4991974fc"
+        "bytes": 9651,
+        "hash": "7e5d9e9cc348b5ad"
       },
       "assetDigests": [
         {
@@ -47419,9 +48212,9 @@
     {
       "id": "node-active",
       "result": "PASS",
-      "specFingerprint": "9c7cfcdb6c9f",
-      "sourceFingerprint": "957e34f8616eaf44",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "1600f4b3bd82",
+      "sourceFingerprint": "5a3ed945031356f0",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -47813,10 +48606,12 @@
           "detail": "litRatio=0.2470"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-active.png",
-        "bytes": 5729,
-        "hash": "ba85bda31ed14276"
+        "bytes": 15417,
+        "hash": "82756c748fbbc353"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -47825,9 +48620,9 @@
     {
       "id": "node-children-ops",
       "result": "PASS",
-      "specFingerprint": "0cecb5ad294d",
-      "sourceFingerprint": "77c9a10235bb11d9",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "f434218d7b1e",
+      "sourceFingerprint": "04d21d6a2f961c24",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -48318,10 +49113,12 @@
           "detail": "held=1 leaked=0 reloaded=true litRatio=1.0000 assetUnits=8"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-children-ops.png",
-        "bytes": 5068,
-        "hash": "2beed0cf3f4f57a3"
+        "bytes": 7047,
+        "hash": "f7ec92511043c3cf"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -48330,9 +49127,9 @@
     {
       "id": "node-component-queries",
       "result": "PASS",
-      "specFingerprint": "e2e75ca7a981",
-      "sourceFingerprint": "6a55c6207753a3bf",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "1e951dea23af",
+      "sourceFingerprint": "143ddfb3b88e6fa4",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -48766,10 +49563,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-component-queries.png",
-        "bytes": 5066,
-        "hash": "3761a4d71ed1998d"
+        "bytes": 6891,
+        "hash": "f4adc4901deb93ef"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -48778,9 +49577,9 @@
     {
       "id": "node-events",
       "result": "PASS",
-      "specFingerprint": "f43783a95c21",
-      "sourceFingerprint": "837b8e420e7a880a",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "349a6cfe97c5",
+      "sourceFingerprint": "e7104fac7b11ed58",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -49417,10 +50216,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-events.png",
-        "bytes": 5069,
-        "hash": "dd19b8babcc4c051"
+        "bytes": 6913,
+        "hash": "55ceab95acc011c9"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -49429,9 +50230,9 @@
     {
       "id": "node-hierarchy",
       "result": "PASS",
-      "specFingerprint": "72efe2cf6b66",
-      "sourceFingerprint": "fa2e5f388b65f479",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e11498af6216",
+      "sourceFingerprint": "6cb8913624985ef6",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -49651,7 +50452,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 156,
+          "calls": 145,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -49852,13 +50653,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0126"
+          "detail": "litRatio=0.0132"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 5274,
-        "hash": "295407913ea7de08"
+        "bytes": 5763,
+        "hash": "236c9a7eecc42e0d"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -49867,9 +50670,9 @@
     {
       "id": "node-pool",
       "result": "PASS",
-      "specFingerprint": "7f5f5dbec32d",
-      "sourceFingerprint": "9fbd2f186e736626",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "d86a708ca70d",
+      "sourceFingerprint": "76793cbeacb700ba",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -50303,10 +51106,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-pool.png",
-        "bytes": 5068,
-        "hash": "62cc27ec0992287e"
+        "bytes": 7049,
+        "hash": "4c1436a6bb3928ff"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -50315,9 +51120,9 @@
     {
       "id": "node-scale",
       "result": "PASS",
-      "specFingerprint": "9c52ef0d0bc2",
-      "sourceFingerprint": "c3ab3e755cd3f539",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "adcedee647c1",
+      "sourceFingerprint": "58438f35cfba2029",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -50520,7 +51325,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 202,
+          "calls": 164,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -50723,13 +51528,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0579"
+          "detail": "litRatio=0.0588"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 6431,
-        "hash": "455c57fc6a80b315"
+        "bytes": 8180,
+        "hash": "9b88cd20a94c56cf"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -50738,9 +51545,9 @@
     {
       "id": "node-scene-id",
       "result": "PASS",
-      "specFingerprint": "2ddf78549071",
-      "sourceFingerprint": "fb880f39f3a2687b",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4b30e4fbe723",
+      "sourceFingerprint": "734a03c5b92dfce8",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -51142,10 +51949,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scene-id.png",
-        "bytes": 5070,
-        "hash": "b337ece51775cf7a"
+        "bytes": 6884,
+        "hash": "3c5ebdbc0cdf0f96"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -51154,9 +51963,9 @@
     {
       "id": "particle-2d-basic",
       "result": "PASS",
-      "specFingerprint": "d8a9dd22b4c3",
-      "sourceFingerprint": "e87330f4b1d52ba0",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "dc33c48be26c",
+      "sourceFingerprint": "af9084853704646e",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -51852,10 +52661,12 @@
           "detail": "held=34 leaked=0 reloaded=true litRatio=1.0000 assetUnits=8"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/particle-2d-basic.png",
-        "bytes": 40157,
-        "hash": "8d1ae1c8f6ec900c"
+        "bytes": 39828,
+        "hash": "ea5914137c16db5f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -51864,9 +52675,9 @@
     {
       "id": "physics-2d-basic",
       "result": "PASS",
-      "specFingerprint": "a74c759a85f8",
-      "sourceFingerprint": "3f9207b6bac28f9b",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "2992f3827c45",
+      "sourceFingerprint": "0c29ffa9f366c5cf",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -52575,6 +53386,8 @@
           "detail": "held=12 leaked=0 reloaded=true litRatio=0.9999 assetUnits=8"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-2d-basic.png",
         "bytes": 15698,
@@ -52587,9 +53400,9 @@
     {
       "id": "physics-2d-collision",
       "result": "PASS",
-      "specFingerprint": "4ee47e258bda",
-      "sourceFingerprint": "49467e2333a8f117",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "1146afbe7bfc",
+      "sourceFingerprint": "651f615374c33ffe",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -52679,7 +53492,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 286,
+          "reads": 285,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -52917,7 +53730,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 287,
+          "reads": 286,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -53255,6 +54068,8 @@
           "detail": "held=21 leaked=0 reloaded=true litRatio=0.9999 assetUnits=11"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-2d-collision.png",
         "bytes": 16529,
@@ -53267,9 +54082,9 @@
     {
       "id": "physics-3d-basic",
       "result": "PASS",
-      "specFingerprint": "885b85eafe40",
-      "sourceFingerprint": "d2497f8e98052058",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "2dae8fd94551",
+      "sourceFingerprint": "1b6ad95a984fffb3",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -53537,7 +54352,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 306,
+          "calls": 305,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -53657,7 +54472,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 2092,
+          "calls": 2085,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -53674,7 +54489,7 @@
           "api": "math.Quat",
           "proof": "verified",
           "state": "executed",
-          "calls": 286,
+          "calls": 285,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Quat",
@@ -53692,7 +54507,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 1166,
+          "calls": 1162,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -54582,10 +55397,12 @@
           "detail": "held=10 leaked=0 reloaded=true litRatio=1.0000 assetUnits=20"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-basic.png",
-        "bytes": 19891,
-        "hash": "087dbd0230187c89"
+        "bytes": 19894,
+        "hash": "adf866954bb53c4a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -54594,9 +55411,9 @@
     {
       "id": "physics-3d-collision",
       "result": "PASS",
-      "specFingerprint": "31c2e8f2d958",
-      "sourceFingerprint": "10386b846b99736a",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "3ff3f3d53ed9",
+      "sourceFingerprint": "6f5ec74fcc298655",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -54840,7 +55657,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 215,
+          "calls": 216,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -55230,10 +56047,12 @@
           "detail": "held=8 leaked=0 reloaded=true litRatio=0.9995 assetUnits=16"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-collision.png",
-        "bytes": 11001,
-        "hash": "3aee9b83adb79444"
+        "bytes": 11017,
+        "hash": "89a8311fb510b53c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -55242,9 +56061,9 @@
     {
       "id": "physics-interaction",
       "result": "PASS",
-      "specFingerprint": "48666e065489",
-      "sourceFingerprint": "eb16c723bbabce9c",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "ca48ced6399e",
+      "sourceFingerprint": "b5e309975cb0a963",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -55588,7 +56407,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 303,
+          "calls": 302,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56059,10 +56878,83 @@
           "detail": "held=25 leaked=0 reloaded=true litRatio=0.9995 assetUnits=21"
         }
       ],
+      "scenarioProbe": {
+        "id": "physics-interaction",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "cannon-simulates-displacement",
+            "ok": true,
+            "detail": "Tower1 rest y=0.5（builtin 恒 0.6 不动 → 后端非 cannon 即判红）"
+          },
+          {
+            "name": "contact-pairs-run1",
+            "ok": true,
+            "detail": "pairs=Ground|Tower1,Tower1|Tower2,Tower2|Tower3"
+          },
+          {
+            "name": "rest-stable-run1",
+            "ok": true,
+            "detail": "stable=true exits=0 heights=[0.5,1.5,2.5]"
+          },
+          {
+            "name": "old-towers-destroyed",
+            "ok": true,
+            "detail": "isValid 全 false=true"
+          },
+          {
+            "name": "reset-reproducible",
+            "ok": true,
+            "detail": "run1=[0.5,1.5,2.5] run2=[0.5,1.5,2.5] pairs=3"
+          }
+        ],
+        "state": {
+          "phase": "ready",
+          "clicks": 0,
+          "ballsSpawned": 0,
+          "strikeEnters": 0,
+          "lastRayHit": "(none)",
+          "enterPairsRun1": [
+            "Ground|Tower1",
+            "Tower1|Tower2",
+            "Tower2|Tower3"
+          ],
+          "enterPairsRun2": [
+            "Ground|Tower1",
+            "Tower1|Tower2",
+            "Tower2|Tower3"
+          ],
+          "restY1": [
+            0.5,
+            1.5,
+            2.5
+          ],
+          "restY2": [
+            0.5,
+            1.5,
+            2.5
+          ],
+          "exitTotal": 0,
+          "resetReproducible": true,
+          "towersValid": [
+            true,
+            true,
+            true
+          ],
+          "livePairs": [
+            "Ground|Tower1",
+            "Tower1|Tower2",
+            "Tower2|Tower3"
+          ]
+        }
+      },
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-interaction.png",
-        "bytes": 12409,
-        "hash": "9764d60b138ac099"
+        "bytes": 12417,
+        "hash": "f0720fb3efe36cfb"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -56071,9 +56963,9 @@
     {
       "id": "primitives-geometry-ops",
       "result": "PASS",
-      "specFingerprint": "e7794dfb9762",
-      "sourceFingerprint": "baad02840d35e518",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "50bc153ddb1c",
+      "sourceFingerprint": "0fda4c96ce7a51a5",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -56523,10 +57415,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/primitives-geometry-ops.png",
-        "bytes": 5065,
-        "hash": "2c9f2dba742d7909"
+        "bytes": 7050,
+        "hash": "03b87910123c28bf"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -56535,9 +57429,9 @@
     {
       "id": "primitives-shapes-extra",
       "result": "PASS",
-      "specFingerprint": "5a6b7032fd08",
-      "sourceFingerprint": "52e7113be5b77e97",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e76a8b021e50",
+      "sourceFingerprint": "047accd37ce78909",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -56970,10 +57864,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/primitives-shapes-extra.png",
-        "bytes": 5056,
-        "hash": "0275a9874b91ccd5"
+        "bytes": 7135,
+        "hash": "6a6bece1a61073c1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -56982,9 +57878,9 @@
     {
       "id": "primitives-wireframe-obj",
       "result": "PASS",
-      "specFingerprint": "b1e8e7db4f9d",
-      "sourceFingerprint": "85449a8406472936",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "924c2a4ebd0a",
+      "sourceFingerprint": "5f322ef65443e136",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -57434,10 +58330,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/primitives-wireframe-obj.png",
-        "bytes": 5063,
-        "hash": "63a0f7307464d109"
+        "bytes": 7143,
+        "hash": "715ef7ae1c4bf272"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -57446,9 +58344,9 @@
     {
       "id": "product-viewer",
       "result": "PASS",
-      "specFingerprint": "1b424deb41b9",
-      "sourceFingerprint": "a01534e089e675e9",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4bf3f38b6e50",
+      "sourceFingerprint": "f56183e5669f6304",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -57927,7 +58825,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 257,
+          "calls": 265,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -58080,7 +58978,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 665,
+          "calls": 675,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -58252,7 +59150,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9990"
+          "detail": "litRatio=0.9991"
         },
         {
           "validatorId": "interaction:button-click",
@@ -58267,7 +59165,7 @@
         {
           "validatorId": "interaction:button-click",
           "state": "PASS",
-          "detail": "点击「更换模型」已执行 lit=0.9994 differs=true"
+          "detail": "点击「更换模型」已执行 lit=1.0000 differs=true"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -58277,13 +59175,190 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=8 leaked=0 reloaded=true litRatio=0.9997 assetUnits=21"
+          "detail": "held=8 leaked=0 reloaded=true litRatio=1.0000 assetUnits=21"
+        }
+      ],
+      "scenarioProbe": {
+        "id": "product-viewer",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "t1-load-failure-recorded",
+            "ok": true,
+            "detail": "Failed to execute 'decode' on 'TextDecoder': The encoded data was not valid."
+          },
+          {
+            "name": "t2-retry-load-success",
+            "ok": true,
+            "detail": "meshes=1 animations=0"
+          },
+          {
+            "name": "t3-side-animated",
+            "ok": true,
+            "detail": "clips=1"
+          },
+          {
+            "name": "t4-material-variant-applied",
+            "ok": true,
+            "detail": "variantIdx=1"
+          },
+          {
+            "name": "t4-variant-cycle-restores",
+            "ok": true,
+            "detail": "variantIdx=0 swaps=4"
+          },
+          {
+            "name": "t5-resize-handler-ran",
+            "ok": true,
+            "detail": "resizeEvents=1 canvas=480x360 rect.w=1"
+          },
+          {
+            "name": "screenshot-captured",
+            "ok": true,
+            "detail": "bytes=6398"
+          },
+          {
+            "name": "material-variant-cycled",
+            "ok": true,
+            "detail": "variantIdx=1 swaps=5"
+          },
+          {
+            "name": "model-swap-disposes-old",
+            "ok": true,
+            "detail": "oldValid=false newKind=SimpleSkin"
+          },
+          {
+            "name": "t6-buttons-processed",
+            "ok": true,
+            "detail": "shots=1 matSwaps=5 modelSwaps=1"
+          }
+        ],
+        "state": {
+          "viewport": {
+            "canvas": [
+              480,
+              360
+            ],
+            "rect": [
+              1,
+              1
+            ]
+          },
+          "final": {
+            "mainKind": "SimpleSkin",
+            "materialSwaps": 5,
+            "modelSwaps": 1,
+            "screenshots": 1,
+            "shotBytes": 6398,
+            "resizeEvents": 1,
+            "viewport": {
+              "canvas": [
+                480,
+                360
+              ],
+              "rect": [
+                1,
+                1
+              ]
+            },
+            "boxMeshes": -1,
+            "skinAnimations": 1,
+            "boxAssetAutoDestroyedByDispose": true
+          }
+        }
+      },
+      "networkAssets": [
+        {
+          "path": "/assets/corrupt-product.glb",
+          "status": 200,
+          "bytes": 70,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin.gltf",
+          "status": 200,
+          "bytes": 3520,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin.gltf",
+          "status": 200,
+          "bytes": 3520,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_geometry.bin",
+          "status": 200,
+          "bytes": 168,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_skinningData.bin",
+          "status": 200,
+          "bytes": 320,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_inverseBindMatrices.bin",
+          "status": 200,
+          "bytes": 128,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/SimpleSkin_animation.bin",
+          "status": 200,
+          "bytes": 240,
+          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/product-viewer.png",
-        "bytes": 19511,
-        "hash": "b329f87593efa831"
+        "bytes": 22160,
+        "hash": "bc8554d77475eab1"
       },
       "assetDigests": [
         {
@@ -58356,9 +59431,9 @@
     {
       "id": "profiler-overlay",
       "result": "PASS",
-      "specFingerprint": "66d6546c7a37",
-      "sourceFingerprint": "afc5dc805c737985",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7452de8c11ca",
+      "sourceFingerprint": "86784386074fa41c",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -58527,7 +59602,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 180,
+          "calls": 183,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -58834,13 +59909,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9992"
+          "detail": "litRatio=0.9998"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/profiler-overlay.png",
-        "bytes": 16525,
-        "hash": "dcbf6226a352acb3"
+        "bytes": 20358,
+        "hash": "8792ca7220021eee"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -58849,9 +59926,9 @@
     {
       "id": "render-composite",
       "result": "PASS",
-      "specFingerprint": "2f1c7cda0809",
-      "sourceFingerprint": "fc304b3f4e6df1f8",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "f2a8eecaa3c9",
+      "sourceFingerprint": "f3bc5f329a814950",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -59144,7 +60221,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 315,
+          "calls": 313,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -59349,7 +60426,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 12,
+          "calls": 16,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -59505,10 +60582,171 @@
           "detail": "held=5 leaked=0 reloaded=true litRatio=0.2277 assetUnits=11"
         }
       ],
+      "scenarioProbe": {
+        "id": "render-composite",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "p1-baseline-visible",
+            "ok": true,
+            "detail": "center=[24,57,149,255]（预期蓝色主体，clear=(30,40,60)）"
+          },
+          {
+            "name": "p2a-ambient-shifts-pixels",
+            "ok": true,
+            "detail": "base=[24,57,149,255] ambientGreen=[23,64,125,255]"
+          },
+          {
+            "name": "p2a-ambient-restored",
+            "ok": true,
+            "detail": "baseLum=56.6 restoredLum=56.6"
+          },
+          {
+            "name": "p2b-pointlight-brightens",
+            "ok": true,
+            "detail": "baseLum=56.6 pointOnLum=255.0"
+          },
+          {
+            "name": "p2b-pointlight-off-restores",
+            "ok": true,
+            "detail": "pointOffLum=56.6 baseLum=56.6"
+          },
+          {
+            "name": "p2b-light-count-plus-one",
+            "ok": true,
+            "detail": "before=2 now=3"
+          },
+          {
+            "name": "p2b-light-count-restored",
+            "ok": true,
+            "detail": "now=2 tmpValid=false"
+          },
+          {
+            "name": "p2c-mainlight-brightens",
+            "ok": true,
+            "detail": "illuminance 30000→65000: baseLum=56.6 brightLum=85.6"
+          },
+          {
+            "name": "p2c-mainlight-restores",
+            "ok": true,
+            "detail": "restoredLum=56.6 baseLum=56.6"
+          },
+          {
+            "name": "p3-texture-on-screen",
+            "ok": true,
+            "detail": "center=[227,217,89,255]（预期黄色纹理主导）"
+          },
+          {
+            "name": "render-camera-public-access",
+            "ok": true,
+            "detail": "size=480x360 aspect=1.3333333333333333"
+          },
+          {
+            "name": "world-to-screen-in-viewport",
+            "ok": true,
+            "detail": "screen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+          },
+          {
+            "name": "screen-world-roundtrip",
+            "ok": true,
+            "detail": "world=[-2.3000000000000504,1.6999999999999968,0.7999999999998941]"
+          },
+          {
+            "name": "p4-rendertarget-visible",
+            "ok": true,
+            "detail": "quad non-bg=3230px warm(快照内容)=2428px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+          },
+          {
+            "name": "p5-rt-resize-readback",
+            "ok": true,
+            "detail": "rt 256 → 128x128"
+          },
+          {
+            "name": "render-camera-public-access",
+            "ok": true,
+            "detail": "size=480x360 aspect=1.3333333333333333"
+          },
+          {
+            "name": "world-to-screen-in-viewport",
+            "ok": true,
+            "detail": "screen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+          },
+          {
+            "name": "screen-world-roundtrip",
+            "ok": true,
+            "detail": "world=[-2.3000000000000504,1.6999999999999968,0.7999999999998941]"
+          },
+          {
+            "name": "p5-resized-rt-still-renders",
+            "ok": true,
+            "detail": "quad@128 non-bg=3879px warm=2831px rep=[19,28,49,255] rect={\"x\":0,\"y\":0,\"w\":1,\"h\":1}"
+          }
+        ],
+        "state": {
+          "baselineLum": 57,
+          "ambientShiftPixel": [
+            23,
+            64,
+            125,
+            255
+          ],
+          "tmpLightVisualDelta": 198,
+          "lightPropVisualDelta": 29,
+          "texturePixel": [
+            227,
+            217,
+            89,
+            255
+          ],
+          "quadRegion": {
+            "count": 3230,
+            "warm": 2428,
+            "pixel": [
+              195,
+              45,
+              30,
+              255
+            ]
+          },
+          "quadRegionAfterRTResize": {
+            "count": 3879,
+            "warm": 2831,
+            "pixel": [
+              19,
+              28,
+              49,
+              255
+            ]
+          },
+          "worldToScreenRaw": [
+            46.46061552573158,
+            231.91256908686654,
+            0.9816176954968052
+          ],
+          "cameraRect": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "lights": 2,
+          "glVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "maxTextureSize": 16384,
+          "rtValid": true,
+          "rtSize": [
+            128,
+            128
+          ],
+          "gapRef": "GAP-L1 已于 r53 修复（fixture 4.0 语义对齐）；Camera 组件 resize 导出面缺口（GAP-C2）见 docs/api-scenario-gap-matrix.md §7"
+        }
+      },
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/render-composite.png",
-        "bytes": 8928,
-        "hash": "5294fab840cb68db"
+        "bytes": 9174,
+        "hash": "854a865db867f717"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -59517,9 +60755,9 @@
     {
       "id": "runtime-asset-release",
       "result": "PASS",
-      "specFingerprint": "928e831458d2",
-      "sourceFingerprint": "11c2af5dc6de1137",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "f628bd4d35b5",
+      "sourceFingerprint": "4a9f2c0d68b5473f",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -59883,10 +61121,19 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=0.0560 assetUnits=15"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/BoxTextured.glb",
+          "status": 200,
+          "bytes": 5956,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/runtime-asset-release.png",
-        "bytes": 12486,
-        "hash": "61e4035bca0c1e0f"
+        "bytes": 12927,
+        "hash": "960e9e746e2abc8c"
       },
       "assetDigests": [
         {
@@ -59910,9 +61157,9 @@
     {
       "id": "scene-asset-meta",
       "result": "PASS",
-      "specFingerprint": "a6666038cab0",
-      "sourceFingerprint": "4af9775c86397ec9",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "6e068a897412",
+      "sourceFingerprint": "da38bbe3d694f92f",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -60331,18 +61578,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=1 leaked=0 reloaded=true litRatio=0.9997 assetUnits=6"
+          "detail": "held=1 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/scene-asset-meta.png",
-        "bytes": 5080,
-        "hash": "8f5760b305356e42"
+        "bytes": 7042,
+        "hash": "38e7de8c86d7f9f3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -60351,9 +61600,9 @@
     {
       "id": "scene-globals-read",
       "result": "PASS",
-      "specFingerprint": "aa6186546441",
-      "sourceFingerprint": "f8f9a871fe9a0411",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "a9702becc446",
+      "sourceFingerprint": "ea8fcfd16e2050b1",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -60942,13 +62191,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/scene-globals-read.png",
-        "bytes": 5071,
-        "hash": "da81f10eb594c1b4"
+        "bytes": 6903,
+        "hash": "1df29b0873ae2496"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -60957,9 +62208,9 @@
     {
       "id": "scene-runtime-ops",
       "result": "PASS",
-      "specFingerprint": "6870f7b786e9",
-      "sourceFingerprint": "febfab14631514d6",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "e0a9561573a7",
+      "sourceFingerprint": "cba3d9332bbd4582",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -61414,18 +62665,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9997"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=1 leaked=0 reloaded=true litRatio=0.9997 assetUnits=8"
+          "detail": "held=1 leaked=0 reloaded=true litRatio=1.0000 assetUnits=8"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/scene-runtime-ops.png",
-        "bytes": 5074,
-        "hash": "f07e19ab7c4faaea"
+        "bytes": 7080,
+        "hash": "3fefc0f29ee8dec6"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -61434,9 +62687,9 @@
     {
       "id": "scene-switch-reentry",
       "result": "PASS",
-      "specFingerprint": "08b0bdf40ebd",
-      "sourceFingerprint": "306dd1eed412c7ec",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "df4aafe4741e",
+      "sourceFingerprint": "fd48cef4ffe8c97f",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -62081,10 +63334,142 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=0.1012 assetUnits=6"
         }
       ],
+      "scenarioProbe": {
+        "id": "scene-switch-reentry",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "tree-insertChild",
+            "ok": true,
+            "detail": "children=3"
+          },
+          {
+            "name": "tree-setParent",
+            "ok": true,
+            "detail": "a.parent=B"
+          },
+          {
+            "name": "tree-removeFromParent",
+            "ok": true,
+            "detail": "parent not null after remove"
+          },
+          {
+            "name": "tree-walk",
+            "ok": true,
+            "detail": "walked=3 (expect root+b+c=3)"
+          },
+          {
+            "name": "tree-removeAllChildren",
+            "ok": true,
+            "detail": "children=0"
+          },
+          {
+            "name": "scene-destroy-invalidates",
+            "ok": true,
+            "detail": "scratch scene still valid after engine frames ran"
+          },
+          {
+            "name": "gen1-running",
+            "ok": true,
+            "detail": "updates=17"
+          },
+          {
+            "name": "gen1-lifecycle-once",
+            "ok": true,
+            "detail": "onLoad=1 start=1 onEnable=1"
+          },
+          {
+            "name": "gen2-running",
+            "ok": true,
+            "detail": "updates=28"
+          },
+          {
+            "name": "autoReleaseAssets-recorded",
+            "ok": true,
+            "detail": "SceneB.autoReleaseAssets=true"
+          },
+          {
+            "name": "gen1-frozen",
+            "ok": true,
+            "detail": "gen1 updates 17 → 17 after switch"
+          },
+          {
+            "name": "gen1-scene-destroyed",
+            "ok": true,
+            "detail": "isValid(SceneA gen1)=false"
+          },
+          {
+            "name": "gen1-lifecycle-closure",
+            "ok": true,
+            "detail": "onDisable=1 onDestroy=1"
+          },
+          {
+            "name": "gen3-running",
+            "ok": true,
+            "detail": "updates=28"
+          },
+          {
+            "name": "gen2-frozen",
+            "ok": true,
+            "detail": "gen2 updates 46 → 46"
+          },
+          {
+            "name": "gen2-scene-destroyed",
+            "ok": true,
+            "detail": "isValid(SceneB)=false"
+          },
+          {
+            "name": "reentry-fresh-state",
+            "ok": true,
+            "detail": "onLoad=1 start=1 clicks=0"
+          },
+          {
+            "name": "scene-live-is-a2",
+            "ok": true,
+            "detail": "director.getScene()=SceneA"
+          }
+        ],
+        "state": {
+          "generation": 3,
+          "liveScene": "SceneA",
+          "autoReleaseB": true,
+          "registry": [
+            {
+              "gen": 1,
+              "variant": "A",
+              "updates": 17,
+              "clicks": 0,
+              "onDisable": 1,
+              "onDestroy": 1
+            },
+            {
+              "gen": 2,
+              "variant": "B",
+              "updates": 46,
+              "clicks": 0,
+              "onDisable": 1,
+              "onDestroy": 1
+            },
+            {
+              "gen": 3,
+              "variant": "A",
+              "updates": 43,
+              "clicks": 0,
+              "onDisable": 0,
+              "onDestroy": 0
+            }
+          ],
+          "sceneA1Valid": false,
+          "sceneBValid": false
+        }
+      },
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/scene-switch-reentry.png",
-        "bytes": 5008,
-        "hash": "8a7fc6cdd56a8948"
+        "bytes": 10468,
+        "hash": "bc30480631539e51"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -62093,9 +63478,9 @@
     {
       "id": "shader-custom-gradient",
       "result": "PASS",
-      "specFingerprint": "bca00e9b5ea0",
-      "sourceFingerprint": "f286bd701c0db7a0",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "b96b45bc2180",
+      "sourceFingerprint": "35462f213c12decb",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -62645,10 +64030,104 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=1.0000 assetUnits=5"
         }
       ],
+      "scenarioProbe": {
+        "id": "shader-custom-gradient",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "effect-registered",
+            "ok": true,
+            "detail": "EffectAsset.get !== 注册实例"
+          },
+          {
+            "name": "gradient-horizontal",
+            "ok": true,
+            "detail": "left=[163,79,116,255]（偏红）right=[111,95,171,255]（偏蓝）"
+          },
+          {
+            "name": "uniform-vec4-colorA",
+            "ok": true,
+            "detail": "left after colorA=green: [45,173,127,255]"
+          },
+          {
+            "name": "time-animation-frame-diff",
+            "ok": true,
+            "detail": "maxDiff=2"
+          },
+          {
+            "name": "uniform-float-freeze",
+            "ok": true,
+            "detail": "f0=[44,142,136,255] f1=[44,142,136,255]"
+          }
+        ],
+        "state": {
+          "glVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "gfxAPI": "WEBGL2",
+          "baseline": {
+            "left": [
+              163,
+              79,
+              116,
+              255
+            ],
+            "right": [
+              111,
+              95,
+              171,
+              255
+            ]
+          },
+          "afterColorA": [
+            45,
+            173,
+            127,
+            255
+          ],
+          "animDiff": {
+            "d0": [
+              37,
+              119,
+              114,
+              255
+            ],
+            "d1": [
+              36,
+              117,
+              112,
+              255
+            ],
+            "d2": [
+              37,
+              119,
+              114,
+              255
+            ],
+            "maxDiff": 2
+          },
+          "frozen": {
+            "f0": [
+              44,
+              142,
+              136,
+              255
+            ],
+            "f1": [
+              44,
+              142,
+              136,
+              255
+            ]
+          },
+          "effectValid": true
+        }
+      },
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-custom-gradient.png",
-        "bytes": 6664,
-        "hash": "b1c825e8e9b5f594"
+        "bytes": 6714,
+        "hash": "080d1dfdce5e3698"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -62657,9 +64136,9 @@
     {
       "id": "shader-dissolve",
       "result": "PASS",
-      "specFingerprint": "2de6e0a943a9",
-      "sourceFingerprint": "abcc81bb9e885254",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7cada7a1d2e8",
+      "sourceFingerprint": "d5ef856a78549703",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -62918,7 +64397,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 272,
+          "calls": 275,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63294,10 +64773,73 @@
           "detail": "held=3 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
         }
       ],
+      "scenarioProbe": {
+        "id": "shader-dissolve",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "effect-registered",
+            "ok": true,
+            "detail": "get===true validate=true"
+          },
+          {
+            "name": "texture-bound-checker",
+            "ok": true,
+            "detail": "c1=[240,150,60,255] c2=[40,200,190,255]（预期青/橙互补）"
+          },
+          {
+            "name": "dissolve-to-background",
+            "ok": true,
+            "detail": "center=[16,18,24,255]（预期≈清屏色 16,18,24）"
+          },
+          {
+            "name": "edge-glow-visible",
+            "ok": true,
+            "detail": "edge pixels=1995"
+          },
+          {
+            "name": "dissolve-animation-frame-diff",
+            "ok": true,
+            "detail": "changedPx=2625 threshold=0.567"
+          }
+        ],
+        "state": {
+          "checkerSamples": {
+            "c1": [
+              240,
+              150,
+              60,
+              255
+            ],
+            "c2": [
+              40,
+              200,
+              190,
+              255
+            ]
+          },
+          "dissolvedSample": [
+            16,
+            18,
+            24,
+            255
+          ],
+          "edgePixels": 1995,
+          "animDiff": {
+            "changedPx": 2625,
+            "thresholdNow": 0.567
+          },
+          "effectValid": true,
+          "animatorAlive": true
+        }
+      },
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-dissolve.png",
-        "bytes": 7349,
-        "hash": "82d17095e0744aad"
+        "bytes": 7273,
+        "hash": "ef75ed17e922c325"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -63306,9 +64848,9 @@
     {
       "id": "skinned-animation",
       "result": "PASS",
-      "specFingerprint": "e5ceb0171281",
-      "sourceFingerprint": "cf1a4e3b115fd499",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "b05a5b26c639",
+      "sourceFingerprint": "efb9ef263634cf5c",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -63460,7 +65002,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 364,
+          "calls": 362,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63674,13 +65216,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0646"
+          "detail": "litRatio=0.0650"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 6045,
-        "hash": "b55e5356932fd1d4"
+        "bytes": 6143,
+        "hash": "093ff2681f8d6727"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -63689,9 +65233,9 @@
     {
       "id": "starter",
       "result": "PASS",
-      "specFingerprint": "509d0ba585c2",
-      "sourceFingerprint": "84714e6e975fbc32",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4efbf96c2741",
+      "sourceFingerprint": "5643bb4d6e2b8540",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -63919,6 +65463,8 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/starter.png",
         "bytes": 4784,
@@ -63931,9 +65477,9 @@
     {
       "id": "static-model",
       "result": "PASS",
-      "specFingerprint": "cab0aa290350",
-      "sourceFingerprint": "63e4502a895fc0fa",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "1c8e43051896",
+      "sourceFingerprint": "a7fbfefe053020bf",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -64423,10 +65969,25 @@
           "detail": "held=8 leaked=0 reloaded=true litRatio=0.6031 assetUnits=10"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/model.json",
+          "status": 200,
+          "bytes": 379,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/model.json",
+          "status": 200,
+          "bytes": 379,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/static-model.png",
-        "bytes": 12090,
-        "hash": "3979da3dfe400b2d"
+        "bytes": 12049,
+        "hash": "a87e01734676ac45"
       },
       "assetDigests": [
         {
@@ -64443,9 +66004,9 @@
     {
       "id": "tank-battle",
       "result": "PASS",
-      "specFingerprint": "0e25bcd6468a",
-      "sourceFingerprint": "87f478e933b48d40",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "4864fea4e269",
+      "sourceFingerprint": "11b8e2e140a094de",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -65015,10 +66576,103 @@
           "detail": "held=4 leaked=0 reloaded=true litRatio=1.0000 assetUnits=8"
         }
       ],
+      "scenarioProbe": {
+        "id": "tank-battle",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "audio-clip-loaded",
+            "ok": true,
+            "detail": "clip=true duration=1.6"
+          },
+          {
+            "name": "d1-pool-idle-initial",
+            "ok": true,
+            "detail": "active=0"
+          },
+          {
+            "name": "d1-shot-acquired-from-pool",
+            "ok": true,
+            "detail": "fired=true active=1"
+          },
+          {
+            "name": "d1-brick-destroyed-bullet-recycled",
+            "ok": true,
+            "detail": "bricks=1 active=0 spent=1 cell=."
+          },
+          {
+            "name": "d2-steel-blocks-bullet",
+            "ok": true,
+            "detail": "steelBlocks=1 cell=S active=0"
+          },
+          {
+            "name": "d3-two-bullets-in-flight",
+            "ok": true,
+            "detail": "active=2"
+          },
+          {
+            "name": "d3-simultaneous-double-hit",
+            "ok": true,
+            "detail": "doubleHits=1 victimAlive=false kills=1 active=0"
+          },
+          {
+            "name": "d4-player-hit-by-enemy",
+            "ok": true,
+            "detail": "hitsByEnemy=3 steps=120"
+          },
+          {
+            "name": "d4-lose-state",
+            "ok": true,
+            "detail": "state=over hp=0"
+          },
+          {
+            "name": "d4-restart-fresh",
+            "ok": true,
+            "detail": "hp=3 kills=0 brick-restored=true"
+          },
+          {
+            "name": "d5-win-state",
+            "ok": true,
+            "detail": "state=won kills=2 hp=1"
+          }
+        ],
+        "state": {
+          "game": {
+            "state": "playing",
+            "steps": 0,
+            "shotsFired": 0,
+            "bricksDestroyed": 0,
+            "blockedBySteel": 0,
+            "bulletsSpent": 0,
+            "simultaneousDoubleHit": 0,
+            "playerHitsByEnemy": 0,
+            "enemyKills": 0,
+            "audioState": "",
+            "audioDuration": 1.6
+          },
+          "boardValid": true
+        }
+      },
+      "networkAssets": [
+        {
+          "path": "/assets/tone.wav",
+          "status": 200,
+          "bytes": 25644,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/tone.wav",
+          "status": 200,
+          "bytes": 25644,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/tank-battle.png",
-        "bytes": 9318,
-        "hash": "d8f75357355fd107"
+        "bytes": 9313,
+        "hash": "4076a7125831e435"
       },
       "assetDigests": [
         {
@@ -65035,9 +66689,9 @@
     {
       "id": "tetris-classic",
       "result": "PASS",
-      "specFingerprint": "800230dc941c",
-      "sourceFingerprint": "811e1f4bd9569977",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "67d84f00e67a",
+      "sourceFingerprint": "3ec71c4754dfb103",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -65532,10 +67186,72 @@
           "detail": "held=3 leaked=0 reloaded=true litRatio=1.0000 assetUnits=7"
         }
       ],
+      "scenarioProbe": {
+        "id": "tetris-classic",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "demo-lose-topout",
+            "ok": true,
+            "detail": "state=over pieces=10"
+          },
+          {
+            "name": "render-orientation-bottom-stack",
+            "ok": true,
+            "detail": "bottom=[225,207,86,255]（应有色块）"
+          },
+          {
+            "name": "boundary-reject",
+            "ok": true,
+            "detail": "wallRejects=1"
+          },
+          {
+            "name": "demo-win-double-clear",
+            "ok": true,
+            "detail": "state=won lines=2 score=480"
+          },
+          {
+            "name": "grid-rows-cleared",
+            "ok": true,
+            "detail": "rows 0-1 not empty"
+          },
+          {
+            "name": "render-orientation-cleared-bottom",
+            "ok": true,
+            "detail": "after-win bottom=[11,14,23,255]"
+          },
+          {
+            "name": "pause-freezes-steps",
+            "ok": true,
+            "detail": "steps 0 → 0"
+          },
+          {
+            "name": "resume-advances-steps",
+            "ok": true,
+            "detail": "steps=2"
+          }
+        ],
+        "state": {
+          "game": {
+            "state": "playing",
+            "score": 0,
+            "lines": 0,
+            "level": 1,
+            "pieces": 1,
+            "steps": 0,
+            "wallRejects": 0,
+            "seed": 777
+          },
+          "boardValid": true
+        }
+      },
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tetris-classic.png",
-        "bytes": 10262,
-        "hash": "514bc5fa55679f1b"
+        "bytes": 10215,
+        "hash": "72f7d06c2cb45ea8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -65544,9 +67260,9 @@
     {
       "id": "texture-basic",
       "result": "PASS",
-      "specFingerprint": "801c006d64c7",
-      "sourceFingerprint": "f45c5c6dcce11ce3",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "f412ce14bc94",
+      "sourceFingerprint": "0bcebbb30e15ca1d",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -65817,7 +67533,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 217,
+          "calls": 218,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -66054,18 +67770,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0989"
+          "detail": "litRatio=0.0994"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0848 assetUnits=7"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0873 assetUnits=7"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture-basic.png",
-        "bytes": 21634,
-        "hash": "21eadf179930d9c7"
+        "bytes": 26074,
+        "hash": "012be49153afac2b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -66074,9 +67792,9 @@
     {
       "id": "texture2d-ops",
       "result": "PASS",
-      "specFingerprint": "65286e65b9e5",
-      "sourceFingerprint": "db02dcc4ffa25fa1",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "2644a73fb04f",
+      "sourceFingerprint": "d5b512b6239cdb75",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -66631,18 +68349,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=1 leaked=0 reloaded=true litRatio=0.9994 assetUnits=6"
+          "detail": "held=1 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture2d-ops.png",
-        "bytes": 5070,
-        "hash": "2d971267d3f1b39e"
+        "bytes": 6939,
+        "hash": "a1a3ff71b1cbc1c5"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -66651,9 +68371,9 @@
     {
       "id": "texture2d-serialization",
       "result": "PASS",
-      "specFingerprint": "9290667093b2",
-      "sourceFingerprint": "fe328285c4156589",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "bfa4c738187b",
+      "sourceFingerprint": "6512223704e49e45",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -67105,18 +68825,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=1 leaked=0 reloaded=true litRatio=0.9994 assetUnits=6"
+          "detail": "held=1 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture2d-serialization.png",
-        "bytes": 5074,
-        "hash": "5b2ccc30be4c68fe"
+        "bytes": 7119,
+        "hash": "31c65441e43b87c7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -67125,9 +68847,9 @@
     {
       "id": "tiledmap-basic",
       "result": "PASS",
-      "specFingerprint": "48312c2aac4b",
-      "sourceFingerprint": "ecbcddc571bb3443",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7cc79446c2a9",
+      "sourceFingerprint": "d190ac5740586673",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -67551,7 +69273,7 @@
           "api": "TiledLayer.isCullingDirty",
           "proof": "verified",
           "state": "executed",
-          "calls": 537,
+          "calls": 535,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67619,7 +69341,7 @@
           "api": "TiledMap.getLayers",
           "proof": "verified",
           "state": "executed",
-          "calls": 582,
+          "calls": 578,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68036,6 +69758,15 @@
           "detail": "held=3 leaked=0 reloaded=true litRatio=1.0000 assetUnits=13"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/tiles.png",
+          "status": 200,
+          "bytes": 276,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/tiledmap-basic.png",
         "bytes": 20369,
@@ -68077,9 +69808,9 @@
     {
       "id": "transform",
       "result": "PASS",
-      "specFingerprint": "e9fb4d97b277",
-      "sourceFingerprint": "b8bf300dc9d60f49",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "80b0c3becc83",
+      "sourceFingerprint": "1a37f130b093f25a",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -68180,7 +69911,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 227,
+          "calls": 226,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68197,7 +69928,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 225,
+          "calls": 224,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68214,7 +69945,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 223,
+          "calls": 222,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68282,7 +70013,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 451,
+          "calls": 449,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -68408,13 +70139,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0479"
+          "detail": "litRatio=0.0481"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 5810,
-        "hash": "6ce28044b91ee33a"
+        "bytes": 7215,
+        "hash": "274df2d70483e6a3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -68423,9 +70156,9 @@
     {
       "id": "tween-basic",
       "result": "PASS",
-      "specFingerprint": "a2b66e97135b",
-      "sourceFingerprint": "97805d6ae4dda9e7",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "7c414aa0e623",
+      "sourceFingerprint": "afb6b00fc4627a34",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -68543,7 +70276,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 229,
+          "calls": 228,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68560,7 +70293,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 1,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68628,7 +70361,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 7,
+          "calls": 8,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -68769,10 +70502,12 @@
           "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
-        "bytes": 5276,
-        "hash": "bd3f624fb097cc82"
+        "bytes": 6484,
+        "hash": "52936a7060e23e9f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -68781,9 +70516,9 @@
     {
       "id": "ui-asset-loading",
       "result": "PASS",
-      "specFingerprint": "41de9c2c2349",
-      "sourceFingerprint": "35dd32b211b98c1f",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "ac1d1fe9483f",
+      "sourceFingerprint": "cbda0eef993792c8",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -69400,6 +71135,67 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=0.9996 assetUnits=8"
         }
       ],
+      "scenarioProbe": {
+        "id": "ui-asset-loading",
+        "ready": true,
+        "ok": true,
+        "clickPhaseDone": false,
+        "checks": [
+          {
+            "name": "p1-registry-roundtrip",
+            "ok": true,
+            "detail": "loaded=true same=true starts=1"
+          },
+          {
+            "name": "p2-url-json-load",
+            "ok": true,
+            "detail": "name=ui-asset-loading items=3"
+          },
+          {
+            "name": "p3-miss-rejected",
+            "ok": true,
+            "detail": "[cocosair] loadAssetAsync: 'gen/missing-panel' not found. Register it via assetManager.ass"
+          },
+          {
+            "name": "p4-retry-fallback-success",
+            "ok": true,
+            "detail": "retry404=true fallbackLoaded=true"
+          },
+          {
+            "name": "p5-concurrent-load-lock",
+            "ok": true,
+            "detail": "starts=+1 rejects=+2"
+          },
+          {
+            "name": "p6-no-dangling-callbacks",
+            "ok": true,
+            "detail": "dangling=0 guarded=1"
+          }
+        ],
+        "state": {
+          "phase": "ready",
+          "loadState": "loaded",
+          "loadStarts": 3,
+          "lockRejects": 2,
+          "http404s": 2,
+          "retries": 1,
+          "registryHits": 3,
+          "manifestOk": true,
+          "danglingEffects": 0,
+          "guardedCallbacks": 1,
+          "echoCount": 0,
+          "registryTexValid": true,
+          "previewFrameValid": true
+        }
+      },
+      "networkAssets": [
+        {
+          "path": "/assets/panel-manifest.json",
+          "status": 200,
+          "bytes": 177,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/ui-asset-loading.png",
         "bytes": 20839,
@@ -69420,9 +71216,9 @@
     {
       "id": "ui-components",
       "result": "PASS",
-      "specFingerprint": "ee9cf6470300",
-      "sourceFingerprint": "4d867b64bb82d212",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "a5330ec56a6c",
+      "sourceFingerprint": "6fbbbf57ed1a5002",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -69710,7 +71506,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 335,
+          "calls": 298,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -70148,10 +71944,12 @@
           "detail": "held=36 leaked=0 reloaded=true litRatio=0.9999 assetUnits=40"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-components.png",
-        "bytes": 18520,
-        "hash": "902a74210d960b8a"
+        "bytes": 18868,
+        "hash": "7678213bf71cb2af"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -70160,9 +71958,9 @@
     {
       "id": "ui-layout",
       "result": "PASS",
-      "specFingerprint": "f15b913767bc",
-      "sourceFingerprint": "77f21c2819021f29",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "41b52d169c05",
+      "sourceFingerprint": "8188d8511c8c2b98",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -70645,6 +72443,8 @@
           "detail": "held=18 leaked=0 reloaded=true litRatio=1.0000 assetUnits=13"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-layout.png",
         "bytes": 12105,
@@ -70657,9 +72457,9 @@
     {
       "id": "utils-family",
       "result": "PASS",
-      "specFingerprint": "f513e4f5045b",
-      "sourceFingerprint": "be8aad5628270919",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "a8faeac6500a",
+      "sourceFingerprint": "b4fadffb071fd409",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -71072,13 +72872,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9975"
+          "detail": "litRatio=1.0000"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/utils-family.png",
-        "bytes": 5087,
-        "hash": "386817ca48c106d5"
+        "bytes": 6991,
+        "hash": "a79d9375a289f50d"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -71087,9 +72889,9 @@
     {
       "id": "video-basic",
       "result": "PASS",
-      "specFingerprint": "e4de09333e06",
-      "sourceFingerprint": "35f72dfaf054cab5",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "db60ff8c7e06",
+      "sourceFingerprint": "a2cc5d2b37a6dd0b",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -71154,7 +72956,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 983,
+          "calls": 986,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -71290,7 +73092,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 647,
+          "calls": 649,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71307,7 +73109,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 333,
+          "calls": 334,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71324,7 +73126,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 980,
+          "calls": 983,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71341,7 +73143,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 647,
+          "calls": 649,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71829,10 +73631,49 @@
           "detail": "held=2 leaked=0 reloaded=true litRatio=1.0000 assetUnits=9"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [
+        {
+          "path": "/assets/clip.mp4",
+          "status": 200,
+          "bytes": 25279,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/clip.mp4",
+          "status": 200,
+          "bytes": 25279,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/clip.mp4",
+          "status": 200,
+          "bytes": 25279,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/clip.mp4",
+          "status": 200,
+          "bytes": 25279,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/clip.mp4",
+          "status": 200,
+          "bytes": 25279,
+          "observation": "server-response"
+        },
+        {
+          "path": "/assets/clip.mp4",
+          "status": 200,
+          "bytes": 25279,
+          "observation": "server-response"
+        }
+      ],
       "artifact": {
         "path": "docs/evidence/examples/video-basic.png",
-        "bytes": 14973,
-        "hash": "de7b26e368066c69"
+        "bytes": 14968,
+        "hash": "5af1a21c99f343a8"
       },
       "assetDigests": [
         {
@@ -71849,9 +73690,9 @@
     {
       "id": "webview-basic",
       "result": "PASS",
-      "specFingerprint": "4312cf66c71f",
-      "sourceFingerprint": "8aeb640901c44844",
-      "candidateFingerprint": "d1cc556759a27943",
+      "specFingerprint": "f6efbe2a2c12",
+      "sourceFingerprint": "b955ded66d1a7898",
+      "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
@@ -71912,7 +73753,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 586,
+          "calls": 584,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -72048,7 +73889,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 290,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72065,7 +73906,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 290,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72082,7 +73923,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 583,
+          "calls": 581,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72099,7 +73940,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 292,
+          "calls": 291,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72371,7 +74212,7 @@
           "api": "WebView.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 263,
+          "calls": 262,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72570,10 +74411,12 @@
           "detail": "held=1 leaked=0 reloaded=true litRatio=0.9999 assetUnits=9"
         }
       ],
+      "scenarioProbe": null,
+      "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/webview-basic.png",
-        "bytes": 20418,
-        "hash": "847e82c0b8e3f928"
+        "bytes": 20404,
+        "hash": "70e0a2c97b0c6db0"
       },
       "assetDigests": [
         {

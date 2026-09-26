@@ -63,17 +63,65 @@ light.illuminance = 2;
  * 每面顶点按"从外侧看的逆时针"排列，符合 glTF 的正面绕序约定。
  * @returns {{ positions: number[], normals: number[], indices: number[] }}
  */
-function buildBox (w: number, h: number, d: number): { positions: number[]; normals: number[]; indices: number[] } {
+function buildBox(w: number, h: number, d: number): { positions: number[]; normals: number[]; indices: number[] } {
     const x = w / 2;
     const y = h / 2;
     const z = d / 2;
     const faces: { n: number[]; v: number[][] }[] = [
-        { n: [0, 0, 1], v: [[-x, -y, z], [x, -y, z], [x, y, z], [-x, y, z]] },       // +Z
-        { n: [0, 0, -1], v: [[x, -y, -z], [-x, -y, -z], [-x, y, -z], [x, y, -z]] },  // -Z
-        { n: [1, 0, 0], v: [[x, -y, z], [x, -y, -z], [x, y, -z], [x, y, z]] },        // +X
-        { n: [-1, 0, 0], v: [[-x, -y, -z], [-x, -y, z], [-x, y, z], [-x, y, -z]] },   // -X
-        { n: [0, 1, 0], v: [[-x, y, z], [x, y, z], [x, y, -z], [-x, y, -z]] },        // +Y
-        { n: [0, -1, 0], v: [[-x, -y, -z], [x, -y, -z], [x, -y, z], [-x, -y, z]] },   // -Y
+        {
+            n: [0, 0, 1],
+            v: [
+                [-x, -y, z],
+                [x, -y, z],
+                [x, y, z],
+                [-x, y, z],
+            ],
+        }, // +Z
+        {
+            n: [0, 0, -1],
+            v: [
+                [x, -y, -z],
+                [-x, -y, -z],
+                [-x, y, -z],
+                [x, y, -z],
+            ],
+        }, // -Z
+        {
+            n: [1, 0, 0],
+            v: [
+                [x, -y, z],
+                [x, -y, -z],
+                [x, y, -z],
+                [x, y, z],
+            ],
+        }, // +X
+        {
+            n: [-1, 0, 0],
+            v: [
+                [-x, -y, -z],
+                [-x, -y, z],
+                [-x, y, z],
+                [-x, y, -z],
+            ],
+        }, // -X
+        {
+            n: [0, 1, 0],
+            v: [
+                [-x, y, z],
+                [x, y, z],
+                [x, y, -z],
+                [-x, y, -z],
+            ],
+        }, // +Y
+        {
+            n: [0, -1, 0],
+            v: [
+                [-x, -y, -z],
+                [x, -y, -z],
+                [x, -y, z],
+                [-x, -y, z],
+            ],
+        }, // -Y
     ];
     const positions: number[] = [];
     const normals: number[] = [];
@@ -95,7 +143,7 @@ function buildBox (w: number, h: number, d: number): { positions: number[]; norm
  * Float32 需 4 字节对齐、Uint16 需 2 字节对齐 —— 这里 288 / 288 / 576 全部满足。
  * @returns {ArrayBuffer}
  */
-function packBoxBuffer (box: { positions: number[]; normals: number[]; indices: number[] }): ArrayBuffer {
+function packBoxBuffer(box: { positions: number[]; normals: number[]; indices: number[] }): ArrayBuffer {
     const positions = new Float32Array(box.positions);
     const normals = new Float32Array(box.normals);
     const indices = new Uint16Array(box.indices);
@@ -108,7 +156,7 @@ function packBoxBuffer (box: { positions: number[]; normals: number[]; indices: 
 }
 
 /** ArrayBuffer → base64（浏览器内联 data URI 用）。 */
-function arrayBufferToBase64 (buffer: ArrayBuffer): string {
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
     const bytes = new Uint8Array(buffer);
     let binary = '';
     for (let i = 0; i < bytes.length; i++) {
@@ -120,9 +168,9 @@ function arrayBufferToBase64 (buffer: ArrayBuffer): string {
 const box = buildBox(1, 1, 1);
 const buffer = packBoxBuffer(box);
 const base64 = arrayBufferToBase64(buffer);
-const POS_BYTES = box.positions.length / 3 * 4 * 3; // 24 顶点 × vec3 × 4 字节 = 288
+const POS_BYTES = (box.positions.length / 3) * 4 * 3; // 24 顶点 × vec3 × 4 字节 = 288
 const NRM_BYTES = POS_BYTES;
-const IDX_BYTES = box.indices.length * 2;           // 36 索引 × 2 字节 = 72
+const IDX_BYTES = box.indices.length * 2; // 36 索引 × 2 字节 = 72
 
 // 一个最小但合法的 glTF 2.0 文档：单 mesh、单 PBR 材质、缓冲以 base64 data URI 内联。
 const gltfDocument = {
@@ -130,18 +178,22 @@ const gltfDocument = {
     scene: 0,
     scenes: [{ name: 'inline-scene', nodes: [0] }],
     nodes: [{ name: 'InlineBox', mesh: 0 }],
-    meshes: [{
-        name: 'box',
-        primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
-    }],
-    materials: [{
-        name: 'teal-pbr',
-        pbrMetallicRoughness: {
-            baseColorFactor: [0.18, 0.70, 0.64, 1.0],
-            metallicFactor: 0.1,
-            roughnessFactor: 0.55,
+    meshes: [
+        {
+            name: 'box',
+            primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
         },
-    }],
+    ],
+    materials: [
+        {
+            name: 'teal-pbr',
+            pbrMetallicRoughness: {
+                baseColorFactor: [0.18, 0.7, 0.64, 1.0],
+                metallicFactor: 0.1,
+                roughnessFactor: 0.55,
+            },
+        },
+    ],
     accessors: [
         { bufferView: 0, componentType: 5126, count: 24, type: 'VEC3', min: [-0.5, -0.5, -0.5], max: [0.5, 0.5, 0.5] },
         { bufferView: 1, componentType: 5126, count: 24, type: 'VEC3' },
@@ -152,10 +204,12 @@ const gltfDocument = {
         { buffer: 0, byteOffset: POS_BYTES, byteLength: NRM_BYTES, target: 34962 },
         { buffer: 0, byteOffset: POS_BYTES + NRM_BYTES, byteLength: IDX_BYTES, target: 34963 },
     ],
-    buffers: [{
-        byteLength: buffer.byteLength,
-        uri: `data:application/octet-stream;base64,${base64}`,
-    }],
+    buffers: [
+        {
+            byteLength: buffer.byteLength,
+            uri: `data:application/octet-stream;base64,${base64}`,
+        },
+    ],
 };
 
 // ============ 2. 解析 → 实例化 → 挂场景 ============
@@ -171,7 +225,7 @@ scene.addChild(pivot);
 pivot.addChild(instance.root);
 
 class Rotator extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
     }
 }

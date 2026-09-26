@@ -75,16 +75,16 @@ for (let i = 0; i < 5; i++) {
 const info = document.querySelector('#info') as HTMLElement;
 
 class Orbit extends Component {
-    update (dt: number): void {
+    update(dt: number): void {
         const node = this.node;
         const a = node.eulerAngles.y + dt * 12;
-        node.setPosition(new Vec3(Math.sin(a * Math.PI / 180) * 7, 2.4, Math.cos(a * Math.PI / 180) * 7));
+        node.setPosition(new Vec3(Math.sin((a * Math.PI) / 180) * 7, 2.4, Math.cos((a * Math.PI) / 180) * 7));
         node.lookAt(new Vec3(0, 0.8, 0));
     }
 }
 cameraNode.addComponent(Orbit);
 
-function showProjection (): void {
+function showProjection(): void {
     const isPersp = camera.projection === Camera.ProjectionType.PERSPECTIVE;
     const p = cameraNode.position;
     info.textContent = [
@@ -99,12 +99,12 @@ class Cycler extends Component {
     private _t = 0;
     private _persp = true;
 
-    constructor () {
+    constructor() {
         super();
         this._t = 0;
         this._persp = true;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._t += dt;
         const persp = Math.floor(this._t / 3) % 2 === 0;
         if (persp !== this._persp) {

@@ -9,16 +9,16 @@ AIR 内置 `GLTFLoader` 类（d.ts 32918），是 **Promise 风格**，且把"�
 
 ## 1. 加载入口（实测 API 面）
 
-| 入口 | d.ts | 语义 |
-| --- | --- | --- |
-| `new GLTFLoader(options?)` | 32918 | 实例化加载器；options 见 32933–32939 |
-| `loader.loadAsync(url)` | 32927 | 抓取并解析文件，`Promise<GLTFAsset>` |
-| `loader.parseAsync(data, baseUrl?)` | 32928 | 解析内存中的 JSON 文本 / GLB ArrayBuffer（示例走这条） |
-| `loader.setDRACODecoder / setMeshoptDecoder / setKTX2Transcoder` | 32919–32921 | 挂可选解码器，链式返回 |
-| `loader.register / unregister(factory)` | 32922–32923 | 挂自定义扩展处理器（`GLTFExtensionFactory`） |
-| `registerGLTFLoader()` | 32930 | 把 glTF 加载器登记进 assetManager，之后 `loadAssetAsync` 能路由 `.gltf/.glb` |
-| `loadAssetAsync(url)` / `loadAssetAsync(path, Type)` | 32845 / 32839 | 通用资产入口（登记后覆盖 glTF） |
-| `configureGLTFLoaderDefaults(opts)` | 32932 | 进程级 fallback options，实例 options 优先 |
+| 入口                                                             | d.ts          | 语义                                                                         |
+| ---------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------- |
+| `new GLTFLoader(options?)`                                       | 32918         | 实例化加载器；options 见 32933–32939                                         |
+| `loader.loadAsync(url)`                                          | 32927         | 抓取并解析文件，`Promise<GLTFAsset>`                                         |
+| `loader.parseAsync(data, baseUrl?)`                              | 32928         | 解析内存中的 JSON 文本 / GLB ArrayBuffer（示例走这条）                       |
+| `loader.setDRACODecoder / setMeshoptDecoder / setKTX2Transcoder` | 32919–32921   | 挂可选解码器，链式返回                                                       |
+| `loader.register / unregister(factory)`                          | 32922–32923   | 挂自定义扩展处理器（`GLTFExtensionFactory`）                                 |
+| `registerGLTFLoader()`                                           | 32930         | 把 glTF 加载器登记进 assetManager，之后 `loadAssetAsync` 能路由 `.gltf/.glb` |
+| `loadAssetAsync(url)` / `loadAssetAsync(path, Type)`             | 32845 / 32839 | 通用资产入口（登记后覆盖 glTF）                                              |
+| `configureGLTFLoaderDefaults(opts)`                              | 32932         | 进程级 fallback options，实例 options 优先                                   |
 
 `GLTFAsset` 的读回面（d.ts 32900–32916）：`sceneNames`（场景名列表）、`warnings`（解析告警）、
 `document`（原始 glTF JSON 元数据，含相机/灯光/节点名）、`instantiate(sceneIndex?)` →
@@ -38,13 +38,13 @@ meshopt/KTX2 通路存在但本篇未取证；无压缩的 glTF/GLB 是零依赖
 内存路（示例实测，逐字片段）：
 
 ```js
-    const t0 = performance.now();
-    const loader = new GLTFLoader();
-    asset = await loader.parseAsync(buildCubeGLTFText());
-    const parseMs = performance.now() - t0;
-    instance = asset.instantiate(0);
-    instance.root.setPosition(new Vec3(0, 0.9, 0));
-    scene.addChild(instance.root);
+const t0 = performance.now();
+const loader = new GLTFLoader();
+asset = await loader.parseAsync(buildCubeGLTFText());
+const parseMs = performance.now() - t0;
+instance = asset.instantiate(0);
+instance.root.setPosition(new Vec3(0, 0.9, 0));
+scene.addChild(instance.root);
 ```
 
 `parseAsync` 第一参接受 JSON 文本或 GLB 的 ArrayBuffer；带外部 buffer/贴图的 `.gltf` 需要第二参
@@ -114,38 +114,65 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 `examples/manual-load-gltf/index.html`：
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Load a .GLTF file — 加载 glTF 文件（docs/manual/load-gltf.md）</title>
     <style>
-        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #fff; }
-        #GameDiv { width: 100%; height: 100%; }
-        #Cocos3dGameContainer { width: 100%; height: 100%; }
-        #GameCanvas { width: 100%; display: block; height: 100%; }
-        #info {
-            position: absolute; left: 8px; top: 8px; z-index: 10;
-            font: 12px/1.6 ui-monospace, Consolas, monospace; color: #e8eef7;
-            background: rgba(10, 16, 26, .78); padding: 6px 10px; border-radius: 4px;
-            white-space: pre;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #fff;
+      }
+      #GameDiv {
+        width: 100%;
+        height: 100%;
+      }
+      #Cocos3dGameContainer {
+        width: 100%;
+        height: 100%;
+      }
+      #GameCanvas {
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
+      #info {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        z-index: 10;
+        font:
+          12px/1.6 ui-monospace,
+          Consolas,
+          monospace;
+        color: #e8eef7;
+        background: rgba(10, 16, 26, 0.78);
+        padding: 6px 10px;
+        border-radius: 4px;
+        white-space: pre;
+      }
     </style>
     <script type="importmap">
-        { "imports": { "cocosair": "/build/cocosair.module.js" } }
+      { "imports": { "cocosair": "/build/cocosair.module.js" } }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
     <div id="GameDiv">
-        <div id="Cocos3dGameContainer">
-            <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-            <canvas id="GameCanvas"></canvas>
-        </div>
+      <div id="Cocos3dGameContainer">
+        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+        <canvas id="GameCanvas"></canvas>
+      </div>
     </div>
     <div id="info">loading…</div>
     <script type="module" src="./main.ts"></script>
-</body>
+  </body>
 </html>
 ```
 
@@ -163,27 +190,27 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-    createAirApp,
-    Scene,
-    Node,
-    Camera,
-    DirectionalLight,
-    Component,
-    Layers,
-    Vec3,
-    Color,
-    GLTFLoader,
-    GLTFAsset,
-    GLTFInstance,
-} from 'cocosair';
+  createAirApp,
+  Scene,
+  Node,
+  Camera,
+  DirectionalLight,
+  Component,
+  Layers,
+  Vec3,
+  Color,
+  GLTFLoader,
+  GLTFAsset,
+  GLTFInstance,
+} from "cocosair";
 
-const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
+const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene('load-gltf');
+const scene = new Scene("load-gltf");
 
 // ---- 相机 ----
-const cameraNode = new Node('Main Camera');
+const cameraNode = new Node("Main Camera");
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(2.6, 2.4, 4.2));
 cameraNode.lookAt(new Vec3(0, 0.9, 0));
@@ -197,109 +224,175 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node('DirLight');
+const dirNode = new Node("DirLight");
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 现造最小 glTF：立方体 24 顶点 / 36 索引，buffer 内嵌 data URI ----
-function buildCubeGLTFText (): string {
-    const h = 0.6;
-    const faces: { n: number[]; c: number[][] }[] = [
-        { n: [0, 0, 1], c: [[-h, -h, h], [h, -h, h], [h, h, h], [-h, h, h]] },
-        { n: [0, 0, -1], c: [[h, -h, -h], [-h, -h, -h], [-h, h, -h], [h, h, -h]] },
-        { n: [1, 0, 0], c: [[h, -h, h], [h, -h, -h], [h, h, -h], [h, h, h]] },
-        { n: [-1, 0, 0], c: [[-h, -h, -h], [-h, -h, h], [-h, h, h], [-h, h, -h]] },
-        { n: [0, 1, 0], c: [[-h, h, h], [h, h, h], [h, h, -h], [-h, h, -h]] },
-        { n: [0, -1, 0], c: [[-h, -h, -h], [h, -h, -h], [h, -h, h], [-h, -h, h]] },
-    ];
-    const positions: number[] = [];
-    const normals: number[] = [];
-    const indices: number[] = [];
-    faces.forEach((f, fi) => {
-        f.c.forEach((p) => { positions.push(...p); normals.push(...f.n); });
-        const b = fi * 4;
-        indices.push(b, b + 1, b + 2, b, b + 2, b + 3);
+function buildCubeGLTFText(): string {
+  const h = 0.6;
+  const faces: { n: number[]; c: number[][] }[] = [
+    {
+      n: [0, 0, 1],
+      c: [
+        [-h, -h, h],
+        [h, -h, h],
+        [h, h, h],
+        [-h, h, h],
+      ],
+    },
+    {
+      n: [0, 0, -1],
+      c: [
+        [h, -h, -h],
+        [-h, -h, -h],
+        [-h, h, -h],
+        [h, h, -h],
+      ],
+    },
+    {
+      n: [1, 0, 0],
+      c: [
+        [h, -h, h],
+        [h, -h, -h],
+        [h, h, -h],
+        [h, h, h],
+      ],
+    },
+    {
+      n: [-1, 0, 0],
+      c: [
+        [-h, -h, -h],
+        [-h, -h, h],
+        [-h, h, h],
+        [-h, h, -h],
+      ],
+    },
+    {
+      n: [0, 1, 0],
+      c: [
+        [-h, h, h],
+        [h, h, h],
+        [h, h, -h],
+        [-h, h, -h],
+      ],
+    },
+    {
+      n: [0, -1, 0],
+      c: [
+        [-h, -h, -h],
+        [h, -h, -h],
+        [h, -h, h],
+        [-h, -h, h],
+      ],
+    },
+  ];
+  const positions: number[] = [];
+  const normals: number[] = [];
+  const indices: number[] = [];
+  faces.forEach((f, fi) => {
+    f.c.forEach((p) => {
+      positions.push(...p);
+      normals.push(...f.n);
     });
-    const posF = new Float32Array(positions);
-    const norF = new Float32Array(normals);
-    const idxU = new Uint16Array(indices);
-    const buf = new Uint8Array(posF.byteLength + norF.byteLength + idxU.byteLength);
-    buf.set(new Uint8Array(posF.buffer), 0);
-    buf.set(new Uint8Array(norF.buffer), posF.byteLength);
-    buf.set(new Uint8Array(idxU.buffer), posF.byteLength + norF.byteLength);
-    let bin = '';
-    for (let i = 0; i < buf.length; i += 0x8000) {
-        bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
-    }
-    const json = {
-        asset: { version: '2.0', generator: 'manual-load-gltf in-page builder' },
-        scene: 0,
-        scenes: [{ name: 'ManualScene', nodes: [0] }],
-        nodes: [{ name: 'InMemoryCube', mesh: 0 }],
-        meshes: [{
-            name: 'CubeMesh',
-            primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
-        }],
-        materials: [{
-            name: 'CubeMat',
-            pbrMetallicRoughness: { baseColorFactor: [0.85, 0.45, 0.2, 1], metallicFactor: 0, roughnessFactor: 0.7 },
-        }],
-        buffers: [{ byteLength: buf.length, uri: `data:application/octet-stream;base64,${btoa(bin)}` }],
-        bufferViews: [
-            { buffer: 0, byteOffset: 0, byteLength: posF.byteLength },
-            { buffer: 0, byteOffset: posF.byteLength, byteLength: norF.byteLength },
-            { buffer: 0, byteOffset: posF.byteLength + norF.byteLength, byteLength: idxU.byteLength },
-        ],
-        accessors: [
-            { bufferView: 0, componentType: 5126, count: 24, type: 'VEC3', min: [-h, -h, -h], max: [h, h, h] },
-            { bufferView: 1, componentType: 5126, count: 24, type: 'VEC3' },
-            { bufferView: 2, componentType: 5123, count: 36, type: 'SCALAR' },
-        ],
-    };
-    return JSON.stringify(json);
+    const b = fi * 4;
+    indices.push(b, b + 1, b + 2, b, b + 2, b + 3);
+  });
+  const posF = new Float32Array(positions);
+  const norF = new Float32Array(normals);
+  const idxU = new Uint16Array(indices);
+  const buf = new Uint8Array(posF.byteLength + norF.byteLength + idxU.byteLength);
+  buf.set(new Uint8Array(posF.buffer), 0);
+  buf.set(new Uint8Array(norF.buffer), posF.byteLength);
+  buf.set(new Uint8Array(idxU.buffer), posF.byteLength + norF.byteLength);
+  let bin = "";
+  for (let i = 0; i < buf.length; i += 0x8000) {
+    bin += String.fromCharCode(...buf.subarray(i, i + 0x8000));
+  }
+  const json = {
+    asset: { version: "2.0", generator: "manual-load-gltf in-page builder" },
+    scene: 0,
+    scenes: [{ name: "ManualScene", nodes: [0] }],
+    nodes: [{ name: "InMemoryCube", mesh: 0 }],
+    meshes: [
+      {
+        name: "CubeMesh",
+        primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
+      },
+    ],
+    materials: [
+      {
+        name: "CubeMat",
+        pbrMetallicRoughness: {
+          baseColorFactor: [0.85, 0.45, 0.2, 1],
+          metallicFactor: 0,
+          roughnessFactor: 0.7,
+        },
+      },
+    ],
+    buffers: [{ byteLength: buf.length, uri: `data:application/octet-stream;base64,${btoa(bin)}` }],
+    bufferViews: [
+      { buffer: 0, byteOffset: 0, byteLength: posF.byteLength },
+      { buffer: 0, byteOffset: posF.byteLength, byteLength: norF.byteLength },
+      { buffer: 0, byteOffset: posF.byteLength + norF.byteLength, byteLength: idxU.byteLength },
+    ],
+    accessors: [
+      { bufferView: 0, componentType: 5126, count: 24, type: "VEC3", min: [-h, -h, -h], max: [h, h, h] },
+      { bufferView: 1, componentType: 5126, count: 24, type: "VEC3" },
+      { bufferView: 2, componentType: 5123, count: 36, type: "SCALAR" },
+    ],
+  };
+  return JSON.stringify(json);
 }
 
 // ---- 解析 + 实例化 ----
-const info = document.querySelector('#info') as HTMLElement;
-let report = 'parsing…';
+const info = document.querySelector("#info") as HTMLElement;
+let report = "parsing…";
 let asset: GLTFAsset | null = null;
 let instance: GLTFInstance | null = null;
 try {
-    const t0 = performance.now();
-    const loader = new GLTFLoader();
-    asset = await loader.parseAsync(buildCubeGLTFText());
-    const parseMs = performance.now() - t0;
-    instance = asset.instantiate(0);
-    instance.root.setPosition(new Vec3(0, 0.9, 0));
-    scene.addChild(instance.root);
-    report = [
-        'gltf: in-memory minimal cube (24 verts / 36 idx, data-URI buffer)',
-        `parseAsync: ${parseMs.toFixed(1)} ms → GLTFAsset (warnings: ${asset.warnings.length})`,
-        `instantiate(0): root="${instance.root.name}", children=${instance.root.children.length}, animations=${instance.animations.length}`,
-        'real files: loader.loadAsync(url) — see docs/manual/load-gltf.md §2',
-    ].join('\n');
+  const t0 = performance.now();
+  const loader = new GLTFLoader();
+  asset = await loader.parseAsync(buildCubeGLTFText());
+  const parseMs = performance.now() - t0;
+  instance = asset.instantiate(0);
+  instance.root.setPosition(new Vec3(0, 0.9, 0));
+  scene.addChild(instance.root);
+  report = [
+    "gltf: in-memory minimal cube (24 verts / 36 idx, data-URI buffer)",
+    `parseAsync: ${parseMs.toFixed(1)} ms → GLTFAsset (warnings: ${asset.warnings.length})`,
+    `instantiate(0): root="${instance.root.name}", children=${instance.root.children.length}, animations=${instance.animations.length}`,
+    "real files: loader.loadAsync(url) — see docs/manual/load-gltf.md §2",
+  ].join("\n");
 } catch (e) {
-    report = `gltf parse failed: ${e.name}: ${e.message}`;
+  report = `gltf parse failed: ${e.name}: ${e.message}`;
 }
 info.textContent = report;
 
 // ---- 实例自转，便于肉眼确认加载结果在场景里 ----
 class Spin extends Component {
-    update (dt: number): void {
-        if (instance) {
-            instance.root.setRotationFromEuler(0, instance.root.eulerAngles.y + dt * 24, 0);
-        }
+  update(dt: number): void {
+    if (instance) {
+      instance.root.setRotationFromEuler(0, instance.root.eulerAngles.y + dt * 24, 0);
     }
+  }
 }
 cameraNode.addComponent(Spin);
 
 window.__airApp = app;
-window.__inspect = { get asset () { return asset; }, get instance () { return instance; } };
+window.__inspect = {
+  get asset() {
+    return asset;
+  },
+  get instance() {
+    return instance;
+  },
+};
 app.run(scene);
 
-console.log('[manual/load-gltf] running on cocosair');
+console.log("[manual/load-gltf] running on cocosair");
 ```
 
 ---

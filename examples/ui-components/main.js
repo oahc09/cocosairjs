@@ -71,7 +71,7 @@ const observed = {
 };
 window.__observed = observed;
 
-function makeUINode (name, parent, width, height, x = 0, y = 0, anchorX = 0.5, anchorY = 0.5) {
+function makeUINode(name, parent, width, height, x = 0, y = 0, anchorX = 0.5, anchorY = 0.5) {
     const node = new Node(name);
     node.layer = UI_LAYER;
     let transform = node.getComponent(UITransform);
@@ -85,7 +85,7 @@ function makeUINode (name, parent, width, height, x = 0, y = 0, anchorX = 0.5, a
     return node;
 }
 
-function addUITransform (node) {
+function addUITransform(node) {
     return node.getComponent(UITransform) || node.addComponent(UITransform);
 }
 
@@ -95,11 +95,12 @@ function addUITransform (node) {
 //     因此改用运行时生成的 SpriteFrame（已实测可用）。
 const frameCache = new Map();
 const spriteSlots = [];
-function makeSpriteFrame (cssColor, w = 16, h = 16, radius = 0) {
+function makeSpriteFrame(cssColor, w = 16, h = 16, radius = 0) {
     const key = `${cssColor}|${w}|${h}|${radius}`;
     if (frameCache.has(key)) return frameCache.get(key).spriteFrame;
     const cvs = document.createElement('canvas');
-    cvs.width = w; cvs.height = h;
+    cvs.width = w;
+    cvs.height = h;
     const ctx = cvs.getContext('2d');
     ctx.fillStyle = cssColor;
     if (radius > 0) {
@@ -118,7 +119,7 @@ function makeSpriteFrame (cssColor, w = 16, h = 16, radius = 0) {
     return sf;
 }
 
-function addSprite (node, cssColor, w = 16, h = 16, radius = 0) {
+function addSprite(node, cssColor, w = 16, h = 16, radius = 0) {
     const sprite = node.addComponent(Sprite);
     sprite.sizeMode = Sprite.SizeMode.CUSTOM; // 必须在赋 spriteFrame 之前，否则节点被裁到纹理尺寸
     const slot = { name: node.name, sprite, args: [cssColor || '#ffffff', w, h, radius] };
@@ -129,11 +130,11 @@ function addSprite (node, cssColor, w = 16, h = 16, radius = 0) {
 
 // 一个槽位的取用与挂接：首次构建与 Lifecycle Contract 的「重新获取」共用同一条路径，
 // 所以「拆得掉」与「建得回、画面复原」由同一份实现承担，而不是两条各说各话。
-function assignFrame (slot) {
+function assignFrame(slot) {
     slot.sprite.spriteFrame = makeSpriteFrame(...slot.args);
 }
 
-function addLabel (node, text, fontSize, color) {
+function addLabel(node, text, fontSize, color) {
     const label = node.addComponent(Label);
     label.string = text;
     label.fontSize = fontSize;
@@ -143,14 +144,14 @@ function addLabel (node, text, fontSize, color) {
     return label;
 }
 
-function uiToWorldCenter (node) {
+function uiToWorldCenter(node) {
     const t = node.getComponent(UITransform);
     const p = t.convertToWorldSpaceAR(new Vec3(0, 0, 0), new Vec3());
     return { x: p.x, y: p.y };
 }
 
 // 页面（Playwright --click）坐标：viewport 左上角原点、y 向下；UI 世界坐标 y 向上。
-function pageClickFor (node) {
+function pageClickFor(node) {
     const w = uiToWorldCenter(node);
     return { x: Math.round(w.x), y: Math.round(window.innerHeight - w.y) };
 }
@@ -226,7 +227,7 @@ buttonNode.on('click', () => {
 // --- ToggleContainer + 2 Toggle（背景方块 + checkMark 方块 + 文本）
 const togglesNode = makeUINode('Toggles', stackNode, 200, 24);
 const toggleContainer = togglesNode.addComponent(ToggleContainer);
-function buildToggle (name, parent, text, checked) {
+function buildToggle(name, parent, text, checked) {
     const row = makeUINode(name, parent, 120, 22, 0, 0);
     row.layer = UI_LAYER;
     const bg = addSprite(row, '#ffffff', 120, 22, 4);
@@ -265,7 +266,7 @@ slider.progress = 0.2;
 
 // 本引擎版本的 Slider 无公开 bar 属性（仅 handle），用组件把 slider.progress 同步给 ProgressBar（同时演示 ProgressBar）。
 class SliderBarSync extends Component {
-    update () {
+    update() {
         if (this.pb && this.sl) this.pb.progress = this.sl.progress;
     }
 }
@@ -278,7 +279,12 @@ const editBoxNode = makeUINode('EditBox', stackNode, 170, 30);
 const ebBgSprite = addSprite(editBoxNode, '#ffffff', 170, 30, 6);
 ebBgSprite.color = new Color(38, 46, 66, 255);
 const ebText = addLabel(makeUINode('EBText', editBoxNode, 160, 20), '', 14);
-const ebPlaceholder = addLabel(makeUINode('EBPlaceholder', editBoxNode, 160, 20), 'type here', 14, new Color(150, 160, 180, 255));
+const ebPlaceholder = addLabel(
+    makeUINode('EBPlaceholder', editBoxNode, 160, 20),
+    'type here',
+    14,
+    new Color(150, 160, 180, 255),
+);
 const editBox = editBoxNode.addComponent(EditBox);
 editBox.textLabel = ebText;
 editBox.placeholderLabel = ebPlaceholder;
@@ -289,7 +295,7 @@ editBoxNode.on('editing-return', () => observed.editBoxEvents.push('return'));
 
 // 持续脉动小圆点：证明 UI 每帧真实重绘（probe frameChanged 断言用）。
 class Pulse extends Component {
-    update (dt) {
+    update(dt) {
         this._t = (this._t || 0) + dt;
         const s = 1 + 0.35 * Math.sin(this._t * 4);
         this.node.setScale(s, s, 1);
@@ -343,7 +349,7 @@ app.run(scene);
 
 // §25 资源 Lifecycle Contract：持有物即本示例运行期真实创建的 SpriteFrame/Texture2D/ImageAsset。
 // 释放必须先把组件引用断开，再销毁本体，否则 Sprite 会指向已销毁资源。
-function ownedAssets () {
+function ownedAssets() {
     return [...frameCache.entries()].flatMap(([name, entry]) => [
         { name: `SpriteFrame:${name}`, ref: entry.spriteFrame },
         { name: `Texture2D:${name}`, ref: entry.texture },
@@ -355,17 +361,23 @@ installAssetLifecycle({
     label: 'ui-components',
     hold: ownedAssets,
     release: () => {
-        for (const slot of spriteSlots) { slot.sprite.spriteFrame = null; }
-        for (const asset of ownedAssets()) { asset.ref.destroy(); }
+        for (const slot of spriteSlots) {
+            slot.sprite.spriteFrame = null;
+        }
+        for (const asset of ownedAssets()) {
+            asset.ref.destroy();
+        }
         frameCache.clear();
     },
     reacquire: () => {
-        for (const slot of spriteSlots) { assignFrame(slot); }
+        for (const slot of spriteSlots) {
+            assignFrame(slot);
+        }
         return ownedAssets();
     },
 });
 
-async function nextFrames (n) {
+async function nextFrames(n) {
     for (let i = 0; i < n; i++) {
         await new Promise((resolve) => requestAnimationFrame(() => resolve()));
     }
@@ -373,8 +385,8 @@ async function nextFrames (n) {
 
 await nextFrames(10);
 
-observed.layoutApplied = gridNode.children.length === 4
-    && gridNode.children.every((c) => c.position.x !== 0 || c.position.y !== 0);
+observed.layoutApplied =
+    gridNode.children.length === 4 && gridNode.children.every((c) => c.position.x !== 0 || c.position.y !== 0);
 
 // Slider：程序化改变 progress（value changes）
 observed.sliderBefore = slider.progress;
@@ -394,7 +406,11 @@ observed.scrollViewOffsetAfterLive = null;
 // Toggle：容器互斥验证（程序化改变 B → A 应被取消；Toggle 无公开 toggle() 方法，用 isChecked setter）
 toggleB.isChecked = true;
 await nextFrames(2);
-observed.toggleExclusiveCheck = { a: toggleA.isChecked, b: toggleB.isChecked, allowSwitchOff: toggleContainer.allowSwitchOff };
+observed.toggleExclusiveCheck = {
+    a: toggleA.isChecked,
+    b: toggleB.isChecked,
+    allowSwitchOff: toggleContainer.allowSwitchOff,
+};
 
 // EditBox：DOM input 可用性 + 程序化 focus（headless 引擎差异如实记录在 probe）
 observed.editBoxStringBefore = editBox.string;
@@ -409,7 +425,9 @@ try {
             found: true,
             tag: input.tagName,
             value: input.value === '' ? '(empty)' : input.value,
-            parent: input.parentElement ? (input.parentElement.id || input.parentElement.className || input.parentElement.tagName) : null,
+            parent: input.parentElement
+                ? input.parentElement.id || input.parentElement.className || input.parentElement.tagName
+                : null,
         };
         input.value = 'air';
         input.dispatchEvent(new Event('input'));
@@ -425,7 +443,7 @@ observed.editBoxFocused = editBox.isFocused ? editBox.isFocused() : null;
 // Button 真实点击坐标（实测世界坐标换算，供 probe --click 使用）
 observed.clickTargets.button = pageClickFor(buttonNode);
 
-function positionsOf (parent) {
+function positionsOf(parent) {
     return parent.children.map((c) => [Math.round(c.position.x), Math.round(c.position.y)]);
 }
 observed.stackChildPositions = positionsOf(stackNode);
@@ -441,7 +459,11 @@ window.__probe = async () => {
         cameraVisibilityHasUI3D: (vis & UI_LAYER) !== 0,
         label: { string: titleLabel.string, fontSize: titleLabel.fontSize },
         sprite: {
-            hasFrame: !!(buttonSprite.spriteFrame && buttonSprite.spriteFrame.texture && buttonSprite.spriteFrame.texture.width),
+            hasFrame: !!(
+                buttonSprite.spriteFrame &&
+                buttonSprite.spriteFrame.texture &&
+                buttonSprite.spriteFrame.texture.width
+            ),
             frameSource: 'runtime canvas -> ImageAsset -> Texture2D -> SpriteFrame',
         },
         button: {
@@ -468,7 +490,9 @@ window.__probe = async () => {
         scrollView: {
             offsetBefore: observed.scrollViewOffsetBefore,
             offsetAfter: observed.scrollViewOffsetAfter,
-            offsetLive: ((v) => ({ x: Number(v.x.toFixed(2)), y: Number(v.y.toFixed(2)) }))(scrollView.getScrollOffset(new Vec3())),
+            offsetLive: ((v) => ({ x: Number(v.x.toFixed(2)), y: Number(v.y.toFixed(2)) }))(
+                scrollView.getScrollOffset(new Vec3()),
+            ),
             events: observed.scrollViewEvents,
             contentHeight: svContentNode.getComponent(UITransform).height,
         },

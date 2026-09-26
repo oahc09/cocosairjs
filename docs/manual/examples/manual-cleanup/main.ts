@@ -61,7 +61,7 @@ camera.visibility = Layers.Enum.DEFAULT;
 // ---- 一套 = 一个节点树 + 三个独占 GPU 资源（材质/纹理/网格） ----
 const TEX_SIZE = 64;
 
-function makeFaceTexture (letter: string, bg: string, ink: string): Texture2D {
+function makeFaceTexture(letter: string, bg: string, ink: string): Texture2D {
     const paint = document.createElement('canvas');
     paint.width = paint.height = TEX_SIZE;
     const g2d = paint.getContext('2d') as CanvasRenderingContext2D;
@@ -108,7 +108,7 @@ type SetProbe = {
 
 type DisposeReturns = { node: boolean; mesh: boolean; mat: boolean; tex: boolean };
 
-function buildSet (name: string): AssetSet {
+function buildSet(name: string): AssetSet {
     const set = { name, id: ++uid, swaps: 0 } as AssetSet;
     set.root = new Node(`Set${name}`);
     set.root.layer = Layers.Enum.DEFAULT;
@@ -146,7 +146,7 @@ function buildSet (name: string): AssetSet {
 }
 
 // 读一组"存活探针"：节点/资源各自 isValid + 底层 GPU 句柄状态
-function probeSet (set: AssetSet): SetProbe {
+function probeSet(set: AssetSet): SetProbe {
     const out: SetProbe = {};
     try {
         out.nodeValid = set.root.isValid;
@@ -167,7 +167,7 @@ function probeSet (set: AssetSet): SetProbe {
 }
 
 // 递归"移除+释放"模板的 AIR 落地：先节点后资源，destroy() 返回值 = 是否首次销毁
-function disposeSet (set: AssetSet): DisposeReturns {
+function disposeSet(set: AssetSet): DisposeReturns {
     const returns = {
         node: set.root.destroy(),
         mesh: set.mesh.destroy(),
@@ -189,7 +189,7 @@ class CleanupRig extends Component {
     returns: DisposeReturns | null = null;
     swaps = 0;
 
-    update (dt: number): void {
+    update(dt: number): void {
         this._t = (this._t || 0) + dt;
         const phase = this._t % (HALF * 2);
         const want = phase < HALF ? 'A' : 'B';
@@ -216,8 +216,12 @@ class CleanupRig extends Component {
             'cleanup: node.destroy() cascades nodes+components; assets need explicit destroy()',
             `live set=${this.live.name} (swap at t=${HALF}s)  swaps=${this.swaps || 0}  scene children=${scene.children.length}`,
             `live: node=${now.nodeValid} subs=${now.subs} passes=${now.passes} texGfx=${now.gfx} mat.refCount=${now.refCount}`,
-            ret ? `dispose returns(first-call): node=${ret.node} mesh=${ret.mesh} mat=${ret.mat} tex=${ret.tex}` : 'dispose returns: (first swap pending)',
-            rep ? `old set +2 frames: node=${rep.nodeValid} trim=${rep.trimValid} mesh=${rep.meshValid} subs=${rep.subs} passes=${rep.passes} gfx=${rep.gfx}` : 'old set: (no dispose yet)',
+            ret
+                ? `dispose returns(first-call): node=${ret.node} mesh=${ret.mesh} mat=${ret.mat} tex=${ret.tex}`
+                : 'dispose returns: (first swap pending)',
+            rep
+                ? `old set +2 frames: node=${rep.nodeValid} trim=${rep.trimValid} mesh=${rep.meshValid} subs=${rep.subs} passes=${rep.passes} gfx=${rep.gfx}`
+                : 'old set: (no dispose yet)',
         ].join('\n');
     }
 }

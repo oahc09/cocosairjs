@@ -105,13 +105,13 @@ const info = document.querySelector('#info') as HTMLElement;
 class Orbit extends Component {
     private _angle = 30;
 
-    constructor () {
+    constructor() {
         super();
         this._angle = 30;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._angle += dt * 12;
-        const rad = this._angle * Math.PI / 180;
+        const rad = (this._angle * Math.PI) / 180;
         const r = 19;
         this.node.setPosition(new Vec3(Math.sin(rad) * r, 8.5, Math.cos(rad) * r));
         this.node.lookAt(new Vec3(0, 0.5, 0));

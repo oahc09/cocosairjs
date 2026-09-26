@@ -56,7 +56,7 @@ dir.illuminance = 2;
 
 // ---- 共享 mesh/material ----
 const cubeMesh = utils.createMesh(primitives.box({ width: 0.7, height: 0.7, length: 0.7 }));
-function attachCube (node: Node, r: number, g: number, b: number): void {
+function attachCube(node: Node, r: number, g: number, b: number): void {
     const renderer = node.addComponent(MeshRenderer);
     renderer.mesh = cubeMesh;
     const material = new Material();
@@ -98,8 +98,25 @@ const tipWorldManual = new Vec3();
 const tipWorldEngine = new Vec3();
 const eulerOut = new Vec3();
 
-const MAT_KEYS: string[] = ['m00', 'm01', 'm02', 'm03', 'm04', 'm05', 'm06', 'm07', 'm08', 'm09', 'm10', 'm11', 'm12', 'm13', 'm14', 'm15'];
-function maxMatDiff (a: Mat4, b: Mat4): number {
+const MAT_KEYS: string[] = [
+    'm00',
+    'm01',
+    'm02',
+    'm03',
+    'm04',
+    'm05',
+    'm06',
+    'm07',
+    'm08',
+    'm09',
+    'm10',
+    'm11',
+    'm12',
+    'm13',
+    'm14',
+    'm15',
+];
+function maxMatDiff(a: Mat4, b: Mat4): number {
     let diff = 0;
     for (const k of MAT_KEYS) {
         diff = Math.max(diff, Math.abs(a[k] - b[k]));
@@ -112,11 +129,11 @@ const info = document.querySelector('#info') as HTMLElement;
 class Orbit extends Component {
     private _angle = 0;
 
-    constructor () {
+    constructor() {
         super();
         this._angle = 0;
     }
-    update (dt: number): void {
+    update(dt: number): void {
         this._angle += dt * 30;
         root.setRotationFromEuler(0, this._angle, 0);
 

@@ -7,52 +7,27 @@
   "requiresDevTools": false,
   "title": "Input Events",
   "category": "interaction",
-  "apiClaims": [
-    "input.on",
-    "Input.EventType.KEY_DOWN",
-    "Input.EventType.TOUCH_MOVE"
-  ],
-  "capabilities": [
-    "input"
-  ],
+  "apiClaims": ["input.on", "Input.EventType.KEY_DOWN", "Input.EventType.TOUCH_MOVE"],
+  "capabilities": ["input"],
   "validation": {
-    "functional": [
-      "node-exists",
-      "transform-equals",
-      "no-runtime-error",
-      "material-property"
-    ],
-    "interaction": [
-      "frame-diff"
-    ],
-    "visual": [
-      "visible-frame"
-    ],
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "输入系统全景：键盘 WASD 平移、滚轮推拉、拖拽旋转（真实输入链）",
-    "points": [
-      "input.on + Input.EventType.KEY_DOWN/KEY_UP",
-      "MOUSE_WHEEL 相机推拉",
-      "TOUCH_START/MOVE/END 拖拽旋转"
-    ]
+    "points": ["input.on + Input.EventType.KEY_DOWN/KEY_UP", "MOUSE_WHEEL 相机推拉", "TOUCH_START/MOVE/END 拖拽旋转"]
   },
   "effect": {
     "functional": "按键集合驱动 KeyboardMover.update 平移；滚轮改变相机 z（3~20 夹取）；按下拖动改变 cube 欧拉角。",
     "visual": "WASD 移动方块、滚轮拉近拉远、拖拽旋转方块，三者实时响应"
   },
   "api": {
-    "primary": [
-      "input",
-      "Input"
-    ],
-    "supporting": [
-      "Component",
-      "Camera"
-    ],
+    "primary": ["input", "Input"],
+    "supporting": ["Component", "Camera"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -70,111 +45,104 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "直接监听 document 事件绕过 input.on 合同",
-      "定时器模拟按键冒充真实输入"
-    ],
+    "forbiddenShortcut": ["直接监听 document 事件绕过 input.on 合同", "定时器模拟按键冒充真实输入"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L44"
+        "sourceLocation": "L58"
       },
       {
         "api": "Scene",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L45"
+        "sourceLocation": "L59"
       },
       {
         "api": "Node",
         "source": "main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L49"
+        "sourceLocation": "L63"
       },
       {
         "api": "MeshRenderer",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L52"
+        "sourceLocation": "L66"
       },
       {
         "api": "Camera",
         "source": "shared/scene-kit.js",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L38"
       },
       {
         "api": "Component",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L30"
+        "sourceLocation": "L32"
       },
       {
         "api": "input",
         "source": "main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L59"
+        "sourceLocation": "L73"
       },
       {
         "api": "Input",
         "source": "main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L59"
+        "sourceLocation": "L73"
       },
       {
         "api": "Layers",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L50"
+        "sourceLocation": "L64"
       },
       {
         "api": "builtinResMgr",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L54"
+        "sourceLocation": "L68"
       },
       {
         "api": "utils.createMesh",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L53"
+        "sourceLocation": "L67"
       },
       {
         "api": "primitives.box",
         "source": "main.ts",
         "validator": "material-property",
-        "sourceLocation": "L53"
+        "sourceLocation": "L67"
       },
       {
         "api": "Node.addChild",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L51"
+        "sourceLocation": "L65"
       },
       {
         "api": "Node.setPosition",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L39"
+        "sourceLocation": "L49"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L73"
+        "sourceLocation": "L91"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "Main Camera",
-        "Main Light",
-        "interactive-cube"
-      ]
+      "nodes": ["Main Camera", "Main Light", "interactive-cube"]
     }
   },
   "interaction": {
@@ -190,9 +158,7 @@
     ]
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -205,23 +171,15 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [
-          0,
-          8,
-          0
-        ],
+        "position": [0, 8, 0],
         "provenance": [
           {
             "source": "examples/shared/scene-kit.js",
-            "line": 53,
+            "line": 57,
             "text": "position 默认值 [0,8,0]（shared 形参默认值）"
           }
         ],
-        "rotationEuler": [
-          -45,
-          -30,
-          0
-        ]
+        "rotationEuler": [-45, -30, 0]
       },
       "interactive-cube": {
         "position": {
@@ -231,12 +189,12 @@
         "provenance": [
           {
             "source": "main.ts",
-            "line": 39,
+            "line": 49,
             "text": "this.node.position.x + x * dt * 3,this.node.position.y,this.node.position.z + z * dt * 3 —— 该轴由交互改写，变化在交互前/后两次读回之间判定"
           },
           {
             "source": "main.ts",
-            "line": 73,
+            "line": 91,
             "text": "cube.eulerAngles.x + delta.y * 0.5,cube.eulerAngles.y + delta.x * 0.5,0 —— 该轴由交互改写，变化在交互前/后两次读回之间判定"
           }
         ],
@@ -260,14 +218,14 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, cube);）",
-        "line": "L56"
+        "line": "L70"
       }
     }
   },
   "promotion": {
-    "spec": "7b79f441a1fe",
-    "source": "d955f577fb18256d",
-    "candidate": "d1cc556759a27943",
+    "spec": "aeed6a7d4db8",
+    "source": "37642ffb95c12375",
+    "candidate": "8746fc59b6aa0408",
     "verified": 13,
     "attested": 2,
     "units": 15

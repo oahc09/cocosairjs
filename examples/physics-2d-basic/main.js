@@ -56,13 +56,22 @@ const UI_LAYER = Layers.Enum.UI_3D;
 const frameCache = new Map();
 const spriteSlots = [];
 
-function createFrame (key, cssColor, w, h, radius) {
-    if (frameCache.has(key)) { return frameCache.get(key).spriteFrame; }
+function createFrame(key, cssColor, w, h, radius) {
+    if (frameCache.has(key)) {
+        return frameCache.get(key).spriteFrame;
+    }
     const cvs = document.createElement('canvas');
-    cvs.width = w; cvs.height = h;
+    cvs.width = w;
+    cvs.height = h;
     const ctx = cvs.getContext('2d');
     ctx.fillStyle = cssColor;
-    if (radius > 0) { ctx.beginPath(); ctx.roundRect(0, 0, w, h, radius); ctx.fill(); } else { ctx.fillRect(0, 0, w, h); }
+    if (radius > 0) {
+        ctx.beginPath();
+        ctx.roundRect(0, 0, w, h, radius);
+        ctx.fill();
+    } else {
+        ctx.fillRect(0, 0, w, h);
+    }
     const image = new ImageAsset(cvs);
     const texture = new Texture2D();
     texture.image = image;
@@ -72,11 +81,11 @@ function createFrame (key, cssColor, w, h, radius) {
     return spriteFrame;
 }
 
-function assignFrame (slot) {
+function assignFrame(slot) {
     slot.sprite.spriteFrame = createFrame(slot.key, slot.color, slot.w, slot.h, slot.radius);
 }
 
-function makeBox (name, parent, x, y, w, h) {
+function makeBox(name, parent, x, y, w, h) {
     const node = new Node(name);
     node.layer = UI_LAYER;
     const t = node.addComponent(UITransform);
@@ -92,7 +101,7 @@ function makeBox (name, parent, x, y, w, h) {
     return node;
 }
 
-function addLabel (parent, text, x, y) {
+function addLabel(parent, text, x, y) {
     const node = new Node('Status');
     node.layer = UI_LAYER;
     const t = node.addComponent(UITransform);
@@ -187,14 +196,27 @@ gemCollider.threshold = 0.1;
 const statusLabel = addLabel(canvasNode, 'physics-2d (box2d backend) — mount + queries only, gravityScale=0', -10, 150);
 
 const r2 = (v) => Math.round(v * 100) / 100;
-const namesOf = (colliders) => [...(colliders || [])].map((c) => c.node.name).sort().join(',');
-const hitsOf = (hits) => [...(hits || [])].map((h) => (h.collider ? h.collider.node.name : h.node.name)).sort().join(',');
+const namesOf = (colliders) =>
+    [...(colliders || [])]
+        .map((c) => c.node.name)
+        .sort()
+        .join(',');
+const hitsOf = (hits) =>
+    [...(hits || [])]
+        .map((h) => (h.collider ? h.collider.node.name : h.node.name))
+        .sort()
+        .join(',');
 
-function readback () {
+function readback() {
     const crateAABB = crateCollider.worldAABB;
     return {
-        backend: PhysicsSystem2D.PHYSICS_BOX2D ? 'box2d'
-            : (PhysicsSystem2D.PHYSICS_BUILTIN ? 'builtin' : (PhysicsSystem2D.PHYSICS_BOX2D_WASM ? 'box2d-wasm' : 'none')),
+        backend: PhysicsSystem2D.PHYSICS_BOX2D
+            ? 'box2d'
+            : PhysicsSystem2D.PHYSICS_BUILTIN
+              ? 'builtin'
+              : PhysicsSystem2D.PHYSICS_BOX2D_WASM
+                ? 'box2d-wasm'
+                : 'none',
         flagNone: PhysicsSystem2D.PHYSICS_NONE,
         flagBuiltin: PhysicsSystem2D.PHYSICS_BUILTIN,
         flagBox2D: PhysicsSystem2D.PHYSICS_BOX2D,
@@ -211,7 +233,10 @@ function readback () {
         gemType: ERigidBody2DType[gemBody.type],
         crateColliderType: crateCollider.TYPE,
         colliderBodyIdentity: crateCollider.body === crateBody,
-        colliderInheritsBase: crateCollider instanceof Collider2D && ballCollider instanceof Collider2D && gemCollider instanceof Collider2D,
+        colliderInheritsBase:
+            crateCollider instanceof Collider2D &&
+            ballCollider instanceof Collider2D &&
+            gemCollider instanceof Collider2D,
         groundSizeW: r2(groundCollider.size.width),
         groundSizeH: r2(groundCollider.size.height),
         groundAABBW: r2(groundCollider.worldAABB.width),
@@ -228,7 +253,9 @@ function readback () {
         crateAABBW: r2(crateAABB.width),
         crateAABBH: r2(crateAABB.height),
         crateWorldPoints: crateCollider.worldPoints.length,
-        crateWorldMin: crateCollider.worldPoints.length ? [r2(crateCollider.worldPoints[0].x), r2(crateCollider.worldPoints[0].y)] : [],
+        crateWorldMin: crateCollider.worldPoints.length
+            ? [r2(crateCollider.worldPoints[0].x), r2(crateCollider.worldPoints[0].y)]
+            : [],
         ballRadius: ballCollider.radius,
         ballWorldRadius: r2(ballCollider.worldRadius),
         ballWorldX: r2(ballCollider.worldPosition.x),
@@ -258,8 +285,10 @@ function readback () {
 //     ⇒ 代理同步，查询与 worldAABB 全部落到新位置
 let preClick = null;
 let applyOnly = null;
-function moveCrateToGround () {
-    if (preClick) { return; }
+function moveCrateToGround() {
+    if (preClick) {
+        return;
+    }
     preClick = readback();
     crate.setPosition(CRATE_MOVED.x, CRATE_MOVED.y, 0);
     crateCollider.apply();
@@ -268,16 +297,19 @@ function moveCrateToGround () {
 canvasNode.on(Node.EventType.TOUCH_START, moveCrateToGround);
 
 class PhysicsReadout extends Component {
-    update () {
+    update() {
         window.__geom = readback();
         const text = `physics-2d backend=${physics.physicsWorld.constructor.name} crate@${Math.round(crate.position.x)},${Math.round(crate.position.y)}`;
-        if (text !== this._text) { this._text = text; statusLabel.string = text; }
+        if (text !== this._text) {
+            this._text = text;
+            statusLabel.string = text;
+        }
     }
 }
 
 canvasNode.addComponent(PhysicsReadout);
 
-function ownedAssets () {
+function ownedAssets() {
     return [...frameCache.entries()].flatMap(([name, entry]) => [
         { name: `SpriteFrame:${name}`, ref: entry.spriteFrame },
         { name: `Texture2D:${name}`, ref: entry.texture },
@@ -289,12 +321,18 @@ installAssetLifecycle({
     label: 'physics-2d-basic',
     hold: ownedAssets,
     release: () => {
-        for (const slot of spriteSlots) { slot.sprite.spriteFrame = null; }
-        for (const asset of ownedAssets()) { asset.ref.destroy(); }
+        for (const slot of spriteSlots) {
+            slot.sprite.spriteFrame = null;
+        }
+        for (const asset of ownedAssets()) {
+            asset.ref.destroy();
+        }
         frameCache.clear();
     },
     reacquire: () => {
-        for (const slot of spriteSlots) { assignFrame(slot); }
+        for (const slot of spriteSlots) {
+            assignFrame(slot);
+        }
         return ownedAssets();
     },
 });

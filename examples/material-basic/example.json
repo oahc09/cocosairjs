@@ -4,54 +4,30 @@
   "title": "Material Basic",
   "category": "material",
   "status": "stable",
-  "apiClaims": [
-    "MeshRenderer",
-    "builtinResMgr.get",
-    "builtin-standard-material"
-  ],
-  "capabilities": [
-    "materials"
-  ],
-  "benchmarkRefs": [
-    "B031"
-  ],
+  "apiClaims": ["MeshRenderer", "builtinResMgr.get", "builtin-standard-material"],
+  "capabilities": ["materials"],
+  "benchmarkRefs": ["B031"],
   "recipeRefs": [],
   "requiresDevTools": false,
   "validation": {
-    "functional": [
-      "node-exists",
-      "material-property",
-      "no-runtime-error"
-    ],
+    "functional": ["node-exists", "material-property", "no-runtime-error"],
     "interaction": [],
-    "visual": [
-      "visible-frame"
-    ],
+    "visual": ["visible-frame"],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "builtin-standard 材质的最小接线：builtinResMgr.get + MeshRenderer.material",
-    "points": [
-      "builtinResMgr 获取内建标准材质",
-      "renderer.material 挂接",
-      "三色并排的材质实例语义"
-    ]
+    "points": ["builtinResMgr 获取内建标准材质", "renderer.material 挂接", "三色并排的材质实例语义"]
   },
   "effect": {
     "functional": "三个 cube 各持 MeshRenderer，材质均为 builtin-standard-material；场景由 cam（PERSPECTIVE）与 light 照明。",
     "visual": "红/绿/蓝三个立方体并排，受光呈现不同明暗面"
   },
   "api": {
-    "primary": [
-      "builtinResMgr",
-      "MeshRenderer"
-    ],
-    "supporting": [
-      "Camera",
-      "DirectionalLight"
-    ],
+    "primary": ["builtinResMgr", "MeshRenderer"],
+    "supporting": ["Camera", "DirectionalLight"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -68,120 +44,108 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": [
-      "未初始化的裸 Material 实例直接上渲染"
-    ],
+    "forbiddenShortcut": ["未初始化的裸 Material 实例直接上渲染"],
     "evidence": [
       {
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L2"
+        "sourceLocation": "L14"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L3"
+        "sourceLocation": "L15"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L4"
+        "sourceLocation": "L16"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L14"
+        "sourceLocation": "L32"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L6"
+        "sourceLocation": "L20"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L9"
+        "sourceLocation": "L25"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L6"
+        "sourceLocation": "L20"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L5"
+        "sourceLocation": "L18"
       },
       {
         "api": "builtinResMgr",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L16"
+        "sourceLocation": "L34"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L15"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L4"
+        "sourceLocation": "L17"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L5"
+        "sourceLocation": "L18"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L5"
+        "sourceLocation": "L24"
       }
     ]
   },
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": [
-        "cam",
-        "light",
-        "cube-0",
-        "cube-1",
-        "cube-2"
-      ]
+      "nodes": ["cam", "light", "cube-0", "cube-1", "cube-2"]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": [
-      "scene-ready"
-    ]
+    "validators": ["scene-ready"]
   },
   "coverage": {
-    "benchmarkRefs": [
-      "B031"
-    ],
+    "benchmarkRefs": ["B031"],
     "recipeRefs": []
   },
   "screenshot": {},
@@ -214,9 +178,9 @@
     }
   },
   "promotion": {
-    "spec": "d2f18d65ff5f",
-    "source": "64a5e60f317d77b8",
-    "candidate": "d1cc556759a27943",
+    "spec": "3dc08a803d09",
+    "source": "77978071ea70ce35",
+    "candidate": "8746fc59b6aa0408",
     "verified": 13,
     "attested": 1,
     "units": 14

@@ -61,7 +61,7 @@ groundMaterial.initialize({ effectName: 'builtin-standard' });
 groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
-function addCube (name: string, x: number, configure: (material: Material) => void): Material {
+function addCube(name: string, x: number, configure: (material: Material) => void): Material {
     const node = new Node(name);
     node.layer = Layers.Enum.DEFAULT;
     node.setPosition(new Vec3(x, 0.7, 0));
