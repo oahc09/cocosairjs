@@ -33,8 +33,7 @@
     "VideoPlayer.pause",
     "VideoPlayer.resume",
     "VideoPlayer.videoPlayerEvent",
-    "VideoPlayer.REMOTE",
-    "VideoPlayer.LOCAL",
+    "VideoPlayer.ResourceType",
     "VideoClip",
     "assetManager",
     "screen",
@@ -81,8 +80,7 @@
       "VideoPlayer.pause",
       "VideoPlayer.resume",
       "VideoPlayer.videoPlayerEvent",
-      "VideoPlayer.REMOTE",
-      "VideoPlayer.LOCAL",
+      "VideoPlayer.ResourceType",
       "EventHandler.target",
       "EventHandler.component",
       "EventHandler.handler",
@@ -126,8 +124,7 @@
       "VideoPlayer.pause",
       "VideoPlayer.resume",
       "VideoPlayer.videoPlayerEvent",
-      "VideoPlayer.REMOTE",
-      "VideoPlayer.LOCAL",
+      "VideoPlayer.ResourceType",
       "VideoClip",
       "assetManager",
       "screen",
@@ -301,13 +298,7 @@
         "sourceLocation": "L287"
       },
       {
-        "api": "VideoPlayer.REMOTE",
-        "source": "main.js",
-        "validator": "scene-ready",
-        "sourceLocation": "L377"
-      },
-      {
-        "api": "VideoPlayer.LOCAL",
+        "api": "VideoPlayer.ResourceType",
         "source": "main.js",
         "validator": "scene-ready",
         "sourceLocation": "L275"
@@ -490,11 +481,11 @@
     }
   },
   "promotion": {
-    "spec": "db60ff8c7e06",
-    "source": "a2cc5d2b37a6dd0b",
+    "spec": "a72fa4472915",
+    "source": "159c0548a29b166b",
     "candidate": "8746fc59b6aa0408",
     "verified": 24,
-    "attested": 13,
-    "units": 37
+    "attested": 12,
+    "units": 36
   }
 }

@@ -197,9 +197,17 @@ function generateTraceModule (exportNames, units, realUrl) {
       if (typeof orig !== 'function') { T.mechanism[unit] = 'data-member'; continue; }
       const canon = T.canonical.get(orig);
       if (canon) { T.alias[unit] = canon; T.mechanism[unit] = 'alias:' + canon; continue; }
-      copy[member] = fnMeta(orig, unit);
+      const isClass = /^class[ ({]/.test(Function.prototype.toString.call(orig))
+        || (/^[A-Z]/.test(member) && !!orig.prototype);
+      const wrapped = isClass ? T.wrapExport(orig, unit) : fnMeta(orig, unit);
+      Object.defineProperty(copy, member, { configurable: true, enumerable: true,
+        get () {
+          if (T.observing > 0) T.harnessCalls[unit] = (T.harnessCalls[unit] || 0) + 1;
+          else T.reads[unit] = (T.reads[unit] || 0) + 1;
+          return wrapped;
+        } });
       T.canonical.set(orig, unit);
-      T.mechanism[unit] = 'frozen-namespace-member';
+      T.mechanism[unit] = isClass ? 'frozen-namespace-class' : 'frozen-namespace-member';
     }
     return copy;
   };
@@ -252,7 +260,7 @@ function generateTraceModule (exportNames, units, realUrl) {
     const parts = u.split('.');
     if (parts.length < 2) { continue; }
     if (!topNames.has(parts[0])) { memberLeaves.add(parts[parts.length - 1]); }
-    if (u.endsWith('.constructor')) { memberLeaves.add(parts[0]); }
+    if (u.endsWith('.constructor')) { memberLeaves.add(parts[parts.length - 2]); }
   }
   const tracedTop = new Set([...topNames, ...memberLeaves]);
   // 命名空间宿主（`primitives.box` / `utils.createMesh`）：成员在冻结对象上无法就地替换，
@@ -305,13 +313,21 @@ function generateTraceModule (exportNames, units, realUrl) {
     }
     let done = false;
     if (typeof host === 'function') {
-      if (parts.length === 2) {
-        done = T.patchOwn(host.prototype, leaf, unit, 'prototype');
-        if (!done) { done = T.patchOwn(host, leaf, unit, 'static'); }
-        if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
-      } else {
-        done = T.patchOwn(host, leaf, unit, 'static');
+      if (leaf === 'constructor') {
+        // A new C() call never reads C.prototype.constructor. Constructor units
+        // must share the exported class wrapper's construct counter.
+        aliasTo(unit, T.canonical.get(host) || parts.slice(0, -1).join('.'));
+        continue;
       }
+      // The owner may be a class inside a namespace (dragonBones.Armature).
+      // Instance methods live on its prototype regardless of path depth.
+      const staticDone = T.patchOwn(host, leaf, unit, 'static');
+      // Declaration bundles list static methods before same-name instance
+      // methods. The inventory retains the first declaration for each unit,
+      // so prefer static here too; only fall back to the prototype when the
+      // class has no static member with this name.
+      done = staticDone || T.patchOwn(host.prototype, leaf, unit, 'prototype');
+      if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
     } else {
       done = T.patchOwn(host, leaf, unit, 'namespace-member');
     }
@@ -352,11 +368,14 @@ function normalizeTrace (raw, units) {
     const n = Number(calls[target || unit]) || 0;
     const r = Number(reads[target || unit]) || 0;
     let state;
-    // reads 只对命名空间式宿主有意义（顶层导出对象/类）；成员 unit 的读取不代表成员本身被执行。
-    const via = n > 0 ? 'call' : (r > 0 && unit.indexOf('.') < 0 ? 'read' : null);
+    // A namespace class may be consumed through a static method without a
+    // constructor call. Its class-object read is evidence of that class use;
+    // ordinary member reads still do not prove method execution.
+    const classRead = mech === 'frozen-namespace-class';
+    const via = n > 0 ? 'call' : (r > 0 && (unit.indexOf('.') < 0 || classRead) ? 'read' : null);
     if (via) { state = 'executed'; } else if (mech === 'unresolved') { state = 'unresolved'; } else if (mech === 'data-member' || mech === 'namespace') { state = 'not-instrumentable'; } else { state = 'not-observed'; }
     out[unit] = {
-      state, calls: n, reads: r > 0 && unit.indexOf('.') < 0 ? r : 0, via, mechanism: mech,
+      state, calls: n, reads: r > 0 && (unit.indexOf('.') < 0 || classRead) ? r : 0, via, mechanism: mech,
       observedVia: target && target !== unit ? target : undefined,
       // 门禁读回期间被抑制的调用：只作边界生效的披露，不参与 state 判定。
       harnessCalls: Number(harness[target || unit]) || undefined,

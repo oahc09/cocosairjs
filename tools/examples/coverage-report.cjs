@@ -22,8 +22,8 @@
  *   源码/引擎改动都会使既有 verified 失效，这是"改动不影响结论"这类说法的反例控制。
  *
  * verified 门禁（§25 增补 + 总审查 item 4 分母修正）：
- *   分母 = inventory 中 coverageRequired=true 的同 tier 单元（Core/Important 共 1510；
- *   Advanced 全部 coverageRequired=false → 门禁 NOT_APPLICABLE，不再用 3219 的可选面自证）。
+ *   分母 = inventory 中 coverageRequired=true 的同 tier 单元。库存修订后
+ *   Core / Important / Advanced 均须有非空分母，Supporting/Internal 不入门禁。
  *   Core 100% / Important ≥90% / Advanced ≥80%（在其 own required 分母上）。
  * 门禁未达标如实输出 FAIL 并以非零退出码阻断。
  *
@@ -42,6 +42,7 @@ var EVIDENCE_PATHS = [
   'docs/evidence/v11-devtools-examples.json',
 ];
 var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
+var CHECK_ONLY = process.argv.includes('--check');
 
 (function main() {
   var inventory = JSON.parse(fs.readFileSync(INVENTORY_PATH, 'utf8'));
@@ -93,7 +94,8 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   var frozen = {};
   var units = inventory.units || {};
   for (var fq in units) {
-    frozen[fq] = { tier: units[fq].tier, coverageRequired: units[fq].coverageRequired, kind: units[fq].kind };
+    frozen[fq] = { tier: units[fq].tier, coverageRequired: units[fq].coverageRequired, kind: units[fq].kind,
+      coverageStatus: units[fq].coverageStatus, coverageReason: units[fq].coverageReason };
   }
 
   // claimed / attested / verified 覆盖映射（逐 API）
@@ -157,14 +159,12 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   }
 
   function rate (n, total) { return total ? Math.round((n / total) * 1000) / 1000 : 0; }
-  // r48 重定标（owner 指令「完成剩余事项」；登记 docs/v12-owner-decisions.md §5 / docs/v11-progress.md）：
-  // V1.1 立项期的 100%/90%/80% 目标改为「分层下限 + 棘轮」——下限只升不降（防回归有牙），
-  // 立项目标保留为 target 字段仅供披露，不再参与判定；低于下限即红。
-  // 下限取值 = r48 现读（core 6.9% / important 1.1%）向下取整的保守地板，上调时改这里并同步登记。
+  // Release acceptance uses the V1.1 taskbook targets. The historical r48
+  // regression floors remain documented, but cannot grant a release PASS.
   var GATES = {
-    core: { label: 'floor 6% verified of coverageRequired (ratchet; V1.1 target 100% retained for disclosure)', threshold: 0.06 },
-    important: { label: 'floor 1% verified of coverageRequired (ratchet; V1.1 target 90% retained for disclosure)', threshold: 0.01 },
-    advanced: { label: 'floor 0% (coverageRequired 为空，NOT_APPLICABLE)', threshold: 0 },
+    core: { label: 'V1.1 Release: 100% verified of coverageRequired', threshold: 1 },
+    important: { label: 'V1.1 Release: >=90% verified of coverageRequired', threshold: 0.9 },
+    advanced: { label: 'V1.1 Release: >=80% verified of coverageRequired', threshold: 0.8 },
   };
 
   // 分层统计：required 分母（coverageRequired=true）用于门禁，全量分母仅用于披露
@@ -192,11 +192,17 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   for (var name of ['core', 'important', 'advanced']) {
     var s = tiers[name] || { total: 0, required: 0, claimed: 0, attested: 0, verified: 0, requiredClaimed: 0, requiredVerified: 0, verifiedViaCall: 0, verifiedViaRead: 0, verifiedViaUnknown: 0, requiredVerifiedViaCall: 0, requiredVerifiedViaRead: 0, requiredVerifiedViaUnknown: 0 };
     var vr = rate(s.requiredVerified, s.required);
+    var requiredNames = Object.keys(frozen).filter(function (u) { return frozen[u].tier === name && frozen[u].coverageRequired; });
+    var documentedOnly = requiredNames.filter(function (u) { return !verifiedBy[u] && frozen[u].coverageStatus === 'documented-only'
+      && typeof frozen[u].coverageReason === 'string' && frozen[u].coverageReason.trim(); }).length;
+    var unstated = requiredNames.filter(function (u) { return !verifiedBy[u] && !frozen[u].coverageStatus; }).length;
     tierReport[name] = {
       denominator: 'coverageRequired',
       total: s.total, required: s.required,
       claimed: s.claimed, attested: s.attested, verified: s.verified,
       requiredClaimed: s.requiredClaimed, requiredVerified: s.requiredVerified,
+      documentedOnly: documentedOnly, documentedOnlyRate: rate(documentedOnly, s.required),
+      uncovered: s.required - s.requiredVerified - documentedOnly, unstated: unstated,
       // verified 的观察通道拆分：只有 call 是"该 API 被当作函数/构造器执行过"的直接证据。
       verifiedViaCall: s.verifiedViaCall, verifiedViaRead: s.verifiedViaRead, verifiedViaUnknown: s.verifiedViaUnknown,
       requiredVerifiedViaCall: s.requiredVerifiedViaCall, requiredVerifiedViaRead: s.requiredVerifiedViaRead, requiredVerifiedViaUnknown: s.requiredVerifiedViaUnknown,
@@ -206,7 +212,7 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
       gate: GATES[name].label, threshold: GATES[name].threshold,
       // required=0 表示该 tier 不进入覆盖义务（如 Advanced 全部可选），门禁不适用而非"通过"
       applicable: s.required > 0,
-      pass: s.required === 0 ? true : vr >= GATES[name].threshold,
+      pass: s.required > 0 && vr >= GATES[name].threshold,
     };
   }
 
@@ -224,6 +230,7 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
     // 比例必须绑定分母身份：inventory 重新生成（增删单元/改 tier）会让同名指标含义变化，
     // 没有这个哈希就无法判断报告数字对应的是哪一版分母。
     inventoryFingerprint: inventoryFingerprint,
+    apiInventoryRevision: inventory.apiInventoryRevision || null,
     inventoryConsistency: inventoryInconsistencies,
     totalUnits: Object.keys(frozen).length,
     totalRequired: Object.keys(frozen).filter(function (u) { return frozen[u].coverageRequired; }).length,
@@ -246,7 +253,15 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
     unclaimedRequired: Object.keys(frozen).filter(function (u) { return frozen[u].coverageRequired && !claimedBy[u]; }).length,
   };
 
-  fs.writeFileSync(OUT_PATH, JSON.stringify(report, null, 2) + '\n');
+  var reportMatches = true;
+  if (CHECK_ONLY) {
+    var existing = fs.existsSync(OUT_PATH) ? JSON.parse(fs.readFileSync(OUT_PATH, 'utf8')) : null;
+    var comparable = function (value) { var copy = Object.assign({}, value); delete copy.generatedAt; return JSON.stringify(copy); };
+    reportMatches = !!existing && comparable(existing) === comparable(report);
+    if (!reportMatches) console.error('[coverage] FAIL checked-in report differs from current inventory, specs or evidence');
+  } else {
+    fs.writeFileSync(OUT_PATH, JSON.stringify(report, null, 2) + '\n');
+  }
   for (var t2 of ['core', 'important', 'advanced']) {
     var tr = tierReport[t2];
     console.log('[coverage] ' + t2 + ': required ' + tr.required + '/' + tr.total + ' | claimed ' + tr.requiredClaimed
@@ -264,15 +279,14 @@ var OUT_PATH = path.join(REPO, 'docs', 'api-coverage-report.json');
   }
   console.log('[coverage] inventory fingerprint: ' + inventoryFingerprint);
   if (evidenceSchemaGaps.length) { console.log('[coverage] evidence without apiProof (counted as claimed only): ' + evidenceSchemaGaps.length); }
-  console.log('[coverage] → ' + path.relative(REPO, OUT_PATH));
-  // 机器可强制：分母自相矛盾（数据完整性）必须以非零退出码阻断。
-  // r48（owner-decisions #18 更新记录，docs/v12-owner-decisions.md §5）：tier 门禁从「信息性」升级为
-  // 「分层下限 + 棘轮」—— 低于下限即红（防回归有牙）；100/90/80 立项目标保留为披露字段，不再判定。
-  // 覆盖率从「发布阻塞项」转为「随里程碑上调的下限」（当前地板见上方 GATES 注释）。
-  var gatesPass = inventoryInconsistencies.length === 0
-    && ['core', 'important', 'advanced'].every(function (n) { return tierReport[n].pass; });
+  console.log('[coverage] ' + (CHECK_ONLY ? 'checked ' : 'wrote ') + path.relative(REPO, OUT_PATH));
+  var gatesPass = reportMatches && inventoryInconsistencies.length === 0
+    && staleEvidence.length === 0 && evidenceSchemaGaps.length === 0
+    && ['core', 'important', 'advanced'].every(function (n) { return tierReport[n].applicable && tierReport[n].pass; })
+    && tierReport.important.unstated === 0
+    && tierReport.advanced.documentedOnlyRate <= 0.2 && tierReport.advanced.uncovered === 0;
   process.exitCode = gatesPass ? 0 : 1;
   console.log('[coverage] gate:', gatesPass ? 'PASS' : 'FAIL'
-    + ' (r48 ratchet floors: core>=6% important>=1% advanced N/A;'
+    + ' (V1.1 Release: core=100% important>=90% advanced>=80%;'
     + ' tier pass=' + ['core', 'important', 'advanced'].map(function (n) { return n + ':' + tierReport[n].pass; }).join(',') + ')');
 })();

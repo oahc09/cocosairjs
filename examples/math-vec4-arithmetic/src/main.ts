@@ -100,7 +100,7 @@ T('div', () => {
     return Math.round(o.w * 100) / 100;
 });
 T('neg', () => {
-    (Vec4 as any).negative(o, a);
+    o.set(a.x, a.y, a.z, a.w).negative();
     return o.x;
 });
 

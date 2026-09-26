@@ -81,7 +81,7 @@ T('reflect', () => {
     return o.x + ',' + o.y;
 });
 T('projLenLE', () => {
-    (Vec2 as any).project(o, d, new Vec2(1, 0));
+    o.set(d.x, d.y).project(new Vec2(1, 0));
     var pl = (Vec2 as any).length(o);
     return pl <= (Vec2 as any).length(d) + 1e-9;
 });

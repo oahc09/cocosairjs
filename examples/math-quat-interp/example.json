@@ -240,55 +240,55 @@
         "api": "math.Quat.length",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L51"
+        "sourceLocation": "L92"
       },
       {
         "api": "math.Quat.lengthSqr",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L92"
+        "sourceLocation": "L94"
       },
       {
         "api": "math.Quat.equals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L96"
+        "sourceLocation": "L95"
       },
       {
         "api": "math.Quat.strictEquals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L97"
+        "sourceLocation": "L96"
       },
       {
         "api": "math.Quat.set",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L99"
+        "sourceLocation": "L98"
       },
       {
         "api": "math.Quat.toString",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L100"
+        "sourceLocation": "L99"
       },
       {
         "api": "math.Quat.x",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L101"
+        "sourceLocation": "L100"
       },
       {
         "api": "math.Quat.y",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L102"
+        "sourceLocation": "L101"
       },
       {
         "api": "math.Quat.z",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L103"
+        "sourceLocation": "L102"
       },
       {
         "api": "math.Quat.w",
@@ -327,11 +327,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "64864da48407",
-    "source": "b76e61dcf47c1481",
+    "spec": "4c392d8aca8f",
+    "source": "913fd22173e04c57",
     "candidate": "8746fc59b6aa0408",
-    "verified": 26,
-    "attested": 6,
+    "verified": 28,
+    "attested": 4,
     "units": 32
   }
 }

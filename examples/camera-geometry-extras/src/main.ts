@@ -54,6 +54,8 @@ var cubeMaterial = new Material();
 cubeMaterial.initialize({ effectName: 'builtin-standard' });
 cubeMaterial.setProperty('mainColor', new Color(150, 210, 200));
 cubeRenderer.material = cubeMaterial;
+app.run(scene);
+await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
 // ---- 主题：Camera — 世界矩阵投影与几何查询（确定性 readback，全部进 __probe）----
 var probe: any = {};
@@ -105,5 +107,4 @@ T('oblique', () => {
 probe.topic = 'camera-geometry-extras';
 (window as any).__probe = async () => probe;
 
-app.run(scene);
 console.log('[camera-geometry-extras] running');

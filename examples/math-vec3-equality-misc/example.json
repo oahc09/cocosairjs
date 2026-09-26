@@ -272,7 +272,7 @@
         "api": "math.Vec3.y",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L98"
+        "sourceLocation": "L90"
       },
       {
         "api": "math.Vec3.z",
@@ -311,11 +311,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "ce18d88226fc",
-    "source": "f35a14e3a1341566",
+    "spec": "103676084a48",
+    "source": "1721c45a5d158484",
     "candidate": "8746fc59b6aa0408",
-    "verified": 22,
-    "attested": 8,
+    "verified": 27,
+    "attested": 3,
     "units": 30
   }
 }

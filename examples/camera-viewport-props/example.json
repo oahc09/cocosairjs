@@ -28,10 +28,10 @@
     "primitives.box",
     "Camera.postProcess",
     "Camera.usePostProcess",
-    "Camera.pipeline",
+    "renderer.scene.Camera.pipeline",
     "Camera.screenScale",
-    "Camera.SKYBOX",
-    "Camera.setViewportInOrientedSpace"
+    "Camera.ClearFlag",
+    "renderer.scene.Camera.setViewportInOrientedSpace"
   ],
   "capabilities": [],
   "learning": {
@@ -43,7 +43,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 155,215,205）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Camera.postProcess", "Camera.pipeline"],
+    "primary": ["Camera.postProcess", "renderer.scene.Camera.pipeline"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -81,10 +81,10 @@
       "primitives.box",
       "Camera.postProcess",
       "Camera.usePostProcess",
-      "Camera.pipeline",
+      "renderer.scene.Camera.pipeline",
       "Camera.screenScale",
-      "Camera.SKYBOX",
-      "Camera.setViewportInOrientedSpace"
+      "Camera.ClearFlag",
+      "renderer.scene.Camera.setViewportInOrientedSpace"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -209,7 +209,7 @@
         "sourceLocation": "L83"
       },
       {
-        "api": "Camera.pipeline",
+        "api": "renderer.scene.Camera.pipeline",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L88"
@@ -221,13 +221,13 @@
         "sourceLocation": "L96"
       },
       {
-        "api": "Camera.SKYBOX",
+        "api": "Camera.ClearFlag",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L106"
+        "sourceLocation": "L35"
       },
       {
-        "api": "Camera.setViewportInOrientedSpace",
+        "api": "renderer.scene.Camera.setViewportInOrientedSpace",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L113"
@@ -263,11 +263,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "598241d45feb",
-    "source": "735eed7dc083aba9",
+    "spec": "6adc2647f4bc",
+    "source": "307ddd895cedd106",
     "candidate": "8746fc59b6aa0408",
-    "verified": 21,
-    "attested": 3,
+    "verified": 22,
+    "attested": 2,
     "units": 24
   }
 }

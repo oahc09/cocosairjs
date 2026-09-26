@@ -74,7 +74,7 @@ import * as cocosairNS from 'cocosair';
 var v = new Vec3(3, 4, 9);
 var out = new Vec2();
 T('toVec2', () => {
-    var o = (Vec3 as any).toVec2(out, v);
+    var o = v.toVec2();
     return o.x + ',' + o.y;
 });
 probe.topic = 'math-vec3-tovec2';

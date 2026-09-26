@@ -256,10 +256,10 @@
   "specStatus": "frozen",
   "promotion": {
     "spec": "00c5e8366ce2",
-    "source": "af2f3dd62a273028",
+    "source": "ceefa87df5fff3f9",
     "candidate": "8746fc59b6aa0408",
-    "verified": 18,
-    "attested": 5,
+    "verified": 23,
+    "attested": 0,
     "units": 23
   }
 }

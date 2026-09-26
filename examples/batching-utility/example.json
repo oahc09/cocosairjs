@@ -26,7 +26,7 @@
     "Material.setProperty",
     "utils.createMesh",
     "primitives.box",
-    "BatchingUtility.constructor",
+    "BatchingUtility",
     "BatchingUtility.batchStaticModel",
     "BatchingUtility.unbatchStaticModel"
   ],
@@ -76,7 +76,7 @@
       "Material.setProperty",
       "utils.createMesh",
       "primitives.box",
-      "BatchingUtility.constructor",
+      "BatchingUtility",
       "BatchingUtility.batchStaticModel",
       "BatchingUtility.unbatchStaticModel"
     ],
@@ -191,10 +191,10 @@
         "sourceLocation": "L51"
       },
       {
-        "api": "BatchingUtility.constructor",
+        "api": "BatchingUtility",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L59"
+        "sourceLocation": "L77"
       },
       {
         "api": "BatchingUtility.batchStaticModel",
@@ -239,8 +239,8 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "921b2d2f111e",
-    "source": "bd7f192ce097290b",
+    "spec": "247bafa0cca7",
+    "source": "cc42645c22e9dab1",
     "candidate": "8746fc59b6aa0408",
     "verified": 21,
     "attested": 0,

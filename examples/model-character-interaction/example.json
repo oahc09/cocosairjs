@@ -21,7 +21,7 @@
   },
   "api": {
     "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate", "Camera.screenPointToRay"],
-    "supporting": ["Animation.getState", "input", "intersect", "AnimationClip.wrapMode", "isValid"],
+    "supporting": ["Animation.getState", "input", "geometry.intersect", "AnimationClip.wrapMode", "isValid"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -61,9 +61,9 @@
       "GLTFAsset.skeletons",
       "GLTFAsset.images",
       "GLTFAsset.sceneNames",
-      "Ray",
-      "AABB",
-      "intersect",
+      "geometry.Ray",
+      "geometry.AABB",
+      "geometry.intersect",
       "input",
       "Input",
       "EventTouch.getLocation",
@@ -305,19 +305,19 @@
         "sourceLocation": "L230"
       },
       {
-        "api": "Ray",
+        "api": "geometry.Ray",
         "source": "src/main.ts",
         "validator": "frame-diff",
         "sourceLocation": "L109"
       },
       {
-        "api": "AABB",
+        "api": "geometry.AABB",
         "source": "src/main.ts",
         "validator": "frame-diff",
         "sourceLocation": "L99"
       },
       {
-        "api": "intersect",
+        "api": "geometry.intersect",
         "source": "src/main.ts",
         "validator": "frame-diff",
         "sourceLocation": "L111"
@@ -490,11 +490,11 @@
     }
   },
   "promotion": {
-    "spec": "7bc28ca313c2",
-    "source": "1b699dee9a45eaae",
+    "spec": "f21a20179694",
+    "source": "201da8ea96b81111",
     "candidate": "8746fc59b6aa0408",
-    "verified": 37,
-    "attested": 8,
+    "verified": 39,
+    "attested": 6,
     "units": 45
   }
 }

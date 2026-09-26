@@ -34,7 +34,7 @@
     "primitives.sphere",
     "primitives.capsule",
     "primitives.torus",
-    "Ray",
+    "geometry.Ray",
     "PhysicsGroup",
     "physics.selector",
     "physics.PhysicsSystem",
@@ -156,7 +156,7 @@
       "primitives.sphere",
       "primitives.capsule",
       "primitives.torus",
-      "Ray",
+      "geometry.Ray",
       "PhysicsGroup",
       "physics.selector",
       "physics.PhysicsSystem",
@@ -368,7 +368,7 @@
         "sourceLocation": "L298"
       },
       {
-        "api": "Ray",
+        "api": "geometry.Ray",
         "source": "main.js",
         "validator": "node-exists",
         "sourceLocation": "L522"
@@ -749,11 +749,11 @@
     }
   },
   "promotion": {
-    "spec": "2dae8fd94551",
-    "source": "1b6ad95a984fffb3",
+    "spec": "9b2c4ac4792e",
+    "source": "11d87b8794c9e535",
     "candidate": "8746fc59b6aa0408",
-    "verified": 35,
-    "attested": 34,
+    "verified": 60,
+    "attested": 9,
     "units": 69
   }
 }

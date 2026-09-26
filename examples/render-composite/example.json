@@ -21,7 +21,7 @@
   },
   "api": {
     "primary": ["RenderTexture", "Camera.worldToScreen", "Material.setProperty"],
-    "supporting": ["PointLight", "SceneGlobals.ambient", "Light.destroy"],
+    "supporting": ["PointLight", "SceneGlobals.ambient", "Component.destroy"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -36,7 +36,7 @@
       "Camera.worldToScreen",
       "DirectionalLight",
       "PointLight",
-      "Light.destroy",
+      "Component.destroy",
       "Layers",
       "math.Vec3",
       "math.Color",
@@ -142,7 +142,7 @@
         "sourceLocation": "L173"
       },
       {
-        "api": "Light.destroy",
+        "api": "Component.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
         "sourceLocation": "L407"
@@ -417,11 +417,11 @@
     }
   },
   "promotion": {
-    "spec": "f2a8eecaa3c9",
-    "source": "f3bc5f329a814950",
+    "spec": "2722e26e69ef",
+    "source": "eed46d5241592949",
     "candidate": "8746fc59b6aa0408",
-    "verified": 28,
-    "attested": 4,
+    "verified": 29,
+    "attested": 3,
     "units": 32
   }
 }

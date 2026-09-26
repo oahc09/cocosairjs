@@ -274,7 +274,7 @@
         "api": "math.Vec2.set",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L88"
+        "sourceLocation": "L78"
       }
     ]
   },
@@ -307,11 +307,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "49523ddcb972",
-    "source": "fc9a5900ceb65606",
+    "spec": "be4a85769c5a",
+    "source": "dad5ee6f33e45b82",
     "candidate": "8746fc59b6aa0408",
-    "verified": 24,
-    "attested": 5,
+    "verified": 29,
+    "attested": 0,
     "units": 29
   }
 }

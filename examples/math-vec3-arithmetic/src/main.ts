@@ -79,7 +79,7 @@ T('add', () => {
     return o.x + ',' + o.y + ',' + o.z;
 });
 T('add3f', () => {
-    (Vec3 as any).add3f(o, 1, 2, 3, 4, 5, 6);
+    o.set(1, 2, 3).add3f(4, 5, 6);
     return o.z;
 });
 T('sub', () => {
@@ -87,7 +87,7 @@ T('sub', () => {
     return o.x + ',' + o.y + ',' + o.z;
 });
 T('sub3f', () => {
-    (Vec3 as any).subtract3f(o, 4, 5, 6, 1, 2, 3);
+    o.set(4, 5, 6).subtract3f(1, 2, 3);
     return o.x;
 });
 T('mul', () => {
@@ -95,7 +95,7 @@ T('mul', () => {
     return o.x + ',' + o.z;
 });
 T('mul3f', () => {
-    (Vec3 as any).multiply3f(o, 1, 2, 3, 4, 5, 6);
+    o.set(1, 2, 3).multiply3f(4, 5, 6);
     return o.y;
 });
 T('mulS', () => {
@@ -107,11 +107,11 @@ T('div', () => {
     return Math.round(o.z * 100) / 100;
 });
 T('div3f', () => {
-    (Vec3 as any).divide3f(o, 8, 10, 12, 2, 5, 6);
+    o.set(8, 10, 12).divide3f(2, 5, 6);
     return o.x + ',' + o.y + ',' + o.z;
 });
 T('neg', () => {
-    (Vec3 as any).negative(o, a);
+    o.set(a.x, a.y, a.z).negative();
     return o.x + ',' + o.z;
 });
 

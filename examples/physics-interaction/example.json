@@ -46,7 +46,7 @@
       "primitives.box",
       "primitives.sphere",
       "primitives.torus",
-      "Ray",
+      "geometry.Ray",
       "physics.PhysicsSystem.raycast",
       "physics.PhysicsSystem.syncSceneToPhysics",
       "physics.PhysicsSystem.step",
@@ -211,7 +211,7 @@
         "sourceLocation": "L204"
       },
       {
-        "api": "Ray",
+        "api": "geometry.Ray",
         "source": "src/main.ts",
         "validator": "frame-diff",
         "sourceLocation": "L243"
@@ -366,11 +366,11 @@
   },
   "validationExpectations": {},
   "promotion": {
-    "spec": "ca48ced6399e",
-    "source": "b5e309975cb0a963",
+    "spec": "58000f69e95e",
+    "source": "4753b596e6ba21cb",
     "candidate": "8746fc59b6aa0408",
-    "verified": 34,
-    "attested": 7,
+    "verified": 39,
+    "attested": 2,
     "units": 41
   }
 }

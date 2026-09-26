@@ -224,10 +224,10 @@
   "specStatus": "frozen",
   "promotion": {
     "spec": "39e4aa1ca1b9",
-    "source": "6c8ab2b84ba00630",
+    "source": "476470486c6d0c4f",
     "candidate": "8746fc59b6aa0408",
-    "verified": 18,
-    "attested": 1,
+    "verified": 19,
+    "attested": 0,
     "units": 19
   }
 }

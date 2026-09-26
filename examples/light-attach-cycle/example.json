@@ -26,11 +26,10 @@
     "Material.setProperty",
     "utils.createMesh",
     "primitives.box",
-    "Light.LUMINOUS_FLUX",
-    "Light.LUMINANCE",
-    "Light.attachToScene",
-    "Light.detachFromScene",
-    "Light.update",
+    "Light.PhotometricTerm",
+    "renderer.scene.Light.attachToScene",
+    "renderer.scene.Light.detachFromScene",
+    "renderer.scene.DirectionalLight.update",
     "Light.onLoad"
   ],
   "capabilities": [],
@@ -43,7 +42,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 255,225,165）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Light.LUMINOUS_FLUX", "Light.LUMINANCE"],
+    "primary": ["Light.PhotometricTerm"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -79,11 +78,10 @@
       "Material.setProperty",
       "utils.createMesh",
       "primitives.box",
-      "Light.LUMINOUS_FLUX",
-      "Light.LUMINANCE",
-      "Light.attachToScene",
-      "Light.detachFromScene",
-      "Light.update",
+      "Light.PhotometricTerm",
+      "renderer.scene.Light.attachToScene",
+      "renderer.scene.Light.detachFromScene",
+      "renderer.scene.DirectionalLight.update",
       "Light.onLoad"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
@@ -92,145 +90,139 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L23"
+        "sourceLocation": "L24"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L42"
+        "sourceLocation": "L43"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L43"
+        "sourceLocation": "L44"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L37"
+        "sourceLocation": "L38"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L36"
+        "sourceLocation": "L37"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L29"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L49"
+        "sourceLocation": "L50"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L53"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L53"
+        "sourceLocation": "L54"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L50"
+        "sourceLocation": "L51"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L50"
+        "sourceLocation": "L51"
       },
       {
-        "api": "Light.LUMINOUS_FLUX",
+        "api": "Light.PhotometricTerm",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L76"
+        "sourceLocation": "L81"
       },
       {
-        "api": "Light.LUMINANCE",
+        "api": "renderer.scene.Light.attachToScene",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L83"
+        "sourceLocation": "L106"
       },
       {
-        "api": "Light.attachToScene",
+        "api": "renderer.scene.Light.detachFromScene",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L103"
+        "sourceLocation": "L115"
       },
       {
-        "api": "Light.detachFromScene",
+        "api": "renderer.scene.DirectionalLight.update",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L111"
-      },
-      {
-        "api": "Light.update",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L120"
+        "sourceLocation": "L126"
       },
       {
         "api": "Light.onLoad",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L128"
+        "sourceLocation": "L134"
       }
     ]
   },
@@ -263,11 +255,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "d2fbe339dee3",
-    "source": "947eed98bd636042",
+    "spec": "2f25b8264944",
+    "source": "0eb2fcf420ce8b42",
     "candidate": "8746fc59b6aa0408",
-    "verified": 19,
-    "attested": 5,
-    "units": 24
+    "verified": 22,
+    "attested": 1,
+    "units": 23
   }
 }

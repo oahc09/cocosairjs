@@ -33,7 +33,6 @@
     "Texture2D.toString",
     "Texture2D.reset",
     "Texture2D.releaseTexture",
-    "Texture2D.base",
     "Texture2D.initDefault",
     "Texture2D.validate"
   ],
@@ -90,7 +89,6 @@
       "Texture2D.toString",
       "Texture2D.reset",
       "Texture2D.releaseTexture",
-      "Texture2D.base",
       "Texture2D.initDefault",
       "Texture2D.validate"
     ],
@@ -247,12 +245,6 @@
         "sourceLocation": "L129"
       },
       {
-        "api": "Texture2D.base",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L112"
-      },
-      {
         "api": "Texture2D.initDefault",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
@@ -295,11 +287,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "2644a73fb04f",
-    "source": "d5b512b6239cdb75",
+    "spec": "06b86e15335c",
+    "source": "2ddf9d4b035baa4f",
     "candidate": "8746fc59b6aa0408",
     "verified": 27,
-    "attested": 1,
-    "units": 28
+    "attested": 0,
+    "units": 27
   }
 }

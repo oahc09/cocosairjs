@@ -28,9 +28,6 @@
     "primitives.box",
     "math.Color.fromHSV",
     "math.Color.toHSV",
-    "math.Color.h",
-    "math.Color.s",
-    "math.Color.v",
     "math.Color.lerp",
     "math.Color.multiply",
     "math.Color.set",
@@ -86,9 +83,6 @@
       "primitives.box",
       "math.Color.fromHSV",
       "math.Color.toHSV",
-      "math.Color.h",
-      "math.Color.s",
-      "math.Color.v",
       "math.Color.lerp",
       "math.Color.multiply",
       "math.Color.set",
@@ -219,24 +213,6 @@
         "sourceLocation": "L86"
       },
       {
-        "api": "math.Color.h",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L94"
-      },
-      {
-        "api": "math.Color.s",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L95"
-      },
-      {
-        "api": "math.Color.v",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L96"
-      },
-      {
         "api": "math.Color.lerp",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
@@ -303,11 +279,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "d40a003d46b4",
-    "source": "7e880273577db792",
+    "spec": "f5bcae14d814",
+    "source": "24fcc620834ff250",
     "candidate": "8746fc59b6aa0408",
-    "verified": 22,
-    "attested": 7,
-    "units": 29
+    "verified": 26,
+    "attested": 0,
+    "units": 26
   }
 }

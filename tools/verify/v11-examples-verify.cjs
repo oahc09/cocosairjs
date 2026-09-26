@@ -686,7 +686,9 @@ async function verifyApp (example, workspace, html, spec, prepared) {
       scenarioProbe = await runtime.page.evaluate(() => window.__trialProbe);
       if (scenarioProbe.ok !== true || !Array.isArray(scenarioProbe.checks)
         || scenarioProbe.checks.length === 0 || scenarioProbe.checks.some((c) => c.ok !== true)) {
-        throw new Error('scenario probe did not complete all behavioral assertions');
+        const failedCheck = scenarioProbe.checks && scenarioProbe.checks.find((c) => c.ok !== true);
+        throw new Error('scenario probe did not complete all behavioral assertions: '
+          + (failedCheck ? `${failedCheck.name}: ${failedCheck.detail || ''}` : JSON.stringify({ ready: scenarioProbe.ready, ok: scenarioProbe.ok, checks: scenarioProbe.checks && scenarioProbe.checks.length, error: scenarioProbe.error })));
       }
     }
 

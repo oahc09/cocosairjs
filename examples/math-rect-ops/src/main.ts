@@ -90,20 +90,20 @@ T('lerp', () => {
     return o.x + ',' + o.width;
 });
 T('toString', () => typeof r.toString());
-T('intersects', () => (Rect as any).intersects(new Rect(0, 0, 5, 5), new Rect(4, 4, 5, 5)));
-T('notIntersects', () => (Rect as any).intersects(new Rect(0, 0, 1, 1), new Rect(5, 5, 1, 1)));
-T('contains', () => (Rect as any).contains(new Rect(0, 0, 10, 10), new Vec2(5, 5)));
-T('containsRect', () => (Rect as any).containsRect(new Rect(0, 0, 10, 10), new Rect(2, 2, 3, 3)));
+T('intersects', () => new Rect(0, 0, 5, 5).intersects(new Rect(4, 4, 5, 5)));
+T('notIntersects', () => new Rect(0, 0, 1, 1).intersects(new Rect(5, 5, 1, 1)));
+T('contains', () => new Rect(0, 0, 10, 10).contains(new Vec2(5, 5)));
+T('containsRect', () => new Rect(0, 0, 10, 10).containsRect(new Rect(2, 2, 3, 3)));
 T('xform', () => {
     (Mat4 as any).identity(m);
     m.m12 = 10;
-    (Rect as any).transformMat4(o, new Rect(0, 0, 1, 1), m);
-    return Math.round(o.x);
+    var transformed = new Rect(0, 0, 1, 1).transformMat4(m);
+    return Math.round(transformed.x);
 });
 T('xformPts', () => {
     try {
         var pts = [new Vec2(), new Vec2(), new Vec2(), new Vec2()];
-        (Rect as any).transformMat4ToPoints(pts as any, new Rect(0, 0, 1, 1), m);
+        new Rect(0, 0, 1, 1).transformMat4ToPoints(m, pts[0], pts[1], pts[2], pts[3]);
         return pts[0].x + ',' + pts[2].y;
     } catch (e) {
         return 'threw';

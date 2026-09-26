@@ -26,9 +26,9 @@
     "Material.setProperty",
     "utils.createMesh",
     "primitives.box",
-    "Camera.worldMatrixToScreen",
-    "Camera.getClipSpaceMinz",
-    "Camera.calculateObliqueMat"
+    "renderer.scene.Camera.worldMatrixToScreen",
+    "renderer.scene.Camera.getClipSpaceMinz",
+    "renderer.scene.Camera.calculateObliqueMat"
   ],
   "capabilities": [],
   "learning": {
@@ -40,7 +40,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 150,210,200）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Camera.worldMatrixToScreen"],
+    "primary": ["renderer.scene.Camera.worldMatrixToScreen"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -76,9 +76,9 @@
       "Material.setProperty",
       "utils.createMesh",
       "primitives.box",
-      "Camera.worldMatrixToScreen",
-      "Camera.getClipSpaceMinz",
-      "Camera.calculateObliqueMat"
+      "renderer.scene.Camera.worldMatrixToScreen",
+      "renderer.scene.Camera.getClipSpaceMinz",
+      "renderer.scene.Camera.calculateObliqueMat"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -191,22 +191,22 @@
         "sourceLocation": "L52"
       },
       {
-        "api": "Camera.worldMatrixToScreen",
+        "api": "renderer.scene.Camera.worldMatrixToScreen",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L81"
+        "sourceLocation": "L83"
       },
       {
-        "api": "Camera.getClipSpaceMinz",
+        "api": "renderer.scene.Camera.getClipSpaceMinz",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L89"
+        "sourceLocation": "L91"
       },
       {
-        "api": "Camera.calculateObliqueMat",
+        "api": "renderer.scene.Camera.calculateObliqueMat",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L99"
+        "sourceLocation": "L101"
       }
     ]
   },
@@ -239,11 +239,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "6e6f27f11498",
-    "source": "cf5dcaf721166120",
+    "spec": "84c7dc74ca1a",
+    "source": "709b12cd0409f9ad",
     "candidate": "8746fc59b6aa0408",
-    "verified": 18,
-    "attested": 3,
+    "verified": 21,
+    "attested": 0,
     "units": 21
   }
 }

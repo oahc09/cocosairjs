@@ -79,19 +79,19 @@ var v = new Vec4(1, 2, 3, 4);
 var o = new Vec4();
 var m = new Mat4();
 T('dot', () => (Vec4 as any).dot(e1, e2));
-T('len', () => Math.round((Vec4 as any).length(v) * 1000) / 1000);
+T('len', () => Math.round(v.length() * 1000) / 1000);
 T('lenSqr', () => (Vec4 as any).lengthSqr(v));
 T('norm', () => {
     (Vec4 as any).normalize(o, v);
-    return Math.round((Vec4 as any).length(o) * 1000) / 1000;
+    return Math.round(o.length() * 1000) / 1000;
 });
 T('lerp', () => {
     (Vec4 as any).lerp(o, new Vec4(0, 0, 0, 0), v, 0.5);
     return o.x + ',' + o.w;
 });
 T('clampf', () => {
-    (Vec4 as any).clampf(o, new Vec4(0, 0, 0, 0), new Vec4(1, 1, 1, 1));
-    return o.x <= 1;
+    o.set(2, -1, 3, 4).clampf(new Vec4(0, 0, 0, 0), new Vec4(1, 1, 1, 1));
+    return o.x === 1 && o.y === 0 && o.z === 1 && o.w === 1;
 });
 T('xform', () => {
     (Mat4 as any).identity(m);
@@ -101,9 +101,9 @@ T('xform', () => {
 });
 T('toString', () => typeof v.toString());
 T('equals', () => (Vec4 as any).equals(new Vec4(1.0000001, 0, 0, 0), e1));
-T('equals4f', () => (Vec4 as any).equals4f(v, 1, 2, 3, 4));
+T('equals4f', () => v.equals4f(1, 2, 3, 4));
 T('strictEq', () => (Vec4 as any).strictEquals(v, v.clone()));
-T('strictEq4f', () => (Vec4 as any).strictEquals4f(v, 1, 2, 3, 4));
+T('strictEq4f', () => v.strictEquals4f(1, 2, 3, 4));
 probe.topic = 'math-vec4-length-misc';
 (window as any).__probe = async () => probe;
 

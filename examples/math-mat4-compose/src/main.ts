@@ -89,7 +89,7 @@ T('getT', () => {
     return outT.x + ',' + outT.z;
 });
 T('getS', () => {
-    (Mat4 as any).getScale(outS, o);
+    o.getScale(outS);
     return outS.x;
 });
 T('getR', () => {

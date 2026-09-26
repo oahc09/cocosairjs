@@ -85,6 +85,7 @@ T('angleSym', () => {
     return ab === ba;
 });
 T('unitLen', () => Math.round(Math.sqrt((Quat as any).lengthSqr(q)) * 1e4) / 1e4);
+T('instanceLen', () => Math.round(q.length() * 1e4) / 1e4);
 T('lerpMid', () => {
     (Quat as any).lerp(o, new Quat(), new Quat(), 0.5);
     return o.w;

@@ -58,9 +58,9 @@
       "AnimationClip",
       "AnimationClip.wrapMode",
       "frameObject",
-      "Ray",
-      "AABB",
-      "intersect",
+      "geometry.Ray",
+      "geometry.AABB",
+      "geometry.intersect",
       "EventTouch.getLocation",
       "input",
       "Input",
@@ -278,19 +278,19 @@
         "sourceLocation": "L195"
       },
       {
-        "api": "Ray",
+        "api": "geometry.Ray",
         "source": "src/main.ts",
         "validator": "frame-diff",
         "sourceLocation": "L248"
       },
       {
-        "api": "AABB",
+        "api": "geometry.AABB",
         "source": "src/main.ts",
         "validator": "frame-diff",
         "sourceLocation": "L244"
       },
       {
-        "api": "intersect",
+        "api": "geometry.intersect",
         "source": "src/main.ts",
         "validator": "frame-diff",
         "sourceLocation": "L259"
@@ -520,11 +520,11 @@
     }
   },
   "promotion": {
-    "spec": "4bf3f38b6e50",
-    "source": "f56183e5669f6304",
+    "spec": "e568b27b4292",
+    "source": "ce8c2f3d46c24e7f",
     "candidate": "8746fc59b6aa0408",
-    "verified": 36,
-    "attested": 5,
+    "verified": 38,
+    "attested": 3,
     "units": 41
   }
 }

@@ -85,6 +85,9 @@ void import('./tween-contract.js')
         pingpong();
     })
     .catch((error) => {
-        if ((window as any).__trialProbe) (window as any).__trialProbe.ready = true;
+        if ((window as any).__trialProbe) {
+            (window as any).__trialProbe.ready = true;
+            (window as any).__trialProbe.error = String(error);
+        }
         throw error;
     });

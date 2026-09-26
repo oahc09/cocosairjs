@@ -8,6 +8,7 @@ import {
     Scene,
     Node,
     Camera,
+    Light,
     DirectionalLight,
     MeshRenderer,
     Material,
@@ -52,6 +53,10 @@ var cubeMaterial = new Material();
 cubeMaterial.initialize({ effectName: 'builtin-standard' });
 cubeMaterial.setProperty('mainColor', new Color(255, 225, 165));
 cubeRenderer.material = cubeMaterial;
+app.run(scene);
+await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+const renderLight: any = (light as any)._light;
+const renderScene: any = renderLight?.scene;
 
 // ---- 主题：Light — 常量与挂接生命周期（确定性 readback，全部进 __probe）----
 var probe: any = {};
@@ -73,14 +78,14 @@ function Vec3Ctor(): any {
 import * as cocosairNS from 'cocosair';
 T('fluxConst', () => {
     try {
-        return String((DirectionalLight as any).LUMINOUS_FLUX !== undefined);
+        return String((Light as any).PhotometricTerm?.LUMINOUS_FLUX !== undefined);
     } catch (e) {
         return 'threw';
     }
 });
 T('lumConst', () => {
     try {
-        return String((DirectionalLight as any).LUMINANCE !== undefined);
+        return String((Light as any).PhotometricTerm?.LUMINANCE !== undefined);
     } catch (e) {
         return 'threw';
     }
@@ -97,27 +102,28 @@ T('ctor', () => {
 });
 T('attach', () => {
     try {
-        var n = new Node('AttachProbe');
-        scene.addChild(n);
-        var l = n.addComponent(DirectionalLight);
-        (l as any).attachToScene ? (l as any).attachToScene() : 0;
-        return 'ok';
+        if (!renderLight || !renderScene) return 'missing';
+        renderLight.attachToScene(renderScene);
+        return renderLight.scene === renderScene ? 'ok' : 'mismatch';
     } catch (e) {
         return 'threw';
     }
 });
 T('detach', () => {
     try {
-        (light as any).detachFromScene ? (light as any).detachFromScene() : 0;
-        (light as any).attachToScene ? (light as any).attachToScene() : 0;
-        return 'ok';
+        if (!renderLight || !renderScene) return 'missing';
+        renderLight.detachFromScene();
+        const detached = renderLight.scene === null;
+        renderLight.attachToScene(renderScene);
+        return detached && renderLight.scene === renderScene ? 'ok' : 'mismatch';
     } catch (e) {
         return 'threw';
     }
 });
 T('update', () => {
     try {
-        (light as any).update(0.016);
+        if (!renderLight) return 'missing';
+        renderLight.update();
         return 'ok';
     } catch (e) {
         return 'threw';
@@ -134,5 +140,4 @@ T('onLoad', () => {
 probe.topic = 'light-attach-cycle';
 (window as any).__probe = async () => probe;
 
-app.run(scene);
 console.log('[light-attach-cycle] running');

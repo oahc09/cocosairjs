@@ -89,8 +89,7 @@ T('rotateTowards0', () => {
 });
 T('angle', () => Math.round((Quat as any).angle(q, r) * 100) / 100);
 T('len', () => {
-    var sq = (Quat as any).lengthSqr(r);
-    return Math.round(Math.sqrt(sq) * 1000) / 1000;
+    return Math.round(r.length() * 1000) / 1000;
 });
 T('lenSqr', () => Math.round((Quat as any).lengthSqr(q) * 100) / 100);
 T('equals', () => (Quat as any).equals(q, o));

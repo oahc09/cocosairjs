@@ -6,7 +6,7 @@
 > **V0.1 RC**（2026-09-12）：验收矩阵 L0–L14 全部通过，详见 `docs/acceptance-report.md`。
 > **V0.2 RC**（2026-09-12）：Code First DX & SDK 化，验收矩阵 L0–L17 全部通过，详见 `docs/acceptance-report-v02.md`。
 > **V0.3**（2026-09-12）：完成 V0.2 审查修复、资源 Inspect/Validate、多实例生命周期和独立静态验证，见 [验证记录](docs/11-v03-verification.md)。V0.2 原增量/helper 验收的更正也记录于此。
-> **V1.1**：57 个示例全部带冻结规格与证据链（当期 52 例全量浏览器验证 52/52 PASS、`unproven 0`；逐例证据 JSON 在仓库内证据目录，未随 npm 包发布），口径与陷阱见 `docs/v11-baseline.md`、`docs/v11-example-specs.md`。
+> **V1.1**：当前 Gallery 登记 145 例（144 stable、1 draft）。规格、逐例浏览器证据及 API 覆盖必须绑定同一候选；逐例原始证据保存在仓库中，不随 npm 包发布。覆盖未达到任务书的 100%/90%/80% Release 目标，不能据示例数量宣称可发布。口径见 `docs/v11-baseline.md`、`docs/v11-example-specs.md`、`docs/api-coverage-report.json` 与 `docs/release-coverage-work.md`。
 > **V1.2 特性回归（r46 批复结案口径，2026-09-24）**：16 组上游能力逐组回归，逐组状态见 `docs/v12-upstream-regression.md` §3；
 > 门禁读数与部分通过项见 `docs/acceptance-report-v12.md`。资产缺口档（spine / bullet / physx / box2d-wasm / webgpu-glslang）
 > 与 D9 残留 14 项均已按批复口径结案（`UPSTREAM.md` Deviation-04/05/06）；交付期物理后端切换：
@@ -90,8 +90,9 @@ cocosair.js/
 | `npm run verify:v12-custom-face` | 后处理与 custom 管线交付面护栏（只读，C1–C5）：接线门面与子图逐字节 + 簿记在册 + feature unit 声明与默认发行姿态不漂移 |
 | `npm run verify:doc-refs` | 文档互引棘轮（只读）：markdown 里的仓库内路径必须存在；历史断链 46 条登记在 `tools/v12/doc-refs-baseline.json`，新增断链或基线腐烂即红 |
 | `npm run verify:benchmark` | 包体/加载基线回归（绑定当期 bundle sha256₁₆） |
-| `npm run verify:api-coverage` | 顶层 API 面覆盖报告（V1.1 遗留口径，当前 **FAIL**，见验收报告 §2 第 10 条） |
-| `npm test` | smoke tests（jsdom + HEADLESS 渲染模式，32 suites / 261 tests） |
+| `npm run verify:api-coverage` | 逐 API 执行证明与 V1.1 正式 100%/90%/80% 覆盖门槛；`--check` 可只读核对报告是否对应当期库存、规格和证据 |
+| `npm run verify:release` | 发布候选总门禁：干净工作树、覆盖率、示例数、V1.1/DevTools/Gallery/V1.2 证据与当前构建一致性 |
+| `npm test` | smoke tests（jsdom + HEADLESS 渲染模式；当期数量以 `docs/test-inventory.json` 为准） |
 | `npm run analyze` | 依赖图 / 抽取清单 / 文件映射再生成（docs/*.json） |
 | `npm run baseline` | 上游 Web baseline 复现（验收 L0 证据） |
 

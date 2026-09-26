@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-26T10:22:28.919Z",
+  "generatedAt": "2026-09-26T13:37:19.510Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T10:21:29.208Z",
+      "measuredAt": "2026-09-26T13:34:37.953Z",
       "mode": "spec-driven-v3"
     },
     {
@@ -24,15 +24,16 @@
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
   "candidateFingerprint": "8746fc59b6aa0408",
-  "inventoryFingerprint": "15d629f3a2262d01",
+  "inventoryFingerprint": "584e7c5677527260",
+  "apiInventoryRevision": "190aa74d8e4fcbc8",
   "inventoryConsistency": [],
-  "totalUnits": 8060,
-  "totalRequired": 2589,
-  "totalClaimed": 762,
-  "totalAttested": 281,
-  "totalVerified": 481,
-  "totalVerifiedViaCall": 467,
-  "totalVerifiedViaRead": 14,
+  "totalUnits": 12229,
+  "totalRequired": 4365,
+  "totalClaimed": 738,
+  "totalAttested": 148,
+  "totalVerified": 590,
+  "totalVerifiedViaCall": 575,
+  "totalVerifiedViaRead": 15,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -57,7 +58,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "b2c3c58b9ac036a2"
+        "hash": "9fe2fb258ff7e729"
       },
       "claims": 17,
       "tally": {
@@ -81,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "97ab3592c88b765a"
+        "hash": "b3fc3c7871e9fde4"
       },
       "claims": 18,
       "tally": {
@@ -105,7 +106,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "7bbb57d5a9d421c9"
+        "hash": "b46f6cf3e45633c6"
       },
       "claims": 28,
       "tally": {
@@ -153,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "617d195d748e9f1d"
+        "hash": "4895ac00a9164994"
       },
       "claims": 21,
       "tally": {
@@ -177,7 +178,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 13,
-        "hash": "689ba079e6454232"
+        "hash": "b60dd36f42b73737"
       },
       "claims": 13,
       "tally": {
@@ -199,16 +200,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 21,
         "total": 21,
-        "hash": "2ca97f85dc767e20"
+        "hash": "0331e2819a06a771"
       },
       "claims": 21,
       "tally": {
-        "verified": 18,
-        "attested": 3,
+        "verified": 21,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 20,
         "verifiedRead": 1
       }
     },
@@ -225,7 +226,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "72cd5b637267ff8d"
+        "hash": "a624b3b0b4eae952"
       },
       "claims": 19,
       "tally": {
@@ -247,16 +248,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
+        "observed": 18,
         "total": 19,
-        "hash": "6690b209e758d51d"
+        "hash": "f165da5847f7429a"
       },
       "claims": 19,
       "tally": {
-        "verified": 19,
-        "attested": 0,
+        "verified": 18,
+        "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 18,
+        "verifiedCall": 17,
         "verifiedRead": 1
       }
     },
@@ -273,7 +274,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "411a73d88cc4f59e"
+        "hash": "bf9ab1f93e985d46"
       },
       "claims": 19,
       "tally": {
@@ -297,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "a3ac6ded1b4afae6"
+        "hash": "52518354464ccc63"
       },
       "claims": 21,
       "tally": {
@@ -321,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "17d731f0619cda78"
+        "hash": "03783c12eee79f2a"
       },
       "claims": 20,
       "tally": {
@@ -343,16 +344,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
+        "observed": 22,
         "total": 24,
-        "hash": "b6d4c643cd7c3acc"
+        "hash": "40a534a725bacd93"
       },
       "claims": 24,
       "tally": {
-        "verified": 21,
-        "attested": 3,
+        "verified": 22,
+        "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 20,
+        "verifiedCall": 21,
         "verifiedRead": 1
       }
     },
@@ -369,7 +370,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 37,
-        "hash": "bb6fd5218c2e9538"
+        "hash": "4ad155cad270de4a"
       },
       "claims": 37,
       "tally": {
@@ -393,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "5e3eb35148447939"
+        "hash": "0a4de5365f063697"
       },
       "claims": 20,
       "tally": {
@@ -417,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "410314e759554195"
+        "hash": "b779255f626f6fb9"
       },
       "claims": 26,
       "tally": {
@@ -441,7 +442,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "842ac37fbf0c8881"
+        "hash": "53076013256a3f01"
       },
       "claims": 28,
       "tally": {
@@ -465,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "0e7c5e9ec3447e89"
+        "hash": "95a3e1bbab2eb13e"
       },
       "claims": 19,
       "tally": {
@@ -487,17 +488,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 15,
+        "observed": 36,
         "total": 46,
-        "hash": "0ff1c5751b1a7866"
+        "hash": "5792018297057bb8"
       },
       "claims": 46,
       "tally": {
-        "verified": 15,
-        "attested": 31,
+        "verified": 36,
+        "attested": 10,
         "claimedOnly": 0,
-        "verifiedCall": 12,
-        "verifiedRead": 3
+        "verifiedCall": 32,
+        "verifiedRead": 4
       }
     },
     {
@@ -513,7 +514,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 27,
-        "hash": "6695270d18a5ad64"
+        "hash": "5e026afa904bd0a7"
       },
       "claims": 27,
       "tally": {
@@ -537,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "f83db20d61b50c1c"
+        "hash": "c48ff7757f0dab73"
       },
       "claims": 17,
       "tally": {
@@ -581,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "3df12606f7dcab1d"
+        "hash": "2b85ad83685bbefe"
       },
       "claims": 15,
       "tally": {
@@ -605,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "9817c2a96d300b53"
+        "hash": "d0385567e16d0450"
       },
       "claims": 14,
       "tally": {
@@ -629,7 +630,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "949f52e229eb0f90"
+        "hash": "cf2700c110175f76"
       },
       "claims": 24,
       "tally": {
@@ -653,7 +654,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "0a4ef44985924b66"
+        "hash": "f87c639d568098c7"
       },
       "claims": 20,
       "tally": {
@@ -677,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "8116ef96ebed0d4d"
+        "hash": "2ad210c17d613114"
       },
       "claims": 20,
       "tally": {
@@ -701,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "2174385cab56773b"
+        "hash": "e535116a52c1c2a4"
       },
       "claims": 21,
       "tally": {
@@ -725,7 +726,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 12,
-        "hash": "46628c6fcc22c05c"
+        "hash": "67b96f3df5806897"
       },
       "claims": 12,
       "tally": {
@@ -749,7 +750,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 17,
-        "hash": "2b33f90ccc3d451b"
+        "hash": "8e69c00dab62f758"
       },
       "claims": 17,
       "tally": {
@@ -773,7 +774,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 15,
-        "hash": "2eb25b91f5eff970"
+        "hash": "8aea2c7da80d65cf"
       },
       "claims": 15,
       "tally": {
@@ -797,7 +798,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "deab08c9f00a4aa8"
+        "hash": "f2862aa047771369"
       },
       "claims": 23,
       "tally": {
@@ -821,7 +822,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "e50b72aa10b2a682"
+        "hash": "65f39939eabcc770"
       },
       "claims": 20,
       "tally": {
@@ -843,16 +844,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
-        "total": 34,
-        "hash": "8c942c0c6efbd747"
+        "observed": 18,
+        "total": 19,
+        "hash": "591792f9cae1c4f9"
       },
-      "claims": 34,
+      "claims": 19,
       "tally": {
-        "verified": 24,
-        "attested": 10,
+        "verified": 18,
+        "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 23,
+        "verifiedCall": 17,
         "verifiedRead": 1
       }
     },
@@ -867,16 +868,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
-        "total": 24,
-        "hash": "67505dd9885eb404"
+        "observed": 22,
+        "total": 23,
+        "hash": "7979743144bac531"
       },
-      "claims": 24,
+      "claims": 23,
       "tally": {
-        "verified": 19,
-        "attested": 5,
+        "verified": 22,
+        "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 18,
+        "verifiedCall": 21,
         "verifiedRead": 1
       }
     },
@@ -893,7 +894,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "1ef3403b7cee0bad"
+        "hash": "69e8bea1e89dfbe4"
       },
       "claims": 19,
       "tally": {
@@ -917,7 +918,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "8cc1b25928d3327b"
+        "hash": "4a5cf45ef0599428"
       },
       "claims": 18,
       "tally": {
@@ -941,7 +942,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "1d5135fb5de44a85"
+        "hash": "004abf2ca9bb7f66"
       },
       "claims": 19,
       "tally": {
@@ -965,7 +966,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "411a73d88cc4f59e"
+        "hash": "bf9ab1f93e985d46"
       },
       "claims": 19,
       "tally": {
@@ -989,7 +990,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "69478e10d2c313eb"
+        "hash": "2ebf76707a78d108"
       },
       "claims": 22,
       "tally": {
@@ -1013,7 +1014,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "37a500d6211a6161"
+        "hash": "e7507c326b8595b3"
       },
       "claims": 14,
       "tally": {
@@ -1037,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "a910127e12b45b63"
+        "hash": "172952abae46fb74"
       },
       "claims": 16,
       "tally": {
@@ -1061,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "d8f224add31a5f7c"
+        "hash": "fb0fed8652819742"
       },
       "claims": 23,
       "tally": {
@@ -1085,7 +1086,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "680dd33659ec1808"
+        "hash": "3312135b1163d827"
       },
       "claims": 23,
       "tally": {
@@ -1109,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "a3e6e0f50a51a362"
+        "hash": "a4acc51a80b809b8"
       },
       "claims": 22,
       "tally": {
@@ -1133,7 +1134,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 16,
-        "hash": "3d066dfa7e122232"
+        "hash": "196b21464f4004e8"
       },
       "claims": 16,
       "tally": {
@@ -1157,7 +1158,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 25,
-        "hash": "12e50a3bc3bacc20"
+        "hash": "38768593b01a8846"
       },
       "claims": 25,
       "tally": {
@@ -1181,7 +1182,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 36,
-        "hash": "87d6c92f8270e533"
+        "hash": "aebbba871e2ab88e"
       },
       "claims": 36,
       "tally": {
@@ -1205,7 +1206,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 21,
-        "hash": "2dba6e8696e8f99b"
+        "hash": "55a149f20821a6d9"
       },
       "claims": 21,
       "tally": {
@@ -1229,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "a10bd3ddf8965483"
+        "hash": "7ad4c4f6a6b99486"
       },
       "claims": 21,
       "tally": {
@@ -1251,16 +1252,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 25,
         "total": 25,
-        "hash": "6d8e3682500ac502"
+        "hash": "535ad7c28d899dfa"
       },
       "claims": 25,
       "tally": {
-        "verified": 22,
-        "attested": 3,
+        "verified": 25,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
+        "verifiedCall": 24,
         "verifiedRead": 1
       }
     },
@@ -1275,16 +1276,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
-        "total": 29,
-        "hash": "48a6c64cc3920b83"
+        "observed": 26,
+        "total": 26,
+        "hash": "8c6830e9c4a3ba0c"
       },
-      "claims": 29,
+      "claims": 26,
       "tally": {
-        "verified": 22,
-        "attested": 7,
+        "verified": 26,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
+        "verifiedCall": 25,
         "verifiedRead": 1
       }
     },
@@ -1301,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "e60d8bd0820df41f"
+        "hash": "33c2fbc7a6464fba"
       },
       "claims": 21,
       "tally": {
@@ -1325,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "964f3833520702d3"
+        "hash": "1b0c0d16f84178a9"
       },
       "claims": 19,
       "tally": {
@@ -1349,7 +1350,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "dc42d90ad3056596"
+        "hash": "eb7d9e82235dccf9"
       },
       "claims": 22,
       "tally": {
@@ -1371,16 +1372,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 29,
+        "observed": 30,
         "total": 30,
-        "hash": "90ce6b83be21d106"
+        "hash": "74acb2e1eb134552"
       },
       "claims": 30,
       "tally": {
-        "verified": 29,
-        "attested": 1,
+        "verified": 30,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 28,
+        "verifiedCall": 29,
         "verifiedRead": 1
       }
     },
@@ -1397,7 +1398,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 28,
-        "hash": "ee62fc48342032f1"
+        "hash": "9741f43d51bdc702"
       },
       "claims": 28,
       "tally": {
@@ -1421,7 +1422,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 30,
-        "hash": "0a9fae64218c8f79"
+        "hash": "31bb726db7fdf6ea"
       },
       "claims": 30,
       "tally": {
@@ -1445,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "3ede2028fcaf47bd"
+        "hash": "2111d6cae4eb906d"
       },
       "claims": 23,
       "tally": {
@@ -1467,16 +1468,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 30,
+        "observed": 31,
         "total": 31,
-        "hash": "c17d0a8080e55452"
+        "hash": "a945b17f0e8dc3a6"
       },
       "claims": 31,
       "tally": {
-        "verified": 30,
-        "attested": 1,
+        "verified": 31,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 29,
+        "verifiedCall": 30,
         "verifiedRead": 1
       }
     },
@@ -1491,16 +1492,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
+        "observed": 24,
         "total": 24,
-        "hash": "03f4aa3a3bc0edfe"
+        "hash": "ba7796e7d7443c35"
       },
       "claims": 24,
       "tally": {
-        "verified": 23,
-        "attested": 1,
+        "verified": 24,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
+        "verifiedCall": 23,
         "verifiedRead": 1
       }
     },
@@ -1517,7 +1518,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 29,
-        "hash": "53331cb2d3edd274"
+        "hash": "7dbd0694fad2cdac"
       },
       "claims": 29,
       "tally": {
@@ -1539,16 +1540,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
+        "observed": 22,
         "total": 22,
-        "hash": "31762b2a93be6b49"
+        "hash": "d7a043b5c3068aa9"
       },
       "claims": 22,
       "tally": {
-        "verified": 21,
-        "attested": 1,
+        "verified": 22,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 20,
+        "verifiedCall": 21,
         "verifiedRead": 1
       }
     },
@@ -1563,16 +1564,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 23,
-        "hash": "3da413b3e0cf37ff"
+        "hash": "14ec975fabb052c4"
       },
       "claims": 23,
       "tally": {
-        "verified": 18,
-        "attested": 5,
+        "verified": 19,
+        "attested": 4,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 18,
         "verifiedRead": 1
       }
     },
@@ -1587,16 +1588,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
+        "observed": 25,
         "total": 25,
-        "hash": "43dba9efebff49c9"
+        "hash": "7b0c8cf59b9fb3c1"
       },
       "claims": 25,
       "tally": {
-        "verified": 24,
-        "attested": 1,
+        "verified": 25,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 23,
+        "verifiedCall": 24,
         "verifiedRead": 1
       }
     },
@@ -1611,16 +1612,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
+        "observed": 28,
         "total": 32,
-        "hash": "cff6a7f871c43e61"
+        "hash": "bb8f33f850917aed"
       },
       "claims": 32,
       "tally": {
-        "verified": 26,
-        "attested": 6,
+        "verified": 28,
+        "attested": 4,
         "claimedOnly": 0,
-        "verifiedCall": 25,
+        "verifiedCall": 27,
         "verifiedRead": 1
       }
     },
@@ -1637,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "1c6f99b3ce05a9fb"
+        "hash": "d566ffa0b8f7042e"
       },
       "claims": 18,
       "tally": {
@@ -1659,16 +1660,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 23,
         "total": 23,
-        "hash": "2acaf908cd59d928"
+        "hash": "3cb873f9c1410920"
       },
       "claims": 23,
       "tally": {
-        "verified": 18,
-        "attested": 5,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 22,
         "verifiedRead": 1
       }
     },
@@ -1683,16 +1684,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 20,
+        "observed": 29,
         "total": 33,
-        "hash": "c1863ff91a3cb389"
+        "hash": "b00024e04220cd77"
       },
       "claims": 33,
       "tally": {
-        "verified": 20,
-        "attested": 13,
+        "verified": 29,
+        "attested": 4,
         "claimedOnly": 0,
-        "verifiedCall": 19,
+        "verifiedCall": 28,
         "verifiedRead": 1
       }
     },
@@ -1709,7 +1710,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "c79e3e6f55b288b0"
+        "hash": "6419ad7d8e30c6c6"
       },
       "claims": 23,
       "tally": {
@@ -1731,16 +1732,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 20,
+        "observed": 24,
         "total": 26,
-        "hash": "0e37e7b4eb7079b2"
+        "hash": "811fc70106090881"
       },
       "claims": 26,
       "tally": {
-        "verified": 20,
-        "attested": 6,
+        "verified": 24,
+        "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 19,
+        "verifiedCall": 23,
         "verifiedRead": 1
       }
     },
@@ -1755,16 +1756,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 23,
         "total": 23,
-        "hash": "2786dc4d88f533df"
+        "hash": "81a82f5898aca562"
       },
       "claims": 23,
       "tally": {
-        "verified": 22,
-        "attested": 1,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
+        "verifiedCall": 22,
         "verifiedRead": 1
       }
     },
@@ -1779,16 +1780,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
+        "observed": 29,
         "total": 29,
-        "hash": "664b5a3802a9934b"
+        "hash": "1a0ab37394a43ee0"
       },
       "claims": 29,
       "tally": {
-        "verified": 24,
-        "attested": 5,
+        "verified": 29,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 23,
+        "verifiedCall": 28,
         "verifiedRead": 1
       }
     },
@@ -1803,16 +1804,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 21,
-        "hash": "2d1814a2a7e2bfc7"
+        "hash": "9593324b6ecc9988"
       },
       "claims": 21,
       "tally": {
-        "verified": 18,
-        "attested": 3,
+        "verified": 19,
+        "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 18,
         "verifiedRead": 1
       }
     },
@@ -1827,16 +1828,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 26,
         "total": 28,
-        "hash": "e474ab5814201418"
+        "hash": "6426ac6a20e0f0a1"
       },
       "claims": 28,
       "tally": {
-        "verified": 22,
-        "attested": 6,
+        "verified": 26,
+        "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 21,
+        "verifiedCall": 25,
         "verifiedRead": 1
       }
     },
@@ -1851,16 +1852,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
+        "observed": 27,
         "total": 27,
-        "hash": "0ea4a649deb2cd12"
+        "hash": "aca9d04e889c4ed2"
       },
       "claims": 27,
       "tally": {
-        "verified": 23,
-        "attested": 4,
+        "verified": 27,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
+        "verifiedCall": 26,
         "verifiedRead": 1
       }
     },
@@ -1875,16 +1876,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 19,
-        "hash": "b546799ecdf8990f"
+        "hash": "017ce3f666b6d1e2"
       },
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 18,
         "verifiedRead": 1
       }
     },
@@ -1899,16 +1900,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 23,
         "total": 23,
-        "hash": "d07cb69d9d6187fa"
+        "hash": "b28d52a9eb2eb9b2"
       },
       "claims": 23,
       "tally": {
-        "verified": 22,
-        "attested": 1,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
+        "verifiedCall": 22,
         "verifiedRead": 1
       }
     },
@@ -1923,16 +1924,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
+        "observed": 29,
         "total": 29,
-        "hash": "b4b665fb50a395d8"
+        "hash": "040c33c7df7a8cbd"
       },
       "claims": 29,
       "tally": {
-        "verified": 24,
-        "attested": 5,
+        "verified": 29,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 23,
+        "verifiedCall": 28,
         "verifiedRead": 1
       }
     },
@@ -1947,16 +1948,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 22,
-        "hash": "4438c874ed477d2e"
+        "hash": "a5855c9ec58b2e12"
       },
       "claims": 22,
       "tally": {
-        "verified": 18,
-        "attested": 4,
+        "verified": 19,
+        "attested": 3,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 18,
         "verifiedRead": 1
       }
     },
@@ -1971,16 +1972,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 27,
         "total": 30,
-        "hash": "7f712cbf3ef985c8"
+        "hash": "0df2f15877682b58"
       },
       "claims": 30,
       "tally": {
-        "verified": 22,
-        "attested": 8,
+        "verified": 27,
+        "attested": 3,
         "claimedOnly": 0,
-        "verifiedCall": 21,
+        "verifiedCall": 26,
         "verifiedRead": 1
       }
     },
@@ -1995,16 +1996,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
+        "observed": 27,
         "total": 27,
-        "hash": "5a9a05e42ea06655"
+        "hash": "8cea22d123047361"
       },
       "claims": 27,
       "tally": {
-        "verified": 26,
-        "attested": 1,
+        "verified": 27,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 25,
+        "verifiedCall": 26,
         "verifiedRead": 1
       }
     },
@@ -2019,16 +2020,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 19,
-        "hash": "0ab3a69264ed69dc"
+        "hash": "8dfd6d74c70329c1"
       },
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 18,
         "verifiedRead": 1
       }
     },
@@ -2043,16 +2044,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 25,
+        "observed": 26,
         "total": 26,
-        "hash": "630a0ed99a0c5bb7"
+        "hash": "9d9a0febfea691f6"
       },
       "claims": 26,
       "tally": {
-        "verified": 25,
-        "attested": 1,
+        "verified": 26,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 24,
+        "verifiedCall": 25,
         "verifiedRead": 1
       }
     },
@@ -2067,16 +2068,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 23,
-        "hash": "0679c40319d4fceb"
+        "hash": "47d50837b787f5df"
       },
       "claims": 23,
       "tally": {
-        "verified": 18,
-        "attested": 5,
+        "verified": 19,
+        "attested": 4,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 18,
         "verifiedRead": 1
       }
     },
@@ -2091,16 +2092,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 25,
+        "observed": 30,
         "total": 30,
-        "hash": "7a8f85327ba0bee3"
+        "hash": "2916aa4a520d2b69"
       },
       "claims": 30,
       "tally": {
-        "verified": 25,
-        "attested": 5,
+        "verified": 30,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 24,
+        "verifiedCall": 29,
         "verifiedRead": 1
       }
     },
@@ -2117,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "22acdedd58eb88f3"
+        "hash": "e9326d1af11226c6"
       },
       "claims": 23,
       "tally": {
@@ -2141,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "34e18a46ea9b7070"
+        "hash": "0f1ad71ec853528b"
       },
       "claims": 18,
       "tally": {
@@ -2165,7 +2166,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "63d7c0b22352036b"
+        "hash": "2acd7d08da1f0864"
       },
       "claims": 24,
       "tally": {
@@ -2189,7 +2190,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "62aa14370acfd437"
+        "hash": "b27668d08886e524"
       },
       "claims": 22,
       "tally": {
@@ -2213,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "8843427e0c5cb4db"
+        "hash": "b3e895bd0428afa3"
       },
       "claims": 16,
       "tally": {
@@ -2237,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "2f8bd786b0feeaba"
+        "hash": "23719c01ec55bc74"
       },
       "claims": 19,
       "tally": {
@@ -2261,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "81bf10fbeb1d915d"
+        "hash": "9773cd93d0d44d99"
       },
       "claims": 21,
       "tally": {
@@ -2285,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "8cc1b25928d3327b"
+        "hash": "4a5cf45ef0599428"
       },
       "claims": 18,
       "tally": {
@@ -2309,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "5c8c55990a7bed70"
+        "hash": "94bc9359cbf35982"
       },
       "claims": 18,
       "tally": {
@@ -2332,13 +2333,13 @@
       "hasApiProof": true,
       "instrumentation": {
         "observed": 22,
-        "total": 25,
-        "hash": "6435f640308ffccc"
+        "total": 23,
+        "hash": "4cb37b5fb67bc8f6"
       },
-      "claims": 25,
+      "claims": 23,
       "tally": {
         "verified": 22,
-        "attested": 3,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 21,
         "verifiedRead": 1
@@ -2355,16 +2356,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 37,
+        "observed": 39,
         "total": 45,
-        "hash": "1ee277bc6d4bfbcf"
+        "hash": "a4cd0b4c05a72fec"
       },
       "claims": 45,
       "tally": {
-        "verified": 37,
-        "attested": 8,
+        "verified": 39,
+        "attested": 6,
         "claimedOnly": 0,
-        "verifiedCall": 32,
+        "verifiedCall": 34,
         "verifiedRead": 5
       }
     },
@@ -2381,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "97ab3592c88b765a"
+        "hash": "b3fc3c7871e9fde4"
       },
       "claims": 18,
       "tally": {
@@ -2405,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "1d62c7d51fbe0740"
+        "hash": "b0afefa4595a6b05"
       },
       "claims": 24,
       "tally": {
@@ -2429,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "fbfa08ef58fa5035"
+        "hash": "538e07e209580b97"
       },
       "claims": 21,
       "tally": {
@@ -2453,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "41d721a73721c72d"
+        "hash": "942bedf153a30499"
       },
       "claims": 33,
       "tally": {
@@ -2477,7 +2478,7 @@
       "instrumentation": {
         "observed": 40,
         "total": 40,
-        "hash": "62e4f6cba9c09f24"
+        "hash": "1ed6e15521bc6787"
       },
       "claims": 40,
       "tally": {
@@ -2501,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "3e18af309e34f3a0"
+        "hash": "32492b3380202c39"
       },
       "claims": 21,
       "tally": {
@@ -2525,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "717124dbd9f72ca5"
+        "hash": "1fa543e7b4ae231c"
       },
       "claims": 19,
       "tally": {
@@ -2549,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "80d17fa9c21de62b"
+        "hash": "be3229ddfb6919ba"
       },
       "claims": 19,
       "tally": {
@@ -2573,7 +2574,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 34,
-        "hash": "57ac0d199d59f232"
+        "hash": "cb61bd8b190347f1"
       },
       "claims": 34,
       "tally": {
@@ -2597,7 +2598,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 36,
-        "hash": "b59afb94fc4e57e6"
+        "hash": "3d256d4360dac185"
       },
       "claims": 36,
       "tally": {
@@ -2621,7 +2622,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 33,
-        "hash": "9d8522ef4a62c863"
+        "hash": "adf3716b818f6d3e"
       },
       "claims": 33,
       "tally": {
@@ -2643,16 +2644,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 35,
+        "observed": 60,
         "total": 69,
-        "hash": "b33e61d594a80ea5"
+        "hash": "193f2d20935e4822"
       },
       "claims": 69,
       "tally": {
-        "verified": 35,
-        "attested": 34,
+        "verified": 60,
+        "attested": 9,
         "claimedOnly": 0,
-        "verifiedCall": 33,
+        "verifiedCall": 58,
         "verifiedRead": 2
       }
     },
@@ -2667,16 +2668,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 25,
+        "observed": 30,
         "total": 31,
-        "hash": "6fa725a92440aee6"
+        "hash": "a6b307743b33b54b"
       },
       "claims": 31,
       "tally": {
-        "verified": 25,
-        "attested": 6,
+        "verified": 30,
+        "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 24,
+        "verifiedCall": 29,
         "verifiedRead": 1
       }
     },
@@ -2691,16 +2692,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 34,
+        "observed": 39,
         "total": 41,
-        "hash": "ad9c877fabcb4cfe"
+        "hash": "97ac033e6fc1d877"
       },
       "claims": 41,
       "tally": {
-        "verified": 34,
-        "attested": 7,
+        "verified": 39,
+        "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 31,
+        "verifiedCall": 36,
         "verifiedRead": 3
       }
     },
@@ -2717,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "aafd19c9ab6b68c0"
+        "hash": "0900bbd1211a1034"
       },
       "claims": 22,
       "tally": {
@@ -2741,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "81bf10fbeb1d915d"
+        "hash": "9773cd93d0d44d99"
       },
       "claims": 21,
       "tally": {
@@ -2765,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "afe9943046ac41d1"
+        "hash": "499dc6cee8837190"
       },
       "claims": 22,
       "tally": {
@@ -2787,16 +2788,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 36,
+        "observed": 38,
         "total": 41,
-        "hash": "b00ad1f36c4a820a"
+        "hash": "3eb6493a55254191"
       },
       "claims": 41,
       "tally": {
-        "verified": 36,
-        "attested": 5,
+        "verified": 38,
+        "attested": 3,
         "claimedOnly": 0,
-        "verifiedCall": 32,
+        "verifiedCall": 34,
         "verifiedRead": 4
       }
     },
@@ -2813,7 +2814,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "5b320fb0dfe1a6d9"
+        "hash": "2ab10f9513ef945e"
       },
       "claims": 23,
       "tally": {
@@ -2931,16 +2932,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 28,
+        "observed": 29,
         "total": 32,
-        "hash": "e84c8fa3d039bba8"
+        "hash": "76b7cc6a945d3780"
       },
       "claims": 32,
       "tally": {
-        "verified": 28,
-        "attested": 4,
+        "verified": 29,
+        "attested": 3,
         "claimedOnly": 0,
-        "verifiedCall": 26,
+        "verifiedCall": 27,
         "verifiedRead": 2
       }
     },
@@ -2957,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "342d9e58faa45cf5"
+        "hash": "58486607408121ce"
       },
       "claims": 16,
       "tally": {
@@ -2981,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "4916ea05fa778fcc"
+        "hash": "425056b47bf03939"
       },
       "claims": 20,
       "tally": {
@@ -3005,7 +3006,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 29,
-        "hash": "a13396f176be8ff8"
+        "hash": "3f31846c0596f3d2"
       },
       "claims": 29,
       "tally": {
@@ -3029,7 +3030,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "8a57a8626d790cee"
+        "hash": "c0cd877ae167a515"
       },
       "claims": 22,
       "tally": {
@@ -3053,7 +3054,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "f98b9cb7f337c4ce"
+        "hash": "9db031a8593fe5d7"
       },
       "claims": 32,
       "tally": {
@@ -3077,7 +3078,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 26,
-        "hash": "6b1e3127398f8f6d"
+        "hash": "6227a567aba81f29"
       },
       "claims": 26,
       "tally": {
@@ -3101,7 +3102,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 31,
-        "hash": "8fc2c46ee0c58d7a"
+        "hash": "9d9ae2a9bffa0a00"
       },
       "claims": 31,
       "tally": {
@@ -3125,7 +3126,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "018b764e652df1d1"
+        "hash": "8d1cd4e3a8cc8296"
       },
       "claims": 16,
       "tally": {
@@ -3149,7 +3150,7 @@
       "instrumentation": {
         "observed": 8,
         "total": 9,
-        "hash": "09e9bb3fccd43912"
+        "hash": "ff0ca6964b9be850"
       },
       "claims": 9,
       "tally": {
@@ -3173,7 +3174,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "b28669e102f85a55"
+        "hash": "88cb356da972cd4c"
       },
       "claims": 23,
       "tally": {
@@ -3197,7 +3198,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 27,
-        "hash": "bd4534473e09557a"
+        "hash": "082316bf892fee65"
       },
       "claims": 27,
       "tally": {
@@ -3221,7 +3222,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "5e979a56abf18189"
+        "hash": "7f136ecce07f538b"
       },
       "claims": 23,
       "tally": {
@@ -3245,7 +3246,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "d4d2b7f44f07226e"
+        "hash": "247b8579383236af"
       },
       "claims": 25,
       "tally": {
@@ -3268,13 +3269,13 @@
       "hasApiProof": true,
       "instrumentation": {
         "observed": 27,
-        "total": 28,
-        "hash": "35139752d3ee6751"
+        "total": 27,
+        "hash": "7248cb3a7c6619c8"
       },
-      "claims": 28,
+      "claims": 27,
       "tally": {
         "verified": 27,
-        "attested": 1,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 26,
         "verifiedRead": 1
@@ -3293,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "48dc8da91be535d7"
+        "hash": "217441ba7b51357d"
       },
       "claims": 22,
       "tally": {
@@ -3317,7 +3318,7 @@
       "instrumentation": {
         "observed": 46,
         "total": 48,
-        "hash": "24eecc22acc95fa8"
+        "hash": "9bbe8808f656117f"
       },
       "claims": 48,
       "tally": {
@@ -3341,7 +3342,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "c2db299ee1c81a62"
+        "hash": "587104ae40f247de"
       },
       "claims": 14,
       "tally": {
@@ -3365,7 +3366,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 37,
-        "hash": "1ab930378cc7833f"
+        "hash": "e0f47d86406d3ae4"
       },
       "claims": 37,
       "tally": {
@@ -3389,7 +3390,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 30,
-        "hash": "fa0efaae113f08e2"
+        "hash": "9f41bfa0b8808946"
       },
       "claims": 30,
       "tally": {
@@ -3413,7 +3414,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 37,
-        "hash": "33b6f18391ad9201"
+        "hash": "e6c1fd98ca356db0"
       },
       "claims": 37,
       "tally": {
@@ -3437,7 +3438,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "9167ef5bb46cccdf"
+        "hash": "61f57be7b4458e60"
       },
       "claims": 23,
       "tally": {
@@ -3461,7 +3462,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "b09f90f8de600991"
+        "hash": "91b2c5dca3669e3f"
       },
       "claims": 20,
       "tally": {
@@ -3484,13 +3485,13 @@
       "hasApiProof": true,
       "instrumentation": {
         "observed": 24,
-        "total": 37,
-        "hash": "de1900aeed6c1304"
+        "total": 36,
+        "hash": "e038252599408a44"
       },
-      "claims": 37,
+      "claims": 36,
       "tally": {
         "verified": 24,
-        "attested": 13,
+        "attested": 12,
         "claimedOnly": 0,
         "verifiedCall": 21,
         "verifiedRead": 3
@@ -3509,7 +3510,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "ca2d70f192f5de5b"
+        "hash": "d547fd4d965e9435"
       },
       "claims": 36,
       "tally": {
@@ -3524,75 +3525,87 @@
   "tiers": {
     "core": {
       "denominator": "coverageRequired",
-      "total": 816,
-      "required": 816,
-      "claimed": 498,
-      "attested": 183,
-      "verified": 315,
-      "requiredClaimed": 498,
-      "requiredVerified": 315,
-      "verifiedViaCall": 313,
+      "total": 963,
+      "required": 963,
+      "claimed": 418,
+      "attested": 71,
+      "verified": 347,
+      "requiredClaimed": 418,
+      "requiredVerified": 347,
+      "documentedOnly": 0,
+      "documentedOnlyRate": 0,
+      "uncovered": 616,
+      "unstated": 616,
+      "verifiedViaCall": 345,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 313,
+      "requiredVerifiedViaCall": 345,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.384,
-      "claimedRate": 0.61,
-      "verifiedRate": 0.386,
-      "allUnitsVerifiedRate": 0.386,
-      "gate": "floor 6% verified of coverageRequired (ratchet; V1.1 target 100% retained for disclosure)",
-      "threshold": 0.06,
+      "requiredVerifiedViaCallRate": 0.358,
+      "claimedRate": 0.434,
+      "verifiedRate": 0.36,
+      "allUnitsVerifiedRate": 0.36,
+      "gate": "V1.1 Release: 100% verified of coverageRequired",
+      "threshold": 1,
       "applicable": true,
-      "pass": true
+      "pass": false
     },
     "important": {
       "denominator": "coverageRequired",
-      "total": 1773,
-      "required": 1773,
-      "claimed": 71,
-      "attested": 16,
-      "verified": 55,
-      "requiredClaimed": 71,
-      "requiredVerified": 55,
-      "verifiedViaCall": 53,
+      "total": 272,
+      "required": 272,
+      "claimed": 44,
+      "attested": 2,
+      "verified": 42,
+      "requiredClaimed": 44,
+      "requiredVerified": 42,
+      "documentedOnly": 0,
+      "documentedOnlyRate": 0,
+      "uncovered": 230,
+      "unstated": 230,
+      "verifiedViaCall": 40,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 53,
+      "requiredVerifiedViaCall": 40,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.03,
-      "claimedRate": 0.04,
-      "verifiedRate": 0.031,
-      "allUnitsVerifiedRate": 0.031,
-      "gate": "floor 1% verified of coverageRequired (ratchet; V1.1 target 90% retained for disclosure)",
-      "threshold": 0.01,
+      "requiredVerifiedViaCallRate": 0.147,
+      "claimedRate": 0.162,
+      "verifiedRate": 0.154,
+      "allUnitsVerifiedRate": 0.154,
+      "gate": "V1.1 Release: >=90% verified of coverageRequired",
+      "threshold": 0.9,
       "applicable": true,
-      "pass": true
+      "pass": false
     },
     "advanced": {
       "denominator": "coverageRequired",
-      "total": 5471,
-      "required": 0,
-      "claimed": 193,
-      "attested": 82,
-      "verified": 111,
-      "requiredClaimed": 0,
-      "requiredVerified": 0,
-      "verifiedViaCall": 101,
-      "verifiedViaRead": 10,
+      "total": 3130,
+      "required": 3130,
+      "claimed": 182,
+      "attested": 45,
+      "verified": 137,
+      "requiredClaimed": 182,
+      "requiredVerified": 137,
+      "documentedOnly": 0,
+      "documentedOnlyRate": 0,
+      "uncovered": 2993,
+      "unstated": 2993,
+      "verifiedViaCall": 126,
+      "verifiedViaRead": 11,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 0,
-      "requiredVerifiedViaRead": 0,
+      "requiredVerifiedViaCall": 126,
+      "requiredVerifiedViaRead": 11,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0,
-      "claimedRate": 0,
-      "verifiedRate": 0,
-      "allUnitsVerifiedRate": 0.02,
-      "gate": "floor 0% (coverageRequired 为空，NOT_APPLICABLE)",
-      "threshold": 0,
-      "applicable": false,
-      "pass": true
+      "requiredVerifiedViaCallRate": 0.04,
+      "claimedRate": 0.058,
+      "verifiedRate": 0.044,
+      "allUnitsVerifiedRate": 0.044,
+      "gate": "V1.1 Release: >=80% verified of coverageRequired",
+      "threshold": 0.8,
+      "applicable": true,
+      "pass": false
     }
   },
   "verifiedList": [
@@ -5204,7 +5217,7 @@
     },
     {
       "unit": "utils.createMesh",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "anim-position",
@@ -6245,7 +6258,7 @@
       ]
     },
     {
-      "unit": "BatchingUtility.constructor",
+      "unit": "BatchingUtility",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -6281,6 +6294,30 @@
         "product-viewer",
         "skinned-animation",
         "static-model"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.worldMatrixToScreen",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.getClipSpaceMinz",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.calculateObliqueMat",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
       ]
     },
     {
@@ -6323,14 +6360,6 @@
         "physics-3d-collision",
         "physics-interaction",
         "scene-switch-reentry"
-      ]
-    },
-    {
-      "unit": "Layers.makeMaskInclude",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "camera-multi"
       ]
     },
     {
@@ -6403,6 +6432,14 @@
     {
       "unit": "Camera.screenScale",
       "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.setViewportInOrientedSpace",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "camera-viewport-props"
@@ -6534,8 +6571,8 @@
       ]
     },
     {
-      "unit": "ColorKey.constructor",
-      "tier": "core",
+      "unit": "ColorKey",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "color-timeline-key"
@@ -6588,6 +6625,174 @@
       "unit": "Director",
       "tier": "advanced",
       "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAsset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAtlasAsset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAsset.init",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAtlasAsset.init",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.getInstance",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.getDragonBonesDataByUUID",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.playAnimation",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.setAnimationCacheMode",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.isAnimationCached",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.armature",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.Armature.getSlots",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.Armature.getBones",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.Armature.animation",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.Armature.advanceTime",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.Armature.name",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.Animation.gotoAndStopByFrame",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.Animation.isPlaying",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureData.getSkin",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesData.getArmature",
+      "tier": "supporting",
+      "via": "call",
       "examples": [
         "dragonbones-basic"
       ]
@@ -6783,7 +6988,7 @@
     },
     {
       "unit": "createMeshoptDecoder",
-      "tier": "core",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "gltf-meshopt"
@@ -6892,51 +7097,27 @@
       ]
     },
     {
-      "unit": "Layers.init",
-      "tier": "core",
+      "unit": "renderer.scene.Light.attachToScene",
+      "tier": "supporting",
       "via": "call",
       "examples": [
-        "layers-enum-ops"
+        "light-attach-cycle"
       ]
     },
     {
-      "unit": "Layers.makeMaskExclude",
-      "tier": "core",
+      "unit": "renderer.scene.Light.detachFromScene",
+      "tier": "supporting",
       "via": "call",
       "examples": [
-        "layers-enum-ops"
+        "light-attach-cycle"
       ]
     },
     {
-      "unit": "Layers.addLayer",
-      "tier": "core",
+      "unit": "renderer.scene.DirectionalLight.update",
+      "tier": "supporting",
       "via": "call",
       "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.deleteLayer",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.nameToLayer",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.layerToName",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "layers-enum-ops"
+        "light-attach-cycle"
       ]
     },
     {
@@ -7153,6 +7334,14 @@
       ]
     },
     {
+      "unit": "math.Color.toHEX",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-convert"
+      ]
+    },
+    {
       "unit": "math.Color.fromHEX",
       "tier": "core",
       "via": "call",
@@ -7161,7 +7350,55 @@
       ]
     },
     {
+      "unit": "math.Color.toCSS",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-convert"
+      ]
+    },
+    {
+      "unit": "math.Color.toRGBValue",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-convert"
+      ]
+    },
+    {
+      "unit": "math.Color.fromHSV",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.toHSV",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
       "unit": "math.Color.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.getModifiableProperties",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7308,6 +7545,14 @@
       ]
     },
     {
+      "unit": "math.Mat3.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-basics"
+      ]
+    },
+    {
       "unit": "math.Mat3.rotate",
       "tier": "core",
       "via": "call",
@@ -7333,7 +7578,7 @@
     },
     {
       "unit": "math.Mat4.fromRTS",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "math-mat4-applied",
@@ -7441,6 +7686,14 @@
       ]
     },
     {
+      "unit": "math.Mat4.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
       "unit": "math.Mat4.fromSRT",
       "tier": "core",
       "via": "call",
@@ -7465,6 +7718,14 @@
       ]
     },
     {
+      "unit": "math.Mat4.getScale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-compose"
+      ]
+    },
+    {
       "unit": "math.Mat4.getRotation",
       "tier": "core",
       "via": "call",
@@ -7474,7 +7735,7 @@
     },
     {
       "unit": "math.Mat4.translate",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "math-mat4-transform"
@@ -7523,12 +7784,29 @@
       ]
     },
     {
+      "unit": "math.Quat.length",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-applied",
+        "math-quat-interp"
+      ]
+    },
+    {
       "unit": "math.Quat.lerp",
       "tier": "core",
       "via": "call",
       "examples": [
         "math-quat-applied",
         "math-quat-interp"
+      ]
+    },
+    {
+      "unit": "math.Quat.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-components"
       ]
     },
     {
@@ -7541,6 +7819,14 @@
     },
     {
       "unit": "math.Quat.toEulerInYXZOrder",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-euler"
+      ]
+    },
+    {
+      "unit": "math.Quat.getEulerAngles",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7620,6 +7906,67 @@
       ]
     },
     {
+      "unit": "math.Quat.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-interp"
+      ]
+    },
+    {
+      "unit": "math.Rect.intersects",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry",
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.contains",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry",
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.containsRect",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry",
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry",
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry",
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
       "unit": "math.Rect.equals",
       "tier": "core",
       "via": "call",
@@ -7629,6 +7976,30 @@
     },
     {
       "unit": "math.Rect.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.transformMat4",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.transformMat4ToPoints",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7652,6 +8023,30 @@
       ]
     },
     {
+      "unit": "math.Size.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.set",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
       "unit": "math.Size.equals",
       "tier": "core",
       "via": "call",
@@ -7665,6 +8060,23 @@
       "via": "call",
       "examples": [
         "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Vec2.project",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-applied",
+        "math-vec2-length-angle"
       ]
     },
     {
@@ -7712,7 +8124,31 @@
       ]
     },
     {
+      "unit": "math.Vec2.add2f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.subtract2f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec2.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.multiply2f",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7728,6 +8164,22 @@
       ]
     },
     {
+      "unit": "math.Vec2.divide2f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec2.negative",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec2.set",
       "tier": "core",
       "via": "call",
@@ -7736,7 +8188,23 @@
       ]
     },
     {
+      "unit": "math.Vec2.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-components"
+      ]
+    },
+    {
       "unit": "math.Vec2.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec2.equals2f",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7752,7 +8220,31 @@
       ]
     },
     {
+      "unit": "math.Vec2.strictEquals2f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec2.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-equality-misc"
+      ]
+    },
+    {
       "unit": "math.Vec2.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec2.clampf",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7765,6 +8257,14 @@
       "via": "call",
       "examples": [
         "math-vec2-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec2.length",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-length-angle"
       ]
     },
     {
@@ -7784,11 +8284,35 @@
       ]
     },
     {
+      "unit": "math.Vec2.signAngle",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-length-angle"
+      ]
+    },
+    {
       "unit": "math.Vec2.cross",
       "tier": "core",
       "via": "call",
       "examples": [
         "math-vec2-length-angle"
+      ]
+    },
+    {
+      "unit": "math.Vec2.rotate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-length-angle"
+      ]
+    },
+    {
+      "unit": "math.Vec2.toVec3",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-tovec3"
       ]
     },
     {
@@ -7819,6 +8343,15 @@
       ]
     },
     {
+      "unit": "math.Vec3.length",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-applied",
+        "math-vec3-length-products"
+      ]
+    },
+    {
       "unit": "math.Vec3.lerp",
       "tier": "core",
       "via": "call",
@@ -7836,6 +8369,14 @@
       ]
     },
     {
+      "unit": "math.Vec3.add3f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec3.subtract",
       "tier": "core",
       "via": "call",
@@ -7844,7 +8385,23 @@
       ]
     },
     {
+      "unit": "math.Vec3.subtract3f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec3.multiply",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.multiply3f",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7868,6 +8425,22 @@
       ]
     },
     {
+      "unit": "math.Vec3.divide3f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec3.negative",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec3.set",
       "tier": "core",
       "via": "call",
@@ -7876,7 +8449,23 @@
       ]
     },
     {
+      "unit": "math.Vec3.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-components"
+      ]
+    },
+    {
       "unit": "math.Vec3.equals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec3.equals3f",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -7892,11 +8481,44 @@
       ]
     },
     {
+      "unit": "math.Vec3.strictEquals3f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec3.toString",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec3.clampf",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-equality-misc"
+      ]
+    },
+    {
       "unit": "math.Vec3.transformMat4",
       "tier": "core",
       "via": "call",
       "examples": [
         "math-vec3-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec3.toVec2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-equality-misc",
+        "math-vec3-tovec2"
       ]
     },
     {
@@ -7980,6 +8602,14 @@
       ]
     },
     {
+      "unit": "math.Vec4.negative",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec4.scale",
       "tier": "core",
       "via": "call",
@@ -7996,7 +8626,23 @@
       ]
     },
     {
+      "unit": "math.Vec4.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-components"
+      ]
+    },
+    {
       "unit": "math.Vec4.dot",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-length-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec4.length",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -8028,7 +8674,23 @@
       ]
     },
     {
+      "unit": "math.Vec4.clampf",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-length-misc"
+      ]
+    },
+    {
       "unit": "math.Vec4.transformMat4",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-length-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec4.toString",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -8044,7 +8706,23 @@
       ]
     },
     {
+      "unit": "math.Vec4.equals4f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-length-misc"
+      ]
+    },
+    {
       "unit": "math.Vec4.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-length-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec4.strictEquals4f",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -8093,7 +8771,7 @@
     },
     {
       "unit": "Mesh.assign",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "mesh-lifecycle-ops"
@@ -8298,6 +8976,26 @@
       ]
     },
     {
+      "unit": "geometry.Ray",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "geometry.AABB",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
       "unit": "EventTouch.getLocation",
       "tier": "advanced",
       "via": "call",
@@ -8368,7 +9066,7 @@
     },
     {
       "unit": "Node.removeComponent",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "node-component-queries"
@@ -8672,7 +9370,7 @@
     },
     {
       "unit": "NodePool.constructor",
-      "tier": "core",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "node-pool"
@@ -8680,7 +9378,7 @@
     },
     {
       "unit": "NodePool.size",
-      "tier": "core",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "node-pool"
@@ -8688,7 +9386,7 @@
     },
     {
       "unit": "NodePool.get",
-      "tier": "core",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "node-pool"
@@ -8696,7 +9394,7 @@
     },
     {
       "unit": "SpriteFrame",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "particle-2d-basic",
@@ -8727,7 +9425,7 @@
     },
     {
       "unit": "ParticleSystem2D",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "particle-2d-basic"
@@ -8735,7 +9433,7 @@
     },
     {
       "unit": "ParticleSystem2D.resetSystem",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "particle-2d-basic"
@@ -8743,7 +9441,7 @@
     },
     {
       "unit": "ParticleAsset",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "particle-2d-basic"
@@ -8882,7 +9580,7 @@
     },
     {
       "unit": "CircleCollider2D",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "physics-2d-basic",
@@ -8923,7 +9621,7 @@
     },
     {
       "unit": "physics.PhysicsSystem",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic"
@@ -8931,15 +9629,15 @@
     },
     {
       "unit": "physics.PhysicsSystem.constructAndRegister",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
-      "unit": "physics.RigidBody",
-      "tier": "advanced",
+      "unit": "physics.PhysicsSystem.syncSceneToPhysics",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic",
@@ -8948,8 +9646,209 @@
       ]
     },
     {
+      "unit": "physics.PhysicsSystem.step",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic",
+        "physics-3d-collision",
+        "physics-interaction"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.emitEvents",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic",
+        "physics-3d-collision",
+        "physics-interaction"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycast",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic",
+        "physics-3d-collision",
+        "physics-interaction"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.raycastClosest",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic",
+        "physics-3d-collision"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.lineStripCast",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepBox",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.PhysicsSystem.sweepBoxClosest",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic",
+        "physics-3d-collision",
+        "physics-interaction"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyForce",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyImpulse",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.applyTorque",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.setLinearVelocity",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.getLinearVelocity",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.setAngularVelocity",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.getAngularVelocity",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.wakeUp",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.sleep",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearState",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearForces",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.RigidBody.clearVelocity",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
       "unit": "physics.Collider",
-      "tier": "advanced",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.getGroup",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.setGroup",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.getMask",
+      "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.Collider.setMask",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic"
@@ -8957,7 +9856,7 @@
     },
     {
       "unit": "physics.BoxCollider",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic",
@@ -8967,7 +9866,7 @@
     },
     {
       "unit": "physics.SphereCollider",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic",
@@ -8977,7 +9876,7 @@
     },
     {
       "unit": "physics.CapsuleCollider",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic"
@@ -8985,7 +9884,7 @@
     },
     {
       "unit": "physics.MeshCollider",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic"
@@ -8993,7 +9892,7 @@
     },
     {
       "unit": "physics.PhysicsRayResult",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic"
@@ -9001,7 +9900,7 @@
     },
     {
       "unit": "physics.PhysicsMaterial",
-      "tier": "important",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-3d-basic"
@@ -9036,7 +9935,7 @@
     },
     {
       "unit": "primitives.invWinding",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "primitives-geometry-ops"
@@ -9044,7 +9943,7 @@
     },
     {
       "unit": "primitives.normals",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "primitives-geometry-ops"
@@ -9060,7 +9959,7 @@
     },
     {
       "unit": "primitives.wireframe",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "primitives-wireframe-obj"
@@ -9068,7 +9967,7 @@
     },
     {
       "unit": "primitives.toWavefrontOBJ",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "primitives-wireframe-obj"
@@ -9123,6 +10022,14 @@
       ]
     },
     {
+      "unit": "Component.destroy",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "render-composite"
+      ]
+    },
+    {
       "unit": "RenderTexture",
       "tier": "advanced",
       "via": "call",
@@ -9140,7 +10047,7 @@
     },
     {
       "unit": "SceneAsset.constructor",
-      "tier": "core",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "scene-asset-meta"
@@ -9236,7 +10143,7 @@
     },
     {
       "unit": "buildSkeletonTree",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "skinned-animation"
@@ -9269,7 +10176,7 @@
     },
     {
       "unit": "Texture2D.create",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "texture2d-ops"
@@ -9285,7 +10192,7 @@
     },
     {
       "unit": "Texture2D.getHtmlElementObj",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "texture2d-ops"
@@ -9301,7 +10208,7 @@
     },
     {
       "unit": "Texture2D.releaseTexture",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "texture2d-ops"
@@ -9325,7 +10232,7 @@
     },
     {
       "unit": "Texture2D._serialize",
-      "tier": "core",
+      "tier": "internal",
       "via": "call",
       "examples": [
         "texture2d-serialization"
@@ -9333,7 +10240,7 @@
     },
     {
       "unit": "Texture2D._deserialize",
-      "tier": "core",
+      "tier": "internal",
       "via": "call",
       "examples": [
         "texture2d-serialization"
@@ -9766,7 +10673,7 @@
     },
     {
       "unit": "SpriteFrame.createWithImage",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "ui-asset-loading"
@@ -9889,7 +10796,7 @@
     },
     {
       "unit": "utils.toPPM",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "utils-family"
@@ -9897,7 +10804,7 @@
     },
     {
       "unit": "utils.readMesh",
-      "tier": "core",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "utils-family"
@@ -9905,7 +10812,7 @@
     },
     {
       "unit": "GraphicsComponent",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "video-basic",
@@ -9914,7 +10821,7 @@
     },
     {
       "unit": "GraphicsComponent.rect",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "video-basic",
@@ -9923,7 +10830,7 @@
     },
     {
       "unit": "GraphicsComponent.clear",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "video-basic",
@@ -9932,7 +10839,7 @@
     },
     {
       "unit": "GraphicsComponent.stroke",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "video-basic",
@@ -9941,7 +10848,7 @@
     },
     {
       "unit": "GraphicsComponent.fill",
-      "tier": "important",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "video-basic",
@@ -9999,7 +10906,7 @@
     },
     {
       "unit": "js.setClassName",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
@@ -10040,7 +10947,7 @@
     },
     {
       "unit": "WebView.__preload",
-      "tier": "advanced",
+      "tier": "internal",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -10129,29 +11036,8 @@
       ]
     },
     {
-      "unit": "Camera.worldMatrixToScreen",
-      "tier": "core",
-      "examples": [
-        "camera-geometry-extras"
-      ]
-    },
-    {
-      "unit": "Camera.getClipSpaceMinz",
-      "tier": "core",
-      "examples": [
-        "camera-geometry-extras"
-      ]
-    },
-    {
-      "unit": "Camera.calculateObliqueMat",
-      "tier": "core",
-      "examples": [
-        "camera-geometry-extras"
-      ]
-    },
-    {
       "unit": "input",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "camera-lookat",
         "camera-ortho",
@@ -10174,79 +11060,81 @@
       ]
     },
     {
-      "unit": "Camera.pipeline",
+      "unit": "Layers.Enum",
+      "tier": "core",
+      "examples": [
+        "camera-multi",
+        "layers-enum-ops",
+        "starter"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.pipeline",
+      "tier": "advanced",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.ClearFlag",
       "tier": "core",
       "examples": [
         "camera-viewport-props"
       ]
     },
     {
-      "unit": "Camera.SKYBOX",
-      "tier": "core",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
-      "unit": "Camera.setViewportInOrientedSpace",
-      "tier": "core",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
-      "unit": "ColorTimeline.constructor",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.constructor",
+      "tier": "supporting",
       "examples": [
         "color-timeline-key",
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.slotIndex",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.slotIndex",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.frames",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.frames",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.getPropertyId",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.getPropertyId",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.getSlotIndex",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.getSlotIndex",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.setSlotIndex",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.setSlotIndex",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.setFrame",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.setFrame",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.apply",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.apply",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
@@ -10264,204 +11152,57 @@
       ]
     },
     {
-      "unit": "DragonBonesAsset",
+      "unit": "dragonBones.AnimationCacheMode",
       "tier": "advanced",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "DragonBonesAtlasAsset",
+      "unit": "dragonBones.ArmatureDisplay.playTimes",
       "tier": "advanced",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "ArmatureDisplay",
-      "tier": "advanced",
+      "unit": "dragonBones.ArmatureData.animations",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "CCFactory",
-      "tier": "advanced",
+      "unit": "dragonBones.ArmatureData.bones",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "AnimationCacheMode",
-      "tier": "important",
+      "unit": "dragonBones.ArmatureData.slots",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "DragonBonesAsset.init",
-      "tier": "advanced",
+      "unit": "dragonBones.DragonBonesData.armatureNames",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "DragonBonesAtlasAsset.init",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "CCFactory.getInstance",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "CCFactory.getDragonBonesDataByUUID",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.playAnimation",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.playTimes",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.setAnimationCacheMode",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.isAnimationCached",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.armature",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.getSlots",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.getBones",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.animation",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.advanceTime",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.name",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Animation.gotoAndStopByFrame",
-      "tier": "important",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Animation.isPlaying",
-      "tier": "important",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.getSkin",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.animations",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.bones",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.slots",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "DragonBonesData.getArmature",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "DragonBonesData.armatureNames",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "DragonBonesData.version",
-      "tier": "advanced",
+      "unit": "dragonBones.DragonBonesData.version",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
       "unit": "GLTFAsset.owned",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "gltf-asset-readonly",
         "model-character-interaction"
@@ -10477,7 +11218,7 @@
     },
     {
       "unit": "GLTFAsset.images",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "gltf-asset-readonly",
         "model-character-interaction"
@@ -10485,112 +11226,13 @@
     },
     {
       "unit": "GLTFAsset.meshMaterials",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "gltf-asset-readonly"
       ]
     },
     {
-      "unit": "Layers.NONE",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.IGNORE_RAYCAST",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.GIZMOS",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.EDITOR",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.UI_3D",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.SCENE_GIZMO",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.UI_2D",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.PROFILER",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.DEFAULT",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops",
-        "starter"
-      ]
-    },
-    {
-      "unit": "Layers.ALL",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Light.LUMINOUS_FLUX",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.LUMINANCE",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.attachToScene",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.detachFromScene",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.update",
+      "unit": "Light.PhotometricTerm",
       "tier": "core",
       "examples": [
         "light-attach-cycle"
@@ -10751,76 +11393,6 @@
       ]
     },
     {
-      "unit": "math.Color.toHEX",
-      "tier": "core",
-      "examples": [
-        "math-color-convert"
-      ]
-    },
-    {
-      "unit": "math.Color.toCSS",
-      "tier": "core",
-      "examples": [
-        "math-color-convert"
-      ]
-    },
-    {
-      "unit": "math.Color.toRGBValue",
-      "tier": "core",
-      "examples": [
-        "math-color-convert"
-      ]
-    },
-    {
-      "unit": "math.Color.fromHSV",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.toHSV",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.h",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.s",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.v",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.toString",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.getModifiableProperties",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
       "unit": "math.HALF_PI",
       "tier": "core",
       "examples": [
@@ -10832,13 +11404,6 @@
       "tier": "core",
       "examples": [
         "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "math.Mat3.toString",
-      "tier": "core",
-      "examples": [
-        "math-mat3-basics"
       ]
     },
     {
@@ -10921,20 +11486,6 @@
       ]
     },
     {
-      "unit": "math.Mat4.toString",
-      "tier": "core",
-      "examples": [
-        "math-mat4-basics"
-      ]
-    },
-    {
-      "unit": "math.Mat4.getScale",
-      "tier": "core",
-      "examples": [
-        "math-mat4-compose"
-      ]
-    },
-    {
       "unit": "math.Mat4.m00",
       "tier": "core",
       "examples": [
@@ -10984,21 +11535,6 @@
       ]
     },
     {
-      "unit": "math.Quat.length",
-      "tier": "core",
-      "examples": [
-        "math-quat-applied",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.constructor",
-      "tier": "core",
-      "examples": [
-        "math-quat-components"
-      ]
-    },
-    {
       "unit": "math.Quat.x",
       "tier": "core",
       "examples": [
@@ -11031,67 +11567,6 @@
       ]
     },
     {
-      "unit": "math.Quat.getEulerAngles",
-      "tier": "core",
-      "examples": [
-        "math-quat-euler"
-      ]
-    },
-    {
-      "unit": "math.Quat.toString",
-      "tier": "core",
-      "examples": [
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Rect.intersects",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.contains",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.containsRect",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.clone",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.set",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.constructor",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
       "unit": "math.Rect.x",
       "tier": "core",
       "examples": [
@@ -11120,34 +11595,6 @@
       ]
     },
     {
-      "unit": "math.Rect.toString",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.transformMat4",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.transformMat4ToPoints",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.constructor",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
       "unit": "math.Size.width",
       "tier": "core",
       "examples": [
@@ -11159,77 +11606,6 @@
       "tier": "core",
       "examples": [
         "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.clone",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.set",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.toString",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Vec2.project",
-      "tier": "core",
-      "examples": [
-        "math-vec2-applied",
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.add2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.subtract2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.multiply2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.divide2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.negative",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.constructor",
-      "tier": "core",
-      "examples": [
-        "math-vec2-components"
       ]
     },
     {
@@ -11246,112 +11622,6 @@
       "examples": [
         "math-vec2-components",
         "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.equals2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.strictEquals2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.toString",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.clampf",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.length",
-      "tier": "core",
-      "examples": [
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.signAngle",
-      "tier": "core",
-      "examples": [
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.rotate",
-      "tier": "core",
-      "examples": [
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.toVec3",
-      "tier": "core",
-      "examples": [
-        "math-vec2-tovec3"
-      ]
-    },
-    {
-      "unit": "math.Vec3.length",
-      "tier": "core",
-      "examples": [
-        "math-vec3-applied",
-        "math-vec3-length-products"
-      ]
-    },
-    {
-      "unit": "math.Vec3.add3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.subtract3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.multiply3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.divide3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.negative",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.constructor",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components"
       ]
     },
     {
@@ -11376,56 +11646,6 @@
       "examples": [
         "math-vec3-components",
         "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.equals3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.strictEquals3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.toString",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.clampf",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.toVec2",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc",
-        "math-vec3-tovec2"
-      ]
-    },
-    {
-      "unit": "math.Vec4.negative",
-      "tier": "core",
-      "examples": [
-        "math-vec4-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec4.constructor",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
       ]
     },
     {
@@ -11457,59 +11677,10 @@
       ]
     },
     {
-      "unit": "math.Vec4.length",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.clampf",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.toString",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.equals4f",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.strictEquals4f",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
       "unit": "Mesh.morphRendering",
       "tier": "core",
       "examples": [
         "mesh-morph-bounds"
-      ]
-    },
-    {
-      "unit": "MeshRenderer.ON",
-      "tier": "core",
-      "examples": [
-        "meshrenderer-hooks"
-      ]
-    },
-    {
-      "unit": "MeshRenderer.OFF",
-      "tier": "core",
-      "examples": [
-        "meshrenderer-hooks"
       ]
     },
     {
@@ -11528,25 +11699,7 @@
       ]
     },
     {
-      "unit": "Ray",
-      "tier": "advanced",
-      "examples": [
-        "model-character-interaction",
-        "physics-3d-basic",
-        "physics-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "AABB",
-      "tier": "advanced",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "intersect",
+      "unit": "geometry.intersect",
       "tier": "advanced",
       "examples": [
         "model-character-interaction",
@@ -11555,84 +11708,84 @@
     },
     {
       "unit": "Node._originalSceneId",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "node-scene-id"
       ]
     },
     {
       "unit": "ParticleSystem2D._simulator",
-      "tier": "important",
+      "tier": "internal",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D._renderSpriteFrame",
-      "tier": "important",
+      "tier": "internal",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.emitterMode",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.gravity",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.speed",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.startSize",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.endSize",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.life",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.emissionRate",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.duration",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.rotationIsDir",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
@@ -11690,227 +11843,50 @@
     },
     {
       "unit": "physics.selector",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
-      "unit": "physics.PhysicsSystem.syncSceneToPhysics",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.step",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.emitEvents",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.raycast",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.raycastClosest",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision"
-      ]
-    },
-    {
       "unit": "physics.PhysicsSystem.raycastResults",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.raycastClosestResult",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic",
         "physics-3d-collision"
       ]
     },
     {
-      "unit": "physics.PhysicsSystem.lineStripCast",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
       "unit": "physics.PhysicsSystem.lineStripCastResults",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.sweepBox",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.sweepBoxClosest",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.sweepCastResults",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.minVolumeSize",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.applyForce",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.applyImpulse",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.applyTorque",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.setLinearVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.getLinearVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.setAngularVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.getAngularVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.wakeUp",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.sleep",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.clearState",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.clearForces",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.clearVelocity",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.Collider.type",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.getGroup",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.setGroup",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.getMask",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.setMask",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
@@ -11923,15 +11899,8 @@
       ]
     },
     {
-      "unit": "Light.destroy",
-      "tier": "core",
-      "examples": [
-        "render-composite"
-      ]
-    },
-    {
       "unit": "SceneGlobals.ambient",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "render-composite",
         "scene-globals-read"
@@ -11939,77 +11908,77 @@
     },
     {
       "unit": "SceneAsset.scene",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-asset-meta"
       ]
     },
     {
       "unit": "Scene._globals",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.shadows",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals._skybox",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.fog",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.octree",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.skin",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.lightProbeInfo",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.postSettings",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.bakedWithStationaryMainLight",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.disableLightmap",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
@@ -12038,15 +12007,8 @@
       ]
     },
     {
-      "unit": "Texture2D.base",
-      "tier": "core",
-      "examples": [
-        "texture2d-ops"
-      ]
-    },
-    {
       "unit": "Texture2D._mipmaps",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "texture2d-serialization"
       ]
@@ -12098,14 +12060,7 @@
       ]
     },
     {
-      "unit": "VideoPlayer.REMOTE",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
-      "unit": "VideoPlayer.LOCAL",
+      "unit": "VideoPlayer.ResourceType",
       "tier": "advanced",
       "examples": [
         "video-basic"
@@ -12120,7 +12075,7 @@
     },
     {
       "unit": "Screen.requestFullScreen",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic"
       ]
@@ -12204,29 +12159,8 @@
       ]
     },
     {
-      "unit": "Camera.worldMatrixToScreen",
-      "tier": "core",
-      "examples": [
-        "camera-geometry-extras"
-      ]
-    },
-    {
-      "unit": "Camera.getClipSpaceMinz",
-      "tier": "core",
-      "examples": [
-        "camera-geometry-extras"
-      ]
-    },
-    {
-      "unit": "Camera.calculateObliqueMat",
-      "tier": "core",
-      "examples": [
-        "camera-geometry-extras"
-      ]
-    },
-    {
       "unit": "input",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "camera-lookat",
         "camera-ortho",
@@ -12249,79 +12183,81 @@
       ]
     },
     {
-      "unit": "Camera.pipeline",
+      "unit": "Layers.Enum",
+      "tier": "core",
+      "examples": [
+        "camera-multi",
+        "layers-enum-ops",
+        "starter"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.pipeline",
+      "tier": "advanced",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.ClearFlag",
       "tier": "core",
       "examples": [
         "camera-viewport-props"
       ]
     },
     {
-      "unit": "Camera.SKYBOX",
-      "tier": "core",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
-      "unit": "Camera.setViewportInOrientedSpace",
-      "tier": "core",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
-      "unit": "ColorTimeline.constructor",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.constructor",
+      "tier": "supporting",
       "examples": [
         "color-timeline-key",
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.slotIndex",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.slotIndex",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.frames",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.frames",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.getPropertyId",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.getPropertyId",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.getSlotIndex",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.getSlotIndex",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.setSlotIndex",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.setSlotIndex",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.setFrame",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.setFrame",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
     },
     {
-      "unit": "ColorTimeline.apply",
-      "tier": "core",
+      "unit": "sp.spine.ColorTimeline.apply",
+      "tier": "supporting",
       "examples": [
         "colortimeline-ops"
       ]
@@ -12339,204 +12275,57 @@
       ]
     },
     {
-      "unit": "DragonBonesAsset",
+      "unit": "dragonBones.AnimationCacheMode",
       "tier": "advanced",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "DragonBonesAtlasAsset",
+      "unit": "dragonBones.ArmatureDisplay.playTimes",
       "tier": "advanced",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "ArmatureDisplay",
-      "tier": "advanced",
+      "unit": "dragonBones.ArmatureData.animations",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "CCFactory",
-      "tier": "advanced",
+      "unit": "dragonBones.ArmatureData.bones",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "AnimationCacheMode",
-      "tier": "important",
+      "unit": "dragonBones.ArmatureData.slots",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "DragonBonesAsset.init",
-      "tier": "advanced",
+      "unit": "dragonBones.DragonBonesData.armatureNames",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
-      "unit": "DragonBonesAtlasAsset.init",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "CCFactory.getInstance",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "CCFactory.getDragonBonesDataByUUID",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.playAnimation",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.playTimes",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.setAnimationCacheMode",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.isAnimationCached",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureDisplay.armature",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.getSlots",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.getBones",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.animation",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.advanceTime",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Armature.name",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Animation.gotoAndStopByFrame",
-      "tier": "important",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "Animation.isPlaying",
-      "tier": "important",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.getSkin",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.animations",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.bones",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "ArmatureData.slots",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "DragonBonesData.getArmature",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "DragonBonesData.armatureNames",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "DragonBonesData.version",
-      "tier": "advanced",
+      "unit": "dragonBones.DragonBonesData.version",
+      "tier": "supporting",
       "examples": [
         "dragonbones-basic"
       ]
     },
     {
       "unit": "GLTFAsset.owned",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "gltf-asset-readonly",
         "model-character-interaction"
@@ -12552,7 +12341,7 @@
     },
     {
       "unit": "GLTFAsset.images",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "gltf-asset-readonly",
         "model-character-interaction"
@@ -12560,112 +12349,13 @@
     },
     {
       "unit": "GLTFAsset.meshMaterials",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "gltf-asset-readonly"
       ]
     },
     {
-      "unit": "Layers.NONE",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.IGNORE_RAYCAST",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.GIZMOS",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.EDITOR",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.UI_3D",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.SCENE_GIZMO",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.UI_2D",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.PROFILER",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Layers.DEFAULT",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops",
-        "starter"
-      ]
-    },
-    {
-      "unit": "Layers.ALL",
-      "tier": "core",
-      "examples": [
-        "layers-enum-ops"
-      ]
-    },
-    {
-      "unit": "Light.LUMINOUS_FLUX",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.LUMINANCE",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.attachToScene",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.detachFromScene",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
-      ]
-    },
-    {
-      "unit": "Light.update",
+      "unit": "Light.PhotometricTerm",
       "tier": "core",
       "examples": [
         "light-attach-cycle"
@@ -12826,76 +12516,6 @@
       ]
     },
     {
-      "unit": "math.Color.toHEX",
-      "tier": "core",
-      "examples": [
-        "math-color-convert"
-      ]
-    },
-    {
-      "unit": "math.Color.toCSS",
-      "tier": "core",
-      "examples": [
-        "math-color-convert"
-      ]
-    },
-    {
-      "unit": "math.Color.toRGBValue",
-      "tier": "core",
-      "examples": [
-        "math-color-convert"
-      ]
-    },
-    {
-      "unit": "math.Color.fromHSV",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.toHSV",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.h",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.s",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.v",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.toString",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
-      "unit": "math.Color.getModifiableProperties",
-      "tier": "core",
-      "examples": [
-        "math-color-models"
-      ]
-    },
-    {
       "unit": "math.HALF_PI",
       "tier": "core",
       "examples": [
@@ -12907,13 +12527,6 @@
       "tier": "core",
       "examples": [
         "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "math.Mat3.toString",
-      "tier": "core",
-      "examples": [
-        "math-mat3-basics"
       ]
     },
     {
@@ -12996,20 +12609,6 @@
       ]
     },
     {
-      "unit": "math.Mat4.toString",
-      "tier": "core",
-      "examples": [
-        "math-mat4-basics"
-      ]
-    },
-    {
-      "unit": "math.Mat4.getScale",
-      "tier": "core",
-      "examples": [
-        "math-mat4-compose"
-      ]
-    },
-    {
       "unit": "math.Mat4.m00",
       "tier": "core",
       "examples": [
@@ -13059,21 +12658,6 @@
       ]
     },
     {
-      "unit": "math.Quat.length",
-      "tier": "core",
-      "examples": [
-        "math-quat-applied",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.constructor",
-      "tier": "core",
-      "examples": [
-        "math-quat-components"
-      ]
-    },
-    {
       "unit": "math.Quat.x",
       "tier": "core",
       "examples": [
@@ -13106,67 +12690,6 @@
       ]
     },
     {
-      "unit": "math.Quat.getEulerAngles",
-      "tier": "core",
-      "examples": [
-        "math-quat-euler"
-      ]
-    },
-    {
-      "unit": "math.Quat.toString",
-      "tier": "core",
-      "examples": [
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Rect.intersects",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.contains",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.containsRect",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.clone",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.set",
-      "tier": "core",
-      "examples": [
-        "math-rect-geometry",
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.constructor",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
       "unit": "math.Rect.x",
       "tier": "core",
       "examples": [
@@ -13195,34 +12718,6 @@
       ]
     },
     {
-      "unit": "math.Rect.toString",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.transformMat4",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.transformMat4ToPoints",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.constructor",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
       "unit": "math.Size.width",
       "tier": "core",
       "examples": [
@@ -13234,77 +12729,6 @@
       "tier": "core",
       "examples": [
         "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.clone",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.set",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.toString",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Vec2.project",
-      "tier": "core",
-      "examples": [
-        "math-vec2-applied",
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.add2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.subtract2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.multiply2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.divide2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.negative",
-      "tier": "core",
-      "examples": [
-        "math-vec2-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec2.constructor",
-      "tier": "core",
-      "examples": [
-        "math-vec2-components"
       ]
     },
     {
@@ -13321,112 +12745,6 @@
       "examples": [
         "math-vec2-components",
         "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.equals2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.strictEquals2f",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.toString",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.clampf",
-      "tier": "core",
-      "examples": [
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.length",
-      "tier": "core",
-      "examples": [
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.signAngle",
-      "tier": "core",
-      "examples": [
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.rotate",
-      "tier": "core",
-      "examples": [
-        "math-vec2-length-angle"
-      ]
-    },
-    {
-      "unit": "math.Vec2.toVec3",
-      "tier": "core",
-      "examples": [
-        "math-vec2-tovec3"
-      ]
-    },
-    {
-      "unit": "math.Vec3.length",
-      "tier": "core",
-      "examples": [
-        "math-vec3-applied",
-        "math-vec3-length-products"
-      ]
-    },
-    {
-      "unit": "math.Vec3.add3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.subtract3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.multiply3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.divide3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.negative",
-      "tier": "core",
-      "examples": [
-        "math-vec3-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec3.constructor",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components"
       ]
     },
     {
@@ -13451,56 +12769,6 @@
       "examples": [
         "math-vec3-components",
         "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.equals3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.strictEquals3f",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.toString",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.clampf",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.toVec2",
-      "tier": "core",
-      "examples": [
-        "math-vec3-equality-misc",
-        "math-vec3-tovec2"
-      ]
-    },
-    {
-      "unit": "math.Vec4.negative",
-      "tier": "core",
-      "examples": [
-        "math-vec4-arithmetic"
-      ]
-    },
-    {
-      "unit": "math.Vec4.constructor",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
       ]
     },
     {
@@ -13532,59 +12800,10 @@
       ]
     },
     {
-      "unit": "math.Vec4.length",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.clampf",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.toString",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.equals4f",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.strictEquals4f",
-      "tier": "core",
-      "examples": [
-        "math-vec4-length-misc"
-      ]
-    },
-    {
       "unit": "Mesh.morphRendering",
       "tier": "core",
       "examples": [
         "mesh-morph-bounds"
-      ]
-    },
-    {
-      "unit": "MeshRenderer.ON",
-      "tier": "core",
-      "examples": [
-        "meshrenderer-hooks"
-      ]
-    },
-    {
-      "unit": "MeshRenderer.OFF",
-      "tier": "core",
-      "examples": [
-        "meshrenderer-hooks"
       ]
     },
     {
@@ -13603,25 +12822,7 @@
       ]
     },
     {
-      "unit": "Ray",
-      "tier": "advanced",
-      "examples": [
-        "model-character-interaction",
-        "physics-3d-basic",
-        "physics-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "AABB",
-      "tier": "advanced",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "intersect",
+      "unit": "geometry.intersect",
       "tier": "advanced",
       "examples": [
         "model-character-interaction",
@@ -13630,84 +12831,84 @@
     },
     {
       "unit": "Node._originalSceneId",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "node-scene-id"
       ]
     },
     {
       "unit": "ParticleSystem2D._simulator",
-      "tier": "important",
+      "tier": "internal",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D._renderSpriteFrame",
-      "tier": "important",
+      "tier": "internal",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.emitterMode",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.gravity",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.speed",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.startSize",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.endSize",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.life",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.emissionRate",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.duration",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.rotationIsDir",
-      "tier": "important",
+      "tier": "advanced",
       "examples": [
         "particle-2d-basic"
       ]
@@ -13765,227 +12966,50 @@
     },
     {
       "unit": "physics.selector",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
-      "unit": "physics.PhysicsSystem.syncSceneToPhysics",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.step",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.emitEvents",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.raycast",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision",
-        "physics-interaction"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.raycastClosest",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic",
-        "physics-3d-collision"
-      ]
-    },
-    {
       "unit": "physics.PhysicsSystem.raycastResults",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.raycastClosestResult",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic",
         "physics-3d-collision"
       ]
     },
     {
-      "unit": "physics.PhysicsSystem.lineStripCast",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
       "unit": "physics.PhysicsSystem.lineStripCastResults",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.sweepBox",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.PhysicsSystem.sweepBoxClosest",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.sweepCastResults",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.PhysicsSystem.minVolumeSize",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.applyForce",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.applyImpulse",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.applyTorque",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.setLinearVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.getLinearVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.setAngularVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.getAngularVelocity",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.wakeUp",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.sleep",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.clearState",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.clearForces",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.RigidBody.clearVelocity",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
     },
     {
       "unit": "physics.Collider.type",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.getGroup",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.setGroup",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.getMask",
-      "tier": "advanced",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.Collider.setMask",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-3d-basic"
       ]
@@ -13998,15 +13022,8 @@
       ]
     },
     {
-      "unit": "Light.destroy",
-      "tier": "core",
-      "examples": [
-        "render-composite"
-      ]
-    },
-    {
       "unit": "SceneGlobals.ambient",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "render-composite",
         "scene-globals-read"
@@ -14014,77 +13031,77 @@
     },
     {
       "unit": "SceneAsset.scene",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-asset-meta"
       ]
     },
     {
       "unit": "Scene._globals",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.shadows",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals._skybox",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.fog",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.octree",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.skin",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.lightProbeInfo",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.postSettings",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.bakedWithStationaryMainLight",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.disableLightmap",
-      "tier": "core",
+      "tier": "advanced",
       "examples": [
         "scene-globals-read"
       ]
@@ -14113,15 +13130,8 @@
       ]
     },
     {
-      "unit": "Texture2D.base",
-      "tier": "core",
-      "examples": [
-        "texture2d-ops"
-      ]
-    },
-    {
       "unit": "Texture2D._mipmaps",
-      "tier": "core",
+      "tier": "internal",
       "examples": [
         "texture2d-serialization"
       ]
@@ -14173,14 +13183,7 @@
       ]
     },
     {
-      "unit": "VideoPlayer.REMOTE",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
-      "unit": "VideoPlayer.LOCAL",
+      "unit": "VideoPlayer.ResourceType",
       "tier": "advanced",
       "examples": [
         "video-basic"
@@ -14195,7 +13198,7 @@
     },
     {
       "unit": "Screen.requestFullScreen",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic"
       ]
@@ -14230,60 +13233,34 @@
     }
   ],
   "unclaimedCore": [
-    "MeshBuffer",
-    "MeshBuffer.constructor",
-    "MeshBuffer.initSharedBuffer",
-    "MeshBuffer.syncSharedBufferToNative",
-    "MeshBuffer.initialize",
-    "MeshBuffer.reset",
-    "MeshBuffer.destroy",
-    "MeshBuffer.setDirty",
-    "MeshBuffer.request",
-    "MeshBuffer.requireFreeIA",
-    "MeshBuffer.recycleIA",
-    "MeshBuffer.checkCapacity",
-    "MeshBuffer.uploadBuffers",
-    "MeshRenderData",
-    "MeshRenderData.constructor",
-    "MeshRenderData.add",
-    "MeshRenderData.remove",
-    "MeshRenderData._isMeshBuffer",
-    "MeshRenderData.vData",
-    "MeshRenderData.iData",
-    "MeshRenderData.vertexStart",
-    "MeshRenderData.vertexRange",
-    "MeshRenderData.indexStart",
-    "MeshRenderData.indexRange",
-    "MeshRenderData.lastFilledIndex",
-    "MeshRenderData.lastFilledVertex",
-    "MeshRenderData.frame",
-    "MeshRenderData.request",
-    "MeshRenderData.reserve",
-    "MeshRenderData.resize",
-    "MeshRenderData.updateRange",
-    "MeshRenderData.requestIA",
-    "MeshRenderData.uploadBuffers",
-    "MeshRenderData.freeIAPool",
-    "MeshRenderData.reset",
-    "MeshRenderData.clear",
-    "MeshRenderData.setRenderDrawInfoAttributes",
-    "utils.find",
-    "MeshUtils",
-    "MeshUtils.constructor",
-    "MeshUtils.createMesh",
-    "MeshUtils.createDynamicMesh",
-    "BatchingUtility",
+    "Mesh.struct",
+    "Mesh.data",
+    "Mesh.hash",
+    "Mesh.jointBufferIndices",
+    "Mesh.renderingSubMeshes",
     "Mesh.destroyRenderingMesh",
     "Mesh.initDefault",
-    "MeshRenderer.constructor",
+    "Mesh.allowDataAccess",
+    "MeshRenderer.ShadowCastingMode",
+    "MeshRenderer.ShadowReceivingMode",
+    "MeshRenderer.shadowBias",
+    "MeshRenderer.shadowNormalBias",
+    "MeshRenderer.shadowCastingMode",
+    "MeshRenderer.shadowCastingModeForInspector",
     "MeshRenderer.onUpdateReceiveDirLight",
+    "MeshRenderer.receiveShadow",
+    "MeshRenderer.receiveShadowForInspector",
+    "MeshRenderer.mesh",
+    "MeshRenderer.model",
+    "MeshRenderer.enableMorph",
+    "MeshRenderer.isGlobalStandardSkinObject",
+    "MeshRenderer.constructor",
     "MeshRenderer.onLoad",
     "MeshRenderer.onRestore",
     "MeshRenderer.onEnable",
     "MeshRenderer.onDisable",
     "MeshRenderer.onDestroy",
     "MeshRenderer.onGeometryChanged",
-    "MeshRenderer._updateLightmap",
     "MeshRenderer.updateProbeCubemap",
     "MeshRenderer.updateProbeBlendCubemap",
     "MeshRenderer.updateProbePlanarMap",
@@ -14291,94 +13268,300 @@
     "MeshRenderer.updateReflectionProbeId",
     "MeshRenderer.updateReflectionProbeBlendId",
     "MeshRenderer.updateReflectionProbeBlendWeight",
+    "DirectionalLight.illuminance",
+    "DirectionalLight.shadowEnabled",
+    "DirectionalLight.shadowPcf",
+    "DirectionalLight.shadowBias",
+    "DirectionalLight.shadowNormalBias",
+    "DirectionalLight.shadowSaturation",
+    "DirectionalLight.shadowDistance",
+    "DirectionalLight.shadowInvisibleOcclusionRange",
+    "DirectionalLight.csmLevel",
+    "DirectionalLight.enableCSM",
+    "DirectionalLight.csmLayerLambda",
+    "DirectionalLight.shadowFixedArea",
+    "DirectionalLight.shadowNear",
+    "DirectionalLight.shadowFar",
+    "DirectionalLight.shadowOrthoSize",
+    "DirectionalLight.csmAdvancedOptions",
+    "DirectionalLight.csmLayersTransition",
+    "DirectionalLight.csmTransitionRange",
     "Light",
+    "Light.Type",
+    "Light.color",
+    "Light.useColorTemperature",
+    "Light.colorTemperature",
+    "Light.staticSettings",
+    "Light.type",
+    "Light.baked",
+    "Light.visibility",
     "Light.constructor",
     "Light.onEnable",
     "Light.onDisable",
     "Light.onDestroy",
     "SphereLight",
+    "SphereLight.luminousFlux",
+    "SphereLight.luminance",
+    "SphereLight.term",
+    "SphereLight.size",
+    "SphereLight.range",
     "SphereLight.constructor",
+    "SpotLight.luminousFlux",
+    "SpotLight.luminance",
+    "SpotLight.term",
+    "SpotLight.size",
+    "SpotLight.range",
+    "SpotLight.spotAngle",
+    "SpotLight.angleAttenuationStrength",
+    "SpotLight.shadowEnabled",
+    "SpotLight.shadowPcf",
+    "SpotLight.shadowBias",
+    "SpotLight.shadowNormalBias",
     "SpotLight.constructor",
+    "PointLight.luminousFlux",
+    "PointLight.luminance",
+    "PointLight.term",
+    "PointLight.range",
     "PointLight.constructor",
-    "Color.constructor",
-    "Color.x",
-    "Color.y",
-    "Color.z",
-    "Color.w",
-    "Color.copy",
-    "Color.set",
-    "Color.reset",
-    "InputAssemblerInfo",
-    "InputAssemblerInfo.constructor",
-    "InputAssemblerInfo.attributes",
-    "InputAssemblerInfo.vertexBuffers",
-    "InputAssemblerInfo.indexBuffer",
-    "InputAssemblerInfo.indirectBuffer",
-    "InputAssemblerInfo.copy",
-    "ColorAttachment",
-    "ColorAttachment.constructor",
-    "ColorAttachment.format",
-    "ColorAttachment.sampleCount",
-    "ColorAttachment.loadOp",
-    "ColorAttachment.storeOp",
-    "ColorAttachment.barrier",
-    "ColorAttachment.copy",
-    "InputState",
-    "InputState.constructor",
-    "InputState.attributes",
-    "InputState.copy",
-    "Camera.constructor",
-    "Camera.isWindowSize",
-    "Camera.pipelineSettings",
-    "Camera.initialize",
-    "Camera.destroy",
-    "Camera.attachToScene",
-    "Camera.detachFromScene",
-    "Camera.resize",
-    "Camera.setFixedSize",
-    "Camera.syncCameraEditor",
-    "Camera.update",
-    "Camera.initGeometryRenderer",
-    "Camera.changeTargetWindow",
-    "Camera.detachCamera",
-    "ColorTemperatureToRGB",
-    "Light.initialize",
-    "DirectionalLight.initialize",
-    "DirectionalLight.update",
-    "SphereLight.initialize",
-    "SphereLight.update",
-    "SpotLight.initialize",
-    "SpotLight.update",
-    "PointLight.initialize",
-    "PointLight.update",
-    "MaterialInstance",
-    "MaterialInstance.constructor",
-    "MaterialInstance.recompileShaders",
-    "MaterialInstance.overridePipelineStates",
-    "MaterialInstance.destroy",
-    "MaterialInstance.onPassStateChange",
-    "NodePool",
-    "CameraVisFlags",
+    "math.Vec2.ZERO",
+    "math.Vec2.ONE",
+    "math.Vec2.NEG_ONE",
+    "math.Vec2.UNIT_X",
+    "math.Vec2.UNIT_Y",
     "math.Vec2.clone",
+    "math.Vec2.copy",
+    "math.Vec2.ceil",
+    "math.Vec2.floor",
+    "math.Vec2.min",
+    "math.Vec2.max",
+    "math.Vec2.round",
+    "math.Vec2.scaleAndAdd",
+    "math.Vec2.distance",
+    "math.Vec2.squaredDistance",
+    "math.Vec2.len",
+    "math.Vec2.negate",
+    "math.Vec2.inverse",
+    "math.Vec2.inverseSafe",
+    "math.Vec2.random",
+    "math.Vec2.transformMat3",
+    "math.Vec2.str",
+    "math.Vec2.toArray",
+    "math.Vec2.fromArray",
+    "math.Vec2.prototype.clone",
+    "math.Vec2.prototype.set",
+    "math.Vec2.prototype.equals",
+    "math.Vec2.prototype.strictEquals",
+    "math.Vec2.prototype.lerp",
+    "math.Vec2.prototype.add",
+    "math.Vec2.prototype.subtract",
+    "math.Vec2.prototype.multiplyScalar",
+    "math.Vec2.prototype.multiply",
+    "math.Vec2.prototype.divide",
+    "math.Vec2.prototype.dot",
+    "math.Vec2.prototype.cross",
+    "math.Vec2.prototype.lengthSqr",
+    "math.Vec2.prototype.normalize",
+    "math.Vec2.prototype.angle",
+    "math.Vec2.prototype.transformMat4",
     "math.v2",
+    "math.Vec3.UNIT_X",
+    "math.Vec3.UNIT_Y",
+    "math.Vec3.UNIT_Z",
+    "math.Vec3.RIGHT",
+    "math.Vec3.UP",
+    "math.Vec3.FORWARD",
+    "math.Vec3.ZERO",
+    "math.Vec3.ONE",
+    "math.Vec3.NEG_ONE",
+    "math.Vec3.zero",
     "math.Vec3.clone",
+    "math.Vec3.copy",
+    "math.Vec3.ceil",
+    "math.Vec3.floor",
+    "math.Vec3.min",
+    "math.Vec3.max",
+    "math.Vec3.round",
+    "math.Vec3.scaleAndAdd",
+    "math.Vec3.negate",
+    "math.Vec3.invert",
+    "math.Vec3.invertSafe",
+    "math.Vec3.slerp",
+    "math.Vec3.random",
+    "math.Vec3.transformMat4Normal",
+    "math.Vec3.transformMat3",
+    "math.Vec3.transformAffine",
+    "math.Vec3.transformQuat",
+    "math.Vec3.transformRTS",
+    "math.Vec3.transformInverseRTS",
+    "math.Vec3.rotateX",
+    "math.Vec3.rotateY",
+    "math.Vec3.rotateZ",
+    "math.Vec3.rotateN",
+    "math.Vec3.toArray",
+    "math.Vec3.fromArray",
+    "math.Vec3.signedAngle",
+    "math.Vec3.projectOnPlane",
+    "math.Vec3.project",
+    "math.Vec3.moveTowards",
+    "math.Vec3.generateOrthogonal",
+    "math.Vec3.prototype.clone",
+    "math.Vec3.prototype.set",
+    "math.Vec3.prototype.equals",
+    "math.Vec3.prototype.strictEquals",
+    "math.Vec3.prototype.lerp",
+    "math.Vec3.prototype.add",
+    "math.Vec3.prototype.subtract",
+    "math.Vec3.prototype.multiplyScalar",
+    "math.Vec3.prototype.multiply",
+    "math.Vec3.prototype.divide",
+    "math.Vec3.prototype.dot",
+    "math.Vec3.prototype.cross",
+    "math.Vec3.prototype.lengthSqr",
+    "math.Vec3.prototype.normalize",
+    "math.Vec3.prototype.transformMat4",
     "math.v3",
     "math.Vec4",
+    "math.Vec4.ZERO",
+    "math.Vec4.ONE",
+    "math.Vec4.NEG_ONE",
+    "math.Vec4.UNIT_X",
+    "math.Vec4.UNIT_Y",
+    "math.Vec4.UNIT_Z",
+    "math.Vec4.UNIT_W",
     "math.Vec4.clone",
+    "math.Vec4.copy",
+    "math.Vec4.fromColor",
+    "math.Vec4.angle",
+    "math.Vec4.ceil",
+    "math.Vec4.floor",
+    "math.Vec4.min",
+    "math.Vec4.max",
+    "math.Vec4.round",
+    "math.Vec4.scaleAndAdd",
+    "math.Vec4.distance",
+    "math.Vec4.squaredDistance",
+    "math.Vec4.len",
+    "math.Vec4.negate",
+    "math.Vec4.inverse",
+    "math.Vec4.inverseSafe",
+    "math.Vec4.random",
+    "math.Vec4.transformAffine",
+    "math.Vec4.transformQuat",
+    "math.Vec4.toArray",
+    "math.Vec4.fromArray",
+    "math.Vec4.prototype.clone",
+    "math.Vec4.prototype.set",
+    "math.Vec4.prototype.equals",
+    "math.Vec4.prototype.strictEquals",
+    "math.Vec4.prototype.lerp",
+    "math.Vec4.prototype.add",
     "math.Vec4.add4f",
+    "math.Vec4.prototype.subtract",
     "math.Vec4.subtract4f",
+    "math.Vec4.prototype.multiplyScalar",
+    "math.Vec4.prototype.multiply",
     "math.Vec4.multiply4f",
+    "math.Vec4.prototype.divide",
     "math.Vec4.divide4f",
-    "math.Vec4.cross",
+    "math.Vec4.prototype.dot",
+    "math.Vec4.prototype.lengthSqr",
+    "math.Vec4.prototype.normalize",
+    "math.Vec4.prototype.scale",
+    "math.Vec4.prototype.transformMat4",
     "math.v4",
+    "math.Quat.IDENTITY",
     "math.Quat.clone",
+    "math.Quat.copy",
+    "math.Quat.identity",
+    "math.Quat.rotationTo",
+    "math.Quat.getAxisAngle",
+    "math.Quat.multiply",
+    "math.Quat.multiplyScalar",
+    "math.Quat.scaleAndAdd",
+    "math.Quat.rotateX",
+    "math.Quat.rotateY",
+    "math.Quat.rotateZ",
+    "math.Quat.rotateAround",
+    "math.Quat.rotateAroundLocal",
+    "math.Quat.calculateW",
+    "math.Quat.dot",
+    "math.Quat.sqlerp",
+    "math.Quat.invert",
+    "math.Quat.conjugate",
+    "math.Quat.len",
+    "math.Quat.normalize",
+    "math.Quat.fromAxes",
+    "math.Quat.fromViewUp",
+    "math.Quat.fromAxisAngle",
+    "math.Quat.fromMat3",
+    "math.Quat.fromEuler",
+    "math.Quat.fromAngleZ",
+    "math.Quat.toArray",
+    "math.Quat.prototype.clone",
+    "math.Quat.prototype.set",
+    "math.Quat.prototype.equals",
+    "math.Quat.prototype.strictEquals",
+    "math.Quat.prototype.lerp",
+    "math.Quat.prototype.slerp",
+    "math.Quat.prototype.lengthSqr",
     "math.quat",
     "math.Mat3",
-    "math.Mat3.constructor",
+    "math.Mat3.IDENTITY",
     "math.Mat3.clone",
+    "math.Mat3.copy",
+    "math.Mat3.multiplyMat4",
+    "math.Mat3.translate",
+    "math.Mat3.fromMat4",
+    "math.Mat3.fromViewUp",
+    "math.Mat3.fromTranslation",
+    "math.Mat3.fromScaling",
+    "math.Mat3.fromRotation",
+    "math.Mat3.inverseTransposeMat4",
+    "math.Mat3.toArray",
+    "math.Mat3.fromArray",
+    "math.Mat3.multiplyScalarAndAdd",
+    "math.Mat3.toEuler",
+    "math.Mat3.constructor",
+    "math.Mat3.prototype.clone",
+    "math.Mat3.prototype.set",
+    "math.Mat3.prototype.equals",
+    "math.Mat3.prototype.strictEquals",
+    "math.Mat3.prototype.identity",
+    "math.Mat3.prototype.transpose",
+    "math.Mat3.prototype.invert",
+    "math.Mat3.prototype.determinant",
+    "math.Mat3.prototype.add",
+    "math.Mat3.prototype.subtract",
+    "math.Mat3.prototype.multiply",
+    "math.Mat3.prototype.multiplyScalar",
+    "math.Mat3.prototype.scale",
+    "math.Mat3.prototype.rotate",
+    "math.Mat3.prototype.fromQuat",
     "math.Mat4",
-    "math.Mat4.constructor",
+    "math.Mat4.IDENTITY",
     "math.Mat4.clone",
+    "math.Mat4.copy",
+    "math.Mat4.rotateX",
+    "math.Mat4.rotateY",
+    "math.Mat4.rotateZ",
+    "math.Mat4.fromTranslation",
+    "math.Mat4.fromScaling",
+    "math.Mat4.fromRotation",
+    "math.Mat4.fromXRotation",
+    "math.Mat4.fromYRotation",
+    "math.Mat4.fromZRotation",
+    "math.Mat4.fromRT",
+    "math.Mat4.getScaling",
+    "math.Mat4.toSRT",
+    "math.Mat4.toEuler",
+    "math.Mat4.fromSRTOrigin",
+    "math.Mat4.frustum",
+    "math.Mat4.perspective",
+    "math.Mat4.ortho",
+    "math.Mat4.lookAt",
+    "math.Mat4.toArray",
+    "math.Mat4.fromArray",
+    "math.Mat4.multiplyScalarAndAdd",
     "math.Mat4.m01",
     "math.Mat4.m02",
     "math.Mat4.m06",
@@ -14387,11 +13570,86 @@
     "math.Mat4.m12",
     "math.Mat4.m13",
     "math.Mat4.m14",
+    "math.Mat4.constructor",
+    "math.Mat4.prototype.clone",
+    "math.Mat4.prototype.set",
+    "math.Mat4.prototype.equals",
+    "math.Mat4.prototype.strictEquals",
+    "math.Mat4.prototype.identity",
+    "math.Mat4.prototype.zero",
+    "math.Mat4.prototype.transpose",
+    "math.Mat4.prototype.invert",
+    "math.Mat4.prototype.determinant",
+    "math.Mat4.prototype.add",
+    "math.Mat4.prototype.subtract",
+    "math.Mat4.prototype.multiply",
+    "math.Mat4.prototype.multiplyScalar",
+    "math.Mat4.prototype.transform",
+    "math.Mat4.prototype.scale",
+    "math.Mat4.prototype.rotate",
+    "math.Mat4.prototype.getTranslation",
+    "math.Mat4.prototype.getRotation",
+    "math.Mat4.prototype.fromSRT",
+    "math.Mat4.prototype.fromQuat",
     "math.mat4",
+    "math.Size.ZERO",
+    "math.Size.ONE",
+    "math.Size.x",
+    "math.Size.y",
+    "math.Size.prototype.equals",
+    "math.Size.prototype.lerp",
     "math.size",
+    "math.Rect.fromMinMax",
+    "math.Rect.intersection",
+    "math.Rect.union",
+    "math.Rect.xMin",
+    "math.Rect.yMin",
+    "math.Rect.xMax",
+    "math.Rect.yMax",
+    "math.Rect.center",
+    "math.Rect.origin",
+    "math.Rect.size",
+    "math.Rect.z",
+    "math.Rect.w",
+    "math.Rect.prototype.equals",
+    "math.Rect.prototype.lerp",
     "math.rect",
-    "math.Color.constructor",
+    "math.Color.WHITE",
+    "math.Color.GRAY",
+    "math.Color.BLACK",
+    "math.Color.TRANSPARENT",
+    "math.Color.RED",
+    "math.Color.GREEN",
+    "math.Color.BLUE",
+    "math.Color.CYAN",
+    "math.Color.MAGENTA",
+    "math.Color.YELLOW",
     "math.Color.clone",
+    "math.Color.copy",
+    "math.Color.add",
+    "math.Color.subtract",
+    "math.Color.divide",
+    "math.Color.scale",
+    "math.Color.toArray",
+    "math.Color.fromArray",
+    "math.Color.fromUint32",
+    "math.Color.strictEquals",
+    "math.Color.hex",
+    "math.Color.r",
+    "math.Color.g",
+    "math.Color.b",
+    "math.Color.a",
+    "math.Color.x",
+    "math.Color.y",
+    "math.Color.z",
+    "math.Color.w",
+    "math.Color.constructor",
+    "math.Color.prototype.clone",
+    "math.Color.prototype.equals",
+    "math.Color.prototype.lerp",
+    "math.Color.prototype.fromHEX",
+    "math.Color.prototype.set",
+    "math.Color.prototype.multiply",
     "math.color",
     "math.toRadian",
     "math.toDegree",
@@ -14404,150 +13662,122 @@
     "math.repeat",
     "math.pingPong",
     "math.absMaxComponent",
-    "ColorKey",
-    "ColorKey.color",
-    "ColorKey.time",
+    "math.MATH_FLOAT_ARRAY",
+    "math.MathBase",
+    "math.MathBase.createFloatArray",
+    "math.MathBase.array",
+    "Node.components",
+    "Node.name",
+    "Node.uuid",
+    "Node.children",
+    "Node.active",
+    "Node.activeInHierarchy",
+    "Node.parent",
+    "Node.scene",
     "Node.attr",
-    "Node._removeComponent",
-    "Node._updateSiblingIndex",
-    "Node._uiProps",
-    "Node._static",
+    "Node.EventType",
+    "Node.NodeSpace",
+    "Node.TransformBit",
     "Node.isNode",
-    "Node._onSetParent",
-    "Node._onBatchCreated",
-    "Node._onBeforeSerialize",
-    "Node._onPostActivated",
+    "Node.position",
+    "Node.x",
+    "Node.y",
+    "Node.z",
+    "Node.worldPosition",
+    "Node.worldPositionX",
+    "Node.worldPositionY",
+    "Node.worldPositionZ",
+    "Node.rotation",
+    "Node.eulerAngles",
+    "Node.angle",
+    "Node.worldRotation",
+    "Node.scale",
+    "Node.worldScale",
+    "Node.matrix",
+    "Node.worldMatrix",
+    "Node.forward",
+    "Node.up",
+    "Node.right",
+    "Node.mobility",
+    "Node.layer",
+    "Node.hasChangedFlags",
     "Node.invalidateChildren",
     "Node.isTransformDirty",
     "Node.pauseSystemEvents",
     "Node.resumeSystemEvents",
     "Node.resetHasChangedFlags",
     "Node.clearNodeArray",
+    "Scene.renderScene",
+    "Scene.globals",
     "Scene.addComponent",
-    "Scene._onHierarchyChanged",
-    "Scene._onPostActivated",
-    "Scene._onBatchCreated",
-    "Layers.constructor",
-    "NodeActivator",
-    "NodeActivator.constructor",
-    "NodeActivator.reset",
-    "NodeActivator.activateNode",
-    "NodeActivator.activateComp",
-    "NodeActivator.destroyComp",
-    "LightProbeInfo",
-    "LightProbeInfo.constructor",
-    "LightProbeInfo.activate",
-    "LightProbeInfo.onProbeBakeFinished",
-    "LightProbeInfo.onProbeBakeCleared",
-    "LightProbeInfo.clearSHCoefficients",
-    "LightProbeInfo.isUniqueNode",
-    "LightProbeInfo.addNode",
-    "LightProbeInfo.removeNode",
-    "LightProbeInfo.syncData",
-    "LightProbeInfo.update",
-    "SceneGlobals",
-    "SceneGlobals.constructor",
-    "SceneGlobals.bakedWithHighpLightmap",
-    "SceneGlobals.activate",
-    "Camera.SOLID_COLOR",
-    "Camera.DEPTH_ONLY",
-    "Camera.DONT_CLEAR",
+    "Layers.BitMask",
+    "Layers.makeMaskInclude",
+    "Layers.makeMaskExclude",
+    "Layers.addLayer",
+    "Layers.deleteLayer",
+    "Layers.nameToLayer",
+    "Layers.layerToName",
+    "Camera.ProjectionType",
+    "Camera.FOVAxis",
+    "Camera.Aperture",
+    "Camera.Shutter",
+    "Camera.ISO",
+    "Camera.TARGET_TEXTURE_CHANGE",
+    "Camera.constructor",
+    "Camera.camera",
+    "Camera.priority",
+    "Camera.visibility",
+    "Camera.clearFlags",
+    "Camera.clearColor",
+    "Camera.clearDepth",
+    "Camera.clearStencil",
+    "Camera.projection",
+    "Camera.fovAxis",
+    "Camera.fov",
+    "Camera.orthoHeight",
+    "Camera.near",
+    "Camera.far",
+    "Camera.aperture",
+    "Camera.shutter",
+    "Camera.iso",
+    "Camera.rect",
+    "Camera.targetTexture",
     "Camera.onLoad",
     "Camera.onEnable",
     "Camera.onDisable",
     "Camera.onDestroy",
     "Camera.convertToUINode",
-    "Camera._createCamera",
     "ModelRenderer",
     "ModelRenderer.constructor",
-    "ModelRenderer._collectModels",
+    "ModelRenderer.visibility",
+    "ModelRenderer.priority",
     "instantiate",
-    "SceneAsset",
-    "SceneAsset.initDefault",
-    "SceneAsset.validate",
+    "Texture2D.mipmaps",
+    "Texture2D.image",
     "Texture2D.description",
     "Material.constructor",
-    "NodePool.clear",
-    "NodePool.put",
+    "Material.effectAsset",
+    "Material.effectName",
+    "Material.technique",
+    "Material.passes",
+    "Material.hash",
+    "Material.parent",
+    "Material.owner",
+    "Input.EventType",
     "Input.constructor",
-    "ColorTrack",
-    "ColorTrack.constructor",
-    "ColorTrack.channels",
-    "ColorTimeline",
-    "Color.r",
-    "Color.g",
-    "Color.b",
-    "Color.a",
-    "Color.setFromColor",
-    "Color.setFromString",
-    "Color.add",
-    "Color.clamp",
-    "Color.rgba8888ToColor",
-    "Color.rgb888ToColor",
-    "MeshAttachment",
-    "MeshAttachment.constructor",
-    "MeshAttachment.path",
-    "MeshAttachment.regionUVs",
-    "MeshAttachment.uvs",
-    "MeshAttachment.triangles",
-    "MeshAttachment.color",
-    "MeshAttachment.width",
-    "MeshAttachment.height",
-    "MeshAttachment.hullLength",
-    "MeshAttachment.edges",
-    "MeshAttachment.updateUVs",
-    "MeshAttachment.getParentMesh",
-    "MeshAttachment.setParentMesh",
-    "MeshAttachment.copy",
-    "MeshAttachment.newLinkedMesh",
-    "ColorTransform",
-    "ColorTransform.constructor",
-    "ColorTransform.alphaMultiplier",
-    "ColorTransform.redMultiplier",
-    "ColorTransform.greenMultiplier",
-    "ColorTransform.blueMultiplier",
-    "ColorTransform.alphaOffset",
-    "ColorTransform.redOffset",
-    "ColorTransform.greenOffset",
-    "ColorTransform.blueOffset",
-    "ColorTransform.copyFrom",
-    "ColorTransform.identity",
-    "MeshDisplayData",
-    "MeshDisplayData.constructor",
-    "MeshDisplayData.toString",
-    "MeshDisplayData.inheritDeform",
-    "MeshDisplayData.offset",
-    "MeshDisplayData.weight",
-    "MeshDisplayData.glue",
-    "MeshDisplayData.texture",
-    "ColorGradingPass",
-    "ColorGradingPass.constructor",
-    "ColorGradingPass.checkEnable",
-    "ColorGradingPass.name",
-    "ColorGradingPass.effectName",
-    "ColorGradingPass.outputNames",
-    "ColorGradingPass.render",
+    "Input.on",
+    "Input.once",
+    "Input.off",
     "GLTFAsset",
+    "GLTFAsset.document",
+    "GLTFAsset.warnings",
     "GLTFAsset.constructor",
     "GLTFLoader.constructor",
     "GLTFLoader.register",
     "GLTFLoader.unregister",
     "GLTFExtensionRegistry",
-    "GLTFExtensionRegistry.constructor",
-    "LightInfo",
-    "LightInfo.constructor",
-    "LightInfo.reset",
-    "LightInfo.light",
-    "LightInfo.probe",
-    "LightInfo.level",
-    "LightInfo.culledByLight",
-    "LightingStage",
-    "LightingStage.constructor",
-    "LightingStage.initialize",
-    "LightingStage.gatherLights",
-    "LightingStage.activate",
-    "LightingStage.destroy",
-    "LightingStage.render"
+    "GLTFExtensionRegistry.size",
+    "Vec3"
   ],
-  "unclaimedRequired": 2020
+  "unclaimedRequired": 3721
 }

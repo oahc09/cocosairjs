@@ -26,22 +26,7 @@
     "Material.setProperty",
     "utils.createMesh",
     "primitives.box",
-    "Layers.NONE",
-    "Layers.IGNORE_RAYCAST",
-    "Layers.GIZMOS",
-    "Layers.EDITOR",
-    "Layers.UI_3D",
-    "Layers.SCENE_GIZMO",
-    "Layers.UI_2D",
-    "Layers.PROFILER",
-    "Layers.DEFAULT",
-    "Layers.ALL",
-    "Layers.init",
-    "Layers.makeMaskExclude",
-    "Layers.addLayer",
-    "Layers.deleteLayer",
-    "Layers.nameToLayer",
-    "Layers.layerToName"
+    "Layers.Enum"
   ],
   "capabilities": [],
   "learning": {
@@ -53,7 +38,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 170,210,190）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Layers.makeMaskExclude", "Layers.nameToLayer"],
+    "primary": ["Layers.Enum"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -89,22 +74,7 @@
       "Material.setProperty",
       "utils.createMesh",
       "primitives.box",
-      "Layers.NONE",
-      "Layers.IGNORE_RAYCAST",
-      "Layers.GIZMOS",
-      "Layers.EDITOR",
-      "Layers.UI_3D",
-      "Layers.SCENE_GIZMO",
-      "Layers.UI_2D",
-      "Layers.PROFILER",
-      "Layers.DEFAULT",
-      "Layers.ALL",
-      "Layers.init",
-      "Layers.makeMaskExclude",
-      "Layers.addLayer",
-      "Layers.deleteLayer",
-      "Layers.nameToLayer",
-      "Layers.layerToName"
+      "Layers.Enum"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -217,100 +187,10 @@
         "sourceLocation": "L50"
       },
       {
-        "api": "Layers.NONE",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L74"
-      },
-      {
-        "api": "Layers.IGNORE_RAYCAST",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L91"
-      },
-      {
-        "api": "Layers.GIZMOS",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L78"
-      },
-      {
-        "api": "Layers.EDITOR",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L77"
-      },
-      {
-        "api": "Layers.UI_3D",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L83"
-      },
-      {
-        "api": "Layers.SCENE_GIZMO",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L86"
-      },
-      {
-        "api": "Layers.UI_2D",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L76"
-      },
-      {
-        "api": "Layers.PROFILER",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L81"
-      },
-      {
-        "api": "Layers.DEFAULT",
+        "api": "Layers.Enum",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L37"
-      },
-      {
-        "api": "Layers.ALL",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L88"
-      },
-      {
-        "api": "Layers.init",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L118"
-      },
-      {
-        "api": "Layers.makeMaskExclude",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L91"
-      },
-      {
-        "api": "Layers.addLayer",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L126"
-      },
-      {
-        "api": "Layers.deleteLayer",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L128"
-      },
-      {
-        "api": "Layers.nameToLayer",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L100"
-      },
-      {
-        "api": "Layers.layerToName",
-        "source": "src/main.ts",
-        "validator": "no-runtime-error",
-        "sourceLocation": "L110"
       }
     ]
   },
@@ -343,11 +223,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "b3f0cc42328a",
-    "source": "55effe6c1c4bebda",
+    "spec": "4088c5469b52",
+    "source": "ed0c37c5ed29eb0d",
     "candidate": "8746fc59b6aa0408",
-    "verified": 24,
-    "attested": 10,
-    "units": 34
+    "verified": 18,
+    "attested": 1,
+    "units": 19
   }
 }

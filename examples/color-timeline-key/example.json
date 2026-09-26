@@ -26,8 +26,8 @@
     "Material.setProperty",
     "utils.createMesh",
     "primitives.box",
-    "ColorTimeline.constructor",
-    "ColorKey.constructor"
+    "sp.spine.ColorTimeline.constructor",
+    "ColorKey"
   ],
   "capabilities": [],
   "learning": {
@@ -39,7 +39,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 255,170,170）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["ColorTimeline.constructor", "ColorKey.constructor"],
+    "primary": ["sp.spine.ColorTimeline.constructor", "ColorKey"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -75,8 +75,8 @@
       "Material.setProperty",
       "utils.createMesh",
       "primitives.box",
-      "ColorTimeline.constructor",
-      "ColorKey.constructor"
+      "sp.spine.ColorTimeline.constructor",
+      "ColorKey"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -189,16 +189,16 @@
         "sourceLocation": "L50"
       },
       {
-        "api": "ColorTimeline.constructor",
+        "api": "sp.spine.ColorTimeline.constructor",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L58"
       },
       {
-        "api": "ColorKey.constructor",
+        "api": "ColorKey",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L58"
+        "sourceLocation": "L84"
       }
     ]
   },
@@ -231,8 +231,8 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "e7bad608d89c",
-    "source": "1db43e4634e91227",
+    "spec": "47b4bae22ade",
+    "source": "1103976d73d8af6a",
     "candidate": "8746fc59b6aa0408",
     "verified": 19,
     "attested": 1,

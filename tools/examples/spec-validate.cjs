@@ -24,7 +24,7 @@ const Module = require('module');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const CANONICAL_EXAMPLES_DIR = path.join(REPO, 'examples');
-const INVENTORY_PATH = path.join(REPO, 'docs', 'example-api-inventory.json');
+const INVENTORY_PATH = process.env.COCOSAIR_API_INVENTORY || path.join(REPO, 'docs', 'example-api-inventory.json');
 const CANONICAL_OUT = path.join(REPO, 'docs', 'evidence', 'v11-spec-validate.json');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
 

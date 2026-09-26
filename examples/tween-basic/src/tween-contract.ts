@@ -1,15 +1,18 @@
 import { Node, Tween, tween, isValid } from 'cocosair';
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
-async function until(test: () => boolean): Promise<void> {
+async function until(test: () => boolean, describe: () => string = () => ''): Promise<void> {
     const end = performance.now() + 5000;
     while (!test()) {
-        if (performance.now() > end) throw new Error('Tween did not reach the expected state');
+        if (performance.now() > end) throw new Error(`Tween did not reach the expected state: ${describe()}`);
         await sleep(20);
     }
 }
 
 export async function verifyTweenControl(): Promise<void> {
+    // Let the first game tick settle before timing short tween segments; the
+    // startup frame may carry a large delta and finish a tween in one step.
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
     const probe = { ready: false, ok: false, checks: [] as { name: string; ok: boolean; detail: string }[] };
     (window as any).__trialProbe = probe;
     const check = (name: string, ok: boolean, detail = '') => {
@@ -22,7 +25,7 @@ export async function verifyTweenControl(): Promise<void> {
     const control = tween(model)
         .bindNodeState(false)
         .tag(7401)
-        .to(0.6, { x: 6 })
+        .to(4, { x: 6 })
         .call(() => {
             finished = true;
         });
@@ -30,7 +33,10 @@ export async function verifyTweenControl(): Promise<void> {
     control.timeScale(2);
     check('time-scale-readback', control.getTimeScale() === 2);
     control.start();
-    await until(() => model.x > 0 && model.x < 6);
+    await until(
+        () => model.x > 0 && model.x < 6,
+        () => `initial x=${model.x} finished=${finished}`,
+    );
     control.pause();
     const frozen = model.x;
     await sleep(160);

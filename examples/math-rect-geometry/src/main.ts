@@ -76,10 +76,10 @@ var A = new Rect(0, 0, 10, 10);
 var B = new Rect(5, 5, 10, 10);
 var C = new Rect(20, 20, 2, 2);
 T('areaA', () => A.width * A.height);
-T('ABOverlap', () => (Rect as any).intersects(A, B));
-T('ACNoOverlap', () => (Rect as any).intersects(A, C));
-T('containPt', () => (Rect as any).contains(A, new Vec2(5, 5)) && !(Rect as any).contains(A, new Vec2(11, 5)));
-T('containRectSelf', () => (Rect as any).containsRect(A, A.clone()));
+T('ABOverlap', () => A.intersects(B));
+T('ACNoOverlap', () => A.intersects(C));
+T('containPt', () => A.contains(new Vec2(5, 5)) && !A.contains(new Vec2(11, 5)));
+T('containRectSelf', () => A.containsRect(A.clone()));
 T('setCopy', () => {
     var o = new Rect();
     (Rect as any).set(o, A.x, A.y, A.width, A.height);

@@ -23,10 +23,12 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run format:check
-      - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory-v2.cjs
+      - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory-v2.cjs tools/examples/reconcile-api-claims.cjs
       - run: npm run typecheck
       - run: npx jest --runInBand
       - run: npm run build:all
+      - run: npm run gallery:api
+      - run: git diff --exit-code -- docs/example-api-inventory.json
       - run: npm run verify:consumer
       - run: npm run verify:web-only
       - run: npm run verify:licenses
@@ -39,6 +41,8 @@ jobs:
       - run: npm run verify:v12-custom-face
       - run: npm run verify:doc-refs
       - run: npm run verify:v11-chain-face
+      - if: startsWith(github.ref, 'refs/tags/v')
+        run: node tools/examples/coverage-report.cjs --check
       - if: startsWith(github.ref, 'refs/tags/v')
         run: npm run verify:release
     env:

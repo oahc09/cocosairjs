@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-26T10:22:28.487Z",
-  "revision": "8867d14",
+  "generatedAt": "2026-09-26T13:36:38.225Z",
+  "revision": "f5dcae4",
   "examples": [
     {
       "dir": "anim-position",
@@ -472,7 +472,7 @@
           "Material.setProperty",
           "utils.createMesh",
           "primitives.box",
-          "BatchingUtility.constructor",
+          "BatchingUtility",
           "BatchingUtility.batchStaticModel",
           "BatchingUtility.unbatchStaticModel"
         ]
@@ -508,8 +508,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "921b2d2f111e",
-        "source": "bd7f192ce097290b",
+        "spec": "247bafa0cca7",
+        "source": "cc42645c22e9dab1",
         "candidate": "8746fc59b6aa0408",
         "verified": 21,
         "attested": 0,
@@ -646,7 +646,7 @@
       },
       "api": {
         "primary": [
-          "Camera.worldMatrixToScreen"
+          "renderer.scene.Camera.worldMatrixToScreen"
         ],
         "supporting": [
           "createAirApp",
@@ -683,9 +683,9 @@
           "Material.setProperty",
           "utils.createMesh",
           "primitives.box",
-          "Camera.worldMatrixToScreen",
-          "Camera.getClipSpaceMinz",
-          "Camera.calculateObliqueMat"
+          "renderer.scene.Camera.worldMatrixToScreen",
+          "renderer.scene.Camera.getClipSpaceMinz",
+          "renderer.scene.Camera.calculateObliqueMat"
         ]
       },
       "capabilities": [],
@@ -719,11 +719,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "6e6f27f11498",
-        "source": "cf5dcaf721166120",
+        "spec": "84c7dc74ca1a",
+        "source": "709b12cd0409f9ad",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 3,
+        "verified": 21,
+        "attested": 0,
         "units": 21
       }
     },
@@ -857,7 +857,7 @@
           "Layers"
         ],
         "supporting": [
-          "Layers.makeMaskInclude",
+          "Layers.Enum",
           "Node.setPosition"
         ],
         "claims": [
@@ -868,7 +868,7 @@
           "Camera",
           "DirectionalLight",
           "Layers",
-          "Layers.makeMaskInclude",
+          "Layers.Enum",
           "math.Vec3",
           "math.Color",
           "Material",
@@ -921,11 +921,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4cc883e74e9f",
-        "source": "d5f77480d1490d5e",
+        "spec": "e428c783e31d",
+        "source": "7fec7450acdbcb31",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
-        "attested": 0,
+        "verified": 18,
+        "attested": 1,
         "units": 19
       }
     },
@@ -1269,7 +1269,7 @@
       "api": {
         "primary": [
           "Camera.postProcess",
-          "Camera.pipeline"
+          "renderer.scene.Camera.pipeline"
         ],
         "supporting": [
           "createAirApp",
@@ -1308,10 +1308,10 @@
           "primitives.box",
           "Camera.postProcess",
           "Camera.usePostProcess",
-          "Camera.pipeline",
+          "renderer.scene.Camera.pipeline",
           "Camera.screenScale",
-          "Camera.SKYBOX",
-          "Camera.setViewportInOrientedSpace"
+          "Camera.ClearFlag",
+          "renderer.scene.Camera.setViewportInOrientedSpace"
         ]
       },
       "capabilities": [],
@@ -1345,11 +1345,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "598241d45feb",
-        "source": "735eed7dc083aba9",
+        "spec": "6adc2647f4bc",
+        "source": "307ddd895cedd106",
         "candidate": "8746fc59b6aa0408",
-        "verified": 21,
-        "attested": 3,
+        "verified": 22,
+        "attested": 2,
         "units": 24
       }
     },
@@ -1508,8 +1508,8 @@
       },
       "api": {
         "primary": [
-          "ColorTimeline.constructor",
-          "ColorKey.constructor"
+          "sp.spine.ColorTimeline.constructor",
+          "ColorKey"
         ],
         "supporting": [
           "createAirApp",
@@ -1546,8 +1546,8 @@
           "Material.setProperty",
           "utils.createMesh",
           "primitives.box",
-          "ColorTimeline.constructor",
-          "ColorKey.constructor"
+          "sp.spine.ColorTimeline.constructor",
+          "ColorKey"
         ]
       },
       "capabilities": [],
@@ -1581,8 +1581,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e7bad608d89c",
-        "source": "1db43e4634e91227",
+        "spec": "47b4bae22ade",
+        "source": "1103976d73d8af6a",
         "candidate": "8746fc59b6aa0408",
         "verified": 19,
         "attested": 1,
@@ -1612,8 +1612,8 @@
       },
       "api": {
         "primary": [
-          "ColorTimeline.frames",
-          "ColorTimeline.apply"
+          "sp.spine.ColorTimeline.frames",
+          "sp.spine.ColorTimeline.apply"
         ],
         "supporting": [
           "createAirApp",
@@ -1650,14 +1650,14 @@
           "Material.setProperty",
           "utils.createMesh",
           "primitives.box",
-          "ColorTimeline.constructor",
-          "ColorTimeline.slotIndex",
-          "ColorTimeline.frames",
-          "ColorTimeline.getPropertyId",
-          "ColorTimeline.getSlotIndex",
-          "ColorTimeline.setSlotIndex",
-          "ColorTimeline.setFrame",
-          "ColorTimeline.apply"
+          "sp.spine.ColorTimeline.constructor",
+          "sp.spine.ColorTimeline.slotIndex",
+          "sp.spine.ColorTimeline.frames",
+          "sp.spine.ColorTimeline.getPropertyId",
+          "sp.spine.ColorTimeline.getSlotIndex",
+          "sp.spine.ColorTimeline.setSlotIndex",
+          "sp.spine.ColorTimeline.setFrame",
+          "sp.spine.ColorTimeline.apply"
         ]
       },
       "capabilities": [],
@@ -1691,8 +1691,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2134116accb0",
-        "source": "557dece4c7386b13",
+        "spec": "f8dbf91bb42e",
+        "source": "441178b88666598b",
         "candidate": "8746fc59b6aa0408",
         "verified": 18,
         "attested": 8,
@@ -1958,36 +1958,36 @@
       },
       "api": {
         "primary": [
-          "ArmatureDisplay",
-          "DragonBonesAsset",
-          "DragonBonesAtlasAsset"
+          "dragonBones.ArmatureDisplay",
+          "dragonBones.DragonBonesAsset",
+          "dragonBones.DragonBonesAtlasAsset"
         ],
         "supporting": [
-          "CCFactory",
-          "AnimationCacheMode",
-          "DragonBonesAsset.init",
-          "DragonBonesAtlasAsset.init",
-          "CCFactory.getInstance",
-          "CCFactory.getDragonBonesDataByUUID",
-          "ArmatureDisplay.playAnimation",
-          "ArmatureDisplay.playTimes",
-          "ArmatureDisplay.setAnimationCacheMode",
-          "ArmatureDisplay.isAnimationCached",
-          "ArmatureDisplay.armature",
-          "Armature.getSlots",
-          "Armature.getBones",
-          "Armature.animation",
-          "Armature.advanceTime",
-          "Armature.name",
-          "Animation.gotoAndStopByFrame",
-          "Animation.isPlaying",
-          "ArmatureData.getSkin",
-          "ArmatureData.animations",
-          "ArmatureData.bones",
-          "ArmatureData.slots",
-          "DragonBonesData.getArmature",
-          "DragonBonesData.armatureNames",
-          "DragonBonesData.version",
+          "dragonBones.CCFactory",
+          "dragonBones.AnimationCacheMode",
+          "dragonBones.DragonBonesAsset.init",
+          "dragonBones.DragonBonesAtlasAsset.init",
+          "dragonBones.CCFactory.getInstance",
+          "dragonBones.CCFactory.getDragonBonesDataByUUID",
+          "dragonBones.ArmatureDisplay.playAnimation",
+          "dragonBones.ArmatureDisplay.playTimes",
+          "dragonBones.ArmatureDisplay.setAnimationCacheMode",
+          "dragonBones.ArmatureDisplay.isAnimationCached",
+          "dragonBones.ArmatureDisplay.armature",
+          "dragonBones.Armature.getSlots",
+          "dragonBones.Armature.getBones",
+          "dragonBones.Armature.animation",
+          "dragonBones.Armature.advanceTime",
+          "dragonBones.Armature.name",
+          "dragonBones.Animation.gotoAndStopByFrame",
+          "dragonBones.Animation.isPlaying",
+          "dragonBones.ArmatureData.getSkin",
+          "dragonBones.ArmatureData.animations",
+          "dragonBones.ArmatureData.bones",
+          "dragonBones.ArmatureData.slots",
+          "dragonBones.DragonBonesData.getArmature",
+          "dragonBones.DragonBonesData.armatureNames",
+          "dragonBones.DragonBonesData.version",
           "Texture2D",
           "assetManager",
           "Node.on"
@@ -2011,34 +2011,34 @@
           "Node.addChild",
           "Node.addComponent",
           "Node.on",
-          "DragonBonesAsset",
-          "DragonBonesAtlasAsset",
-          "ArmatureDisplay",
-          "CCFactory",
-          "AnimationCacheMode",
-          "DragonBonesAsset.init",
-          "DragonBonesAtlasAsset.init",
-          "CCFactory.getInstance",
-          "CCFactory.getDragonBonesDataByUUID",
-          "ArmatureDisplay.playAnimation",
-          "ArmatureDisplay.playTimes",
-          "ArmatureDisplay.setAnimationCacheMode",
-          "ArmatureDisplay.isAnimationCached",
-          "ArmatureDisplay.armature",
-          "Armature.getSlots",
-          "Armature.getBones",
-          "Armature.animation",
-          "Armature.advanceTime",
-          "Armature.name",
-          "Animation.gotoAndStopByFrame",
-          "Animation.isPlaying",
-          "ArmatureData.getSkin",
-          "ArmatureData.animations",
-          "ArmatureData.bones",
-          "ArmatureData.slots",
-          "DragonBonesData.getArmature",
-          "DragonBonesData.armatureNames",
-          "DragonBonesData.version"
+          "dragonBones.DragonBonesAsset",
+          "dragonBones.DragonBonesAtlasAsset",
+          "dragonBones.ArmatureDisplay",
+          "dragonBones.CCFactory",
+          "dragonBones.AnimationCacheMode",
+          "dragonBones.DragonBonesAsset.init",
+          "dragonBones.DragonBonesAtlasAsset.init",
+          "dragonBones.CCFactory.getInstance",
+          "dragonBones.CCFactory.getDragonBonesDataByUUID",
+          "dragonBones.ArmatureDisplay.playAnimation",
+          "dragonBones.ArmatureDisplay.playTimes",
+          "dragonBones.ArmatureDisplay.setAnimationCacheMode",
+          "dragonBones.ArmatureDisplay.isAnimationCached",
+          "dragonBones.ArmatureDisplay.armature",
+          "dragonBones.Armature.getSlots",
+          "dragonBones.Armature.getBones",
+          "dragonBones.Armature.animation",
+          "dragonBones.Armature.advanceTime",
+          "dragonBones.Armature.name",
+          "dragonBones.Animation.gotoAndStopByFrame",
+          "dragonBones.Animation.isPlaying",
+          "dragonBones.ArmatureData.getSkin",
+          "dragonBones.ArmatureData.animations",
+          "dragonBones.ArmatureData.bones",
+          "dragonBones.ArmatureData.slots",
+          "dragonBones.DragonBonesData.getArmature",
+          "dragonBones.DragonBonesData.armatureNames",
+          "dragonBones.DragonBonesData.version"
         ]
       },
       "capabilities": [
@@ -2086,11 +2086,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "768644d07b66",
-        "source": "17a0a6d6b66e1faa",
+        "spec": "7c755d620c3d",
+        "source": "a9c357ebb1b5e758",
         "candidate": "8746fc59b6aa0408",
-        "verified": 15,
-        "attested": 31,
+        "verified": 36,
+        "attested": 10,
         "units": 46
       }
     },
@@ -3519,8 +3519,7 @@
       },
       "api": {
         "primary": [
-          "Layers.makeMaskExclude",
-          "Layers.nameToLayer"
+          "Layers.Enum"
         ],
         "supporting": [
           "createAirApp",
@@ -3557,22 +3556,7 @@
           "Material.setProperty",
           "utils.createMesh",
           "primitives.box",
-          "Layers.NONE",
-          "Layers.IGNORE_RAYCAST",
-          "Layers.GIZMOS",
-          "Layers.EDITOR",
-          "Layers.UI_3D",
-          "Layers.SCENE_GIZMO",
-          "Layers.UI_2D",
-          "Layers.PROFILER",
-          "Layers.DEFAULT",
-          "Layers.ALL",
-          "Layers.init",
-          "Layers.makeMaskExclude",
-          "Layers.addLayer",
-          "Layers.deleteLayer",
-          "Layers.nameToLayer",
-          "Layers.layerToName"
+          "Layers.Enum"
         ]
       },
       "capabilities": [],
@@ -3606,12 +3590,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b3f0cc42328a",
-        "source": "55effe6c1c4bebda",
+        "spec": "4088c5469b52",
+        "source": "ed0c37c5ed29eb0d",
         "candidate": "8746fc59b6aa0408",
-        "verified": 24,
-        "attested": 10,
-        "units": 34
+        "verified": 18,
+        "attested": 1,
+        "units": 19
       }
     },
     {
@@ -3637,8 +3621,7 @@
       },
       "api": {
         "primary": [
-          "Light.LUMINOUS_FLUX",
-          "Light.LUMINANCE"
+          "Light.PhotometricTerm"
         ],
         "supporting": [
           "createAirApp",
@@ -3675,11 +3658,10 @@
           "Material.setProperty",
           "utils.createMesh",
           "primitives.box",
-          "Light.LUMINOUS_FLUX",
-          "Light.LUMINANCE",
-          "Light.attachToScene",
-          "Light.detachFromScene",
-          "Light.update",
+          "Light.PhotometricTerm",
+          "renderer.scene.Light.attachToScene",
+          "renderer.scene.Light.detachFromScene",
+          "renderer.scene.DirectionalLight.update",
           "Light.onLoad"
         ]
       },
@@ -3714,12 +3696,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "d2fbe339dee3",
-        "source": "947eed98bd636042",
+        "spec": "2f25b8264944",
+        "source": "0eb2fcf420ce8b42",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
-        "attested": 5,
-        "units": 24
+        "verified": 22,
+        "attested": 1,
+        "units": 23
       }
     },
     {
@@ -5358,8 +5340,8 @@
         "spec": "4e2e445e2a98",
         "source": "ce052ed83cc90a95",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 3,
+        "verified": 25,
+        "attested": 0,
         "units": 25
       }
     },
@@ -5426,9 +5408,6 @@
           "primitives.box",
           "math.Color.fromHSV",
           "math.Color.toHSV",
-          "math.Color.h",
-          "math.Color.s",
-          "math.Color.v",
           "math.Color.lerp",
           "math.Color.multiply",
           "math.Color.set",
@@ -5468,12 +5447,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "d40a003d46b4",
-        "source": "7e880273577db792",
+        "spec": "f5bcae14d814",
+        "source": "24fcc620834ff250",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 7,
-        "units": 29
+        "verified": 26,
+        "attested": 0,
+        "units": 26
       }
     },
     {
@@ -5897,8 +5876,8 @@
         "spec": "43ef412e782d",
         "source": "88de2a60c50a8703",
         "candidate": "8746fc59b6aa0408",
-        "verified": 29,
-        "attested": 1,
+        "verified": 30,
+        "attested": 0,
         "units": 30
       }
     },
@@ -6346,8 +6325,8 @@
         "spec": "e9881610708d",
         "source": "4ba2e1b5ae85097a",
         "candidate": "8746fc59b6aa0408",
-        "verified": 30,
-        "attested": 1,
+        "verified": 31,
+        "attested": 0,
         "units": 31
       }
     },
@@ -6452,10 +6431,10 @@
       },
       "promotion": {
         "spec": "679348ba6ca7",
-        "source": "f804e3c7d90ac938",
+        "source": "c7aaaf8d7e935e74",
         "candidate": "8746fc59b6aa0408",
-        "verified": 23,
-        "attested": 1,
+        "verified": 24,
+        "attested": 0,
         "units": 24
       }
     },
@@ -6671,11 +6650,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2ba550844695",
-        "source": "9fa7e79898d2782c",
+        "spec": "198648ebab3f",
+        "source": "844e5399a2b4de0a",
         "candidate": "8746fc59b6aa0408",
-        "verified": 21,
-        "attested": 1,
+        "verified": 22,
+        "attested": 0,
         "units": 22
       }
     },
@@ -6781,8 +6760,8 @@
         "spec": "eb9e9de757e9",
         "source": "a51696c718c2af5c",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 5,
+        "verified": 19,
+        "attested": 4,
         "units": 23
       }
     },
@@ -6890,8 +6869,8 @@
         "spec": "ba5cfcc9eb5b",
         "source": "a8aa732d8837e6c8",
         "candidate": "8746fc59b6aa0408",
-        "verified": 24,
-        "attested": 1,
+        "verified": 25,
+        "attested": 0,
         "units": 25
       }
     },
@@ -7003,11 +6982,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "64864da48407",
-        "source": "b76e61dcf47c1481",
+        "spec": "4c392d8aca8f",
+        "source": "913fd22173e04c57",
         "candidate": "8746fc59b6aa0408",
-        "verified": 26,
-        "attested": 6,
+        "verified": 28,
+        "attested": 4,
         "units": 32
       }
     },
@@ -7212,10 +7191,10 @@
       },
       "promotion": {
         "spec": "00c5e8366ce2",
-        "source": "af2f3dd62a273028",
+        "source": "ceefa87df5fff3f9",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 5,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -7330,10 +7309,10 @@
       },
       "promotion": {
         "spec": "d0434e11c8bc",
-        "source": "0106719f35a017c3",
+        "source": "e942dc8156650d39",
         "candidate": "8746fc59b6aa0408",
-        "verified": 20,
-        "attested": 13,
+        "verified": 29,
+        "attested": 4,
         "units": 33
       }
     },
@@ -7549,8 +7528,8 @@
         "spec": "c1bf3006d928",
         "source": "4fe2b4c3f9df21bf",
         "candidate": "8746fc59b6aa0408",
-        "verified": 20,
-        "attested": 6,
+        "verified": 24,
+        "attested": 2,
         "units": 26
       }
     },
@@ -7654,10 +7633,10 @@
       },
       "promotion": {
         "spec": "8fb0300091bb",
-        "source": "88b75665869be4e9",
+        "source": "ac2ad052249e06af",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 1,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -7767,11 +7746,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "49523ddcb972",
-        "source": "fc9a5900ceb65606",
+        "spec": "be4a85769c5a",
+        "source": "dad5ee6f33e45b82",
         "candidate": "8746fc59b6aa0408",
-        "verified": 24,
-        "attested": 5,
+        "verified": 29,
+        "attested": 0,
         "units": 29
       }
     },
@@ -7875,8 +7854,8 @@
         "spec": "df85dd1e8123",
         "source": "1e97ac75f2a9f38f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 3,
+        "verified": 19,
+        "attested": 2,
         "units": 21
       }
     },
@@ -7985,10 +7964,10 @@
       },
       "promotion": {
         "spec": "2077aead34e2",
-        "source": "dd5eb3c11a754a36",
+        "source": "e8065eefca9b5e94",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 6,
+        "verified": 26,
+        "attested": 2,
         "units": 28
       }
     },
@@ -8097,10 +8076,10 @@
       },
       "promotion": {
         "spec": "5e9a56f9e4d6",
-        "source": "f2a25ee3942e0b87",
+        "source": "7d9357f712fd6afd",
         "candidate": "8746fc59b6aa0408",
-        "verified": 23,
-        "attested": 4,
+        "verified": 27,
+        "attested": 0,
         "units": 27
       }
     },
@@ -8197,10 +8176,10 @@
       },
       "promotion": {
         "spec": "359302f37ee8",
-        "source": "e51cdd77f9733ba4",
+        "source": "bfb3b149c978500f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "units": 19
       }
     },
@@ -8306,8 +8285,8 @@
         "spec": "42ac85f4d283",
         "source": "888e4f69808a0c53",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 1,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -8417,11 +8396,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ffe5f8f18708",
-        "source": "ec63006daef5076b",
+        "spec": "1efca1d9c025",
+        "source": "13c7aeed662e92e9",
         "candidate": "8746fc59b6aa0408",
-        "verified": 24,
-        "attested": 5,
+        "verified": 29,
+        "attested": 0,
         "units": 29
       }
     },
@@ -8526,8 +8505,8 @@
         "spec": "09efb0d2382c",
         "source": "ba28a0e1f5ed04ad",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 4,
+        "verified": 19,
+        "attested": 3,
         "units": 22
       }
     },
@@ -8638,11 +8617,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ce18d88226fc",
-        "source": "f35a14e3a1341566",
+        "spec": "103676084a48",
+        "source": "1721c45a5d158484",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 8,
+        "verified": 27,
+        "attested": 3,
         "units": 30
       }
     },
@@ -8753,8 +8732,8 @@
         "spec": "4f8bbed4c64f",
         "source": "b991bc0d2aa6dfb8",
         "candidate": "8746fc59b6aa0408",
-        "verified": 26,
-        "attested": 1,
+        "verified": 27,
+        "attested": 0,
         "units": 27
       }
     },
@@ -8851,10 +8830,10 @@
       },
       "promotion": {
         "spec": "39e4aa1ca1b9",
-        "source": "6c8ab2b84ba00630",
+        "source": "476470486c6d0c4f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "units": 19
       }
     },
@@ -8961,11 +8940,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1945d8214fb6",
-        "source": "db7b2fcd410fb399",
+        "spec": "c6e351f6c1ca",
+        "source": "712b166e77f42489",
         "candidate": "8746fc59b6aa0408",
-        "verified": 25,
-        "attested": 1,
+        "verified": 26,
+        "attested": 0,
         "units": 26
       }
     },
@@ -9071,8 +9050,8 @@
         "spec": "8d3ecabd9775",
         "source": "f63c8c756aa249fa",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 5,
+        "verified": 19,
+        "attested": 4,
         "units": 23
       }
     },
@@ -9184,10 +9163,10 @@
       },
       "promotion": {
         "spec": "aba2d336dced",
-        "source": "2195ae9a8f079347",
+        "source": "0aba272be450bb84",
         "candidate": "8746fc59b6aa0408",
-        "verified": 25,
-        "attested": 5,
+        "verified": 30,
+        "attested": 0,
         "units": 30
       }
     },
@@ -10152,8 +10131,6 @@
           "Material.setProperty",
           "utils.createMesh",
           "primitives.box",
-          "MeshRenderer.ON",
-          "MeshRenderer.OFF",
           "MeshRenderer.bakeSettings",
           "MeshRenderer.setWeight",
           "MeshRenderer.getWeight",
@@ -10192,12 +10169,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "68f9cf1085f5",
-        "source": "814f6ef0a5c013ad",
+        "spec": "5ad13d83329f",
+        "source": "3890ce8fbd30ea74",
         "candidate": "8746fc59b6aa0408",
         "verified": 22,
-        "attested": 3,
-        "units": 25
+        "attested": 1,
+        "units": 23
       }
     },
     {
@@ -10231,7 +10208,7 @@
         "supporting": [
           "Animation.getState",
           "input",
-          "intersect",
+          "geometry.intersect",
           "AnimationClip.wrapMode",
           "isValid"
         ],
@@ -10274,9 +10251,9 @@
           "GLTFAsset.skeletons",
           "GLTFAsset.images",
           "GLTFAsset.sceneNames",
-          "Ray",
-          "AABB",
-          "intersect",
+          "geometry.Ray",
+          "geometry.AABB",
+          "geometry.intersect",
           "input",
           "Input",
           "EventTouch.getLocation",
@@ -10330,11 +10307,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7bc28ca313c2",
-        "source": "1b699dee9a45eaae",
+        "spec": "f21a20179694",
+        "source": "201da8ea96b81111",
         "candidate": "8746fc59b6aa0408",
-        "verified": 37,
-        "attested": 8,
+        "verified": 39,
+        "attested": 6,
         "units": 45
       }
     },
@@ -11685,7 +11662,7 @@
           "primitives.sphere",
           "primitives.capsule",
           "primitives.torus",
-          "Ray",
+          "geometry.Ray",
           "PhysicsGroup",
           "physics.selector",
           "physics.PhysicsSystem",
@@ -11779,11 +11756,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2dae8fd94551",
-        "source": "1b6ad95a984fffb3",
+        "spec": "9b2c4ac4792e",
+        "source": "11d87b8794c9e535",
         "candidate": "8746fc59b6aa0408",
-        "verified": 35,
-        "attested": 34,
+        "verified": 60,
+        "attested": 9,
         "units": 69
       }
     },
@@ -11907,8 +11884,8 @@
         "spec": "3ff3f3d53ed9",
         "source": "6f5ec74fcc298655",
         "candidate": "8746fc59b6aa0408",
-        "verified": 25,
-        "attested": 6,
+        "verified": 30,
+        "attested": 1,
         "units": 31
       }
     },
@@ -11969,7 +11946,7 @@
           "primitives.box",
           "primitives.sphere",
           "primitives.torus",
-          "Ray",
+          "geometry.Ray",
           "physics.PhysicsSystem.raycast",
           "physics.PhysicsSystem.syncSceneToPhysics",
           "physics.PhysicsSystem.step",
@@ -12039,11 +12016,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "ca48ced6399e",
-        "source": "b5e309975cb0a963",
+        "spec": "58000f69e95e",
+        "source": "4753b596e6ba21cb",
         "candidate": "8746fc59b6aa0408",
-        "verified": 34,
-        "attested": 7,
+        "verified": 39,
+        "attested": 2,
         "units": 41
       }
     },
@@ -12431,9 +12408,9 @@
           "AnimationClip",
           "AnimationClip.wrapMode",
           "frameObject",
-          "Ray",
-          "AABB",
-          "intersect",
+          "geometry.Ray",
+          "geometry.AABB",
+          "geometry.intersect",
           "EventTouch.getLocation",
           "input",
           "Input",
@@ -12505,11 +12482,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4bf3f38b6e50",
-        "source": "f56183e5669f6304",
+        "spec": "e568b27b4292",
+        "source": "ce8c2f3d46c24e7f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 36,
-        "attested": 5,
+        "verified": 38,
+        "attested": 3,
         "units": 41
       }
     },
@@ -13017,7 +12994,7 @@
         "supporting": [
           "PointLight",
           "SceneGlobals.ambient",
-          "Light.destroy"
+          "Component.destroy"
         ],
         "claims": [
           "createAirApp",
@@ -13033,7 +13010,7 @@
           "Camera.worldToScreen",
           "DirectionalLight",
           "PointLight",
-          "Light.destroy",
+          "Component.destroy",
           "Layers",
           "math.Vec3",
           "math.Color",
@@ -13101,11 +13078,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f2a8eecaa3c9",
-        "source": "f3bc5f329a814950",
+        "spec": "2722e26e69ef",
+        "source": "eed46d5241592949",
         "candidate": "8746fc59b6aa0408",
-        "verified": 28,
-        "attested": 4,
+        "verified": 29,
+        "attested": 3,
         "units": 32
       }
     },
@@ -14011,7 +13988,7 @@
           "Camera",
           "Node.addComponent",
           "Layers",
-          "Layers.DEFAULT",
+          "Layers.Enum",
           "math.Color"
         ],
         "claims": [
@@ -14022,7 +13999,7 @@
           "Camera",
           "Node.addComponent",
           "Layers",
-          "Layers.DEFAULT",
+          "Layers.Enum",
           "math.Color"
         ]
       },
@@ -14057,8 +14034,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4efbf96c2741",
-        "source": "5643bb4d6e2b8540",
+        "spec": "caf382e1364f",
+        "source": "5c2b55c4103485c7",
         "candidate": "8746fc59b6aa0408",
         "verified": 8,
         "attested": 1,
@@ -14570,7 +14547,6 @@
           "Texture2D.toString",
           "Texture2D.reset",
           "Texture2D.releaseTexture",
-          "Texture2D.base",
           "Texture2D.initDefault",
           "Texture2D.validate"
         ]
@@ -14608,12 +14584,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2644a73fb04f",
-        "source": "d5b512b6239cdb75",
+        "spec": "06b86e15335c",
+        "source": "2ddf9d4b035baa4f",
         "candidate": "8746fc59b6aa0408",
         "verified": 27,
-        "attested": 1,
-        "units": 28
+        "attested": 0,
+        "units": 27
       }
     },
     {
@@ -15101,8 +15077,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2a7a2f994bba",
-        "source": "ab630306fdea9afa",
+        "spec": "2689747c5522",
+        "source": "0a8823359f0bd485",
         "candidate": "8746fc59b6aa0408",
         "verified": 36,
         "attested": 1,
@@ -15618,8 +15594,7 @@
           "VideoPlayer.pause",
           "VideoPlayer.resume",
           "VideoPlayer.videoPlayerEvent",
-          "VideoPlayer.REMOTE",
-          "VideoPlayer.LOCAL",
+          "VideoPlayer.ResourceType",
           "EventHandler.target",
           "EventHandler.component",
           "EventHandler.handler",
@@ -15663,8 +15638,7 @@
           "VideoPlayer.pause",
           "VideoPlayer.resume",
           "VideoPlayer.videoPlayerEvent",
-          "VideoPlayer.REMOTE",
-          "VideoPlayer.LOCAL",
+          "VideoPlayer.ResourceType",
           "VideoClip",
           "assetManager",
           "screen",
@@ -15725,12 +15699,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "db60ff8c7e06",
-        "source": "a2cc5d2b37a6dd0b",
+        "spec": "a72fa4472915",
+        "source": "159c0548a29b166b",
         "candidate": "8746fc59b6aa0408",
         "verified": 24,
-        "attested": 13,
-        "units": 37
+        "attested": 12,
+        "units": 36
       }
     },
     {

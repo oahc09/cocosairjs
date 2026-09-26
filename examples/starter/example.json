@@ -15,7 +15,7 @@
     "Camera",
     "Node.addComponent",
     "Layers",
-    "Layers.DEFAULT",
+    "Layers.Enum",
     "math.Color"
   ],
   "capabilities": ["basics"],
@@ -43,7 +43,7 @@
   },
   "api": {
     "primary": ["createAirApp", "Scene"],
-    "supporting": ["Node", "Node.addChild", "Camera", "Node.addComponent", "Layers", "Layers.DEFAULT", "math.Color"],
+    "supporting": ["Node", "Node.addChild", "Camera", "Node.addComponent", "Layers", "Layers.Enum", "math.Color"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -52,7 +52,7 @@
       "Camera",
       "Node.addComponent",
       "Layers",
-      "Layers.DEFAULT",
+      "Layers.Enum",
       "math.Color"
     ],
     "forbiddenShortcut": [
@@ -104,7 +104,7 @@
         "sourceLocation": "L28"
       },
       {
-        "api": "Layers.DEFAULT",
+        "api": "Layers.Enum",
         "source": "src/main.ts",
         "validator": "visible-frame",
         "sourceLocation": "L28"
@@ -138,8 +138,8 @@
     "assets": "无第三方资产（程序化场景，代码随仓库 MIT 授权）"
   },
   "promotion": {
-    "spec": "4efbf96c2741",
-    "source": "5643bb4d6e2b8540",
+    "spec": "caf382e1364f",
+    "source": "5c2b55c4103485c7",
     "candidate": "8746fc59b6aa0408",
     "verified": 8,
     "attested": 1,

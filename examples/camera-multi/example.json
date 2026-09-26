@@ -20,7 +20,7 @@
   },
   "api": {
     "primary": ["Camera", "Layers"],
-    "supporting": ["Layers.makeMaskInclude", "Node.setPosition"],
+    "supporting": ["Layers.Enum", "Node.setPosition"],
     "claims": [
       "createAirApp",
       "Scene",
@@ -29,7 +29,7 @@
       "Camera",
       "DirectionalLight",
       "Layers",
-      "Layers.makeMaskInclude",
+      "Layers.Enum",
       "math.Vec3",
       "math.Color",
       "Material",
@@ -87,10 +87,10 @@
         "sourceLocation": "L45"
       },
       {
-        "api": "Layers.makeMaskInclude",
+        "api": "Layers.Enum",
         "validator": "node-exists",
         "source": "src/main.ts",
-        "sourceLocation": "L81"
+        "sourceLocation": "L45"
       },
       {
         "api": "math.Vec3",
@@ -301,11 +301,11 @@
     }
   },
   "promotion": {
-    "spec": "4cc883e74e9f",
-    "source": "d5f77480d1490d5e",
+    "spec": "e428c783e31d",
+    "source": "7fec7450acdbcb31",
     "candidate": "8746fc59b6aa0408",
-    "verified": 19,
-    "attested": 0,
+    "verified": 18,
+    "attested": 1,
     "units": 19
   }
 }

@@ -77,17 +77,17 @@ var b = new Vec2(1, 2);
 var o = new Vec2();
 var m = new Mat4();
 T('equals', () => (Vec2 as any).equals(a, b));
-T('equals2f', () => (Vec2 as any).equals2f(a, 1, 2));
+T('equals2f', () => a.equals2f(1, 2));
 T('strictEq', () => (Vec2 as any).strictEquals(a, b));
-T('strictEq2f', () => (Vec2 as any).strictEquals2f(b, 1, 2));
+T('strictEq2f', () => b.strictEquals2f(1, 2));
 T('toString', () => typeof a.toString());
 T('lerp', () => {
     (Vec2 as any).lerp(o, new Vec2(0, 0), new Vec2(10, 10), 0.5);
     return o.x + ',' + o.y;
 });
 T('clampf', () => {
-    (Vec2 as any).clampf(o, new Vec2(0, 0), new Vec2(1, 1));
-    return o.x <= 1 && o.y <= 1;
+    o.set(2, -1).clampf(new Vec2(0, 0), new Vec2(1, 1));
+    return o.x === 1 && o.y === 0;
 });
 T('xform', () => {
     (Mat4 as any).identity(m);

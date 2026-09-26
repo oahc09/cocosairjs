@@ -77,20 +77,20 @@ var v = new Vec2(3, 4);
 var o = new Vec2();
 T('dot', () => (Vec2 as any).dot(x, y));
 T('cross', () => (Vec2 as any).cross(x, y));
-T('len', () => (Vec2 as any).length(v));
+T('len', () => v.length());
 T('lenSqr', () => (Vec2 as any).lengthSqr(v));
 T('norm', () => {
     (Vec2 as any).normalize(o, v);
     return Math.round(o.x * 100) + ',' + Math.round(o.y * 100);
 });
 T('angle', () => Math.round((Vec2 as any).angle(x, y) * 100) / 100);
-T('signAngle', () => Math.round((Vec2 as any).signAngle(x, y) * 100) / 100);
+T('signAngle', () => Math.round(x.signAngle(y) * 100) / 100);
 T('rotate', () => {
-    (Vec2 as any).rotate(o, x, Math.PI / 2);
+    o.set(x.x, x.y).rotate(Math.PI / 2);
     return Math.round(o.x) + ',' + Math.round(o.y);
 });
 T('project', () => {
-    (Vec2 as any).project(o, new Vec2(5, 0), new Vec2(1, 1));
+    o.set(5, 0).project(new Vec2(1, 1));
     return Math.round(o.x);
 });
 probe.topic = 'math-vec2-length-angle';

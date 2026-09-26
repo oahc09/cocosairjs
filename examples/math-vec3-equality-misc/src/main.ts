@@ -77,17 +77,17 @@ var b = new Vec3(1, 2, 3);
 var o = new Vec3();
 var m = new Mat4();
 T('equals', () => (Vec3 as any).equals(a, b));
-T('equals3f', () => (Vec3 as any).equals3f(a, 1, 2, 3));
+T('equals3f', () => a.equals3f(1, 2, 3));
 T('strictEq', () => (Vec3 as any).strictEquals(a, b));
-T('strictEq3f', () => (Vec3 as any).strictEquals3f(b, 1, 2, 3));
+T('strictEq3f', () => b.strictEquals3f(1, 2, 3));
 T('toString', () => typeof b.toString());
 T('lerp', () => {
     (Vec3 as any).lerp(o, new Vec3(0, 0, 0), new Vec3(10, 20, 30), 0.5);
     return o.x + ',' + o.z;
 });
 T('clampf', () => {
-    (Vec3 as any).clampf(o, new Vec3(0, 0, 0), new Vec3(1, 1, 1));
-    return o.x <= 1;
+    o.set(2, -1, 3).clampf(new Vec3(0, 0, 0), new Vec3(1, 1, 1));
+    return o.x === 1 && o.y === 0 && o.z === 1;
 });
 T('xform', () => {
     (Mat4 as any).identity(m);
@@ -98,7 +98,7 @@ T('xform', () => {
     return o.x + ',' + o.y + ',' + o.z;
 });
 T('toVec2', () => {
-    var v2 = (Vec3 as any).toVec2(new (Vec3 as any)(), b);
+    var v2 = b.toVec2();
     return v2.x + ',' + v2.y;
 });
 a.x = 4;

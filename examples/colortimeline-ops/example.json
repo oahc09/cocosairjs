@@ -26,14 +26,14 @@
     "Material.setProperty",
     "utils.createMesh",
     "primitives.box",
-    "ColorTimeline.constructor",
-    "ColorTimeline.slotIndex",
-    "ColorTimeline.frames",
-    "ColorTimeline.getPropertyId",
-    "ColorTimeline.getSlotIndex",
-    "ColorTimeline.setSlotIndex",
-    "ColorTimeline.setFrame",
-    "ColorTimeline.apply"
+    "sp.spine.ColorTimeline.constructor",
+    "sp.spine.ColorTimeline.slotIndex",
+    "sp.spine.ColorTimeline.frames",
+    "sp.spine.ColorTimeline.getPropertyId",
+    "sp.spine.ColorTimeline.getSlotIndex",
+    "sp.spine.ColorTimeline.setSlotIndex",
+    "sp.spine.ColorTimeline.setFrame",
+    "sp.spine.ColorTimeline.apply"
   ],
   "capabilities": [],
   "learning": {
@@ -45,7 +45,7 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 255,175,175）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["ColorTimeline.frames", "ColorTimeline.apply"],
+    "primary": ["sp.spine.ColorTimeline.frames", "sp.spine.ColorTimeline.apply"],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -81,14 +81,14 @@
       "Material.setProperty",
       "utils.createMesh",
       "primitives.box",
-      "ColorTimeline.constructor",
-      "ColorTimeline.slotIndex",
-      "ColorTimeline.frames",
-      "ColorTimeline.getPropertyId",
-      "ColorTimeline.getSlotIndex",
-      "ColorTimeline.setSlotIndex",
-      "ColorTimeline.setFrame",
-      "ColorTimeline.apply"
+      "sp.spine.ColorTimeline.constructor",
+      "sp.spine.ColorTimeline.slotIndex",
+      "sp.spine.ColorTimeline.frames",
+      "sp.spine.ColorTimeline.getPropertyId",
+      "sp.spine.ColorTimeline.getSlotIndex",
+      "sp.spine.ColorTimeline.setSlotIndex",
+      "sp.spine.ColorTimeline.setFrame",
+      "sp.spine.ColorTimeline.apply"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -201,49 +201,49 @@
         "sourceLocation": "L50"
       },
       {
-        "api": "ColorTimeline.constructor",
+        "api": "sp.spine.ColorTimeline.constructor",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L58"
       },
       {
-        "api": "ColorTimeline.slotIndex",
+        "api": "sp.spine.ColorTimeline.slotIndex",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L121"
       },
       {
-        "api": "ColorTimeline.frames",
+        "api": "sp.spine.ColorTimeline.frames",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L95"
       },
       {
-        "api": "ColorTimeline.getPropertyId",
+        "api": "sp.spine.ColorTimeline.getPropertyId",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L103"
       },
       {
-        "api": "ColorTimeline.getSlotIndex",
+        "api": "sp.spine.ColorTimeline.getSlotIndex",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L86"
       },
       {
-        "api": "ColorTimeline.setSlotIndex",
+        "api": "sp.spine.ColorTimeline.setSlotIndex",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L85"
       },
       {
-        "api": "ColorTimeline.setFrame",
+        "api": "sp.spine.ColorTimeline.setFrame",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L94"
       },
       {
-        "api": "ColorTimeline.apply",
+        "api": "sp.spine.ColorTimeline.apply",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L112"
@@ -279,8 +279,8 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "2134116accb0",
-    "source": "557dece4c7386b13",
+    "spec": "f8dbf91bb42e",
+    "source": "441178b88666598b",
     "candidate": "8746fc59b6aa0408",
     "verified": 18,
     "attested": 8,

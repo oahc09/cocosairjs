@@ -35,6 +35,15 @@ requireCheck(
     coverage.inventoryFingerprint === sha16('docs/example-api-inventory.json'),
     'coverage inventory fingerprint is stale',
 );
+requireCheck(
+    inventory.sourceFingerprint === sha16('build/cocosair.module.d.ts'),
+    'API inventory was generated from a different declaration bundle',
+);
+requireCheck(/^[0-9a-f]{16}$/.test(inventory.apiInventoryRevision || ''), 'API inventory revision is missing');
+requireCheck(
+    coverage.apiInventoryRevision === inventory.apiInventoryRevision,
+    'coverage report belongs to another API inventory revision',
+);
 requireCheck((coverage.inventoryConsistency || []).length === 0, 'coverage inventory is inconsistent');
 requireCheck((coverage.staleEvidenceExamples || []).length === 0, 'coverage evidence is stale');
 requireCheck((coverage.evidenceSchemaGaps || []).length === 0, 'coverage evidence has schema gaps');
