@@ -479,3 +479,7 @@ example 侧签名与当期 d.ts 不符——属于并行线的修复范围，本
 - **GLTFAsset 销毁后读取**：遵循资产生命周期合同，调用方必须用 `isValid` 守卫；本轮不把已销毁资产访问改为静默空值。
 
 §7 的原始观察保留为历史排查记录，当前结论以本节及本轮验收记录为准。
+
+## GAP-T1：Tween 嵌入反转序列的终点偏差（覆盖波次 1，待处理）
+
+`reverseTime(embedTween)` 包装 `by` 相对位移动作时，起点 x=3、偏移 +2，反转完成后实测停在 x=5，预期为 x=3。无嵌入参数的直接 `by(...).reverseTime()` 路径已通过三浏览器验证。方法级 verified 只覆盖后者，不代表此分支正确。复现与失败证据见 `docs/evidence/coverage-wave1-reverse-time-diagnostic.json`，波次说明见 `docs/api-coverage-wave1.md`。后续应在隔离回归用例中定位 Sequence 的反向重启与起点捕获，再按上游映射规则处理。

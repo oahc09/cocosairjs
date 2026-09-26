@@ -15,10 +15,12 @@ import {
     Layers,
     Vec3,
     tween,
+    Tween,
     utils,
     primitives,
     builtinResMgr,
 } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 const app = await createAirApp({ canvas: '#GameCanvas' });
 window.__airApp = app; // 开发面板/agent session 显式绑定入口（V0.5.1 T5）
@@ -47,6 +49,42 @@ function pingpong(): void {
         .to(1.2, { position: new Vec3(-3, 0, 0) }, { easing: 'sineInOut', onComplete: pingpong })
         .start();
 }
-pingpong();
-
 app.run(scene);
+installAssetLifecycle({
+    label: 'tween-basic',
+    hold: () => [
+        { name: 'moving-node', ref: cube },
+        { name: 'moving-mesh', ref: r.mesh },
+    ],
+    release: () => {
+        // Stop callbacks before replacing the captured target.
+        Tween.stopAllByTarget(cube);
+        const mesh = r.mesh;
+        r.mesh = null;
+        cube.destroy();
+        if (mesh) mesh.destroy();
+    },
+    reacquire: async () => {
+        cube = new Node('tween-cube');
+        cube.layer = Layers.Enum.DEFAULT;
+        cube.setPosition(new Vec3(-3, 0, 0));
+        scene.addChild(cube);
+        r = cube.addComponent(MeshRenderer);
+        r.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+        r.material = builtinResMgr.get('builtin-standard-material');
+        pingpong();
+        return [
+            { name: 'moving-node', ref: cube },
+            { name: 'moving-mesh', ref: r.mesh },
+        ];
+    },
+});
+void import('./tween-contract.js')
+    .then(async ({ verifyTweenControl }) => {
+        await verifyTweenControl();
+        pingpong();
+    })
+    .catch((error) => {
+        if ((window as any).__trialProbe) (window as any).__trialProbe.ready = true;
+        throw error;
+    });

@@ -210,19 +210,19 @@
         "api": "AudioSource",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L284"
+        "sourceLocation": "L285"
       },
       {
         "api": "AudioClip",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L322"
+        "sourceLocation": "L329"
       },
       {
         "api": "AudioPCMDataView",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L349"
+        "sourceLocation": "L356"
       },
       {
         "api": "AudioPCMDataView.getData",
@@ -234,7 +234,7 @@
         "api": "AudioClip.validate",
         "source": "main.js",
         "validator": "no-runtime-error",
-        "sourceLocation": "L323"
+        "sourceLocation": "L330"
       },
       {
         "api": "AudioClip.getDuration",
@@ -246,37 +246,37 @@
         "api": "AudioSource.play",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L301"
+        "sourceLocation": "L303"
       },
       {
         "api": "AudioSource.pause",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L391"
+        "sourceLocation": "L395"
       },
       {
         "api": "AudioSource.stop",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L516"
+        "sourceLocation": "L520"
       },
       {
         "api": "AudioSource.playOneShot",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L472"
+        "sourceLocation": "L476"
       },
       {
         "api": "AudioSource.getPCMData",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L343"
+        "sourceLocation": "L350"
       },
       {
         "api": "AudioSource.getSampleRate",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L342"
+        "sourceLocation": "L349"
       },
       {
         "api": "Node.addChild",
@@ -294,7 +294,7 @@
         "api": "Node.on",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L498"
+        "sourceLocation": "L502"
       }
     ]
   },
@@ -388,8 +388,8 @@
     "assets": "无第三方资产：`assets/tone.wav`（25,644 B，sha256 前 16 位 744d7e437a5235ac）由仓库内 `tools/fixtures/make-tone-wav.cjs` 手写 RIFF/PCM 生成（mono/16-bit/8000 Hz/1.600 s，前半 440 Hz@0.50、后半 660 Hz@0.25，段首尾 88 样本线性包络），无编码器依赖。audio 模块为 cocos4 上游 TypeScript 端口（`src/cocos/audio/*` 6 文件逐字节同源，登记在 `docs/upstream-file-map.json`），`pal/audio` 为官方发布物 vendored（`src/pal/audio/**`，许可按 UNLICENSED 口径单独登记）"
   },
   "promotion": {
-    "spec": "314a178a8b05",
-    "source": "f643036bfb2f575b",
+    "spec": "7ac2fe951476",
+    "source": "38d2fec0f38626ee",
     "candidate": "8746fc59b6aa0408",
     "verified": 26,
     "attested": 2,

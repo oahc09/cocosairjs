@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-26T07:05:29.776Z",
-  "revision": "b07a191",
+  "generatedAt": "2026-09-26T10:22:28.487Z",
+  "revision": "8867d14",
   "examples": [
     {
       "dir": "anim-position",
@@ -321,8 +321,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "314a178a8b05",
-        "source": "f643036bfb2f575b",
+        "spec": "7ac2fe951476",
+        "source": "38d2fec0f38626ee",
         "candidate": "8746fc59b6aa0408",
         "verified": 26,
         "attested": 2,
@@ -1477,8 +1477,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "c78aff993ad8",
-        "source": "930880f0bb6826bd",
+        "spec": "a7f63fc705a1",
+        "source": "097992b17ba74405",
         "candidate": "8746fc59b6aa0408",
         "verified": 35,
         "attested": 2,
@@ -1812,8 +1812,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "70226909db1a",
-        "source": "2ce4f5dc9c17474d",
+        "spec": "5224b3c3a036",
+        "source": "01feed613351fe17",
         "candidate": "8746fc59b6aa0408",
         "verified": 26,
         "attested": 2,
@@ -10775,15 +10775,16 @@
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
-        "goal": "理解 Node 父子层级：旋转父节点时整条子链一起运动（world = parent world × local）",
+        "goal": "通过机械臂层级和确定性坐标契约，学习父节点旋转/缩放、世界空间设置及矩阵拆分。",
         "points": [
           "用 addChild 组装 Root → Arm → Hand 层级",
           "理解 local transform 与 world transform 的叠加关系",
-          "用 getChildByName 按名称解析节点"
+          "用 getChildByName 按名称解析节点",
+          "页内 __trialProbe 必须完成行为断言，失败抛出运行期错误；不会用 try 兜底冒充支持"
         ]
       },
       "effect": {
-        "functional": "Scene 中 Root(Arm(Hand)) 三层嵌套；Root 每帧绕 Y 旋转；Hand 的世界位置随 Root 旋转持续变化；getChildByName 链式解析命中同一 Hand 实例。",
+        "functional": "Scene 中 Root(Arm(Hand)) 三层嵌套；Root 每帧绕 Y 旋转；Hand 的世界位置随 Root 旋转持续变化；getChildByName 链式解析命中同一 Hand 实例。 启动时完成独立行为契约，具体断言由 __trialProbe 交给正典验证器检查。",
         "visual": "机械臂式三节结构（蓝根/绿臂/橙手）绕中心缓慢旋转，子节点的位移轨迹随父节点转动"
       },
       "api": {
@@ -10815,7 +10816,27 @@
           "Node.getChildByName",
           "Node.setPosition",
           "Node.setScale",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "Node.getPosition",
+          "Node.getWorldPosition",
+          "Node.inverseTransformPoint",
+          "Node.setWorldPosition",
+          "Node.setWorldScale",
+          "Node.getWorldScale",
+          "Node.getScale",
+          "Node.setRotation",
+          "Node.getRotation",
+          "Node.setWorldRotation",
+          "Node.getWorldRotation",
+          "Node.setWorldRotationFromEuler",
+          "Node.translate",
+          "Node.rotate",
+          "Node.updateWorldTransform",
+          "Node.getWorldMatrix",
+          "Node.getWorldRS",
+          "Node.getWorldRT",
+          "Node.setRTS",
+          "Node.getPathInHierarchy"
         ]
       },
       "capabilities": [
@@ -10855,12 +10876,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e11498af6216",
-        "source": "6cb8913624985ef6",
+        "spec": "1bfb8e53fd5c",
+        "source": "cb3105bd3025cda6",
         "candidate": "8746fc59b6aa0408",
-        "verified": 20,
+        "verified": 40,
         "attested": 0,
-        "units": 20
+        "units": 40
       }
     },
     {
@@ -14260,8 +14281,8 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4864fea4e269",
-        "source": "11b8e2e140a094de",
+        "spec": "b73eafe44754",
+        "source": "ff2b442ea1080e8f",
         "candidate": "8746fc59b6aa0408",
         "verified": 25,
         "attested": 2,
@@ -14982,15 +15003,16 @@
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
-        "goal": "tween() 补间链：.to 多段 + 缓动 + onComplete 循环续接",
+        "goal": "学习可视补间以及暂停/恢复、组合、克隆、重复、反转与节点移除的完整控制流程。",
         "points": [
           "tween(target) 工厂与链式 .to",
           "easing: \"sineInOut\" 缓动",
-          "onComplete 自续接形成往返循环"
+          "onComplete 自续接形成往返循环",
+          "页内 __trialProbe 必须完成行为断言，失败抛出运行期错误；不会用 try 兜底冒充支持"
         ]
       },
       "effect": {
-        "functional": "tween-cube 的 position 由补间驱动在 x=-3 与 x=3 之间往返（sineInOut），onComplete 续接实现持续运动；非 setInterval 覆盖。",
+        "functional": "tween-cube 的 position 由补间驱动在 x=-3 与 x=3 之间往返（sineInOut），onComplete 续接实现持续运动；非 setInterval 覆盖。 启动时完成独立行为契约，具体断言由 __trialProbe 交给正典验证器检查。 __lifecycle 先停止补间，再释放自有节点和网格，重新创建同构目标并恢复动画；内建共享材质不由示例销毁。",
         "visual": "立方体在左右两端之间平滑往返，两端缓入缓出"
       },
       "api": {
@@ -15016,7 +15038,29 @@
           "primitives.box",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "Tween.bindNodeState",
+          "Tween.tag",
+          "Tween.id",
+          "Tween.getTarget",
+          "Tween.stop",
+          "Tween.pause",
+          "Tween.resume",
+          "Tween.clone",
+          "Tween.union",
+          "Tween.by",
+          "Tween.set",
+          "Tween.sequence",
+          "Tween.parallel",
+          "Tween.timeScale",
+          "Tween.getTimeScale",
+          "Tween.repeat",
+          "Tween.repeatForever",
+          "Tween.reverseTime",
+          "Tween.reverse",
+          "Tween.stopAll",
+          "Tween.removeSelf",
+          "Tween.destroySelf"
         ]
       },
       "capabilities": [
@@ -15051,16 +15095,18 @@
           "visible-frame",
           "frame-diff"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
       "promotion": {
-        "spec": "7c414aa0e623",
-        "source": "afb6b00fc4627a34",
+        "spec": "2a7a2f994bba",
+        "source": "ab630306fdea9afa",
         "candidate": "8746fc59b6aa0408",
-        "verified": 14,
+        "verified": 36,
         "attested": 1,
-        "units": 15
+        "units": 37
       }
     },
     {

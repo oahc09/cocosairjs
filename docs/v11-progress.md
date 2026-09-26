@@ -327,3 +327,7 @@ p2c 30000→65000：56.6→85.6→56.6（姿态钉死后确定性基线）；g4-
 ## 2026-09-26 接口场景验收修复
 
 本计划新增 13 例在 Chromium/Firefox/WebKit 下全部通过；WebKit 采用与 Playwright 1.61.0 配套的 2311 构建，r52 的环境阻断记录为历史状态。完整修复与验证清单见 `docs/interface-scenarios-repair-report.md`。Core/Important 分母和原有门槛均未调整，verified 保持 439。
+
+## 覆盖波次 1：节点变换与 Tween 控制
+
+在现有 `node-hierarchy`、`tween-basic` 中加入 32 项严格行为断言，新增 Core 20 / Important 22 个 verified 单元。正典全量 140/140 通过；覆盖总量由 439 增至 481，旧单元无减少，stale=0、schema gap=0。三浏览器定向验证各 2/2。嵌入 reverseTime 分支的终点偏差单列 GAP-T1，不把此异常路径当作能力通过。完整记录见 `docs/api-coverage-wave1.md`。

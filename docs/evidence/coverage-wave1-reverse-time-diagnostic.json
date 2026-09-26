@@ -1,0 +1,83 @@
+{
+  "status": "KNOWN_GAP",
+  "engineCandidate": "8746fc59b6aa0408",
+  "reproduction": "const target={x:3}; tween(target).reverseTime(tween(target).by(0.2,{x:2})).call(() => console.log(target.x)).start();",
+  "expected": 3,
+  "observed": 5,
+  "evidence": {
+    "measuredAt": "2026-09-26T09:42:20.486Z",
+    "runner": "tools/verify/g1-trial-run.cjs (trial, non-canonical)",
+    "outDir": "C:\\Users\\caosh\\AppData\\Local\\Temp\\cocosair-g1-trial",
+    "results": [
+      {
+        "id": "tween-basic",
+        "ms": 4384,
+        "verdict": "FAIL",
+        "probe": {
+          "ready": true,
+          "ok": false,
+          "checks": [
+            {
+              "name": "target-identity",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "name": "time-scale-readback",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "name": "pause-freezes",
+              "ok": true,
+              "detail": "3.4579999998211868"
+            },
+            {
+              "name": "resume-reaches-end",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "name": "stop-freezes",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "name": "sequence-and-parallel-endpoints",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "name": "clone-union-repeat",
+              "ok": true,
+              "detail": "{\"x\":3,\"y\":6}"
+            },
+            {
+              "name": "clone-does-not-change-original",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "name": "reverse-by-id-restores",
+              "ok": true,
+              "detail": ""
+            },
+            {
+              "name": "reverse-time-restores-start",
+              "ok": false,
+              "detail": "x=5"
+            }
+          ]
+        },
+        "consoleErrors": [],
+        "pageErrors": [
+          "Error: reverse-time-restores-start: x=5\n    at check (http://127.0.0.1:53039/examples/tween-basic/src/tween-contract.js:15:20)\n    at verifyTweenControl (http://127.0.0.1:53039/examples/tween-basic/src/tween-contract.js:68:3)\n    at async http://127.0.0.1:53039/examples/tween-basic/src/main.ts:40:3"
+        ],
+        "runError": null,
+        "failedChecks": [
+          "reverse-time-restores-start: x=5"
+        ]
+      }
+    ]
+  }
+}

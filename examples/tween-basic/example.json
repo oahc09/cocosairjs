@@ -4,7 +4,33 @@
   "title": "Tween Basic",
   "category": "animation",
   "status": "stable",
-  "apiClaims": ["Node.setPosition", "Scene", "Camera"],
+  "apiClaims": [
+    "Node.setPosition",
+    "Scene",
+    "Camera",
+    "Tween.bindNodeState",
+    "Tween.tag",
+    "Tween.id",
+    "Tween.getTarget",
+    "Tween.stop",
+    "Tween.pause",
+    "Tween.resume",
+    "Tween.clone",
+    "Tween.union",
+    "Tween.by",
+    "Tween.set",
+    "Tween.sequence",
+    "Tween.parallel",
+    "Tween.timeScale",
+    "Tween.getTimeScale",
+    "Tween.repeat",
+    "Tween.repeatForever",
+    "Tween.reverseTime",
+    "Tween.reverse",
+    "Tween.stopAll",
+    "Tween.removeSelf",
+    "Tween.destroySelf"
+  ],
   "capabilities": ["animation"],
   "benchmarkRefs": [],
   "recipeRefs": [],
@@ -13,16 +39,21 @@
     "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
     "interaction": [],
     "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": [],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
-    "goal": "tween() 补间链：.to 多段 + 缓动 + onComplete 循环续接",
-    "points": ["tween(target) 工厂与链式 .to", "easing: \"sineInOut\" 缓动", "onComplete 自续接形成往返循环"]
+    "goal": "学习可视补间以及暂停/恢复、组合、克隆、重复、反转与节点移除的完整控制流程。",
+    "points": [
+      "tween(target) 工厂与链式 .to",
+      "easing: \"sineInOut\" 缓动",
+      "onComplete 自续接形成往返循环",
+      "页内 __trialProbe 必须完成行为断言，失败抛出运行期错误；不会用 try 兜底冒充支持"
+    ]
   },
   "effect": {
-    "functional": "tween-cube 的 position 由补间驱动在 x=-3 与 x=3 之间往返（sineInOut），onComplete 续接实现持续运动；非 setInterval 覆盖。",
+    "functional": "tween-cube 的 position 由补间驱动在 x=-3 与 x=3 之间往返（sineInOut），onComplete 续接实现持续运动；非 setInterval 覆盖。 启动时完成独立行为契约，具体断言由 __trialProbe 交给正典验证器检查。 __lifecycle 先停止补间，再释放自有节点和网格，重新创建同构目标并恢复动画；内建共享材质不由示例销毁。",
     "visual": "立方体在左右两端之间平滑往返，两端缓入缓出"
   },
   "api": {
@@ -43,7 +74,29 @@
       "primitives.box",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.setRotationFromEuler",
+      "Tween.bindNodeState",
+      "Tween.tag",
+      "Tween.id",
+      "Tween.getTarget",
+      "Tween.stop",
+      "Tween.pause",
+      "Tween.resume",
+      "Tween.clone",
+      "Tween.union",
+      "Tween.by",
+      "Tween.set",
+      "Tween.sequence",
+      "Tween.parallel",
+      "Tween.timeScale",
+      "Tween.getTimeScale",
+      "Tween.repeat",
+      "Tween.repeatForever",
+      "Tween.reverseTime",
+      "Tween.reverse",
+      "Tween.stopAll",
+      "Tween.removeSelf",
+      "Tween.destroySelf"
     ],
     "forbiddenShortcut": ["setInterval 线性改写位置冒充补间", "在 update 中手写插值替代 tween 合同"],
     "evidence": [
@@ -51,91 +104,223 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L23"
+        "sourceLocation": "L25"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L25"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L28"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L40"
+        "sourceLocation": "L42"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L30"
+        "sourceLocation": "L32"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L35"
+        "sourceLocation": "L37"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L30"
+        "sourceLocation": "L32"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L30"
       },
       {
         "api": "tween",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L45"
+        "sourceLocation": "L47"
       },
       {
         "api": "builtinResMgr",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L42"
+        "sourceLocation": "L44"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L41"
+        "sourceLocation": "L43"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L41"
+        "sourceLocation": "L43"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L27"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "Tween.bindNodeState",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L23",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.tag",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L24",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.id",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L77",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.getTarget",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L29",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.stop",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L43",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.pause",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L34",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.resume",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L38",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.clone",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L65",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.union",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L62",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.by",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L41",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.set",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L50",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.sequence",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L59",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.parallel",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L52",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.timeScale",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L30",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.getTimeScale",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L31",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.repeat",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L62",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.repeatForever",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L109",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.reverseTime",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L88",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.reverse",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L78",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.stopAll",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L111",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.removeSelf",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L123",
+        "validator": "no-runtime-error"
+      },
+      {
+        "api": "Tween.destroySelf",
+        "source": "src/tween-contract.ts",
+        "sourceLocation": "L130",
+        "validator": "no-runtime-error"
       }
     ]
   },
@@ -166,7 +351,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 28,
+            "line": 30,
             "text": "cam.setPosition(new Vec3(0, 3, 9));"
           }
         ],
@@ -177,7 +362,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 33,
+            "line": 35,
             "text": "light.setPosition(new Vec3(0, 8, 0));"
           }
         ],
@@ -213,11 +398,11 @@
     }
   },
   "promotion": {
-    "spec": "7c414aa0e623",
-    "source": "afb6b00fc4627a34",
+    "spec": "2a7a2f994bba",
+    "source": "ab630306fdea9afa",
     "candidate": "8746fc59b6aa0408",
-    "verified": 14,
+    "verified": 36,
     "attested": 1,
-    "units": 15
+    "units": 37
   }
 }

@@ -100,7 +100,7 @@
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L897"
+        "sourceLocation": "L903"
       },
       {
         "api": "Component",
@@ -184,49 +184,49 @@
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L859"
+        "sourceLocation": "L865"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L859"
+        "sourceLocation": "L865"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L807"
+        "sourceLocation": "L813"
       },
       {
         "api": "assetManager",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L893"
+        "sourceLocation": "L899"
       },
       {
         "api": "AudioSource",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L625"
+        "sourceLocation": "L626"
       },
       {
         "api": "AudioSource.play",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L841"
+        "sourceLocation": "L847"
       },
       {
         "api": "AudioSource.stop",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L840"
+        "sourceLocation": "L846"
       },
       {
         "api": "AudioClip.getDuration",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L647"
+        "sourceLocation": "L650"
       }
     ]
   },
@@ -344,7 +344,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 633,
+              "line": 636,
               "text": "(assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {"
             }
           ]
@@ -353,8 +353,8 @@
     }
   },
   "promotion": {
-    "spec": "70226909db1a",
-    "source": "2ce4f5dc9c17474d",
+    "spec": "5224b3c3a036",
+    "source": "01feed613351fe17",
     "candidate": "8746fc59b6aa0408",
     "verified": 26,
     "attested": 2,

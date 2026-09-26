@@ -177,49 +177,49 @@
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L792"
+        "sourceLocation": "L795"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L792"
+        "sourceLocation": "L795"
       },
       {
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L893"
+        "sourceLocation": "L896"
       },
       {
         "api": "assetManager",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L826"
+        "sourceLocation": "L829"
       },
       {
         "api": "AudioSource",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L569"
+        "sourceLocation": "L570"
       },
       {
         "api": "AudioSource.play",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L774"
+        "sourceLocation": "L777"
       },
       {
         "api": "AudioSource.stop",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L773"
+        "sourceLocation": "L776"
       },
       {
         "api": "AudioClip.getDuration",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L587"
+        "sourceLocation": "L590"
       }
     ]
   },
@@ -337,7 +337,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 579,
+              "line": 582,
               "text": "(assetManager as any).loadRemote('./assets/tone.wav', (err: unknown, clip: AudioClip) => {"
             }
           ]
@@ -346,8 +346,8 @@
     }
   },
   "promotion": {
-    "spec": "4864fea4e269",
-    "source": "11b8e2e140a094de",
+    "spec": "b73eafe44754",
+    "source": "ff2b442ea1080e8f",
     "candidate": "8746fc59b6aa0408",
     "verified": 25,
     "attested": 2,

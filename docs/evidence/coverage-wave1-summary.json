@@ -1,0 +1,94 @@
+{
+  "measuredAt": "2026-09-26T10:26:02.645Z",
+  "completed": true,
+  "baselineRevision": "8867d14",
+  "candidateFingerprint": "8746fc59b6aa0408",
+  "examplesEnhanced": [
+    "node-hierarchy",
+    "tween-basic"
+  ],
+  "totalVerified": {
+    "before": 439,
+    "after": 481,
+    "added": 42,
+    "removed": 0
+  },
+  "addedUnits": [
+    "Node.getPathInHierarchy",
+    "Node.getPosition",
+    "Node.getRotation",
+    "Node.getScale",
+    "Node.getWorldMatrix",
+    "Node.getWorldPosition",
+    "Node.getWorldRS",
+    "Node.getWorldRT",
+    "Node.getWorldRotation",
+    "Node.getWorldScale",
+    "Node.inverseTransformPoint",
+    "Node.rotate",
+    "Node.setRTS",
+    "Node.setRotation",
+    "Node.setWorldPosition",
+    "Node.setWorldRotation",
+    "Node.setWorldRotationFromEuler",
+    "Node.setWorldScale",
+    "Node.translate",
+    "Node.updateWorldTransform",
+    "Tween.bindNodeState",
+    "Tween.by",
+    "Tween.clone",
+    "Tween.destroySelf",
+    "Tween.getTarget",
+    "Tween.getTimeScale",
+    "Tween.id",
+    "Tween.parallel",
+    "Tween.pause",
+    "Tween.removeSelf",
+    "Tween.repeat",
+    "Tween.repeatForever",
+    "Tween.resume",
+    "Tween.reverse",
+    "Tween.reverseTime",
+    "Tween.sequence",
+    "Tween.set",
+    "Tween.stop",
+    "Tween.stopAll",
+    "Tween.tag",
+    "Tween.timeScale",
+    "Tween.union"
+  ],
+  "tiers": {
+    "core": {
+      "verified": 315,
+      "required": 816
+    },
+    "important": {
+      "verified": 55,
+      "required": 1773
+    }
+  },
+  "checks": {
+    "chromiumFull": "140/140",
+    "targeted": {
+      "chromium": "2/2",
+      "firefox": "2/2",
+      "webkit": "2/2"
+    },
+    "gallery": "210/210, lifecycle 44/44",
+    "jest": "32 suites / 263 tests",
+    "format": "PASS",
+    "typecheck": "PASS",
+    "apiEvidence": "3512 entries, zero drift",
+    "evidenceChain": "PASS"
+  },
+  "stale": 0,
+  "schemaGaps": 0,
+  "knownGaps": [
+    {
+      "id": "GAP-T1",
+      "api": "Tween.reverseTime(embedTween)",
+      "status": "documented, not fixed",
+      "evidence": "docs/evidence/coverage-wave1-reverse-time-diagnostic.json"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-26T07:05:31.010Z",
+  "generatedAt": "2026-09-26T10:22:28.919Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T07:03:46.229Z",
+      "measuredAt": "2026-09-26T10:21:29.208Z",
       "mode": "spec-driven-v3"
     },
     {
@@ -28,10 +28,10 @@
   "inventoryConsistency": [],
   "totalUnits": 8060,
   "totalRequired": 2589,
-  "totalClaimed": 720,
+  "totalClaimed": 762,
   "totalAttested": 281,
-  "totalVerified": 439,
-  "totalVerifiedViaCall": 425,
+  "totalVerified": 481,
+  "totalVerifiedViaCall": 467,
   "totalVerifiedViaRead": 14,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
@@ -2475,16 +2475,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 20,
-        "total": 20,
-        "hash": "edf90fffb91b0ef1"
+        "observed": 40,
+        "total": 40,
+        "hash": "62e4f6cba9c09f24"
       },
-      "claims": 20,
+      "claims": 40,
       "tally": {
-        "verified": 20,
+        "verified": 40,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 19,
+        "verifiedCall": 39,
         "verifiedRead": 1
       }
     },
@@ -3363,16 +3363,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 14,
-        "total": 15,
-        "hash": "9427afab4decc81d"
+        "observed": 36,
+        "total": 37,
+        "hash": "1ab930378cc7833f"
       },
-      "claims": 15,
+      "claims": 37,
       "tally": {
-        "verified": 14,
+        "verified": 36,
         "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 13,
+        "verifiedCall": 35,
         "verifiedRead": 1
       }
     },
@@ -3526,21 +3526,21 @@
       "denominator": "coverageRequired",
       "total": 816,
       "required": 816,
-      "claimed": 478,
+      "claimed": 498,
       "attested": 183,
-      "verified": 295,
-      "requiredClaimed": 478,
-      "requiredVerified": 295,
-      "verifiedViaCall": 293,
+      "verified": 315,
+      "requiredClaimed": 498,
+      "requiredVerified": 315,
+      "verifiedViaCall": 313,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 293,
+      "requiredVerifiedViaCall": 313,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.359,
-      "claimedRate": 0.586,
-      "verifiedRate": 0.362,
-      "allUnitsVerifiedRate": 0.362,
+      "requiredVerifiedViaCallRate": 0.384,
+      "claimedRate": 0.61,
+      "verifiedRate": 0.386,
+      "allUnitsVerifiedRate": 0.386,
       "gate": "floor 6% verified of coverageRequired (ratchet; V1.1 target 100% retained for disclosure)",
       "threshold": 0.06,
       "applicable": true,
@@ -3550,21 +3550,21 @@
       "denominator": "coverageRequired",
       "total": 1773,
       "required": 1773,
-      "claimed": 49,
+      "claimed": 71,
       "attested": 16,
-      "verified": 33,
-      "requiredClaimed": 49,
-      "requiredVerified": 33,
-      "verifiedViaCall": 31,
+      "verified": 55,
+      "requiredClaimed": 71,
+      "requiredVerified": 55,
+      "verifiedViaCall": 53,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 31,
+      "requiredVerifiedViaCall": 53,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.017,
-      "claimedRate": 0.028,
-      "verifiedRate": 0.019,
-      "allUnitsVerifiedRate": 0.019,
+      "requiredVerifiedViaCallRate": 0.03,
+      "claimedRate": 0.04,
+      "verifiedRate": 0.031,
+      "allUnitsVerifiedRate": 0.031,
       "gate": "floor 1% verified of coverageRequired (ratchet; V1.1 target 90% retained for disclosure)",
       "threshold": 0.01,
       "applicable": true,
@@ -8511,6 +8511,166 @@
       ]
     },
     {
+      "unit": "Node.getPosition",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getWorldPosition",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.inverseTransformPoint",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.setWorldPosition",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.setWorldScale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getWorldScale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getScale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.setRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.setWorldRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getWorldRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.setWorldRotationFromEuler",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.translate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.rotate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.updateWorldTransform",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getWorldMatrix",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getWorldRS",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getWorldRT",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.setRTS",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.getPathInHierarchy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
       "unit": "NodePool.constructor",
       "tier": "core",
       "via": "call",
@@ -9426,6 +9586,182 @@
       "via": "call",
       "examples": [
         "tiledmap-basic"
+      ]
+    },
+    {
+      "unit": "Tween.bindNodeState",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.tag",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.id",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.getTarget",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.stop",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.pause",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.resume",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.clone",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.union",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.by",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.set",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.sequence",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.parallel",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.timeScale",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.getTimeScale",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.repeat",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.repeatForever",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.reverseTime",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.reverse",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.stopAll",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.removeSelf",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.destroySelf",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
       ]
     },
     {
@@ -14081,32 +14417,12 @@
     "Node._onBatchCreated",
     "Node._onBeforeSerialize",
     "Node._onPostActivated",
-    "Node.translate",
-    "Node.rotate",
     "Node.invalidateChildren",
-    "Node.updateWorldTransform",
-    "Node.getPosition",
-    "Node.setRotation",
-    "Node.getRotation",
-    "Node.getScale",
-    "Node.inverseTransformPoint",
-    "Node.setWorldPosition",
-    "Node.getWorldPosition",
-    "Node.setWorldRotation",
-    "Node.setWorldRotationFromEuler",
-    "Node.getWorldRotation",
-    "Node.setWorldScale",
-    "Node.getWorldScale",
-    "Node.getWorldMatrix",
-    "Node.getWorldRS",
-    "Node.getWorldRT",
-    "Node.setRTS",
     "Node.isTransformDirty",
     "Node.pauseSystemEvents",
     "Node.resumeSystemEvents",
     "Node.resetHasChangedFlags",
     "Node.clearNodeArray",
-    "Node.getPathInHierarchy",
     "Scene.addComponent",
     "Scene._onHierarchyChanged",
     "Scene._onPostActivated",
@@ -14233,5 +14549,5 @@
     "LightingStage.destroy",
     "LightingStage.render"
   ],
-  "unclaimedRequired": 2062
+  "unclaimedRequired": 2020
 }

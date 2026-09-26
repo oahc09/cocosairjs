@@ -1,0 +1,1719 @@
+{
+  "measuredAt": "2026-09-26T10:08:43.783Z",
+  "runner": "tools/verify/v11-examples-verify.cjs",
+  "browser": "webkit",
+  "mode": "spec-driven-v3",
+  "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
+  "candidateFingerprint": "8746fc59b6aa0408",
+  "apiProofTotals": {
+    "verified": 76,
+    "attested": 1,
+    "unproven": 0
+  },
+  "total": 2,
+  "pass": 2,
+  "fail": 0,
+  "partial": true,
+  "completed": true,
+  "subset": [
+    "node-hierarchy",
+    "tween-basic"
+  ],
+  "runPass": 2,
+  "runTotal": 2,
+  "results": [
+    {
+      "id": "node-hierarchy",
+      "result": "PASS",
+      "specFingerprint": "1bfb8e53fd5c",
+      "sourceFingerprint": "cb3105bd3025cda6",
+      "candidateFingerprint": "8746fc59b6aa0408",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 575,
+        "unitCount": 40,
+        "bytes": 46150,
+        "hash": "62e4f6cba9c09f24",
+        "notes": [],
+        "observed": 40,
+        "total": 40
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 16,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Component",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 3,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 14,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 4,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 18,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 28,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material.setProperty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 42,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 7,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getChildByName",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getPathInHierarchy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getWorldMatrix",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getWorldPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getWorldRS",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getWorldRT",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getWorldRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.getWorldScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.inverseTransformPoint",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.rotate",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRTS",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 161,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setWorldPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setWorldRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setWorldRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setWorldScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.translate",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.updateWorldTransform",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 664,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 32,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "expectationGaps": {
+        "transform-equals": {
+          "compared": 5,
+          "graph": 5,
+          "missing": []
+        },
+        "material-property": {
+          "compared": 3,
+          "graph": 5,
+          "missing": [
+            "Main Camera",
+            "Main Light"
+          ]
+        },
+        "asset-loaded": {
+          "paths": 0,
+          "specAssets": 0,
+          "kinds": 0
+        }
+      },
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=6"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "5 expected nodes present"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "Root=builtin-standard{mainColor}, Arm=builtin-standard{mainColor}, Hand=builtin-standard{mainColor} | coverage 3/3 nodes authored"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "9 declared components matched (nodes 5/5 in graph) | coverage 5/5 nodes authored + 1 grounded exclusions"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=0.0135"
+        }
+      ],
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "local-position",
+            "ok": true,
+            "detail": "1,0,0"
+          },
+          {
+            "name": "rotated-scaled-world-position",
+            "ok": true,
+            "detail": "10,2.0000000000000004,0"
+          },
+          {
+            "name": "inverse-world-origin",
+            "ok": true,
+            "detail": "2.220446049250313e-16,0,0"
+          },
+          {
+            "name": "world-position-updates-local",
+            "ok": true,
+            "detail": "1.9999999999999996,-8.881784197001252e-16,0"
+          },
+          {
+            "name": "world-scale",
+            "ok": true,
+            "detail": "4,5.999999999999999,8"
+          },
+          {
+            "name": "local-scale-under-parent",
+            "ok": true,
+            "detail": "1.9999999999999996,2.999999999999999,4"
+          },
+          {
+            "name": "local-rotation",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "world-rotation",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "world-euler",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "local-translate-under-parent",
+            "ok": true,
+            "detail": "10,6.000000000000002,0"
+          },
+          {
+            "name": "local-rotate",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "world-matrix-origin",
+            "ok": true,
+            "detail": "10,6.000000000000002,0"
+          },
+          {
+            "name": "rotation-scale-excludes-translation",
+            "ok": true,
+            "detail": "0,0,0"
+          },
+          {
+            "name": "rotation-scale-keeps-scale",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "rotation-translation-keeps-position",
+            "ok": true,
+            "detail": "10,6.000000000000002,0"
+          },
+          {
+            "name": "rotation-translation-excludes-scale",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "hierarchy-path",
+            "ok": true,
+            "detail": "ContractRoot/Probe"
+          },
+          {
+            "name": "scratch-hierarchy-destroyed",
+            "ok": true,
+            "detail": ""
+          }
+        ]
+      },
+      "networkAssets": [],
+      "artifact": {
+        "path": "docs/evidence/coverage-wave1-webkit/node-hierarchy.png",
+        "bytes": 2753,
+        "hash": "e50a48ce7ec5894f"
+      },
+      "assetDigests": [],
+      "nodeCount": 0,
+      "errors": []
+    },
+    {
+      "id": "tween-basic",
+      "result": "PASS",
+      "specFingerprint": "2a7a2f994bba",
+      "sourceFingerprint": "ab630306fdea9afa",
+      "candidateFingerprint": "8746fc59b6aa0408",
+      "instrumentation": {
+        "name": "cocosair.traced.js",
+        "exports": 575,
+        "unitCount": 37,
+        "bytes": 45813,
+        "hash": "1ab930378cc7833f",
+        "notes": [
+          "Tween.stopAll: no own descriptor on prototype"
+        ],
+        "observed": 36,
+        "total": 37
+      },
+      "apiProof": [
+        {
+          "api": "Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 8,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 8,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Layers",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 3,
+          "via": "read",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "MeshRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 31,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 24,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.addChild",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setPosition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 108,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Node.setRotationFromEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.bindNodeState",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.by",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 8,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.destroySelf",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.getTarget",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 63,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.getTimeScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.id",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.parallel",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.pause",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.removeSelf",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.repeat",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.repeatForever",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.resume",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.reverse",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.reverseTime",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.sequence",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.stop",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.stopAll",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.tag",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.timeScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween.union",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "builtinResMgr",
+          "proof": "attested",
+          "state": "not-instrumentable",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "namespace",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createAirApp",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 9,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Vec3",
+          "observedVia": "Vec3",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "primitives.box",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "tween",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 17,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "frozen-namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        }
+      ],
+      "expectationGaps": {
+        "transform-equals": {
+          "compared": 3,
+          "graph": 3,
+          "missing": []
+        },
+        "material-property": {
+          "compared": 1,
+          "graph": 3,
+          "missing": [
+            "cam",
+            "light"
+          ]
+        },
+        "asset-loaded": {
+          "paths": 0,
+          "specAssets": 0,
+          "kinds": 0
+        }
+      },
+      "specDimensions": {
+        "ready": [
+          "scene-ready"
+        ],
+        "functional": [
+          "node-exists",
+          "transform-equals",
+          "no-runtime-error",
+          "material-property"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame",
+          "frame-diff"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "validatorResults": [
+        {
+          "validatorId": "scene-ready",
+          "state": "PASS",
+          "detail": "sceneId=scene-1 nodeCount=4"
+        },
+        {
+          "validatorId": "node-exists",
+          "state": "PASS",
+          "detail": "3 expected nodes present"
+        },
+        {
+          "validatorId": "material-property",
+          "state": "PASS",
+          "detail": "tween-cube=builtin-standard | coverage 1/1 nodes authored"
+        },
+        {
+          "validatorId": "transform-equals",
+          "state": "PASS",
+          "detail": "5 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored"
+        },
+        {
+          "validatorId": "no-runtime-error",
+          "state": "PASS",
+          "detail": "clean"
+        },
+        {
+          "validatorId": "frame-diff",
+          "state": "PASS",
+          "detail": "frame pixels change over time"
+        },
+        {
+          "validatorId": "visible-frame",
+          "state": "PASS",
+          "detail": "litRatio=1.0000"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "held=2 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
+        }
+      ],
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "target-identity",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "time-scale-readback",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "pause-freezes",
+            "ok": true,
+            "detail": "5.280000000000001"
+          },
+          {
+            "name": "resume-reaches-end",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "stop-freezes",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "sequence-and-parallel-endpoints",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clone-union-repeat",
+            "ok": true,
+            "detail": "{\"x\":3,\"y\":6}"
+          },
+          {
+            "name": "clone-does-not-change-original",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "reverse-by-id-restores",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "reverse-time-restores-start",
+            "ok": true,
+            "detail": "x=3"
+          },
+          {
+            "name": "tag-selective-stop",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "stop-all-stops-repeat-forever",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "remove-self-detaches",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "destroy-self-invalidates",
+            "ok": true,
+            "detail": ""
+          }
+        ]
+      },
+      "networkAssets": [],
+      "artifact": {
+        "path": "docs/evidence/coverage-wave1-webkit/tween-basic.png",
+        "bytes": 2375,
+        "hash": "25b8da2d3a7d33d0"
+      },
+      "assetDigests": [],
+      "nodeCount": 0,
+      "errors": []
+    }
+  ]
+}

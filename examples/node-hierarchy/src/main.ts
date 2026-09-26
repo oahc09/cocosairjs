@@ -94,3 +94,9 @@ var handNode = scene.getChildByName('Root')!.getChildByName('Arm')!.getChildByNa
 console.log('[node-hierarchy] hand resolved via getChildByName:', handNode === hand);
 
 app.run(scene);
+void import('./transform-contract.js')
+    .then(({ verifyTransforms }) => verifyTransforms())
+    .catch((error) => {
+        if ((window as any).__trialProbe) (window as any).__trialProbe.ready = true;
+        throw error;
+    });
