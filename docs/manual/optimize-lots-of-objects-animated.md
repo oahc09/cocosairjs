@@ -26,22 +26,22 @@ const baseX = new Float32Array(GRID * GRID);
 const baseZ = new Float32Array(GRID * GRID);
 const phase = new Float32Array(GRID * GRID);
 for (let ix = 0; ix < GRID; ix++) {
-  for (let iz = 0; iz < GRID; iz++) {
-    const i = ix * GRID + iz;
-    const x = (ix - (GRID - 1) / 2) * SPACING;
-    const z = (iz - (GRID - 1) / 2) * SPACING;
-    baseX[i] = x;
-    baseZ[i] = z;
-    phase[i] = Math.sqrt(x * x + z * z) * 0.9;
-    const cubeNode = new Node(`Cube-${i}`);
-    cubeNode.layer = Layers.Enum.DEFAULT;
-    cubeNode.setPosition(new Vec3(x, 0.5, z));
-    grid.addChild(cubeNode);
-    const renderer = cubeNode.addComponent(MeshRenderer);
-    renderer.mesh = sharedMesh;
-    renderer.material = sharedMaterial;
-    cubes.push(cubeNode);
-  }
+    for (let iz = 0; iz < GRID; iz++) {
+        const i = ix * GRID + iz;
+        const x = (ix - (GRID - 1) / 2) * SPACING;
+        const z = (iz - (GRID - 1) / 2) * SPACING;
+        baseX[i] = x;
+        baseZ[i] = z;
+        phase[i] = Math.sqrt(x * x + z * z) * 0.9;
+        const cubeNode = new Node(`Cube-${i}`);
+        cubeNode.layer = Layers.Enum.DEFAULT;
+        cubeNode.setPosition(new Vec3(x, 0.5, z));
+        grid.addChild(cubeNode);
+        const renderer = cubeNode.addComponent(MeshRenderer);
+        renderer.mesh = sharedMesh;
+        renderer.material = sharedMaterial;
+        cubes.push(cubeNode);
+    }
 }
 ```
 
@@ -49,16 +49,16 @@ for (let ix = 0; ix < GRID; ix++) {
 每帧循环里**不new任何对象**（`this._v` 是构造期分配的复用 Vec3）：
 
 ```js
-const t0 = performance.now();
-this._t += dt;
-this._frames++;
-for (let i = 0; i < cubes.length; i++) {
-  const y = 0.6 + Math.sin(this._t * 2.0 - phase[i]) * 0.55;
-  this._v.set(baseX[i], y, baseZ[i]);
-  cubes[i].setPosition(this._v);
-}
-const ms = performance.now() - t0;
-this._emaMs = this._emaMs === 0 ? ms : this._emaMs * 0.9 + ms * 0.1;
+        const t0 = performance.now();
+        this._t += dt;
+        this._frames++;
+        for (let i = 0; i < cubes.length; i++) {
+            const y = 0.6 + Math.sin(this._t * 2.0 - phase[i]) * 0.55;
+            this._v.set(baseX[i], y, baseZ[i]);
+            cubes[i].setPosition(this._v);
+        }
+        const ms = performance.now() - t0;
+        this._emaMs = this._emaMs === 0 ? ms : this._emaMs * 0.9 + ms * 0.1;
 ```
 
 `performance.now()` 差值做指数移动平均打进覆盖层——**逻辑侧成本自己测自己**，不靠引擎统计。
@@ -125,65 +125,65 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>
-      Optimizing Lots of Objects Animated — 优化大量动画对象（docs/manual/optimize-lots-of-objects-animated.md）
-    </title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            Optimizing Lots of Objects Animated — 优化大量动画对象（docs/manual/optimize-lots-of-objects-animated.md）
+        </title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -202,28 +202,28 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("lots-animated");
+const scene = new Scene('lots-animated');
 
 // ---- 相机（固定斜视） ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(13.0, 9.5, 13.0));
 cameraNode.lookAt(new Vec3(0, 0.8, 0));
@@ -237,7 +237,7 @@ camera.clearColor = new Color(16, 20, 28, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-55, -35, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -247,70 +247,70 @@ dir.illuminance = 4.5;
 const GRID = 20;
 const SPACING = 1.1;
 
-const grid = new Node("Grid");
+const grid = new Node('Grid');
 scene.addChild(grid);
 
 const sharedMesh = utils.createMesh(primitives.box({ width: 0.8, height: 0.8, length: 0.8 }));
 const sharedMaterial = new Material();
-sharedMaterial.initialize({ effectName: "builtin-standard" });
-sharedMaterial.setProperty("mainColor", new Color(240, 175, 90, 255));
+sharedMaterial.initialize({ effectName: 'builtin-standard' });
+sharedMaterial.setProperty('mainColor', new Color(240, 175, 90, 255));
 
 const cubes: Node[] = [];
 const baseX = new Float32Array(GRID * GRID);
 const baseZ = new Float32Array(GRID * GRID);
 const phase = new Float32Array(GRID * GRID);
 for (let ix = 0; ix < GRID; ix++) {
-  for (let iz = 0; iz < GRID; iz++) {
-    const i = ix * GRID + iz;
-    const x = (ix - (GRID - 1) / 2) * SPACING;
-    const z = (iz - (GRID - 1) / 2) * SPACING;
-    baseX[i] = x;
-    baseZ[i] = z;
-    phase[i] = Math.sqrt(x * x + z * z) * 0.9;
-    const cubeNode = new Node(`Cube-${i}`);
-    cubeNode.layer = Layers.Enum.DEFAULT;
-    cubeNode.setPosition(new Vec3(x, 0.5, z));
-    grid.addChild(cubeNode);
-    const renderer = cubeNode.addComponent(MeshRenderer);
-    renderer.mesh = sharedMesh;
-    renderer.material = sharedMaterial;
-    cubes.push(cubeNode);
-  }
+    for (let iz = 0; iz < GRID; iz++) {
+        const i = ix * GRID + iz;
+        const x = (ix - (GRID - 1) / 2) * SPACING;
+        const z = (iz - (GRID - 1) / 2) * SPACING;
+        baseX[i] = x;
+        baseZ[i] = z;
+        phase[i] = Math.sqrt(x * x + z * z) * 0.9;
+        const cubeNode = new Node(`Cube-${i}`);
+        cubeNode.layer = Layers.Enum.DEFAULT;
+        cubeNode.setPosition(new Vec3(x, 0.5, z));
+        grid.addChild(cubeNode);
+        const renderer = cubeNode.addComponent(MeshRenderer);
+        renderer.mesh = sharedMesh;
+        renderer.material = sharedMaterial;
+        cubes.push(cubeNode);
+    }
 }
 
 // ---- 单个管理组件：数据化布局，集中写 400 个变换 ----
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 class WaveField extends Component {
-  private _t = 0;
-  private _frames = 0;
-  private _emaMs = 0;
-  private _v: Vec3;
+    private _t = 0;
+    private _frames = 0;
+    private _emaMs = 0;
+    private _v: Vec3;
 
-  constructor() {
-    super();
-    this._t = 0;
-    this._frames = 0;
-    this._emaMs = 0;
-    this._v = new Vec3();
-  }
-  update(dt: number): void {
-    const t0 = performance.now();
-    this._t += dt;
-    this._frames++;
-    for (let i = 0; i < cubes.length; i++) {
-      const y = 0.6 + Math.sin(this._t * 2.0 - phase[i]) * 0.55;
-      this._v.set(baseX[i], y, baseZ[i]);
-      cubes[i].setPosition(this._v);
+    constructor() {
+        super();
+        this._t = 0;
+        this._frames = 0;
+        this._emaMs = 0;
+        this._v = new Vec3();
     }
-    const ms = performance.now() - t0;
-    this._emaMs = this._emaMs === 0 ? ms : this._emaMs * 0.9 + ms * 0.1;
-    info.textContent = [
-      `cubes: ${cubes.length} (${GRID}×${GRID} wave field, shared mesh+material)`,
-      `manager: 1 component + Float32Array (no per-cube component)`,
-      `update cost: ${this._emaMs.toFixed(2)} ms/frame (ema), frames: ${this._frames}, t=${this._t.toFixed(1)}s`,
-      "AIR: no user InstancedMesh → data-driven single manager",
-    ].join("\n");
-  }
+    update(dt: number): void {
+        const t0 = performance.now();
+        this._t += dt;
+        this._frames++;
+        for (let i = 0; i < cubes.length; i++) {
+            const y = 0.6 + Math.sin(this._t * 2.0 - phase[i]) * 0.55;
+            this._v.set(baseX[i], y, baseZ[i]);
+            cubes[i].setPosition(this._v);
+        }
+        const ms = performance.now() - t0;
+        this._emaMs = this._emaMs === 0 ? ms : this._emaMs * 0.9 + ms * 0.1;
+        info.textContent = [
+            `cubes: ${cubes.length} (${GRID}×${GRID} wave field, shared mesh+material)`,
+            `manager: 1 component + Float32Array (no per-cube component)`,
+            `update cost: ${this._emaMs.toFixed(2)} ms/frame (ema), frames: ${this._frames}, t=${this._t.toFixed(1)}s`,
+            'AIR: no user InstancedMesh → data-driven single manager',
+        ].join('\n');
+    }
 }
 cameraNode.addComponent(WaveField);
 
@@ -318,7 +318,7 @@ window.__airApp = app;
 window.__inspect = { grid, cubes };
 app.run(scene);
 
-console.log("[manual/lots-animated] running on cocosair");
+console.log('[manual/lots-animated] running on cocosair');
 ```
 
 ---

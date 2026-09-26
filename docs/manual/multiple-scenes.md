@@ -48,13 +48,13 @@ AIR 原生的分屏解法是**单画布多相机**：每台相机给一条 `rect
 这是本篇踩坑位（§3）：
 
 ```js
-cam.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-cam.clearColor = new Color(10 + i * 8, 14, 22, 255);
-// 层掩码：本相机只看自己那组（layerBits[i]）+ 挂在 DEFAULT 层的方向光；
-// 三组立方体各占独立自定义层位，故互相不可见——这正是分屏"逻辑隔离"的关键。
-cam.visibility = layer | Layers.Enum.DEFAULT;
-cam.rect = new Rect(i / 3, 0, 1 / 3, 1);
-cam.priority = i;
+    cam.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+    cam.clearColor = new Color(10 + i * 8, 14, 22, 255);
+    // 层掩码：本相机只看自己那组（layerBits[i]）+ 挂在 DEFAULT 层的方向光；
+    // 三组立方体各占独立自定义层位，故互相不可见——这正是分屏"逻辑隔离"的关键。
+    cam.visibility = layer | Layers.Enum.DEFAULT;
+    cam.rect = new Rect(i / 3, 0, 1 / 3, 1);
+    cam.priority = i;
 ```
 
 覆盖层每帧读回三台相机的 `rect.x/width` 与 `visibility` 数值，承诺肉眼可读、探针可取。
@@ -115,63 +115,63 @@ rect/visibility 探针 dump 见 §3。`manual-doc-consistency` 结果见台账�
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Multiple Scenes — 多场景与多视口（docs/manual/multiple-scenes.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Multiple Scenes — 多场景与多视口（docs/manual/multiple-scenes.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -190,29 +190,29 @@ rect/visibility 探针 dump 见 §3。`manual-doc-consistency` 结果见台账�
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  Rect,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    Rect,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("multi-canvas");
+const scene = new Scene('multi-canvas');
 
 // ---- 一盏方向光（对所有相机可见） ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-45, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -226,81 +226,81 @@ const spinSpeeds = [22, -34, 48];
 const rigs: Node[] = [];
 
 function makeCube(parent: Node, layer: number, x: number, y: number, z: number): MeshRenderer {
-  const n = new Node("Cube");
-  n.layer = layer;
-  n.setPosition(new Vec3(x, y, z));
-  parent.addChild(n);
-  const r = n.addComponent(MeshRenderer);
-  r.mesh = sharedBox;
-  return r;
+    const n = new Node('Cube');
+    n.layer = layer;
+    n.setPosition(new Vec3(x, y, z));
+    parent.addChild(n);
+    const r = n.addComponent(MeshRenderer);
+    r.mesh = sharedBox;
+    return r;
 }
 
 layerBits.forEach((layer, i) => {
-  const rig = new Node(`SubScene-${i}`);
-  rig.setPosition(new Vec3(0, 1.1, 0));
-  scene.addChild(rig);
-  const mat = new Material();
-  mat.initialize({ effectName: "builtin-standard" });
-  mat.setProperty("mainColor", clusterColors[i]);
-  // 三种不同排布：单块 / 2×2 方阵 / 竖叠三块
-  if (i === 0) {
-    makeCube(rig, layer, 0, 0, 0).material = mat;
-  } else if (i === 1) {
-    [
-      [-0.6, -0.6],
-      [0.6, -0.6],
-      [-0.6, 0.6],
-      [0.6, 0.6],
-    ].forEach(([x, z]) => {
-      makeCube(rig, layer, x, 0, z).material = mat;
-    });
-  } else {
-    [-0.9, 0, 0.9].forEach((y) => {
-      makeCube(rig, layer, 0, y, 0).material = mat;
-    });
-  }
-  rigs.push(rig);
+    const rig = new Node(`SubScene-${i}`);
+    rig.setPosition(new Vec3(0, 1.1, 0));
+    scene.addChild(rig);
+    const mat = new Material();
+    mat.initialize({ effectName: 'builtin-standard' });
+    mat.setProperty('mainColor', clusterColors[i]);
+    // 三种不同排布：单块 / 2×2 方阵 / 竖叠三块
+    if (i === 0) {
+        makeCube(rig, layer, 0, 0, 0).material = mat;
+    } else if (i === 1) {
+        [
+            [-0.6, -0.6],
+            [0.6, -0.6],
+            [-0.6, 0.6],
+            [0.6, 0.6],
+        ].forEach(([x, z]) => {
+            makeCube(rig, layer, x, 0, z).material = mat;
+        });
+    } else {
+        [-0.9, 0, 0.9].forEach((y) => {
+            makeCube(rig, layer, 0, y, 0).material = mat;
+        });
+    }
+    rigs.push(rig);
 });
 
 // ---- 三台相机：各占屏幕一条竖带（rect），只渲染自己那层（visibility） ----
 const cameras: Camera[] = [];
 layerBits.forEach((layer, i) => {
-  const camNode = new Node(`Cam-${i}`);
-  scene.addChild(camNode);
-  camNode.setPosition(new Vec3(2.6, 2.8, 7.0));
-  camNode.lookAt(new Vec3(0, 1.1, 0));
-  const cam = camNode.addComponent(Camera);
-  cam.projection = Camera.ProjectionType.PERSPECTIVE;
-  cam.fov = 45;
-  cam.near = 0.1;
-  cam.far = 100;
-  cam.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-  cam.clearColor = new Color(10 + i * 8, 14, 22, 255);
-  // 层掩码：本相机只看自己那组（layerBits[i]）+ 挂在 DEFAULT 层的方向光；
-  // 三组立方体各占独立自定义层位，故互相不可见——这正是分屏"逻辑隔离"的关键。
-  cam.visibility = layer | Layers.Enum.DEFAULT;
-  cam.rect = new Rect(i / 3, 0, 1 / 3, 1);
-  cam.priority = i;
-  cameras.push(cam);
+    const camNode = new Node(`Cam-${i}`);
+    scene.addChild(camNode);
+    camNode.setPosition(new Vec3(2.6, 2.8, 7.0));
+    camNode.lookAt(new Vec3(0, 1.1, 0));
+    const cam = camNode.addComponent(Camera);
+    cam.projection = Camera.ProjectionType.PERSPECTIVE;
+    cam.fov = 45;
+    cam.near = 0.1;
+    cam.far = 100;
+    cam.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+    cam.clearColor = new Color(10 + i * 8, 14, 22, 255);
+    // 层掩码：本相机只看自己那组（layerBits[i]）+ 挂在 DEFAULT 层的方向光；
+    // 三组立方体各占独立自定义层位，故互相不可见——这正是分屏"逻辑隔离"的关键。
+    cam.visibility = layer | Layers.Enum.DEFAULT;
+    cam.rect = new Rect(i / 3, 0, 1 / 3, 1);
+    cam.priority = i;
+    cameras.push(cam);
 });
 
 // ---- 覆盖层：读回三台相机的 rect / visibility ----
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 class Overlay extends Component {
-  update(dt: number): void {
-    rigs.forEach((rig, i) => {
-      const e = rig.eulerAngles;
-      rig.setRotationFromEuler(0, e.y + spinSpeeds[i] * dt, 0);
-    });
-    info.textContent = [
-      "AIR multi-scene = one Scene + N Cameras (rect strip + visibility layer mask)",
-      ...cameras.map(
-        (c, i) =>
-          `cam${i}: rect.x=${c.rect.x.toFixed(2)} w=${c.rect.width.toFixed(2)} vis=${c.visibility} (layer ${layerBits[i]})`,
-      ),
-      "each strip shows a different cluster (single / 2x2 / stacked) at a different spin",
-    ].join("\n");
-  }
+    update(dt: number): void {
+        rigs.forEach((rig, i) => {
+            const e = rig.eulerAngles;
+            rig.setRotationFromEuler(0, e.y + spinSpeeds[i] * dt, 0);
+        });
+        info.textContent = [
+            'AIR multi-scene = one Scene + N Cameras (rect strip + visibility layer mask)',
+            ...cameras.map(
+                (c, i) =>
+                    `cam${i}: rect.x=${c.rect.x.toFixed(2)} w=${c.rect.width.toFixed(2)} vis=${c.visibility} (layer ${layerBits[i]})`,
+            ),
+            'each strip shows a different cluster (single / 2x2 / stacked) at a different spin',
+        ].join('\n');
+    }
 }
 cameras[0].node.addComponent(Overlay);
 
@@ -308,7 +308,7 @@ window.__airApp = app;
 window.__inspect = { cameras, rigs, layerBits };
 app.run(scene);
 
-console.log("[manual/multi-canvas] running on cocosair");
+console.log('[manual/multi-canvas] running on cocosair');
 ```
 
 ---

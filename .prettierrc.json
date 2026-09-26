@@ -17,7 +17,12 @@
     },
     {
       "files": ["*.md"],
-      "options": { "tabWidth": 2, "proseWrap": "preserve", "singleQuote": false }
+      "options": {
+        "tabWidth": 2,
+        "proseWrap": "preserve",
+        "singleQuote": false,
+        "embeddedLanguageFormatting": "off"
+      }
     },
     {
       "files": ["*.yml", "*.yaml"],

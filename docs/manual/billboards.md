@@ -32,12 +32,12 @@ CPU 抄旋转在数学上与"顶点着色器去旋转"同解：面片的世界�
 差别只在 `Rig.update` 里对父节点做什么：
 
 ```js
-// 球面公告板：整份抄相机世界旋转 → 面片恒平行于视平面
-spherical.setRotation(cameraNode.rotation);
-// 柱面/立面：只抄 yaw（pitch 归零），像真实路牌绕竖轴转身
-const ce = cameraNode.eulerAngles;
-cylindrical.setRotationFromEuler(0, ce.y, 0);
-// 对照组 Static：永不转身 → 相机绕到侧面时被压成一条线
+        // 球面公告板：整份抄相机世界旋转 → 面片恒平行于视平面
+        spherical.setRotation(cameraNode.rotation);
+        // 柱面/立面：只抄 yaw（pitch 归零），像真实路牌绕竖轴转身
+        const ce = cameraNode.eulerAngles;
+        cylindrical.setRotationFromEuler(0, ce.y, 0);
+        // 对照组 Static：永不转身 → 相机绕到侧面时被压成一条线
 ```
 
 相机以 26°/s 绕半径 8.5 的圆巡游并持续 `lookAt` 圆心，所以相机自身有稳定 pitch（俯视），
@@ -103,63 +103,63 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Billboards and Facades — 公告板（docs/manual/billboards.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Billboards and Facades — 公告板（docs/manual/billboards.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -180,36 +180,36 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  Texture2D,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    Texture2D,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("billboards");
+const scene = new Scene('billboards');
 
 // ---- 方向光（面片用 standard+贴图，需吃光） ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-20, 10, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 8;
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 2.2, 8.5));
 cameraNode.lookAt(new Vec3(0, 1.4, 0));
@@ -224,29 +224,29 @@ camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- "脸"纹理：128 canvas 现造，一次性 uploadData（y 预翻转=动态纹理篇同款约定） ----
 const TEX_SIZE = 128;
-const paint = document.createElement("canvas");
+const paint = document.createElement('canvas');
 paint.width = paint.height = TEX_SIZE;
-const g2d = paint.getContext("2d") as CanvasRenderingContext2D;
+const g2d = paint.getContext('2d') as CanvasRenderingContext2D;
 g2d.setTransform(1, 0, 0, -1, 0, TEX_SIZE); // uploadData 不翻 y，作画时预翻
-g2d.fillStyle = "#2b6cb0";
+g2d.fillStyle = '#2b6cb0';
 g2d.fillRect(0, 0, TEX_SIZE, TEX_SIZE);
-g2d.fillStyle = "#ffd75e";
+g2d.fillStyle = '#ffd75e';
 g2d.beginPath();
 g2d.arc(TEX_SIZE / 2, TEX_SIZE / 2, 46, 0, Math.PI * 2);
 g2d.fill();
-g2d.fillStyle = "#10233f";
+g2d.fillStyle = '#10233f';
 g2d.beginPath();
 g2d.arc(44, 52, 7, 0, Math.PI * 2);
 g2d.arc(84, 52, 7, 0, Math.PI * 2);
 g2d.fill();
-g2d.strokeStyle = "#10233f";
+g2d.strokeStyle = '#10233f';
 g2d.lineWidth = 5;
 g2d.beginPath();
 g2d.arc(TEX_SIZE / 2, 66, 26, 0.25 * Math.PI, 0.75 * Math.PI);
 g2d.stroke();
-g2d.fillStyle = "#e8eef7";
-g2d.font = "bold 16px monospace";
-g2d.fillText("TOP", 48, 18); // 方位标：正对镜头时应读作"上"
+g2d.fillStyle = '#e8eef7';
+g2d.font = 'bold 16px monospace';
+g2d.fillText('TOP', 48, 18); // 方位标：正对镜头时应读作"上"
 
 const faceTexture = new Texture2D();
 // 实测坑：本张"裸造"纹理（reset+uploadData）配 unlit+USE_ALBEDO_MAP 渲染成纯白平面、
@@ -258,55 +258,55 @@ let faceUploaded = false;
 // ---- 三块面片：同一材质（standard+贴图），父节点管朝向、子平面法线转 +Z ----
 const sharedMesh = utils.createMesh(primitives.plane({ width: 2.2, length: 2.2 }));
 const faceMat = new Material();
-faceMat.initialize({ effectName: "builtin-standard", defines: { USE_ALBEDO_MAP: true } });
-faceMat.setProperty("mainTexture", faceTexture);
+faceMat.initialize({ effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } });
+faceMat.setProperty('mainTexture', faceTexture);
 
 function makeQuad(name: string, x: number): Node {
-  const root = new Node(name);
-  root.layer = Layers.Enum.DEFAULT;
-  root.setPosition(new Vec3(x, 1.4, 0));
-  scene.addChild(root);
-  const plane = new Node("Plane");
-  plane.layer = Layers.Enum.DEFAULT;
-  plane.setRotationFromEuler(90, 0, 0); // plane 默认法线 +Y → 转成父节点 +Z
-  root.addChild(plane);
-  const r = plane.addComponent(MeshRenderer);
-  r.mesh = sharedMesh;
-  r.material = faceMat;
-  return root;
+    const root = new Node(name);
+    root.layer = Layers.Enum.DEFAULT;
+    root.setPosition(new Vec3(x, 1.4, 0));
+    scene.addChild(root);
+    const plane = new Node('Plane');
+    plane.layer = Layers.Enum.DEFAULT;
+    plane.setRotationFromEuler(90, 0, 0); // plane 默认法线 +Y → 转成父节点 +Z
+    root.addChild(plane);
+    const r = plane.addComponent(MeshRenderer);
+    r.mesh = sharedMesh;
+    r.material = faceMat;
+    return root;
 }
-const spherical = makeQuad("Spherical", -3.2);
-const cylindrical = makeQuad("Cylindrical", 0);
-const staticQuad = makeQuad("Static", 3.2);
+const spherical = makeQuad('Spherical', -3.2);
+const cylindrical = makeQuad('Cylindrical', 0);
+const staticQuad = makeQuad('Static', 3.2);
 
 // ---- 每帧：相机绕圈 + 两种 CPU 公告板 ----
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 
 class Rig extends Component {
-  private _yaw = 0;
+    private _yaw = 0;
 
-  update(dt: number): void {
-    if (!faceUploaded) {
-      faceTexture.uploadData(paint); // 一次性上传，放 run 之后的 update 里
-      faceUploaded = true;
+    update(dt: number): void {
+        if (!faceUploaded) {
+            faceTexture.uploadData(paint); // 一次性上传，放 run 之后的 update 里
+            faceUploaded = true;
+        }
+        this._yaw = ((this._yaw || 0) + 26 * dt) % 360;
+        const r = (this._yaw * Math.PI) / 180;
+        cameraNode.setPosition(new Vec3(Math.sin(r) * 8.5, 2.2, Math.cos(r) * 8.5));
+        cameraNode.lookAt(new Vec3(0, 1.4, 0));
+        // 球面公告板：整份抄相机世界旋转 → 面片恒平行于视平面
+        spherical.setRotation(cameraNode.rotation);
+        // 柱面/立面：只抄 yaw（pitch 归零），像真实路牌绕竖轴转身
+        const ce = cameraNode.eulerAngles;
+        cylindrical.setRotationFromEuler(0, ce.y, 0);
+        // 对照组 Static：永不转身 → 相机绕到侧面时被压成一条线
+        info.textContent = [
+            'billboards CPU route: copy camera rotation per frame (no user GLSL / no Billboard component)',
+            `cam yaw=${ce.y.toFixed(0)} (orbit 26 deg/s), spherical=full quat copy, cylindrical=yaw only`,
+            'left Spherical always faces camera; middle Cylindrical yaws only; right Static turns edge-on',
+            `face texture: gfx=${faceTexture.getGFXTexture() ? 'ok' : 'null'}, uploaded=${faceUploaded}`,
+        ].join('\n');
     }
-    this._yaw = ((this._yaw || 0) + 26 * dt) % 360;
-    const r = (this._yaw * Math.PI) / 180;
-    cameraNode.setPosition(new Vec3(Math.sin(r) * 8.5, 2.2, Math.cos(r) * 8.5));
-    cameraNode.lookAt(new Vec3(0, 1.4, 0));
-    // 球面公告板：整份抄相机世界旋转 → 面片恒平行于视平面
-    spherical.setRotation(cameraNode.rotation);
-    // 柱面/立面：只抄 yaw（pitch 归零），像真实路牌绕竖轴转身
-    const ce = cameraNode.eulerAngles;
-    cylindrical.setRotationFromEuler(0, ce.y, 0);
-    // 对照组 Static：永不转身 → 相机绕到侧面时被压成一条线
-    info.textContent = [
-      "billboards CPU route: copy camera rotation per frame (no user GLSL / no Billboard component)",
-      `cam yaw=${ce.y.toFixed(0)} (orbit 26 deg/s), spherical=full quat copy, cylindrical=yaw only`,
-      "left Spherical always faces camera; middle Cylindrical yaws only; right Static turns edge-on",
-      `face texture: gfx=${faceTexture.getGFXTexture() ? "ok" : "null"}, uploaded=${faceUploaded}`,
-    ].join("\n");
-  }
 }
 cameraNode.addComponent(Rig);
 
@@ -314,7 +314,7 @@ window.__airApp = app;
 window.__inspect = { camera, cameraNode, spherical, cylindrical, staticQuad, faceTexture, paint };
 app.run(scene);
 
-console.log("[manual/billboards] running on cocosair");
+console.log('[manual/billboards] running on cocosair');
 ```
 
 ---

@@ -75,63 +75,63 @@ canvas: 640x480
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Setup — 环境搭建（docs/manual/setup.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Setup — 环境搭建（docs/manual/setup.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -148,27 +148,27 @@ canvas: 640x480
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("setup");
+const scene = new Scene('setup');
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.6, 5.0));
 cameraNode.lookAt(new Vec3(0, 0.5, 0));
@@ -182,32 +182,32 @@ camera.clearColor = new Color(20, 26, 38, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node("Main Light");
+const lightNode = new Node('Main Light');
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 地面 + hello cube ----
-const groundNode = new Node("Ground");
+const groundNode = new Node('Ground');
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
 groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
 const groundMaterial = new Material();
-groundMaterial.initialize({ effectName: "builtin-standard" });
-groundMaterial.setProperty("mainColor", new Color(70, 90, 80, 255));
+groundMaterial.initialize({ effectName: 'builtin-standard' });
+groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
-const cubeNode = new Node("Hello Cube");
+const cubeNode = new Node('Hello Cube');
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.6, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: "builtin-standard" });
-cubeMaterial.setProperty("mainColor", new Color(90, 200, 220, 255));
+cubeMaterial.initialize({ effectName: 'builtin-standard' });
+cubeMaterial.setProperty('mainColor', new Color(90, 200, 220, 255));
 cubeRenderer.material = cubeMaterial;
 
 window.__airApp = app;
@@ -216,13 +216,13 @@ app.run(scene);
 // ============ 覆盖层：starter 自检 ============
 // 注：/​__build_status 通道由 dev server 注入的 reload 脚本轮询（见文章 §3），
 // 示例自身不去 fetch 它 —— 纯静态部署下该路径 404 会产生控制台噪声。
-(document.querySelector("#info") as HTMLElement).textContent = [
-  "setup: minimal starter running",
-  `scene: ${scene.name}  nodes: ${scene.children.length}`,
-  `canvas: ${canvas.width}x${canvas.height}`,
-].join("\n");
+(document.querySelector('#info') as HTMLElement).textContent = [
+    'setup: minimal starter running',
+    `scene: ${scene.name}  nodes: ${scene.children.length}`,
+    `canvas: ${canvas.width}x${canvas.height}`,
+].join('\n');
 
-console.log("[manual/setup] running on cocosair");
+console.log('[manual/setup] running on cocosair');
 ```
 
 ## API 参考

@@ -6,12 +6,12 @@
  *   2. visible-frame：画布非背景像素占比 ≥1%（背景以四角采样自适应，不硬编码清屏色）
  *   3. frame-diff（仅动画类示例声明）：相隔 400ms 双帧 PNG 不同
  *   4. app-contract：window.__airApp 必须在超时内出现（每个手册示例末尾固定挂载）
- *   5. state-probe（可选契约）：示例可暴露 window.__manualProbe() → { ready, ok, checks }；
+ *   5. state-probe：登记的行为示例必须暴露 window.__manualProbe() → { ready, ok, checks }；
  *      验证器轮询至 ready（30s 上限），ready 后 ok===true 才 PASS。帧差不证明逻辑正确——
  *      回调次序/监听清理/资源释放这类行为断言由示例自证、本检查读回，计划书 §五.3 的最小扩展。
  *
- * 控制台豁免（CONSOLE_ALLOWLIST）：做"故意失败路径"用例的示例（如 404 资产加载）必然产生浏览器
- * 网络状态 console.error——按示例名单豁免，但计入 detail 与证据（可审计），其余 error 仍判 FAIL。
+ * 控制台豁免：仅 manual-asset-lifecycle 的 /assets/does-not-exist.json HTTP 404，
+ * 同时匹配示例、URL 路径及状态码，计入 detail 与证据；其余 error 仍判 FAIL。
  *
  * 执行：NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-verify.cjs [--ids=manual-a,manual-b]
  * 产出：docs/evidence/manual-examples-verified.json + docs/evidence/examples/manual-<slug>.png
@@ -25,6 +25,7 @@ const http = require('http');
 const os = require('os');
 const crypto = require('crypto');
 const esbuild = require('esbuild');
+const { evaluateProbe, isAllowedNetworkError } = require('./manual-probe-contract.cjs');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const MANUAL_EXAMPLES_DIR = path.join(REPO, 'docs', 'manual', 'examples');
@@ -35,11 +36,6 @@ const SETTLE_MS = 2500;
 const FRAME_GAP_MS = 400;
 const PER_EXAMPLE_TIMEOUT = 120000;
 const GRID = 12; // 12×12 采样网格
-
-// 故意失败路径用例的浏览器网络状态日志豁免（仅网络层 "Failed to load resource"，引擎/页面错误不豁免）
-const CONSOLE_ALLOWLIST = new Map([
-  ['manual-asset-lifecycle', /Failed to load resource:/],
-]);
 
 const args = process.argv.slice(2);
 const idsArg = args.find((a) => a.startsWith('--ids='));
@@ -229,12 +225,11 @@ async function runOne (id, browser) {
     context = await browser.newContext({ viewport: { width: 640, height: 480 } });
     const page = await context.newPage();
     const consoleErrors = [];
-    const allowRe = CONSOLE_ALLOWLIST.get(id) || null;
     let allowedConsole = 0;
     page.on('console', (m) => {
       if (m.type() !== 'error') { return; }
       const text = m.text().slice(0, 300);
-      if (allowRe && allowRe.test(text)) { allowedConsole++; return; }
+      if (isAllowedNetworkError(id, text, m.location().url)) { allowedConsole++; return; }
       consoleErrors.push(text);
     });
     page.on('pageerror', (e) => { errors.push(String(e && e.message || e).slice(0, 300)); });
@@ -266,12 +261,6 @@ async function runOne (id, browser) {
     push('visible-frame', visibleFrameOk(first),
       `litRatio=${first.litRatio.toFixed(4)} distinctColors=${first.distinctColors} ${first.width}x${first.height}${retried ? ' (after 1 re-capture)' : ''}`);
 
-    const allErrors = [...consoleErrors, ...errors];
-    push('no-runtime-error', allErrors.length === 0,
-      allErrors.length === 0
-        ? (allowedConsole > 0 ? `clean (${allowedConsole} allowed network 404)` : 'clean')
-        : allErrors.slice(0, 2).join(' | '));
-
     let frameDiffers = null;
     if (ANIMATED.has(id)) {
       await new Promise((r) => setTimeout(r, FRAME_GAP_MS));
@@ -283,11 +272,16 @@ async function runOne (id, browser) {
       artifact = saveArtifact(id, first.png);
     }
 
-    // state-probe（可选契约）：见文件头判据 5。无 __manualProbe 的示例跳过，不影响存量语义。
+    // 登记的行为示例必须提供探针；未登记的旧示例仍可省略。
     let probePass = true;
     let probeDetail = 'no __manualProbe (skipped)';
     try {
       const hasProbe = await page.evaluate(() => typeof window.__manualProbe === 'function');
+      if (!hasProbe) {
+        const result = evaluateProbe(id, false);
+        probePass = result.pass;
+        probeDetail = result.detail;
+      }
       if (hasProbe) {
         const deadline = Date.now() + 30000;
         let probe = null;
@@ -302,11 +296,9 @@ async function runOne (id, browser) {
           probePass = false;
           probeDetail = `probe not ready within 30s (phase=${probe.phase || '?'}${probe.driverError ? ' driverError=' + String(probe.driverError).slice(0, 160) : ''}${probe.order ? ' order=' + probe.order.join(',') : ''})`;
         } else {
-          const fails = (probe.checks || []).filter((c) => !c.pass);
-          probePass = probe.ok === true && fails.length === 0;
-          probeDetail = probe.ok === true
-            ? `ok (${(probe.checks || []).length} assertions)`
-            : `ok=${probe.ok} failed=[${fails.map((c) => `${c.name}:${c.detail}`).join(' | ') || '?'}]`;
+          const result = evaluateProbe(id, true, probe);
+          probePass = result.pass;
+          probeDetail = result.detail;
         }
       }
     } catch (e) {
@@ -314,6 +306,13 @@ async function runOne (id, browser) {
       probeDetail = 'probe threw: ' + String(e && e.message || e).slice(0, 120);
     }
     push('state-probe', probePass, probeDetail);
+
+    // 探针执行结束后再检查，避免遗漏异步行为阶段的运行错误。
+    const allErrors = [...consoleErrors, ...errors];
+    push('no-runtime-error', allErrors.length === 0,
+      allErrors.length === 0
+        ? (allowedConsole > 0 ? `clean (${allowedConsole} allowed network 404)` : 'clean')
+        : allErrors.slice(0, 2).join(' | '));
 
     const pass = checks.every((c) => c.result === 'PASS');
     return {
@@ -407,10 +406,11 @@ function writeEvidence (results, allIds) {
   try {
     for (const id of ids) {
       const t0 = Date.now();
+      let timeout;
       const r = await Promise.race([
         runOne(id, browser),
-        new Promise((_, reject) => setTimeout(() => reject(new Error(`timeout after ${PER_EXAMPLE_TIMEOUT}ms`)), PER_EXAMPLE_TIMEOUT)),
-      ]).catch((e) => ({ id, result: 'FAIL', checks: [{ name: 'runner', result: 'FAIL', detail: String(e.message || e).slice(0, 240) }], ms: Date.now() - t0, measuredAt: new Date().toISOString() }));
+        new Promise((_, reject) => { timeout = setTimeout(() => reject(new Error(`timeout after ${PER_EXAMPLE_TIMEOUT}ms`)), PER_EXAMPLE_TIMEOUT); }),
+      ]).catch((e) => ({ id, result: 'FAIL', checks: [{ name: 'runner', result: 'FAIL', detail: String(e.message || e).slice(0, 240) }], ms: Date.now() - t0, measuredAt: new Date().toISOString() })).finally(() => clearTimeout(timeout));
       results.push(r);
       const detail = r.checks.map((c) => `${c.name}=${c.result}`).join(' ');
       console.log(`[${r.result}] ${id} (${(r.ms / 1000).toFixed(1)}s) ${detail}${r.error ? ' err=' + r.error : ''}`);

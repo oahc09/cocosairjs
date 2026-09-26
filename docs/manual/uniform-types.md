@@ -34,26 +34,26 @@
 // 1) number（float uniform）：metallic / roughness
 //    注意：metallic=1 且场景无环境光/IBL 时金属接近全黑（无漫反射、镜面无物可反），
 //    那是 PBR 的正确行为而非 bug；这里用 metallic=0 让 float 的效果肉眼可见。
-addCube("float: metallic+roughness", -3.6, { effectName: "builtin-standard" }, (m) => {
-  m.setProperty("metallic", 0.0);
-  m.setProperty("roughness", 0.35);
+addCube('float: metallic+roughness', -3.6, { effectName: 'builtin-standard' }, (m) => {
+    m.setProperty('metallic', 0.0);
+    m.setProperty('roughness', 0.35);
 });
 
 // 2) Color（Vec4 uniform）：mainColor
-addCube("Color: mainColor", -1.2, { effectName: "builtin-standard" }, (m) => {
-  m.setProperty("mainColor", new Color(225, 70, 60, 255));
+addCube('Color: mainColor', -1.2, { effectName: 'builtin-standard' }, (m) => {
+    m.setProperty('mainColor', new Color(225, 70, 60, 255));
 });
 
 // 3) Texture2D + Vec4：mainTexture + tilingOffset（需打开 USE_ALBEDO_MAP）
-addCube("Vec4+Tex: tilingOffset", 1.2, { effectName: "builtin-standard", defines: { USE_ALBEDO_MAP: true } }, (m) => {
-  m.setProperty("mainTexture", checkerTexture);
-  m.setProperty("tilingOffset", new Vec4(2, 2, 0, 0));
+addCube('Vec4+Tex: tilingOffset', 1.2, { effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } }, (m) => {
+    m.setProperty('mainTexture', checkerTexture);
+    m.setProperty('tilingOffset', new Vec4(2, 2, 0, 0));
 });
 
 // 4) Color + Vec3：emissive + emissiveScale
-addCube("Color+Vec3: emissive", 3.6, { effectName: "builtin-standard" }, (m) => {
-  m.setProperty("emissive", new Color(40, 220, 210, 255));
-  m.setProperty("emissiveScale", new Vec3(2, 2, 2));
+addCube('Color+Vec3: emissive', 3.6, { effectName: 'builtin-standard' }, (m) => {
+    m.setProperty('emissive', new Color(40, 220, 210, 255));
+    m.setProperty('emissiveScale', new Vec3(2, 2, 2));
 });
 ```
 
@@ -83,63 +83,63 @@ npm run dev
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Uniform Types — Uniform 类型（docs/manual/uniform-types.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.72);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Uniform Types — Uniform 类型（docs/manual/uniform-types.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.72);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -167,30 +167,30 @@ npm run dev
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  ImageAsset,
-  Texture2D,
-  Layers,
-  Vec3,
-  Vec4,
-  Color,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    ImageAsset,
+    Texture2D,
+    Layers,
+    Vec3,
+    Vec4,
+    Color,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("uniform-types");
+const scene = new Scene('uniform-types');
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 2.2, 9.2));
 cameraNode.lookAt(new Vec3(0, 0.4, 0));
@@ -204,7 +204,7 @@ camera.clearColor = new Color(22, 28, 40, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node("Main Light");
+const lightNode = new Node('Main Light');
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-40, -25, 0);
 const light = lightNode.addComponent(DirectionalLight);
@@ -213,87 +213,87 @@ light.illuminance = 2;
 // ---- 程序化棋盘纹理（给 3 号 cube 演示 sampler2D + tilingOffset） ----
 const SIZE = 32;
 function checkerboardPixels(): Uint8Array {
-  const pixels = new Uint8Array(SIZE * SIZE * 4);
-  for (let y = 0; y < SIZE; y++) {
-    for (let x = 0; x < SIZE; x++) {
-      const i = (SIZE * y + x) * 4;
-      const check = ((x >> 3) + (y >> 3)) % 2 === 0;
-      const v = check ? 235 : 45;
-      pixels[i] = v;
-      pixels[i + 1] = v;
-      pixels[i + 2] = v;
-      pixels[i + 3] = 255;
+    const pixels = new Uint8Array(SIZE * SIZE * 4);
+    for (let y = 0; y < SIZE; y++) {
+        for (let x = 0; x < SIZE; x++) {
+            const i = (SIZE * y + x) * 4;
+            const check = ((x >> 3) + (y >> 3)) % 2 === 0;
+            const v = check ? 235 : 45;
+            pixels[i] = v;
+            pixels[i + 1] = v;
+            pixels[i + 2] = v;
+            pixels[i + 3] = 255;
+        }
     }
-  }
-  return pixels;
+    return pixels;
 }
 const imageAsset = new ImageAsset({
-  width: SIZE,
-  height: SIZE,
-  _data: checkerboardPixels(),
-  _compressed: false,
-  format: Texture2D.PixelFormat.RGBA8888,
+    width: SIZE,
+    height: SIZE,
+    _data: checkerboardPixels(),
+    _compressed: false,
+    format: Texture2D.PixelFormat.RGBA8888,
 });
 const checkerTexture = new Texture2D();
 checkerTexture.image = imageAsset;
 
 // ---- 四个 cube，每个一个独立材质（不碰共享 builtin 材质） ----
 function addCube(
-  name: string,
-  x: number,
-  initOptions: { effectName: string; defines?: Record<string, boolean> },
-  configure: (m: Material) => void,
+    name: string,
+    x: number,
+    initOptions: { effectName: string; defines?: Record<string, boolean> },
+    configure: (m: Material) => void,
 ): Node {
-  const node = new Node(name);
-  node.layer = Layers.Enum.DEFAULT;
-  node.setPosition(new Vec3(x, 0.5, 0));
-  scene.addChild(node);
-  const renderer = node.addComponent(MeshRenderer);
-  renderer.mesh = utils.createMesh(primitives.box({ width: 1.4, height: 1.4, length: 1.4 }));
-  const material = new Material();
-  material.initialize(initOptions);
-  configure(material);
-  renderer.material = material;
-  return node;
+    const node = new Node(name);
+    node.layer = Layers.Enum.DEFAULT;
+    node.setPosition(new Vec3(x, 0.5, 0));
+    scene.addChild(node);
+    const renderer = node.addComponent(MeshRenderer);
+    renderer.mesh = utils.createMesh(primitives.box({ width: 1.4, height: 1.4, length: 1.4 }));
+    const material = new Material();
+    material.initialize(initOptions);
+    configure(material);
+    renderer.material = material;
+    return node;
 }
 
 // 1) number（float uniform）：metallic / roughness
 //    注意：metallic=1 且场景无环境光/IBL 时金属接近全黑（无漫反射、镜面无物可反），
 //    那是 PBR 的正确行为而非 bug；这里用 metallic=0 让 float 的效果肉眼可见。
-addCube("float: metallic+roughness", -3.6, { effectName: "builtin-standard" }, (m) => {
-  m.setProperty("metallic", 0.0);
-  m.setProperty("roughness", 0.35);
+addCube('float: metallic+roughness', -3.6, { effectName: 'builtin-standard' }, (m) => {
+    m.setProperty('metallic', 0.0);
+    m.setProperty('roughness', 0.35);
 });
 
 // 2) Color（Vec4 uniform）：mainColor
-addCube("Color: mainColor", -1.2, { effectName: "builtin-standard" }, (m) => {
-  m.setProperty("mainColor", new Color(225, 70, 60, 255));
+addCube('Color: mainColor', -1.2, { effectName: 'builtin-standard' }, (m) => {
+    m.setProperty('mainColor', new Color(225, 70, 60, 255));
 });
 
 // 3) Texture2D + Vec4：mainTexture + tilingOffset（需打开 USE_ALBEDO_MAP）
-addCube("Vec4+Tex: tilingOffset", 1.2, { effectName: "builtin-standard", defines: { USE_ALBEDO_MAP: true } }, (m) => {
-  m.setProperty("mainTexture", checkerTexture);
-  m.setProperty("tilingOffset", new Vec4(2, 2, 0, 0));
+addCube('Vec4+Tex: tilingOffset', 1.2, { effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } }, (m) => {
+    m.setProperty('mainTexture', checkerTexture);
+    m.setProperty('tilingOffset', new Vec4(2, 2, 0, 0));
 });
 
 // 4) Color + Vec3：emissive + emissiveScale
-addCube("Color+Vec3: emissive", 3.6, { effectName: "builtin-standard" }, (m) => {
-  m.setProperty("emissive", new Color(40, 220, 210, 255));
-  m.setProperty("emissiveScale", new Vec3(2, 2, 2));
+addCube('Color+Vec3: emissive', 3.6, { effectName: 'builtin-standard' }, (m) => {
+    m.setProperty('emissive', new Color(40, 220, 210, 255));
+    m.setProperty('emissiveScale', new Vec3(2, 2, 2));
 });
 
 window.__airApp = app;
 app.run(scene);
 
-(document.querySelector("#info") as HTMLElement).textContent = [
-  "uniform types → JS types (builtin-standard)",
-  "1 metallic/roughness : number (float)",
-  "2 mainColor          : Color (Vec4)",
-  "3 mainTexture+tiling : Texture2D + Vec4",
-  "4 emissive+scale     : Color + Vec3",
-].join("\n");
+(document.querySelector('#info') as HTMLElement).textContent = [
+    'uniform types → JS types (builtin-standard)',
+    '1 metallic/roughness : number (float)',
+    '2 mainColor          : Color (Vec4)',
+    '3 mainTexture+tiling : Texture2D + Vec4',
+    '4 emissive+scale     : Color + Vec3',
+].join('\n');
 
-console.log("[manual/uniform-types] running on cocosair");
+console.log('[manual/uniform-types] running on cocosair');
 ```
 
 ## API 参考

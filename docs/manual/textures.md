@@ -17,11 +17,11 @@
 
 ```js
 const imageAsset = new ImageAsset({
-  width: 32,
-  height: 32,
-  _data: checkerboardPixels(),
-  _compressed: false,
-  format: Texture2D.PixelFormat.RGBA8888,
+    width: 32,
+    height: 32,
+    _data: checkerboardPixels(),
+    _compressed: false,
+    format: Texture2D.PixelFormat.RGBA8888,
 });
 const texture = new Texture2D();
 texture.image = imageAsset;
@@ -56,12 +56,12 @@ texture.setWrapMode(Texture2D.WrapMode.REPEAT, Texture2D.WrapMode.REPEAT); // �
 ```js
 const cubeMaterial = new Material();
 cubeMaterial.initialize({
-  effectName: "builtin-standard",
-  defines: { USE_ALBEDO_MAP: true }, // 不打开这个宏，mainTexture 不参与着色
+    effectName: 'builtin-standard',
+    defines: { USE_ALBEDO_MAP: true }, // 不打开这个宏，mainTexture 不参与着色
 });
-cubeMaterial.setProperty("mainTexture", texture);
-cubeMaterial.setProperty("tilingOffset", new Vec4(2, 2, 0, 0)); // xy=tiling zw=offset
-cubeMaterial.setProperty("roughness", 0.5);
+cubeMaterial.setProperty('mainTexture', texture);
+cubeMaterial.setProperty('tilingOffset', new Vec4(2, 2, 0, 0)); // xy=tiling zw=offset
+cubeMaterial.setProperty('roughness', 0.5);
 ```
 
 两个必记点（都在 [Uniform Types](./uniform-types.md) 展开）：
@@ -90,63 +90,63 @@ cube spins: six faces sample the same texture
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Textures — 纹理（docs/manual/textures.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Textures — 纹理（docs/manual/textures.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -163,31 +163,31 @@ cube spins: six faces sample the same texture
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Vec4,
-  Color,
-  ImageAsset,
-  Texture2D,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Vec4,
+    Color,
+    ImageAsset,
+    Texture2D,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("textures");
+const scene = new Scene('textures');
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.6, 5.5));
 cameraNode.lookAt(new Vec3(0, 0.7, 0));
@@ -201,7 +201,7 @@ camera.clearColor = new Color(18, 24, 34, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node("Main Light");
+const lightNode = new Node('Main Light');
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
@@ -209,46 +209,46 @@ light.illuminance = 2;
 
 // ---- 程序化像素：32×32 棋盘格（8×8 个 4px 色块） ----
 function checkerboardPixels(): Uint8Array {
-  const size = 32;
-  const data = new Uint8Array(size * size * 4);
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const even = ((x >> 2) + (y >> 2)) % 2 === 0;
-      const i = (y * size + x) * 4;
-      data[i] = even ? 235 : 40;
-      data[i + 1] = even ? 235 : 40;
-      data[i + 2] = even ? 235 : 40;
-      data[i + 3] = 255;
+    const size = 32;
+    const data = new Uint8Array(size * size * 4);
+    for (let y = 0; y < size; y++) {
+        for (let x = 0; x < size; x++) {
+            const even = ((x >> 2) + (y >> 2)) % 2 === 0;
+            const i = (y * size + x) * 4;
+            data[i] = even ? 235 : 40;
+            data[i + 1] = even ? 235 : 40;
+            data[i + 2] = even ? 235 : 40;
+            data[i + 3] = 255;
+        }
     }
-  }
-  return data;
+    return data;
 }
 
 // ---- 两步上传：ImageAsset（CPU 像素）→ Texture2D（GPU 纹理） ----
 const imageAsset = new ImageAsset({
-  width: 32,
-  height: 32,
-  _data: checkerboardPixels(),
-  _compressed: false,
-  format: Texture2D.PixelFormat.RGBA8888,
+    width: 32,
+    height: 32,
+    _data: checkerboardPixels(),
+    _compressed: false,
+    format: Texture2D.PixelFormat.RGBA8888,
 });
 const texture = new Texture2D();
 texture.image = imageAsset;
 texture.setWrapMode(Texture2D.WrapMode.REPEAT, Texture2D.WrapMode.REPEAT); // 平铺前提：wrap=REPEAT
 
 // ---- 地面 ----
-const groundNode = new Node("Ground");
+const groundNode = new Node('Ground');
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
 groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
 const groundMaterial = new Material();
-groundMaterial.initialize({ effectName: "builtin-standard" });
-groundMaterial.setProperty("mainColor", new Color(70, 90, 80, 255));
+groundMaterial.initialize({ effectName: 'builtin-standard' });
+groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
 // ---- 贴棋盘格的自转 cube ----
-const cubeNode = new Node("Textured Cube");
+const cubeNode = new Node('Textured Cube');
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.8, 0));
 scene.addChild(cubeNode);
@@ -256,18 +256,18 @@ const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1.3, height: 1.3, length: 1.3 }));
 const cubeMaterial = new Material();
 cubeMaterial.initialize({
-  effectName: "builtin-standard",
-  defines: { USE_ALBEDO_MAP: true }, // 不打开这个宏，mainTexture 不参与着色
+    effectName: 'builtin-standard',
+    defines: { USE_ALBEDO_MAP: true }, // 不打开这个宏，mainTexture 不参与着色
 });
-cubeMaterial.setProperty("mainTexture", texture);
-cubeMaterial.setProperty("tilingOffset", new Vec4(2, 2, 0, 0)); // xy=tiling zw=offset
-cubeMaterial.setProperty("roughness", 0.5);
+cubeMaterial.setProperty('mainTexture', texture);
+cubeMaterial.setProperty('tilingOffset', new Vec4(2, 2, 0, 0)); // xy=tiling zw=offset
+cubeMaterial.setProperty('roughness', 0.5);
 cubeRenderer.material = cubeMaterial;
 
 class Rotator extends Component {
-  update(dt: number): void {
-    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
-  }
+    update(dt: number): void {
+        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
+    }
 }
 cubeNode.addComponent(Rotator);
 
@@ -275,14 +275,14 @@ window.__airApp = app;
 app.run(scene);
 
 // ============ 覆盖层：纹理参数 ============
-(document.querySelector("#info") as HTMLElement).textContent = [
-  "textures: procedural 32x32 checker → Texture2D",
-  `image: ${texture.width}x${texture.height} RGBA8888, wrap=REPEAT`,
-  "tilingOffset (2,2,0,0): 每面 2x2 平铺",
-  "cube spins: six faces sample the same texture",
-].join("\n");
+(document.querySelector('#info') as HTMLElement).textContent = [
+    'textures: procedural 32x32 checker → Texture2D',
+    `image: ${texture.width}x${texture.height} RGBA8888, wrap=REPEAT`,
+    'tilingOffset (2,2,0,0): 每面 2x2 平铺',
+    'cube spins: six faces sample the same texture',
+].join('\n');
 
-console.log("[manual/textures] running on cocosair");
+console.log('[manual/textures] running on cocosair');
 ```
 
 ## API 参考

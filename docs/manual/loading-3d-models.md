@@ -41,10 +41,13 @@ glTF 的二进制数据放在 `buffers[]` 里。零资产做法是把整段二�
         { buffer: 0, byteOffset: POS_BYTES, byteLength: NRM_BYTES, target: 34962 },
         { buffer: 0, byteOffset: POS_BYTES + NRM_BYTES, byteLength: IDX_BYTES, target: 34963 },
     ],
-    buffers: [{
-        byteLength: buffer.byteLength,
-        uri: `data:application/octet-stream;base64,${base64}`,
-    }],
+    buffers: [
+        {
+            byteLength: buffer.byteLength,
+            uri: `data:application/octet-stream;base64,${base64}`,
+        },
+    ],
+};
 ```
 
 两个容易踩的约束（示例的 `packBoxBuffer` 都满足了）：
@@ -59,7 +62,7 @@ glTF 的二进制数据放在 `buffers[]` 里。零资产做法是把整段二�
 解析成功后拿到的 `instance.root` 是一个普通 `Node`，可以像任何节点一样挂到场景。示例用一个 pivot 承载它，把自转挂在 pivot 上，方便以后整体平移/缩放模型而不动模型内部层级：
 
 ```js
-const pivot = new Node("model-pivot");
+const pivot = new Node('model-pivot');
 pivot.layer = Layers.Enum.DEFAULT;
 scene.addChild(pivot);
 pivot.addChild(instance.root);
@@ -117,63 +120,63 @@ npm run dev
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Loading 3D Models — 加载 3D 模型（docs/manual/loading-3d-models.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.72);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Loading 3D Models — 加载 3D 模型（docs/manual/loading-3d-models.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.72);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -200,25 +203,25 @@ npm run dev
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  GLTFLoader,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    GLTFLoader,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("loading-models");
+const scene = new Scene('loading-models');
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(2.6, 2.0, 3.4));
 cameraNode.lookAt(new Vec3(0, 0, 0));
@@ -232,7 +235,7 @@ camera.clearColor = new Color(20, 26, 38, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node("Main Light");
+const lightNode = new Node('Main Light');
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-40, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
@@ -246,77 +249,77 @@ light.illuminance = 2;
  * @returns {{ positions: number[], normals: number[], indices: number[] }}
  */
 function buildBox(w: number, h: number, d: number): { positions: number[]; normals: number[]; indices: number[] } {
-  const x = w / 2;
-  const y = h / 2;
-  const z = d / 2;
-  const faces: { n: number[]; v: number[][] }[] = [
-    {
-      n: [0, 0, 1],
-      v: [
-        [-x, -y, z],
-        [x, -y, z],
-        [x, y, z],
-        [-x, y, z],
-      ],
-    }, // +Z
-    {
-      n: [0, 0, -1],
-      v: [
-        [x, -y, -z],
-        [-x, -y, -z],
-        [-x, y, -z],
-        [x, y, -z],
-      ],
-    }, // -Z
-    {
-      n: [1, 0, 0],
-      v: [
-        [x, -y, z],
-        [x, -y, -z],
-        [x, y, -z],
-        [x, y, z],
-      ],
-    }, // +X
-    {
-      n: [-1, 0, 0],
-      v: [
-        [-x, -y, -z],
-        [-x, -y, z],
-        [-x, y, z],
-        [-x, y, -z],
-      ],
-    }, // -X
-    {
-      n: [0, 1, 0],
-      v: [
-        [-x, y, z],
-        [x, y, z],
-        [x, y, -z],
-        [-x, y, -z],
-      ],
-    }, // +Y
-    {
-      n: [0, -1, 0],
-      v: [
-        [-x, -y, -z],
-        [x, -y, -z],
-        [x, -y, z],
-        [-x, -y, z],
-      ],
-    }, // -Y
-  ];
-  const positions: number[] = [];
-  const normals: number[] = [];
-  const indices: number[] = [];
-  faces.forEach((face, i) => {
-    const base = i * 4;
-    for (const p of face.v) {
-      positions.push(p[0], p[1], p[2]);
-      normals.push(face.n[0], face.n[1], face.n[2]);
-    }
-    indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
-  });
-  return { positions, normals, indices };
+    const x = w / 2;
+    const y = h / 2;
+    const z = d / 2;
+    const faces: { n: number[]; v: number[][] }[] = [
+        {
+            n: [0, 0, 1],
+            v: [
+                [-x, -y, z],
+                [x, -y, z],
+                [x, y, z],
+                [-x, y, z],
+            ],
+        }, // +Z
+        {
+            n: [0, 0, -1],
+            v: [
+                [x, -y, -z],
+                [-x, -y, -z],
+                [-x, y, -z],
+                [x, y, -z],
+            ],
+        }, // -Z
+        {
+            n: [1, 0, 0],
+            v: [
+                [x, -y, z],
+                [x, -y, -z],
+                [x, y, -z],
+                [x, y, z],
+            ],
+        }, // +X
+        {
+            n: [-1, 0, 0],
+            v: [
+                [-x, -y, -z],
+                [-x, -y, z],
+                [-x, y, z],
+                [-x, y, -z],
+            ],
+        }, // -X
+        {
+            n: [0, 1, 0],
+            v: [
+                [-x, y, z],
+                [x, y, z],
+                [x, y, -z],
+                [-x, y, -z],
+            ],
+        }, // +Y
+        {
+            n: [0, -1, 0],
+            v: [
+                [-x, -y, -z],
+                [x, -y, -z],
+                [x, -y, z],
+                [-x, -y, z],
+            ],
+        }, // -Y
+    ];
+    const positions: number[] = [];
+    const normals: number[] = [];
+    const indices: number[] = [];
+    faces.forEach((face, i) => {
+        const base = i * 4;
+        for (const p of face.v) {
+            positions.push(p[0], p[1], p[2]);
+            normals.push(face.n[0], face.n[1], face.n[2]);
+        }
+        indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
+    });
+    return { positions, normals, indices };
 }
 
 /**
@@ -326,25 +329,25 @@ function buildBox(w: number, h: number, d: number): { positions: number[]; norma
  * @returns {ArrayBuffer}
  */
 function packBoxBuffer(box: { positions: number[]; normals: number[]; indices: number[] }): ArrayBuffer {
-  const positions = new Float32Array(box.positions);
-  const normals = new Float32Array(box.normals);
-  const indices = new Uint16Array(box.indices);
-  const buffer = new ArrayBuffer(positions.byteLength + normals.byteLength + indices.byteLength);
-  const bytes = new Uint8Array(buffer);
-  bytes.set(new Uint8Array(positions.buffer), 0);
-  bytes.set(new Uint8Array(normals.buffer), positions.byteLength);
-  bytes.set(new Uint8Array(indices.buffer), positions.byteLength + normals.byteLength);
-  return buffer;
+    const positions = new Float32Array(box.positions);
+    const normals = new Float32Array(box.normals);
+    const indices = new Uint16Array(box.indices);
+    const buffer = new ArrayBuffer(positions.byteLength + normals.byteLength + indices.byteLength);
+    const bytes = new Uint8Array(buffer);
+    bytes.set(new Uint8Array(positions.buffer), 0);
+    bytes.set(new Uint8Array(normals.buffer), positions.byteLength);
+    bytes.set(new Uint8Array(indices.buffer), positions.byteLength + normals.byteLength);
+    return buffer;
 }
 
 /** ArrayBuffer → base64（浏览器内联 data URI 用）。 */
 function arrayBufferToBase64(buffer: ArrayBuffer): string {
-  const bytes = new Uint8Array(buffer);
-  let binary = "";
-  for (let i = 0; i < bytes.length; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
 }
 
 const box = buildBox(1, 1, 1);
@@ -356,42 +359,42 @@ const IDX_BYTES = box.indices.length * 2; // 36 索引 × 2 字节 = 72
 
 // 一个最小但合法的 glTF 2.0 文档：单 mesh、单 PBR 材质、缓冲以 base64 data URI 内联。
 const gltfDocument = {
-  asset: { version: "2.0", generator: "cocosair manual / loading-3d-models" },
-  scene: 0,
-  scenes: [{ name: "inline-scene", nodes: [0] }],
-  nodes: [{ name: "InlineBox", mesh: 0 }],
-  meshes: [
-    {
-      name: "box",
-      primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
-    },
-  ],
-  materials: [
-    {
-      name: "teal-pbr",
-      pbrMetallicRoughness: {
-        baseColorFactor: [0.18, 0.7, 0.64, 1.0],
-        metallicFactor: 0.1,
-        roughnessFactor: 0.55,
-      },
-    },
-  ],
-  accessors: [
-    { bufferView: 0, componentType: 5126, count: 24, type: "VEC3", min: [-0.5, -0.5, -0.5], max: [0.5, 0.5, 0.5] },
-    { bufferView: 1, componentType: 5126, count: 24, type: "VEC3" },
-    { bufferView: 2, componentType: 5123, count: 36, type: "SCALAR" },
-  ],
-  bufferViews: [
-    { buffer: 0, byteOffset: 0, byteLength: POS_BYTES, target: 34962 },
-    { buffer: 0, byteOffset: POS_BYTES, byteLength: NRM_BYTES, target: 34962 },
-    { buffer: 0, byteOffset: POS_BYTES + NRM_BYTES, byteLength: IDX_BYTES, target: 34963 },
-  ],
-  buffers: [
-    {
-      byteLength: buffer.byteLength,
-      uri: `data:application/octet-stream;base64,${base64}`,
-    },
-  ],
+    asset: { version: '2.0', generator: 'cocosair manual / loading-3d-models' },
+    scene: 0,
+    scenes: [{ name: 'inline-scene', nodes: [0] }],
+    nodes: [{ name: 'InlineBox', mesh: 0 }],
+    meshes: [
+        {
+            name: 'box',
+            primitives: [{ attributes: { POSITION: 0, NORMAL: 1 }, indices: 2, material: 0 }],
+        },
+    ],
+    materials: [
+        {
+            name: 'teal-pbr',
+            pbrMetallicRoughness: {
+                baseColorFactor: [0.18, 0.7, 0.64, 1.0],
+                metallicFactor: 0.1,
+                roughnessFactor: 0.55,
+            },
+        },
+    ],
+    accessors: [
+        { bufferView: 0, componentType: 5126, count: 24, type: 'VEC3', min: [-0.5, -0.5, -0.5], max: [0.5, 0.5, 0.5] },
+        { bufferView: 1, componentType: 5126, count: 24, type: 'VEC3' },
+        { bufferView: 2, componentType: 5123, count: 36, type: 'SCALAR' },
+    ],
+    bufferViews: [
+        { buffer: 0, byteOffset: 0, byteLength: POS_BYTES, target: 34962 },
+        { buffer: 0, byteOffset: POS_BYTES, byteLength: NRM_BYTES, target: 34962 },
+        { buffer: 0, byteOffset: POS_BYTES + NRM_BYTES, byteLength: IDX_BYTES, target: 34963 },
+    ],
+    buffers: [
+        {
+            byteLength: buffer.byteLength,
+            uri: `data:application/octet-stream;base64,${base64}`,
+        },
+    ],
 };
 
 // ============ 2. 解析 → 实例化 → 挂场景 ============
@@ -401,15 +404,15 @@ const asset = await loader.parseAsync(JSON.stringify(gltfDocument));
 const instance = asset.instantiate();
 
 // 用一个 pivot 节点承载模型，自转挂在 pivot 上，便于以后整体移动/缩放模型
-const pivot = new Node("model-pivot");
+const pivot = new Node('model-pivot');
 pivot.layer = Layers.Enum.DEFAULT;
 scene.addChild(pivot);
 pivot.addChild(instance.root);
 
 class Rotator extends Component {
-  update(dt: number): void {
-    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
-  }
+    update(dt: number): void {
+        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 40, 0);
+    }
 }
 pivot.addComponent(Rotator);
 
@@ -418,14 +421,14 @@ app.run(scene);
 
 // ============ 3. 解析结果自检（覆盖层） ============
 
-(document.querySelector("#info") as HTMLElement).textContent = [
-  "GLTFLoader.parseAsync(inline glTF JSON)",
-  `meshes: ${asset.meshes.length}  materials: ${asset.materials.length}`,
-  `skeletons: ${asset.skeletons.length}  animations: ${instance.animations.length}`,
-  asset.warnings.length ? `warnings: ${asset.warnings.join(" | ")}` : "warnings: none (parsed clean)",
-].join("\n");
+(document.querySelector('#info') as HTMLElement).textContent = [
+    'GLTFLoader.parseAsync(inline glTF JSON)',
+    `meshes: ${asset.meshes.length}  materials: ${asset.materials.length}`,
+    `skeletons: ${asset.skeletons.length}  animations: ${instance.animations.length}`,
+    asset.warnings.length ? `warnings: ${asset.warnings.join(' | ')}` : 'warnings: none (parsed clean)',
+].join('\n');
 
-console.log("[manual/loading-models] running on cocosair");
+console.log('[manual/loading-models] running on cocosair');
 ```
 
 ## API 参考

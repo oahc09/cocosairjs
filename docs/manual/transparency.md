@@ -32,24 +32,24 @@ alpha 64/128/192 递减，混合状态在 `initialize` 里一次给齐：
 
 ```js
 [64, 128, 192].forEach((alpha, i) => {
-  const n = new Node(`Glass-${i}`);
-  n.layer = Layers.Enum.DEFAULT;
-  n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
-  rig.addChild(n);
-  const r = n.addComponent(MeshRenderer);
-  r.mesh = sphereMesh;
-  const m = new Material();
-  m.initialize({
-    effectName: "builtin-standard",
-    states: {
-      blendState: {
-        targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
-      },
-    },
-  });
-  m.setProperty("mainColor", new Color(245, 245, 250, alpha));
-  r.material = m;
-  glassMats.push(m);
+    const n = new Node(`Glass-${i}`);
+    n.layer = Layers.Enum.DEFAULT;
+    n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
+    rig.addChild(n);
+    const r = n.addComponent(MeshRenderer);
+    r.mesh = sphereMesh;
+    const m = new Material();
+    m.initialize({
+        effectName: 'builtin-standard',
+        states: {
+            blendState: {
+                targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
+            },
+        },
+    });
+    m.setProperty('mainColor', new Color(245, 245, 250, alpha));
+    r.material = m;
+    glassMats.push(m);
 });
 ```
 
@@ -127,63 +127,63 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>How to Draw Transparent Objects — 绘制透明对象（docs/manual/transparency.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>How to Draw Transparent Objects — 绘制透明对象（docs/manual/transparency.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -202,28 +202,28 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("transparent");
+const scene = new Scene('transparent');
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 1.8, 8.5));
 cameraNode.lookAt(new Vec3(0, 1.2, 0));
@@ -237,7 +237,7 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-40, -25, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -247,74 +247,74 @@ dir.illuminance = 2;
 const opaqueColors = [new Color(220, 60, 60, 255), new Color(60, 200, 90, 255), new Color(70, 120, 235, 255)];
 const sharedBox = utils.createMesh(primitives.box({ width: 1.1, height: 1.1, length: 1.1 }));
 opaqueColors.forEach((col, i) => {
-  const n = new Node(`Opaque-${i}`);
-  n.layer = Layers.Enum.DEFAULT;
-  n.setPosition(new Vec3((i - 1) * 1.6, 1.2, -0.6));
-  scene.addChild(n);
-  const r = n.addComponent(MeshRenderer);
-  r.mesh = sharedBox;
-  const m = new Material();
-  m.initialize({ effectName: "builtin-standard" });
-  m.setProperty("mainColor", col);
-  r.material = m;
+    const n = new Node(`Opaque-${i}`);
+    n.layer = Layers.Enum.DEFAULT;
+    n.setPosition(new Vec3((i - 1) * 1.6, 1.2, -0.6));
+    scene.addChild(n);
+    const r = n.addComponent(MeshRenderer);
+    r.mesh = sharedBox;
+    const m = new Material();
+    m.initialize({ effectName: 'builtin-standard' });
+    m.setProperty('mainColor', col);
+    r.material = m;
 });
 
 // ---- 前排：三个半透明球（alpha 64/128/192），挂 rig 下整体旋转 ----
-const rig = new Node("Rig");
+const rig = new Node('Rig');
 rig.setPosition(new Vec3(0, 1.2, 0.9));
 scene.addChild(rig);
 
 const sphereMesh = utils.createMesh(primitives.sphere(0.75, 24, 16));
 const glassMats: Material[] = [];
 [64, 128, 192].forEach((alpha, i) => {
-  const n = new Node(`Glass-${i}`);
-  n.layer = Layers.Enum.DEFAULT;
-  n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
-  rig.addChild(n);
-  const r = n.addComponent(MeshRenderer);
-  r.mesh = sphereMesh;
-  const m = new Material();
-  m.initialize({
-    effectName: "builtin-standard",
-    states: {
-      blendState: {
-        targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
-      },
-    },
-  });
-  m.setProperty("mainColor", new Color(245, 245, 250, alpha));
-  r.material = m;
-  glassMats.push(m);
+    const n = new Node(`Glass-${i}`);
+    n.layer = Layers.Enum.DEFAULT;
+    n.setPosition(new Vec3((i - 1) * 1.1, 0, 0));
+    rig.addChild(n);
+    const r = n.addComponent(MeshRenderer);
+    r.mesh = sphereMesh;
+    const m = new Material();
+    m.initialize({
+        effectName: 'builtin-standard',
+        states: {
+            blendState: {
+                targets: [{ blend: true, blendSrc: 2, blendDst: 4 }],
+            },
+        },
+    });
+    m.setProperty('mainColor', new Color(245, 245, 250, alpha));
+    r.material = m;
+    glassMats.push(m);
 });
 
 // ---- 覆盖层：读回 pass 混合状态 ----
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 function blendReadout(m: Material): string {
-  try {
-    const t = m.passes[0].blendState.targets[0];
-    return `blend=${t.blend} src=${t.blendSrc} dst=${t.blendDst}`;
-  } catch (e) {
-    return `readout failed: ${e.name}`;
-  }
+    try {
+        const t = m.passes[0].blendState.targets[0];
+        return `blend=${t.blend} src=${t.blendSrc} dst=${t.blendDst}`;
+    } catch (e) {
+        return `readout failed: ${e.name}`;
+    }
 }
 class Spinner extends Component {
-  private _a = 0;
-  private _readout = "";
-  constructor() {
-    super();
-    this._a = 0;
-    this._readout = blendReadout(glassMats[1]);
-  }
-  update(dt: number): void {
-    this._a += dt * 30;
-    rig.setRotationFromEuler(0, Math.sin((this._a * Math.PI) / 180) * 35, 0);
-    info.textContent = [
-      "transparency: mainColor.a = 64/128/192 + initialize({states.blendState}) (per-sphere private Material)",
-      `pass[0].blendState.targets[0]: ${this._readout} (2=SRC_ALPHA, 4=ONE_MINUS_SRC_ALPHA)`,
-      `rig yaw: ${(Math.sin((this._a * Math.PI) / 180) * 35).toFixed(1)}° (swings to reveal overlap order)`,
-      "opaque row behind: red/green/blue cubes; glass spheres in front",
-    ].join("\n");
-  }
+    private _a = 0;
+    private _readout = '';
+    constructor() {
+        super();
+        this._a = 0;
+        this._readout = blendReadout(glassMats[1]);
+    }
+    update(dt: number): void {
+        this._a += dt * 30;
+        rig.setRotationFromEuler(0, Math.sin((this._a * Math.PI) / 180) * 35, 0);
+        info.textContent = [
+            'transparency: mainColor.a = 64/128/192 + initialize({states.blendState}) (per-sphere private Material)',
+            `pass[0].blendState.targets[0]: ${this._readout} (2=SRC_ALPHA, 4=ONE_MINUS_SRC_ALPHA)`,
+            `rig yaw: ${(Math.sin((this._a * Math.PI) / 180) * 35).toFixed(1)}° (swings to reveal overlap order)`,
+            'opaque row behind: red/green/blue cubes; glass spheres in front',
+        ].join('\n');
+    }
 }
 cameraNode.addComponent(Spinner);
 
@@ -322,7 +322,7 @@ window.__airApp = app;
 window.__inspect = { glassMats, rig };
 app.run(scene);
 
-console.log("[manual/transparent] running on cocosair");
+console.log('[manual/transparent] running on cocosair');
 ```
 
 ---

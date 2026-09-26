@@ -183,7 +183,7 @@ Skeleton 组件装配链路无样例。不由 DragonBones 可用性推断。详�
 - [x] 手册示例全量复测：`node tools/verify/manual-examples-verify.cjs`（不带 --ids）→ 实测 **44/44 PASS**（partial:false，measuredAt 2026-09-25T07:20:50Z）
 - [x] 新增示例复测与行为探针结果：`manual-component-lifecycle` 14 断言、`manual-input-events` 11 断言、`manual-asset-lifecycle` 9 断言（含故意 404 失败路径，网络日志豁免在案）、`manual-animation-system` +2 断言（代码构造 Clip 播放/冻结）——全部 PASS
 - [x] `node tools/verify/manual-doc-consistency.cjs --strict` → PASS（68 篇声明、44 例逐字节核对、strict）
-- [x] `npm run verify:doc-refs` → ok:true（128 docs / 1219 refs / 零新断链）
+- [x] `npm run verify:doc-refs` → ok:true（128 docs / 1221 refs / 零新断链）
 - [x] `npm run typecheck` → PASS（引擎源码零改动）
 - [x] 本矩阵状态列按当期证据刷新：#1/#2/#3 升 FULL（新页+新例）；#5/#8 物理文档面清偿；#11 后处理保持待验证（G4 探针阻断点见 §3）
 - 验收报告：`docs/evidence/manual-cocos4-gaps-report.md`

@@ -11,11 +11,13 @@
 | --- | --- | --- | --- | --- |
 | 1 | `NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/manual-examples-verify.cjs`（不带 --ids，正典口径） | 手册全部 44 个示例（41 存量 + 3 新增） | **44/44 PASS**（app-contract / visible-frame / no-runtime-error / frame-diff(动画类) / state-probe(可选)），`partial:false` → `docs/evidence/manual-examples-verified.json` + `docs/evidence/examples/manual-*.png` ×44 | 2026-09-25T07:20:50Z |
 | 2 | `node tools/verify/manual-doc-consistency.cjs --strict` | index.md 68 篇声明、44 例逐字节拷贝核对、孤儿目录检查 | **PASS**（strict，fail=0，missing=0；WARN×1 为 installation.md 历史 d.ts 教学片段，属设计容忍） | 同日 |
-| 3 | `npm run verify:doc-refs` | 全仓 128 篇 md、1219 条仓库内引用（棘轮基线 31 条） | **ok:true**（unresolvedCount=0，staleBaselineCount=0，无新增断链） | 同日 |
+| 3 | `npm run verify:doc-refs` | 全仓 128 篇 md、1221 条仓库内引用（棘轮基线 31 条） | **ok:true**（unresolvedCount=0，staleBaselineCount=0，无新增断链） | 同日 |
 | 4 | `npm run typecheck` | src 全量（tsc） | **PASS**（零错误；引擎源码无改动） | 同日 |
 | 5 | 验证器最小扩展（计划书 §五.3） | `tools/verify/manual-examples-verify.cjs` | 新增 `state-probe` 检查（`window.__manualProbe()` 契约，轮询 30s）与 `CONSOLE_ALLOWLIST`（故意 404 用例的网络日志豁免，仅限 manual-asset-lifecycle、计入 detail 可审计）；ANIMATED 集 +3 | 同日 |
 
 ## 2. 交付清单（按批次）
+
+引用计数勘误（2026-09-26）：本文档的 r49 引用数已按 `710fb00` 的独立复核结果从 1219 更正为 1221，保持 128 篇和零断链结论。后续文档与验证器修复见 `docs/interface-scenarios-repair-report.md`，本报告其余记录仍按 r49 历史范围解读。
 
 | 批次 | 交付件 |
 | --- | --- |
@@ -40,7 +42,7 @@
 
 - [x] **P0/P1 官方主题都能从 `docs/manual/index.md` 找到 AIR 对应页、现有示例或明确边界**——工作流组 8 行 + 骨架行状态列（creating-text PARTIAL / physics FULL）+ 覆盖矩阵 11 主题全登记（矩阵 §2 速览）。
 - [x] **`index.md`、`creating-text.md`、`physics.md`、`faq.md`、`game.md` 不再陈述当前导出面已推翻的旧能力结论**——G1 纠偏（ physics.md 的"仅内部命名空间"移入版本说明；"368 导出数"口径仅存于历史章节与版本记录）。
-- [x] **新增主题页的代码可从仓库当前公开 API 运行；重用主示例的链接可到达且运行说明明确**——三篇 G2 页的代码即其示例逐字节拷贝（44/44 浏览器实跑）；G3 深链页片段均为对应主示例文件的连续子串（WARN 口径下零臆造）；doc-refs 1219 引用零断链；各页均给 `npm run dev` 运行 URL。
+- [x] **新增主题页的代码可从仓库当前公开 API 运行；重用主示例的链接可到达且运行说明明确**——三篇 G2 页的代码即其示例逐字节拷贝（44/44 浏览器实跑）；G3 深链页片段均为对应主示例文件的连续子串（WARN 口径下零臆造）；doc-refs 1221 引用零断链；各页均给 `npm run dev` 运行 URL。
 - [x] **生命周期、事件、资源、UI、物理的新增行为路径有可观察断言；通过、失败、未运行分别记录**——通过：§3 全表（36 条新断言全 PASS）；失败路径作为被测行为纳入断言（404 拒绝、注册表未命中、销毁后无回调）；未运行/待验证：后处理像素效果与 Spine（矩阵 §3 阻断点在案，未提升状态）。
 - [x] **文档引用、一致性、类型检查与受影响浏览器示例验证按 G5 完成，报告附命令、时间、范围及结果**——本报告 §1。
 

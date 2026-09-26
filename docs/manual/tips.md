@@ -26,11 +26,11 @@ WebGL 默认 `preserveDrawingBuffer=false`，在绘制回调之外调 `canvas.to
 
 ```js
 input.on(SystemEventType.KEY_DOWN, (e) => {
-  pressed.add(e.keyCode);
-  lastKey = KEY_NAMES.get(e.keyCode) || String(e.keyCode);
+    pressed.add(e.keyCode);
+    lastKey = KEY_NAMES.get(e.keyCode) || String(e.keyCode);
 });
 input.on(SystemEventType.KEY_UP, (e) => {
-  pressed.delete(e.keyCode);
+    pressed.delete(e.keyCode);
 });
 ```
 
@@ -73,63 +73,63 @@ AIR 侧的 CSS 定位部分完全可行（canvas 就是普通 DOM 元素，`posi
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Get Keyboard Input From a Canvas — 画布键盘输入（docs/manual/tips.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Get Keyboard Input From a Canvas — 画布键盘输入（docs/manual/tips.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -148,31 +148,31 @@ AIR 侧的 CSS 定位部分完全可行（canvas 就是普通 DOM 元素，`posi
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-  input,
-  SystemEventType,
-  KeyCode,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+    input,
+    SystemEventType,
+    KeyCode,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("tips-keyboard");
+const scene = new Scene('tips-keyboard');
 
 // ---- 相机（斜视，保证三面受光 distinctColors>=3）----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 3.0, 6.4));
 cameraNode.lookAt(new Vec3(0, 1.0, 0));
@@ -186,74 +186,74 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 立方体 ----
-const cubeNode = new Node("Cube");
+const cubeNode = new Node('Cube');
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 1.0, 0));
 scene.addChild(cubeNode);
 const renderer = cubeNode.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1.2, height: 1.2, length: 1.2 }));
 const material = new Material();
-material.initialize({ effectName: "builtin-standard" });
-material.setProperty("mainColor", new Color(120, 205, 150, 255));
+material.initialize({ effectName: 'builtin-standard' });
+material.setProperty('mainColor', new Color(120, 205, 150, 255));
 renderer.material = material;
 
 // ---- 键盘输入 ----
 const KEY_NAMES = new Map<KeyCode, string>([
-  [KeyCode.KEY_W, "W"],
-  [KeyCode.KEY_A, "A"],
-  [KeyCode.KEY_S, "S"],
-  [KeyCode.KEY_D, "D"],
-  [KeyCode.ARROW_UP, "ArrowUp"],
-  [KeyCode.ARROW_DOWN, "ArrowDown"],
-  [KeyCode.ARROW_LEFT, "ArrowLeft"],
-  [KeyCode.ARROW_RIGHT, "ArrowRight"],
-  [KeyCode.SPACE, "Space"],
+    [KeyCode.KEY_W, 'W'],
+    [KeyCode.KEY_A, 'A'],
+    [KeyCode.KEY_S, 'S'],
+    [KeyCode.KEY_D, 'D'],
+    [KeyCode.ARROW_UP, 'ArrowUp'],
+    [KeyCode.ARROW_DOWN, 'ArrowDown'],
+    [KeyCode.ARROW_LEFT, 'ArrowLeft'],
+    [KeyCode.ARROW_RIGHT, 'ArrowRight'],
+    [KeyCode.SPACE, 'Space'],
 ]);
 const pressed = new Set<KeyCode>();
-let lastKey = "(none)";
+let lastKey = '(none)';
 
 input.on(SystemEventType.KEY_DOWN, (e) => {
-  pressed.add(e.keyCode);
-  lastKey = KEY_NAMES.get(e.keyCode) || String(e.keyCode);
+    pressed.add(e.keyCode);
+    lastKey = KEY_NAMES.get(e.keyCode) || String(e.keyCode);
 });
 input.on(SystemEventType.KEY_UP, (e) => {
-  pressed.delete(e.keyCode);
+    pressed.delete(e.keyCode);
 });
 
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 class KeyboardMover extends Component {
-  update(dt: number): void {
-    let dx = 0;
-    let dz = 0;
-    if (pressed.has(KeyCode.KEY_A) || pressed.has(KeyCode.ARROW_LEFT)) dx -= 1;
-    if (pressed.has(KeyCode.KEY_D) || pressed.has(KeyCode.ARROW_RIGHT)) dx += 1;
-    if (pressed.has(KeyCode.KEY_W) || pressed.has(KeyCode.ARROW_UP)) dz -= 1;
-    if (pressed.has(KeyCode.KEY_S) || pressed.has(KeyCode.ARROW_DOWN)) dz += 1;
-    const p = this.node.position;
-    this.node.setPosition(p.x + dx * dt * 2, p.y, p.z + dz * dt * 2);
-    // 空闲自转保证无按键时也有帧间差异（frame-diff）；Space 叠加更快自转
-    const spin = pressed.has(KeyCode.SPACE) ? 90 : 20;
-    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * spin, 0);
-    const names = [...pressed].map((k) => KEY_NAMES.get(k) || k).join(",");
-    info.textContent = [
-      "keyboard: WASD / arrows move, Space spins faster",
-      `last key: ${lastKey}`,
-      `pressed: ${names || "(none)"}`,
-      `cube: (${p.x.toFixed(2)}, ${p.y.toFixed(2)}, ${p.z.toFixed(2)})`,
-    ].join("\n");
-  }
+    update(dt: number): void {
+        let dx = 0;
+        let dz = 0;
+        if (pressed.has(KeyCode.KEY_A) || pressed.has(KeyCode.ARROW_LEFT)) dx -= 1;
+        if (pressed.has(KeyCode.KEY_D) || pressed.has(KeyCode.ARROW_RIGHT)) dx += 1;
+        if (pressed.has(KeyCode.KEY_W) || pressed.has(KeyCode.ARROW_UP)) dz -= 1;
+        if (pressed.has(KeyCode.KEY_S) || pressed.has(KeyCode.ARROW_DOWN)) dz += 1;
+        const p = this.node.position;
+        this.node.setPosition(p.x + dx * dt * 2, p.y, p.z + dz * dt * 2);
+        // 空闲自转保证无按键时也有帧间差异（frame-diff）；Space 叠加更快自转
+        const spin = pressed.has(KeyCode.SPACE) ? 90 : 20;
+        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * spin, 0);
+        const names = [...pressed].map((k) => KEY_NAMES.get(k) || k).join(',');
+        info.textContent = [
+            'keyboard: WASD / arrows move, Space spins faster',
+            `last key: ${lastKey}`,
+            `pressed: ${names || '(none)'}`,
+            `cube: (${p.x.toFixed(2)}, ${p.y.toFixed(2)}, ${p.z.toFixed(2)})`,
+        ].join('\n');
+    }
 }
 cubeNode.addComponent(KeyboardMover);
 
 window.__airApp = app;
 app.run(scene);
 
-console.log("[manual/tips-keyboard] running on cocosair");
+console.log('[manual/tips-keyboard] running on cocosair');
 ```

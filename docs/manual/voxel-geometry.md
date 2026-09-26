@@ -37,12 +37,12 @@ AIR 没有专门的 merge 工具，但 `primitives.*` 直接吐**数据形态的
 const boxPrim = primitives.box({ width: 1, height: 1, length: 1 });
 const faces: { dir: number[]; vbase: number; idxStart: number }[] = [];
 for (let f = 0; f < 6; f++) {
-  const n = f * 12; // 该面首顶点的 normal 起点：(f*4 顶点)*3 分量
-  faces.push({
-    dir: [Math.round(boxPrim.normals[n]), Math.round(boxPrim.normals[n + 1]), Math.round(boxPrim.normals[n + 2])],
-    vbase: f * 4,
-    idxStart: f * 6,
-  });
+    const n = f * 12; // 该面首顶点的 normal 起点：(f*4 顶点)*3 分量
+    faces.push({
+        dir: [Math.round(boxPrim.normals[n]), Math.round(boxPrim.normals[n + 1]), Math.round(boxPrim.normals[n + 2])],
+        vbase: f * 4,
+        idxStart: f * 6,
+    });
 }
 ```
 
@@ -53,7 +53,8 @@ for (let f = 0; f < 6; f++) {
                 if (solid(x + face.dir[0], y + face.dir[1], z + face.dir[2])) continue; // 邻居挡住 → 丢面
                 const base = positions.length / 3;
                 const c = PALETTE[y % PALETTE.length];
-                for (let k = 0; k < 4; k++) { // 4 顶点：平移复制 + 法线 + uv + 色
+                for (let k = 0; k < 4; k++) {
+                    // 4 顶点：平移复制 + 法线 + uv + 色
                     const vp = (face.vbase + k) * 3;
                     positions.push(
                         boxPrim.positions[vp] + x - OFF,
@@ -65,7 +66,8 @@ for (let f = 0; f < 6; f++) {
                     uvs.push(boxPrim.uvs[vt], boxPrim.uvs[vt + 1]);
                     colors.push(c[0], c[1], c[2], 1); // RGBA32F 归一浮点（见 PALETTE 处实测坑注释）
                 }
-                for (let k = 0; k < 6; k++) { // 6 索引：面内局部索引重映射到合并缓冲
+                for (let k = 0; k < 6; k++) {
+                    // 6 索引：面内局部索引重映射到合并缓冲
                     indices.push(base + boxPrim.indices[face.idxStart + k] - face.vbase);
                 }
 ```
@@ -131,63 +133,63 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Making Voxel Geometry (Minecraft) — 体素几何（docs/manual/voxel-geometry.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Making Voxel Geometry (Minecraft) — 体素几何（docs/manual/voxel-geometry.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -210,34 +212,34 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("voxel");
+const scene = new Scene('voxel');
 
 // ---- 方向光 + 相机（俯角看山体轮廓） ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-35, 30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 10;
 
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(11.5, 9.5, 12.5));
 cameraNode.lookAt(new Vec3(0, 1.5, 0));
@@ -254,43 +256,43 @@ camera.visibility = Layers.Enum.DEFAULT;
 const GRID = 12;
 const heights = new Int16Array(GRID * GRID);
 for (let z = 0; z < GRID; z++) {
-  for (let x = 0; x < GRID; x++) {
-    const wave =
-      0.5 + 0.5 * Math.sin(x * 0.55 + 0.3) * Math.cos(z * 0.42) + 0.5 * (0.5 + 0.5 * Math.sin(z * 0.6 - x * 0.2));
-    heights[z * GRID + x] = 1 + Math.floor(3.2 * wave); // 1..8 名义区间，实测本波形 1..5
-  }
+    for (let x = 0; x < GRID; x++) {
+        const wave =
+            0.5 + 0.5 * Math.sin(x * 0.55 + 0.3) * Math.cos(z * 0.42) + 0.5 * (0.5 + 0.5 * Math.sin(z * 0.6 - x * 0.2));
+        heights[z * GRID + x] = 1 + Math.floor(3.2 * wave); // 1..8 名义区间，实测本波形 1..5
+    }
 }
 const maxH = Math.max(...heights);
 
 // 体素占据判定：网格外=空；y<0 视为实心（底面永不暴露，通用地面约定）
 function solid(x: number, y: number, z: number): boolean {
-  if (y < 0) return true;
-  if (x < 0 || x >= GRID || z < 0 || z >= GRID) return false;
-  return y < heights[z * GRID + x];
+    if (y < 0) return true;
+    if (x < 0 || x >= GRID || z < 0 || z >= GRID) return false;
+    return y < heights[z * GRID + x];
 }
 
 // ---- 面模板：primitives.box(1) 的 6 个面拆成 6 个 quad（4 顶点+6 索引/面，面序固定） ----
 const boxPrim = primitives.box({ width: 1, height: 1, length: 1 });
 const faces: { dir: number[]; vbase: number; idxStart: number }[] = [];
 for (let f = 0; f < 6; f++) {
-  const n = f * 12; // 该面首顶点的 normal 起点：(f*4 顶点)*3 分量
-  faces.push({
-    dir: [Math.round(boxPrim.normals[n]), Math.round(boxPrim.normals[n + 1]), Math.round(boxPrim.normals[n + 2])],
-    vbase: f * 4,
-    idxStart: f * 6,
-  });
+    const n = f * 12; // 该面首顶点的 normal 起点：(f*4 顶点)*3 分量
+    faces.push({
+        dir: [Math.round(boxPrim.normals[n]), Math.round(boxPrim.normals[n + 1]), Math.round(boxPrim.normals[n + 2])],
+        vbase: f * 4,
+        idxStart: f * 6,
+    });
 }
 
 // ---- 高度分层调色板（0..maxH-1 循环），亮色系：sRGB→linear 会压暗（cleanup 篇同款口径） ----
 // 实测坑：createMesh 默认 colors 属性是 RGBA32F（create-mesh.ts _defAttrs[4]），
 // 分量必须给 0..1 归一浮点——写 0..255 会被 shader 当 >1 截断成纯白（首版截图实锤）
 const PALETTE = [
-  [70, 150, 210], // 水
-  [90, 190, 120], // 草
-  [170, 205, 110], // 浅草
-  [215, 195, 140], // 沙岩
-  [200, 200, 205], // 岩
-  [245, 248, 255], // 雪
+    [70, 150, 210], // 水
+    [90, 190, 120], // 草
+    [170, 205, 110], // 浅草
+    [215, 195, 140], // 沙岩
+    [200, 200, 205], // 岩
+    [245, 248, 255], // 雪
 ].map((c) => c.map((v) => v / 255));
 
 // ---- 合并：只发暴露面，顶点色按层 ----
@@ -304,100 +306,100 @@ let exposedFaces = 0;
 const OFF = (GRID - 1) / 2; // 居中：格坐标 → 世界坐标偏移
 
 for (let z = 0; z < GRID; z++) {
-  for (let x = 0; x < GRID; x++) {
-    const h = heights[z * GRID + x];
-    for (let y = 0; y < h; y++) {
-      voxelCount++;
-      for (let f = 0; f < 6; f++) {
-        const face = faces[f];
-        if (solid(x + face.dir[0], y + face.dir[1], z + face.dir[2])) continue; // 邻居挡住 → 丢面
-        const base = positions.length / 3;
-        const c = PALETTE[y % PALETTE.length];
-        for (let k = 0; k < 4; k++) {
-          // 4 顶点：平移复制 + 法线 + uv + 色
-          const vp = (face.vbase + k) * 3;
-          positions.push(
-            boxPrim.positions[vp] + x - OFF,
-            boxPrim.positions[vp + 1] + y,
-            boxPrim.positions[vp + 2] + z - OFF,
-          );
-          normals.push(boxPrim.normals[vp], boxPrim.normals[vp + 1], boxPrim.normals[vp + 2]);
-          const vt = (face.vbase + k) * 2;
-          uvs.push(boxPrim.uvs[vt], boxPrim.uvs[vt + 1]);
-          colors.push(c[0], c[1], c[2], 1); // RGBA32F 归一浮点（见 PALETTE 处实测坑注释）
+    for (let x = 0; x < GRID; x++) {
+        const h = heights[z * GRID + x];
+        for (let y = 0; y < h; y++) {
+            voxelCount++;
+            for (let f = 0; f < 6; f++) {
+                const face = faces[f];
+                if (solid(x + face.dir[0], y + face.dir[1], z + face.dir[2])) continue; // 邻居挡住 → 丢面
+                const base = positions.length / 3;
+                const c = PALETTE[y % PALETTE.length];
+                for (let k = 0; k < 4; k++) {
+                    // 4 顶点：平移复制 + 法线 + uv + 色
+                    const vp = (face.vbase + k) * 3;
+                    positions.push(
+                        boxPrim.positions[vp] + x - OFF,
+                        boxPrim.positions[vp + 1] + y,
+                        boxPrim.positions[vp + 2] + z - OFF,
+                    );
+                    normals.push(boxPrim.normals[vp], boxPrim.normals[vp + 1], boxPrim.normals[vp + 2]);
+                    const vt = (face.vbase + k) * 2;
+                    uvs.push(boxPrim.uvs[vt], boxPrim.uvs[vt + 1]);
+                    colors.push(c[0], c[1], c[2], 1); // RGBA32F 归一浮点（见 PALETTE 处实测坑注释）
+                }
+                for (let k = 0; k < 6; k++) {
+                    // 6 索引：面内局部索引重映射到合并缓冲
+                    indices.push(base + boxPrim.indices[face.idxStart + k] - face.vbase);
+                }
+                exposedFaces++;
+            }
         }
-        for (let k = 0; k < 6; k++) {
-          // 6 索引：面内局部索引重映射到合并缓冲
-          indices.push(base + boxPrim.indices[face.idxStart + k] - face.vbase);
-        }
-        exposedFaces++;
-      }
     }
-  }
 }
 
 const geometry: primitives.IGeometry = {
-  positions,
-  normals,
-  uvs,
-  colors,
-  indices,
-  minPos: new Vec3(-OFF - 0.5, 0, -OFF - 0.5),
-  maxPos: new Vec3(OFF + 0.5, maxH, OFF + 0.5),
+    positions,
+    normals,
+    uvs,
+    colors,
+    indices,
+    minPos: new Vec3(-OFF - 0.5, 0, -OFF - 0.5),
+    maxPos: new Vec3(OFF + 0.5, maxH, OFF + 0.5),
 };
 const mergedMesh = utils.createMesh(geometry);
 
 // ---- 单节点单材质单 draw call ----
-const terrain = new Node("VoxelTerrain");
+const terrain = new Node('VoxelTerrain');
 terrain.layer = Layers.Enum.DEFAULT;
 scene.addChild(terrain);
 const renderer = terrain.addComponent(MeshRenderer);
 renderer.mesh = mergedMesh;
 const mat = new Material();
 mat.initialize({
-  effectName: "builtin-standard",
-  defines: { USE_VERTEX_COLOR: true }, // 顶点色宏：a_color 通道进 albedo（builtin-effects 628/668）
+    effectName: 'builtin-standard',
+    defines: { USE_VERTEX_COLOR: true }, // 顶点色宏：a_color 通道进 albedo（builtin-effects 628/668）
 });
 renderer.material = mat;
 
 // ---- 自转（持续变化源）+ 覆盖层算账 ----
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 
 class Spin extends Component {
-  private _a = 0;
-  update(dt: number): void {
-    this._a = ((this._a || 0) + 16 * dt) % 360;
-    this.node.setRotationFromEuler(0, this._a, 0);
-    info.textContent = [
-      "voxel merge: 12x12 heightfield, exposed faces only -> ONE IGeometry -> ONE Mesh -> ONE draw call",
-      `voxels=${voxelCount}  maxH=${maxH}  grid=${GRID}x${GRID}`,
-      `naive faces=${voxelCount * 6}  exposed faces=${exposedFaces}  culled=${Math.round((1 - exposedFaces / (voxelCount * 6)) * 100)}%`,
-      `verts=${positions.length / 3}  indices=${indices.length}  (per-face 4v+6i, hidden neighbors dropped)`,
-      `spin=${this._a.toFixed(0)} deg/s=16, USE_VERTEX_COLOR palette=${PALETTE.length} levels`,
-    ].join("\n");
-  }
+    private _a = 0;
+    update(dt: number): void {
+        this._a = ((this._a || 0) + 16 * dt) % 360;
+        this.node.setRotationFromEuler(0, this._a, 0);
+        info.textContent = [
+            'voxel merge: 12x12 heightfield, exposed faces only -> ONE IGeometry -> ONE Mesh -> ONE draw call',
+            `voxels=${voxelCount}  maxH=${maxH}  grid=${GRID}x${GRID}`,
+            `naive faces=${voxelCount * 6}  exposed faces=${exposedFaces}  culled=${Math.round((1 - exposedFaces / (voxelCount * 6)) * 100)}%`,
+            `verts=${positions.length / 3}  indices=${indices.length}  (per-face 4v+6i, hidden neighbors dropped)`,
+            `spin=${this._a.toFixed(0)} deg/s=16, USE_VERTEX_COLOR palette=${PALETTE.length} levels`,
+        ].join('\n');
+    }
 }
 const spin = terrain.addComponent(Spin);
 
 window.__airApp = app;
 window.__inspect = {
-  camera,
-  terrain,
-  mergedMesh,
-  spin,
-  stats: {
-    voxelCount,
-    exposedFaces,
-    verts: positions.length / 3,
-    indices: indices.length,
-    maxH,
-    naiveFaces: voxelCount * 6,
-  },
-  heights: Array.from(heights),
+    camera,
+    terrain,
+    mergedMesh,
+    spin,
+    stats: {
+        voxelCount,
+        exposedFaces,
+        verts: positions.length / 3,
+        indices: indices.length,
+        maxH,
+        naiveFaces: voxelCount * 6,
+    },
+    heights: Array.from(heights),
 };
 app.run(scene);
 
-console.log("[manual/voxel] running on cocosair");
+console.log('[manual/voxel] running on cocosair');
 ```
 
 ---

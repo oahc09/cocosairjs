@@ -29,13 +29,13 @@ HTML 里 `#GameCanvas` 的 CSS 是 `width:100%; height:100%`（见示例 index.h
 `window resize` → screen-adapter 重算布局尺寸 → 更新 canvas 像素尺寸 → 触发 `screen` 的 `window-resize` / `canvas-resize` 事件 → 渲染管线按新尺寸重建渲染目标 → 相机按新纵横比投影。整条链自动跑；示例订阅事件只是为了把"当前尺寸"打到覆盖层给你看：
 
 ```js
-screen.on("window-resize", () => {
-  resizeCount++;
-  renderInfo();
+screen.on('window-resize', () => {
+    resizeCount++;
+    renderInfo();
 });
-screen.on("canvas-resize", () => {
-  resizeCount++;
-  renderInfo();
+screen.on('canvas-resize', () => {
+    resizeCount++;
+    renderInfo();
 });
 ```
 
@@ -80,63 +80,63 @@ npm run dev
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Responsive Design — 响应式设计（docs/manual/responsive.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Responsive Design — 响应式设计（docs/manual/responsive.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -158,28 +158,28 @@ npm run dev
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-  screen,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+    screen,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("responsive");
+const scene = new Scene('responsive');
 
 // ---- 相机（纵横比由引擎按 canvas 自动维护，无需手动 aspect） ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 2.2, 4.2));
 cameraNode.lookAt(new Vec3(0, 0.5, 0));
@@ -193,32 +193,32 @@ camera.clearColor = new Color(20, 26, 38, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node("Main Light");
+const lightNode = new Node('Main Light');
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 地面 + 参照 cube（cube 非正方形轮廓，拉伸与否一眼可辨） ----
-const groundNode = new Node("Ground");
+const groundNode = new Node('Ground');
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
 groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
 const groundMaterial = new Material();
-groundMaterial.initialize({ effectName: "builtin-standard" });
-groundMaterial.setProperty("mainColor", new Color(70, 90, 80, 255));
+groundMaterial.initialize({ effectName: 'builtin-standard' });
+groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
-const cubeNode = new Node("Reference Cube");
+const cubeNode = new Node('Reference Cube');
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 0.6, 0));
 scene.addChild(cubeNode);
 const cubeRenderer = cubeNode.addComponent(MeshRenderer);
 cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1.4, length: 1 }));
 const cubeMaterial = new Material();
-cubeMaterial.initialize({ effectName: "builtin-standard" });
-cubeMaterial.setProperty("mainColor", new Color(230, 130, 50, 255));
+cubeMaterial.initialize({ effectName: 'builtin-standard' });
+cubeMaterial.setProperty('mainColor', new Color(230, 130, 50, 255));
 cubeRenderer.material = cubeMaterial;
 
 window.__airApp = app;
@@ -227,29 +227,29 @@ app.run(scene);
 // ============ 覆盖层：实时尺寸 + resize 事件订阅 ============
 let resizeCount = 0;
 function renderInfo(): void {
-  const ws = screen.windowSize || { width: -1, height: -1 };
-  const res = screen.resolution || { width: -1, height: -1 };
-  (document.querySelector("#info") as HTMLElement).textContent = [
-    "responsive: drag the window to resize",
-    `screen.windowSize : ${ws.width}x${ws.height}`,
-    `screen.resolution : ${res.width}x${res.height}`,
-    `devicePixelRatio  : ${screen.devicePixelRatio}`,
-    `canvas pixels     : ${canvas.width}x${canvas.height}`,
-    `resize events     : ${resizeCount}`,
-  ].join("\n");
+    const ws = screen.windowSize || { width: -1, height: -1 };
+    const res = screen.resolution || { width: -1, height: -1 };
+    (document.querySelector('#info') as HTMLElement).textContent = [
+        'responsive: drag the window to resize',
+        `screen.windowSize : ${ws.width}x${ws.height}`,
+        `screen.resolution : ${res.width}x${res.height}`,
+        `devicePixelRatio  : ${screen.devicePixelRatio}`,
+        `canvas pixels     : ${canvas.width}x${canvas.height}`,
+        `resize events     : ${resizeCount}`,
+    ].join('\n');
 }
 renderInfo();
 
-screen.on("window-resize", () => {
-  resizeCount++;
-  renderInfo();
+screen.on('window-resize', () => {
+    resizeCount++;
+    renderInfo();
 });
-screen.on("canvas-resize", () => {
-  resizeCount++;
-  renderInfo();
+screen.on('canvas-resize', () => {
+    resizeCount++;
+    renderInfo();
 });
 
-console.log("[manual/responsive] running on cocosair");
+console.log('[manual/responsive] running on cocosair');
 ```
 
 ## API 参考

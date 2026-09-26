@@ -23,10 +23,10 @@ Scene 'scenegraph'
 建子节点时给的是**局部坐标**（相对父节点）：
 
 ```ts
-const node = new Node(name);
-node.layer = Layers.Enum.DEFAULT;
-node.setPosition(new Vec3(x, y, z)); // 局部坐标：相对父节点
-parent.addChild(node);
+    const node = new Node(name);
+    node.layer = Layers.Enum.DEFAULT;
+    node.setPosition(new Vec3(x, y, z)); // 局部坐标：相对父节点
+    parent.addChild(node);
 ```
 
 覆盖层实测（t=0，Rig 尚未转过角度）：
@@ -46,9 +46,9 @@ Tip active=false activeInHierarchy=false (hidden)
 
 ```ts
 class Spinner extends Component {
-  update(dt: number): void {
-    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 30, 0);
-  }
+    update(dt: number): void {
+        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 30, 0);
+    }
 }
 rig.addComponent(Spinner);
 ```
@@ -91,63 +91,63 @@ tip.active = false;
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Scenegraph — 场景图（docs/manual/scenegraph.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Scenegraph — 场景图（docs/manual/scenegraph.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -163,28 +163,28 @@ tip.active = false;
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("scenegraph");
+const scene = new Scene('scenegraph');
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 2.2, 7.5));
 cameraNode.lookAt(new Vec3(0, 0.8, 0));
@@ -198,53 +198,53 @@ camera.clearColor = new Color(18, 24, 34, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 光源 ----
-const lightNode = new Node("Main Light");
+const lightNode = new Node('Main Light');
 scene.addChild(lightNode);
 lightNode.setRotationFromEuler(-45, -30, 0);
 const light = lightNode.addComponent(DirectionalLight);
 light.illuminance = 2;
 
 // ---- 地面 ----
-const groundNode = new Node("Ground");
+const groundNode = new Node('Ground');
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
 groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 14, length: 14 }));
 const groundMaterial = new Material();
-groundMaterial.initialize({ effectName: "builtin-standard" });
-groundMaterial.setProperty("mainColor", new Color(70, 90, 80, 255));
+groundMaterial.initialize({ effectName: 'builtin-standard' });
+groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));
 groundRenderer.material = groundMaterial;
 
 function addCube(name: string, parent: Node, x: number, y: number, z: number, color: Color, size: number = 0.8): Node {
-  const node = new Node(name);
-  node.layer = Layers.Enum.DEFAULT;
-  node.setPosition(new Vec3(x, y, z)); // 局部坐标：相对父节点
-  parent.addChild(node);
-  const renderer = node.addComponent(MeshRenderer);
-  renderer.mesh = utils.createMesh(primitives.box({ width: size, height: size, length: size }));
-  const material = new Material();
-  material.initialize({ effectName: "builtin-standard" });
-  material.setProperty("mainColor", color);
-  renderer.material = material;
-  return node;
+    const node = new Node(name);
+    node.layer = Layers.Enum.DEFAULT;
+    node.setPosition(new Vec3(x, y, z)); // 局部坐标：相对父节点
+    parent.addChild(node);
+    const renderer = node.addComponent(MeshRenderer);
+    renderer.mesh = utils.createMesh(primitives.box({ width: size, height: size, length: size }));
+    const material = new Material();
+    material.initialize({ effectName: 'builtin-standard' });
+    material.setProperty('mainColor', color);
+    renderer.material = material;
+    return node;
 }
 
 // ---- 三层场景图：Rig 旋转 → 子臂继承 → 孙节点 Tip 隐藏 ----
-const rig = new Node("Rig");
+const rig = new Node('Rig');
 rig.layer = Layers.Enum.DEFAULT;
 rig.setPosition(new Vec3(0, 1.0, 0));
 scene.addChild(rig);
 
 class Spinner extends Component {
-  update(dt: number): void {
-    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 30, 0);
-  }
+    update(dt: number): void {
+        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 30, 0);
+    }
 }
 rig.addComponent(Spinner);
 
-const armA = addCube("Arm-A", rig, -2, 0, 0, new Color(230, 120, 60, 255));
-const armB = addCube("Arm-B", rig, 2, 0, 0, new Color(90, 200, 220, 255));
-const tip = addCube("Tip", armB, 0, 1.2, 0, new Color(240, 210, 90, 255), 0.5);
+const armA = addCube('Arm-A', rig, -2, 0, 0, new Color(230, 120, 60, 255));
+const armB = addCube('Arm-B', rig, 2, 0, 0, new Color(90, 200, 220, 255));
+const tip = addCube('Tip', armB, 0, 1.2, 0, new Color(240, 210, 90, 255), 0.5);
 
 // 隐藏孙节点：active=false 时自身与后代都不渲染、update 也不跑
 tip.active = false;
@@ -254,14 +254,14 @@ app.run(scene);
 
 // ============ 覆盖层：层级与 active 标志 ============
 const wp = armA.worldPosition;
-(document.querySelector("#info") as HTMLElement).textContent = [
-  "scenegraph: Scene → Rig → Arm-A / Arm-B → Tip",
-  "Rig spins 30°/s; arms+tip inherit the transform",
-  `Arm-A local(-2,0,0) world(${wp.x.toFixed(2)},${wp.y.toFixed(2)},${wp.z.toFixed(2)})`,
-  `Tip active=${tip.active} activeInHierarchy=${tip.activeInHierarchy} (hidden)`,
-].join("\n");
+(document.querySelector('#info') as HTMLElement).textContent = [
+    'scenegraph: Scene → Rig → Arm-A / Arm-B → Tip',
+    'Rig spins 30°/s; arms+tip inherit the transform',
+    `Arm-A local(-2,0,0) world(${wp.x.toFixed(2)},${wp.y.toFixed(2)},${wp.z.toFixed(2)})`,
+    `Tip active=${tip.active} activeInHierarchy=${tip.activeInHierarchy} (hidden)`,
+].join('\n');
 
-console.log("[manual/scenegraph] running on cocosair");
+console.log('[manual/scenegraph] running on cocosair');
 ```
 
 ## API 参考

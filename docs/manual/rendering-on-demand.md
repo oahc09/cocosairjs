@@ -28,11 +28,11 @@
 ```js
 // dirty 驱动：只有 dirty 时才消耗一帧
 setInterval(() => {
-  if (!dirty) return;
-  dirty = false;
-  framesRendered++;
-  game.step();
-  updateOverlay();
+    if (!dirty) return;
+    dirty = false;
+    framesRendered++;
+    game.step();
+    updateOverlay();
 }, 100);
 ```
 
@@ -41,9 +41,9 @@ setInterval(() => {
 ```js
 // Auto：有节奏地"变脏"，模拟状态变化触发重绘
 setInterval(() => {
-  if (!autoMode) return;
-  cubeNode.setRotationFromEuler(0, cubeNode.eulerAngles.y + 6, 0);
-  dirty = true;
+    if (!autoMode) return;
+    cubeNode.setRotationFromEuler(0, cubeNode.eulerAngles.y + 6, 0);
+    dirty = true;
 }, 400);
 ```
 
@@ -53,8 +53,8 @@ setInterval(() => {
 // 让引擎自然绘制首帧（画布留下内容），随后停掉连续主循环，改由上面按需 step。
 // 若 app.run 后同步 game.pause()，则一帧都不会绘制（EVENT_AFTER_DRAW 永不触发）。
 director.once(Director.EVENT_AFTER_DRAW, () => {
-  game.pause();
-  updateOverlay();
+    game.pause();
+    updateOverlay();
 });
 ```
 
@@ -102,87 +102,87 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Rendering On Demand — 按需渲染（docs/manual/rendering-on-demand.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-      #ui {
-        position: absolute;
-        left: 8px;
-        bottom: 8px;
-        z-index: 10;
-        font:
-          12px/1.4 ui-monospace,
-          Consolas,
-          monospace;
-      }
-      #ui button {
-        margin-right: 6px;
-        padding: 4px 10px;
-        cursor: pointer;
-        font: inherit;
-        color: #0b1018;
-        background: #d7e3f2;
-        border: 1px solid #8fa4bd;
-        border-radius: 4px;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <div id="ui">
-      <button id="btn-step" type="button">Render one frame</button>
-      <button id="btn-auto" type="button">Auto: OFF</button>
-    </div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Rendering On Demand — 按需渲染（docs/manual/rendering-on-demand.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+            #ui {
+                position: absolute;
+                left: 8px;
+                bottom: 8px;
+                z-index: 10;
+                font:
+                    12px/1.4 ui-monospace,
+                    Consolas,
+                    monospace;
+            }
+            #ui button {
+                margin-right: 6px;
+                padding: 4px 10px;
+                cursor: pointer;
+                font: inherit;
+                color: #0b1018;
+                background: #d7e3f2;
+                border: 1px solid #8fa4bd;
+                border-radius: 4px;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <div id="ui">
+            <button id="btn-step" type="button">Render one frame</button>
+            <button id="btn-auto" type="button">Auto: OFF</button>
+        </div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -201,30 +201,30 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-  primitives,
-  game,
-  director,
-  Director,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+    primitives,
+    game,
+    director,
+    Director,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("rendering-on-demand");
+const scene = new Scene('rendering-on-demand');
 
 // ---- 相机（斜视，保证三面受光 distinctColors>=3）----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(3.0, 3.0, 6.4));
 cameraNode.lookAt(new Vec3(0, 1.0, 0));
@@ -238,22 +238,22 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光 ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
 dir.illuminance = 2;
 
 // ---- 立方体 ----
-const cubeNode = new Node("Cube");
+const cubeNode = new Node('Cube');
 cubeNode.layer = Layers.Enum.DEFAULT;
 cubeNode.setPosition(new Vec3(0, 1.0, 0));
 scene.addChild(cubeNode);
 const renderer = cubeNode.addComponent(MeshRenderer);
 renderer.mesh = utils.createMesh(primitives.box({ width: 1.2, height: 1.2, length: 1.2 }));
 const material = new Material();
-material.initialize({ effectName: "builtin-standard" });
-material.setProperty("mainColor", new Color(90, 170, 235, 255));
+material.initialize({ effectName: 'builtin-standard' });
+material.setProperty('mainColor', new Color(90, 170, 235, 255));
 renderer.material = material;
 
 // ---- 按需渲染核心 ----
@@ -261,43 +261,43 @@ let dirty = true; // 初始请求一帧，保证画布有内容
 let framesRendered = 0; // 只在真正 step 时 +1
 let autoMode = true; // 默认开：周期性"变脏"→ step，演示按需节奏（可点按钮关成冻结态）
 
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 function updateOverlay(): void {
-  info.textContent = [
-    "rendering on demand: game.pause() + game.step()",
-    `main loop paused: ${game.isPaused()}`,
-    `frames actually rendered: ${framesRendered}`,
-    `auto mode: ${autoMode ? "ON (dirty every 400ms)" : "OFF"}`,
-    'click "Render one frame" or enable Auto to draw',
-  ].join("\n");
+    info.textContent = [
+        'rendering on demand: game.pause() + game.step()',
+        `main loop paused: ${game.isPaused()}`,
+        `frames actually rendered: ${framesRendered}`,
+        `auto mode: ${autoMode ? 'ON (dirty every 400ms)' : 'OFF'}`,
+        'click "Render one frame" or enable Auto to draw',
+    ].join('\n');
 }
 
 // dirty 驱动：只有 dirty 时才消耗一帧
 setInterval(() => {
-  if (!dirty) return;
-  dirty = false;
-  framesRendered++;
-  game.step();
-  updateOverlay();
+    if (!dirty) return;
+    dirty = false;
+    framesRendered++;
+    game.step();
+    updateOverlay();
 }, 100);
 
 // Auto：有节奏地"变脏"，模拟状态变化触发重绘
 setInterval(() => {
-  if (!autoMode) return;
-  cubeNode.setRotationFromEuler(0, cubeNode.eulerAngles.y + 6, 0);
-  dirty = true;
+    if (!autoMode) return;
+    cubeNode.setRotationFromEuler(0, cubeNode.eulerAngles.y + 6, 0);
+    dirty = true;
 }, 400);
 
-(document.querySelector("#btn-step") as HTMLElement).addEventListener("click", () => {
-  cubeNode.setRotationFromEuler(0, cubeNode.eulerAngles.y + 15, 0);
-  dirty = true;
+(document.querySelector('#btn-step') as HTMLElement).addEventListener('click', () => {
+    cubeNode.setRotationFromEuler(0, cubeNode.eulerAngles.y + 15, 0);
+    dirty = true;
 });
-const btnAuto = document.querySelector("#btn-auto") as HTMLElement;
-btnAuto.textContent = autoMode ? "Auto: ON" : "Auto: OFF";
-btnAuto.addEventListener("click", () => {
-  autoMode = !autoMode;
-  btnAuto.textContent = autoMode ? "Auto: ON" : "Auto: OFF";
-  dirty = true;
+const btnAuto = document.querySelector('#btn-auto') as HTMLElement;
+btnAuto.textContent = autoMode ? 'Auto: ON' : 'Auto: OFF';
+btnAuto.addEventListener('click', () => {
+    autoMode = !autoMode;
+    btnAuto.textContent = autoMode ? 'Auto: ON' : 'Auto: OFF';
+    dirty = true;
 });
 
 window.__airApp = app;
@@ -305,11 +305,11 @@ app.run(scene);
 // 让引擎自然绘制首帧（画布留下内容），随后停掉连续主循环，改由上面按需 step。
 // 若 app.run 后同步 game.pause()，则一帧都不会绘制（EVENT_AFTER_DRAW 永不触发）。
 director.once(Director.EVENT_AFTER_DRAW, () => {
-  game.pause();
-  updateOverlay();
+    game.pause();
+    updateOverlay();
 });
 
-console.log("[manual/rendering-on-demand] running on cocosair");
+console.log('[manual/rendering-on-demand] running on cocosair');
 ```
 
 ---

@@ -25,29 +25,29 @@ const SEG = 24;
 const HALF = 2.0;
 
 function heightAt(x: number, z: number): number {
-  return AMP * Math.sin(FREQ * x) * Math.cos(FREQ * z);
+    return AMP * Math.sin(FREQ * x) * Math.cos(FREQ * z);
 }
 ```
 
 ```js
-// 解析法线：n = normalize(-df/dx, 1, -df/dz)
-const dfdx = AMP * FREQ * Math.cos(FREQ * x) * Math.cos(FREQ * z);
-const dfdz = -AMP * FREQ * Math.sin(FREQ * x) * Math.sin(FREQ * z);
-const len = Math.hypot(dfdx, 1, dfdz);
-normals.push(-dfdx / len, 1 / len, -dfdz / len);
+        // 解析法线：n = normalize(-df/dx, 1, -df/dz)
+        const dfdx = AMP * FREQ * Math.cos(FREQ * x) * Math.cos(FREQ * z);
+        const dfdz = -AMP * FREQ * Math.sin(FREQ * x) * Math.sin(FREQ * z);
+        const len = Math.hypot(dfdx, 1, dfdz);
+        normals.push(-dfdx / len, 1 / len, -dfdz / len);
 ```
 
 索引按格推进、每格两三角形（`a,c,b` / `b,c,d`），绕序与 `primitives.plane` 一致保证正面朝上：
 
 ```js
 for (let j = 0; j < SEG; j++) {
-  for (let i = 0; i < SEG; i++) {
-    const a = j * (SEG + 1) + i;
-    const b = a + 1;
-    const c = a + (SEG + 1);
-    const d = c + 1;
-    indices.push(a, c, b, b, c, d);
-  }
+    for (let i = 0; i < SEG; i++) {
+        const a = j * (SEG + 1) + i;
+        const b = a + 1;
+        const c = a + (SEG + 1);
+        const d = c + 1;
+        indices.push(a, c, b, b, c, d);
+    }
 }
 ```
 
@@ -55,12 +55,12 @@ for (let j = 0; j < SEG; j++) {
 
 ```js
 const waveGeometry = {
-  positions,
-  normals,
-  uvs,
-  indices,
-  minPos: new Vec3(-HALF, -AMP, -HALF),
-  maxPos: new Vec3(HALF, AMP, HALF),
+    positions,
+    normals,
+    uvs,
+    indices,
+    minPos: new Vec3(-HALF, -AMP, -HALF),
+    maxPos: new Vec3(HALF, AMP, HALF),
 };
 ```
 
@@ -115,63 +115,63 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
 ```html
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <title>Custom BufferGeometry — 自定义几何（docs/manual/custom-buffergeometry.md）</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: #fff;
-      }
-      #GameDiv {
-        width: 100%;
-        height: 100%;
-      }
-      #Cocos3dGameContainer {
-        width: 100%;
-        height: 100%;
-      }
-      #GameCanvas {
-        width: 100%;
-        display: block;
-        height: 100%;
-      }
-      #info {
-        position: absolute;
-        left: 8px;
-        top: 8px;
-        z-index: 10;
-        font:
-          12px/1.6 ui-monospace,
-          Consolas,
-          monospace;
-        color: #e8eef7;
-        background: rgba(10, 16, 26, 0.78);
-        padding: 6px 10px;
-        border-radius: 4px;
-        white-space: pre;
-      }
-    </style>
-    <script type="importmap">
-      { "imports": { "cocosair": "/build/cocosair.module.js" } }
-    </script>
-  </head>
-  <body>
-    <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
-    <div id="GameDiv">
-      <div id="Cocos3dGameContainer">
-        <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
-        <canvas id="GameCanvas"></canvas>
-      </div>
-    </div>
-    <div id="info">loading…</div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Custom BufferGeometry — 自定义几何（docs/manual/custom-buffergeometry.md）</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                display: block;
+                height: 100%;
+            }
+            #info {
+                position: absolute;
+                left: 8px;
+                top: 8px;
+                z-index: 10;
+                font:
+                    12px/1.6 ui-monospace,
+                    Consolas,
+                    monospace;
+                color: #e8eef7;
+                background: rgba(10, 16, 26, 0.78);
+                padding: 6px 10px;
+                border-radius: 4px;
+                white-space: pre;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <div id="info">loading…</div>
+        <script type="module" src="./main.ts"></script>
+    </body>
 </html>
 ```
 
@@ -188,27 +188,27 @@ NODE_PATH=<含 playwright 的 node_modules> node tools/verify/manual-examples-ve
  */
 
 import {
-  createAirApp,
-  Scene,
-  Node,
-  Camera,
-  DirectionalLight,
-  MeshRenderer,
-  Material,
-  Component,
-  Layers,
-  Vec3,
-  Color,
-  utils,
-} from "cocosair";
+    createAirApp,
+    Scene,
+    Node,
+    Camera,
+    DirectionalLight,
+    MeshRenderer,
+    Material,
+    Component,
+    Layers,
+    Vec3,
+    Color,
+    utils,
+} from 'cocosair';
 
-const canvas = document.querySelector("#GameCanvas") as HTMLCanvasElement;
+const canvas = document.querySelector('#GameCanvas') as HTMLCanvasElement;
 const app = await createAirApp({ canvas });
 
-const scene = new Scene("custom-geometry");
+const scene = new Scene('custom-geometry');
 
 // ---- 相机 ----
-const cameraNode = new Node("Main Camera");
+const cameraNode = new Node('Main Camera');
 scene.addChild(cameraNode);
 cameraNode.setPosition(new Vec3(0, 3.4, 5.2));
 cameraNode.lookAt(new Vec3(0, 0, 0));
@@ -222,7 +222,7 @@ camera.clearColor = new Color(18, 22, 30, 255);
 camera.visibility = Layers.Enum.DEFAULT;
 
 // ---- 一盏方向光让波纹明暗起伏 ----
-const dirNode = new Node("DirLight");
+const dirNode = new Node('DirLight');
 dirNode.setRotationFromEuler(-50, -30, 0);
 scene.addChild(dirNode);
 const dir = dirNode.addComponent(DirectionalLight);
@@ -235,7 +235,7 @@ const SEG = 24;
 const HALF = 2.0;
 
 function heightAt(x: number, z: number): number {
-  return AMP * Math.sin(FREQ * x) * Math.cos(FREQ * z);
+    return AMP * Math.sin(FREQ * x) * Math.cos(FREQ * z);
 }
 
 const positions: number[] = [];
@@ -243,67 +243,67 @@ const normals: number[] = [];
 const uvs: number[] = [];
 const indices: number[] = [];
 for (let j = 0; j <= SEG; j++) {
-  for (let i = 0; i <= SEG; i++) {
-    const x = -HALF + (i / SEG) * HALF * 2;
-    const z = -HALF + (j / SEG) * HALF * 2;
-    positions.push(x, heightAt(x, z), z);
-    // 解析法线：n = normalize(-df/dx, 1, -df/dz)
-    const dfdx = AMP * FREQ * Math.cos(FREQ * x) * Math.cos(FREQ * z);
-    const dfdz = -AMP * FREQ * Math.sin(FREQ * x) * Math.sin(FREQ * z);
-    const len = Math.hypot(dfdx, 1, dfdz);
-    normals.push(-dfdx / len, 1 / len, -dfdz / len);
-    uvs.push(i / SEG, j / SEG);
-  }
+    for (let i = 0; i <= SEG; i++) {
+        const x = -HALF + (i / SEG) * HALF * 2;
+        const z = -HALF + (j / SEG) * HALF * 2;
+        positions.push(x, heightAt(x, z), z);
+        // 解析法线：n = normalize(-df/dx, 1, -df/dz)
+        const dfdx = AMP * FREQ * Math.cos(FREQ * x) * Math.cos(FREQ * z);
+        const dfdz = -AMP * FREQ * Math.sin(FREQ * x) * Math.sin(FREQ * z);
+        const len = Math.hypot(dfdx, 1, dfdz);
+        normals.push(-dfdx / len, 1 / len, -dfdz / len);
+        uvs.push(i / SEG, j / SEG);
+    }
 }
 for (let j = 0; j < SEG; j++) {
-  for (let i = 0; i < SEG; i++) {
-    const a = j * (SEG + 1) + i;
-    const b = a + 1;
-    const c = a + (SEG + 1);
-    const d = c + 1;
-    indices.push(a, c, b, b, c, d);
-  }
+    for (let i = 0; i < SEG; i++) {
+        const a = j * (SEG + 1) + i;
+        const b = a + 1;
+        const c = a + (SEG + 1);
+        const d = c + 1;
+        indices.push(a, c, b, b, c, d);
+    }
 }
 
 const waveGeometry = {
-  positions,
-  normals,
-  uvs,
-  indices,
-  minPos: new Vec3(-HALF, -AMP, -HALF),
-  maxPos: new Vec3(HALF, AMP, HALF),
+    positions,
+    normals,
+    uvs,
+    indices,
+    minPos: new Vec3(-HALF, -AMP, -HALF),
+    maxPos: new Vec3(HALF, AMP, HALF),
 };
 
-const waveNode = new Node("WaveGrid");
+const waveNode = new Node('WaveGrid');
 waveNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(waveNode);
 const waveRenderer = waveNode.addComponent(MeshRenderer);
 waveRenderer.mesh = utils.createMesh(waveGeometry);
 const waveMaterial = new Material();
-waveMaterial.initialize({ effectName: "builtin-standard" });
-waveMaterial.setProperty("mainColor", new Color(95, 205, 160, 255));
-waveMaterial.setProperty("roughness", 0.5);
+waveMaterial.initialize({ effectName: 'builtin-standard' });
+waveMaterial.setProperty('mainColor', new Color(95, 205, 160, 255));
+waveMaterial.setProperty('roughness', 0.5);
 waveRenderer.material = waveMaterial;
 
 class Spinner extends Component {
-  update(dt: number): void {
-    this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 20, 0);
-  }
+    update(dt: number): void {
+        this.node.setRotationFromEuler(0, this.node.eulerAngles.y + dt * 20, 0);
+    }
 }
 waveNode.addComponent(Spinner);
 
-const info = document.querySelector("#info") as HTMLElement;
+const info = document.querySelector('#info') as HTMLElement;
 info.textContent = [
-  "custom geometry: hand-written IGeometry (no primitives.*)",
-  `verts: ${positions.length / 3}  indices: ${indices.length}  tris: ${indices.length / 3}`,
-  "y = 0.35*sin(1.6x)*cos(1.6z), normals = analytic partials",
-  "utils.createMesh(IGeometry) → MeshRenderer.mesh",
-].join("\n");
+    'custom geometry: hand-written IGeometry (no primitives.*)',
+    `verts: ${positions.length / 3}  indices: ${indices.length}  tris: ${indices.length / 3}`,
+    'y = 0.35*sin(1.6x)*cos(1.6z), normals = analytic partials',
+    'utils.createMesh(IGeometry) → MeshRenderer.mesh',
+].join('\n');
 
 window.__airApp = app;
 app.run(scene);
 
-console.log("[manual/custom-geometry] running on cocosair");
+console.log('[manual/custom-geometry] running on cocosair');
 ```
 
 ---

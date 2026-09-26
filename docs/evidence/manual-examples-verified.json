@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-26T06:54:03.373Z",
+  "measuredAt": "2026-09-26T09:27:15.196Z",
   "runner": "tools/verify/manual-examples-verify.cjs",
   "mode": "manual-examples-v1",
   "scope": "docs/manual/examples/manual-*",
@@ -23,12 +23,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0860 distinctColors=13 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0877 distinctColors=14 640x480"
         },
         {
           "name": "frame-diff",
@@ -39,17 +34,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-align-html.png",
-        "bytes": 9336,
-        "hash": "4de35f860cc649c7"
+        "bytes": 9225,
+        "hash": "2c6aa44528f7bd12"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 4366,
-      "measuredAt": "2026-09-26T06:51:15.655Z"
+      "ms": 4029,
+      "measuredAt": "2026-09-26T09:24:33.972Z"
     },
     {
       "id": "manual-animation-system",
@@ -66,11 +66,6 @@
           "detail": "litRatio=0.0500 distinctColors=10 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "frame-diff",
           "result": "PASS",
           "detail": "frames differ over 400ms"
@@ -79,17 +74,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "ok (2 assertions)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-animation-system.png",
-        "bytes": 9949,
-        "hash": "df2e5e2392d6da27"
+        "bytes": 9979,
+        "hash": "cff609d0be039ed3"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 6557,
-      "measuredAt": "2026-09-26T06:51:22.233Z"
+      "ms": 6462,
+      "measuredAt": "2026-09-26T09:24:40.445Z"
     },
     {
       "id": "manual-asset-lifecycle",
@@ -106,11 +106,6 @@
           "detail": "litRatio=0.0617 distinctColors=3 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean (1 allowed network 404)"
-        },
-        {
           "name": "frame-diff",
           "result": "PASS",
           "detail": "frames differ over 400ms"
@@ -119,17 +114,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "ok (9 assertions)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean (1 allowed network 404)"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-asset-lifecycle.png",
-        "bytes": 9240,
-        "hash": "3c2f8504f8c0716e"
+        "bytes": 9413,
+        "hash": "e213c9759df7be48"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 5930,
-      "measuredAt": "2026-09-26T06:51:28.177Z"
+      "ms": 5791,
+      "measuredAt": "2026-09-26T09:24:46.245Z"
     },
     {
       "id": "manual-backgrounds",
@@ -146,14 +146,14 @@
           "detail": "litRatio=0.0803 distinctColors=16 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -163,8 +163,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3211,
-      "measuredAt": "2026-09-26T06:51:31.402Z"
+      "ms": 3006,
+      "measuredAt": "2026-09-26T09:24:49.262Z"
     },
     {
       "id": "manual-billboards",
@@ -178,12 +178,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.1036 distinctColors=23 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.1535 distinctColors=22 640x480"
         },
         {
           "name": "frame-diff",
@@ -194,17 +189,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-billboards.png",
-        "bytes": 14547,
-        "hash": "03f55fa24ac0eb45"
+        "bytes": 16739,
+        "hash": "8801776c8aa46b73"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3793,
-      "measuredAt": "2026-09-26T06:51:35.207Z"
+      "ms": 3440,
+      "measuredAt": "2026-09-26T09:24:52.712Z"
     },
     {
       "id": "manual-cameras",
@@ -218,12 +218,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.1393 distinctColors=26 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.1370 distinctColors=26 640x480"
         },
         {
           "name": "frame-diff",
@@ -234,17 +229,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-cameras.png",
-        "bytes": 13819,
-        "hash": "2942c471eb612718"
+        "bytes": 14142,
+        "hash": "3c8ae780ec875fba"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3693,
-      "measuredAt": "2026-09-26T06:51:38.913Z"
+      "ms": 3405,
+      "measuredAt": "2026-09-26T09:24:56.126Z"
     },
     {
       "id": "manual-cleanup",
@@ -261,14 +261,14 @@
           "detail": "litRatio=0.0800 distinctColors=11 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -278,8 +278,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3121,
-      "measuredAt": "2026-09-26T06:51:42.045Z"
+      "ms": 2981,
+      "measuredAt": "2026-09-26T09:24:59.116Z"
     },
     {
       "id": "manual-color-management",
@@ -293,12 +293,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.2376 distinctColors=29 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.2376 distinctColors=26 640x480"
         },
         {
           "name": "frame-diff",
@@ -309,17 +304,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-color-management.png",
-        "bytes": 8706,
-        "hash": "3fd5463b9643e918"
+        "bytes": 8702,
+        "hash": "ad3aacf05d27ef80"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3703,
-      "measuredAt": "2026-09-26T06:51:45.764Z"
+      "ms": 3412,
+      "measuredAt": "2026-09-26T09:25:02.542Z"
     },
     {
       "id": "manual-component-lifecycle",
@@ -333,12 +333,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0189 distinctColors=7 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0190 distinctColors=7 640x480"
         },
         {
           "name": "frame-diff",
@@ -349,17 +344,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "ok (14 assertions)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-component-lifecycle.png",
-        "bytes": 9191,
-        "hash": "f9b2d647593aba3e"
+        "bytes": 9115,
+        "hash": "323af9d13b5e3a0c"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 8734,
-      "measuredAt": "2026-09-26T06:51:54.511Z"
+      "ms": 9089,
+      "measuredAt": "2026-09-26T09:25:11.640Z"
     },
     {
       "id": "manual-creating-a-scene",
@@ -373,12 +373,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0459 distinctColors=7 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0458 distinctColors=6 640x480"
         },
         {
           "name": "frame-diff",
@@ -389,17 +384,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-creating-a-scene.png",
-        "bytes": 9546,
-        "hash": "365d1ee8818726b6"
+        "bytes": 9423,
+        "hash": "79a2580d0f9bf7f0"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3653,
-      "measuredAt": "2026-09-26T06:51:58.187Z"
+      "ms": 3745,
+      "measuredAt": "2026-09-26T09:25:15.394Z"
     },
     {
       "id": "manual-custom-geometry",
@@ -413,12 +413,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.2934 distinctColors=6 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.2931 distinctColors=6 640x480"
         },
         {
           "name": "frame-diff",
@@ -429,17 +424,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-custom-geometry.png",
-        "bytes": 22475,
-        "hash": "6101da32698bb91d"
+        "bytes": 22659,
+        "hash": "f4bc0ae956d6f732"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3503,
-      "measuredAt": "2026-09-26T06:52:01.701Z"
+      "ms": 3440,
+      "measuredAt": "2026-09-26T09:25:18.843Z"
     },
     {
       "id": "manual-debugging-js",
@@ -453,28 +453,28 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0471 distinctColors=5 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0469 distinctColors=5 640x480"
         },
         {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-debugging-js.png",
-        "bytes": 9623,
-        "hash": "38da1c0e585956af"
+        "bytes": 9605,
+        "hash": "2f6714b994120cd4"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3100,
-      "measuredAt": "2026-09-26T06:52:04.811Z"
+      "ms": 3014,
+      "measuredAt": "2026-09-26T09:25:21.866Z"
     },
     {
       "id": "manual-dispose-objects",
@@ -488,12 +488,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0406 distinctColors=7 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0409 distinctColors=7 640x480"
         },
         {
           "name": "frame-diff",
@@ -504,17 +499,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-dispose-objects.png",
-        "bytes": 9876,
-        "hash": "49f74d6af4da9f23"
+        "bytes": 9585,
+        "hash": "1e030c33a7821540"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3888,
-      "measuredAt": "2026-09-26T06:52:08.728Z"
+      "ms": 3432,
+      "measuredAt": "2026-09-26T09:25:25.311Z"
     },
     {
       "id": "manual-drawing-lines",
@@ -531,14 +531,14 @@
           "detail": "litRatio=0.0888 distinctColors=61 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -548,8 +548,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3307,
-      "measuredAt": "2026-09-26T06:52:12.050Z"
+      "ms": 3015,
+      "measuredAt": "2026-09-26T09:25:28.334Z"
     },
     {
       "id": "manual-dynamic-texture",
@@ -563,12 +563,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.3242 distinctColors=22 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.3248 distinctColors=21 640x480"
         },
         {
           "name": "frame-diff",
@@ -579,17 +574,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-dynamic-texture.png",
-        "bytes": 38029,
-        "hash": "5f503320ee19984e"
+        "bytes": 38448,
+        "hash": "be0c9b44c35473e6"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3563,
-      "measuredAt": "2026-09-26T06:52:15.630Z"
+      "ms": 3463,
+      "measuredAt": "2026-09-26T09:25:31.808Z"
     },
     {
       "id": "manual-fog",
@@ -603,12 +603,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0807 distinctColors=23 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0808 distinctColors=25 640x480"
         },
         {
           "name": "frame-diff",
@@ -619,17 +614,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-fog.png",
-        "bytes": 9178,
-        "hash": "1511115fdf3c4252"
+        "bytes": 9235,
+        "hash": "97e14c0d774e5437"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3551,
-      "measuredAt": "2026-09-26T06:52:19.202Z"
+      "ms": 3432,
+      "measuredAt": "2026-09-26T09:25:35.249Z"
     },
     {
       "id": "manual-fundamentals",
@@ -643,12 +643,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0488 distinctColors=11 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0490 distinctColors=13 640x480"
         },
         {
           "name": "frame-diff",
@@ -659,17 +654,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-fundamentals.png",
-        "bytes": 12060,
-        "hash": "6670edc6d0e8dca1"
+        "bytes": 11934,
+        "hash": "0df40a482355dfe0"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3476,
-      "measuredAt": "2026-09-26T06:52:22.688Z"
+      "ms": 3409,
+      "measuredAt": "2026-09-26T09:25:38.668Z"
     },
     {
       "id": "manual-indexed-textures",
@@ -686,25 +686,25 @@
           "detail": "litRatio=0.3284 distinctColors=14 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-indexed-textures.png",
-        "bytes": 35865,
-        "hash": "d21485527fe2abf3"
+        "bytes": 35861,
+        "hash": "04d6e82ae7fe362f"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3155,
-      "measuredAt": "2026-09-26T06:52:25.857Z"
+      "ms": 2978,
+      "measuredAt": "2026-09-26T09:25:41.655Z"
     },
     {
       "id": "manual-input-events",
@@ -718,12 +718,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0815 distinctColors=38 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0816 distinctColors=38 640x480"
         },
         {
           "name": "frame-diff",
@@ -734,17 +729,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "ok (11 assertions)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-input-events.png",
-        "bytes": 12270,
-        "hash": "ca07fefece595832"
+        "bytes": 12279,
+        "hash": "3eda66954b0e312e"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 9662,
-      "measuredAt": "2026-09-26T06:52:35.531Z"
+      "ms": 9566,
+      "measuredAt": "2026-09-26T09:25:51.231Z"
     },
     {
       "id": "manual-installation",
@@ -761,14 +761,14 @@
           "detail": "litRatio=0.1134 distinctColors=7 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -778,8 +778,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3202,
-      "measuredAt": "2026-09-26T06:52:38.744Z"
+      "ms": 3299,
+      "measuredAt": "2026-09-26T09:25:54.539Z"
     },
     {
       "id": "manual-lights",
@@ -793,12 +793,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.4732 distinctColors=95 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.4732 distinctColors=94 640x480"
         },
         {
           "name": "frame-diff",
@@ -809,17 +804,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-lights.png",
-        "bytes": 120646,
-        "hash": "a683622e75d55dfc"
+        "bytes": 120690,
+        "hash": "d4e4bc6e8c936e28"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3681,
-      "measuredAt": "2026-09-26T06:52:42.446Z"
+      "ms": 3486,
+      "measuredAt": "2026-09-26T09:25:58.037Z"
     },
     {
       "id": "manual-load-gltf",
@@ -833,28 +833,28 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0986 distinctColors=10 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0978 distinctColors=10 640x480"
         },
         {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-load-gltf.png",
-        "bytes": 10488,
-        "hash": "f0ccad7270d61eb3"
+        "bytes": 10166,
+        "hash": "74b87d1dbed53975"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3322,
-      "measuredAt": "2026-09-26T06:52:45.790Z"
+      "ms": 3006,
+      "measuredAt": "2026-09-26T09:26:01.052Z"
     },
     {
       "id": "manual-loading-models",
@@ -868,12 +868,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0749 distinctColors=8 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0761 distinctColors=10 640x480"
         },
         {
           "name": "frame-diff",
@@ -884,17 +879,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-loading-models.png",
-        "bytes": 9110,
-        "hash": "5e2af363a4287192"
+        "bytes": 9005,
+        "hash": "486be7862694988e"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3525,
-      "measuredAt": "2026-09-26T06:52:49.326Z"
+      "ms": 3440,
+      "measuredAt": "2026-09-26T09:26:04.501Z"
     },
     {
       "id": "manual-lots-animated",
@@ -908,12 +908,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.6461 distinctColors=4 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.6482 distinctColors=4 640x480"
         },
         {
           "name": "frame-diff",
@@ -924,17 +919,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-lots-animated.png",
-        "bytes": 76352,
-        "hash": "4da3e1e97a33cb1c"
+        "bytes": 76343,
+        "hash": "7772f1de5d2ee992"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3755,
-      "measuredAt": "2026-09-26T06:52:53.102Z"
+      "ms": 3461,
+      "measuredAt": "2026-09-26T09:26:07.970Z"
     },
     {
       "id": "manual-lots-of-objects",
@@ -948,12 +948,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.3279 distinctColors=7 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.3310 distinctColors=7 640x480"
         },
         {
           "name": "frame-diff",
@@ -964,17 +959,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-lots-of-objects.png",
-        "bytes": 37801,
-        "hash": "67add22472acf2c3"
+        "bytes": 38595,
+        "hash": "b5ccf3b151cb5729"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3606,
-      "measuredAt": "2026-09-26T06:52:56.724Z"
+      "ms": 3474,
+      "measuredAt": "2026-09-26T09:26:11.452Z"
     },
     {
       "id": "manual-materials",
@@ -991,14 +991,14 @@
           "detail": "litRatio=0.1320 distinctColors=21 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -1008,8 +1008,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3246,
-      "measuredAt": "2026-09-26T06:52:59.981Z"
+      "ms": 2974,
+      "measuredAt": "2026-09-26T09:26:14.436Z"
     },
     {
       "id": "manual-matrix-transformations",
@@ -1023,12 +1023,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0331 distinctColors=21 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0334 distinctColors=20 640x480"
         },
         {
           "name": "frame-diff",
@@ -1039,17 +1034,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-matrix-transformations.png",
-        "bytes": 10580,
-        "hash": "17909af4e3c8ceab"
+        "bytes": 10614,
+        "hash": "aee1ee6012140081"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3473,
-      "measuredAt": "2026-09-26T06:53:03.468Z"
+      "ms": 3421,
+      "measuredAt": "2026-09-26T09:26:17.869Z"
     },
     {
       "id": "manual-mini-game",
@@ -1063,12 +1063,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.6332 distinctColors=24 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.6332 distinctColors=28 640x480"
         },
         {
           "name": "frame-diff",
@@ -1079,17 +1074,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-mini-game.png",
-        "bytes": 14051,
-        "hash": "923bc0f8aa04f018"
+        "bytes": 14100,
+        "hash": "bc211028221c8b98"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3476,
-      "measuredAt": "2026-09-26T06:53:06.954Z"
+      "ms": 3425,
+      "measuredAt": "2026-09-26T09:26:21.302Z"
     },
     {
       "id": "manual-multi-canvas",
@@ -1103,28 +1103,28 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.4356 distinctColors=18 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.4336 distinctColors=18 640x480"
         },
         {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-multi-canvas.png",
-        "bytes": 13344,
-        "hash": "00d1330c60b9147b"
+        "bytes": 13013,
+        "hash": "c86e9ed82d28cd00"
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3118,
-      "measuredAt": "2026-09-26T06:53:10.090Z"
+      "ms": 2995,
+      "measuredAt": "2026-09-26T09:26:24.306Z"
     },
     {
       "id": "manual-picking",
@@ -1141,11 +1141,6 @@
           "detail": "litRatio=0.1257 distinctColors=41 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "frame-diff",
           "result": "PASS",
           "detail": "frames differ over 400ms"
@@ -1154,17 +1149,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-picking.png",
-        "bytes": 17212,
-        "hash": "8b5af3032cd35638"
+        "bytes": 17266,
+        "hash": "81bbcb08024ae43d"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3458,
-      "measuredAt": "2026-09-26T06:53:13.556Z"
+      "ms": 3420,
+      "measuredAt": "2026-09-26T09:26:27.736Z"
     },
     {
       "id": "manual-post-processing",
@@ -1181,11 +1181,6 @@
           "detail": "litRatio=0.0395 distinctColors=6 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "frame-diff",
           "result": "PASS",
           "detail": "frames differ over 400ms"
@@ -1194,17 +1189,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-post-processing.png",
-        "bytes": 9396,
-        "hash": "9c1ae9872c081bd9"
+        "bytes": 9247,
+        "hash": "82c2a711895fcc3a"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3605,
-      "measuredAt": "2026-09-26T06:53:17.185Z"
+      "ms": 3416,
+      "measuredAt": "2026-09-26T09:26:31.161Z"
     },
     {
       "id": "manual-primitives",
@@ -1218,12 +1218,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.1419 distinctColors=76 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.1421 distinctColors=77 640x480"
         },
         {
           "name": "frame-diff",
@@ -1234,17 +1229,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-primitives.png",
-        "bytes": 20206,
-        "hash": "6d8e0b35064770c9"
+        "bytes": 20173,
+        "hash": "8736b38617f1a8f2"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3493,
-      "measuredAt": "2026-09-26T06:53:20.689Z"
+      "ms": 3431,
+      "measuredAt": "2026-09-26T09:26:34.601Z"
     },
     {
       "id": "manual-render-targets",
@@ -1258,12 +1258,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.2818 distinctColors=25 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.2787 distinctColors=18 640x480"
         },
         {
           "name": "frame-diff",
@@ -1274,17 +1269,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "ok (1 assertions)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-render-targets.png",
-        "bytes": 14232,
-        "hash": "6d0f942b74ed5855"
+        "bytes": 14514,
+        "hash": "c93e10f6069e1df6"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3573,
-      "measuredAt": "2026-09-26T06:53:24.279Z"
+      "ms": 3443,
+      "measuredAt": "2026-09-26T09:26:38.053Z"
     },
     {
       "id": "manual-rendering-on-demand",
@@ -1301,11 +1301,6 @@
           "detail": "litRatio=0.0438 distinctColors=8 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "frame-diff",
           "result": "PASS",
           "detail": "frames differ over 400ms"
@@ -1314,6 +1309,11 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -1323,8 +1323,8 @@
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 4337,
-      "measuredAt": "2026-09-26T06:53:28.643Z"
+      "ms": 4151,
+      "measuredAt": "2026-09-26T09:26:42.215Z"
     },
     {
       "id": "manual-responsive-design",
@@ -1341,14 +1341,14 @@
           "detail": "litRatio=0.0777 distinctColors=7 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -1358,8 +1358,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3231,
-      "measuredAt": "2026-09-26T06:53:31.890Z"
+      "ms": 2999,
+      "measuredAt": "2026-09-26T09:26:45.222Z"
     },
     {
       "id": "manual-scenegraph",
@@ -1373,12 +1373,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0335 distinctColors=8 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0359 distinctColors=12 640x480"
         },
         {
           "name": "frame-diff",
@@ -1389,17 +1384,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-scenegraph.png",
-        "bytes": 9492,
-        "hash": "add057d6139bd312"
+        "bytes": 9244,
+        "hash": "c8c35accd430be29"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3530,
-      "measuredAt": "2026-09-26T06:53:35.435Z"
+      "ms": 3420,
+      "measuredAt": "2026-09-26T09:26:48.651Z"
     },
     {
       "id": "manual-setup",
@@ -1416,14 +1416,14 @@
           "detail": "litRatio=0.0556 distinctColors=10 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -1433,8 +1433,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3047,
-      "measuredAt": "2026-09-26T06:53:38.492Z"
+      "ms": 3012,
+      "measuredAt": "2026-09-26T09:26:51.672Z"
     },
     {
       "id": "manual-textures",
@@ -1448,12 +1448,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0738 distinctColors=18 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0717 distinctColors=19 640x480"
         },
         {
           "name": "frame-diff",
@@ -1464,17 +1459,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-textures.png",
-        "bytes": 52083,
-        "hash": "18ad4f4fc4127fba"
+        "bytes": 52177,
+        "hash": "0854e03e75ca6672"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3651,
-      "measuredAt": "2026-09-26T06:53:42.159Z"
+      "ms": 3451,
+      "measuredAt": "2026-09-26T09:26:55.135Z"
     },
     {
       "id": "manual-tips-keyboard",
@@ -1488,12 +1488,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0477 distinctColors=7 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0470 distinctColors=7 640x480"
         },
         {
           "name": "frame-diff",
@@ -1504,17 +1499,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-tips-keyboard.png",
-        "bytes": 9628,
-        "hash": "d1d0ecde8120e686"
+        "bytes": 9643,
+        "hash": "2b21438ab5df7716"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3777,
-      "measuredAt": "2026-09-26T06:53:45.956Z"
+      "ms": 3407,
+      "measuredAt": "2026-09-26T09:26:58.551Z"
     },
     {
       "id": "manual-transparent",
@@ -1528,12 +1528,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.0929 distinctColors=33 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.0929 distinctColors=32 640x480"
         },
         {
           "name": "frame-diff",
@@ -1544,17 +1539,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-transparent.png",
-        "bytes": 19910,
-        "hash": "4ac18fc0d38958fa"
+        "bytes": 19926,
+        "hash": "ab0c6d254158bc0b"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3536,
-      "measuredAt": "2026-09-26T06:53:49.510Z"
+      "ms": 3410,
+      "measuredAt": "2026-09-26T09:27:01.970Z"
     },
     {
       "id": "manual-uniform-types",
@@ -1571,14 +1571,14 @@
           "detail": "litRatio=0.1404 distinctColors=31 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -1588,8 +1588,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3138,
-      "measuredAt": "2026-09-26T06:53:52.663Z"
+      "ms": 3027,
+      "measuredAt": "2026-09-26T09:27:05.007Z"
     },
     {
       "id": "manual-update-things",
@@ -1606,11 +1606,6 @@
           "detail": "litRatio=0.0786 distinctColors=8 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "frame-diff",
           "result": "PASS",
           "detail": "frames differ over 400ms"
@@ -1619,17 +1614,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-update-things.png",
-        "bytes": 11164,
-        "hash": "d74650727ba85b23"
+        "bytes": 11299,
+        "hash": "67c64378ee8b4078"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3590,
-      "measuredAt": "2026-09-26T06:53:56.271Z"
+      "ms": 3499,
+      "measuredAt": "2026-09-26T09:27:08.518Z"
     },
     {
       "id": "manual-voxel",
@@ -1643,12 +1643,7 @@
         {
           "name": "visible-frame",
           "result": "PASS",
-          "detail": "litRatio=0.3963 distinctColors=30 640x480"
-        },
-        {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
+          "detail": "litRatio=0.3965 distinctColors=31 640x480"
         },
         {
           "name": "frame-diff",
@@ -1659,17 +1654,22 @@
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
         "path": "docs/evidence/examples/manual-voxel.png",
-        "bytes": 21825,
-        "hash": "8ca504f29aea19b9"
+        "bytes": 21042,
+        "hash": "e70957d4afc9daa9"
       },
       "animated": true,
       "frameDiffers": true,
-      "ms": 3655,
-      "measuredAt": "2026-09-26T06:53:59.940Z"
+      "ms": 3407,
+      "measuredAt": "2026-09-26T09:27:11.935Z"
     },
     {
       "id": "manual-webgl-compat",
@@ -1686,14 +1686,14 @@
           "detail": "litRatio=0.0508 distinctColors=7 640x480"
         },
         {
-          "name": "no-runtime-error",
-          "result": "PASS",
-          "detail": "clean"
-        },
-        {
           "name": "state-probe",
           "result": "PASS",
           "detail": "no __manualProbe (skipped)"
+        },
+        {
+          "name": "no-runtime-error",
+          "result": "PASS",
+          "detail": "clean"
         }
       ],
       "screenshot": {
@@ -1703,8 +1703,8 @@
       },
       "animated": false,
       "frameDiffers": null,
-      "ms": 3079,
-      "measuredAt": "2026-09-26T06:54:03.033Z"
+      "ms": 3011,
+      "measuredAt": "2026-09-26T09:27:14.955Z"
     }
   ]
 }
