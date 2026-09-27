@@ -95,4 +95,28 @@ class Orbit extends Component {
 lightNode.addComponent(Orbit);
 
 app.run(scene);
+const pointProbe = { ready: false, ok: false, checks: [] as { name: string; ok: boolean; detail: string }[] };
+(window as any).__trialProbe = pointProbe;
+requestAnimationFrame(() => {
+    const values: Record<string, unknown> = {
+        'PointLight.constructor': typeof PointLight.prototype.constructor,
+        'PointLight.luminousFlux': pointLight.luminousFlux,
+        'PointLight.luminance': pointLight.luminance,
+        'PointLight.term': pointLight.term,
+        'PointLight.range': pointLight.range,
+    };
+    for (const [name, value] of Object.entries(values)) {
+        const type = typeof value;
+        const ok =
+            value === null ||
+            type === 'string' ||
+            type === 'boolean' ||
+            type === 'function' ||
+            (typeof value === 'number' && Number.isFinite(value)) ||
+            type === 'object';
+        pointProbe.checks.push({ name, ok, detail: `${type}:${String(value)}` });
+    }
+    pointProbe.ok = pointProbe.checks.every((check) => check.ok);
+    pointProbe.ready = true;
+});
 console.log('[light-point] running');

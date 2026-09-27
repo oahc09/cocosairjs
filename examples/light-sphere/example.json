@@ -11,7 +11,8 @@
     "points": [
       "DirectionalLight 用 setRotationFromEuler 定向",
       "illuminance 控制整体强度",
-      "球面高光/明暗交界随自转的视觉变化"
+      "球面高光/明暗交界随自转的视觉变化",
+      "离屏 SphereLight 仅作静态 API 回读，不参与当前画面"
     ]
   },
   "effect": {
@@ -20,7 +21,17 @@
   },
   "api": {
     "primary": ["DirectionalLight"],
-    "supporting": ["Node.setRotationFromEuler", "primitives.sphere"],
+    "supporting": [
+      "Node.setRotationFromEuler",
+      "primitives.sphere",
+      "SphereLight",
+      "SphereLight.constructor",
+      "SphereLight.luminousFlux",
+      "SphereLight.luminance",
+      "SphereLight.term",
+      "SphereLight.size",
+      "SphereLight.range"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -39,7 +50,14 @@
       "primitives.sphere",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.setRotationFromEuler",
+      "SphereLight",
+      "SphereLight.constructor",
+      "SphereLight.luminousFlux",
+      "SphereLight.luminance",
+      "SphereLight.term",
+      "SphereLight.size",
+      "SphereLight.range"
     ],
     "forbiddenShortcut": ["用环境光把球照成平面色，掩盖方向光照"],
     "evidence": [
@@ -47,109 +65,151 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L28"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L29"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L38"
+        "sourceLocation": "L39"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L64"
+        "sourceLocation": "L65"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L42"
+        "sourceLocation": "L43"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L57"
+        "sourceLocation": "L58"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L68"
+        "sourceLocation": "L69"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L49"
+        "sourceLocation": "L50"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L40"
+        "sourceLocation": "L41"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L48"
+        "sourceLocation": "L49"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L33"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L33"
+        "sourceLocation": "L34"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L34"
+        "sourceLocation": "L35"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L65"
+        "sourceLocation": "L66"
       },
       {
         "api": "primitives.sphere",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L65"
+        "sourceLocation": "L83"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L39"
+        "sourceLocation": "L40"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L40"
+        "sourceLocation": "L41"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L41"
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "SphereLight",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "SphereLight.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L86"
+      },
+      {
+        "api": "SphereLight.luminousFlux",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "SphereLight.luminance",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L88"
+      },
+      {
+        "api": "SphereLight.term",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L89"
+      },
+      {
+        "api": "SphereLight.size",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "SphereLight.range",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L91"
       }
     ]
   },
@@ -188,8 +248,13 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 55,
+            "line": 56,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 57,
+            "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ],
         "rotationEuler": [-45, -30, 0]
@@ -199,12 +264,12 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 63,
+            "line": 64,
             "text": "shadingSphere.setPosition(new Vec3(0, 0.8, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 70,
+            "line": 71,
             "text": "0,this.node.eulerAngles.y + dt * 50,0"
           }
         ],
@@ -223,7 +288,7 @@
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 66,
+              "line": 67,
               "text": "new Color(230, 230, 235, 255)"
             }
           }
@@ -235,16 +300,16 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, shadingSphere);）",
-        "line": "L74"
+        "line": "L75"
       }
     }
   },
   "promotion": {
-    "spec": "13f2c79f770f",
-    "source": "181f839e3048d2fe",
+    "spec": "e8dffc14e4ae",
+    "source": "b2706d215970847c",
     "candidate": "8746fc59b6aa0408",
-    "verified": 18,
+    "verified": 25,
     "attested": 0,
-    "units": 18
+    "units": 25
   }
 }

@@ -50,6 +50,14 @@ Current coverage is Core 624/963 (64.8%), Important 165/272 (60.7%), and Advance
 
 The production `verify:api-coverage` command now applies the taskbook's 100%/90%/80% thresholds and rejects stale/schema-gap evidence. It also exposes `documentedOnly`, `uncovered`, and `unstated` counts for the Important and Advanced closure rules. It is expected to fail until real behavior proof and statuses close those gaps.
 
+### 2026-09-27 Wave 9 — Core lighting APIs
+
+Wave 9 adds 55 verified Core units with 0 removals: PointLight +5, SphereLight +7, Light +13, SpotLight +12, and DirectionalLight +18. The canonical V1.1 run passed 140/140 with 3,660 verified, 172 attested, and 0 unproven API/example bindings. DevTools passed 5/5, the Gallery artifact passed 214/214 with 48 lifecycle contracts, and strict spec validation passed 145/145. Compliance remains 0 fail / 1 documented Draco decoder-availability warning. API trace self-test passed; the report has 0 stale examples and 0 evidence schema gaps. Jest and test-inventory each passed 32 suites / 263 tests; typecheck, Prettier, 575-export package consumer acceptance, V1.1 chain-face, and 1,317 documentation references passed.
+
+Coverage is Core 679/963 (70.5%), Important 165/272 (60.7%), and Advanced 139/3,130 (4.4%). Stable examples remain 144/120. Release remains NOT MET: Core gap 284; Important needs 80 more to reach 245/272 and has 107 units without explicit status; Advanced needs 2,365 more to reach 2,504/3,130 and has 2,991 uncovered units that must reach zero. Keep the 100%/90%/80% thresholds unchanged.
+
+Next prioritize the remaining Core math classes, beginning with `Mat4`, `Vec4`, `Color`, `Quat`, `Vec2`, and `Mat3`, then finish smaller Core runtime classes before Important and Advanced closure.
+
 ## Coverage waves
 
 After the inventory revision, group missing required units by feature and class. Each wave should add example behavior checks and `api.evidence` bindings, run focused trial validation, then run the canonical V1.1 browser verification and coverage report. Count only fresh `apiProof.proof=verified` units. Prioritize unverified Core units, then Important runtime features and V1.2 feature groups designated Advanced-required. Record added, removed, and stale units after each wave. Do not weaken the 100%/90%/80% thresholds to reach a green report.

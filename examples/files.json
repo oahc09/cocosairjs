@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T08:53:01.512Z",
-  "revision": "1763224",
+  "generatedAt": "2026-09-27T10:54:35.685Z",
+  "revision": "0130331",
   "examples": [
     {
       "dir": "anim-position",
@@ -3860,7 +3860,12 @@
         ],
         "supporting": [
           "Component",
-          "Node.setPosition"
+          "Node.setPosition",
+          "PointLight.constructor",
+          "PointLight.luminousFlux",
+          "PointLight.luminance",
+          "PointLight.term",
+          "PointLight.range"
         ],
         "claims": [
           "createAirApp",
@@ -3881,7 +3886,12 @@
           "primitives.plane",
           "Node.addChild",
           "Node.setPosition",
-          "Node.lookAt"
+          "Node.lookAt",
+          "PointLight.constructor",
+          "PointLight.luminousFlux",
+          "PointLight.luminance",
+          "PointLight.term",
+          "PointLight.range"
         ]
       },
       "capabilities": [
@@ -3922,12 +3932,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "957212499be3",
-        "source": "ede6040c16f088b8",
+        "spec": "ea400d8377c2",
+        "source": "44280f19ae58d54e",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
+        "verified": 24,
         "attested": 0,
-        "units": 19
+        "units": 24
       }
     },
     {
@@ -3944,7 +3954,8 @@
         "points": [
           "DirectionalLight 用 setRotationFromEuler 定向",
           "illuminance 控制整体强度",
-          "球面高光/明暗交界随自转的视觉变化"
+          "球面高光/明暗交界随自转的视觉变化",
+          "离屏 SphereLight 仅作静态 API 回读，不参与当前画面"
         ]
       },
       "effect": {
@@ -3957,7 +3968,14 @@
         ],
         "supporting": [
           "Node.setRotationFromEuler",
-          "primitives.sphere"
+          "primitives.sphere",
+          "SphereLight",
+          "SphereLight.constructor",
+          "SphereLight.luminousFlux",
+          "SphereLight.luminance",
+          "SphereLight.term",
+          "SphereLight.size",
+          "SphereLight.range"
         ],
         "claims": [
           "createAirApp",
@@ -3977,7 +3995,14 @@
           "primitives.sphere",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "SphereLight",
+          "SphereLight.constructor",
+          "SphereLight.luminousFlux",
+          "SphereLight.luminance",
+          "SphereLight.term",
+          "SphereLight.size",
+          "SphereLight.range"
         ]
       },
       "capabilities": [
@@ -4016,12 +4041,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "13f2c79f770f",
-        "source": "181f839e3048d2fe",
+        "spec": "e8dffc14e4ae",
+        "source": "b2706d215970847c",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
+        "verified": 25,
         "attested": 0,
-        "units": 18
+        "units": 25
       }
     },
     {
@@ -4051,7 +4076,33 @@
         ],
         "supporting": [
           "Component",
-          "Node.setPosition"
+          "Node.setPosition",
+          "Light",
+          "Light.constructor",
+          "Light.Type",
+          "Light.PhotometricTerm",
+          "Light.color",
+          "Light.useColorTemperature",
+          "Light.colorTemperature",
+          "Light.staticSettings",
+          "Light.type",
+          "Light.baked",
+          "Light.visibility",
+          "Light.onEnable",
+          "Light.onDisable",
+          "Light.onDestroy",
+          "SpotLight.constructor",
+          "SpotLight.luminousFlux",
+          "SpotLight.luminance",
+          "SpotLight.term",
+          "SpotLight.size",
+          "SpotLight.range",
+          "SpotLight.spotAngle",
+          "SpotLight.angleAttenuationStrength",
+          "SpotLight.shadowEnabled",
+          "SpotLight.shadowPcf",
+          "SpotLight.shadowBias",
+          "SpotLight.shadowNormalBias"
         ],
         "claims": [
           "createAirApp",
@@ -4072,7 +4123,33 @@
           "primitives.plane",
           "Node.addChild",
           "Node.setPosition",
-          "Node.lookAt"
+          "Node.lookAt",
+          "Light",
+          "Light.constructor",
+          "Light.Type",
+          "Light.PhotometricTerm",
+          "Light.color",
+          "Light.useColorTemperature",
+          "Light.colorTemperature",
+          "Light.staticSettings",
+          "Light.type",
+          "Light.baked",
+          "Light.visibility",
+          "Light.onEnable",
+          "Light.onDisable",
+          "Light.onDestroy",
+          "SpotLight.constructor",
+          "SpotLight.luminousFlux",
+          "SpotLight.luminance",
+          "SpotLight.term",
+          "SpotLight.size",
+          "SpotLight.range",
+          "SpotLight.spotAngle",
+          "SpotLight.angleAttenuationStrength",
+          "SpotLight.shadowEnabled",
+          "SpotLight.shadowPcf",
+          "SpotLight.shadowBias",
+          "SpotLight.shadowNormalBias"
         ]
       },
       "capabilities": [
@@ -4107,16 +4184,18 @@
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
       "promotion": {
-        "spec": "9743cdd62ff4",
-        "source": "b3534e04dd7d198f",
+        "spec": "c42cdd481052",
+        "source": "b03352118c34029e",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
+        "verified": 45,
         "attested": 0,
-        "units": 19
+        "units": 45
       }
     },
     {
@@ -4146,7 +4225,25 @@
         ],
         "supporting": [
           "input",
-          "Input"
+          "Input",
+          "DirectionalLight.illuminance",
+          "DirectionalLight.shadowEnabled",
+          "DirectionalLight.shadowPcf",
+          "DirectionalLight.shadowBias",
+          "DirectionalLight.shadowNormalBias",
+          "DirectionalLight.shadowSaturation",
+          "DirectionalLight.shadowDistance",
+          "DirectionalLight.shadowInvisibleOcclusionRange",
+          "DirectionalLight.csmLevel",
+          "DirectionalLight.enableCSM",
+          "DirectionalLight.csmLayerLambda",
+          "DirectionalLight.shadowFixedArea",
+          "DirectionalLight.shadowNear",
+          "DirectionalLight.shadowFar",
+          "DirectionalLight.shadowOrthoSize",
+          "DirectionalLight.csmAdvancedOptions",
+          "DirectionalLight.csmLayersTransition",
+          "DirectionalLight.csmTransitionRange"
         ],
         "claims": [
           "createAirApp",
@@ -4167,7 +4264,25 @@
           "Node.setPosition",
           "Node.setRotationFromEuler",
           "input",
-          "Input"
+          "Input",
+          "DirectionalLight.illuminance",
+          "DirectionalLight.shadowEnabled",
+          "DirectionalLight.shadowPcf",
+          "DirectionalLight.shadowBias",
+          "DirectionalLight.shadowNormalBias",
+          "DirectionalLight.shadowSaturation",
+          "DirectionalLight.shadowDistance",
+          "DirectionalLight.shadowInvisibleOcclusionRange",
+          "DirectionalLight.csmLevel",
+          "DirectionalLight.enableCSM",
+          "DirectionalLight.csmLayerLambda",
+          "DirectionalLight.shadowFixedArea",
+          "DirectionalLight.shadowNear",
+          "DirectionalLight.shadowFar",
+          "DirectionalLight.shadowOrthoSize",
+          "DirectionalLight.csmAdvancedOptions",
+          "DirectionalLight.csmLayersTransition",
+          "DirectionalLight.csmTransitionRange"
         ]
       },
       "capabilities": [
@@ -4217,12 +4332,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "248ee78d5a9e",
-        "source": "84e2d6b201f643d3",
+        "spec": "516c502017cf",
+        "source": "0de72aa96c0cbf42",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
+        "verified": 36,
         "attested": 1,
-        "units": 19
+        "units": 37
       }
     },
     {

@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T08:53:01.404Z",
+  "measuredAt": "2026-09-27T10:54:35.524Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
@@ -323,7 +323,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -761,7 +761,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1221,7 +1221,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10814 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -1256,13 +1256,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 8092,
-        "hash": "c692055cc4c1622b"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -2188,7 +2188,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2513,7 +2513,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2951,7 +2951,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3411,7 +3411,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10814 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -3446,13 +3446,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 8092,
-        "hash": "c692055cc4c1622b"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -4378,7 +4378,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {

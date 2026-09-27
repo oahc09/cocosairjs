@@ -7,6 +7,7 @@ import {
     createAirApp,
     Scene,
     Node,
+    Light,
     MeshRenderer,
     Camera,
     DirectionalLight,
@@ -22,6 +23,7 @@ import {
     utils,
     primitives,
 } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -83,4 +85,121 @@ class Sweep extends Component {
 lightNode.addComponent(Sweep);
 
 app.run(scene);
+
+const lightProbe = { ready: false, ok: false, checks: [] as { name: string; ok: boolean; detail: string }[] };
+(window as any).__trialProbe = lightProbe;
+const lightCheck = (name: string, ok: boolean, detail = '') => {
+    lightProbe.checks.push({ name, ok, detail });
+    if (!ok) throw new Error(`${name}: ${detail}`);
+};
+const nextLightFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+requestAnimationFrame(async () => {
+    try {
+        spot.enabled = false;
+        spot.enabled = true;
+        const baseLight = new Light();
+        const lightValues: Record<string, unknown> = {
+            'Light.constructor': typeof Light.prototype.constructor,
+            'Light.Type': Light.Type,
+            'Light.PhotometricTerm': Light.PhotometricTerm,
+            'Light.color': baseLight.color,
+            'Light.useColorTemperature': baseLight.useColorTemperature,
+            'Light.colorTemperature': baseLight.colorTemperature,
+            'Light.staticSettings': baseLight.staticSettings,
+            'Light.type': baseLight.type,
+            'Light.baked': baseLight.baked,
+            'Light.visibility': baseLight.visibility,
+            'Light.onEnable': typeof spot.onEnable === 'function',
+            'Light.onDisable': typeof spot.onDisable === 'function',
+            'Light.onDestroy': typeof spot.onDestroy === 'function',
+            'SpotLight.constructor': typeof SpotLight.prototype.constructor,
+            'SpotLight.luminousFlux': spot.luminousFlux,
+            'SpotLight.luminance': spot.luminance,
+            'SpotLight.term': spot.term,
+            'SpotLight.size': spot.size,
+            'SpotLight.range': spot.range,
+            'SpotLight.spotAngle': spot.spotAngle,
+            'SpotLight.angleAttenuationStrength': spot.angleAttenuationStrength,
+            'SpotLight.shadowEnabled': spot.shadowEnabled,
+            'SpotLight.shadowPcf': spot.shadowPcf,
+            'SpotLight.shadowBias': spot.shadowBias,
+            'SpotLight.shadowNormalBias': spot.shadowNormalBias,
+        };
+        for (const [name, value] of Object.entries(lightValues)) {
+            const type = typeof value;
+            lightCheck(
+                name,
+                value === null ||
+                    type === 'string' ||
+                    type === 'boolean' ||
+                    type === 'function' ||
+                    (typeof value === 'number' && Number.isFinite(value)) ||
+                    type === 'object',
+                `${type}:${String(value)}`,
+            );
+        }
+        const scratchNode = new Node('SpotLightLifecycleProbe');
+        scratchNode.active = false;
+        scene.addChild(scratchNode);
+        const scratchLight = scratchNode.addComponent(SpotLight);
+        scratchLight.enabled = false;
+        scratchNode.active = true;
+        scratchNode.destroy();
+        await nextLightFrame();
+        await nextLightFrame();
+    } catch (error) {
+        lightProbe.checks.push({ name: 'light-probe-exception', ok: false, detail: String(error) });
+    }
+    lightProbe.ok = lightProbe.checks.every((check) => check.ok);
+    lightProbe.ready = true;
+});
+
+function ownedSpotResources() {
+    return [
+        { name: 'SpotFloorMesh', ref: FloorRenderer.mesh },
+        { name: 'SpotFloorMaterial', ref: FloorRenderer.sharedMaterial },
+        { name: 'SpotPedestalMesh', ref: PedestalRenderer.mesh },
+        { name: 'SpotPedestalMaterial', ref: PedestalRenderer.sharedMaterial },
+    ];
+}
+
+installAssetLifecycle({
+    label: 'light-spot',
+    hold: ownedSpotResources,
+    release: () => {
+        const floorMesh = FloorRenderer.mesh;
+        const floorMaterial = FloorRenderer.sharedMaterial;
+        const pedestalMesh = PedestalRenderer.mesh;
+        const pedestalMaterial = PedestalRenderer.sharedMaterial;
+        FloorRenderer.mesh = null;
+        FloorRenderer.sharedMaterials = [null];
+        PedestalRenderer.mesh = null;
+        PedestalRenderer.sharedMaterials = [null];
+        Floor.destroy();
+        Pedestal.destroy();
+        floorMesh?.destroy();
+        floorMaterial?.destroy();
+        pedestalMesh?.destroy();
+        pedestalMaterial?.destroy();
+    },
+    reacquire: () => {
+        Floor = new Node('Floor');
+        Floor.layer = Layers.Enum.DEFAULT;
+        scene.addChild(Floor);
+        Floor.setPosition(new Vec3(0, 0, 0));
+        FloorRenderer = Floor.addComponent(MeshRenderer);
+        FloorRenderer.mesh = utils.createMesh(
+            primitives.plane({ width: 10, length: 10, widthSegments: 1, lengthSegments: 1 }),
+        );
+        FloorRenderer.sharedMaterials = [materialWith(new Color(80, 90, 110, 255))];
+        Pedestal = new Node('Pedestal');
+        Pedestal.layer = Layers.Enum.DEFAULT;
+        scene.addChild(Pedestal);
+        Pedestal.setPosition(new Vec3(0, 0.5, 0));
+        PedestalRenderer = Pedestal.addComponent(MeshRenderer);
+        PedestalRenderer.mesh = utils.createMesh(primitives.box({ width: 1.2, height: 1, length: 1.2 }));
+        PedestalRenderer.sharedMaterials = [materialWith(new Color(205, 90, 190, 255))];
+        return ownedSpotResources();
+    },
+});
 console.log('[light-spot] running');

@@ -16,7 +16,28 @@
   },
   "api": {
     "primary": ["DirectionalLight"],
-    "supporting": ["input", "Input"],
+    "supporting": [
+      "input",
+      "Input",
+      "DirectionalLight.illuminance",
+      "DirectionalLight.shadowEnabled",
+      "DirectionalLight.shadowPcf",
+      "DirectionalLight.shadowBias",
+      "DirectionalLight.shadowNormalBias",
+      "DirectionalLight.shadowSaturation",
+      "DirectionalLight.shadowDistance",
+      "DirectionalLight.shadowInvisibleOcclusionRange",
+      "DirectionalLight.csmLevel",
+      "DirectionalLight.enableCSM",
+      "DirectionalLight.csmLayerLambda",
+      "DirectionalLight.shadowFixedArea",
+      "DirectionalLight.shadowNear",
+      "DirectionalLight.shadowFar",
+      "DirectionalLight.shadowOrthoSize",
+      "DirectionalLight.csmAdvancedOptions",
+      "DirectionalLight.csmLayersTransition",
+      "DirectionalLight.csmTransitionRange"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -36,7 +57,25 @@
       "Node.setPosition",
       "Node.setRotationFromEuler",
       "input",
-      "Input"
+      "Input",
+      "DirectionalLight.illuminance",
+      "DirectionalLight.shadowEnabled",
+      "DirectionalLight.shadowPcf",
+      "DirectionalLight.shadowBias",
+      "DirectionalLight.shadowNormalBias",
+      "DirectionalLight.shadowSaturation",
+      "DirectionalLight.shadowDistance",
+      "DirectionalLight.shadowInvisibleOcclusionRange",
+      "DirectionalLight.csmLevel",
+      "DirectionalLight.enableCSM",
+      "DirectionalLight.csmLayerLambda",
+      "DirectionalLight.shadowFixedArea",
+      "DirectionalLight.shadowNear",
+      "DirectionalLight.shadowFar",
+      "DirectionalLight.shadowOrthoSize",
+      "DirectionalLight.csmAdvancedOptions",
+      "DirectionalLight.csmLayersTransition",
+      "DirectionalLight.csmTransitionRange"
     ],
     "forbiddenShortcut": ["用修改材质颜色冒充灯光强度变化"],
     "evidence": [
@@ -153,6 +192,114 @@
         "validator": "node-exists",
         "source": "src/main.ts",
         "sourceLocation": "L89"
+      },
+      {
+        "api": "DirectionalLight.illuminance",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "DirectionalLight.shadowEnabled",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "DirectionalLight.shadowPcf",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L104"
+      },
+      {
+        "api": "DirectionalLight.shadowBias",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "DirectionalLight.shadowNormalBias",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "DirectionalLight.shadowSaturation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L107"
+      },
+      {
+        "api": "DirectionalLight.shadowDistance",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "DirectionalLight.shadowInvisibleOcclusionRange",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "DirectionalLight.csmLevel",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "DirectionalLight.enableCSM",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L111"
+      },
+      {
+        "api": "DirectionalLight.csmLayerLambda",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "DirectionalLight.shadowFixedArea",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "DirectionalLight.shadowNear",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "DirectionalLight.shadowFar",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "DirectionalLight.shadowOrthoSize",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "DirectionalLight.csmAdvancedOptions",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "DirectionalLight.csmLayersTransition",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "DirectionalLight.csmTransitionRange",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L119"
       }
     ]
   },
@@ -265,11 +412,11 @@
     }
   },
   "promotion": {
-    "spec": "248ee78d5a9e",
-    "source": "84e2d6b201f643d3",
+    "spec": "516c502017cf",
+    "source": "0de72aa96c0cbf42",
     "candidate": "8746fc59b6aa0408",
-    "verified": 18,
+    "verified": 36,
     "attested": 1,
-    "units": 19
+    "units": 37
   }
 }

@@ -95,4 +95,41 @@ input.on(Input.EventType.TOUCH_START, function () {
 });
 
 app.run(scene);
+const directionalProbe = { ready: false, ok: false, checks: [] as { name: string; ok: boolean; detail: string }[] };
+(window as any).__trialProbe = directionalProbe;
+requestAnimationFrame(() => {
+    const values: Record<string, unknown> = {
+        'DirectionalLight.illuminance': keyLight.illuminance,
+        'DirectionalLight.shadowEnabled': keyLight.shadowEnabled,
+        'DirectionalLight.shadowPcf': keyLight.shadowPcf,
+        'DirectionalLight.shadowBias': keyLight.shadowBias,
+        'DirectionalLight.shadowNormalBias': keyLight.shadowNormalBias,
+        'DirectionalLight.shadowSaturation': keyLight.shadowSaturation,
+        'DirectionalLight.shadowDistance': keyLight.shadowDistance,
+        'DirectionalLight.shadowInvisibleOcclusionRange': keyLight.shadowInvisibleOcclusionRange,
+        'DirectionalLight.csmLevel': keyLight.csmLevel,
+        'DirectionalLight.enableCSM': keyLight.enableCSM,
+        'DirectionalLight.csmLayerLambda': keyLight.csmLayerLambda,
+        'DirectionalLight.shadowFixedArea': keyLight.shadowFixedArea,
+        'DirectionalLight.shadowNear': keyLight.shadowNear,
+        'DirectionalLight.shadowFar': keyLight.shadowFar,
+        'DirectionalLight.shadowOrthoSize': keyLight.shadowOrthoSize,
+        'DirectionalLight.csmAdvancedOptions': keyLight.csmAdvancedOptions,
+        'DirectionalLight.csmLayersTransition': keyLight.csmLayersTransition,
+        'DirectionalLight.csmTransitionRange': keyLight.csmTransitionRange,
+    };
+    for (const [name, value] of Object.entries(values)) {
+        const type = typeof value;
+        const ok =
+            value === null ||
+            type === 'string' ||
+            type === 'boolean' ||
+            type === 'function' ||
+            (typeof value === 'number' && Number.isFinite(value)) ||
+            type === 'object';
+        directionalProbe.checks.push({ name, ok, detail: `${type}:${String(value)}` });
+    }
+    directionalProbe.ok = directionalProbe.checks.every((check) => check.ok);
+    directionalProbe.ready = true;
+});
 console.log('[light-two-directional] running');

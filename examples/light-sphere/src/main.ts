@@ -12,6 +12,7 @@ import {
     DirectionalLight,
     PointLight,
     SpotLight,
+    SphereLight,
     Component,
     input,
     Input,
@@ -74,4 +75,34 @@ shadingSphere.addComponent(Spin);
 frameObject(camera, shadingSphere); // 相机取景：目标居中（§21 Expected Result）
 
 app.run(scene);
+const sphereProbe = { ready: false, ok: false, checks: [] as { name: string; ok: boolean; detail: string }[] };
+(window as any).__trialProbe = sphereProbe;
+requestAnimationFrame(async () => {
+    const probeNode = new Node('SphereLightApiProbe');
+    const sphere = probeNode.addComponent(SphereLight);
+    sphere.enabled = false;
+    const values: Record<string, unknown> = {
+        SphereLight: typeof SphereLight,
+        'SphereLight.constructor': typeof SphereLight.prototype.constructor,
+        'SphereLight.luminousFlux': sphere.luminousFlux,
+        'SphereLight.luminance': sphere.luminance,
+        'SphereLight.term': sphere.term,
+        'SphereLight.size': sphere.size,
+        'SphereLight.range': sphere.range,
+    };
+    for (const [name, value] of Object.entries(values)) {
+        const type = typeof value;
+        const ok =
+            value === null ||
+            type === 'string' ||
+            type === 'boolean' ||
+            type === 'function' ||
+            (type === 'number' && Number.isFinite(value)) ||
+            type === 'object';
+        sphereProbe.checks.push({ name, ok, detail: `${type}:${String(value)}` });
+    }
+    probeNode.destroy();
+    sphereProbe.ok = sphereProbe.checks.every((check) => check.ok);
+    sphereProbe.ready = true;
+});
 console.log('[light-sphere] running');

@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T08:55:29.348Z",
+  "measuredAt": "2026-09-27T10:56:51.426Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
@@ -8,15 +8,15 @@
     "examples": 145,
     "booted": 140,
     "devToolsPagesServed": 5,
-    "lifecycle": 47
+    "lifecycle": 48
   },
   "artifactBytes": {
     "engineCopySha256_16": "cef2756486b073d1",
     "liveBundleSha256_16": "cef2756486b073d1",
     "identical": true
   },
-  "total": 213,
-  "pass": 213,
+  "total": 214,
+  "pass": 214,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -91,7 +91,7 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:49774/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:50665/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -377,6 +377,11 @@
       "id": "example-boot:light-spot",
       "ok": true,
       "detail": "booted via /light-spot/"
+    },
+    {
+      "id": "lifecycle:light-spot",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:light-two-directional",
@@ -1066,7 +1071,7 @@
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "47 §25 合同示例在部署物内完成释放核对"
+      "detail": "48 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",

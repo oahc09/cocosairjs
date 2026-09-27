@@ -20,7 +20,36 @@
   },
   "api": {
     "primary": ["SpotLight"],
-    "supporting": ["Component", "Node.setPosition"],
+    "supporting": [
+      "Component",
+      "Node.setPosition",
+      "Light",
+      "Light.constructor",
+      "Light.Type",
+      "Light.PhotometricTerm",
+      "Light.color",
+      "Light.useColorTemperature",
+      "Light.colorTemperature",
+      "Light.staticSettings",
+      "Light.type",
+      "Light.baked",
+      "Light.visibility",
+      "Light.onEnable",
+      "Light.onDisable",
+      "Light.onDestroy",
+      "SpotLight.constructor",
+      "SpotLight.luminousFlux",
+      "SpotLight.luminance",
+      "SpotLight.term",
+      "SpotLight.size",
+      "SpotLight.range",
+      "SpotLight.spotAngle",
+      "SpotLight.angleAttenuationStrength",
+      "SpotLight.shadowEnabled",
+      "SpotLight.shadowPcf",
+      "SpotLight.shadowBias",
+      "SpotLight.shadowNormalBias"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -40,7 +69,33 @@
       "primitives.plane",
       "Node.addChild",
       "Node.setPosition",
-      "Node.lookAt"
+      "Node.lookAt",
+      "Light",
+      "Light.constructor",
+      "Light.Type",
+      "Light.PhotometricTerm",
+      "Light.color",
+      "Light.useColorTemperature",
+      "Light.colorTemperature",
+      "Light.staticSettings",
+      "Light.type",
+      "Light.baked",
+      "Light.visibility",
+      "Light.onEnable",
+      "Light.onDisable",
+      "Light.onDestroy",
+      "SpotLight.constructor",
+      "SpotLight.luminousFlux",
+      "SpotLight.luminance",
+      "SpotLight.term",
+      "SpotLight.size",
+      "SpotLight.range",
+      "SpotLight.spotAngle",
+      "SpotLight.angleAttenuationStrength",
+      "SpotLight.shadowEnabled",
+      "SpotLight.shadowPcf",
+      "SpotLight.shadowBias",
+      "SpotLight.shadowNormalBias"
     ],
     "forbiddenShortcut": ["用 emissive 自发光材质冒充聚光照明"],
     "evidence": [
@@ -48,115 +103,271 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L28"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L37"
+        "sourceLocation": "L39"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L65"
+        "sourceLocation": "L67"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L41"
+        "sourceLocation": "L43"
       },
       {
         "api": "SpotLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L56"
+        "sourceLocation": "L58"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L76"
+        "sourceLocation": "L78"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L48"
+        "sourceLocation": "L50"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L39"
+        "sourceLocation": "L41"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L47"
+        "sourceLocation": "L49"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L33"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L32"
+        "sourceLocation": "L34"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L33"
+        "sourceLocation": "L35"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L66"
+        "sourceLocation": "L68"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L73"
+        "sourceLocation": "L75"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L66"
+        "sourceLocation": "L68"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L38"
+        "sourceLocation": "L40"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L39"
+        "sourceLocation": "L41"
       },
       {
         "api": "Node.lookAt",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L40"
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "Light",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L100"
+      },
+      {
+        "api": "Light.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "Light.Type",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "Light.PhotometricTerm",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L104"
+      },
+      {
+        "api": "Light.color",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "Light.useColorTemperature",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "Light.colorTemperature",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L107"
+      },
+      {
+        "api": "Light.staticSettings",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "Light.type",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "Light.baked",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "Light.visibility",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L50"
+      },
+      {
+        "api": "Light.onEnable",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "Light.onDisable",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "Light.onDestroy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "SpotLight.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "SpotLight.luminousFlux",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "SpotLight.luminance",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L59"
+      },
+      {
+        "api": "SpotLight.term",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "SpotLight.size",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "SpotLight.range",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "SpotLight.spotAngle",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "SpotLight.angleAttenuationStrength",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "SpotLight.shadowEnabled",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "SpotLight.shadowPcf",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "SpotLight.shadowBias",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "SpotLight.shadowNormalBias",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L126"
       }
     ]
   },
@@ -177,7 +388,7 @@
     "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
     "visual": ["visible-frame"],
-    "lifecycle": [],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -195,7 +406,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 39,
+            "line": 41,
             "text": "cameraNode.setPosition(new Vec3(0, 2.6, 7.5));"
           }
         ]
@@ -213,17 +424,23 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 79,
+            "line": 82,
             "text": "正弦包络 Math.sin(this.t * 0.6) * 1.5,4.5,Math.cos(this.t * 0.6) * 1.5：三角项取 [-1,1]，其余为字面量算术"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 57,
+            "text": "lightNode.setRotationFromEuler(-90, 0, 0);"
           }
-        ]
+        ],
+        "rotationEuler": [-90, 0, 0]
       },
       "Floor": {
         "position": [0, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 64,
+            "line": 66,
             "text": "Floor.setPosition(new Vec3(0, 0, 0));"
           }
         ]
@@ -233,7 +450,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 71,
+            "line": 73,
             "text": "Pedestal.setPosition(new Vec3(0, 0.5, 0));"
           }
         ]
@@ -249,7 +466,7 @@
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 67,
+              "line": 69,
               "text": "new Color(80, 90, 110, 255)"
             }
           }
@@ -264,7 +481,7 @@
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 74,
+              "line": 76,
               "text": "new Color(205, 90, 190, 255)"
             }
           }
@@ -275,17 +492,17 @@
   "expectationExclusions": {
     "transform-equals": {
       "Main Camera": {
-        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.6, 7.5)); cameraNode.lo）",
-        "line": "L39"
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0.5, 0));）",
+        "line": "L42"
       }
     }
   },
   "promotion": {
-    "spec": "9743cdd62ff4",
-    "source": "b3534e04dd7d198f",
+    "spec": "c42cdd481052",
+    "source": "b03352118c34029e",
     "candidate": "8746fc59b6aa0408",
-    "verified": 19,
+    "verified": 45,
     "attested": 0,
-    "units": 19
+    "units": 45
   }
 }

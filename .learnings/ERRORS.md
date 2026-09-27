@@ -303,3 +303,64 @@ Install the shared `installAssetLifecycle` contract, detach renderer references 
 - **Notes**: Both examples now release and reacquire their generated mesh/material pairs; focused V1.1 lifecycle validators and the full Gallery lifecycle checks passed.
 
 ---
+
+## [ERR-20260927-011] verification-script-invocation
+
+**Logged**: 2026-09-27T10:58:16Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+Two verification commands were initially invoked with an outdated script filename and an incorrectly hyphenated self-test flag.
+
+### Error
+`tools/verify/v11-devtools-examples-verify.cjs` does not exist, and `tools/verify/api-trace.cjs --self-test` printed usage instead of running the self-test.
+
+### Context
+- The actual DevTools verifier is `tools/verify/v11-devtools-examples.cjs`.
+- The API trace self-test flag is `--selftest`.
+- No repository files were changed by the failed invocations.
+
+### Suggested Fix
+Check the current `tools/verify` filenames and script usage before copying command names from an earlier run summary.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/verify/v11-devtools-examples.cjs`, `tools/verify/api-trace.cjs`
+
+### Resolution
+- **Resolved**: 2026-09-27T10:58:16Z
+- **Notes**: Reran the actual DevTools verifier (5/5 PASS with runtime bundle boundary) and API trace self-test (PASS).
+
+---
+
+## [ERR-20260927-012] spec-runner-generated-json-format
+
+**Logged**: 2026-09-27T11:08:45Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+The canonical example verifier rewrites four lighting specs with formatting that did not satisfy the repository Prettier check.
+
+### Error
+`npm run format:check` reported `light-point`, `light-sphere`, `light-spot`, and `light-two-directional` as unformatted after the full V1.1 run.
+
+### Context
+- The verifier refreshed promotion evidence in the four touched `example.json` files.
+- Spec fingerprints are computed from parsed JSON, so whitespace normalization does not invalidate the run evidence.
+
+### Suggested Fix
+Run Prettier on verifier-updated specs, then rerun strict spec validation, compliance, and evidence checks.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `examples/light-point/example.json`, `examples/light-sphere/example.json`, `examples/light-spot/example.json`, `examples/light-two-directional/example.json`
+
+### Resolution
+- **Resolved**: 2026-09-27T11:08:45Z
+- **Notes**: Prettier normalized all four specs; full formatting, strict spec validation, compliance, and API evidence checks passed afterward.
+
+---

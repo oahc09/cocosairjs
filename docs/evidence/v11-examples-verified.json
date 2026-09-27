@@ -1,12 +1,12 @@
 {
-  "measuredAt": "2026-09-27T08:52:14.603Z",
+  "measuredAt": "2026-09-27T10:53:29.541Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "browser": "chromium",
   "mode": "spec-driven-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
   "candidateFingerprint": "8746fc59b6aa0408",
   "apiProofTotals": {
-    "verified": 3604,
+    "verified": 3660,
     "attested": 172,
     "unproven": 0
   },
@@ -790,7 +790,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 295,
+          "calls": 302,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -982,12 +982,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0600"
+          "detail": "litRatio=0.0627"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0627 assetUnits=8"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0601 assetUnits=8"
         }
       ],
       "scenarioProbe": {
@@ -1062,7 +1062,7 @@
           {
             "name": "play-and-events",
             "ok": true,
-            "detail": "x=0.5536666666467985 events=1/1"
+            "detail": "x=1.7263333333532016 events=1/1"
           },
           {
             "name": "pause",
@@ -1094,8 +1094,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 6815,
-        "hash": "39271fdb8a0f5582"
+        "bytes": 7228,
+        "hash": "f0ce4138b452d1c7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1315,7 +1315,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 174,
+          "calls": 203,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1505,15 +1505,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0403"
+          "detail": "litRatio=0.0363"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 7681,
-        "hash": "782939bfead77aef"
+        "bytes": 6670,
+        "hash": "914ab5784ab7d42d"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1570,7 +1570,7 @@
           "api": "AudioClip.getDuration",
           "proof": "verified",
           "state": "executed",
-          "calls": 306,
+          "calls": 314,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1791,7 +1791,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 918,
+          "calls": 924,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -2118,8 +2118,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/audio-basic.png",
-        "bytes": 19507,
-        "hash": "b86c3cd76f410d05"
+        "bytes": 19198,
+        "hash": "40c58a78aef97af1"
       },
       "assetDigests": [
         {
@@ -3270,7 +3270,7 @@
           "api": "renderer.scene.Camera.getClipSpaceMinz",
           "proof": "verified",
           "state": "executed",
-          "calls": 149,
+          "calls": 152,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7157,7 +7157,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 2664,
+          "calls": 2727,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7174,7 +7174,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 1476,
+          "calls": 1511,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7362,7 +7362,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 2855,
+          "calls": 2918,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -7654,7 +7654,7 @@
       "artifact": {
         "path": "docs/evidence/examples/collector-dodge.png",
         "bytes": 13908,
-        "hash": "f90a07765d8fab02"
+        "hash": "64e1ecb1ea2b17f0"
       },
       "assetDigests": [
         {
@@ -9347,8 +9347,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/contra-action.png",
-        "bytes": 11231,
-        "hash": "6a2760df33461084"
+        "bytes": 11236,
+        "hash": "b68d557eac7c4b74"
       },
       "assetDigests": [
         {
@@ -10178,7 +10178,7 @@
           "api": "dragonBones.Armature.advanceTime",
           "proof": "verified",
           "state": "executed",
-          "calls": 335,
+          "calls": 338,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10212,7 +10212,7 @@
           "api": "dragonBones.Armature.getBones",
           "proof": "verified",
           "state": "executed",
-          "calls": 355,
+          "calls": 358,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10365,7 +10365,7 @@
           "api": "dragonBones.ArmatureDisplay.isAnimationCached",
           "proof": "verified",
           "state": "executed",
-          "calls": 940,
+          "calls": 949,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10737,8 +10737,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/dragonbones-basic.png",
-        "bytes": 15960,
-        "hash": "6181a02690e03f02"
+        "bytes": 15977,
+        "hash": "d50546206a834b52"
       },
       "assetDigests": [
         {
@@ -14067,7 +14067,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1758"
+          "detail": "litRatio=0.2080"
         },
         {
           "validatorId": "resource-released",
@@ -14086,8 +14086,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-morph.png",
-        "bytes": 7122,
-        "hash": "033d33d39a3b5109"
+        "bytes": 7091,
+        "hash": "419f010f9b5d1a5d"
       },
       "assetDigests": [
         {
@@ -14581,7 +14581,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1911 assetUnits=11"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1913 assetUnits=11"
         }
       ],
       "scenarioProbe": null,
@@ -14643,8 +14643,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-skin.png",
-        "bytes": 17560,
-        "hash": "7f75602f7cd887d1"
+        "bytes": 17490,
+        "hash": "5463db8111c9fd73"
       },
       "assetDigests": [
         {
@@ -15622,7 +15622,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 181,
+          "calls": 178,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -15827,15 +15827,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0438"
+          "detail": "litRatio=0.0455"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 6423,
-        "hash": "94ffd472eddfa00e"
+        "bytes": 7676,
+        "hash": "771ca0931c79ad5f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16002,7 +16002,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 8,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16205,8 +16205,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/input.png",
-        "bytes": 19398,
-        "hash": "72b61ed21503c42c"
+        "bytes": 14869,
+        "hash": "5f45504b420365f3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16938,7 +16938,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 289,
+          "calls": 306,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17943,7 +17943,7 @@
           "api": "renderer.scene.DirectionalLight.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 155,
+          "calls": 152,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -18084,24 +18084,28 @@
     {
       "id": "light-point",
       "result": "PASS",
-      "specFingerprint": "957212499be3",
-      "sourceFingerprint": "ede6040c16f088b8",
+      "specFingerprint": "ea400d8377c2",
+      "sourceFingerprint": "44280f19ae58d54e",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 19,
-        "bytes": 51112,
-        "hash": "6e000f32fdddd3d0",
+        "unitCount": 24,
+        "bytes": 51651,
+        "hash": "52d7c9201cee8f36",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
           "Node.lookAt: no own descriptor on static",
-          "Node.setPosition: no own descriptor on static"
+          "Node.setPosition: no own descriptor on static",
+          "PointLight.luminance: no own descriptor on static",
+          "PointLight.luminousFlux: no own descriptor on static",
+          "PointLight.range: no own descriptor on static",
+          "PointLight.term: no own descriptor on static"
         ],
-        "observed": 19,
-        "total": 19
+        "observed": 24,
+        "total": 24
       },
       "apiProof": [
         {
@@ -18278,7 +18282,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 193,
+          "calls": 220,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -18296,13 +18300,99 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 16,
+          "reads": 17,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
           "bindings": [
             {
               "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "PointLight.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:PointLight",
+          "observedVia": "PointLight",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "PointLight.luminance",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "PointLight.luminousFlux",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "PointLight.range",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "PointLight.term",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -18499,12 +18589,42 @@
           "detail": "litRatio=0.5856"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "PointLight.constructor",
+            "ok": true,
+            "detail": "string:function"
+          },
+          {
+            "name": "PointLight.luminousFlux",
+            "ok": true,
+            "detail": "number:947482.0225045783"
+          },
+          {
+            "name": "PointLight.luminance",
+            "ok": true,
+            "detail": "number:24000"
+          },
+          {
+            "name": "PointLight.term",
+            "ok": true,
+            "detail": "number:0"
+          },
+          {
+            "name": "PointLight.range",
+            "ok": true,
+            "detail": "number:8"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 43145,
-        "hash": "3c58cc8948ccd0ee"
+        "bytes": 42245,
+        "hash": "9d1773a265e3e484"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -18513,24 +18633,29 @@
     {
       "id": "light-sphere",
       "result": "PASS",
-      "specFingerprint": "13f2c79f770f",
-      "sourceFingerprint": "181f839e3048d2fe",
+      "specFingerprint": "e8dffc14e4ae",
+      "sourceFingerprint": "b2706d215970847c",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 18,
-        "bytes": 51123,
-        "hash": "cd01cf831886a289",
+        "unitCount": 25,
+        "bytes": 51850,
+        "hash": "e05f518846f79aad",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
-          "Node.setRotationFromEuler: no own descriptor on static"
+          "Node.setRotationFromEuler: no own descriptor on static",
+          "SphereLight.luminance: no own descriptor on static",
+          "SphereLight.luminousFlux: no own descriptor on static",
+          "SphereLight.range: no own descriptor on static",
+          "SphereLight.size: no own descriptor on static",
+          "SphereLight.term: no own descriptor on static"
         ],
-        "observed": 18,
-        "total": 18
+        "observed": 25,
+        "total": 25
       },
       "apiProof": [
         {
@@ -18673,7 +18798,7 @@
           "api": "Node",
           "proof": "verified",
           "state": "executed",
-          "calls": 3,
+          "calls": 4,
           "reads": 16,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -18724,7 +18849,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 227,
+          "calls": 241,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -18749,6 +18874,126 @@
           "bindings": [
             {
               "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SphereLight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 9,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SphereLight.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:SphereLight",
+          "observedVia": "SphereLight",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SphereLight.luminance",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SphereLight.luminousFlux",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SphereLight.range",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SphereLight.size",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SphereLight.term",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -18916,15 +19161,55 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1317"
+          "detail": "litRatio=0.1320"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "SphereLight",
+            "ok": true,
+            "detail": "string:function"
+          },
+          {
+            "name": "SphereLight.constructor",
+            "ok": true,
+            "detail": "string:function"
+          },
+          {
+            "name": "SphereLight.luminousFlux",
+            "ok": true,
+            "detail": "number:1700"
+          },
+          {
+            "name": "SphereLight.luminance",
+            "ok": true,
+            "detail": "number:1913.8445799108247"
+          },
+          {
+            "name": "SphereLight.term",
+            "ok": true,
+            "detail": "number:0"
+          },
+          {
+            "name": "SphereLight.size",
+            "ok": true,
+            "detail": "number:0.15"
+          },
+          {
+            "name": "SphereLight.range",
+            "ok": true,
+            "detail": "number:1"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 32342,
-        "hash": "a3b047c2288db09a"
+        "bytes": 32722,
+        "hash": "7b5d3fc8016148aa"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -18933,24 +19218,45 @@
     {
       "id": "light-spot",
       "result": "PASS",
-      "specFingerprint": "9743cdd62ff4",
-      "sourceFingerprint": "b3534e04dd7d198f",
+      "specFingerprint": "c42cdd481052",
+      "sourceFingerprint": "b03352118c34029e",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 19,
-        "bytes": 51108,
-        "hash": "1e6373af13100ecf",
+        "unitCount": 45,
+        "bytes": 53647,
+        "hash": "13e696bd9cce9583",
         "notes": [
+          "Light.baked: no own descriptor on static",
+          "Light.color: no own descriptor on static",
+          "Light.colorTemperature: no own descriptor on static",
+          "Light.onDestroy: no own descriptor on static",
+          "Light.onDisable: no own descriptor on static",
+          "Light.onEnable: no own descriptor on static",
+          "Light.staticSettings: no own descriptor on static",
+          "Light.type: no own descriptor on static",
+          "Light.useColorTemperature: no own descriptor on static",
+          "Light.visibility: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
           "Node.lookAt: no own descriptor on static",
-          "Node.setPosition: no own descriptor on static"
+          "Node.setPosition: no own descriptor on static",
+          "SpotLight.angleAttenuationStrength: no own descriptor on static",
+          "SpotLight.luminance: no own descriptor on static",
+          "SpotLight.luminousFlux: no own descriptor on static",
+          "SpotLight.range: no own descriptor on static",
+          "SpotLight.shadowBias: no own descriptor on static",
+          "SpotLight.shadowEnabled: no own descriptor on static",
+          "SpotLight.shadowNormalBias: no own descriptor on static",
+          "SpotLight.shadowPcf: no own descriptor on static",
+          "SpotLight.size: no own descriptor on static",
+          "SpotLight.spotAngle: no own descriptor on static",
+          "SpotLight.term: no own descriptor on static"
         ],
-        "observed": 19,
-        "total": 19
+        "observed": 45,
+        "total": 45
       },
       "apiProof": [
         {
@@ -18992,7 +19298,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 3,
+          "reads": 5,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -19005,11 +19311,250 @@
           ]
         },
         {
-          "api": "Material",
+          "api": "Light",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 3,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.PhotometricTerm",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.Type",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.baked",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.color",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.colorTemperature",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Light",
+          "observedVia": "Light",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.onDestroy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.onDisable",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.onEnable",
           "proof": "verified",
           "state": "executed",
           "calls": 2,
-          "reads": 12,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.staticSettings",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.type",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.useColorTemperature",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Light.visibility",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Material",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 18,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -19025,7 +19570,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 27,
+          "calls": 29,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19042,7 +19587,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 6,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19059,8 +19604,8 @@
           "api": "MeshRenderer",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
-          "reads": 34,
+          "calls": 4,
+          "reads": 48,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -19076,8 +19621,8 @@
           "api": "Node",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
-          "reads": 20,
+          "calls": 7,
+          "reads": 30,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -19093,7 +19638,7 @@
           "api": "Node.addChild",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 7,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19127,7 +19672,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 193,
+          "calls": 256,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19161,14 +19706,219 @@
           "api": "SpotLight",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
-          "reads": 12,
+          "calls": 2,
+          "reads": 15,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
           "bindings": [
             {
               "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.angleAttenuationStrength",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:SpotLight",
+          "observedVia": "SpotLight",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.luminance",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.luminousFlux",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.range",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.shadowBias",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.shadowEnabled",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.shadowNormalBias",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.shadowPcf",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.size",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.spotAngle",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "SpotLight.term",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -19195,7 +19945,7 @@
           "api": "math.Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 3,
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Color",
@@ -19213,7 +19963,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 5,
+          "calls": 7,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -19231,7 +19981,7 @@
           "api": "primitives.box",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "frozen-namespace-member",
@@ -19248,7 +19998,7 @@
           "api": "primitives.plane",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "frozen-namespace-member",
@@ -19265,7 +20015,7 @@
           "api": "utils.createMesh",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 4,
           "reads": 0,
           "via": "call",
           "mechanism": "frozen-namespace-member",
@@ -19313,7 +20063,9 @@
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
       "validatorResults": [
@@ -19335,7 +20087,7 @@
         {
           "validatorId": "transform-equals",
           "state": "PASS",
-          "detail": "4 declared components matched (nodes 4/4 in graph) | coverage 4/4 nodes authored + 1 grounded exclusions"
+          "detail": "5 declared components matched (nodes 4/4 in graph) | coverage 4/4 nodes authored + 1 grounded exclusions"
         },
         {
           "validatorId": "no-runtime-error",
@@ -19345,15 +20097,150 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.5359"
+          "detail": "litRatio=0.5294"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.5426 assetUnits=9"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "Light.constructor",
+            "ok": true,
+            "detail": "string:function"
+          },
+          {
+            "name": "Light.Type",
+            "ok": true,
+            "detail": "object:[object Object]"
+          },
+          {
+            "name": "Light.PhotometricTerm",
+            "ok": true,
+            "detail": "object:[object Object]"
+          },
+          {
+            "name": "Light.color",
+            "ok": true,
+            "detail": "object:rgba(255, 255, 255, 255)"
+          },
+          {
+            "name": "Light.useColorTemperature",
+            "ok": true,
+            "detail": "boolean:false"
+          },
+          {
+            "name": "Light.colorTemperature",
+            "ok": true,
+            "detail": "number:6550"
+          },
+          {
+            "name": "Light.staticSettings",
+            "ok": true,
+            "detail": "object:[object Object]"
+          },
+          {
+            "name": "Light.type",
+            "ok": true,
+            "detail": "number:5"
+          },
+          {
+            "name": "Light.baked",
+            "ok": true,
+            "detail": "boolean:false"
+          },
+          {
+            "name": "Light.visibility",
+            "ok": true,
+            "detail": "number:-325058561"
+          },
+          {
+            "name": "Light.onEnable",
+            "ok": true,
+            "detail": "boolean:true"
+          },
+          {
+            "name": "Light.onDisable",
+            "ok": true,
+            "detail": "boolean:true"
+          },
+          {
+            "name": "Light.onDestroy",
+            "ok": true,
+            "detail": "boolean:true"
+          },
+          {
+            "name": "SpotLight.constructor",
+            "ok": true,
+            "detail": "string:function"
+          },
+          {
+            "name": "SpotLight.luminousFlux",
+            "ok": true,
+            "detail": "number:21318.345506353013"
+          },
+          {
+            "name": "SpotLight.luminance",
+            "ok": true,
+            "detail": "number:24000"
+          },
+          {
+            "name": "SpotLight.term",
+            "ok": true,
+            "detail": "number:0"
+          },
+          {
+            "name": "SpotLight.size",
+            "ok": true,
+            "detail": "number:0.15"
+          },
+          {
+            "name": "SpotLight.range",
+            "ok": true,
+            "detail": "number:12"
+          },
+          {
+            "name": "SpotLight.spotAngle",
+            "ok": true,
+            "detail": "number:60"
+          },
+          {
+            "name": "SpotLight.angleAttenuationStrength",
+            "ok": true,
+            "detail": "number:0"
+          },
+          {
+            "name": "SpotLight.shadowEnabled",
+            "ok": true,
+            "detail": "boolean:false"
+          },
+          {
+            "name": "SpotLight.shadowPcf",
+            "ok": true,
+            "detail": "number:0"
+          },
+          {
+            "name": "SpotLight.shadowBias",
+            "ok": true,
+            "detail": "number:0.00001"
+          },
+          {
+            "name": "SpotLight.shadowNormalBias",
+            "ok": true,
+            "detail": "number:0"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 16202,
-        "hash": "766d522226d322ea"
+        "bytes": 15863,
+        "hash": "7dfaf93dcc48be98"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19362,24 +20249,42 @@
     {
       "id": "light-two-directional",
       "result": "PASS",
-      "specFingerprint": "248ee78d5a9e",
-      "sourceFingerprint": "84e2d6b201f643d3",
+      "specFingerprint": "516c502017cf",
+      "sourceFingerprint": "0de72aa96c0cbf42",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 19,
-        "bytes": 51152,
-        "hash": "e1812225788be9dd",
+        "unitCount": 37,
+        "bytes": 53871,
+        "hash": "ff7c1e1120bee5c7",
         "notes": [
+          "DirectionalLight.csmAdvancedOptions: no own descriptor on static",
+          "DirectionalLight.csmLayerLambda: no own descriptor on static",
+          "DirectionalLight.csmLayersTransition: no own descriptor on static",
+          "DirectionalLight.csmLevel: no own descriptor on static",
+          "DirectionalLight.csmTransitionRange: no own descriptor on static",
+          "DirectionalLight.enableCSM: no own descriptor on static",
+          "DirectionalLight.illuminance: no own descriptor on static",
+          "DirectionalLight.shadowBias: no own descriptor on static",
+          "DirectionalLight.shadowDistance: no own descriptor on static",
+          "DirectionalLight.shadowEnabled: no own descriptor on static",
+          "DirectionalLight.shadowFar: no own descriptor on static",
+          "DirectionalLight.shadowFixedArea: no own descriptor on static",
+          "DirectionalLight.shadowInvisibleOcclusionRange: no own descriptor on static",
+          "DirectionalLight.shadowNear: no own descriptor on static",
+          "DirectionalLight.shadowNormalBias: no own descriptor on static",
+          "DirectionalLight.shadowOrthoSize: no own descriptor on static",
+          "DirectionalLight.shadowPcf: no own descriptor on static",
+          "DirectionalLight.shadowSaturation: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
           "Node.setRotationFromEuler: no own descriptor on static"
         ],
-        "observed": 18,
-        "total": 19
+        "observed": 36,
+        "total": 37
       },
       "apiProof": [
         {
@@ -19411,6 +20316,312 @@
           "bindings": [
             {
               "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.csmAdvancedOptions",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.csmLayerLambda",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.csmLayersTransition",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.csmLevel",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.csmTransitionRange",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.enableCSM",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.illuminance",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowBias",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowDistance",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowEnabled",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowFar",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowFixedArea",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowInvisibleOcclusionRange",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowNear",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowNormalBias",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowOrthoSize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowPcf",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "DirectionalLight.shadowSaturation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -19785,7 +20996,102 @@
           "detail": "canvas state changed after real input"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "DirectionalLight.illuminance",
+            "ok": true,
+            "detail": "number:20000"
+          },
+          {
+            "name": "DirectionalLight.shadowEnabled",
+            "ok": true,
+            "detail": "boolean:false"
+          },
+          {
+            "name": "DirectionalLight.shadowPcf",
+            "ok": true,
+            "detail": "number:0"
+          },
+          {
+            "name": "DirectionalLight.shadowBias",
+            "ok": true,
+            "detail": "number:0.00001"
+          },
+          {
+            "name": "DirectionalLight.shadowNormalBias",
+            "ok": true,
+            "detail": "number:0"
+          },
+          {
+            "name": "DirectionalLight.shadowSaturation",
+            "ok": true,
+            "detail": "number:1"
+          },
+          {
+            "name": "DirectionalLight.shadowDistance",
+            "ok": true,
+            "detail": "number:50"
+          },
+          {
+            "name": "DirectionalLight.shadowInvisibleOcclusionRange",
+            "ok": true,
+            "detail": "number:200"
+          },
+          {
+            "name": "DirectionalLight.csmLevel",
+            "ok": true,
+            "detail": "number:4"
+          },
+          {
+            "name": "DirectionalLight.enableCSM",
+            "ok": true,
+            "detail": "boolean:true"
+          },
+          {
+            "name": "DirectionalLight.csmLayerLambda",
+            "ok": true,
+            "detail": "number:0.75"
+          },
+          {
+            "name": "DirectionalLight.shadowFixedArea",
+            "ok": true,
+            "detail": "boolean:false"
+          },
+          {
+            "name": "DirectionalLight.shadowNear",
+            "ok": true,
+            "detail": "number:0.1"
+          },
+          {
+            "name": "DirectionalLight.shadowFar",
+            "ok": true,
+            "detail": "number:10"
+          },
+          {
+            "name": "DirectionalLight.shadowOrthoSize",
+            "ok": true,
+            "detail": "number:5"
+          },
+          {
+            "name": "DirectionalLight.csmAdvancedOptions",
+            "ok": true,
+            "detail": "boolean:false"
+          },
+          {
+            "name": "DirectionalLight.csmLayersTransition",
+            "ok": true,
+            "detail": "boolean:false"
+          },
+          {
+            "name": "DirectionalLight.csmTransitionRange",
+            "ok": true,
+            "detail": "number:0.05"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-two-directional.png",
@@ -22754,7 +24060,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 397,
+          "calls": 429,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -22955,15 +24261,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1123"
+          "detail": "litRatio=0.1072"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 9584,
-        "hash": "878946c910bd497d"
+        "bytes": 9535,
+        "hash": "1412519eb0d83efe"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -41445,7 +42751,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 156,
+          "calls": 152,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -42331,7 +43637,7 @@
           "api": "math.Vec3.subtract",
           "proof": "verified",
           "state": "executed",
-          "calls": 181,
+          "calls": 178,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -44212,7 +45518,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 147,
+          "calls": 165,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -44654,7 +45960,7 @@
           "api": "math.Vec3.toArray",
           "proof": "verified",
           "state": "executed",
-          "calls": 283,
+          "calls": 319,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -45051,7 +46357,7 @@
           {
             "name": "Vec3.random",
             "ok": true,
-            "detail": "-1.6691150792739982,0.4663164506424622,0.9983004657919232"
+            "detail": "-0.5783713266303374,1.8665117127331876,0.42616972529930663"
           },
           {
             "name": "Vec3.transformMat4Normal",
@@ -46162,7 +47468,7 @@
           "api": "math.Vec4.prototype.set",
           "proof": "verified",
           "state": "executed",
-          "calls": 162,
+          "calls": 159,
           "reads": 0,
           "via": "call",
           "mechanism": "namespace-member",
@@ -48287,7 +49593,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 200,
+          "calls": 213,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -48479,7 +49785,7 @@
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
         "bytes": 10828,
-        "hash": "45e8265dba3fcab0"
+        "hash": "60c1df4c43cdc867"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -49860,8 +51166,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-multi-material.png",
-        "bytes": 7682,
-        "hash": "185da9cc96b58a94"
+        "bytes": 7690,
+        "hash": "91fd8d41834bbdd7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -50081,7 +51387,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 201,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -50289,8 +51595,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 16861,
-        "hash": "ce7131d29f213f49"
+        "bytes": 16795,
+        "hash": "a548d8325a27e612"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -50966,7 +52272,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 200,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -51150,15 +52456,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0494"
+          "detail": "litRatio=0.0493"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 17173,
-        "hash": "dfd2019565b5f94a"
+        "bytes": 17148,
+        "hash": "b91dd87a002e84f0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -51378,7 +52684,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 189,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -51562,15 +52868,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0427"
+          "detail": "litRatio=0.0412"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 17511,
-        "hash": "040c9f0b80baf1d6"
+        "bytes": 16954,
+        "hash": "37fb1e1eb1b7ce7d"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -53613,7 +54919,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0561 assetUnits=11"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0564 assetUnits=11"
         }
       ],
       "scenarioProbe": {
@@ -53630,22 +54936,22 @@
           {
             "name": "animation-clock-started",
             "ok": true,
-            "detail": "tA=0.195（8s 内动画时钟未起步）"
+            "detail": "tA=0.641（8s 内动画时钟未起步）"
           },
           {
             "name": "independent-animation-clocks",
             "ok": true,
-            "detail": "tA=0.604 tB=1.597 ratio=2.64"
+            "detail": "tA=0.605 tB=2.492 ratio=4.12"
           },
           {
             "name": "pause-freezes-time",
             "ok": true,
-            "detail": "paused=1.597 after320ms=1.597"
+            "detail": "paused=2.492 after320ms=2.492"
           },
           {
             "name": "resume-advances-time",
             "ok": true,
-            "detail": "still=1.597 resumed=2.265"
+            "detail": "still=2.492 resumed=3.126"
           },
           {
             "name": "instanceB-disposed",
@@ -53655,7 +54961,7 @@
           {
             "name": "charA-unaffected-by-B-release",
             "ok": true,
-            "detail": "tA 1.448 → 1.848"
+            "detail": "tA 1.879 → 2.279"
           }
         ],
         "state": {
@@ -53673,8 +54979,8 @@
           },
           "timeline": {
             "clipName": "animation_0",
-            "tA": 1.8478000000119197,
-            "tB": 2.2646000000238407,
+            "tA": 2.279399999976157,
+            "tB": 3.125599999904631,
             "charBValid": false,
             "charAValid": true,
             "clicks": 0
@@ -53745,8 +55051,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/model-character-interaction.png",
-        "bytes": 9591,
-        "hash": "601763f1c5d1335b"
+        "bytes": 9584,
+        "hash": "3768b1b756421e8c"
       },
       "assetDigests": [
         {
@@ -56233,7 +57539,7 @@
           "api": "Node.clearNodeArray",
           "proof": "verified",
           "state": "executed",
-          "calls": 145,
+          "calls": 160,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -56267,7 +57573,7 @@
           "api": "Node.eulerAngles",
           "proof": "verified",
           "state": "executed",
-          "calls": 146,
+          "calls": 161,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56489,7 +57795,7 @@
           "api": "Node.hasChangedFlags",
           "proof": "verified",
           "state": "executed",
-          "calls": 1654,
+          "calls": 1819,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56506,7 +57812,7 @@
           "api": "Node.invalidateChildren",
           "proof": "verified",
           "state": "executed",
-          "calls": 176,
+          "calls": 191,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56574,7 +57880,7 @@
           "api": "Node.layer",
           "proof": "verified",
           "state": "executed",
-          "calls": 874,
+          "calls": 964,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56695,7 +58001,7 @@
           "api": "Node.resetHasChangedFlags",
           "proof": "verified",
           "state": "executed",
-          "calls": 145,
+          "calls": 160,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -56798,7 +58104,7 @@
           "api": "Node.scene",
           "proof": "verified",
           "state": "executed",
-          "calls": 599,
+          "calls": 659,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56866,7 +58172,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 145,
+          "calls": 160,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57002,7 +58308,7 @@
           "api": "Node.updateWorldTransform",
           "proof": "verified",
           "state": "executed",
-          "calls": 611,
+          "calls": 671,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57036,7 +58342,7 @@
           "api": "Node.worldMatrix",
           "proof": "verified",
           "state": "executed",
-          "calls": 147,
+          "calls": 162,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57373,7 +58679,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0130"
+          "detail": "litRatio=0.0127"
         }
       ],
       "scenarioProbe": {
@@ -57483,7 +58789,7 @@
           {
             "name": "node-read:Node.uuid",
             "ok": true,
-            "detail": "string:Node.736"
+            "detail": "string:Node.684"
           },
           {
             "name": "node-read:Node.children",
@@ -57655,8 +58961,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 5825,
-        "hash": "b0c72b182014c9cf"
+        "bytes": 6130,
+        "hash": "49cced6d3af43230"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -58336,7 +59642,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 199,
+          "calls": 217,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -58539,15 +59845,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0582"
+          "detail": "litRatio=0.0603"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 8304,
-        "hash": "fde86077ee78fbab"
+        "bytes": 8007,
+        "hash": "485e41684351b952"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -59686,8 +60992,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/particle-2d-basic.png",
-        "bytes": 39949,
-        "hash": "6a260bc72b49bca4"
+        "bytes": 40839,
+        "hash": "738fcb4977a18f42"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -59796,7 +61102,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 570,
+          "reads": 567,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -60018,7 +61324,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 951,
+          "reads": 946,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -60034,7 +61340,7 @@
           "api": "PhysicsSystem2D.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 380,
+          "calls": 378,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -60051,7 +61357,7 @@
           "api": "PhysicsSystem2D.testAABB",
           "proof": "verified",
           "state": "executed",
-          "calls": 190,
+          "calls": 189,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -60068,7 +61374,7 @@
           "api": "PhysicsSystem2D.testPoint",
           "proof": "verified",
           "state": "executed",
-          "calls": 1140,
+          "calls": 1134,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -60153,7 +61459,7 @@
           "api": "RigidBody2D.getMass",
           "proof": "verified",
           "state": "executed",
-          "calls": 190,
+          "calls": 189,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -60272,7 +61578,7 @@
           "api": "math.Rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 190,
+          "calls": 189,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Rect",
@@ -60308,7 +61614,7 @@
           "api": "math.Vec2",
           "proof": "verified",
           "state": "executed",
-          "calls": 1906,
+          "calls": 1896,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec2",
@@ -60526,7 +61832,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 286,
+          "reads": 280,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -60764,7 +62070,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 287,
+          "reads": 281,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -61396,7 +62702,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 294,
+          "calls": 293,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61482,8 +62788,8 @@
           "api": "geometry.Ray",
           "proof": "verified",
           "state": "executed",
-          "calls": 3562,
-          "reads": 3562,
+          "calls": 3549,
+          "reads": 3549,
           "via": "call",
           "mechanism": "frozen-namespace-class",
           "bound": true,
@@ -61516,7 +62822,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 2008,
+          "calls": 2001,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -61533,7 +62839,7 @@
           "api": "math.Quat",
           "proof": "verified",
           "state": "executed",
-          "calls": 274,
+          "calls": 273,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Quat",
@@ -61551,7 +62857,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 1118,
+          "calls": 1114,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -61814,7 +63120,7 @@
           "api": "physics.PhysicsSystem.lineStripCast",
           "proof": "verified",
           "state": "executed",
-          "calls": 274,
+          "calls": 273,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61865,7 +63171,7 @@
           "api": "physics.PhysicsSystem.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 3014,
+          "calls": 3003,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61882,7 +63188,7 @@
           "api": "physics.PhysicsSystem.raycastClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 822,
+          "calls": 819,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61950,7 +63256,7 @@
           "api": "physics.PhysicsSystem.sweepBox",
           "proof": "verified",
           "state": "executed",
-          "calls": 274,
+          "calls": 273,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61967,7 +63273,7 @@
           "api": "physics.PhysicsSystem.sweepBoxClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 274,
+          "calls": 273,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62708,7 +64014,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 216,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63102,8 +64408,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-collision.png",
-        "bytes": 11016,
-        "hash": "ad3f79817c31969d"
+        "bytes": 11042,
+        "hash": "1c26e064446e814a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -63467,7 +64773,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 301,
+          "calls": 302,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -64013,8 +65319,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-interaction.png",
-        "bytes": 12343,
-        "hash": "ea7a612d0926c758"
+        "bytes": 12353,
+        "hash": "74309602b2281da2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -65906,7 +67212,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 258,
+          "calls": 261,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -66076,7 +67382,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 669,
+          "calls": 674,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -66248,7 +67554,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9995"
+          "detail": "litRatio=0.9994"
         },
         {
           "validatorId": "interaction:button-click",
@@ -67023,8 +68329,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/profiler-overlay.png",
-        "bytes": 18882,
-        "hash": "02e62181d2ed02a9"
+        "bytes": 19440,
+        "hash": "f8cffa3812ffef0a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -67335,7 +68641,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 310,
+          "calls": 313,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67683,7 +68989,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2288"
+          "detail": "litRatio=0.2285"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -67770,7 +69076,7 @@
           {
             "name": "p4-rendertarget-visible",
             "ok": true,
-            "detail": "quad non-bg=3203px warm(快照内容)=2420px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+            "detail": "quad non-bg=3203px warm(快照内容)=2419px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
           },
           {
             "name": "p5-rt-resize-readback",
@@ -67816,7 +69122,7 @@
           ],
           "quadRegion": {
             "count": 3203,
-            "warm": 2420,
+            "warm": 2419,
             "pixel": [
               195,
               45,
@@ -67859,8 +69165,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/render-composite.png",
-        "bytes": 8764,
-        "hash": "feee5fe2a1fbe872"
+        "bytes": 9176,
+        "hash": "e59041425987ed12"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -70526,7 +71832,7 @@
           {
             "name": "gen1-running",
             "ok": true,
-            "detail": "updates=18"
+            "detail": "updates=15"
           },
           {
             "name": "gen1-lifecycle-once",
@@ -70536,7 +71842,7 @@
           {
             "name": "gen2-running",
             "ok": true,
-            "detail": "updates=27"
+            "detail": "updates=28"
           },
           {
             "name": "autoReleaseAssets-recorded",
@@ -70546,7 +71852,7 @@
           {
             "name": "gen1-frozen",
             "ok": true,
-            "detail": "gen1 updates 18 → 18 after switch"
+            "detail": "gen1 updates 15 → 15 after switch"
           },
           {
             "name": "gen1-scene-destroyed",
@@ -70561,12 +71867,12 @@
           {
             "name": "gen3-running",
             "ok": true,
-            "detail": "updates=28"
+            "detail": "updates=26"
           },
           {
             "name": "gen2-frozen",
             "ok": true,
-            "detail": "gen2 updates 45 → 45"
+            "detail": "gen2 updates 46 → 46"
           },
           {
             "name": "gen2-scene-destroyed",
@@ -70592,7 +71898,7 @@
             {
               "gen": 1,
               "variant": "A",
-              "updates": 18,
+              "updates": 15,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -70600,7 +71906,7 @@
             {
               "gen": 2,
               "variant": "B",
-              "updates": 45,
+              "updates": 46,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -70608,7 +71914,7 @@
             {
               "gen": 3,
               "variant": "A",
-              "updates": 43,
+              "updates": 41,
               "clicks": 0,
               "onDisable": 0,
               "onDestroy": 0
@@ -71202,17 +72508,17 @@
           {
             "name": "gradient-horizontal",
             "ok": true,
-            "detail": "left=[166,80,118,255]（偏红）right=[114,97,175,255]（偏蓝）"
+            "detail": "left=[162,78,116,255]（偏红）right=[111,95,170,255]（偏蓝）"
           },
           {
             "name": "uniform-vec4-colorA",
             "ok": true,
-            "detail": "left after colorA=green: [47,180,133,255]"
+            "detail": "left after colorA=green: [44,172,126,255]"
           },
           {
             "name": "time-animation-frame-diff",
             "ok": true,
-            "detail": "maxDiff=12"
+            "detail": "maxDiff=3"
           },
           {
             "name": "uniform-float-freeze",
@@ -71225,44 +72531,44 @@
           "gfxAPI": "WEBGL2",
           "baseline": {
             "left": [
-              166,
-              80,
-              118,
+              162,
+              78,
+              116,
               255
             ],
             "right": [
-              114,
-              97,
-              175,
+              111,
+              95,
+              170,
               255
             ]
           },
           "afterColorA": [
-            47,
-            180,
-            133,
+            44,
+            172,
+            126,
             255
           ],
           "animDiff": {
             "d0": [
-              41,
-              130,
-              125,
-              255
-            ],
-            "d1": [
-              38,
-              122,
-              117,
-              255
-            ],
-            "d2": [
               37,
               118,
               113,
               255
             ],
-            "maxDiff": 12
+            "d1": [
+              36,
+              117,
+              112,
+              255
+            ],
+            "d2": [
+              37,
+              120,
+              115,
+              255
+            ],
+            "maxDiff": 3
           },
           "frozen": {
             "f0": [
@@ -71284,8 +72590,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-custom-gradient.png",
-        "bytes": 6736,
-        "hash": "6312e31f3bd7019f"
+        "bytes": 6666,
+        "hash": "69e0e5315c6d141e"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -71562,7 +72868,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 277,
+          "calls": 248,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72003,8 +73309,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-dissolve.png",
-        "bytes": 7349,
-        "hash": "82d17095e0744aad"
+        "bytes": 7275,
+        "hash": "ede1071454ae3219"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -72172,7 +73478,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 336,
+          "calls": 358,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72386,15 +73692,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0638"
+          "detail": "litRatio=0.0635"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 6910,
-        "hash": "ae0afda65c9452c0"
+        "bytes": 6890,
+        "hash": "1d2eadf164b7b4fe"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -74444,8 +75750,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tetris-classic.png",
-        "bytes": 10259,
-        "hash": "76a9cdd252053846"
+        "bytes": 10215,
+        "hash": "72f7d06c2cb45ea8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -74737,7 +76043,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 217,
+          "calls": 228,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -74974,20 +76280,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1011"
+          "detail": "litRatio=0.0956"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0874 assetUnits=7"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0873 assetUnits=7"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture-basic.png",
-        "bytes": 26024,
-        "hash": "759e156b2bb1e23f"
+        "bytes": 26064,
+        "hash": "19c2c1f1e2f8425f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -76511,7 +77817,7 @@
           "api": "TiledLayer.isCullingDirty",
           "proof": "verified",
           "state": "executed",
-          "calls": 527,
+          "calls": 538,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -76579,7 +77885,7 @@
           "api": "TiledMap.getLayers",
           "proof": "verified",
           "state": "executed",
-          "calls": 570,
+          "calls": 582,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -77154,7 +78460,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 228,
+          "calls": 241,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -77171,7 +78477,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 226,
+          "calls": 239,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -77188,7 +78494,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 224,
+          "calls": 237,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -77256,7 +78562,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 453,
+          "calls": 479,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -77382,15 +78688,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0496"
+          "detail": "litRatio=0.0455"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 8573,
-        "hash": "c477ecfbaaf5b522"
+        "bytes": 8912,
+        "hash": "001d1374b3a4aca0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -77553,7 +78859,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 106,
+          "calls": 108,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -77723,7 +79029,7 @@
           "api": "Tween.getTarget",
           "proof": "verified",
           "state": "executed",
-          "calls": 84,
+          "calls": 86,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78415,7 +79721,7 @@
           {
             "name": "pause-freezes",
             "ok": true,
-            "detail": "0.5267999999821186"
+            "detail": "0.7407000000178814"
           },
           {
             "name": "resume-reaches-end",
@@ -78537,8 +79843,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
-        "bytes": 5592,
-        "hash": "7a76d84a8539060c"
+        "bytes": 5605,
+        "hash": "71fdefdbb0786cb6"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -80112,7 +81418,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 335,
+          "calls": 337,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -80657,7 +81963,7 @@
           "api": "UIRenderer.color",
           "proof": "verified",
           "state": "executed",
-          "calls": 18869,
+          "calls": 18985,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -80674,7 +81980,7 @@
           "api": "UIRenderer.customMaterial",
           "proof": "verified",
           "state": "executed",
-          "calls": 6573,
+          "calls": 6617,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -80759,7 +82065,7 @@
           "api": "UIRenderer.postUpdateAssembler",
           "proof": "verified",
           "state": "executed",
-          "calls": 9736,
+          "calls": 9796,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -81331,8 +82637,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-components.png",
-        "bytes": 18534,
-        "hash": "87eb03ded60d855b"
+        "bytes": 18742,
+        "hash": "47cb77a35d711214"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -81576,7 +82882,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 1657,
+          "calls": 1641,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -81680,7 +82986,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 12,
-          "reads": 3094,
+          "reads": 3062,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -81696,7 +83002,7 @@
           "api": "UITransform.convertToWorldSpaceAR",
           "proof": "verified",
           "state": "executed",
-          "calls": 1528,
+          "calls": 1512,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -82190,7 +83496,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 3056,
+          "calls": 3024,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -82863,7 +84169,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 986,
+          "calls": 992,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -82881,7 +84187,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 3,
-          "reads": 31,
+          "reads": 30,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -82999,7 +84305,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 649,
+          "calls": 653,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83016,7 +84322,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 334,
+          "calls": 336,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83033,7 +84339,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 983,
+          "calls": 989,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83050,7 +84356,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 649,
+          "calls": 653,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83562,8 +84868,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/video-basic.png",
-        "bytes": 14954,
-        "hash": "cc9d7bf04c483d91"
+        "bytes": 14971,
+        "hash": "046bdd91d516ed67"
       },
       "assetDigests": [
         {
@@ -83656,7 +84962,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 584,
+          "calls": 590,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -83792,7 +85098,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 290,
+          "calls": 293,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83809,7 +85115,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 290,
+          "calls": 293,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83826,7 +85132,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 581,
+          "calls": 587,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83843,7 +85149,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 294,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83980,7 +85286,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 3,
-          "reads": 19,
+          "reads": 20,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -84115,7 +85421,7 @@
           "api": "WebView.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 262,
+          "calls": 265,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84318,8 +85624,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/webview-basic.png",
-        "bytes": 20410,
-        "hash": "8050dd19e493d032"
+        "bytes": 20421,
+        "hash": "c4246dbb25e343b5"
       },
       "assetDigests": [
         {

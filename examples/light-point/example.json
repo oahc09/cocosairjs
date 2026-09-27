@@ -20,7 +20,15 @@
   },
   "api": {
     "primary": ["PointLight"],
-    "supporting": ["Component", "Node.setPosition"],
+    "supporting": [
+      "Component",
+      "Node.setPosition",
+      "PointLight.constructor",
+      "PointLight.luminousFlux",
+      "PointLight.luminance",
+      "PointLight.term",
+      "PointLight.range"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -40,7 +48,12 @@
       "primitives.plane",
       "Node.addChild",
       "Node.setPosition",
-      "Node.lookAt"
+      "Node.lookAt",
+      "PointLight.constructor",
+      "PointLight.luminousFlux",
+      "PointLight.luminance",
+      "PointLight.term",
+      "PointLight.range"
     ],
     "forbiddenShortcut": ["用贴图烘焙的假光斑冒充动态点光源", "保留场景默认灯光参与照明（会掩盖单光源语义）"],
     "evidence": [
@@ -157,6 +170,36 @@
         "source": "src/main.ts",
         "validator": "transform-equals",
         "sourceLocation": "L40"
+      },
+      {
+        "api": "PointLight.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "PointLight.luminousFlux",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "PointLight.luminance",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L56"
+      },
+      {
+        "api": "PointLight.term",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "PointLight.range",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L57"
       }
     ]
   },
@@ -331,11 +374,11 @@
     }
   },
   "promotion": {
-    "spec": "957212499be3",
-    "source": "ede6040c16f088b8",
+    "spec": "ea400d8377c2",
+    "source": "44280f19ae58d54e",
     "candidate": "8746fc59b6aa0408",
-    "verified": 19,
+    "verified": 24,
     "attested": 0,
-    "units": 19
+    "units": 24
   }
 }

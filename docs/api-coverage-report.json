@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-27T09:03:30.007Z",
+  "generatedAt": "2026-09-27T11:03:17.508Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T08:52:14.603Z",
+      "measuredAt": "2026-09-27T10:53:29.541Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T08:53:01.404Z",
+      "measuredAt": "2026-09-27T10:54:35.524Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -29,11 +29,11 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 1099,
+  "totalClaimed": 1154,
   "totalAttested": 107,
-  "totalVerified": 992,
-  "totalVerifiedViaCall": 910,
-  "totalVerifiedViaRead": 82,
+  "totalVerified": 1047,
+  "totalVerifiedViaCall": 964,
+  "totalVerifiedViaRead": 83,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -892,16 +892,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "6e000f32fdddd3d0"
+        "observed": 24,
+        "total": 24,
+        "hash": "52d7c9201cee8f36"
       },
-      "claims": 19,
+      "claims": 24,
       "tally": {
-        "verified": 19,
+        "verified": 24,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 18,
+        "verifiedCall": 23,
         "verifiedRead": 1
       }
     },
@@ -916,16 +916,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
-        "total": 18,
-        "hash": "cd01cf831886a289"
+        "observed": 25,
+        "total": 25,
+        "hash": "e05f518846f79aad"
       },
-      "claims": 18,
+      "claims": 25,
       "tally": {
-        "verified": 18,
+        "verified": 25,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 24,
         "verifiedRead": 1
       }
     },
@@ -940,17 +940,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "1e6373af13100ecf"
+        "observed": 45,
+        "total": 45,
+        "hash": "13e696bd9cce9583"
       },
-      "claims": 19,
+      "claims": 45,
       "tally": {
-        "verified": 19,
+        "verified": 45,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 18,
-        "verifiedRead": 1
+        "verifiedCall": 42,
+        "verifiedRead": 3
       }
     },
     {
@@ -964,16 +964,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
-        "total": 19,
-        "hash": "e1812225788be9dd"
+        "observed": 36,
+        "total": 37,
+        "hash": "ff7c1e1120bee5c7"
       },
-      "claims": 19,
+      "claims": 37,
       "tally": {
-        "verified": 18,
+        "verified": 36,
         "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 16,
+        "verifiedCall": 34,
         "verifiedRead": 2
       }
     },
@@ -3527,25 +3527,25 @@
       "denominator": "coverageRequired",
       "total": 963,
       "required": 963,
-      "claimed": 655,
+      "claimed": 710,
       "attested": 31,
-      "verified": 624,
-      "requiredClaimed": 655,
-      "requiredVerified": 624,
+      "verified": 679,
+      "requiredClaimed": 710,
+      "requiredVerified": 679,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 339,
-      "unstated": 339,
-      "verifiedViaCall": 563,
-      "verifiedViaRead": 61,
+      "uncovered": 284,
+      "unstated": 284,
+      "verifiedViaCall": 617,
+      "verifiedViaRead": 62,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 563,
-      "requiredVerifiedViaRead": 61,
+      "requiredVerifiedViaCall": 617,
+      "requiredVerifiedViaRead": 62,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.585,
-      "claimedRate": 0.68,
-      "verifiedRate": 0.648,
-      "allUnitsVerifiedRate": 0.648,
+      "requiredVerifiedViaCallRate": 0.641,
+      "claimedRate": 0.737,
+      "verifiedRate": 0.705,
+      "allUnitsVerifiedRate": 0.705,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -7589,7 +7589,8 @@
       "tier": "core",
       "via": "read",
       "examples": [
-        "light-attach-cycle"
+        "light-attach-cycle",
+        "light-spot"
       ]
     },
     {
@@ -7643,11 +7644,451 @@
       ]
     },
     {
+      "unit": "PointLight.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-point"
+      ]
+    },
+    {
+      "unit": "PointLight.luminousFlux",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-point"
+      ]
+    },
+    {
+      "unit": "PointLight.luminance",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-point"
+      ]
+    },
+    {
+      "unit": "PointLight.term",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-point"
+      ]
+    },
+    {
+      "unit": "PointLight.range",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-point"
+      ]
+    },
+    {
+      "unit": "SphereLight",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
+      "unit": "SphereLight.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
+      "unit": "SphereLight.luminousFlux",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
+      "unit": "SphereLight.luminance",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
+      "unit": "SphereLight.term",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
+      "unit": "SphereLight.size",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
+      "unit": "SphereLight.range",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-sphere"
+      ]
+    },
+    {
       "unit": "SpotLight",
       "tier": "core",
       "via": "call",
       "examples": [
         "light-spot"
+      ]
+    },
+    {
+      "unit": "Light",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.Type",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.color",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.useColorTemperature",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.colorTemperature",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.staticSettings",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.type",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.baked",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.visibility",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.onEnable",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.onDisable",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "Light.onDestroy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.luminousFlux",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.luminance",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.term",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.size",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.range",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.spotAngle",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.angleAttenuationStrength",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.shadowEnabled",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.shadowPcf",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.shadowBias",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "SpotLight.shadowNormalBias",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-spot"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.illuminance",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowEnabled",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowPcf",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowBias",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowNormalBias",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowSaturation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowDistance",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowInvisibleOcclusionRange",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.csmLevel",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.enableCSM",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.csmLayerLambda",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowFixedArea",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowNear",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowFar",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.shadowOrthoSize",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.csmAdvancedOptions",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.csmLayersTransition",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
+      ]
+    },
+    {
+      "unit": "DirectionalLight.csmTransitionRange",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "light-two-directional"
       ]
     },
     {
@@ -15877,61 +16318,6 @@
     "Mesh.destroyRenderingMesh",
     "Mesh.initDefault",
     "Mesh.allowDataAccess",
-    "DirectionalLight.illuminance",
-    "DirectionalLight.shadowEnabled",
-    "DirectionalLight.shadowPcf",
-    "DirectionalLight.shadowBias",
-    "DirectionalLight.shadowNormalBias",
-    "DirectionalLight.shadowSaturation",
-    "DirectionalLight.shadowDistance",
-    "DirectionalLight.shadowInvisibleOcclusionRange",
-    "DirectionalLight.csmLevel",
-    "DirectionalLight.enableCSM",
-    "DirectionalLight.csmLayerLambda",
-    "DirectionalLight.shadowFixedArea",
-    "DirectionalLight.shadowNear",
-    "DirectionalLight.shadowFar",
-    "DirectionalLight.shadowOrthoSize",
-    "DirectionalLight.csmAdvancedOptions",
-    "DirectionalLight.csmLayersTransition",
-    "DirectionalLight.csmTransitionRange",
-    "Light",
-    "Light.Type",
-    "Light.color",
-    "Light.useColorTemperature",
-    "Light.colorTemperature",
-    "Light.staticSettings",
-    "Light.type",
-    "Light.baked",
-    "Light.visibility",
-    "Light.constructor",
-    "Light.onEnable",
-    "Light.onDisable",
-    "Light.onDestroy",
-    "SphereLight",
-    "SphereLight.luminousFlux",
-    "SphereLight.luminance",
-    "SphereLight.term",
-    "SphereLight.size",
-    "SphereLight.range",
-    "SphereLight.constructor",
-    "SpotLight.luminousFlux",
-    "SpotLight.luminance",
-    "SpotLight.term",
-    "SpotLight.size",
-    "SpotLight.range",
-    "SpotLight.spotAngle",
-    "SpotLight.angleAttenuationStrength",
-    "SpotLight.shadowEnabled",
-    "SpotLight.shadowPcf",
-    "SpotLight.shadowBias",
-    "SpotLight.shadowNormalBias",
-    "SpotLight.constructor",
-    "PointLight.luminousFlux",
-    "PointLight.luminance",
-    "PointLight.term",
-    "PointLight.range",
-    "PointLight.constructor",
     "math.Vec2.ZERO",
     "math.Vec2.ONE",
     "math.Vec2.NEG_ONE",
@@ -16178,5 +16564,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3360
+  "unclaimedRequired": 3305
 }
