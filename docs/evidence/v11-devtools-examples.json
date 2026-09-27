@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T11:43:26.918Z",
+  "measuredAt": "2026-09-27T13:22:31.634Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
@@ -323,7 +323,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -761,7 +761,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→56 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1256,7 +1256,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→57 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -1732,7 +1732,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→56 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2188,7 +2188,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2513,7 +2513,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2951,7 +2951,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→56 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3446,7 +3446,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→57 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -3922,7 +3922,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→56 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -4378,7 +4378,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {

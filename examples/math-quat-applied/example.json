@@ -36,7 +36,35 @@
     "math.Quat.prototype.strictEquals",
     "math.Quat.prototype.lerp",
     "math.Quat.prototype.slerp",
-    "math.Quat.prototype.lengthSqr"
+    "math.Quat.prototype.lengthSqr",
+    "math.Quat.IDENTITY",
+    "math.Quat.clone",
+    "math.Quat.copy",
+    "math.Quat.identity",
+    "math.Quat.rotationTo",
+    "math.Quat.getAxisAngle",
+    "math.Quat.multiply",
+    "math.Quat.multiplyScalar",
+    "math.Quat.scaleAndAdd",
+    "math.Quat.rotateX",
+    "math.Quat.rotateY",
+    "math.Quat.rotateZ",
+    "math.Quat.rotateAround",
+    "math.Quat.rotateAroundLocal",
+    "math.Quat.calculateW",
+    "math.Quat.dot",
+    "math.Quat.sqlerp",
+    "math.Quat.invert",
+    "math.Quat.conjugate",
+    "math.Quat.len",
+    "math.Quat.normalize",
+    "math.Quat.fromAxes",
+    "math.Quat.fromViewUp",
+    "math.Quat.fromAxisAngle",
+    "math.Quat.fromMat3",
+    "math.Quat.fromEuler",
+    "math.Quat.fromAngleZ",
+    "math.Quat.toArray"
   ],
   "capabilities": [],
   "learning": {
@@ -70,7 +98,35 @@
       "math.Quat.prototype.strictEquals",
       "math.Quat.prototype.lerp",
       "math.Quat.prototype.slerp",
-      "math.Quat.prototype.lengthSqr"
+      "math.Quat.prototype.lengthSqr",
+      "math.Quat.IDENTITY",
+      "math.Quat.clone",
+      "math.Quat.copy",
+      "math.Quat.identity",
+      "math.Quat.rotationTo",
+      "math.Quat.getAxisAngle",
+      "math.Quat.multiply",
+      "math.Quat.multiplyScalar",
+      "math.Quat.scaleAndAdd",
+      "math.Quat.rotateX",
+      "math.Quat.rotateY",
+      "math.Quat.rotateZ",
+      "math.Quat.rotateAround",
+      "math.Quat.rotateAroundLocal",
+      "math.Quat.calculateW",
+      "math.Quat.dot",
+      "math.Quat.sqlerp",
+      "math.Quat.invert",
+      "math.Quat.conjugate",
+      "math.Quat.len",
+      "math.Quat.normalize",
+      "math.Quat.fromAxes",
+      "math.Quat.fromViewUp",
+      "math.Quat.fromAxisAngle",
+      "math.Quat.fromMat3",
+      "math.Quat.fromEuler",
+      "math.Quat.fromAngleZ",
+      "math.Quat.toArray"
     ],
     "claims": [
       "createAirApp",
@@ -101,7 +157,35 @@
       "math.Quat.prototype.strictEquals",
       "math.Quat.prototype.lerp",
       "math.Quat.prototype.slerp",
-      "math.Quat.prototype.lengthSqr"
+      "math.Quat.prototype.lengthSqr",
+      "math.Quat.IDENTITY",
+      "math.Quat.clone",
+      "math.Quat.copy",
+      "math.Quat.identity",
+      "math.Quat.rotationTo",
+      "math.Quat.getAxisAngle",
+      "math.Quat.multiply",
+      "math.Quat.multiplyScalar",
+      "math.Quat.scaleAndAdd",
+      "math.Quat.rotateX",
+      "math.Quat.rotateY",
+      "math.Quat.rotateZ",
+      "math.Quat.rotateAround",
+      "math.Quat.rotateAroundLocal",
+      "math.Quat.calculateW",
+      "math.Quat.dot",
+      "math.Quat.sqlerp",
+      "math.Quat.invert",
+      "math.Quat.conjugate",
+      "math.Quat.len",
+      "math.Quat.normalize",
+      "math.Quat.fromAxes",
+      "math.Quat.fromViewUp",
+      "math.Quat.fromAxisAngle",
+      "math.Quat.fromMat3",
+      "math.Quat.fromEuler",
+      "math.Quat.fromAngleZ",
+      "math.Quat.toArray"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -278,6 +362,174 @@
         "source": "src/instance-contract.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L30"
+      },
+      {
+        "api": "math.Quat.IDENTITY",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L101"
+      },
+      {
+        "api": "math.Quat.clone",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "math.Quat.copy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "math.Quat.identity",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L104"
+      },
+      {
+        "api": "math.Quat.rotationTo",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "math.Quat.getAxisAngle",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "math.Quat.multiply",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L107"
+      },
+      {
+        "api": "math.Quat.multiplyScalar",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "math.Quat.scaleAndAdd",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "math.Quat.rotateX",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "math.Quat.rotateY",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L111"
+      },
+      {
+        "api": "math.Quat.rotateZ",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "math.Quat.rotateAround",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "math.Quat.rotateAroundLocal",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "math.Quat.calculateW",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "math.Quat.dot",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "math.Quat.sqlerp",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "math.Quat.invert",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "math.Quat.conjugate",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "math.Quat.len",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L120"
+      },
+      {
+        "api": "math.Quat.normalize",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "math.Quat.fromAxes",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "math.Quat.fromViewUp",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "math.Quat.fromAxisAngle",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "math.Quat.fromMat3",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "math.Quat.fromEuler",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L126"
+      },
+      {
+        "api": "math.Quat.fromAngleZ",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L127"
+      },
+      {
+        "api": "math.Quat.toArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L128"
       }
     ]
   },
@@ -310,11 +562,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "c1a3454b55c8",
-    "source": "0e1daae182c56a6d",
+    "spec": "31ad85d68ae2",
+    "source": "0b9d615d0b38693d",
     "candidate": "8746fc59b6aa0408",
-    "verified": 29,
+    "verified": 57,
     "attested": 0,
-    "units": 29
+    "units": 57
   }
 }

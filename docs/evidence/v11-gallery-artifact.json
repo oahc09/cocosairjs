@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T11:46:19.460Z",
+  "measuredAt": "2026-09-27T13:24:23.560Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
@@ -91,7 +91,7 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:60062/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:52850/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",

@@ -18,6 +18,7 @@ import {
     utils,
     primitives,
     Mat3,
+    Mat4,
     Quat,
 } from 'cocosair';
 
@@ -103,10 +104,34 @@ T('mulS', () => {
     return o.m00;
 });
 
-T('setRT', () => (Mat3 as any).set(o, 1, 0, 0, 0, 1, 0, 0, 0, 1).m22);
+T('setRT', () => (Mat3 as any).set(o, 1, 0, 0, 0, 1, 0, 0, 0, 1).m08);
 T('equals', () => (Mat3 as any).equals(m, o));
 T('strictEq', () => (Mat3 as any).strictEquals(m, m.clone()));
 T('toString', () => typeof m.toString());
+var covMat3Array = new Float32Array(9);
+T('covMat3.IDENTITY', () => Mat3.IDENTITY.m00);
+T('covMat3.clone', () => Mat3.clone(m).m08);
+T('covMat3.copy', () => Mat3.copy(o, m).m08);
+T('covMat3.multiplyMat4', () => Mat3.multiplyMat4(o, m, new Mat4()).m08);
+T('covMat3.translate', () => Mat3.translate(o, m, new Vec3(2, 3, 0)).m06);
+T('covMat3.fromMat4', () => Mat3.fromMat4(o, new Mat4()).m08);
+T('covMat3.fromViewUp', () => Mat3.fromViewUp(o, new Vec3(0, 0, -1), new Vec3(0, 1, 0)).m00);
+T('covMat3.fromTranslation', () => Mat3.fromTranslation(o, new Vec2(2, 3)).m06);
+T('covMat3.fromScaling', () => Mat3.fromScaling(o, new Vec2(2, 3)).m00);
+T('covMat3.fromRotation', () => Mat3.fromRotation(o, 0.25).m00);
+T('covMat3.inverseTransposeMat4', () => {
+    var result = Mat3.inverseTransposeMat4(o, new Mat4());
+    if (!result) throw new Error('Mat3.inverseTransposeMat4 returned null');
+    return result.m00;
+});
+T('covMat3.toArray', () => Mat3.toArray(covMat3Array, o)[0]);
+T('covMat3.fromArray', () => Mat3.fromArray(o, covMat3Array).m00);
+T('covMat3.multiplyScalarAndAdd', () => Mat3.multiplyScalarAndAdd(o, m, m, 0.5).m00);
+T('covMat3.toEuler', () => Mat3.toEuler(o, new Vec3()));
+T('covMat3.constructor', () => new Mat3().m08);
+for (const [key, value] of Object.entries(probe)) {
+    if (key.startsWith('covMat3.') && value === 'threw') throw new Error(`Mat3 coverage probe failed: ${key}`);
+}
 probe.topic = 'math-mat3-basics';
 (window as any).__probe = async () => probe;
 

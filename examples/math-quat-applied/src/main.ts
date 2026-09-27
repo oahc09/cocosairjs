@@ -90,6 +90,45 @@ T('lerpMid', () => {
     (Quat as any).lerp(o, new Quat(), new Quat(), 0.5);
     return o.w;
 });
+var covQuatA = new Quat(0, 0, 0.3826834, 0.9238795);
+var covQuatB = new Quat(0, 0.258819, 0, 0.965926);
+var covQuatC = new Quat(0.258819, 0, 0, 0.965926);
+var covQuatOut = new Quat();
+var covQuatAxis = new Vec3(0, 1, 0);
+var covQuatAxisOut = new Vec3();
+var covQuatMat3 = new Mat3();
+var covQuatArray = new Float32Array(4);
+T('covQuat.IDENTITY', () => Quat.IDENTITY.w);
+T('covQuat.clone', () => Quat.clone(covQuatA).w);
+T('covQuat.copy', () => Quat.copy(covQuatOut, covQuatA).w);
+T('covQuat.identity', () => Quat.identity(covQuatOut).w);
+T('covQuat.rotationTo', () => Quat.rotationTo(covQuatOut, new Vec3(1, 0, 0), new Vec3(0, 1, 0)).z);
+T('covQuat.getAxisAngle', () => Quat.getAxisAngle(covQuatAxisOut, covQuatA));
+T('covQuat.multiply', () => Quat.multiply(covQuatOut, covQuatA, covQuatB).w);
+T('covQuat.multiplyScalar', () => Quat.multiplyScalar(covQuatOut, covQuatA, 0.5).w);
+T('covQuat.scaleAndAdd', () => Quat.scaleAndAdd(covQuatOut, covQuatA, covQuatB, 0.25).w);
+T('covQuat.rotateX', () => Quat.rotateX(covQuatOut, covQuatA, 0.1).w);
+T('covQuat.rotateY', () => Quat.rotateY(covQuatOut, covQuatA, 0.1).w);
+T('covQuat.rotateZ', () => Quat.rotateZ(covQuatOut, covQuatA, 0.1).w);
+T('covQuat.rotateAround', () => Quat.rotateAround(covQuatOut, covQuatA, covQuatAxis, 0.1).w);
+T('covQuat.rotateAroundLocal', () => Quat.rotateAroundLocal(covQuatOut, covQuatA, covQuatAxis, 0.1).w);
+T('covQuat.calculateW', () => Quat.calculateW(covQuatOut, new Quat(0.1, 0.2, 0.3, 0)).w);
+T('covQuat.dot', () => Quat.dot(covQuatA, covQuatB));
+T('covQuat.sqlerp', () => Quat.sqlerp(covQuatOut, new Quat(), covQuatA, covQuatB, covQuatC, 0.5).w);
+T('covQuat.invert', () => Quat.invert(covQuatOut, covQuatA).w);
+T('covQuat.conjugate', () => Quat.conjugate(covQuatOut, covQuatA).z);
+T('covQuat.len', () => Quat.len(covQuatA));
+T('covQuat.normalize', () => Quat.normalize(covQuatOut, covQuatA).w);
+T('covQuat.fromAxes', () => Quat.fromAxes(covQuatOut, new Vec3(1, 0, 0), new Vec3(0, 1, 0), new Vec3(0, 0, 1)).w);
+T('covQuat.fromViewUp', () => Quat.fromViewUp(covQuatOut, new Vec3(0, 0, -1), new Vec3(0, 1, 0)).w);
+T('covQuat.fromAxisAngle', () => Quat.fromAxisAngle(covQuatOut, covQuatAxis, 0.25).w);
+T('covQuat.fromMat3', () => Quat.fromMat3(covQuatOut, covQuatMat3).w);
+T('covQuat.fromEuler', () => Quat.fromEuler(covQuatOut, 10, 20, 30).w);
+T('covQuat.fromAngleZ', () => Quat.fromAngleZ(covQuatOut, 0.25).w);
+T('covQuat.toArray', () => Quat.toArray(covQuatArray, covQuatA)[3]);
+for (const [key, value] of Object.entries(probe)) {
+    if (key.startsWith('covQuat.') && value === 'threw') throw new Error(`Quat coverage probe failed: ${key}`);
+}
 probe.topic = 'math-quat-applied';
 (window as any).__probe = async () => probe;
 

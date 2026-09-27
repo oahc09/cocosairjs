@@ -364,3 +364,33 @@ Run Prettier on verifier-updated specs, then rerun strict spec validation, compl
 - **Notes**: Prettier normalized all four specs; full formatting, strict spec validation, compliance, and API evidence checks passed afterward.
 
 ---
+
+## [ERR-20260927-013] mat3-component-alias
+
+**Logged**: 2026-09-27T11:58:16Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+A new Mat3 coverage probe used the conventional two-dimensional-looking name `m22`, but Cocos Mat3 components use linear names from `m00` through `m08`.
+
+### Error
+The focused G1 trial rejected `math-mat3-basics` with TS2339 for `Mat3.m22` at the new clone/copy/multiply/constructor reads.
+
+### Context
+- G1 results before correction: Quat and Vec2 passed; Mat3 failed its TypeScript contract.
+- The existing Mat3 setup probe also used `m22` through an `any` cast and silently read an undefined property.
+
+### Suggested Fix
+Use the declared Mat3 linear component name `m08` for the last matrix element and avoid bypassing type checks for component names.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `examples/math-mat3-basics/src/main.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T11:58:16Z
+- **Notes**: Replaced all `m22` probes with `m08`; focused G1 rerun passed 3/3.
+
+---

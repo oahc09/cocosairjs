@@ -15,6 +15,7 @@ import {
     Color,
     Vec3,
     Vec2,
+    Mat3,
     utils,
     primitives,
 } from 'cocosair';
@@ -86,6 +87,34 @@ T('div2f', () => o.set(6, 8).divide2f(2, 4).x + ',' + o.y);
 T('neg', () => o.set(a.x, a.y).negative().x + ',' + o.y);
 
 T('setRT', () => (Vec2 as any).set(o, 9, 9).x === 9 && o.y === 9);
+T('covVec2.ZERO', () => Vec2.ZERO.x);
+T('covVec2.ONE', () => Vec2.ONE.y);
+T('covVec2.NEG_ONE', () => Vec2.NEG_ONE.x);
+T('covVec2.UNIT_X', () => Vec2.UNIT_X.x);
+T('covVec2.UNIT_Y', () => Vec2.UNIT_Y.y);
+T('covVec2.clone', () => Vec2.clone(a).y);
+T('covVec2.copy', () => Vec2.copy(o, a).x);
+T('covVec2.ceil', () => Vec2.ceil(o, new Vec2(1.2, 2.2)).y);
+T('covVec2.floor', () => Vec2.floor(o, new Vec2(1.8, 2.8)).y);
+T('covVec2.min', () => Vec2.min(o, a, b).x);
+T('covVec2.max', () => Vec2.max(o, a, b).y);
+T('covVec2.round', () => Vec2.round(o, new Vec2(1.2, 2.8)).y);
+T('covVec2.scaleAndAdd', () => Vec2.scaleAndAdd(o, a, b, 0.5).y);
+T('covVec2.distance', () => Vec2.distance(a, b));
+T('covVec2.squaredDistance', () => Vec2.squaredDistance(a, b));
+T('covVec2.len', () => Vec2.len(a));
+T('covVec2.negate', () => Vec2.negate(o, a).x);
+T('covVec2.inverse', () => Vec2.inverse(o, a).y);
+T('covVec2.inverseSafe', () => Vec2.inverseSafe(o, new Vec2(1, 2)).x);
+T('covVec2.random', () => Vec2.random(o, 1).x);
+T('covVec2.transformMat3', () => Vec2.transformMat3(o, a, new Mat3()).y);
+T('covVec2.str', () => Vec2.str(a));
+var covVec2Array = new Float32Array(2);
+T('covVec2.toArray', () => Vec2.toArray(covVec2Array, a)[1]);
+T('covVec2.fromArray', () => Vec2.fromArray(o, covVec2Array).y);
+for (const [key, value] of Object.entries(probe)) {
+    if (key.startsWith('covVec2.') && value === 'threw') throw new Error(`Vec2 coverage probe failed: ${key}`);
+}
 probe.topic = 'math-vec2-arithmetic';
 (window as any).__probe = async () => probe;
 

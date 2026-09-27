@@ -52,7 +52,23 @@
     "math.Mat3.prototype.multiplyScalar",
     "math.Mat3.prototype.scale",
     "math.Mat3.prototype.rotate",
-    "math.Mat3.prototype.fromQuat"
+    "math.Mat3.prototype.fromQuat",
+    "math.Mat3.IDENTITY",
+    "math.Mat3.clone",
+    "math.Mat3.copy",
+    "math.Mat3.multiplyMat4",
+    "math.Mat3.translate",
+    "math.Mat3.fromMat4",
+    "math.Mat3.fromViewUp",
+    "math.Mat3.fromTranslation",
+    "math.Mat3.fromScaling",
+    "math.Mat3.fromRotation",
+    "math.Mat3.inverseTransposeMat4",
+    "math.Mat3.toArray",
+    "math.Mat3.fromArray",
+    "math.Mat3.multiplyScalarAndAdd",
+    "math.Mat3.toEuler",
+    "math.Mat3.constructor"
   ],
   "capabilities": [],
   "learning": {
@@ -94,7 +110,23 @@
       "math.Mat3.prototype.multiplyScalar",
       "math.Mat3.prototype.scale",
       "math.Mat3.prototype.rotate",
-      "math.Mat3.prototype.fromQuat"
+      "math.Mat3.prototype.fromQuat",
+      "math.Mat3.IDENTITY",
+      "math.Mat3.clone",
+      "math.Mat3.copy",
+      "math.Mat3.multiplyMat4",
+      "math.Mat3.translate",
+      "math.Mat3.fromMat4",
+      "math.Mat3.fromViewUp",
+      "math.Mat3.fromTranslation",
+      "math.Mat3.fromScaling",
+      "math.Mat3.fromRotation",
+      "math.Mat3.inverseTransposeMat4",
+      "math.Mat3.toArray",
+      "math.Mat3.fromArray",
+      "math.Mat3.multiplyScalarAndAdd",
+      "math.Mat3.toEuler",
+      "math.Mat3.constructor"
     ],
     "claims": [
       "createAirApp",
@@ -141,7 +173,23 @@
       "math.Mat3.prototype.multiplyScalar",
       "math.Mat3.prototype.scale",
       "math.Mat3.prototype.rotate",
-      "math.Mat3.prototype.fromQuat"
+      "math.Mat3.prototype.fromQuat",
+      "math.Mat3.IDENTITY",
+      "math.Mat3.clone",
+      "math.Mat3.copy",
+      "math.Mat3.multiplyMat4",
+      "math.Mat3.translate",
+      "math.Mat3.fromMat4",
+      "math.Mat3.fromViewUp",
+      "math.Mat3.fromTranslation",
+      "math.Mat3.fromScaling",
+      "math.Mat3.fromRotation",
+      "math.Mat3.inverseTransposeMat4",
+      "math.Mat3.toArray",
+      "math.Mat3.fromArray",
+      "math.Mat3.multiplyScalarAndAdd",
+      "math.Mat3.toEuler",
+      "math.Mat3.constructor"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -149,181 +197,181 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L26"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L44"
+        "sourceLocation": "L45"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L33"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L45"
+        "sourceLocation": "L46"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L39"
+        "sourceLocation": "L40"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L38"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L53"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L54"
+        "sourceLocation": "L55"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L55"
+        "sourceLocation": "L56"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L53"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L53"
       },
       {
         "api": "math.Mat3.identity",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L79"
+        "sourceLocation": "L80"
       },
       {
         "api": "math.Mat3.transpose",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L86"
+        "sourceLocation": "L87"
       },
       {
         "api": "math.Mat3.invert",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L82"
+        "sourceLocation": "L83"
       },
       {
         "api": "math.Mat3.determinant",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L80"
+        "sourceLocation": "L81"
       },
       {
         "api": "math.Mat3.add",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L90"
+        "sourceLocation": "L91"
       },
       {
         "api": "math.Mat3.subtract",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L94"
+        "sourceLocation": "L95"
       },
       {
         "api": "math.Mat3.multiply",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L98"
+        "sourceLocation": "L99"
       },
       {
         "api": "math.Mat3.multiplyScalar",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L102"
+        "sourceLocation": "L103"
       },
       {
         "api": "math.Mat3.set",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L106"
+        "sourceLocation": "L107"
       },
       {
         "api": "math.Mat3.equals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L107"
+        "sourceLocation": "L108"
       },
       {
         "api": "math.Mat3.strictEquals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L108"
+        "sourceLocation": "L109"
       },
       {
         "api": "math.Mat3.toString",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L109"
+        "sourceLocation": "L110"
       },
       {
         "api": "math.Mat3.prototype.clone",
@@ -414,6 +462,102 @@
         "source": "src/instance-contract.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L44"
+      },
+      {
+        "api": "math.Mat3.IDENTITY",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "math.Mat3.clone",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "math.Mat3.copy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "math.Mat3.multiplyMat4",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "math.Mat3.translate",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "math.Mat3.fromMat4",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "math.Mat3.fromViewUp",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "math.Mat3.fromTranslation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "math.Mat3.fromScaling",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L120"
+      },
+      {
+        "api": "math.Mat3.fromRotation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "math.Mat3.inverseTransposeMat4",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "math.Mat3.toArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L127"
+      },
+      {
+        "api": "math.Mat3.fromArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L128"
+      },
+      {
+        "api": "math.Mat3.multiplyScalarAndAdd",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L129"
+      },
+      {
+        "api": "math.Mat3.toEuler",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L130"
+      },
+      {
+        "api": "math.Mat3.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L61"
       }
     ]
   },
@@ -446,11 +590,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "e2b91f157639",
-    "source": "b3f2e85287dec12f",
+    "spec": "4aa1b0553603",
+    "source": "b46ab04ed8c9b2e2",
     "candidate": "8746fc59b6aa0408",
-    "verified": 45,
+    "verified": 61,
     "attested": 0,
-    "units": 45
+    "units": 61
   }
 }
