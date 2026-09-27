@@ -800,13 +800,15 @@ function verifyOne (example) {
     const prepared = prepareWorkspace(example, workspace, spec, { trace: TRACE_ON && !isShell });
     return isShell ? verifyUiShell(example, workspace, prepared.html, spec) : verifyApp(example, workspace, prepared.html, spec, prepared);
   })();
+  let timeoutHandle;
   const timer = new Promise((_, reject) => {
-    setTimeout(() => { timedOut = true; reject(new Error(`timeout after ${PER_EXAMPLE_TIMEOUT}ms`)); }, PER_EXAMPLE_TIMEOUT);
+    timeoutHandle = setTimeout(() => { timedOut = true; reject(new Error(`timeout after ${PER_EXAMPLE_TIMEOUT}ms`)); }, PER_EXAMPLE_TIMEOUT);
   });
   return Promise.race([run, timer]).catch((error) => ({
     id: example.id, result: 'FAIL',
     reason: timedOut ? `timeout after ${PER_EXAMPLE_TIMEOUT}ms` : String(error && error.message || error).slice(0, 300),
   })).then(async (result) => {
+    clearTimeout(timeoutHandle);
     fs.rmSync(workRoot, { recursive: true, force: true });
     return result;
   });

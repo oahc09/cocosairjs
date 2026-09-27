@@ -332,6 +332,11 @@ async function verifyArtifact () {
       }
       // 8c) 解码器示例：解码文件必须真的被这次启动请求过
       if (/gltf-(meshopt|draco)/.test(ex.id)) {
+        // __airApp is published before these examples' async fetch/parse completes. Wait for
+        // the terminal decoder state before sampling resource timing, or fast page navigation
+        // can turn a successful request into a false missing-decoder failure.
+        await page.waitForFunction(() => typeof (window).__decoderState === 'string', undefined, { timeout: 15000 })
+          .catch(() => null);
         const seen = await page.evaluate(() => performance.getEntriesByType('resource').map((e) => e.name));
         const want = ex.id === 'gltf-meshopt' ? 'meshopt/meshopt_decoder.mjs' : 'draco.glb';
         const hit = seen.some((u) => decodeURIComponent(u).indexOf(want) >= 0);

@@ -13,7 +13,7 @@
  *   - 类实例方法             → 就地替换原型方法（示例与引擎内部调用都会计数）
  *   - 静态方法 / 单例方法    → 就地替换该对象上的方法
  *   - 原型访问器（get/set）  → 包住 accessor
- *   - 数据属性 / 常量        → 无法插桩，如实记 not-instrumentable（绝不当作 verified）
+ *   - 可配置数据属性 / 常量  → 读写语义透明地记录成员读取；不可配置者仍记 not-instrumentable
  *
  * 计数语义是"该 API 在本次运行中被执行过"，不是"这一行由示例自己调用"：原型/访问器插桩
  * 同样会记到引擎内部调用。因此 unit 状态附带 mechanism，报告端不得把内部调用冒充示例调用
@@ -235,10 +235,36 @@ function generateTraceModule (exportNames, units, realUrl) {
         if (!isClass) { T.canonical.set(orig, T.canonical.get(orig) || key); }
         Object.defineProperty(obj, prop, { value, writable: true, enumerable: d.enumerable, configurable: true });
       } else {
-        // 数据属性/常量（如 math.EPSILON）：读一次即失去存在痕迹，无法证明"该 API 被执行"。
-        // 如实记 data-member → 报告端归入 not-instrumentable（attested），绝不写 verified。
+        // 可配置的数据属性可通过透明 accessor 记录精确的成员读取；枚举值等常量因此能以
+        // via=read 证明，而不是把"类被读过"误当成员被用过。不可配置属性保留旧的保守边界。
+        const protoDescriptor = typeof obj === 'function' && obj.prototype
+          ? Object.getOwnPropertyDescriptor(obj.prototype, prop)
+          : null;
+        // Function.length/name are own data properties on every class constructor. If the
+        // declaration also has an instance method with that name, let the prototype patch
+        // below handle it instead of shadowing the declared API with constructor metadata.
+        if (protoDescriptor && typeof protoDescriptor.value === 'function' && !d.enumerable && !d.writable) {
+          note(key + ': constructor metadata defers to prototype method');
+          return false;
+        }
+        if (d.configurable) {
+          let value = d.value;
+          const descriptor = {
+            get () {
+              if (T.observing > 0) { T.harnessCalls[key] = (T.harnessCalls[key] || 0) + 1; }
+              else { T.reads[key] = (T.reads[key] || 0) + 1; }
+              return value;
+            },
+            enumerable: d.enumerable,
+            configurable: true,
+          };
+          if (d.writable) { descriptor.set = function (next) { value = next; }; }
+          Object.defineProperty(obj, prop, descriptor);
+          T.mechanism[key] = 'data-property';
+          return true;
+        }
         T.mechanism[key] = 'data-member';
-        note(key + ': data property, not instrumentable');
+        note(key + ': data property is not configurable');
         return false;
       }
       T.mechanism[key] = T.mechanism[key] ? T.mechanism[key] + '→' + mechanism : mechanism;
@@ -372,10 +398,11 @@ function normalizeTrace (raw, units) {
     // constructor call. Its class-object read is evidence of that class use;
     // ordinary member reads still do not prove method execution.
     const classRead = mech === 'frozen-namespace-class';
-    const via = n > 0 ? 'call' : (r > 0 && (unit.indexOf('.') < 0 || classRead) ? 'read' : null);
+    const dataPropertyRead = mech.indexOf('data-property') === 0 && r > 0;
+    const via = n > 0 ? 'call' : (r > 0 && (unit.indexOf('.') < 0 || classRead || dataPropertyRead) ? 'read' : null);
     if (via) { state = 'executed'; } else if (mech === 'unresolved') { state = 'unresolved'; } else if (mech === 'data-member' || mech === 'namespace') { state = 'not-instrumentable'; } else { state = 'not-observed'; }
     out[unit] = {
-      state, calls: n, reads: r > 0 && (unit.indexOf('.') < 0 || classRead) ? r : 0, via, mechanism: mech,
+      state, calls: n, reads: r > 0 && (unit.indexOf('.') < 0 || classRead || dataPropertyRead) ? r : 0, via, mechanism: mech,
       observedVia: target && target !== unit ? target : undefined,
       // 门禁读回期间被抑制的调用：只作边界生效的披露，不参与 state 判定。
       harnessCalls: Number(harness[target || unit]) || undefined,
@@ -420,6 +447,8 @@ if (require.main === module) {
     if (norm2.units.Layers.state !== 'executed' || norm2.units.Layers.via !== 'read') { throw new Error('selftest: namespace read not observed as executed(via=read)'); }
     if (norm2.units['Layers.Enum'].state !== 'not-instrumentable') { throw new Error('selftest: member unit wrongly promoted by reads'); }
     if (norm2.units['Layers.enableLayers'].state !== 'not-observed') { throw new Error('selftest: instrumented member with 0 calls must stay not-observed despite reads'); }
+    const normData = normalizeTrace({ calls: {}, reads: { 'Label.HorizontalAlign': 2 }, mechanism: { 'Label.HorizontalAlign': 'data-property→static' }, alias: {} }, ['Label.HorizontalAlign']);
+    if (normData.units['Label.HorizontalAlign'].state !== 'executed' || normData.units['Label.HorizontalAlign'].via !== 'read' || normData.units['Label.HorizontalAlign'].reads !== 2) { throw new Error('selftest: an instrumented static data-property read must be executed(via=read)'); }
     if (!/T\.reads\[key\]/.test(code)) { throw new Error('selftest: read trap missing from generated wrapper'); }
     if (!/T\.snapshot = \(\)/.test(code)) { throw new Error('selftest: snapshot() projection missing from generated wrapper'); }
     if (!/T\.observing > 0/.test(code)) { throw new Error('selftest: harness-suppression guard missing from generated wrapper'); }

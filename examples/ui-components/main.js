@@ -347,6 +347,144 @@ scrollViewNode.on('scroll-ended', () => observed.scrollViewEvents.push('scroll-e
 window.__airApp = app;
 app.run(scene);
 
+const labelProbe = { ready: false, ok: false, checks: [] };
+window.__trialProbe = labelProbe;
+requestAnimationFrame(() => {
+    // Exercise component lifecycle callbacks without letting the disabled frame reach a render tick.
+    titleLabel.enabled = false;
+    titleLabel.enabled = true;
+    buttonSprite.enabled = false;
+    buttonSprite.enabled = true;
+    titleLabel.updateRenderData(true);
+    titleLabel.markForUpdateRenderData();
+    const labelApi = {
+        constructor: () => typeof Label.prototype.constructor,
+        'Label.HorizontalAlign': () => Label.HorizontalAlign,
+        'Label.VerticalAlign': () => Label.VerticalAlign,
+        'Label.Overflow': () => Label.Overflow,
+        'Label.CacheMode': () => Label.CacheMode,
+        string: () => titleLabel.string,
+        horizontalAlign: () => titleLabel.horizontalAlign,
+        verticalAlign: () => titleLabel.verticalAlign,
+        actualFontSize: () => titleLabel.actualFontSize,
+        fontSize: () => titleLabel.fontSize,
+        lineHeight: () => titleLabel.lineHeight,
+        spacingX: () => titleLabel.spacingX,
+        overflow: () => titleLabel.overflow,
+        enableWrapText: () => titleLabel.enableWrapText,
+        useSystemFont: () => titleLabel.useSystemFont,
+        fontFamily: () => titleLabel.fontFamily,
+        font: () => titleLabel.font,
+        cacheMode: () => titleLabel.cacheMode,
+        isBold: () => titleLabel.isBold,
+        isItalic: () => titleLabel.isItalic,
+        isUnderline: () => titleLabel.isUnderline,
+        underlineHeight: () => titleLabel.underlineHeight,
+        enableOutline: () => titleLabel.enableOutline,
+        outlineColor: () => titleLabel.outlineColor,
+        outlineWidth: () => titleLabel.outlineWidth,
+        enableShadow: () => titleLabel.enableShadow,
+        shadowColor: () => titleLabel.shadowColor,
+        shadowOffset: () => titleLabel.shadowOffset,
+        shadowBlur: () => titleLabel.shadowBlur,
+        onEnable: () => typeof titleLabel.onEnable === 'function',
+        updateRenderData: () => typeof titleLabel.updateRenderData === 'function',
+    };
+    for (const [name, read] of Object.entries(labelApi)) {
+        try {
+            const value = read();
+            const type = typeof value;
+            labelProbe.checks.push({
+                name,
+                ok:
+                    value === null ||
+                    type === 'string' ||
+                    type === 'boolean' ||
+                    (type === 'number' && Number.isFinite(value)) ||
+                    type === 'object',
+                detail: `${type}:${value === null ? 'null' : String(value)}`,
+            });
+        } catch (error) {
+            labelProbe.checks.push({ name, ok: false, detail: String(error) });
+        }
+    }
+    const spriteApi = {
+        constructor: () => typeof Sprite.prototype.constructor,
+        spriteAtlas: () => buttonSprite.spriteAtlas,
+        sizeMode: () => buttonSprite.sizeMode,
+        spriteFrame: () => buttonSprite.spriteFrame,
+        type: () => buttonSprite.type,
+        fillType: () => buttonSprite.fillType,
+        fillCenter: () => buttonSprite.fillCenter,
+        fillStart: () => buttonSprite.fillStart,
+        fillRange: () => buttonSprite.fillRange,
+        trim: () => buttonSprite.trim,
+        grayscale: () => buttonSprite.grayscale,
+        'Sprite.FillType': () => Sprite.FillType,
+        'Sprite.Type': () => Sprite.Type,
+        'Sprite.SizeMode': () => Sprite.SizeMode,
+        'Sprite.EventType': () => Sprite.EventType,
+        onEnable: () => typeof buttonSprite.onEnable === 'function',
+        onDisable: () => typeof buttonSprite.onDisable === 'function',
+        'UIRenderer.color': () => buttonSprite.color,
+        changeSpriteFrameFromAtlas: () => {
+            const before = buttonSprite.spriteFrame;
+            buttonSprite.changeSpriteFrameFromAtlas('missing-frame');
+            return buttonSprite.spriteFrame === before;
+        },
+    };
+    for (const [name, read] of Object.entries(spriteApi)) {
+        try {
+            const value = read();
+            const type = typeof value;
+            labelProbe.checks.push({
+                name: name.includes('.') ? name : `Sprite.${name}`,
+                ok:
+                    value === null ||
+                    type === 'string' ||
+                    type === 'boolean' ||
+                    (type === 'number' && Number.isFinite(value)) ||
+                    type === 'object' ||
+                    type === 'function',
+                detail: `${type}:${value === null ? 'null' : String(value)}`,
+            });
+        } catch (error) {
+            labelProbe.checks.push({ name: `Sprite.${name}`, ok: false, detail: String(error) });
+        }
+    }
+    const rendererApi = {
+        sharedMaterials: () => titleLabel.sharedMaterials,
+        customMaterial: () => titleLabel.customMaterial,
+        priority: () => titleLabel.priority,
+        onLoad: () => typeof titleLabel.onLoad === 'function',
+        onEnable: () => typeof titleLabel.onEnable === 'function',
+        onDisable: () => typeof titleLabel.onDisable === 'function',
+        markForUpdateRenderData: () => typeof titleLabel.markForUpdateRenderData === 'function',
+        requestRenderData: () => typeof titleLabel.requestRenderData === 'function',
+        postUpdateAssembler: () => typeof titleLabel.postUpdateAssembler === 'function',
+    };
+    for (const [name, read] of Object.entries(rendererApi)) {
+        try {
+            const value = read();
+            const type = typeof value;
+            labelProbe.checks.push({
+                name: `UIRenderer.${name}`,
+                ok:
+                    value === null ||
+                    type === 'string' ||
+                    type === 'boolean' ||
+                    (type === 'number' && Number.isFinite(value)) ||
+                    type === 'object',
+                detail: `${type}:${value === null ? 'null' : String(value)}`,
+            });
+        } catch (error) {
+            labelProbe.checks.push({ name: `UIRenderer.${name}`, ok: false, detail: String(error) });
+        }
+    }
+    labelProbe.ok = labelProbe.checks.every((entry) => entry.ok);
+    labelProbe.ready = true;
+});
+
 // §25 资源 Lifecycle Contract：持有物即本示例运行期真实创建的 SpriteFrame/Texture2D/ImageAsset。
 // 释放必须先把组件引用断开，再销毁本体，否则 Sprite 会指向已销毁资源。
 function ownedAssets() {

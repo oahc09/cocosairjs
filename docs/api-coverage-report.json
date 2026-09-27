@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-27T03:20:19.354Z",
+  "generatedAt": "2026-09-27T05:11:46.131Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T02:57:02.418Z",
+      "measuredAt": "2026-09-27T04:43:27.027Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T07:04:48.433Z",
+      "measuredAt": "2026-09-27T04:44:27.459Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -29,11 +29,11 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 901,
-  "totalAttested": 149,
-  "totalVerified": 752,
-  "totalVerifiedViaCall": 739,
-  "totalVerifiedViaRead": 13,
+  "totalClaimed": 960,
+  "totalAttested": 145,
+  "totalVerified": 815,
+  "totalVerifiedViaCall": 789,
+  "totalVerifiedViaRead": 26,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -58,7 +58,7 @@
       "instrumentation": {
         "observed": 47,
         "total": 49,
-        "hash": "aa00a297e7407a5f"
+        "hash": "d63a607c2852b16f"
       },
       "claims": 49,
       "tally": {
@@ -82,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "b3fc3c7871e9fde4"
+        "hash": "a0321b01eda538a1"
       },
       "claims": 18,
       "tally": {
@@ -106,7 +106,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "b46f6cf3e45633c6"
+        "hash": "182265b5ad3e4966"
       },
       "claims": 28,
       "tally": {
@@ -130,7 +130,7 @@
       "instrumentation": {
         "observed": 8,
         "total": 11,
-        "hash": "525aa08f3d34cc73"
+        "hash": "82c92a48589f160f"
       },
       "claims": 11,
       "tally": {
@@ -154,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "4895ac00a9164994"
+        "hash": "d36cc2304eac2f7f"
       },
       "claims": 21,
       "tally": {
@@ -178,7 +178,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 13,
-        "hash": "b60dd36f42b73737"
+        "hash": "f9e55fedf23a8971"
       },
       "claims": 13,
       "tally": {
@@ -202,7 +202,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "0331e2819a06a771"
+        "hash": "22e8875b26396531"
       },
       "claims": 21,
       "tally": {
@@ -226,7 +226,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "a624b3b0b4eae952"
+        "hash": "713b28c229539307"
       },
       "claims": 19,
       "tally": {
@@ -248,17 +248,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 19,
-        "hash": "f165da5847f7429a"
+        "hash": "76e9f6283288d33d"
       },
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 17,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -274,7 +274,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "bf9ab1f93e985d46"
+        "hash": "01c6eaab0e449f4b"
       },
       "claims": 19,
       "tally": {
@@ -298,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "52518354464ccc63"
+        "hash": "4693d72c5b7106d7"
       },
       "claims": 21,
       "tally": {
@@ -322,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "03783c12eee79f2a"
+        "hash": "3f73bf3b9e7d1019"
       },
       "claims": 20,
       "tally": {
@@ -344,17 +344,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 23,
         "total": 24,
-        "hash": "40a534a725bacd93"
+        "hash": "35fd850311952d31"
       },
       "claims": 24,
       "tally": {
-        "verified": 22,
-        "attested": 2,
+        "verified": 23,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 21,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -370,7 +370,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 37,
-        "hash": "4ad155cad270de4a"
+        "hash": "b7d17a1f5d877b37"
       },
       "claims": 37,
       "tally": {
@@ -394,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "0a4de5365f063697"
+        "hash": "2fb04a25f33c22f7"
       },
       "claims": 20,
       "tally": {
@@ -418,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "b779255f626f6fb9"
+        "hash": "f38cfcc701e6234b"
       },
       "claims": 26,
       "tally": {
@@ -442,7 +442,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "53076013256a3f01"
+        "hash": "32d568fa233b44ab"
       },
       "claims": 28,
       "tally": {
@@ -466,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "95a3e1bbab2eb13e"
+        "hash": "0c7cfbe0757c5c5c"
       },
       "claims": 19,
       "tally": {
@@ -490,15 +490,15 @@
       "instrumentation": {
         "observed": 36,
         "total": 46,
-        "hash": "5792018297057bb8"
+        "hash": "a436f4e097539346"
       },
       "claims": 46,
       "tally": {
         "verified": 36,
         "attested": 10,
         "claimedOnly": 0,
-        "verifiedCall": 32,
-        "verifiedRead": 4
+        "verifiedCall": 31,
+        "verifiedRead": 5
       }
     },
     {
@@ -514,7 +514,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 27,
-        "hash": "5e026afa904bd0a7"
+        "hash": "9c68391aa68a9b17"
       },
       "claims": 27,
       "tally": {
@@ -538,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "c48ff7757f0dab73"
+        "hash": "404b011c518dbf9f"
       },
       "claims": 17,
       "tally": {
@@ -582,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "2b85ad83685bbefe"
+        "hash": "b12d24bcdab7ac4c"
       },
       "claims": 15,
       "tally": {
@@ -606,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "d0385567e16d0450"
+        "hash": "edddc7a190e8fdb8"
       },
       "claims": 14,
       "tally": {
@@ -630,7 +630,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "cf2700c110175f76"
+        "hash": "1784e3953cf62206"
       },
       "claims": 24,
       "tally": {
@@ -654,7 +654,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "f87c639d568098c7"
+        "hash": "17772e974eac675b"
       },
       "claims": 20,
       "tally": {
@@ -678,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "2ad210c17d613114"
+        "hash": "d2edd5665f3b6463"
       },
       "claims": 20,
       "tally": {
@@ -702,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "e535116a52c1c2a4"
+        "hash": "ddf41c122ef0ac63"
       },
       "claims": 21,
       "tally": {
@@ -726,7 +726,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 12,
-        "hash": "67b96f3df5806897"
+        "hash": "259c0d29e1c7391f"
       },
       "claims": 12,
       "tally": {
@@ -750,7 +750,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 17,
-        "hash": "8e69c00dab62f758"
+        "hash": "484714bbbdcdb73e"
       },
       "claims": 17,
       "tally": {
@@ -774,7 +774,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 15,
-        "hash": "8aea2c7da80d65cf"
+        "hash": "37b62e67a270a66d"
       },
       "claims": 15,
       "tally": {
@@ -798,7 +798,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "f2862aa047771369"
+        "hash": "485dfdd89c94afe6"
       },
       "claims": 23,
       "tally": {
@@ -822,7 +822,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "65f39939eabcc770"
+        "hash": "106937a27b1b0df8"
       },
       "claims": 20,
       "tally": {
@@ -844,17 +844,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 19,
-        "hash": "591792f9cae1c4f9"
+        "hash": "bc487c6e76c8a0fe"
       },
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 17,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -868,17 +868,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 23,
         "total": 23,
-        "hash": "7979743144bac531"
+        "hash": "080e911b377ad887"
       },
       "claims": 23,
       "tally": {
-        "verified": 22,
-        "attested": 1,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 21,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -894,7 +894,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "69e8bea1e89dfbe4"
+        "hash": "1f62848893ee439c"
       },
       "claims": 19,
       "tally": {
@@ -918,7 +918,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "4a5cf45ef0599428"
+        "hash": "485e831e18b9514a"
       },
       "claims": 18,
       "tally": {
@@ -942,7 +942,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "004abf2ca9bb7f66"
+        "hash": "ac5b839a97348024"
       },
       "claims": 19,
       "tally": {
@@ -966,7 +966,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "bf9ab1f93e985d46"
+        "hash": "01c6eaab0e449f4b"
       },
       "claims": 19,
       "tally": {
@@ -990,7 +990,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "2ebf76707a78d108"
+        "hash": "bb709cf54bec5205"
       },
       "claims": 22,
       "tally": {
@@ -1014,7 +1014,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "e7507c326b8595b3"
+        "hash": "e24d3a39510a29b8"
       },
       "claims": 14,
       "tally": {
@@ -1038,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "172952abae46fb74"
+        "hash": "a0c2a82ce5b85e5b"
       },
       "claims": 16,
       "tally": {
@@ -1062,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "fb0fed8652819742"
+        "hash": "47522a9c2ec22289"
       },
       "claims": 23,
       "tally": {
@@ -1086,7 +1086,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "3312135b1163d827"
+        "hash": "d0a42ae5d04849d1"
       },
       "claims": 23,
       "tally": {
@@ -1110,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "a4acc51a80b809b8"
+        "hash": "637043318ce8ea9e"
       },
       "claims": 22,
       "tally": {
@@ -1134,7 +1134,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 16,
-        "hash": "196b21464f4004e8"
+        "hash": "14e49d20bf0eb1ea"
       },
       "claims": 16,
       "tally": {
@@ -1158,7 +1158,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 25,
-        "hash": "38768593b01a8846"
+        "hash": "cc4c0e7ddcadcc6e"
       },
       "claims": 25,
       "tally": {
@@ -1182,7 +1182,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 36,
-        "hash": "aebbba871e2ab88e"
+        "hash": "0344cfed34840a9a"
       },
       "claims": 36,
       "tally": {
@@ -1206,7 +1206,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 21,
-        "hash": "55a149f20821a6d9"
+        "hash": "e179c9f93b1b553d"
       },
       "claims": 21,
       "tally": {
@@ -1230,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "7ad4c4f6a6b99486"
+        "hash": "be6b0f4f79565e19"
       },
       "claims": 21,
       "tally": {
@@ -1254,7 +1254,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "535ad7c28d899dfa"
+        "hash": "3d201a662c3928c8"
       },
       "claims": 25,
       "tally": {
@@ -1278,7 +1278,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "0048a779103b4dce"
+        "hash": "c27164e287d702e1"
       },
       "claims": 32,
       "tally": {
@@ -1302,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "33c2fbc7a6464fba"
+        "hash": "2c4cb4b08e0a898f"
       },
       "claims": 21,
       "tally": {
@@ -1326,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "1b0c0d16f84178a9"
+        "hash": "3456333af158fc5b"
       },
       "claims": 19,
       "tally": {
@@ -1350,7 +1350,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "eb7d9e82235dccf9"
+        "hash": "757e218d316806f9"
       },
       "claims": 22,
       "tally": {
@@ -1374,7 +1374,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "37c2156450704f1b"
+        "hash": "6a15df265911fbf7"
       },
       "claims": 45,
       "tally": {
@@ -1398,7 +1398,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 28,
-        "hash": "9741f43d51bdc702"
+        "hash": "3cbcd5bdbc42a015"
       },
       "claims": 28,
       "tally": {
@@ -1422,7 +1422,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 30,
-        "hash": "31bb726db7fdf6ea"
+        "hash": "0e3b13864082e24a"
       },
       "claims": 30,
       "tally": {
@@ -1446,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "2111d6cae4eb906d"
+        "hash": "808fedd2a70a3163"
       },
       "claims": 23,
       "tally": {
@@ -1470,7 +1470,7 @@
       "instrumentation": {
         "observed": 51,
         "total": 51,
-        "hash": "a6150ef583f480c7"
+        "hash": "0ad72552f117ffdd"
       },
       "claims": 51,
       "tally": {
@@ -1494,7 +1494,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "ba7796e7d7443c35"
+        "hash": "c666bbff5c44fed8"
       },
       "claims": 24,
       "tally": {
@@ -1518,7 +1518,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 29,
-        "hash": "7dbd0694fad2cdac"
+        "hash": "c52bfbabc73bd962"
       },
       "claims": 29,
       "tally": {
@@ -1542,7 +1542,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "db7af1cdef95e38f"
+        "hash": "b948845b7c4e4571"
       },
       "claims": 29,
       "tally": {
@@ -1566,7 +1566,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 23,
-        "hash": "14ec975fabb052c4"
+        "hash": "4cc8f83ce8951bca"
       },
       "claims": 23,
       "tally": {
@@ -1590,7 +1590,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "7b0c8cf59b9fb3c1"
+        "hash": "a3db9dd0456f3b1f"
       },
       "claims": 25,
       "tally": {
@@ -1614,7 +1614,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 32,
-        "hash": "bb8f33f850917aed"
+        "hash": "7bec111048b8a8a5"
       },
       "claims": 32,
       "tally": {
@@ -1638,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "d566ffa0b8f7042e"
+        "hash": "e60d56c9dc06fff2"
       },
       "claims": 18,
       "tally": {
@@ -1662,7 +1662,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "3cb873f9c1410920"
+        "hash": "5a9611864118e2e0"
       },
       "claims": 23,
       "tally": {
@@ -1686,7 +1686,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 35,
-        "hash": "4424e6fbbdf205e7"
+        "hash": "ff753f0d7a051ba1"
       },
       "claims": 35,
       "tally": {
@@ -1710,7 +1710,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "6419ad7d8e30c6c6"
+        "hash": "95b5c911ad7e7cc0"
       },
       "claims": 23,
       "tally": {
@@ -1734,7 +1734,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "8791f86fc241cd61"
+        "hash": "bf4114894a8f4f61"
       },
       "claims": 28,
       "tally": {
@@ -1758,7 +1758,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "81a82f5898aca562"
+        "hash": "843ed199a9626744"
       },
       "claims": 23,
       "tally": {
@@ -1782,7 +1782,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "376352868c85954f"
+        "hash": "6bab9a4628938e89"
       },
       "claims": 45,
       "tally": {
@@ -1806,7 +1806,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 21,
-        "hash": "9593324b6ecc9988"
+        "hash": "065602b1a521f2ee"
       },
       "claims": 21,
       "tally": {
@@ -1830,7 +1830,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "6426ac6a20e0f0a1"
+        "hash": "bae6a10118ae598d"
       },
       "claims": 28,
       "tally": {
@@ -1854,7 +1854,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "aca9d04e889c4ed2"
+        "hash": "676689c194f698a0"
       },
       "claims": 27,
       "tally": {
@@ -1878,7 +1878,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "017ce3f666b6d1e2"
+        "hash": "3b8cc5d80b0df68b"
       },
       "claims": 19,
       "tally": {
@@ -1902,7 +1902,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "b28d52a9eb2eb9b2"
+        "hash": "6732b081e956f15b"
       },
       "claims": 23,
       "tally": {
@@ -1926,7 +1926,7 @@
       "instrumentation": {
         "observed": 44,
         "total": 44,
-        "hash": "2de4de3d0065a56a"
+        "hash": "2f3243ed30048813"
       },
       "claims": 44,
       "tally": {
@@ -1950,7 +1950,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 22,
-        "hash": "a5855c9ec58b2e12"
+        "hash": "f775d8c2c047c2d9"
       },
       "claims": 22,
       "tally": {
@@ -1974,7 +1974,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 30,
-        "hash": "0df2f15877682b58"
+        "hash": "c2301e6e1af8e316"
       },
       "claims": 30,
       "tally": {
@@ -1998,7 +1998,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "8cea22d123047361"
+        "hash": "60c45f8c03f95552"
       },
       "claims": 27,
       "tally": {
@@ -2022,7 +2022,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "8dfd6d74c70329c1"
+        "hash": "e021b3399e78001a"
       },
       "claims": 19,
       "tally": {
@@ -2046,7 +2046,7 @@
       "instrumentation": {
         "observed": 41,
         "total": 41,
-        "hash": "7547eb34685cf01c"
+        "hash": "23e0f1578b9ac323"
       },
       "claims": 41,
       "tally": {
@@ -2070,7 +2070,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 23,
-        "hash": "47d50837b787f5df"
+        "hash": "afdc5215c6159d44"
       },
       "claims": 23,
       "tally": {
@@ -2094,7 +2094,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "2916aa4a520d2b69"
+        "hash": "3cbfe317aa281f1d"
       },
       "claims": 30,
       "tally": {
@@ -2118,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "e9326d1af11226c6"
+        "hash": "7651c26eaf4cfeb0"
       },
       "claims": 23,
       "tally": {
@@ -2142,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "0f1ad71ec853528b"
+        "hash": "fe06fbbb78244d7f"
       },
       "claims": 18,
       "tally": {
@@ -2166,7 +2166,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "2acd7d08da1f0864"
+        "hash": "9747b7d701e81dab"
       },
       "claims": 24,
       "tally": {
@@ -2190,7 +2190,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "b27668d08886e524"
+        "hash": "0a09fc2796e194ac"
       },
       "claims": 22,
       "tally": {
@@ -2214,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "b3e895bd0428afa3"
+        "hash": "b55e22d1db114c85"
       },
       "claims": 16,
       "tally": {
@@ -2238,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "23719c01ec55bc74"
+        "hash": "9f0d96271f07538c"
       },
       "claims": 19,
       "tally": {
@@ -2262,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "9773cd93d0d44d99"
+        "hash": "1ae658f1a317083c"
       },
       "claims": 21,
       "tally": {
@@ -2286,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "4a5cf45ef0599428"
+        "hash": "485e831e18b9514a"
       },
       "claims": 18,
       "tally": {
@@ -2310,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "94bc9359cbf35982"
+        "hash": "0591386c74363319"
       },
       "claims": 18,
       "tally": {
@@ -2334,7 +2334,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "4cb37b5fb67bc8f6"
+        "hash": "e58c11bbfd8035e5"
       },
       "claims": 23,
       "tally": {
@@ -2358,7 +2358,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 45,
-        "hash": "a4cd0b4c05a72fec"
+        "hash": "85b97143ff2048b1"
       },
       "claims": 45,
       "tally": {
@@ -2382,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "b3fc3c7871e9fde4"
+        "hash": "a0321b01eda538a1"
       },
       "claims": 18,
       "tally": {
@@ -2406,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "b0afefa4595a6b05"
+        "hash": "b62dede1d4889a53"
       },
       "claims": 24,
       "tally": {
@@ -2430,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "538e07e209580b97"
+        "hash": "15de2c819bcba87f"
       },
       "claims": 21,
       "tally": {
@@ -2454,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "942bedf153a30499"
+        "hash": "84923351f63f3180"
       },
       "claims": 33,
       "tally": {
@@ -2478,7 +2478,7 @@
       "instrumentation": {
         "observed": 40,
         "total": 40,
-        "hash": "1ed6e15521bc6787"
+        "hash": "0817d206abc032d2"
       },
       "claims": 40,
       "tally": {
@@ -2502,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "32492b3380202c39"
+        "hash": "c1c18b5eebcfa071"
       },
       "claims": 21,
       "tally": {
@@ -2526,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "1fa543e7b4ae231c"
+        "hash": "0dd30b872e85a0c7"
       },
       "claims": 19,
       "tally": {
@@ -2550,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "be3229ddfb6919ba"
+        "hash": "178ea6190adaf256"
       },
       "claims": 19,
       "tally": {
@@ -2574,7 +2574,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 34,
-        "hash": "cb61bd8b190347f1"
+        "hash": "19827c9dac45063c"
       },
       "claims": 34,
       "tally": {
@@ -2598,7 +2598,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 36,
-        "hash": "3d256d4360dac185"
+        "hash": "3d4609fcf871db4c"
       },
       "claims": 36,
       "tally": {
@@ -2622,7 +2622,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 33,
-        "hash": "adf3716b818f6d3e"
+        "hash": "ec745a1d741ff44f"
       },
       "claims": 33,
       "tally": {
@@ -2646,7 +2646,7 @@
       "instrumentation": {
         "observed": 60,
         "total": 69,
-        "hash": "193f2d20935e4822"
+        "hash": "abc8fe07227c2cec"
       },
       "claims": 69,
       "tally": {
@@ -2670,7 +2670,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 31,
-        "hash": "a6b307743b33b54b"
+        "hash": "3359bf4159de559e"
       },
       "claims": 31,
       "tally": {
@@ -2694,7 +2694,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 41,
-        "hash": "97ac033e6fc1d877"
+        "hash": "da66156ecc8e22d9"
       },
       "claims": 41,
       "tally": {
@@ -2718,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "0900bbd1211a1034"
+        "hash": "7e9e100c56eeda08"
       },
       "claims": 22,
       "tally": {
@@ -2742,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "9773cd93d0d44d99"
+        "hash": "1ae658f1a317083c"
       },
       "claims": 21,
       "tally": {
@@ -2766,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "499dc6cee8837190"
+        "hash": "36e0c5d24fcccdb9"
       },
       "claims": 22,
       "tally": {
@@ -2790,7 +2790,7 @@
       "instrumentation": {
         "observed": 38,
         "total": 41,
-        "hash": "3eb6493a55254191"
+        "hash": "45a3a9ce19b66845"
       },
       "claims": 41,
       "tally": {
@@ -2814,7 +2814,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "2ab10f9513ef945e"
+        "hash": "1a3609cfc6bc203a"
       },
       "claims": 23,
       "tally": {
@@ -2838,7 +2838,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 18,
-        "hash": "aea4d2677af37982"
+        "hash": "d1066c5e877e7cec"
       },
       "claims": 18,
       "tally": {
@@ -2862,7 +2862,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 20,
-        "hash": "48ff18f4e9d29254"
+        "hash": "7bdbfc4001c1f641"
       },
       "claims": 20,
       "tally": {
@@ -2886,7 +2886,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "9a1da61ab854c6ce"
+        "hash": "6887beeadb1d981b"
       },
       "claims": 19,
       "tally": {
@@ -2910,7 +2910,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "c1d56144f328deb7"
+        "hash": "6558680d912f9334"
       },
       "claims": 19,
       "tally": {
@@ -2934,7 +2934,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "76b7cc6a945d3780"
+        "hash": "f8bfad112a6f38ea"
       },
       "claims": 32,
       "tally": {
@@ -2958,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "58486607408121ce"
+        "hash": "b8f0f3a11b208399"
       },
       "claims": 16,
       "tally": {
@@ -2982,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "425056b47bf03939"
+        "hash": "d29f7a56202052b3"
       },
       "claims": 20,
       "tally": {
@@ -3006,7 +3006,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 29,
-        "hash": "3f31846c0596f3d2"
+        "hash": "7301f31cb3d2a47f"
       },
       "claims": 29,
       "tally": {
@@ -3030,7 +3030,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "c0cd877ae167a515"
+        "hash": "fbe8e6de94054e7b"
       },
       "claims": 22,
       "tally": {
@@ -3054,7 +3054,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "9db031a8593fe5d7"
+        "hash": "42bc261781e4fc84"
       },
       "claims": 32,
       "tally": {
@@ -3078,7 +3078,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 26,
-        "hash": "6227a567aba81f29"
+        "hash": "454601606c207598"
       },
       "claims": 26,
       "tally": {
@@ -3102,7 +3102,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 31,
-        "hash": "9d9ae2a9bffa0a00"
+        "hash": "6b2f613023b2e66d"
       },
       "claims": 31,
       "tally": {
@@ -3126,7 +3126,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "8d1cd4e3a8cc8296"
+        "hash": "fd06c1290cb55092"
       },
       "claims": 16,
       "tally": {
@@ -3148,17 +3148,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 8,
+        "observed": 9,
         "total": 9,
-        "hash": "ff0ca6964b9be850"
+        "hash": "eca4fa381f6255a5"
       },
       "claims": 9,
       "tally": {
-        "verified": 8,
-        "attested": 1,
+        "verified": 9,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 7,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -3174,7 +3174,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "88cb356da972cd4c"
+        "hash": "3991544d04ff8815"
       },
       "claims": 23,
       "tally": {
@@ -3198,7 +3198,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 27,
-        "hash": "082316bf892fee65"
+        "hash": "6e0619e6bc24269c"
       },
       "claims": 27,
       "tally": {
@@ -3222,7 +3222,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "7f136ecce07f538b"
+        "hash": "7f4216d8ca924d2a"
       },
       "claims": 23,
       "tally": {
@@ -3246,7 +3246,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "247b8579383236af"
+        "hash": "7c4e2f39d2101d3d"
       },
       "claims": 25,
       "tally": {
@@ -3270,7 +3270,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "7248cb3a7c6619c8"
+        "hash": "8a6d6354084a88d7"
       },
       "claims": 27,
       "tally": {
@@ -3294,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "217441ba7b51357d"
+        "hash": "7965cf6cc1ae604d"
       },
       "claims": 22,
       "tally": {
@@ -3318,7 +3318,7 @@
       "instrumentation": {
         "observed": 46,
         "total": 48,
-        "hash": "9bbe8808f656117f"
+        "hash": "88cda1363d5ba09d"
       },
       "claims": 48,
       "tally": {
@@ -3342,7 +3342,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "587104ae40f247de"
+        "hash": "72c37aad7fa5750c"
       },
       "claims": 14,
       "tally": {
@@ -3366,7 +3366,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 51,
-        "hash": "5b569ab019868d85"
+        "hash": "4b0e872217ef3239"
       },
       "claims": 51,
       "tally": {
@@ -3390,7 +3390,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 30,
-        "hash": "9f41bfa0b8808946"
+        "hash": "f752dcd01ad2d95b"
       },
       "claims": 30,
       "tally": {
@@ -3412,17 +3412,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 36,
-        "total": 37,
-        "hash": "e6c1fd98ca356db0"
+        "observed": 95,
+        "total": 96,
+        "hash": "088232e6168a0345"
       },
-      "claims": 37,
+      "claims": 96,
       "tally": {
-        "verified": 36,
+        "verified": 95,
         "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 34,
-        "verifiedRead": 2
+        "verifiedCall": 85,
+        "verifiedRead": 10
       }
     },
     {
@@ -3438,7 +3438,7 @@
       "instrumentation": {
         "observed": 48,
         "total": 49,
-        "hash": "c58e119951792368"
+        "hash": "127a10021522d765"
       },
       "claims": 49,
       "tally": {
@@ -3462,7 +3462,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "91b2c5dca3669e3f"
+        "hash": "398dfbaa0e664279"
       },
       "claims": 20,
       "tally": {
@@ -3484,17 +3484,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
+        "observed": 25,
         "total": 36,
-        "hash": "e038252599408a44"
+        "hash": "57613723a6208e14"
       },
       "claims": 36,
       "tally": {
-        "verified": 24,
-        "attested": 12,
+        "verified": 25,
+        "attested": 11,
         "claimedOnly": 0,
         "verifiedCall": 21,
-        "verifiedRead": 3
+        "verifiedRead": 4
       }
     },
     {
@@ -3510,7 +3510,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "d547fd4d965e9435"
+        "hash": "a8d277e683f36306"
       },
       "claims": 36,
       "tally": {
@@ -3528,24 +3528,24 @@
       "total": 963,
       "required": 963,
       "claimed": 516,
-      "attested": 71,
-      "verified": 445,
+      "attested": 68,
+      "verified": 448,
       "requiredClaimed": 516,
-      "requiredVerified": 445,
+      "requiredVerified": 448,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 518,
-      "unstated": 518,
+      "uncovered": 515,
+      "unstated": 515,
       "verifiedViaCall": 443,
-      "verifiedViaRead": 2,
+      "verifiedViaRead": 5,
       "verifiedViaUnknown": 0,
       "requiredVerifiedViaCall": 443,
-      "requiredVerifiedViaRead": 2,
+      "requiredVerifiedViaRead": 5,
       "requiredVerifiedViaUnknown": 0,
       "requiredVerifiedViaCallRate": 0.46,
       "claimedRate": 0.536,
-      "verifiedRate": 0.462,
-      "allUnitsVerifiedRate": 0.462,
+      "verifiedRate": 0.465,
+      "allUnitsVerifiedRate": 0.465,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -3555,25 +3555,25 @@
       "denominator": "coverageRequired",
       "total": 272,
       "required": 272,
-      "claimed": 109,
+      "claimed": 168,
       "attested": 3,
-      "verified": 106,
-      "requiredClaimed": 109,
-      "requiredVerified": 106,
+      "verified": 165,
+      "requiredClaimed": 168,
+      "requiredVerified": 165,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 166,
-      "unstated": 166,
-      "verifiedViaCall": 106,
-      "verifiedViaRead": 0,
+      "uncovered": 107,
+      "unstated": 107,
+      "verifiedViaCall": 157,
+      "verifiedViaRead": 8,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 106,
-      "requiredVerifiedViaRead": 0,
+      "requiredVerifiedViaCall": 157,
+      "requiredVerifiedViaRead": 8,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.39,
-      "claimedRate": 0.401,
-      "verifiedRate": 0.39,
-      "allUnitsVerifiedRate": 0.39,
+      "requiredVerifiedViaCallRate": 0.577,
+      "claimedRate": 0.618,
+      "verifiedRate": 0.607,
+      "allUnitsVerifiedRate": 0.607,
       "gate": "V1.1 Release: >=90% verified of coverageRequired",
       "threshold": 0.9,
       "applicable": true,
@@ -3584,19 +3584,19 @@
       "total": 3130,
       "required": 3130,
       "claimed": 182,
-      "attested": 45,
-      "verified": 137,
+      "attested": 44,
+      "verified": 138,
       "requiredClaimed": 182,
-      "requiredVerified": 137,
+      "requiredVerified": 138,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 2993,
-      "unstated": 2993,
+      "uncovered": 2992,
+      "unstated": 2992,
       "verifiedViaCall": 126,
-      "verifiedViaRead": 11,
+      "verifiedViaRead": 12,
       "verifiedViaUnknown": 0,
       "requiredVerifiedViaCall": 126,
-      "requiredVerifiedViaRead": 11,
+      "requiredVerifiedViaRead": 12,
       "requiredVerifiedViaUnknown": 0,
       "requiredVerifiedViaCallRate": 0.04,
       "claimedRate": 0.058,
@@ -6620,6 +6620,16 @@
       ]
     },
     {
+      "unit": "Layers.Enum",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "camera-multi",
+        "layers-enum-ops",
+        "starter"
+      ]
+    },
+    {
       "unit": "primitives.plane",
       "tier": "core",
       "via": "call",
@@ -6690,6 +6700,14 @@
       "unit": "Camera.screenScale",
       "tier": "core",
       "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.ClearFlag",
+      "tier": "core",
+      "via": "read",
       "examples": [
         "camera-viewport-props"
       ]
@@ -7017,7 +7035,7 @@
     {
       "unit": "dragonBones.Armature.name",
       "tier": "supporting",
-      "via": "call",
+      "via": "read",
       "examples": [
         "dragonbones-basic"
       ]
@@ -7316,6 +7334,14 @@
       "via": "call",
       "examples": [
         "input-queries"
+      ]
+    },
+    {
+      "unit": "Light.PhotometricTerm",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "light-attach-cycle"
       ]
     },
     {
@@ -11889,6 +11915,478 @@
       ]
     },
     {
+      "unit": "Label.constructor",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.string",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.horizontalAlign",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.verticalAlign",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.actualFontSize",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.fontSize",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.lineHeight",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.spacingX",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.overflow",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.enableWrapText",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.useSystemFont",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.fontFamily",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.font",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.cacheMode",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.isBold",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.isItalic",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.isUnderline",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.underlineHeight",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.enableOutline",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.outlineColor",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.outlineWidth",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.enableShadow",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.shadowColor",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.shadowOffset",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.shadowBlur",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.constructor",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.sizeMode",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.spriteFrame",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.color",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.HorizontalAlign",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.VerticalAlign",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.Overflow",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.CacheMode",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.spriteAtlas",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.type",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.fillType",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.fillCenter",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.fillStart",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.fillRange",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.trim",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.grayscale",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.FillType",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.Type",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.SizeMode",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.EventType",
+      "tier": "important",
+      "via": "read",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.sharedMaterials",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.customMaterial",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.priority",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.onEnable",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Label.updateRenderData",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.onEnable",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.onDisable",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "Sprite.changeSpriteFrameFromAtlas",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.onLoad",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.onEnable",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.onDisable",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.markForUpdateRenderData",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.requestRenderData",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
+      "unit": "UIRenderer.postUpdateAssembler",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-components"
+      ]
+    },
+    {
       "unit": "Widget.isAlignLeft",
       "tier": "important",
       "via": "call",
@@ -12199,6 +12697,14 @@
       ]
     },
     {
+      "unit": "VideoPlayer.ResourceType",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
       "unit": "VideoClip",
       "tier": "advanced",
       "via": "read",
@@ -12378,24 +12884,8 @@
       ]
     },
     {
-      "unit": "Layers.Enum",
-      "tier": "core",
-      "examples": [
-        "camera-multi",
-        "layers-enum-ops",
-        "starter"
-      ]
-    },
-    {
       "unit": "renderer.scene.Camera.pipeline",
       "tier": "advanced",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
-      "unit": "Camera.ClearFlag",
-      "tier": "core",
       "examples": [
         "camera-viewport-props"
       ]
@@ -12547,13 +13037,6 @@
       "tier": "internal",
       "examples": [
         "gltf-asset-readonly"
-      ]
-    },
-    {
-      "unit": "Light.PhotometricTerm",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
       ]
     },
     {
@@ -13364,13 +13847,6 @@
     },
     {
       "unit": "VideoPlayer.videoPlayerEvent",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
-      "unit": "VideoPlayer.ResourceType",
       "tier": "advanced",
       "examples": [
         "video-basic"
@@ -13509,24 +13985,8 @@
       ]
     },
     {
-      "unit": "Layers.Enum",
-      "tier": "core",
-      "examples": [
-        "camera-multi",
-        "layers-enum-ops",
-        "starter"
-      ]
-    },
-    {
       "unit": "renderer.scene.Camera.pipeline",
       "tier": "advanced",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
-      "unit": "Camera.ClearFlag",
-      "tier": "core",
       "examples": [
         "camera-viewport-props"
       ]
@@ -13678,13 +14138,6 @@
       "tier": "internal",
       "examples": [
         "gltf-asset-readonly"
-      ]
-    },
-    {
-      "unit": "Light.PhotometricTerm",
-      "tier": "core",
-      "examples": [
-        "light-attach-cycle"
       ]
     },
     {
@@ -14495,13 +14948,6 @@
     },
     {
       "unit": "VideoPlayer.videoPlayerEvent",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
-      "unit": "VideoPlayer.ResourceType",
       "tier": "advanced",
       "examples": [
         "video-basic"
@@ -14999,5 +15445,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3558
+  "unclaimedRequired": 3499
 }

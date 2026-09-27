@@ -110,6 +110,23 @@ function findSymbolLine (exampleDir, sourceFile, unit) {
         if (lines[i] && re.test(lines[i])) { return { line: i + 1 }; }
       }
     }
+    // Constructor API evidence should point at the class's own prototype constructor,
+    // even when the example creates components through addComponent rather than `new`.
+    if (memberOf[2] === 'constructor') {
+      const className = memberOf[1].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`\\b${className}\\s*\\.\\s*prototype\\s*\\.\\s*constructor\\b`);
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i] && re.test(lines[i])) { return { line: i + 1 }; }
+      }
+    }
+    // UIRenderer properties are inherited by Label/Sprite. Accept an executed property
+    // use on a derived component instead of falling back to an unrelated parameter name.
+    if (memberOf[1] === 'UIRenderer') {
+      const re = new RegExp(`\\b[A-Za-z_$][\\w$]*\\s*\\.\\s*${method}\\s*(?:=|\\(|[;,.)\\]])`);
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i] && re.test(lines[i])) { return { line: i + 1 }; }
+      }
+    }
   }
   const patterns = [
     new RegExp(`\\bnew\\s+${esc}\\b`),

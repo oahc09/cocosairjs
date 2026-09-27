@@ -23,7 +23,66 @@
     "ProgressBar",
     "Layout",
     "ScrollView",
-    "EditBox"
+    "EditBox",
+    "Label.constructor",
+    "Label.string",
+    "Label.horizontalAlign",
+    "Label.verticalAlign",
+    "Label.actualFontSize",
+    "Label.fontSize",
+    "Label.lineHeight",
+    "Label.spacingX",
+    "Label.overflow",
+    "Label.enableWrapText",
+    "Label.useSystemFont",
+    "Label.fontFamily",
+    "Label.font",
+    "Label.cacheMode",
+    "Label.isBold",
+    "Label.isItalic",
+    "Label.isUnderline",
+    "Label.underlineHeight",
+    "Label.enableOutline",
+    "Label.outlineColor",
+    "Label.outlineWidth",
+    "Label.enableShadow",
+    "Label.shadowColor",
+    "Label.shadowOffset",
+    "Label.shadowBlur",
+    "Sprite.constructor",
+    "Sprite.sizeMode",
+    "Sprite.spriteFrame",
+    "UIRenderer.color",
+    "Label.HorizontalAlign",
+    "Label.VerticalAlign",
+    "Label.Overflow",
+    "Label.CacheMode",
+    "Sprite.spriteAtlas",
+    "Sprite.type",
+    "Sprite.fillType",
+    "Sprite.fillCenter",
+    "Sprite.fillStart",
+    "Sprite.fillRange",
+    "Sprite.trim",
+    "Sprite.grayscale",
+    "Sprite.FillType",
+    "Sprite.Type",
+    "Sprite.SizeMode",
+    "Sprite.EventType",
+    "UIRenderer.sharedMaterials",
+    "UIRenderer.customMaterial",
+    "UIRenderer.priority",
+    "Label.onEnable",
+    "Label.updateRenderData",
+    "Sprite.onEnable",
+    "Sprite.onDisable",
+    "Sprite.changeSpriteFrameFromAtlas",
+    "UIRenderer.onLoad",
+    "UIRenderer.onEnable",
+    "UIRenderer.onDisable",
+    "UIRenderer.markForUpdateRenderData",
+    "UIRenderer.requestRenderData",
+    "UIRenderer.postUpdateAssembler"
   ],
   "capabilities": ["ui"],
   "validation": {
@@ -49,7 +108,76 @@
   },
   "api": {
     "primary": ["Canvas", "Button", "Layout"],
-    "supporting": ["UITransform", "Widget", "ScrollView", "Slider", "Toggle", "ToggleContainer", "EditBox"],
+    "supporting": [
+      "UITransform",
+      "Widget",
+      "ScrollView",
+      "Slider",
+      "Toggle",
+      "ToggleContainer",
+      "EditBox",
+      "Label",
+      "Label.constructor",
+      "Label.string",
+      "Label.horizontalAlign",
+      "Label.verticalAlign",
+      "Label.actualFontSize",
+      "Label.fontSize",
+      "Label.lineHeight",
+      "Label.spacingX",
+      "Label.overflow",
+      "Label.enableWrapText",
+      "Label.useSystemFont",
+      "Label.fontFamily",
+      "Label.font",
+      "Label.cacheMode",
+      "Label.isBold",
+      "Label.isItalic",
+      "Label.isUnderline",
+      "Label.underlineHeight",
+      "Label.enableOutline",
+      "Label.outlineColor",
+      "Label.outlineWidth",
+      "Label.enableShadow",
+      "Label.shadowColor",
+      "Label.shadowOffset",
+      "Label.shadowBlur",
+      "Sprite",
+      "Sprite.constructor",
+      "Sprite.sizeMode",
+      "Sprite.spriteFrame",
+      "UIRenderer.color",
+      "Label.HorizontalAlign",
+      "Label.VerticalAlign",
+      "Label.Overflow",
+      "Label.CacheMode",
+      "Sprite.spriteAtlas",
+      "Sprite.type",
+      "Sprite.fillType",
+      "Sprite.fillCenter",
+      "Sprite.fillStart",
+      "Sprite.fillRange",
+      "Sprite.trim",
+      "Sprite.grayscale",
+      "Sprite.FillType",
+      "Sprite.Type",
+      "Sprite.SizeMode",
+      "Sprite.EventType",
+      "UIRenderer.sharedMaterials",
+      "UIRenderer.customMaterial",
+      "UIRenderer.priority",
+      "Label.onEnable",
+      "Label.updateRenderData",
+      "Sprite.onEnable",
+      "Sprite.onDisable",
+      "Sprite.changeSpriteFrameFromAtlas",
+      "UIRenderer.onLoad",
+      "UIRenderer.onEnable",
+      "UIRenderer.onDisable",
+      "UIRenderer.markForUpdateRenderData",
+      "UIRenderer.requestRenderData",
+      "UIRenderer.postUpdateAssembler"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -87,7 +215,66 @@
       "ScrollView.scrollToBottom",
       "ScrollView.getScrollOffset",
       "EditBox.focus",
-      "EditBox.isFocused"
+      "EditBox.isFocused",
+      "Label.constructor",
+      "Label.string",
+      "Label.horizontalAlign",
+      "Label.verticalAlign",
+      "Label.actualFontSize",
+      "Label.fontSize",
+      "Label.lineHeight",
+      "Label.spacingX",
+      "Label.overflow",
+      "Label.enableWrapText",
+      "Label.useSystemFont",
+      "Label.fontFamily",
+      "Label.font",
+      "Label.cacheMode",
+      "Label.isBold",
+      "Label.isItalic",
+      "Label.isUnderline",
+      "Label.underlineHeight",
+      "Label.enableOutline",
+      "Label.outlineColor",
+      "Label.outlineWidth",
+      "Label.enableShadow",
+      "Label.shadowColor",
+      "Label.shadowOffset",
+      "Label.shadowBlur",
+      "Sprite.constructor",
+      "Sprite.sizeMode",
+      "Sprite.spriteFrame",
+      "UIRenderer.color",
+      "Label.HorizontalAlign",
+      "Label.VerticalAlign",
+      "Label.Overflow",
+      "Label.CacheMode",
+      "Sprite.spriteAtlas",
+      "Sprite.type",
+      "Sprite.fillType",
+      "Sprite.fillCenter",
+      "Sprite.fillStart",
+      "Sprite.fillRange",
+      "Sprite.trim",
+      "Sprite.grayscale",
+      "Sprite.FillType",
+      "Sprite.Type",
+      "Sprite.SizeMode",
+      "Sprite.EventType",
+      "UIRenderer.sharedMaterials",
+      "UIRenderer.customMaterial",
+      "UIRenderer.priority",
+      "Label.onEnable",
+      "Label.updateRenderData",
+      "Sprite.onEnable",
+      "Sprite.onDisable",
+      "Sprite.changeSpriteFrameFromAtlas",
+      "UIRenderer.onLoad",
+      "UIRenderer.onEnable",
+      "UIRenderer.onDisable",
+      "UIRenderer.markForUpdateRenderData",
+      "UIRenderer.requestRenderData",
+      "UIRenderer.postUpdateAssembler"
     ],
     "forbiddenShortcut": [
       "加载 .scene/.prefab 冒充 Code First",
@@ -298,25 +485,379 @@
         "api": "ScrollView.scrollToBottom",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L400"
+        "sourceLocation": "L538"
       },
       {
         "api": "ScrollView.getScrollOffset",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L398"
+        "sourceLocation": "L536"
       },
       {
         "api": "EditBox.focus",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L419"
+        "sourceLocation": "L557"
       },
       {
         "api": "EditBox.isFocused",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L441"
+        "sourceLocation": "L579"
+      },
+      {
+        "api": "Label.constructor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L361"
+      },
+      {
+        "api": "Label.string",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L139"
+      },
+      {
+        "api": "Label.horizontalAlign",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L194"
+      },
+      {
+        "api": "Label.verticalAlign",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L368"
+      },
+      {
+        "api": "Label.actualFontSize",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L369"
+      },
+      {
+        "api": "Label.fontSize",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L137"
+      },
+      {
+        "api": "Label.lineHeight",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L141"
+      },
+      {
+        "api": "Label.spacingX",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L251"
+      },
+      {
+        "api": "Label.overflow",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L143"
+      },
+      {
+        "api": "Label.enableWrapText",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L374"
+      },
+      {
+        "api": "Label.useSystemFont",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L375"
+      },
+      {
+        "api": "Label.fontFamily",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L376"
+      },
+      {
+        "api": "Label.font",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L377"
+      },
+      {
+        "api": "Label.cacheMode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L378"
+      },
+      {
+        "api": "Label.isBold",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L379"
+      },
+      {
+        "api": "Label.isItalic",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L380"
+      },
+      {
+        "api": "Label.isUnderline",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L381"
+      },
+      {
+        "api": "Label.underlineHeight",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L382"
+      },
+      {
+        "api": "Label.enableOutline",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L383"
+      },
+      {
+        "api": "Label.outlineColor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L384"
+      },
+      {
+        "api": "Label.outlineWidth",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L385"
+      },
+      {
+        "api": "Label.enableShadow",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L386"
+      },
+      {
+        "api": "Label.shadowColor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L387"
+      },
+      {
+        "api": "Label.shadowOffset",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L388"
+      },
+      {
+        "api": "Label.shadowBlur",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L389"
+      },
+      {
+        "api": "Sprite.constructor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L412"
+      },
+      {
+        "api": "Sprite.sizeMode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "Sprite.spriteFrame",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L602"
+      },
+      {
+        "api": "UIRenderer.color",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L142"
+      },
+      {
+        "api": "Label.HorizontalAlign",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L194"
+      },
+      {
+        "api": "Label.VerticalAlign",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L363"
+      },
+      {
+        "api": "Label.Overflow",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L143"
+      },
+      {
+        "api": "Label.CacheMode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L365"
+      },
+      {
+        "api": "Sprite.spriteAtlas",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L413"
+      },
+      {
+        "api": "Sprite.type",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L200"
+      },
+      {
+        "api": "Sprite.fillType",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L417"
+      },
+      {
+        "api": "Sprite.fillCenter",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L418"
+      },
+      {
+        "api": "Sprite.fillStart",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L419"
+      },
+      {
+        "api": "Sprite.fillRange",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L420"
+      },
+      {
+        "api": "Sprite.trim",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L421"
+      },
+      {
+        "api": "Sprite.grayscale",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L422"
+      },
+      {
+        "api": "Sprite.FillType",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L423"
+      },
+      {
+        "api": "Sprite.Type",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L200"
+      },
+      {
+        "api": "Sprite.SizeMode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "Sprite.EventType",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L426"
+      },
+      {
+        "api": "UIRenderer.sharedMaterials",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L456"
+      },
+      {
+        "api": "UIRenderer.customMaterial",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L457"
+      },
+      {
+        "api": "UIRenderer.priority",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L458"
+      },
+      {
+        "api": "Label.onEnable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L390"
+      },
+      {
+        "api": "Label.updateRenderData",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L358"
+      },
+      {
+        "api": "Sprite.onEnable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L390"
+      },
+      {
+        "api": "Sprite.onDisable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L428"
+      },
+      {
+        "api": "Sprite.changeSpriteFrameFromAtlas",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L432"
+      },
+      {
+        "api": "UIRenderer.onLoad",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L459"
+      },
+      {
+        "api": "UIRenderer.onEnable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L390"
+      },
+      {
+        "api": "UIRenderer.onDisable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L428"
+      },
+      {
+        "api": "UIRenderer.markForUpdateRenderData",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L359"
+      },
+      {
+        "api": "UIRenderer.requestRenderData",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L463"
+      },
+      {
+        "api": "UIRenderer.postUpdateAssembler",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L464"
       }
     ]
   },
@@ -351,11 +892,11 @@
   },
   "validationExpectations": {},
   "promotion": {
-    "spec": "a5330ec56a6c",
-    "source": "6fbbbf57ed1a5002",
+    "spec": "40a35227bec3",
+    "source": "2e2366b4936ed1f8",
     "candidate": "8746fc59b6aa0408",
-    "verified": 36,
+    "verified": 95,
     "attested": 1,
-    "units": 37
+    "units": 96
   }
 }
