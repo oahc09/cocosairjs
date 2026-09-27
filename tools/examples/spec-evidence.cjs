@@ -97,6 +97,12 @@ function findSymbolLine (exampleDir, sourceFile, unit) {
   if (!file) { return { error: `source ${sourceFile} not found` }; }
   const token = evidenceToken(unit);
   const lines = codeLines(fs.readFileSync(file, 'utf8'));
+  if (unit === 'Camera.camera' || unit === 'renderer.scene.Camera.pipeline') {
+    const re = unit === 'Camera.camera' ? /\bcamera\s*\.\s*camera\b/ : /\bcamera\s*\.\s*camera\s*\.\s*pipeline\b/;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i] && re.test(lines[i])) { return { line: i + 1 }; }
+    }
+  }
   // 由强到弱：构造 / 作参数被引用 / 静态访问 / 调用 / 裸标识符——全部只在代码行上匹配
   const esc = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   // `Class.method`：先按接收者变量名定位，避免同一文件里同名方法（Node.destroy / Mesh.destroy /
@@ -108,6 +114,27 @@ function findSymbolLine (exampleDir, sourceFile, unit) {
       const re = new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\.\\s*${method}\\s*[(.]`);
       for (let i = 0; i < lines.length; i++) {
         if (lines[i] && re.test(lines[i])) { return { line: i + 1 }; }
+      }
+    }
+    // Node.matrix is setter-only in the public declaration. Bind its evidence to the
+    // actual assignment, not to an unrelated local variable named `matrix`.
+    if (unit === 'Node.matrix') {
+      for (const name of declaredReceivers(lines, 'Node')) {
+        const receiver = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp(`\\b${receiver}\\s*\\.\\s*matrix\\s*=`);
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i] && re.test(lines[i])) { return { line: i + 1 }; }
+        }
+      }
+    }
+    const vec3Component = /^math\.Vec3\.([xyz])$/.exec(unit);
+    if (vec3Component) {
+      for (const name of declaredReceivers(lines, 'Vec3')) {
+        const receiver = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const re = new RegExp(`\\b${receiver}\\s*\\.\\s*${vec3Component[1]}\\b(?=\\s*[,;.)\\]])`);
+        for (let i = 0; i < lines.length; i++) {
+          if (lines[i] && re.test(lines[i])) { return { line: i + 1 }; }
+        }
       }
     }
     // Constructor API evidence should point at the class's own prototype constructor,

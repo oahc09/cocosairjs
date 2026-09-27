@@ -37,7 +37,8 @@
     "math.Mat3.m05",
     "math.Mat3.m06",
     "math.Mat3.m07",
-    "math.Mat3.m08"
+    "math.Mat3.m08",
+    "math.Mat3"
   ],
   "capabilities": [],
   "learning": {
@@ -64,7 +65,8 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "math.Mat3"
     ],
     "claims": [
       "createAirApp",
@@ -96,7 +98,8 @@
       "math.Mat3.m05",
       "math.Mat3.m06",
       "math.Mat3.m07",
-      "math.Mat3.m08"
+      "math.Mat3.m08",
+      "math.Mat3"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -279,6 +282,12 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L85"
+      },
+      {
+        "api": "math.Mat3",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L76"
       }
     ]
   },
@@ -311,11 +320,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "6c31008b566b",
-    "source": "5c9f18341c661804",
+    "spec": "11d86aca4ffd",
+    "source": "b910e492ab3c99fd",
     "candidate": "8746fc59b6aa0408",
-    "verified": 21,
-    "attested": 9,
-    "units": 30
+    "verified": 31,
+    "attested": 0,
+    "units": 31
   }
 }

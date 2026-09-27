@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-27T05:11:46.131Z",
+  "generatedAt": "2026-09-27T07:35:34.704Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T04:43:27.027Z",
+      "measuredAt": "2026-09-27T07:24:55.147Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T04:44:27.459Z",
+      "measuredAt": "2026-09-27T07:33:47.801Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -29,11 +29,11 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 960,
-  "totalAttested": 145,
-  "totalVerified": 815,
-  "totalVerifiedViaCall": 789,
-  "totalVerifiedViaRead": 26,
+  "totalClaimed": 1043,
+  "totalAttested": 108,
+  "totalVerified": 935,
+  "totalVerifiedViaCall": 862,
+  "totalVerifiedViaRead": 73,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -58,7 +58,7 @@
       "instrumentation": {
         "observed": 47,
         "total": 49,
-        "hash": "d63a607c2852b16f"
+        "hash": "2180dfb1f33c10a4"
       },
       "claims": 49,
       "tally": {
@@ -82,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "a0321b01eda538a1"
+        "hash": "5dc0b6f8bcb7dd36"
       },
       "claims": 18,
       "tally": {
@@ -106,7 +106,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "182265b5ad3e4966"
+        "hash": "697a4a59b83a32d6"
       },
       "claims": 28,
       "tally": {
@@ -130,7 +130,7 @@
       "instrumentation": {
         "observed": 8,
         "total": 11,
-        "hash": "82c92a48589f160f"
+        "hash": "30220bde9fecc5fc"
       },
       "claims": 11,
       "tally": {
@@ -154,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "d36cc2304eac2f7f"
+        "hash": "43735432def51624"
       },
       "claims": 21,
       "tally": {
@@ -178,7 +178,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 13,
-        "hash": "f9e55fedf23a8971"
+        "hash": "c1fcd9c253d07cde"
       },
       "claims": 13,
       "tally": {
@@ -202,7 +202,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "22e8875b26396531"
+        "hash": "49ee3ba079553fe6"
       },
       "claims": 21,
       "tally": {
@@ -226,7 +226,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "713b28c229539307"
+        "hash": "3cf3c1f078a21306"
       },
       "claims": 19,
       "tally": {
@@ -250,7 +250,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "76e9f6283288d33d"
+        "hash": "4f39070bea4f1743"
       },
       "claims": 19,
       "tally": {
@@ -274,7 +274,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "01c6eaab0e449f4b"
+        "hash": "4b26b9f4e057f6f9"
       },
       "claims": 19,
       "tally": {
@@ -298,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "4693d72c5b7106d7"
+        "hash": "5b5d67f94262f798"
       },
       "claims": 21,
       "tally": {
@@ -322,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "3f73bf3b9e7d1019"
+        "hash": "b3d20e4dbe08d02e"
       },
       "claims": 20,
       "tally": {
@@ -344,17 +344,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
-        "total": 24,
-        "hash": "35fd850311952d31"
+        "observed": 25,
+        "total": 25,
+        "hash": "332e42a724cec4b9"
       },
-      "claims": 24,
+      "claims": 25,
       "tally": {
-        "verified": 23,
-        "attested": 1,
+        "verified": 25,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
-        "verifiedRead": 2
+        "verifiedCall": 22,
+        "verifiedRead": 3
       }
     },
     {
@@ -370,7 +370,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 37,
-        "hash": "b7d17a1f5d877b37"
+        "hash": "5bd306c853f54e7a"
       },
       "claims": 37,
       "tally": {
@@ -394,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "2fb04a25f33c22f7"
+        "hash": "853df4347bd86b2f"
       },
       "claims": 20,
       "tally": {
@@ -418,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "f38cfcc701e6234b"
+        "hash": "d6ea4e4036f35edf"
       },
       "claims": 26,
       "tally": {
@@ -442,7 +442,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "32d568fa233b44ab"
+        "hash": "23cabd9673ae8aa8"
       },
       "claims": 28,
       "tally": {
@@ -466,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "0c7cfbe0757c5c5c"
+        "hash": "4fd9873ffc45a3cc"
       },
       "claims": 19,
       "tally": {
@@ -490,15 +490,15 @@
       "instrumentation": {
         "observed": 36,
         "total": 46,
-        "hash": "a436f4e097539346"
+        "hash": "a9f8f1d9d8336e24"
       },
       "claims": 46,
       "tally": {
         "verified": 36,
         "attested": 10,
         "claimedOnly": 0,
-        "verifiedCall": 31,
-        "verifiedRead": 5
+        "verifiedCall": 32,
+        "verifiedRead": 4
       }
     },
     {
@@ -514,7 +514,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 27,
-        "hash": "9c68391aa68a9b17"
+        "hash": "6ffc0b6b3d175827"
       },
       "claims": 27,
       "tally": {
@@ -538,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "404b011c518dbf9f"
+        "hash": "21f57d9182a7d955"
       },
       "claims": 17,
       "tally": {
@@ -582,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "b12d24bcdab7ac4c"
+        "hash": "3dfc71391d98e47c"
       },
       "claims": 15,
       "tally": {
@@ -606,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "edddc7a190e8fdb8"
+        "hash": "4585247e71522be8"
       },
       "claims": 14,
       "tally": {
@@ -630,7 +630,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "1784e3953cf62206"
+        "hash": "29a4fa5c31eb89ae"
       },
       "claims": 24,
       "tally": {
@@ -654,7 +654,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "17772e974eac675b"
+        "hash": "a80914208d2c0c00"
       },
       "claims": 20,
       "tally": {
@@ -678,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "d2edd5665f3b6463"
+        "hash": "6ab7f0b4e36d9db3"
       },
       "claims": 20,
       "tally": {
@@ -702,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "ddf41c122ef0ac63"
+        "hash": "648766c1f43c9284"
       },
       "claims": 21,
       "tally": {
@@ -726,7 +726,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 12,
-        "hash": "259c0d29e1c7391f"
+        "hash": "828a84775ea321b2"
       },
       "claims": 12,
       "tally": {
@@ -750,7 +750,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 17,
-        "hash": "484714bbbdcdb73e"
+        "hash": "783b48f62ff8cfa7"
       },
       "claims": 17,
       "tally": {
@@ -774,7 +774,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 15,
-        "hash": "37b62e67a270a66d"
+        "hash": "7f4320befefa947a"
       },
       "claims": 15,
       "tally": {
@@ -798,7 +798,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "485dfdd89c94afe6"
+        "hash": "771d6881372d9efc"
       },
       "claims": 23,
       "tally": {
@@ -822,7 +822,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "106937a27b1b0df8"
+        "hash": "812b379e3c42b652"
       },
       "claims": 20,
       "tally": {
@@ -846,7 +846,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "bc487c6e76c8a0fe"
+        "hash": "aadd0d23d5ce2019"
       },
       "claims": 19,
       "tally": {
@@ -870,7 +870,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "080e911b377ad887"
+        "hash": "29bad2c080711e97"
       },
       "claims": 23,
       "tally": {
@@ -894,7 +894,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "1f62848893ee439c"
+        "hash": "79b5fd25c46c9755"
       },
       "claims": 19,
       "tally": {
@@ -918,7 +918,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "485e831e18b9514a"
+        "hash": "ce0486ed3e21fcd2"
       },
       "claims": 18,
       "tally": {
@@ -942,7 +942,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "ac5b839a97348024"
+        "hash": "68adc0f8b2a54e58"
       },
       "claims": 19,
       "tally": {
@@ -966,7 +966,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "01c6eaab0e449f4b"
+        "hash": "4b26b9f4e057f6f9"
       },
       "claims": 19,
       "tally": {
@@ -990,7 +990,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "bb709cf54bec5205"
+        "hash": "2ef10c8fc5b14e0a"
       },
       "claims": 22,
       "tally": {
@@ -1014,7 +1014,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "e24d3a39510a29b8"
+        "hash": "4e1b68b292e5dded"
       },
       "claims": 14,
       "tally": {
@@ -1038,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "a0c2a82ce5b85e5b"
+        "hash": "c6b8445387e74026"
       },
       "claims": 16,
       "tally": {
@@ -1062,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "47522a9c2ec22289"
+        "hash": "76f646066549b55a"
       },
       "claims": 23,
       "tally": {
@@ -1086,7 +1086,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "d0a42ae5d04849d1"
+        "hash": "daaffdb58373ef72"
       },
       "claims": 23,
       "tally": {
@@ -1110,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "637043318ce8ea9e"
+        "hash": "507be4af4a74322a"
       },
       "claims": 22,
       "tally": {
@@ -1134,7 +1134,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 16,
-        "hash": "14e49d20bf0eb1ea"
+        "hash": "31081c607c08e017"
       },
       "claims": 16,
       "tally": {
@@ -1158,7 +1158,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 25,
-        "hash": "cc4c0e7ddcadcc6e"
+        "hash": "57bb2e9fcfcde494"
       },
       "claims": 25,
       "tally": {
@@ -1182,7 +1182,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 36,
-        "hash": "0344cfed34840a9a"
+        "hash": "c54666b489adfdb3"
       },
       "claims": 36,
       "tally": {
@@ -1206,7 +1206,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 21,
-        "hash": "e179c9f93b1b553d"
+        "hash": "d780bea6ba8adb1a"
       },
       "claims": 21,
       "tally": {
@@ -1230,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "be6b0f4f79565e19"
+        "hash": "4005391c7cd71d55"
       },
       "claims": 21,
       "tally": {
@@ -1254,7 +1254,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "3d201a662c3928c8"
+        "hash": "38c569731923e9df"
       },
       "claims": 25,
       "tally": {
@@ -1278,7 +1278,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "c27164e287d702e1"
+        "hash": "173a8d37bb1e17af"
       },
       "claims": 32,
       "tally": {
@@ -1302,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "2c4cb4b08e0a898f"
+        "hash": "4dcafd90b47b86c2"
       },
       "claims": 21,
       "tally": {
@@ -1326,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "3456333af158fc5b"
+        "hash": "aca269f93fa4484a"
       },
       "claims": 19,
       "tally": {
@@ -1350,7 +1350,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "757e218d316806f9"
+        "hash": "0ee4fb763bf75b78"
       },
       "claims": 22,
       "tally": {
@@ -1374,7 +1374,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "6a15df265911fbf7"
+        "hash": "aedd15d0af74e59d"
       },
       "claims": 45,
       "tally": {
@@ -1396,17 +1396,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 28,
         "total": 28,
-        "hash": "3cbcd5bdbc42a015"
+        "hash": "07e8fd3492bab689"
       },
       "claims": 28,
       "tally": {
-        "verified": 18,
-        "attested": 10,
+        "verified": 28,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 1
+        "verifiedCall": 18,
+        "verifiedRead": 10
       }
     },
     {
@@ -1420,17 +1420,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
-        "total": 30,
-        "hash": "0e3b13864082e24a"
+        "observed": 31,
+        "total": 31,
+        "hash": "965dd7adc3633c06"
       },
-      "claims": 30,
+      "claims": 31,
       "tally": {
-        "verified": 21,
-        "attested": 9,
+        "verified": 31,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 20,
-        "verifiedRead": 1
+        "verifiedCall": 21,
+        "verifiedRead": 10
       }
     },
     {
@@ -1446,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "808fedd2a70a3163"
+        "hash": "5e2a7c08657daa53"
       },
       "claims": 23,
       "tally": {
@@ -1470,7 +1470,7 @@
       "instrumentation": {
         "observed": 51,
         "total": 51,
-        "hash": "0ad72552f117ffdd"
+        "hash": "f8e194fd737ea0be"
       },
       "claims": 51,
       "tally": {
@@ -1494,7 +1494,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "c666bbff5c44fed8"
+        "hash": "8d4370e6ab9deab1"
       },
       "claims": 24,
       "tally": {
@@ -1516,17 +1516,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
-        "total": 29,
-        "hash": "c52bfbabc73bd962"
+        "observed": 30,
+        "total": 30,
+        "hash": "b267efd01eefcef6"
       },
-      "claims": 29,
+      "claims": 30,
       "tally": {
-        "verified": 22,
-        "attested": 7,
+        "verified": 30,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
-        "verifiedRead": 1
+        "verifiedCall": 22,
+        "verifiedRead": 8
       }
     },
     {
@@ -1542,7 +1542,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "b948845b7c4e4571"
+        "hash": "ef9ee61e92736c4e"
       },
       "claims": 29,
       "tally": {
@@ -1564,17 +1564,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
+        "observed": 23,
         "total": 23,
-        "hash": "4cc8f83ce8951bca"
+        "hash": "8a63297d10c0cb20"
       },
       "claims": 23,
       "tally": {
-        "verified": 19,
-        "attested": 4,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 18,
-        "verifiedRead": 1
+        "verifiedRead": 5
       }
     },
     {
@@ -1590,7 +1590,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "a3db9dd0456f3b1f"
+        "hash": "1fdef5503cb51fdf"
       },
       "claims": 25,
       "tally": {
@@ -1612,17 +1612,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 28,
-        "total": 32,
-        "hash": "7bec111048b8a8a5"
+        "observed": 33,
+        "total": 33,
+        "hash": "d4fab8d27866b0f3"
       },
-      "claims": 32,
+      "claims": 33,
       "tally": {
-        "verified": 28,
-        "attested": 4,
+        "verified": 33,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 27,
-        "verifiedRead": 1
+        "verifiedCall": 28,
+        "verifiedRead": 5
       }
     },
     {
@@ -1638,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "e60d56c9dc06fff2"
+        "hash": "6251a6781611aeb5"
       },
       "claims": 18,
       "tally": {
@@ -1662,7 +1662,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "5a9611864118e2e0"
+        "hash": "2c8bbdf75724c122"
       },
       "claims": 23,
       "tally": {
@@ -1684,17 +1684,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 31,
+        "observed": 35,
         "total": 35,
-        "hash": "ff753f0d7a051ba1"
+        "hash": "2e60bb8bba2ea2f6"
       },
       "claims": 35,
       "tally": {
-        "verified": 31,
-        "attested": 4,
+        "verified": 35,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 30,
-        "verifiedRead": 1
+        "verifiedRead": 5
       }
     },
     {
@@ -1710,7 +1710,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "95b5c911ad7e7cc0"
+        "hash": "be745b2167ef1320"
       },
       "claims": 23,
       "tally": {
@@ -1732,17 +1732,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
+        "observed": 28,
         "total": 28,
-        "hash": "bf4114894a8f4f61"
+        "hash": "2d533242dae40680"
       },
       "claims": 28,
       "tally": {
-        "verified": 26,
-        "attested": 2,
+        "verified": 28,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 25,
-        "verifiedRead": 1
+        "verifiedRead": 3
       }
     },
     {
@@ -1758,7 +1758,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "843ed199a9626744"
+        "hash": "aa28ad70a1a7fc06"
       },
       "claims": 23,
       "tally": {
@@ -1782,7 +1782,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "6bab9a4628938e89"
+        "hash": "ca47e39bc432621f"
       },
       "claims": 45,
       "tally": {
@@ -1804,17 +1804,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
+        "observed": 21,
         "total": 21,
-        "hash": "065602b1a521f2ee"
+        "hash": "82f9f60524b85356"
       },
       "claims": 21,
       "tally": {
-        "verified": 19,
-        "attested": 2,
+        "verified": 21,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 18,
-        "verifiedRead": 1
+        "verifiedRead": 3
       }
     },
     {
@@ -1828,17 +1828,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
-        "total": 28,
-        "hash": "bae6a10118ae598d"
+        "observed": 29,
+        "total": 29,
+        "hash": "108d0baf48813240"
       },
-      "claims": 28,
+      "claims": 29,
       "tally": {
-        "verified": 26,
-        "attested": 2,
+        "verified": 29,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 25,
-        "verifiedRead": 1
+        "verifiedCall": 26,
+        "verifiedRead": 3
       }
     },
     {
@@ -1854,7 +1854,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "676689c194f698a0"
+        "hash": "b65b3a458ad7b0d6"
       },
       "claims": 27,
       "tally": {
@@ -1878,7 +1878,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "3b8cc5d80b0df68b"
+        "hash": "63d75b2ed7445eb4"
       },
       "claims": 19,
       "tally": {
@@ -1902,7 +1902,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "6732b081e956f15b"
+        "hash": "e44b936f8c362d65"
       },
       "claims": 23,
       "tally": {
@@ -1926,7 +1926,7 @@
       "instrumentation": {
         "observed": 44,
         "total": 44,
-        "hash": "2f3243ed30048813"
+        "hash": "a0006cb98f82599e"
       },
       "claims": 44,
       "tally": {
@@ -1948,17 +1948,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
+        "observed": 22,
         "total": 22,
-        "hash": "f775d8c2c047c2d9"
+        "hash": "7031a75fdf743d10"
       },
       "claims": 22,
       "tally": {
-        "verified": 19,
-        "attested": 3,
+        "verified": 22,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 18,
-        "verifiedRead": 1
+        "verifiedRead": 4
       }
     },
     {
@@ -1972,17 +1972,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 27,
+        "observed": 30,
         "total": 30,
-        "hash": "c2301e6e1af8e316"
+        "hash": "845a6908be119dbf"
       },
       "claims": 30,
       "tally": {
-        "verified": 27,
-        "attested": 3,
+        "verified": 30,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 26,
-        "verifiedRead": 1
+        "verifiedRead": 4
       }
     },
     {
@@ -1996,17 +1996,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 27,
-        "total": 27,
-        "hash": "60c45f8c03f95552"
+        "observed": 70,
+        "total": 70,
+        "hash": "975da085462a00cb"
       },
-      "claims": 27,
+      "claims": 70,
       "tally": {
-        "verified": 27,
+        "verified": 70,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 26,
-        "verifiedRead": 1
+        "verifiedCall": 57,
+        "verifiedRead": 13
       }
     },
     {
@@ -2022,7 +2022,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "e021b3399e78001a"
+        "hash": "421604db64601574"
       },
       "claims": 19,
       "tally": {
@@ -2046,7 +2046,7 @@
       "instrumentation": {
         "observed": 41,
         "total": 41,
-        "hash": "23e0f1578b9ac323"
+        "hash": "e604fdaf109ec5a0"
       },
       "claims": 41,
       "tally": {
@@ -2068,17 +2068,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
+        "observed": 23,
         "total": 23,
-        "hash": "afdc5215c6159d44"
+        "hash": "447177c775a8e094"
       },
       "claims": 23,
       "tally": {
-        "verified": 19,
-        "attested": 4,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 18,
-        "verifiedRead": 1
+        "verifiedRead": 5
       }
     },
     {
@@ -2094,7 +2094,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "3cbfe317aa281f1d"
+        "hash": "1102aad970d6eace"
       },
       "claims": 30,
       "tally": {
@@ -2118,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "7651c26eaf4cfeb0"
+        "hash": "f2dde45f629696ed"
       },
       "claims": 23,
       "tally": {
@@ -2142,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "fe06fbbb78244d7f"
+        "hash": "417fad574f1ec42b"
       },
       "claims": 18,
       "tally": {
@@ -2166,7 +2166,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "9747b7d701e81dab"
+        "hash": "6d8800e6566af35e"
       },
       "claims": 24,
       "tally": {
@@ -2190,7 +2190,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "0a09fc2796e194ac"
+        "hash": "248d7b294511ea47"
       },
       "claims": 22,
       "tally": {
@@ -2214,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "b55e22d1db114c85"
+        "hash": "8d4b78d876b96633"
       },
       "claims": 16,
       "tally": {
@@ -2238,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "9f0d96271f07538c"
+        "hash": "1b94dd03f8cf912c"
       },
       "claims": 19,
       "tally": {
@@ -2262,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "1ae658f1a317083c"
+        "hash": "fc5fb5515d95df19"
       },
       "claims": 21,
       "tally": {
@@ -2286,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "485e831e18b9514a"
+        "hash": "ce0486ed3e21fcd2"
       },
       "claims": 18,
       "tally": {
@@ -2310,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "0591386c74363319"
+        "hash": "01a1f5c6fb72d905"
       },
       "claims": 18,
       "tally": {
@@ -2334,7 +2334,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "e58c11bbfd8035e5"
+        "hash": "715cf87b562b9122"
       },
       "claims": 23,
       "tally": {
@@ -2358,7 +2358,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 45,
-        "hash": "85b97143ff2048b1"
+        "hash": "1ca8ea45d2261228"
       },
       "claims": 45,
       "tally": {
@@ -2382,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "a0321b01eda538a1"
+        "hash": "5dc0b6f8bcb7dd36"
       },
       "claims": 18,
       "tally": {
@@ -2406,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "b62dede1d4889a53"
+        "hash": "4a42e129af0dfd24"
       },
       "claims": 24,
       "tally": {
@@ -2430,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "15de2c819bcba87f"
+        "hash": "0afae2beedc4affb"
       },
       "claims": 21,
       "tally": {
@@ -2454,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "84923351f63f3180"
+        "hash": "989fb51760e2f104"
       },
       "claims": 33,
       "tally": {
@@ -2476,17 +2476,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 40,
-        "total": 40,
-        "hash": "0817d206abc032d2"
+        "observed": 81,
+        "total": 81,
+        "hash": "285ea3518afbbb57"
       },
-      "claims": 40,
+      "claims": 81,
       "tally": {
-        "verified": 40,
+        "verified": 81,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 39,
-        "verifiedRead": 1
+        "verifiedCall": 77,
+        "verifiedRead": 4
       }
     },
     {
@@ -2502,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "c1c18b5eebcfa071"
+        "hash": "e958db5124be676e"
       },
       "claims": 21,
       "tally": {
@@ -2526,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "0dd30b872e85a0c7"
+        "hash": "e2dc08b2a0a9a946"
       },
       "claims": 19,
       "tally": {
@@ -2550,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "178ea6190adaf256"
+        "hash": "0a76ce69368058a5"
       },
       "claims": 19,
       "tally": {
@@ -2574,7 +2574,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 34,
-        "hash": "19827c9dac45063c"
+        "hash": "c6c83b132bfa3463"
       },
       "claims": 34,
       "tally": {
@@ -2598,7 +2598,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 36,
-        "hash": "3d4609fcf871db4c"
+        "hash": "ec61a7c7165b3efc"
       },
       "claims": 36,
       "tally": {
@@ -2622,7 +2622,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 33,
-        "hash": "ec745a1d741ff44f"
+        "hash": "da7101db1c2702aa"
       },
       "claims": 33,
       "tally": {
@@ -2646,7 +2646,7 @@
       "instrumentation": {
         "observed": 60,
         "total": 69,
-        "hash": "abc8fe07227c2cec"
+        "hash": "2f56c0081963b041"
       },
       "claims": 69,
       "tally": {
@@ -2670,7 +2670,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 31,
-        "hash": "3359bf4159de559e"
+        "hash": "9f60e3e19966d70b"
       },
       "claims": 31,
       "tally": {
@@ -2694,7 +2694,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 41,
-        "hash": "da66156ecc8e22d9"
+        "hash": "59330658f7ab1eee"
       },
       "claims": 41,
       "tally": {
@@ -2718,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "7e9e100c56eeda08"
+        "hash": "aca1f38d903ec0ec"
       },
       "claims": 22,
       "tally": {
@@ -2742,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "1ae658f1a317083c"
+        "hash": "fc5fb5515d95df19"
       },
       "claims": 21,
       "tally": {
@@ -2766,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "36e0c5d24fcccdb9"
+        "hash": "8b308f07740f3c37"
       },
       "claims": 22,
       "tally": {
@@ -2790,7 +2790,7 @@
       "instrumentation": {
         "observed": 38,
         "total": 41,
-        "hash": "45a3a9ce19b66845"
+        "hash": "257653bb76677090"
       },
       "claims": 41,
       "tally": {
@@ -2814,7 +2814,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "1a3609cfc6bc203a"
+        "hash": "caec5f2712352b8a"
       },
       "claims": 23,
       "tally": {
@@ -2838,7 +2838,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 18,
-        "hash": "d1066c5e877e7cec"
+        "hash": "d46d097c70a4a67e"
       },
       "claims": 18,
       "tally": {
@@ -2862,7 +2862,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 20,
-        "hash": "7bdbfc4001c1f641"
+        "hash": "3c620664a1ff4b4d"
       },
       "claims": 20,
       "tally": {
@@ -2886,7 +2886,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "6887beeadb1d981b"
+        "hash": "65886e9ed9cd5cbe"
       },
       "claims": 19,
       "tally": {
@@ -2910,7 +2910,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "6558680d912f9334"
+        "hash": "d049e6bb4f045bd6"
       },
       "claims": 19,
       "tally": {
@@ -2934,7 +2934,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "f8bfad112a6f38ea"
+        "hash": "d3911e61a89e54fa"
       },
       "claims": 32,
       "tally": {
@@ -2958,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "b8f0f3a11b208399"
+        "hash": "3e2c9a954d21ee0e"
       },
       "claims": 16,
       "tally": {
@@ -2982,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "d29f7a56202052b3"
+        "hash": "0395f9b090622e30"
       },
       "claims": 20,
       "tally": {
@@ -3006,7 +3006,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 29,
-        "hash": "7301f31cb3d2a47f"
+        "hash": "729727b306638326"
       },
       "claims": 29,
       "tally": {
@@ -3030,7 +3030,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "fbe8e6de94054e7b"
+        "hash": "37e6a892dce758d4"
       },
       "claims": 22,
       "tally": {
@@ -3054,7 +3054,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "42bc261781e4fc84"
+        "hash": "98705b7d6be165e2"
       },
       "claims": 32,
       "tally": {
@@ -3078,7 +3078,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 26,
-        "hash": "454601606c207598"
+        "hash": "19a8c1905534f6d0"
       },
       "claims": 26,
       "tally": {
@@ -3102,7 +3102,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 31,
-        "hash": "6b2f613023b2e66d"
+        "hash": "3a76a5f4a8fee410"
       },
       "claims": 31,
       "tally": {
@@ -3126,7 +3126,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "fd06c1290cb55092"
+        "hash": "5b032f578c49a0f1"
       },
       "claims": 16,
       "tally": {
@@ -3150,7 +3150,7 @@
       "instrumentation": {
         "observed": 9,
         "total": 9,
-        "hash": "eca4fa381f6255a5"
+        "hash": "703632bb7f1d0a83"
       },
       "claims": 9,
       "tally": {
@@ -3174,7 +3174,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "3991544d04ff8815"
+        "hash": "5a16c7296513e14c"
       },
       "claims": 23,
       "tally": {
@@ -3198,7 +3198,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 27,
-        "hash": "6e0619e6bc24269c"
+        "hash": "432d3bee5c48ad12"
       },
       "claims": 27,
       "tally": {
@@ -3222,7 +3222,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "7f4216d8ca924d2a"
+        "hash": "c8f6a556271d931c"
       },
       "claims": 23,
       "tally": {
@@ -3246,7 +3246,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "7c4e2f39d2101d3d"
+        "hash": "39da310c28a6d4a7"
       },
       "claims": 25,
       "tally": {
@@ -3270,7 +3270,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "8a6d6354084a88d7"
+        "hash": "52fd59aad23b4bf2"
       },
       "claims": 27,
       "tally": {
@@ -3294,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "7965cf6cc1ae604d"
+        "hash": "de074208a79fc93f"
       },
       "claims": 22,
       "tally": {
@@ -3318,7 +3318,7 @@
       "instrumentation": {
         "observed": 46,
         "total": 48,
-        "hash": "88cda1363d5ba09d"
+        "hash": "69301c8421af0fce"
       },
       "claims": 48,
       "tally": {
@@ -3342,7 +3342,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "72c37aad7fa5750c"
+        "hash": "c70362cd56ec6bcf"
       },
       "claims": 14,
       "tally": {
@@ -3366,7 +3366,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 51,
-        "hash": "4b0e872217ef3239"
+        "hash": "72233a73524cde8f"
       },
       "claims": 51,
       "tally": {
@@ -3390,7 +3390,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 30,
-        "hash": "f752dcd01ad2d95b"
+        "hash": "4a7633eb5b9307a5"
       },
       "claims": 30,
       "tally": {
@@ -3414,7 +3414,7 @@
       "instrumentation": {
         "observed": 95,
         "total": 96,
-        "hash": "088232e6168a0345"
+        "hash": "334a1cefc5764d09"
       },
       "claims": 96,
       "tally": {
@@ -3438,7 +3438,7 @@
       "instrumentation": {
         "observed": 48,
         "total": 49,
-        "hash": "127a10021522d765"
+        "hash": "25cf26cb33e12a76"
       },
       "claims": 49,
       "tally": {
@@ -3462,7 +3462,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "398dfbaa0e664279"
+        "hash": "416d2ae8de6bb8ff"
       },
       "claims": 20,
       "tally": {
@@ -3486,7 +3486,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 36,
-        "hash": "57613723a6208e14"
+        "hash": "4359a4a1755fed5a"
       },
       "claims": 36,
       "tally": {
@@ -3510,7 +3510,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "a8d277e683f36306"
+        "hash": "4acee85ffb38e2bf"
       },
       "claims": 36,
       "tally": {
@@ -3527,25 +3527,25 @@
       "denominator": "coverageRequired",
       "total": 963,
       "required": 963,
-      "claimed": 516,
-      "attested": 68,
-      "verified": 448,
-      "requiredClaimed": 516,
-      "requiredVerified": 448,
+      "claimed": 599,
+      "attested": 32,
+      "verified": 567,
+      "requiredClaimed": 599,
+      "requiredVerified": 567,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 515,
-      "unstated": 515,
-      "verifiedViaCall": 443,
-      "verifiedViaRead": 5,
+      "uncovered": 396,
+      "unstated": 396,
+      "verifiedViaCall": 515,
+      "verifiedViaRead": 52,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 443,
-      "requiredVerifiedViaRead": 5,
+      "requiredVerifiedViaCall": 515,
+      "requiredVerifiedViaRead": 52,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.46,
-      "claimedRate": 0.536,
-      "verifiedRate": 0.465,
-      "allUnitsVerifiedRate": 0.465,
+      "requiredVerifiedViaCallRate": 0.535,
+      "claimedRate": 0.622,
+      "verifiedRate": 0.589,
+      "allUnitsVerifiedRate": 0.589,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -3584,19 +3584,19 @@
       "total": 3130,
       "required": 3130,
       "claimed": 182,
-      "attested": 44,
-      "verified": 138,
+      "attested": 43,
+      "verified": 139,
       "requiredClaimed": 182,
-      "requiredVerified": 138,
+      "requiredVerified": 139,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 2992,
-      "unstated": 2992,
+      "uncovered": 2991,
+      "unstated": 2991,
       "verifiedViaCall": 126,
-      "verifiedViaRead": 12,
+      "verifiedViaRead": 13,
       "verifiedViaUnknown": 0,
       "requiredVerifiedViaCall": 126,
-      "requiredVerifiedViaRead": 12,
+      "requiredVerifiedViaRead": 13,
       "requiredVerifiedViaUnknown": 0,
       "requiredVerifiedViaCallRate": 0.04,
       "claimedRate": 0.058,
@@ -6697,6 +6697,14 @@
       ]
     },
     {
+      "unit": "renderer.scene.Camera.pipeline",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
       "unit": "Camera.screenScale",
       "tier": "core",
       "via": "call",
@@ -6715,6 +6723,14 @@
     {
       "unit": "renderer.scene.Camera.setViewportInOrientedSpace",
       "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.camera",
+      "tier": "core",
       "via": "call",
       "examples": [
         "camera-viewport-props"
@@ -7035,7 +7051,7 @@
     {
       "unit": "dragonBones.Armature.name",
       "tier": "supporting",
-      "via": "read",
+      "via": "call",
       "examples": [
         "dragonbones-basic"
       ]
@@ -7969,6 +7985,96 @@
       ]
     },
     {
+      "unit": "math.Mat3.m00",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m01",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m02",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m03",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m04",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m05",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m06",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m07",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3.m08",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
+      "unit": "math.Mat3",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat3-elements",
+        "math-mat3-transforms"
+      ]
+    },
+    {
       "unit": "math.Mat3.rotate",
       "tier": "core",
       "via": "call",
@@ -8342,6 +8448,70 @@
       ]
     },
     {
+      "unit": "math.Mat4.m00",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m05",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m10",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m15",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m03",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m07",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m11",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
+      "unit": "math.Mat4",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-transform"
+      ]
+    },
+    {
       "unit": "math.Quat.slerp",
       "tier": "core",
       "via": "call",
@@ -8439,6 +8609,42 @@
       "via": "call",
       "examples": [
         "math-quat-components"
+      ]
+    },
+    {
+      "unit": "math.Quat.x",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-quat-components",
+        "math-quat-interp"
+      ]
+    },
+    {
+      "unit": "math.Quat.y",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-quat-components",
+        "math-quat-interp"
+      ]
+    },
+    {
+      "unit": "math.Quat.z",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-quat-components",
+        "math-quat-interp"
+      ]
+    },
+    {
+      "unit": "math.Quat.w",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-quat-components",
+        "math-quat-interp"
       ]
     },
     {
@@ -8546,6 +8752,15 @@
       ]
     },
     {
+      "unit": "math.Quat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-quat-interp",
+        "physics-3d-basic"
+      ]
+    },
+    {
       "unit": "math.Rect.intersects",
       "tier": "core",
       "via": "call",
@@ -8594,6 +8809,38 @@
       "unit": "math.Rect.constructor",
       "tier": "core",
       "via": "call",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.x",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.y",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.width",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-rect-ops"
+      ]
+    },
+    {
+      "unit": "math.Rect.height",
+      "tier": "core",
+      "via": "read",
       "examples": [
         "math-rect-ops"
       ]
@@ -8674,6 +8921,22 @@
       "unit": "math.Size.constructor",
       "tier": "core",
       "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.width",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.height",
+      "tier": "core",
+      "via": "read",
       "examples": [
         "math-size-ops"
       ]
@@ -8988,6 +9251,24 @@
       ]
     },
     {
+      "unit": "math.Vec2.x",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec2-components",
+        "math-vec2-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec2.y",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec2-components",
+        "math-vec2-equality-misc"
+      ]
+    },
+    {
       "unit": "math.Vec2.equals",
       "tier": "core",
       "via": "call",
@@ -9049,6 +9330,16 @@
       "via": "call",
       "examples": [
         "math-vec2-equality-misc"
+      ]
+    },
+    {
+      "unit": "math.Vec2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec2-equality-misc",
+        "physics-2d-basic",
+        "physics-2d-collision"
       ]
     },
     {
@@ -9369,6 +9660,36 @@
       ]
     },
     {
+      "unit": "math.Vec3.x",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-components",
+        "math-vec3-equality-misc",
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.y",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-components",
+        "math-vec3-equality-misc",
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.z",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-components",
+        "math-vec3-equality-misc",
+        "math-vec3-length-products"
+      ]
+    },
+    {
       "unit": "math.Vec3.equals",
       "tier": "core",
       "via": "call",
@@ -9467,6 +9788,326 @@
     },
     {
       "unit": "math.Vec3.angle",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.UNIT_X",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.UNIT_Y",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.UNIT_Z",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.RIGHT",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.UP",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.FORWARD",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.ZERO",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.ONE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.NEG_ONE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.zero",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.copy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.ceil",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.floor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.min",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.max",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.round",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.scaleAndAdd",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.negate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.invert",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.invertSafe",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.slerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.random",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.transformMat4Normal",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.transformMat3",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.transformAffine",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.transformQuat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.transformRTS",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.transformInverseRTS",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.rotateX",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.rotateY",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.rotateZ",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.rotateN",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.toArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.fromArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.signedAngle",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.projectOnPlane",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.project",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.moveTowards",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec3-length-products"
+      ]
+    },
+    {
+      "unit": "math.Vec3.generateOrthogonal",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -9661,6 +10302,38 @@
       "unit": "math.Vec4.constructor",
       "tier": "core",
       "via": "call",
+      "examples": [
+        "math-vec4-components"
+      ]
+    },
+    {
+      "unit": "math.Vec4.x",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-components"
+      ]
+    },
+    {
+      "unit": "math.Vec4.y",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-components"
+      ]
+    },
+    {
+      "unit": "math.Vec4.z",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-components"
+      ]
+    },
+    {
+      "unit": "math.Vec4.w",
+      "tier": "core",
+      "via": "read",
       "examples": [
         "math-vec4-components"
       ]
@@ -10377,6 +11050,334 @@
       ]
     },
     {
+      "unit": "Node.components",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.name",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.uuid",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.children",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.active",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.activeInHierarchy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.parent",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.scene",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.EventType",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.NodeSpace",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.TransformBit",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.isNode",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.position",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.x",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.y",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.z",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.worldPosition",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.worldPositionX",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.worldPositionY",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.worldPositionZ",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.rotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.eulerAngles",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.angle",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.worldRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.scale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.worldScale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.matrix",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.worldMatrix",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.forward",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.up",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.right",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.mobility",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.layer",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.hasChangedFlags",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.attr",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.invalidateChildren",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.isTransformDirty",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.pauseSystemEvents",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.resumeSystemEvents",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.resetHasChangedFlags",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
+      "unit": "Node.clearNodeArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "node-hierarchy"
+      ]
+    },
+    {
       "unit": "NodePool.constructor",
       "tier": "advanced",
       "via": "call",
@@ -10481,15 +11482,6 @@
         "ui-asset-loading",
         "ui-components",
         "ui-layout"
-      ]
-    },
-    {
-      "unit": "math.Vec2",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "physics-2d-basic",
-        "physics-2d-collision"
       ]
     },
     {
@@ -10609,14 +11601,6 @@
       "via": "call",
       "examples": [
         "physics-2d-collision"
-      ]
-    },
-    {
-      "unit": "math.Quat",
-      "tier": "core",
-      "via": "call",
-      "examples": [
-        "physics-3d-basic"
       ]
     },
     {
@@ -12884,13 +13868,6 @@
       ]
     },
     {
-      "unit": "renderer.scene.Camera.pipeline",
-      "tier": "advanced",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
       "unit": "sp.spine.ColorTimeline.constructor",
       "tier": "supporting",
       "examples": [
@@ -13205,276 +14182,6 @@
       "tier": "core",
       "examples": [
         "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m00",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m01",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m02",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m03",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m04",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m04",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m05",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m06",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m07",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m08",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m00",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m05",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m10",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m15",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m03",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m07",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m11",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Quat.x",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.y",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.z",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.w",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Rect.x",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.y",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.width",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.height",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.width",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.height",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Vec2.x",
-      "tier": "core",
-      "examples": [
-        "math-vec2-components",
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.y",
-      "tier": "core",
-      "examples": [
-        "math-vec2-components",
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.x",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components",
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.y",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components",
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.z",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components",
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.x",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
-      ]
-    },
-    {
-      "unit": "math.Vec4.y",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
-      ]
-    },
-    {
-      "unit": "math.Vec4.z",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
-      ]
-    },
-    {
-      "unit": "math.Vec4.w",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
       ]
     },
     {
@@ -13985,13 +14692,6 @@
       ]
     },
     {
-      "unit": "renderer.scene.Camera.pipeline",
-      "tier": "advanced",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
       "unit": "sp.spine.ColorTimeline.constructor",
       "tier": "supporting",
       "examples": [
@@ -14306,276 +15006,6 @@
       "tier": "core",
       "examples": [
         "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m00",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m01",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m02",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m03",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m04",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m04",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m05",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m06",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m07",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat3.m08",
-      "tier": "core",
-      "examples": [
-        "math-mat3-elements",
-        "math-mat3-transforms"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m00",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m05",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m10",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m15",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m03",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m07",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Mat4.m11",
-      "tier": "core",
-      "examples": [
-        "math-mat4-transform"
-      ]
-    },
-    {
-      "unit": "math.Quat.x",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.y",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.z",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Quat.w",
-      "tier": "core",
-      "examples": [
-        "math-quat-components",
-        "math-quat-interp"
-      ]
-    },
-    {
-      "unit": "math.Rect.x",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.y",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.width",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Rect.height",
-      "tier": "core",
-      "examples": [
-        "math-rect-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.width",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Size.height",
-      "tier": "core",
-      "examples": [
-        "math-size-ops"
-      ]
-    },
-    {
-      "unit": "math.Vec2.x",
-      "tier": "core",
-      "examples": [
-        "math-vec2-components",
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec2.y",
-      "tier": "core",
-      "examples": [
-        "math-vec2-components",
-        "math-vec2-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.x",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components",
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.y",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components",
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec3.z",
-      "tier": "core",
-      "examples": [
-        "math-vec3-components",
-        "math-vec3-equality-misc"
-      ]
-    },
-    {
-      "unit": "math.Vec4.x",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
-      ]
-    },
-    {
-      "unit": "math.Vec4.y",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
-      ]
-    },
-    {
-      "unit": "math.Vec4.z",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
-      ]
-    },
-    {
-      "unit": "math.Vec4.w",
-      "tier": "core",
-      "examples": [
-        "math-vec4-components"
       ]
     },
     {
@@ -15112,46 +15542,6 @@
     "math.Vec2.toArray",
     "math.Vec2.fromArray",
     "math.v2",
-    "math.Vec3.UNIT_X",
-    "math.Vec3.UNIT_Y",
-    "math.Vec3.UNIT_Z",
-    "math.Vec3.RIGHT",
-    "math.Vec3.UP",
-    "math.Vec3.FORWARD",
-    "math.Vec3.ZERO",
-    "math.Vec3.ONE",
-    "math.Vec3.NEG_ONE",
-    "math.Vec3.zero",
-    "math.Vec3.clone",
-    "math.Vec3.copy",
-    "math.Vec3.ceil",
-    "math.Vec3.floor",
-    "math.Vec3.min",
-    "math.Vec3.max",
-    "math.Vec3.round",
-    "math.Vec3.scaleAndAdd",
-    "math.Vec3.negate",
-    "math.Vec3.invert",
-    "math.Vec3.invertSafe",
-    "math.Vec3.slerp",
-    "math.Vec3.random",
-    "math.Vec3.transformMat4Normal",
-    "math.Vec3.transformMat3",
-    "math.Vec3.transformAffine",
-    "math.Vec3.transformQuat",
-    "math.Vec3.transformRTS",
-    "math.Vec3.transformInverseRTS",
-    "math.Vec3.rotateX",
-    "math.Vec3.rotateY",
-    "math.Vec3.rotateZ",
-    "math.Vec3.rotateN",
-    "math.Vec3.toArray",
-    "math.Vec3.fromArray",
-    "math.Vec3.signedAngle",
-    "math.Vec3.projectOnPlane",
-    "math.Vec3.project",
-    "math.Vec3.moveTowards",
-    "math.Vec3.generateOrthogonal",
     "math.v3",
     "math.Vec4",
     "math.Vec4.ZERO",
@@ -15216,7 +15606,6 @@
     "math.Quat.fromAngleZ",
     "math.Quat.toArray",
     "math.quat",
-    "math.Mat3",
     "math.Mat3.IDENTITY",
     "math.Mat3.clone",
     "math.Mat3.copy",
@@ -15233,7 +15622,6 @@
     "math.Mat3.multiplyScalarAndAdd",
     "math.Mat3.toEuler",
     "math.Mat3.constructor",
-    "math.Mat4",
     "math.Mat4.IDENTITY",
     "math.Mat4.clone",
     "math.Mat4.copy",
@@ -15260,6 +15648,7 @@
     "math.Mat4.multiplyScalarAndAdd",
     "math.Mat4.m01",
     "math.Mat4.m02",
+    "math.Mat4.m04",
     "math.Mat4.m06",
     "math.Mat4.m08",
     "math.Mat4.m09",
@@ -15332,47 +15721,6 @@
     "math.MathBase",
     "math.MathBase.createFloatArray",
     "math.MathBase.array",
-    "Node.components",
-    "Node.name",
-    "Node.uuid",
-    "Node.children",
-    "Node.active",
-    "Node.activeInHierarchy",
-    "Node.parent",
-    "Node.scene",
-    "Node.attr",
-    "Node.EventType",
-    "Node.NodeSpace",
-    "Node.TransformBit",
-    "Node.isNode",
-    "Node.position",
-    "Node.x",
-    "Node.y",
-    "Node.z",
-    "Node.worldPosition",
-    "Node.worldPositionX",
-    "Node.worldPositionY",
-    "Node.worldPositionZ",
-    "Node.rotation",
-    "Node.eulerAngles",
-    "Node.angle",
-    "Node.worldRotation",
-    "Node.scale",
-    "Node.worldScale",
-    "Node.matrix",
-    "Node.worldMatrix",
-    "Node.forward",
-    "Node.up",
-    "Node.right",
-    "Node.mobility",
-    "Node.layer",
-    "Node.hasChangedFlags",
-    "Node.invalidateChildren",
-    "Node.isTransformDirty",
-    "Node.pauseSystemEvents",
-    "Node.resumeSystemEvents",
-    "Node.resetHasChangedFlags",
-    "Node.clearNodeArray",
     "Scene.renderScene",
     "Scene.globals",
     "Scene.addComponent",
@@ -15390,7 +15738,6 @@
     "Camera.ISO",
     "Camera.TARGET_TEXTURE_CHANGE",
     "Camera.constructor",
-    "Camera.camera",
     "Camera.priority",
     "Camera.visibility",
     "Camera.clearFlags",
@@ -15445,5 +15792,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3499
+  "unclaimedRequired": 3416
 }

@@ -32,6 +32,14 @@ Wave 6 added 63 verified units with 0 removals: Core +3, Important +59, Advanced
 
 The current API report has zero stale examples and zero evidence schema gaps. Core is 448/963 (46.5%), Important 165/272 (60.7%), and Advanced 138/3,130 (4.4%). Stable examples are 144/120, so that count gate passes. The Release gate remains NOT MET: Core needs 515 more verified units; Important needs at least 80 more to reach 245/272 and has 107 unverified units without explicit status; Advanced needs 2,366 more to reach 2,504/3,130, and still has 2,992 uncovered units. Advanced must ultimately have zero uncovered units, with documented-only capped at 626 (20% of its denominator). Do not alter the 100%/90%/80% thresholds.
 
+### 2026-09-27 Wave 7 — Core Node and math surfaces
+
+Wave 7 adds 120 verified units with 0 removals relative to committed Wave 6: Core +119 and Advanced +1. The work covers 41 Node APIs, 43 Vec3 constants/static operations/component fields, and verified value-type fields for Mat3, Mat4, Quat, Rect, Size, Vec2, and Vec4. It also corrects the Camera example to read `renderer.scene.Camera.pipeline` through `Camera.camera`, and removes a duplicate/wrong `math.Mat4.m04` claim from the Mat3 example.
+
+The canonical V1.1 run completed 140/140 PASS, with 1 promotion, 0 demotions, and 3,547 verified / 173 attested / 0 unproven API/example bindings. Gallery is 211/211; the V1.2 matrix remains 39/39; DevTools is 5/5. Specification validation is 145/145 frozen and compliance is 0 fail / 1 documented Draco warning. Jest passed 32 suites / 263 tests; typecheck, Prettier, API trace selftest, consumer acceptance (575 exports), test inventory (32/263), and 1,317 documentation-reference checks passed. The release coverage report has 0 stale evidence and 0 schema gaps.
+
+Current coverage is Core 567/963 (58.9%), Important 165/272 (60.7%), and Advanced 139/3,130 (4.4%). Stable examples remain 144/120. Release is NOT MET: Core gap 396; Important needs 80 more verified to reach 245/272 and has 107 unverified units without explicit status; Advanced needs 2,365 more verified to reach 2,504/3,130 and has 2,991 uncovered. Advanced ultimately allows at most 626 documented-only units and requires zero uncovered units. Do not weaken the release thresholds.
+
 The production `verify:api-coverage` command now applies the taskbook's 100%/90%/80% thresholds and rejects stale/schema-gap evidence. It also exposes `documentedOnly`, `uncovered`, and `unstated` counts for the Important and Advanced closure rules. It is expected to fail until real behavior proof and statuses close those gaps.
 
 ## Coverage waves

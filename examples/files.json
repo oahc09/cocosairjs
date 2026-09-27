@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T04:44:27.732Z",
-  "revision": "775ad39",
+  "generatedAt": "2026-09-27T07:33:48.066Z",
+  "revision": "c3774ab",
   "examples": [
     {
       "dir": "anim-position",
@@ -1321,10 +1321,10 @@
       "specStatus": "frozen",
       "requiresDevTools": false,
       "learning": {
-        "goal": "掌握 Camera 属性面：后处理开关/管线对象/屏幕缩放只读、SKYBOX 常量与定向空间视口写入（try 兜底）。",
+        "goal": "掌握 Camera 属性面：后处理开关、渲染相机的管线名称和屏幕缩放只读、SKYBOX 常量与定向空间视口写入。",
         "points": [
           "postProcess/usePostProcess 布尔回读",
-          "pipeline 为对象或空",
+          "通过 Camera.camera 读取 renderer.scene.Camera.pipeline 字符串（默认可为空）",
           "SKYBOX 常量存在性"
         ]
       },
@@ -1351,7 +1351,9 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "Camera.camera",
+          "renderer.scene.Camera.pipeline"
         ],
         "claims": [
           "createAirApp",
@@ -1377,7 +1379,8 @@
           "renderer.scene.Camera.pipeline",
           "Camera.screenScale",
           "Camera.ClearFlag",
-          "renderer.scene.Camera.setViewportInOrientedSpace"
+          "renderer.scene.Camera.setViewportInOrientedSpace",
+          "Camera.camera"
         ]
       },
       "capabilities": [],
@@ -1411,12 +1414,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "6adc2647f4bc",
-        "source": "307ddd895cedd106",
+        "spec": "101577bb4132",
+        "source": "587583bd16af75f6",
         "candidate": "8746fc59b6aa0408",
-        "verified": 23,
-        "attested": 1,
-        "units": 24
+        "verified": 25,
+        "attested": 0,
+        "units": 25
       }
     },
     {
@@ -6029,7 +6032,8 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Mat3"
         ],
         "claims": [
           "createAirApp",
@@ -6054,12 +6058,12 @@
           "math.Mat3.m01",
           "math.Mat3.m02",
           "math.Mat3.m03",
-          "math.Mat4.m04",
           "math.Mat3.m04",
           "math.Mat3.m05",
           "math.Mat3.m06",
           "math.Mat3.m07",
-          "math.Mat3.m08"
+          "math.Mat3.m08",
+          "math.Mat3"
         ]
       },
       "capabilities": [],
@@ -6093,11 +6097,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "31de2c390b2d",
-        "source": "a632d38095b1c3f4",
+        "spec": "c0d42af29914",
+        "source": "16bbc63646599b56",
         "candidate": "8746fc59b6aa0408",
-        "verified": 18,
-        "attested": 10,
+        "verified": 28,
+        "attested": 0,
         "units": 28
       }
     },
@@ -6141,7 +6145,8 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Mat3"
         ],
         "claims": [
           "createAirApp",
@@ -6173,7 +6178,8 @@
           "math.Mat3.m05",
           "math.Mat3.m06",
           "math.Mat3.m07",
-          "math.Mat3.m08"
+          "math.Mat3.m08",
+          "math.Mat3"
         ]
       },
       "capabilities": [],
@@ -6207,12 +6213,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "6c31008b566b",
-        "source": "5c9f18341c661804",
+        "spec": "11d86aca4ffd",
+        "source": "b910e492ab3c99fd",
         "candidate": "8746fc59b6aa0408",
-        "verified": 21,
-        "attested": 9,
-        "units": 30
+        "verified": 31,
+        "attested": 0,
+        "units": 31
       }
     },
     {
@@ -6627,7 +6633,8 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Mat4"
         ],
         "claims": [
           "createAirApp",
@@ -6658,7 +6665,8 @@
           "math.Mat4.m15",
           "math.Mat4.m03",
           "math.Mat4.m07",
-          "math.Mat4.m11"
+          "math.Mat4.m11",
+          "math.Mat4"
         ]
       },
       "capabilities": [],
@@ -6692,12 +6700,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b2387018b204",
-        "source": "c8f8e75fec62af9a",
+        "spec": "3a33e8470406",
+        "source": "b0d669079a3e27a3",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 7,
-        "units": 29
+        "verified": 30,
+        "attested": 0,
+        "units": 30
       }
     },
     {
@@ -6922,8 +6930,8 @@
         "spec": "eb9e9de757e9",
         "source": "a51696c718c2af5c",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
-        "attested": 4,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -7076,7 +7084,8 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Quat"
         ],
         "claims": [
           "createAirApp",
@@ -7110,7 +7119,8 @@
           "math.Quat.x",
           "math.Quat.y",
           "math.Quat.z",
-          "math.Quat.w"
+          "math.Quat.w",
+          "math.Quat"
         ]
       },
       "capabilities": [],
@@ -7144,12 +7154,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4c392d8aca8f",
-        "source": "913fd22173e04c57",
+        "spec": "ffa5adffa8a9",
+        "source": "4cbb6eb95ec9b214",
         "candidate": "8746fc59b6aa0408",
-        "verified": 28,
-        "attested": 4,
-        "units": 32
+        "verified": 33,
+        "attested": 0,
+        "units": 33
       }
     },
     {
@@ -7477,8 +7487,8 @@
         "spec": "027f9c6f22cf",
         "source": "7c55d767a20d0caa",
         "candidate": "8746fc59b6aa0408",
-        "verified": 31,
-        "attested": 4,
+        "verified": 35,
+        "attested": 0,
         "units": 35
       }
     },
@@ -7698,8 +7708,8 @@
         "spec": "5d6a3acc6095",
         "source": "c3de2ed1cbe0da9f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 26,
-        "attested": 2,
+        "verified": 28,
+        "attested": 0,
         "units": 28
       }
     },
@@ -8056,8 +8066,8 @@
         "spec": "df85dd1e8123",
         "source": "1e97ac75f2a9f38f",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
-        "attested": 2,
+        "verified": 21,
+        "attested": 0,
         "units": 21
       }
     },
@@ -8101,7 +8111,8 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Vec2"
         ],
         "claims": [
           "createAirApp",
@@ -8131,7 +8142,8 @@
           "math.Vec2.clampf",
           "math.Vec2.transformMat4",
           "math.Vec2.x",
-          "math.Vec2.y"
+          "math.Vec2.y",
+          "math.Vec2"
         ]
       },
       "capabilities": [],
@@ -8165,12 +8177,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2077aead34e2",
-        "source": "e8065eefca9b5e94",
+        "spec": "070df733f068",
+        "source": "f5ad1388893fcc15",
         "candidate": "8746fc59b6aa0408",
-        "verified": 26,
-        "attested": 2,
-        "units": 28
+        "verified": 29,
+        "attested": 0,
+        "units": 29
       }
     },
     {
@@ -8737,8 +8749,8 @@
         "spec": "09efb0d2382c",
         "source": "ba28a0e1f5ed04ad",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
-        "attested": 3,
+        "verified": 22,
+        "attested": 0,
         "units": 22
       }
     },
@@ -8852,8 +8864,8 @@
         "spec": "103676084a48",
         "source": "1721c45a5d158484",
         "candidate": "8746fc59b6aa0408",
-        "verified": 27,
-        "attested": 3,
+        "verified": 30,
+        "attested": 0,
         "units": 30
       }
     },
@@ -8898,7 +8910,50 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.Vec3.UNIT_X",
+          "math.Vec3.UNIT_Y",
+          "math.Vec3.UNIT_Z",
+          "math.Vec3.RIGHT",
+          "math.Vec3.UP",
+          "math.Vec3.FORWARD",
+          "math.Vec3.ZERO",
+          "math.Vec3.ONE",
+          "math.Vec3.NEG_ONE",
+          "math.Vec3.zero",
+          "math.Vec3.clone",
+          "math.Vec3.copy",
+          "math.Vec3.ceil",
+          "math.Vec3.floor",
+          "math.Vec3.min",
+          "math.Vec3.max",
+          "math.Vec3.round",
+          "math.Vec3.scaleAndAdd",
+          "math.Vec3.negate",
+          "math.Vec3.invert",
+          "math.Vec3.invertSafe",
+          "math.Vec3.slerp",
+          "math.Vec3.random",
+          "math.Vec3.transformMat4Normal",
+          "math.Vec3.transformMat3",
+          "math.Vec3.transformAffine",
+          "math.Vec3.transformQuat",
+          "math.Vec3.transformRTS",
+          "math.Vec3.transformInverseRTS",
+          "math.Vec3.rotateX",
+          "math.Vec3.rotateY",
+          "math.Vec3.rotateZ",
+          "math.Vec3.rotateN",
+          "math.Vec3.toArray",
+          "math.Vec3.fromArray",
+          "math.Vec3.signedAngle",
+          "math.Vec3.projectOnPlane",
+          "math.Vec3.project",
+          "math.Vec3.moveTowards",
+          "math.Vec3.generateOrthogonal",
+          "math.Vec3.x",
+          "math.Vec3.y",
+          "math.Vec3.z"
         ],
         "claims": [
           "createAirApp",
@@ -8927,7 +8982,50 @@
           "math.Vec3.normalize",
           "math.Vec3.distance",
           "math.Vec3.squaredDistance",
-          "math.Vec3.angle"
+          "math.Vec3.angle",
+          "math.Vec3.UNIT_X",
+          "math.Vec3.UNIT_Y",
+          "math.Vec3.UNIT_Z",
+          "math.Vec3.RIGHT",
+          "math.Vec3.UP",
+          "math.Vec3.FORWARD",
+          "math.Vec3.ZERO",
+          "math.Vec3.ONE",
+          "math.Vec3.NEG_ONE",
+          "math.Vec3.zero",
+          "math.Vec3.clone",
+          "math.Vec3.copy",
+          "math.Vec3.ceil",
+          "math.Vec3.floor",
+          "math.Vec3.min",
+          "math.Vec3.max",
+          "math.Vec3.round",
+          "math.Vec3.scaleAndAdd",
+          "math.Vec3.negate",
+          "math.Vec3.invert",
+          "math.Vec3.invertSafe",
+          "math.Vec3.slerp",
+          "math.Vec3.random",
+          "math.Vec3.transformMat4Normal",
+          "math.Vec3.transformMat3",
+          "math.Vec3.transformAffine",
+          "math.Vec3.transformQuat",
+          "math.Vec3.transformRTS",
+          "math.Vec3.transformInverseRTS",
+          "math.Vec3.rotateX",
+          "math.Vec3.rotateY",
+          "math.Vec3.rotateZ",
+          "math.Vec3.rotateN",
+          "math.Vec3.toArray",
+          "math.Vec3.fromArray",
+          "math.Vec3.signedAngle",
+          "math.Vec3.projectOnPlane",
+          "math.Vec3.project",
+          "math.Vec3.moveTowards",
+          "math.Vec3.generateOrthogonal",
+          "math.Vec3.x",
+          "math.Vec3.y",
+          "math.Vec3.z"
         ]
       },
       "capabilities": [],
@@ -8961,12 +9059,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "4f8bbed4c64f",
-        "source": "b991bc0d2aa6dfb8",
+        "spec": "5708a65d0f42",
+        "source": "02d565acd823bc68",
         "candidate": "8746fc59b6aa0408",
-        "verified": 27,
+        "verified": 70,
         "attested": 0,
-        "units": 27
+        "units": 70
       }
     },
     {
@@ -9312,8 +9410,8 @@
         "spec": "8d3ecabd9775",
         "source": "f63c8c756aa249fa",
         "candidate": "8746fc59b6aa0408",
-        "verified": 19,
-        "attested": 4,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -11033,7 +11131,48 @@
         ],
         "supporting": [
           "Node.setScale",
-          "Component"
+          "Component",
+          "Node.components",
+          "Node.name",
+          "Node.uuid",
+          "Node.children",
+          "Node.active",
+          "Node.activeInHierarchy",
+          "Node.parent",
+          "Node.scene",
+          "Node.EventType",
+          "Node.NodeSpace",
+          "Node.TransformBit",
+          "Node.isNode",
+          "Node.position",
+          "Node.x",
+          "Node.y",
+          "Node.z",
+          "Node.worldPosition",
+          "Node.worldPositionX",
+          "Node.worldPositionY",
+          "Node.worldPositionZ",
+          "Node.rotation",
+          "Node.eulerAngles",
+          "Node.angle",
+          "Node.worldRotation",
+          "Node.scale",
+          "Node.worldScale",
+          "Node.matrix",
+          "Node.worldMatrix",
+          "Node.forward",
+          "Node.up",
+          "Node.right",
+          "Node.mobility",
+          "Node.layer",
+          "Node.hasChangedFlags",
+          "Node.attr",
+          "Node.invalidateChildren",
+          "Node.isTransformDirty",
+          "Node.pauseSystemEvents",
+          "Node.resumeSystemEvents",
+          "Node.resetHasChangedFlags",
+          "Node.clearNodeArray"
         ],
         "claims": [
           "createAirApp",
@@ -11075,7 +11214,48 @@
           "Node.getWorldRS",
           "Node.getWorldRT",
           "Node.setRTS",
-          "Node.getPathInHierarchy"
+          "Node.getPathInHierarchy",
+          "Node.components",
+          "Node.name",
+          "Node.uuid",
+          "Node.children",
+          "Node.active",
+          "Node.activeInHierarchy",
+          "Node.parent",
+          "Node.scene",
+          "Node.EventType",
+          "Node.NodeSpace",
+          "Node.TransformBit",
+          "Node.isNode",
+          "Node.position",
+          "Node.x",
+          "Node.y",
+          "Node.z",
+          "Node.worldPosition",
+          "Node.worldPositionX",
+          "Node.worldPositionY",
+          "Node.worldPositionZ",
+          "Node.rotation",
+          "Node.eulerAngles",
+          "Node.angle",
+          "Node.worldRotation",
+          "Node.scale",
+          "Node.worldScale",
+          "Node.matrix",
+          "Node.worldMatrix",
+          "Node.forward",
+          "Node.up",
+          "Node.right",
+          "Node.mobility",
+          "Node.layer",
+          "Node.hasChangedFlags",
+          "Node.attr",
+          "Node.invalidateChildren",
+          "Node.isTransformDirty",
+          "Node.pauseSystemEvents",
+          "Node.resumeSystemEvents",
+          "Node.resetHasChangedFlags",
+          "Node.clearNodeArray"
         ]
       },
       "capabilities": [
@@ -11115,12 +11295,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "1bfb8e53fd5c",
-        "source": "cb3105bd3025cda6",
+        "spec": "9cad82ae2901",
+        "source": "6647945ed1133b9b",
         "candidate": "8746fc59b6aa0408",
-        "verified": 40,
+        "verified": 81,
         "attested": 0,
-        "units": 40
+        "units": 81
       }
     },
     {

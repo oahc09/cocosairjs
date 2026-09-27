@@ -153,3 +153,123 @@ Wait for the example's terminal `window.__decoderState` before reading resource 
 - **Notes**: Added a bounded decoder-state wait and reran the complete Gallery artifact check: 211/211 PASS.
 
 ---
+
+## [ERR-20260927-006] g1-extensionless-contract-import
+
+**Logged**: 2026-09-27T07:34:28Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+The G1 browser trial timed out because a new TypeScript helper was imported without the `.js` extension required by the repository's source resolver.
+
+### Error
+The page received a 404 for the extensionless helper import and never published `window.__trialProbe`.
+
+### Context
+- Command: `node tools/verify/g1-trial-run.cjs --ids=math-vec3-length-products`
+- The repo dev server resolves `.js` imports to sibling `.ts` sources; it does not resolve extensionless relative imports.
+
+### Suggested Fix
+Use explicit `.js` extensions for relative ESM imports, including imports whose source file is `.ts`.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `examples/math-vec3-length-products/src/main.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T07:34:28Z
+- **Notes**: Changed the import to `./vec3-core-contract.js`; the 43-check Vec3 browser trial passed.
+
+---
+
+## [ERR-20260927-007] duplicate-mat3-api-claim
+
+**Logged**: 2026-09-27T07:34:28Z
+**Priority**: medium
+**Status**: resolved
+**Area**: docs
+
+### Summary
+A corrected Mat3 field claim remained duplicated in the frozen example specification.
+
+### Error
+Strict specification validation rejected both `api.claims` and `api.evidence` for duplicate `math.Mat3.m04` entries.
+
+### Context
+- The original `math-mat3-elements` specification listed `math.Mat4.m04` at the line that actually reads `Mat3.m04`.
+- Rebinding that unit to the real declaration exposed the duplicate in the same specification.
+
+### Suggested Fix
+Keep a single `math.Mat3.m04` claim and evidence row, and verify against the AST inventory.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `examples/math-mat3-elements/example.json`
+
+### Resolution
+- **Resolved**: 2026-09-27T07:34:28Z
+- **Notes**: Removed the duplicate after correction; strict validation returned to 145/145 and the focused Mat3 V1.1 run passed.
+
+---
+
+## [ERR-20260927-008] test-inventory-parallel-contention
+
+**Logged**: 2026-09-27T07:44:43Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+Running test-inventory alongside the full Jest suite caused the inventory runner to miss one long-running suite.
+
+### Error
+The concurrent inventory check observed 32 suites / 262 tests and reported `smoke-28-benchmark-regression.test.ts` missing, while the separate Jest run completed 32/32 suites and 263/263 tests.
+
+### Context
+- Commands: `npm test` and `npm run verify:test-inventory` launched concurrently.
+- The smoke suite took about 68 seconds under concurrent load; the inventory check was then rerun alone.
+
+### Suggested Fix
+Run test-inventory after Jest has exited instead of concurrently with another Jest process.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/verify/test-inventory.cjs`
+
+### Resolution
+- **Resolved**: 2026-09-27T07:44:43Z
+- **Notes**: The sequential `npm run verify:test-inventory` rerun passed with 32 suites / 263 tests and no failures.
+
+---
+
+## [ERR-20260927-009] instance-data-trace-owner-resolution
+
+**Logged**: 2026-09-27T07:44:43Z
+**Priority**: medium
+**Status**: resolved
+**Area**: tests
+
+### Summary
+Value-type fields and the renderer Camera pipeline are instance-owned data properties, so prototype-only tracing could not prove their reads.
+
+### Error
+The first full V1.1 pass with generic instance-field tracking produced false `api-executed` failures for unrelated DragonBones and GLTF asset data, and aliased math constructors did not share the instance instrumentation registry.
+
+### Context
+- Commands: focused and full `tools/verify/v11-examples-verify.cjs` runs during Wave 7.
+- The valid owners are inventory-declared Core math value types and `renderer.scene.Camera`; field instrumentation must attach to the constructed or accessor-returned instance.
+
+### Suggested Fix
+Gate own-field instrumentation by inventory parent and property kind, and register constructor aliases by class identity/name before reading fields.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/verify/api-trace.cjs`
+
+### Resolution
+- **Resolved**: 2026-09-27T07:44:43Z
+- **Notes**: Limited instrumentation to declared math value-type properties and renderer.scene.Camera fields, added returned-object instrumentation, and completed the full V1.1 run at 140/140 PASS with 0 unproven.
+
+---

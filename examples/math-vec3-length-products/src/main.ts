@@ -18,6 +18,7 @@ import {
     utils,
     primitives,
 } from 'cocosair';
+import { installVec3CoreProbe } from './vec3-core-contract.js';
 
 // ---- 共享脚手架：可见帧 + 场景就绪（math-vec3-length-products）----
 var app = await createAirApp({ canvas: '#GameCanvas' });
@@ -95,4 +96,5 @@ probe.topic = 'math-vec3-length-products';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+installVec3CoreProbe();
 console.log('[math-vec3-length-products] running');

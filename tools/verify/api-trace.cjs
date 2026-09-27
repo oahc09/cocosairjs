@@ -32,6 +32,7 @@ const crypto = require('crypto');
 const REPO = path.resolve(__dirname, '..', '..');
 
 const TRACE_FILE_NAME = 'cocosair.traced.js';
+const API_INVENTORY = JSON.parse(fs.readFileSync(path.join(REPO, 'docs', 'example-api-inventory.json'), 'utf8'));
 
 function sha16 (buf) { return crypto.createHash('sha256').update(buf).digest('hex').slice(0, 16); }
 
@@ -142,15 +143,55 @@ function generateTraceModule (exportNames, units, realUrl) {
   lines.push(`import * as __CC from '${realUrl || '/build/cocosair.module.js'}';`);
   lines.push('__traceRuntime();');
   lines.push(`const __UNITS = ${JSON.stringify(units)};`);
+  const kinds = Object.fromEntries(units.map((unit) => [unit, API_INVENTORY.units[unit]?.kind || null]));
+  const parents = Object.fromEntries(units.map((unit) => [unit, API_INVENTORY.units[unit]?.parent || null]));
+  lines.push(`const __KINDS = ${JSON.stringify(kinds)};`);
+  lines.push(`const __PARENTS = ${JSON.stringify(parents)};`);
   lines.push(`const __NAMES = ${JSON.stringify(exportNames)};`);
   lines.push('function __traceRuntime() {');
-  lines.push(`  const T = window.__apiTrace = { calls: Object.create(null), reads: Object.create(null), harnessCalls: Object.create(null), mechanism: Object.create(null), alias: Object.create(null), canonical: new Map(), notes: [], observing: 0, startedAt: Date.now() };
+  lines.push(`  const T = window.__apiTrace = { calls: Object.create(null), reads: Object.create(null), harnessCalls: Object.create(null), mechanism: Object.create(null), alias: Object.create(null), canonical: new Map(), instanceData: new Map(), instanceDataNames: new Map(), instanceDataSeen: new WeakSet(), notes: [], observing: 0, startedAt: Date.now() };
   // T.observing：门禁自己的读回（Material.getProperty / MeshRenderer.getMaterial …）会走同一张
   // 被打桩的原型，不隔离就能凭"验证器读了一次"把 claim 刷成 executed。读回期间计数改记 harnessCalls
   // ——它只用于证明隔离边界确实生效，永不参与 verified 判定。
   const hit = (key) => { const k = T.alias[key] || key; if (T.observing > 0) { T.harnessCalls[k] = (T.harnessCalls[k] || 0) + 1; return; } T.calls[k] = (T.calls[k] || 0) + 1; };
   T.hit = hit;
   const note = (msg) => { if (T.notes.length < 200) { T.notes.push(String(msg).slice(0, 160)); } };
+  const recordRead = (key) => {
+    if (T.observing > 0) { T.harnessCalls[key] = (T.harnessCalls[key] || 0) + 1; }
+    else { T.reads[key] = (T.reads[key] || 0) + 1; }
+  };
+  T.registerInstanceData = (ctor, prop, key) => {
+    const entries = T.instanceData.get(ctor) || [];
+    if (!entries.some((entry) => entry.prop === prop && entry.key === key)) { entries.push({ prop, key }); }
+    T.instanceData.set(ctor, entries);
+    const name = ctor && ctor.name;
+    if (name) {
+      const named = T.instanceDataNames.get(name) || [];
+      if (!named.some((entry) => entry.prop === prop && entry.key === key)) { named.push({ prop, key }); }
+      T.instanceDataNames.set(name, named);
+    }
+  };
+  T.instrumentInstanceData = (instance, ctor) => {
+    if (!instance || typeof instance !== 'object' || T.instanceDataSeen.has(instance)) { return; }
+    const entries = T.instanceData.get(ctor) || (ctor && T.instanceDataNames.get(ctor.name));
+    if (!entries || !entries.length) { return; }
+    T.instanceDataSeen.add(instance);
+    for (const { prop, key } of entries) {
+      const d = Object.getOwnPropertyDescriptor(instance, prop);
+      if (!d || d.get || d.set || !d.configurable) { note(key + ': instance data field unavailable'); continue; }
+      let value = d.value;
+      const descriptor = {
+        get () { recordRead(key); return value; },
+        enumerable: d.enumerable,
+        configurable: true,
+      };
+      if (d.writable) { descriptor.set = function (next) { value = next; }; }
+      try {
+        Object.defineProperty(instance, prop, descriptor);
+        T.mechanism[key] = 'instance-data-property';
+      } catch (e) { note(key + ': instance data patch failed ' + String(e.message || e).slice(0, 60)); }
+    }
+  };
 
   const fnMeta = (orig, name) => {
     const w = function () { hit(name); return orig.apply(this, arguments); };
@@ -169,7 +210,12 @@ function generateTraceModule (exportNames, units, realUrl) {
     T.mechanism[key] = T.mechanism[key] || 'export-wrapper';
     if (!T.canonical.has(orig)) { T.canonical.set(orig, key); }
     const handler = {
-      construct (target, args, newTarget) { hit(key); return Reflect.construct(target, args, newTarget === proxy ? target : newTarget); },
+      construct (target, args, newTarget) {
+        hit(key);
+        const instance = Reflect.construct(target, args, newTarget === proxy ? target : newTarget);
+        T.instrumentInstanceData(instance, target);
+        return instance;
+      },
       apply (target, thisArg, args) { hit(key); return Reflect.apply(target, thisArg, args); },
       get (target, prop) {
         if (typeof prop === 'string') { T.reads[key] = (T.reads[key] || 0) + 1; }
@@ -217,7 +263,17 @@ function generateTraceModule (exportNames, units, realUrl) {
     if (!d) { note(key + ': no own descriptor on ' + mechanism); return false; }
     try {
       if (d.get || d.set) {
-        const get = d.get ? function () { hit(key); return d.get.apply(this, arguments); } : undefined;
+        const get = d.get ? function () {
+          hit(key);
+          const value = d.get.apply(this, arguments);
+          if (value && typeof value === 'object') {
+            const prototype = Object.getPrototypeOf(value);
+            if (prototype && typeof prototype.constructor === 'function') {
+              T.instrumentInstanceData(value, prototype.constructor);
+            }
+          }
+          return value;
+        } : undefined;
         const set = d.set ? function () { hit(key); return d.set.apply(this, arguments); } : undefined;
         Object.defineProperty(obj, prop, { get, set, enumerable: d.enumerable, configurable: true });
       } else if (typeof d.value === 'function') {
@@ -241,20 +297,19 @@ function generateTraceModule (exportNames, units, realUrl) {
           ? Object.getOwnPropertyDescriptor(obj.prototype, prop)
           : null;
         // Function.length/name are own data properties on every class constructor. If the
-        // declaration also has an instance method with that name, let the prototype patch
-        // below handle it instead of shadowing the declared API with constructor metadata.
-        if (protoDescriptor && typeof protoDescriptor.value === 'function' && !d.enumerable && !d.writable) {
-          note(key + ': constructor metadata defers to prototype method');
+        // declaration also has a same-named prototype method/accessor, defer to that member
+        // instead of shadowing the declared API with constructor metadata.
+        const prototypeApiMember = protoDescriptor && (
+          typeof protoDescriptor.value === 'function' || protoDescriptor.get || protoDescriptor.set
+        );
+        if (prototypeApiMember && !d.enumerable && !d.writable) {
+          note(key + ': constructor metadata defers to prototype member');
           return false;
         }
         if (d.configurable) {
           let value = d.value;
           const descriptor = {
-            get () {
-              if (T.observing > 0) { T.harnessCalls[key] = (T.harnessCalls[key] || 0) + 1; }
-              else { T.reads[key] = (T.reads[key] || 0) + 1; }
-              return value;
-            },
+            get () { recordRead(key); return value; },
             enumerable: d.enumerable,
             configurable: true,
           };
@@ -354,6 +409,13 @@ function generateTraceModule (exportNames, units, realUrl) {
       // class has no static member with this name.
       done = staticDone || T.patchOwn(host.prototype, leaf, unit, 'prototype');
       if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
+      const owner = __PARENTS[unit];
+      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera');
+      if (!done && __KINDS[unit] === 'property' && ownDataOwner) {
+        T.registerInstanceData(host, leaf, unit);
+        T.mechanism[unit] = 'instance-data';
+        done = true;
+      }
     } else {
       done = T.patchOwn(host, leaf, unit, 'namespace-member');
     }
@@ -398,7 +460,7 @@ function normalizeTrace (raw, units) {
     // constructor call. Its class-object read is evidence of that class use;
     // ordinary member reads still do not prove method execution.
     const classRead = mech === 'frozen-namespace-class';
-    const dataPropertyRead = mech.indexOf('data-property') === 0 && r > 0;
+    const dataPropertyRead = (mech.indexOf('data-property') === 0 || mech.indexOf('instance-data-property') === 0) && r > 0;
     const via = n > 0 ? 'call' : (r > 0 && (unit.indexOf('.') < 0 || classRead || dataPropertyRead) ? 'read' : null);
     if (via) { state = 'executed'; } else if (mech === 'unresolved') { state = 'unresolved'; } else if (mech === 'data-member' || mech === 'namespace') { state = 'not-instrumentable'; } else { state = 'not-observed'; }
     out[unit] = {
@@ -423,7 +485,7 @@ function writeTraceWorkspace (workspaceDir, units, realUrl) {
 if (require.main === module) {
   const argv = process.argv.slice(2);
   if (argv.includes('--selftest')) {
-    const code = generateTraceModule(['Node', 'createAirApp', 'Vec3'], ['createAirApp', 'Node', 'Node.setPosition', 'Node.constructor', 'math.Vec3'], '/build/cocosair.module.js');
+    const code = generateTraceModule(['Node', 'createAirApp', 'Vec3'], ['createAirApp', 'Node', 'Node.setPosition', 'Node.constructor', 'math.Vec3', 'math.Vec3.x'], '/build/cocosair.module.js');
     const names = bundleExportNames();
     console.log('[api-trace] bundle exports:', names.length, '| wrapper bytes:', code.length);
     if (!names.includes('Node') || !names.includes('createAirApp')) { throw new Error('selftest: expected export names missing'); }
@@ -449,6 +511,10 @@ if (require.main === module) {
     if (norm2.units['Layers.enableLayers'].state !== 'not-observed') { throw new Error('selftest: instrumented member with 0 calls must stay not-observed despite reads'); }
     const normData = normalizeTrace({ calls: {}, reads: { 'Label.HorizontalAlign': 2 }, mechanism: { 'Label.HorizontalAlign': 'data-property→static' }, alias: {} }, ['Label.HorizontalAlign']);
     if (normData.units['Label.HorizontalAlign'].state !== 'executed' || normData.units['Label.HorizontalAlign'].via !== 'read' || normData.units['Label.HorizontalAlign'].reads !== 2) { throw new Error('selftest: an instrumented static data-property read must be executed(via=read)'); }
+    const normInstance = normalizeTrace({ calls: {}, reads: { 'math.Vec3.x': 1 }, mechanism: { 'math.Vec3.x': 'instance-data-property' }, alias: {} }, ['math.Vec3.x']);
+    if (normInstance.units['math.Vec3.x'].state !== 'executed' || normInstance.units['math.Vec3.x'].via !== 'read') { throw new Error('selftest: an instrumented instance data-property read must be executed(via=read)'); }
+    if (!/__KINDS = \{[^}]*"math.Vec3.x":"property"/.test(code)) { throw new Error('selftest: inventory kind map missing for instance property'); }
+    if (!/__PARENTS = \{[^}]*"math.Vec3.x":"math.Vec3"/.test(code) || !/T\.registerInstanceData\(host, leaf, unit\)/.test(code)) { throw new Error('selftest: instance-data owner mapping missing'); }
     if (!/T\.reads\[key\]/.test(code)) { throw new Error('selftest: read trap missing from generated wrapper'); }
     if (!/T\.snapshot = \(\)/.test(code)) { throw new Error('selftest: snapshot() projection missing from generated wrapper'); }
     if (!/T\.observing > 0/.test(code)) { throw new Error('selftest: harness-suppression guard missing from generated wrapper'); }

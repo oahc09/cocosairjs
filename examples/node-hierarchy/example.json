@@ -21,7 +21,51 @@
   },
   "api": {
     "primary": ["Node.addChild", "Node.getChildByName"],
-    "supporting": ["Node.setScale", "Component"],
+    "supporting": [
+      "Node.setScale",
+      "Component",
+      "Node.components",
+      "Node.name",
+      "Node.uuid",
+      "Node.children",
+      "Node.active",
+      "Node.activeInHierarchy",
+      "Node.parent",
+      "Node.scene",
+      "Node.EventType",
+      "Node.NodeSpace",
+      "Node.TransformBit",
+      "Node.isNode",
+      "Node.position",
+      "Node.x",
+      "Node.y",
+      "Node.z",
+      "Node.worldPosition",
+      "Node.worldPositionX",
+      "Node.worldPositionY",
+      "Node.worldPositionZ",
+      "Node.rotation",
+      "Node.eulerAngles",
+      "Node.angle",
+      "Node.worldRotation",
+      "Node.scale",
+      "Node.worldScale",
+      "Node.matrix",
+      "Node.worldMatrix",
+      "Node.forward",
+      "Node.up",
+      "Node.right",
+      "Node.mobility",
+      "Node.layer",
+      "Node.hasChangedFlags",
+      "Node.attr",
+      "Node.invalidateChildren",
+      "Node.isTransformDirty",
+      "Node.pauseSystemEvents",
+      "Node.resumeSystemEvents",
+      "Node.resetHasChangedFlags",
+      "Node.clearNodeArray"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -62,7 +106,48 @@
       "Node.getWorldRS",
       "Node.getWorldRT",
       "Node.setRTS",
-      "Node.getPathInHierarchy"
+      "Node.getPathInHierarchy",
+      "Node.components",
+      "Node.name",
+      "Node.uuid",
+      "Node.children",
+      "Node.active",
+      "Node.activeInHierarchy",
+      "Node.parent",
+      "Node.scene",
+      "Node.EventType",
+      "Node.NodeSpace",
+      "Node.TransformBit",
+      "Node.isNode",
+      "Node.position",
+      "Node.x",
+      "Node.y",
+      "Node.z",
+      "Node.worldPosition",
+      "Node.worldPositionX",
+      "Node.worldPositionY",
+      "Node.worldPositionZ",
+      "Node.rotation",
+      "Node.eulerAngles",
+      "Node.angle",
+      "Node.worldRotation",
+      "Node.scale",
+      "Node.worldScale",
+      "Node.matrix",
+      "Node.worldMatrix",
+      "Node.forward",
+      "Node.up",
+      "Node.right",
+      "Node.mobility",
+      "Node.layer",
+      "Node.hasChangedFlags",
+      "Node.attr",
+      "Node.invalidateChildren",
+      "Node.isTransformDirty",
+      "Node.pauseSystemEvents",
+      "Node.resumeSystemEvents",
+      "Node.resetHasChangedFlags",
+      "Node.clearNodeArray"
     ],
     "forbiddenShortcut": ["用三个平级独立节点冒充父子层级", "直接设置 world 变换绕过 parent × local 合成"],
     "evidence": [
@@ -305,6 +390,252 @@
         "source": "src/transform-contract.ts",
         "sourceLocation": "L46",
         "validator": "no-runtime-error"
+      },
+      {
+        "api": "Node.components",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "Node.name",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L8"
+      },
+      {
+        "api": "Node.uuid",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L53"
+      },
+      {
+        "api": "Node.children",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L54"
+      },
+      {
+        "api": "Node.active",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L55"
+      },
+      {
+        "api": "Node.activeInHierarchy",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L56"
+      },
+      {
+        "api": "Node.parent",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Node.scene",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L58"
+      },
+      {
+        "api": "Node.EventType",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L59"
+      },
+      {
+        "api": "Node.NodeSpace",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "Node.TransformBit",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "Node.isNode",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L104"
+      },
+      {
+        "api": "Node.position",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L19"
+      },
+      {
+        "api": "Node.x",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node.y",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node.z",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L12"
+      },
+      {
+        "api": "Node.worldPosition",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "Node.worldPositionX",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L67"
+      },
+      {
+        "api": "Node.worldPositionY",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L68"
+      },
+      {
+        "api": "Node.worldPositionZ",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L69"
+      },
+      {
+        "api": "Node.rotation",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Node.eulerAngles",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L71"
+      },
+      {
+        "api": "Node.angle",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L72"
+      },
+      {
+        "api": "Node.worldRotation",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L73"
+      },
+      {
+        "api": "Node.scale",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Node.worldScale",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L75"
+      },
+      {
+        "api": "Node.matrix",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "Node.worldMatrix",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L76"
+      },
+      {
+        "api": "Node.forward",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L77"
+      },
+      {
+        "api": "Node.up",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L78"
+      },
+      {
+        "api": "Node.right",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L79"
+      },
+      {
+        "api": "Node.mobility",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "Node.layer",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L81"
+      },
+      {
+        "api": "Node.hasChangedFlags",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "Node.attr",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "Node.invalidateChildren",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "Node.isTransformDirty",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "Node.pauseSystemEvents",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L107"
+      },
+      {
+        "api": "Node.resumeSystemEvents",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "Node.resetHasChangedFlags",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "Node.clearNodeArray",
+        "source": "src/transform-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
       }
     ]
   },
@@ -450,11 +781,11 @@
     }
   },
   "promotion": {
-    "spec": "1bfb8e53fd5c",
-    "source": "cb3105bd3025cda6",
+    "spec": "9cad82ae2901",
+    "source": "6647945ed1133b9b",
     "candidate": "8746fc59b6aa0408",
-    "verified": 40,
+    "verified": 81,
     "attested": 0,
-    "units": 40
+    "units": 81
   }
 }

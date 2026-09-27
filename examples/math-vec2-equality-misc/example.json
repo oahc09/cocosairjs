@@ -35,7 +35,8 @@
     "math.Vec2.clampf",
     "math.Vec2.transformMat4",
     "math.Vec2.x",
-    "math.Vec2.y"
+    "math.Vec2.y",
+    "math.Vec2"
   ],
   "capabilities": [],
   "learning": {
@@ -66,7 +67,8 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "math.Vec2"
     ],
     "claims": [
       "createAirApp",
@@ -96,7 +98,8 @@
       "math.Vec2.clampf",
       "math.Vec2.transformMat4",
       "math.Vec2.x",
-      "math.Vec2.y"
+      "math.Vec2.y",
+      "math.Vec2"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -267,6 +270,12 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L86"
+      },
+      {
+        "api": "math.Vec2",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L75"
       }
     ]
   },
@@ -299,11 +308,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "2077aead34e2",
-    "source": "e8065eefca9b5e94",
+    "spec": "070df733f068",
+    "source": "f5ad1388893fcc15",
     "candidate": "8746fc59b6aa0408",
-    "verified": 26,
-    "attested": 2,
-    "units": 28
+    "verified": 29,
+    "attested": 0,
+    "units": 29
   }
 }

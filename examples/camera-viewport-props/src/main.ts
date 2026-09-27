@@ -85,14 +85,6 @@ T('usePost', () => {
         return 'threw';
     }
 });
-T('pipeline', () => {
-    try {
-        var p = (camera as any).pipeline;
-        return p ? 'obj' : 'null';
-    } catch (e) {
-        return 'threw';
-    }
-});
 T('screenScale', () => {
     try {
         var s = (camera as any).screenScale;
@@ -120,4 +112,8 @@ probe.topic = 'camera-viewport-props';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+T('pipeline', () => {
+    const rendererCamera = camera.camera;
+    return typeof rendererCamera.pipeline === 'string' ? rendererCamera.pipeline : 'invalid-type';
+});
 console.log('[camera-viewport-props] running');

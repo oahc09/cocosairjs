@@ -44,11 +44,75 @@ export async function verifyTransforms(): Promise<void> {
         vector('rotation-translation-keeps-position', new Vec3(rt.m12, rt.m13, rt.m14), 10, 6, 0);
         check('rotation-translation-excludes-scale', Math.abs(Math.hypot(rt.m00, rt.m01, rt.m02) - 1) < 0.0001);
         check('hierarchy-path', child.getPathInHierarchy().endsWith('ContractRoot/Probe'), child.getPathInHierarchy());
+
+        root.attr({ name: 'ContractRoot' });
+        check('node-attr', root.name === 'ContractRoot', root.name);
+        const nodeReads: Record<string, unknown> = {
+            'Node.components': root.components,
+            'Node.name': root.name,
+            'Node.uuid': root.uuid,
+            'Node.children': root.children,
+            'Node.active': root.active,
+            'Node.activeInHierarchy': root.activeInHierarchy,
+            'Node.parent': child.parent,
+            'Node.scene': root.scene,
+            'Node.EventType': Node.EventType,
+            'Node.NodeSpace': Node.NodeSpace,
+            'Node.TransformBit': Node.TransformBit,
+            'Node.position': child.position,
+            'Node.x': child.x,
+            'Node.y': child.y,
+            'Node.z': child.z,
+            'Node.worldPosition': child.worldPosition,
+            'Node.worldPositionX': child.worldPositionX,
+            'Node.worldPositionY': child.worldPositionY,
+            'Node.worldPositionZ': child.worldPositionZ,
+            'Node.rotation': child.rotation,
+            'Node.eulerAngles': child.eulerAngles,
+            'Node.angle': child.angle,
+            'Node.worldRotation': child.worldRotation,
+            'Node.scale': child.scale,
+            'Node.worldScale': child.worldScale,
+            'Node.worldMatrix': child.worldMatrix,
+            'Node.forward': child.forward,
+            'Node.up': child.up,
+            'Node.right': child.right,
+            'Node.mobility': child.mobility,
+            'Node.layer': child.layer,
+            'Node.hasChangedFlags': child.hasChangedFlags,
+        };
+        for (const [name, value] of Object.entries(nodeReads)) {
+            const type = typeof value;
+            check(
+                `node-read:${name}`,
+                value === null ||
+                    type === 'boolean' ||
+                    type === 'string' ||
+                    (typeof value === 'number' && Number.isFinite(value)) ||
+                    type === 'object',
+                `${type}:${String(value)}`,
+            );
+        }
+        const localMatrix = Mat4.fromRTS(
+            new Mat4(),
+            child.getRotation(new Quat()),
+            child.getPosition(new Vec3()),
+            child.getScale(new Vec3()),
+        );
+        child.matrix = localMatrix;
+        vector('node-matrix-setter-keeps-world-position', child.getWorldPosition(new Vec3()), 10, 6, 0);
+        check('node-static-isNode', Node.isNode(root) && !Node.isNode({}));
+        root.invalidateChildren(Node.TransformBit.POSITION);
+        check('node-isTransformDirty', root.isTransformDirty());
+        root.pauseSystemEvents(false);
+        root.resumeSystemEvents(false);
     } finally {
         root.destroy();
     }
     await new Promise((resolve) => setTimeout(resolve, 120));
     check('scratch-hierarchy-destroyed', !isValid(root) && !isValid(child));
+    Node.resetHasChangedFlags();
+    Node.clearNodeArray();
     probe.ok = true;
     probe.ready = true;
 }

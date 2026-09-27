@@ -31,12 +31,17 @@
     "renderer.scene.Camera.pipeline",
     "Camera.screenScale",
     "Camera.ClearFlag",
-    "renderer.scene.Camera.setViewportInOrientedSpace"
+    "renderer.scene.Camera.setViewportInOrientedSpace",
+    "Camera.camera"
   ],
   "capabilities": [],
   "learning": {
-    "goal": "掌握 Camera 属性面：后处理开关/管线对象/屏幕缩放只读、SKYBOX 常量与定向空间视口写入（try 兜底）。",
-    "points": ["postProcess/usePostProcess 布尔回读", "pipeline 为对象或空", "SKYBOX 常量存在性"]
+    "goal": "掌握 Camera 属性面：后处理开关、渲染相机的管线名称和屏幕缩放只读、SKYBOX 常量与定向空间视口写入。",
+    "points": [
+      "postProcess/usePostProcess 布尔回读",
+      "通过 Camera.camera 读取 renderer.scene.Camera.pipeline 字符串（默认可为空）",
+      "SKYBOX 常量存在性"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
@@ -58,7 +63,9 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "Camera.camera",
+      "renderer.scene.Camera.pipeline"
     ],
     "claims": [
       "createAirApp",
@@ -84,7 +91,8 @@
       "renderer.scene.Camera.pipeline",
       "Camera.screenScale",
       "Camera.ClearFlag",
-      "renderer.scene.Camera.setViewportInOrientedSpace"
+      "renderer.scene.Camera.setViewportInOrientedSpace",
+      "Camera.camera"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -212,13 +220,13 @@
         "api": "renderer.scene.Camera.pipeline",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L88"
+        "sourceLocation": "L115"
       },
       {
         "api": "Camera.screenScale",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L96"
+        "sourceLocation": "L88"
       },
       {
         "api": "Camera.ClearFlag",
@@ -230,7 +238,13 @@
         "api": "renderer.scene.Camera.setViewportInOrientedSpace",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L113"
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "Camera.camera",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
       }
     ]
   },
@@ -263,11 +277,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "6adc2647f4bc",
-    "source": "307ddd895cedd106",
+    "spec": "101577bb4132",
+    "source": "587583bd16af75f6",
     "candidate": "8746fc59b6aa0408",
-    "verified": 23,
-    "attested": 1,
-    "units": 24
+    "verified": 25,
+    "attested": 0,
+    "units": 25
   }
 }

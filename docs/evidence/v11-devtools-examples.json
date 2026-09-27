@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T04:44:27.459Z",
+  "measuredAt": "2026-09-27T07:33:47.801Z",
   "runner": "tools/verify/v11-devtools-examples.cjs",
   "mode": "devtools-session-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
@@ -22,8 +22,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 11,
-        "bytes": 47357,
-        "hash": "82c92a48589f160f",
+        "bytes": 50467,
+        "hash": "30220bde9fecc5fc",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -323,7 +323,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -345,8 +345,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 47669,
-        "hash": "d1066c5e877e7cec",
+        "bytes": 51116,
+        "hash": "d46d097c70a4a67e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -783,8 +783,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 47726,
-        "hash": "7bdbfc4001c1f641",
+        "bytes": 51307,
+        "hash": "3c620664a1ff4b4d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1221,7 +1221,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=10814 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -1256,13 +1256,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 8092,
+        "hash": "c692055cc4c1622b"
       },
       "assetDigests": [],
       "errors": []
@@ -1278,8 +1278,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 47700,
-        "hash": "6887beeadb1d981b",
+        "bytes": 51219,
+        "hash": "65886e9ed9cd5cbe",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1697,7 +1697,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10814 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -1732,13 +1732,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 8092,
-        "hash": "c692055cc4c1622b"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -1754,8 +1754,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 47699,
-        "hash": "6558680d912f9334",
+        "bytes": 51216,
+        "hash": "d049e6bb4f045bd6",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2212,8 +2212,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 11,
-        "bytes": 47357,
-        "hash": "82c92a48589f160f",
+        "bytes": 50467,
+        "hash": "30220bde9fecc5fc",
         "notes": [
           "Node.addChild: no own descriptor on static"
         ],
@@ -2513,7 +2513,7 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
@@ -2535,8 +2535,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 47669,
-        "hash": "d1066c5e877e7cec",
+        "bytes": 51116,
+        "hash": "d46d097c70a4a67e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2973,8 +2973,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 47726,
-        "hash": "7bdbfc4001c1f641",
+        "bytes": 51307,
+        "hash": "3c620664a1ff4b4d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3411,7 +3411,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10810 viewport=480x360"
+          "detail": "bytes=10814 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -3446,13 +3446,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 0→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-create-node.png",
-        "bytes": 8090,
-        "hash": "3d3bda8e2112064a"
+        "bytes": 8092,
+        "hash": "c692055cc4c1622b"
       },
       "assetDigests": [],
       "errors": []
@@ -3468,8 +3468,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 47700,
-        "hash": "6887beeadb1d981b",
+        "bytes": 51219,
+        "hash": "65886e9ed9cd5cbe",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3887,7 +3887,7 @@
         {
           "validatorId": "captureFrame",
           "state": "PASS",
-          "detail": "bytes=10814 viewport=480x360"
+          "detail": "bytes=10810 viewport=480x360"
         },
         {
           "validatorId": "visible-frame",
@@ -3922,13 +3922,13 @@
         {
           "validatorId": "detach:loop-alive",
           "state": "PASS",
-          "detail": "Director.EVENT_AFTER_DRAW frames 0→54 after session close (must keep growing)"
+          "detail": "Director.EVENT_AFTER_DRAW frames 1→55 after session close (must keep growing)"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/rc-error-report.png",
-        "bytes": 8092,
-        "hash": "c692055cc4c1622b"
+        "bytes": 8090,
+        "hash": "3d3bda8e2112064a"
       },
       "assetDigests": [],
       "errors": []
@@ -3944,8 +3944,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 47699,
-        "hash": "6558680d912f9334",
+        "bytes": 51216,
+        "hash": "d049e6bb4f045bd6",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
