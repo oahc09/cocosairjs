@@ -58,6 +58,14 @@ Coverage is Core 679/963 (70.5%), Important 165/272 (60.7%), and Advanced 139/3,
 
 Next prioritize the remaining Core math classes, beginning with `Mat4`, `Vec4`, `Color`, `Quat`, `Vec2`, and `Mat3`, then finish smaller Core runtime classes before Important and Advanced closure.
 
+### 2026-09-27 Wave 10 — Core Mat4, Vec4, and Color
+
+Wave 10 adds 96 verified Core units with 0 removals: Mat4 +34, Vec4 +32, and Color +30. The canonical V1.1 run passed 140/140 with 3,756 verified, 172 attested, and 0 unproven bindings. DevTools passed 5/5, Gallery passed 214/214 with 48 lifecycle contracts, and strict spec validation passed 145/145. Compliance remains 0 fail / 1 documented Draco decoder-availability warning. The API trace self-test passed; evidence has 0 stale proofs and 0 schema gaps. Jest and test-inventory each passed 32 suites / 263 tests; typecheck, Prettier, 575-export package acceptance, V1.1 chain-face, and 1,317 documentation references passed.
+
+Coverage is Core 775/963 (80.5%), Important 165/272 (60.7%), and Advanced 139/3,130 (4.4%). Stable examples remain 144/120. Release remains NOT MET: Core gap 188; Important needs 80 more to reach 245/272 and has 107 units without explicit status; Advanced needs 2,365 more to reach 2,504/3,130 and has 2,991 uncovered units that must reach zero. Keep the 100%/90%/80% thresholds unchanged.
+
+Next prioritize `Quat` (28 remaining Core units), `Vec2` (24), and `Mat3` (16), then finish the remaining Core runtime classes before Important and Advanced closure.
+
 ## Coverage waves
 
 After the inventory revision, group missing required units by feature and class. Each wave should add example behavior checks and `api.evidence` bindings, run focused trial validation, then run the canonical V1.1 browser verification and coverage report. Count only fresh `apiProof.proof=verified` units. Prioritize unverified Core units, then Important runtime features and V1.2 feature groups designated Advanced-required. Record added, removed, and stale units after each wave. Do not weaken the 100%/90%/80% thresholds to reach a green report.

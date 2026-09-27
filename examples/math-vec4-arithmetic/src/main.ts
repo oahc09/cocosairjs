@@ -15,6 +15,8 @@ import {
     Color,
     Vec3,
     Vec2,
+    Quat,
+    Mat4,
     utils,
     primitives,
     Vec4,
@@ -105,6 +107,42 @@ T('neg', () => {
 });
 
 T('setRT', () => (Vec4 as any).set(o, 1, 2, 3, 9).w);
+T('covVec4.ZERO', () => Vec4.ZERO.w);
+T('covVec4.ONE', () => Vec4.ONE.w);
+T('covVec4.NEG_ONE', () => Vec4.NEG_ONE.w);
+T('covVec4.UNIT_X', () => Vec4.UNIT_X.x);
+T('covVec4.UNIT_Y', () => Vec4.UNIT_Y.y);
+T('covVec4.UNIT_Z', () => Vec4.UNIT_Z.z);
+T('covVec4.UNIT_W', () => Vec4.UNIT_W.w);
+T('covVec4.clone', () => Vec4.clone(a).w);
+T('covVec4.copy', () => Vec4.copy(o, a).w);
+T('covVec4.fromColor', () => Vec4.fromColor(o, new Color(10, 20, 30, 40)).w);
+T('covVec4.angle', () => Vec4.angle(a, b));
+T('covVec4.ceil', () => Vec4.ceil(o, new Vec4(1.2, 2.2, 3.2, 4.2)).w);
+T('covVec4.floor', () => Vec4.floor(o, new Vec4(1.8, 2.8, 3.8, 4.8)).w);
+T('covVec4.min', () => Vec4.min(o, a, b).x);
+T('covVec4.max', () => Vec4.max(o, a, b).w);
+T('covVec4.round', () => Vec4.round(o, new Vec4(1.2, 2.8, 3.2, 4.8)).w);
+T('covVec4.scaleAndAdd', () => Vec4.scaleAndAdd(o, a, b, 0.5).w);
+T('covVec4.distance', () => Vec4.distance(a, b));
+T('covVec4.squaredDistance', () => Vec4.squaredDistance(a, b));
+T('covVec4.len', () => Vec4.len(a));
+T('covVec4.negate', () => Vec4.negate(o, a).x);
+T('covVec4.inverse', () => Vec4.inverse(o, a).w);
+T('covVec4.inverseSafe', () => Vec4.inverseSafe(o, new Vec4(1, 2, 3, 4)).w);
+T('covVec4.random', () => Vec4.random(o, 1).w);
+T('covVec4.transformAffine', () => Vec4.transformAffine(o, a, new Mat4()).w);
+T('covVec4.transformQuat', () => Vec4.transformQuat(o, a, new Quat()).w);
+var covVec4Array = new Float32Array(4);
+T('covVec4.toArray', () => Vec4.toArray(covVec4Array, a)[3]);
+T('covVec4.fromArray', () => Vec4.fromArray(o, covVec4Array).w);
+T('covVec4.add4f', () => o.add4f(1, 2, 3, 4).w);
+T('covVec4.subtract4f', () => o.subtract4f(1, 2, 3, 4).x);
+T('covVec4.multiply4f', () => o.multiply4f(2, 3, 4, 5).w);
+T('covVec4.divide4f', () => o.divide4f(2, 3, 4, 5).w);
+for (const [key, value] of Object.entries(probe)) {
+    if (key.startsWith('covVec4.') && value === 'threw') throw new Error(`Vec4 coverage probe failed: ${key}`);
+}
 probe.topic = 'math-vec4-arithmetic';
 (window as any).__probe = async () => probe;
 

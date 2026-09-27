@@ -58,7 +58,41 @@
     "math.Mat4.prototype.getTranslation",
     "math.Mat4.prototype.getRotation",
     "math.Mat4.prototype.fromSRT",
-    "math.Mat4.prototype.fromQuat"
+    "math.Mat4.prototype.fromQuat",
+    "math.Mat4.IDENTITY",
+    "math.Mat4.clone",
+    "math.Mat4.copy",
+    "math.Mat4.rotateX",
+    "math.Mat4.rotateY",
+    "math.Mat4.rotateZ",
+    "math.Mat4.fromTranslation",
+    "math.Mat4.fromScaling",
+    "math.Mat4.fromRotation",
+    "math.Mat4.fromXRotation",
+    "math.Mat4.fromYRotation",
+    "math.Mat4.fromZRotation",
+    "math.Mat4.fromRT",
+    "math.Mat4.getScaling",
+    "math.Mat4.toSRT",
+    "math.Mat4.toEuler",
+    "math.Mat4.fromSRTOrigin",
+    "math.Mat4.frustum",
+    "math.Mat4.perspective",
+    "math.Mat4.ortho",
+    "math.Mat4.lookAt",
+    "math.Mat4.toArray",
+    "math.Mat4.fromArray",
+    "math.Mat4.multiplyScalarAndAdd",
+    "math.Mat4.m01",
+    "math.Mat4.m02",
+    "math.Mat4.m04",
+    "math.Mat4.m06",
+    "math.Mat4.m08",
+    "math.Mat4.m09",
+    "math.Mat4.m12",
+    "math.Mat4.m13",
+    "math.Mat4.m14",
+    "math.Mat4.constructor"
   ],
   "capabilities": [],
   "learning": {
@@ -105,7 +139,41 @@
       "math.Mat4.prototype.getTranslation",
       "math.Mat4.prototype.getRotation",
       "math.Mat4.prototype.fromSRT",
-      "math.Mat4.prototype.fromQuat"
+      "math.Mat4.prototype.fromQuat",
+      "math.Mat4.IDENTITY",
+      "math.Mat4.clone",
+      "math.Mat4.copy",
+      "math.Mat4.rotateX",
+      "math.Mat4.rotateY",
+      "math.Mat4.rotateZ",
+      "math.Mat4.fromTranslation",
+      "math.Mat4.fromScaling",
+      "math.Mat4.fromRotation",
+      "math.Mat4.fromXRotation",
+      "math.Mat4.fromYRotation",
+      "math.Mat4.fromZRotation",
+      "math.Mat4.fromRT",
+      "math.Mat4.getScaling",
+      "math.Mat4.toSRT",
+      "math.Mat4.toEuler",
+      "math.Mat4.fromSRTOrigin",
+      "math.Mat4.frustum",
+      "math.Mat4.perspective",
+      "math.Mat4.ortho",
+      "math.Mat4.lookAt",
+      "math.Mat4.toArray",
+      "math.Mat4.fromArray",
+      "math.Mat4.multiplyScalarAndAdd",
+      "math.Mat4.m01",
+      "math.Mat4.m02",
+      "math.Mat4.m04",
+      "math.Mat4.m06",
+      "math.Mat4.m08",
+      "math.Mat4.m09",
+      "math.Mat4.m12",
+      "math.Mat4.m13",
+      "math.Mat4.m14",
+      "math.Mat4.constructor"
     ],
     "claims": [
       "createAirApp",
@@ -158,7 +226,41 @@
       "math.Mat4.prototype.getTranslation",
       "math.Mat4.prototype.getRotation",
       "math.Mat4.prototype.fromSRT",
-      "math.Mat4.prototype.fromQuat"
+      "math.Mat4.prototype.fromQuat",
+      "math.Mat4.IDENTITY",
+      "math.Mat4.clone",
+      "math.Mat4.copy",
+      "math.Mat4.rotateX",
+      "math.Mat4.rotateY",
+      "math.Mat4.rotateZ",
+      "math.Mat4.fromTranslation",
+      "math.Mat4.fromScaling",
+      "math.Mat4.fromRotation",
+      "math.Mat4.fromXRotation",
+      "math.Mat4.fromYRotation",
+      "math.Mat4.fromZRotation",
+      "math.Mat4.fromRT",
+      "math.Mat4.getScaling",
+      "math.Mat4.toSRT",
+      "math.Mat4.toEuler",
+      "math.Mat4.fromSRTOrigin",
+      "math.Mat4.frustum",
+      "math.Mat4.perspective",
+      "math.Mat4.ortho",
+      "math.Mat4.lookAt",
+      "math.Mat4.toArray",
+      "math.Mat4.fromArray",
+      "math.Mat4.multiplyScalarAndAdd",
+      "math.Mat4.m01",
+      "math.Mat4.m02",
+      "math.Mat4.m04",
+      "math.Mat4.m06",
+      "math.Mat4.m08",
+      "math.Mat4.m09",
+      "math.Mat4.m12",
+      "math.Mat4.m13",
+      "math.Mat4.m14",
+      "math.Mat4.constructor"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -166,187 +268,187 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L25"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L32"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L43"
+        "sourceLocation": "L44"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L32"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L44"
+        "sourceLocation": "L45"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L38"
+        "sourceLocation": "L39"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L37"
+        "sourceLocation": "L38"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L30"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L50"
+        "sourceLocation": "L51"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L53"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L53"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L54"
+        "sourceLocation": "L55"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L52"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L52"
       },
       {
         "api": "math.Mat4.identity",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L77"
+        "sourceLocation": "L78"
       },
       {
         "api": "math.Mat4.zero",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L80"
+        "sourceLocation": "L81"
       },
       {
         "api": "math.Mat4.transpose",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L89"
+        "sourceLocation": "L90"
       },
       {
         "api": "math.Mat4.invert",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L85"
+        "sourceLocation": "L86"
       },
       {
         "api": "math.Mat4.determinant",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L81"
+        "sourceLocation": "L82"
       },
       {
         "api": "math.Mat4.add",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L93"
+        "sourceLocation": "L94"
       },
       {
         "api": "math.Mat4.subtract",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L97"
+        "sourceLocation": "L98"
       },
       {
         "api": "math.Mat4.multiply",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L101"
+        "sourceLocation": "L102"
       },
       {
         "api": "math.Mat4.multiplyScalar",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L105"
+        "sourceLocation": "L106"
       },
       {
         "api": "math.Mat4.set",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L109"
+        "sourceLocation": "L110"
       },
       {
         "api": "math.Mat4.equals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L110"
+        "sourceLocation": "L111"
       },
       {
         "api": "math.Mat4.strictEquals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L111"
+        "sourceLocation": "L112"
       },
       {
         "api": "math.Mat4.toString",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L112"
+        "sourceLocation": "L113"
       },
       {
         "api": "math.Mat4.prototype.clone",
@@ -467,6 +569,210 @@
         "source": "src/instance-contract.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L62"
+      },
+      {
+        "api": "math.Mat4.IDENTITY",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "math.Mat4.clone",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "math.Mat4.copy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "math.Mat4.rotateX",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L124"
+      },
+      {
+        "api": "math.Mat4.rotateY",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "math.Mat4.rotateZ",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L126"
+      },
+      {
+        "api": "math.Mat4.fromTranslation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L127"
+      },
+      {
+        "api": "math.Mat4.fromScaling",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L128"
+      },
+      {
+        "api": "math.Mat4.fromRotation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L130"
+      },
+      {
+        "api": "math.Mat4.fromXRotation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "math.Mat4.fromYRotation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L135"
+      },
+      {
+        "api": "math.Mat4.fromZRotation",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L136"
+      },
+      {
+        "api": "math.Mat4.fromRT",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L137"
+      },
+      {
+        "api": "math.Mat4.getScaling",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L138"
+      },
+      {
+        "api": "math.Mat4.toSRT",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L140"
+      },
+      {
+        "api": "math.Mat4.toEuler",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L143"
+      },
+      {
+        "api": "math.Mat4.fromSRTOrigin",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L144"
+      },
+      {
+        "api": "math.Mat4.frustum",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "math.Mat4.perspective",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L146"
+      },
+      {
+        "api": "math.Mat4.ortho",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "math.Mat4.lookAt",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "math.Mat4.toArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L149"
+      },
+      {
+        "api": "math.Mat4.fromArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L150"
+      },
+      {
+        "api": "math.Mat4.multiplyScalarAndAdd",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L151"
+      },
+      {
+        "api": "math.Mat4.m01",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "math.Mat4.m02",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "math.Mat4.m04",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L154"
+      },
+      {
+        "api": "math.Mat4.m06",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "math.Mat4.m08",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L156"
+      },
+      {
+        "api": "math.Mat4.m09",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L157"
+      },
+      {
+        "api": "math.Mat4.m12",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L127"
+      },
+      {
+        "api": "math.Mat4.m13",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L159"
+      },
+      {
+        "api": "math.Mat4.m14",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L160"
+      },
+      {
+        "api": "math.Mat4.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L60"
       }
     ]
   },
@@ -499,11 +805,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "b6f4be16b75b",
-    "source": "8c344612c32701ab",
+    "spec": "6cf98c815458",
+    "source": "c4d2a3f10503ceb9",
     "candidate": "8746fc59b6aa0408",
-    "verified": 51,
+    "verified": 85,
     "attested": 0,
-    "units": 51
+    "units": 85
   }
 }

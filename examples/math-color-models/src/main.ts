@@ -125,6 +125,40 @@ T('getModifiableProperties', () => {
         return 'threw';
     }
 });
+T('covColor.WHITE', () => Color.WHITE.r);
+T('covColor.GRAY', () => Color.GRAY.g);
+T('covColor.BLACK', () => Color.BLACK.b);
+T('covColor.TRANSPARENT', () => Color.TRANSPARENT.a);
+T('covColor.RED', () => Color.RED.r);
+T('covColor.GREEN', () => Color.GREEN.g);
+T('covColor.BLUE', () => Color.BLUE.b);
+T('covColor.CYAN', () => Color.CYAN.g);
+T('covColor.MAGENTA', () => Color.MAGENTA.r);
+T('covColor.YELLOW', () => Color.YELLOW.r);
+T('covColor.clone', () => Color.clone(c).r);
+T('covColor.copy', () => Color.copy(o, c).r);
+T('covColor.add', () => Color.add(o, c, new Color(1, 2, 3, 4)).r);
+T('covColor.subtract', () => Color.subtract(o, c, new Color(1, 2, 3, 4)).g);
+T('covColor.divide', () => Color.divide(o, c, new Color(1, 2, 3, 4)).b);
+T('covColor.scale', () => Color.scale(o, c, 0.5).a);
+var covColorArray = new Float32Array(4);
+T('covColor.toArray', () => Color.toArray(covColorArray, c)[0]);
+T('covColor.fromArray', () => Color.fromArray(covColorArray, o).r);
+T('covColor.fromUint32', () => Color.fromUint32(o, 0x12345678).r);
+T('covColor.strictEquals', () => Color.strictEquals(o, o.clone()));
+T('covColor.hex', () => Color.hex(c));
+T('covColor.r', () => c.r);
+T('covColor.g', () => c.g);
+T('covColor.b', () => c.b);
+T('covColor.a', () => c.a);
+T('covColor.x', () => c.x);
+T('covColor.y', () => c.y);
+T('covColor.z', () => c.z);
+T('covColor.w', () => c.w);
+T('covColor.constructor', () => new Color(5, 6, 7, 8).a);
+for (const [key, value] of Object.entries(probe)) {
+    if (key.startsWith('covColor.') && value === 'threw') throw new Error(`Color coverage probe failed: ${key}`);
+}
 probe.topic = 'math-color-models';
 (window as any).__probe = async () => probe;
 

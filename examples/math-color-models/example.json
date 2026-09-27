@@ -39,7 +39,37 @@
     "math.Color.prototype.lerp",
     "math.Color.prototype.fromHEX",
     "math.Color.prototype.set",
-    "math.Color.prototype.multiply"
+    "math.Color.prototype.multiply",
+    "math.Color.WHITE",
+    "math.Color.GRAY",
+    "math.Color.BLACK",
+    "math.Color.TRANSPARENT",
+    "math.Color.RED",
+    "math.Color.GREEN",
+    "math.Color.BLUE",
+    "math.Color.CYAN",
+    "math.Color.MAGENTA",
+    "math.Color.YELLOW",
+    "math.Color.clone",
+    "math.Color.copy",
+    "math.Color.add",
+    "math.Color.subtract",
+    "math.Color.divide",
+    "math.Color.scale",
+    "math.Color.toArray",
+    "math.Color.fromArray",
+    "math.Color.fromUint32",
+    "math.Color.strictEquals",
+    "math.Color.hex",
+    "math.Color.r",
+    "math.Color.g",
+    "math.Color.b",
+    "math.Color.a",
+    "math.Color.x",
+    "math.Color.y",
+    "math.Color.z",
+    "math.Color.w",
+    "math.Color.constructor"
   ],
   "capabilities": [],
   "learning": {
@@ -72,7 +102,37 @@
       "math.Color.prototype.lerp",
       "math.Color.prototype.fromHEX",
       "math.Color.prototype.set",
-      "math.Color.prototype.multiply"
+      "math.Color.prototype.multiply",
+      "math.Color.WHITE",
+      "math.Color.GRAY",
+      "math.Color.BLACK",
+      "math.Color.TRANSPARENT",
+      "math.Color.RED",
+      "math.Color.GREEN",
+      "math.Color.BLUE",
+      "math.Color.CYAN",
+      "math.Color.MAGENTA",
+      "math.Color.YELLOW",
+      "math.Color.clone",
+      "math.Color.copy",
+      "math.Color.add",
+      "math.Color.subtract",
+      "math.Color.divide",
+      "math.Color.scale",
+      "math.Color.toArray",
+      "math.Color.fromArray",
+      "math.Color.fromUint32",
+      "math.Color.strictEquals",
+      "math.Color.hex",
+      "math.Color.r",
+      "math.Color.g",
+      "math.Color.b",
+      "math.Color.a",
+      "math.Color.x",
+      "math.Color.y",
+      "math.Color.z",
+      "math.Color.w",
+      "math.Color.constructor"
     ],
     "claims": [
       "createAirApp",
@@ -106,7 +166,37 @@
       "math.Color.prototype.lerp",
       "math.Color.prototype.fromHEX",
       "math.Color.prototype.set",
-      "math.Color.prototype.multiply"
+      "math.Color.prototype.multiply",
+      "math.Color.WHITE",
+      "math.Color.GRAY",
+      "math.Color.BLACK",
+      "math.Color.TRANSPARENT",
+      "math.Color.RED",
+      "math.Color.GREEN",
+      "math.Color.BLUE",
+      "math.Color.CYAN",
+      "math.Color.MAGENTA",
+      "math.Color.YELLOW",
+      "math.Color.clone",
+      "math.Color.copy",
+      "math.Color.add",
+      "math.Color.subtract",
+      "math.Color.divide",
+      "math.Color.scale",
+      "math.Color.toArray",
+      "math.Color.fromArray",
+      "math.Color.fromUint32",
+      "math.Color.strictEquals",
+      "math.Color.hex",
+      "math.Color.r",
+      "math.Color.g",
+      "math.Color.b",
+      "math.Color.a",
+      "math.Color.x",
+      "math.Color.y",
+      "math.Color.z",
+      "math.Color.w",
+      "math.Color.constructor"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -301,6 +391,186 @@
         "source": "src/instance-contract.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L34"
+      },
+      {
+        "api": "math.Color.WHITE",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L128"
+      },
+      {
+        "api": "math.Color.GRAY",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L129"
+      },
+      {
+        "api": "math.Color.BLACK",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L130"
+      },
+      {
+        "api": "math.Color.TRANSPARENT",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L131"
+      },
+      {
+        "api": "math.Color.RED",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L132"
+      },
+      {
+        "api": "math.Color.GREEN",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L133"
+      },
+      {
+        "api": "math.Color.BLUE",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "math.Color.CYAN",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L135"
+      },
+      {
+        "api": "math.Color.MAGENTA",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L136"
+      },
+      {
+        "api": "math.Color.YELLOW",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L137"
+      },
+      {
+        "api": "math.Color.clone",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "math.Color.copy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L139"
+      },
+      {
+        "api": "math.Color.add",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L140"
+      },
+      {
+        "api": "math.Color.subtract",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L141"
+      },
+      {
+        "api": "math.Color.divide",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L142"
+      },
+      {
+        "api": "math.Color.scale",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L143"
+      },
+      {
+        "api": "math.Color.toArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "math.Color.fromArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L146"
+      },
+      {
+        "api": "math.Color.fromUint32",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "math.Color.strictEquals",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L148"
+      },
+      {
+        "api": "math.Color.hex",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L149"
+      },
+      {
+        "api": "math.Color.r",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L79"
+      },
+      {
+        "api": "math.Color.g",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L79"
+      },
+      {
+        "api": "math.Color.b",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L79"
+      },
+      {
+        "api": "math.Color.a",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L131"
+      },
+      {
+        "api": "math.Color.x",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L154"
+      },
+      {
+        "api": "math.Color.y",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "math.Color.z",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L156"
+      },
+      {
+        "api": "math.Color.w",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L157"
+      },
+      {
+        "api": "math.Color.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L58"
       }
     ]
   },
@@ -333,11 +603,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "b5b173f118ac",
-    "source": "950699d39a4eb2a0",
+    "spec": "89ecaa27ffdb",
+    "source": "a51f6d658d115a46",
     "candidate": "8746fc59b6aa0408",
-    "verified": 32,
+    "verified": 62,
     "attested": 0,
-    "units": 32
+    "units": 62
   }
 }

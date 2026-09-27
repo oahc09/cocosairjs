@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-27T11:03:17.508Z",
+  "generatedAt": "2026-09-27T11:48:11.687Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T10:53:29.541Z",
+      "measuredAt": "2026-09-27T11:41:51.625Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T10:54:35.524Z",
+      "measuredAt": "2026-09-27T11:43:26.918Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -29,11 +29,11 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 1154,
+  "totalClaimed": 1250,
   "totalAttested": 107,
-  "totalVerified": 1047,
-  "totalVerifiedViaCall": 964,
-  "totalVerifiedViaRead": 83,
+  "totalVerified": 1143,
+  "totalVerifiedViaCall": 1033,
+  "totalVerifiedViaRead": 110,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -1276,17 +1276,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 32,
-        "total": 32,
-        "hash": "eb4561f72a42d486"
+        "observed": 62,
+        "total": 62,
+        "hash": "b04e225e87ee55a8"
       },
-      "claims": 32,
+      "claims": 62,
       "tally": {
-        "verified": 32,
+        "verified": 62,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 31,
-        "verifiedRead": 1
+        "verifiedCall": 51,
+        "verifiedRead": 11
       }
     },
     {
@@ -1468,17 +1468,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 51,
-        "total": 51,
-        "hash": "9a3ad674154e0dc5"
+        "observed": 85,
+        "total": 85,
+        "hash": "a39eed10765fa0a7"
       },
-      "claims": 51,
+      "claims": 85,
       "tally": {
-        "verified": 51,
+        "verified": 85,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 50,
-        "verifiedRead": 1
+        "verifiedCall": 74,
+        "verifiedRead": 11
       }
     },
     {
@@ -2044,17 +2044,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 41,
-        "total": 41,
-        "hash": "8547068e4a9e26ea"
+        "observed": 73,
+        "total": 73,
+        "hash": "4120e32a1f50d1b2"
       },
-      "claims": 41,
+      "claims": 73,
       "tally": {
-        "verified": 41,
+        "verified": 73,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 40,
-        "verifiedRead": 1
+        "verifiedCall": 65,
+        "verifiedRead": 8
       }
     },
     {
@@ -3527,25 +3527,25 @@
       "denominator": "coverageRequired",
       "total": 963,
       "required": 963,
-      "claimed": 710,
+      "claimed": 806,
       "attested": 31,
-      "verified": 679,
-      "requiredClaimed": 710,
-      "requiredVerified": 679,
+      "verified": 775,
+      "requiredClaimed": 806,
+      "requiredVerified": 775,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 284,
-      "unstated": 284,
-      "verifiedViaCall": 617,
-      "verifiedViaRead": 62,
+      "uncovered": 188,
+      "unstated": 188,
+      "verifiedViaCall": 686,
+      "verifiedViaRead": 89,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 617,
-      "requiredVerifiedViaRead": 62,
+      "requiredVerifiedViaCall": 686,
+      "requiredVerifiedViaRead": 89,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.641,
-      "claimedRate": 0.737,
-      "verifiedRate": 0.705,
-      "allUnitsVerifiedRate": 0.705,
+      "requiredVerifiedViaCallRate": 0.712,
+      "claimedRate": 0.837,
+      "verifiedRate": 0.805,
+      "allUnitsVerifiedRate": 0.805,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -8391,6 +8391,246 @@
       ]
     },
     {
+      "unit": "math.Color.WHITE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.GRAY",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.BLACK",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.TRANSPARENT",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.RED",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.GREEN",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.BLUE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.CYAN",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.MAGENTA",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.YELLOW",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.copy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.add",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.subtract",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.divide",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.scale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.toArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.fromArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.fromUint32",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.strictEquals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.hex",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.r",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.g",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.b",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.a",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.x",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.y",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.z",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.w",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
+      "unit": "math.Color.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-color-models"
+      ]
+    },
+    {
       "unit": "math.lerp",
       "tier": "core",
       "via": "call",
@@ -9042,6 +9282,278 @@
     },
     {
       "unit": "math.Mat4.prototype.fromQuat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.IDENTITY",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.copy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.rotateX",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.rotateY",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.rotateZ",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromTranslation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromScaling",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromXRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromYRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromZRotation",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromRT",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.getScaling",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.toSRT",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.toEuler",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromSRTOrigin",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.frustum",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.perspective",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.ortho",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.lookAt",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.toArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.fromArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.multiplyScalarAndAdd",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m01",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m02",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m04",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m06",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m08",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m09",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m12",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m13",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.m14",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-mat4-basics"
+      ]
+    },
+    {
+      "unit": "math.Mat4.constructor",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -10965,6 +11477,262 @@
     },
     {
       "unit": "math.Vec4.prototype.scale",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.ZERO",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.ONE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.NEG_ONE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.UNIT_X",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.UNIT_Y",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.UNIT_Z",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.UNIT_W",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.clone",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.copy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.fromColor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.angle",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.ceil",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.floor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.min",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.max",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.round",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.scaleAndAdd",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.distance",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.squaredDistance",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.len",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.negate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.inverse",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.inverseSafe",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.random",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.transformAffine",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.transformQuat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.toArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.fromArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.add4f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.subtract4f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.multiply4f",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.Vec4.divide4f",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -16345,38 +17113,6 @@
     "math.v2",
     "math.v3",
     "math.Vec4",
-    "math.Vec4.ZERO",
-    "math.Vec4.ONE",
-    "math.Vec4.NEG_ONE",
-    "math.Vec4.UNIT_X",
-    "math.Vec4.UNIT_Y",
-    "math.Vec4.UNIT_Z",
-    "math.Vec4.UNIT_W",
-    "math.Vec4.clone",
-    "math.Vec4.copy",
-    "math.Vec4.fromColor",
-    "math.Vec4.angle",
-    "math.Vec4.ceil",
-    "math.Vec4.floor",
-    "math.Vec4.min",
-    "math.Vec4.max",
-    "math.Vec4.round",
-    "math.Vec4.scaleAndAdd",
-    "math.Vec4.distance",
-    "math.Vec4.squaredDistance",
-    "math.Vec4.len",
-    "math.Vec4.negate",
-    "math.Vec4.inverse",
-    "math.Vec4.inverseSafe",
-    "math.Vec4.random",
-    "math.Vec4.transformAffine",
-    "math.Vec4.transformQuat",
-    "math.Vec4.toArray",
-    "math.Vec4.fromArray",
-    "math.Vec4.add4f",
-    "math.Vec4.subtract4f",
-    "math.Vec4.multiply4f",
-    "math.Vec4.divide4f",
     "math.v4",
     "math.Quat.IDENTITY",
     "math.Quat.clone",
@@ -16423,40 +17159,6 @@
     "math.Mat3.multiplyScalarAndAdd",
     "math.Mat3.toEuler",
     "math.Mat3.constructor",
-    "math.Mat4.IDENTITY",
-    "math.Mat4.clone",
-    "math.Mat4.copy",
-    "math.Mat4.rotateX",
-    "math.Mat4.rotateY",
-    "math.Mat4.rotateZ",
-    "math.Mat4.fromTranslation",
-    "math.Mat4.fromScaling",
-    "math.Mat4.fromRotation",
-    "math.Mat4.fromXRotation",
-    "math.Mat4.fromYRotation",
-    "math.Mat4.fromZRotation",
-    "math.Mat4.fromRT",
-    "math.Mat4.getScaling",
-    "math.Mat4.toSRT",
-    "math.Mat4.toEuler",
-    "math.Mat4.fromSRTOrigin",
-    "math.Mat4.frustum",
-    "math.Mat4.perspective",
-    "math.Mat4.ortho",
-    "math.Mat4.lookAt",
-    "math.Mat4.toArray",
-    "math.Mat4.fromArray",
-    "math.Mat4.multiplyScalarAndAdd",
-    "math.Mat4.m01",
-    "math.Mat4.m02",
-    "math.Mat4.m04",
-    "math.Mat4.m06",
-    "math.Mat4.m08",
-    "math.Mat4.m09",
-    "math.Mat4.m12",
-    "math.Mat4.m13",
-    "math.Mat4.m14",
-    "math.Mat4.constructor",
     "math.mat4",
     "math.Size.ZERO",
     "math.Size.ONE",
@@ -16476,36 +17178,6 @@
     "math.Rect.z",
     "math.Rect.w",
     "math.rect",
-    "math.Color.WHITE",
-    "math.Color.GRAY",
-    "math.Color.BLACK",
-    "math.Color.TRANSPARENT",
-    "math.Color.RED",
-    "math.Color.GREEN",
-    "math.Color.BLUE",
-    "math.Color.CYAN",
-    "math.Color.MAGENTA",
-    "math.Color.YELLOW",
-    "math.Color.clone",
-    "math.Color.copy",
-    "math.Color.add",
-    "math.Color.subtract",
-    "math.Color.divide",
-    "math.Color.scale",
-    "math.Color.toArray",
-    "math.Color.fromArray",
-    "math.Color.fromUint32",
-    "math.Color.strictEquals",
-    "math.Color.hex",
-    "math.Color.r",
-    "math.Color.g",
-    "math.Color.b",
-    "math.Color.a",
-    "math.Color.x",
-    "math.Color.y",
-    "math.Color.z",
-    "math.Color.w",
-    "math.Color.constructor",
     "math.color",
     "math.toRadian",
     "math.toDegree",
@@ -16564,5 +17236,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3305
+  "unclaimedRequired": 3209
 }

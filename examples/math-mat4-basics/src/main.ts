@@ -15,6 +15,7 @@ import {
     Color,
     Vec3,
     Vec2,
+    Quat,
     utils,
     primitives,
     Mat4,
@@ -110,6 +111,57 @@ T('setRT', () => (Mat4 as any).set(o, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 
 T('equals', () => (Mat4 as any).equals(m, o));
 T('strictEq', () => (Mat4 as any).strictEquals(m, m.clone()));
 T('toString', () => typeof m.toString());
+var covMat4Vec = new Vec3(1, 2, 3);
+var covMat4Axis = new Vec3(0, 1, 0);
+var covMat4Quat = new Quat();
+var covMat4Scale = new Vec3();
+var covMat4Euler = new Vec3();
+var covMat4Origin = new Vec3(0.5, 0.5, 0.5);
+var covMat4Array = new Float32Array(16);
+T('covMat4.IDENTITY', () => Mat4.IDENTITY.m00);
+T('covMat4.clone', () => Mat4.clone(m).m15);
+T('covMat4.copy', () => Mat4.copy(o, m).m15);
+T('covMat4.rotateX', () => Mat4.rotateX(o, m, 0.25).m05);
+T('covMat4.rotateY', () => Mat4.rotateY(o, m, 0.25).m00);
+T('covMat4.rotateZ', () => Mat4.rotateZ(o, m, 0.25).m00);
+T('covMat4.fromTranslation', () => Mat4.fromTranslation(o, covMat4Vec).m12);
+T('covMat4.fromScaling', () => Mat4.fromScaling(o, covMat4Vec).m00);
+T('covMat4.fromRotation', () => {
+    var result = Mat4.fromRotation(o, 0.25, covMat4Axis);
+    if (!result) throw new Error('Mat4.fromRotation returned null');
+    return result.m00;
+});
+T('covMat4.fromXRotation', () => Mat4.fromXRotation(o, 0.25).m05);
+T('covMat4.fromYRotation', () => Mat4.fromYRotation(o, 0.25).m00);
+T('covMat4.fromZRotation', () => Mat4.fromZRotation(o, 0.25).m00);
+T('covMat4.fromRT', () => Mat4.fromRT(o, covMat4Quat, covMat4Vec).m12);
+T('covMat4.getScaling', () => Mat4.getScaling(covMat4Scale, o).x);
+T('covMat4.toSRT', () => {
+    Mat4.toSRT(o, covMat4Quat, covMat4Vec, covMat4Scale);
+    return covMat4Scale.x;
+});
+T('covMat4.toEuler', () => Mat4.toEuler(o, covMat4Euler));
+T('covMat4.fromSRTOrigin', () => Mat4.fromSRTOrigin(o, covMat4Quat, covMat4Vec, covMat4Scale, covMat4Origin).m12);
+T('covMat4.frustum', () => Mat4.frustum(o, -1, 1, -1, 1, 0.1, 10).m00);
+T('covMat4.perspective', () => Mat4.perspective(o, Math.PI / 3, 1, 0.1, 10).m00);
+T('covMat4.ortho', () => Mat4.ortho(o, -1, 1, -1, 1, 0.1, 10).m15);
+T('covMat4.lookAt', () => Mat4.lookAt(o, new Vec3(0, 0, 3), new Vec3(), new Vec3(0, 1, 0)).m12);
+T('covMat4.toArray', () => Mat4.toArray(covMat4Array, o)[0]);
+T('covMat4.fromArray', () => Mat4.fromArray(o, covMat4Array).m00);
+T('covMat4.multiplyScalarAndAdd', () => Mat4.multiplyScalarAndAdd(o, m, m, 0.25).m15);
+T('covMat4.m01', () => o.m01);
+T('covMat4.m02', () => o.m02);
+T('covMat4.m04', () => o.m04);
+T('covMat4.m06', () => o.m06);
+T('covMat4.m08', () => o.m08);
+T('covMat4.m09', () => o.m09);
+T('covMat4.m12', () => o.m12);
+T('covMat4.m13', () => o.m13);
+T('covMat4.m14', () => o.m14);
+T('covMat4.constructor', () => new Mat4().m15);
+for (const [key, value] of Object.entries(probe)) {
+    if (key.startsWith('covMat4.') && value === 'threw') throw new Error(`Mat4 coverage probe failed: ${key}`);
+}
 probe.topic = 'math-mat4-basics';
 (window as any).__probe = async () => probe;
 

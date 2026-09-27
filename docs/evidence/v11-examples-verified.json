@@ -1,12 +1,12 @@
 {
-  "measuredAt": "2026-09-27T10:53:29.541Z",
+  "measuredAt": "2026-09-27T11:41:51.625Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "browser": "chromium",
   "mode": "spec-driven-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
   "candidateFingerprint": "8746fc59b6aa0408",
   "apiProofTotals": {
-    "verified": 3660,
+    "verified": 3756,
     "attested": 172,
     "unproven": 0
   },
@@ -790,7 +790,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 302,
+          "calls": 300,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -982,12 +982,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0627"
+          "detail": "litRatio=0.0634"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0601 assetUnits=8"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0613 assetUnits=8"
         }
       ],
       "scenarioProbe": {
@@ -1062,7 +1062,7 @@
           {
             "name": "play-and-events",
             "ok": true,
-            "detail": "x=1.7263333333532016 events=1/1"
+            "detail": "x=1.9139999999602635 events=1/1"
           },
           {
             "name": "pause",
@@ -1094,8 +1094,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 7228,
-        "hash": "f0ce4138b452d1c7"
+        "bytes": 7174,
+        "hash": "338555719903e851"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1315,7 +1315,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 203,
+          "calls": 239,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1505,15 +1505,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0363"
+          "detail": "litRatio=0.0343"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 6670,
-        "hash": "914ab5784ab7d42d"
+        "bytes": 6946,
+        "hash": "916d0a8519e930a8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1570,7 +1570,7 @@
           "api": "AudioClip.getDuration",
           "proof": "verified",
           "state": "executed",
-          "calls": 314,
+          "calls": 309,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1791,7 +1791,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 924,
+          "calls": 911,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -2118,8 +2118,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/audio-basic.png",
-        "bytes": 19198,
-        "hash": "40c58a78aef97af1"
+        "bytes": 17962,
+        "hash": "4a891b91bd71b0b7"
       },
       "assetDigests": [
         {
@@ -3270,7 +3270,7 @@
           "api": "renderer.scene.Camera.getClipSpaceMinz",
           "proof": "verified",
           "state": "executed",
-          "calls": 152,
+          "calls": 158,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7653,8 +7653,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/collector-dodge.png",
-        "bytes": 13908,
-        "hash": "64e1ecb1ea2b17f0"
+        "bytes": 13922,
+        "hash": "9374db67bbb7ee68"
       },
       "assetDigests": [
         {
@@ -10178,7 +10178,7 @@
           "api": "dragonBones.Armature.advanceTime",
           "proof": "verified",
           "state": "executed",
-          "calls": 338,
+          "calls": 336,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10212,7 +10212,7 @@
           "api": "dragonBones.Armature.getBones",
           "proof": "verified",
           "state": "executed",
-          "calls": 358,
+          "calls": 356,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10365,7 +10365,7 @@
           "api": "dragonBones.ArmatureDisplay.isAnimationCached",
           "proof": "verified",
           "state": "executed",
-          "calls": 949,
+          "calls": 943,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10737,8 +10737,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/dragonbones-basic.png",
-        "bytes": 15977,
-        "hash": "d50546206a834b52"
+        "bytes": 15973,
+        "hash": "84d5f2d60a7a4ebb"
       },
       "assetDigests": [
         {
@@ -14067,7 +14067,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2080"
+          "detail": "litRatio=0.2019"
         },
         {
           "validatorId": "resource-released",
@@ -14086,8 +14086,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-morph.png",
-        "bytes": 7091,
-        "hash": "419f010f9b5d1a5d"
+        "bytes": 7122,
+        "hash": "be347935dd05a7af"
       },
       "assetDigests": [
         {
@@ -14643,8 +14643,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-skin.png",
-        "bytes": 17490,
-        "hash": "5463db8111c9fd73"
+        "bytes": 17488,
+        "hash": "e291f13da9e89daa"
       },
       "assetDigests": [
         {
@@ -15622,7 +15622,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 178,
+          "calls": 184,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -15827,15 +15827,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0455"
+          "detail": "litRatio=0.0454"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 7676,
-        "hash": "771ca0931c79ad5f"
+        "bytes": 7037,
+        "hash": "6c1d4da8189fd01a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16002,7 +16002,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 8,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16205,8 +16205,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/input.png",
-        "bytes": 14869,
-        "hash": "5f45504b420365f3"
+        "bytes": 19398,
+        "hash": "72b61ed21503c42c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16938,7 +16938,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 306,
+          "calls": 309,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17158,8 +17158,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/interaction-click.png",
-        "bytes": 9149,
-        "hash": "f61010ceca097160"
+        "bytes": 9148,
+        "hash": "9924544ebedb5a28"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -18282,7 +18282,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 220,
+          "calls": 218,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -18623,8 +18623,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 42245,
-        "hash": "9d1773a265e3e484"
+        "bytes": 42114,
+        "hash": "a6cd67976fc8b9b2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -18849,7 +18849,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 241,
+          "calls": 240,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19208,8 +19208,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 32722,
-        "hash": "7b5d3fc8016148aa"
+        "bytes": 32839,
+        "hash": "86474e0e0f53e5a3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19672,7 +19672,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 256,
+          "calls": 257,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -20102,7 +20102,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.5426 assetUnits=9"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.5428 assetUnits=9"
         }
       ],
       "scenarioProbe": {
@@ -20239,8 +20239,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 15863,
-        "hash": "7dfaf93dcc48be98"
+        "bytes": 15860,
+        "hash": "cacde101315318cf"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -24060,7 +24060,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 429,
+          "calls": 431,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -24261,15 +24261,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1072"
+          "detail": "litRatio=0.1057"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 9535,
-        "hash": "1412519eb0d83efe"
+        "bytes": 9038,
+        "hash": "0792ff6d1aad8fdc"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -26979,15 +26979,15 @@
     {
       "id": "math-color-models",
       "result": "PASS",
-      "specFingerprint": "b5b173f118ac",
-      "sourceFingerprint": "950699d39a4eb2a0",
+      "specFingerprint": "89ecaa27ffdb",
+      "sourceFingerprint": "a51f6d658d115a46",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 32,
-        "bytes": 52510,
-        "hash": "eb4561f72a42d486",
+        "unitCount": 62,
+        "bytes": 54906,
+        "hash": "b04e225e87ee55a8",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -26995,13 +26995,21 @@
           "Node.addComponent: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
           "Node.setRotationFromEuler: no own descriptor on static",
+          "math.Color.a: no own descriptor on static",
+          "math.Color.b: no own descriptor on static",
           "math.Color.fromHSV: no own descriptor on static",
+          "math.Color.g: no own descriptor on static",
           "math.Color.getModifiableProperties: no own descriptor on static",
+          "math.Color.r: no own descriptor on static",
           "math.Color.toHSV: no own descriptor on static",
-          "math.Color.toString: no own descriptor on static"
+          "math.Color.toString: no own descriptor on static",
+          "math.Color.w: no own descriptor on static",
+          "math.Color.x: no own descriptor on static",
+          "math.Color.y: no own descriptor on static",
+          "math.Color.z: no own descriptor on static"
         ],
-        "observed": 32,
-        "total": 32
+        "observed": 62,
+        "total": 62
       },
       "apiProof": [
         {
@@ -27025,8 +27033,8 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 16,
-          "reads": 6,
+          "calls": 20,
+          "reads": 27,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -27260,7 +27268,314 @@
           ]
         },
         {
+          "api": "math.Color.BLACK",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.BLUE",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.CYAN",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.GRAY",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.GREEN",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.MAGENTA",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.RED",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.TRANSPARENT",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.WHITE",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 3,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.YELLOW",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.a",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 52,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.b",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 61,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 20,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Color",
+          "observedVia": "Color",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.copy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.divide",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Color.equals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.fromArray",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
@@ -27294,6 +27609,40 @@
           ]
         },
         {
+          "api": "math.Color.fromUint32",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.g",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 61,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Color.getModifiableProperties",
           "proof": "verified",
           "state": "executed",
@@ -27301,6 +27650,23 @@
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.hex",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
           "bound": true,
           "bindings": [
             {
@@ -27348,7 +27714,7 @@
           "api": "math.Color.prototype.clone",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "namespace-member",
@@ -27433,7 +27799,7 @@
           "api": "math.Color.prototype.set",
           "proof": "verified",
           "state": "executed",
-          "calls": 27,
+          "calls": 33,
           "reads": 0,
           "via": "call",
           "mechanism": "namespace-member",
@@ -27447,7 +27813,92 @@
           ]
         },
         {
+          "api": "math.Color.r",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 68,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.scale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Color.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.strictEquals",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.subtract",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.toArray",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
@@ -27485,6 +27936,74 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.w",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 8,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.x",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 12,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.y",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 12,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Color.z",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 12,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -31692,15 +32211,15 @@
     {
       "id": "math-mat4-basics",
       "result": "PASS",
-      "specFingerprint": "b6f4be16b75b",
-      "sourceFingerprint": "8c344612c32701ab",
+      "specFingerprint": "6cf98c815458",
+      "sourceFingerprint": "c4d2a3f10503ceb9",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 51,
-        "bytes": 54478,
-        "hash": "9a3ad674154e0dc5",
+        "unitCount": 85,
+        "bytes": 57336,
+        "hash": "a39eed10765fa0a7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -31708,10 +32227,28 @@
           "Node.addComponent: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
           "Node.setRotationFromEuler: no own descriptor on static",
+          "math.Mat4.m01: no own descriptor on static",
+          "math.Mat4.m01: no own descriptor on prototype",
+          "math.Mat4.m02: no own descriptor on static",
+          "math.Mat4.m02: no own descriptor on prototype",
+          "math.Mat4.m04: no own descriptor on static",
+          "math.Mat4.m04: no own descriptor on prototype",
+          "math.Mat4.m06: no own descriptor on static",
+          "math.Mat4.m06: no own descriptor on prototype",
+          "math.Mat4.m08: no own descriptor on static",
+          "math.Mat4.m08: no own descriptor on prototype",
+          "math.Mat4.m09: no own descriptor on static",
+          "math.Mat4.m09: no own descriptor on prototype",
+          "math.Mat4.m12: no own descriptor on static",
+          "math.Mat4.m12: no own descriptor on prototype",
+          "math.Mat4.m13: no own descriptor on static",
+          "math.Mat4.m13: no own descriptor on prototype",
+          "math.Mat4.m14: no own descriptor on static",
+          "math.Mat4.m14: no own descriptor on prototype",
           "math.Mat4.toString: no own descriptor on static"
         ],
-        "observed": 51,
-        "total": 51
+        "observed": 85,
+        "total": 85
       },
       "apiProof": [
         {
@@ -31970,7 +32507,76 @@
           ]
         },
         {
+          "api": "math.Mat4.IDENTITY",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Mat4.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 21,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Mat4",
+          "observedVia": "Mat4",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.copy",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
@@ -32021,10 +32627,197 @@
           ]
         },
         {
+          "api": "math.Mat4.fromArray",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromRT",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromSRTOrigin",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromScaling",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromTranslation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromXRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromYRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.fromZRotation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.frustum",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.getScaling",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Mat4.identity",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 7,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -32045,6 +32838,176 @@
           "reads": 0,
           "via": "call",
           "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.lookAt",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m01",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 72,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m02",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 70,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m04",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 69,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m06",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 69,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m08",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 69,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m09",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 69,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m12",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 65,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m13",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 61,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.m14",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 61,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
@@ -32076,6 +33039,57 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.multiplyScalarAndAdd",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.ortho",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.perspective",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -32429,6 +33443,57 @@
           ]
         },
         {
+          "api": "math.Mat4.rotateX",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.rotateY",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.rotateZ",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Mat4.set",
           "proof": "verified",
           "state": "executed",
@@ -32467,6 +33532,57 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.toArray",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.toEuler",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Mat4.toSRT",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -32534,7 +33650,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 14,
+          "calls": 22,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -42751,7 +43867,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 152,
+          "calls": 157,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -43637,7 +44753,7 @@
           "api": "math.Vec3.subtract",
           "proof": "verified",
           "state": "executed",
-          "calls": 178,
+          "calls": 184,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -45518,7 +46634,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 165,
+          "calls": 164,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -45960,7 +47076,7 @@
           "api": "math.Vec3.toArray",
           "proof": "verified",
           "state": "executed",
-          "calls": 319,
+          "calls": 317,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -46357,7 +47473,7 @@
           {
             "name": "Vec3.random",
             "ok": true,
-            "detail": "-0.5783713266303374,1.8665117127331876,0.42616972529930663"
+            "detail": "-1.4097798791479708,-1.3682249192966658,0.3748083010889234"
           },
           {
             "name": "Vec3.transformMat4Normal",
@@ -46897,15 +48013,15 @@
     {
       "id": "math-vec4-arithmetic",
       "result": "PASS",
-      "specFingerprint": "9a7f5ae7c9a3",
-      "sourceFingerprint": "2cf519023b63ef4e",
+      "specFingerprint": "5569d854117e",
+      "sourceFingerprint": "e084db1ebaa1b75f",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 41,
-        "bytes": 53462,
-        "hash": "8547068e4a9e26ea",
+        "unitCount": 73,
+        "bytes": 56089,
+        "hash": "4120e32a1f50d1b2",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -46913,10 +48029,14 @@
           "Node.addComponent: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
           "Node.setRotationFromEuler: no own descriptor on static",
-          "math.Vec4.negative: no own descriptor on static"
+          "math.Vec4.add4f: no own descriptor on static",
+          "math.Vec4.divide4f: no own descriptor on static",
+          "math.Vec4.multiply4f: no own descriptor on static",
+          "math.Vec4.negative: no own descriptor on static",
+          "math.Vec4.subtract4f: no own descriptor on static"
         ],
-        "observed": 41,
-        "total": 41
+        "observed": 73,
+        "total": 73
       },
       "apiProof": [
         {
@@ -46940,7 +48060,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 3,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -47193,7 +48313,228 @@
           ]
         },
         {
+          "api": "math.Vec4.NEG_ONE",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.ONE",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.UNIT_W",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.UNIT_X",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.UNIT_Y",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.UNIT_Z",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.ZERO",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec4.add",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.add4f",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.angle",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.ceil",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.copy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.distance",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
@@ -47227,6 +48568,159 @@
           ]
         },
         {
+          "api": "math.Vec4.divide4f",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.floor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.fromArray",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.fromColor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.inverse",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.inverseSafe",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.len",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.max",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.min",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec4.multiply",
           "proof": "verified",
           "state": "executed",
@@ -47244,10 +48738,44 @@
           ]
         },
         {
+          "api": "math.Vec4.multiply4f",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec4.multiplyScalar",
           "proof": "verified",
           "state": "executed",
           "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.negate",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -47468,7 +48996,7 @@
           "api": "math.Vec4.prototype.set",
           "proof": "verified",
           "state": "executed",
-          "calls": 159,
+          "calls": 168,
           "reads": 0,
           "via": "call",
           "mechanism": "namespace-member",
@@ -47533,7 +49061,58 @@
           ]
         },
         {
+          "api": "math.Vec4.random",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.round",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec4.scale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.scaleAndAdd",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
@@ -47567,7 +49146,92 @@
           ]
         },
         {
+          "api": "math.Vec4.squaredDistance",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "math.Vec4.subtract",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.subtract4f",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.toArray",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 7,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.transformAffine",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec4.transformQuat",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
@@ -49593,7 +51257,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 213,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -49777,15 +51441,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0587"
+          "detail": "litRatio=0.0583"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
-        "bytes": 10828,
-        "hash": "60c1df4c43cdc867"
+        "bytes": 10872,
+        "hash": "4fdc6f5c2c50e66e"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -51387,7 +53051,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 214,
+          "calls": 215,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -51595,8 +53259,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 16795,
-        "hash": "a548d8325a27e612"
+        "bytes": 16804,
+        "hash": "b9e0e0f749e311d9"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -52272,7 +53936,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 214,
+          "calls": 216,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -52463,8 +54127,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 17148,
-        "hash": "b91dd87a002e84f0"
+        "bytes": 17168,
+        "hash": "d26fd149fda06ff2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -52868,15 +54532,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0412"
+          "detail": "litRatio=0.0405"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 16954,
-        "hash": "37fb1e1eb1b7ce7d"
+        "bytes": 16054,
+        "hash": "ef863fb8468513b5"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -54919,7 +56583,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0564 assetUnits=11"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0561 assetUnits=11"
         }
       ],
       "scenarioProbe": {
@@ -54936,22 +56600,22 @@
           {
             "name": "animation-clock-started",
             "ok": true,
-            "detail": "tA=0.641（8s 内动画时钟未起步）"
+            "detail": "tA=0.765（8s 内动画时钟未起步）"
           },
           {
             "name": "independent-animation-clocks",
             "ok": true,
-            "detail": "tA=0.605 tB=2.492 ratio=4.12"
+            "detail": "tA=0.602 tB=2.733 ratio=4.54"
           },
           {
             "name": "pause-freezes-time",
             "ok": true,
-            "detail": "paused=2.492 after320ms=2.492"
+            "detail": "paused=2.733 after320ms=2.733"
           },
           {
             "name": "resume-advances-time",
             "ok": true,
-            "detail": "still=2.492 resumed=3.126"
+            "detail": "still=2.733 resumed=3.367"
           },
           {
             "name": "instanceB-disposed",
@@ -54961,7 +56625,7 @@
           {
             "name": "charA-unaffected-by-B-release",
             "ok": true,
-            "detail": "tA 1.879 → 2.279"
+            "detail": "tA 2.017 → 2.417"
           }
         ],
         "state": {
@@ -54979,8 +56643,8 @@
           },
           "timeline": {
             "clipName": "animation_0",
-            "tA": 2.279399999976157,
-            "tB": 3.125599999904631,
+            "tA": 2.4167000000178813,
+            "tB": 3.3668000000715255,
             "charBValid": false,
             "charAValid": true,
             "clicks": 0
@@ -55051,8 +56715,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/model-character-interaction.png",
-        "bytes": 9584,
-        "hash": "3768b1b756421e8c"
+        "bytes": 9597,
+        "hash": "5d9837d17e0e4e27"
       },
       "assetDigests": [
         {
@@ -58679,7 +60343,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0127"
+          "detail": "litRatio=0.0136"
         }
       ],
       "scenarioProbe": {
@@ -58789,7 +60453,7 @@
           {
             "name": "node-read:Node.uuid",
             "ok": true,
-            "detail": "string:Node.684"
+            "detail": "string:Node.982"
           },
           {
             "name": "node-read:Node.children",
@@ -58961,8 +60625,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 6130,
-        "hash": "49cced6d3af43230"
+        "bytes": 6353,
+        "hash": "a0e4c553edc2049a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -59642,7 +61306,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 217,
+          "calls": 204,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -59845,15 +61509,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0603"
+          "detail": "litRatio=0.0626"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 8007,
-        "hash": "485e41684351b952"
+        "bytes": 7996,
+        "hash": "29a3b13239dc4ce2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -60992,8 +62656,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/particle-2d-basic.png",
-        "bytes": 40839,
-        "hash": "738fcb4977a18f42"
+        "bytes": 40421,
+        "hash": "df7cddfb6f83885a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -61102,7 +62766,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 567,
+          "reads": 585,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -61324,7 +62988,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 946,
+          "reads": 976,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -61340,7 +63004,7 @@
           "api": "PhysicsSystem2D.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 378,
+          "calls": 390,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61357,7 +63021,7 @@
           "api": "PhysicsSystem2D.testAABB",
           "proof": "verified",
           "state": "executed",
-          "calls": 189,
+          "calls": 195,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61374,7 +63038,7 @@
           "api": "PhysicsSystem2D.testPoint",
           "proof": "verified",
           "state": "executed",
-          "calls": 1134,
+          "calls": 1170,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61459,7 +63123,7 @@
           "api": "RigidBody2D.getMass",
           "proof": "verified",
           "state": "executed",
-          "calls": 189,
+          "calls": 195,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -61578,7 +63242,7 @@
           "api": "math.Rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 189,
+          "calls": 195,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Rect",
@@ -61614,7 +63278,7 @@
           "api": "math.Vec2",
           "proof": "verified",
           "state": "executed",
-          "calls": 1896,
+          "calls": 1956,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec2",
@@ -61832,7 +63496,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 280,
+          "reads": 297,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -62070,7 +63734,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 281,
+          "reads": 298,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -62702,7 +64366,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 293,
+          "calls": 255,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62788,8 +64452,8 @@
           "api": "geometry.Ray",
           "proof": "verified",
           "state": "executed",
-          "calls": 3549,
-          "reads": 3549,
+          "calls": 3055,
+          "reads": 3055,
           "via": "call",
           "mechanism": "frozen-namespace-class",
           "bound": true,
@@ -62822,7 +64486,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 2001,
+          "calls": 1735,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -62839,7 +64503,7 @@
           "api": "math.Quat",
           "proof": "verified",
           "state": "executed",
-          "calls": 273,
+          "calls": 235,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Quat",
@@ -62857,7 +64521,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 1114,
+          "calls": 962,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -63120,7 +64784,7 @@
           "api": "physics.PhysicsSystem.lineStripCast",
           "proof": "verified",
           "state": "executed",
-          "calls": 273,
+          "calls": 235,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63171,7 +64835,7 @@
           "api": "physics.PhysicsSystem.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 3003,
+          "calls": 2585,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63188,7 +64852,7 @@
           "api": "physics.PhysicsSystem.raycastClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 819,
+          "calls": 705,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63256,7 +64920,7 @@
           "api": "physics.PhysicsSystem.sweepBox",
           "proof": "verified",
           "state": "executed",
-          "calls": 273,
+          "calls": 235,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63273,7 +64937,7 @@
           "api": "physics.PhysicsSystem.sweepBoxClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 273,
+          "calls": 235,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -64014,7 +65678,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 201,
+          "calls": 221,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -64408,8 +66072,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-collision.png",
-        "bytes": 11042,
-        "hash": "1c26e064446e814a"
+        "bytes": 11004,
+        "hash": "1291764f54e66f90"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -64773,7 +66437,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 302,
+          "calls": 311,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -65319,8 +66983,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-interaction.png",
-        "bytes": 12353,
-        "hash": "74309602b2281da2"
+        "bytes": 12355,
+        "hash": "06574169d4ef5327"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -67212,7 +68876,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 261,
+          "calls": 182,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67382,7 +69046,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 674,
+          "calls": 592,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -67554,7 +69218,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9994"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "interaction:button-click",
@@ -68015,7 +69679,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 181,
+          "calls": 186,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68322,15 +69986,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9998"
+          "detail": "litRatio=0.9997"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/profiler-overlay.png",
-        "bytes": 19440,
-        "hash": "f8cffa3812ffef0a"
+        "bytes": 19410,
+        "hash": "31355e035f1449fe"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -68641,7 +70305,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 313,
+          "calls": 299,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68989,7 +70653,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2285"
+          "detail": "litRatio=0.2260"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -68999,7 +70663,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2278 assetUnits=11"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2303 assetUnits=11"
         }
       ],
       "scenarioProbe": {
@@ -69076,7 +70740,7 @@
           {
             "name": "p4-rendertarget-visible",
             "ok": true,
-            "detail": "quad non-bg=3203px warm(快照内容)=2419px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+            "detail": "quad non-bg=3230px warm(快照内容)=2428px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
           },
           {
             "name": "p5-rt-resize-readback",
@@ -69101,7 +70765,7 @@
           {
             "name": "p5-resized-rt-still-renders",
             "ok": true,
-            "detail": "quad@128 non-bg=3879px warm=2831px rep=[19,28,49,255] rect={\"x\":0,\"y\":0,\"w\":1,\"h\":1}"
+            "detail": "quad@128 non-bg=3886px warm=2830px rep=[19,28,49,255] rect={\"x\":0,\"y\":0,\"w\":1,\"h\":1}"
           }
         ],
         "state": {
@@ -69121,8 +70785,8 @@
             255
           ],
           "quadRegion": {
-            "count": 3203,
-            "warm": 2419,
+            "count": 3230,
+            "warm": 2428,
             "pixel": [
               195,
               45,
@@ -69131,8 +70795,8 @@
             ]
           },
           "quadRegionAfterRTResize": {
-            "count": 3879,
-            "warm": 2831,
+            "count": 3886,
+            "warm": 2830,
             "pixel": [
               19,
               28,
@@ -69165,8 +70829,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/render-composite.png",
-        "bytes": 9176,
-        "hash": "e59041425987ed12"
+        "bytes": 9303,
+        "hash": "9441d4a1e5f39632"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -71832,7 +73496,7 @@
           {
             "name": "gen1-running",
             "ok": true,
-            "detail": "updates=15"
+            "detail": "updates=2"
           },
           {
             "name": "gen1-lifecycle-once",
@@ -71842,7 +73506,7 @@
           {
             "name": "gen2-running",
             "ok": true,
-            "detail": "updates=28"
+            "detail": "updates=25"
           },
           {
             "name": "autoReleaseAssets-recorded",
@@ -71852,7 +73516,7 @@
           {
             "name": "gen1-frozen",
             "ok": true,
-            "detail": "gen1 updates 15 → 15 after switch"
+            "detail": "gen1 updates 2 → 2 after switch"
           },
           {
             "name": "gen1-scene-destroyed",
@@ -71872,7 +73536,7 @@
           {
             "name": "gen2-frozen",
             "ok": true,
-            "detail": "gen2 updates 46 → 46"
+            "detail": "gen2 updates 42 → 42"
           },
           {
             "name": "gen2-scene-destroyed",
@@ -71898,7 +73562,7 @@
             {
               "gen": 1,
               "variant": "A",
-              "updates": 15,
+              "updates": 2,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -71906,7 +73570,7 @@
             {
               "gen": 2,
               "variant": "B",
-              "updates": 46,
+              "updates": 42,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -71914,7 +73578,7 @@
             {
               "gen": 3,
               "variant": "A",
-              "updates": 41,
+              "updates": 39,
               "clicks": 0,
               "onDisable": 0,
               "onDestroy": 0
@@ -72508,17 +74172,17 @@
           {
             "name": "gradient-horizontal",
             "ok": true,
-            "detail": "left=[162,78,116,255]（偏红）right=[111,95,170,255]（偏蓝）"
+            "detail": "left=[163,79,116,255]（偏红）right=[113,97,174,255]（偏蓝）"
           },
           {
             "name": "uniform-vec4-colorA",
             "ok": true,
-            "detail": "left after colorA=green: [44,172,126,255]"
+            "detail": "left after colorA=green: [48,185,136,255]"
           },
           {
             "name": "time-animation-frame-diff",
             "ok": true,
-            "detail": "maxDiff=3"
+            "detail": "maxDiff=22"
           },
           {
             "name": "uniform-float-freeze",
@@ -72531,44 +74195,44 @@
           "gfxAPI": "WEBGL2",
           "baseline": {
             "left": [
-              162,
-              78,
+              163,
+              79,
               116,
               255
             ],
             "right": [
-              111,
-              95,
-              170,
+              113,
+              97,
+              174,
               255
             ]
           },
           "afterColorA": [
-            44,
-            172,
-            126,
+            48,
+            185,
+            136,
             255
           ],
           "animDiff": {
             "d0": [
-              37,
-              118,
-              113,
+              47,
+              150,
+              144,
               255
             ],
             "d1": [
-              36,
-              117,
-              112,
+              43,
+              138,
+              132,
               255
             ],
             "d2": [
-              37,
-              120,
-              115,
+              40,
+              128,
+              123,
               255
             ],
-            "maxDiff": 3
+            "maxDiff": 22
           },
           "frozen": {
             "f0": [
@@ -72591,7 +74255,7 @@
       "artifact": {
         "path": "docs/evidence/examples/shader-custom-gradient.png",
         "bytes": 6666,
-        "hash": "69e0e5315c6d141e"
+        "hash": "bd1e30aa926f58fc"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -72868,7 +74532,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 248,
+          "calls": 254,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73273,7 +74937,7 @@
           {
             "name": "dissolve-animation-frame-diff",
             "ok": true,
-            "detail": "changedPx=2625 threshold=0.567"
+            "detail": "changedPx=5565 threshold=0.580"
           }
         ],
         "state": {
@@ -73299,8 +74963,8 @@
           ],
           "edgePixels": 1995,
           "animDiff": {
-            "changedPx": 2625,
-            "thresholdNow": 0.567
+            "changedPx": 5565,
+            "thresholdNow": 0.58
           },
           "effectValid": true,
           "animatorAlive": true
@@ -73309,8 +74973,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-dissolve.png",
-        "bytes": 7275,
-        "hash": "ede1071454ae3219"
+        "bytes": 7285,
+        "hash": "b73a6cb9bd5984a7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -73478,7 +75142,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 358,
+          "calls": 356,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73692,15 +75356,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0635"
+          "detail": "litRatio=0.0629"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 6890,
-        "hash": "1d2eadf164b7b4fe"
+        "bytes": 6672,
+        "hash": "08c92c9962d80239"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -76043,7 +77707,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 228,
+          "calls": 174,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -76280,20 +77944,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0956"
+          "detail": "litRatio=0.0856"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0873 assetUnits=7"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0874 assetUnits=7"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture-basic.png",
-        "bytes": 26064,
-        "hash": "19c2c1f1e2f8425f"
+        "bytes": 26075,
+        "hash": "b784dd50cfe2c243"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -77817,7 +79481,7 @@
           "api": "TiledLayer.isCullingDirty",
           "proof": "verified",
           "state": "executed",
-          "calls": 538,
+          "calls": 545,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -77885,7 +79549,7 @@
           "api": "TiledMap.getLayers",
           "proof": "verified",
           "state": "executed",
-          "calls": 582,
+          "calls": 590,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78460,7 +80124,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 241,
+          "calls": 245,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78477,7 +80141,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 239,
+          "calls": 243,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78494,7 +80158,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 237,
+          "calls": 241,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78562,7 +80226,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 479,
+          "calls": 487,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -78688,15 +80352,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0455"
+          "detail": "litRatio=0.0494"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 8912,
-        "hash": "001d1374b3a4aca0"
+        "bytes": 7614,
+        "hash": "3a16edaf3c50f718"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -78859,7 +80523,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 108,
+          "calls": 109,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -79721,7 +81385,7 @@
           {
             "name": "pause-freezes",
             "ok": true,
-            "detail": "0.7407000000178814"
+            "detail": "0.7430999999642371"
           },
           {
             "name": "resume-reaches-end",
@@ -79843,8 +81507,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
-        "bytes": 5605,
-        "hash": "71fdefdbb0786cb6"
+        "bytes": 5602,
+        "hash": "d0f6df22ef2d5817"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -81418,7 +83082,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 337,
+          "calls": 340,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -81963,7 +83627,7 @@
           "api": "UIRenderer.color",
           "proof": "verified",
           "state": "executed",
-          "calls": 18985,
+          "calls": 19151,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -81980,7 +83644,7 @@
           "api": "UIRenderer.customMaterial",
           "proof": "verified",
           "state": "executed",
-          "calls": 6617,
+          "calls": 6675,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -82065,7 +83729,7 @@
           "api": "UIRenderer.postUpdateAssembler",
           "proof": "verified",
           "state": "executed",
-          "calls": 9796,
+          "calls": 9882,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -82637,8 +84301,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-components.png",
-        "bytes": 18742,
-        "hash": "47cb77a35d711214"
+        "bytes": 18465,
+        "hash": "e231154e14451a63"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -82882,7 +84546,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 1641,
+          "calls": 1721,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -82986,7 +84650,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 12,
-          "reads": 3062,
+          "reads": 3222,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -83002,7 +84666,7 @@
           "api": "UITransform.convertToWorldSpaceAR",
           "proof": "verified",
           "state": "executed",
-          "calls": 1512,
+          "calls": 1592,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83496,7 +85160,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 3024,
+          "calls": 3184,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -84169,7 +85833,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 992,
+          "calls": 986,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -84305,7 +85969,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 653,
+          "calls": 648,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84322,7 +85986,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 336,
+          "calls": 335,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84339,7 +86003,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 989,
+          "calls": 983,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84356,7 +86020,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 653,
+          "calls": 648,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84868,8 +86532,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/video-basic.png",
-        "bytes": 14971,
-        "hash": "046bdd91d516ed67"
+        "bytes": 14972,
+        "hash": "469ec4a60f971630"
       },
       "assetDigests": [
         {
@@ -84962,7 +86626,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 590,
+          "calls": 592,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -85098,7 +86762,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 293,
+          "calls": 294,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85115,7 +86779,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 293,
+          "calls": 294,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85132,7 +86796,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 587,
+          "calls": 589,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85149,7 +86813,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 294,
+          "calls": 295,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85421,7 +87085,7 @@
           "api": "WebView.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 265,
+          "calls": 266,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85624,8 +87288,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/webview-basic.png",
-        "bytes": 20421,
-        "hash": "c4246dbb25e343b5"
+        "bytes": 20418,
+        "hash": "2cda555057bcd74e"
       },
       "assetDigests": [
         {
