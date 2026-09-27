@@ -80,20 +80,22 @@ var asset = (await loader.parseAsync(
     './assets/',
 )) as any;
 probe.parsedMeshes = asset.meshes ? asset.meshes.length : -1;
+var covFactory = (_context: any) => ({ name: 'AIR_COVERAGE_PROBE' });
+var covRegistry = new GLTFExtensionRegistry();
+T('covGLTFExtensionRegistry', () => typeof GLTFExtensionRegistry);
+covRegistry.register(covFactory as any);
+T('covGLTFExtensionRegistry.size', () => covRegistry.size);
+covRegistry.unregister(covFactory as any);
 T('loaderRegister', () => {
     try {
-        var reg1: any = GLTFLoader;
-        reg1.register('PROBE_ext');
-        return 'ok';
+        return loader.register(covFactory as any) === loader ? 'registered' : 'wrong-chain';
     } catch (e) {
         return 'threw';
     }
 });
 T('loaderUnregister', () => {
     try {
-        var reg2: any = GLTFLoader;
-        reg2.unregister('PROBE_ext');
-        return 'ok';
+        return loader.unregister(covFactory as any) === loader ? 'unregistered' : 'wrong-chain';
     } catch (e) {
         return 'threw';
     }
@@ -117,8 +119,8 @@ T('setKtx2Null', () => {
 T('regRegister', () => {
     try {
         var reg: any = new GLTFExtensionRegistry();
-        reg.register('PROBE_reg');
-        return 'ok';
+        reg.register(covFactory);
+        return reg.size === 1 ? 'registered' : `size=${reg.size}`;
     } catch (e) {
         return 'threw';
     }
@@ -126,8 +128,8 @@ T('regRegister', () => {
 T('regUnregister', () => {
     try {
         var reg: any = new GLTFExtensionRegistry();
-        reg.unregister('PROBE_reg');
-        return 'ok';
+        reg.register(covFactory);
+        return reg.unregister(covFactory) ? 'unregistered' : 'missing';
     } catch (e) {
         return 'threw';
     }
@@ -150,8 +152,17 @@ T('validateRequired', () => {
         return 'threw';
     }
 });
+const covGLTFFailures = Object.entries(probe)
+    .filter(
+        ([key, value]) =>
+            (key.startsWith('covGLTF') || key === 'loaderRegister' || key === 'loaderUnregister') && value === 'threw',
+    )
+    .map(([key]) => key);
+probe.coverageFailures = covGLTFFailures;
 probe.topic = 'gltf-loader-registry';
 (window as any).__probe = async () => probe;
+if (covGLTFFailures.length)
+    console.error(`[coverage] GLTF loader/registry probes failed: ${covGLTFFailures.join(', ')}`);
 
 // §25 资源生命周期合同（真拆建）：hold 当前对象 → destroy → 按 lifecycleMake 重建。
 var lcRef: any = asset;

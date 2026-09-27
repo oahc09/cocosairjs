@@ -78,6 +78,7 @@ function Vec3Ctor(): any {
     return (cocosairNS as any).Vec3;
 }
 import * as cocosairNS from 'cocosair';
+var mathNS = (cocosairNS as any).math;
 T('equals', () => equals(0.5, 0.5));
 T('approx', () => approx(1, 1 + EPSILON / 2));
 T('notApprox', () => approx(1, 2));
@@ -85,7 +86,7 @@ T('approxGE', () => approxGE(1, 1 - EPSILON / 2));
 T('approxLE', () => approxLE(1, 1 + EPSILON / 2));
 T('approxGT', () => approxGT(1 + EPSILON, 1));
 T('approxLT', () => approxLT(1 - EPSILON, 1));
-T('epsilon', () => EPSILON > 0 && EPSILON < 1e-5);
+T('epsilon', () => mathNS.EPSILON > 0 && mathNS.EPSILON < 1e-5);
 probe.topic = 'math-approx-compare';
 (window as any).__probe = async () => probe;
 

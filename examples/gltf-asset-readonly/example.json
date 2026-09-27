@@ -34,7 +34,11 @@
     "GLTFAsset.animations",
     "GLTFAsset.sceneNames",
     "GLTFAsset.images",
-    "GLTFAsset.meshMaterials"
+    "GLTFAsset.meshMaterials",
+    "GLTFAsset",
+    "GLTFAsset.document",
+    "GLTFAsset.warnings",
+    "GLTFAsset.constructor"
   ],
   "capabilities": [],
   "learning": {
@@ -61,7 +65,12 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "GLTFAsset",
+      "GLTFAsset.sceneNames",
+      "GLTFAsset.document",
+      "GLTFAsset.warnings",
+      "GLTFAsset.constructor"
     ],
     "claims": [
       "createAirApp",
@@ -90,7 +99,11 @@
       "GLTFAsset.animations",
       "GLTFAsset.sceneNames",
       "GLTFAsset.images",
-      "GLTFAsset.meshMaterials"
+      "GLTFAsset.meshMaterials",
+      "GLTFAsset",
+      "GLTFAsset.document",
+      "GLTFAsset.warnings",
+      "GLTFAsset.constructor"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -255,6 +268,30 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L89"
+      },
+      {
+        "api": "GLTFAsset",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "GLTFAsset.document",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "GLTFAsset.warnings",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L93"
+      },
+      {
+        "api": "GLTFAsset.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L61"
       }
     ]
   },
@@ -287,11 +324,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "07da80d1aa5b",
-    "source": "8b0e6869870468c5",
+    "spec": "c3c81d03e1e2",
+    "source": "180b2cc46b5dc471",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 23,
-    "attested": 4,
-    "units": 27
+    "verified": 31,
+    "attested": 0,
+    "units": 31
   }
 }

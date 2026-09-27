@@ -215,415 +215,415 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L211"
+        "sourceLocation": "L212"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L221"
+        "sourceLocation": "L222"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L197"
+        "sourceLocation": "L198"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L224"
+        "sourceLocation": "L225"
       },
       {
         "api": "Node.addComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L171"
+        "sourceLocation": "L172"
       },
       {
         "api": "Node.getComponent",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L300"
+        "sourceLocation": "L301"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L199"
+        "sourceLocation": "L200"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L484"
+        "sourceLocation": "L485"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L226"
+        "sourceLocation": "L227"
       },
       {
         "api": "DirectionalLight",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L239"
+        "sourceLocation": "L240"
       },
       {
         "api": "Layers",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L198"
+        "sourceLocation": "L199"
       },
       {
         "api": "Color",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L232"
+        "sourceLocation": "L233"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L199"
+        "sourceLocation": "L200"
       },
       {
         "api": "math.Quat",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L592"
+        "sourceLocation": "L593"
       },
       {
         "api": "isValid",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L191"
+        "sourceLocation": "L192"
       },
       {
         "api": "input",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L718"
+        "sourceLocation": "L720"
       },
       {
         "api": "Input",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L718"
+        "sourceLocation": "L720"
       },
       {
         "api": "MeshRenderer",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L171"
+        "sourceLocation": "L172"
       },
       {
         "api": "Material",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L163"
+        "sourceLocation": "L164"
       },
       {
         "api": "Material.initialize",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L164"
+        "sourceLocation": "L165"
       },
       {
         "api": "Material.setProperty",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L165"
+        "sourceLocation": "L166"
       },
       {
         "api": "utils.createMesh",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L179"
+        "sourceLocation": "L180"
       },
       {
         "api": "primitives.box",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L245"
+        "sourceLocation": "L246"
       },
       {
         "api": "primitives.sphere",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L269"
+        "sourceLocation": "L270"
       },
       {
         "api": "primitives.capsule",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L278"
+        "sourceLocation": "L279"
       },
       {
         "api": "primitives.torus",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L298"
+        "sourceLocation": "L299"
       },
       {
         "api": "geometry.Ray",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L522"
+        "sourceLocation": "L523"
       },
       {
         "api": "PhysicsGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L155"
+        "sourceLocation": "L156"
       },
       {
         "api": "physics.selector",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L612"
+        "sourceLocation": "L613"
       },
       {
         "api": "physics.PhysicsSystem",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L474"
+        "sourceLocation": "L475"
       },
       {
         "api": "physics.PhysicsSystem.constructAndRegister",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L476"
+        "sourceLocation": "L477"
       },
       {
         "api": "physics.PhysicsSystem.syncSceneToPhysics",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L371"
+        "sourceLocation": "L372"
       },
       {
         "api": "physics.PhysicsSystem.step",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L375"
+        "sourceLocation": "L376"
       },
       {
         "api": "physics.PhysicsSystem.emitEvents",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L413"
+        "sourceLocation": "L414"
       },
       {
         "api": "physics.PhysicsSystem.raycast",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L523"
+        "sourceLocation": "L524"
       },
       {
         "api": "physics.PhysicsSystem.raycastClosest",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L540"
+        "sourceLocation": "L541"
       },
       {
         "api": "physics.PhysicsSystem.raycastResults",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L526"
+        "sourceLocation": "L527"
       },
       {
         "api": "physics.PhysicsSystem.raycastClosestResult",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L479"
+        "sourceLocation": "L480"
       },
       {
         "api": "physics.PhysicsSystem.lineStripCast",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L573"
+        "sourceLocation": "L574"
       },
       {
         "api": "physics.PhysicsSystem.lineStripCastResults",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L574"
+        "sourceLocation": "L575"
       },
       {
         "api": "physics.PhysicsSystem.sweepBox",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L593"
+        "sourceLocation": "L594"
       },
       {
         "api": "physics.PhysicsSystem.sweepBoxClosest",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L595"
+        "sourceLocation": "L596"
       },
       {
         "api": "physics.PhysicsSystem.sweepCastResults",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L594"
+        "sourceLocation": "L595"
       },
       {
         "api": "physics.PhysicsSystem.minVolumeSize",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L631"
+        "sourceLocation": "L633"
       },
       {
         "api": "physics.RigidBody",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L246"
+        "sourceLocation": "L247"
       },
       {
         "api": "physics.RigidBody.applyForce",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L354"
+        "sourceLocation": "L355"
       },
       {
         "api": "physics.RigidBody.applyImpulse",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L355"
+        "sourceLocation": "L356"
       },
       {
         "api": "physics.RigidBody.applyTorque",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L356"
+        "sourceLocation": "L357"
       },
       {
         "api": "physics.RigidBody.setLinearVelocity",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L357"
+        "sourceLocation": "L358"
       },
       {
         "api": "physics.RigidBody.getLinearVelocity",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L363"
+        "sourceLocation": "L364"
       },
       {
         "api": "physics.RigidBody.setAngularVelocity",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L358"
+        "sourceLocation": "L359"
       },
       {
         "api": "physics.RigidBody.getAngularVelocity",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L364"
+        "sourceLocation": "L365"
       },
       {
         "api": "physics.RigidBody.wakeUp",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L367"
+        "sourceLocation": "L368"
       },
       {
         "api": "physics.RigidBody.sleep",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L368"
+        "sourceLocation": "L369"
       },
       {
         "api": "physics.RigidBody.clearState",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L369"
+        "sourceLocation": "L370"
       },
       {
         "api": "physics.RigidBody.clearForces",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L365"
+        "sourceLocation": "L366"
       },
       {
         "api": "physics.RigidBody.clearVelocity",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L366"
+        "sourceLocation": "L367"
       },
       {
         "api": "physics.Collider",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L465"
+        "sourceLocation": "L466"
       },
       {
         "api": "physics.Collider.type",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L207"
+        "sourceLocation": "L208"
       },
       {
         "api": "physics.Collider.getGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L329"
+        "sourceLocation": "L330"
       },
       {
         "api": "physics.Collider.setGroup",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L325"
+        "sourceLocation": "L326"
       },
       {
         "api": "physics.Collider.getMask",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L330"
+        "sourceLocation": "L331"
       },
       {
         "api": "physics.Collider.setMask",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L431"
+        "sourceLocation": "L432"
       },
       {
         "api": "physics.BoxCollider",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L248"
+        "sourceLocation": "L249"
       },
       {
         "api": "physics.SphereCollider",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L272"
+        "sourceLocation": "L273"
       },
       {
         "api": "physics.CapsuleCollider",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L281"
+        "sourceLocation": "L282"
       },
       {
         "api": "physics.MeshCollider",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L299"
+        "sourceLocation": "L300"
       },
       {
         "api": "physics.PhysicsRayResult",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L478"
+        "sourceLocation": "L479"
       },
       {
         "api": "physics.PhysicsMaterial",
         "source": "main.js",
         "validator": "visible-frame",
-        "sourceLocation": "L467"
+        "sourceLocation": "L468"
       }
     ]
   },
@@ -659,8 +659,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 223,
-            "text": "makeNode(Main Camera) → position [0,3.6,9.4]（工厂形参见 L199）"
+            "line": 224,
+            "text": "makeNode(Main Camera) → position [0,3.6,9.4]（工厂形参见 L200）"
           }
         ]
       },
@@ -669,8 +669,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 236,
-            "text": "makeNode(Main Light) → position [0,8,0]（工厂形参见 L199）"
+            "line": 237,
+            "text": "makeNode(Main Light) → position [0,8,0]（工厂形参见 L200）"
           }
         ]
       },
@@ -679,8 +679,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 243,
-            "text": "makeNode(Ground) → position [0,-0.15,0]（工厂形参见 L199）"
+            "line": 244,
+            "text": "makeNode(Ground) → position [0,-0.15,0]（工厂形参见 L200）"
           }
         ]
       },
@@ -689,8 +689,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 253,
-            "text": "makeNode(Crate) → position [-2.2,0.75,0]（工厂形参见 L199）"
+            "line": 254,
+            "text": "makeNode(Crate) → position [-2.2,0.75,0]（工厂形参见 L200）"
           }
         ]
       },
@@ -699,8 +699,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 267,
-            "text": "makeNode(Ball) → position [0,0.7,0]（工厂形参见 L199）"
+            "line": 268,
+            "text": "makeNode(Ball) → position [0,0.7,0]（工厂形参见 L200）"
           }
         ]
       },
@@ -709,8 +709,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 276,
-            "text": "makeNode(Capsule) → position [2.2,0.8,0]（工厂形参见 L199）"
+            "line": 277,
+            "text": "makeNode(Capsule) → position [2.2,0.8,0]（工厂形参见 L200）"
           }
         ]
       },
@@ -719,8 +719,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 286,
-            "text": "makeNode(Sensor) → position [-2.2,3.6,0]（工厂形参见 L199）"
+            "line": 287,
+            "text": "makeNode(Sensor) → position [-2.2,3.6,0]（工厂形参见 L200）"
           }
         ]
       },
@@ -729,8 +729,8 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 296,
-            "text": "makeNode(Trimesh) → position [4.2,0.9,0]（工厂形参见 L199）"
+            "line": 297,
+            "text": "makeNode(Trimesh) → position [4.2,0.9,0]（工厂形参见 L200）"
           }
         ]
       },
@@ -741,7 +741,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 727,
+            "line": 729,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
@@ -749,11 +749,11 @@
     }
   },
   "promotion": {
-    "spec": "9b2c4ac4792e",
-    "source": "11d87b8794c9e535",
+    "spec": "c8e36fab4e52",
+    "source": "5a37fd3d3300ace6",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 60,
-    "attested": 9,
+    "verified": 63,
+    "attested": 6,
     "units": 69
   }
 }

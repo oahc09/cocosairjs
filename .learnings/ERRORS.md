@@ -574,3 +574,75 @@ Register the one intentional PAL delta and its reason in `docs/upstream-file-map
 - **Notes**: The PAL deviation is documented, the regression suite verifies cap values and limits other PAL changes to zero, `verify:file-map` passes, and the refreshed V1.2 matrix passes 39/39.
 
 ---
+
+## [ERR-20260927-020] wave13-verification-invocation
+
+**Logged**: 2026-09-27T17:04:29Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+The first Wave 13 browser run lacked the external Playwright module path, and two setup edits failed before changing files.
+
+### Error
+```text
+Cannot find module 'playwright'
+PowerShell: 不允许空管道元素。
+api-trace patch context did not match because the code is inside a template literal passed to lines.push().
+Node.js `git show` inspection exceeded the default `spawnSync` maxBuffer (`ENOBUFS`). A browser-matrix contract probe also assumed an array, but the contract is keyed by example id.
+PowerShell expanded `\r` in a JavaScript regular-expression command and produced an unterminated regex.
+```
+
+### Context
+- The repository intentionally does not install Playwright locally; its browser runners require `NODE_PATH`.
+- PowerShell did not accept piping directly after the `foreach` statement in the probe.
+- The API trace template's runtime lines are nested inside a JavaScript template literal.
+- Large evidence JSON needs an explicit `maxBuffer`; `tools/v12/browser-matrix-contract.json` is an object keyed by example id, not a `cases` array.
+- In PowerShell `node -e` snippets, avoid regex escape sequences that the shell can expand; splitting and filtering lines is simpler for exact edits.
+
+### Suggested Fix
+Set `NODE_PATH` to the configured Playwright-containing `node_modules` for browser runs, capture PowerShell loop results before formatting, patch the actual template-literal source line, size `maxBuffer` for evidence files, and inspect a contract's shape before iterating.
+
+### Metadata
+- Reproducible: no
+- Related Files: `tools/verify/api-trace.cjs`
+- See Also: ERR-20260927-001, ERR-20260927-003
+
+### Resolution
+- **Resolved**: 2026-09-27T17:04:29Z
+- **Notes**: Located Playwright at `E:\AIProMax\Y2026M08\AIShaderBenchmark\node_modules`; corrected the shell probe, applied the tracer changes at their real source locations, increased the evidence read buffer, inspected contract keys before querying cases, and used a split/filter edit after PowerShell expanded a regex escape.
+
+---
+
+## [ERR-20260927-021] wave13-api-trace-regression
+
+**Logged**: 2026-09-27T19:03:24Z
+**Priority**: medium
+**Status**: resolved
+**Area**: tests
+
+### Summary
+Wave 13 exposed namespace alias and async GLTF instance gaps in API tracing, plus false failures from probes that were not executed through observable bindings.
+
+### Error
+The first full V1.1 trace run reported missing execution evidence for math namespace aliases, GLTFAsset own fields, `physics.selector`, and `screen`. A broad prototype-instance hook then caused `collector-dodge` and `tween-basic` regressions. The V1.2 video matrix also found that a final `currentTimeAdvanced` snapshot could be false in WebKit after the full P0–P9 sequence even though earlier playback and frame-decode assertions passed.
+
+### Context
+- Root ESM numeric bindings cannot be observed when the example imports the primitive directly; namespace property reads can be observed.
+- `GLTFLoader.parseAsync` constructs `GLTFAsset` internally and returns it through a Promise, outside the consumer-side constructor proxy.
+- Applying own-field instrumentation to every prototype method altered unrelated examples.
+- V1.2 already proves actual playback in P3 and decoded frame advancement in P5; the extra end-of-sequence playback snapshot sampled WebKit after fullscreen and media lifecycle changes.
+
+### Suggested Fix
+Return traced canonical wrappers through namespace aliases, record namespace reads, instrument only the resolved `GLTFAsset` from `GLTFLoader.parseAsync`, and keep direct playback/decode checks while removing a redundant final-state snapshot assertion.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/verify/api-trace.cjs`, `examples/video-basic/main.js`, `tools/v12/browser-matrix-contract.json`
+
+### Resolution
+- **Resolved**: 2026-09-27T19:03:24Z
+- **Notes**: Targeted and full V1.1 verification passed 140/140; strict specs passed 145/145; Gallery passed 216/216; the full V1.2 matrix passed 39/39 with the retained P3/P5 playback and decode assertions.
+
+---

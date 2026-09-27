@@ -80,7 +80,10 @@
     "math.Vec4.add4f",
     "math.Vec4.subtract4f",
     "math.Vec4.multiply4f",
-    "math.Vec4.divide4f"
+    "math.Vec4.divide4f",
+    "math.MathBase",
+    "math.MathBase.createFloatArray",
+    "math.MathBase.array"
   ],
   "capabilities": [],
   "learning": {
@@ -154,7 +157,10 @@
       "math.Vec4.add4f",
       "math.Vec4.subtract4f",
       "math.Vec4.multiply4f",
-      "math.Vec4.divide4f"
+      "math.Vec4.divide4f",
+      "math.MathBase",
+      "math.MathBase.createFloatArray",
+      "math.MathBase.array"
     ],
     "claims": [
       "createAirApp",
@@ -229,7 +235,10 @@
       "math.Vec4.add4f",
       "math.Vec4.subtract4f",
       "math.Vec4.multiply4f",
-      "math.Vec4.divide4f"
+      "math.Vec4.divide4f",
+      "math.MathBase",
+      "math.MathBase.createFloatArray",
+      "math.MathBase.array"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -670,6 +679,24 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L142"
+      },
+      {
+        "api": "math.MathBase",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "math.MathBase.createFloatArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "math.MathBase.array",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L149"
       }
     ]
   },
@@ -702,11 +729,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "5569d854117e",
-    "source": "e084db1ebaa1b75f",
+    "spec": "b143498dced9",
+    "source": "8fa976235c18bda7",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 73,
+    "verified": 76,
     "attested": 0,
-    "units": 73
+    "units": 76
   }
 }

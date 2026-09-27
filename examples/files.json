@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T15:35:50.938Z",
-  "revision": "ee9ecf5",
+  "generatedAt": "2026-09-27T19:00:45.366Z",
+  "revision": "86042a5",
   "examples": [
     {
       "dir": "anim-position",
@@ -390,8 +390,8 @@
         "spec": "7ac2fe951476",
         "source": "38d2fec0f38626ee",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 26,
-        "attested": 2,
+        "verified": 28,
+        "attested": 0,
         "units": 28
       }
     },
@@ -473,8 +473,8 @@
         "spec": "735d00cae975",
         "source": "e89d32ce3ed3bbb6",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 8,
-        "attested": 3,
+        "verified": 9,
+        "attested": 2,
         "units": 11
       }
     },
@@ -684,8 +684,8 @@
         "spec": "d314861ea3a2",
         "source": "0af7f6b33b45bf6e",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 12,
-        "attested": 1,
+        "verified": 13,
+        "attested": 0,
         "units": 13
       }
     },
@@ -891,8 +891,8 @@
         "spec": "466cfd2b2403",
         "source": "ef1843dfdc0ab7c7",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "units": 19
       }
     },
@@ -1097,8 +1097,8 @@
         "spec": "91aa75cbfdff",
         "source": "376aa633d7649377",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "units": 19
       }
     },
@@ -1609,8 +1609,8 @@
         "spec": "a7f63fc705a1",
         "source": "097992b17ba74405",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 35,
-        "attested": 2,
+        "verified": 37,
+        "attested": 0,
         "units": 37
       }
     },
@@ -1944,8 +1944,8 @@
         "spec": "5224b3c3a036",
         "source": "01feed613351fe17",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 26,
-        "attested": 2,
+        "verified": 28,
+        "attested": 0,
         "units": 28
       }
     },
@@ -2218,8 +2218,8 @@
         "spec": "7c755d620c3d",
         "source": "a9c357ebb1b5e758",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 36,
-        "attested": 10,
+        "verified": 40,
+        "attested": 6,
         "units": 46
       }
     },
@@ -2263,7 +2263,12 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "GLTFAsset",
+          "GLTFAsset.sceneNames",
+          "GLTFAsset.document",
+          "GLTFAsset.warnings",
+          "GLTFAsset.constructor"
         ],
         "claims": [
           "createAirApp",
@@ -2292,7 +2297,11 @@
           "GLTFAsset.animations",
           "GLTFAsset.sceneNames",
           "GLTFAsset.images",
-          "GLTFAsset.meshMaterials"
+          "GLTFAsset.meshMaterials",
+          "GLTFAsset",
+          "GLTFAsset.document",
+          "GLTFAsset.warnings",
+          "GLTFAsset.constructor"
         ]
       },
       "capabilities": [],
@@ -2328,12 +2337,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "07da80d1aa5b",
-        "source": "8b0e6869870468c5",
+        "spec": "c3c81d03e1e2",
+        "source": "180b2cc46b5dc471",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 23,
-        "attested": 4,
-        "units": 27
+        "verified": 31,
+        "attested": 0,
+        "units": 31
       }
     },
     {
@@ -2730,7 +2739,12 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "GLTFLoader.constructor",
+          "GLTFLoader.register",
+          "GLTFLoader.unregister",
+          "GLTFExtensionRegistry",
+          "GLTFExtensionRegistry.size"
         ],
         "claims": [
           "createAirApp",
@@ -2756,7 +2770,12 @@
           "GLTFExtensionRegistry.register",
           "GLTFExtensionRegistry.unregister",
           "GLTFExtensionRegistry.createHandlers",
-          "GLTFExtensionRegistry.validateRequired"
+          "GLTFExtensionRegistry.validateRequired",
+          "GLTFLoader.constructor",
+          "GLTFLoader.register",
+          "GLTFLoader.unregister",
+          "GLTFExtensionRegistry",
+          "GLTFExtensionRegistry.size"
         ]
       },
       "capabilities": [],
@@ -2792,12 +2811,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "02884be29324",
-        "source": "e8bc35c4e2e91bae",
+        "spec": "410987ea135f",
+        "source": "213a22d7c2c3ca48",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 24,
+        "verified": 29,
         "attested": 0,
-        "units": 24
+        "units": 29
       }
     },
     {
@@ -3304,8 +3323,8 @@
         "spec": "1eec40a9fdad",
         "source": "037467dd34348936",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 16,
-        "attested": 1,
+        "verified": 17,
+        "attested": 0,
         "units": 17
       }
     },
@@ -3406,8 +3425,8 @@
         "spec": "aeed6a7d4db8",
         "source": "37642ffb95c12375",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 13,
-        "attested": 2,
+        "verified": 15,
+        "attested": 0,
         "units": 15
       }
     },
@@ -3630,8 +3649,8 @@
         "spec": "e5337b3cc8f9",
         "source": "286de09ae2f442c2",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 19,
-        "attested": 1,
+        "verified": 20,
+        "attested": 0,
         "units": 20
       }
     },
@@ -4359,8 +4378,8 @@
         "spec": "516c502017cf",
         "source": "0de72aa96c0cbf42",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 36,
-        "attested": 1,
+        "verified": 37,
+        "attested": 0,
         "units": 37
       }
     },
@@ -4469,8 +4488,8 @@
         "spec": "691785c7d88e",
         "source": "ccc6fc2c4637ea1e",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 21,
-        "attested": 1,
+        "verified": 22,
+        "attested": 0,
         "units": 22
       }
     },
@@ -4560,8 +4579,8 @@
         "spec": "3dc08a803d09",
         "source": "77978071ea70ce35",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 13,
-        "attested": 1,
+        "verified": 14,
+        "attested": 0,
         "units": 14
       }
     },
@@ -5078,8 +5097,8 @@
         "spec": "57a35450dc95",
         "source": "7517caefdbe8802f",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 15,
-        "attested": 1,
+        "verified": 16,
+        "attested": 0,
         "units": 16
       }
     },
@@ -5184,11 +5203,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "22fbdb446ecc",
-        "source": "aa8f177850fc8b75",
+        "spec": "fc9bfe4f1c26",
+        "source": "20f11d26e9b06084",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 24,
-        "attested": 1,
+        "verified": 25,
+        "attested": 0,
         "units": 25
       }
     },
@@ -5233,7 +5252,25 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.bits.sign",
+          "math.bits.abs",
+          "math.bits.min",
+          "math.bits.max",
+          "math.bits.isPow2",
+          "math.bits.log2",
+          "math.bits.log10",
+          "math.bits.popCount",
+          "math.bits.countTrailingZeros",
+          "math.bits.nextPow2",
+          "math.bits.prevPow2",
+          "math.bits.parity",
+          "math.bits.reverse",
+          "math.bits.interleave2",
+          "math.bits.deinterleave2",
+          "math.bits.interleave3",
+          "math.bits.deinterleave3",
+          "math.bits.nextCombination"
         ],
         "claims": [
           "createAirApp",
@@ -5305,11 +5342,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7715860acf04",
-        "source": "8ddf903c55618ac1",
+        "spec": "0dac7344c814",
+        "source": "3185e7f6fe4b2b48",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 18,
-        "attested": 18,
+        "verified": 36,
+        "attested": 0,
         "units": 36
       }
     },
@@ -5352,7 +5389,10 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.bits.INT_BITS",
+          "math.bits.INT_MAX",
+          "math.bits.INT_MIN"
         ],
         "claims": [
           "createAirApp",
@@ -5409,11 +5449,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f459d4a2b5f6",
-        "source": "5e1be191a2b0cf66",
+        "spec": "a60808cc9b2d",
+        "source": "4a090376a6375b36",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 18,
-        "attested": 3,
+        "verified": 21,
+        "attested": 0,
         "units": 21
       }
     },
@@ -6116,11 +6156,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "e647cf23199c",
-        "source": "9f895aa61ce574a1",
+        "spec": "f7a11b7992de",
+        "source": "8a562381af5876cb",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 20,
-        "attested": 2,
+        "verified": 22,
+        "attested": 0,
         "units": 22
       }
     },
@@ -7989,7 +8029,31 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "math.v2",
+          "math.v3",
+          "math.Vec4",
+          "math.v4",
+          "math.quat",
+          "math.mat4",
+          "math.size",
+          "math.rect",
+          "math.color",
+          "math.toRadian",
+          "math.toDegree",
+          "math.randomRange",
+          "math.randomRangeInt",
+          "math.pseudoRandom",
+          "math.pseudoRandomRange",
+          "math.pseudoRandomRangeInt",
+          "math.nextPow2",
+          "math.repeat",
+          "math.pingPong",
+          "math.absMaxComponent",
+          "math.HALF_PI",
+          "math.TWO_PI",
+          "math.EPSILON",
+          "math.MATH_FLOAT_ARRAY"
         ],
         "claims": [
           "createAirApp",
@@ -8014,7 +8078,31 @@
           "math.clamp01",
           "math.lerp",
           "math.inverseLerp",
-          "math.absMax"
+          "math.absMax",
+          "math.v2",
+          "math.v3",
+          "math.Vec4",
+          "math.v4",
+          "math.quat",
+          "math.mat4",
+          "math.size",
+          "math.rect",
+          "math.color",
+          "math.toRadian",
+          "math.toDegree",
+          "math.randomRange",
+          "math.randomRangeInt",
+          "math.pseudoRandom",
+          "math.pseudoRandomRange",
+          "math.pseudoRandomRangeInt",
+          "math.nextPow2",
+          "math.repeat",
+          "math.pingPong",
+          "math.absMaxComponent",
+          "math.HALF_PI",
+          "math.TWO_PI",
+          "math.EPSILON",
+          "math.MATH_FLOAT_ARRAY"
         ]
       },
       "capabilities": [],
@@ -8048,12 +8136,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "dbe73acd98c1",
-        "source": "92b4a147ff81428a",
+        "spec": "55b98a111bc1",
+        "source": "860768f3941d7dff",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 23,
+        "verified": 47,
         "attested": 0,
-        "units": 23
+        "units": 47
       }
     },
     {
@@ -9768,7 +9856,10 @@
           "math.Vec4.add4f",
           "math.Vec4.subtract4f",
           "math.Vec4.multiply4f",
-          "math.Vec4.divide4f"
+          "math.Vec4.divide4f",
+          "math.MathBase",
+          "math.MathBase.createFloatArray",
+          "math.MathBase.array"
         ],
         "claims": [
           "createAirApp",
@@ -9843,7 +9934,10 @@
           "math.Vec4.add4f",
           "math.Vec4.subtract4f",
           "math.Vec4.multiply4f",
-          "math.Vec4.divide4f"
+          "math.Vec4.divide4f",
+          "math.MathBase",
+          "math.MathBase.createFloatArray",
+          "math.MathBase.array"
         ]
       },
       "capabilities": [],
@@ -9877,12 +9971,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "5569d854117e",
-        "source": "e084db1ebaa1b75f",
+        "spec": "b143498dced9",
+        "source": "8fa976235c18bda7",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 73,
+        "verified": 76,
         "attested": 0,
-        "units": 73
+        "units": 76
       }
     },
     {
@@ -11332,8 +11426,8 @@
         "spec": "f21a20179694",
         "source": "201da8ea96b81111",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 39,
-        "attested": 6,
+        "verified": 44,
+        "attested": 1,
         "units": 45
       }
     },
@@ -12409,8 +12503,8 @@
         "spec": "dc33c48be26c",
         "source": "af9084853704646e",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 22,
-        "attested": 12,
+        "verified": 23,
+        "attested": 11,
         "units": 34
       }
     },
@@ -12540,8 +12634,8 @@
         "spec": "2992f3827c45",
         "source": "0c29ffa9f366c5cf",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 32,
-        "attested": 4,
+        "verified": 33,
+        "attested": 3,
         "units": 36
       }
     },
@@ -12679,8 +12773,8 @@
         "spec": "1146afbe7bfc",
         "source": "651f615374c33ffe",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 27,
-        "attested": 6,
+        "verified": 30,
+        "attested": 3,
         "units": 33
       }
     },
@@ -12860,11 +12954,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "9b2c4ac4792e",
-        "source": "11d87b8794c9e535",
+        "spec": "c8e36fab4e52",
+        "source": "5a37fd3d3300ace6",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 60,
-        "attested": 9,
+        "verified": 63,
+        "attested": 6,
         "units": 69
       }
     },
@@ -13123,8 +13217,8 @@
         "spec": "58000f69e95e",
         "source": "4753b596e6ba21cb",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 39,
-        "attested": 2,
+        "verified": 41,
+        "attested": 0,
         "units": 41
       }
     },
@@ -13589,8 +13683,8 @@
         "spec": "e568b27b4292",
         "source": "ce8c2f3d46c24e7f",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 38,
-        "attested": 3,
+        "verified": 40,
+        "attested": 1,
         "units": 41
       }
     },
@@ -13688,8 +13782,8 @@
         "spec": "7452de8c11ca",
         "source": "86784386074fa41c",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 21,
-        "attested": 2,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -14185,8 +14279,8 @@
         "spec": "2722e26e69ef",
         "source": "eed46d5241592949",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 29,
-        "attested": 3,
+        "verified": 31,
+        "attested": 1,
         "units": 32
       }
     },
@@ -14545,7 +14639,12 @@
           "Scene.globals",
           "Scene.autoReleaseAssets",
           "Scene.dependAssets",
-          "Scene.addComponent"
+          "Scene.addComponent",
+          "director",
+          "game",
+          "instantiate",
+          "builtinResMgr",
+          "Vec3"
         ],
         "claims": [
           "createAirApp",
@@ -14572,7 +14671,12 @@
           "Scene.updateWorldTransform",
           "Scene.renderScene",
           "Scene.globals",
-          "Scene.addComponent"
+          "Scene.addComponent",
+          "director",
+          "game",
+          "instantiate",
+          "builtinResMgr",
+          "Vec3"
         ]
       },
       "capabilities": [],
@@ -14608,12 +14712,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "3168242ad2e7",
-        "source": "5cfeac496a6f8491",
+        "spec": "72ed9b905b71",
+        "source": "99edfa6fc0060f0f",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 25,
+        "verified": 30,
         "attested": 0,
-        "units": 25
+        "units": 30
       }
     },
     {
@@ -14731,8 +14835,8 @@
         "spec": "df4aafe4741e",
         "source": "fd48cef4ffe8c97f",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 30,
-        "attested": 2,
+        "verified": 32,
+        "attested": 0,
         "units": 32
       }
     },
@@ -14846,8 +14950,8 @@
         "spec": "b96b45bc2180",
         "source": "35462f213c12decb",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 23,
-        "attested": 3,
+        "verified": 25,
+        "attested": 1,
         "units": 26
       }
     },
@@ -14966,8 +15070,8 @@
         "spec": "7cada7a1d2e8",
         "source": "d5ef856a78549703",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 28,
-        "attested": 3,
+        "verified": 30,
+        "attested": 1,
         "units": 31
       }
     },
@@ -15253,8 +15357,8 @@
         "spec": "1c8e43051896",
         "source": "a7fbfefe053020bf",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 22,
-        "attested": 1,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -15373,8 +15477,8 @@
         "spec": "b73eafe44754",
         "source": "ff2b442ea1080e8f",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 25,
-        "attested": 2,
+        "verified": 27,
+        "attested": 0,
         "units": 27
       }
     },
@@ -15484,8 +15588,8 @@
         "spec": "67d84f00e67a",
         "source": "3ec71c4754dfb103",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 21,
-        "attested": 2,
+        "verified": 23,
+        "attested": 0,
         "units": 23
       }
     },
@@ -15986,8 +16090,8 @@
         "spec": "7cc79446c2a9",
         "source": "d190ac5740586673",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 46,
-        "attested": 2,
+        "verified": 48,
+        "attested": 0,
         "units": 48
       }
     },
@@ -16082,8 +16186,8 @@
         "spec": "80b0c3becc83",
         "source": "1a37f130b093f25a",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 13,
-        "attested": 1,
+        "verified": 14,
+        "attested": 0,
         "units": 14
       }
     },
@@ -16226,8 +16330,8 @@
         "spec": "7c068016a452",
         "source": "938bdcafc5787e15",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 50,
-        "attested": 1,
+        "verified": 51,
+        "attested": 0,
         "units": 51
       }
     },
@@ -16348,8 +16452,8 @@
         "spec": "ac1d1fe9483f",
         "source": "cbda0eef993792c8",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 27,
-        "attested": 3,
+        "verified": 29,
+        "attested": 1,
         "units": 30
       }
     },
@@ -16602,8 +16706,8 @@
         "spec": "40a35227bec3",
         "source": "2e2366b4936ed1f8",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 95,
-        "attested": 1,
+        "verified": 96,
+        "attested": 0,
         "units": 96
       }
     },
@@ -16764,8 +16868,8 @@
         "spec": "e56f7afefc3a",
         "source": "a540521e5af62671",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 48,
-        "attested": 1,
+        "verified": 49,
+        "attested": 0,
         "units": 49
       }
     },
@@ -17017,11 +17121,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "a72fa4472915",
-        "source": "159c0548a29b166b",
+        "spec": "131f1ec448fd",
+        "source": "a3e42e86712a04e7",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 25,
-        "attested": 11,
+        "verified": 29,
+        "attested": 7,
         "units": 36
       }
     },
@@ -17168,8 +17272,8 @@
         "spec": "f6efbe2a2c12",
         "source": "b955ded66d1a7898",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 29,
-        "attested": 7,
+        "verified": 31,
+        "attested": 5,
         "units": 36
       }
     }

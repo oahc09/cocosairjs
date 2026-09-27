@@ -151,217 +151,217 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L120"
+        "sourceLocation": "L122"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L123"
+        "sourceLocation": "L125"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L124"
+        "sourceLocation": "L126"
       },
       {
         "api": "Camera",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L134"
+        "sourceLocation": "L136"
       },
       {
         "api": "Canvas",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L128"
+        "sourceLocation": "L130"
       },
       {
         "api": "UITransform",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L126"
+        "sourceLocation": "L128"
       },
       {
         "api": "Layers",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L65"
+        "sourceLocation": "L67"
       },
       {
         "api": "Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L136"
+        "sourceLocation": "L138"
       },
       {
         "api": "Label",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L148"
+        "sourceLocation": "L150"
       },
       {
         "api": "GraphicsComponent",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L176"
+        "sourceLocation": "L178"
       },
       {
         "api": "GraphicsComponent.rect",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L375"
+        "sourceLocation": "L377"
       },
       {
         "api": "GraphicsComponent.clear",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L189"
+        "sourceLocation": "L191"
       },
       {
         "api": "GraphicsComponent.stroke",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L196"
+        "sourceLocation": "L198"
       },
       {
         "api": "GraphicsComponent.fill",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L192"
+        "sourceLocation": "L194"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L186"
+        "sourceLocation": "L188"
       },
       {
         "api": "EventHandler",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L283"
+        "sourceLocation": "L285"
       },
       {
         "api": "EventHandler.target",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L284"
+        "sourceLocation": "L286"
       },
       {
         "api": "EventHandler.component",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L285"
+        "sourceLocation": "L287"
       },
       {
         "api": "EventHandler.handler",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L214"
+        "sourceLocation": "L216"
       },
       {
         "api": "EventHandler.customEventData",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L287"
+        "sourceLocation": "L289"
       },
       {
         "api": "VideoPlayer",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L274"
+        "sourceLocation": "L276"
       },
       {
         "api": "VideoPlayer.play",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L400"
+        "sourceLocation": "L402"
       },
       {
         "api": "VideoPlayer.pause",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L405"
+        "sourceLocation": "L407"
       },
       {
         "api": "VideoPlayer.resume",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L410"
+        "sourceLocation": "L412"
       },
       {
         "api": "VideoPlayer.videoPlayerEvent",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L287"
+        "sourceLocation": "L289"
       },
       {
         "api": "VideoPlayer.ResourceType",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L275"
+        "sourceLocation": "L277"
       },
       {
         "api": "VideoClip",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L330"
+        "sourceLocation": "L332"
       },
       {
         "api": "assetManager",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L108"
+        "sourceLocation": "L110"
       },
       {
         "api": "screen",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L659"
+        "sourceLocation": "L61"
       },
       {
         "api": "Screen.requestFullScreen",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L668"
+        "sourceLocation": "L670"
       },
       {
         "api": "Screen.exitFullScreen",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L681"
+        "sourceLocation": "L683"
       },
       {
         "api": "js.setClassName",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L219"
+        "sourceLocation": "L221"
       },
       {
         "api": "macro",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L62"
+        "sourceLocation": "L64"
       },
       {
         "api": "view",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L121"
+        "sourceLocation": "L123"
       },
       {
         "api": "ResolutionPolicy",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L121"
+        "sourceLocation": "L123"
       },
       {
         "api": "Node.on",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L299"
+        "sourceLocation": "L301"
       }
     ]
   },
@@ -399,7 +399,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 124,
+            "line": 126,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
@@ -409,7 +409,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 133,
+            "line": 135,
             "text": "cameraNode.setPosition(0, 0, 1000);"
           }
         ]
@@ -419,7 +419,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 146,
+            "line": 148,
             "text": "statusNode.setPosition(0, 148, 0);"
           }
         ]
@@ -429,7 +429,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 158,
+            "line": 160,
             "text": "hintNode.setPosition(0, -150, 0);"
           }
         ]
@@ -441,7 +441,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 171,
+            "line": 173,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
@@ -451,7 +451,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 182,
+            "line": 184,
             "text": "clockNode.setPosition(0, -124, 0);"
           }
         ]
@@ -463,7 +463,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 206,
+            "line": 208,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
@@ -473,7 +473,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 272,
+            "line": 274,
             "text": "hostNode.setPosition(0, -10, 0);"
           }
         ]
@@ -481,11 +481,11 @@
     }
   },
   "promotion": {
-    "spec": "a72fa4472915",
-    "source": "159c0548a29b166b",
+    "spec": "131f1ec448fd",
+    "source": "a3e42e86712a04e7",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 25,
-    "attested": 11,
+    "verified": 29,
+    "attested": 7,
     "units": 36
   }
 }

@@ -200,25 +200,25 @@
         "api": "math.floatToHalf",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L79"
+        "sourceLocation": "L80"
       },
       {
         "api": "math.halfToFloat",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L79"
+        "sourceLocation": "L80"
       },
       {
         "api": "math.HALF_PI",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L82"
+        "sourceLocation": "L83"
       },
       {
         "api": "math.TWO_PI",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L83"
+        "sourceLocation": "L84"
       }
     ]
   },
@@ -251,11 +251,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "e647cf23199c",
-    "source": "9f895aa61ce574a1",
+    "spec": "f7a11b7992de",
+    "source": "8a562381af5876cb",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 20,
-    "attested": 2,
+    "verified": 22,
+    "attested": 0,
     "units": 22
   }
 }

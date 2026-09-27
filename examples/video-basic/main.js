@@ -58,6 +58,8 @@ import {
 } from 'cocosair';
 import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 
+const screenApiProbe = { supportsFullScreen: screen.supportsFullScreen, isFullScreen: screen.isFullScreen };
+
 /** 必须在 createAirApp 之前：swapchain 建立时才读这个开关（见文件头 ②）。 */
 macro.ENABLE_TRANSPARENT_CANVAS = true;
 
@@ -685,7 +687,6 @@ async function onUserClick() {
     }
     out.exitSettledWithinMs = await waitFor(() => !document.fullscreenElement, 2000);
     out.after = { fsEl: tagOf(document.fullscreenElement), isFullScreen: screen.isFullScreen, videoRect: rectOf(v) };
-
     // B. VideoPlayer 自己的全屏：只有 **awake 路**（clip 之前就置 `fullScreenOnAwake=true`）可用。
     //    加载完成后再置真会走 `screen.requestFullScreen(video, cb)`（deprecated 重载）：element 参数被
     //    忽略（真目标由 PAL 自己选，实测是 `document.body`），而 cb 被零参调用 ⇒ 形参 `document`
@@ -793,9 +794,11 @@ app.run(scene);
 
 window.__probe = async () => {
     const v = player ? player.nativeVideo : null;
+    const timeBeforeSample = player ? player.currentTime : 0;
     const f0 = videoFrameStats(v);
     await sleep(420);
     const f1 = videoFrameStats(v);
+    const timeAfterSample = player ? player.currentTime : 0;
     const rect = v ? v.getBoundingClientRect() : null;
     return {
         summary: status.string,
@@ -803,13 +806,11 @@ window.__probe = async () => {
         results,
         eventLog: eventLog.slice(),
         live: {
+            screenApi: screenApiProbe,
             state: player ? player.state : null,
             isPlaying: player ? player.isPlaying : null,
             duration: player ? num(player.duration) : null,
-            currentTimeAdvanced: (() => {
-                const a = player ? player.currentTime : 0;
-                return player ? a > 0 : false;
-            })(),
+            currentTimeAdvanced: player ? Math.abs(timeAfterSample - timeBeforeSample) > 0.01 : false,
             loop: player ? player.loop : null,
             volume: player ? num(player.volume) : null,
             playbackRate: player ? num(player.playbackRate) : null,

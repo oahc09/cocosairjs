@@ -55,7 +55,10 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "math.bits.INT_BITS",
+      "math.bits.INT_MAX",
+      "math.bits.INT_MIN"
     ],
     "claims": [
       "createAirApp",
@@ -239,11 +242,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "f459d4a2b5f6",
-    "source": "5e1be191a2b0cf66",
+    "spec": "a60808cc9b2d",
+    "source": "4a090376a6375b36",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 18,
-    "attested": 3,
+    "verified": 21,
+    "attested": 0,
     "units": 21
   }
 }

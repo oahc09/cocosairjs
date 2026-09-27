@@ -202,43 +202,43 @@
         "api": "math.equals",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L81"
+        "sourceLocation": "L82"
       },
       {
         "api": "math.approx",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L82"
+        "sourceLocation": "L83"
       },
       {
         "api": "math.approxGE",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L84"
+        "sourceLocation": "L85"
       },
       {
         "api": "math.approxLE",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L85"
+        "sourceLocation": "L86"
       },
       {
         "api": "math.approxGT",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L86"
+        "sourceLocation": "L87"
       },
       {
         "api": "math.approxLT",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L87"
+        "sourceLocation": "L88"
       },
       {
         "api": "math.EPSILON",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L86"
+        "sourceLocation": "L87"
       }
     ]
   },
@@ -271,11 +271,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "22fbdb446ecc",
-    "source": "aa8f177850fc8b75",
+    "spec": "fc9bfe4f1c26",
+    "source": "20f11d26e9b06084",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 24,
-    "attested": 1,
+    "verified": 25,
+    "attested": 0,
     "units": 25
   }
 }

@@ -65,7 +65,7 @@
 
 - 手势内直接 `await screen.requestFullScreen()` / `await screen.exitFullScreen()`，自己 try/catch。
   不 await 的 `exitFullScreen()` 在非全屏态会抛 `pageerror: Failed to execute 'exitFullscreen' on
-  'Document': Document not active`。实测 enter/exit 双向都 resolve
+'Document': Document not active`。实测 enter/exit 双向都 resolve
   （`enterResolved/exitResolved true`、`exitSettledWithinMs 0`）。
 - `fullScreenOnAwake = true` 必须在赋 `clip` **之前**设置，此时走的是「几何全屏」分支：
   `syncMatrix` 用 `visibleRect` 把 `<video>` 撑满视口（实测 `awake.rect 480x360 == awake.viewport`、
@@ -86,16 +86,16 @@
 
 ## 4. 逐引擎差异（禁入 `probeEquals`，只做 `probePresent`/非空）
 
-| 项 | chromium | firefox | webkit |
-| --- | --- | --- | --- |
-| `p1Mount.readyState` | 4 | 4 | **3** |
-| `p1Mount.readyToPlayWithinMs` | 0 | 21 | **-1**（未触发） |
-| `p2Events.metaBeforeReady` / `firstReadyToPlay` | true/3 | true/3 | **false/-1** |
-| `p9Fullscreen.during.videoRect` | 160x120 | **341.3x256** | 160x120 |
-| `p6SourceSwitch.remoteMetaWithinMs` | 20 → **21** | 20 → **21** | 304 → **713** |
+| 项                                               | chromium          | firefox           | webkit                  |
+| ------------------------------------------------ | ----------------- | ----------------- | ----------------------- |
+| `p1Mount.readyState`                             | 4                 | 4                 | **3**                   |
+| `p1Mount.readyToPlayWithinMs`                    | 0                 | 21                | **-1**（未触发）        |
+| `p2Events.metaBeforeReady` / `firstReadyToPlay`  | true/3            | true/3            | **false/-1**            |
+| `p9Fullscreen.during.videoRect`                  | 160x120           | **341.3x256**     | 160x120                 |
+| `p6SourceSwitch.remoteMetaWithinMs`              | 20 → **21**       | 20 → **21**       | 304 → **713**           |
 | `live.state` / `isPlaying` / `liveFramesAdvance` | playing/true/true | clicked/true/true | clicked/**false/false** |
-| `p5Geometry.playingBeforeSample` | **false** | true | true |
-| `p0Asset.videoCurrentSrcEmpty` | true | true | **false** |
+| `p5Geometry.playingBeforeSample`                 | **false**         | true              | true                    |
+| `p0Asset.videoCurrentSrcEmpty`                   | true              | true              | **false**               |
 
 `<video>.objectFit` 在 AIR 路径上始终 `none`（引擎自己按 `visibleRect` 摆位），
 `keepAspectRatio` 的开/关不改变计算值——三引擎一致地报 `none`，所以 `p5Geometry.objectFit*` 三条
@@ -110,7 +110,7 @@
 
 `p7Completed`：把 `currentTime` 设到 `duration + ε`，三引擎一致 `completedWithinMs -1`、`endedDelta 0`、
 `isPlayingAfterEnd false`——即 HTML `<video>` 的 `ended` 没有发生，只是被钳到边界并暂停
-（`stateAfterEnd`  chromium/firefox `ready-to-play`、webkit `meta-loaded`）。
+（`stateAfterEnd` chromium/firefox `ready-to-play`、webkit `meta-loaded`）。
 `loop = true` 时同样 `completedDeltaDuringLoop 0`，回绕本身成功（`wrappedBelowSeekTarget true`，
 `wrapWithinMs 371`）——但这一条在 r37 之前是**碰巧**成立的，见 §6。
 这不是缺陷，但和「设超界就等于播完」的直觉相反，写在这里防下次误判。
@@ -158,3 +158,9 @@ r37 的 27/27 在 webkit 上**不可稳定复现**：同一份代码 + 同一份
 
 **取证纪律新增一条**：由挂钟超时派生的布尔（`wrapMs >= 0` 这类）能通过「三引擎逐字一致」的筛选，
 却仍然是竞态。这类键在纳入 `probeEquals` 前，必须先确认探针的前置条件是**就绪态**而非固定余量。
+
+### 2026-09-28 · 视频末尾播放状态的契约收敛
+
+在完整的 P0–P9 序列后等待约 36 秒再读取 `live.currentTimeAdvanced`，Chromium 与 Firefox 通过，WebKit 偶发已暂停；同一份读回同时显示 P3 的 `advancedWhilePlaying=true` 与 P5 的 `decodedFramesAdvance=true`，证明播放器此前实际推进并解码。因为契约已在 P3/P5 分别验证播放推进和视频帧解码，末尾瞬时状态重复证明同一能力，却依赖 WebKit 完成全屏/第二播放器生命周期后的偶然播放状态。
+
+因此从 `video-basic` 的 V1.2 `probeEquals` 移除 `live.currentTimeAdvanced`，保留该字段作诊断，并继续锁定 P3 `advancedWhilePlaying`、P5 `decodedFramesAdvance`、P8 `wrappedBelowSeekTarget` 与 `completedDeltaDuringLoop`。这修正了冗余快照门槛，没有豁免播放、解码或循环行为。

@@ -79,8 +79,17 @@ T('relation', () => {
         mn = (bits as any).INT_MIN;
     return mn === -mx - 1;
 });
+var mathBitsNS = (cocosairNS as any).math.bits;
+T('covBits.INT_BITS', () => mathBitsNS.INT_BITS);
+T('covBits.INT_MAX', () => mathBitsNS.INT_MAX);
+T('covBits.INT_MIN', () => mathBitsNS.INT_MIN);
+const covBitFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covBits.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covBitFailures;
 probe.topic = 'math-bits-constants';
 (window as any).__probe = async () => probe;
+if (covBitFailures.length) console.error(`[coverage] bit constant probes failed: ${covBitFailures.join(', ')}`);
 
 app.run(scene);
 console.log('[math-bits-constants] running');

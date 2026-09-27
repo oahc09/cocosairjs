@@ -87,8 +87,23 @@ T('skeletons', () => 'len' + (asset.skeletons ? asset.skeletons.length : -1));
 T('animations', () => 'len' + (asset.animations ? asset.animations.length : -1));
 T('sceneNames', () => (asset.sceneNames && asset.sceneNames.length >= 1 ? 'nonEmpty' : 'empty'));
 T('meshMaterials', () => (asset.meshMaterials ? 'len' + asset.meshMaterials.length : 'null'));
+T('covAsset.class', () => asset instanceof GLTFAsset);
+T('covAsset.sceneNames', () => asset.sceneNames.length);
+T('covAsset.document', () => asset.document.asset.version);
+T('covAsset.warnings', () => asset.warnings.length);
+T('covAsset.constructor', () => {
+    var probeAsset = new (GLTFAsset as any)((asset as any).context, (asset as any).layout);
+    var names = probeAsset.sceneNames.length;
+    probeAsset.destroy();
+    return names;
+});
+const covAssetFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covAsset.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covAssetFailures;
 probe.topic = 'gltf-asset-readonly';
 (window as any).__probe = async () => probe;
+if (covAssetFailures.length) console.error(`[coverage] GLTFAsset probes failed: ${covAssetFailures.join(', ')}`);
 
 // §25 资源生命周期合同（真拆建）：hold 当前对象 → destroy → 按 lifecycleMake 重建。
 var lcRef: any = asset;

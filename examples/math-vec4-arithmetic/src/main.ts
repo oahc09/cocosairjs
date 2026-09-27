@@ -140,11 +140,21 @@ T('covVec4.add4f', () => o.add4f(1, 2, 3, 4).w);
 T('covVec4.subtract4f', () => o.subtract4f(1, 2, 3, 4).x);
 T('covVec4.multiply4f', () => o.multiply4f(2, 3, 4, 5).w);
 T('covVec4.divide4f', () => o.divide4f(2, 3, 4, 5).w);
-for (const [key, value] of Object.entries(probe)) {
-    if (key.startsWith('covVec4.') && value === 'threw') throw new Error(`Vec4 coverage probe failed: ${key}`);
-}
+var mathNS = (cocosairNS as any).math;
+T('covMathBase.class', () => typeof mathNS.MathBase);
+T('covMathBase.createFloatArray', () => mathNS.MathBase.createFloatArray(4).length);
+T('covMathBase.array', () => {
+    var mathBase = new mathNS.MathBase();
+    (mathBase as any)._array = mathNS.MathBase.createFloatArray(4);
+    return mathBase.array.length;
+});
+const covMathFailures = Object.entries(probe)
+    .filter(([key, value]) => (key.startsWith('covVec4.') || key.startsWith('covMathBase.')) && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covMathFailures;
 probe.topic = 'math-vec4-arithmetic';
 (window as any).__probe = async () => probe;
+if (covMathFailures.length) console.error(`[coverage] Vec4/MathBase probes failed: ${covMathFailures.join(', ')}`);
 
 app.run(scene);
 void import('./instance-contract.js').then(({ verifyVec4InstanceContract }) => verifyVec4InstanceContract());

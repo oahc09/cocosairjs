@@ -76,11 +76,12 @@ function Vec3Ctor(): any {
     return (cocosairNS as any).Vec3;
 }
 import * as cocosairNS from 'cocosair';
+var mathNS = (cocosairNS as any).math;
 T('halfRT', () => halfToFloat(floatToHalf(1.5)));
 T('halfRT2', () => Math.round(halfToFloat(floatToHalf(0.25)) * 100) / 100);
 T('nextPow2', () => (cocosairNS as any).nextPow2(33));
-T('halfPi', () => Math.round(HALF_PI * 10000) / 10000);
-T('twoPi', () => Math.round(TWO_PI * 10000) / 10000);
+T('halfPi', () => Math.round(mathNS.HALF_PI * 10000) / 10000);
+T('twoPi', () => Math.round(mathNS.TWO_PI * 10000) / 10000);
 probe.topic = 'math-float-encoding';
 (window as any).__probe = async () => probe;
 

@@ -32,7 +32,12 @@
     "Scene.updateWorldTransform",
     "Scene.renderScene",
     "Scene.globals",
-    "Scene.addComponent"
+    "Scene.addComponent",
+    "director",
+    "game",
+    "instantiate",
+    "builtinResMgr",
+    "Vec3"
   ],
   "capabilities": [],
   "learning": {
@@ -64,7 +69,12 @@
       "Scene.globals",
       "Scene.autoReleaseAssets",
       "Scene.dependAssets",
-      "Scene.addComponent"
+      "Scene.addComponent",
+      "director",
+      "game",
+      "instantiate",
+      "builtinResMgr",
+      "Vec3"
     ],
     "claims": [
       "createAirApp",
@@ -91,7 +101,12 @@
       "Scene.updateWorldTransform",
       "Scene.renderScene",
       "Scene.globals",
-      "Scene.addComponent"
+      "Scene.addComponent",
+      "director",
+      "game",
+      "instantiate",
+      "builtinResMgr",
+      "Vec3"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -244,6 +259,36 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L109"
+      },
+      {
+        "api": "director",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "game",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "instantiate",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "builtinResMgr",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "Vec3",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L30"
       }
     ]
   },
@@ -276,11 +321,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "3168242ad2e7",
-    "source": "5cfeac496a6f8491",
+    "spec": "72ed9b905b71",
+    "source": "99edfa6fc0060f0f",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 25,
+    "verified": 30,
     "attested": 0,
-    "units": 25
+    "units": 30
   }
 }

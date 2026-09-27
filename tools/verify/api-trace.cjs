@@ -190,7 +190,7 @@ function generateTraceModule(exportNames, units, realUrl) {
     lines.push(`const __PARENTS = ${JSON.stringify(parents)};`);
     lines.push(`const __NAMES = ${JSON.stringify(exportNames)};`);
     lines.push('function __traceRuntime() {');
-    lines.push(`  const T = window.__apiTrace = { calls: Object.create(null), reads: Object.create(null), harnessCalls: Object.create(null), mechanism: Object.create(null), alias: Object.create(null), canonical: new Map(), instanceData: new Map(), instanceDataNames: new Map(), instanceDataSeen: new WeakSet(), notes: [], observing: 0, startedAt: Date.now() };
+    lines.push(`  const T = window.__apiTrace = { calls: Object.create(null), reads: Object.create(null), harnessCalls: Object.create(null), mechanism: Object.create(null), alias: Object.create(null), canonical: new Map(), wrappers: new Map(), instanceData: new Map(), instanceDataNames: new Map(), instanceDataSeen: new WeakSet(), notes: [], observing: 0, startedAt: Date.now() };
   // T.observing：门禁自己的读回（Material.getProperty / MeshRenderer.getMaterial …）会走同一张
   // 被打桩的原型，不隔离就能凭"验证器读了一次"把 claim 刷成 executed。读回期间计数改记 harnessCalls
   // ——它只用于证明隔离边界确实生效，永不参与 verified 判定。
@@ -244,9 +244,16 @@ function generateTraceModule(exportNames, units, realUrl) {
     if (ctor && T.instanceDataNames.has(ctor.name)) { T.instrumentInstanceData(value, ctor, ctor.name); }
     return value;
   };
+  T.instrumentResult = (value, name) => {
+    if (value && typeof value.then === 'function') {
+      if (name === 'GLTFLoader.parseAsync') { return value.then((result) => T.instrumentReturnedInstance(result)); }
+      return value;
+    }
+    return T.instrumentReturnedInstance(value);
+  };
 
   const fnMeta = (orig, name) => {
-    const w = function () { hit(name); return T.instrumentReturnedInstance(orig.apply(this, arguments)); };
+    const w = function () { hit(name); return T.instrumentResult(orig.apply(this, arguments), name); };
     try { Object.defineProperty(w, 'name', { value: orig.name || name, configurable: true }); } catch (e) { /* ignore */ }
     try { Object.defineProperty(w, 'length', { value: orig.length, configurable: true }); } catch (e) { /* ignore */ }
     w.__tracedOriginal = orig;
@@ -258,7 +265,25 @@ function generateTraceModule(exportNames, units, realUrl) {
   // get 陷阱记录「成员被读取」：Layers.Enum.DEFAULT 这类命名空间用法永远不会有 construct/apply，
   // 只记 calls 就会把真实用到的 API 误报成"未执行"。reads 与 calls 分开计，报告端不得混为调用。
   T.wrapExport = (orig, key) => {
-    if (typeof orig !== 'function') { return orig; }
+    if (T.wrappers.has(orig)) { return T.wrappers.get(orig); }
+    if (typeof orig !== 'function') {
+      if (orig && typeof orig === 'object' && !key.includes('.') && __UNITS.includes(key)) {
+        T.mechanism[key] = T.mechanism[key] || 'export-object';
+        const boundMethods = new WeakMap();
+        return new Proxy(orig, {
+          get (target, prop) {
+            if (typeof prop === 'string') { recordRead(key); }
+            const value = Reflect.get(target, prop, target);
+            if (typeof value !== 'function') { return value; }
+            const descriptor = Object.getOwnPropertyDescriptor(target, prop);
+            if (descriptor && !descriptor.configurable && !descriptor.writable) { return value; }
+            if (!boundMethods.has(value)) { boundMethods.set(value, value.bind(target)); }
+            return boundMethods.get(value);
+          },
+        });
+      }
+      return orig;
+    }
     T.mechanism[key] = T.mechanism[key] || 'export-wrapper';
     if (!T.canonical.has(orig)) { T.canonical.set(orig, key); }
     const handler = {
@@ -268,7 +293,7 @@ function generateTraceModule(exportNames, units, realUrl) {
         T.instrumentInstanceData(instance, target, key);
         return instance;
       },
-      apply (target, thisArg, args) { hit(key); return T.instrumentReturnedInstance(Reflect.apply(target, thisArg, args)); },
+      apply (target, thisArg, args) { hit(key); return T.instrumentResult(Reflect.apply(target, thisArg, args), key); },
       get (target, prop) {
         if (typeof prop === 'string') { T.reads[key] = (T.reads[key] || 0) + 1; }
         // 引擎 Node._findComponent 对 @sealed 类走 "comp.constructor === ctor" 身份比较：
@@ -280,21 +305,46 @@ function generateTraceModule(exportNames, units, realUrl) {
       },
     };
     const proxy = new Proxy(orig, handler);
+    T.wrappers.set(orig, proxy);
     return proxy;
   };
-  T.nsCopy = (src, members, hostKey) => {
+  T.nsCopy = (src, tree, hostKey) => {
     // esbuild 把 export namespace utils/primitives 打成 Object.freeze 的命名空间对象：
     // 属性不可写，install 的 patchOwn 只能报 unresolved。此处按宿主建一份浅拷贝并替换成员，
     // 让经命名空间访问的 API 也有真实计数。拷贝只在冻结时发生（否则返回原对象给 install 就地插桩）。
     if (!src || typeof src !== 'object') { return src; }
-    if (!Object.isFrozen(src)) { return src; }
-    const copy = Object.assign(Object.create(null), src);
-    for (const member of members) {
+    const nestedObject = Object.entries(tree.children || {}).some(([member]) => src[member] && typeof src[member] === 'object');
+    const aliasedMember = (tree.members || []).some((member) => typeof src[member] === 'function' && T.canonical.has(src[member]));
+    const copy = Object.isFrozen(src) || nestedObject || aliasedMember ? Object.assign(Object.create(null), src) : src;
+    for (const member of tree.members || []) {
       const unit = hostKey + '.' + member;
       const orig = src[member];
-      if (typeof orig !== 'function') { T.mechanism[unit] = 'data-member'; continue; }
+      const childTree = tree.children && tree.children[member];
+      if (childTree && orig && typeof orig === 'object') {
+        copy[member] = T.nsCopy(orig, childTree, unit);
+        continue;
+      }
+      if (typeof orig !== 'function') {
+        const descriptor = Object.getOwnPropertyDescriptor(copy, member);
+        if (descriptor && !descriptor.configurable) { T.mechanism[unit] = 'data-member'; continue; }
+        Object.defineProperty(copy, member, { configurable: true, enumerable: descriptor ? descriptor.enumerable : true,
+          get () { recordRead(unit); return orig; } });
+        T.mechanism[unit] = 'data-property';
+        continue;
+      }
       const canon = T.canonical.get(orig);
-      if (canon) { T.alias[unit] = canon; T.mechanism[unit] = 'alias:' + canon; continue; }
+      if (canon) {
+        T.alias[unit] = canon;
+        T.mechanism[unit] = 'alias:' + canon;
+        const descriptor = Object.getOwnPropertyDescriptor(copy, member);
+        if (!descriptor || descriptor.configurable !== false) {
+          Object.defineProperty(copy, member, { configurable: true, enumerable: descriptor ? descriptor.enumerable : true,
+            get () { recordRead(unit); return T.wrappers.get(orig) || orig; } });
+        } else {
+          note(unit + ': alias property is not configurable');
+        }
+        continue;
+      }
       const isClass = /^class[ ({]/.test(Function.prototype.toString.call(orig))
         || (/^[A-Z]/.test(member) && !!orig.prototype);
       const wrapped = isClass ? T.wrapExport(orig, unit) : fnMeta(orig, unit);
@@ -402,27 +452,36 @@ function generateTraceModule(exportNames, units, realUrl) {
         }
     }
     const tracedTop = new Set([...topNames, ...memberLeaves]);
-    // 命名空间宿主（`primitives.box` / `utils.createMesh`）：成员在冻结对象上无法就地替换，
-    // 只有导出侧换成浅拷贝才能计数，因此按宿主收集成员名。
-    const nsMembers = {};
+    // 命名空间宿主（`primitives.box` / `utils.createMesh` / `math.bits.sign`）：
+    // 冻结对象及其嵌套命名空间不能就地替换，按导出根生成递归浅拷贝树。
+    const nsTrees = {};
     const exportedSet = new Set(exportNames);
     for (const u of units) {
         const parts = u.split('.');
-        if (parts.length !== 2) {
-            continue;
+        if (parts.length < 2 || !exportedSet.has(parts[0])) continue;
+        let node = nsTrees[parts[0]];
+        if (!node) node = nsTrees[parts[0]] = { members: new Set(), children: {} };
+        for (let index = 1; index < parts.length; ++index) {
+            const member = parts[index];
+            node.members.add(member);
+            if (index === parts.length - 1) break;
+            if (!node.children[member]) node.children[member] = { members: new Set(), children: {} };
+            node = node.children[member];
         }
-        if (!exportedSet.has(parts[0])) {
-            continue;
-        }
-        (nsMembers[parts[0]] = nsMembers[parts[0]] || []).push(parts[1]);
     }
+    const serializeNsTree = (node) => ({
+        members: [...node.members].sort(),
+        children: Object.fromEntries(
+            Object.entries(node.children).map(([name, child]) => [name, serializeNsTree(child)]),
+        ),
+    });
     lines.push('const __wrap = window.__apiTrace.wrapExport;');
     lines.push('const __nsCopy = window.__apiTrace.nsCopy;');
     for (const name of exportNames) {
         const wrapped = tracedTop.has(name) ? `__wrap(__CC.${name}, ${JSON.stringify(name)})` : `__CC.${name}`;
-        if (nsMembers[name]) {
+        if (nsTrees[name]) {
             lines.push(
-                `export const ${name} = __nsCopy(${wrapped}, ${JSON.stringify(nsMembers[name])}, ${JSON.stringify(name)});`,
+                `export const ${name} = __nsCopy(${wrapped}, ${JSON.stringify(serializeNsTree(nsTrees[name]))}, ${JSON.stringify(name)});`,
             );
         } else {
             lines.push(`export const ${name} = ${wrapped};`);
@@ -474,7 +533,7 @@ function generateTraceModule(exportNames, units, realUrl) {
       done = staticDone || T.patchOwn(host.prototype, leaf, unit, 'prototype');
       if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
       const owner = __PARENTS[unit];
-      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera' || owner === 'MeshRenderer' || owner === 'Scene' || owner === 'Mesh');
+      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera' || owner === 'MeshRenderer' || owner === 'Scene' || owner === 'Mesh' || owner === 'GLTFAsset');
       if (!done && __KINDS[unit] === 'property' && ownDataOwner) {
         T.registerInstanceData(host, leaf, unit);
         T.mechanism[unit] = 'instance-data';
@@ -524,14 +583,17 @@ function normalizeTrace(raw, units) {
         const rawMech = mechanism[unit];
         const mech = typeof rawMech === 'string' ? rawMech : target ? 'alias:' + target : 'unresolved';
         const n = Number(calls[target || unit]) || 0;
-        const r = Number(reads[target || unit]) || 0;
+        const r = (Number(reads[target || unit]) || 0) + (target ? Number(reads[unit]) || 0 : 0);
         let state;
         // A namespace class may be consumed through a static method without a
         // constructor call. Its class-object read is evidence of that class use;
         // ordinary member reads still do not prove method execution.
-        const classRead = mech === 'frozen-namespace-class';
+        const classRead = mech === 'frozen-namespace-class' || (target && API_INVENTORY.units[unit]?.kind === 'class');
         const dataPropertyRead =
-            (mech.indexOf('data-property') === 0 || mech.indexOf('instance-data-property') === 0) && r > 0;
+            (mech.indexOf('data-property') === 0 ||
+                mech.indexOf('instance-data-property') === 0 ||
+                (target && API_INVENTORY.units[unit]?.kind === 'constant')) &&
+            r > 0;
         const via = n > 0 ? 'call' : r > 0 && (unit.indexOf('.') < 0 || classRead || dataPropertyRead) ? 'read' : null;
         if (via) {
             state = 'executed';
@@ -629,6 +691,20 @@ if (require.main === module) {
         if (norm.units['math.Vec3'].observedVia !== 'Vec3') {
             throw new Error('selftest: alias source not recorded');
         }
+        const normAliasRead = normalizeTrace(
+            {
+                calls: {},
+                reads: { 'math.Vec4': 1, 'math.MATH_FLOAT_ARRAY': 1 },
+                mechanism: { 'math.Vec4': 'alias:Vec4', 'math.MATH_FLOAT_ARRAY': 'alias:MATH_FLOAT_ARRAY' },
+                alias: { 'math.Vec4': 'Vec4', 'math.MATH_FLOAT_ARRAY': 'MATH_FLOAT_ARRAY' },
+            },
+            ['math.Vec4', 'math.MATH_FLOAT_ARRAY'],
+        );
+        for (const unit of ['math.Vec4', 'math.MATH_FLOAT_ARRAY']) {
+            if (normAliasRead.units[unit].state !== 'executed' || normAliasRead.units[unit].via !== 'read') {
+                throw new Error(`selftest: alias read ${unit} was not treated as an executed API read`);
+            }
+        }
         // 命名空间式读取（Layers.Enum.DEFAULT）：顶层类导出只被读成员时算 executed(via=read)，
         // 但成员 unit 只有 reads 不算执行——读 `Layers.Enum` 不等于调用 `Layers.Enum.something`。
         const norm2 = normalizeTrace(
@@ -649,6 +725,13 @@ if (require.main === module) {
         if (norm2.units['Layers.enableLayers'].state !== 'not-observed') {
             throw new Error('selftest: instrumented member with 0 calls must stay not-observed despite reads');
         }
+        const normObject = normalizeTrace(
+            { calls: {}, reads: { director: 1 }, mechanism: { director: 'export-object' }, alias: {} },
+            ['director'],
+        );
+        if (normObject.units.director.state !== 'executed' || normObject.units.director.via !== 'read') {
+            throw new Error('selftest: a top-level runtime object read must be executed(via=read)');
+        }
         const normData = normalizeTrace(
             {
                 calls: {},
@@ -664,6 +747,21 @@ if (require.main === module) {
             normData.units['Label.HorizontalAlign'].reads !== 2
         ) {
             throw new Error('selftest: an instrumented static data-property read must be executed(via=read)');
+        }
+        const normNamespaceData = normalizeTrace(
+            {
+                calls: {},
+                reads: { 'math.bits.INT_BITS': 1 },
+                mechanism: { 'math.bits.INT_BITS': 'data-property' },
+                alias: {},
+            },
+            ['math.bits.INT_BITS'],
+        );
+        if (
+            normNamespaceData.units['math.bits.INT_BITS'].state !== 'executed' ||
+            normNamespaceData.units['math.bits.INT_BITS'].via !== 'read'
+        ) {
+            throw new Error('selftest: a frozen namespace data-property read must be executed(via=read)');
         }
         const normInstance = normalizeTrace(
             {
@@ -695,14 +793,23 @@ if (require.main === module) {
         ) {
             throw new Error('selftest: instance-data export owner hint missing');
         }
-        if (!/T\.instrumentReturnedInstance\(orig\.apply\(this, arguments\)\)/.test(code)) {
-            throw new Error('selftest: returned instance data fields must be instrumented');
+        if (
+            !/T\.instrumentResult\(orig\.apply\(this, arguments\), name\)/.test(code) ||
+            !/value\.then\(\(result\) => T\.instrumentReturnedInstance\(result\)\)/.test(code)
+        ) {
+            throw new Error('selftest: direct and async returned instance data fields must be instrumented');
+        }
+        if (!/__UNITS\.includes\(key\)/.test(code) || !/export-object/.test(code)) {
+            throw new Error('selftest: claimed top-level runtime objects must record property reads');
         }
         if (!/directEntries && directEntries\.length/.test(code)) {
             throw new Error('selftest: empty constructor registry must fall through to the owner hint');
         }
         if (!/owner === 'Scene'.*owner === 'Mesh'/.test(code)) {
             throw new Error('selftest: Scene and Mesh data-property owners missing');
+        }
+        if (!/owner === 'GLTFAsset'/.test(code)) {
+            throw new Error('selftest: GLTFAsset own data-property owner missing');
         }
         if (!/T\.reads\[key\]/.test(code)) {
             throw new Error('selftest: read trap missing from generated wrapper');
@@ -734,12 +841,23 @@ if (require.main === module) {
         const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
         const full = generateTraceModule(
             bundleExportNames(),
-            ['Node', 'Node.setPosition', 'primitives.box', 'utils.createMesh', 'math.Color'],
+            ['Node', 'Node.setPosition', 'primitives.box', 'utils.createMesh', 'math.Color', 'math.bits.INT_BITS'],
             '/build/cocosair.module.js',
         );
         esbuild.transformSync(full, { loader: 'js', format: 'esm', target: 'es2022' });
-        if (!/__nsCopy\(__CC\.primitives, \["box"\], "primitives"\)/.test(full)) {
+        if (!/__nsCopy\(__CC\.primitives, \{"members":\["box"\],"children":\{\}\}, "primitives"\)/.test(full)) {
             throw new Error('selftest: frozen-namespace copy not emitted');
+        }
+        if (!/T\.wrappers\.get\(orig\) \|\| orig/.test(full) || !/get \(\) \{ recordRead\(unit\); return/.test(full)) {
+            throw new Error(
+                'selftest: aliased namespace exports must return the canonical wrapper and record alias reads',
+            );
+        }
+        if (!/"bits":\{"members":\["INT_BITS"\],"children":\{\}\}/.test(full)) {
+            throw new Error('selftest: nested frozen namespace tree was not emitted');
+        }
+        if (!/T\.mechanism\[unit\] = 'data-property'/.test(full) || !/recordRead\(unit\)/.test(full)) {
+            throw new Error('selftest: namespace data-property reads are instrumented');
         }
         console.log('[api-trace] selftest PASS (shape + alias/normalize semantics + generated ESM parses)');
         process.exitCode = 0;

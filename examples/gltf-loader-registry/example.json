@@ -31,7 +31,12 @@
     "GLTFExtensionRegistry.register",
     "GLTFExtensionRegistry.unregister",
     "GLTFExtensionRegistry.createHandlers",
-    "GLTFExtensionRegistry.validateRequired"
+    "GLTFExtensionRegistry.validateRequired",
+    "GLTFLoader.constructor",
+    "GLTFLoader.register",
+    "GLTFLoader.unregister",
+    "GLTFExtensionRegistry",
+    "GLTFExtensionRegistry.size"
   ],
   "capabilities": [],
   "learning": {
@@ -62,7 +67,12 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "GLTFLoader.constructor",
+      "GLTFLoader.register",
+      "GLTFLoader.unregister",
+      "GLTFExtensionRegistry",
+      "GLTFExtensionRegistry.size"
     ],
     "claims": [
       "createAirApp",
@@ -88,7 +98,12 @@
       "GLTFExtensionRegistry.register",
       "GLTFExtensionRegistry.unregister",
       "GLTFExtensionRegistry.createHandlers",
-      "GLTFExtensionRegistry.validateRequired"
+      "GLTFExtensionRegistry.validateRequired",
+      "GLTFLoader.constructor",
+      "GLTFLoader.register",
+      "GLTFLoader.unregister",
+      "GLTFExtensionRegistry",
+      "GLTFExtensionRegistry.size"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -204,13 +219,13 @@
         "api": "GLTFLoader.setDRACODecoder",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L103"
+        "sourceLocation": "L105"
       },
       {
         "api": "GLTFLoader.setKTX2Transcoder",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L111"
+        "sourceLocation": "L113"
       },
       {
         "api": "GLTFExtensionRegistry.register",
@@ -222,19 +237,49 @@
         "api": "GLTFExtensionRegistry.unregister",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L95"
+        "sourceLocation": "L88"
       },
       {
         "api": "GLTFExtensionRegistry.createHandlers",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L138"
+        "sourceLocation": "L140"
       },
       {
         "api": "GLTFExtensionRegistry.validateRequired",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L147"
+        "sourceLocation": "L149"
+      },
+      {
+        "api": "GLTFLoader.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "GLTFLoader.register",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L91"
+      },
+      {
+        "api": "GLTFLoader.unregister",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L98"
+      },
+      {
+        "api": "GLTFExtensionRegistry",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L84"
+      },
+      {
+        "api": "GLTFExtensionRegistry.size",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L87"
       }
     ]
   },
@@ -267,11 +312,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "02884be29324",
-    "source": "e8bc35c4e2e91bae",
+    "spec": "410987ea135f",
+    "source": "213a22d7c2c3ca48",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 24,
+    "verified": 29,
     "attested": 0,
-    "units": 24
+    "units": 29
   }
 }

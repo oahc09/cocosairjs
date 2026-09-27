@@ -112,14 +112,24 @@ T('covScene.addComponent', () => {
         return 'documented-error';
     }
 });
+T('covRoot.director', () => ((cocosairNS as any).director.root ? 'ready' : 'null'));
+T('covRoot.game', () => (cocosairNS as any).game.frameRate);
+T('covRoot.builtinResMgr', () => typeof (cocosairNS as any).builtinResMgr.get);
+T('covRoot.instantiate', () => {
+    var clone = (cocosairNS as any).instantiate(cube);
+    var valid = !!clone && clone !== cube;
+    if (clone && clone.destroy) clone.destroy();
+    return valid;
+});
+T('covRoot.Vec3', () => new (cocosairNS as any).Vec3(1, 2, 3).z);
 const covSceneFailures = Object.entries(probe)
-    .filter(([key, value]) => key.startsWith('covScene.') && value === 'threw')
+    .filter(([key, value]) => (key.startsWith('covScene.') || key.startsWith('covRoot.')) && value === 'threw')
     .map(([key]) => key);
 if (probe['covScene.addComponent'] !== 'documented-error') covSceneFailures.push('Scene.addComponent');
 probe.coverageFailures = covSceneFailures;
 probe.topic = 'scene-runtime-ops';
 (window as any).__probe = async () => probe;
-if (covSceneFailures.length) console.error(`[coverage] Scene probes failed: ${covSceneFailures.join(', ')}`);
+if (covSceneFailures.length) console.error(`[coverage] Scene/root probes failed: ${covSceneFailures.join(', ')}`);
 
 // §25 资源生命周期合同（真拆建）：hold 当前对象 → destroy → 按 lifecycleMake 重建。
 var lcRef: any = lcHolder;

@@ -98,8 +98,38 @@ T('absMaxComponent', () => {
         return 'threw';
     }
 });
+var mathNS = (cocosairNS as any).math;
+T('covMath.v2', () => mathNS.v2(1, 2).y);
+T('covMath.v3', () => mathNS.v3(1, 2, 3).z);
+T('covMath.Vec4', () => typeof mathNS.Vec4);
+T('covMath.v4', () => mathNS.v4(1, 2, 3, 4).w);
+T('covMath.quat', () => mathNS.quat().w);
+T('covMath.mat4', () => mathNS.mat4().m15);
+T('covMath.size', () => mathNS.size(3, 4).height);
+T('covMath.rect', () => mathNS.rect(1, 2, 3, 4).width);
+T('covMath.color', () => mathNS.color(10, 20, 30, 40).r);
+T('covMath.toRadian', () => mathNS.toRadian(180));
+T('covMath.toDegree', () => mathNS.toDegree(Math.PI));
+T('covMath.randomRange', () => mathNS.randomRange(1, 2));
+T('covMath.randomRangeInt', () => mathNS.randomRangeInt(1, 2));
+T('covMath.pseudoRandom', () => mathNS.pseudoRandom(1));
+T('covMath.pseudoRandomRange', () => mathNS.pseudoRandomRange(1, 0, 1));
+T('covMath.pseudoRandomRangeInt', () => mathNS.pseudoRandomRangeInt(1, 0, 10));
+T('covMath.nextPow2', () => mathNS.nextPow2(65));
+T('covMath.repeat', () => mathNS.repeat(7, 3));
+T('covMath.pingPong', () => mathNS.pingPong(4, 3));
+T('covMath.absMaxComponent', () => mathNS.absMaxComponent(new Vec3(-7, 3, 2)));
+T('covMath.HALF_PI', () => mathNS.HALF_PI);
+T('covMath.TWO_PI', () => mathNS.TWO_PI);
+T('covMath.EPSILON', () => mathNS.EPSILON);
+T('covMath.MATH_FLOAT_ARRAY', () => typeof mathNS.MATH_FLOAT_ARRAY);
+const covMathFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covMath.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covMathFailures;
 probe.topic = 'math-scalar-utils';
 (window as any).__probe = async () => probe;
+if (covMathFailures.length) console.error(`[coverage] math namespace probes failed: ${covMathFailures.join(', ')}`);
 
 app.run(scene);
 console.log('[math-scalar-utils] running');

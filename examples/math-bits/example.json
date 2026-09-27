@@ -74,7 +74,25 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "math.bits.sign",
+      "math.bits.abs",
+      "math.bits.min",
+      "math.bits.max",
+      "math.bits.isPow2",
+      "math.bits.log2",
+      "math.bits.log10",
+      "math.bits.popCount",
+      "math.bits.countTrailingZeros",
+      "math.bits.nextPow2",
+      "math.bits.prevPow2",
+      "math.bits.parity",
+      "math.bits.reverse",
+      "math.bits.interleave2",
+      "math.bits.deinterleave2",
+      "math.bits.interleave3",
+      "math.bits.deinterleave3",
+      "math.bits.nextCombination"
     ],
     "claims": [
       "createAirApp",
@@ -363,11 +381,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "7715860acf04",
-    "source": "8ddf903c55618ac1",
+    "spec": "0dac7344c814",
+    "source": "3185e7f6fe4b2b48",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 18,
-    "attested": 18,
+    "verified": 36,
+    "attested": 0,
     "units": 36
   }
 }

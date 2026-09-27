@@ -142,6 +142,7 @@ import {
     SphereCollider,
     CapsuleCollider,
     MeshCollider,
+    physics as physicsNamespace,
     selector,
 } from 'cocosair';
 import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
@@ -618,6 +619,7 @@ function readback() {
         worldCtor: physics.physicsWorld.constructor.name,
         // 见文件头 9)：这个名字在发行产物里属于 2D selector，只能作为名称冲突本身的证据。
         flatSelectorId: selector.id,
+        threeDSelectorId: physicsNamespace.selector.id,
         flatSelectorBackendKeys: Object.keys(selector.backend).sort().join(','),
         flatSelectorWrapperCount: Object.keys(selector.wrapper).length,
         flatSelectorHasBoxShape: selector.wrapper.BoxShape != null,

@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-27T16:01:39.564Z",
+  "generatedAt": "2026-09-27T19:07:31.283Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T15:34:44.625Z",
+      "measuredAt": "2026-09-27T19:00:45.220Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T15:35:50.788Z",
+      "measuredAt": "2026-09-27T18:07:50.150Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -29,11 +29,11 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 1372,
-  "totalAttested": 103,
-  "totalVerified": 1269,
-  "totalVerifiedViaCall": 1144,
-  "totalVerifiedViaRead": 125,
+  "totalClaimed": 1407,
+  "totalAttested": 61,
+  "totalVerified": 1346,
+  "totalVerifiedViaCall": 1195,
+  "totalVerifiedViaRead": 151,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -58,7 +58,7 @@
       "instrumentation": {
         "observed": 47,
         "total": 49,
-        "hash": "9c092dd19729dfd4"
+        "hash": "00bcd897ea1ffaf3"
       },
       "claims": 49,
       "tally": {
@@ -82,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "c8b5b17d870996ed"
+        "hash": "ed2a339c131bfaf5"
       },
       "claims": 18,
       "tally": {
@@ -104,17 +104,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
+        "observed": 28,
         "total": 28,
-        "hash": "d2754a3b2604d1be"
+        "hash": "21c1ec07ccd9a08e"
       },
       "claims": 28,
       "tally": {
-        "verified": 26,
-        "attested": 2,
+        "verified": 28,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 22,
-        "verifiedRead": 4
+        "verifiedRead": 6
       }
     },
     {
@@ -128,17 +128,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 8,
+        "observed": 9,
         "total": 11,
-        "hash": "29316edf32c666d7"
+        "hash": "32220a31861ff0bf"
       },
       "claims": 11,
       "tally": {
-        "verified": 8,
-        "attested": 1,
+        "verified": 9,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 7,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -154,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "d231986e5d71f454"
+        "hash": "150745e0c34e5ac0"
       },
       "claims": 21,
       "tally": {
@@ -176,17 +176,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 12,
+        "observed": 13,
         "total": 13,
-        "hash": "fa9a3a0edaef32fe"
+        "hash": "404fcfa3137dd234"
       },
       "claims": 13,
       "tally": {
-        "verified": 12,
-        "attested": 1,
+        "verified": 13,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 11,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -202,7 +202,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "6a89c571e2fbf34e"
+        "hash": "a15efa94117f4be9"
       },
       "claims": 21,
       "tally": {
@@ -224,17 +224,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 19,
-        "hash": "cc639eb6d0692321"
+        "hash": "c35613a52d14226f"
       },
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 16,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -250,7 +250,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "724567f4e3522be0"
+        "hash": "917b3659b91885f7"
       },
       "claims": 19,
       "tally": {
@@ -272,17 +272,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 19,
-        "hash": "f50ff2ca88a035d7"
+        "hash": "7d6ee1ade1937e0a"
       },
       "claims": 19,
       "tally": {
-        "verified": 18,
-        "attested": 1,
+        "verified": 19,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 16,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -298,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "1d9b2a0e2e9e445e"
+        "hash": "e65605a4e338ad53"
       },
       "claims": 21,
       "tally": {
@@ -322,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "6cc7533eb72296e2"
+        "hash": "b11082b2e8db2419"
       },
       "claims": 20,
       "tally": {
@@ -346,7 +346,7 @@
       "instrumentation": {
         "observed": 54,
         "total": 54,
-        "hash": "6e5958d253be3b2f"
+        "hash": "a7e41e0b792bf5ea"
       },
       "claims": 54,
       "tally": {
@@ -368,17 +368,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 35,
+        "observed": 37,
         "total": 37,
-        "hash": "51b5c6cdda2bfb37"
+        "hash": "f3e23a927f317f43"
       },
       "claims": 37,
       "tally": {
-        "verified": 35,
-        "attested": 2,
+        "verified": 37,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 32,
-        "verifiedRead": 3
+        "verifiedRead": 5
       }
     },
     {
@@ -394,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "cdef73a8c929f82b"
+        "hash": "619a0e4c23601106"
       },
       "claims": 20,
       "tally": {
@@ -418,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "cb4af0c8f146811a"
+        "hash": "62774359b7353232"
       },
       "claims": 26,
       "tally": {
@@ -440,17 +440,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 26,
+        "observed": 28,
         "total": 28,
-        "hash": "62f8ed77a8b61053"
+        "hash": "8431d2f90cfe309d"
       },
       "claims": 28,
       "tally": {
-        "verified": 26,
-        "attested": 2,
+        "verified": 28,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 24,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -466,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "7d29c4c54970d30c"
+        "hash": "0ff32090f061f371"
       },
       "claims": 19,
       "tally": {
@@ -488,17 +488,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 36,
+        "observed": 40,
         "total": 46,
-        "hash": "bc256054e462b2ec"
+        "hash": "31560c2053c7ef77"
       },
       "claims": 46,
       "tally": {
-        "verified": 36,
-        "attested": 10,
+        "verified": 40,
+        "attested": 6,
         "claimedOnly": 0,
         "verifiedCall": 32,
-        "verifiedRead": 4
+        "verifiedRead": 8
       }
     },
     {
@@ -512,17 +512,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
-        "total": 27,
-        "hash": "d6c21297609ec8c6"
+        "observed": 31,
+        "total": 31,
+        "hash": "7e00047d3840f981"
       },
-      "claims": 27,
+      "claims": 31,
       "tally": {
-        "verified": 23,
-        "attested": 4,
+        "verified": 31,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
-        "verifiedRead": 1
+        "verifiedCall": 26,
+        "verifiedRead": 5
       }
     },
     {
@@ -538,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "f9f45967a34d181b"
+        "hash": "33328f7850fdedd6"
       },
       "claims": 17,
       "tally": {
@@ -582,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "2bacb2c288e271d5"
+        "hash": "d375743f9655b20b"
       },
       "claims": 15,
       "tally": {
@@ -606,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "6ea7c8cd57f0aa7d"
+        "hash": "473733145fc41ede"
       },
       "claims": 14,
       "tally": {
@@ -628,16 +628,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
-        "total": 24,
-        "hash": "b7e17ee0ca479012"
+        "observed": 29,
+        "total": 29,
+        "hash": "9f05474b57e2ecec"
       },
-      "claims": 24,
+      "claims": 29,
       "tally": {
-        "verified": 24,
+        "verified": 29,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 23,
+        "verifiedCall": 28,
         "verifiedRead": 1
       }
     },
@@ -654,7 +654,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "f402249e77678bde"
+        "hash": "06e7ebffbb0eef41"
       },
       "claims": 20,
       "tally": {
@@ -678,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "d7325d80d27cdd70"
+        "hash": "c539629ef9e4fb70"
       },
       "claims": 20,
       "tally": {
@@ -702,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "69f6f2b02f4693ef"
+        "hash": "965debf9c74c6168"
       },
       "claims": 21,
       "tally": {
@@ -726,7 +726,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 12,
-        "hash": "020a32b83fb7109a"
+        "hash": "ed8358c063410af5"
       },
       "claims": 12,
       "tally": {
@@ -748,17 +748,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 16,
+        "observed": 17,
         "total": 17,
-        "hash": "d06d7cea30c87c15"
+        "hash": "bbc508c7b105dc44"
       },
       "claims": 17,
       "tally": {
-        "verified": 16,
-        "attested": 1,
+        "verified": 17,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 15,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -772,17 +772,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 13,
+        "observed": 15,
         "total": 15,
-        "hash": "c2d4579c6974d5e5"
+        "hash": "a2d3bc61c0e5075f"
       },
       "claims": 15,
       "tally": {
-        "verified": 13,
-        "attested": 2,
+        "verified": 15,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 11,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -798,7 +798,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "8ce91a366e9a400d"
+        "hash": "61e1daeb3c6c3235"
       },
       "claims": 28,
       "tally": {
@@ -820,17 +820,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
+        "observed": 20,
         "total": 20,
-        "hash": "5772775e42d46e58"
+        "hash": "c75604e8552bafed"
       },
       "claims": 20,
       "tally": {
-        "verified": 19,
-        "attested": 1,
+        "verified": 20,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 17,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -846,7 +846,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 26,
-        "hash": "3ebebdb6f6e0e37b"
+        "hash": "4b159ad7b055a4b0"
       },
       "claims": 26,
       "tally": {
@@ -870,7 +870,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "194c1ff713e2a642"
+        "hash": "b6e3e88ba71d53c2"
       },
       "claims": 23,
       "tally": {
@@ -894,7 +894,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "ebae0d33531c0c04"
+        "hash": "edcebb1874943bbd"
       },
       "claims": 24,
       "tally": {
@@ -918,7 +918,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "a50ff670948b8879"
+        "hash": "f8e503424c6b1396"
       },
       "claims": 25,
       "tally": {
@@ -942,7 +942,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "3913b9b10e000b76"
+        "hash": "4d1b669aba2933ca"
       },
       "claims": 45,
       "tally": {
@@ -964,17 +964,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 36,
+        "observed": 37,
         "total": 37,
-        "hash": "d3d8bc5d0ac85e1d"
+        "hash": "4305bd0c5955ef66"
       },
       "claims": 37,
       "tally": {
-        "verified": 36,
-        "attested": 1,
+        "verified": 37,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 34,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -988,17 +988,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
+        "observed": 22,
         "total": 22,
-        "hash": "8a99e7a9fbad3ed7"
+        "hash": "143e5c27e1ae88dd"
       },
       "claims": 22,
       "tally": {
-        "verified": 21,
-        "attested": 1,
+        "verified": 22,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 19,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -1012,17 +1012,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 13,
+        "observed": 14,
         "total": 14,
-        "hash": "7630036f6322f98f"
+        "hash": "7f52c6a3b4730207"
       },
       "claims": 14,
       "tally": {
-        "verified": 13,
-        "attested": 1,
+        "verified": 14,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 12,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -1038,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "33f284953c5e019b"
+        "hash": "64a83eb301f8dc48"
       },
       "claims": 16,
       "tally": {
@@ -1062,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "b7ee47d07038f650"
+        "hash": "9705621325dd5aa6"
       },
       "claims": 23,
       "tally": {
@@ -1086,7 +1086,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "3d21eb9c1c9e4f84"
+        "hash": "455c232d6034511d"
       },
       "claims": 31,
       "tally": {
@@ -1110,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "46382aa91694b162"
+        "hash": "7d6341d0bda0c654"
       },
       "claims": 22,
       "tally": {
@@ -1132,17 +1132,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 15,
+        "observed": 16,
         "total": 16,
-        "hash": "33228b35b646ee68"
+        "hash": "3f023d6fc16a6b35"
       },
       "claims": 16,
       "tally": {
-        "verified": 15,
-        "attested": 1,
+        "verified": 16,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 14,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -1156,17 +1156,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
+        "observed": 25,
         "total": 25,
-        "hash": "1625ca4157b67b90"
+        "hash": "67bc3d2c76b9ddb6"
       },
       "claims": 25,
       "tally": {
-        "verified": 24,
-        "attested": 1,
+        "verified": 25,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 23,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -1180,16 +1180,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 36,
         "total": 36,
-        "hash": "7e09c56d2fa1efc1"
+        "hash": "89c1209005a8142c"
       },
       "claims": 36,
       "tally": {
-        "verified": 18,
-        "attested": 18,
+        "verified": 36,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
+        "verifiedCall": 35,
         "verifiedRead": 1
       }
     },
@@ -1204,17 +1204,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 21,
         "total": 21,
-        "hash": "e17c020c18b53898"
+        "hash": "0a3714046479ad49"
       },
       "claims": 21,
       "tally": {
-        "verified": 18,
-        "attested": 3,
+        "verified": 21,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 17,
-        "verifiedRead": 1
+        "verifiedRead": 4
       }
     },
     {
@@ -1230,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "ff1ae06ece681d5b"
+        "hash": "fc618a389f67c2a4"
       },
       "claims": 21,
       "tally": {
@@ -1254,7 +1254,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "049572b69c57924a"
+        "hash": "72d58c2fc72f46af"
       },
       "claims": 25,
       "tally": {
@@ -1278,7 +1278,7 @@
       "instrumentation": {
         "observed": 62,
         "total": 62,
-        "hash": "3e155e08dcc65eb3"
+        "hash": "cc80e269f9d6fa2e"
       },
       "claims": 62,
       "tally": {
@@ -1302,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "05e0eebadf368bd9"
+        "hash": "b8235d6719e5ba8f"
       },
       "claims": 21,
       "tally": {
@@ -1326,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "a3a40a2e33868c67"
+        "hash": "f57bfa62a19fef63"
       },
       "claims": 19,
       "tally": {
@@ -1348,17 +1348,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 20,
+        "observed": 22,
         "total": 22,
-        "hash": "9a98c8568a12244c"
+        "hash": "58ee71bd3e99265c"
       },
       "claims": 22,
       "tally": {
-        "verified": 20,
-        "attested": 2,
+        "verified": 22,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 19,
-        "verifiedRead": 1
+        "verifiedRead": 3
       }
     },
     {
@@ -1374,7 +1374,7 @@
       "instrumentation": {
         "observed": 61,
         "total": 61,
-        "hash": "805d75ee16bdd53a"
+        "hash": "411214ba4071746f"
       },
       "claims": 61,
       "tally": {
@@ -1398,7 +1398,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "836fbf86f8499e48"
+        "hash": "dc4e38d908cec983"
       },
       "claims": 28,
       "tally": {
@@ -1422,7 +1422,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "e3598fdc8cdefddf"
+        "hash": "8e50db891ed26d82"
       },
       "claims": 31,
       "tally": {
@@ -1446,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "86e5f938322b7e34"
+        "hash": "a762e5f5d02dd756"
       },
       "claims": 23,
       "tally": {
@@ -1470,7 +1470,7 @@
       "instrumentation": {
         "observed": 85,
         "total": 85,
-        "hash": "4b59233d95fa8a1d"
+        "hash": "72b161a0b634aa1b"
       },
       "claims": 85,
       "tally": {
@@ -1494,7 +1494,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "7a26a7ca7d63ffd8"
+        "hash": "07946467c267cc42"
       },
       "claims": 24,
       "tally": {
@@ -1518,7 +1518,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "fe68cd3dc0caee99"
+        "hash": "bdbe3ebb7845f6a3"
       },
       "claims": 30,
       "tally": {
@@ -1542,7 +1542,7 @@
       "instrumentation": {
         "observed": 57,
         "total": 57,
-        "hash": "34ee5fa157534c7f"
+        "hash": "92657f8921fe5fc3"
       },
       "claims": 57,
       "tally": {
@@ -1566,7 +1566,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "0078eb9311bdc746"
+        "hash": "75cb6bb28b07cb4f"
       },
       "claims": 23,
       "tally": {
@@ -1590,7 +1590,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "f8dd5e3b0e949a9b"
+        "hash": "ee57a9e602edd8fd"
       },
       "claims": 25,
       "tally": {
@@ -1614,7 +1614,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "732e915efe6ec871"
+        "hash": "aa387c500b970b5a"
       },
       "claims": 33,
       "tally": {
@@ -1638,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "5507212c7c76bfbe"
+        "hash": "46264c005d8b0a99"
       },
       "claims": 18,
       "tally": {
@@ -1662,7 +1662,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "161867388c038f71"
+        "hash": "c6abf70e6bad48a5"
       },
       "claims": 35,
       "tally": {
@@ -1686,7 +1686,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "2f10feb81d7aa103"
+        "hash": "b08c81fb5038eafa"
       },
       "claims": 35,
       "tally": {
@@ -1708,17 +1708,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
-        "total": 23,
-        "hash": "b188b0eedd5b289b"
+        "observed": 47,
+        "total": 47,
+        "hash": "213e68d42fa94c5a"
       },
-      "claims": 23,
+      "claims": 47,
       "tally": {
-        "verified": 23,
+        "verified": 47,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
-        "verifiedRead": 1
+        "verifiedCall": 41,
+        "verifiedRead": 6
       }
     },
     {
@@ -1734,7 +1734,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "7a143c6b78e92ab6"
+        "hash": "1ab8ce070a91e90f"
       },
       "claims": 32,
       "tally": {
@@ -1758,7 +1758,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "5ecf8f2353ccc909"
+        "hash": "098a38dcd695ff60"
       },
       "claims": 23,
       "tally": {
@@ -1782,7 +1782,7 @@
       "instrumentation": {
         "observed": 69,
         "total": 69,
-        "hash": "71faa5b94e8f1b60"
+        "hash": "46ab5e30e99d26e6"
       },
       "claims": 69,
       "tally": {
@@ -1806,7 +1806,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "9e1480892604c3f0"
+        "hash": "225eeed7050ab513"
       },
       "claims": 21,
       "tally": {
@@ -1830,7 +1830,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "44f88c04df0a2b78"
+        "hash": "e7a20c8870725d00"
       },
       "claims": 29,
       "tally": {
@@ -1854,7 +1854,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "7165399ea0769440"
+        "hash": "28e100ce1ad032b0"
       },
       "claims": 27,
       "tally": {
@@ -1878,7 +1878,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "10e048bf118f2ffb"
+        "hash": "a9c3eabdfb66d762"
       },
       "claims": 19,
       "tally": {
@@ -1902,7 +1902,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "94c6741c185ac91f"
+        "hash": "7ba84ec36664e40e"
       },
       "claims": 23,
       "tally": {
@@ -1926,7 +1926,7 @@
       "instrumentation": {
         "observed": 44,
         "total": 44,
-        "hash": "007ef944039ad1c6"
+        "hash": "5ad6ca749cc4b2d9"
       },
       "claims": 44,
       "tally": {
@@ -1950,7 +1950,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "d668ed11e52feb6a"
+        "hash": "17cb32894ffd39c2"
       },
       "claims": 22,
       "tally": {
@@ -1974,7 +1974,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "9156e75a8a496640"
+        "hash": "e85953ed33f18761"
       },
       "claims": 30,
       "tally": {
@@ -1998,7 +1998,7 @@
       "instrumentation": {
         "observed": 70,
         "total": 70,
-        "hash": "c7b470a8c7e8208d"
+        "hash": "0c49f368e8ec4326"
       },
       "claims": 70,
       "tally": {
@@ -2022,7 +2022,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "f5deddcaca3c3319"
+        "hash": "e59cf814ca5fc3f3"
       },
       "claims": 19,
       "tally": {
@@ -2044,16 +2044,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 73,
-        "total": 73,
-        "hash": "8520ee8b38f3147d"
+        "observed": 76,
+        "total": 76,
+        "hash": "aff47f2dee869933"
       },
-      "claims": 73,
+      "claims": 76,
       "tally": {
-        "verified": 73,
+        "verified": 76,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 65,
+        "verifiedCall": 68,
         "verifiedRead": 8
       }
     },
@@ -2070,7 +2070,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "c050d7473f95ae34"
+        "hash": "41b9e47e05a69051"
       },
       "claims": 23,
       "tally": {
@@ -2094,7 +2094,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "014b52c676e3bcff"
+        "hash": "014bd97359aefcfe"
       },
       "claims": 30,
       "tally": {
@@ -2118,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "c95ad2fca3389383"
+        "hash": "4d11d2bfaef0f7ea"
       },
       "claims": 23,
       "tally": {
@@ -2142,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "56548a39df7c45cb"
+        "hash": "a6c5051f768bca2c"
       },
       "claims": 18,
       "tally": {
@@ -2166,7 +2166,7 @@
       "instrumentation": {
         "observed": 37,
         "total": 37,
-        "hash": "4ec30cfa96473c77"
+        "hash": "86dd44901fde39bf"
       },
       "claims": 37,
       "tally": {
@@ -2190,7 +2190,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "dfecaff1860cce5c"
+        "hash": "0152aba7af18bdbb"
       },
       "claims": 22,
       "tally": {
@@ -2214,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "3cb7e2dfe1651b97"
+        "hash": "982abef8330c5b89"
       },
       "claims": 16,
       "tally": {
@@ -2238,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "63a20a96ebd88884"
+        "hash": "476e0b581b0c562e"
       },
       "claims": 19,
       "tally": {
@@ -2262,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "736f21918e9dd20b"
+        "hash": "c9db20a23a354582"
       },
       "claims": 21,
       "tally": {
@@ -2286,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "e3c1b43948126c2e"
+        "hash": "83b404c53b5fa80e"
       },
       "claims": 18,
       "tally": {
@@ -2310,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "08cfdf5a4e50c1aa"
+        "hash": "1b2b2a9ddac08ff3"
       },
       "claims": 18,
       "tally": {
@@ -2334,7 +2334,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 50,
-        "hash": "b6dbc28e515a059e"
+        "hash": "9118f7a41731fcf8"
       },
       "claims": 50,
       "tally": {
@@ -2356,17 +2356,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 39,
+        "observed": 44,
         "total": 45,
-        "hash": "e323938b471f8cac"
+        "hash": "d64adffc7ec5a3ac"
       },
       "claims": 45,
       "tally": {
-        "verified": 39,
-        "attested": 6,
+        "verified": 44,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 34,
-        "verifiedRead": 5
+        "verifiedRead": 10
       }
     },
     {
@@ -2382,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "c8b5b17d870996ed"
+        "hash": "ed2a339c131bfaf5"
       },
       "claims": 18,
       "tally": {
@@ -2406,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "d1be9d96a33d7861"
+        "hash": "45f98bee50903357"
       },
       "claims": 24,
       "tally": {
@@ -2430,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "122b287189a7a738"
+        "hash": "cd1f566504c39f1d"
       },
       "claims": 21,
       "tally": {
@@ -2454,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "f98ce3feb05f4e29"
+        "hash": "cb2851513f7d9869"
       },
       "claims": 33,
       "tally": {
@@ -2478,7 +2478,7 @@
       "instrumentation": {
         "observed": 81,
         "total": 81,
-        "hash": "ac6f343375f32c4c"
+        "hash": "e59f46ee61b561cf"
       },
       "claims": 81,
       "tally": {
@@ -2502,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "d60609c429c21ebc"
+        "hash": "e934354f040343da"
       },
       "claims": 21,
       "tally": {
@@ -2526,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "0b594b7f40ffbf17"
+        "hash": "4749a7b77d7709a9"
       },
       "claims": 19,
       "tally": {
@@ -2550,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "33d284a0eb797d15"
+        "hash": "08aa378a0425b6cb"
       },
       "claims": 19,
       "tally": {
@@ -2572,17 +2572,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 23,
         "total": 34,
-        "hash": "2f7a25687442cba6"
+        "hash": "0f6efeb40674a7ba"
       },
       "claims": 34,
       "tally": {
-        "verified": 22,
-        "attested": 12,
+        "verified": 23,
+        "attested": 11,
         "claimedOnly": 0,
         "verifiedCall": 20,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -2596,17 +2596,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 32,
+        "observed": 33,
         "total": 36,
-        "hash": "ce25c6323e9ee2f1"
+        "hash": "da8f05ef0d68e4b1"
       },
       "claims": 36,
       "tally": {
-        "verified": 32,
-        "attested": 4,
+        "verified": 33,
+        "attested": 3,
         "claimedOnly": 0,
         "verifiedCall": 28,
-        "verifiedRead": 4
+        "verifiedRead": 5
       }
     },
     {
@@ -2620,17 +2620,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 27,
+        "observed": 30,
         "total": 33,
-        "hash": "7f30df2635ccda71"
+        "hash": "7a25b56e1a23ee6e"
       },
       "claims": 33,
       "tally": {
-        "verified": 27,
-        "attested": 6,
+        "verified": 30,
+        "attested": 3,
         "claimedOnly": 0,
         "verifiedCall": 23,
-        "verifiedRead": 4
+        "verifiedRead": 7
       }
     },
     {
@@ -2644,17 +2644,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 60,
+        "observed": 63,
         "total": 69,
-        "hash": "dae7ae7881bc959e"
+        "hash": "ef8f4a84bd5ad0ca"
       },
       "claims": 69,
       "tally": {
-        "verified": 60,
-        "attested": 9,
+        "verified": 63,
+        "attested": 6,
         "claimedOnly": 0,
         "verifiedCall": 58,
-        "verifiedRead": 2
+        "verifiedRead": 5
       }
     },
     {
@@ -2670,7 +2670,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 31,
-        "hash": "60fc61be20fdc7c1"
+        "hash": "651547636d6eebc2"
       },
       "claims": 31,
       "tally": {
@@ -2692,17 +2692,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 39,
+        "observed": 41,
         "total": 41,
-        "hash": "14293837e651cbd1"
+        "hash": "598adde23370ce29"
       },
       "claims": 41,
       "tally": {
-        "verified": 39,
-        "attested": 2,
+        "verified": 41,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 36,
-        "verifiedRead": 3
+        "verifiedRead": 5
       }
     },
     {
@@ -2718,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "a8852cbdbd4485bd"
+        "hash": "005663d355eb6c1a"
       },
       "claims": 22,
       "tally": {
@@ -2742,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "736f21918e9dd20b"
+        "hash": "c9db20a23a354582"
       },
       "claims": 21,
       "tally": {
@@ -2766,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "3e79d7f55a085e36"
+        "hash": "1691670e14a9bca3"
       },
       "claims": 22,
       "tally": {
@@ -2788,17 +2788,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 38,
+        "observed": 40,
         "total": 41,
-        "hash": "3dfda6b77f47beed"
+        "hash": "2c2cc1d74b73cb27"
       },
       "claims": 41,
       "tally": {
-        "verified": 38,
-        "attested": 3,
+        "verified": 40,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 34,
-        "verifiedRead": 4
+        "verifiedRead": 6
       }
     },
     {
@@ -2812,17 +2812,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
+        "observed": 23,
         "total": 23,
-        "hash": "174acd5bf5a47bf3"
+        "hash": "cc78c75cbdd5bf1c"
       },
       "claims": 23,
       "tally": {
-        "verified": 21,
-        "attested": 2,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 19,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -2838,7 +2838,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 18,
-        "hash": "646b33d856ae38f4"
+        "hash": "3bb9e3f823b454df"
       },
       "claims": 18,
       "tally": {
@@ -2862,7 +2862,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 20,
-        "hash": "3ec2ea9710d19362"
+        "hash": "6dfb3c060b79e9a5"
       },
       "claims": 20,
       "tally": {
@@ -2886,7 +2886,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "128d754a39b9bdce"
+        "hash": "6417c878d0d11436"
       },
       "claims": 19,
       "tally": {
@@ -2910,7 +2910,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "988bcfd05848bae0"
+        "hash": "531b27192ae024ad"
       },
       "claims": 19,
       "tally": {
@@ -2932,17 +2932,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 29,
+        "observed": 31,
         "total": 32,
-        "hash": "2904cc452cf87cfe"
+        "hash": "f7db9cba1f5e98c8"
       },
       "claims": 32,
       "tally": {
-        "verified": 29,
-        "attested": 3,
+        "verified": 31,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 27,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -2958,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "7dd293b1ce7fd7d1"
+        "hash": "da2233db122da481"
       },
       "claims": 16,
       "tally": {
@@ -2982,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "6adc6671f64f3b8d"
+        "hash": "98c0d754a8c6400f"
       },
       "claims": 20,
       "tally": {
@@ -3006,7 +3006,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 29,
-        "hash": "27e99799939f5e20"
+        "hash": "9b2ed0a0ff0c4f41"
       },
       "claims": 29,
       "tally": {
@@ -3028,17 +3028,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 25,
-        "total": 25,
-        "hash": "787142be460f1ba9"
+        "observed": 30,
+        "total": 30,
+        "hash": "6a8b54ad81681e51"
       },
-      "claims": 25,
+      "claims": 30,
       "tally": {
-        "verified": 25,
+        "verified": 30,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
-        "verifiedRead": 3
+        "verifiedCall": 24,
+        "verifiedRead": 6
       }
     },
     {
@@ -3052,17 +3052,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 30,
+        "observed": 32,
         "total": 32,
-        "hash": "e6993a137d80b4ef"
+        "hash": "9cb40ed4d316cbd3"
       },
       "claims": 32,
       "tally": {
-        "verified": 30,
-        "attested": 2,
+        "verified": 32,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 27,
-        "verifiedRead": 3
+        "verifiedRead": 5
       }
     },
     {
@@ -3076,17 +3076,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
+        "observed": 25,
         "total": 26,
-        "hash": "73329caedde88132"
+        "hash": "467f0794721132f5"
       },
       "claims": 26,
       "tally": {
-        "verified": 23,
-        "attested": 3,
+        "verified": 25,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 21,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -3100,17 +3100,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 28,
+        "observed": 30,
         "total": 31,
-        "hash": "865a2be3adaed22c"
+        "hash": "83f9b3fd9f6608d1"
       },
       "claims": 31,
       "tally": {
-        "verified": 28,
-        "attested": 3,
+        "verified": 30,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 26,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -3126,7 +3126,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "76286ddebf3cd270"
+        "hash": "dd23a5243de5b4c0"
       },
       "claims": 16,
       "tally": {
@@ -3150,7 +3150,7 @@
       "instrumentation": {
         "observed": 9,
         "total": 9,
-        "hash": "66a7e3a7974ad652"
+        "hash": "1adbcd7564c0ba8b"
       },
       "claims": 9,
       "tally": {
@@ -3172,17 +3172,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
+        "observed": 23,
         "total": 23,
-        "hash": "fa0a632d6d6f3ff3"
+        "hash": "27f0ada113b53e07"
       },
       "claims": 23,
       "tally": {
-        "verified": 22,
-        "attested": 1,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 21,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -3196,17 +3196,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 25,
+        "observed": 27,
         "total": 27,
-        "hash": "484cf368d82382e3"
+        "hash": "d3922eede978c1ac"
       },
       "claims": 27,
       "tally": {
-        "verified": 25,
-        "attested": 2,
+        "verified": 27,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 23,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -3220,17 +3220,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
+        "observed": 23,
         "total": 23,
-        "hash": "0d5762fd5a1e6994"
+        "hash": "504df5ea24edec53"
       },
       "claims": 23,
       "tally": {
-        "verified": 21,
-        "attested": 2,
+        "verified": 23,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 19,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     },
     {
@@ -3246,7 +3246,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "ecebf5e6ad635739"
+        "hash": "3c5afb5a94d9dcbd"
       },
       "claims": 25,
       "tally": {
@@ -3270,7 +3270,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "7505925bef1f75b6"
+        "hash": "8810a60ce195ebbf"
       },
       "claims": 30,
       "tally": {
@@ -3294,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "3aceb2439e84fdad"
+        "hash": "cb49e7fca68bbf74"
       },
       "claims": 22,
       "tally": {
@@ -3316,17 +3316,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 46,
+        "observed": 48,
         "total": 48,
-        "hash": "a941f94b8b58775f"
+        "hash": "10bf323985af0287"
       },
       "claims": 48,
       "tally": {
-        "verified": 46,
-        "attested": 2,
+        "verified": 48,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 42,
-        "verifiedRead": 4
+        "verifiedRead": 6
       }
     },
     {
@@ -3340,17 +3340,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 13,
+        "observed": 14,
         "total": 14,
-        "hash": "d2b01eb581cc89b2"
+        "hash": "4ebedd6cac6bea6a"
       },
       "claims": 14,
       "tally": {
-        "verified": 13,
-        "attested": 1,
+        "verified": 14,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 12,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -3364,17 +3364,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 50,
+        "observed": 51,
         "total": 51,
-        "hash": "cdc5663e61a763c5"
+        "hash": "977d46b2b39c46eb"
       },
       "claims": 51,
       "tally": {
-        "verified": 50,
-        "attested": 1,
+        "verified": 51,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 49,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -3388,17 +3388,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 27,
+        "observed": 29,
         "total": 30,
-        "hash": "333e046bac5d991a"
+        "hash": "f5e0b14d1e3bc90e"
       },
       "claims": 30,
       "tally": {
-        "verified": 27,
-        "attested": 3,
+        "verified": 29,
+        "attested": 1,
         "claimedOnly": 0,
         "verifiedCall": 24,
-        "verifiedRead": 3
+        "verifiedRead": 5
       }
     },
     {
@@ -3412,17 +3412,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 95,
+        "observed": 96,
         "total": 96,
-        "hash": "4adcd7cb92154d7b"
+        "hash": "063c67c527aac406"
       },
       "claims": 96,
       "tally": {
-        "verified": 95,
-        "attested": 1,
+        "verified": 96,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 85,
-        "verifiedRead": 10
+        "verifiedRead": 11
       }
     },
     {
@@ -3436,17 +3436,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 48,
+        "observed": 49,
         "total": 49,
-        "hash": "7cba5d0d8adb8a9c"
+        "hash": "4af95b026eda90e3"
       },
       "claims": 49,
       "tally": {
-        "verified": 48,
-        "attested": 1,
+        "verified": 49,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 46,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -3462,7 +3462,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "d6983b6de636900e"
+        "hash": "c6d30085b185ca02"
       },
       "claims": 20,
       "tally": {
@@ -3484,17 +3484,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 25,
+        "observed": 29,
         "total": 36,
-        "hash": "99ed1f0ddd2a0697"
+        "hash": "2133a33c14830298"
       },
       "claims": 36,
       "tally": {
-        "verified": 25,
-        "attested": 11,
+        "verified": 29,
+        "attested": 7,
         "claimedOnly": 0,
         "verifiedCall": 21,
-        "verifiedRead": 4
+        "verifiedRead": 8
       }
     },
     {
@@ -3508,17 +3508,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 29,
+        "observed": 31,
         "total": 36,
-        "hash": "fc7c63992867351d"
+        "hash": "a2c8d244c7c401f5"
       },
       "claims": 36,
       "tally": {
-        "verified": 29,
-        "attested": 7,
+        "verified": 31,
+        "attested": 5,
         "claimedOnly": 0,
         "verifiedCall": 27,
-        "verifiedRead": 2
+        "verifiedRead": 4
       }
     }
   ],
@@ -3527,29 +3527,29 @@
       "denominator": "coverageRequired",
       "total": 963,
       "required": 963,
-      "claimed": 928,
-      "attested": 28,
-      "verified": 900,
-      "requiredClaimed": 928,
-      "requiredVerified": 900,
+      "claimed": 963,
+      "attested": 0,
+      "verified": 963,
+      "requiredClaimed": 963,
+      "requiredVerified": 963,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 63,
-      "unstated": 63,
-      "verifiedViaCall": 797,
-      "verifiedViaRead": 103,
+      "uncovered": 0,
+      "unstated": 0,
+      "verifiedViaCall": 848,
+      "verifiedViaRead": 115,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 797,
-      "requiredVerifiedViaRead": 103,
+      "requiredVerifiedViaCall": 848,
+      "requiredVerifiedViaRead": 115,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.828,
-      "claimedRate": 0.964,
-      "verifiedRate": 0.935,
-      "allUnitsVerifiedRate": 0.935,
+      "requiredVerifiedViaCallRate": 0.881,
+      "claimedRate": 1,
+      "verifiedRate": 1,
+      "allUnitsVerifiedRate": 1,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
-      "pass": false
+      "pass": true
     },
     "important": {
       "denominator": "coverageRequired",
@@ -3584,24 +3584,24 @@
       "total": 3130,
       "required": 3130,
       "claimed": 182,
-      "attested": 43,
-      "verified": 139,
+      "attested": 33,
+      "verified": 149,
       "requiredClaimed": 182,
-      "requiredVerified": 139,
+      "requiredVerified": 149,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 2991,
-      "unstated": 2991,
+      "uncovered": 2981,
+      "unstated": 2981,
       "verifiedViaCall": 126,
-      "verifiedViaRead": 13,
+      "verifiedViaRead": 23,
       "verifiedViaUnknown": 0,
       "requiredVerifiedViaCall": 126,
-      "requiredVerifiedViaRead": 13,
+      "requiredVerifiedViaRead": 23,
       "requiredVerifiedViaUnknown": 0,
       "requiredVerifiedViaCallRate": 0.04,
       "claimedRate": 0.058,
-      "verifiedRate": 0.044,
-      "allUnitsVerifiedRate": 0.044,
+      "verifiedRate": 0.048,
+      "allUnitsVerifiedRate": 0.048,
       "gate": "V1.1 Release: >=80% verified of coverageRequired",
       "threshold": 0.8,
       "applicable": true,
@@ -6276,6 +6276,25 @@
       ]
     },
     {
+      "unit": "view",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "audio-basic",
+        "dragonbones-basic",
+        "particle-2d-basic",
+        "physics-2d-basic",
+        "physics-2d-collision",
+        "physics-interaction",
+        "tiledmap-basic",
+        "ui-asset-loading",
+        "ui-components",
+        "ui-layout",
+        "video-basic",
+        "webview-basic"
+      ]
+    },
+    {
       "unit": "ResolutionPolicy",
       "tier": "advanced",
       "via": "read",
@@ -6292,6 +6311,22 @@
         "ui-layout",
         "video-basic",
         "webview-basic"
+      ]
+    },
+    {
+      "unit": "assetManager",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "audio-basic",
+        "collector-dodge",
+        "contra-action",
+        "dragonbones-basic",
+        "static-model",
+        "tank-battle",
+        "tiledmap-basic",
+        "ui-asset-loading",
+        "video-basic"
       ]
     },
     {
@@ -6515,6 +6550,23 @@
       ]
     },
     {
+      "unit": "builtinResMgr",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "automation",
+        "camera",
+        "hello-cube",
+        "input",
+        "material-basic",
+        "material-unlit",
+        "profiler-overlay",
+        "scene-runtime-ops",
+        "transform",
+        "tween-basic"
+      ]
+    },
+    {
       "unit": "BatchingUtility",
       "tier": "core",
       "via": "call",
@@ -6575,6 +6627,31 @@
       "via": "call",
       "examples": [
         "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "input",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-lookat",
+        "camera-ortho",
+        "collector-dodge",
+        "contra-action",
+        "input",
+        "interaction-click",
+        "light-two-directional",
+        "match3-classic",
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer",
+        "render-composite",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tank-battle",
+        "tetris-classic"
       ]
     },
     {
@@ -7153,6 +7230,20 @@
       ]
     },
     {
+      "unit": "director",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic",
+        "render-composite",
+        "scene-runtime-ops",
+        "scene-switch-reentry",
+        "shader-custom-gradient",
+        "shader-dissolve",
+        "tetris-classic"
+      ]
+    },
+    {
       "unit": "dragonBones.DragonBonesAsset",
       "tier": "advanced",
       "via": "call",
@@ -7178,6 +7269,14 @@
     },
     {
       "unit": "dragonBones.CCFactory",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.AnimationCacheMode",
       "tier": "advanced",
       "via": "read",
       "examples": [
@@ -7321,6 +7420,15 @@
       ]
     },
     {
+      "unit": "GLTFAsset.owned",
+      "tier": "internal",
+      "via": "read",
+      "examples": [
+        "gltf-asset-readonly",
+        "model-character-interaction"
+      ]
+    },
+    {
       "unit": "GLTFAsset.meshes",
       "tier": "core",
       "via": "call",
@@ -7365,6 +7473,64 @@
         "gltf-asset-readonly",
         "model-character-interaction",
         "product-viewer"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.sceneNames",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "gltf-asset-readonly",
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.images",
+      "tier": "internal",
+      "via": "read",
+      "examples": [
+        "gltf-asset-readonly",
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.meshMaterials",
+      "tier": "internal",
+      "via": "read",
+      "examples": [
+        "gltf-asset-readonly"
+      ]
+    },
+    {
+      "unit": "GLTFAsset",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-asset-readonly"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.document",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-asset-readonly"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.warnings",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-asset-readonly"
+      ]
+    },
+    {
+      "unit": "GLTFAsset.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-asset-readonly"
       ]
     },
     {
@@ -7495,6 +7661,46 @@
     },
     {
       "unit": "GLTFExtensionRegistry.validateRequired",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-loader-registry"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-loader-registry"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.register",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-loader-registry"
+      ]
+    },
+    {
+      "unit": "GLTFLoader.unregister",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-loader-registry"
+      ]
+    },
+    {
+      "unit": "GLTFExtensionRegistry",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "gltf-loader-registry"
+      ]
+    },
+    {
+      "unit": "GLTFExtensionRegistry.size",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -8380,6 +8586,183 @@
       ]
     },
     {
+      "unit": "math.EPSILON",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-approx-compare",
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.bits.sign",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.abs",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.min",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.max",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.isPow2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.log2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.log10",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.popCount",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.countTrailingZeros",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.nextPow2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.prevPow2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.parity",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.reverse",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.interleave2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.deinterleave2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.interleave3",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.deinterleave3",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.nextCombination",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-bits"
+      ]
+    },
+    {
+      "unit": "math.bits.INT_BITS",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-bits-constants"
+      ]
+    },
+    {
+      "unit": "math.bits.INT_MAX",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-bits-constants"
+      ]
+    },
+    {
+      "unit": "math.bits.INT_MIN",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-bits-constants"
+      ]
+    },
+    {
       "unit": "math.Color.lerp",
       "tier": "core",
       "via": "call",
@@ -8839,6 +9222,24 @@
       "via": "call",
       "examples": [
         "math-float-encoding"
+      ]
+    },
+    {
+      "unit": "math.HALF_PI",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-float-encoding",
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.TWO_PI",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-float-encoding",
+        "math-scalar-utils"
       ]
     },
     {
@@ -10711,6 +11112,174 @@
       ]
     },
     {
+      "unit": "math.v2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.v3",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.Vec4",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.v4",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.quat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.mat4",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.size",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.rect",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.color",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.toRadian",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.toDegree",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.randomRange",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.randomRangeInt",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.pseudoRandom",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.pseudoRandomRange",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.pseudoRandomRangeInt",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.nextPow2",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.repeat",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.pingPong",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.absMaxComponent",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
+      "unit": "math.MATH_FLOAT_ARRAY",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-scalar-utils"
+      ]
+    },
+    {
       "unit": "math.Size.constructor",
       "tier": "core",
       "via": "call",
@@ -12572,6 +13141,30 @@
       ]
     },
     {
+      "unit": "math.MathBase",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.MathBase.createFloatArray",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
+      "unit": "math.MathBase.array",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-vec4-arithmetic"
+      ]
+    },
+    {
       "unit": "math.Vec4.constructor",
       "tier": "core",
       "via": "call",
@@ -13273,6 +13866,15 @@
       "unit": "geometry.AABB",
       "tier": "advanced",
       "via": "call",
+      "examples": [
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "geometry.intersect",
+      "tier": "advanced",
+      "via": "read",
       "examples": [
         "model-character-interaction",
         "product-viewer"
@@ -14206,9 +14808,34 @@
       ]
     },
     {
+      "unit": "Contact2DType",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "physics-2d-collision"
+      ]
+    },
+    {
+      "unit": "PhysicsGroup",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "physics-2d-collision",
+        "physics-3d-basic"
+      ]
+    },
+    {
       "unit": "primitives.capsule",
       "tier": "core",
       "via": "call",
+      "examples": [
+        "physics-3d-basic"
+      ]
+    },
+    {
+      "unit": "physics.selector",
+      "tier": "supporting",
+      "via": "read",
       "examples": [
         "physics-3d-basic"
       ]
@@ -14576,6 +15203,14 @@
       ]
     },
     {
+      "unit": "profiler",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "profiler-overlay"
+      ]
+    },
+    {
       "unit": "Profiler",
       "tier": "advanced",
       "via": "read",
@@ -14706,6 +15341,31 @@
     },
     {
       "unit": "Scene.addComponent",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "scene-runtime-ops"
+      ]
+    },
+    {
+      "unit": "game",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "scene-runtime-ops",
+        "webview-basic"
+      ]
+    },
+    {
+      "unit": "instantiate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "scene-runtime-ops"
+      ]
+    },
+    {
+      "unit": "Vec3",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -16372,12 +17032,28 @@
       ]
     },
     {
+      "unit": "screen",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "video-basic"
+      ]
+    },
+    {
       "unit": "js.setClassName",
       "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
         "webview-basic"
+      ]
+    },
+    {
+      "unit": "macro",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "video-basic"
       ]
     },
     {
@@ -16471,78 +17147,6 @@
       ]
     },
     {
-      "unit": "view",
-      "tier": "advanced",
-      "examples": [
-        "audio-basic",
-        "dragonbones-basic",
-        "particle-2d-basic",
-        "physics-2d-basic",
-        "physics-2d-collision",
-        "physics-interaction",
-        "tiledmap-basic",
-        "ui-asset-loading",
-        "ui-components",
-        "ui-layout",
-        "video-basic",
-        "webview-basic"
-      ]
-    },
-    {
-      "unit": "assetManager",
-      "tier": "advanced",
-      "examples": [
-        "audio-basic",
-        "collector-dodge",
-        "contra-action",
-        "dragonbones-basic",
-        "static-model",
-        "tank-battle",
-        "tiledmap-basic",
-        "ui-asset-loading",
-        "video-basic"
-      ]
-    },
-    {
-      "unit": "builtinResMgr",
-      "tier": "core",
-      "examples": [
-        "automation",
-        "camera",
-        "hello-cube",
-        "input",
-        "material-basic",
-        "material-unlit",
-        "profiler-overlay",
-        "transform",
-        "tween-basic"
-      ]
-    },
-    {
-      "unit": "input",
-      "tier": "advanced",
-      "examples": [
-        "camera-lookat",
-        "camera-ortho",
-        "collector-dodge",
-        "contra-action",
-        "input",
-        "interaction-click",
-        "light-two-directional",
-        "match3-classic",
-        "model-character-interaction",
-        "physics-3d-basic",
-        "physics-interaction",
-        "product-viewer",
-        "render-composite",
-        "scene-switch-reentry",
-        "shader-custom-gradient",
-        "shader-dissolve",
-        "tank-battle",
-        "tetris-classic"
-      ]
-    },
-    {
       "unit": "sp.spine.ColorTimeline.constructor",
       "tier": "supporting",
       "examples": [
@@ -16600,25 +17204,6 @@
       ]
     },
     {
-      "unit": "director",
-      "tier": "core",
-      "examples": [
-        "dragonbones-basic",
-        "render-composite",
-        "scene-switch-reentry",
-        "shader-custom-gradient",
-        "shader-dissolve",
-        "tetris-classic"
-      ]
-    },
-    {
-      "unit": "dragonBones.AnimationCacheMode",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
       "unit": "dragonBones.ArmatureDisplay.playTimes",
       "tier": "advanced",
       "examples": [
@@ -16658,213 +17243,6 @@
       "tier": "supporting",
       "examples": [
         "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.owned",
-      "tier": "internal",
-      "examples": [
-        "gltf-asset-readonly",
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.sceneNames",
-      "tier": "core",
-      "examples": [
-        "gltf-asset-readonly",
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.images",
-      "tier": "internal",
-      "examples": [
-        "gltf-asset-readonly",
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.meshMaterials",
-      "tier": "internal",
-      "examples": [
-        "gltf-asset-readonly"
-      ]
-    },
-    {
-      "unit": "math.EPSILON",
-      "tier": "core",
-      "examples": [
-        "math-approx-compare"
-      ]
-    },
-    {
-      "unit": "math.bits.sign",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.abs",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.min",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.max",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.isPow2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.log2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.log10",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.popCount",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.countTrailingZeros",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.nextPow2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.prevPow2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.parity",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.reverse",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.interleave2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.deinterleave2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.interleave3",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.deinterleave3",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.nextCombination",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.INT_BITS",
-      "tier": "core",
-      "examples": [
-        "math-bits-constants"
-      ]
-    },
-    {
-      "unit": "math.bits.INT_MAX",
-      "tier": "core",
-      "examples": [
-        "math-bits-constants"
-      ]
-    },
-    {
-      "unit": "math.bits.INT_MIN",
-      "tier": "core",
-      "examples": [
-        "math-bits-constants"
-      ]
-    },
-    {
-      "unit": "math.HALF_PI",
-      "tier": "core",
-      "examples": [
-        "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "math.TWO_PI",
-      "tier": "core",
-      "examples": [
-        "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "geometry.intersect",
-      "tier": "advanced",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
       ]
     },
     {
@@ -16988,28 +17366,6 @@
       ]
     },
     {
-      "unit": "Contact2DType",
-      "tier": "advanced",
-      "examples": [
-        "physics-2d-collision"
-      ]
-    },
-    {
-      "unit": "PhysicsGroup",
-      "tier": "advanced",
-      "examples": [
-        "physics-2d-collision",
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.selector",
-      "tier": "supporting",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
       "unit": "physics.PhysicsSystem.raycastResults",
       "tier": "supporting",
       "examples": [
@@ -17050,13 +17406,6 @@
       "tier": "supporting",
       "examples": [
         "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "profiler",
-      "tier": "advanced",
-      "examples": [
-        "profiler-overlay"
       ]
     },
     {
@@ -17199,13 +17548,6 @@
       ]
     },
     {
-      "unit": "screen",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
       "unit": "Screen.requestFullScreen",
       "tier": "supporting",
       "examples": [
@@ -17220,22 +17562,8 @@
       ]
     },
     {
-      "unit": "macro",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
       "unit": "WebView.webviewEvents",
       "tier": "advanced",
-      "examples": [
-        "webview-basic"
-      ]
-    },
-    {
-      "unit": "game",
-      "tier": "core",
       "examples": [
         "webview-basic"
       ]
@@ -17259,78 +17587,6 @@
       ]
     },
     {
-      "unit": "view",
-      "tier": "advanced",
-      "examples": [
-        "audio-basic",
-        "dragonbones-basic",
-        "particle-2d-basic",
-        "physics-2d-basic",
-        "physics-2d-collision",
-        "physics-interaction",
-        "tiledmap-basic",
-        "ui-asset-loading",
-        "ui-components",
-        "ui-layout",
-        "video-basic",
-        "webview-basic"
-      ]
-    },
-    {
-      "unit": "assetManager",
-      "tier": "advanced",
-      "examples": [
-        "audio-basic",
-        "collector-dodge",
-        "contra-action",
-        "dragonbones-basic",
-        "static-model",
-        "tank-battle",
-        "tiledmap-basic",
-        "ui-asset-loading",
-        "video-basic"
-      ]
-    },
-    {
-      "unit": "builtinResMgr",
-      "tier": "core",
-      "examples": [
-        "automation",
-        "camera",
-        "hello-cube",
-        "input",
-        "material-basic",
-        "material-unlit",
-        "profiler-overlay",
-        "transform",
-        "tween-basic"
-      ]
-    },
-    {
-      "unit": "input",
-      "tier": "advanced",
-      "examples": [
-        "camera-lookat",
-        "camera-ortho",
-        "collector-dodge",
-        "contra-action",
-        "input",
-        "interaction-click",
-        "light-two-directional",
-        "match3-classic",
-        "model-character-interaction",
-        "physics-3d-basic",
-        "physics-interaction",
-        "product-viewer",
-        "render-composite",
-        "scene-switch-reentry",
-        "shader-custom-gradient",
-        "shader-dissolve",
-        "tank-battle",
-        "tetris-classic"
-      ]
-    },
-    {
       "unit": "sp.spine.ColorTimeline.constructor",
       "tier": "supporting",
       "examples": [
@@ -17388,25 +17644,6 @@
       ]
     },
     {
-      "unit": "director",
-      "tier": "core",
-      "examples": [
-        "dragonbones-basic",
-        "render-composite",
-        "scene-switch-reentry",
-        "shader-custom-gradient",
-        "shader-dissolve",
-        "tetris-classic"
-      ]
-    },
-    {
-      "unit": "dragonBones.AnimationCacheMode",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
       "unit": "dragonBones.ArmatureDisplay.playTimes",
       "tier": "advanced",
       "examples": [
@@ -17446,213 +17683,6 @@
       "tier": "supporting",
       "examples": [
         "dragonbones-basic"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.owned",
-      "tier": "internal",
-      "examples": [
-        "gltf-asset-readonly",
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.sceneNames",
-      "tier": "core",
-      "examples": [
-        "gltf-asset-readonly",
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.images",
-      "tier": "internal",
-      "examples": [
-        "gltf-asset-readonly",
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "GLTFAsset.meshMaterials",
-      "tier": "internal",
-      "examples": [
-        "gltf-asset-readonly"
-      ]
-    },
-    {
-      "unit": "math.EPSILON",
-      "tier": "core",
-      "examples": [
-        "math-approx-compare"
-      ]
-    },
-    {
-      "unit": "math.bits.sign",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.abs",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.min",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.max",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.isPow2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.log2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.log10",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.popCount",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.countTrailingZeros",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.nextPow2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.prevPow2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.parity",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.reverse",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.interleave2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.deinterleave2",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.interleave3",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.deinterleave3",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.nextCombination",
-      "tier": "core",
-      "examples": [
-        "math-bits"
-      ]
-    },
-    {
-      "unit": "math.bits.INT_BITS",
-      "tier": "core",
-      "examples": [
-        "math-bits-constants"
-      ]
-    },
-    {
-      "unit": "math.bits.INT_MAX",
-      "tier": "core",
-      "examples": [
-        "math-bits-constants"
-      ]
-    },
-    {
-      "unit": "math.bits.INT_MIN",
-      "tier": "core",
-      "examples": [
-        "math-bits-constants"
-      ]
-    },
-    {
-      "unit": "math.HALF_PI",
-      "tier": "core",
-      "examples": [
-        "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "math.TWO_PI",
-      "tier": "core",
-      "examples": [
-        "math-float-encoding"
-      ]
-    },
-    {
-      "unit": "geometry.intersect",
-      "tier": "advanced",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
       ]
     },
     {
@@ -17776,28 +17806,6 @@
       ]
     },
     {
-      "unit": "Contact2DType",
-      "tier": "advanced",
-      "examples": [
-        "physics-2d-collision"
-      ]
-    },
-    {
-      "unit": "PhysicsGroup",
-      "tier": "advanced",
-      "examples": [
-        "physics-2d-collision",
-        "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "physics.selector",
-      "tier": "supporting",
-      "examples": [
-        "physics-3d-basic"
-      ]
-    },
-    {
       "unit": "physics.PhysicsSystem.raycastResults",
       "tier": "supporting",
       "examples": [
@@ -17838,13 +17846,6 @@
       "tier": "supporting",
       "examples": [
         "physics-3d-basic"
-      ]
-    },
-    {
-      "unit": "profiler",
-      "tier": "advanced",
-      "examples": [
-        "profiler-overlay"
       ]
     },
     {
@@ -17987,13 +17988,6 @@
       ]
     },
     {
-      "unit": "screen",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
       "unit": "Screen.requestFullScreen",
       "tier": "supporting",
       "examples": [
@@ -18008,63 +18002,13 @@
       ]
     },
     {
-      "unit": "macro",
-      "tier": "advanced",
-      "examples": [
-        "video-basic"
-      ]
-    },
-    {
       "unit": "WebView.webviewEvents",
       "tier": "advanced",
       "examples": [
         "webview-basic"
       ]
-    },
-    {
-      "unit": "game",
-      "tier": "core",
-      "examples": [
-        "webview-basic"
-      ]
     }
   ],
-  "unclaimedCore": [
-    "math.v2",
-    "math.v3",
-    "math.Vec4",
-    "math.v4",
-    "math.quat",
-    "math.mat4",
-    "math.size",
-    "math.rect",
-    "math.color",
-    "math.toRadian",
-    "math.toDegree",
-    "math.randomRange",
-    "math.randomRangeInt",
-    "math.pseudoRandom",
-    "math.pseudoRandomRange",
-    "math.pseudoRandomRangeInt",
-    "math.nextPow2",
-    "math.repeat",
-    "math.pingPong",
-    "math.absMaxComponent",
-    "math.MATH_FLOAT_ARRAY",
-    "math.MathBase",
-    "math.MathBase.createFloatArray",
-    "math.MathBase.array",
-    "instantiate",
-    "GLTFAsset",
-    "GLTFAsset.document",
-    "GLTFAsset.warnings",
-    "GLTFAsset.constructor",
-    "GLTFLoader.constructor",
-    "GLTFLoader.register",
-    "GLTFLoader.unregister",
-    "GLTFExtensionRegistry",
-    "GLTFExtensionRegistry.size",
-    "Vec3"
-  ],
-  "unclaimedRequired": 3087
+  "unclaimedCore": [],
+  "unclaimedRequired": 3052
 }

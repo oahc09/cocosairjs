@@ -94,8 +94,33 @@ probe.morton3 = bits.interleave3(1, 2, 3);
 probe.unmorton3_1 = bits.deinterleave3(bits.interleave3(1, 2, 3), 1);
 probe.combo5 = bits.nextCombination(5);
 
+var mathBitsNS = (cocosairNS as any).math.bits;
+T('covBits.sign', () => mathBitsNS.sign(-7));
+T('covBits.abs', () => mathBitsNS.abs(-9));
+T('covBits.min', () => mathBitsNS.min(3, 11));
+T('covBits.max', () => mathBitsNS.max(3, 11));
+T('covBits.isPow2', () => mathBitsNS.isPow2(64));
+T('covBits.log2', () => mathBitsNS.log2(64));
+T('covBits.log10', () => mathBitsNS.log10(1000));
+T('covBits.popCount', () => mathBitsNS.popCount(255));
+T('covBits.countTrailingZeros', () => mathBitsNS.countTrailingZeros(96));
+T('covBits.nextPow2', () => mathBitsNS.nextPow2(65));
+T('covBits.prevPow2', () => mathBitsNS.prevPow2(65));
+T('covBits.parity', () => mathBitsNS.parity(7));
+T('covBits.reverse', () => mathBitsNS.reverse(0b101));
+T('covBits.interleave2', () => mathBitsNS.interleave2(5, 9));
+T('covBits.deinterleave2', () => mathBitsNS.deinterleave2(mathBitsNS.interleave2(5, 9), 1));
+T('covBits.interleave3', () => mathBitsNS.interleave3(1, 2, 3));
+T('covBits.deinterleave3', () => mathBitsNS.deinterleave3(mathBitsNS.interleave3(1, 2, 3), 1));
+T('covBits.nextCombination', () => mathBitsNS.nextCombination(5));
+const covBitFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covBits.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covBitFailures;
+
 probe.topic = 'math-bits';
 (window as any).__probe = async () => probe;
+if (covBitFailures.length) console.error(`[coverage] bit probes failed: ${covBitFailures.join(', ')}`);
 
 app.run(scene);
 console.log('[math-bits] running');
