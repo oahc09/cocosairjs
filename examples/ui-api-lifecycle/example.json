@@ -1,0 +1,223 @@
+{
+  "id": "ui-api-lifecycle",
+  "version": "1.0.0",
+  "status": "stable",
+  "specStatus": "frozen",
+  "benchmarkRefs": [],
+  "recipeRefs": [],
+  "requiresDevTools": false,
+  "title": "Widget and UI Renderer Lifecycle",
+  "category": "ui",
+  "apiClaims": [
+    "Widget.editorTop",
+    "Widget.editorBottom",
+    "Widget.editorLeft",
+    "Widget.editorRight",
+    "Widget.editorHorizontalCenter",
+    "Widget.editorVerticalCenter",
+    "Widget.AlignMode",
+    "Widget.onEnable",
+    "Widget.onDisable",
+    "Widget.onDestroy",
+    "UIRenderer",
+    "UIRenderer.constructor",
+    "UIRenderer.onRestore",
+    "UIRenderer.onDestroy",
+    "UIRenderer.destroyRenderData",
+    "Sprite.onDestroy",
+    "Label.onDestroy"
+  ],
+  "capabilities": [],
+  "learning": {
+    "goal": "使用 Widget 约束 UI 节点的视口边距，并理解 UI 渲染组件的生命周期。",
+    "points": [
+      "Widget 的 AlignMode 与 editor-only 边距读取会保留布局值。",
+      "UIRenderer、Sprite 和 Label 的资源清理由组件生命周期触发。"
+    ]
+  },
+  "effect": {
+    "functional": "场景包含 Canvas、UICamera 与标题 Label；Widget 设置左右/上方边距并使用 ON_WINDOW_RESIZE。屏幕外的临时组件在真实帧后创建与销毁，用来核对 Widget/UIRenderer/Sprite/Label 生命周期。",
+    "visual": "深色画面中央上方显示浅蓝标题“Widget and UI lifecycle”，背景由 WebGL 相机清屏。"
+  },
+  "api": {
+    "primary": ["Widget.AlignMode", "UIRenderer"],
+    "supporting": [
+      "Widget.editorTop",
+      "Widget.editorBottom",
+      "Widget.editorLeft",
+      "Widget.editorRight",
+      "Widget.editorHorizontalCenter",
+      "Widget.editorVerticalCenter",
+      "Widget.AlignMode",
+      "Widget.onEnable",
+      "Widget.onDisable",
+      "Widget.onDestroy",
+      "UIRenderer",
+      "UIRenderer.constructor",
+      "UIRenderer.onRestore",
+      "UIRenderer.onDestroy",
+      "UIRenderer.destroyRenderData",
+      "Sprite.onDestroy",
+      "Label.onDestroy"
+    ],
+    "claims": [
+      "Widget.editorTop",
+      "Widget.editorBottom",
+      "Widget.editorLeft",
+      "Widget.editorRight",
+      "Widget.editorHorizontalCenter",
+      "Widget.editorVerticalCenter",
+      "Widget.AlignMode",
+      "Widget.onEnable",
+      "Widget.onDisable",
+      "Widget.onDestroy",
+      "UIRenderer",
+      "UIRenderer.constructor",
+      "UIRenderer.onRestore",
+      "UIRenderer.onDestroy",
+      "UIRenderer.destroyRenderData",
+      "Sprite.onDestroy",
+      "Label.onDestroy"
+    ],
+    "forbiddenShortcut": ["用 DOM/CSS 文本冒充 Canvas 内 Label", "用手工调用事件冒充组件生命周期"],
+    "evidence": [
+      {
+        "api": "Widget.editorTop",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "Widget.editorBottom",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "Widget.editorLeft",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "Widget.editorRight",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "Widget.editorHorizontalCenter",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "Widget.editorVerticalCenter",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "Widget.AlignMode",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "Widget.onEnable",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L71"
+      },
+      {
+        "api": "Widget.onDisable",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L75"
+      },
+      {
+        "api": "Widget.onDestroy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L79"
+      },
+      {
+        "api": "UIRenderer",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L84"
+      },
+      {
+        "api": "UIRenderer.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L136"
+      },
+      {
+        "api": "UIRenderer.onRestore",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L137"
+      },
+      {
+        "api": "UIRenderer.onDestroy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "UIRenderer.destroyRenderData",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L138"
+      },
+      {
+        "api": "Sprite.onDestroy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L79"
+      },
+      {
+        "api": "Label.onDestroy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L79"
+      }
+    ]
+  },
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Canvas", "UICamera", "TitleLabel"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "assets": [],
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "no-runtime-error"],
+    "interaction": [],
+    "visual": ["visible-frame"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产；UI 元素由引擎运行时创建，示例代码随仓库 MIT 授权。"
+  },
+  "promotion": {
+    "spec": "fb73abcb354f",
+    "source": "59231c951d6a22fd",
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 17,
+    "attested": 0,
+    "units": 17
+  }
+}

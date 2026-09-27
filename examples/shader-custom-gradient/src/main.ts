@@ -179,6 +179,25 @@ async function main(): Promise<void> {
 
     // ---- 注册（引擎启动后） ----------------------------------------------------
     effect = buildEffect();
+    EffectAsset.register(effect);
+    const registeredEffects = EffectAsset.getAll();
+    pcheck(
+        'effect-public-fields',
+        effect.constructor.name === 'EffectAsset' &&
+            registeredEffects[EFFECT_NAME] === effect &&
+            effect.techniques.length > 0 &&
+            effect.combinations.length >= 0 &&
+            effect.hideInEditor === false,
+        'EffectAsset register/getAll/techniques/combinations/hideInEditor',
+    );
+    const defaultEffectProbe = new EffectAsset();
+    defaultEffectProbe.initDefault();
+    pcheck(
+        'effect-init-default',
+        defaultEffectProbe.name === 'builtin-unlit' && defaultEffectProbe.validate(),
+        'default effect',
+    );
+    defaultEffectProbe.destroy();
     pcheck('effect-registered', EffectAsset.get(EFFECT_NAME) === effect, 'EffectAsset.get !== 注册实例');
     const canvasEl = document.getElementById('GameCanvas') as HTMLCanvasElement;
     const gl = (canvasEl.getContext('webgl2') || canvasEl.getContext('webgl')) as WebGLRenderingContext | null;

@@ -15,9 +15,13 @@ import {
     Scene,
     Node,
     SkinnedMeshRenderer,
+    SkeletalAnimation,
+    SkinnedMeshUnit,
+    Skeleton,
     Mesh,
     Material,
     Component,
+    Vec2,
     gfx,
     Color,
     buildSkeletonTree,
@@ -25,6 +29,7 @@ import {
     frameObject,
 } from 'cocosair';
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
+import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 
 const canvas = document.querySelector('#GameCanvas');
 
@@ -118,27 +123,31 @@ const vertexBundle = {
     ],
 };
 
-const mesh = new Mesh();
-mesh.reset({
-    struct: {
-        vertexBundles: [vertexBundle],
-        primitives: [
-            {
-                primitiveMode: TRIANGLE_LIST,
-                vertexBundelIndices: [0],
-                indexView: {
-                    offset: vertexData.byteLength,
-                    length: indexData.byteLength,
-                    count: indices.length,
-                    stride: 2,
+function createMesh() {
+    const value = new Mesh();
+    value.reset({
+        struct: {
+            vertexBundles: [vertexBundle],
+            primitives: [
+                {
+                    primitiveMode: TRIANGLE_LIST,
+                    vertexBundelIndices: [0],
+                    indexView: {
+                        offset: vertexData.byteLength,
+                        length: indexData.byteLength,
+                        count: indices.length,
+                        stride: 2,
+                    },
                 },
-            },
-        ],
-        minPosition: { x: -0.25, y: 0, z: -0.25 },
-        maxPosition: { x: 0.25, y: (ROWS - 1) * SEG_H, z: 0.25 },
-    },
-    data: new Uint8Array(joinBuffers(vertexData.buffer, indexData.buffer)),
-});
+            ],
+            minPosition: { x: -0.25, y: 0, z: -0.25 },
+            maxPosition: { x: 0.25, y: (ROWS - 1) * SEG_H, z: 0.25 },
+        },
+        data: new Uint8Array(joinBuffers(vertexData.buffer, indexData.buffer)),
+    });
+    return value;
+}
+let mesh = createMesh();
 
 function joinBuffers(a, b) {
     const out = new Uint8Array(a.byteLength + b.byteLength);
@@ -172,25 +181,89 @@ class TentacleDriver extends Component {
     }
 }
 
+class SkinnedRendererLifecycleProbe extends SkinnedMeshRenderer {
+    onLoad() {
+        super.onLoad();
+    }
+    onDestroy() {
+        super.onDestroy();
+    }
+}
+
 // ---------------- 3. Skeleton 资产（V0.2 buildSkeletonTree 正式 utils） ----------------
 // joints 是相对 skinningRoot 的路径；bindpose = inverse(骨骼当前世界矩阵)
-const skeleton = buildSkeletonTree(armature, ['bone0', 'bone0/bone1', 'bone0/bone1/bone2']);
+let skeleton = buildSkeletonTree(armature, ['bone0', 'bone0/bone1', 'bone0/bone1/bone2']);
+const skeletonProbe = new Skeleton('ImportantSkeletonProbe');
+skeletonProbe.joints = skeleton.joints.slice();
+skeletonProbe.bindposes = skeleton.bindposes.slice();
+const skeletonProbeState = {
+    constructorName: skeletonProbe.constructor.name,
+    joints: skeleton.joints.length,
+    bindposes: skeleton.bindposes.length,
+    inverseBindposes: skeletonProbe.inverseBindposes.length,
+    hash: skeletonProbe.hash,
+    valid: skeletonProbe.validate(),
+};
+skeletonProbe.destroy();
 
 // ---------------- 4. SkinnedMeshRenderer ----------------
-const smr = armature.addComponent(SkinnedMeshRenderer);
+let smr = armature.addComponent(SkinnedMeshRenderer);
 smr.mesh = mesh;
 smr.skeleton = skeleton;
 smr.skinningRoot = armature;
+const skinnedModel = smr.model;
 
-const skinMaterial = new Material();
+let skinMaterial = new Material();
 skinMaterial.initialize({ effectName: 'builtin-standard' });
 skinMaterial.setProperty('mainColor', new Color(240, 160, 40, 255));
 smr.material = skinMaterial;
+smr.uploadAnimation(null);
+const skinUnit = new SkinnedMeshUnit();
+skinUnit.offset = new Vec2(0.1, 0.2);
+skinUnit.size = new Vec2(0.8, 0.9);
+skinUnit.copyFrom = smr;
+const skinUnitState = {
+    constructorName: skinUnit.constructor.name,
+    mesh: skinUnit.mesh === mesh,
+    skeleton: skinUnit.skeleton === skeleton,
+    material: skinUnit.material === skinMaterial,
+    offset: `${skinUnit.offset.x},${skinUnit.offset.y}`,
+    size: `${skinUnit.size.x},${skinUnit.size.y}`,
+};
+
+const scene = new Scene('skinned-animation');
+class SkeletalLifecycleProbe extends SkeletalAnimation {
+    onLoad() {
+        super.onLoad();
+    }
+    start() {
+        super.start();
+    }
+    onEnable() {
+        super.onEnable();
+    }
+    onDisable() {
+        super.onDisable();
+    }
+    onDestroy() {
+        super.onDestroy();
+    }
+}
+const skeletalProbeRoot = new Node('SkeletalAnimationProbe');
+const probeBone0 = new Node('bone0');
+const probeBone1 = new Node('bone1');
+skeletalProbeRoot.addChild(probeBone0);
+probeBone0.addChild(probeBone1);
+scene.addChild(skeletalProbeRoot);
+const skeletalProbe = skeletalProbeRoot.addComponent(SkeletalLifecycleProbe);
+const rendererProbeNode = new Node('SkinnedRendererLifecycleProbe');
+scene.addChild(rendererProbeNode);
+const rendererProbe = rendererProbeNode.addComponent(SkinnedRendererLifecycleProbe);
+rendererProbe.setSharedMaterial(skinMaterial, 0);
 
 armature.addComponent(TentacleDriver);
 
 // ---------------- 5. 场景 ----------------
-const scene = new Scene('skinned-animation');
 const camera = setupCamera(scene, { position: [0, 2.4, 6.5] });
 setupDirectionalLight(scene, { position: [0, 8, 0], illuminance: 55000 });
 
@@ -201,6 +274,98 @@ restoreBindPose(armature, skeleton);
 // V0.2 frameObject：按包围盒取景触手
 frameObject(camera, armature);
 
+function heldResources() {
+    return [
+        { name: 'SkinnedMesh', ref: mesh },
+        { name: 'Skeleton', ref: skeleton },
+        { name: 'SkinnedMaterial', ref: skinMaterial },
+        { name: 'SkinnedMeshRenderer', ref: smr },
+    ];
+}
+
+async function releaseResources() {
+    smr.destroy();
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    skinUnit.mesh = null;
+    skinUnit.skeleton = null;
+    skinUnit.material = null;
+    mesh.destroy();
+    skeleton.destroy();
+    skinMaterial.destroy();
+}
+
+async function reacquireResources() {
+    let step = 'mesh';
+    try {
+        mesh = createMesh();
+        step = 'skeleton';
+        skeleton = buildSkeletonTree(armature, ['bone0', 'bone0/bone1', 'bone0/bone1/bone2']);
+        step = 'material';
+        skinMaterial = new Material();
+        skinMaterial.initialize({ effectName: 'builtin-standard' });
+        skinMaterial.setProperty('mainColor', new Color(240, 160, 40, 255));
+        smr = armature.addComponent(SkinnedMeshRenderer);
+        step = 'renderer mesh';
+        smr.mesh = mesh;
+        step = 'renderer skeleton';
+        smr.skeleton = skeleton;
+        step = 'renderer root';
+        smr.skinningRoot = armature;
+        step = 'renderer material';
+        smr.material = skinMaterial;
+        step = 'renderer animation';
+        smr.uploadAnimation(null);
+        step = 'skinned unit';
+        skinUnit.copyFrom = smr;
+        step = 'restore bind pose';
+        restoreBindPose(armature, skeleton);
+        return heldResources();
+    } catch (error) {
+        throw new Error(`reacquire step ${step}: ${String((error && error.message) || error)}`);
+    }
+}
+
+installAssetLifecycle({
+    label: 'skinned-animation',
+    hold: heldResources,
+    release: releaseResources,
+    reacquire: reacquireResources,
+});
+
 app.run(scene);
+// Invoke the public start hook once explicitly as the skeletal socket manager is initialized.
+skeletalProbe.start();
+skeletalProbe.useBakedAnimation = false;
+const socketTarget = new Node('SocketTarget');
+skeletalProbe.sockets = [new SkeletalAnimation.Socket('bone0/bone1', socketTarget)];
+const socketPaths = skeletalProbe.querySockets();
+const createdSocket = skeletalProbe.createSocket('bone0/bone1');
+skeletalProbe.rebuildSocketAnimations();
+skeletalProbe.pause();
+skeletalProbe.resume();
+skeletalProbe.stop();
+skeletalProbe.enabled = false;
+skeletalProbe.enabled = true;
+const skeletalProbeState = {
+    useBakedAnimation: skeletalProbe.useBakedAnimation,
+    sockets: skeletalProbe.sockets.length,
+    querySockets: socketPaths.length > 0,
+    createSocket: createdSocket === socketTarget,
+    rendererModel: !!skinnedModel,
+};
+const skinnedRendererState = {
+    constructorName: smr.constructor.name,
+    skeleton: smr.skeleton === skeleton,
+    skinningRoot: smr.skinningRoot === armature,
+    model: !!smr.model,
+};
+requestAnimationFrame(() =>
+    requestAnimationFrame(() => {
+        skeletalProbeRoot.destroy();
+        rendererProbeNode.destroy();
+    }),
+);
+
+window.__probe = () => ({ skeletonProbeState, skinUnitState, skeletalProbeState, skinnedRendererState });
 
 console.log('[skinned-animation] running — buildSkeletonTree/restoreBindPose/frameObject + 3-bone skinned ribbon');

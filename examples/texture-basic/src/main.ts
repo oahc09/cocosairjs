@@ -18,7 +18,9 @@ import {
     Color,
     Material,
     Texture2D,
+    TextureCube,
     ImageAsset,
+    gfx,
     utils,
     primitives,
 } from 'cocosair';
@@ -48,6 +50,9 @@ function checkerboardPixels(): Uint8Array {
 
 var imageAsset: any;
 var texture: any;
+var cubeTexture: any;
+var defaultCube: any;
+var resetProbeCube: any;
 var material: any;
 var mesh: any;
 var texturedCube: any;
@@ -63,6 +68,9 @@ function owned(): any[] {
     return [
         { name: 'ImageAsset', ref: imageAsset },
         { name: 'Texture2D', ref: texture },
+        { name: 'TextureCube', ref: cubeTexture },
+        { name: 'TextureCubeDefault', ref: defaultCube },
+        { name: 'TextureCubeResetProbe', ref: resetProbeCube },
         { name: 'Material', ref: material },
         { name: 'Mesh', ref: mesh },
         { name: 'TexturedCube', ref: texturedCube },
@@ -80,6 +88,51 @@ function acquire(): any[] {
     });
     texture = new Texture2D();
     texture.image = imageAsset;
+
+    // Cubemap API probe: reuse the six-face checkerboard for all faces, then verify
+    // the public mipmap, face-index, default, reset, and validation surfaces.
+    const faces = [texture, texture, texture, texture, texture, texture];
+    cubeTexture = TextureCube.fromTexture2DArray(faces);
+    const cubeFace = cubeTexture.image;
+    const cubeState = {
+        constructorName: cubeTexture.constructor.name,
+        faceOrder: [
+            TextureCube.FaceIndex.front,
+            TextureCube.FaceIndex.back,
+            TextureCube.FaceIndex.left,
+            TextureCube.FaceIndex.right,
+            TextureCube.FaceIndex.top,
+            TextureCube.FaceIndex.bottom,
+        ],
+        isRGBE: cubeTexture.isRGBE,
+        mipmapCount: cubeTexture.mipmaps.length,
+        atlasAbsent: cubeTexture.mipmapAtlas === null,
+        offlineMipmaps: cubeTexture.isUsingOfflineMipmaps(),
+        imagePresent: !!cubeFace && cubeFace.front === imageAsset,
+        valid: cubeTexture.validate(),
+    };
+    cubeTexture.onLoaded();
+    cubeTexture.updateMipmaps(0, cubeTexture.mipmaps.length);
+    defaultCube = new TextureCube();
+    defaultCube.initDefault();
+    resetProbeCube = new TextureCube();
+    resetProbeCube.reset({ width: 1, height: 1, format: gfx.Format.RGBA8, mipmapLevel: 1 });
+    const resetProbeAtlas = resetProbeCube.mipmapAtlas;
+    resetProbeCube.mipmapAtlas = null;
+    if (
+        cubeState.constructorName !== 'TextureCube' ||
+        cubeState.faceOrder.length !== 6 ||
+        cubeState.isRGBE !== false ||
+        cubeState.mipmapCount !== 1 ||
+        !cubeState.atlasAbsent ||
+        cubeState.offlineMipmaps ||
+        !cubeState.imagePresent ||
+        !cubeState.valid ||
+        !defaultCube.validate() ||
+        resetProbeAtlas !== null
+    ) {
+        throw new Error('[texture-basic] TextureCube API probe failed: ' + JSON.stringify(cubeState));
+    }
 
     material = new Material();
     material.initialize({ effectName: 'builtin-standard', defines: { USE_ALBEDO_MAP: true } });
@@ -129,6 +182,9 @@ installAssetLifecycle({
         mesh.destroy();
         material.destroy();
         texture.destroy();
+        cubeTexture.destroy();
+        defaultCube.destroy();
+        resetProbeCube.destroy();
         imageAsset.destroy();
     },
     reacquire: acquire,

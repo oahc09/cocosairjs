@@ -549,7 +549,7 @@ function generateTraceModule(exportNames, units, realUrl) {
       done = staticDone || T.patchOwn(host.prototype, leaf, unit, 'prototype');
       if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
       const owner = __PARENTS[unit];
-      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera' || owner === 'MeshRenderer' || owner === 'Scene' || owner === 'Mesh' || owner === 'GLTFAsset' || owner === 'Animation' || owner === 'AnimationClip' || owner === 'EffectAsset');
+      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera' || owner === 'MeshRenderer' || owner === 'Scene' || owner === 'Mesh' || owner === 'GLTFAsset' || owner === 'Animation' || owner === 'AnimationClip' || owner === 'EffectAsset' || owner === 'TextureCube' || owner === 'SkinnedMeshUnit');
       if (!done && __KINDS[unit] === 'property' && ownDataOwner) {
         T.registerInstanceData(host, leaf, unit);
         T.mechanism[unit] = 'instance-data';
@@ -833,7 +833,7 @@ if (require.main === module) {
         if (!/owner === 'GLTFAsset'/.test(code)) {
             throw new Error('selftest: GLTFAsset own data-property owner missing');
         }
-        for (const owner of ['Animation', 'AnimationClip', 'EffectAsset']) {
+        for (const owner of ['Animation', 'AnimationClip', 'EffectAsset', 'TextureCube', 'SkinnedMeshUnit']) {
             if (!new RegExp(`owner === '${owner}'`).test(code)) {
                 throw new Error(`selftest: ${owner} own data-property owner missing`);
             }

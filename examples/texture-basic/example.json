@@ -20,7 +20,25 @@
   },
   "api": {
     "primary": ["Texture2D", "ImageAsset"],
-    "supporting": ["Material.initialize", "Material.setProperty"],
+    "supporting": [
+      "Material.initialize",
+      "Material.setProperty",
+      "TextureCube",
+      "TextureCube.FaceIndex",
+      "TextureCube.isRGBE",
+      "TextureCube.constructor",
+      "TextureCube.mipmaps",
+      "TextureCube.mipmapAtlas",
+      "TextureCube.isUsingOfflineMipmaps",
+      "TextureCube.image",
+      "TextureCube.fromTexture2DArray",
+      "TextureCube.onLoaded",
+      "TextureCube.reset",
+      "TextureCube.updateMipmaps",
+      "TextureCube.destroy",
+      "TextureCube.initDefault",
+      "TextureCube.validate"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -46,7 +64,22 @@
       "Mesh.destroy",
       "Material.destroy",
       "Texture2D.destroy",
-      "isValid"
+      "isValid",
+      "TextureCube",
+      "TextureCube.FaceIndex",
+      "TextureCube.isRGBE",
+      "TextureCube.constructor",
+      "TextureCube.mipmaps",
+      "TextureCube.mipmapAtlas",
+      "TextureCube.isUsingOfflineMipmaps",
+      "TextureCube.image",
+      "TextureCube.fromTexture2DArray",
+      "TextureCube.onLoaded",
+      "TextureCube.reset",
+      "TextureCube.updateMipmaps",
+      "TextureCube.destroy",
+      "TextureCube.initDefault",
+      "TextureCube.validate"
     ],
     "forbiddenShortcut": ["从外网 URL 拉图（示例必须离线可跑）", "用纯色 mainColor 冒充贴图效果"],
     "evidence": [
@@ -54,151 +87,241 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L29"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L29"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L90"
+        "sourceLocation": "L143"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L94"
+        "sourceLocation": "L147"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L105"
+        "sourceLocation": "L158"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L118"
+        "sourceLocation": "L171"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L55"
+        "sourceLocation": "L60"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L91"
+        "sourceLocation": "L144"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L93"
+        "sourceLocation": "L146"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L111"
+        "sourceLocation": "L164"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L84"
+        "sourceLocation": "L137"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L85"
+        "sourceLocation": "L138"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L86"
+        "sourceLocation": "L139"
       },
       {
         "api": "Texture2D",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L81"
+        "sourceLocation": "L89"
       },
       {
         "api": "ImageAsset",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L74"
+        "sourceLocation": "L82"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L88"
+        "sourceLocation": "L141"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L88"
+        "sourceLocation": "L141"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L92"
+        "sourceLocation": "L145"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L93"
+        "sourceLocation": "L146"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L117"
+        "sourceLocation": "L170"
       },
       {
         "api": "Node.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L128"
+        "sourceLocation": "L181"
       },
       {
         "api": "Mesh.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L129"
+        "sourceLocation": "L182"
       },
       {
         "api": "Material.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L130"
+        "sourceLocation": "L183"
       },
       {
         "api": "Texture2D.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L131"
+        "sourceLocation": "L184"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
         "sourceLocation": "L27"
+      },
+      {
+        "api": "TextureCube",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L116"
+      },
+      {
+        "api": "TextureCube.FaceIndex",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L100"
+      },
+      {
+        "api": "TextureCube.isRGBE",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L107"
+      },
+      {
+        "api": "TextureCube.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L98"
+      },
+      {
+        "api": "TextureCube.mipmaps",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L108"
+      },
+      {
+        "api": "TextureCube.mipmapAtlas",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
+      },
+      {
+        "api": "TextureCube.isUsingOfflineMipmaps",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L110"
+      },
+      {
+        "api": "TextureCube.image",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "TextureCube.fromTexture2DArray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L95"
+      },
+      {
+        "api": "TextureCube.onLoaded",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "TextureCube.reset",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "TextureCube.updateMipmaps",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "TextureCube.destroy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L186"
+      },
+      {
+        "api": "TextureCube.initDefault",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "TextureCube.validate",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L131"
       }
     ]
   },
@@ -237,7 +360,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 103,
+            "line": 156,
             "text": "cameraNode.setPosition(new Vec3(0, 2.4, 6.5));"
           }
         ]
@@ -247,8 +370,13 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 116,
+            "line": 169,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 170,
+            "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ],
         "rotationEuler": [-45, -30, 0]
@@ -258,12 +386,12 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 93,
+            "line": 146,
             "text": "texturedCube.setPosition(new Vec3(0, 0.5, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 57,
+            "line": 62,
             "text": "0,this.node.eulerAngles.y + dt * 35,0"
           }
         ],
@@ -282,7 +410,7 @@
             "tolerance": null,
             "provenance": {
               "source": "src/main.ts",
-              "line": 86,
+              "line": 139,
               "text": "texture"
             }
           }
@@ -293,17 +421,17 @@
   "expectationExclusions": {
     "transform-equals": {
       "Main Camera": {
-        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.4, 6.5)); cameraNode.lo）",
-        "line": "L103"
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0.5, 0));）",
+        "line": "L157"
       }
     }
   },
   "promotion": {
-    "spec": "f412ce14bc94",
-    "source": "0bcebbb30e15ca1d",
+    "spec": "95ed047131ee",
+    "source": "f3342765dca75676",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 25,
+    "verified": 40,
     "attested": 0,
-    "units": 25
+    "units": 40
   }
 }

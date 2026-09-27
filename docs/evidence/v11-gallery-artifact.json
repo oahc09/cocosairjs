@@ -1,22 +1,22 @@
 {
-  "measuredAt": "2026-09-27T20:03:00.111Z",
+  "measuredAt": "2026-09-27T21:41:02.334Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
   "completed": true,
   "scope": {
-    "examples": 145,
-    "booted": 140,
+    "examples": 146,
+    "booted": 141,
     "devToolsPagesServed": 5,
-    "lifecycle": 50
+    "lifecycle": 52
   },
   "artifactBytes": {
     "engineCopySha256_16": "05f7eb14b1014d5d",
     "liveBundleSha256_16": "05f7eb14b1014d5d",
     "identical": true
   },
-  "total": 216,
-  "pass": 216,
+  "total": 219,
+  "pass": 219,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -56,7 +56,7 @@
     {
       "id": "artifact:thumbnails-all",
       "ok": true,
-      "detail": "140/140 thumbnails reachable"
+      "detail": "141/141 thumbnails reachable"
     },
     {
       "id": "artifact:devtools-page-served:automation",
@@ -86,12 +86,12 @@
     {
       "id": "gallery:list-rendered",
       "ok": true,
-      "detail": "links=145 expected=145"
+      "detail": "links=146 expected=146"
     },
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:54758/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:50307/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -929,6 +929,11 @@
       "detail": "booted via /skinned-animation/"
     },
     {
+      "id": "lifecycle:skinned-animation",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:starter",
       "ok": true,
       "detail": "booted via /starter/"
@@ -971,7 +976,7 @@
     {
       "id": "lifecycle:texture-basic",
       "ok": true,
-      "detail": "held=5 leaked=0 reloaded=true"
+      "detail": "held=8 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:texture2d-ops",
@@ -1017,6 +1022,16 @@
       "id": "lifecycle:tween-basic",
       "ok": true,
       "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
+      "id": "example-boot:ui-api-lifecycle",
+      "ok": true,
+      "detail": "booted via /ui-api-lifecycle/"
+    },
+    {
+      "id": "lifecycle:ui-api-lifecycle",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:ui-asset-loading",
@@ -1076,12 +1091,12 @@
     {
       "id": "artifact:all-boottable-examples",
       "ok": true,
-      "detail": "140/140 booted under nested mount"
+      "detail": "141/141 booted under nested mount"
     },
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "50 §25 合同示例在部署物内完成释放核对"
+      "detail": "52 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",

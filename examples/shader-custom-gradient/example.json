@@ -21,7 +21,18 @@
   },
   "api": {
     "primary": ["EffectAsset.onLoaded", "Material.initialize", "Material.setProperty"],
-    "supporting": ["EffectAsset.get", "EffectAsset.remove", "utils.createMesh"],
+    "supporting": [
+      "EffectAsset.get",
+      "EffectAsset.remove",
+      "utils.createMesh",
+      "EffectAsset.register",
+      "EffectAsset.getAll",
+      "EffectAsset.techniques",
+      "EffectAsset.combinations",
+      "EffectAsset.hideInEditor",
+      "EffectAsset.constructor",
+      "EffectAsset.initDefault"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -48,7 +59,14 @@
       "input",
       "Input",
       "director",
-      "isValid"
+      "isValid",
+      "EffectAsset.register",
+      "EffectAsset.getAll",
+      "EffectAsset.techniques",
+      "EffectAsset.combinations",
+      "EffectAsset.hideInEditor",
+      "EffectAsset.constructor",
+      "EffectAsset.initDefault"
     ],
     "forbiddenShortcut": [
       "以内建 effect 改名冒充用户自写 Shader（片元源码必须本例手写并真实参与编译）",
@@ -67,55 +85,55 @@
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L197"
+        "sourceLocation": "L216"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L198"
+        "sourceLocation": "L217"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L199"
+        "sourceLocation": "L218"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L200"
+        "sourceLocation": "L219"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L214"
+        "sourceLocation": "L233"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L216"
+        "sourceLocation": "L235"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L201"
+        "sourceLocation": "L220"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L208"
+        "sourceLocation": "L227"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L200"
+        "sourceLocation": "L219"
       },
       {
         "api": "math.Color",
@@ -145,13 +163,13 @@
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L217"
+        "sourceLocation": "L236"
       },
       {
         "api": "primitives.plane",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L218"
+        "sourceLocation": "L237"
       },
       {
         "api": "EffectAsset",
@@ -169,19 +187,19 @@
         "api": "EffectAsset.get",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L182"
+        "sourceLocation": "L201"
       },
       {
         "api": "EffectAsset.remove",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L308"
+        "sourceLocation": "L327"
       },
       {
         "api": "EffectAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L305"
+        "sourceLocation": "L200"
       },
       {
         "api": "EffectAsset.shaders",
@@ -193,13 +211,13 @@
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L286"
+        "sourceLocation": "L305"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L286"
+        "sourceLocation": "L305"
       },
       {
         "api": "director",
@@ -211,7 +229,49 @@
         "api": "isValid",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L341"
+        "sourceLocation": "L360"
+      },
+      {
+        "api": "EffectAsset.register",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L182"
+      },
+      {
+        "api": "EffectAsset.getAll",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L183"
+      },
+      {
+        "api": "EffectAsset.techniques",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L188"
+      },
+      {
+        "api": "EffectAsset.combinations",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L189"
+      },
+      {
+        "api": "EffectAsset.hideInEditor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L190"
+      },
+      {
+        "api": "EffectAsset.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L186"
+      },
+      {
+        "api": "EffectAsset.initDefault",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L194"
       }
     ]
   },
@@ -255,26 +315,26 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 200,
+            "line": 219,
             "text": "cameraNode.setPosition(new Vec3(0, 0, 5));"
           }
         ]
       },
       "GradientQuad": {
         "position": [0, 0, 0],
-        "rotationEuler": [90, 0, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 213,
+            "line": 232,
             "text": "quad.setPosition(new Vec3(0, 0, 0));"
           },
           {
             "source": "src/main.ts",
-            "line": 214,
+            "line": 233,
             "text": "quad.setRotationFromEuler(90, 0, 0);"
           }
-        ]
+        ],
+        "rotationEuler": [90, 0, 0]
       }
     },
     "material-property": {
@@ -287,7 +347,7 @@
             "tolerance": 0.01,
             "provenance": {
               "source": "src/main.ts",
-              "line": 317,
+              "line": 336,
               "text": "material.setProperty('colorA', new Color(40, 220, 90, 255));"
             }
           },
@@ -306,11 +366,11 @@
     }
   },
   "promotion": {
-    "spec": "b96b45bc2180",
-    "source": "35462f213c12decb",
+    "spec": "b433fdcd5f3f",
+    "source": "4cab0849e36df44f",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 26,
+    "verified": 33,
     "attested": 0,
-    "units": 26
+    "units": 33
   }
 }

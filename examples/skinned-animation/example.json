@@ -7,13 +7,54 @@
   "requiresDevTools": false,
   "title": "Skinned Animation",
   "category": "animation",
-  "apiClaims": ["SkinnedMeshRenderer", "SkeletalAnimation", "AnimationClip"],
+  "apiClaims": [
+    "SkinnedMeshRenderer",
+    "SkeletalAnimation",
+    "AnimationClip",
+    "SkeletalAnimation.Socket",
+    "SkeletalAnimation.sockets",
+    "SkeletalAnimation.useBakedAnimation",
+    "SkeletalAnimation.onLoad",
+    "SkeletalAnimation.onDestroy",
+    "SkeletalAnimation.onEnable",
+    "SkeletalAnimation.onDisable",
+    "SkeletalAnimation.start",
+    "SkeletalAnimation.pause",
+    "SkeletalAnimation.resume",
+    "SkeletalAnimation.stop",
+    "SkeletalAnimation.querySockets",
+    "SkeletalAnimation.rebuildSocketAnimations",
+    "SkeletalAnimation.createSocket",
+    "Skeleton",
+    "Skeleton.constructor",
+    "Skeleton.joints",
+    "Skeleton.bindposes",
+    "Skeleton.inverseBindposes",
+    "Skeleton.hash",
+    "Skeleton.destroy",
+    "Skeleton.validate",
+    "SkinnedMeshRenderer.skeleton",
+    "SkinnedMeshRenderer.skinningRoot",
+    "SkinnedMeshRenderer.model",
+    "SkinnedMeshRenderer.constructor",
+    "SkinnedMeshRenderer.onLoad",
+    "SkinnedMeshRenderer.onDestroy",
+    "SkinnedMeshRenderer.uploadAnimation",
+    "SkinnedMeshRenderer.setSharedMaterial",
+    "SkinnedMeshUnit",
+    "SkinnedMeshUnit.mesh",
+    "SkinnedMeshUnit.skeleton",
+    "SkinnedMeshUnit.material",
+    "SkinnedMeshUnit.offset",
+    "SkinnedMeshUnit.size",
+    "SkinnedMeshUnit.copyFrom"
+  ],
   "capabilities": ["animation", "skeleton"],
   "validation": {
     "functional": ["node-exists", "animation-playing", "no-runtime-error", "material-property", "transform-equals"],
     "interaction": [],
     "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": [],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "specStatus": "frozen",
@@ -31,7 +72,48 @@
   },
   "api": {
     "primary": ["buildSkeletonTree", "SkinnedMeshRenderer"],
-    "supporting": ["restoreBindPose", "Component"],
+    "supporting": [
+      "restoreBindPose",
+      "Component",
+      "SkeletalAnimation",
+      "SkeletalAnimation.Socket",
+      "SkeletalAnimation.sockets",
+      "SkeletalAnimation.useBakedAnimation",
+      "SkeletalAnimation.onLoad",
+      "SkeletalAnimation.onDestroy",
+      "SkeletalAnimation.onEnable",
+      "SkeletalAnimation.onDisable",
+      "SkeletalAnimation.start",
+      "SkeletalAnimation.pause",
+      "SkeletalAnimation.resume",
+      "SkeletalAnimation.stop",
+      "SkeletalAnimation.querySockets",
+      "SkeletalAnimation.rebuildSocketAnimations",
+      "SkeletalAnimation.createSocket",
+      "Skeleton",
+      "Skeleton.constructor",
+      "Skeleton.joints",
+      "Skeleton.bindposes",
+      "Skeleton.inverseBindposes",
+      "Skeleton.hash",
+      "Skeleton.destroy",
+      "Skeleton.validate",
+      "SkinnedMeshRenderer.skeleton",
+      "SkinnedMeshRenderer.skinningRoot",
+      "SkinnedMeshRenderer.model",
+      "SkinnedMeshRenderer.constructor",
+      "SkinnedMeshRenderer.onLoad",
+      "SkinnedMeshRenderer.onDestroy",
+      "SkinnedMeshRenderer.uploadAnimation",
+      "SkinnedMeshRenderer.setSharedMaterial",
+      "SkinnedMeshUnit",
+      "SkinnedMeshUnit.mesh",
+      "SkinnedMeshUnit.skeleton",
+      "SkinnedMeshUnit.material",
+      "SkinnedMeshUnit.offset",
+      "SkinnedMeshUnit.size",
+      "SkinnedMeshUnit.copyFrom"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -48,7 +130,45 @@
       "Material.initialize",
       "Node.addChild",
       "Node.setPosition",
-      "Node.setRotationFromEuler"
+      "Node.setRotationFromEuler",
+      "SkeletalAnimation",
+      "SkeletalAnimation.Socket",
+      "SkeletalAnimation.sockets",
+      "SkeletalAnimation.useBakedAnimation",
+      "SkeletalAnimation.onLoad",
+      "SkeletalAnimation.onDestroy",
+      "SkeletalAnimation.onEnable",
+      "SkeletalAnimation.onDisable",
+      "SkeletalAnimation.start",
+      "SkeletalAnimation.pause",
+      "SkeletalAnimation.resume",
+      "SkeletalAnimation.stop",
+      "SkeletalAnimation.querySockets",
+      "SkeletalAnimation.rebuildSocketAnimations",
+      "SkeletalAnimation.createSocket",
+      "Skeleton",
+      "Skeleton.constructor",
+      "Skeleton.joints",
+      "Skeleton.bindposes",
+      "Skeleton.inverseBindposes",
+      "Skeleton.hash",
+      "Skeleton.destroy",
+      "Skeleton.validate",
+      "SkinnedMeshRenderer.skeleton",
+      "SkinnedMeshRenderer.skinningRoot",
+      "SkinnedMeshRenderer.model",
+      "SkinnedMeshRenderer.constructor",
+      "SkinnedMeshRenderer.onLoad",
+      "SkinnedMeshRenderer.onDestroy",
+      "SkinnedMeshRenderer.uploadAnimation",
+      "SkinnedMeshRenderer.setSharedMaterial",
+      "SkinnedMeshUnit",
+      "SkinnedMeshUnit.mesh",
+      "SkinnedMeshUnit.skeleton",
+      "SkinnedMeshUnit.material",
+      "SkinnedMeshUnit.offset",
+      "SkinnedMeshUnit.size",
+      "SkinnedMeshUnit.copyFrom"
     ],
     "forbiddenShortcut": ["用整体旋转网格冒充蒙皮变形（顶点必须随关节移动）"],
     "evidence": [
@@ -56,19 +176,19 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L36"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L193"
+        "sourceLocation": "L234"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L151"
+        "sourceLocation": "L160"
       },
       {
         "api": "Camera",
@@ -80,73 +200,301 @@
         "api": "SkinnedMeshRenderer",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L180"
+        "sourceLocation": "L210"
       },
       {
         "api": "Mesh",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L121"
+        "sourceLocation": "L127"
       },
       {
         "api": "Material",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L185"
+        "sourceLocation": "L216"
       },
       {
         "api": "Component",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L166"
+        "sourceLocation": "L175"
       },
       {
         "api": "buildSkeletonTree",
         "source": "main.js",
         "validator": "animation-playing",
-        "sourceLocation": "L177"
+        "sourceLocation": "L195"
       },
       {
         "api": "restoreBindPose",
         "source": "main.js",
         "validator": "animation-playing",
-        "sourceLocation": "L200"
+        "sourceLocation": "L273"
       },
       {
         "api": "frameObject",
         "source": "main.js",
         "validator": "transform-equals",
-        "sourceLocation": "L202"
+        "sourceLocation": "L275"
       },
       {
         "api": "math.Color",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L187"
+        "sourceLocation": "L218"
       },
       {
         "api": "Material.initialize",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L186"
+        "sourceLocation": "L217"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L154"
+        "sourceLocation": "L163"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L155"
+        "sourceLocation": "L164"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L170"
+        "sourceLocation": "L179"
+      },
+      {
+        "api": "SkeletalAnimation",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L340"
+      },
+      {
+        "api": "SkeletalAnimation.Socket",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L340"
+      },
+      {
+        "api": "SkeletalAnimation.sockets",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L351"
+      },
+      {
+        "api": "SkeletalAnimation.useBakedAnimation",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L338"
+      },
+      {
+        "api": "SkeletalAnimation.onLoad",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L185"
+      },
+      {
+        "api": "SkeletalAnimation.onDestroy",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L188"
+      },
+      {
+        "api": "SkeletalAnimation.onEnable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L242"
+      },
+      {
+        "api": "SkeletalAnimation.onDisable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L245"
+      },
+      {
+        "api": "SkeletalAnimation.start",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L239"
+      },
+      {
+        "api": "SkeletalAnimation.pause",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L344"
+      },
+      {
+        "api": "SkeletalAnimation.resume",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L345"
+      },
+      {
+        "api": "SkeletalAnimation.stop",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L346"
+      },
+      {
+        "api": "SkeletalAnimation.querySockets",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L341"
+      },
+      {
+        "api": "SkeletalAnimation.rebuildSocketAnimations",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L343"
+      },
+      {
+        "api": "SkeletalAnimation.createSocket",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L342"
+      },
+      {
+        "api": "Skeleton",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L196"
+      },
+      {
+        "api": "Skeleton.constructor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L200"
+      },
+      {
+        "api": "Skeleton.joints",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L64"
+      },
+      {
+        "api": "Skeleton.bindposes",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L198"
+      },
+      {
+        "api": "Skeleton.inverseBindposes",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L203"
+      },
+      {
+        "api": "Skeleton.hash",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L204"
+      },
+      {
+        "api": "Skeleton.destroy",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L207"
+      },
+      {
+        "api": "Skeleton.validate",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L205"
+      },
+      {
+        "api": "SkinnedMeshRenderer.skeleton",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L228"
+      },
+      {
+        "api": "SkinnedMeshRenderer.skinningRoot",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L213"
+      },
+      {
+        "api": "SkinnedMeshRenderer.model",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L214"
+      },
+      {
+        "api": "SkinnedMeshRenderer.constructor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L200"
+      },
+      {
+        "api": "SkinnedMeshRenderer.onLoad",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L185"
+      },
+      {
+        "api": "SkinnedMeshRenderer.onDestroy",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L188"
+      },
+      {
+        "api": "SkinnedMeshRenderer.uploadAnimation",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L220"
+      },
+      {
+        "api": "SkinnedMeshRenderer.setSharedMaterial",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L262"
+      },
+      {
+        "api": "SkinnedMeshUnit",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L221"
+      },
+      {
+        "api": "SkinnedMeshUnit.mesh",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L227"
+      },
+      {
+        "api": "SkinnedMeshUnit.skeleton",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L228"
+      },
+      {
+        "api": "SkinnedMeshUnit.material",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L219"
+      },
+      {
+        "api": "SkinnedMeshUnit.offset",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L230"
+      },
+      {
+        "api": "SkinnedMeshUnit.size",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L231"
+      },
+      {
+        "api": "SkinnedMeshUnit.copyFrom",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L224"
       }
     ]
   },
@@ -177,7 +525,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 195,
+            "line": 268,
             "text": "position 默认值 [0,8,0]（示例显式传入）"
           }
         ],
@@ -190,7 +538,7 @@
         "provenance": [
           {
             "source": "main.js",
-            "line": 151,
+            "line": 160,
             "text": "new Node(...) 之后未赋局部变换，合同为引擎默认 identity"
           }
         ]
@@ -206,7 +554,7 @@
             "tolerance": 0.002,
             "provenance": {
               "source": "main.js",
-              "line": 187,
+              "line": 218,
               "text": "new Color(240, 160, 40, 255)"
             }
           }
@@ -218,16 +566,16 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, armature);）",
-        "line": "L202"
+        "line": "L275"
       }
     }
   },
   "promotion": {
-    "spec": "b05a5b26c639",
-    "source": "efb9ef263634cf5c",
+    "spec": "01fa4e3a9f64",
+    "source": "a454e3685141457c",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 16,
+    "verified": 54,
     "attested": 0,
-    "units": 16
+    "units": 54
   }
 }

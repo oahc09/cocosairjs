@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T19:59:19.117Z",
-  "revision": "716f794",
+  "generatedAt": "2026-09-27T21:39:17.624Z",
+  "revision": "9befc6d",
   "examples": [
     {
       "dir": "anim-position",
@@ -14909,7 +14909,14 @@
         "supporting": [
           "EffectAsset.get",
           "EffectAsset.remove",
-          "utils.createMesh"
+          "utils.createMesh",
+          "EffectAsset.register",
+          "EffectAsset.getAll",
+          "EffectAsset.techniques",
+          "EffectAsset.combinations",
+          "EffectAsset.hideInEditor",
+          "EffectAsset.constructor",
+          "EffectAsset.initDefault"
         ],
         "claims": [
           "createAirApp",
@@ -14937,7 +14944,14 @@
           "input",
           "Input",
           "director",
-          "isValid"
+          "isValid",
+          "EffectAsset.register",
+          "EffectAsset.getAll",
+          "EffectAsset.techniques",
+          "EffectAsset.combinations",
+          "EffectAsset.hideInEditor",
+          "EffectAsset.constructor",
+          "EffectAsset.initDefault"
         ]
       },
       "capabilities": [
@@ -14985,12 +14999,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "b96b45bc2180",
-        "source": "35462f213c12decb",
+        "spec": "b433fdcd5f3f",
+        "source": "4cab0849e36df44f",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 26,
+        "verified": 33,
         "attested": 0,
-        "units": 26
+        "units": 33
       }
     },
     {
@@ -15141,7 +15155,45 @@
         ],
         "supporting": [
           "restoreBindPose",
-          "Component"
+          "Component",
+          "SkeletalAnimation",
+          "SkeletalAnimation.Socket",
+          "SkeletalAnimation.sockets",
+          "SkeletalAnimation.useBakedAnimation",
+          "SkeletalAnimation.onLoad",
+          "SkeletalAnimation.onDestroy",
+          "SkeletalAnimation.onEnable",
+          "SkeletalAnimation.onDisable",
+          "SkeletalAnimation.start",
+          "SkeletalAnimation.pause",
+          "SkeletalAnimation.resume",
+          "SkeletalAnimation.stop",
+          "SkeletalAnimation.querySockets",
+          "SkeletalAnimation.rebuildSocketAnimations",
+          "SkeletalAnimation.createSocket",
+          "Skeleton",
+          "Skeleton.constructor",
+          "Skeleton.joints",
+          "Skeleton.bindposes",
+          "Skeleton.inverseBindposes",
+          "Skeleton.hash",
+          "Skeleton.destroy",
+          "Skeleton.validate",
+          "SkinnedMeshRenderer.skeleton",
+          "SkinnedMeshRenderer.skinningRoot",
+          "SkinnedMeshRenderer.model",
+          "SkinnedMeshRenderer.constructor",
+          "SkinnedMeshRenderer.onLoad",
+          "SkinnedMeshRenderer.onDestroy",
+          "SkinnedMeshRenderer.uploadAnimation",
+          "SkinnedMeshRenderer.setSharedMaterial",
+          "SkinnedMeshUnit",
+          "SkinnedMeshUnit.mesh",
+          "SkinnedMeshUnit.skeleton",
+          "SkinnedMeshUnit.material",
+          "SkinnedMeshUnit.offset",
+          "SkinnedMeshUnit.size",
+          "SkinnedMeshUnit.copyFrom"
         ],
         "claims": [
           "createAirApp",
@@ -15159,7 +15211,45 @@
           "Material.initialize",
           "Node.addChild",
           "Node.setPosition",
-          "Node.setRotationFromEuler"
+          "Node.setRotationFromEuler",
+          "SkeletalAnimation",
+          "SkeletalAnimation.Socket",
+          "SkeletalAnimation.sockets",
+          "SkeletalAnimation.useBakedAnimation",
+          "SkeletalAnimation.onLoad",
+          "SkeletalAnimation.onDestroy",
+          "SkeletalAnimation.onEnable",
+          "SkeletalAnimation.onDisable",
+          "SkeletalAnimation.start",
+          "SkeletalAnimation.pause",
+          "SkeletalAnimation.resume",
+          "SkeletalAnimation.stop",
+          "SkeletalAnimation.querySockets",
+          "SkeletalAnimation.rebuildSocketAnimations",
+          "SkeletalAnimation.createSocket",
+          "Skeleton",
+          "Skeleton.constructor",
+          "Skeleton.joints",
+          "Skeleton.bindposes",
+          "Skeleton.inverseBindposes",
+          "Skeleton.hash",
+          "Skeleton.destroy",
+          "Skeleton.validate",
+          "SkinnedMeshRenderer.skeleton",
+          "SkinnedMeshRenderer.skinningRoot",
+          "SkinnedMeshRenderer.model",
+          "SkinnedMeshRenderer.constructor",
+          "SkinnedMeshRenderer.onLoad",
+          "SkinnedMeshRenderer.onDestroy",
+          "SkinnedMeshRenderer.uploadAnimation",
+          "SkinnedMeshRenderer.setSharedMaterial",
+          "SkinnedMeshUnit",
+          "SkinnedMeshUnit.mesh",
+          "SkinnedMeshUnit.skeleton",
+          "SkinnedMeshUnit.material",
+          "SkinnedMeshUnit.offset",
+          "SkinnedMeshUnit.size",
+          "SkinnedMeshUnit.copyFrom"
         ]
       },
       "capabilities": [
@@ -15196,16 +15286,18 @@
           "visible-frame",
           "frame-diff"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
       "promotion": {
-        "spec": "b05a5b26c639",
-        "source": "efb9ef263634cf5c",
+        "spec": "01fa4e3a9f64",
+        "source": "a454e3685141457c",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 16,
+        "verified": 54,
         "attested": 0,
-        "units": 16
+        "units": 54
       }
     },
     {
@@ -15659,7 +15751,22 @@
         ],
         "supporting": [
           "Material.initialize",
-          "Material.setProperty"
+          "Material.setProperty",
+          "TextureCube",
+          "TextureCube.FaceIndex",
+          "TextureCube.isRGBE",
+          "TextureCube.constructor",
+          "TextureCube.mipmaps",
+          "TextureCube.mipmapAtlas",
+          "TextureCube.isUsingOfflineMipmaps",
+          "TextureCube.image",
+          "TextureCube.fromTexture2DArray",
+          "TextureCube.onLoaded",
+          "TextureCube.reset",
+          "TextureCube.updateMipmaps",
+          "TextureCube.destroy",
+          "TextureCube.initDefault",
+          "TextureCube.validate"
         ],
         "claims": [
           "createAirApp",
@@ -15686,7 +15793,22 @@
           "Mesh.destroy",
           "Material.destroy",
           "Texture2D.destroy",
-          "isValid"
+          "isValid",
+          "TextureCube",
+          "TextureCube.FaceIndex",
+          "TextureCube.isRGBE",
+          "TextureCube.constructor",
+          "TextureCube.mipmaps",
+          "TextureCube.mipmapAtlas",
+          "TextureCube.isUsingOfflineMipmaps",
+          "TextureCube.image",
+          "TextureCube.fromTexture2DArray",
+          "TextureCube.onLoaded",
+          "TextureCube.reset",
+          "TextureCube.updateMipmaps",
+          "TextureCube.destroy",
+          "TextureCube.initDefault",
+          "TextureCube.validate"
         ]
       },
       "capabilities": [
@@ -15726,12 +15848,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f412ce14bc94",
-        "source": "0bcebbb30e15ca1d",
+        "spec": "95ed047131ee",
+        "source": "f3342765dca75676",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 25,
+        "verified": 40,
         "attested": 0,
-        "units": 25
+        "units": 40
       }
     },
     {
@@ -16387,6 +16509,111 @@
         "verified": 59,
         "attested": 0,
         "units": 59
+      }
+    },
+    {
+      "dir": "ui-api-lifecycle",
+      "id": "ui-api-lifecycle",
+      "version": "1.0.0",
+      "title": "Widget and UI Renderer Lifecycle",
+      "category": "ui",
+      "status": "stable",
+      "specStatus": "frozen",
+      "requiresDevTools": false,
+      "learning": {
+        "goal": "使用 Widget 约束 UI 节点的视口边距，并理解 UI 渲染组件的生命周期。",
+        "points": [
+          "Widget 的 AlignMode 与 editor-only 边距读取会保留布局值。",
+          "UIRenderer、Sprite 和 Label 的资源清理由组件生命周期触发。"
+        ]
+      },
+      "effect": {
+        "functional": "场景包含 Canvas、UICamera 与标题 Label；Widget 设置左右/上方边距并使用 ON_WINDOW_RESIZE。屏幕外的临时组件在真实帧后创建与销毁，用来核对 Widget/UIRenderer/Sprite/Label 生命周期。",
+        "visual": "深色画面中央上方显示浅蓝标题“Widget and UI lifecycle”，背景由 WebGL 相机清屏。"
+      },
+      "api": {
+        "primary": [
+          "Widget.AlignMode",
+          "UIRenderer"
+        ],
+        "supporting": [
+          "Widget.editorTop",
+          "Widget.editorBottom",
+          "Widget.editorLeft",
+          "Widget.editorRight",
+          "Widget.editorHorizontalCenter",
+          "Widget.editorVerticalCenter",
+          "Widget.AlignMode",
+          "Widget.onEnable",
+          "Widget.onDisable",
+          "Widget.onDestroy",
+          "UIRenderer",
+          "UIRenderer.constructor",
+          "UIRenderer.onRestore",
+          "UIRenderer.onDestroy",
+          "UIRenderer.destroyRenderData",
+          "Sprite.onDestroy",
+          "Label.onDestroy"
+        ],
+        "claims": [
+          "Widget.editorTop",
+          "Widget.editorBottom",
+          "Widget.editorLeft",
+          "Widget.editorRight",
+          "Widget.editorHorizontalCenter",
+          "Widget.editorVerticalCenter",
+          "Widget.AlignMode",
+          "Widget.onEnable",
+          "Widget.onDisable",
+          "Widget.onDestroy",
+          "UIRenderer",
+          "UIRenderer.constructor",
+          "UIRenderer.onRestore",
+          "UIRenderer.onDestroy",
+          "UIRenderer.destroyRenderData",
+          "Sprite.onDestroy",
+          "Label.onDestroy"
+        ]
+      },
+      "capabilities": [],
+      "scene": {
+        "expectedGraph": {
+          "nodes": [
+            "Canvas",
+            "UICamera",
+            "TitleLabel"
+          ]
+        }
+      },
+      "interaction": {
+        "steps": []
+      },
+      "ready": {
+        "validators": [
+          "scene-ready"
+        ]
+      },
+      "validation": {
+        "functional": [
+          "node-exists",
+          "no-runtime-error"
+        ],
+        "interaction": [],
+        "visual": [
+          "visible-frame"
+        ],
+        "lifecycle": [
+          "resource-released"
+        ],
+        "capability": []
+      },
+      "promotion": {
+        "spec": "fb73abcb354f",
+        "source": "59231c951d6a22fd",
+        "candidate": "7f3b89f6ac076cbf",
+        "verified": 17,
+        "attested": 0,
+        "units": 17
       }
     },
     {
@@ -17435,7 +17662,8 @@
       "ui-components",
       "ui-layout",
       "webview-basic",
-      "ui-asset-loading"
+      "ui-asset-loading",
+      "ui-api-lifecycle"
     ],
     "physics-2d": [
       "physics-2d-basic",

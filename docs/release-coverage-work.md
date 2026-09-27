@@ -101,3 +101,11 @@ Wave 14 adds 30 verified Important units with 0 removals: 29 animation/tween API
 The canonical V1.1 run passed 140/140 (1 promoted, 0 demoted), with 4,053 verified, 66 attested, and 0 unproven API/example bindings. Strict specification validation passed 145/145 frozen; compliance remains 0 fail / 1 documented Draco warning. The refreshed DevTools chain passed 5/5, Gallery passed 216/216 with 50 lifecycle contracts, and the V1.2 matrix remains 39/39. Typecheck, Prettier, test inventory, API trace self-test, and documentation checks are run for this wave.
 
 Important is 195/272 (71.7%), with 77 unverified units still needing proof or an explicit status. Core stays at 963/963; Advanced stays at 149/3,130 with 2,981 uncovered. Release remains NOT READY. The next wave targets skinned/skeletal runtime, UI Widget/renderer lifecycle, cube textures, and remaining EffectAsset APIs.
+
+### 2026-09-28 Wave 15 — Skeletal, UI, and texture resource APIs
+
+Wave 15 adds 77 verified Important units with 0 removals: SkeletalAnimation/Skeleton/SkinnedMeshRenderer/SkinnedMeshUnit 38, Widget/UIRenderer/Sprite/Label 17, TextureCube 15, and EffectAsset 7. The work extends `skinned-animation`, `texture-basic`, and `shader-custom-gradient`, and adds the focused `ui-api-lifecycle` Gallery example. Important is now 272/272 (100%); its unverified unstated count is 0.
+
+The canonical V1.1 run passed 141/141 with 0 promotions, 0 demotions, 4,130 verified, 66 attested, and 0 unproven API/example bindings. DevTools passed 5/5; Gallery passed 219/219 with 52 lifecycle contracts. Strict spec validation passed 146/146 frozen and compliance remains 0 fail / 1 documented Draco warning. Test inventory is 32 suites / 265 tests; typecheck, Prettier, API trace self-test, file-map, web-only, documentation references, and the unchanged V1.2 matrix (39/39) passed.
+
+Core is 963/963. Advanced remains 149/3,130 (4.8%) with 2,981 uncovered units, making it the only release-gate area left. Release is NOT READY until Advanced reaches 2,504/3,130 and all remaining units receive valid proof or permitted documented-only disposition. Keep all coverage thresholds unchanged.
