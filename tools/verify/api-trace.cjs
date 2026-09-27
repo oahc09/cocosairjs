@@ -239,6 +239,10 @@ function generateTraceModule(exportNames, units, realUrl) {
   };
   T.instrumentReturnedInstance = (value) => {
     if (!value || typeof value !== 'object') { return value; }
+    if (Array.isArray(value)) {
+      for (const entry of value) { T.instrumentReturnedInstance(entry); }
+      return value;
+    }
     const prototype = Object.getPrototypeOf(value);
     const ctor = prototype && prototype.constructor;
     if (ctor && T.instanceDataNames.has(ctor.name)) { T.instrumentInstanceData(value, ctor, ctor.name); }
@@ -295,7 +299,19 @@ function generateTraceModule(exportNames, units, realUrl) {
       },
       apply (target, thisArg, args) { hit(key); return T.instrumentResult(Reflect.apply(target, thisArg, args), key); },
       get (target, prop) {
-        if (typeof prop === 'string') { T.reads[key] = (T.reads[key] || 0) + 1; }
+        if (typeof prop === 'string') {
+          T.reads[key] = (T.reads[key] || 0) + 1;
+          const memberKey = key + '.' + prop;
+          if (
+            __UNITS.includes(memberKey) &&
+            (__KINDS[memberKey] === 'property' || __KINDS[memberKey] === 'constant') &&
+            T.mechanism[memberKey] === 'unresolved' &&
+            Object.getOwnPropertyDescriptor(target, prop)
+          ) {
+            T.mechanism[memberKey] = 'data-property';
+            recordRead(memberKey);
+          }
+        }
         // 引擎 Node._findComponent 对 @sealed 类走 "comp.constructor === ctor" 身份比较：
         // Proxy 与原类不是同一对象 ⇒ 插桩页里 getComponent(UITransform)/getComponents(Layout) 假报 null
         // （实测真页面 1 个组件、插桩页 0 个，示例还会因此重复 addComponent）。
@@ -371,7 +387,7 @@ function generateTraceModule(exportNames, units, realUrl) {
           if (value && typeof value === 'object') {
             const prototype = Object.getPrototypeOf(value);
             if (prototype && typeof prototype.constructor === 'function') {
-              T.instrumentInstanceData(value, prototype.constructor);
+              T.instrumentReturnedInstance(value);
             }
           }
           return value;
@@ -533,7 +549,7 @@ function generateTraceModule(exportNames, units, realUrl) {
       done = staticDone || T.patchOwn(host.prototype, leaf, unit, 'prototype');
       if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
       const owner = __PARENTS[unit];
-      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera' || owner === 'MeshRenderer' || owner === 'Scene' || owner === 'Mesh' || owner === 'GLTFAsset');
+      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera' || owner === 'MeshRenderer' || owner === 'Scene' || owner === 'Mesh' || owner === 'GLTFAsset' || owner === 'Animation' || owner === 'AnimationClip' || owner === 'EffectAsset');
       if (!done && __KINDS[unit] === 'property' && ownDataOwner) {
         T.registerInstanceData(host, leaf, unit);
         T.mechanism[unit] = 'instance-data';
@@ -805,14 +821,33 @@ if (require.main === module) {
         if (!/directEntries && directEntries\.length/.test(code)) {
             throw new Error('selftest: empty constructor registry must fall through to the owner hint');
         }
+        if (
+            !/Array\.isArray\(value\)/.test(code) ||
+            !/for \(const entry of value\) \{ T\.instrumentReturnedInstance\(entry\); \}/.test(code)
+        ) {
+            throw new Error('selftest: returned arrays must instrument tracked instance fields on their elements');
+        }
         if (!/owner === 'Scene'.*owner === 'Mesh'/.test(code)) {
             throw new Error('selftest: Scene and Mesh data-property owners missing');
         }
         if (!/owner === 'GLTFAsset'/.test(code)) {
             throw new Error('selftest: GLTFAsset own data-property owner missing');
         }
+        for (const owner of ['Animation', 'AnimationClip', 'EffectAsset']) {
+            if (!new RegExp(`owner === '${owner}'`).test(code)) {
+                throw new Error(`selftest: ${owner} own data-property owner missing`);
+            }
+        }
         if (!/T\.reads\[key\]/.test(code)) {
             throw new Error('selftest: read trap missing from generated wrapper');
+        }
+        if (
+            !/__KINDS\[memberKey\] === 'property'/.test(code) ||
+            !/Object\.getOwnPropertyDescriptor\(target, prop\)/.test(code)
+        ) {
+            throw new Error(
+                'selftest: runtime-added static data properties must be observable after class initialization',
+            );
         }
         if (!/T\.snapshot = \(\)/.test(code)) {
             throw new Error('selftest: snapshot() projection missing from generated wrapper');

@@ -194,19 +194,19 @@
         "api": "Animation.getState",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L267"
+        "sourceLocation": "L272"
       },
       {
         "api": "Animation.pause",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L287"
+        "sourceLocation": "L292"
       },
       {
         "api": "Animation.resume",
         "source": "src/main.ts",
         "validator": "animation-playing",
-        "sourceLocation": "L296"
+        "sourceLocation": "L301"
       },
       {
         "api": "AnimationClip",
@@ -254,7 +254,7 @@
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L342"
+        "sourceLocation": "L347"
       },
       {
         "api": "GLTFAsset.owned",
@@ -326,13 +326,13 @@
         "api": "input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L306"
+        "sourceLocation": "L311"
       },
       {
         "api": "Input",
         "source": "src/main.ts",
         "validator": "frame-diff",
-        "sourceLocation": "L306"
+        "sourceLocation": "L311"
       },
       {
         "api": "EventTouch.getLocation",
@@ -490,11 +490,11 @@
     }
   },
   "promotion": {
-    "spec": "f21a20179694",
-    "source": "201da8ea96b81111",
+    "spec": "1e712e56bb86",
+    "source": "a6f36b8c7acce1c3",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 44,
-    "attested": 1,
+    "verified": 45,
+    "attested": 0,
     "units": 45
   }
 }

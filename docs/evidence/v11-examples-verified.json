@@ -1,13 +1,13 @@
 {
-  "measuredAt": "2026-09-27T19:00:45.220Z",
+  "measuredAt": "2026-09-27T19:51:21.431Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "browser": "chromium",
   "mode": "spec-driven-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
   "candidateFingerprint": "7f3b89f6ac076cbf",
   "apiProofTotals": {
-    "verified": 4020,
-    "attested": 72,
+    "verified": 4053,
+    "attested": 66,
     "unproven": 0
   },
   "total": 140,
@@ -21,15 +21,15 @@
     {
       "id": "anim-position",
       "result": "PASS",
-      "specFingerprint": "286a91e18a35",
-      "sourceFingerprint": "1ecac36f4796a553",
+      "specFingerprint": "113419aed33a",
+      "sourceFingerprint": "9630b2703491c62c",
       "candidateFingerprint": "7f3b89f6ac076cbf",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 49,
-        "bytes": 57689,
-        "hash": "00bcd897ea1ffaf3",
+        "unitCount": 68,
+        "bytes": 61102,
+        "hash": "f151be289e1fe208",
         "notes": [
           "Animation.addClip: no own descriptor on static",
           "Animation.clips: no own descriptor on static",
@@ -39,6 +39,10 @@
           "Animation.getState: no own descriptor on static",
           "Animation.off: no own descriptor on static",
           "Animation.on: no own descriptor on static",
+          "Animation.onDestroy: no own descriptor on static",
+          "Animation.onDisable: no own descriptor on static",
+          "Animation.onEnable: no own descriptor on static",
+          "Animation.onLoad: no own descriptor on static",
           "Animation.once: no own descriptor on static",
           "Animation.pause: no own descriptor on static",
           "Animation.play: no own descriptor on static",
@@ -47,28 +51,29 @@
           "Animation.removeClip: no own descriptor on static",
           "Animation.removeState: no own descriptor on static",
           "Animation.resume: no own descriptor on static",
+          "Animation.start: no own descriptor on static",
           "Animation.stop: no own descriptor on static",
+          "AnimationClip.addAuxiliaryCurve_experimental: no own descriptor on static",
           "AnimationClip.addTrack: no own descriptor on static",
+          "AnimationClip.auxiliaryCurveCount_experimental: no own descriptor on static",
           "AnimationClip.clearTracks: no own descriptor on static",
           "AnimationClip.destroy: no own descriptor on static",
           "AnimationClip.duration: no own descriptor on static",
           "AnimationClip.events: no own descriptor on static",
+          "AnimationClip.getAuxiliaryCurveNames_experimental: no own descriptor on static",
+          "AnimationClip.getAuxiliaryCurve_experimental: no own descriptor on static",
           "AnimationClip.getTrack: no own descriptor on static",
+          "AnimationClip.hasAuxiliaryCurve_experimental: no own descriptor on static",
           "AnimationClip.hasEvents: no own descriptor on static",
           "AnimationClip.hash: no own descriptor on static",
+          "AnimationClip.isAdditive_experimental: no own descriptor on static",
+          "AnimationClip.onLoaded: no own descriptor on static",
           "AnimationClip.range: no own descriptor on static",
-          "AnimationClip.removeTrack: no own descriptor on static",
-          "AnimationClip.tracks: no own descriptor on static",
-          "AnimationClip.tracksCount: no own descriptor on static",
-          "AnimationClip.wrapMode: no own descriptor on static",
-          "AnimationClip.wrapMode: no own descriptor on prototype",
-          "Material.initialize: no own descriptor on static",
-          "Material.setProperty: no own descriptor on static",
-          "Node.addChild: no own descriptor on static",
-          "Node.setPosition: no own descriptor on static"
+          "AnimationClip.removeAuxiliaryCurve_experimental: no own descriptor on static",
+          "AnimationClip.removeTrack: no own descriptor on static"
         ],
-        "observed": 47,
-        "total": 49
+        "observed": 68,
+        "total": 68
       },
       "apiProof": [
         {
@@ -76,9 +81,26 @@
           "proof": "verified",
           "state": "executed",
           "calls": 2,
-          "reads": 37,
+          "reads": 42,
           "via": "call",
           "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.EventType",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 3,
+          "via": "read",
+          "mechanism": "data-property",
           "bound": true,
           "bindings": [
             {
@@ -225,6 +247,74 @@
           ]
         },
         {
+          "api": "Animation.onDestroy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.onDisable",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.onEnable",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.onLoad",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "Animation.once",
           "proof": "verified",
           "state": "executed",
@@ -277,12 +367,12 @@
         },
         {
           "api": "Animation.playOnLoad",
-          "proof": "attested",
-          "state": "unresolved",
+          "proof": "verified",
+          "state": "executed",
           "calls": 0,
-          "reads": 0,
-          "via": null,
-          "mechanism": "unresolved",
+          "reads": 4,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
@@ -344,6 +434,23 @@
           ]
         },
         {
+          "api": "Animation.start",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "Animation.stop",
           "proof": "verified",
           "state": "executed",
@@ -365,9 +472,43 @@
           "proof": "verified",
           "state": "executed",
           "calls": 3,
-          "reads": 4,
+          "reads": 6,
           "via": "call",
           "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.WrapMode",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 3,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.addAuxiliaryCurve_experimental",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
           "bound": true,
           "bindings": [
             {
@@ -381,7 +522,24 @@
           "api": "AnimationClip.addTrack",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.auxiliaryCurveCount_experimental",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -430,10 +588,27 @@
           ]
         },
         {
+          "api": "AnimationClip.createWithSpriteFrames",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "AnimationClip.destroy",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 3,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -450,7 +625,7 @@
           "api": "AnimationClip.duration",
           "proof": "verified",
           "state": "executed",
-          "calls": 32,
+          "calls": 34,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -467,7 +642,41 @@
           "api": "AnimationClip.events",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.getAuxiliaryCurveNames_experimental",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.getAuxiliaryCurve_experimental",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -485,6 +694,23 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.hasAuxiliaryCurve_experimental",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -532,7 +758,58 @@
           ]
         },
         {
+          "api": "AnimationClip.isAdditive_experimental",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.onLoaded",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "AnimationClip.range",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.removeAuxiliaryCurve_experimental",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
@@ -566,6 +843,57 @@
           ]
         },
         {
+          "api": "AnimationClip.renameAuxiliaryCurve_experimental",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.sample",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 9,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.speed",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 7,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "AnimationClip.tracks",
           "proof": "verified",
           "state": "executed",
@@ -586,7 +914,7 @@
           "api": "AnimationClip.tracksCount",
           "proof": "verified",
           "state": "executed",
-          "calls": 3,
+          "calls": 4,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -601,12 +929,12 @@
         },
         {
           "api": "AnimationClip.wrapMode",
-          "proof": "attested",
-          "state": "unresolved",
+          "proof": "verified",
+          "state": "executed",
           "calls": 0,
-          "reads": 0,
-          "via": null,
-          "mechanism": "unresolved",
+          "reads": 7,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
@@ -790,7 +1118,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 295,
+          "calls": 288,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -982,12 +1310,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0608"
+          "detail": "litRatio=0.0615"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0622 assetUnits=8"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0617 assetUnits=8"
         }
       ],
       "scenarioProbe": {
@@ -996,6 +1324,36 @@
         "checks": [
           {
             "name": "clip-constructor-shape",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-metadata",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-additive-default",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-sprite-frames",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-auxiliary-curve-readback",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-auxiliary-curve-rename",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-auxiliary-curve-remove",
             "ok": true,
             "detail": ""
           },
@@ -1045,6 +1403,21 @@
             "detail": ""
           },
           {
+            "name": "animation-play-on-load",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "animation-on-disable",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "animation-on-enable",
+            "ok": true,
+            "detail": ""
+          },
+          {
             "name": "add-get-state",
             "ok": true,
             "detail": ""
@@ -1060,9 +1433,14 @@
             "detail": ""
           },
           {
+            "name": "animation-load-start-hooks",
+            "ok": true,
+            "detail": "{\"onLoad\":1,\"start\":1,\"onEnable\":2,\"onDisable\":1,\"onDestroy\":0}"
+          },
+          {
             "name": "play-and-events",
             "ok": true,
-            "detail": "x=0.5416666666666667 events=1/1"
+            "detail": "x=0.5786666666716338 events=1/1"
           },
           {
             "name": "pause",
@@ -1094,8 +1472,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 6834,
-        "hash": "496f36fe487eb47a"
+        "bytes": 7049,
+        "hash": "1f2eb35f77b6834b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1111,8 +1489,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 54519,
-        "hash": "ed2a339c131bfaf5",
+        "bytes": 55151,
+        "hash": "7502764aa2d90973",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1315,7 +1693,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 226,
+          "calls": 224,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1505,15 +1883,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0423"
+          "detail": "litRatio=0.0381"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 7503,
-        "hash": "f7497f18a4eba020"
+        "bytes": 7206,
+        "hash": "182407f6d41496e1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1529,8 +1907,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 55322,
-        "hash": "21c1ec07ccd9a08e",
+        "bytes": 55954,
+        "hash": "640d669324fd3a9a",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioClip.validate: no own descriptor on static",
@@ -1570,7 +1948,7 @@
           "api": "AudioClip.getDuration",
           "proof": "verified",
           "state": "executed",
-          "calls": 303,
+          "calls": 306,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1791,7 +2169,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 910,
+          "calls": 918,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -2118,8 +2496,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/audio-basic.png",
-        "bytes": 19505,
-        "hash": "7b5b290d519909e4"
+        "bytes": 19507,
+        "hash": "0aa9e6f73e47427e"
       },
       "assetDigests": [
         {
@@ -2143,8 +2521,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54979,
-        "hash": "150745e0c34e5ac0",
+        "bytes": 55611,
+        "hash": "6df501cdabbb3112",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2599,8 +2977,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 13,
-        "bytes": 54002,
-        "hash": "404fcfa3137dd234",
+        "bytes": 54634,
+        "hash": "24242fd9c0d55594",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static"
@@ -2942,8 +3320,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55205,
-        "hash": "a15efa94117f4be9",
+        "bytes": 55837,
+        "hash": "26fc13acffd61e38",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3270,7 +3648,7 @@
           "api": "renderer.scene.Camera.getClipSpaceMinz",
           "proof": "verified",
           "state": "executed",
-          "calls": 156,
+          "calls": 155,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -3401,8 +3779,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54572,
-        "hash": "c35613a52d14226f",
+        "bytes": 55204,
+        "hash": "93f364cdbfbf8c18",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3837,8 +4215,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54660,
-        "hash": "917b3659b91885f7",
+        "bytes": 55292,
+        "hash": "1b0edac593c2bd17",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -4273,8 +4651,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54560,
-        "hash": "7d6ee1ade1937e0a",
+        "bytes": 55192,
+        "hash": "eb6c6e7df56e60a5",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -4709,8 +5087,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54887,
-        "hash": "e65605a4e338ad53",
+        "bytes": 55519,
+        "hash": "6c56cc10927844bf",
         "notes": [
           "Camera.screenPointToRay: no own descriptor on static",
           "Camera.screenToWorld: no own descriptor on static",
@@ -5168,8 +5546,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 54772,
-        "hash": "b11082b2e8db2419",
+        "bytes": 55404,
+        "hash": "f39e11ace086dd9e",
         "notes": [
           "Camera.screenToWorld: no own descriptor on static",
           "Camera.worldToScreen: no own descriptor on static",
@@ -5609,8 +5987,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 54,
-        "bytes": 58088,
-        "hash": "a7e41e0b792bf5ea",
+        "bytes": 58720,
+        "hash": "01165e654656678d",
         "notes": [
           "Camera.aperture: no own descriptor on static",
           "Camera.camera: no own descriptor on static",
@@ -6825,8 +7203,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 37,
-        "bytes": 56096,
-        "hash": "f3e23a927f317f43",
+        "bytes": 56728,
+        "hash": "e57fba6020bd055e",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioSource.play: no own descriptor on static",
@@ -7157,7 +7535,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 2205,
+          "calls": 2655,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7174,7 +7552,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 1221,
+          "calls": 1471,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7362,7 +7740,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 2396,
+          "calls": 2846,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -7653,8 +8031,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/collector-dodge.png",
-        "bytes": 13921,
-        "hash": "c0369d380395468c"
+        "bytes": 13888,
+        "hash": "6148fbb0599f0a6c"
       },
       "assetDigests": [
         {
@@ -7678,8 +8056,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 54894,
-        "hash": "619a0e4c23601106",
+        "bytes": 55526,
+        "hash": "1314760b38e74c93",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -8117,8 +8495,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 26,
-        "bytes": 55897,
-        "hash": "62774359b7353232",
+        "bytes": 56529,
+        "hash": "21a95c4fd031179c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -8658,8 +9036,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 55431,
-        "hash": "8431d2f90cfe309d",
+        "bytes": 56063,
+        "hash": "7cba3d85c3c7bc39",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioSource.play: no own descriptor on static",
@@ -9347,8 +9725,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/contra-action.png",
-        "bytes": 11236,
-        "hash": "b68d557eac7c4b74"
+        "bytes": 11231,
+        "hash": "6a2760df33461084"
       },
       "assetDigests": [
         {
@@ -9372,8 +9750,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54716,
-        "hash": "0ff32090f061f371",
+        "bytes": 55348,
+        "hash": "72e12a45722c5c42",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -9795,8 +10173,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 46,
-        "bytes": 59025,
-        "hash": "31560c2053c7ef77",
+        "bytes": 59657,
+        "hash": "c5d686fd348b0f0c",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -10178,7 +10556,7 @@
           "api": "dragonBones.Armature.advanceTime",
           "proof": "verified",
           "state": "executed",
-          "calls": 336,
+          "calls": 335,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10212,7 +10590,7 @@
           "api": "dragonBones.Armature.getBones",
           "proof": "verified",
           "state": "executed",
-          "calls": 356,
+          "calls": 355,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10365,7 +10743,7 @@
           "api": "dragonBones.ArmatureDisplay.isAnimationCached",
           "proof": "verified",
           "state": "executed",
-          "calls": 943,
+          "calls": 940,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10737,8 +11115,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/dragonbones-basic.png",
-        "bytes": 15966,
-        "hash": "8bfefd2c5d71437e"
+        "bytes": 15967,
+        "hash": "31a52f19614c6359"
       },
       "assetDigests": [
         {
@@ -10776,8 +11154,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 55834,
-        "hash": "7e00047d3840f981",
+        "bytes": 56466,
+        "hash": "415646c9ddabfacd",
         "notes": [
           "GLTFAsset.animations: no own descriptor on static",
           "GLTFAsset.document: no own descriptor on static",
@@ -11453,8 +11831,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 17,
-        "bytes": 54437,
-        "hash": "33328f7850fdedd6",
+        "bytes": 55069,
+        "hash": "d62e51ee23dc81e2",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -11913,8 +12291,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 15,
-        "bytes": 54231,
-        "hash": "d375743f9655b20b",
+        "bytes": 54863,
+        "hash": "c1c844df7e10d15c",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -12297,8 +12675,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 14,
-        "bytes": 54165,
-        "hash": "473733145fc41ede",
+        "bytes": 54797,
+        "hash": "f0fa8120fa8b0c8f",
         "notes": [
           "GLTFLoader.getExtensionSupport: no own descriptor on static",
           "GLTFLoader.parseAsync: no own descriptor on static",
@@ -12664,8 +13042,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 29,
-        "bytes": 56123,
-        "hash": "9f05474b57e2ecec",
+        "bytes": 56755,
+        "hash": "307fd18ca554f375",
         "notes": [
           "GLTFExtensionRegistry.createHandlers: no own descriptor on static",
           "GLTFExtensionRegistry.register: no own descriptor on static",
@@ -13301,8 +13679,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 54859,
-        "hash": "06e7ebffbb0eef41",
+        "bytes": 55491,
+        "hash": "04c419c608cfcf5c",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -13787,8 +14165,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 54728,
-        "hash": "c539629ef9e4fb70",
+        "bytes": 55360,
+        "hash": "a9b94a6bbe5561e8",
         "notes": [
           "Animation.play: no own descriptor on static",
           "GLTFAsset.destroy: no own descriptor on static",
@@ -14227,12 +14605,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1752"
+          "detail": "litRatio=0.1755"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.2373 assetUnits=8"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.2374 assetUnits=8"
         }
       ],
       "scenarioProbe": null,
@@ -14246,8 +14624,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-morph.png",
-        "bytes": 7119,
-        "hash": "422d638758b6585d"
+        "bytes": 7097,
+        "hash": "b588cb74a917eed2"
       },
       "assetDigests": [
         {
@@ -14278,8 +14656,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54866,
-        "hash": "965debf9c74c6168",
+        "bytes": 55498,
+        "hash": "568030056d3919c5",
         "notes": [
           "Animation.play: no own descriptor on static",
           "GLTFAsset.destroy: no own descriptor on static",
@@ -14741,7 +15119,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1906 assetUnits=11"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1913 assetUnits=11"
         }
       ],
       "scenarioProbe": null,
@@ -14803,8 +15181,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-skin.png",
-        "bytes": 17556,
-        "hash": "bea7c3e5bf17d268"
+        "bytes": 17506,
+        "hash": "8411cba27204dc87"
       },
       "assetDigests": [
         {
@@ -14863,8 +15241,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 12,
-        "bytes": 53934,
-        "hash": "ed8358c063410af5",
+        "bytes": 54566,
+        "hash": "f0dc4dfd36b3c275",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
@@ -15613,8 +15991,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 17,
-        "bytes": 54380,
-        "hash": "bbc508c7b105dc44",
+        "bytes": 55012,
+        "hash": "40ae3e00c0c1a27c",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -15987,15 +16365,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0456"
+          "detail": "litRatio=0.0455"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 7688,
-        "hash": "fba301c608c2e1c1"
+        "bytes": 7742,
+        "hash": "dc8d16738681ce59"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16011,8 +16389,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 15,
-        "bytes": 54106,
-        "hash": "a2d3bc61c0e5075f",
+        "bytes": 54738,
+        "hash": "1945b09b2120bfd2",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -16162,7 +16540,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 8,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16365,8 +16743,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/input.png",
-        "bytes": 14869,
-        "hash": "5f45504b420365f3"
+        "bytes": 19398,
+        "hash": "72b61ed21503c42c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16382,8 +16760,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 55499,
-        "hash": "61e1daeb3c6c3235",
+        "bytes": 56131,
+        "hash": "a4f1da8691cbc5ca",
         "notes": [
           "Input.getAllTouches: no own descriptor on static",
           "Input.getTouch: no own descriptor on static",
@@ -16966,8 +17344,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 54630,
-        "hash": "c75604e8552bafed",
+        "bytes": 55262,
+        "hash": "7f444d725e36d2ec",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -17187,7 +17565,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 289,
+          "calls": 288,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17424,8 +17802,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 26,
-        "bytes": 55306,
-        "hash": "4b159ad7b055a4b0",
+        "bytes": 55938,
+        "hash": "a32fbd96fe1e88cb",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -17965,8 +18343,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55449,
-        "hash": "b6e3e88ba71d53c2",
+        "bytes": 56081,
+        "hash": "8914e445df7cc72a",
         "notes": [
           "Light.onLoad: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
@@ -18311,7 +18689,7 @@
           "api": "renderer.scene.DirectionalLight.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 155,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -18459,8 +18837,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 24,
-        "bytes": 55085,
-        "hash": "edcebb1874943bbd",
+        "bytes": 55717,
+        "hash": "c747e6af352d2cb4",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -18991,8 +19369,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 43178,
-        "hash": "9e10993769c29d41"
+        "bytes": 43232,
+        "hash": "4912ba3db5aceecb"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19008,8 +19386,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55284,
-        "hash": "f8e503424c6b1396",
+        "bytes": 55916,
+        "hash": "7974fb9d698591bb",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -19217,7 +19595,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 220,
+          "calls": 228,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19576,8 +19954,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 32382,
-        "hash": "fcead332870f5f86"
+        "bytes": 32525,
+        "hash": "6be322747f23f306"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19593,8 +19971,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 45,
-        "bytes": 57107,
-        "hash": "4d1b669aba2933ca",
+        "bytes": 57739,
+        "hash": "df82b5a79ae5da19",
         "notes": [
           "Light.baked: no own descriptor on static",
           "Light.color: no own descriptor on static",
@@ -20040,7 +20418,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 231,
+          "calls": 229,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -20465,12 +20843,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.5357"
+          "detail": "litRatio=0.5354"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.5462 assetUnits=9"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.5465 assetUnits=9"
         }
       ],
       "scenarioProbe": {
@@ -20607,8 +20985,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 15370,
-        "hash": "5e0de1520390629c"
+        "bytes": 15642,
+        "hash": "46550c0dd06bc35a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -20624,8 +21002,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 37,
-        "bytes": 57305,
-        "hash": "4305bd0c5955ef66",
+        "bytes": 57937,
+        "hash": "3edaa471fc3e83a0",
         "notes": [
           "DirectionalLight.csmAdvancedOptions: no own descriptor on static",
           "DirectionalLight.csmLayerLambda: no own descriptor on static",
@@ -21480,8 +21858,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 54810,
-        "hash": "143e5c27e1ae88dd",
+        "bytes": 55442,
+        "hash": "f87c3d98d21f4c62",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -22074,8 +22452,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 14,
-        "bytes": 54142,
-        "hash": "7f52c6a3b4730207",
+        "bytes": 54774,
+        "hash": "f4378e3ab157f528",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -22415,8 +22793,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 54326,
-        "hash": "64a83eb301f8dc48",
+        "bytes": 54958,
+        "hash": "842ed1451a261263",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -22792,8 +23170,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55004,
-        "hash": "9705621325dd5aa6",
+        "bytes": 55636,
+        "hash": "456967f48595bc65",
         "notes": [
           "Material.initDefault: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
@@ -23287,8 +23665,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 55779,
-        "hash": "455c232d6034511d",
+        "bytes": 56411,
+        "hash": "dbab8fb23dc2dfb0",
         "notes": [
           "Material.copy: no own descriptor on static",
           "Material.effectAsset: no own descriptor on static",
@@ -23932,8 +24310,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 54996,
-        "hash": "7d6341d0bda0c654",
+        "bytes": 55628,
+        "hash": "cd7356df470dca1f",
         "notes": [
           "GLTFAsset.instantiate: no own descriptor on static",
           "GLTFLoader.parseAsync: no own descriptor on static",
@@ -24428,8 +24806,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 54289,
-        "hash": "3f023d6fc16a6b35",
+        "bytes": 54921,
+        "hash": "0a3e1f8e33a05f20",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -24579,7 +24957,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 399,
+          "calls": 395,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -24780,15 +25158,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1124"
+          "detail": "litRatio=0.1116"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 9730,
-        "hash": "aa1a7025f3a533ed"
+        "bytes": 9717,
+        "hash": "ebb277aba88443d8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -24804,8 +25182,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55157,
-        "hash": "67bc3d2c76b9ddb6",
+        "bytes": 55789,
+        "hash": "72674c715c55331d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -25334,8 +25712,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56206,
-        "hash": "89c1209005a8142c",
+        "bytes": 56838,
+        "hash": "c31d4ae59abca371",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -26045,8 +26423,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54820,
-        "hash": "0a3714046479ad49",
+        "bytes": 55452,
+        "hash": "0f3f67bd34b22fad",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -26501,8 +26879,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54847,
-        "hash": "fc618a389f67c2a4",
+        "bytes": 55479,
+        "hash": "cbdf9f7181554b43",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -26957,8 +27335,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55225,
-        "hash": "72d58c2fc72f46af",
+        "bytes": 55857,
+        "hash": "d3ca160eee3cbb26",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -27484,8 +27862,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 62,
-        "bytes": 58782,
-        "hash": "cc80e269f9d6fa2e",
+        "bytes": 59414,
+        "hash": "4527893a4d432a0b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -28685,8 +29063,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54792,
-        "hash": "b8235d6719e5ba8f",
+        "bytes": 55424,
+        "hash": "2793a240b8fd261f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -29144,8 +29522,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54647,
-        "hash": "f57bfa62a19fef63",
+        "bytes": 55279,
+        "hash": "aba5c04cc4537f33",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -29567,8 +29945,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 54912,
-        "hash": "58ee71bd3e99265c",
+        "bytes": 55544,
+        "hash": "144eecc963fd2415",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -30042,8 +30420,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 61,
-        "bytes": 59313,
-        "hash": "411214ba4071746f",
+        "bytes": 59945,
+        "hash": "4c8ae8cc89126ba7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -31260,8 +31638,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 55316,
-        "hash": "dc4e38d908cec983",
+        "bytes": 55948,
+        "hash": "b6dfafb12a586d9c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -31854,8 +32232,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 55581,
-        "hash": "8e50db891ed26d82",
+        "bytes": 56213,
+        "hash": "4171e08486bc0876",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -32499,8 +32877,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55033,
-        "hash": "a762e5f5d02dd756",
+        "bytes": 55665,
+        "hash": "7a881949147f8a8b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -32989,8 +33367,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 85,
-        "bytes": 61553,
-        "hash": "72b161a0b634aa1b",
+        "bytes": 62185,
+        "hash": "3166b43114e5e85e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -33640,7 +34018,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1052,
+          "reads": 1058,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33657,7 +34035,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1052,
+          "reads": 1058,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33674,7 +34052,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1048,
+          "reads": 1054,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33691,7 +34069,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1050,
+          "reads": 1056,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33708,7 +34086,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1048,
+          "reads": 1054,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33725,7 +34103,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1048,
+          "reads": 1054,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33742,7 +34120,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1038,
+          "reads": 1044,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33759,7 +34137,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1034,
+          "reads": 1040,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -33776,7 +34154,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1034,
+          "reads": 1040,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34658,8 +35036,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 24,
-        "bytes": 55156,
-        "hash": "07946467c267cc42",
+        "bytes": 55788,
+        "hash": "5403600b93741bdb",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -35166,8 +35544,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 55530,
-        "hash": "bdbe3ebb7845f6a3",
+        "bytes": 56162,
+        "hash": "c1eab36212d3208e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -35790,8 +36168,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 57,
-        "bytes": 58532,
-        "hash": "92657f8921fe5fc3",
+        "bytes": 59164,
+        "hash": "529013f6d3c35848",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -36899,8 +37277,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 54962,
-        "hash": "75cb6bb28b07cb4f",
+        "bytes": 55594,
+        "hash": "970f93eb33021f0e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -37398,8 +37776,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55271,
-        "hash": "ee57a9e602edd8fd",
+        "bytes": 55903,
+        "hash": "51a50fc82396c0ad",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -37923,8 +38301,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 33,
-        "bytes": 55847,
-        "hash": "aa387c500b970b5a",
+        "bytes": 56479,
+        "hash": "540e1665da783b12",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -38594,8 +38972,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 54517,
-        "hash": "46264c005d8b0a99",
+        "bytes": 55149,
+        "hash": "c6c8134989379349",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -38999,8 +39377,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 35,
-        "bytes": 56059,
-        "hash": "c6abf70e6bad48a5",
+        "bytes": 56691,
+        "hash": "e07d5e90db722ce6",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -39707,8 +40085,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 35,
-        "bytes": 56299,
-        "hash": "b08c81fb5038eafa",
+        "bytes": 56931,
+        "hash": "a383a3422424fee9",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -40433,8 +40811,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 47,
-        "bytes": 57244,
-        "hash": "213e68d42fa94c5a",
+        "bytes": 57876,
+        "hash": "7405dd3e82e11a7b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -41341,8 +41719,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 32,
-        "bytes": 55886,
-        "hash": "1ab8ce070a91e90f",
+        "bytes": 56518,
+        "hash": "b24a5be20da0a29b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -42009,8 +42387,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55037,
-        "hash": "098a38dcd695ff60",
+        "bytes": 55669,
+        "hash": "3c14f809328af348",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -42500,8 +42878,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 69,
-        "bytes": 59764,
-        "hash": "46ab5e30e99d26e6",
+        "bytes": 60396,
+        "hash": "6f3e33d0c2a22169",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -43862,8 +44240,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54824,
-        "hash": "225eeed7050ab513",
+        "bytes": 55456,
+        "hash": "f82967a67ad81a3c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -44323,8 +44701,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 29,
-        "bytes": 55583,
-        "hash": "e7a20c8870725d00",
+        "bytes": 56215,
+        "hash": "2cda08d399a13a6d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -44924,8 +45302,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 27,
-        "bytes": 55361,
-        "hash": "28e100ce1ad032b0",
+        "bytes": 55993,
+        "hash": "d868b583256f6014",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -45486,8 +45864,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54645,
-        "hash": "a9c3eabdfb66d762",
+        "bytes": 55277,
+        "hash": "6a57d8a91fd6969f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -45909,8 +46287,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 54990,
-        "hash": "7ba84ec36664e40e",
+        "bytes": 55622,
+        "hash": "7e2f78cb9940b0cd",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -46218,7 +46596,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 143,
+          "calls": 139,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -46400,8 +46778,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 44,
-        "bytes": 57488,
-        "hash": "5ad6ca749cc4b2d9",
+        "bytes": 58120,
+        "hash": "b59363fb01c32b2e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -47104,7 +47482,7 @@
           "api": "math.Vec3.subtract",
           "proof": "verified",
           "state": "executed",
-          "calls": 168,
+          "calls": 181,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -47332,8 +47710,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 54870,
-        "hash": "17cb32894ffd39c2",
+        "bytes": 55502,
+        "hash": "e359f8f56cd8b0bc",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -47812,8 +48190,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 55667,
-        "hash": "e85953ed33f18761",
+        "bytes": 56299,
+        "hash": "f809b13435406384",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -48432,8 +48810,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 70,
-        "bytes": 59413,
-        "hash": "0c49f368e8ec4326",
+        "bytes": 60045,
+        "hash": "26718115050131fb",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -49824,7 +50202,7 @@
           {
             "name": "Vec3.random",
             "ok": true,
-            "detail": "0.7376214942210546,-0.6778828176425366,1.7310082081862332"
+            "detail": "0.7584238100992354,0.7898227863797546,-1.6736108539292758"
           },
           {
             "name": "Vec3.transformMat4Normal",
@@ -49948,8 +50326,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54638,
-        "hash": "e59cf814ca5fc3f3",
+        "bytes": 55270,
+        "hash": "e135b479fb13a4cd",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -50371,8 +50749,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 76,
-        "bytes": 60517,
-        "hash": "aff47f2dee869933",
+        "bytes": 61149,
+        "hash": "23d8675ac20ae34c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -51400,7 +51778,7 @@
           "api": "math.Vec4.prototype.set",
           "proof": "verified",
           "state": "executed",
-          "calls": 163,
+          "calls": 150,
           "reads": 0,
           "via": "call",
           "mechanism": "namespace-member",
@@ -51849,8 +52227,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 54962,
-        "hash": "41b9e47e05a69051",
+        "bytes": 55594,
+        "hash": "3b0c0af84426abde",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -52348,8 +52726,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 55740,
-        "hash": "014bd97359aefcfe",
+        "bytes": 56372,
+        "hash": "0de7a305d3032ddd",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -52962,8 +53340,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55047,
-        "hash": "4d11d2bfaef0f7ea",
+        "bytes": 55679,
+        "hash": "a53e55f34334d1c1",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -53457,8 +53835,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 54539,
-        "hash": "a6c5051f768bca2c",
+        "bytes": 55171,
+        "hash": "40349e1fe7027419",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -53661,7 +54039,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 198,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -53852,8 +54230,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
-        "bytes": 10809,
-        "hash": "8047f1500d5ff8b9"
+        "bytes": 10808,
+        "hash": "49eb36f20acccaf0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -53869,8 +54247,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 37,
-        "bytes": 56399,
-        "hash": "86dd44901fde39bf",
+        "bytes": 57031,
+        "hash": "5b11742a953be3bc",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -54623,8 +55001,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 54963,
-        "hash": "0152aba7af18bdbb",
+        "bytes": 55595,
+        "hash": "ec90baafdb6cfc66",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -55101,8 +55479,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 54363,
-        "hash": "982abef8330c5b89",
+        "bytes": 54995,
+        "hash": "8582b22e0cfa7319",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -55492,8 +55870,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54612,
-        "hash": "476e0b581b0c562e",
+        "bytes": 55244,
+        "hash": "8692a5b7df45b970",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -55696,7 +56074,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 200,
+          "calls": 198,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -55904,8 +56282,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 16860,
-        "hash": "503f448e177f35a0"
+        "bytes": 16779,
+        "hash": "50e8cc491a97fd98"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -55921,8 +56299,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54756,
-        "hash": "c9db20a23a354582",
+        "bytes": 55388,
+        "hash": "f316ae2d1a7b4784",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -56377,8 +56755,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 54531,
-        "hash": "83b404c53b5fa80e",
+        "bytes": 55163,
+        "hash": "b2deba1f9439052f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -56581,7 +56959,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 200,
+          "calls": 198,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56772,8 +57150,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 17329,
-        "hash": "0ef4a75840239138"
+        "bytes": 17223,
+        "hash": "4c2a0d7f3a06ead0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -56789,8 +57167,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 54527,
-        "hash": "1b2b2a9ddac08ff3",
+        "bytes": 55159,
+        "hash": "66b74dd9b2ec7452",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -56993,7 +57371,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 176,
+          "calls": 197,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57177,15 +57555,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0414"
+          "detail": "litRatio=0.0427"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 16977,
-        "hash": "bbf5329c289b9af3"
+        "bytes": 17642,
+        "hash": "aa948991cacfa206"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -57201,8 +57579,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 50,
-        "bytes": 59071,
-        "hash": "9118f7a41731fcf8",
+        "bytes": 59703,
+        "hash": "97ebfe7c06a0c32e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -58321,15 +58699,15 @@
     {
       "id": "model-character-interaction",
       "result": "PASS",
-      "specFingerprint": "f21a20179694",
-      "sourceFingerprint": "201da8ea96b81111",
+      "specFingerprint": "1e712e56bb86",
+      "sourceFingerprint": "a6f36b8c7acce1c3",
       "candidateFingerprint": "7f3b89f6ac076cbf",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 45,
-        "bytes": 57331,
-        "hash": "d64adffc7ec5a3ac",
+        "bytes": 57963,
+        "hash": "d9080f62afe09a99",
         "notes": [
           "Animation.getState: no own descriptor on static",
           "Animation.pause: no own descriptor on static",
@@ -58362,7 +58740,7 @@
           "Node.walk: no own descriptor on static",
           "Renderer.setSharedMaterial: no own descriptor on static"
         ],
-        "observed": 44,
+        "observed": 45,
         "total": 45
       },
       "apiProof": [
@@ -58387,7 +58765,7 @@
           "api": "Animation.getState",
           "proof": "verified",
           "state": "executed",
-          "calls": 9,
+          "calls": 8,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -58456,7 +58834,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 7,
+          "reads": 9,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -58470,12 +58848,12 @@
         },
         {
           "api": "AnimationClip.wrapMode",
-          "proof": "attested",
-          "state": "unresolved",
+          "proof": "verified",
+          "state": "executed",
           "calls": 0,
-          "reads": 0,
-          "via": null,
-          "mechanism": "unresolved",
+          "reads": 3,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
@@ -59243,24 +59621,29 @@
             "detail": "animA=true animB=true"
           },
           {
+            "name": "clip-wrap-mode-readback",
+            "ok": true,
+            "detail": "both instances use Loop wrap mode"
+          },
+          {
             "name": "animation-clock-started",
             "ok": true,
-            "detail": "tA=0.245（8s 内动画时钟未起步）"
+            "detail": "tA=0.226（8s 内动画时钟未起步）"
           },
           {
             "name": "independent-animation-clocks",
             "ok": true,
-            "detail": "tA=0.616 tB=1.723 ratio=2.80"
+            "detail": "tA=0.598 tB=1.649 ratio=2.76"
           },
           {
             "name": "pause-freezes-time",
             "ok": true,
-            "detail": "paused=1.723 after320ms=1.723"
+            "detail": "paused=1.649 after320ms=1.649"
           },
           {
             "name": "resume-advances-time",
             "ok": true,
-            "detail": "still=1.723 resumed=2.390"
+            "detail": "still=1.649 resumed=2.284"
           },
           {
             "name": "instanceB-disposed",
@@ -59270,7 +59653,7 @@
           {
             "name": "charA-unaffected-by-B-release",
             "ok": true,
-            "detail": "tA 1.512 → 1.928"
+            "detail": "tA 1.475 → 1.893"
           }
         ],
         "state": {
@@ -59288,8 +59671,8 @@
           },
           "timeline": {
             "clipName": "animation_0",
-            "tA": 1.9284999999999999,
-            "tB": 2.389799999997019,
+            "tA": 1.893199999999255,
+            "tB": 2.2836000000014907,
             "charBValid": false,
             "charAValid": true,
             "clicks": 0
@@ -59360,8 +59743,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/model-character-interaction.png",
-        "bytes": 9583,
-        "hash": "b1a781160ed5b85a"
+        "bytes": 9618,
+        "hash": "5a8506ce8d1ac71a"
       },
       "assetDigests": [
         {
@@ -59420,8 +59803,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 54519,
-        "hash": "ed2a339c131bfaf5",
+        "bytes": 55151,
+        "hash": "7502764aa2d90973",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -59834,8 +60217,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 24,
-        "bytes": 55123,
-        "hash": "45f98bee50903357",
+        "bytes": 55755,
+        "hash": "18100134fa3c6c47",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -60354,8 +60737,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54847,
-        "hash": "cd1f566504c39f1d",
+        "bytes": 55479,
+        "hash": "60241aea237b76f7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -60813,8 +61196,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 33,
-        "bytes": 55718,
-        "hash": "cb2851513f7d9869",
+        "bytes": 56350,
+        "hash": "b46043bc7b7085d5",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -61488,8 +61871,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 81,
-        "bytes": 59982,
-        "hash": "e59f46ee61b561cf",
+        "bytes": 60614,
+        "hash": "2c0b78cc2c6d731d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -61848,7 +62231,7 @@
           "api": "Node.clearNodeArray",
           "proof": "verified",
           "state": "executed",
-          "calls": 126,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -61882,7 +62265,7 @@
           "api": "Node.eulerAngles",
           "proof": "verified",
           "state": "executed",
-          "calls": 127,
+          "calls": 157,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62104,7 +62487,7 @@
           "api": "Node.hasChangedFlags",
           "proof": "verified",
           "state": "executed",
-          "calls": 1445,
+          "calls": 1775,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62121,7 +62504,7 @@
           "api": "Node.invalidateChildren",
           "proof": "verified",
           "state": "executed",
-          "calls": 157,
+          "calls": 187,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62189,7 +62572,7 @@
           "api": "Node.layer",
           "proof": "verified",
           "state": "executed",
-          "calls": 760,
+          "calls": 940,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62310,7 +62693,7 @@
           "api": "Node.resetHasChangedFlags",
           "proof": "verified",
           "state": "executed",
-          "calls": 126,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -62413,7 +62796,7 @@
           "api": "Node.scene",
           "proof": "verified",
           "state": "executed",
-          "calls": 523,
+          "calls": 643,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62481,7 +62864,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 126,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62617,7 +63000,7 @@
           "api": "Node.updateWorldTransform",
           "proof": "verified",
           "state": "executed",
-          "calls": 535,
+          "calls": 655,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62651,7 +63034,7 @@
           "api": "Node.worldMatrix",
           "proof": "verified",
           "state": "executed",
-          "calls": 128,
+          "calls": 158,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62988,7 +63371,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0124"
+          "detail": "litRatio=0.0129"
         }
       ],
       "scenarioProbe": {
@@ -63098,7 +63481,7 @@
           {
             "name": "node-read:Node.uuid",
             "ok": true,
-            "detail": "string:Node.147"
+            "detail": "string:Node.271"
           },
           {
             "name": "node-read:Node.children",
@@ -63270,8 +63653,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 5754,
-        "hash": "107e19fe4f2623f8"
+        "bytes": 5940,
+        "hash": "d523badc2a7128ef"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -63287,8 +63670,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54858,
-        "hash": "e934354f040343da",
+        "bytes": 55490,
+        "hash": "b9cbe5c853520cef",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -63746,8 +64129,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54594,
-        "hash": "4749a7b77d7709a9",
+        "bytes": 55226,
+        "hash": "3b02fc57974b01ce",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -64154,15 +64537,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0579"
+          "detail": "litRatio=0.0595"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 8264,
-        "hash": "9dbccf4bee5268b8"
+        "bytes": 8086,
+        "hash": "9ef2c1dc73139de8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -64178,8 +64561,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 54626,
-        "hash": "08aa378a0425b6cb",
+        "bytes": 55258,
+        "hash": "92e107d3c0c28c6b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -64602,8 +64985,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 34,
-        "bytes": 56197,
-        "hash": "0f6efeb40674a7ba",
+        "bytes": 56829,
+        "hash": "c6850d178ba3e895",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -65301,8 +65684,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/particle-2d-basic.png",
-        "bytes": 38640,
-        "hash": "e414becd77b16e79"
+        "bytes": 39037,
+        "hash": "dbd6aefbcfc3bfc2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -65318,8 +65701,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56109,
-        "hash": "da8f05ef0d68e4b1",
+        "bytes": 56741,
+        "hash": "46149ce2a3a53da9",
         "notes": [
           "Collider2D.TYPE: no own descriptor on static",
           "Collider2D.TYPE: no own descriptor on prototype",
@@ -65411,7 +65794,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 561,
+          "reads": 513,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -65633,7 +66016,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 936,
+          "reads": 856,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -65649,7 +66032,7 @@
           "api": "PhysicsSystem2D.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 374,
+          "calls": 342,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -65666,7 +66049,7 @@
           "api": "PhysicsSystem2D.testAABB",
           "proof": "verified",
           "state": "executed",
-          "calls": 187,
+          "calls": 171,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -65683,7 +66066,7 @@
           "api": "PhysicsSystem2D.testPoint",
           "proof": "verified",
           "state": "executed",
-          "calls": 1122,
+          "calls": 1026,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -65768,7 +66151,7 @@
           "api": "RigidBody2D.getMass",
           "proof": "verified",
           "state": "executed",
-          "calls": 187,
+          "calls": 171,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -65887,7 +66270,7 @@
           "api": "math.Rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 187,
+          "calls": 171,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Rect",
@@ -65923,7 +66306,7 @@
           "api": "math.Vec2",
           "proof": "verified",
           "state": "executed",
-          "calls": 1876,
+          "calls": 1716,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec2",
@@ -66051,8 +66434,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 33,
-        "bytes": 55748,
-        "hash": "7a25b56e1a23ee6e",
+        "bytes": 56380,
+        "hash": "be5991afacd139e1",
         "notes": [
           "Collider2D.apply: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
@@ -66141,7 +66524,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 282,
+          "reads": 286,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -66209,7 +66592,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 6490,
+          "reads": 6582,
           "via": "read",
           "mechanism": "export-object",
           "bound": true,
@@ -66362,7 +66745,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 287,
+          "reads": 291,
           "via": "read",
           "mechanism": "export-object",
           "bound": true,
@@ -66379,7 +66762,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 283,
+          "reads": 287,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -66738,8 +67121,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 69,
-        "bytes": 61305,
-        "hash": "ef8f4a84bd5ad0ca",
+        "bytes": 61937,
+        "hash": "e4bab8c3babcb1e0",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -68060,8 +68443,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-basic.png",
-        "bytes": 19894,
-        "hash": "adf866954bb53c4a"
+        "bytes": 19891,
+        "hash": "087dbd0230187c89"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -68077,8 +68460,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 56240,
-        "hash": "651547636d6eebc2",
+        "bytes": 56872,
+        "hash": "05bcc199f84f3bba",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -68323,7 +68706,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 217,
+          "calls": 216,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68717,8 +69100,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-collision.png",
-        "bytes": 11011,
-        "hash": "8ded77a4536bca31"
+        "bytes": 10983,
+        "hash": "b813a2de77391daf"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -68734,8 +69117,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 41,
-        "bytes": 56904,
-        "hash": "598adde23370ce29",
+        "bytes": 57536,
+        "hash": "66f5c2b6429cf6fd",
         "notes": [
           "Camera.screenPointToRay: no own descriptor on static",
           "EventTouch.getLocation: no own descriptor on static",
@@ -69082,7 +69465,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 301,
+          "calls": 304,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -69628,8 +70011,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-interaction.png",
-        "bytes": 12428,
-        "hash": "e38b56dc9f2baaba"
+        "bytes": 12360,
+        "hash": "7bd21468002576e1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -69645,8 +70028,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 54885,
-        "hash": "005663d355eb6c1a",
+        "bytes": 55517,
+        "hash": "04e8a4352eb3cce5",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -70118,8 +70501,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 54756,
-        "hash": "c9db20a23a354582",
+        "bytes": 55388,
+        "hash": "f316ae2d1a7b4784",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -70574,8 +70957,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55001,
-        "hash": "1691670e14a9bca3",
+        "bytes": 55633,
+        "hash": "52d8707658e7099a",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -71047,8 +71430,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 41,
-        "bytes": 57002,
-        "hash": "2c2cc1d74b73cb27",
+        "bytes": 57634,
+        "hash": "84c87ae38032fc9a",
         "notes": [
           "Animation.play: no own descriptor on static",
           "AnimationClip.wrapMode: no own descriptor on static",
@@ -71070,7 +71453,7 @@
           "Node.walk: no own descriptor on static",
           "Renderer.setSharedMaterial: no own descriptor on static"
         ],
-        "observed": 40,
+        "observed": 41,
         "total": 41
       },
       "apiProof": [
@@ -71127,12 +71510,12 @@
         },
         {
           "api": "AnimationClip.wrapMode",
-          "proof": "attested",
-          "state": "unresolved",
+          "proof": "verified",
+          "state": "executed",
           "calls": 0,
-          "reads": 0,
-          "via": null,
-          "mechanism": "unresolved",
+          "reads": 3,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
@@ -71521,7 +71904,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 253,
+          "calls": 259,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71691,7 +72074,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 662,
+          "calls": 670,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -71863,7 +72246,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9995"
+          "detail": "litRatio=0.9994"
         },
         {
           "validatorId": "interaction:button-click",
@@ -72151,8 +72534,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55014,
-        "hash": "cc78c75cbdd5bf1c",
+        "bytes": 55646,
+        "hash": "3ba0b825423419a5",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -72324,7 +72707,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 183,
+          "calls": 180,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72638,8 +73021,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/profiler-overlay.png",
-        "bytes": 19254,
-        "hash": "1bad9617080988cb"
+        "bytes": 19239,
+        "hash": "bcd32aa24e54db9d"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -72655,8 +73038,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 32,
-        "bytes": 55830,
-        "hash": "f7db9cba1f5e98c8",
+        "bytes": 56462,
+        "hash": "8ccf80e3d2e4ff45",
         "notes": [
           "Camera.worldToScreen: no own descriptor on static",
           "Component.destroy: no own descriptor on static",
@@ -72950,7 +73333,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 309,
+          "calls": 311,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73308,7 +73691,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2278 assetUnits=11"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2277 assetUnits=11"
         }
       ],
       "scenarioProbe": {
@@ -73385,7 +73768,7 @@
           {
             "name": "p4-rendertarget-visible",
             "ok": true,
-            "detail": "quad non-bg=3203px warm(快照内容)=2420px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+            "detail": "quad non-bg=3205px warm(快照内容)=2421px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
           },
           {
             "name": "p5-rt-resize-readback",
@@ -73430,8 +73813,8 @@
             255
           ],
           "quadRegion": {
-            "count": 3203,
-            "warm": 2420,
+            "count": 3205,
+            "warm": 2421,
             "pixel": [
               195,
               45,
@@ -73474,8 +73857,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/render-composite.png",
-        "bytes": 8798,
-        "hash": "bbc1e13f74979bf8"
+        "bytes": 9066,
+        "hash": "1727891ac12863be"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -73491,8 +73874,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 54360,
-        "hash": "da2233db122da481",
+        "bytes": 54992,
+        "hash": "4071a98dc66089f6",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -73900,8 +74283,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 54797,
-        "hash": "98c0d754a8c6400f",
+        "bytes": 55429,
+        "hash": "5c0693855cef5f1c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -74349,8 +74732,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 29,
-        "bytes": 55883,
-        "hash": "9b2ed0a0ff0c4f41",
+        "bytes": 56515,
+        "hash": "283cf9bd82941033",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -74628,7 +75011,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 281,
+          "reads": 295,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -74963,8 +75346,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 55593,
-        "hash": "6a8b54ad81681e51",
+        "bytes": 56225,
+        "hash": "8f39143712c8ccd6",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -75588,8 +75971,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 32,
-        "bytes": 55658,
-        "hash": "9cb40ed4d316cbd3",
+        "bytes": 56290,
+        "hash": "d87cf75576b0487a",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -76280,7 +76663,7 @@
           {
             "name": "gen1-running",
             "ok": true,
-            "detail": "updates=16"
+            "detail": "updates=15"
           },
           {
             "name": "gen1-lifecycle-once",
@@ -76300,7 +76683,7 @@
           {
             "name": "gen1-frozen",
             "ok": true,
-            "detail": "gen1 updates 16 → 16 after switch"
+            "detail": "gen1 updates 15 → 15 after switch"
           },
           {
             "name": "gen1-scene-destroyed",
@@ -76315,12 +76698,12 @@
           {
             "name": "gen3-running",
             "ok": true,
-            "detail": "updates=27"
+            "detail": "updates=25"
           },
           {
             "name": "gen2-frozen",
             "ok": true,
-            "detail": "gen2 updates 46 → 46"
+            "detail": "gen2 updates 45 → 45"
           },
           {
             "name": "gen2-scene-destroyed",
@@ -76346,7 +76729,7 @@
             {
               "gen": 1,
               "variant": "A",
-              "updates": 16,
+              "updates": 15,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -76354,7 +76737,7 @@
             {
               "gen": 2,
               "variant": "B",
-              "updates": 46,
+              "updates": 45,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -76362,7 +76745,7 @@
             {
               "gen": 3,
               "variant": "A",
-              "updates": 42,
+              "updates": 40,
               "clicks": 0,
               "onDisable": 0,
               "onDestroy": 0
@@ -76375,8 +76758,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/scene-switch-reentry.png",
-        "bytes": 10463,
-        "hash": "9fd7546b90c2aebf"
+        "bytes": 10468,
+        "hash": "bc30480631539e51"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -76392,8 +76775,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 26,
-        "bytes": 55217,
-        "hash": "467f0794721132f5",
+        "bytes": 55849,
+        "hash": "d2193162e4d5358f",
         "notes": [
           "EffectAsset.destroy: no own descriptor on static",
           "EffectAsset.onLoaded: no own descriptor on static",
@@ -76405,7 +76788,7 @@
           "Node.setPosition: no own descriptor on static",
           "Node.setRotationFromEuler: no own descriptor on static"
         ],
-        "observed": 25,
+        "observed": 26,
         "total": 26
       },
       "apiProof": [
@@ -76513,12 +76896,12 @@
         },
         {
           "api": "EffectAsset.shaders",
-          "proof": "attested",
-          "state": "unresolved",
+          "proof": "verified",
+          "state": "executed",
           "calls": 0,
-          "reads": 0,
-          "via": null,
-          "mechanism": "unresolved",
+          "reads": 51,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
@@ -76961,7 +77344,7 @@
           {
             "name": "uniform-vec4-colorA",
             "ok": true,
-            "detail": "left after colorA=green: [45,174,128,255]"
+            "detail": "left after colorA=green: [45,175,129,255]"
           },
           {
             "name": "time-animation-frame-diff",
@@ -76993,14 +77376,14 @@
           },
           "afterColorA": [
             45,
-            174,
-            128,
+            175,
+            129,
             255
           ],
           "animDiff": {
             "d0": [
               38,
-              120,
+              121,
               116,
               255
             ],
@@ -77038,8 +77421,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-custom-gradient.png",
-        "bytes": 6759,
-        "hash": "e5ef749531ab1434"
+        "bytes": 6701,
+        "hash": "c29f3e84b548a349"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -77055,8 +77438,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 55677,
-        "hash": "83f9b3fd9f6608d1",
+        "bytes": 56309,
+        "hash": "6d47bd7b510dd037",
         "notes": [
           "EffectAsset.destroy: no own descriptor on static",
           "EffectAsset.onLoaded: no own descriptor on static",
@@ -77070,7 +77453,7 @@
           "Node.setRotationFromEuler: no own descriptor on static",
           "Texture2D.destroy: no own descriptor on static"
         ],
-        "observed": 30,
+        "observed": 31,
         "total": 31
       },
       "apiProof": [
@@ -77195,12 +77578,12 @@
         },
         {
           "api": "EffectAsset.shaders",
-          "proof": "attested",
-          "state": "unresolved",
+          "proof": "verified",
+          "state": "executed",
           "calls": 0,
-          "reads": 0,
-          "via": null,
-          "mechanism": "unresolved",
+          "reads": 53,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
@@ -77316,7 +77699,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 274,
+          "calls": 275,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -77774,8 +78157,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 54289,
-        "hash": "dd23a5243de5b4c0",
+        "bytes": 54921,
+        "hash": "7be8b8a9dce28bae",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
@@ -77926,7 +78309,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 334,
+          "calls": 362,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78140,15 +78523,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0650"
+          "detail": "litRatio=0.0652"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 6154,
-        "hash": "97ca9c13ec203410"
+        "bytes": 6035,
+        "hash": "405f3808e38194a8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -78164,8 +78547,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 9,
-        "bytes": 53617,
-        "hash": "1adbcd7564c0ba8b",
+        "bytes": 54249,
+        "hash": "41aec74852d4f254",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static"
@@ -78408,8 +78791,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 54913,
-        "hash": "27f0ada113b53e07",
+        "bytes": 55545,
+        "hash": "409e9056c7431fb0",
         "notes": [
           "Material.destroy: no own descriptor on static",
           "Mesh.destroy: no own descriptor on static",
@@ -78942,8 +79325,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 27,
-        "bytes": 55360,
-        "hash": "d3922eede978c1ac",
+        "bytes": 55992,
+        "hash": "060b2dc49f1c0f45",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioSource.play: no own descriptor on static",
@@ -79637,8 +80020,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 54879,
-        "hash": "504df5ea24edec53",
+        "bytes": 55511,
+        "hash": "fad6b39c0d2b02b2",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -80215,8 +80598,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55147,
-        "hash": "3c5afb5a94d9dcbd",
+        "bytes": 55779,
+        "hash": "127a0cf0263f6861",
         "notes": [
           "Material.destroy: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
@@ -80491,7 +80874,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 216,
+          "calls": 217,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -80728,7 +81111,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1003"
+          "detail": "litRatio=0.1006"
         },
         {
           "validatorId": "resource-released",
@@ -80740,8 +81123,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture-basic.png",
-        "bytes": 26053,
-        "hash": "012d7e55693c89f0"
+        "bytes": 26119,
+        "hash": "803f9a4f9ff277c4"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -80757,8 +81140,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 55819,
-        "hash": "8810a60ce195ebbf",
+        "bytes": 56451,
+        "hash": "d54e8c035fb8147e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -81385,8 +81768,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 54975,
-        "hash": "cb49e7fca68bbf74",
+        "bytes": 55607,
+        "hash": "d60e3fb6d75007b8",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -81870,8 +82253,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 48,
-        "bytes": 57649,
-        "hash": "10bf323985af0287",
+        "bytes": 58281,
+        "hash": "5c8bebeebb0fa967",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -82319,7 +82702,7 @@
           "api": "TiledLayer.isCullingDirty",
           "proof": "verified",
           "state": "executed",
-          "calls": 535,
+          "calls": 536,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -82387,7 +82770,7 @@
           "api": "TiledMap.getLayers",
           "proof": "verified",
           "state": "executed",
-          "calls": 578,
+          "calls": 580,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -82861,8 +83244,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 14,
-        "bytes": 54131,
-        "hash": "4ebedd6cac6bea6a",
+        "bytes": 54763,
+        "hash": "22f2c69b8436137a",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -83190,15 +83573,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0472"
+          "detail": "litRatio=0.0490"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 7136,
-        "hash": "b76b797405e73b66"
+        "bytes": 7352,
+        "hash": "ad831d48e372316b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -83207,15 +83590,15 @@
     {
       "id": "tween-basic",
       "result": "PASS",
-      "specFingerprint": "7c068016a452",
-      "sourceFingerprint": "938bdcafc5787e15",
+      "specFingerprint": "4f2be6f5dca5",
+      "sourceFingerprint": "ab152be635b54e0b",
       "candidateFingerprint": "7f3b89f6ac076cbf",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 51,
-        "bytes": 57113,
-        "hash": "977d46b2b39c46eb",
+        "unitCount": 59,
+        "bytes": 58535,
+        "hash": "36e1ea9e3e0020ce",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -83249,10 +83632,12 @@
           "Tween.timeScale: no own descriptor on static",
           "Tween.union: no own descriptor on static",
           "Tween.update: no own descriptor on static",
-          "Tween.updateUntil: no own descriptor on static"
+          "Tween.updateUntil: no own descriptor on static",
+          "TweenSystem.ActionManager: no own descriptor on static",
+          "TweenSystem.update: no own descriptor on static"
         ],
-        "observed": 51,
-        "total": 51
+        "observed": 59,
+        "total": 59
       },
       "apiProof": [
         {
@@ -83361,7 +83746,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 84,
+          "calls": 103,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83403,6 +83788,23 @@
           "bindings": [
             {
               "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Tween",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 7,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -83477,6 +83879,24 @@
           ]
         },
         {
+          "api": "Tween.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Tween",
+          "observedVia": "Tween",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "Tween.destroySelf",
           "proof": "verified",
           "state": "executed",
@@ -83531,7 +83951,7 @@
           "api": "Tween.getTarget",
           "proof": "verified",
           "state": "executed",
-          "calls": 81,
+          "calls": 87,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83837,7 +84257,7 @@
           "api": "Tween.stop",
           "proof": "verified",
           "state": "executed",
-          "calls": 5,
+          "calls": 6,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84008,6 +84428,109 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "TweenSystem",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 3,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "TweenSystem.ActionManager",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 33,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "TweenSystem.ID",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 2,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "TweenSystem.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:TweenSystem",
+          "observedVia": "TweenSystem",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "TweenSystem.instance",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 33,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "TweenSystem.update",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 523,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84211,6 +84734,16 @@
         "ok": true,
         "checks": [
           {
+            "name": "Tween-direct-constructor",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "TweenSystem-surface",
+            "ok": true,
+            "detail": ""
+          },
+          {
             "name": "target-identity",
             "ok": true,
             "detail": ""
@@ -84223,7 +84756,7 @@
           {
             "name": "pause-freezes",
             "ok": true,
-            "detail": "0.6495"
+            "detail": "0.5246999999955296"
           },
           {
             "name": "resume-reaches-end",
@@ -84318,7 +84851,7 @@
           {
             "name": "custom-update",
             "ok": true,
-            "detail": "11 updates x=1"
+            "detail": "14 updates x=1"
           },
           {
             "name": "custom-update-until",
@@ -84345,8 +84878,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
-        "bytes": 5627,
-        "hash": "23f9452b26315417"
+        "bytes": 5585,
+        "hash": "78ee5a8ad9aae13b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -84362,8 +84895,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 55329,
-        "hash": "f5e0b14d1e3bc90e",
+        "bytes": 55961,
+        "hash": "57d4309487e8185b",
         "notes": [
           "AssetManager.assets: no own descriptor on static",
           "AssetManager.assets: no own descriptor on prototype",
@@ -85068,8 +85601,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 96,
-        "bytes": 61661,
-        "hash": "063c67c527aac406",
+        "bytes": 62293,
+        "hash": "6fd3af39cd072354",
         "notes": [
           "EditBox.focus: no own descriptor on static",
           "EditBox.isFocused: no own descriptor on static",
@@ -85920,7 +86453,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 336,
+          "calls": 314,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -86465,7 +86998,7 @@
           "api": "UIRenderer.color",
           "proof": "verified",
           "state": "executed",
-          "calls": 18927,
+          "calls": 17695,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -86482,7 +87015,7 @@
           "api": "UIRenderer.customMaterial",
           "proof": "verified",
           "state": "executed",
-          "calls": 6595,
+          "calls": 6155,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -86567,7 +87100,7 @@
           "api": "UIRenderer.postUpdateAssembler",
           "proof": "verified",
           "state": "executed",
-          "calls": 9766,
+          "calls": 9128,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -87139,8 +87672,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-components.png",
-        "bytes": 18468,
-        "hash": "de62d897479388f7"
+        "bytes": 18470,
+        "hash": "025cda1824ae1079"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -87156,8 +87689,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 49,
-        "bytes": 57417,
-        "hash": "4af95b026eda90e3",
+        "bytes": 58049,
+        "hash": "6188e7dd3fa2a048",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -87384,7 +87917,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 1665,
+          "calls": 1657,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -87488,7 +88021,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 12,
-          "reads": 3110,
+          "reads": 3094,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -87504,7 +88037,7 @@
           "api": "UITransform.convertToWorldSpaceAR",
           "proof": "verified",
           "state": "executed",
-          "calls": 1536,
+          "calls": 1528,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -87998,7 +88531,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 3072,
+          "calls": 3056,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -88168,8 +88701,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 54661,
-        "hash": "c6d30085b185ca02",
+        "bytes": 55293,
+        "hash": "02b4f88dd4723dae",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -88607,8 +89140,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56191,
-        "hash": "2133a33c14830298",
+        "bytes": 56823,
+        "hash": "40d71028912a69d7",
         "notes": [
           "EventHandler.component: no own descriptor on static",
           "EventHandler.component: no own descriptor on prototype",
@@ -88671,7 +89204,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 983,
+          "calls": 988,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -88807,7 +89340,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 647,
+          "calls": 650,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -88824,7 +89357,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 333,
+          "calls": 335,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -88841,7 +89374,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 980,
+          "calls": 985,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -88858,7 +89391,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 647,
+          "calls": 650,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -89370,8 +89903,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/video-basic.png",
-        "bytes": 14968,
-        "hash": "7510ac763bacda4c"
+        "bytes": 14969,
+        "hash": "28be3b3f3d494e9d"
       },
       "assetDigests": [
         {
@@ -89395,8 +89928,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56221,
-        "hash": "a2c8d244c7c401f5",
+        "bytes": 56853,
+        "hash": "c4a94241f33c6b9b",
         "notes": [
           "EventHandler.component: no own descriptor on static",
           "EventHandler.component: no own descriptor on prototype",
@@ -89464,7 +89997,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 584,
+          "calls": 580,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -89600,7 +90133,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 290,
+          "calls": 288,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -89617,7 +90150,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 290,
+          "calls": 288,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -89634,7 +90167,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 581,
+          "calls": 577,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -89651,7 +90184,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 289,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -89923,7 +90456,7 @@
           "api": "WebView.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 262,
+          "calls": 260,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -90126,8 +90659,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/webview-basic.png",
-        "bytes": 20407,
-        "hash": "0590df788dec1215"
+        "bytes": 20419,
+        "hash": "28fd518ed0544b91"
       },
       "assetDigests": [
         {

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T19:00:45.366Z",
-  "revision": "86042a5",
+  "generatedAt": "2026-09-27T19:59:19.117Z",
+  "revision": "716f794",
   "examples": [
     {
       "dir": "anim-position",
@@ -62,7 +62,26 @@
           "AnimationClip.range",
           "AnimationClip.hash",
           "AnimationClip.events",
-          "AnimationClip.destroy"
+          "AnimationClip.destroy",
+          "Animation.EventType",
+          "Animation.onLoad",
+          "Animation.start",
+          "Animation.onEnable",
+          "Animation.onDisable",
+          "Animation.onDestroy",
+          "AnimationClip.WrapMode",
+          "AnimationClip.createWithSpriteFrames",
+          "AnimationClip.sample",
+          "AnimationClip.speed",
+          "AnimationClip.isAdditive_experimental",
+          "AnimationClip.onLoaded",
+          "AnimationClip.auxiliaryCurveCount_experimental",
+          "AnimationClip.getAuxiliaryCurveNames_experimental",
+          "AnimationClip.hasAuxiliaryCurve_experimental",
+          "AnimationClip.addAuxiliaryCurve_experimental",
+          "AnimationClip.getAuxiliaryCurve_experimental",
+          "AnimationClip.renameAuxiliaryCurve_experimental",
+          "AnimationClip.removeAuxiliaryCurve_experimental"
         ],
         "claims": [
           "createAirApp",
@@ -113,7 +132,26 @@
           "AnimationClip.range",
           "AnimationClip.hash",
           "AnimationClip.events",
-          "AnimationClip.destroy"
+          "AnimationClip.destroy",
+          "Animation.EventType",
+          "Animation.onLoad",
+          "Animation.start",
+          "Animation.onEnable",
+          "Animation.onDisable",
+          "Animation.onDestroy",
+          "AnimationClip.WrapMode",
+          "AnimationClip.createWithSpriteFrames",
+          "AnimationClip.sample",
+          "AnimationClip.speed",
+          "AnimationClip.isAdditive_experimental",
+          "AnimationClip.onLoaded",
+          "AnimationClip.auxiliaryCurveCount_experimental",
+          "AnimationClip.getAuxiliaryCurveNames_experimental",
+          "AnimationClip.hasAuxiliaryCurve_experimental",
+          "AnimationClip.addAuxiliaryCurve_experimental",
+          "AnimationClip.getAuxiliaryCurve_experimental",
+          "AnimationClip.renameAuxiliaryCurve_experimental",
+          "AnimationClip.removeAuxiliaryCurve_experimental"
         ]
       },
       "capabilities": [
@@ -154,12 +192,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "286a91e18a35",
-        "source": "1ecac36f4796a553",
+        "spec": "113419aed33a",
+        "source": "9630b2703491c62c",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 47,
-        "attested": 2,
-        "units": 49
+        "verified": 68,
+        "attested": 0,
+        "units": 68
       }
     },
     {
@@ -11423,11 +11461,11 @@
         "capability": []
       },
       "promotion": {
-        "spec": "f21a20179694",
-        "source": "201da8ea96b81111",
+        "spec": "1e712e56bb86",
+        "source": "a6f36b8c7acce1c3",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 44,
-        "attested": 1,
+        "verified": 45,
+        "attested": 0,
         "units": 45
       }
     },
@@ -13683,8 +13721,8 @@
         "spec": "e568b27b4292",
         "source": "ce8c2f3d46c24e7f",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 40,
-        "attested": 1,
+        "verified": 41,
+        "attested": 0,
         "units": 41
       }
     },
@@ -14950,8 +14988,8 @@
         "spec": "b96b45bc2180",
         "source": "35462f213c12decb",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 25,
-        "attested": 1,
+        "verified": 26,
+        "attested": 0,
         "units": 26
       }
     },
@@ -15070,8 +15108,8 @@
         "spec": "7cada7a1d2e8",
         "source": "d5ef856a78549703",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 30,
-        "attested": 1,
+        "verified": 31,
+        "attested": 0,
         "units": 31
       }
     },
@@ -16233,7 +16271,15 @@
           "Tween.updateUntil",
           "Tween.hide",
           "Tween.show",
-          "Tween.stopAllByTag"
+          "Tween.stopAllByTag",
+          "Tween",
+          "Tween.constructor",
+          "TweenSystem",
+          "TweenSystem.ID",
+          "TweenSystem.instance",
+          "TweenSystem.ActionManager",
+          "TweenSystem.constructor",
+          "TweenSystem.update"
         ],
         "claims": [
           "createAirApp",
@@ -16286,7 +16332,15 @@
           "Tween.updateUntil",
           "Tween.hide",
           "Tween.show",
-          "Tween.stopAllByTag"
+          "Tween.stopAllByTag",
+          "Tween",
+          "Tween.constructor",
+          "TweenSystem",
+          "TweenSystem.ID",
+          "TweenSystem.instance",
+          "TweenSystem.ActionManager",
+          "TweenSystem.constructor",
+          "TweenSystem.update"
         ]
       },
       "capabilities": [
@@ -16327,12 +16381,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "7c068016a452",
-        "source": "938bdcafc5787e15",
+        "spec": "4f2be6f5dca5",
+        "source": "ab152be635b54e0b",
         "candidate": "7f3b89f6ac076cbf",
-        "verified": 51,
+        "verified": 59,
         "attested": 0,
-        "units": 51
+        "units": 59
       }
     },
     {

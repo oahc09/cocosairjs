@@ -1,4 +1,4 @@
-import { MeshRenderer, Node, Tween, tween, isValid } from 'cocosair';
+import { MeshRenderer, Node, Tween, TweenSystem, tween, isValid } from 'cocosair';
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 async function until(test: () => boolean, describe: () => string = () => ''): Promise<void> {
@@ -20,6 +20,16 @@ export async function verifyTweenControl(parentNode: Node): Promise<void> {
         if (!ok) throw new Error(`${name}: ${detail}`);
     };
     const near = (a: number, b: number) => Math.abs(a - b) < 0.0001;
+    const constructorTarget = { x: 0 };
+    const directTween = new Tween(constructorTarget);
+    check('Tween-direct-constructor', directTween.getTarget() === constructorTarget);
+    directTween.stop();
+    const tweenSystem = new TweenSystem();
+    tweenSystem.update(0);
+    check(
+        'TweenSystem-surface',
+        TweenSystem.ID === 'TWEEN' && TweenSystem.instance instanceof TweenSystem && !!tweenSystem.ActionManager,
+    );
     const model = { x: 0, y: 0 };
     let finished = false;
     const control = tween(model)

@@ -43,7 +43,15 @@
     "Tween.updateUntil",
     "Tween.hide",
     "Tween.show",
-    "Tween.stopAllByTag"
+    "Tween.stopAllByTag",
+    "Tween",
+    "Tween.constructor",
+    "TweenSystem",
+    "TweenSystem.ID",
+    "TweenSystem.instance",
+    "TweenSystem.ActionManager",
+    "TweenSystem.constructor",
+    "TweenSystem.update"
   ],
   "capabilities": ["animation"],
   "benchmarkRefs": [],
@@ -88,7 +96,15 @@
       "Tween.updateUntil",
       "Tween.hide",
       "Tween.show",
-      "Tween.stopAllByTag"
+      "Tween.stopAllByTag",
+      "Tween",
+      "Tween.constructor",
+      "TweenSystem",
+      "TweenSystem.ID",
+      "TweenSystem.instance",
+      "TweenSystem.ActionManager",
+      "TweenSystem.constructor",
+      "TweenSystem.update"
     ],
     "claims": [
       "createAirApp",
@@ -141,7 +157,15 @@
       "Tween.updateUntil",
       "Tween.hide",
       "Tween.show",
-      "Tween.stopAllByTag"
+      "Tween.stopAllByTag",
+      "Tween",
+      "Tween.constructor",
+      "TweenSystem",
+      "TweenSystem.ID",
+      "TweenSystem.instance",
+      "TweenSystem.ActionManager",
+      "TweenSystem.constructor",
+      "TweenSystem.update"
     ],
     "forbiddenShortcut": ["setInterval 线性改写位置冒充补间", "在 update 中手写插值替代 tween 合同"],
     "evidence": [
@@ -238,218 +262,266 @@
       {
         "api": "Tween.bindNodeState",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L26",
+        "sourceLocation": "L36",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.tag",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L27",
+        "sourceLocation": "L37",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.id",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L83",
+        "sourceLocation": "L93",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.getTarget",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L32",
+        "sourceLocation": "L25",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.stop",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L49",
+        "sourceLocation": "L26",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.pause",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L40",
+        "sourceLocation": "L50",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.resume",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L44",
+        "sourceLocation": "L54",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.clone",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L71",
+        "sourceLocation": "L81",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.union",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L68",
+        "sourceLocation": "L78",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.by",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L47",
+        "sourceLocation": "L57",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.set",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L56",
+        "sourceLocation": "L66",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.sequence",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L65",
+        "sourceLocation": "L75",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.parallel",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L58",
+        "sourceLocation": "L68",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.timeScale",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L33",
+        "sourceLocation": "L43",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.getTimeScale",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L34",
+        "sourceLocation": "L44",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.repeat",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L68",
+        "sourceLocation": "L78",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.repeatForever",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L115",
+        "sourceLocation": "L125",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.reverseTime",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L94",
+        "sourceLocation": "L104",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.reverse",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L84",
+        "sourceLocation": "L94",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.stopAll",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L117",
+        "sourceLocation": "L127",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.removeSelf",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L129",
+        "sourceLocation": "L139",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.destroySelf",
         "source": "src/tween-contract.ts",
-        "sourceLocation": "L136",
+        "sourceLocation": "L146",
         "validator": "no-runtime-error"
       },
       {
         "api": "Tween.then",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L145"
+        "sourceLocation": "L155"
       },
       {
         "api": "Tween.call",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L29"
+        "sourceLocation": "L39"
       },
       {
         "api": "Tween.running",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L150"
+        "sourceLocation": "L160"
       },
       {
         "api": "Tween.duration",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L151"
+        "sourceLocation": "L161"
       },
       {
         "api": "Tween.getRunningCount",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L152"
+        "sourceLocation": "L162"
       },
       {
         "api": "Tween.pauseAllByTarget",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L159"
+        "sourceLocation": "L169"
       },
       {
         "api": "Tween.resumeAllByTarget",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L163"
+        "sourceLocation": "L173"
       },
       {
         "api": "Tween.stopAllByTarget",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L165"
+        "sourceLocation": "L175"
       },
       {
         "api": "Tween.target",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L177"
+        "sourceLocation": "L187"
       },
       {
         "api": "Tween.update",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L177"
+        "sourceLocation": "L28"
       },
       {
         "api": "Tween.updateUntil",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L191"
+        "sourceLocation": "L201"
       },
       {
         "api": "Tween.hide",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L201"
+        "sourceLocation": "L211"
       },
       {
         "api": "Tween.show",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L204"
+        "sourceLocation": "L214"
       },
       {
         "api": "Tween.stopAllByTag",
         "source": "src/tween-contract.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L107"
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "Tween",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "Tween.constructor",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "TweenSystem",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "TweenSystem.ID",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "TweenSystem.instance",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "TweenSystem.ActionManager",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "TweenSystem.constructor",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "TweenSystem.update",
+        "source": "src/tween-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L28"
       }
     ]
   },
@@ -527,11 +599,11 @@
     }
   },
   "promotion": {
-    "spec": "7c068016a452",
-    "source": "938bdcafc5787e15",
+    "spec": "4f2be6f5dca5",
+    "source": "ab152be635b54e0b",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 51,
+    "verified": 59,
     "attested": 0,
-    "units": 51
+    "units": 59
   }
 }

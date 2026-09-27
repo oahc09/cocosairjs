@@ -1,4 +1,4 @@
-import { Animation, AnimationClip, Node, Scene, animation } from 'cocosair';
+import { Animation, AnimationClip, Node, Scene, SpriteFrame, animation } from 'cocosair';
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 async function until(test: () => boolean): Promise<void> {
@@ -6,6 +6,30 @@ async function until(test: () => boolean): Promise<void> {
     while (!test()) {
         if (performance.now() > end) throw new Error('Animation did not reach the expected state');
         await sleep(20);
+    }
+}
+
+const animationLifecycle = { onLoad: 0, start: 0, onEnable: 0, onDisable: 0, onDestroy: 0 };
+class ProbeAnimation extends Animation {
+    override onLoad(): void {
+        super.onLoad();
+        animationLifecycle.onLoad++;
+    }
+    override start(): void {
+        super.start();
+        animationLifecycle.start++;
+    }
+    override onEnable(): void {
+        super.onEnable();
+        animationLifecycle.onEnable++;
+    }
+    override onDisable(): void {
+        super.onDisable();
+        animationLifecycle.onDisable++;
+    }
+    override onDestroy(): void {
+        super.onDestroy();
+        animationLifecycle.onDestroy++;
     }
 }
 
@@ -61,6 +85,39 @@ export async function verifyAnimationContract(scene: Scene): Promise<{
         const owned = makeClip();
         clip = owned.clip;
         const track = owned.track;
+        clip.sample = 30;
+        clip.speed = 1;
+        clip.onLoaded();
+        check('clip-metadata', clip.sample === 30 && clip.speed === 1 && clip.wrapMode === AnimationClip.WrapMode.Loop);
+        check('clip-additive-default', clip.isAdditive_experimental === false);
+
+        const frameA = new SpriteFrame();
+        const frameB = new SpriteFrame();
+        const spriteClip = AnimationClip.createWithSpriteFrames([frameA, frameB], 10);
+        check(
+            'clip-sprite-frames',
+            spriteClip.sample === 10 && spriteClip.duration === 0.2 && spriteClip.tracksCount === 1,
+        );
+        spriteClip.destroy();
+        frameA.destroy();
+        frameB.destroy();
+
+        const auxiliary = clip.addAuxiliaryCurve_experimental('blend-weight');
+        auxiliary.assignSorted([
+            [0, 0],
+            [1.2, 1],
+        ]);
+        check(
+            'clip-auxiliary-curve-readback',
+            clip.auxiliaryCurveCount_experimental === 1 &&
+                clip.getAuxiliaryCurveNames_experimental()[0] === 'blend-weight' &&
+                clip.hasAuxiliaryCurve_experimental('blend-weight') &&
+                clip.getAuxiliaryCurve_experimental('blend-weight').evaluate(0.6) > 0,
+        );
+        clip.renameAuxiliaryCurve_experimental('blend-weight', 'weight');
+        check('clip-auxiliary-curve-rename', clip.hasAuxiliaryCurve_experimental('weight'));
+        clip.removeAuxiliaryCurve_experimental('weight');
+        check('clip-auxiliary-curve-remove', clip.auxiliaryCurveCount_experimental === 0);
         check('clip-add-get-track', clip.tracksCount === 1 && clip.getTrack(0) === track);
         check('clip-tracks', [...clip.tracks].length === 1);
         const range = clip.range();
@@ -84,9 +141,14 @@ export async function verifyAnimationContract(scene: Scene): Promise<{
 
         node = new Node('AnimationApiProbe');
         scene.addChild(node);
-        anim = node.addComponent(Animation);
+        anim = node.addComponent(ProbeAnimation);
         anim.defaultClip = clip;
         anim.playOnLoad = false;
+        check('animation-play-on-load', anim.playOnLoad === false);
+        anim.enabled = false;
+        check('animation-on-disable', animationLifecycle.onDisable > 0);
+        anim.enabled = true;
+        check('animation-on-enable', animationLifecycle.onEnable > 1);
         state = anim.addClip(clip, 'probe');
         check('add-get-state', state === anim.getState('probe') && anim.clips.includes(clip));
         const temporary = anim.createState(clip, 'temporary');
@@ -105,6 +167,11 @@ export async function verifyAnimationContract(scene: Scene): Promise<{
         });
         anim.play('probe');
         await until(() => node.position.x > 0.1);
+        check(
+            'animation-load-start-hooks',
+            animationLifecycle.onLoad === 1 && animationLifecycle.start === 1,
+            JSON.stringify(animationLifecycle),
+        );
         check(
             'play-and-events',
             state.isPlaying && playEvents >= 1 && onceEvents === 1,
@@ -137,10 +204,12 @@ export async function verifyAnimationContract(scene: Scene): Promise<{
             { name: 'animation-node', ref: node },
             { name: 'animation-clip', ref: clip },
         ],
-        release: () => {
+        release: async () => {
             anim.stop();
             anim.removeClip(clip, true);
             node.destroy();
+            await until(() => animationLifecycle.onDestroy > 0);
+            check('animation-on-destroy', animationLifecycle.onDestroy > 0, JSON.stringify(animationLifecycle));
             clip.destroy();
         },
         reacquire: async () => {
@@ -148,7 +217,7 @@ export async function verifyAnimationContract(scene: Scene): Promise<{
             clip = rebuilt.clip;
             node = new Node('AnimationApiProbe');
             scene.addChild(node);
-            anim = node.addComponent(Animation);
+            anim = node.addComponent(ProbeAnimation);
             anim.defaultClip = clip;
             state = anim.addClip(clip, 'probe');
             anim.play('probe');

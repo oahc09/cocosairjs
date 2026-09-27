@@ -261,6 +261,11 @@ async function main(): Promise<void> {
     animB!.clips.forEach((clip: AnimationClip) => {
         clip.wrapMode = AnimationClip.WrapMode.Loop;
     });
+    pcheck(
+        'clip-wrap-mode-readback',
+        [...animA!.clips, ...animB!.clips].every((clip) => clip.wrapMode === AnimationClip.WrapMode.Loop),
+        'both instances use Loop wrap mode',
+    );
     clipName = animA!.clips[0].name;
     animA!.play(clipName);
     animB!.play(clipName);

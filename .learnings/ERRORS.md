@@ -646,3 +646,36 @@ Return traced canonical wrappers through namespace aliases, record namespace rea
 - **Notes**: Targeted and full V1.1 verification passed 140/140; strict specs passed 145/145; Gallery passed 216/216; the full V1.2 matrix passed 39/39 with the retained P3/P5 playback and decode assertions.
 
 ---
+
+## [ERR-20260927-022] wave14-animation-lifecycle-and-array-tracing
+
+**Logged**: 2026-09-27T20:03:15Z
+**Priority**: medium
+**Status**: resolved
+**Area**: tests
+
+### Summary
+Wave 14's first targeted lifecycle run failed because `onDestroy` is deferred, and the full V1.1 run showed `AnimationClip` instances inside `GLTFAsset.animations` were not receiving own-field tracing.
+
+### Error
+```text
+anim-position resource-released: leaked after release: animation-clip; release: animation-on-destroy: onDestroy=0
+model-character-interaction api-executed: AnimationClip.wrapMode not observed
+```
+
+### Context
+- `Node.destroy()` schedules component destruction for the lifecycle tick, so checking `Animation.onDestroy` synchronously reports too early and aborts clip cleanup.
+- `GLTFAsset.animations` returns an array; the trace instrumented the array object but did not inspect its `AnimationClip` elements.
+
+### Suggested Fix
+Make the release hook await the real `onDestroy` callback before checking it and finishing cleanup. Recursively instrument tracked instances in returned arrays, and read `clip.wrapMode` after setting it in the model interaction example.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/verify/api-trace.cjs`, `examples/anim-position/src/animation-contract.ts`, `examples/model-character-interaction/src/main.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T20:03:15Z
+- **Notes**: Targeted animation/tween/model examples passed 3/3; the canonical V1.1 run passed 140/140 with 4,053 verified bindings and 0 unproven.
+
+---
