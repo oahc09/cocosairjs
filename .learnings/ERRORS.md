@@ -273,3 +273,33 @@ Gate own-field instrumentation by inventory parent and property kind, and regist
 - **Notes**: Limited instrumentation to declared math value-type properties and renderer.scene.Camera fields, added returned-object instrumentation, and completed the full V1.1 run at 140/140 PASS with 0 unproven.
 
 ---
+
+## [ERR-20260927-010] camera-meshrenderer-lifecycle-contract
+
+**Logged**: 2026-09-27T09:12:42Z
+**Priority**: medium
+**Status**: resolved
+**Area**: tests
+
+### Summary
+Coverage additions made the Camera and MeshRenderer examples subject to the required resource lifecycle audit, but their procedural mesh and material initially had no release/reacquire contract.
+
+### Error
+`spec-compliance-audit.cjs` reported S25-LIFECYCLE for both `camera-viewport-props` and `meshrenderer-hooks`.
+
+### Context
+- The examples create runtime Mesh and Material resources and now claim `Camera.targetTexture` / MeshRenderer destruction APIs, which puts them inside the resource-example contract.
+- The existing examples used Code First resources but had no `validation.lifecycle` declaration or `window.__lifecycle` implementation.
+
+### Suggested Fix
+Install the shared `installAssetLifecycle` contract, detach renderer references before destruction, verify release, and reacquire/rebind the resources.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `examples/camera-viewport-props/src/main.ts`, `examples/meshrenderer-hooks/src/main.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T09:12:42Z
+- **Notes**: Both examples now release and reacquire their generated mesh/material pairs; focused V1.1 lifecycle validators and the full Gallery lifecycle checks passed.
+
+---

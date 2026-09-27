@@ -40,6 +40,14 @@ The canonical V1.1 run completed 140/140 PASS, with 1 promotion, 0 demotions, an
 
 Current coverage is Core 567/963 (58.9%), Important 165/272 (60.7%), and Advanced 139/3,130 (4.4%). Stable examples remain 144/120. Release is NOT MET: Core gap 396; Important needs 80 more verified to reach 245/272 and has 107 unverified units without explicit status; Advanced needs 2,365 more verified to reach 2,504/3,130 and has 2,991 uncovered. Advanced ultimately allows at most 626 documented-only units and requires zero uncovered units. Do not weaken the release thresholds.
 
+### 2026-09-27 Wave 8 — Camera and MeshRenderer
+
+Wave 8 adds 57 verified Core units with 0 removals: 29 Camera units and 28 MeshRenderer units. The Camera probe now reads the actual renderer-camera pipeline through `Camera.camera`; the MeshRenderer probe covers shadow/material state, mesh/model fields, lifecycle callbacks, geometry/lighting hooks, and reflection-probe updates. Both examples now release and reacquire their generated mesh/material pair under the §25 Lifecycle Contract.
+
+The canonical V1.1 run completed 140/140 PASS (2 promoted, 0 demoted), with 3,604 verified, 172 attested, and 0 unproven API/example bindings. DevTools passed 5/5, Gallery passed 213/213 with 47 lifecycle contracts, and the V1.2 matrix remains 39/39 across three engines. Strict spec validation is 145/145; compliance is 0 fail / 1 documented Draco warning. Jest and test-inventory passed 32 suites / 263 tests; typecheck, format, API trace selftest, consumer acceptance (575 exports), and 1,317 documentation references passed.
+
+Current coverage is Core 624/963 (64.8%), Important 165/272 (60.7%), and Advanced 139/3,130 (4.4%), with no stale evidence or schema gaps. Stable examples remain 144/120. Release remains NOT MET: Core gap 339; Important gap 80 to the 245/272 target plus 107 units needing explicit status; Advanced gap 2,365 to the 2,504/3,130 target plus 2,991 uncovered units that must receive proof or an allowed documented-only disposition.
+
 The production `verify:api-coverage` command now applies the taskbook's 100%/90%/80% thresholds and rejects stale/schema-gap evidence. It also exposes `documentedOnly`, `uncovered`, and `unstated` counts for the Important and Advanced closure rules. It is expected to fail until real behavior proof and statuses close those gaps.
 
 ## Coverage waves

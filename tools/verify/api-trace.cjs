@@ -410,7 +410,7 @@ function generateTraceModule (exportNames, units, realUrl) {
       done = staticDone || T.patchOwn(host.prototype, leaf, unit, 'prototype');
       if (!done && leaf === 'constructor') { T.mechanism[unit] = 'export-wrapper'; done = true; }
       const owner = __PARENTS[unit];
-      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera');
+      const ownDataOwner = owner && (owner.indexOf('math.') === 0 || owner === 'renderer.scene.Camera' || owner === 'MeshRenderer');
       if (!done && __KINDS[unit] === 'property' && ownDataOwner) {
         T.registerInstanceData(host, leaf, unit);
         T.mechanism[unit] = 'instance-data';

@@ -32,7 +32,36 @@
     "Camera.screenScale",
     "Camera.ClearFlag",
     "renderer.scene.Camera.setViewportInOrientedSpace",
-    "Camera.camera"
+    "Camera.camera",
+    "Camera.constructor",
+    "Camera.ProjectionType",
+    "Camera.FOVAxis",
+    "Camera.Aperture",
+    "Camera.Shutter",
+    "Camera.ISO",
+    "Camera.TARGET_TEXTURE_CHANGE",
+    "Camera.priority",
+    "Camera.visibility",
+    "Camera.clearFlags",
+    "Camera.clearColor",
+    "Camera.clearDepth",
+    "Camera.clearStencil",
+    "Camera.projection",
+    "Camera.fovAxis",
+    "Camera.fov",
+    "Camera.orthoHeight",
+    "Camera.near",
+    "Camera.far",
+    "Camera.aperture",
+    "Camera.shutter",
+    "Camera.iso",
+    "Camera.rect",
+    "Camera.targetTexture",
+    "Camera.onLoad",
+    "Camera.onEnable",
+    "Camera.onDisable",
+    "Camera.onDestroy",
+    "Camera.convertToUINode"
   ],
   "capabilities": [],
   "learning": {
@@ -65,7 +94,36 @@
       "MeshRenderer",
       "Material",
       "Camera.camera",
-      "renderer.scene.Camera.pipeline"
+      "renderer.scene.Camera.pipeline",
+      "Camera.constructor",
+      "Camera.ProjectionType",
+      "Camera.FOVAxis",
+      "Camera.Aperture",
+      "Camera.Shutter",
+      "Camera.ISO",
+      "Camera.TARGET_TEXTURE_CHANGE",
+      "Camera.priority",
+      "Camera.visibility",
+      "Camera.clearFlags",
+      "Camera.clearColor",
+      "Camera.clearDepth",
+      "Camera.clearStencil",
+      "Camera.projection",
+      "Camera.fovAxis",
+      "Camera.fov",
+      "Camera.orthoHeight",
+      "Camera.near",
+      "Camera.far",
+      "Camera.aperture",
+      "Camera.shutter",
+      "Camera.iso",
+      "Camera.rect",
+      "Camera.targetTexture",
+      "Camera.onLoad",
+      "Camera.onEnable",
+      "Camera.onDisable",
+      "Camera.onDestroy",
+      "Camera.convertToUINode"
     ],
     "claims": [
       "createAirApp",
@@ -92,7 +150,36 @@
       "Camera.screenScale",
       "Camera.ClearFlag",
       "renderer.scene.Camera.setViewportInOrientedSpace",
-      "Camera.camera"
+      "Camera.camera",
+      "Camera.constructor",
+      "Camera.ProjectionType",
+      "Camera.FOVAxis",
+      "Camera.Aperture",
+      "Camera.Shutter",
+      "Camera.ISO",
+      "Camera.TARGET_TEXTURE_CHANGE",
+      "Camera.priority",
+      "Camera.visibility",
+      "Camera.clearFlags",
+      "Camera.clearColor",
+      "Camera.clearDepth",
+      "Camera.clearStencil",
+      "Camera.projection",
+      "Camera.fovAxis",
+      "Camera.fov",
+      "Camera.orthoHeight",
+      "Camera.near",
+      "Camera.far",
+      "Camera.aperture",
+      "Camera.shutter",
+      "Camera.iso",
+      "Camera.rect",
+      "Camera.targetTexture",
+      "Camera.onLoad",
+      "Camera.onEnable",
+      "Camera.onDisable",
+      "Camera.onDestroy",
+      "Camera.convertToUINode"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -100,79 +187,79 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L23"
+        "sourceLocation": "L24"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L26"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L42"
+        "sourceLocation": "L43"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L43"
+        "sourceLocation": "L44"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L37"
+        "sourceLocation": "L38"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L36"
+        "sourceLocation": "L37"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L29"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L49"
+        "sourceLocation": "L50"
       },
       {
         "api": "Material",
@@ -184,67 +271,241 @@
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L53"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L53"
+        "sourceLocation": "L54"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L50"
+        "sourceLocation": "L52"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L50"
+        "sourceLocation": "L52"
       },
       {
         "api": "Camera.postProcess",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L74"
+        "sourceLocation": "L76"
       },
       {
         "api": "Camera.usePostProcess",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L83"
+        "sourceLocation": "L85"
       },
       {
         "api": "renderer.scene.Camera.pipeline",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L115"
+        "sourceLocation": "L117"
       },
       {
         "api": "Camera.screenScale",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L88"
+        "sourceLocation": "L90"
       },
       {
         "api": "Camera.ClearFlag",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L35"
+        "sourceLocation": "L36"
       },
       {
         "api": "renderer.scene.Camera.setViewportInOrientedSpace",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L105"
+        "sourceLocation": "L107"
       },
       {
         "api": "Camera.camera",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L116"
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "Camera.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L133"
+      },
+      {
+        "api": "Camera.ProjectionType",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "Camera.FOVAxis",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L135"
+      },
+      {
+        "api": "Camera.Aperture",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L136"
+      },
+      {
+        "api": "Camera.Shutter",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L137"
+      },
+      {
+        "api": "Camera.ISO",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L138"
+      },
+      {
+        "api": "Camera.TARGET_TEXTURE_CHANGE",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L139"
+      },
+      {
+        "api": "Camera.priority",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "Camera.visibility",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "Camera.clearFlags",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "Camera.clearColor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "Camera.clearDepth",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L144"
+      },
+      {
+        "api": "Camera.clearStencil",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "Camera.projection",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "Camera.fovAxis",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "Camera.fov",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "Camera.orthoHeight",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L149"
+      },
+      {
+        "api": "Camera.near",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "Camera.far",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "Camera.aperture",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "Camera.shutter",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Camera.iso",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L154"
+      },
+      {
+        "api": "Camera.rect",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "Camera.targetTexture",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L156"
+      },
+      {
+        "api": "Camera.onLoad",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L157"
+      },
+      {
+        "api": "Camera.onEnable",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L158"
+      },
+      {
+        "api": "Camera.onDisable",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L159"
+      },
+      {
+        "api": "Camera.onDestroy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L160"
+      },
+      {
+        "api": "Camera.convertToUINode",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L182"
       }
     ]
   },
@@ -259,7 +520,7 @@
   },
   "validation": {
     "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": [],
+    "lifecycle": ["resource-released"],
     "interaction": [],
     "visual": ["visible-frame"],
     "capability": []
@@ -277,11 +538,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "101577bb4132",
-    "source": "587583bd16af75f6",
+    "spec": "be7616c97447",
+    "source": "a2a681a948975be9",
     "candidate": "8746fc59b6aa0408",
-    "verified": 25,
+    "verified": 54,
     "attested": 0,
-    "units": 25
+    "units": 54
   }
 }

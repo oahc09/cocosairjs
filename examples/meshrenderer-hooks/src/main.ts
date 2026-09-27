@@ -18,6 +18,7 @@ import {
     utils,
     primitives,
 } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 // ---- 共享脚手架：可见帧 + 场景就绪（meshrenderer-hooks）----
 var app = await createAirApp({ canvas: '#GameCanvas' });
@@ -46,11 +47,12 @@ var cube = new Node('Cube');
 cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
 cube.setPosition(new Vec3(0, 0.6, 0));
-var cubeRenderer = cube.addComponent(MeshRenderer);
-cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+var cubeMesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 var cubeMaterial = new Material();
 cubeMaterial.initialize({ effectName: 'builtin-standard' });
 cubeMaterial.setProperty('mainColor', new Color(200, 220, 250));
+var cubeRenderer = cube.addComponent(MeshRenderer);
+cubeRenderer.mesh = cubeMesh;
 cubeRenderer.material = cubeMaterial;
 
 // ---- 主题：MeshRenderer — 权重/常量/烘焙设置面（确定性 readback，全部进 __probe）----
@@ -117,4 +119,109 @@ probe.topic = 'meshrenderer-hooks';
 (window as any).__probe = async () => probe;
 
 app.run(scene);
+const rendererProbe = { ready: false, ok: false, checks: [] as { name: string; ok: boolean; detail: string }[] };
+(window as any).__trialProbe = rendererProbe;
+const rendererCheck = (name: string, ok: boolean, detail = '') => {
+    rendererProbe.checks.push({ name, ok, detail });
+    if (!ok) throw new Error(`${name}: ${detail}`);
+};
+const nextRendererFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+requestAnimationFrame(async () => {
+    cubeRenderer.enabled = false;
+    cubeRenderer.enabled = true;
+    const rendererValues: Record<string, unknown> = {
+        'MeshRenderer.constructor': typeof MeshRenderer.prototype.constructor,
+        'MeshRenderer.ShadowCastingMode': MeshRenderer.ShadowCastingMode,
+        'MeshRenderer.ShadowReceivingMode': MeshRenderer.ShadowReceivingMode,
+        'MeshRenderer.shadowBias': cubeRenderer.shadowBias,
+        'MeshRenderer.shadowNormalBias': cubeRenderer.shadowNormalBias,
+        'MeshRenderer.shadowCastingMode': cubeRenderer.shadowCastingMode,
+        'MeshRenderer.shadowCastingModeForInspector': cubeRenderer.shadowCastingModeForInspector,
+        'MeshRenderer.receiveShadow': cubeRenderer.receiveShadow,
+        'MeshRenderer.receiveShadowForInspector': cubeRenderer.receiveShadowForInspector,
+        'MeshRenderer.mesh': cubeRenderer.mesh,
+        'MeshRenderer.model': cubeRenderer.model,
+        'MeshRenderer.enableMorph': cubeRenderer.enableMorph,
+        'MeshRenderer.isGlobalStandardSkinObject': cubeRenderer.isGlobalStandardSkinObject,
+        'MeshRenderer.onLoad': typeof cubeRenderer.onLoad,
+        'MeshRenderer.onRestore': typeof cubeRenderer.onRestore,
+        'MeshRenderer.onEnable': typeof cubeRenderer.onEnable,
+        'MeshRenderer.onDisable': typeof cubeRenderer.onDisable,
+        'MeshRenderer.onDestroy': typeof cubeRenderer.onDestroy,
+        'MeshRenderer.onGeometryChanged': typeof cubeRenderer.onGeometryChanged,
+        'MeshRenderer.onUpdateReceiveDirLight': typeof cubeRenderer.onUpdateReceiveDirLight,
+        'MeshRenderer.updateProbeCubemap': typeof cubeRenderer.updateProbeCubemap,
+        'MeshRenderer.updateProbeBlendCubemap': typeof cubeRenderer.updateProbeBlendCubemap,
+        'MeshRenderer.updateProbePlanarMap': typeof cubeRenderer.updateProbePlanarMap,
+        'MeshRenderer.updateReflectionProbeDataMap': typeof cubeRenderer.updateReflectionProbeDataMap,
+        'MeshRenderer.updateReflectionProbeId': typeof cubeRenderer.updateReflectionProbeId,
+        'MeshRenderer.updateReflectionProbeBlendId': typeof cubeRenderer.updateReflectionProbeBlendId,
+        'MeshRenderer.updateReflectionProbeBlendWeight': typeof cubeRenderer.updateReflectionProbeBlendWeight,
+    };
+    for (const [name, value] of Object.entries(rendererValues)) {
+        const type = typeof value;
+        rendererCheck(
+            name,
+            value === null ||
+                type === 'string' ||
+                type === 'boolean' ||
+                type === 'function' ||
+                (typeof value === 'number' && Number.isFinite(value)) ||
+                type === 'object',
+            `${type}:${String(value)}`,
+        );
+    }
+    cubeRenderer.onUpdateReceiveDirLight(camera.visibility);
+    cubeRenderer.onGeometryChanged();
+    cubeRenderer.updateProbeCubemap(null);
+    cubeRenderer.updateProbeBlendCubemap(null);
+    cubeRenderer.updateProbePlanarMap(null);
+    cubeRenderer.updateReflectionProbeDataMap(null);
+    cubeRenderer.updateReflectionProbeId(0);
+    cubeRenderer.updateReflectionProbeBlendId(0);
+    cubeRenderer.updateReflectionProbeBlendWeight(0);
+
+    const scratchNode = new Node('MeshRendererLifecycleProbe');
+    scratchNode.active = false;
+    scene.addChild(scratchNode);
+    const scratchRenderer = scratchNode.addComponent(MeshRenderer);
+    scratchRenderer.mesh = cubeRenderer.mesh;
+    scratchRenderer.enabled = false;
+    scratchNode.active = true;
+    scratchRenderer.onRestore();
+    scratchNode.destroy();
+    await nextRendererFrame();
+    await nextRendererFrame();
+    rendererProbe.ok = true;
+    rendererProbe.ready = true;
+});
+
+function ownedCubeResources() {
+    return [
+        { name: 'MeshRendererHooksMesh', ref: cubeMesh },
+        { name: 'MeshRendererHooksMaterial', ref: cubeMaterial },
+    ];
+}
+
+installAssetLifecycle({
+    label: 'meshrenderer-hooks',
+    hold: ownedCubeResources,
+    release: () => {
+        cubeRenderer.mesh = null;
+        cubeRenderer.material = null;
+        cubeRenderer.destroy();
+        cubeMesh.destroy();
+        cubeMaterial.destroy();
+    },
+    reacquire: () => {
+        cubeMesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+        cubeMaterial = new Material();
+        cubeMaterial.initialize({ effectName: 'builtin-standard' });
+        cubeMaterial.setProperty('mainColor', new Color(200, 220, 250));
+        cubeRenderer = cube.addComponent(MeshRenderer);
+        cubeRenderer.mesh = cubeMesh;
+        cubeRenderer.material = cubeMaterial;
+        return ownedCubeResources();
+    },
+});
 console.log('[meshrenderer-hooks] running');

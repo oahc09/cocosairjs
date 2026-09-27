@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T07:29:11.896Z",
+  "measuredAt": "2026-09-27T08:55:29.348Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
@@ -8,15 +8,15 @@
     "examples": 145,
     "booted": 140,
     "devToolsPagesServed": 5,
-    "lifecycle": 45
+    "lifecycle": 47
   },
   "artifactBytes": {
     "engineCopySha256_16": "cef2756486b073d1",
     "liveBundleSha256_16": "cef2756486b073d1",
     "identical": true
   },
-  "total": 211,
-  "pass": 211,
+  "total": 213,
+  "pass": 213,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -91,7 +91,7 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:54402/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:49774/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -167,6 +167,11 @@
       "id": "example-boot:camera-viewport-props",
       "ok": true,
       "detail": "booted via /camera-viewport-props/"
+    },
+    {
+      "id": "lifecycle:camera-viewport-props",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:collector-dodge",
@@ -679,6 +684,11 @@
       "detail": "booted via /meshrenderer-hooks/"
     },
     {
+      "id": "lifecycle:meshrenderer-hooks",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:model-character-interaction",
       "ok": true,
       "detail": "booted via /model-character-interaction/"
@@ -1056,7 +1066,7 @@
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "45 §25 合同示例在部署物内完成释放核对"
+      "detail": "47 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",

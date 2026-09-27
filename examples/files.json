@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T07:33:48.066Z",
-  "revision": "c3774ab",
+  "generatedAt": "2026-09-27T08:53:01.512Z",
+  "revision": "1763224",
   "examples": [
     {
       "dir": "anim-position",
@@ -1353,7 +1353,36 @@
           "MeshRenderer",
           "Material",
           "Camera.camera",
-          "renderer.scene.Camera.pipeline"
+          "renderer.scene.Camera.pipeline",
+          "Camera.constructor",
+          "Camera.ProjectionType",
+          "Camera.FOVAxis",
+          "Camera.Aperture",
+          "Camera.Shutter",
+          "Camera.ISO",
+          "Camera.TARGET_TEXTURE_CHANGE",
+          "Camera.priority",
+          "Camera.visibility",
+          "Camera.clearFlags",
+          "Camera.clearColor",
+          "Camera.clearDepth",
+          "Camera.clearStencil",
+          "Camera.projection",
+          "Camera.fovAxis",
+          "Camera.fov",
+          "Camera.orthoHeight",
+          "Camera.near",
+          "Camera.far",
+          "Camera.aperture",
+          "Camera.shutter",
+          "Camera.iso",
+          "Camera.rect",
+          "Camera.targetTexture",
+          "Camera.onLoad",
+          "Camera.onEnable",
+          "Camera.onDisable",
+          "Camera.onDestroy",
+          "Camera.convertToUINode"
         ],
         "claims": [
           "createAirApp",
@@ -1380,7 +1409,36 @@
           "Camera.screenScale",
           "Camera.ClearFlag",
           "renderer.scene.Camera.setViewportInOrientedSpace",
-          "Camera.camera"
+          "Camera.camera",
+          "Camera.constructor",
+          "Camera.ProjectionType",
+          "Camera.FOVAxis",
+          "Camera.Aperture",
+          "Camera.Shutter",
+          "Camera.ISO",
+          "Camera.TARGET_TEXTURE_CHANGE",
+          "Camera.priority",
+          "Camera.visibility",
+          "Camera.clearFlags",
+          "Camera.clearColor",
+          "Camera.clearDepth",
+          "Camera.clearStencil",
+          "Camera.projection",
+          "Camera.fovAxis",
+          "Camera.fov",
+          "Camera.orthoHeight",
+          "Camera.near",
+          "Camera.far",
+          "Camera.aperture",
+          "Camera.shutter",
+          "Camera.iso",
+          "Camera.rect",
+          "Camera.targetTexture",
+          "Camera.onLoad",
+          "Camera.onEnable",
+          "Camera.onDisable",
+          "Camera.onDestroy",
+          "Camera.convertToUINode"
         ]
       },
       "capabilities": [],
@@ -1406,7 +1464,9 @@
           "node-exists",
           "no-runtime-error"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "interaction": [],
         "visual": [
           "visible-frame"
@@ -1414,12 +1474,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "101577bb4132",
-        "source": "587583bd16af75f6",
+        "spec": "be7616c97447",
+        "source": "a2a681a948975be9",
         "candidate": "8746fc59b6aa0408",
-        "verified": 25,
+        "verified": 54,
         "attested": 0,
-        "units": 25
+        "units": 54
       }
     },
     {
@@ -10470,7 +10530,35 @@
           "Color",
           "math.Vec3",
           "MeshRenderer",
-          "Material"
+          "Material",
+          "MeshRenderer.constructor",
+          "MeshRenderer.ShadowCastingMode",
+          "MeshRenderer.ShadowReceivingMode",
+          "MeshRenderer.shadowBias",
+          "MeshRenderer.shadowNormalBias",
+          "MeshRenderer.shadowCastingMode",
+          "MeshRenderer.shadowCastingModeForInspector",
+          "MeshRenderer.receiveShadow",
+          "MeshRenderer.receiveShadowForInspector",
+          "MeshRenderer.mesh",
+          "MeshRenderer.model",
+          "MeshRenderer.enableMorph",
+          "MeshRenderer.isGlobalStandardSkinObject",
+          "MeshRenderer.onLoad",
+          "MeshRenderer.onRestore",
+          "MeshRenderer.onEnable",
+          "MeshRenderer.onDisable",
+          "MeshRenderer.onDestroy",
+          "MeshRenderer.onGeometryChanged",
+          "MeshRenderer.onUpdateReceiveDirLight",
+          "MeshRenderer.updateProbeCubemap",
+          "MeshRenderer.updateProbeBlendCubemap",
+          "MeshRenderer.updateProbePlanarMap",
+          "MeshRenderer.updateReflectionProbeDataMap",
+          "MeshRenderer.updateReflectionProbeId",
+          "MeshRenderer.updateReflectionProbeBlendId",
+          "MeshRenderer.updateReflectionProbeBlendWeight",
+          "MeshRenderer.bakeSettings"
         ],
         "claims": [
           "createAirApp",
@@ -10495,7 +10583,34 @@
           "MeshRenderer.setWeight",
           "MeshRenderer.getWeight",
           "MeshRenderer.setWeights",
-          "MeshRenderer.setInstancedAttribute"
+          "MeshRenderer.setInstancedAttribute",
+          "MeshRenderer.constructor",
+          "MeshRenderer.ShadowCastingMode",
+          "MeshRenderer.ShadowReceivingMode",
+          "MeshRenderer.shadowBias",
+          "MeshRenderer.shadowNormalBias",
+          "MeshRenderer.shadowCastingMode",
+          "MeshRenderer.shadowCastingModeForInspector",
+          "MeshRenderer.receiveShadow",
+          "MeshRenderer.receiveShadowForInspector",
+          "MeshRenderer.mesh",
+          "MeshRenderer.model",
+          "MeshRenderer.enableMorph",
+          "MeshRenderer.isGlobalStandardSkinObject",
+          "MeshRenderer.onLoad",
+          "MeshRenderer.onRestore",
+          "MeshRenderer.onEnable",
+          "MeshRenderer.onDisable",
+          "MeshRenderer.onDestroy",
+          "MeshRenderer.onGeometryChanged",
+          "MeshRenderer.onUpdateReceiveDirLight",
+          "MeshRenderer.updateProbeCubemap",
+          "MeshRenderer.updateProbeBlendCubemap",
+          "MeshRenderer.updateProbePlanarMap",
+          "MeshRenderer.updateReflectionProbeDataMap",
+          "MeshRenderer.updateReflectionProbeId",
+          "MeshRenderer.updateReflectionProbeBlendId",
+          "MeshRenderer.updateReflectionProbeBlendWeight"
         ]
       },
       "capabilities": [],
@@ -10521,7 +10636,9 @@
           "node-exists",
           "no-runtime-error"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "interaction": [],
         "visual": [
           "visible-frame"
@@ -10529,12 +10646,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "5ad13d83329f",
-        "source": "3890ce8fbd30ea74",
+        "spec": "5921a5fa608c",
+        "source": "d9b62d4d799956ec",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
-        "attested": 1,
-        "units": 23
+        "verified": 50,
+        "attested": 0,
+        "units": 50
       }
     },
     {

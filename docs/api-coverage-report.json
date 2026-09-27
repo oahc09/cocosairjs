@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-27T07:35:34.704Z",
+  "generatedAt": "2026-09-27T09:03:30.007Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T07:24:55.147Z",
+      "measuredAt": "2026-09-27T08:52:14.603Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T07:33:47.801Z",
+      "measuredAt": "2026-09-27T08:53:01.404Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -29,11 +29,11 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 1043,
-  "totalAttested": 108,
-  "totalVerified": 935,
-  "totalVerifiedViaCall": 862,
-  "totalVerifiedViaRead": 73,
+  "totalClaimed": 1099,
+  "totalAttested": 107,
+  "totalVerified": 992,
+  "totalVerifiedViaCall": 910,
+  "totalVerifiedViaRead": 82,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -58,7 +58,7 @@
       "instrumentation": {
         "observed": 47,
         "total": 49,
-        "hash": "2180dfb1f33c10a4"
+        "hash": "73a8a0d9cef88fe1"
       },
       "claims": 49,
       "tally": {
@@ -82,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "5dc0b6f8bcb7dd36"
+        "hash": "5e89e4b16f34006d"
       },
       "claims": 18,
       "tally": {
@@ -106,7 +106,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "697a4a59b83a32d6"
+        "hash": "a769b846af5c88e1"
       },
       "claims": 28,
       "tally": {
@@ -130,7 +130,7 @@
       "instrumentation": {
         "observed": 8,
         "total": 11,
-        "hash": "30220bde9fecc5fc"
+        "hash": "ca09abd296528820"
       },
       "claims": 11,
       "tally": {
@@ -154,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "43735432def51624"
+        "hash": "12bd6d88232e6b18"
       },
       "claims": 21,
       "tally": {
@@ -178,7 +178,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 13,
-        "hash": "c1fcd9c253d07cde"
+        "hash": "f39d9f48c18b6908"
       },
       "claims": 13,
       "tally": {
@@ -202,7 +202,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "49ee3ba079553fe6"
+        "hash": "df343afc053e92b8"
       },
       "claims": 21,
       "tally": {
@@ -226,7 +226,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "3cf3c1f078a21306"
+        "hash": "44eb65f1d402e9f4"
       },
       "claims": 19,
       "tally": {
@@ -250,7 +250,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "4f39070bea4f1743"
+        "hash": "ccfe880a5d5e2115"
       },
       "claims": 19,
       "tally": {
@@ -274,7 +274,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "4b26b9f4e057f6f9"
+        "hash": "e1812225788be9dd"
       },
       "claims": 19,
       "tally": {
@@ -298,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "5b5d67f94262f798"
+        "hash": "197150ee8729d15e"
       },
       "claims": 21,
       "tally": {
@@ -322,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "b3d20e4dbe08d02e"
+        "hash": "16918dc9b7aba49b"
       },
       "claims": 20,
       "tally": {
@@ -344,17 +344,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 25,
-        "total": 25,
-        "hash": "332e42a724cec4b9"
+        "observed": 54,
+        "total": 54,
+        "hash": "c5a3d2fd184e8535"
       },
-      "claims": 25,
+      "claims": 54,
       "tally": {
-        "verified": 25,
+        "verified": 54,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
-        "verifiedRead": 3
+        "verifiedCall": 45,
+        "verifiedRead": 9
       }
     },
     {
@@ -370,7 +370,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 37,
-        "hash": "5bd306c853f54e7a"
+        "hash": "a2b8927111b5762b"
       },
       "claims": 37,
       "tally": {
@@ -394,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "853df4347bd86b2f"
+        "hash": "9fb05b338f09380a"
       },
       "claims": 20,
       "tally": {
@@ -418,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "d6ea4e4036f35edf"
+        "hash": "64de3249c1f6ee65"
       },
       "claims": 26,
       "tally": {
@@ -442,7 +442,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "23cabd9673ae8aa8"
+        "hash": "33c237de064679af"
       },
       "claims": 28,
       "tally": {
@@ -466,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "4fd9873ffc45a3cc"
+        "hash": "90d5235901c8c5b5"
       },
       "claims": 19,
       "tally": {
@@ -490,7 +490,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 46,
-        "hash": "a9f8f1d9d8336e24"
+        "hash": "b49d63079d5d9974"
       },
       "claims": 46,
       "tally": {
@@ -514,7 +514,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 27,
-        "hash": "6ffc0b6b3d175827"
+        "hash": "795989d0593ab44d"
       },
       "claims": 27,
       "tally": {
@@ -538,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "21f57d9182a7d955"
+        "hash": "8bc339b45b8f13d5"
       },
       "claims": 17,
       "tally": {
@@ -582,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "3dfc71391d98e47c"
+        "hash": "1879d0500d45c225"
       },
       "claims": 15,
       "tally": {
@@ -606,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "4585247e71522be8"
+        "hash": "a2df339628e06eab"
       },
       "claims": 14,
       "tally": {
@@ -630,7 +630,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "29a4fa5c31eb89ae"
+        "hash": "30b42e94e66ea3fe"
       },
       "claims": 24,
       "tally": {
@@ -654,7 +654,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "a80914208d2c0c00"
+        "hash": "07661890a391d8b8"
       },
       "claims": 20,
       "tally": {
@@ -678,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "6ab7f0b4e36d9db3"
+        "hash": "7822bf2c54f92e4b"
       },
       "claims": 20,
       "tally": {
@@ -702,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "648766c1f43c9284"
+        "hash": "a7b9d1f75236caaf"
       },
       "claims": 21,
       "tally": {
@@ -726,7 +726,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 12,
-        "hash": "828a84775ea321b2"
+        "hash": "8c46ade566d8f1f3"
       },
       "claims": 12,
       "tally": {
@@ -750,7 +750,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 17,
-        "hash": "783b48f62ff8cfa7"
+        "hash": "c04c7ac6015d35fa"
       },
       "claims": 17,
       "tally": {
@@ -774,7 +774,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 15,
-        "hash": "7f4320befefa947a"
+        "hash": "9ce53f7b43f9d9f9"
       },
       "claims": 15,
       "tally": {
@@ -798,7 +798,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "771d6881372d9efc"
+        "hash": "eda1ca5149a1f13a"
       },
       "claims": 23,
       "tally": {
@@ -822,7 +822,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "812b379e3c42b652"
+        "hash": "c705def546e55b53"
       },
       "claims": 20,
       "tally": {
@@ -846,7 +846,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "aadd0d23d5ce2019"
+        "hash": "356e3a01a9cd1f30"
       },
       "claims": 19,
       "tally": {
@@ -870,7 +870,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "29bad2c080711e97"
+        "hash": "d26892af014cc2ec"
       },
       "claims": 23,
       "tally": {
@@ -894,7 +894,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "79b5fd25c46c9755"
+        "hash": "6e000f32fdddd3d0"
       },
       "claims": 19,
       "tally": {
@@ -918,7 +918,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "ce0486ed3e21fcd2"
+        "hash": "cd01cf831886a289"
       },
       "claims": 18,
       "tally": {
@@ -942,7 +942,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "68adc0f8b2a54e58"
+        "hash": "1e6373af13100ecf"
       },
       "claims": 19,
       "tally": {
@@ -966,7 +966,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "4b26b9f4e057f6f9"
+        "hash": "e1812225788be9dd"
       },
       "claims": 19,
       "tally": {
@@ -990,7 +990,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "2ef10c8fc5b14e0a"
+        "hash": "37275c508e1ba11d"
       },
       "claims": 22,
       "tally": {
@@ -1014,7 +1014,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "4e1b68b292e5dded"
+        "hash": "2f638f4561866f91"
       },
       "claims": 14,
       "tally": {
@@ -1038,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "c6b8445387e74026"
+        "hash": "48ef44a349af583d"
       },
       "claims": 16,
       "tally": {
@@ -1062,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "76f646066549b55a"
+        "hash": "381b6b5a41e4a17e"
       },
       "claims": 23,
       "tally": {
@@ -1086,7 +1086,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "daaffdb58373ef72"
+        "hash": "f1db759296fe0a2b"
       },
       "claims": 23,
       "tally": {
@@ -1110,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "507be4af4a74322a"
+        "hash": "ef078966dc0e72ea"
       },
       "claims": 22,
       "tally": {
@@ -1134,7 +1134,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 16,
-        "hash": "31081c607c08e017"
+        "hash": "e7110c96b29ebb88"
       },
       "claims": 16,
       "tally": {
@@ -1158,7 +1158,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 25,
-        "hash": "57bb2e9fcfcde494"
+        "hash": "d210e63fe8721d71"
       },
       "claims": 25,
       "tally": {
@@ -1182,7 +1182,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 36,
-        "hash": "c54666b489adfdb3"
+        "hash": "ed3db806f721d91d"
       },
       "claims": 36,
       "tally": {
@@ -1206,7 +1206,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 21,
-        "hash": "d780bea6ba8adb1a"
+        "hash": "6dd222f09bf05c2c"
       },
       "claims": 21,
       "tally": {
@@ -1230,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "4005391c7cd71d55"
+        "hash": "05416b69935cc368"
       },
       "claims": 21,
       "tally": {
@@ -1254,7 +1254,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "38c569731923e9df"
+        "hash": "20610ca95bb3a4b6"
       },
       "claims": 25,
       "tally": {
@@ -1278,7 +1278,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "173a8d37bb1e17af"
+        "hash": "eb4561f72a42d486"
       },
       "claims": 32,
       "tally": {
@@ -1302,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "4dcafd90b47b86c2"
+        "hash": "5634ce1f49118081"
       },
       "claims": 21,
       "tally": {
@@ -1326,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "aca269f93fa4484a"
+        "hash": "19cc49d628aadc34"
       },
       "claims": 19,
       "tally": {
@@ -1350,7 +1350,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "0ee4fb763bf75b78"
+        "hash": "64b6a9de82c55300"
       },
       "claims": 22,
       "tally": {
@@ -1374,7 +1374,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "aedd15d0af74e59d"
+        "hash": "0a67c665bfb233fa"
       },
       "claims": 45,
       "tally": {
@@ -1398,7 +1398,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "07e8fd3492bab689"
+        "hash": "8dc1126b9191bb64"
       },
       "claims": 28,
       "tally": {
@@ -1422,7 +1422,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "965dd7adc3633c06"
+        "hash": "6dbaaa74fe6c30fd"
       },
       "claims": 31,
       "tally": {
@@ -1446,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "5e2a7c08657daa53"
+        "hash": "145928d6b3e78fde"
       },
       "claims": 23,
       "tally": {
@@ -1470,7 +1470,7 @@
       "instrumentation": {
         "observed": 51,
         "total": 51,
-        "hash": "f8e194fd737ea0be"
+        "hash": "9a3ad674154e0dc5"
       },
       "claims": 51,
       "tally": {
@@ -1494,7 +1494,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "8d4370e6ab9deab1"
+        "hash": "825e31aa509af891"
       },
       "claims": 24,
       "tally": {
@@ -1518,7 +1518,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "b267efd01eefcef6"
+        "hash": "e04e1097545eedc4"
       },
       "claims": 30,
       "tally": {
@@ -1542,7 +1542,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "ef9ee61e92736c4e"
+        "hash": "31ab4c371ae1f22e"
       },
       "claims": 29,
       "tally": {
@@ -1566,7 +1566,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "8a63297d10c0cb20"
+        "hash": "3e92b1de280ce4fd"
       },
       "claims": 23,
       "tally": {
@@ -1590,7 +1590,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "1fdef5503cb51fdf"
+        "hash": "c6b9899618a2bef0"
       },
       "claims": 25,
       "tally": {
@@ -1614,7 +1614,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "d4fab8d27866b0f3"
+        "hash": "d4fbd3802690d711"
       },
       "claims": 33,
       "tally": {
@@ -1638,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "6251a6781611aeb5"
+        "hash": "09563593c2bce593"
       },
       "claims": 18,
       "tally": {
@@ -1662,7 +1662,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "2c8bbdf75724c122"
+        "hash": "8d161ed1bee00d86"
       },
       "claims": 23,
       "tally": {
@@ -1686,7 +1686,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "2e60bb8bba2ea2f6"
+        "hash": "69394d35cb9000f1"
       },
       "claims": 35,
       "tally": {
@@ -1710,7 +1710,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "be745b2167ef1320"
+        "hash": "47e0e2ec3c1b0d48"
       },
       "claims": 23,
       "tally": {
@@ -1734,7 +1734,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "2d533242dae40680"
+        "hash": "dfa5a05c644998bf"
       },
       "claims": 28,
       "tally": {
@@ -1758,7 +1758,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "aa28ad70a1a7fc06"
+        "hash": "48e2ba9aa9ac5075"
       },
       "claims": 23,
       "tally": {
@@ -1782,7 +1782,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "ca47e39bc432621f"
+        "hash": "74939ec8a93eb172"
       },
       "claims": 45,
       "tally": {
@@ -1806,7 +1806,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "82f9f60524b85356"
+        "hash": "9723908e8ff50ba7"
       },
       "claims": 21,
       "tally": {
@@ -1830,7 +1830,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "108d0baf48813240"
+        "hash": "3a8e74d97eaaeebf"
       },
       "claims": 29,
       "tally": {
@@ -1854,7 +1854,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "b65b3a458ad7b0d6"
+        "hash": "c954b0e882bec217"
       },
       "claims": 27,
       "tally": {
@@ -1878,7 +1878,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "63d75b2ed7445eb4"
+        "hash": "cf40b32f715def25"
       },
       "claims": 19,
       "tally": {
@@ -1902,7 +1902,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "e44b936f8c362d65"
+        "hash": "cfe34285b317b256"
       },
       "claims": 23,
       "tally": {
@@ -1926,7 +1926,7 @@
       "instrumentation": {
         "observed": 44,
         "total": 44,
-        "hash": "a0006cb98f82599e"
+        "hash": "034c8740891a9533"
       },
       "claims": 44,
       "tally": {
@@ -1950,7 +1950,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "7031a75fdf743d10"
+        "hash": "64444024d6e64ba0"
       },
       "claims": 22,
       "tally": {
@@ -1974,7 +1974,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "845a6908be119dbf"
+        "hash": "b30dac30e9ac0214"
       },
       "claims": 30,
       "tally": {
@@ -1998,7 +1998,7 @@
       "instrumentation": {
         "observed": 70,
         "total": 70,
-        "hash": "975da085462a00cb"
+        "hash": "32a5b7070269e075"
       },
       "claims": 70,
       "tally": {
@@ -2022,7 +2022,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "421604db64601574"
+        "hash": "be64d8add0806beb"
       },
       "claims": 19,
       "tally": {
@@ -2046,7 +2046,7 @@
       "instrumentation": {
         "observed": 41,
         "total": 41,
-        "hash": "e604fdaf109ec5a0"
+        "hash": "8547068e4a9e26ea"
       },
       "claims": 41,
       "tally": {
@@ -2070,7 +2070,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "447177c775a8e094"
+        "hash": "e4e8b8da256d3003"
       },
       "claims": 23,
       "tally": {
@@ -2094,7 +2094,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "1102aad970d6eace"
+        "hash": "7788f882d7d1a587"
       },
       "claims": 30,
       "tally": {
@@ -2118,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "f2dde45f629696ed"
+        "hash": "699bed70457fa6c6"
       },
       "claims": 23,
       "tally": {
@@ -2142,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "417fad574f1ec42b"
+        "hash": "b86ce2952ad51b5d"
       },
       "claims": 18,
       "tally": {
@@ -2166,7 +2166,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "6d8800e6566af35e"
+        "hash": "5b1c12cc9ebffb8e"
       },
       "claims": 24,
       "tally": {
@@ -2190,7 +2190,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "248d7b294511ea47"
+        "hash": "6e539074831ac69a"
       },
       "claims": 22,
       "tally": {
@@ -2214,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "8d4b78d876b96633"
+        "hash": "0ede58385e7e62f6"
       },
       "claims": 16,
       "tally": {
@@ -2238,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "1b94dd03f8cf912c"
+        "hash": "171753fbd6e59ea7"
       },
       "claims": 19,
       "tally": {
@@ -2262,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "fc5fb5515d95df19"
+        "hash": "854a520108485a59"
       },
       "claims": 21,
       "tally": {
@@ -2286,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "ce0486ed3e21fcd2"
+        "hash": "cd01cf831886a289"
       },
       "claims": 18,
       "tally": {
@@ -2310,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "01a1f5c6fb72d905"
+        "hash": "90cf66e6c179aeb3"
       },
       "claims": 18,
       "tally": {
@@ -2332,17 +2332,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
-        "total": 23,
-        "hash": "715cf87b562b9122"
+        "observed": 50,
+        "total": 50,
+        "hash": "68544cbd7f0fc21b"
       },
-      "claims": 23,
+      "claims": 50,
       "tally": {
-        "verified": 22,
-        "attested": 1,
+        "verified": 50,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 21,
-        "verifiedRead": 1
+        "verifiedCall": 46,
+        "verifiedRead": 4
       }
     },
     {
@@ -2358,7 +2358,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 45,
-        "hash": "1ca8ea45d2261228"
+        "hash": "e9a5b4a9e9e5e581"
       },
       "claims": 45,
       "tally": {
@@ -2382,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "5dc0b6f8bcb7dd36"
+        "hash": "5e89e4b16f34006d"
       },
       "claims": 18,
       "tally": {
@@ -2406,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "4a42e129af0dfd24"
+        "hash": "a94dad37ccbf6866"
       },
       "claims": 24,
       "tally": {
@@ -2430,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "0afae2beedc4affb"
+        "hash": "32f70bba42dc7995"
       },
       "claims": 21,
       "tally": {
@@ -2454,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "989fb51760e2f104"
+        "hash": "a55a02420eb05622"
       },
       "claims": 33,
       "tally": {
@@ -2478,7 +2478,7 @@
       "instrumentation": {
         "observed": 81,
         "total": 81,
-        "hash": "285ea3518afbbb57"
+        "hash": "924ae8206bd7a50c"
       },
       "claims": 81,
       "tally": {
@@ -2502,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "e958db5124be676e"
+        "hash": "ade00eff646d684b"
       },
       "claims": 21,
       "tally": {
@@ -2526,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "e2dc08b2a0a9a946"
+        "hash": "77c9ff235a782bc9"
       },
       "claims": 19,
       "tally": {
@@ -2550,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "0a76ce69368058a5"
+        "hash": "1cf31460186be2a4"
       },
       "claims": 19,
       "tally": {
@@ -2574,7 +2574,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 34,
-        "hash": "c6c83b132bfa3463"
+        "hash": "13942ad9d570fc06"
       },
       "claims": 34,
       "tally": {
@@ -2598,7 +2598,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 36,
-        "hash": "ec61a7c7165b3efc"
+        "hash": "156d8ecc69f92601"
       },
       "claims": 36,
       "tally": {
@@ -2622,7 +2622,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 33,
-        "hash": "da7101db1c2702aa"
+        "hash": "1e421a2df9965137"
       },
       "claims": 33,
       "tally": {
@@ -2646,7 +2646,7 @@
       "instrumentation": {
         "observed": 60,
         "total": 69,
-        "hash": "2f56c0081963b041"
+        "hash": "3883cb564af0bf31"
       },
       "claims": 69,
       "tally": {
@@ -2670,7 +2670,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 31,
-        "hash": "9f60e3e19966d70b"
+        "hash": "af1437d7e6352edd"
       },
       "claims": 31,
       "tally": {
@@ -2694,7 +2694,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 41,
-        "hash": "59330658f7ab1eee"
+        "hash": "a0067c9ace6a23ec"
       },
       "claims": 41,
       "tally": {
@@ -2718,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "aca1f38d903ec0ec"
+        "hash": "b3407766d81ecadd"
       },
       "claims": 22,
       "tally": {
@@ -2742,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "fc5fb5515d95df19"
+        "hash": "854a520108485a59"
       },
       "claims": 21,
       "tally": {
@@ -2766,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "8b308f07740f3c37"
+        "hash": "e6a4529871fcd36a"
       },
       "claims": 22,
       "tally": {
@@ -2790,7 +2790,7 @@
       "instrumentation": {
         "observed": 38,
         "total": 41,
-        "hash": "257653bb76677090"
+        "hash": "d845a5c48ed2c824"
       },
       "claims": 41,
       "tally": {
@@ -2814,7 +2814,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "caec5f2712352b8a"
+        "hash": "33678de999a817f8"
       },
       "claims": 23,
       "tally": {
@@ -2838,7 +2838,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 18,
-        "hash": "d46d097c70a4a67e"
+        "hash": "f3fbbd14871ad846"
       },
       "claims": 18,
       "tally": {
@@ -2862,7 +2862,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 20,
-        "hash": "3c620664a1ff4b4d"
+        "hash": "cbc58d2138620871"
       },
       "claims": 20,
       "tally": {
@@ -2886,7 +2886,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "65886e9ed9cd5cbe"
+        "hash": "e894c306108e2481"
       },
       "claims": 19,
       "tally": {
@@ -2910,7 +2910,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "d049e6bb4f045bd6"
+        "hash": "d8f95b6cdcab67c5"
       },
       "claims": 19,
       "tally": {
@@ -2934,7 +2934,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "d3911e61a89e54fa"
+        "hash": "a82986e4c19f4e12"
       },
       "claims": 32,
       "tally": {
@@ -2958,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "3e2c9a954d21ee0e"
+        "hash": "8df03c405b92cbce"
       },
       "claims": 16,
       "tally": {
@@ -2982,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "0395f9b090622e30"
+        "hash": "843eebea1ce4c902"
       },
       "claims": 20,
       "tally": {
@@ -3006,7 +3006,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 29,
-        "hash": "729727b306638326"
+        "hash": "1e3b51d4307404e5"
       },
       "claims": 29,
       "tally": {
@@ -3030,7 +3030,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "37e6a892dce758d4"
+        "hash": "ac5a1709593cae28"
       },
       "claims": 22,
       "tally": {
@@ -3054,7 +3054,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "98705b7d6be165e2"
+        "hash": "447111e799c005c5"
       },
       "claims": 32,
       "tally": {
@@ -3078,7 +3078,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 26,
-        "hash": "19a8c1905534f6d0"
+        "hash": "6fd036dfd1c85260"
       },
       "claims": 26,
       "tally": {
@@ -3102,7 +3102,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 31,
-        "hash": "3a76a5f4a8fee410"
+        "hash": "8bd429f6e6525778"
       },
       "claims": 31,
       "tally": {
@@ -3126,7 +3126,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "5b032f578c49a0f1"
+        "hash": "87cd48c2d182756f"
       },
       "claims": 16,
       "tally": {
@@ -3150,7 +3150,7 @@
       "instrumentation": {
         "observed": 9,
         "total": 9,
-        "hash": "703632bb7f1d0a83"
+        "hash": "e9534395178e1c11"
       },
       "claims": 9,
       "tally": {
@@ -3174,7 +3174,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "5a16c7296513e14c"
+        "hash": "092a30173ab77267"
       },
       "claims": 23,
       "tally": {
@@ -3198,7 +3198,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 27,
-        "hash": "432d3bee5c48ad12"
+        "hash": "ae582691caeb680a"
       },
       "claims": 27,
       "tally": {
@@ -3222,7 +3222,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "c8f6a556271d931c"
+        "hash": "ea54b2d6f09aecb9"
       },
       "claims": 23,
       "tally": {
@@ -3246,7 +3246,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "39da310c28a6d4a7"
+        "hash": "aeae0658dd716b34"
       },
       "claims": 25,
       "tally": {
@@ -3270,7 +3270,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "52fd59aad23b4bf2"
+        "hash": "5359d432545b8f7b"
       },
       "claims": 27,
       "tally": {
@@ -3294,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "de074208a79fc93f"
+        "hash": "8346db6432046b0b"
       },
       "claims": 22,
       "tally": {
@@ -3318,7 +3318,7 @@
       "instrumentation": {
         "observed": 46,
         "total": 48,
-        "hash": "69301c8421af0fce"
+        "hash": "cbfeaafc302b4b73"
       },
       "claims": 48,
       "tally": {
@@ -3342,7 +3342,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "c70362cd56ec6bcf"
+        "hash": "5e1b98059c4f0b62"
       },
       "claims": 14,
       "tally": {
@@ -3366,7 +3366,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 51,
-        "hash": "72233a73524cde8f"
+        "hash": "4291cfc1c07c4e6c"
       },
       "claims": 51,
       "tally": {
@@ -3390,7 +3390,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 30,
-        "hash": "4a7633eb5b9307a5"
+        "hash": "c84530a99ac8f9d1"
       },
       "claims": 30,
       "tally": {
@@ -3414,7 +3414,7 @@
       "instrumentation": {
         "observed": 95,
         "total": 96,
-        "hash": "334a1cefc5764d09"
+        "hash": "0644bb1458b68a39"
       },
       "claims": 96,
       "tally": {
@@ -3438,7 +3438,7 @@
       "instrumentation": {
         "observed": 48,
         "total": 49,
-        "hash": "25cf26cb33e12a76"
+        "hash": "b4251d912dd95ff8"
       },
       "claims": 49,
       "tally": {
@@ -3462,7 +3462,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "416d2ae8de6bb8ff"
+        "hash": "7a5f264882235ae1"
       },
       "claims": 20,
       "tally": {
@@ -3486,7 +3486,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 36,
-        "hash": "4359a4a1755fed5a"
+        "hash": "34fd685f611a17d0"
       },
       "claims": 36,
       "tally": {
@@ -3510,7 +3510,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "4acee85ffb38e2bf"
+        "hash": "53ae1e90a52c3f67"
       },
       "claims": 36,
       "tally": {
@@ -3527,25 +3527,25 @@
       "denominator": "coverageRequired",
       "total": 963,
       "required": 963,
-      "claimed": 599,
-      "attested": 32,
-      "verified": 567,
-      "requiredClaimed": 599,
-      "requiredVerified": 567,
+      "claimed": 655,
+      "attested": 31,
+      "verified": 624,
+      "requiredClaimed": 655,
+      "requiredVerified": 624,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 396,
-      "unstated": 396,
-      "verifiedViaCall": 515,
-      "verifiedViaRead": 52,
+      "uncovered": 339,
+      "unstated": 339,
+      "verifiedViaCall": 563,
+      "verifiedViaRead": 61,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 515,
-      "requiredVerifiedViaRead": 52,
+      "requiredVerifiedViaCall": 563,
+      "requiredVerifiedViaRead": 61,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.535,
-      "claimedRate": 0.622,
-      "verifiedRate": 0.589,
-      "allUnitsVerifiedRate": 0.589,
+      "requiredVerifiedViaCallRate": 0.585,
+      "claimedRate": 0.68,
+      "verifiedRate": 0.648,
+      "allUnitsVerifiedRate": 0.648,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -6730,6 +6730,238 @@
     },
     {
       "unit": "Camera.camera",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.ProjectionType",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.FOVAxis",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.Aperture",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.Shutter",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.ISO",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.TARGET_TEXTURE_CHANGE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.priority",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.visibility",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.clearFlags",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.clearColor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.clearDepth",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.clearStencil",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.projection",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.fovAxis",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.fov",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.orthoHeight",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.near",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.far",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.aperture",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.shutter",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.iso",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.rect",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.targetTexture",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.onLoad",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.onEnable",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.onDisable",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.onDestroy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "Camera.convertToUINode",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -10595,6 +10827,14 @@
       ]
     },
     {
+      "unit": "MeshRenderer.bakeSettings",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
       "unit": "MeshRenderer.setWeight",
       "tier": "core",
       "via": "call",
@@ -10620,6 +10860,222 @@
     },
     {
       "unit": "MeshRenderer.setInstancedAttribute",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.ShadowCastingMode",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.ShadowReceivingMode",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.shadowBias",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.shadowNormalBias",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.shadowCastingMode",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.shadowCastingModeForInspector",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.receiveShadow",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.receiveShadowForInspector",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.mesh",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.model",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.enableMorph",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.isGlobalStandardSkinObject",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.onLoad",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.onRestore",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.onEnable",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.onDisable",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.onDestroy",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.onGeometryChanged",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.onUpdateReceiveDirLight",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.updateProbeCubemap",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.updateProbeBlendCubemap",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.updateProbePlanarMap",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.updateReflectionProbeDataMap",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.updateReflectionProbeId",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.updateReflectionProbeBlendId",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "meshrenderer-hooks"
+      ]
+    },
+    {
+      "unit": "MeshRenderer.updateReflectionProbeBlendWeight",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -14192,13 +14648,6 @@
       ]
     },
     {
-      "unit": "MeshRenderer.bakeSettings",
-      "tier": "core",
-      "examples": [
-        "meshrenderer-hooks"
-      ]
-    },
-    {
       "unit": "geometry.intersect",
       "tier": "advanced",
       "examples": [
@@ -15016,13 +15465,6 @@
       ]
     },
     {
-      "unit": "MeshRenderer.bakeSettings",
-      "tier": "core",
-      "examples": [
-        "meshrenderer-hooks"
-      ]
-    },
-    {
       "unit": "geometry.intersect",
       "tier": "advanced",
       "examples": [
@@ -15435,33 +15877,6 @@
     "Mesh.destroyRenderingMesh",
     "Mesh.initDefault",
     "Mesh.allowDataAccess",
-    "MeshRenderer.ShadowCastingMode",
-    "MeshRenderer.ShadowReceivingMode",
-    "MeshRenderer.shadowBias",
-    "MeshRenderer.shadowNormalBias",
-    "MeshRenderer.shadowCastingMode",
-    "MeshRenderer.shadowCastingModeForInspector",
-    "MeshRenderer.onUpdateReceiveDirLight",
-    "MeshRenderer.receiveShadow",
-    "MeshRenderer.receiveShadowForInspector",
-    "MeshRenderer.mesh",
-    "MeshRenderer.model",
-    "MeshRenderer.enableMorph",
-    "MeshRenderer.isGlobalStandardSkinObject",
-    "MeshRenderer.constructor",
-    "MeshRenderer.onLoad",
-    "MeshRenderer.onRestore",
-    "MeshRenderer.onEnable",
-    "MeshRenderer.onDisable",
-    "MeshRenderer.onDestroy",
-    "MeshRenderer.onGeometryChanged",
-    "MeshRenderer.updateProbeCubemap",
-    "MeshRenderer.updateProbeBlendCubemap",
-    "MeshRenderer.updateProbePlanarMap",
-    "MeshRenderer.updateReflectionProbeDataMap",
-    "MeshRenderer.updateReflectionProbeId",
-    "MeshRenderer.updateReflectionProbeBlendId",
-    "MeshRenderer.updateReflectionProbeBlendWeight",
     "DirectionalLight.illuminance",
     "DirectionalLight.shadowEnabled",
     "DirectionalLight.shadowPcf",
@@ -15731,35 +16146,6 @@
     "Layers.deleteLayer",
     "Layers.nameToLayer",
     "Layers.layerToName",
-    "Camera.ProjectionType",
-    "Camera.FOVAxis",
-    "Camera.Aperture",
-    "Camera.Shutter",
-    "Camera.ISO",
-    "Camera.TARGET_TEXTURE_CHANGE",
-    "Camera.constructor",
-    "Camera.priority",
-    "Camera.visibility",
-    "Camera.clearFlags",
-    "Camera.clearColor",
-    "Camera.clearDepth",
-    "Camera.clearStencil",
-    "Camera.projection",
-    "Camera.fovAxis",
-    "Camera.fov",
-    "Camera.orthoHeight",
-    "Camera.near",
-    "Camera.far",
-    "Camera.aperture",
-    "Camera.shutter",
-    "Camera.iso",
-    "Camera.rect",
-    "Camera.targetTexture",
-    "Camera.onLoad",
-    "Camera.onEnable",
-    "Camera.onDisable",
-    "Camera.onDestroy",
-    "Camera.convertToUINode",
     "ModelRenderer",
     "ModelRenderer.constructor",
     "ModelRenderer.visibility",
@@ -15792,5 +16178,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3416
+  "unclaimedRequired": 3360
 }

@@ -18,6 +18,7 @@ import {
     utils,
     primitives,
 } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 // ---- 共享脚手架：可见帧 + 场景就绪（camera-viewport-props）----
 var app = await createAirApp({ canvas: '#GameCanvas' });
@@ -47,10 +48,11 @@ cube.layer = Layers.Enum.DEFAULT;
 scene.addChild(cube);
 cube.setPosition(new Vec3(0, 0.6, 0));
 var cubeRenderer = cube.addComponent(MeshRenderer);
-cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 var cubeMaterial = new Material();
+var cubeMesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
 cubeMaterial.initialize({ effectName: 'builtin-standard' });
 cubeMaterial.setProperty('mainColor', new Color(155, 215, 205));
+cubeRenderer.mesh = cubeMesh;
 cubeRenderer.material = cubeMaterial;
 
 // ---- 主题：Camera — 视口与管线属性面（确定性 readback，全部进 __probe）----
@@ -115,5 +117,113 @@ app.run(scene);
 T('pipeline', () => {
     const rendererCamera = camera.camera;
     return typeof rendererCamera.pipeline === 'string' ? rendererCamera.pipeline : 'invalid-type';
+});
+
+const cameraProbe = { ready: false, ok: false, checks: [] as { name: string; ok: boolean; detail: string }[] };
+(window as any).__trialProbe = cameraProbe;
+const cameraCheck = (name: string, ok: boolean, detail = '') => {
+    cameraProbe.checks.push({ name, ok, detail });
+    if (!ok) throw new Error(`${name}: ${detail}`);
+};
+const nextCameraFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+requestAnimationFrame(async () => {
+    camera.enabled = false;
+    camera.enabled = true;
+    const cameraValues: Record<string, unknown> = {
+        'Camera.constructor': typeof Camera.prototype.constructor,
+        'Camera.ProjectionType': Camera.ProjectionType,
+        'Camera.FOVAxis': Camera.FOVAxis,
+        'Camera.Aperture': Camera.Aperture,
+        'Camera.Shutter': Camera.Shutter,
+        'Camera.ISO': Camera.ISO,
+        'Camera.TARGET_TEXTURE_CHANGE': Camera.TARGET_TEXTURE_CHANGE,
+        'Camera.priority': camera.priority,
+        'Camera.visibility': camera.visibility,
+        'Camera.clearFlags': camera.clearFlags,
+        'Camera.clearColor': camera.clearColor,
+        'Camera.clearDepth': camera.clearDepth,
+        'Camera.clearStencil': camera.clearStencil,
+        'Camera.projection': camera.projection,
+        'Camera.fovAxis': camera.fovAxis,
+        'Camera.fov': camera.fov,
+        'Camera.orthoHeight': camera.orthoHeight,
+        'Camera.near': camera.near,
+        'Camera.far': camera.far,
+        'Camera.aperture': camera.aperture,
+        'Camera.shutter': camera.shutter,
+        'Camera.iso': camera.iso,
+        'Camera.rect': camera.rect,
+        'Camera.targetTexture': camera.targetTexture,
+        'Camera.onLoad': typeof camera.onLoad,
+        'Camera.onEnable': typeof camera.onEnable,
+        'Camera.onDisable': typeof camera.onDisable,
+        'Camera.onDestroy': typeof camera.onDestroy,
+    };
+    for (const [name, value] of Object.entries(cameraValues)) {
+        const type = typeof value;
+        cameraCheck(
+            name,
+            value === null ||
+                type === 'string' ||
+                type === 'boolean' ||
+                type === 'function' ||
+                (type === 'number' && Number.isFinite(value)) ||
+                type === 'object',
+            `${type}:${String(value)}`,
+        );
+    }
+    const renderCamera = camera.camera;
+    cameraCheck('Camera.camera', !!renderCamera);
+    cameraCheck(
+        'renderer.scene.Camera.pipeline',
+        typeof renderCamera.pipeline === 'string',
+        String(renderCamera.pipeline),
+    );
+    const uiPoint = camera.convertToUINode(cameraNode.worldPosition, cameraNode, new Vec3());
+    cameraCheck(
+        'Camera.convertToUINode',
+        Number.isFinite(uiPoint.x) && Number.isFinite(uiPoint.y) && Number.isFinite(uiPoint.z),
+    );
+
+    const scratchCameraNode = new Node('CameraLifecycleProbe');
+    scratchCameraNode.active = false;
+    scene.addChild(scratchCameraNode);
+    const scratchCamera = scratchCameraNode.addComponent(Camera);
+    scratchCamera.enabled = false;
+    scratchCameraNode.active = true;
+    scratchCameraNode.destroy();
+    await nextCameraFrame();
+    await nextCameraFrame();
+    cameraProbe.ok = true;
+    cameraProbe.ready = true;
+});
+
+function ownedCubeResources() {
+    return [
+        { name: 'CameraViewportMesh', ref: cubeMesh },
+        { name: 'CameraViewportMaterial', ref: cubeMaterial },
+    ];
+}
+
+installAssetLifecycle({
+    label: 'camera-viewport-props',
+    hold: ownedCubeResources,
+    release: () => {
+        cubeRenderer.mesh = null;
+        cubeRenderer.material = null;
+        cubeRenderer.destroy();
+        cubeMesh.destroy();
+        cubeMaterial.destroy();
+    },
+    reacquire: () => {
+        cubeMesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+        cubeMaterial = new Material();
+        cubeMaterial.initialize({ effectName: 'builtin-standard' });
+        cubeMaterial.setProperty('mainColor', new Color(155, 215, 205));
+        cubeRenderer = cube.addComponent(MeshRenderer);
+        cubeRenderer.mesh = cubeMesh;
+        cubeRenderer.material = cubeMaterial;
+        return ownedCubeResources();
+    },
 });
 console.log('[camera-viewport-props] running');
