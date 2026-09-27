@@ -18,6 +18,7 @@ import {
     utils,
     primitives,
 } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 // ---- 共享脚手架：可见帧 + 场景就绪（material-ops）----
 var app = await createAirApp({ canvas: '#GameCanvas' });
@@ -74,6 +75,14 @@ import * as cocosairNS from 'cocosair';
 var src = new Material();
 src.initialize({ effectName: 'builtin-standard' });
 src.setProperty('mainColor', new Color(10, 20, 30, 255));
+T('covMaterial.constructor', () => new Material() instanceof Material);
+T('covMaterial.effectAsset', () => src.effectAsset === null || typeof src.effectAsset === 'object');
+T('covMaterial.effectName', () => src.effectName);
+T('covMaterial.technique', () => src.technique);
+T('covMaterial.passes', () => src.passes.length);
+T('covMaterial.hash', () => src.hash);
+T('covMaterial.parent', () => src.parent === null);
+T('covMaterial.owner', () => src.owner === null);
 var dst = new Material();
 T('copy', () => {
     try {
@@ -112,8 +121,33 @@ T('overridePS', () => {
         return 'threw';
     }
 });
+const covMaterialFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covMaterial.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covMaterialFailures;
 probe.topic = 'material-ops';
 (window as any).__probe = async () => probe;
+if (covMaterialFailures.length) console.error(`[coverage] Material probes failed: ${covMaterialFailures.join(', ')}`);
 
 app.run(scene);
+const holdMaterials = () => [
+    { name: 'source-material', ref: src },
+    { name: 'destination-material', ref: dst },
+];
+installAssetLifecycle({
+    label: 'material-ops',
+    hold: holdMaterials,
+    release: () => {
+        src.destroy();
+        dst.destroy();
+    },
+    reacquire: () => {
+        src = new Material();
+        src.initialize({ effectName: 'builtin-standard' });
+        src.setProperty('mainColor', new Color(10, 20, 30, 255));
+        dst = new Material();
+        dst.copy(src);
+        return holdMaterials();
+    },
+});
 console.log('[material-ops] running');

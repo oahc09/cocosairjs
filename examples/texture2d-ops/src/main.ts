@@ -148,8 +148,16 @@ T('validate', () => {
         return 'threw';
     }
 });
+T('covTexture.mipmaps', () => tex.mipmaps.length);
+T('covTexture.image', () => tex.image === null || tex.image instanceof Object);
+T('covTexture.description', () => tex.description());
+const covTextureFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covTexture.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covTextureFailures;
 probe.topic = 'texture2d-ops';
 (window as any).__probe = async () => probe;
+if (covTextureFailures.length) console.error(`[coverage] Texture2D probes failed: ${covTextureFailures.join(', ')}`);
 
 // §25 资源生命周期合同（真拆建）：hold 当前对象 → destroy → 按 lifecycleMake 重建。
 var lcRef: any = tex;

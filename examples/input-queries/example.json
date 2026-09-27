@@ -30,7 +30,12 @@
     "Input.getAllTouches",
     "Input.getTouchCount",
     "Input.setAccelerometerEnabled",
-    "Input.setAccelerometerInterval"
+    "Input.setAccelerometerInterval",
+    "Input.EventType",
+    "Input.constructor",
+    "Input.on",
+    "Input.once",
+    "Input.off"
   ],
   "capabilities": [],
   "learning": {
@@ -61,7 +66,12 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "Input.EventType",
+      "Input.constructor",
+      "Input.on",
+      "Input.once",
+      "Input.off"
     ],
     "claims": [
       "createAirApp",
@@ -86,7 +96,12 @@
       "Input.getAllTouches",
       "Input.getTouchCount",
       "Input.setAccelerometerEnabled",
-      "Input.setAccelerometerInterval"
+      "Input.setAccelerometerInterval",
+      "Input.EventType",
+      "Input.constructor",
+      "Input.on",
+      "Input.once",
+      "Input.off"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -227,6 +242,36 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L95"
+      },
+      {
+        "api": "Input.EventType",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L104"
+      },
+      {
+        "api": "Input.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "Input.on",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "Input.once",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L107"
+      },
+      {
+        "api": "Input.off",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
       }
     ]
   },
@@ -259,11 +304,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "d42be4ea4580",
-    "source": "9104caa57f0c51c0",
-    "candidate": "8746fc59b6aa0408",
-    "verified": 23,
+    "spec": "1eaac15002c1",
+    "source": "31b545ce974e0261",
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 28,
     "attested": 0,
-    "units": 23
+    "units": 28
   }
 }

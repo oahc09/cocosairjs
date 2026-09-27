@@ -102,8 +102,24 @@ T('updateWT', () => {
         return 'threw';
     }
 });
+T('covScene.renderScene', () => (scene.renderScene === null ? 'null' : 'ready'));
+T('covScene.globals', () => typeof scene.globals);
+T('covScene.addComponent', () => {
+    try {
+        scene.addComponent(SceneProbe);
+        return 'unexpected';
+    } catch (e) {
+        return 'documented-error';
+    }
+});
+const covSceneFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covScene.') && value === 'threw')
+    .map(([key]) => key);
+if (probe['covScene.addComponent'] !== 'documented-error') covSceneFailures.push('Scene.addComponent');
+probe.coverageFailures = covSceneFailures;
 probe.topic = 'scene-runtime-ops';
 (window as any).__probe = async () => probe;
+if (covSceneFailures.length) console.error(`[coverage] Scene probes failed: ${covSceneFailures.join(', ')}`);
 
 // §25 资源生命周期合同（真拆建）：hold 当前对象 → destroy → 按 lifecycleMake 重建。
 var lcRef: any = lcHolder;

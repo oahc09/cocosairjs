@@ -88,12 +88,14 @@ T(
 T('all', () => typeof ((Layers as any).Enum ? ((Layers as any).Enum as any).ALL : (Layers as any).ALL));
 T('maskExclude', () => {
     try {
-        var m = (Layers as any).makeMaskExclude(['IGNORE_RAYCAST']);
+        var m = Layers.makeMaskExclude([Layers.Enum.IGNORE_RAYCAST]);
         return typeof m;
     } catch (e) {
         return 'threw';
     }
 });
+T('covLayers.BitMask', () => typeof Layers.BitMask);
+T('covLayers.makeMaskInclude', () => Layers.makeMaskInclude([Layers.Enum.DEFAULT]));
 T('nameToLayer', () => {
     try {
         var b = (Layers as any).nameToLayer
@@ -123,17 +125,25 @@ T('init', () => {
 });
 T('addDelete', () => {
     try {
-        (Layers as any).addLayer(30, 'ProbeLayerX');
-        var b1 = (Layers as any).nameToLayer('DEFAULT');
-        (Layers as any).deleteLayer('ProbeLayerX');
-        var b2 = (Layers as any).nameToLayer('DEFAULT');
-        return b1 >= 0 && b2 === 0 ? 'cycled' : b1 + '→' + b2;
+        Layers.addLayer('ProbeLayerX', 19);
+        var bit = Layers.nameToLayer('ProbeLayerX');
+        var layerName = Layers.layerToName(bit);
+        Layers.deleteLayer(bit);
+        return bit === 19 && layerName === 'ProbeLayerX' ? 'cycled' : `${bit}:${layerName}`;
     } catch (e) {
         return 'threw';
     }
 });
+const covLayerFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covLayers.') && value === 'threw')
+    .map(([key]) => key);
+for (const key of ['maskExclude', 'nameToLayer', 'layerToName', 'addDelete']) {
+    if (probe[key] === 'threw') covLayerFailures.push(key);
+}
+probe.coverageFailures = covLayerFailures;
 probe.topic = 'layers-enum-ops';
 (window as any).__probe = async () => probe;
+if (covLayerFailures.length) console.error(`[coverage] Layers probes failed: ${covLayerFailures.join(', ')}`);
 
 app.run(scene);
 console.log('[layers-enum-ops] running');

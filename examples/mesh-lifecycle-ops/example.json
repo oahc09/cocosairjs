@@ -31,7 +31,20 @@
     "Mesh.merge",
     "Mesh.validateMergingMesh",
     "Mesh.updateSubMesh",
-    "Mesh.initialize"
+    "Mesh.initialize",
+    "Mesh.struct",
+    "Mesh.data",
+    "Mesh.hash",
+    "Mesh.jointBufferIndices",
+    "Mesh.renderingSubMeshes",
+    "Mesh.morphRendering",
+    "Mesh.destroyRenderingMesh",
+    "Mesh.initDefault",
+    "Mesh.allowDataAccess",
+    "ModelRenderer",
+    "ModelRenderer.constructor",
+    "ModelRenderer.visibility",
+    "ModelRenderer.priority"
   ],
   "capabilities": [],
   "learning": {
@@ -58,7 +71,20 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "Mesh.struct",
+      "Mesh.data",
+      "Mesh.hash",
+      "Mesh.jointBufferIndices",
+      "Mesh.renderingSubMeshes",
+      "Mesh.morphRendering",
+      "Mesh.destroyRenderingMesh",
+      "Mesh.initDefault",
+      "Mesh.allowDataAccess",
+      "ModelRenderer",
+      "ModelRenderer.constructor",
+      "ModelRenderer.visibility",
+      "ModelRenderer.priority"
     ],
     "claims": [
       "createAirApp",
@@ -84,7 +110,20 @@
       "Mesh.merge",
       "Mesh.validateMergingMesh",
       "Mesh.updateSubMesh",
-      "Mesh.initialize"
+      "Mesh.initialize",
+      "Mesh.struct",
+      "Mesh.data",
+      "Mesh.hash",
+      "Mesh.jointBufferIndices",
+      "Mesh.renderingSubMeshes",
+      "Mesh.morphRendering",
+      "Mesh.destroyRenderingMesh",
+      "Mesh.initDefault",
+      "Mesh.allowDataAccess",
+      "ModelRenderer",
+      "ModelRenderer.constructor",
+      "ModelRenderer.visibility",
+      "ModelRenderer.priority"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -92,145 +131,223 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L26"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L28"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L29"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L43"
+        "sourceLocation": "L45"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L31"
+        "sourceLocation": "L33"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L44"
+        "sourceLocation": "L46"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L38"
+        "sourceLocation": "L40"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L37"
+        "sourceLocation": "L39"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L31"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L50"
+        "sourceLocation": "L52"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L53"
+        "sourceLocation": "L55"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L54"
+        "sourceLocation": "L56"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L53"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L53"
       },
       {
         "api": "Mesh.assign",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L98"
+        "sourceLocation": "L102"
       },
       {
         "api": "Mesh.reset",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L106"
+        "sourceLocation": "L112"
       },
       {
         "api": "Mesh.merge",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L89"
+        "sourceLocation": "L91"
       },
       {
         "api": "Mesh.validateMergingMesh",
         "source": "src/main.ts",
         "validator": "visible-frame",
-        "sourceLocation": "L80"
+        "sourceLocation": "L82"
       },
       {
         "api": "Mesh.updateSubMesh",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L123"
+        "sourceLocation": "L131"
       },
       {
         "api": "Mesh.initialize",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L53"
+        "sourceLocation": "L55"
+      },
+      {
+        "api": "Mesh.struct",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L138"
+      },
+      {
+        "api": "Mesh.data",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L139"
+      },
+      {
+        "api": "Mesh.hash",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L140"
+      },
+      {
+        "api": "Mesh.jointBufferIndices",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L141"
+      },
+      {
+        "api": "Mesh.renderingSubMeshes",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L142"
+      },
+      {
+        "api": "Mesh.morphRendering",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L143"
+      },
+      {
+        "api": "Mesh.destroyRenderingMesh",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L146"
+      },
+      {
+        "api": "Mesh.initDefault",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Mesh.allowDataAccess",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L144"
+      },
+      {
+        "api": "ModelRenderer",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L158"
+      },
+      {
+        "api": "ModelRenderer.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "ModelRenderer.visibility",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "ModelRenderer.priority",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L41"
       }
     ]
   },
@@ -245,7 +362,7 @@
   },
   "validation": {
     "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": [],
+    "lifecycle": ["resource-released"],
     "interaction": [],
     "visual": ["visible-frame"],
     "capability": []
@@ -263,11 +380,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "d1fe84ce4d4d",
-    "source": "f6949b013e9f3653",
-    "candidate": "8746fc59b6aa0408",
-    "verified": 24,
+    "spec": "83e8aa4de17a",
+    "source": "22ad5db42f3d1a3a",
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 37,
     "attested": 0,
-    "units": 24
+    "units": 37
   }
 }

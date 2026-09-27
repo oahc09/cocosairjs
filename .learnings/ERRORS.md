@@ -394,3 +394,183 @@ Use the declared Mat3 linear component name `m08` for the last matrix element an
 - **Notes**: Replaced all `m22` probes with `m08`; focused G1 rerun passed 3/3.
 
 ---
+
+## [ERR-20260927-014] g1-legacy-probe-timeout
+
+**Logged**: 2026-09-27T15:39:52Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+The G1 trial runner timed out on legacy math examples that expose `window.__probe` but not the runner's required `window.__trialProbe`.
+
+### Error
+A focused G1 batch reported `page.waitForFunction: Timeout 150000ms exceeded` for `math-rect-geometry`; the example page had no `__trialProbe` contract, so this was a runner mismatch rather than a runtime API failure.
+
+### Context
+- The affected wave uses older spec-driven examples whose API proof is collected by `tools/verify/v11-examples-verify.cjs`.
+- Other examples in the same batch do expose `__trialProbe` and can use G1 normally.
+
+### Suggested Fix
+Use the canonical spec-driven V1.1 runner for legacy examples without `__trialProbe`; reserve G1 for examples implementing its dedicated trial contract.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/verify/g1-trial-run.cjs`, `tools/verify/v11-examples-verify.cjs`
+
+### Resolution
+- **Resolved**: 2026-09-27T15:39:52Z
+- **Notes**: Replaced the G1 batch with focused V1.1 verification; all eight Wave 12 examples passed.
+
+---
+
+## [ERR-20260927-015] scene-probe-dotted-key
+
+**Logged**: 2026-09-27T15:39:52Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+A scene probe stored a dotted key and later read it as a nested object, causing an uncaught TypeError before the lifecycle hook was installed.
+
+### Error
+`probe.covScene.addComponent` attempted to read `addComponent` from an undefined `probe.covScene` object; the actual key was the string `covScene.addComponent`.
+
+### Context
+- The targeted V1.1 run failed `scene-runtime-ops` with `no-runtime-error` and could not find its resource lifecycle contract.
+- `Scene.addComponent` itself correctly throws the documented error, which the probe catches.
+
+### Suggested Fix
+Use bracket access when probe keys include dots, such as `probe['covScene.addComponent']`.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `examples/scene-runtime-ops/src/main.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T15:39:52Z
+- **Notes**: Corrected the key lookup; scene-runtime-ops passed with its resource contract registered.
+
+---
+
+## [ERR-20260927-016] resource-api-lifecycle-contracts
+
+**Logged**: 2026-09-27T15:39:52Z
+**Priority**: medium
+**Status**: resolved
+**Area**: tests
+
+### Summary
+Adding Core Material and Mesh resource claims caused their examples to require the §25 release/reacquire contract.
+
+### Error
+The compliance audit reported S25-LIFECYCLE for `material-ops` and `mesh-lifecycle-ops`, which had runtime-created resources but no `resource-released` contract.
+
+### Context
+- `material-ops` owns two generated Materials.
+- `mesh-lifecycle-ops` owns two sample meshes and a rendered mesh/material pair; temporary merge/assign/default meshes also needed disposal.
+
+### Suggested Fix
+Detach renderer references, destroy all held resources, recreate and rebind them, then declare the shared `installAssetLifecycle` contract.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `examples/material-ops/src/main.ts`, `examples/mesh-lifecycle-ops/src/main.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T15:39:52Z
+- **Notes**: Both contracts pass in the deployment artifact; Gallery now verifies 50 lifecycle examples with no leaked resources.
+
+---
+
+## [ERR-20260927-017] returned-mesh-data-field-trace
+
+**Logged**: 2026-09-27T15:39:52Z
+**Priority**: medium
+**Status**: resolved
+**Area**: tests
+
+### Summary
+The API trace did not observe `Mesh.morphRendering` reads on Mesh instances returned by `utils.createMesh`, even though the field was present and read by examples.
+
+### Error
+The new Mesh instance-data owner mapping alone still left `Mesh.morphRendering` unobserved in `mesh-morph-bounds`; that API caused `api-executed` to fail.
+
+### Context
+- The constructor wrapper cannot see instances created internally by a traced factory function.
+- Instance data properties need the same focused instrumentation when returned from an API whose result constructor has declared inventory-owned data fields.
+
+### Suggested Fix
+Instrument returned objects only when their constructor maps to a declared instance-data owner; leave all other returned values unchanged.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/verify/api-trace.cjs`, `examples/mesh-morph-bounds/src/main.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T15:39:52Z
+- **Notes**: Added guarded returned-instance instrumentation; mesh-morph-bounds and mesh-lifecycle-ops passed targeted verification, followed by the full 140-example V1.1 run.
+
+---
+
+## [ERR-20260927-018] v12-matrix-playwright-path
+
+**Logged**: 2026-09-27T16:16:52Z
+**Priority**: low
+**Status**: resolved
+**Area**: tests
+
+### Summary
+The first V1.2 matrix invocation could not resolve Playwright because the shell lacked the configured Node dependency path.
+
+### Error
+`npm run verify:v12-matrix` exited with `Cannot find module 'playwright'` before starting any browser case.
+
+### Context
+- V1.1, DevTools, and Gallery verification use the bundled runtime modules under the user's local Codex dependency cache.
+- The V1.2 runner uses the same dependency but was launched without `NODE_PATH`.
+
+### Suggested Fix
+Set `NODE_PATH` to the configured bundled `node_modules` before invoking the browser matrix.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `tools/v12/browser-matrix.cjs`
+
+### Resolution
+- **Resolved**: 2026-09-27T16:16:52Z
+- **Notes**: Reran with `NODE_PATH`; the Chromium, Firefox, and WebKit matrix passed 39/39.
+
+---
+
+## [ERR-20260927-019] pal-dpr-adaptation-release-bookkeeping
+
+**Logged**: 2026-09-27T16:16:52Z
+**Priority**: medium
+**Status**: resolved
+**Area**: tests
+
+### Summary
+A concurrent Web DPR cap adaptation was implemented and documented but had not yet been registered as an intentional PAL deviation or rebound to the current V1.2 bundle.
+
+### Error
+The PAL byte comparison and `verify:file-map` failed for `src/pal/screen-adapter/web/screen-adapter.js`; the V1.2 smoke gate also found that browser-matrix evidence still referenced the previous bundle hash.
+
+### Context
+- The source change adds a configurable `window.__CCDPR_CAP__` while preserving the upstream default cap of 2.
+- `docs/manual/responsive.md` already documented the host override, but `docs/upstream-file-map.json` still marked the source byte-identical.
+
+### Suggested Fix
+Register the one intentional PAL delta and its reason in `docs/upstream-file-map.json` and `UPSTREAM.md`, test default/override/invalid cap behavior, then rebuild and refresh the three-engine matrix.
+
+### Metadata
+- Reproducible: yes
+- Related Files: `src/pal/screen-adapter/web/screen-adapter.js`, `docs/manual/responsive.md`, `docs/upstream-file-map.json`, `test/smoke/smoke-30-v12-regression.test.ts`
+
+### Resolution
+- **Resolved**: 2026-09-27T16:16:52Z
+- **Notes**: The PAL deviation is documented, the regression suite verifies cap values and limits other PAL changes to zero, `verify:file-map` passes, and the refreshed V1.2 matrix passes 39/39.
+
+---

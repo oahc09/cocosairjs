@@ -18,7 +18,9 @@ import {
     utils,
     primitives,
     Mesh,
+    ModelRenderer,
 } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 // ---- 共享脚手架：可见帧 + 场景就绪（mesh-lifecycle-ops）----
 var app = await createAirApp({ canvas: '#GameCanvas' });
@@ -87,18 +89,22 @@ T('validate', () => {
 T('merge', () => {
     try {
         var r = (Mesh as any).merge ? (Mesh as any).merge([m1, m2], false) : (m1 as any).merge([m2]);
-        return r ? 'merged' : 'null';
+        var result = r ? 'merged' : 'null';
+        if (r && r.destroy) r.destroy();
+        return result;
     } catch (e) {
         return 'threw';
     }
 });
 T('assign', () => {
+    var target = new Mesh();
     try {
-        var target = new (Mesh as any)();
         (target as any).assign ? (target as any).assign({ vertexBuffers: [], indices: [] } as any) : 0;
         return 'ok';
     } catch (e) {
         return 'threw';
+    } finally {
+        target.destroy();
     }
 });
 T('reset', () => {
@@ -110,12 +116,14 @@ T('reset', () => {
     }
 });
 T('initialize', () => {
+    var nm = new Mesh();
     try {
-        var nm = new (Mesh as any)();
         (nm as any).initialize ? (nm as any).initialize() : 0;
         return 'ok';
     } catch (e) {
         return 'threw';
+    } finally {
+        nm.destroy();
     }
 });
 T('updateSubMesh', () => {
@@ -126,8 +134,69 @@ T('updateSubMesh', () => {
         return 'threw';
     }
 });
+var covMesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+T('covMesh.struct', () => covMesh.struct.primitives.length);
+T('covMesh.data', () => covMesh.data.length);
+T('covMesh.hash', () => covMesh.hash);
+T('covMesh.jointBufferIndices', () => covMesh.jointBufferIndices.length);
+T('covMesh.renderingSubMeshes', () => covMesh.renderingSubMeshes.length);
+T('covMesh.morphRendering', () => covMesh.morphRendering === null);
+T('covMesh.allowDataAccess', () => covMesh.allowDataAccess);
+T('covMesh.destroyRenderingMesh', () => {
+    covMesh.destroyRenderingMesh();
+    var destroyed = covMesh.renderingSubMeshes === null;
+    covMesh.destroy();
+    return destroyed;
+});
+T('covMesh.initDefault', () => {
+    var defaultMesh = new Mesh();
+    defaultMesh.initDefault();
+    var initialized = defaultMesh.data instanceof Uint8Array;
+    defaultMesh.destroy();
+    return initialized;
+});
+var covModelRenderer = new ModelRenderer();
+T('covModelRenderer', () => typeof ModelRenderer);
+T('covModelRenderer.constructor', () => covModelRenderer instanceof ModelRenderer);
+T('covModelRenderer.visibility', () => cubeRenderer.visibility);
+T('covModelRenderer.priority', () => cubeRenderer.priority);
+const covMeshFailures = Object.entries(probe)
+    .filter(([key, value]) => (key.startsWith('covMesh.') || key.startsWith('covModelRenderer.')) && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covMeshFailures;
 probe.topic = 'mesh-lifecycle-ops';
 (window as any).__probe = async () => probe;
+if (covMeshFailures.length) console.error(`[coverage] Mesh/ModelRenderer probes failed: ${covMeshFailures.join(', ')}`);
 
 app.run(scene);
+const holdMeshResources = () => [
+    { name: 'cube-mesh', ref: cubeRenderer.mesh },
+    { name: 'cube-material', ref: cubeRenderer.sharedMaterial },
+    { name: 'mesh-one', ref: m1 },
+    { name: 'mesh-two', ref: m2 },
+];
+installAssetLifecycle({
+    label: 'mesh-lifecycle-ops',
+    hold: holdMeshResources,
+    release: () => {
+        const mesh = cubeRenderer.mesh;
+        const material = cubeRenderer.sharedMaterial;
+        cubeRenderer.mesh = null;
+        cubeRenderer.sharedMaterials = [null];
+        mesh?.destroy();
+        material?.destroy();
+        m1.destroy();
+        m2.destroy();
+    },
+    reacquire: () => {
+        m1 = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+        m2 = utils.createMesh(primitives.box({ width: 2, height: 2, length: 2 }));
+        cubeRenderer.mesh = utils.createMesh(primitives.box({ width: 1, height: 1, length: 1 }));
+        cubeMaterial = new Material();
+        cubeMaterial.initialize({ effectName: 'builtin-standard' });
+        cubeMaterial.setProperty('mainColor', new Color(190, 210, 240));
+        cubeRenderer.sharedMaterials = [cubeMaterial];
+        return holdMeshResources();
+    },
+});
 console.log('[mesh-lifecycle-ops] running');

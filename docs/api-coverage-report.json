@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-27T13:25:33.313Z",
+  "generatedAt": "2026-09-27T16:01:39.564Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T13:21:49.685Z",
+      "measuredAt": "2026-09-27T15:34:44.625Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T13:22:31.634Z",
+      "measuredAt": "2026-09-27T15:35:50.788Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -23,17 +23,17 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "8746fc59b6aa0408",
+  "candidateFingerprint": "7f3b89f6ac076cbf",
   "inventoryFingerprint": "584e7c5677527260",
   "apiInventoryRevision": "190aa74d8e4fcbc8",
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 1318,
-  "totalAttested": 107,
-  "totalVerified": 1211,
-  "totalVerifiedViaCall": 1094,
-  "totalVerifiedViaRead": 117,
+  "totalClaimed": 1372,
+  "totalAttested": 103,
+  "totalVerified": 1269,
+  "totalVerifiedViaCall": 1144,
+  "totalVerifiedViaRead": 125,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -58,7 +58,7 @@
       "instrumentation": {
         "observed": 47,
         "total": 49,
-        "hash": "73a8a0d9cef88fe1"
+        "hash": "9c092dd19729dfd4"
       },
       "claims": 49,
       "tally": {
@@ -82,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "5e89e4b16f34006d"
+        "hash": "c8b5b17d870996ed"
       },
       "claims": 18,
       "tally": {
@@ -106,7 +106,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "a769b846af5c88e1"
+        "hash": "d2754a3b2604d1be"
       },
       "claims": 28,
       "tally": {
@@ -130,7 +130,7 @@
       "instrumentation": {
         "observed": 8,
         "total": 11,
-        "hash": "ca09abd296528820"
+        "hash": "29316edf32c666d7"
       },
       "claims": 11,
       "tally": {
@@ -154,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "12bd6d88232e6b18"
+        "hash": "d231986e5d71f454"
       },
       "claims": 21,
       "tally": {
@@ -178,7 +178,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 13,
-        "hash": "f39d9f48c18b6908"
+        "hash": "fa9a3a0edaef32fe"
       },
       "claims": 13,
       "tally": {
@@ -202,7 +202,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "df343afc053e92b8"
+        "hash": "6a89c571e2fbf34e"
       },
       "claims": 21,
       "tally": {
@@ -226,7 +226,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "44eb65f1d402e9f4"
+        "hash": "cc639eb6d0692321"
       },
       "claims": 19,
       "tally": {
@@ -250,7 +250,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "ccfe880a5d5e2115"
+        "hash": "724567f4e3522be0"
       },
       "claims": 19,
       "tally": {
@@ -274,7 +274,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "e1812225788be9dd"
+        "hash": "f50ff2ca88a035d7"
       },
       "claims": 19,
       "tally": {
@@ -298,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "197150ee8729d15e"
+        "hash": "1d9b2a0e2e9e445e"
       },
       "claims": 21,
       "tally": {
@@ -322,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "16918dc9b7aba49b"
+        "hash": "6cc7533eb72296e2"
       },
       "claims": 20,
       "tally": {
@@ -346,7 +346,7 @@
       "instrumentation": {
         "observed": 54,
         "total": 54,
-        "hash": "c5a3d2fd184e8535"
+        "hash": "6e5958d253be3b2f"
       },
       "claims": 54,
       "tally": {
@@ -370,7 +370,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 37,
-        "hash": "a2b8927111b5762b"
+        "hash": "51b5c6cdda2bfb37"
       },
       "claims": 37,
       "tally": {
@@ -394,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "9fb05b338f09380a"
+        "hash": "cdef73a8c929f82b"
       },
       "claims": 20,
       "tally": {
@@ -418,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "64de3249c1f6ee65"
+        "hash": "cb4af0c8f146811a"
       },
       "claims": 26,
       "tally": {
@@ -442,7 +442,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 28,
-        "hash": "33c237de064679af"
+        "hash": "62f8ed77a8b61053"
       },
       "claims": 28,
       "tally": {
@@ -466,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "90d5235901c8c5b5"
+        "hash": "7d29c4c54970d30c"
       },
       "claims": 19,
       "tally": {
@@ -490,7 +490,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 46,
-        "hash": "b49d63079d5d9974"
+        "hash": "bc256054e462b2ec"
       },
       "claims": 46,
       "tally": {
@@ -514,7 +514,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 27,
-        "hash": "795989d0593ab44d"
+        "hash": "d6c21297609ec8c6"
       },
       "claims": 27,
       "tally": {
@@ -538,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "8bc339b45b8f13d5"
+        "hash": "f9f45967a34d181b"
       },
       "claims": 17,
       "tally": {
@@ -582,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "1879d0500d45c225"
+        "hash": "2bacb2c288e271d5"
       },
       "claims": 15,
       "tally": {
@@ -606,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "a2df339628e06eab"
+        "hash": "6ea7c8cd57f0aa7d"
       },
       "claims": 14,
       "tally": {
@@ -630,7 +630,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "30b42e94e66ea3fe"
+        "hash": "b7e17ee0ca479012"
       },
       "claims": 24,
       "tally": {
@@ -654,7 +654,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "07661890a391d8b8"
+        "hash": "f402249e77678bde"
       },
       "claims": 20,
       "tally": {
@@ -678,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "7822bf2c54f92e4b"
+        "hash": "d7325d80d27cdd70"
       },
       "claims": 20,
       "tally": {
@@ -702,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "a7b9d1f75236caaf"
+        "hash": "69f6f2b02f4693ef"
       },
       "claims": 21,
       "tally": {
@@ -726,7 +726,7 @@
       "instrumentation": {
         "observed": 12,
         "total": 12,
-        "hash": "8c46ade566d8f1f3"
+        "hash": "020a32b83fb7109a"
       },
       "claims": 12,
       "tally": {
@@ -750,7 +750,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 17,
-        "hash": "c04c7ac6015d35fa"
+        "hash": "d06d7cea30c87c15"
       },
       "claims": 17,
       "tally": {
@@ -774,7 +774,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 15,
-        "hash": "9ce53f7b43f9d9f9"
+        "hash": "c2d4579c6974d5e5"
       },
       "claims": 15,
       "tally": {
@@ -796,17 +796,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
-        "total": 23,
-        "hash": "eda1ca5149a1f13a"
+        "observed": 28,
+        "total": 28,
+        "hash": "8ce91a366e9a400d"
       },
-      "claims": 23,
+      "claims": 28,
       "tally": {
-        "verified": 23,
+        "verified": 28,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
-        "verifiedRead": 1
+        "verifiedCall": 26,
+        "verifiedRead": 2
       }
     },
     {
@@ -822,7 +822,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "c705def546e55b53"
+        "hash": "5772775e42d46e58"
       },
       "claims": 20,
       "tally": {
@@ -844,17 +844,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 19,
-        "total": 19,
-        "hash": "356e3a01a9cd1f30"
+        "observed": 26,
+        "total": 26,
+        "hash": "3ebebdb6f6e0e37b"
       },
-      "claims": 19,
+      "claims": 26,
       "tally": {
-        "verified": 19,
+        "verified": 26,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 17,
-        "verifiedRead": 2
+        "verifiedCall": 23,
+        "verifiedRead": 3
       }
     },
     {
@@ -870,7 +870,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "d26892af014cc2ec"
+        "hash": "194c1ff713e2a642"
       },
       "claims": 23,
       "tally": {
@@ -894,7 +894,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "52d7c9201cee8f36"
+        "hash": "ebae0d33531c0c04"
       },
       "claims": 24,
       "tally": {
@@ -918,7 +918,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "e05f518846f79aad"
+        "hash": "a50ff670948b8879"
       },
       "claims": 25,
       "tally": {
@@ -942,7 +942,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "13e696bd9cce9583"
+        "hash": "3913b9b10e000b76"
       },
       "claims": 45,
       "tally": {
@@ -966,7 +966,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 37,
-        "hash": "ff7c1e1120bee5c7"
+        "hash": "d3d8bc5d0ac85e1d"
       },
       "claims": 37,
       "tally": {
@@ -990,7 +990,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "37275c508e1ba11d"
+        "hash": "8a99e7a9fbad3ed7"
       },
       "claims": 22,
       "tally": {
@@ -1014,7 +1014,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "2f638f4561866f91"
+        "hash": "7630036f6322f98f"
       },
       "claims": 14,
       "tally": {
@@ -1038,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "48ef44a349af583d"
+        "hash": "33f284953c5e019b"
       },
       "claims": 16,
       "tally": {
@@ -1062,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "381b6b5a41e4a17e"
+        "hash": "b7ee47d07038f650"
       },
       "claims": 23,
       "tally": {
@@ -1084,16 +1084,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
-        "total": 23,
-        "hash": "f1db759296fe0a2b"
+        "observed": 31,
+        "total": 31,
+        "hash": "3d21eb9c1c9e4f84"
       },
-      "claims": 23,
+      "claims": 31,
       "tally": {
-        "verified": 23,
+        "verified": 31,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
+        "verifiedCall": 30,
         "verifiedRead": 1
       }
     },
@@ -1110,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "ef078966dc0e72ea"
+        "hash": "46382aa91694b162"
       },
       "claims": 22,
       "tally": {
@@ -1134,7 +1134,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 16,
-        "hash": "e7110c96b29ebb88"
+        "hash": "33228b35b646ee68"
       },
       "claims": 16,
       "tally": {
@@ -1158,7 +1158,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 25,
-        "hash": "d210e63fe8721d71"
+        "hash": "1625ca4157b67b90"
       },
       "claims": 25,
       "tally": {
@@ -1182,7 +1182,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 36,
-        "hash": "ed3db806f721d91d"
+        "hash": "7e09c56d2fa1efc1"
       },
       "claims": 36,
       "tally": {
@@ -1206,7 +1206,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 21,
-        "hash": "6dd222f09bf05c2c"
+        "hash": "e17c020c18b53898"
       },
       "claims": 21,
       "tally": {
@@ -1230,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "05416b69935cc368"
+        "hash": "ff1ae06ece681d5b"
       },
       "claims": 21,
       "tally": {
@@ -1254,7 +1254,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "20610ca95bb3a4b6"
+        "hash": "049572b69c57924a"
       },
       "claims": 25,
       "tally": {
@@ -1278,7 +1278,7 @@
       "instrumentation": {
         "observed": 62,
         "total": 62,
-        "hash": "b04e225e87ee55a8"
+        "hash": "3e155e08dcc65eb3"
       },
       "claims": 62,
       "tally": {
@@ -1302,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "5634ce1f49118081"
+        "hash": "05e0eebadf368bd9"
       },
       "claims": 21,
       "tally": {
@@ -1326,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "19cc49d628aadc34"
+        "hash": "a3a40a2e33868c67"
       },
       "claims": 19,
       "tally": {
@@ -1350,7 +1350,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 22,
-        "hash": "64b6a9de82c55300"
+        "hash": "9a98c8568a12244c"
       },
       "claims": 22,
       "tally": {
@@ -1374,7 +1374,7 @@
       "instrumentation": {
         "observed": 61,
         "total": 61,
-        "hash": "959a0733547aa61e"
+        "hash": "805d75ee16bdd53a"
       },
       "claims": 61,
       "tally": {
@@ -1398,7 +1398,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "8dc1126b9191bb64"
+        "hash": "836fbf86f8499e48"
       },
       "claims": 28,
       "tally": {
@@ -1422,7 +1422,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "6dbaaa74fe6c30fd"
+        "hash": "e3598fdc8cdefddf"
       },
       "claims": 31,
       "tally": {
@@ -1446,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "145928d6b3e78fde"
+        "hash": "86e5f938322b7e34"
       },
       "claims": 23,
       "tally": {
@@ -1470,7 +1470,7 @@
       "instrumentation": {
         "observed": 85,
         "total": 85,
-        "hash": "a39eed10765fa0a7"
+        "hash": "4b59233d95fa8a1d"
       },
       "claims": 85,
       "tally": {
@@ -1494,7 +1494,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "825e31aa509af891"
+        "hash": "7a26a7ca7d63ffd8"
       },
       "claims": 24,
       "tally": {
@@ -1518,7 +1518,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "e04e1097545eedc4"
+        "hash": "fe68cd3dc0caee99"
       },
       "claims": 30,
       "tally": {
@@ -1542,7 +1542,7 @@
       "instrumentation": {
         "observed": 57,
         "total": 57,
-        "hash": "6e5510bc24be0a04"
+        "hash": "34ee5fa157534c7f"
       },
       "claims": 57,
       "tally": {
@@ -1566,7 +1566,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "3e92b1de280ce4fd"
+        "hash": "0078eb9311bdc746"
       },
       "claims": 23,
       "tally": {
@@ -1590,7 +1590,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "c6b9899618a2bef0"
+        "hash": "f8dd5e3b0e949a9b"
       },
       "claims": 25,
       "tally": {
@@ -1614,7 +1614,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "d4fbd3802690d711"
+        "hash": "732e915efe6ec871"
       },
       "claims": 33,
       "tally": {
@@ -1638,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "09563593c2bce593"
+        "hash": "5507212c7c76bfbe"
       },
       "claims": 18,
       "tally": {
@@ -1660,16 +1660,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 23,
-        "total": 23,
-        "hash": "8d161ed1bee00d86"
+        "observed": 35,
+        "total": 35,
+        "hash": "161867388c038f71"
       },
-      "claims": 23,
+      "claims": 35,
       "tally": {
-        "verified": 23,
+        "verified": 35,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 22,
+        "verifiedCall": 34,
         "verifiedRead": 1
       }
     },
@@ -1686,7 +1686,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "69394d35cb9000f1"
+        "hash": "2f10feb81d7aa103"
       },
       "claims": 35,
       "tally": {
@@ -1710,7 +1710,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "47e0e2ec3c1b0d48"
+        "hash": "b188b0eedd5b289b"
       },
       "claims": 23,
       "tally": {
@@ -1732,17 +1732,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 28,
-        "total": 28,
-        "hash": "dfa5a05c644998bf"
+        "observed": 32,
+        "total": 32,
+        "hash": "7a143c6b78e92ab6"
       },
-      "claims": 28,
+      "claims": 32,
       "tally": {
-        "verified": 28,
+        "verified": 32,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 25,
-        "verifiedRead": 3
+        "verifiedCall": 27,
+        "verifiedRead": 5
       }
     },
     {
@@ -1758,7 +1758,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "48e2ba9aa9ac5075"
+        "hash": "5ecf8f2353ccc909"
       },
       "claims": 23,
       "tally": {
@@ -1782,7 +1782,7 @@
       "instrumentation": {
         "observed": 69,
         "total": 69,
-        "hash": "4c467a304b6c5cc3"
+        "hash": "71faa5b94e8f1b60"
       },
       "claims": 69,
       "tally": {
@@ -1806,7 +1806,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "9723908e8ff50ba7"
+        "hash": "9e1480892604c3f0"
       },
       "claims": 21,
       "tally": {
@@ -1830,7 +1830,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "3a8e74d97eaaeebf"
+        "hash": "44f88c04df0a2b78"
       },
       "claims": 29,
       "tally": {
@@ -1854,7 +1854,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "c954b0e882bec217"
+        "hash": "7165399ea0769440"
       },
       "claims": 27,
       "tally": {
@@ -1878,7 +1878,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "cf40b32f715def25"
+        "hash": "10e048bf118f2ffb"
       },
       "claims": 19,
       "tally": {
@@ -1902,7 +1902,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "cfe34285b317b256"
+        "hash": "94c6741c185ac91f"
       },
       "claims": 23,
       "tally": {
@@ -1926,7 +1926,7 @@
       "instrumentation": {
         "observed": 44,
         "total": 44,
-        "hash": "034c8740891a9533"
+        "hash": "007ef944039ad1c6"
       },
       "claims": 44,
       "tally": {
@@ -1950,7 +1950,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "64444024d6e64ba0"
+        "hash": "d668ed11e52feb6a"
       },
       "claims": 22,
       "tally": {
@@ -1974,7 +1974,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "b30dac30e9ac0214"
+        "hash": "9156e75a8a496640"
       },
       "claims": 30,
       "tally": {
@@ -1998,7 +1998,7 @@
       "instrumentation": {
         "observed": 70,
         "total": 70,
-        "hash": "32a5b7070269e075"
+        "hash": "c7b470a8c7e8208d"
       },
       "claims": 70,
       "tally": {
@@ -2022,7 +2022,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "be64d8add0806beb"
+        "hash": "f5deddcaca3c3319"
       },
       "claims": 19,
       "tally": {
@@ -2046,7 +2046,7 @@
       "instrumentation": {
         "observed": 73,
         "total": 73,
-        "hash": "4120e32a1f50d1b2"
+        "hash": "8520ee8b38f3147d"
       },
       "claims": 73,
       "tally": {
@@ -2070,7 +2070,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "e4e8b8da256d3003"
+        "hash": "c050d7473f95ae34"
       },
       "claims": 23,
       "tally": {
@@ -2094,7 +2094,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "7788f882d7d1a587"
+        "hash": "014b52c676e3bcff"
       },
       "claims": 30,
       "tally": {
@@ -2118,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "699bed70457fa6c6"
+        "hash": "c95ad2fca3389383"
       },
       "claims": 23,
       "tally": {
@@ -2142,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "b86ce2952ad51b5d"
+        "hash": "56548a39df7c45cb"
       },
       "claims": 18,
       "tally": {
@@ -2164,17 +2164,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 24,
-        "total": 24,
-        "hash": "5b1c12cc9ebffb8e"
+        "observed": 37,
+        "total": 37,
+        "hash": "4ec30cfa96473c77"
       },
-      "claims": 24,
+      "claims": 37,
       "tally": {
-        "verified": 24,
+        "verified": 37,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 23,
-        "verifiedRead": 1
+        "verifiedCall": 35,
+        "verifiedRead": 2
       }
     },
     {
@@ -2188,17 +2188,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
+        "observed": 22,
         "total": 22,
-        "hash": "6e539074831ac69a"
+        "hash": "dfecaff1860cce5c"
       },
       "claims": 22,
       "tally": {
-        "verified": 21,
-        "attested": 1,
+        "verified": 22,
+        "attested": 0,
         "claimedOnly": 0,
         "verifiedCall": 20,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -2214,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "0ede58385e7e62f6"
+        "hash": "3cb7e2dfe1651b97"
       },
       "claims": 16,
       "tally": {
@@ -2238,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "171753fbd6e59ea7"
+        "hash": "63a20a96ebd88884"
       },
       "claims": 19,
       "tally": {
@@ -2262,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "854a520108485a59"
+        "hash": "736f21918e9dd20b"
       },
       "claims": 21,
       "tally": {
@@ -2286,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "cd01cf831886a289"
+        "hash": "e3c1b43948126c2e"
       },
       "claims": 18,
       "tally": {
@@ -2310,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "90cf66e6c179aeb3"
+        "hash": "08cfdf5a4e50c1aa"
       },
       "claims": 18,
       "tally": {
@@ -2334,7 +2334,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 50,
-        "hash": "68544cbd7f0fc21b"
+        "hash": "b6dbc28e515a059e"
       },
       "claims": 50,
       "tally": {
@@ -2358,7 +2358,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 45,
-        "hash": "e9a5b4a9e9e5e581"
+        "hash": "e323938b471f8cac"
       },
       "claims": 45,
       "tally": {
@@ -2382,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "5e89e4b16f34006d"
+        "hash": "c8b5b17d870996ed"
       },
       "claims": 18,
       "tally": {
@@ -2406,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "a94dad37ccbf6866"
+        "hash": "d1be9d96a33d7861"
       },
       "claims": 24,
       "tally": {
@@ -2430,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "32f70bba42dc7995"
+        "hash": "122b287189a7a738"
       },
       "claims": 21,
       "tally": {
@@ -2454,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "a55a02420eb05622"
+        "hash": "f98ce3feb05f4e29"
       },
       "claims": 33,
       "tally": {
@@ -2478,7 +2478,7 @@
       "instrumentation": {
         "observed": 81,
         "total": 81,
-        "hash": "924ae8206bd7a50c"
+        "hash": "ac6f343375f32c4c"
       },
       "claims": 81,
       "tally": {
@@ -2502,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "ade00eff646d684b"
+        "hash": "d60609c429c21ebc"
       },
       "claims": 21,
       "tally": {
@@ -2526,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "77c9ff235a782bc9"
+        "hash": "0b594b7f40ffbf17"
       },
       "claims": 19,
       "tally": {
@@ -2550,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "1cf31460186be2a4"
+        "hash": "33d284a0eb797d15"
       },
       "claims": 19,
       "tally": {
@@ -2574,7 +2574,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 34,
-        "hash": "13942ad9d570fc06"
+        "hash": "2f7a25687442cba6"
       },
       "claims": 34,
       "tally": {
@@ -2598,7 +2598,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 36,
-        "hash": "156d8ecc69f92601"
+        "hash": "ce25c6323e9ee2f1"
       },
       "claims": 36,
       "tally": {
@@ -2622,7 +2622,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 33,
-        "hash": "1e421a2df9965137"
+        "hash": "7f30df2635ccda71"
       },
       "claims": 33,
       "tally": {
@@ -2646,7 +2646,7 @@
       "instrumentation": {
         "observed": 60,
         "total": 69,
-        "hash": "3883cb564af0bf31"
+        "hash": "dae7ae7881bc959e"
       },
       "claims": 69,
       "tally": {
@@ -2670,7 +2670,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 31,
-        "hash": "af1437d7e6352edd"
+        "hash": "60fc61be20fdc7c1"
       },
       "claims": 31,
       "tally": {
@@ -2694,7 +2694,7 @@
       "instrumentation": {
         "observed": 39,
         "total": 41,
-        "hash": "a0067c9ace6a23ec"
+        "hash": "14293837e651cbd1"
       },
       "claims": 41,
       "tally": {
@@ -2718,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "b3407766d81ecadd"
+        "hash": "a8852cbdbd4485bd"
       },
       "claims": 22,
       "tally": {
@@ -2742,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "854a520108485a59"
+        "hash": "736f21918e9dd20b"
       },
       "claims": 21,
       "tally": {
@@ -2766,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "e6a4529871fcd36a"
+        "hash": "3e79d7f55a085e36"
       },
       "claims": 22,
       "tally": {
@@ -2790,7 +2790,7 @@
       "instrumentation": {
         "observed": 38,
         "total": 41,
-        "hash": "d845a5c48ed2c824"
+        "hash": "3dfda6b77f47beed"
       },
       "claims": 41,
       "tally": {
@@ -2814,7 +2814,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "33678de999a817f8"
+        "hash": "174acd5bf5a47bf3"
       },
       "claims": 23,
       "tally": {
@@ -2838,7 +2838,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 18,
-        "hash": "f3fbbd14871ad846"
+        "hash": "646b33d856ae38f4"
       },
       "claims": 18,
       "tally": {
@@ -2862,7 +2862,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 20,
-        "hash": "cbc58d2138620871"
+        "hash": "3ec2ea9710d19362"
       },
       "claims": 20,
       "tally": {
@@ -2886,7 +2886,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "e894c306108e2481"
+        "hash": "128d754a39b9bdce"
       },
       "claims": 19,
       "tally": {
@@ -2910,7 +2910,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "d8f95b6cdcab67c5"
+        "hash": "988bcfd05848bae0"
       },
       "claims": 19,
       "tally": {
@@ -2934,7 +2934,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 32,
-        "hash": "a82986e4c19f4e12"
+        "hash": "2904cc452cf87cfe"
       },
       "claims": 32,
       "tally": {
@@ -2958,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "8df03c405b92cbce"
+        "hash": "7dd293b1ce7fd7d1"
       },
       "claims": 16,
       "tally": {
@@ -2982,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "843eebea1ce4c902"
+        "hash": "6adc6671f64f3b8d"
       },
       "claims": 20,
       "tally": {
@@ -3004,17 +3004,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 18,
+        "observed": 19,
         "total": 29,
-        "hash": "1e3b51d4307404e5"
+        "hash": "27e99799939f5e20"
       },
       "claims": 29,
       "tally": {
-        "verified": 18,
-        "attested": 11,
+        "verified": 19,
+        "attested": 10,
         "claimedOnly": 0,
         "verifiedCall": 17,
-        "verifiedRead": 1
+        "verifiedRead": 2
       }
     },
     {
@@ -3028,17 +3028,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 20,
-        "total": 22,
-        "hash": "ac5a1709593cae28"
+        "observed": 25,
+        "total": 25,
+        "hash": "787142be460f1ba9"
       },
-      "claims": 22,
+      "claims": 25,
       "tally": {
-        "verified": 20,
-        "attested": 2,
+        "verified": 25,
+        "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 19,
-        "verifiedRead": 1
+        "verifiedCall": 22,
+        "verifiedRead": 3
       }
     },
     {
@@ -3052,17 +3052,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 29,
+        "observed": 30,
         "total": 32,
-        "hash": "447111e799c005c5"
+        "hash": "e6993a137d80b4ef"
       },
       "claims": 32,
       "tally": {
-        "verified": 29,
-        "attested": 3,
+        "verified": 30,
+        "attested": 2,
         "claimedOnly": 0,
         "verifiedCall": 27,
-        "verifiedRead": 2
+        "verifiedRead": 3
       }
     },
     {
@@ -3078,7 +3078,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 26,
-        "hash": "6fd036dfd1c85260"
+        "hash": "73329caedde88132"
       },
       "claims": 26,
       "tally": {
@@ -3102,7 +3102,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 31,
-        "hash": "8bd429f6e6525778"
+        "hash": "865a2be3adaed22c"
       },
       "claims": 31,
       "tally": {
@@ -3126,7 +3126,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "87cd48c2d182756f"
+        "hash": "76286ddebf3cd270"
       },
       "claims": 16,
       "tally": {
@@ -3150,7 +3150,7 @@
       "instrumentation": {
         "observed": 9,
         "total": 9,
-        "hash": "e9534395178e1c11"
+        "hash": "66a7e3a7974ad652"
       },
       "claims": 9,
       "tally": {
@@ -3174,7 +3174,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 23,
-        "hash": "092a30173ab77267"
+        "hash": "fa0a632d6d6f3ff3"
       },
       "claims": 23,
       "tally": {
@@ -3198,7 +3198,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 27,
-        "hash": "ae582691caeb680a"
+        "hash": "484cf368d82382e3"
       },
       "claims": 27,
       "tally": {
@@ -3222,7 +3222,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 23,
-        "hash": "ea54b2d6f09aecb9"
+        "hash": "0d5762fd5a1e6994"
       },
       "claims": 23,
       "tally": {
@@ -3246,7 +3246,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "aeae0658dd716b34"
+        "hash": "ecebf5e6ad635739"
       },
       "claims": 25,
       "tally": {
@@ -3268,16 +3268,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 27,
-        "total": 27,
-        "hash": "5359d432545b8f7b"
+        "observed": 30,
+        "total": 30,
+        "hash": "7505925bef1f75b6"
       },
-      "claims": 27,
+      "claims": 30,
       "tally": {
-        "verified": 27,
+        "verified": 30,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 26,
+        "verifiedCall": 29,
         "verifiedRead": 1
       }
     },
@@ -3294,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "8346db6432046b0b"
+        "hash": "3aceb2439e84fdad"
       },
       "claims": 22,
       "tally": {
@@ -3318,7 +3318,7 @@
       "instrumentation": {
         "observed": 46,
         "total": 48,
-        "hash": "cbfeaafc302b4b73"
+        "hash": "a941f94b8b58775f"
       },
       "claims": 48,
       "tally": {
@@ -3342,7 +3342,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 14,
-        "hash": "5e1b98059c4f0b62"
+        "hash": "d2b01eb581cc89b2"
       },
       "claims": 14,
       "tally": {
@@ -3366,7 +3366,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 51,
-        "hash": "4291cfc1c07c4e6c"
+        "hash": "cdc5663e61a763c5"
       },
       "claims": 51,
       "tally": {
@@ -3390,7 +3390,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 30,
-        "hash": "c84530a99ac8f9d1"
+        "hash": "333e046bac5d991a"
       },
       "claims": 30,
       "tally": {
@@ -3414,7 +3414,7 @@
       "instrumentation": {
         "observed": 95,
         "total": 96,
-        "hash": "0644bb1458b68a39"
+        "hash": "4adcd7cb92154d7b"
       },
       "claims": 96,
       "tally": {
@@ -3438,7 +3438,7 @@
       "instrumentation": {
         "observed": 48,
         "total": 49,
-        "hash": "b4251d912dd95ff8"
+        "hash": "7cba5d0d8adb8a9c"
       },
       "claims": 49,
       "tally": {
@@ -3462,7 +3462,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "7a5f264882235ae1"
+        "hash": "d6983b6de636900e"
       },
       "claims": 20,
       "tally": {
@@ -3486,7 +3486,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 36,
-        "hash": "34fd685f611a17d0"
+        "hash": "99ed1f0ddd2a0697"
       },
       "claims": 36,
       "tally": {
@@ -3510,7 +3510,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "53ae1e90a52c3f67"
+        "hash": "fc7c63992867351d"
       },
       "claims": 36,
       "tally": {
@@ -3527,25 +3527,25 @@
       "denominator": "coverageRequired",
       "total": 963,
       "required": 963,
-      "claimed": 874,
-      "attested": 31,
-      "verified": 843,
-      "requiredClaimed": 874,
-      "requiredVerified": 843,
+      "claimed": 928,
+      "attested": 28,
+      "verified": 900,
+      "requiredClaimed": 928,
+      "requiredVerified": 900,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 120,
-      "unstated": 120,
-      "verifiedViaCall": 747,
-      "verifiedViaRead": 96,
+      "uncovered": 63,
+      "unstated": 63,
+      "verifiedViaCall": 797,
+      "verifiedViaRead": 103,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 747,
-      "requiredVerifiedViaRead": 96,
+      "requiredVerifiedViaCall": 797,
+      "requiredVerifiedViaRead": 103,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.776,
-      "claimedRate": 0.908,
-      "verifiedRate": 0.875,
-      "allUnitsVerifiedRate": 0.875,
+      "requiredVerifiedViaCallRate": 0.828,
+      "claimedRate": 0.964,
+      "verifiedRate": 0.935,
+      "allUnitsVerifiedRate": 0.935,
       "gate": "V1.1 Release: 100% verified of coverageRequired",
       "threshold": 1,
       "applicable": true,
@@ -7585,6 +7585,102 @@
       ]
     },
     {
+      "unit": "Input.EventType",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "input-queries"
+      ]
+    },
+    {
+      "unit": "Input.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "input-queries"
+      ]
+    },
+    {
+      "unit": "Input.on",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "input-queries"
+      ]
+    },
+    {
+      "unit": "Input.once",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "input-queries"
+      ]
+    },
+    {
+      "unit": "Input.off",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "input-queries"
+      ]
+    },
+    {
+      "unit": "Layers.BitMask",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "layers-enum-ops"
+      ]
+    },
+    {
+      "unit": "Layers.makeMaskInclude",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "layers-enum-ops"
+      ]
+    },
+    {
+      "unit": "Layers.makeMaskExclude",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "layers-enum-ops"
+      ]
+    },
+    {
+      "unit": "Layers.addLayer",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "layers-enum-ops"
+      ]
+    },
+    {
+      "unit": "Layers.deleteLayer",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "layers-enum-ops"
+      ]
+    },
+    {
+      "unit": "Layers.nameToLayer",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "layers-enum-ops"
+      ]
+    },
+    {
+      "unit": "Layers.layerToName",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "layers-enum-ops"
+      ]
+    },
+    {
       "unit": "Light.PhotometricTerm",
       "tier": "core",
       "via": "read",
@@ -8165,6 +8261,70 @@
     },
     {
       "unit": "Material.overridePipelineStates",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.effectAsset",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.effectName",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.technique",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.passes",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.hash",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.parent",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "material-ops"
+      ]
+    },
+    {
+      "unit": "Material.owner",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -10343,6 +10503,102 @@
       ]
     },
     {
+      "unit": "math.Rect.fromMinMax",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.intersection",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.union",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.xMin",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.yMin",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.xMax",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.yMax",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.center",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.origin",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.size",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.z",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
+      "unit": "math.Rect.w",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-rect-geometry"
+      ]
+    },
+    {
       "unit": "math.Rect.constructor",
       "tier": "core",
       "via": "call",
@@ -10528,6 +10784,38 @@
     },
     {
       "unit": "math.Size.prototype.lerp",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.ZERO",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.ONE",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.x",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "math-size-ops"
+      ]
+    },
+    {
+      "unit": "math.Size.y",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -12508,6 +12796,111 @@
       ]
     },
     {
+      "unit": "Mesh.struct",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "Mesh.data",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "Mesh.hash",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "Mesh.jointBufferIndices",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "Mesh.renderingSubMeshes",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "Mesh.morphRendering",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "mesh-lifecycle-ops",
+        "mesh-morph-bounds"
+      ]
+    },
+    {
+      "unit": "Mesh.destroyRenderingMesh",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "Mesh.initDefault",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "Mesh.allowDataAccess",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "ModelRenderer",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "ModelRenderer.constructor",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "ModelRenderer.visibility",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
+      "unit": "ModelRenderer.priority",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "mesh-lifecycle-ops"
+      ]
+    },
+    {
       "unit": "Mesh.constructor",
       "tier": "core",
       "via": "call",
@@ -14255,6 +14648,14 @@
       ]
     },
     {
+      "unit": "Scene._globals",
+      "tier": "internal",
+      "via": "read",
+      "examples": [
+        "scene-globals-read"
+      ]
+    },
+    {
       "unit": "Scene.constructor",
       "tier": "core",
       "via": "call",
@@ -14263,7 +14664,48 @@
       ]
     },
     {
+      "unit": "Scene.autoReleaseAssets",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "scene-runtime-ops",
+        "scene-switch-reentry"
+      ]
+    },
+    {
+      "unit": "Scene.dependAssets",
+      "tier": "core",
+      "via": "read",
+      "examples": [
+        "scene-runtime-ops"
+      ]
+    },
+    {
       "unit": "Scene.updateWorldTransform",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "scene-runtime-ops"
+      ]
+    },
+    {
+      "unit": "Scene.renderScene",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "scene-runtime-ops"
+      ]
+    },
+    {
+      "unit": "Scene.globals",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "scene-runtime-ops"
+      ]
+    },
+    {
+      "unit": "Scene.addComponent",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -14425,6 +14867,30 @@
     },
     {
       "unit": "Texture2D.validate",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "texture2d-ops"
+      ]
+    },
+    {
+      "unit": "Texture2D.mipmaps",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "texture2d-ops"
+      ]
+    },
+    {
+      "unit": "Texture2D.image",
+      "tier": "core",
+      "via": "call",
+      "examples": [
+        "texture2d-ops"
+      ]
+    },
+    {
+      "unit": "Texture2D.description",
       "tier": "core",
       "via": "call",
       "examples": [
@@ -16394,13 +16860,6 @@
       ]
     },
     {
-      "unit": "Mesh.morphRendering",
-      "tier": "core",
-      "examples": [
-        "mesh-morph-bounds"
-      ]
-    },
-    {
       "unit": "geometry.intersect",
       "tier": "advanced",
       "examples": [
@@ -16616,13 +17075,6 @@
       ]
     },
     {
-      "unit": "Scene._globals",
-      "tier": "internal",
-      "examples": [
-        "scene-globals-read"
-      ]
-    },
-    {
       "unit": "SceneGlobals.shadows",
       "tier": "advanced",
       "examples": [
@@ -16683,21 +17135,6 @@
       "tier": "advanced",
       "examples": [
         "scene-globals-read"
-      ]
-    },
-    {
-      "unit": "Scene.autoReleaseAssets",
-      "tier": "core",
-      "examples": [
-        "scene-runtime-ops",
-        "scene-switch-reentry"
-      ]
-    },
-    {
-      "unit": "Scene.dependAssets",
-      "tier": "core",
-      "examples": [
-        "scene-runtime-ops"
       ]
     },
     {
@@ -17211,13 +17648,6 @@
       ]
     },
     {
-      "unit": "Mesh.morphRendering",
-      "tier": "core",
-      "examples": [
-        "mesh-morph-bounds"
-      ]
-    },
-    {
       "unit": "geometry.intersect",
       "tier": "advanced",
       "examples": [
@@ -17433,13 +17863,6 @@
       ]
     },
     {
-      "unit": "Scene._globals",
-      "tier": "internal",
-      "examples": [
-        "scene-globals-read"
-      ]
-    },
-    {
       "unit": "SceneGlobals.shadows",
       "tier": "advanced",
       "examples": [
@@ -17500,21 +17923,6 @@
       "tier": "advanced",
       "examples": [
         "scene-globals-read"
-      ]
-    },
-    {
-      "unit": "Scene.autoReleaseAssets",
-      "tier": "core",
-      "examples": [
-        "scene-runtime-ops",
-        "scene-switch-reentry"
-      ]
-    },
-    {
-      "unit": "Scene.dependAssets",
-      "tier": "core",
-      "examples": [
-        "scene-runtime-ops"
       ]
     },
     {
@@ -17622,37 +18030,13 @@
     }
   ],
   "unclaimedCore": [
-    "Mesh.struct",
-    "Mesh.data",
-    "Mesh.hash",
-    "Mesh.jointBufferIndices",
-    "Mesh.renderingSubMeshes",
-    "Mesh.destroyRenderingMesh",
-    "Mesh.initDefault",
-    "Mesh.allowDataAccess",
     "math.v2",
     "math.v3",
     "math.Vec4",
     "math.v4",
     "math.quat",
     "math.mat4",
-    "math.Size.ZERO",
-    "math.Size.ONE",
-    "math.Size.x",
-    "math.Size.y",
     "math.size",
-    "math.Rect.fromMinMax",
-    "math.Rect.intersection",
-    "math.Rect.union",
-    "math.Rect.xMin",
-    "math.Rect.yMin",
-    "math.Rect.xMax",
-    "math.Rect.yMax",
-    "math.Rect.center",
-    "math.Rect.origin",
-    "math.Rect.size",
-    "math.Rect.z",
-    "math.Rect.w",
     "math.rect",
     "math.color",
     "math.toRadian",
@@ -17670,37 +18054,7 @@
     "math.MathBase",
     "math.MathBase.createFloatArray",
     "math.MathBase.array",
-    "Scene.renderScene",
-    "Scene.globals",
-    "Scene.addComponent",
-    "Layers.BitMask",
-    "Layers.makeMaskInclude",
-    "Layers.makeMaskExclude",
-    "Layers.addLayer",
-    "Layers.deleteLayer",
-    "Layers.nameToLayer",
-    "Layers.layerToName",
-    "ModelRenderer",
-    "ModelRenderer.constructor",
-    "ModelRenderer.visibility",
-    "ModelRenderer.priority",
     "instantiate",
-    "Texture2D.mipmaps",
-    "Texture2D.image",
-    "Texture2D.description",
-    "Material.constructor",
-    "Material.effectAsset",
-    "Material.effectName",
-    "Material.technique",
-    "Material.passes",
-    "Material.hash",
-    "Material.parent",
-    "Material.owner",
-    "Input.EventType",
-    "Input.constructor",
-    "Input.on",
-    "Input.once",
-    "Input.off",
     "GLTFAsset",
     "GLTFAsset.document",
     "GLTFAsset.warnings",
@@ -17712,5 +18066,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3141
+  "unclaimedRequired": 3087
 }

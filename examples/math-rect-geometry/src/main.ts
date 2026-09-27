@@ -85,8 +85,26 @@ T('setCopy', () => {
     (Rect as any).set(o, A.x, A.y, A.width, A.height);
     return (Rect as any).equals ? 1 : 1;
 });
+var covRectOut = new Rect();
+T('covRect.fromMinMax', () => Rect.fromMinMax(covRectOut, new Vec2(1, 2), new Vec2(11, 22)).width);
+T('covRect.intersection', () => Rect.intersection(covRectOut, A, B).width);
+T('covRect.union', () => Rect.union(covRectOut, A, B).height);
+T('covRect.xMin', () => A.xMin);
+T('covRect.yMin', () => A.yMin);
+T('covRect.xMax', () => A.xMax);
+T('covRect.yMax', () => A.yMax);
+T('covRect.center', () => A.center.x);
+T('covRect.origin', () => A.origin.y);
+T('covRect.size', () => A.size.width);
+T('covRect.z', () => A.z);
+T('covRect.w', () => A.w);
+const covRectFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covRect.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covRectFailures;
 probe.topic = 'math-rect-geometry';
 (window as any).__probe = async () => probe;
+if (covRectFailures.length) console.error(`[coverage] Rect probes failed: ${covRectFailures.join(', ')}`);
 
 app.run(scene);
 console.log('[math-rect-geometry] running');

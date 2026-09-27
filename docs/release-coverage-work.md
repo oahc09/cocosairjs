@@ -74,6 +74,14 @@ Coverage is Core 843/963 (87.5%), Important 165/272 (60.7%), and Advanced 139/3,
 
 Next close remaining Core units across `Rect`, `Size`, `Mesh`, `Material`, `Layers`, `Scene`, `Input`, and GLTF runtime classes before Important and Advanced closure.
 
+### 2026-09-27 Wave 12 — Core geometry, scene, and resource APIs
+
+Wave 12 adds 57 verified Core units with 0 removals: Rect +12, Size +4, Layers +7, Scene +5, Input +5, Material +8, Mesh +9, ModelRenderer +4, and Texture2D +3. The canonical V1.1 run passed 140/140 with a single fingerprint across all examples, 3,884 verified, 167 attested, and 0 unproven bindings. DevTools passed 5/5; Gallery passed 216/216 with 50 lifecycle contracts. Strict spec validation passed 145/145; compliance remains 0 fail / 1 documented Draco decoder-availability warning. API trace self-test passed; evidence has 0 stale proofs and 0 schema gaps. Jest and test-inventory each passed 32 suites / 265 tests; typecheck, Prettier, 575-export package acceptance, V1.1 chain-face, 1,319 documentation references, verify:file-map, verify:web-only, and the V1.2 browser matrix (39/39) passed.
+
+Coverage is Core 900/963 (93.5%), Important 165/272 (60.7%), and Advanced 139/3,130 (4.4%). Stable examples remain 144/120. Release remains NOT MET: Core gap 63; Important needs 80 more to reach 245/272 and has 107 units without explicit status; Advanced needs 2,365 more to reach 2,504/3,130 and has 2,991 uncovered units that must reach zero. Keep the 100%/90%/80% thresholds unchanged.
+
+Next close the final 63 Core units across GLTF asset/loader/extension registry, math utilities, and remaining runtime singleton exports.
+
 ## Coverage waves
 
 After the inventory revision, group missing required units by feature and class. Each wave should add example behavior checks and `api.evidence` bindings, run focused trial validation, then run the canonical V1.1 browser verification and coverage report. Count only fresh `apiProof.proof=verified` units. Prioritize unverified Core units, then Important runtime features and V1.2 feature groups designated Advanced-required. Record added, removed, and stale units after each wave. Do not weaken the 100%/90%/80% thresholds to reach a green report.

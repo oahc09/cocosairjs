@@ -26,7 +26,14 @@
     "Material.setProperty",
     "utils.createMesh",
     "primitives.box",
-    "Layers.Enum"
+    "Layers.Enum",
+    "Layers.BitMask",
+    "Layers.makeMaskInclude",
+    "Layers.makeMaskExclude",
+    "Layers.addLayer",
+    "Layers.deleteLayer",
+    "Layers.nameToLayer",
+    "Layers.layerToName"
   ],
   "capabilities": [],
   "learning": {
@@ -53,7 +60,14 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "Layers.BitMask",
+      "Layers.makeMaskInclude",
+      "Layers.makeMaskExclude",
+      "Layers.addLayer",
+      "Layers.deleteLayer",
+      "Layers.nameToLayer",
+      "Layers.layerToName"
     ],
     "claims": [
       "createAirApp",
@@ -74,7 +88,14 @@
       "Material.setProperty",
       "utils.createMesh",
       "primitives.box",
-      "Layers.Enum"
+      "Layers.Enum",
+      "Layers.BitMask",
+      "Layers.makeMaskInclude",
+      "Layers.makeMaskExclude",
+      "Layers.addLayer",
+      "Layers.deleteLayer",
+      "Layers.nameToLayer",
+      "Layers.layerToName"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -191,6 +212,48 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L37"
+      },
+      {
+        "api": "Layers.BitMask",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L97"
+      },
+      {
+        "api": "Layers.makeMaskInclude",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L98"
+      },
+      {
+        "api": "Layers.makeMaskExclude",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L91"
+      },
+      {
+        "api": "Layers.addLayer",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L128"
+      },
+      {
+        "api": "Layers.deleteLayer",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L131"
+      },
+      {
+        "api": "Layers.nameToLayer",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "Layers.layerToName",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
       }
     ]
   },
@@ -223,11 +286,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "4088c5469b52",
-    "source": "ed0c37c5ed29eb0d",
-    "candidate": "8746fc59b6aa0408",
-    "verified": 19,
+    "spec": "e22465e2753e",
+    "source": "171eaa9512f3bb0e",
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 26,
     "attested": 0,
-    "units": 19
+    "units": 26
   }
 }

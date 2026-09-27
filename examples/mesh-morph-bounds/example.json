@@ -249,9 +249,9 @@
   "promotion": {
     "spec": "d84e10888320",
     "source": "e269d7b6ad864d3d",
-    "candidate": "8746fc59b6aa0408",
-    "verified": 21,
-    "attested": 1,
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 22,
+    "attested": 0,
     "units": 22
   }
 }

@@ -86,8 +86,17 @@ T('lerp', () => {
     return o.width + ',' + o.height;
 });
 T('toString', () => typeof s.toString());
+T('covSize.ZERO', () => Size.ZERO.width);
+T('covSize.ONE', () => Size.ONE.height);
+T('covSize.x', () => s.x);
+T('covSize.y', () => s.y);
+const covSizeFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covSize.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covSizeFailures;
 probe.topic = 'math-size-ops';
 (window as any).__probe = async () => probe;
+if (covSizeFailures.length) console.error(`[coverage] Size probes failed: ${covSizeFailures.join(', ')}`);
 
 app.run(scene);
 void import('./instance-contract.js').then(({ verifySizeInstanceContract }) => verifySizeInstanceContract());

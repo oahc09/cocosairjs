@@ -29,7 +29,10 @@
     "Scene.constructor",
     "Scene.autoReleaseAssets",
     "Scene.dependAssets",
-    "Scene.updateWorldTransform"
+    "Scene.updateWorldTransform",
+    "Scene.renderScene",
+    "Scene.globals",
+    "Scene.addComponent"
   ],
   "capabilities": [],
   "learning": {
@@ -56,7 +59,12 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "Scene.renderScene",
+      "Scene.globals",
+      "Scene.autoReleaseAssets",
+      "Scene.dependAssets",
+      "Scene.addComponent"
     ],
     "claims": [
       "createAirApp",
@@ -80,7 +88,10 @@
       "Scene.constructor",
       "Scene.autoReleaseAssets",
       "Scene.dependAssets",
-      "Scene.updateWorldTransform"
+      "Scene.updateWorldTransform",
+      "Scene.renderScene",
+      "Scene.globals",
+      "Scene.addComponent"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -215,6 +226,24 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L99"
+      },
+      {
+        "api": "Scene.renderScene",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "Scene.globals",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "Scene.addComponent",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L109"
       }
     ]
   },
@@ -247,11 +276,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "e0a9561573a7",
-    "source": "cba3d9332bbd4582",
-    "candidate": "8746fc59b6aa0408",
-    "verified": 20,
-    "attested": 2,
-    "units": 22
+    "spec": "3168242ad2e7",
+    "source": "5cfeac496a6f8491",
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 25,
+    "attested": 0,
+    "units": 25
   }
 }

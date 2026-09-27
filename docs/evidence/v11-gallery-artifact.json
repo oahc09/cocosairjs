@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T13:24:23.560Z",
+  "measuredAt": "2026-09-27T15:37:38.867Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
@@ -8,15 +8,15 @@
     "examples": 145,
     "booted": 140,
     "devToolsPagesServed": 5,
-    "lifecycle": 48
+    "lifecycle": 50
   },
   "artifactBytes": {
-    "engineCopySha256_16": "cef2756486b073d1",
-    "liveBundleSha256_16": "cef2756486b073d1",
+    "engineCopySha256_16": "05f7eb14b1014d5d",
+    "liveBundleSha256_16": "05f7eb14b1014d5d",
     "identical": true
   },
-  "total": 214,
-  "pass": 214,
+  "total": 216,
+  "pass": 216,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -31,7 +31,7 @@
     {
       "id": "artifact:engine-copy-current",
       "ok": true,
-      "detail": "artifact cef2756486b073d1 vs live build cef2756486b073d1"
+      "detail": "artifact 05f7eb14b1014d5d vs live build 05f7eb14b1014d5d"
     },
     {
       "id": "static:index.html",
@@ -91,7 +91,7 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:52850/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:56711/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -419,6 +419,11 @@
       "detail": "booted via /material-ops/"
     },
     {
+      "id": "lifecycle:material-ops",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
+    },
+    {
       "id": "example-boot:material-transparent",
       "ok": true,
       "detail": "booted via /material-transparent/"
@@ -647,6 +652,11 @@
       "id": "example-boot:mesh-lifecycle-ops",
       "ok": true,
       "detail": "booted via /mesh-lifecycle-ops/"
+    },
+    {
+      "id": "lifecycle:mesh-lifecycle-ops",
+      "ok": true,
+      "detail": "held=4 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:mesh-morph-bounds",
@@ -1071,7 +1081,7 @@
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "48 §25 合同示例在部署物内完成释放核对"
+      "detail": "50 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",

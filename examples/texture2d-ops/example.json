@@ -34,7 +34,10 @@
     "Texture2D.reset",
     "Texture2D.releaseTexture",
     "Texture2D.initDefault",
-    "Texture2D.validate"
+    "Texture2D.validate",
+    "Texture2D.mipmaps",
+    "Texture2D.image",
+    "Texture2D.description"
   ],
   "capabilities": [],
   "learning": {
@@ -61,7 +64,10 @@
       "Color",
       "math.Vec3",
       "MeshRenderer",
-      "Material"
+      "Material",
+      "Texture2D.mipmaps",
+      "Texture2D.image",
+      "Texture2D.description"
     ],
     "claims": [
       "createAirApp",
@@ -90,7 +96,10 @@
       "Texture2D.reset",
       "Texture2D.releaseTexture",
       "Texture2D.initDefault",
-      "Texture2D.validate"
+      "Texture2D.validate",
+      "Texture2D.mipmaps",
+      "Texture2D.image",
+      "Texture2D.description"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -255,6 +264,24 @@
         "source": "src/main.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L145"
+      },
+      {
+        "api": "Texture2D.mipmaps",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L151"
+      },
+      {
+        "api": "Texture2D.image",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "Texture2D.description",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L153"
       }
     ]
   },
@@ -287,11 +314,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "06b86e15335c",
-    "source": "2ddf9d4b035baa4f",
-    "candidate": "8746fc59b6aa0408",
-    "verified": 27,
+    "spec": "94f1a97e35bc",
+    "source": "5d1037188542fa8c",
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 30,
     "attested": 0,
-    "units": 27
+    "units": 30
   }
 }

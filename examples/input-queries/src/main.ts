@@ -98,8 +98,25 @@ T('accelHz', () => {
         return 'threw';
     }
 });
+var covInputProbe = new Input();
+var covInputOn = () => {};
+var covInputOnce = () => {};
+T('covInput.EventType', () => Input.EventType.TOUCH_START);
+T('covInput.constructor', () => covInputProbe instanceof Input);
+T('covInput.on', () => covInputProbe.on(Input.EventType.TOUCH_START, covInputOn) === covInputOn);
+T('covInput.once', () => covInputProbe.once(Input.EventType.TOUCH_MOVE, covInputOnce) === covInputOnce);
+T('covInput.off', () => {
+    covInputProbe.off(Input.EventType.TOUCH_START, covInputOn);
+    covInputProbe.off(Input.EventType.TOUCH_MOVE, covInputOnce);
+    return true;
+});
+const covInputFailures = Object.entries(probe)
+    .filter(([key, value]) => key.startsWith('covInput.') && value === 'threw')
+    .map(([key]) => key);
+probe.coverageFailures = covInputFailures;
 probe.topic = 'input-queries';
 (window as any).__probe = async () => probe;
+if (covInputFailures.length) console.error(`[coverage] Input probes failed: ${covInputFailures.join(', ')}`);
 
 app.run(scene);
 console.log('[input-queries] running');

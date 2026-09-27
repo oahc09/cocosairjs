@@ -35,7 +35,11 @@
     "math.Size.lerp",
     "math.Size.toString",
     "math.Size.prototype.equals",
-    "math.Size.prototype.lerp"
+    "math.Size.prototype.lerp",
+    "math.Size.ZERO",
+    "math.Size.ONE",
+    "math.Size.x",
+    "math.Size.y"
   ],
   "capabilities": [],
   "learning": {
@@ -64,7 +68,11 @@
       "MeshRenderer",
       "Material",
       "math.Size.prototype.equals",
-      "math.Size.prototype.lerp"
+      "math.Size.prototype.lerp",
+      "math.Size.ZERO",
+      "math.Size.ONE",
+      "math.Size.x",
+      "math.Size.y"
     ],
     "claims": [
       "createAirApp",
@@ -94,7 +102,11 @@
       "math.Size.lerp",
       "math.Size.toString",
       "math.Size.prototype.equals",
-      "math.Size.prototype.lerp"
+      "math.Size.prototype.lerp",
+      "math.Size.ZERO",
+      "math.Size.ONE",
+      "math.Size.x",
+      "math.Size.y"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -265,6 +277,30 @@
         "source": "src/instance-contract.ts",
         "validator": "no-runtime-error",
         "sourceLocation": "L13"
+      },
+      {
+        "api": "math.Size.ZERO",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L89"
+      },
+      {
+        "api": "math.Size.ONE",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "math.Size.x",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L77"
+      },
+      {
+        "api": "math.Size.y",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L92"
       }
     ]
   },
@@ -297,11 +333,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "5d6a3acc6095",
-    "source": "c3de2ed1cbe0da9f",
-    "candidate": "8746fc59b6aa0408",
-    "verified": 28,
+    "spec": "1c0010ce0740",
+    "source": "cd75dcb9b3c7a69f",
+    "candidate": "7f3b89f6ac076cbf",
+    "verified": 32,
     "attested": 0,
-    "units": 28
+    "units": 32
   }
 }
