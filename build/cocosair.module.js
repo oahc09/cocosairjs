@@ -14831,7 +14831,8 @@ class ScreenAdapter extends EventTarget {
   }
   get devicePixelRatio() {
     var _window$devicePixelRa;
-    return Math.min((_window$devicePixelRa = window.devicePixelRatio) !== null && _window$devicePixelRa !== void 0 ? _window$devicePixelRa : 1, 2);
+    const cap = Number(window.__CCDPR_CAP__);
+    return Math.min((_window$devicePixelRa = window.devicePixelRatio) !== null && _window$devicePixelRa !== void 0 ? _window$devicePixelRa : 1, Number.isFinite(cap) && cap > 0 ? cap : 2);
   }
   get windowSize() {
     const result = this._windowSizeInCssPixels;

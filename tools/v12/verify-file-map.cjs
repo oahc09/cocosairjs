@@ -32,7 +32,7 @@ const MAN_PATH = path.join(ROOT, 'docs', 'extraction-manifest.json');
 const errors = [];
 const fail = (msg) => errors.push(msg);
 
-function walk (dir, base, out) {
+function walk(dir, base, out) {
     out = out || [];
     if (!fs.existsSync(dir)) return out;
     for (const name of fs.readdirSync(dir)) {
@@ -44,7 +44,7 @@ function walk (dir, base, out) {
     return out;
 }
 
-function upstreamOf (row) {
+function upstreamOf(row) {
     const u = row.upstreamPath;
     if (!u) return null;
     if (u.startsWith('pal/')) return path.join(PAL_DIST, u.slice(4));
@@ -71,7 +71,10 @@ for (const row of rows) {
     if (dupCheck.has(row.airPath)) fail(`重复行: ${row.airPath}`);
     dupCheck.add(row.airPath);
     const air = path.join(ROOT, row.airPath);
-    if (!fs.existsSync(air)) { fail(`AIR 文件不存在: ${row.airPath}`); continue; }
+    if (!fs.existsSync(air)) {
+        fail(`AIR 文件不存在: ${row.airPath}`);
+        continue;
+    }
     const reason = (row.reason || '').trim();
     if (!row.upstreamPath) {
         if (!row.modified) fail(`upstreamPath=null 的行必须 modified:true: ${row.airPath}`);
@@ -99,8 +102,14 @@ if (map.meta.modifiedCount !== actualModified) {
 
 // 三份生成物必须声明同一基线：alpha.33 的陈旧标签曾在 extraction-manifest / web-dependency-graph 里长期存活。
 const DX_PATH = path.join(ROOT, 'docs', 'web-dependency-graph.json');
-for (const [label, file] of [['extraction-manifest', MAN_PATH], ['web-dependency-graph', DX_PATH]]) {
-    if (!fs.existsSync(file)) { fail(`${label} 缺失：${file}`); continue; }
+for (const [label, file] of [
+    ['extraction-manifest', MAN_PATH],
+    ['web-dependency-graph', DX_PATH],
+]) {
+    if (!fs.existsSync(file)) {
+        fail(`${label} 缺失：${file}`);
+        continue;
+    }
     const baseline = (JSON.parse(fs.readFileSync(file, 'utf8')).meta || {}).baseline;
     if (baseline !== map.meta.baseline) {
         fail(`${label} meta.baseline 与 file-map 不一致: ${baseline}`);
@@ -128,7 +137,8 @@ for (const rel of walk(path.join(ROOT, 'src', 'node_modules'), path.join(ROOT, '
 }
 
 for (const e of man.entries) {
-    if (e.destination !== `src/${e.source}`) fail(`manifest destination 与 source 不一致: ${e.source} -> ${e.destination}`);
+    if (e.destination !== `src/${e.source}`)
+        fail(`manifest destination 与 source 不一致: ${e.source} -> ${e.destination}`);
     if (!fs.existsSync(path.join(ROOT, e.destination))) fail(`manifest destination 不存在: ${e.destination}`);
 }
 
@@ -138,7 +148,7 @@ for (const e of man.entries) {
  *    所以「Air 与官方逐字节」必须覆盖到这些替换件——它们参与真实构建，不是可选文件。
  */
 const pairKey = (p) => `${p.key}=>${p.value}`;
-function overridePairs (cfgPath) {
+function overridePairs(cfgPath) {
     const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
     const out = [];
     for (const block of cfg.moduleOverrides || []) {
@@ -147,7 +157,7 @@ function overridePairs (cfgPath) {
     return out;
 }
 // 虚拟模块与模板路径不可按文件比对；pal/* 走上游 npm 产物解析（与 upstreamOf 同口径）
-function resolveSide (rel) {
+function resolveSide(rel) {
     if (rel.startsWith('internal:') || rel.includes('{{')) return null;
     if (rel.startsWith('pal/')) return { air: path.join(ROOT, 'src', rel), up: path.join(PAL_DIST, rel.slice(4)) };
     return { air: path.join(ROOT, 'src', rel), up: path.join(UPSTREAM, rel) };
@@ -176,7 +186,7 @@ if (!fs.existsSync(AIR_CFG)) {
     const byteChecked = new Set();
     const skipped = { platform: [], missingBoth: [] };
     for (const p of airPairs) {
-        if (!upKeys.has(pairKey(p))) continue;   // Air 自有替换对：value 是 Air 原创件，已在上一条断言里要求登记为偏差
+        if (!upKeys.has(pairKey(p))) continue; // Air 自有替换对：value 是 Air 原创件，已在上一条断言里要求登记为偏差
         for (const rel of [p.key, p.value]) {
             const s = resolveSide(rel);
             if (!s || byteChecked.has(rel)) continue;
@@ -184,9 +194,14 @@ if (!fs.existsSync(AIR_CFG)) {
             const airOk = fs.existsSync(s.air) && fs.statSync(s.air).isFile();
             const upOk = fs.existsSync(s.up) && fs.statSync(s.up).isFile();
             if (airOk && upOk) {
-                if (!sameBytes(s.air, s.up)) fail(`替换对文件与上游不同却未标 modified: ${rel}（${pairKey(p)}）`);
+                if (!sameBytes(s.air, s.up)) {
+                    const row = byAir.get(`src/${rel}`);
+                    if (!row || !row.modified || !(row.reason || '').trim()) {
+                        fail(`替换对文件与上游不同却未标 modified: ${rel}（${pairKey(p)}）`);
+                    }
+                }
             } else if (!airOk && !upOk) {
-                skipped.missingBoth.push(rel);   // 两侧都无：官方该条件分支在本快照里本就悬空
+                skipped.missingBoth.push(rel); // 两侧都无：官方该条件分支在本快照里本就悬空
             } else if (!airOk) {
                 // Air 无、上游有 = 发行姿态排除（jsb / vendor / pal 非 web 实现 / 整个未纳入目录）
                 skipped.platform.push(rel);
@@ -195,13 +210,16 @@ if (!fs.existsSync(AIR_CFG)) {
             }
         }
     }
-    ovSummary = `moduleOverrides pairs upstream=${upPairs.length} air=${airPairs.length} airOnlyRegistered=${airOnly} `
-        + `byteChecked=${byteChecked.size - skipped.platform.length - skipped.missingBoth.length} `
-        + `excludedOneSide=${skipped.platform.length} missingBoth=${skipped.missingBoth.length}`;
+    ovSummary =
+        `moduleOverrides pairs upstream=${upPairs.length} air=${airPairs.length} airOnlyRegistered=${airOnly} ` +
+        `byteChecked=${byteChecked.size - skipped.platform.length - skipped.missingBoth.length} ` +
+        `excludedOneSide=${skipped.platform.length} missingBoth=${skipped.missingBoth.length}`;
 }
 
-console.log(`[file-map] rows=${rows.length} modified=${actualModified} scanned(src/cocos|exports|pal)=${covered} `
-    + `manifest=${man.entries.length} upstream=${UPSTREAM}`);
+console.log(
+    `[file-map] rows=${rows.length} modified=${actualModified} scanned(src/cocos|exports|pal)=${covered} ` +
+        `manifest=${man.entries.length} upstream=${UPSTREAM}`,
+);
 console.log(`[file-map] ${ovSummary}`);
 if (errors.length) {
     console.error(`[file-map] FAIL ${errors.length} 项：`);

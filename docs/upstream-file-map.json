@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 29
+    "modifiedCount": 30
   },
   "mapping": [
     {
@@ -7345,8 +7345,8 @@
       "airPath": "src/pal/screen-adapter/web/screen-adapter.js",
       "upstreamPath": "pal/screen-adapter/web/screen-adapter.js",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR Web DPR cap: screenAdapter.devicePixelRatio applies the host window.__CCDPR_CAP__ (default 2) before windowSize, resolution, input-coordinate, and safe-area scaling; documented in docs/manual/responsive.md §3 and UPSTREAM.md."
     },
     {
       "airPath": "src/pal/system-info/enum-type/browser-type.js",

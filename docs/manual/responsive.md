@@ -12,7 +12,7 @@
 | canvas 尺寸同步 | **无需手动 setSize**（screen-adapter 自动）                         | 不要改 canvas 的 width/height 属性，引擎会持续同步           |
 | 相机纵横比      | **无需手动更新**（自动跟随 canvas）                                 | 相机投影由引擎按当前 canvas 维护                             |
 | 窗口变化事件    | `screen.on('window-resize', cb)` / `screen.on('canvas-resize', cb)` | 事件源是 `screen`；`screen.off(type, cb)` 退订               |
-| 设备像素比      | `screen.devicePixelRatio`（只读）                                   | AIR 暴露 dpr 供你读，清晰度策略由引擎按 dpr 处理             |
+| 设备像素比      | `screen.devicePixelRatio`（只读）                                   | 返回**已 clamp** 的 dpr（默认上限 2，见 §3），清晰度策略由引擎按它处理             |
 | 渲染分辨率读数  | `canvas.width/height` + `screen.resolution`                         | `resolution` 是引擎认定的渲染分辨率（对象 `{width,height}`） |
 
 **没有 `cc.view`**：老 Cocos 教程里的 `cc.view.setDesignResolutionSize` 一类在 AIR 不存在，视口一律走 `screen`。
@@ -41,14 +41,31 @@ screen.on('canvas-resize', () => {
 
 ## 3. devicePixelRatio 与清晰度
 
-`screen.devicePixelRatio` 是浏览器 dpr。高 dpr 屏（Retina/缩放屏）下，canvas 像素尺寸 = 布局尺寸 × dpr，保证 1 物理像素 1 渲染像素、文字与边缘不糊。本页在 dpr=1 的环境实测 `resolution` 与 `windowSize` 相等；在 dpr=2 的屏上 `resolution` 会是 `windowSize` 的两倍 —— 这是**正确**行为，不是 bug。做性能预算时按 `resolution`（真实渲染像素）算，不要按 `windowSize`（CSS 像素）算。
+`screen.devicePixelRatio` 是**被引擎 clamp 过的** dpr，不是浏览器 dpr：Web adapter 返回
+`Math.min(window.devicePixelRatio ?? 1, __CCDPR_CAP__ ?? 2)`，canvas 像素尺寸 = 布局尺寸 × 这个值。
+所以高 dpr 屏（Retina/缩放屏/移动端 2.625 或 3）上 1 物理像素 ≠ 1 渲染像素，边缘与文字会比原生渲染糊一档——
+这是引擎为填充率做的**默认性能策略**，不是 bug。注意三个量的单位别混：
+`canvas.clientWidth/clientHeight` 是 **CSS 像素**；`screen.windowSize` 与 `screen.resolution` 都已经是
+**物理像素**（前者 = CSS 尺寸 × 上面那个 clamp 后的 dpr；后者 = `windowSize × resolutionScale`，
+Web adapter 的 `resolutionScale` 默认 1，所以**二者相等**，只有渲染离屏缩放时才分开）。
+做性能预算按 `windowSize`/`resolution` 算，按 CSS 尺寸算会低估像素量。
+
+想要原生清晰度（或更低）可以在**引擎模块求值之前**设置全局开关，它同时作用于 framebuffer 尺寸、
+输入坐标换算（`pal/input` 也走 `screenAdapter.devicePixelRatio`）与 `safeAreaEdge`，只有一个取值出口：
+
+```html
+<script>window.__CCDPR_CAP__ = 3;</script><!-- 必须在 import cocosair 之前 -->
+```
+
+值非法（NaN / ≤0）时回落到默认 2。把清晰度与填充率的取舍交给宿主，引擎本身不猜。
 
 ## 4. 常见拉伸错因
 
 1. **给 canvas 写了固定 width/height 属性**：adapter 的同步被你的硬编码覆盖，窗口变大时画面被 CSS 拉伸 → 变形。删掉属性，交给 CSS 100%。
 2. **改了 canvas 的 CSS 而非父容器**：canvas 的 CSS 应保持 `width:100%;height:100%`；想限尺寸去限 `#GameDiv`。
 3. **自己监听 window.resize 又手动改 canvas**：与 adapter 双重驱动，尺寸抖动。只读 `screen` 事件，不写 canvas。
-4. **用 `windowSize` 当渲染分辨率做预算/截图**：高 dpr 下会低估像素量；用 `resolution`。
+4. **用 CSS 尺寸（`canvas.clientWidth`）当渲染分辨率做预算/截图**：高 dpr 下会低估像素量；用 `screen.windowSize`（已是物理像素）。
+5. **以为高 dpr 屏上 1 物理像素 = 1 渲染像素**：默认被 clamp 到 2×CSS，3.0 屏上会糊一档；见 §3 的 `__CCDPR_CAP__`。
 
 ## 5. 本页实测
 

@@ -12,6 +12,7 @@ import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
 import { join, relative } from 'path';
 import { createAirApp } from '../../src/air/bootstrap';
+import { screen as engineScreen } from '../../src/cocos/core/platform/screen';
 import { Node } from '../../src';
 import { Root } from '../../src/cocos/root';
 import { AudioSource } from '../../src/cocos/audio';
@@ -29,12 +30,17 @@ const bundle = () => {
 };
 
 /** 产物导出表：`export { a as X, b, ... }` 的对外名集合（与 smoke-01 的口径一致，但取全部块）。 */
-function exportedNames (code: string): Set<string> {
+function exportedNames(code: string): Set<string> {
     const names = new Set<string>();
     for (const m of code.matchAll(/^export\s*\{([^}]*)\}/gm)) {
         for (const entry of m[1].split(',')) {
-            const name = entry.trim().split(/\s+as\s+/).pop();
-            if (name) { names.add(name.trim()); }
+            const name = entry
+                .trim()
+                .split(/\s+as\s+/)
+                .pop();
+            if (name) {
+                names.add(name.trim());
+            }
         }
     }
     return names;
@@ -76,16 +82,20 @@ const VENDORED: Array<{ pkg: string; files: string[] }> = [
 /** src/pal 的官方来源：@cocos/engine-pal 的 dist（上游靠 postinstall spread-pal 复制到 <engineRoot>/pal）。 */
 const PAL_DIST = join(ROOT, 'node_modules', '@cocos', 'engine-pal', 'dist');
 
-function listFiles (dir: string, base = dir): string[] {
+function listFiles(dir: string, base = dir): string[] {
     const out: string[] = [];
     for (const name of readdirSync(dir)) {
         const p = join(dir, name);
-        if (statSync(p).isDirectory()) { out.push(...listFiles(p, base)); } else { out.push(relative(base, p).replace(/\\/g, '/')); }
+        if (statSync(p).isDirectory()) {
+            out.push(...listFiles(p, base));
+        } else {
+            out.push(relative(base, p).replace(/\\/g, '/'));
+        }
     }
     return out.sort();
 }
 
-function digest (path: string): string {
+function digest(path: string): string {
     return createHash('sha256').update(readFileSync(path)).digest('hex');
 }
 
@@ -125,20 +135,79 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             for (const rel of files) {
                 const vendored = join(ROOT, 'src', 'node_modules', pkg, rel);
                 const installed = join(ROOT, 'node_modules', pkg, rel);
-                expect({ pkg, rel, vendoredExists: require('fs').existsSync(vendored) }).toEqual({ pkg, rel, vendoredExists: true });
-                expect({ pkg, rel, sameBytes: digest(vendored) === digest(installed) }).toEqual({ pkg, rel, sameBytes: true });
+                expect({ pkg, rel, vendoredExists: require('fs').existsSync(vendored) }).toEqual({
+                    pkg,
+                    rel,
+                    vendoredExists: true,
+                });
+                expect({ pkg, rel, sameBytes: digest(vendored) === digest(installed) }).toEqual({
+                    pkg,
+                    rel,
+                    sameBytes: true,
+                });
             }
         }
     });
 
-    test('src/pal 全部文件是 @cocos/engine-pal dist 的原始字节（无手写替身）', () => {
+    test('PAL 的唯一 AIR 改动是已登记且文档化的 Web DPR cap', () => {
+        const fileMap = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
+        const modified = fileMap.mapping.filter((row: any) => row.airPath.startsWith('src/pal/') && row.modified);
+        expect(modified.map((row: any) => row.airPath)).toEqual(['src/pal/screen-adapter/web/screen-adapter.js']);
+        expect(modified[0].reason).toContain('window.__CCDPR_CAP__');
+
+        const source = readFileSync(join(ROOT, 'src', 'pal', 'screen-adapter', 'web', 'screen-adapter.js'), 'utf8');
+        const manual = readFileSync(join(ROOT, 'docs', 'manual', 'responsive.md'), 'utf8');
+        expect(source).toContain('window.__CCDPR_CAP__');
+        expect(source).toContain('Number.isFinite(cap)&&cap>0?cap:2');
+        expect(manual).toContain('window.__CCDPR_CAP__');
+        expect(manual).toContain('默认上限 2');
+    });
+
+    test('Web DPR cap applies the host value and falls back safely', () => {
+        const dprDescriptor = Object.getOwnPropertyDescriptor(window, 'devicePixelRatio');
+        const hadCap = Object.prototype.hasOwnProperty.call(window, '__CCDPR_CAP__');
+        const oldCap = (window as any).__CCDPR_CAP__;
+        Object.defineProperty(window, 'devicePixelRatio', { configurable: true, value: 4 });
+        try {
+            (window as any).__CCDPR_CAP__ = undefined;
+            expect(engineScreen.devicePixelRatio).toBe(2);
+            (window as any).__CCDPR_CAP__ = 1.5;
+            expect(engineScreen.devicePixelRatio).toBe(1.5);
+            (window as any).__CCDPR_CAP__ = 8;
+            expect(engineScreen.devicePixelRatio).toBe(4);
+            (window as any).__CCDPR_CAP__ = 0;
+            expect(engineScreen.devicePixelRatio).toBe(2);
+            (window as any).__CCDPR_CAP__ = Number.NaN;
+            expect(engineScreen.devicePixelRatio).toBe(2);
+        } finally {
+            if (dprDescriptor) Object.defineProperty(window, 'devicePixelRatio', dprDescriptor);
+            else delete (window as any).devicePixelRatio;
+            if (hadCap) (window as any).__CCDPR_CAP__ = oldCap;
+            else delete (window as any).__CCDPR_CAP__;
+        }
+    });
+
+    test('src/pal 除已登记的 AIR DPR cap 外均与 @cocos/engine-pal dist 逐字节一致', () => {
         const localDir = join(ROOT, 'src', 'pal');
         const files = listFiles(localDir);
         expect(files.length).toBeGreaterThan(30);
+        const fileMap = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
+        const rows = new Map(fileMap.mapping.map((row: any) => [row.airPath, row]));
         for (const rel of files) {
             const up = join(PAL_DIST, rel);
             expect({ rel, upstreamExists: existsSync(up) }).toEqual({ rel, upstreamExists: true });
-            expect({ rel, sameBytes: digest(join(localDir, rel)) === digest(up) }).toEqual({ rel, sameBytes: true });
+            const airPath = `src/pal/${rel.replace(/\\/g, '/')}`;
+            const row: any = rows.get(airPath);
+            const sameBytes = digest(join(localDir, rel)) === digest(up);
+            if (row?.modified) {
+                expect({ rel, reason: Boolean(row.reason), sameBytes }).toEqual({
+                    rel,
+                    reason: true,
+                    sameBytes: false,
+                });
+            } else {
+                expect({ rel, sameBytes }).toEqual({ rel, sameBytes: true });
+            }
         }
     });
 
@@ -148,7 +217,15 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             throw new Error('build/cocosair.module.d.ts 缺失：先跑 npm run build:dts（F-82 产物绑定要求）');
         }
         const code = readFileSync(dts, 'utf8');
-        for (const name of ['PhysicsSystem2D', 'RigidBody2D', 'PhysicsSystem', 'postProcess', 'sp', 'AudioSource', 'AudioClip']) {
+        for (const name of [
+            'PhysicsSystem2D',
+            'RigidBody2D',
+            'PhysicsSystem',
+            'postProcess',
+            'sp',
+            'AudioSource',
+            'AudioClip',
+        ]) {
             expect({ name, declared: new RegExp(`\\b${name}\\b`).test(code) }).toEqual({ name, declared: true });
         }
     });
@@ -229,8 +306,10 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         // modifiedCount 与实际相符、src/{cocos,exports,pal,node_modules} 全量文件有行、抽取件有 manifest 条目。
         let stdout: string;
         try {
-            stdout = execFileSync(process.execPath, [join(ROOT, 'tools', 'v12', 'verify-file-map.cjs')],
-                { cwd: ROOT, encoding: 'utf8' });
+            stdout = execFileSync(process.execPath, [join(ROOT, 'tools', 'v12', 'verify-file-map.cjs')], {
+                cwd: ROOT,
+                encoding: 'utf8',
+            });
         } catch (e: any) {
             throw new Error(`npm run verify:file-map 未通过：\n${e.stdout || ''}${e.stderr || ''}`);
         }
@@ -240,7 +319,8 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
     describe('批次 E / D10：gfx-webgpu 子图的类型核对豁免不外溢', () => {
         const SUBTREES = ['cocos/gfx/webgpu', 'cocos/webgpu'];
         const EXCLUDED_FILES = ['exports/gfx-webgpu.ts'];
-        const isExcluded = (rel: string) => EXCLUDED_FILES.includes(rel) || SUBTREES.some((d) => rel.startsWith(`${d}/`));
+        const isExcluded = (rel: string) =>
+            EXCLUDED_FILES.includes(rel) || SUBTREES.some((d) => rel.startsWith(`${d}/`));
 
         test('豁免清单精确锁定：根与 src 两份 tsconfig 的 exclude 只允许已登记的豁免项', () => {
             const strip = (f: string) => JSON.parse(readFileSync(join(ROOT, f), 'utf8').replace(/^\s*\/\/.*$/gm, ''));
@@ -287,15 +367,24 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             const walk = (dir: string): void => {
                 for (const name of readdirSync(dir)) {
                     const abs = join(dir, name);
-                    if (statSync(abs).isDirectory()) { walk(abs); continue; }
-                    if (!/\.tsx?$/.test(name)) { continue; }
+                    if (statSync(abs).isDirectory()) {
+                        walk(abs);
+                        continue;
+                    }
+                    if (!/\.tsx?$/.test(name)) {
+                        continue;
+                    }
                     const rel = relative(SRC, abs).replace(/\\/g, '/');
-                    if (isExcluded(rel)) { continue; }
+                    if (isExcluded(rel)) {
+                        continue;
+                    }
                     const code = readFileSync(abs, 'utf8');
                     for (const m of code.matchAll(specRe)) {
                         const spec = m[1];
                         if (!spec.startsWith('.')) {
-                            if (/webgpu/i.test(spec)) { offenders.push(`${rel} → ${spec}`); }
+                            if (/webgpu/i.test(spec)) {
+                                offenders.push(`${rel} → ${spec}`);
+                            }
                             continue;
                         }
                         const target = relative(SRC, join(abs, '..', spec)).replace(/\\/g, '/');
@@ -314,8 +403,12 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             // 防止「文件在盘但脱离簿记」的静默漂移。
             const map = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
             const registered = new Set<string>(map.mapping.map((r: any) => r.airPath));
-            for (const rel of ['cocos/gfx/webgpu/webgpu-device.ts', 'cocos/gfx/webgpu/webgpu-define.ts',
-                'cocos/webgpu/instantiated.ts', 'exports/gfx-webgpu.ts']) {
+            for (const rel of [
+                'cocos/gfx/webgpu/webgpu-device.ts',
+                'cocos/gfx/webgpu/webgpu-define.ts',
+                'cocos/webgpu/instantiated.ts',
+                'exports/gfx-webgpu.ts',
+            ]) {
                 expect(registered.has(`src/${rel}`)).toBe(true);
             }
         });
@@ -323,8 +416,13 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
 
     describe('批次 D-4 / G-3（Deviation-05）：三个 wasm 后端子图「已抽取、未接线、暂不类型核对」', () => {
         const SUBTREES = ['cocos/physics/bullet', 'cocos/physics/physx', 'cocos/physics-2d/box2d-wasm'];
-        const EXCLUDED_FILES = ['exports/physics-ammo.ts', 'exports/physics-physx.ts', 'exports/physics-2d-box2d-wasm.ts'];
-        const isExcluded = (rel: string) => EXCLUDED_FILES.includes(rel) || SUBTREES.some((d) => rel.startsWith(`${d}/`));
+        const EXCLUDED_FILES = [
+            'exports/physics-ammo.ts',
+            'exports/physics-physx.ts',
+            'exports/physics-2d-box2d-wasm.ts',
+        ];
+        const isExcluded = (rel: string) =>
+            EXCLUDED_FILES.includes(rel) || SUBTREES.some((d) => rel.startsWith(`${d}/`));
 
         test('82 个抽取文件全部在册且落盘（豁免只作用于类型核对，不改内容）', () => {
             const map = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
@@ -348,15 +446,24 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             const walk = (dir: string): void => {
                 for (const name of readdirSync(dir)) {
                     const abs = join(dir, name);
-                    if (statSync(abs).isDirectory()) { walk(abs); continue; }
-                    if (!/\.tsx?$/.test(name)) { continue; }
+                    if (statSync(abs).isDirectory()) {
+                        walk(abs);
+                        continue;
+                    }
+                    if (!/\.tsx?$/.test(name)) {
+                        continue;
+                    }
                     const rel = relative(SRC, abs).replace(/\\/g, '/');
-                    if (isExcluded(rel)) { continue; }
+                    if (isExcluded(rel)) {
+                        continue;
+                    }
                     const code = readFileSync(abs, 'utf8');
                     for (const m of code.matchAll(specRe)) {
                         const spec = m[1];
                         if (!spec.startsWith('.')) {
-                            if (/physics-(ammo|physx|2d-box2d-wasm)/.test(spec)) { offenders.push(`${rel} → ${spec}`); }
+                            if (/physics-(ammo|physx|2d-box2d-wasm)/.test(spec)) {
+                                offenders.push(`${rel} → ${spec}`);
+                            }
                             continue;
                         }
                         const target = relative(SRC, join(abs, '..', spec)).replace(/\\/g, '/');
@@ -382,7 +489,8 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         });
     });
 
-    describe('V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币', () => {        const EVIDENCE = join(ROOT, 'docs', 'evidence', 'v12', 'browser-matrix.json');
+    describe('V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币', () => {
+        const EVIDENCE = join(ROOT, 'docs', 'evidence', 'v12', 'browser-matrix.json');
         const CONTRACT = join(ROOT, 'tools', 'v12', 'browser-matrix-contract.json');
         const sha16 = (path: string): string => digest(path).slice(0, 16);
 
@@ -410,8 +518,22 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
             const json = JSON.parse(readFileSync(EVIDENCE, 'utf8'));
             for (const rec of json.records) {
                 const png = join(ROOT, rec.png);
-                expect({ engine: rec.engine, example: rec.example, exists: existsSync(png) }).toEqual({ engine: rec.engine, example: rec.example, exists: true });
-                expect({ engine: rec.engine, example: rec.example, sha: sha16(png), recorded: rec.pngSha256_16 }).toEqual({ engine: rec.engine, example: rec.example, sha: rec.pngSha256_16, recorded: rec.pngSha256_16 });
+                expect({ engine: rec.engine, example: rec.example, exists: existsSync(png) }).toEqual({
+                    engine: rec.engine,
+                    example: rec.example,
+                    exists: true,
+                });
+                expect({
+                    engine: rec.engine,
+                    example: rec.example,
+                    sha: sha16(png),
+                    recorded: rec.pngSha256_16,
+                }).toEqual({
+                    engine: rec.engine,
+                    example: rec.example,
+                    sha: rec.pngSha256_16,
+                    recorded: rec.pngSha256_16,
+                });
                 expect(rec.pngBytes).toBe(statSync(png).size);
                 expect(rec.result).toBe('PASS');
                 expect(rec.failedAssertions).toEqual([]);
@@ -424,13 +546,15 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         test('覆盖率：契约里每个示例 × 每个声明引擎都有 PASS 记录（不许静默漏跑）', () => {
             const json = JSON.parse(readFileSync(EVIDENCE, 'utf8'));
             const contract = JSON.parse(readFileSync(CONTRACT, 'utf8'));
-            const covered = new Set<string>(json.records
-                .filter((r: any) => r.result === 'PASS')
-                .map((r: any) => `${r.example}@${r.engine}`));
+            const covered = new Set<string>(
+                json.records.filter((r: any) => r.result === 'PASS').map((r: any) => `${r.example}@${r.engine}`),
+            );
             const missing: string[] = [];
             for (const [example, entry] of Object.entries<any>(contract)) {
                 for (const engine of entry.engines) {
-                    if (!covered.has(`${example}@${engine}`)) { missing.push(`${example}@${engine}`); }
+                    if (!covered.has(`${example}@${engine}`)) {
+                        missing.push(`${example}@${engine}`);
+                    }
                 }
             }
             expect(missing).toEqual([]);
@@ -445,11 +569,16 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
                 d10: 'LV12-18 gfx-webgpu 的 D10 诊断证据（README + 回退探测腿），不是矩阵捕获；见 docs/evidence/v12/d10/README.md 与 UPSTREAM.md Deviation-04',
                 // r46（#13(b) 已批复执行）：原游离目录 LV12-02-profiler-overlay/ 已改名并入
                 // profiler-overlay/early-manual-capture-chromium.png（正典目录、被矩阵记录引用），豁免条目随之移除。
-                'pilot12-r45i': 'r45i 批次的 V1.1 规格驱动链 firefox/webkit 两腿捕获（待批 #15 选项 (a) 的 11 例可跑面，非正典、[skip-promote] 零回写），不是矩阵捕获；命令 / 三引擎对账 / 边界见 docs/evidence/v12/pilot12-r45i/README.md',
-                'v11chain-r45j': 'r45j 批次：V1.1 规格驱动链余下 41 例 × firefox/webkit（与 pilot12-r45i 合并成 52 例全量三引擎对账），非正典、[skip-promote] 零回写，不是矩阵捕获；命令原件 / 结果账 / 4 个红格归因 / F-133·F-134·F-135 在册缺陷见 docs/evidence/v12/v11chain-r45j/README.md，判据与 10 臂负控在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-reconcile-k.cjs 与同目录 r45j-negctl.cjs',
-                'mesh-sphere-r45m': 'r45m 批次：mesh-sphere × {firefox, webkit} 单例重采（r45j 那两格的归因前提——工作树注入的假 validator——已随 r45k 提交消失，由 r45j 自家判据现读自报 STALE），非正典、[skip-promote] 零回写、subset=["mesh-sphere"] 且 partial=true ⇒ 不得读成 52 例整批的一部分；口径 / 命令 / 成本订正 / 六臂负控见 docs/evidence/v12/mesh-sphere-r45m/README.md，判据在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-recapture-reconcile.cjs',
+                'pilot12-r45i':
+                    'r45i 批次的 V1.1 规格驱动链 firefox/webkit 两腿捕获（待批 #15 选项 (a) 的 11 例可跑面，非正典、[skip-promote] 零回写），不是矩阵捕获；命令 / 三引擎对账 / 边界见 docs/evidence/v12/pilot12-r45i/README.md',
+                'v11chain-r45j':
+                    'r45j 批次：V1.1 规格驱动链余下 41 例 × firefox/webkit（与 pilot12-r45i 合并成 52 例全量三引擎对账），非正典、[skip-promote] 零回写，不是矩阵捕获；命令原件 / 结果账 / 4 个红格归因 / F-133·F-134·F-135 在册缺陷见 docs/evidence/v12/v11chain-r45j/README.md，判据与 10 臂负控在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45j-reconcile-k.cjs 与同目录 r45j-negctl.cjs',
+                'mesh-sphere-r45m':
+                    'r45m 批次：mesh-sphere × {firefox, webkit} 单例重采（r45j 那两格的归因前提——工作树注入的假 validator——已随 r45k 提交消失，由 r45j 自家判据现读自报 STALE），非正典、[skip-promote] 零回写、subset=["mesh-sphere"] 且 partial=true ⇒ 不得读成 52 例整批的一部分；口径 / 命令 / 成本订正 / 六臂负控见 docs/evidence/v12/mesh-sphere-r45m/README.md，判据在 docs/audits/global-quality-audit-2026-09-19/raw/gates/r45m-recapture-reconcile.cjs',
             };
-            const dirs = readdirSync(EVIDENCE_DIR, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
+            const dirs = readdirSync(EVIDENCE_DIR, { withFileTypes: true })
+                .filter((e) => e.isDirectory())
+                .map((e) => e.name);
             expect(dirs.filter((d) => !referenced.has(d) && !(d in ACCOUNTED))).toEqual([]);
             expect(Object.keys(ACCOUNTED).filter((d) => !dirs.includes(d))).toEqual([]);
             expect(referenced.size).toBe(Object.keys(JSON.parse(readFileSync(CONTRACT, 'utf8'))).length);

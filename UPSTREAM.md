@@ -169,6 +169,12 @@ Owner 批复「按照建议执行，确保最优」，`docs/v12-d9-residual-tria
 本文档及发布面 `docs/*.md` 中出现的盘符绝对路径（本机取证 scratch 目录、上游快照 `cocos4` 目录、benchmark 目录）
 **不随 npm 包发布、不保证对收件人可复现**；可复现判据一律以仓库内 `npm run verify:*` 系列门禁为准。
 
+## Intentional AIR adaptation: configurable Web DPR cap
+
+`src/pal/screen-adapter/web/screen-adapter.js` retains the upstream default cap of 2, while adding the host override `window.__CCDPR_CAP__` for deployments that need a different fill-rate/clarity tradeoff. The value is read before the adapter scales `windowSize`; invalid or non-positive values fall back to 2. Input-coordinate conversion and safe-area scaling continue to use the same `screenAdapter.devicePixelRatio` getter.
+
+The override must be assigned before importing the engine. The usage and pixel-unit contract are documented in [docs/manual/responsive.md](docs/manual/responsive.md) §3. This is the single intentional PAL byte difference; `docs/upstream-file-map.json` marks it modified and `test/smoke/smoke-30-v12-regression.test.ts` checks that no other PAL file drifts.
+
 ## 基线快照统计（2026-09-12）
 
 | 项 | 值 |
