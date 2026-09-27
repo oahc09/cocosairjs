@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-26T14:28:57.246Z",
-  "revision": "82909ba",
+  "generatedAt": "2026-09-27T00:44:46.308Z",
+  "revision": "2d0cf75",
   "examples": [
     {
       "dir": "anim-position",
@@ -15193,7 +15193,21 @@
         ],
         "supporting": [
           "MeshRenderer",
-          "primitives.box"
+          "primitives.box",
+          "Tween.then",
+          "Tween.call",
+          "Tween.running",
+          "Tween.duration",
+          "Tween.getRunningCount",
+          "Tween.pauseAllByTarget",
+          "Tween.resumeAllByTarget",
+          "Tween.stopAllByTarget",
+          "Tween.target",
+          "Tween.update",
+          "Tween.updateUntil",
+          "Tween.hide",
+          "Tween.show",
+          "Tween.stopAllByTag"
         ],
         "claims": [
           "createAirApp",
@@ -15232,7 +15246,21 @@
           "Tween.reverse",
           "Tween.stopAll",
           "Tween.removeSelf",
-          "Tween.destroySelf"
+          "Tween.destroySelf",
+          "Tween.then",
+          "Tween.call",
+          "Tween.running",
+          "Tween.duration",
+          "Tween.getRunningCount",
+          "Tween.pauseAllByTarget",
+          "Tween.resumeAllByTarget",
+          "Tween.stopAllByTarget",
+          "Tween.target",
+          "Tween.update",
+          "Tween.updateUntil",
+          "Tween.hide",
+          "Tween.show",
+          "Tween.stopAllByTag"
         ]
       },
       "capabilities": [
@@ -15273,12 +15301,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "2689747c5522",
-        "source": "0a8823359f0bd485",
+        "spec": "7c068016a452",
+        "source": "938bdcafc5787e15",
         "candidate": "8746fc59b6aa0408",
-        "verified": 36,
+        "verified": 50,
         "attested": 1,
-        "units": 37
+        "units": 51
       }
     },
     {

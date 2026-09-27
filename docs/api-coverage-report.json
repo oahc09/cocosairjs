@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-26T14:30:12.526Z",
+  "generatedAt": "2026-09-27T00:45:28.900Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T14:27:38.124Z",
+      "measuredAt": "2026-09-26T15:07:16.270Z",
       "mode": "spec-driven-v3"
     },
     {
@@ -29,10 +29,10 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 836,
+  "totalClaimed": 850,
   "totalAttested": 148,
-  "totalVerified": 688,
-  "totalVerifiedViaCall": 673,
+  "totalVerified": 702,
+  "totalVerifiedViaCall": 687,
   "totalVerifiedViaRead": 15,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
@@ -3364,16 +3364,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 36,
-        "total": 37,
-        "hash": "e0f47d86406d3ae4"
+        "observed": 50,
+        "total": 51,
+        "hash": "5b569ab019868d85"
       },
-      "claims": 37,
+      "claims": 51,
       "tally": {
-        "verified": 36,
+        "verified": 50,
         "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 35,
+        "verifiedCall": 49,
         "verifiedRead": 1
       }
     },
@@ -3555,25 +3555,25 @@
       "denominator": "coverageRequired",
       "total": 272,
       "required": 272,
-      "claimed": 44,
+      "claimed": 58,
       "attested": 2,
-      "verified": 42,
-      "requiredClaimed": 44,
-      "requiredVerified": 42,
+      "verified": 56,
+      "requiredClaimed": 58,
+      "requiredVerified": 56,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 230,
-      "unstated": 230,
-      "verifiedViaCall": 40,
+      "uncovered": 216,
+      "unstated": 216,
+      "verifiedViaCall": 54,
       "verifiedViaRead": 2,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 40,
+      "requiredVerifiedViaCall": 54,
       "requiredVerifiedViaRead": 2,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.147,
-      "claimedRate": 0.162,
-      "verifiedRate": 0.154,
-      "allUnitsVerifiedRate": 0.154,
+      "requiredVerifiedViaCallRate": 0.199,
+      "claimedRate": 0.213,
+      "verifiedRate": 0.206,
+      "allUnitsVerifiedRate": 0.206,
       "gate": "V1.1 Release: >=90% verified of coverageRequired",
       "threshold": 0.9,
       "applicable": true,
@@ -11456,6 +11456,118 @@
       ]
     },
     {
+      "unit": "Tween.then",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.call",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.running",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.duration",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.getRunningCount",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.pauseAllByTarget",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.resumeAllByTarget",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.stopAllByTarget",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.target",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.update",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.updateUntil",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.hide",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.show",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
+      "unit": "Tween.stopAllByTag",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "tween-basic"
+      ]
+    },
+    {
       "unit": "SpriteFrame.createWithImage",
       "tier": "advanced",
       "via": "call",
@@ -14465,5 +14577,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3623
+  "unclaimedRequired": 3609
 }

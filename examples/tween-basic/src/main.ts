@@ -81,7 +81,7 @@ installAssetLifecycle({
 });
 void import('./tween-contract.js')
     .then(async ({ verifyTweenControl }) => {
-        await verifyTweenControl();
+        await verifyTweenControl(cube);
         pingpong();
     })
     .catch((error) => {

@@ -19,10 +19,18 @@
  */
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const http = require('http');
 const REPO = path.resolve(__dirname, '..', '..');
 const esbuild = require(path.join(REPO, 'node_modules', 'esbuild'));
-const ARTIFACT = path.join(REPO, 'build', 'examples');
+const overrideArtifact = process.env.COCOSAIR_GALLERY_ARTIFACT;
+const ARTIFACT = overrideArtifact ? path.resolve(overrideArtifact) : path.join(REPO, 'build', 'examples');
+if (overrideArtifact) {
+  const tempRoot = path.resolve(os.tmpdir());
+  if (!ARTIFACT.toLowerCase().startsWith((tempRoot + path.sep).toLowerCase())) {
+    throw new Error('COCOSAIR_GALLERY_ARTIFACT must be a child directory of the system temp directory');
+  }
+}
 const EVIDENCE_PATH = path.join(REPO, 'docs', 'evidence', 'v11-gallery-artifact.json');
 
 function buildArtifact () {
