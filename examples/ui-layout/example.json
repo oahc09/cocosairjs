@@ -17,7 +17,33 @@
     "Layout",
     "UITransform",
     "Sprite",
-    "Label"
+    "Label",
+    "Widget.isAlignLeft",
+    "Widget.isAlignRight",
+    "Widget.isAlignTop",
+    "Widget.isAlignBottom",
+    "Widget.left",
+    "Widget.right",
+    "Widget.top",
+    "Widget.bottom",
+    "Widget.alignMode",
+    "Widget.isAlignVerticalCenter",
+    "Widget.verticalCenter",
+    "Widget.constructor",
+    "Widget.target",
+    "Widget.isAlignHorizontalCenter",
+    "Widget.isStretchWidth",
+    "Widget.isStretchHeight",
+    "Widget.horizontalCenter",
+    "Widget.isAbsoluteTop",
+    "Widget.isAbsoluteBottom",
+    "Widget.isAbsoluteLeft",
+    "Widget.isAbsoluteRight",
+    "Widget.isAbsoluteHorizontalCenter",
+    "Widget.isAbsoluteVerticalCenter",
+    "Widget.alignFlags",
+    "Widget.updateAlignment",
+    "Widget.setDirty"
   ],
   "capabilities": ["ui"],
   "validation": {
@@ -43,7 +69,38 @@
   },
   "api": {
     "primary": ["Canvas", "Widget", "Layout"],
-    "supporting": ["UITransform", "Sprite", "Label", "Camera"],
+    "supporting": [
+      "UITransform",
+      "Sprite",
+      "Label",
+      "Camera",
+      "Widget.isAlignLeft",
+      "Widget.isAlignRight",
+      "Widget.isAlignTop",
+      "Widget.isAlignBottom",
+      "Widget.left",
+      "Widget.right",
+      "Widget.top",
+      "Widget.bottom",
+      "Widget.alignMode",
+      "Widget.isAlignVerticalCenter",
+      "Widget.verticalCenter",
+      "Widget.constructor",
+      "Widget.target",
+      "Widget.isAlignHorizontalCenter",
+      "Widget.isStretchWidth",
+      "Widget.isStretchHeight",
+      "Widget.horizontalCenter",
+      "Widget.isAbsoluteTop",
+      "Widget.isAbsoluteBottom",
+      "Widget.isAbsoluteLeft",
+      "Widget.isAbsoluteRight",
+      "Widget.isAbsoluteHorizontalCenter",
+      "Widget.isAbsoluteVerticalCenter",
+      "Widget.alignFlags",
+      "Widget.updateAlignment",
+      "Widget.setDirty"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -67,7 +124,33 @@
       "Node.addChild",
       "Node.addComponent",
       "Node.getComponent",
-      "UITransform.convertToWorldSpaceAR"
+      "UITransform.convertToWorldSpaceAR",
+      "Widget.isAlignLeft",
+      "Widget.isAlignRight",
+      "Widget.isAlignTop",
+      "Widget.isAlignBottom",
+      "Widget.left",
+      "Widget.right",
+      "Widget.top",
+      "Widget.bottom",
+      "Widget.alignMode",
+      "Widget.isAlignVerticalCenter",
+      "Widget.verticalCenter",
+      "Widget.constructor",
+      "Widget.target",
+      "Widget.isAlignHorizontalCenter",
+      "Widget.isStretchWidth",
+      "Widget.isStretchHeight",
+      "Widget.horizontalCenter",
+      "Widget.isAbsoluteTop",
+      "Widget.isAbsoluteBottom",
+      "Widget.isAbsoluteLeft",
+      "Widget.isAbsoluteRight",
+      "Widget.isAbsoluteHorizontalCenter",
+      "Widget.isAbsoluteVerticalCenter",
+      "Widget.alignFlags",
+      "Widget.updateAlignment",
+      "Widget.setDirty"
     ],
     "forbiddenShortcut": [
       "加载 .scene/.prefab 冒充 Code First",
@@ -213,6 +296,162 @@
         "source": "main.js",
         "validator": "transform-equals",
         "sourceLocation": "L181"
+      },
+      {
+        "api": "Widget.isAlignLeft",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "Widget.isAlignRight",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "Widget.isAlignTop",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "Widget.isAlignBottom",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L118"
+      },
+      {
+        "api": "Widget.left",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "Widget.right",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "Widget.top",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "Widget.bottom",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L119"
+      },
+      {
+        "api": "Widget.alignMode",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L120"
+      },
+      {
+        "api": "Widget.isAlignVerticalCenter",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L175"
+      },
+      {
+        "api": "Widget.verticalCenter",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L176"
+      },
+      {
+        "api": "Widget.constructor",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L225"
+      },
+      {
+        "api": "Widget.target",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L226"
+      },
+      {
+        "api": "Widget.isAlignHorizontalCenter",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L228"
+      },
+      {
+        "api": "Widget.isStretchWidth",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L227"
+      },
+      {
+        "api": "Widget.isStretchHeight",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L227"
+      },
+      {
+        "api": "Widget.horizontalCenter",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L229"
+      },
+      {
+        "api": "Widget.isAbsoluteTop",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L234"
+      },
+      {
+        "api": "Widget.isAbsoluteBottom",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L235"
+      },
+      {
+        "api": "Widget.isAbsoluteLeft",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L232"
+      },
+      {
+        "api": "Widget.isAbsoluteRight",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L233"
+      },
+      {
+        "api": "Widget.isAbsoluteHorizontalCenter",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L236"
+      },
+      {
+        "api": "Widget.isAbsoluteVerticalCenter",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L237"
+      },
+      {
+        "api": "Widget.alignFlags",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L239"
+      },
+      {
+        "api": "Widget.updateAlignment",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L240"
+      },
+      {
+        "api": "Widget.setDirty",
+        "source": "main.js",
+        "validator": "transform-equals",
+        "sourceLocation": "L241"
       }
     ]
   },
@@ -331,11 +570,11 @@
     "assets": "无第三方资产（纹理运行时程序化生成）"
   },
   "promotion": {
-    "spec": "41b52d169c05",
-    "source": "8188d8511c8c2b98",
+    "spec": "e56f7afefc3a",
+    "source": "a540521e5af62671",
     "candidate": "8746fc59b6aa0408",
-    "verified": 22,
+    "verified": 48,
     "attested": 1,
-    "units": 23
+    "units": 49
   }
 }

@@ -23,7 +23,7 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run format:check
-      - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory-v2.cjs tools/examples/reconcile-api-claims.cjs tools/examples/add-vector-instance-coverage.cjs tools/examples/add-tween-control-coverage.cjs
+      - run: npx prettier --check tools/verify/release-readiness.cjs tools/examples/api-inventory-v2.cjs tools/examples/reconcile-api-claims.cjs tools/examples/add-vector-instance-coverage.cjs tools/examples/add-tween-control-coverage.cjs tools/examples/add-animation-runtime-coverage.cjs tools/examples/add-widget-layout-coverage.cjs
       - run: npm run typecheck
       - run: npx jest --runInBand
       - run: npm run build:all

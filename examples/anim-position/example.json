@@ -15,8 +15,42 @@
     "visual": "蓝色方块在画面中左右匀速往复滑动，路径为水平直线"
   },
   "api": {
-    "primary": ["Component", "Node.setPosition"],
-    "supporting": ["MeshRenderer", "primitives.box"],
+    "primary": ["Component", "Node.setPosition", "Animation"],
+    "supporting": [
+      "MeshRenderer",
+      "primitives.box",
+      "Animation.defaultClip",
+      "Animation.clips",
+      "Animation.playOnLoad",
+      "Animation.play",
+      "Animation.crossFade",
+      "Animation.pause",
+      "Animation.resume",
+      "Animation.stop",
+      "Animation.getState",
+      "Animation.createState",
+      "Animation.removeState",
+      "Animation.addClip",
+      "Animation.removeClip",
+      "Animation.on",
+      "Animation.once",
+      "Animation.off",
+      "AnimationClip",
+      "AnimationClip.constructor",
+      "AnimationClip.duration",
+      "AnimationClip.wrapMode",
+      "AnimationClip.tracksCount",
+      "AnimationClip.addTrack",
+      "AnimationClip.getTrack",
+      "AnimationClip.removeTrack",
+      "AnimationClip.clearTracks",
+      "AnimationClip.hasEvents",
+      "AnimationClip.tracks",
+      "AnimationClip.range",
+      "AnimationClip.hash",
+      "AnimationClip.events",
+      "AnimationClip.destroy"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -34,7 +68,39 @@
       "utils.createMesh",
       "primitives.box",
       "Node.addChild",
-      "Node.setPosition"
+      "Node.setPosition",
+      "Animation",
+      "Animation.defaultClip",
+      "Animation.clips",
+      "Animation.playOnLoad",
+      "Animation.play",
+      "Animation.crossFade",
+      "Animation.pause",
+      "Animation.resume",
+      "Animation.stop",
+      "Animation.getState",
+      "Animation.createState",
+      "Animation.removeState",
+      "Animation.addClip",
+      "Animation.removeClip",
+      "Animation.on",
+      "Animation.once",
+      "Animation.off",
+      "AnimationClip",
+      "AnimationClip.constructor",
+      "AnimationClip.duration",
+      "AnimationClip.wrapMode",
+      "AnimationClip.tracksCount",
+      "AnimationClip.addTrack",
+      "AnimationClip.getTrack",
+      "AnimationClip.removeTrack",
+      "AnimationClip.clearTracks",
+      "AnimationClip.hasEvents",
+      "AnimationClip.tracks",
+      "AnimationClip.range",
+      "AnimationClip.hash",
+      "AnimationClip.events",
+      "AnimationClip.destroy"
     ],
     "forbiddenShortcut": ["用 CSS/ DOM 动画移动 canvas 冒充场景动画"],
     "evidence": [
@@ -42,103 +108,295 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L24"
+        "sourceLocation": "L25"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L26"
+        "sourceLocation": "L27"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L35"
+        "sourceLocation": "L36"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L59"
+        "sourceLocation": "L60"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L39"
+        "sourceLocation": "L40"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L52"
+        "sourceLocation": "L53"
       },
       {
         "api": "Component",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L63"
+        "sourceLocation": "L64"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L46"
+        "sourceLocation": "L47"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L37"
+        "sourceLocation": "L38"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L45"
+        "sourceLocation": "L46"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L30"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L30"
+        "sourceLocation": "L31"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L31"
+        "sourceLocation": "L32"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L60"
+        "sourceLocation": "L61"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "material-property",
-        "sourceLocation": "L60"
+        "sourceLocation": "L61"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L36"
+        "sourceLocation": "L37"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L37"
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "Animation",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "Animation.defaultClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L88"
+      },
+      {
+        "api": "Animation.clips",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L91"
+      },
+      {
+        "api": "Animation.playOnLoad",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L89"
+      },
+      {
+        "api": "Animation.play",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L106"
+      },
+      {
+        "api": "Animation.crossFade",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L120"
+      },
+      {
+        "api": "Animation.pause",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "Animation.resume",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "Animation.stop",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L123"
+      },
+      {
+        "api": "Animation.getState",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L91"
+      },
+      {
+        "api": "Animation.createState",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "Animation.removeState",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L94"
+      },
+      {
+        "api": "Animation.addClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "Animation.removeClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "Animation.on",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L102"
+      },
+      {
+        "api": "Animation.once",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L103"
+      },
+      {
+        "api": "Animation.off",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "AnimationClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "AnimationClip.constructor",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "AnimationClip.duration",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "AnimationClip.wrapMode",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "AnimationClip.tracksCount",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L64"
+      },
+      {
+        "api": "AnimationClip.addTrack",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "AnimationClip.getTrack",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L64"
+      },
+      {
+        "api": "AnimationClip.removeTrack",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L78"
+      },
+      {
+        "api": "AnimationClip.clearTracks",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L81"
+      },
+      {
+        "api": "AnimationClip.hasEvents",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L74"
+      },
+      {
+        "api": "AnimationClip.tracks",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "AnimationClip.range",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L69"
+      },
+      {
+        "api": "AnimationClip.hash",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L72"
+      },
+      {
+        "api": "AnimationClip.events",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L73"
+      },
+      {
+        "api": "AnimationClip.destroy",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L83"
       }
     ]
   },
@@ -159,7 +417,7 @@
     "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
     "interaction": [],
     "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": [],
+    "lifecycle": ["resource-released"],
     "capability": []
   },
   "coverage": {
@@ -168,7 +426,7 @@
   },
   "screenshot": {},
   "license": {
-    "assets": "无第三方资产（程序化图元）"
+    "assets": "无第三方资产；程序化生成 AnimationClip、VectorTrack 与场景节点"
   },
   "validationExpectations": {
     "transform-equals": {
@@ -177,24 +435,23 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 72,
-            "text": "cameraNode.setPosition(new Vec3(0, 1.4, 4.8));"
-          },
-          {
-            "source": "src/main.ts",
             "line": 73,
-            "text": "cameraNode.lookAt(new Vec3(0, 0.6, 0));"
+            "text": "cameraNode.setPosition(new Vec3(0, 1.4, 4.8));"
           }
-        ],
-        "rotationEuler": [-9.462322208025618, 0, 0]
+        ]
       },
       "Main Light": {
         "position": [0, 8, 0],
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 50,
+            "line": 51,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 52,
+            "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ],
         "rotationEuler": [-45, -30, 0]
@@ -212,7 +469,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 67,
+            "line": 68,
             "text": "正弦包络 Math.sin(this.t * 2) * 0.8,0.6,0：三角项取 [-1,1]，其余为字面量算术"
           }
         ]
@@ -228,7 +485,7 @@
             "tolerance": 0.002,
             "provenance": {
               "source": "src/main.ts",
-              "line": 61,
+              "line": 62,
               "text": "new Color(65, 155, 235, 255)"
             }
           }
@@ -237,11 +494,19 @@
     }
   },
   "promotion": {
-    "spec": "d54c488cb2db",
-    "source": "f29ae313c67d510b",
+    "spec": "286a91e18a35",
+    "source": "1ecac36f4796a553",
     "candidate": "8746fc59b6aa0408",
-    "verified": 17,
-    "attested": 0,
-    "units": 17
+    "verified": 47,
+    "attested": 2,
+    "units": 49
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0.6, 0));）",
+        "line": "L74"
+      }
+    }
   }
 }

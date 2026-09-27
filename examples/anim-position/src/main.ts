@@ -20,6 +20,7 @@ import {
     primitives,
     frameObject,
 } from 'cocosair';
+import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
 var app = await createAirApp({ canvas: '#GameCanvas' });
 (window as any).__airApp = app;
@@ -73,4 +74,15 @@ cameraNode.setPosition(new Vec3(0, 1.4, 4.8));
 cameraNode.lookAt(new Vec3(0, 0.6, 0));
 
 app.run(scene);
+void import('./animation-contract.js')
+    .then(async ({ verifyAnimationContract }) => {
+        installAssetLifecycle(await verifyAnimationContract(scene));
+    })
+    .catch((error) => {
+        if ((window as any).__trialProbe) {
+            (window as any).__trialProbe.ready = true;
+            (window as any).__trialProbe.error = String(error);
+        }
+        throw error;
+    });
 console.log('[anim-position] running');

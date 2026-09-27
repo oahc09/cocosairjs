@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T00:44:46.308Z",
-  "revision": "2d0cf75",
+  "generatedAt": "2026-09-27T02:59:41.426Z",
+  "revision": "c20953d",
   "examples": [
     {
       "dir": "anim-position",
@@ -26,11 +26,43 @@
       "api": {
         "primary": [
           "Component",
-          "Node.setPosition"
+          "Node.setPosition",
+          "Animation"
         ],
         "supporting": [
           "MeshRenderer",
-          "primitives.box"
+          "primitives.box",
+          "Animation.defaultClip",
+          "Animation.clips",
+          "Animation.playOnLoad",
+          "Animation.play",
+          "Animation.crossFade",
+          "Animation.pause",
+          "Animation.resume",
+          "Animation.stop",
+          "Animation.getState",
+          "Animation.createState",
+          "Animation.removeState",
+          "Animation.addClip",
+          "Animation.removeClip",
+          "Animation.on",
+          "Animation.once",
+          "Animation.off",
+          "AnimationClip",
+          "AnimationClip.constructor",
+          "AnimationClip.duration",
+          "AnimationClip.wrapMode",
+          "AnimationClip.tracksCount",
+          "AnimationClip.addTrack",
+          "AnimationClip.getTrack",
+          "AnimationClip.removeTrack",
+          "AnimationClip.clearTracks",
+          "AnimationClip.hasEvents",
+          "AnimationClip.tracks",
+          "AnimationClip.range",
+          "AnimationClip.hash",
+          "AnimationClip.events",
+          "AnimationClip.destroy"
         ],
         "claims": [
           "createAirApp",
@@ -49,7 +81,39 @@
           "utils.createMesh",
           "primitives.box",
           "Node.addChild",
-          "Node.setPosition"
+          "Node.setPosition",
+          "Animation",
+          "Animation.defaultClip",
+          "Animation.clips",
+          "Animation.playOnLoad",
+          "Animation.play",
+          "Animation.crossFade",
+          "Animation.pause",
+          "Animation.resume",
+          "Animation.stop",
+          "Animation.getState",
+          "Animation.createState",
+          "Animation.removeState",
+          "Animation.addClip",
+          "Animation.removeClip",
+          "Animation.on",
+          "Animation.once",
+          "Animation.off",
+          "AnimationClip",
+          "AnimationClip.constructor",
+          "AnimationClip.duration",
+          "AnimationClip.wrapMode",
+          "AnimationClip.tracksCount",
+          "AnimationClip.addTrack",
+          "AnimationClip.getTrack",
+          "AnimationClip.removeTrack",
+          "AnimationClip.clearTracks",
+          "AnimationClip.hasEvents",
+          "AnimationClip.tracks",
+          "AnimationClip.range",
+          "AnimationClip.hash",
+          "AnimationClip.events",
+          "AnimationClip.destroy"
         ]
       },
       "capabilities": [
@@ -84,16 +148,18 @@
           "visible-frame",
           "frame-diff"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
       "promotion": {
-        "spec": "d54c488cb2db",
-        "source": "f29ae313c67d510b",
+        "spec": "286a91e18a35",
+        "source": "1ecac36f4796a553",
         "candidate": "8746fc59b6aa0408",
-        "verified": 17,
-        "attested": 0,
-        "units": 17
+        "verified": 47,
+        "attested": 2,
+        "units": 49
       }
     },
     {
@@ -15597,7 +15663,33 @@
           "UITransform",
           "Sprite",
           "Label",
-          "Camera"
+          "Camera",
+          "Widget.isAlignLeft",
+          "Widget.isAlignRight",
+          "Widget.isAlignTop",
+          "Widget.isAlignBottom",
+          "Widget.left",
+          "Widget.right",
+          "Widget.top",
+          "Widget.bottom",
+          "Widget.alignMode",
+          "Widget.isAlignVerticalCenter",
+          "Widget.verticalCenter",
+          "Widget.constructor",
+          "Widget.target",
+          "Widget.isAlignHorizontalCenter",
+          "Widget.isStretchWidth",
+          "Widget.isStretchHeight",
+          "Widget.horizontalCenter",
+          "Widget.isAbsoluteTop",
+          "Widget.isAbsoluteBottom",
+          "Widget.isAbsoluteLeft",
+          "Widget.isAbsoluteRight",
+          "Widget.isAbsoluteHorizontalCenter",
+          "Widget.isAbsoluteVerticalCenter",
+          "Widget.alignFlags",
+          "Widget.updateAlignment",
+          "Widget.setDirty"
         ],
         "claims": [
           "createAirApp",
@@ -15622,7 +15714,33 @@
           "Node.addChild",
           "Node.addComponent",
           "Node.getComponent",
-          "UITransform.convertToWorldSpaceAR"
+          "UITransform.convertToWorldSpaceAR",
+          "Widget.isAlignLeft",
+          "Widget.isAlignRight",
+          "Widget.isAlignTop",
+          "Widget.isAlignBottom",
+          "Widget.left",
+          "Widget.right",
+          "Widget.top",
+          "Widget.bottom",
+          "Widget.alignMode",
+          "Widget.isAlignVerticalCenter",
+          "Widget.verticalCenter",
+          "Widget.constructor",
+          "Widget.target",
+          "Widget.isAlignHorizontalCenter",
+          "Widget.isStretchWidth",
+          "Widget.isStretchHeight",
+          "Widget.horizontalCenter",
+          "Widget.isAbsoluteTop",
+          "Widget.isAbsoluteBottom",
+          "Widget.isAbsoluteLeft",
+          "Widget.isAbsoluteRight",
+          "Widget.isAbsoluteHorizontalCenter",
+          "Widget.isAbsoluteVerticalCenter",
+          "Widget.alignFlags",
+          "Widget.updateAlignment",
+          "Widget.setDirty"
         ]
       },
       "capabilities": [
@@ -15667,12 +15785,12 @@
         "capability": []
       },
       "promotion": {
-        "spec": "41b52d169c05",
-        "source": "8188d8511c8c2b98",
+        "spec": "e56f7afefc3a",
+        "source": "a540521e5af62671",
         "candidate": "8746fc59b6aa0408",
-        "verified": 22,
+        "verified": 48,
         "attested": 1,
-        "units": 23
+        "units": 49
       }
     },
     {

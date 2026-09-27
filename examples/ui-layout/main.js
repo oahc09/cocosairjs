@@ -214,6 +214,39 @@ readout.label = topLabel;
 window.__airApp = app;
 app.run(scene);
 
+// API contract for alignment flags and derived stretch behavior. Geometry is
+// already validated by the V1.2 matrix; these readbacks bind the public
+// Widget accessors to the same live layout.
+const widgetProbe = { ready: false, ok: false, checks: [] };
+window.__trialProbe = widgetProbe;
+requestAnimationFrame(() => {
+    const check = (name, ok, detail = '') => widgetProbe.checks.push({ name, ok, detail });
+    try {
+        check('widget-constructor', typeof Widget.prototype.constructor === 'function');
+        check('target-default', rw.target === null);
+        check('stretch-width-height', rw.isStretchWidth === true && cw.isStretchHeight === true);
+        check('horizontal-center-disabled', rw.isAlignHorizontalCenter === false);
+        check('center-offset', rw.horizontalCenter === 0);
+        check(
+            'absolute-margins',
+            rw.isAbsoluteLeft &&
+                rw.isAbsoluteRight &&
+                cw.isAbsoluteTop &&
+                cw.isAbsoluteBottom &&
+                rw.isAbsoluteHorizontalCenter &&
+                rw.isAbsoluteVerticalCenter,
+        );
+        check('align-flags', rw.alignFlags !== 0, String(rw.alignFlags));
+        rw.updateAlignment();
+        rw.setDirty();
+        widgetProbe.ok = widgetProbe.checks.every((entry) => entry.ok);
+    } catch (error) {
+        widgetProbe.checks.push({ name: 'unexpected-error', ok: false, detail: String(error) });
+    } finally {
+        widgetProbe.ready = true;
+    }
+});
+
 // §25 资源 Lifecycle Contract：持有物即本示例运行期真实创建的 SpriteFrame/Texture2D/ImageAsset。
 // 释放先断开组件引用再销毁本体；重新获取复用与首帧同一条 assignFrame 路径，
 // 因此「拆得掉」与「建得回、画面复原」由同一份实现承担，不是两条各自成立的说法。

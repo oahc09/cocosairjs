@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-27T00:45:28.900Z",
+  "generatedAt": "2026-09-27T03:20:19.354Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-26T15:07:16.270Z",
+      "measuredAt": "2026-09-27T02:57:02.418Z",
       "mode": "spec-driven-v3"
     },
     {
@@ -29,11 +29,11 @@
   "inventoryConsistency": [],
   "totalUnits": 12229,
   "totalRequired": 4365,
-  "totalClaimed": 850,
-  "totalAttested": 148,
-  "totalVerified": 702,
-  "totalVerifiedViaCall": 687,
-  "totalVerifiedViaRead": 15,
+  "totalClaimed": 901,
+  "totalAttested": 149,
+  "totalVerified": 752,
+  "totalVerifiedViaCall": 739,
+  "totalVerifiedViaRead": 13,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -56,16 +56,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 17,
-        "total": 17,
-        "hash": "9fe2fb258ff7e729"
+        "observed": 47,
+        "total": 49,
+        "hash": "aa00a297e7407a5f"
       },
-      "claims": 17,
+      "claims": 49,
       "tally": {
-        "verified": 17,
-        "attested": 0,
+        "verified": 47,
+        "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 16,
+        "verifiedCall": 46,
         "verifiedRead": 1
       }
     },
@@ -3436,16 +3436,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 22,
-        "total": 23,
-        "hash": "61f57be7b4458e60"
+        "observed": 48,
+        "total": 49,
+        "hash": "c58e119951792368"
       },
-      "claims": 23,
+      "claims": 49,
       "tally": {
-        "verified": 22,
+        "verified": 48,
         "attested": 1,
         "claimedOnly": 0,
-        "verifiedCall": 20,
+        "verifiedCall": 46,
         "verifiedRead": 2
       }
     },
@@ -3555,25 +3555,25 @@
       "denominator": "coverageRequired",
       "total": 272,
       "required": 272,
-      "claimed": 58,
-      "attested": 2,
-      "verified": 56,
-      "requiredClaimed": 58,
-      "requiredVerified": 56,
+      "claimed": 109,
+      "attested": 3,
+      "verified": 106,
+      "requiredClaimed": 109,
+      "requiredVerified": 106,
       "documentedOnly": 0,
       "documentedOnlyRate": 0,
-      "uncovered": 216,
-      "unstated": 216,
-      "verifiedViaCall": 54,
-      "verifiedViaRead": 2,
+      "uncovered": 166,
+      "unstated": 166,
+      "verifiedViaCall": 106,
+      "verifiedViaRead": 0,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 54,
-      "requiredVerifiedViaRead": 2,
+      "requiredVerifiedViaCall": 106,
+      "requiredVerifiedViaRead": 0,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.199,
-      "claimedRate": 0.213,
-      "verifiedRate": 0.206,
-      "allUnitsVerifiedRate": 0.206,
+      "requiredVerifiedViaCallRate": 0.39,
+      "claimedRate": 0.401,
+      "verifiedRate": 0.39,
+      "allUnitsVerifiedRate": 0.39,
       "gate": "V1.1 Release: >=90% verified of coverageRequired",
       "threshold": 0.9,
       "applicable": true,
@@ -5744,6 +5744,263 @@
       ]
     },
     {
+      "unit": "Animation",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "Animation.defaultClip",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.clips",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.play",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position",
+        "gltf-morph",
+        "gltf-skin",
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "Animation.crossFade",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.pause",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position",
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "Animation.resume",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position",
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "Animation.stop",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.getState",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position",
+        "model-character-interaction"
+      ]
+    },
+    {
+      "unit": "Animation.createState",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.removeState",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.addClip",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.removeClip",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.on",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.once",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "Animation.off",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position",
+        "gltf-morph",
+        "gltf-skin",
+        "gltf-viewer",
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "AnimationClip.constructor",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.duration",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.tracksCount",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.addTrack",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.getTrack",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.removeTrack",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.clearTracks",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.hasEvents",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.tracks",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.range",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.hash",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.events",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.destroy",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
       "unit": "Node.setRotationFromEuler",
       "tier": "core",
       "via": "call",
@@ -7011,41 +7268,6 @@
         "gltf-skin",
         "static-model",
         "texture-basic"
-      ]
-    },
-    {
-      "unit": "Animation",
-      "tier": "important",
-      "via": "read",
-      "examples": [
-        "gltf-morph",
-        "gltf-skin",
-        "gltf-viewer",
-        "model-character-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "Animation.play",
-      "tier": "important",
-      "via": "call",
-      "examples": [
-        "gltf-morph",
-        "gltf-skin",
-        "model-character-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "AnimationClip",
-      "tier": "important",
-      "via": "read",
-      "examples": [
-        "gltf-morph",
-        "gltf-skin",
-        "gltf-viewer",
-        "model-character-interaction",
-        "product-viewer"
       ]
     },
     {
@@ -9718,30 +9940,6 @@
       ]
     },
     {
-      "unit": "Animation.getState",
-      "tier": "important",
-      "via": "call",
-      "examples": [
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "Animation.pause",
-      "tier": "important",
-      "via": "call",
-      "examples": [
-        "model-character-interaction"
-      ]
-    },
-    {
-      "unit": "Animation.resume",
-      "tier": "important",
-      "via": "call",
-      "examples": [
-        "model-character-interaction"
-      ]
-    },
-    {
       "unit": "SkinnedMeshRenderer",
       "tier": "important",
       "via": "call",
@@ -11691,6 +11889,214 @@
       ]
     },
     {
+      "unit": "Widget.isAlignLeft",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAlignRight",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAlignTop",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAlignBottom",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.left",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.right",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.top",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.bottom",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.alignMode",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAlignVerticalCenter",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.verticalCenter",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.constructor",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.target",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAlignHorizontalCenter",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isStretchWidth",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isStretchHeight",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.horizontalCenter",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAbsoluteTop",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAbsoluteBottom",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAbsoluteLeft",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAbsoluteRight",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAbsoluteHorizontalCenter",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.isAbsoluteVerticalCenter",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.alignFlags",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.updateAlignment",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
+      "unit": "Widget.setDirty",
+      "tier": "important",
+      "via": "call",
+      "examples": [
+        "ui-layout"
+      ]
+    },
+    {
       "unit": "utils.toPPM",
       "tier": "supporting",
       "via": "call",
@@ -11883,6 +12289,22 @@
     }
   ],
   "attestedNotVerified": [
+    {
+      "unit": "Animation.playOnLoad",
+      "tier": "important",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.wrapMode",
+      "tier": "important",
+      "examples": [
+        "anim-position",
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
     {
       "unit": "view",
       "tier": "advanced",
@@ -12584,14 +13006,6 @@
       "tier": "core",
       "examples": [
         "meshrenderer-hooks"
-      ]
-    },
-    {
-      "unit": "AnimationClip.wrapMode",
-      "tier": "important",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
       ]
     },
     {
@@ -13007,6 +13421,22 @@
   ],
   "claimedNotVerified": [
     {
+      "unit": "Animation.playOnLoad",
+      "tier": "important",
+      "examples": [
+        "anim-position"
+      ]
+    },
+    {
+      "unit": "AnimationClip.wrapMode",
+      "tier": "important",
+      "examples": [
+        "anim-position",
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
       "unit": "view",
       "tier": "advanced",
       "examples": [
@@ -13707,14 +14137,6 @@
       "tier": "core",
       "examples": [
         "meshrenderer-hooks"
-      ]
-    },
-    {
-      "unit": "AnimationClip.wrapMode",
-      "tier": "important",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
       ]
     },
     {
@@ -14577,5 +14999,5 @@
     "GLTFExtensionRegistry.size",
     "Vec3"
   ],
-  "unclaimedRequired": 3609
+  "unclaimedRequired": 3558
 }

@@ -1,13 +1,13 @@
 {
-  "measuredAt": "2026-09-26T15:07:16.270Z",
+  "measuredAt": "2026-09-27T02:57:02.418Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "browser": "chromium",
   "mode": "spec-driven-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
   "candidateFingerprint": "8746fc59b6aa0408",
   "apiProofTotals": {
-    "verified": 3282,
-    "attested": 232,
+    "verified": 3338,
+    "attested": 234,
     "unproven": 0
   },
   "total": 140,
@@ -21,31 +21,607 @@
     {
       "id": "anim-position",
       "result": "PASS",
-      "specFingerprint": "d54c488cb2db",
-      "sourceFingerprint": "f29ae313c67d510b",
+      "specFingerprint": "286a91e18a35",
+      "sourceFingerprint": "1ecac36f4796a553",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 17,
-        "bytes": 46386,
-        "hash": "9fe2fb258ff7e729",
+        "unitCount": 49,
+        "bytes": 47498,
+        "hash": "aa00a297e7407a5f",
         "notes": [
+          "Animation.addClip: no own descriptor on static",
+          "Animation.clips: no own descriptor on static",
+          "Animation.createState: no own descriptor on static",
+          "Animation.crossFade: no own descriptor on static",
+          "Animation.defaultClip: no own descriptor on static",
+          "Animation.getState: no own descriptor on static",
+          "Animation.off: no own descriptor on static",
+          "Animation.on: no own descriptor on static",
+          "Animation.once: no own descriptor on static",
+          "Animation.pause: no own descriptor on static",
+          "Animation.play: no own descriptor on static",
+          "Animation.playOnLoad: no own descriptor on static",
+          "Animation.playOnLoad: no own descriptor on prototype",
+          "Animation.removeClip: no own descriptor on static",
+          "Animation.removeState: no own descriptor on static",
+          "Animation.resume: no own descriptor on static",
+          "Animation.stop: no own descriptor on static",
+          "AnimationClip.addTrack: no own descriptor on static",
+          "AnimationClip.clearTracks: no own descriptor on static",
+          "AnimationClip.destroy: no own descriptor on static",
+          "AnimationClip.duration: no own descriptor on static",
+          "AnimationClip.events: no own descriptor on static",
+          "AnimationClip.getTrack: no own descriptor on static",
+          "AnimationClip.hasEvents: no own descriptor on static",
+          "AnimationClip.hash: no own descriptor on static",
+          "AnimationClip.range: no own descriptor on static",
+          "AnimationClip.removeTrack: no own descriptor on static",
+          "AnimationClip.tracks: no own descriptor on static",
+          "AnimationClip.tracksCount: no own descriptor on static",
+          "AnimationClip.wrapMode: no own descriptor on static",
+          "AnimationClip.wrapMode: no own descriptor on prototype",
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static"
         ],
-        "observed": 17,
-        "total": 17
+        "observed": 47,
+        "total": 49
       },
       "apiProof": [
+        {
+          "api": "Animation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 37,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.addClip",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.clips",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 7,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.createState",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.crossFade",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.defaultClip",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.getState",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.off",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.on",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.once",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.pause",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.play",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.playOnLoad",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.removeClip",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.removeState",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.resume",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Animation.stop",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 4,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.addTrack",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.clearTracks",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:AnimationClip",
+          "observedVia": "AnimationClip",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.destroy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.duration",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 32,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.events",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.getTrack",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.hasEvents",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.hash",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.range",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.removeTrack",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.tracks",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.tracksCount",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AnimationClip.wrapMode",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
         {
           "api": "Camera",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 12,
+          "reads": 14,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -79,7 +655,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 10,
+          "reads": 12,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -113,7 +689,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 6,
+          "reads": 9,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -164,7 +740,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 26,
+          "reads": 42,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -180,8 +756,8 @@
           "api": "Node",
           "proof": "verified",
           "state": "executed",
-          "calls": 3,
-          "reads": 16,
+          "calls": 5,
+          "reads": 30,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -197,7 +773,7 @@
           "api": "Node.addChild",
           "proof": "verified",
           "state": "executed",
-          "calls": 3,
+          "calls": 5,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -214,7 +790,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 242,
+          "calls": 299,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -367,14 +943,16 @@
           "visible-frame",
           "frame-diff"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
       "validatorResults": [
         {
           "validatorId": "scene-ready",
           "state": "PASS",
-          "detail": "sceneId=scene-1 nodeCount=4"
+          "detail": "sceneId=scene-1 nodeCount=5"
         },
         {
           "validatorId": "node-exists",
@@ -389,7 +967,7 @@
         {
           "validatorId": "transform-equals",
           "state": "PASS",
-          "detail": "5 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored"
+          "detail": "4 declared components matched (nodes 3/3 in graph) | coverage 3/3 nodes authored + 1 grounded exclusions"
         },
         {
           "validatorId": "no-runtime-error",
@@ -404,15 +982,120 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0620"
+          "detail": "litRatio=0.0604"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0620 assetUnits=8"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "clip-constructor-shape",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-add-get-track",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-tracks",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-range",
+            "ok": true,
+            "detail": "0,1.2"
+          },
+          {
+            "name": "clip-hash",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-events",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-no-events",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-remove-track",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-clear-tracks",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "clip-destroy",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "add-get-state",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "create-state",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "remove-state",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "play-and-events",
+            "ok": true,
+            "detail": "x=0.6846666666865349 events=1/1"
+          },
+          {
+            "name": "pause",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "resume",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "cross-fade",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "stop",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "remove-clip",
+            "ok": true,
+            "detail": ""
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 8958,
-        "hash": "c7de379842964620"
+        "bytes": 6836,
+        "hash": "0b9fe167ea4c2c2e"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -632,7 +1315,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 223,
+          "calls": 236,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -822,15 +1505,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0418"
+          "detail": "litRatio=0.0422"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 7650,
-        "hash": "73534d7cfb8943b5"
+        "bytes": 7187,
+        "hash": "bd2807145912e102"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -887,7 +1570,7 @@
           "api": "AudioClip.getDuration",
           "proof": "verified",
           "state": "executed",
-          "calls": 316,
+          "calls": 308,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1108,7 +1791,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 947,
+          "calls": 928,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -1435,8 +2118,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/audio-basic.png",
-        "bytes": 19507,
-        "hash": "6803b8538d1f404d"
+        "bytes": 19493,
+        "hash": "c46121fb691cd352"
       },
       "assetDigests": [
         {
@@ -2587,7 +3270,7 @@
           "api": "renderer.scene.Camera.getClipSpaceMinz",
           "proof": "verified",
           "state": "executed",
-          "calls": 157,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5775,7 +6458,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 2691,
+          "calls": 2682,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5792,7 +6475,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 1491,
+          "calls": 1486,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -5980,7 +6663,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 2882,
+          "calls": 2873,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -6271,8 +6954,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/collector-dodge.png",
-        "bytes": 13926,
-        "hash": "bb7df51f766084d4"
+        "bytes": 13907,
+        "hash": "86a0ae39a68a0990"
       },
       "assetDigests": [
         {
@@ -7965,8 +8648,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/contra-action.png",
-        "bytes": 11236,
-        "hash": "b68d557eac7c4b74"
+        "bytes": 11231,
+        "hash": "6a2760df33461084"
       },
       "assetDigests": [
         {
@@ -8796,7 +9479,7 @@
           "api": "dragonBones.Armature.advanceTime",
           "proof": "verified",
           "state": "executed",
-          "calls": 335,
+          "calls": 337,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -8830,7 +9513,7 @@
           "api": "dragonBones.Armature.getBones",
           "proof": "verified",
           "state": "executed",
-          "calls": 355,
+          "calls": 357,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -8983,7 +9666,7 @@
           "api": "dragonBones.ArmatureDisplay.isAnimationCached",
           "proof": "verified",
           "state": "executed",
-          "calls": 940,
+          "calls": 946,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -9335,9 +10018,9 @@
           "observation": "server-response"
         },
         {
-          "path": "/assets/AirDragon.json",
+          "path": "/assets/AirDragon_atlas.png",
           "status": 200,
-          "bytes": 6583,
+          "bytes": 175,
           "observation": "server-response"
         },
         {
@@ -9347,16 +10030,16 @@
           "observation": "server-response"
         },
         {
-          "path": "/assets/AirDragon_atlas.png",
+          "path": "/assets/AirDragon.json",
           "status": 200,
-          "bytes": 175,
+          "bytes": 6583,
           "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/dragonbones-basic.png",
-        "bytes": 15977,
-        "hash": "d50546206a834b52"
+        "bytes": 15973,
+        "hash": "37dc40ff2e8d1e4f"
       },
       "assetDigests": [
         {
@@ -12685,7 +13368,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1756"
+          "detail": "litRatio=0.1800"
         },
         {
           "validatorId": "resource-released",
@@ -12704,8 +13387,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-morph.png",
-        "bytes": 7122,
-        "hash": "be347935dd05a7af"
+        "bytes": 7112,
+        "hash": "97127034b802fe8a"
       },
       "assetDigests": [
         {
@@ -13194,7 +13877,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1957"
+          "detail": "litRatio=0.1958"
         },
         {
           "validatorId": "resource-released",
@@ -14240,7 +14923,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 181,
+          "calls": 183,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -14445,15 +15128,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0442"
+          "detail": "litRatio=0.0437"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 6245,
-        "hash": "374b62e4576331ef"
+        "bytes": 6436,
+        "hash": "40c1245ff092fd29"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -14620,7 +15303,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 8,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -14823,8 +15506,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/input.png",
-        "bytes": 19398,
-        "hash": "72b61ed21503c42c"
+        "bytes": 14864,
+        "hash": "62acc09e7e23b7b4"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -15556,7 +16239,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 299,
+          "calls": 290,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16900,7 +17583,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 190,
+          "calls": 193,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17125,8 +17808,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 43306,
-        "hash": "f45760174641650d"
+        "bytes": 43585,
+        "hash": "ac76448446dce883"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -17346,7 +18029,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 225,
+          "calls": 221,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17545,8 +18228,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 32752,
-        "hash": "3a017d4c212c037c"
+        "bytes": 32718,
+        "hash": "e85703d969dda7b3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -17749,7 +18432,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 187,
+          "calls": 209,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17967,15 +18650,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.5395"
+          "detail": "litRatio=0.5489"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 15898,
-        "hash": "0a33b7ef773ed51c"
+        "bytes": 15303,
+        "hash": "22d8fdde6378f45f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -21376,7 +22059,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 399,
+          "calls": 391,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -21584,8 +22267,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 9993,
-        "hash": "911f4c14c963936b"
+        "bytes": 10006,
+        "hash": "987b19bd4c1374e0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -40882,7 +41565,7 @@
           "api": "math.Vec3.subtract",
           "proof": "verified",
           "state": "executed",
-          "calls": 181,
+          "calls": 182,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -42553,7 +43236,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 155,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -43756,7 +44439,7 @@
           "api": "math.Vec4.prototype.set",
           "proof": "verified",
           "state": "executed",
-          "calls": 163,
+          "calls": 165,
           "reads": 0,
           "via": "call",
           "mechanism": "namespace-member",
@@ -45881,7 +46564,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 212,
+          "calls": 195,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -46065,15 +46748,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0585"
+          "detail": "litRatio=0.0587"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
-        "bytes": 10713,
-        "hash": "6d8347c9cf4398ae"
+        "bytes": 10842,
+        "hash": "19de34ad61de63a2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -47675,7 +48358,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 201,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -47883,8 +48566,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 16869,
-        "hash": "fea08431a58f6823"
+        "bytes": 16876,
+        "hash": "9f59172b8a83405a"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -48560,7 +49243,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 199,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -48751,8 +49434,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 17281,
-        "hash": "a3daf8990d502db0"
+        "bytes": 17142,
+        "hash": "c950ce09f3c7a68f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -48972,7 +49655,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 198,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -49156,15 +49839,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0425"
+          "detail": "litRatio=0.0413"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 17309,
-        "hash": "06bb958f416a33b3"
+        "bytes": 16948,
+        "hash": "15f48e32384643da"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -50576,7 +51259,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0561 assetUnits=11"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0564 assetUnits=11"
         }
       ],
       "scenarioProbe": {
@@ -50593,22 +51276,22 @@
           {
             "name": "animation-clock-started",
             "ok": true,
-            "detail": "tA=0.232（8s 内动画时钟未起步）"
+            "detail": "tA=0.576（8s 内动画时钟未起步）"
           },
           {
             "name": "independent-animation-clocks",
             "ok": true,
-            "detail": "tA=0.592 tB=1.649 ratio=2.78"
+            "detail": "tA=0.606 tB=2.365 ratio=3.90"
           },
           {
             "name": "pause-freezes-time",
             "ok": true,
-            "detail": "paused=1.649 after320ms=1.649"
+            "detail": "paused=2.365 after320ms=2.365"
           },
           {
             "name": "resume-advances-time",
             "ok": true,
-            "detail": "still=1.649 resumed=2.282"
+            "detail": "still=2.365 resumed=2.998"
           },
           {
             "name": "instanceB-disposed",
@@ -50618,7 +51301,7 @@
           {
             "name": "charA-unaffected-by-B-release",
             "ok": true,
-            "detail": "tA 1.474 → 1.891"
+            "detail": "tA 1.816 → 2.232"
           }
         ],
         "state": {
@@ -50636,8 +51319,8 @@
           },
           "timeline": {
             "clipName": "animation_0",
-            "tA": 1.8913000000119218,
-            "tB": 2.2819999999999996,
+            "tA": 2.232199999988078,
+            "tB": 2.9979999999999998,
             "charBValid": false,
             "charAValid": true,
             "clicks": 0
@@ -50708,8 +51391,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/model-character-interaction.png",
-        "bytes": 9539,
-        "hash": "98fdce649cf82fa4"
+        "bytes": 9579,
+        "hash": "5922f2d7bfdcd4f2"
       },
       "assetDigests": [
         {
@@ -53317,7 +54000,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 158,
+          "calls": 159,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -53436,7 +54119,7 @@
           "api": "Node.updateWorldTransform",
           "proof": "verified",
           "state": "executed",
-          "calls": 652,
+          "calls": 656,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -53620,7 +54303,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0159"
+          "detail": "litRatio=0.0127"
         }
       ],
       "scenarioProbe": {
@@ -53722,8 +54405,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 6264,
-        "hash": "49f0b776a5e044ee"
+        "bytes": 6207,
+        "hash": "0e0c6d408e486d41"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -54403,7 +55086,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 195,
+          "calls": 214,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -54606,15 +55289,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0597"
+          "detail": "litRatio=0.0596"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 8218,
-        "hash": "42da65d9054c4d79"
+        "bytes": 8148,
+        "hash": "4cbdd8366cbec321"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -55753,8 +56436,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/particle-2d-basic.png",
-        "bytes": 42392,
-        "hash": "22c0f1910ce51e38"
+        "bytes": 39465,
+        "hash": "081b5e67c390f408"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -55863,7 +56546,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 573,
+          "reads": 576,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -56085,7 +56768,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 956,
+          "reads": 961,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -56101,7 +56784,7 @@
           "api": "PhysicsSystem2D.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 382,
+          "calls": 384,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56118,7 +56801,7 @@
           "api": "PhysicsSystem2D.testAABB",
           "proof": "verified",
           "state": "executed",
-          "calls": 191,
+          "calls": 192,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56135,7 +56818,7 @@
           "api": "PhysicsSystem2D.testPoint",
           "proof": "verified",
           "state": "executed",
-          "calls": 1146,
+          "calls": 1152,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56220,7 +56903,7 @@
           "api": "RigidBody2D.getMass",
           "proof": "verified",
           "state": "executed",
-          "calls": 191,
+          "calls": 192,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56339,7 +57022,7 @@
           "api": "math.Rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 191,
+          "calls": 192,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Rect",
@@ -56375,7 +57058,7 @@
           "api": "math.Vec2",
           "proof": "verified",
           "state": "executed",
-          "calls": 1916,
+          "calls": 1926,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec2",
@@ -56593,7 +57276,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 291,
+          "reads": 292,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -56831,7 +57514,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 292,
+          "reads": 293,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -57463,7 +58146,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 311,
+          "calls": 315,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57549,8 +58232,8 @@
           "api": "geometry.Ray",
           "proof": "verified",
           "state": "executed",
-          "calls": 3783,
-          "reads": 3783,
+          "calls": 3835,
+          "reads": 3835,
           "via": "call",
           "mechanism": "frozen-namespace-class",
           "bound": true,
@@ -57583,7 +58266,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 2127,
+          "calls": 2155,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -57600,7 +58283,7 @@
           "api": "math.Quat",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 295,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Quat",
@@ -57618,7 +58301,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 1186,
+          "calls": 1202,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -57881,7 +58564,7 @@
           "api": "physics.PhysicsSystem.lineStripCast",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 295,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57932,7 +58615,7 @@
           "api": "physics.PhysicsSystem.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 3201,
+          "calls": 3245,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -57949,7 +58632,7 @@
           "api": "physics.PhysicsSystem.raycastClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 873,
+          "calls": 885,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -58017,7 +58700,7 @@
           "api": "physics.PhysicsSystem.sweepBox",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 295,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -58034,7 +58717,7 @@
           "api": "physics.PhysicsSystem.sweepBoxClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 291,
+          "calls": 295,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -58775,7 +59458,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 221,
+          "calls": 217,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -59169,8 +59852,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-collision.png",
-        "bytes": 10987,
-        "hash": "91d99ad77df71e61"
+        "bytes": 10985,
+        "hash": "a7a06df9bfa624d1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -59534,7 +60217,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 309,
+          "calls": 303,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -60080,8 +60763,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-interaction.png",
-        "bytes": 12363,
-        "hash": "777263437699954c"
+        "bytes": 12369,
+        "hash": "d3e97a46c6388534"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -61973,7 +62656,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 243,
+          "calls": 193,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62143,7 +62826,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 653,
+          "calls": 610,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -62315,7 +62998,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9996"
+          "detail": "litRatio=1.0000"
         },
         {
           "validatorId": "interaction:button-click",
@@ -62776,7 +63459,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 182,
+          "calls": 185,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63090,8 +63773,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/profiler-overlay.png",
-        "bytes": 20131,
-        "hash": "4eda234ad4bdba21"
+        "bytes": 18845,
+        "hash": "e063d3e97ebf8bdc"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -63402,7 +64085,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 312,
+          "calls": 285,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63750,7 +64433,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.2285"
+          "detail": "litRatio=0.2261"
         },
         {
           "validatorId": "interaction:frame-diff",
@@ -63760,7 +64443,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2278 assetUnits=11"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.2291 assetUnits=11"
         }
       ],
       "scenarioProbe": {
@@ -63837,7 +64520,7 @@
           {
             "name": "p4-rendertarget-visible",
             "ok": true,
-            "detail": "quad non-bg=3203px warm(快照内容)=2417px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+            "detail": "quad non-bg=3230px warm(快照内容)=2428px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
           },
           {
             "name": "p5-rt-resize-readback",
@@ -63862,7 +64545,7 @@
           {
             "name": "p5-resized-rt-still-renders",
             "ok": true,
-            "detail": "quad@128 non-bg=3881px warm=2832px rep=[19,28,49,255] rect={\"x\":0,\"y\":0,\"w\":1,\"h\":1}"
+            "detail": "quad@128 non-bg=3890px warm=2830px rep=[19,28,49,255] rect={\"x\":0,\"y\":0,\"w\":1,\"h\":1}"
           }
         ],
         "state": {
@@ -63882,8 +64565,8 @@
             255
           ],
           "quadRegion": {
-            "count": 3203,
-            "warm": 2417,
+            "count": 3230,
+            "warm": 2428,
             "pixel": [
               195,
               45,
@@ -63892,8 +64575,8 @@
             ]
           },
           "quadRegionAfterRTResize": {
-            "count": 3881,
-            "warm": 2832,
+            "count": 3890,
+            "warm": 2830,
             "pixel": [
               19,
               28,
@@ -63926,8 +64609,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/render-composite.png",
-        "bytes": 9085,
-        "hash": "8109ee5e14a92a12"
+        "bytes": 9204,
+        "hash": "c86ba5c2c4310821"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -66593,7 +67276,7 @@
           {
             "name": "gen1-running",
             "ok": true,
-            "detail": "updates=16"
+            "detail": "updates=15"
           },
           {
             "name": "gen1-lifecycle-once",
@@ -66603,7 +67286,7 @@
           {
             "name": "gen2-running",
             "ok": true,
-            "detail": "updates=27"
+            "detail": "updates=28"
           },
           {
             "name": "autoReleaseAssets-recorded",
@@ -66613,7 +67296,7 @@
           {
             "name": "gen1-frozen",
             "ok": true,
-            "detail": "gen1 updates 16 → 16 after switch"
+            "detail": "gen1 updates 15 → 15 after switch"
           },
           {
             "name": "gen1-scene-destroyed",
@@ -66633,7 +67316,7 @@
           {
             "name": "gen2-frozen",
             "ok": true,
-            "detail": "gen2 updates 46 → 46"
+            "detail": "gen2 updates 47 → 47"
           },
           {
             "name": "gen2-scene-destroyed",
@@ -66659,7 +67342,7 @@
             {
               "gen": 1,
               "variant": "A",
-              "updates": 16,
+              "updates": 15,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -66667,7 +67350,7 @@
             {
               "gen": 2,
               "variant": "B",
-              "updates": 46,
+              "updates": 47,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -67269,17 +67952,17 @@
           {
             "name": "gradient-horizontal",
             "ok": true,
-            "detail": "left=[162,78,115,255]（偏红）right=[110,94,169,255]（偏蓝）"
+            "detail": "left=[163,79,116,255]（偏红）right=[113,97,174,255]（偏蓝）"
           },
           {
             "name": "uniform-vec4-colorA",
             "ok": true,
-            "detail": "left after colorA=green: [44,170,125,255]"
+            "detail": "left after colorA=green: [48,185,136,255]"
           },
           {
             "name": "time-animation-frame-diff",
             "ok": true,
-            "detail": "maxDiff=4"
+            "detail": "maxDiff=20"
           },
           {
             "name": "uniform-float-freeze",
@@ -67292,44 +67975,44 @@
           "gfxAPI": "WEBGL2",
           "baseline": {
             "left": [
-              162,
-              78,
-              115,
+              163,
+              79,
+              116,
               255
             ],
             "right": [
-              110,
-              94,
-              169,
+              113,
+              97,
+              174,
               255
             ]
           },
           "afterColorA": [
-            44,
-            170,
-            125,
+            48,
+            185,
+            136,
             255
           ],
           "animDiff": {
             "d0": [
-              37,
-              117,
-              113,
+              47,
+              151,
+              145,
               255
             ],
             "d1": [
-              37,
-              117,
-              112,
+              44,
+              141,
+              135,
               255
             ],
             "d2": [
-              38,
-              121,
-              116,
+              41,
+              131,
+              126,
               255
             ],
-            "maxDiff": 4
+            "maxDiff": 20
           },
           "frozen": {
             "f0": [
@@ -67351,8 +68034,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-custom-gradient.png",
-        "bytes": 6680,
-        "hash": "e2e78cda1c71a06b"
+        "bytes": 6787,
+        "hash": "531660f1176fbb27"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -67629,7 +68312,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 274,
+          "calls": 266,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68070,8 +68753,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-dissolve.png",
-        "bytes": 7273,
-        "hash": "ef75ed17e922c325"
+        "bytes": 7275,
+        "hash": "ede1071454ae3219"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -68239,7 +68922,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 300,
+          "calls": 368,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68453,15 +69136,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0643"
+          "detail": "litRatio=0.0651"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 6519,
-        "hash": "b56bb775d406fee2"
+        "bytes": 6086,
+        "hash": "fd95476d14e96ccd"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -70806,7 +71489,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 233,
+          "calls": 235,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -71043,20 +71726,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1006"
+          "detail": "litRatio=0.0991"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0873 assetUnits=7"
+          "detail": "held=5 leaked=0 reloaded=true litRatio=0.0874 assetUnits=7"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/texture-basic.png",
-        "bytes": 26064,
-        "hash": "19c2c1f1e2f8425f"
+        "bytes": 26043,
+        "hash": "b095c1d59c008fec"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -72580,7 +73263,7 @@
           "api": "TiledLayer.isCullingDirty",
           "proof": "verified",
           "state": "executed",
-          "calls": 542,
+          "calls": 548,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72648,7 +73331,7 @@
           "api": "TiledMap.getLayers",
           "proof": "verified",
           "state": "executed",
-          "calls": 586,
+          "calls": 592,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73223,7 +73906,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 243,
+          "calls": 242,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73240,7 +73923,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 241,
+          "calls": 240,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73257,7 +73940,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 239,
+          "calls": 238,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73325,7 +74008,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 483,
+          "calls": 481,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -73451,15 +74134,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0409"
+          "detail": "litRatio=0.0490"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 9050,
-        "hash": "bc7276df71edb6d2"
+        "bytes": 7436,
+        "hash": "bd92b87c898fa70c"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -73622,7 +74305,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 106,
+          "calls": 110,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73792,7 +74475,7 @@
           "api": "Tween.getTarget",
           "proof": "verified",
           "state": "executed",
-          "calls": 88,
+          "calls": 85,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -74484,7 +75167,7 @@
           {
             "name": "pause-freezes",
             "ok": true,
-            "detail": "0.5378999999910593"
+            "detail": "1.6217999999821187"
           },
           {
             "name": "resume-reaches-end",
@@ -74606,8 +75289,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
-        "bytes": 5589,
-        "hash": "1b0397604c54f4a9"
+        "bytes": 5601,
+        "hash": "84508319ae01c6a7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -75623,7 +76306,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 335,
+          "calls": 341,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -76065,8 +76748,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-components.png",
-        "bytes": 18852,
-        "hash": "89d17d687c368bdc"
+        "bytes": 18467,
+        "hash": "105601d5f2a58d03"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -76075,23 +76758,48 @@
     {
       "id": "ui-layout",
       "result": "PASS",
-      "specFingerprint": "41b52d169c05",
-      "sourceFingerprint": "8188d8511c8c2b98",
+      "specFingerprint": "e56f7afefc3a",
+      "sourceFingerprint": "a540521e5af62671",
       "candidateFingerprint": "8746fc59b6aa0408",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 23,
-        "bytes": 46525,
-        "hash": "61f57be7b4458e60",
+        "unitCount": 49,
+        "bytes": 47554,
+        "hash": "c58e119951792368",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
           "Node.getComponent: no own descriptor on static",
-          "UITransform.convertToWorldSpaceAR: no own descriptor on static"
+          "UITransform.convertToWorldSpaceAR: no own descriptor on static",
+          "Widget.alignFlags: no own descriptor on static",
+          "Widget.alignMode: no own descriptor on static",
+          "Widget.bottom: no own descriptor on static",
+          "Widget.horizontalCenter: no own descriptor on static",
+          "Widget.isAbsoluteBottom: no own descriptor on static",
+          "Widget.isAbsoluteHorizontalCenter: no own descriptor on static",
+          "Widget.isAbsoluteLeft: no own descriptor on static",
+          "Widget.isAbsoluteRight: no own descriptor on static",
+          "Widget.isAbsoluteTop: no own descriptor on static",
+          "Widget.isAbsoluteVerticalCenter: no own descriptor on static",
+          "Widget.isAlignBottom: no own descriptor on static",
+          "Widget.isAlignHorizontalCenter: no own descriptor on static",
+          "Widget.isAlignLeft: no own descriptor on static",
+          "Widget.isAlignRight: no own descriptor on static",
+          "Widget.isAlignTop: no own descriptor on static",
+          "Widget.isAlignVerticalCenter: no own descriptor on static",
+          "Widget.isStretchHeight: no own descriptor on static",
+          "Widget.isStretchWidth: no own descriptor on static",
+          "Widget.left: no own descriptor on static",
+          "Widget.right: no own descriptor on static",
+          "Widget.setDirty: no own descriptor on static",
+          "Widget.target: no own descriptor on static",
+          "Widget.top: no own descriptor on static",
+          "Widget.updateAlignment: no own descriptor on static",
+          "Widget.verticalCenter: no own descriptor on static"
         ],
-        "observed": 22,
-        "total": 23
+        "observed": 48,
+        "total": 49
       },
       "apiProof": [
         {
@@ -76285,7 +76993,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 1650,
+          "calls": 1689,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -76389,7 +77097,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 12,
-          "reads": 3094,
+          "reads": 3158,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -76405,7 +77113,7 @@
           "api": "UITransform.convertToWorldSpaceAR",
           "proof": "verified",
           "state": "executed",
-          "calls": 1528,
+          "calls": 1560,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -76423,9 +77131,452 @@
           "proof": "verified",
           "state": "executed",
           "calls": 5,
-          "reads": 15,
+          "reads": 16,
           "via": "call",
           "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.alignFlags",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 20,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.alignMode",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 31,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.bottom",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 12,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:Widget",
+          "observedVia": "Widget",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.horizontalCenter",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAbsoluteBottom",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 10,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAbsoluteHorizontalCenter",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAbsoluteLeft",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 10,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAbsoluteRight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 10,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAbsoluteTop",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 10,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAbsoluteVerticalCenter",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAlignBottom",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 7,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAlignHorizontalCenter",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 11,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAlignLeft",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAlignRight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAlignTop",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isAlignVerticalCenter",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 12,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isStretchHeight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 15,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.isStretchWidth",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 18,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.left",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 13,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.right",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 13,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.setDirty",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.target",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 10,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.top",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 11,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.updateAlignment",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "transform-equals",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "Widget.verticalCenter",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
           "bound": true,
           "bindings": [
             {
@@ -76456,7 +77607,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 3056,
+          "calls": 3120,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -76565,7 +77716,47 @@
           "detail": "held=18 leaked=0 reloaded=true litRatio=1.0000 assetUnits=13"
         }
       ],
-      "scenarioProbe": null,
+      "scenarioProbe": {
+        "ready": true,
+        "ok": true,
+        "checks": [
+          {
+            "name": "widget-constructor",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "target-default",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "stretch-width-height",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "horizontal-center-disabled",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "center-offset",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "absolute-margins",
+            "ok": true,
+            "detail": ""
+          },
+          {
+            "name": "align-flags",
+            "ok": true,
+            "detail": "42"
+          }
+        ]
+      },
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-layout.png",
@@ -77790,8 +78981,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/video-basic.png",
-        "bytes": 14955,
-        "hash": "5462c987b024f46c"
+        "bytes": 14972,
+        "hash": "c7acddaee677cd41"
       },
       "assetDigests": [
         {
@@ -77884,7 +79075,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 608,
+          "calls": 600,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -78020,7 +79211,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 302,
+          "calls": 298,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78037,7 +79228,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 302,
+          "calls": 298,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78054,7 +79245,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 605,
+          "calls": 597,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78071,7 +79262,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 303,
+          "calls": 299,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78343,7 +79534,7 @@
           "api": "WebView.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 274,
+          "calls": 270,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78546,8 +79737,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/webview-basic.png",
-        "bytes": 20420,
-        "hash": "5af8f945c1363aa3"
+        "bytes": 20415,
+        "hash": "b9bc5104408893e3"
       },
       "assetDigests": [
         {
