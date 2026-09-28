@@ -94,3 +94,26 @@ stale 为重采中途快照）。gltf-draco S25 warn 维持为**已知边界**�
 形态（CommonJS），浏览器正向解码所需 emscripten glue 不在 shipped 集（与 wasm 资产缺口 R8 同族）；
 能力面无越界宣称（catalog：decoder-required/smoke），解堵路径 = P2 资产通道 vendor 浏览器版
 draco_decoder.js（需 owner 授权资产引入）。
+
+## r50 current release gate (2026-09-28)
+
+The r49 NOT READY verdict is superseded for the public Web runtime release candidate. The V1.1 API tier policy was corrected in the accepted taskbook scope note and `docs/api-coverage-wave16.md`; thresholds were not lowered.
+
+| Gate | Requirement | Current evidence | Result |
+|---|---:|---:|---|
+| Stable Gallery examples | ≥120 | 145 stable of 146 entries | PASS |
+| V1.1 browser examples | All runtime examples | 141/141 PASS | PASS |
+| Core API coverage | 100% | 963/963 | PASS |
+| Important API coverage | ≥90% | 272/272 (100%) | PASS |
+| Advanced API coverage | ≥80% verified; documented-only ≤20%; uncovered=0 | 180/191 verified (94.2%); 11 documented-only (5.8%); uncovered=0 | PASS |
+| DevTools examples | All declared examples | 5/5 PASS; runtime package boundary PASS | PASS |
+| Gallery artifact | Standalone nested deployment | 220/220 PASS; engine copy byte-identical; 141/141 runtime examples boot | PASS |
+| V1.2 browser matrix | All contract cases in three engines | 39/39 PASS; completed=true; subset=false | PASS |
+| Jest / typecheck | Current repository checks | 32 suites / 265 tests PASS; typecheck PASS | PASS |
+| Package consumer | Published tarball boundary | 575 exports; 0 failures | PASS |
+| Specification compliance | No blocking compliance failures | 0 fail / 1 documented Draco decoder warning | PASS |
+| Dependency license audit | No unresolved fail | 0 FAIL / 1 accepted engine-pal risk | PASS |
+
+The current runtime/Gallery release scope is READY when `npm run verify:release` passes on the final clean commit. That checker also binds V1.1, DevTools, Gallery, V1.2, and inventory evidence to the same candidate. The final clean-candidate invocation is performed after this Wave 16 commit.
+
+The V0.9 LLM Agent Gate remains NOT_RUN because it requires external LLM credentials and scores agent behavior rather than the runtime package. It is separated from the npm runtime release gate; do not claim an Agent Gate score until that evaluation is run. `npm publish` was not performed.

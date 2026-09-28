@@ -652,6 +652,148 @@ results.p5Animation.backToFlap = safe(() => ({
     stateName: firstDefined(anim._lastAnimationState, ['name', '_name']).value,
 }));
 
+// Advanced ArmatureDisplay surface: read user-facing state, query the live armature data,
+// and exercise event registration without changing the animation timeline.
+const ADVANCED_ARMATURE_DISPLAY_API_UNITS = [
+    'dragonBones.ArmatureDisplay.AnimationCacheMode',
+    'dragonBones.ArmatureDisplay.dragonAsset',
+    'dragonBones.ArmatureDisplay.dragonAtlasAsset',
+    'dragonBones.ArmatureDisplay.armatureName',
+    'dragonBones.ArmatureDisplay.animationName',
+    'dragonBones.ArmatureDisplay.timeScale',
+    'dragonBones.ArmatureDisplay.playTimes',
+    'dragonBones.ArmatureDisplay.premultipliedAlpha',
+    'dragonBones.ArmatureDisplay.debugBones',
+    'dragonBones.ArmatureDisplay.enableBatch',
+    'dragonBones.ArmatureDisplay.sockets',
+    'dragonBones.ArmatureDisplay.socketNodes',
+    'dragonBones.ArmatureDisplay.attachUtil',
+    'dragonBones.ArmatureDisplay.drawList',
+    'dragonBones.ArmatureDisplay.customMaterial',
+    'dragonBones.ArmatureDisplay.getArmatureKey',
+    'dragonBones.ArmatureDisplay.querySockets',
+    'dragonBones.ArmatureDisplay.querySocketPathByName',
+    'dragonBones.ArmatureDisplay.getArmatureNames',
+    'dragonBones.ArmatureDisplay.getAnimationNames',
+    'dragonBones.ArmatureDisplay.on',
+    'dragonBones.ArmatureDisplay.off',
+    'dragonBones.ArmatureDisplay.once',
+    'dragonBones.ArmatureDisplay.addEventListener',
+    'dragonBones.ArmatureDisplay.removeEventListener',
+    'dragonBones.ArmatureDisplay.updateAnimation',
+    'dragonBones.ArmatureDisplay.markForUpdateRenderData',
+    'dragonBones.ArmatureDisplay.initFactory',
+    'dragonBones.ArmatureDisplay.updateAnimationCache',
+    'dragonBones.ArmatureDisplay.invalidAnimationCache',
+    'dragonBones.ArmatureDisplay.buildArmature',
+    'dragonBones.ArmatureDisplay.onEnable',
+    'dragonBones.ArmatureDisplay.onDisable',
+];
+const advancedArmatureSurface = {};
+for (const api of ADVANCED_ARMATURE_DISPLAY_API_UNITS) {
+    const member = api.slice('dragonBones.ArmatureDisplay.'.length);
+    advancedArmatureSurface[member] =
+        member === 'AnimationCacheMode' ? ArmatureDisplay.AnimationCacheMode : display[member];
+}
+const queriedArmatureNames = display.getArmatureNames();
+const queriedAnimationNames = display.getAnimationNames(ARMATURE_NAME);
+const queriedSockets = display.querySockets();
+const queriedSocketPaths = display.querySocketPathByName('root');
+const queriedArmatureKey = display.getArmatureKey();
+const eventProbeListener = () => {};
+display.on('complete', eventProbeListener, display);
+display.off('complete', eventProbeListener, display);
+display.once('complete', eventProbeListener, display);
+display.off('complete', eventProbeListener, display);
+display.addEventListener('complete', eventProbeListener, display);
+display.removeEventListener('complete', eventProbeListener, display);
+display.updateAnimation(0);
+display.markForUpdateRenderData(false);
+display.enabled = false;
+display.enabled = true;
+display.initFactory();
+display.updateAnimationCache('flap'); // realtime mode correctly makes this a no-op
+display.invalidAnimationCache(); // realtime mode has no cache to invalidate
+const detachedArmatureNode = new Node('Detached Armature Probe');
+detachedArmatureNode.addComponent(UITransform);
+const detachedArmatureDisplay = display.buildArmature(ARMATURE_NAME, detachedArmatureNode);
+detachedArmatureNode.destroy();
+const advancedArmatureChecks = {
+    assets:
+        advancedArmatureSurface.dragonAsset === dragonAsset && advancedArmatureSurface.dragonAtlasAsset === atlasAsset,
+    armatureName: advancedArmatureSurface.armatureName === ARMATURE_NAME,
+    armatureKey: queriedArmatureKey === armatureKey,
+    armatureNames: queriedArmatureNames.includes(ARMATURE_NAME),
+    animationNames: queriedAnimationNames.includes('flap'),
+    sockets: Array.isArray(queriedSockets) && Array.isArray(queriedSocketPaths),
+    armatureBuilder: !!detachedArmatureDisplay && detachedArmatureDisplay.dragonAsset === dragonAsset,
+};
+const failedArmatureChecks = Object.keys(advancedArmatureChecks).filter((key) => !advancedArmatureChecks[key]);
+if (failedArmatureChecks.length) {
+    throw new Error(`Advanced ArmatureDisplay API contract failed: ${failedArmatureChecks.join(',')}`);
+}
+
+const ADVANCED_DRAGONBONES_ASSET_FACTORY_API_UNITS = [
+    'dragonBones.CCFactory.id',
+    'dragonBones.CCFactory.uuid',
+    'dragonBones.CCFactory.update',
+    'dragonBones.CCFactory.getDragonBonesDataByRawData',
+    'dragonBones.CCFactory.createArmatureNode',
+    'dragonBones.CCFactory.removeDragonBonesDataByUUID',
+    'dragonBones.DragonBonesAsset.dragonBonesJson',
+    'dragonBones.DragonBonesAsset.constructor',
+    'dragonBones.DragonBonesAsset.createNode',
+    'dragonBones.DragonBonesAsset.reset',
+    'dragonBones.DragonBonesAsset.destroy',
+    'dragonBones.DragonBonesAtlasAsset.constructor',
+    'dragonBones.DragonBonesAtlasAsset.atlasJson',
+    'dragonBones.DragonBonesAtlasAsset.texture',
+    'dragonBones.DragonBonesAtlasAsset.createNode',
+    'dragonBones.DragonBonesAtlasAsset.destroy',
+];
+const ADVANCED_ENGINE_CALLBACK_API_UNITS = [
+    'dragonBones.CCFactory.initUpdate',
+    'dragonBones.CCFactory.buildArmatureDisplay',
+    'dragonBones.ArmatureDisplay.constructor',
+    'dragonBones.ArmatureDisplay.onLoad',
+];
+const engineCallbackShapes = ADVANCED_ENGINE_CALLBACK_API_UNITS.map((api) => {
+    const [owner, member] = api.slice('dragonBones.'.length).split('.');
+    const target = owner === 'CCFactory' ? factory : owner === 'ArmatureDisplay' ? display : null;
+    return (
+        !!target &&
+        typeof (member === 'constructor' ? ArmatureDisplay.prototype.constructor : target[member]) === 'function'
+    );
+});
+if (engineCallbackShapes.some((exists) => !exists)) throw new Error('DragonBones engine callback API is missing');
+const factoryIdentity = { id: factory.id, uuid: factory.uuid };
+const parsedRawData = factory.getDragonBonesDataByRawData(JSON.parse(skelText));
+factory.update(0);
+factory.removeDragonBonesDataByUUID('__air-unregistered-probe__', false);
+
+const detachedFactoryNode = new Node('Factory Armature Probe');
+detachedFactoryNode.addComponent(UITransform);
+factory.createArmatureNode(display, ARMATURE_NAME, detachedFactoryNode);
+detachedFactoryNode.destroy();
+
+const detachedAssetNodes = [];
+dragonAsset.createNode((error, node) => {
+    if (error) throw error;
+    detachedAssetNodes.push(node);
+});
+atlasAsset.createNode((error, node) => {
+    if (error) throw error;
+    detachedAssetNodes.push(node);
+});
+for (const node of detachedAssetNodes) node.destroy();
+
+const resetProbeAsset = new DragonBonesAsset('reset-probe');
+resetProbeAsset.reset();
+resetProbeAsset.destroy();
+if (factoryIdentity.id !== 'CCFactory' || factoryIdentity.uuid !== 'CCFactory' || !parsedRawData) {
+    throw new Error('DragonBones asset/factory API contract failed');
+}
+
 // ---------------------------------------------------------------- p6 资源生命周期（§25 合同）
 function heldAssets() {
     return [

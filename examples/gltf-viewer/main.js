@@ -8,9 +8,13 @@ import {
     GLTFLoader,
     MeshRenderer,
     AirTransmissionCapture,
+    isTransmissionMaterial,
+    TRANSMISSION_LAYER,
+    defaultTransmissionVisibility,
 } from 'cocosair';
 import { installAssetLifecycle } from '../shared/asset-lifecycle.js';
 import { setupCamera, setupDirectionalLight } from '../shared/scene-kit.js';
+import * as airNS from 'cocosair';
 
 const parameters = new URLSearchParams(location.search);
 const embedded = parameters.get('embed') === '1';
@@ -37,6 +41,26 @@ scene.addChild(captureNode);
 const capture = captureNode.addComponent(AirTransmissionCapture);
 capture.mainCamera = camera;
 app.run(scene);
+await new Promise((resolve) => requestAnimationFrame(resolve));
+const captureLifecycleApiNames = ['onEnable', 'onDisable', 'onDestroy', 'lateUpdate'];
+if (captureLifecycleApiNames.some((name) => typeof capture[name] !== 'function')) {
+    throw new Error('AirTransmissionCapture lifecycle API is missing');
+}
+const captureProbe = {
+    mainCamera: capture.mainCamera === camera,
+    sceneColorContract: capture.sceneColor === null || typeof capture.sceneColor === 'object',
+    nonTransmissionMaterial: isTransmissionMaterial(null) === false,
+    transmissionLayer:
+        (airNS.defaultTransmissionVisibility & airNS.TRANSMISSION_LAYER) === airNS.TRANSMISSION_LAYER &&
+        defaultTransmissionVisibility === airNS.defaultTransmissionVisibility &&
+        TRANSMISSION_LAYER === airNS.TRANSMISSION_LAYER,
+};
+if (Object.values(captureProbe).some((passed) => !passed)) {
+    throw new Error(`AirTransmissionCapture contract failed: ${JSON.stringify(captureProbe)}`);
+}
+capture.enabled = false;
+capture.enabled = true;
+capture.lateUpdate();
 const loader = new GLTFLoader();
 const modelSelect = document.querySelector('#model');
 const clipSelect = document.querySelector('#clip');

@@ -119,7 +119,59 @@
       "dragonBones.DragonBonesData.version",
       "Texture2D",
       "assetManager",
-      "Node.on"
+      "Node.on",
+      "dragonBones.ArmatureDisplay.AnimationCacheMode",
+      "dragonBones.ArmatureDisplay.dragonAsset",
+      "dragonBones.ArmatureDisplay.dragonAtlasAsset",
+      "dragonBones.ArmatureDisplay.armatureName",
+      "dragonBones.ArmatureDisplay.animationName",
+      "dragonBones.ArmatureDisplay.timeScale",
+      "dragonBones.ArmatureDisplay.premultipliedAlpha",
+      "dragonBones.ArmatureDisplay.debugBones",
+      "dragonBones.ArmatureDisplay.enableBatch",
+      "dragonBones.ArmatureDisplay.sockets",
+      "dragonBones.ArmatureDisplay.socketNodes",
+      "dragonBones.ArmatureDisplay.attachUtil",
+      "dragonBones.ArmatureDisplay.drawList",
+      "dragonBones.ArmatureDisplay.customMaterial",
+      "dragonBones.ArmatureDisplay.getArmatureKey",
+      "dragonBones.ArmatureDisplay.querySockets",
+      "dragonBones.ArmatureDisplay.querySocketPathByName",
+      "dragonBones.ArmatureDisplay.getArmatureNames",
+      "dragonBones.ArmatureDisplay.getAnimationNames",
+      "dragonBones.ArmatureDisplay.on",
+      "dragonBones.ArmatureDisplay.off",
+      "dragonBones.ArmatureDisplay.once",
+      "dragonBones.ArmatureDisplay.addEventListener",
+      "dragonBones.ArmatureDisplay.removeEventListener",
+      "dragonBones.ArmatureDisplay.updateAnimation",
+      "dragonBones.ArmatureDisplay.markForUpdateRenderData",
+      "dragonBones.CCFactory.id",
+      "dragonBones.CCFactory.uuid",
+      "dragonBones.CCFactory.update",
+      "dragonBones.CCFactory.getDragonBonesDataByRawData",
+      "dragonBones.CCFactory.createArmatureNode",
+      "dragonBones.CCFactory.removeDragonBonesDataByUUID",
+      "dragonBones.DragonBonesAsset.dragonBonesJson",
+      "dragonBones.DragonBonesAsset.constructor",
+      "dragonBones.DragonBonesAsset.createNode",
+      "dragonBones.DragonBonesAsset.reset",
+      "dragonBones.DragonBonesAsset.destroy",
+      "dragonBones.DragonBonesAtlasAsset.constructor",
+      "dragonBones.DragonBonesAtlasAsset.atlasJson",
+      "dragonBones.DragonBonesAtlasAsset.texture",
+      "dragonBones.DragonBonesAtlasAsset.createNode",
+      "dragonBones.DragonBonesAtlasAsset.destroy",
+      "dragonBones.ArmatureDisplay.initFactory",
+      "dragonBones.ArmatureDisplay.updateAnimationCache",
+      "dragonBones.ArmatureDisplay.invalidAnimationCache",
+      "dragonBones.ArmatureDisplay.buildArmature",
+      "dragonBones.ArmatureDisplay.onEnable",
+      "dragonBones.ArmatureDisplay.onDisable",
+      "dragonBones.CCFactory.initUpdate",
+      "dragonBones.CCFactory.buildArmatureDisplay",
+      "dragonBones.ArmatureDisplay.constructor",
+      "dragonBones.ArmatureDisplay.onLoad"
     ],
     "claims": [
       "createAirApp",
@@ -167,7 +219,59 @@
       "dragonBones.ArmatureData.slots",
       "dragonBones.DragonBonesData.getArmature",
       "dragonBones.DragonBonesData.armatureNames",
-      "dragonBones.DragonBonesData.version"
+      "dragonBones.DragonBonesData.version",
+      "dragonBones.ArmatureDisplay.AnimationCacheMode",
+      "dragonBones.ArmatureDisplay.dragonAsset",
+      "dragonBones.ArmatureDisplay.dragonAtlasAsset",
+      "dragonBones.ArmatureDisplay.armatureName",
+      "dragonBones.ArmatureDisplay.animationName",
+      "dragonBones.ArmatureDisplay.timeScale",
+      "dragonBones.ArmatureDisplay.premultipliedAlpha",
+      "dragonBones.ArmatureDisplay.debugBones",
+      "dragonBones.ArmatureDisplay.enableBatch",
+      "dragonBones.ArmatureDisplay.sockets",
+      "dragonBones.ArmatureDisplay.socketNodes",
+      "dragonBones.ArmatureDisplay.attachUtil",
+      "dragonBones.ArmatureDisplay.drawList",
+      "dragonBones.ArmatureDisplay.customMaterial",
+      "dragonBones.ArmatureDisplay.getArmatureKey",
+      "dragonBones.ArmatureDisplay.querySockets",
+      "dragonBones.ArmatureDisplay.querySocketPathByName",
+      "dragonBones.ArmatureDisplay.getArmatureNames",
+      "dragonBones.ArmatureDisplay.getAnimationNames",
+      "dragonBones.ArmatureDisplay.on",
+      "dragonBones.ArmatureDisplay.off",
+      "dragonBones.ArmatureDisplay.once",
+      "dragonBones.ArmatureDisplay.addEventListener",
+      "dragonBones.ArmatureDisplay.removeEventListener",
+      "dragonBones.ArmatureDisplay.updateAnimation",
+      "dragonBones.ArmatureDisplay.markForUpdateRenderData",
+      "dragonBones.CCFactory.id",
+      "dragonBones.CCFactory.uuid",
+      "dragonBones.CCFactory.update",
+      "dragonBones.CCFactory.getDragonBonesDataByRawData",
+      "dragonBones.CCFactory.createArmatureNode",
+      "dragonBones.CCFactory.removeDragonBonesDataByUUID",
+      "dragonBones.DragonBonesAsset.dragonBonesJson",
+      "dragonBones.DragonBonesAsset.constructor",
+      "dragonBones.DragonBonesAsset.createNode",
+      "dragonBones.DragonBonesAsset.reset",
+      "dragonBones.DragonBonesAsset.destroy",
+      "dragonBones.DragonBonesAtlasAsset.constructor",
+      "dragonBones.DragonBonesAtlasAsset.atlasJson",
+      "dragonBones.DragonBonesAtlasAsset.texture",
+      "dragonBones.DragonBonesAtlasAsset.createNode",
+      "dragonBones.DragonBonesAtlasAsset.destroy",
+      "dragonBones.ArmatureDisplay.initFactory",
+      "dragonBones.ArmatureDisplay.updateAnimationCache",
+      "dragonBones.ArmatureDisplay.invalidAnimationCache",
+      "dragonBones.ArmatureDisplay.buildArmature",
+      "dragonBones.ArmatureDisplay.onEnable",
+      "dragonBones.ArmatureDisplay.onDisable",
+      "dragonBones.CCFactory.initUpdate",
+      "dragonBones.CCFactory.buildArmatureDisplay",
+      "dragonBones.ArmatureDisplay.constructor",
+      "dragonBones.ArmatureDisplay.onLoad"
     ],
     "forbiddenShortcut": [
       "用第三方导出的龙骨 `.json/.png`（或任何带 DragonBones Pro 许可面的资产）冒充示例资产：计划书许可要求零第三方资产，本例资产必须由 `tools/fixtures/make-dragonbones-skeleton.cjs` 生成，改完骨架要重跑生成器而不是手改 JSON",
@@ -286,7 +390,7 @@
         "api": "Node.on",
         "source": "main.js",
         "validator": "frame-diff",
-        "sourceLocation": "L737"
+        "sourceLocation": "L879"
       },
       {
         "api": "dragonBones.DragonBonesAsset",
@@ -455,6 +559,318 @@
         "source": "main.js",
         "validator": "transform-equals",
         "sourceLocation": "L351"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.AnimationCacheMode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L297"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.dragonAsset",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L729"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.dragonAtlasAsset",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L267"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.armatureName",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L268"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.animationName",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L640"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.timeScale",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L663"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.premultipliedAlpha",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L665"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.debugBones",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L666"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.enableBatch",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L667"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.sockets",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L668"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.socketNodes",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L669"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.attachUtil",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L670"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.drawList",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L528"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.customMaterial",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L672"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.getArmatureKey",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L702"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.querySockets",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L700"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.querySocketPathByName",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L701"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.getArmatureNames",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L698"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.getAnimationNames",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L699"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.on",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L142"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.off",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L142"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.once",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L706"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.addEventListener",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L708"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.removeEventListener",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L709"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.updateAnimation",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L710"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.markForUpdateRenderData",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L711"
+      },
+      {
+        "api": "dragonBones.CCFactory.id",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L737"
+      },
+      {
+        "api": "dragonBones.CCFactory.uuid",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L272"
+      },
+      {
+        "api": "dragonBones.CCFactory.update",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L771"
+      },
+      {
+        "api": "dragonBones.CCFactory.getDragonBonesDataByRawData",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L770"
+      },
+      {
+        "api": "dragonBones.CCFactory.createArmatureNode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L776"
+      },
+      {
+        "api": "dragonBones.CCFactory.removeDragonBonesDataByUUID",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L772"
+      },
+      {
+        "api": "dragonBones.DragonBonesAsset.dragonBonesJson",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L253"
+      },
+      {
+        "api": "dragonBones.DragonBonesAsset.constructor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L133"
+      },
+      {
+        "api": "dragonBones.DragonBonesAsset.createNode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L780"
+      },
+      {
+        "api": "dragonBones.DragonBonesAsset.reset",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L791"
+      },
+      {
+        "api": "dragonBones.DragonBonesAsset.destroy",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L720"
+      },
+      {
+        "api": "dragonBones.DragonBonesAtlasAsset.constructor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L133"
+      },
+      {
+        "api": "dragonBones.DragonBonesAtlasAsset.atlasJson",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L250"
+      },
+      {
+        "api": "dragonBones.DragonBonesAtlasAsset.texture",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L243"
+      },
+      {
+        "api": "dragonBones.DragonBonesAtlasAsset.createNode",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L780"
+      },
+      {
+        "api": "dragonBones.DragonBonesAtlasAsset.destroy",
+        "source": "main.js",
+        "validator": "resource-released",
+        "sourceLocation": "L720"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.initFactory",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L714"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.updateAnimationCache",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L715"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.invalidAnimationCache",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L716"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.buildArmature",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L719"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.onEnable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L689"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.onDisable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L690"
+      },
+      {
+        "api": "dragonBones.CCFactory.initUpdate",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L755"
+      },
+      {
+        "api": "dragonBones.CCFactory.buildArmatureDisplay",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L756"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.constructor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L133"
+      },
+      {
+        "api": "dragonBones.ArmatureDisplay.onLoad",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L758"
       }
     ]
   },
@@ -530,11 +946,11 @@
     "assets": "无第三方资产：`AirDragon.json` / `AirDragon_atlas.json` / `AirDragon_atlas.png`（64×64、三个纯色 region）全部由本仓库 `tools/fixtures/make-dragonbones-skeleton.cjs` 现生成（PNG 由工具自带的极简 encoder 写出，无外部图像库）。vendored `@cocos/dragonbones-js@1.0.2`（MIT，DragonBones team）随 bundle 出处已在许可门禁登记；dragon-bones 模块为 cocos4 上游 TypeScript 端口，逐字节同源于 src/cocos/dragon-bones"
   },
   "promotion": {
-    "spec": "7c755d620c3d",
-    "source": "a9c357ebb1b5e758",
+    "spec": "a4eee0d7c11b",
+    "source": "771ca54965703158",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 40,
-    "attested": 6,
-    "units": 46
+    "verified": 93,
+    "attested": 5,
+    "units": 98
   }
 }

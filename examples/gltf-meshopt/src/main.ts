@@ -20,6 +20,16 @@ import {
     GLTFLoader,
     createMeshoptDecoder,
     isMeshoptAvailable,
+    createDracoDecoder,
+    createKTX2Transcoder,
+    isKTX2Available,
+    meshQuantizationFactory,
+    KHR_MESH_QUANTIZATION,
+    meshoptCompressionFactory,
+    KHR_MESHOPT_COMPRESSION,
+    EXT_MESHOPT_COMPRESSION,
+    dracoCompressionFactory,
+    KHR_DRACO_MESH_COMPRESSION,
 } from 'cocosair';
 import { installAssetLifecycle } from '../../shared/asset-lifecycle.js';
 
@@ -66,6 +76,32 @@ var decoder = createMeshoptDecoder(decoderModule.MeshoptDecoder);
 var configured = new GLTFLoader();
 configured.setMeshoptDecoder(decoder);
 lines.push('isMeshoptAvailable: ' + isMeshoptAvailable(decoderModule.MeshoptDecoder));
+
+// Advanced decoder and compression entry points: exercise factory construction and the
+// handler capability contracts without claiming that a mock module performed a real decode.
+const dracoProviderProbe = createDracoDecoder(() => ({}) as any);
+const ktxModuleProbe = { initializeBasis: () => {}, KTX2File: function KTX2File() {} };
+const ktxTranscoderProbe = createKTX2Transcoder(() => ktxModuleProbe as any);
+const extensionContext: any = { options: { meshoptDecoder: decoder, dracoDecoder: dracoProviderProbe }, json: {} };
+const quantizationHandler = meshQuantizationFactory(extensionContext);
+const meshoptHandler = meshoptCompressionFactory(EXT_MESHOPT_COMPRESSION)(extensionContext);
+const dracoHandler = dracoCompressionFactory(extensionContext);
+const advancedDecoderProbe = {
+    dracoFactory: typeof dracoProviderProbe.decodePrimitive === 'function',
+    ktxFactory: typeof ktxTranscoderProbe.transcode === 'function',
+    ktxAvailable: isKTX2Available(ktxModuleProbe as any),
+    ktxUnavailable: !isKTX2Available(undefined),
+    quantization:
+        quantizationHandler.name === KHR_MESH_QUANTIZATION && quantizationHandler.support?.().status === 'supported',
+    meshopt: meshoptHandler.name === EXT_MESHOPT_COMPRESSION && meshoptHandler.support?.().status === 'supported',
+    draco: dracoHandler.name === KHR_DRACO_MESH_COMPRESSION && dracoHandler.support?.().status === 'supported',
+    meshoptExtensionNames: KHR_MESHOPT_COMPRESSION === 'KHR_meshopt_compression',
+    dracoExtensionName: KHR_DRACO_MESH_COMPRESSION === 'KHR_draco_mesh_compression',
+    quantizationExtensionName: KHR_MESH_QUANTIZATION === 'KHR_mesh_quantization',
+};
+if (Object.values(advancedDecoderProbe).some((passed) => !passed)) {
+    throw new Error(`Advanced decoder API contract failed: ${JSON.stringify(advancedDecoderProbe)}`);
+}
 
 var bytes = await (await fetch('./assets/meshopt-khr.glb')).arrayBuffer();
 var asset: any;

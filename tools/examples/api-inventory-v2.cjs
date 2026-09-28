@@ -22,7 +22,31 @@ const important =
 const supporting =
     /^(?:gfx|geometry|utils|renderer|rendering|pipeline|native|js|physics|dragonBones|sp\.spine)(?:\.|$)/;
 const requiredAdvancedFeature =
-    /^(?:dragonBones\.(?:DragonBonesAsset|DragonBonesAtlasAsset|ArmatureDisplay|CCFactory|AnimationCacheMode)|geometry\.(?:Ray|AABB|intersect)|renderer\.scene\.Camera)(?:\.|$)/;
+    /^(?:dragonBones\.(?:DragonBonesAsset|DragonBonesAtlasAsset|ArmatureDisplay|CCFactory|AnimationCacheMode)|geometry\.(?:Ray|AABB|intersect)|renderer\.scene\.Camera|(?:createMeshoptDecoder|isMeshoptAvailable|createDracoDecoder|createKTX2Transcoder|isKTX2Available|meshQuantizationFactory|KHR_MESH_QUANTIZATION|meshoptCompressionFactory|KHR_MESHOPT_COMPRESSION|EXT_MESHOPT_COMPRESSION|dracoCompressionFactory|KHR_DRACO_MESH_COMPRESSION|AirTransmissionCapture|isTransmissionMaterial|TRANSMISSION_LAYER|defaultTransmissionVisibility))(?:\.|$)/;
+const documentedOnly = {
+    'dragonBones.CCFactory.constructor':
+        'CCFactory is a process-wide singleton. Its constructor subscribes to game restart and registers the global DragonBones update schedule; direct extra construction can duplicate global ownership. Use the verified getInstance() entry point.',
+    'dragonBones.CCFactory.onRestart':
+        'Engine restart callback only. Direct invocation clears the singleton while live armatures may still reference the current factory; restart ownership remains with the engine event.',
+    'dragonBones.ArmatureDisplay.destroyRenderData':
+        'Tagged engine-internal render lifecycle hook. Clearing draw data outside component/render ownership can invalidate submitted UI geometry; the live draw list and component render path are verified.',
+    'dragonBones.ArmatureDisplay.onDestroy':
+        'Component lifecycle callback paired with base cleanup. Node.destroy owns this path; direct invocation on a live node bypasses component teardown ordering.',
+    KHR_MESH_QUANTIZATION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    KHR_MESHOPT_COMPRESSION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    EXT_MESHOPT_COMPRESSION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    KHR_DRACO_MESH_COMPRESSION:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable decoder example checks its runtime value; keep it documented-only until primitive-export read tracing is supported.',
+    TRANSMISSION_LAYER:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable viewer checks its layer bit against the capture visibility; keep it documented-only until primitive-export read tracing is supported.',
+    defaultTransmissionVisibility:
+        'Primitive top-level ESM constant cannot be individually observed by the V1.1 trace without changing its runtime type. The stable viewer checks it against the capture layer; keep it documented-only until primitive-export read tracing is supported.',
+    'AirTransmissionCapture.onDestroy':
+        'Engine-managed destruction owns the capture camera, render texture, and restoration order. Direct invocation bypasses that ownership contract; actual component creation, enable/disable, and lateUpdate behavior are verified.',
+};
 const units = {};
 const aliases = [];
 const has = (node, kind) => !!node.modifiers?.some((modifier) => modifier.kind === kind);
@@ -38,7 +62,11 @@ const tierOf = (name, node) => {
     if (supporting.test(name)) return 'supporting';
     if (core.test(name)) return 'core';
     if (important.test(name)) return 'important';
-    return 'advanced';
+    // Release tiers are opt-in by declared user-facing scope. Unknown exports remain
+    // visible as Supporting until an explicit API policy promotes them; treating every
+    // unmatched engine declaration as Advanced made implementation/vendor surfaces a
+    // release obligation without any feature-scope decision.
+    return 'supporting';
 };
 const add = (name, kind, node, parent, parentTier) => {
     if (units[name]) return;
@@ -47,6 +75,10 @@ const add = (name, kind, node, parent, parentTier) => {
             ? parentTier
             : tierOf(name, node);
     units[name] = { kind, tier, coverageRequired: !['supporting', 'internal'].includes(tier), parent: parent || null };
+    if (documentedOnly[name]) {
+        units[name].coverageStatus = 'documented-only';
+        units[name].coverageReason = documentedOnly[name];
+    }
 };
 
 function visit(statements, prefix = '') {

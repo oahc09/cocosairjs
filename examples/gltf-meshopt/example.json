@@ -20,7 +20,20 @@
   },
   "api": {
     "primary": ["GLTFLoader.setMeshoptDecoder", "createMeshoptDecoder"],
-    "supporting": ["isMeshoptAvailable", "GLTFLoader.parseAsync"],
+    "supporting": [
+      "isMeshoptAvailable",
+      "GLTFLoader.parseAsync",
+      "createDracoDecoder",
+      "createKTX2Transcoder",
+      "isKTX2Available",
+      "meshQuantizationFactory",
+      "KHR_MESH_QUANTIZATION",
+      "meshoptCompressionFactory",
+      "KHR_MESHOPT_COMPRESSION",
+      "EXT_MESHOPT_COMPRESSION",
+      "dracoCompressionFactory",
+      "KHR_DRACO_MESH_COMPRESSION"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -41,7 +54,17 @@
       "Node.setRotationFromEuler",
       "GLTFAsset.destroy",
       "Material.destroy",
-      "isValid"
+      "isValid",
+      "createDracoDecoder",
+      "createKTX2Transcoder",
+      "isKTX2Available",
+      "meshQuantizationFactory",
+      "KHR_MESH_QUANTIZATION",
+      "meshoptCompressionFactory",
+      "KHR_MESHOPT_COMPRESSION",
+      "EXT_MESHOPT_COMPRESSION",
+      "dracoCompressionFactory",
+      "KHR_DRACO_MESH_COMPRESSION"
     ],
     "forbiddenShortcut": ["加载未压缩模型冒充 meshopt 成功", "跳过 decoder-missing 教学模式"],
     "evidence": [
@@ -49,121 +72,181 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L26"
+        "sourceLocation": "L36"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L28"
+        "sourceLocation": "L38"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L40"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L34"
+        "sourceLocation": "L44"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L47"
+        "sourceLocation": "L57"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "node-exists",
-        "sourceLocation": "L41"
+        "sourceLocation": "L51"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L42"
       },
       {
         "api": "math.Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L40"
+        "sourceLocation": "L50"
       },
       {
         "api": "GLTFLoader",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L66"
+        "sourceLocation": "L76"
       },
       {
         "api": "GLTFLoader.setMeshoptDecoder",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L67"
+        "sourceLocation": "L77"
       },
       {
         "api": "GLTFLoader.parseAsync",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L85"
+        "sourceLocation": "L121"
       },
       {
         "api": "GLTFAsset.instantiate",
         "source": "src/main.ts",
         "validator": "asset-loaded",
-        "sourceLocation": "L86"
+        "sourceLocation": "L122"
       },
       {
         "api": "createMeshoptDecoder",
         "source": "src/main.ts",
         "validator": "capability-status",
-        "sourceLocation": "L65"
+        "sourceLocation": "L75"
       },
       {
         "api": "isMeshoptAvailable",
         "source": "src/main.ts",
         "validator": "capability-status",
-        "sourceLocation": "L68"
+        "sourceLocation": "L78"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L31"
+        "sourceLocation": "L41"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L32"
+        "sourceLocation": "L42"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "transform-equals",
-        "sourceLocation": "L33"
+        "sourceLocation": "L43"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L117"
+        "sourceLocation": "L153"
       },
       {
         "api": "Material.destroy",
         "source": "src/main.ts",
         "validator": "resource-released",
-        "sourceLocation": "L117"
+        "sourceLocation": "L153"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
         "sourceLocation": "L27"
+      },
+      {
+        "api": "createDracoDecoder",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L82"
+      },
+      {
+        "api": "createKTX2Transcoder",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L84"
+      },
+      {
+        "api": "isKTX2Available",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "meshQuantizationFactory",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L86"
+      },
+      {
+        "api": "KHR_MESH_QUANTIZATION",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L95"
+      },
+      {
+        "api": "meshoptCompressionFactory",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "KHR_MESHOPT_COMPRESSION",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L98"
+      },
+      {
+        "api": "EXT_MESHOPT_COMPRESSION",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L87"
+      },
+      {
+        "api": "dracoCompressionFactory",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L88"
+      },
+      {
+        "api": "KHR_DRACO_MESH_COMPRESSION",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L97"
       }
     ]
   },
@@ -212,7 +295,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 99,
+            "line": 135,
             "text": "cameraNode.setPosition(new Vec3(0.2, 0.6, 2.6));"
           }
         ]
@@ -222,7 +305,7 @@
         "provenance": [
           {
             "source": "src/main.ts",
-            "line": 45,
+            "line": 55,
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
@@ -236,7 +319,7 @@
           "provenance": [
             {
               "source": "src/main.ts",
-              "line": 70,
+              "line": 106,
               "text": "var bytes = await (await fetch('./assets/meshopt-khr.glb')).arrayBuffer();"
             }
           ]
@@ -248,16 +331,16 @@
     "transform-equals": {
       "Main Camera": {
         "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0.5, 0));）",
-        "line": "L100"
+        "line": "L136"
       }
     }
   },
   "promotion": {
-    "spec": "e3b586ec08c7",
-    "source": "815ef7631c5affe0",
+    "spec": "1e6e4a0eac13",
+    "source": "f41fd530b51a57df",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 20,
-    "attested": 0,
-    "units": 20
+    "verified": 26,
+    "attested": 4,
+    "units": 30
   }
 }

@@ -630,11 +630,22 @@ internal
 
 ### supporting
 
-低频辅助 API。
+低频、可选子系统、后端/实现层和其他辅助 API。Supporting API 仍属于公开库存和运行时导出，可以由稳定示例覆盖；除非被明确提升到发布覆盖范围，否则不进入 Core / Important / Advanced 门禁分母。
 
 ### internal
 
 不进入 Gallery Coverage Gate。
+
+### V1.1 API 分级范围冻结（2026-09-28）
+
+V1.1 的 tier 必须由声明的产品/API 范围决定，不能把“未被其他正则匹配”自动解释成 Advanced。分级规则如下：
+
+- Core、Important 按当前已冻结的公开 API 分级策略执行。
+- Advanced 只包含明确纳入本次发布 API 覆盖的功能面：DragonBones 资产、显示对象、工厂和动画缓存；`geometry.Ray`、`geometry.AABB` 与 `geometry.intersect`；`renderer.scene.Camera`；glTF decoder 与几何压缩入口；AIR transmission 材质与 capture 入口。
+- 其余公开声明继续留在 API Inventory 中并归入 Supporting，除非未来通过 §18 的 Inventory Revision 明确提升。
+- 类下公开成员继承所属类的 tier；`@internal`、私有成员和 `@deprecated` 规则优先适用。
+
+该范围修正不得依据当前 verified 数量反向筛选 API，也不得改变本计划的 100% / 90% / 80% 覆盖阈值、Advanced documented-only 上限或 uncovered 归零条件。当前清单、逐项变更及门禁读数见 [`docs/api-coverage-wave16.md`](../docs/api-coverage-wave16.md)。
 
 ---
 

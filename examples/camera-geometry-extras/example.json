@@ -28,7 +28,103 @@
     "primitives.box",
     "renderer.scene.Camera.worldMatrixToScreen",
     "renderer.scene.Camera.getClipSpaceMinz",
-    "renderer.scene.Camera.calculateObliqueMat"
+    "renderer.scene.Camera.calculateObliqueMat",
+    "renderer.scene.Camera",
+    "renderer.scene.Camera.standardExposureValue",
+    "renderer.scene.Camera.standardLightMeterScale",
+    "renderer.scene.Camera.name",
+    "renderer.scene.Camera.scene",
+    "renderer.scene.Camera.node",
+    "renderer.scene.Camera.systemWindowId",
+    "renderer.scene.Camera.window",
+    "renderer.scene.Camera.enabled",
+    "renderer.scene.Camera.visibility",
+    "renderer.scene.Camera.priority",
+    "renderer.scene.Camera.width",
+    "renderer.scene.Camera.height",
+    "renderer.scene.Camera.position",
+    "renderer.scene.Camera.forward",
+    "renderer.scene.Camera.aperture",
+    "renderer.scene.Camera.apertureValue",
+    "renderer.scene.Camera.shutter",
+    "renderer.scene.Camera.shutterValue",
+    "renderer.scene.Camera.iso",
+    "renderer.scene.Camera.isoValue",
+    "renderer.scene.Camera.exposure",
+    "renderer.scene.Camera.clearFlag",
+    "renderer.scene.Camera.clearColor",
+    "renderer.scene.Camera.clearDepth",
+    "renderer.scene.Camera.clearStencil",
+    "renderer.scene.Camera.projectionType",
+    "renderer.scene.Camera.aspect",
+    "renderer.scene.Camera.orthoHeight",
+    "renderer.scene.Camera.fovAxis",
+    "renderer.scene.Camera.fov",
+    "renderer.scene.Camera.nearClip",
+    "renderer.scene.Camera.farClip",
+    "renderer.scene.Camera.viewport",
+    "renderer.scene.Camera.frustum",
+    "renderer.scene.Camera.matView",
+    "renderer.scene.Camera.matProj",
+    "renderer.scene.Camera.matProjInv",
+    "renderer.scene.Camera.matViewProj",
+    "renderer.scene.Camera.matViewProjInv",
+    "renderer.scene.Camera.isWindowSize",
+    "renderer.scene.Camera.screenScale",
+    "renderer.scene.Camera.postProcess",
+    "renderer.scene.Camera.usePostProcess",
+    "renderer.scene.Camera.pipeline",
+    "renderer.scene.Camera.pipelineSettings",
+    "renderer.scene.Camera.constructor",
+    "renderer.scene.Camera.initialize",
+    "renderer.scene.Camera.destroy",
+    "renderer.scene.Camera.attachToScene",
+    "renderer.scene.Camera.detachFromScene",
+    "renderer.scene.Camera.resize",
+    "renderer.scene.Camera.setFixedSize",
+    "renderer.scene.Camera.update",
+    "renderer.scene.Camera.surfaceTransform",
+    "renderer.scene.Camera.setViewportInOrientedSpace",
+    "renderer.scene.Camera.initGeometryRenderer",
+    "renderer.scene.Camera.geometryRenderer",
+    "renderer.scene.Camera.cameraType",
+    "renderer.scene.Camera.trackingType",
+    "renderer.scene.Camera.cameraUsage",
+    "renderer.scene.Camera.changeTargetWindow",
+    "renderer.scene.Camera.detachCamera",
+    "renderer.scene.Camera.screenPointToRay",
+    "renderer.scene.Camera.screenToWorld",
+    "renderer.scene.Camera.worldToScreen",
+    "geometry.intersect",
+    "geometry.Ray",
+    "geometry.Ray.create",
+    "geometry.Ray.clone",
+    "geometry.Ray.copy",
+    "geometry.Ray.fromPoints",
+    "geometry.Ray.set",
+    "geometry.Ray.o",
+    "geometry.Ray.d",
+    "geometry.Ray.type",
+    "geometry.Ray.constructor",
+    "geometry.Ray.computeHit",
+    "geometry.AABB",
+    "geometry.AABB.create",
+    "geometry.AABB.fromPoints",
+    "geometry.AABB.set",
+    "geometry.AABB.merge",
+    "geometry.AABB.toBoundingSphere",
+    "geometry.AABB.transform",
+    "geometry.AABB.center",
+    "geometry.AABB.halfExtents",
+    "geometry.AABB.type",
+    "geometry.AABB.constructor",
+    "geometry.AABB.getBoundary",
+    "geometry.AABB.prototype.transform",
+    "geometry.AABB.prototype.clone",
+    "geometry.AABB.prototype.copy",
+    "geometry.AABB.mergePoint",
+    "geometry.AABB.mergePoints",
+    "geometry.AABB.mergeFrustum"
   ],
   "capabilities": [],
   "learning": {
@@ -78,7 +174,103 @@
       "primitives.box",
       "renderer.scene.Camera.worldMatrixToScreen",
       "renderer.scene.Camera.getClipSpaceMinz",
-      "renderer.scene.Camera.calculateObliqueMat"
+      "renderer.scene.Camera.calculateObliqueMat",
+      "renderer.scene.Camera",
+      "renderer.scene.Camera.standardExposureValue",
+      "renderer.scene.Camera.standardLightMeterScale",
+      "renderer.scene.Camera.name",
+      "renderer.scene.Camera.scene",
+      "renderer.scene.Camera.node",
+      "renderer.scene.Camera.systemWindowId",
+      "renderer.scene.Camera.window",
+      "renderer.scene.Camera.enabled",
+      "renderer.scene.Camera.visibility",
+      "renderer.scene.Camera.priority",
+      "renderer.scene.Camera.width",
+      "renderer.scene.Camera.height",
+      "renderer.scene.Camera.position",
+      "renderer.scene.Camera.forward",
+      "renderer.scene.Camera.aperture",
+      "renderer.scene.Camera.apertureValue",
+      "renderer.scene.Camera.shutter",
+      "renderer.scene.Camera.shutterValue",
+      "renderer.scene.Camera.iso",
+      "renderer.scene.Camera.isoValue",
+      "renderer.scene.Camera.exposure",
+      "renderer.scene.Camera.clearFlag",
+      "renderer.scene.Camera.clearColor",
+      "renderer.scene.Camera.clearDepth",
+      "renderer.scene.Camera.clearStencil",
+      "renderer.scene.Camera.projectionType",
+      "renderer.scene.Camera.aspect",
+      "renderer.scene.Camera.orthoHeight",
+      "renderer.scene.Camera.fovAxis",
+      "renderer.scene.Camera.fov",
+      "renderer.scene.Camera.nearClip",
+      "renderer.scene.Camera.farClip",
+      "renderer.scene.Camera.viewport",
+      "renderer.scene.Camera.frustum",
+      "renderer.scene.Camera.matView",
+      "renderer.scene.Camera.matProj",
+      "renderer.scene.Camera.matProjInv",
+      "renderer.scene.Camera.matViewProj",
+      "renderer.scene.Camera.matViewProjInv",
+      "renderer.scene.Camera.isWindowSize",
+      "renderer.scene.Camera.screenScale",
+      "renderer.scene.Camera.postProcess",
+      "renderer.scene.Camera.usePostProcess",
+      "renderer.scene.Camera.pipeline",
+      "renderer.scene.Camera.pipelineSettings",
+      "renderer.scene.Camera.constructor",
+      "renderer.scene.Camera.initialize",
+      "renderer.scene.Camera.destroy",
+      "renderer.scene.Camera.attachToScene",
+      "renderer.scene.Camera.detachFromScene",
+      "renderer.scene.Camera.resize",
+      "renderer.scene.Camera.setFixedSize",
+      "renderer.scene.Camera.update",
+      "renderer.scene.Camera.surfaceTransform",
+      "renderer.scene.Camera.setViewportInOrientedSpace",
+      "renderer.scene.Camera.initGeometryRenderer",
+      "renderer.scene.Camera.geometryRenderer",
+      "renderer.scene.Camera.cameraType",
+      "renderer.scene.Camera.trackingType",
+      "renderer.scene.Camera.cameraUsage",
+      "renderer.scene.Camera.changeTargetWindow",
+      "renderer.scene.Camera.detachCamera",
+      "renderer.scene.Camera.screenPointToRay",
+      "renderer.scene.Camera.screenToWorld",
+      "renderer.scene.Camera.worldToScreen",
+      "geometry.intersect",
+      "geometry.Ray",
+      "geometry.Ray.create",
+      "geometry.Ray.clone",
+      "geometry.Ray.copy",
+      "geometry.Ray.fromPoints",
+      "geometry.Ray.set",
+      "geometry.Ray.o",
+      "geometry.Ray.d",
+      "geometry.Ray.type",
+      "geometry.Ray.constructor",
+      "geometry.Ray.computeHit",
+      "geometry.AABB",
+      "geometry.AABB.create",
+      "geometry.AABB.fromPoints",
+      "geometry.AABB.set",
+      "geometry.AABB.merge",
+      "geometry.AABB.toBoundingSphere",
+      "geometry.AABB.transform",
+      "geometry.AABB.center",
+      "geometry.AABB.halfExtents",
+      "geometry.AABB.type",
+      "geometry.AABB.constructor",
+      "geometry.AABB.getBoundary",
+      "geometry.AABB.prototype.transform",
+      "geometry.AABB.prototype.clone",
+      "geometry.AABB.prototype.copy",
+      "geometry.AABB.mergePoint",
+      "geometry.AABB.mergePoints",
+      "geometry.AABB.mergeFrustum"
     ],
     "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
     "evidence": [
@@ -86,127 +278,703 @@
         "api": "createAirApp",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L25"
+        "sourceLocation": "L28"
       },
       {
         "api": "Scene",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L27"
+        "sourceLocation": "L30"
       },
       {
         "api": "Node",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L31"
       },
       {
         "api": "Node.addChild",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L29"
+        "sourceLocation": "L32"
       },
       {
         "api": "Node.addComponent",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L35"
       },
       {
         "api": "Node.setPosition",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L33"
       },
       {
         "api": "Node.setRotationFromEuler",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L44"
+        "sourceLocation": "L47"
       },
       {
         "api": "Camera",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L32"
+        "sourceLocation": "L35"
       },
       {
         "api": "DirectionalLight",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L45"
+        "sourceLocation": "L48"
       },
       {
         "api": "Layers",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L39"
+        "sourceLocation": "L42"
       },
       {
         "api": "Color",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L38"
+        "sourceLocation": "L41"
       },
       {
         "api": "math.Vec3",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L30"
+        "sourceLocation": "L33"
       },
       {
         "api": "MeshRenderer",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L51"
+        "sourceLocation": "L54"
       },
       {
         "api": "Material",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L53"
+        "sourceLocation": "L59"
       },
       {
         "api": "Material.initialize",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L54"
+        "sourceLocation": "L60"
       },
       {
         "api": "Material.setProperty",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L55"
+        "sourceLocation": "L61"
       },
       {
         "api": "utils.createMesh",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L58"
       },
       {
         "api": "primitives.box",
         "source": "src/main.ts",
         "validator": "scene-ready",
-        "sourceLocation": "L52"
+        "sourceLocation": "L317"
       },
       {
         "api": "renderer.scene.Camera.worldMatrixToScreen",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L83"
+        "sourceLocation": "L92"
       },
       {
         "api": "renderer.scene.Camera.getClipSpaceMinz",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L91"
+        "sourceLocation": "L100"
       },
       {
         "api": "renderer.scene.Camera.calculateObliqueMat",
         "source": "src/main.ts",
         "validator": "no-runtime-error",
-        "sourceLocation": "L101"
+        "sourceLocation": "L111"
+      },
+      {
+        "api": "renderer.scene.Camera",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L35"
+      },
+      {
+        "api": "renderer.scene.Camera.standardExposureValue",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "renderer.scene.Camera.standardLightMeterScale",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "renderer.scene.Camera.name",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L72"
+      },
+      {
+        "api": "renderer.scene.Camera.scene",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L66"
+      },
+      {
+        "api": "renderer.scene.Camera.node",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L125"
+      },
+      {
+        "api": "renderer.scene.Camera.systemWindowId",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L126"
+      },
+      {
+        "api": "renderer.scene.Camera.window",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "renderer.scene.Camera.enabled",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L128"
+      },
+      {
+        "api": "renderer.scene.Camera.visibility",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "renderer.scene.Camera.priority",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L43"
+      },
+      {
+        "api": "renderer.scene.Camera.width",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L58"
+      },
+      {
+        "api": "renderer.scene.Camera.height",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L58"
+      },
+      {
+        "api": "renderer.scene.Camera.position",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L133"
+      },
+      {
+        "api": "renderer.scene.Camera.forward",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L134"
+      },
+      {
+        "api": "renderer.scene.Camera.aperture",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L135"
+      },
+      {
+        "api": "renderer.scene.Camera.apertureValue",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L136"
+      },
+      {
+        "api": "renderer.scene.Camera.shutter",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L137"
+      },
+      {
+        "api": "renderer.scene.Camera.shutterValue",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L138"
+      },
+      {
+        "api": "renderer.scene.Camera.iso",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L139"
+      },
+      {
+        "api": "renderer.scene.Camera.isoValue",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L140"
+      },
+      {
+        "api": "renderer.scene.Camera.exposure",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L141"
+      },
+      {
+        "api": "renderer.scene.Camera.clearFlag",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L142"
+      },
+      {
+        "api": "renderer.scene.Camera.clearColor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "renderer.scene.Camera.clearDepth",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L144"
+      },
+      {
+        "api": "renderer.scene.Camera.clearStencil",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "renderer.scene.Camera.projectionType",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L146"
+      },
+      {
+        "api": "renderer.scene.Camera.aspect",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L147"
+      },
+      {
+        "api": "renderer.scene.Camera.orthoHeight",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L148"
+      },
+      {
+        "api": "renderer.scene.Camera.fovAxis",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L149"
+      },
+      {
+        "api": "renderer.scene.Camera.fov",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "renderer.scene.Camera.nearClip",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L151"
+      },
+      {
+        "api": "renderer.scene.Camera.farClip",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "renderer.scene.Camera.viewport",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "renderer.scene.Camera.frustum",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L154"
+      },
+      {
+        "api": "renderer.scene.Camera.matView",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L155"
+      },
+      {
+        "api": "renderer.scene.Camera.matProj",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L156"
+      },
+      {
+        "api": "renderer.scene.Camera.matProjInv",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L157"
+      },
+      {
+        "api": "renderer.scene.Camera.matViewProj",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L158"
+      },
+      {
+        "api": "renderer.scene.Camera.matViewProjInv",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L159"
+      },
+      {
+        "api": "renderer.scene.Camera.isWindowSize",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L160"
+      },
+      {
+        "api": "renderer.scene.Camera.screenScale",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L161"
+      },
+      {
+        "api": "renderer.scene.Camera.postProcess",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L162"
+      },
+      {
+        "api": "renderer.scene.Camera.usePostProcess",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L163"
+      },
+      {
+        "api": "renderer.scene.Camera.pipeline",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L164"
+      },
+      {
+        "api": "renderer.scene.Camera.pipelineSettings",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L165"
+      },
+      {
+        "api": "renderer.scene.Camera.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L71"
+      },
+      {
+        "api": "renderer.scene.Camera.initialize",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "renderer.scene.Camera.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L299"
+      },
+      {
+        "api": "renderer.scene.Camera.attachToScene",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L169"
+      },
+      {
+        "api": "renderer.scene.Camera.detachFromScene",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L170"
+      },
+      {
+        "api": "renderer.scene.Camera.resize",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L333"
+      },
+      {
+        "api": "renderer.scene.Camera.setFixedSize",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L334"
+      },
+      {
+        "api": "renderer.scene.Camera.update",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L335"
+      },
+      {
+        "api": "renderer.scene.Camera.surfaceTransform",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L174"
+      },
+      {
+        "api": "renderer.scene.Camera.setViewportInOrientedSpace",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L339"
+      },
+      {
+        "api": "renderer.scene.Camera.initGeometryRenderer",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L176"
+      },
+      {
+        "api": "renderer.scene.Camera.geometryRenderer",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L177"
+      },
+      {
+        "api": "renderer.scene.Camera.cameraType",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L178"
+      },
+      {
+        "api": "renderer.scene.Camera.trackingType",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L179"
+      },
+      {
+        "api": "renderer.scene.Camera.cameraUsage",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L180"
+      },
+      {
+        "api": "renderer.scene.Camera.changeTargetWindow",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L181"
+      },
+      {
+        "api": "renderer.scene.Camera.detachCamera",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L298"
+      },
+      {
+        "api": "renderer.scene.Camera.screenPointToRay",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L336"
+      },
+      {
+        "api": "renderer.scene.Camera.screenToWorld",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L337"
+      },
+      {
+        "api": "renderer.scene.Camera.worldToScreen",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L338"
+      },
+      {
+        "api": "geometry.intersect",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L189"
+      },
+      {
+        "api": "geometry.Ray",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L191"
+      },
+      {
+        "api": "geometry.Ray.create",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L301"
+      },
+      {
+        "api": "geometry.Ray.clone",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L302"
+      },
+      {
+        "api": "geometry.Ray.copy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L303"
+      },
+      {
+        "api": "geometry.Ray.fromPoints",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L304"
+      },
+      {
+        "api": "geometry.Ray.set",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L305"
+      },
+      {
+        "api": "geometry.Ray.o",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L81"
+      },
+      {
+        "api": "geometry.Ray.d",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L342"
+      },
+      {
+        "api": "geometry.Ray.type",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L198"
+      },
+      {
+        "api": "geometry.Ray.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L71"
+      },
+      {
+        "api": "geometry.Ray.computeHit",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L307"
+      },
+      {
+        "api": "geometry.AABB",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L202"
+      },
+      {
+        "api": "geometry.AABB.create",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L301"
+      },
+      {
+        "api": "geometry.AABB.fromPoints",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L304"
+      },
+      {
+        "api": "geometry.AABB.set",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L305"
+      },
+      {
+        "api": "geometry.AABB.merge",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L317"
+      },
+      {
+        "api": "geometry.AABB.toBoundingSphere",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L319"
+      },
+      {
+        "api": "geometry.AABB.transform",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L320"
+      },
+      {
+        "api": "geometry.AABB.center",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L351"
+      },
+      {
+        "api": "geometry.AABB.halfExtents",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L349"
+      },
+      {
+        "api": "geometry.AABB.type",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L198"
+      },
+      {
+        "api": "geometry.AABB.constructor",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L71"
+      },
+      {
+        "api": "geometry.AABB.getBoundary",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L323"
+      },
+      {
+        "api": "geometry.AABB.prototype.transform",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L320"
+      },
+      {
+        "api": "geometry.AABB.prototype.clone",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L302"
+      },
+      {
+        "api": "geometry.AABB.prototype.copy",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L303"
+      },
+      {
+        "api": "geometry.AABB.mergePoint",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L328"
+      },
+      {
+        "api": "geometry.AABB.mergePoints",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L329"
+      },
+      {
+        "api": "geometry.AABB.mergeFrustum",
+        "source": "src/main.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L330"
       }
     ]
   },
@@ -221,7 +989,7 @@
   },
   "validation": {
     "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": [],
+    "lifecycle": ["resource-released"],
     "interaction": [],
     "visual": ["visible-frame"],
     "capability": []
@@ -239,11 +1007,11 @@
   },
   "specStatus": "frozen",
   "promotion": {
-    "spec": "84c7dc74ca1a",
-    "source": "709b12cd0409f9ad",
+    "spec": "b615901b7e17",
+    "source": "eff5486133ed2729",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 21,
+    "verified": 117,
     "attested": 0,
-    "units": 21
+    "units": 117
   }
 }

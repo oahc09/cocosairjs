@@ -1,13 +1,13 @@
 {
-  "measuredAt": "2026-09-27T21:36:57.041Z",
+  "measuredAt": "2026-09-27T23:59:51.982Z",
   "runner": "tools/verify/v11-examples-verify.cjs",
   "browser": "chromium",
   "mode": "spec-driven-v3",
   "instrumentation": "per-api-execution-trace (cocosair.traced.js via importmap)",
   "candidateFingerprint": "7f3b89f6ac076cbf",
   "apiProofTotals": {
-    "verified": 4130,
-    "attested": 66,
+    "verified": 4291,
+    "attested": 71,
     "unproven": 0
   },
   "total": 141,
@@ -28,8 +28,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 68,
-        "bytes": 61160,
-        "hash": "ef9c707a709f7e0a",
+        "bytes": 61297,
+        "hash": "f1c28067af91bfe4",
         "notes": [
           "Animation.addClip: no own descriptor on static",
           "Animation.clips: no own descriptor on static",
@@ -1118,7 +1118,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 286,
+          "calls": 299,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1310,12 +1310,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0625"
+          "detail": "litRatio=0.0606"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0617 assetUnits=8"
+          "detail": "held=2 leaked=0 reloaded=true litRatio=0.0621 assetUnits=8"
         }
       ],
       "scenarioProbe": {
@@ -1440,7 +1440,7 @@
           {
             "name": "play-and-events",
             "ok": true,
-            "detail": "x=0.5393333333233993 events=1/1"
+            "detail": "x=0.5523333333432675 events=1/1"
           },
           {
             "name": "pause",
@@ -1472,8 +1472,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-position.png",
-        "bytes": 7063,
-        "hash": "71f96aa51f2e4b14"
+        "bytes": 6772,
+        "hash": "d097748d8a074481"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1489,8 +1489,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 55209,
-        "hash": "0cf62913e791c219",
+        "bytes": 55346,
+        "hash": "77d29557e9ce48d8",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -1693,7 +1693,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 205,
+          "calls": 225,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -1883,15 +1883,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0375"
+          "detail": "litRatio=0.0400"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/anim-rotation.png",
-        "bytes": 7171,
-        "hash": "ffa93e974ffe1cc6"
+        "bytes": 7271,
+        "hash": "5999d2ba5f63c012"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -1907,8 +1907,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 56012,
-        "hash": "c140b70fe3783fa0",
+        "bytes": 56149,
+        "hash": "4a09fcfcd55ba285",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioClip.validate: no own descriptor on static",
@@ -1948,7 +1948,7 @@
           "api": "AudioClip.getDuration",
           "proof": "verified",
           "state": "executed",
-          "calls": 305,
+          "calls": 290,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -2169,7 +2169,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 910,
+          "calls": 865,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -2496,8 +2496,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/audio-basic.png",
-        "bytes": 19503,
-        "hash": "bcb230799b0239d8"
+        "bytes": 19492,
+        "hash": "e21bbed56998b97d"
       },
       "assetDigests": [
         {
@@ -2521,8 +2521,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55669,
-        "hash": "772ed706b7b85783",
+        "bytes": 55806,
+        "hash": "be97a07d09e6b0d7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -2977,8 +2977,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 13,
-        "bytes": 54692,
-        "hash": "be0d3aa9f964604b",
+        "bytes": 54829,
+        "hash": "a54070dce7b7efad",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static"
@@ -3313,15 +3313,15 @@
     {
       "id": "camera-geometry-extras",
       "result": "PASS",
-      "specFingerprint": "84c7dc74ca1a",
-      "sourceFingerprint": "709b12cd0409f9ad",
+      "specFingerprint": "b615901b7e17",
+      "sourceFingerprint": "eff5486133ed2729",
       "candidateFingerprint": "7f3b89f6ac076cbf",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 21,
-        "bytes": 55895,
-        "hash": "5f13836d585d8cdb",
+        "unitCount": 117,
+        "bytes": 69602,
+        "hash": "8121c8959ed7e4aa",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -3329,12 +3329,43 @@
           "Node.addComponent: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
           "Node.setRotationFromEuler: no own descriptor on static",
+          "geometry.AABB.center: no own descriptor on static",
+          "geometry.AABB.center: no own descriptor on prototype",
+          "geometry.AABB.getBoundary: no own descriptor on static",
+          "geometry.AABB.halfExtents: no own descriptor on static",
+          "geometry.AABB.halfExtents: no own descriptor on prototype",
+          "geometry.AABB.mergeFrustum: no own descriptor on static",
+          "geometry.AABB.mergePoint: no own descriptor on static",
+          "geometry.AABB.mergePoints: no own descriptor on static",
+          "geometry.AABB.type: no own descriptor on static",
+          "geometry.Ray.computeHit: no own descriptor on static",
+          "geometry.Ray.d: no own descriptor on static",
+          "geometry.Ray.d: no own descriptor on prototype",
+          "geometry.Ray.o: no own descriptor on static",
+          "geometry.Ray.o: no own descriptor on prototype",
+          "geometry.Ray.type: no own descriptor on static",
+          "renderer.scene.Camera.aperture: no own descriptor on static",
+          "renderer.scene.Camera.apertureValue: no own descriptor on static",
+          "renderer.scene.Camera.aspect: no own descriptor on static",
+          "renderer.scene.Camera.attachToScene: no own descriptor on static",
           "renderer.scene.Camera.calculateObliqueMat: no own descriptor on static",
-          "renderer.scene.Camera.getClipSpaceMinz: no own descriptor on static",
-          "renderer.scene.Camera.worldMatrixToScreen: no own descriptor on static"
+          "renderer.scene.Camera.cameraType: no own descriptor on static",
+          "renderer.scene.Camera.cameraUsage: no own descriptor on static",
+          "renderer.scene.Camera.changeTargetWindow: no own descriptor on static",
+          "renderer.scene.Camera.clearColor: no own descriptor on static",
+          "renderer.scene.Camera.clearDepth: no own descriptor on static",
+          "renderer.scene.Camera.clearFlag: no own descriptor on static",
+          "renderer.scene.Camera.clearStencil: no own descriptor on static",
+          "renderer.scene.Camera.destroy: no own descriptor on static",
+          "renderer.scene.Camera.detachCamera: no own descriptor on static",
+          "renderer.scene.Camera.detachFromScene: no own descriptor on static",
+          "renderer.scene.Camera.enabled: no own descriptor on static",
+          "renderer.scene.Camera.exposure: no own descriptor on static",
+          "renderer.scene.Camera.farClip: no own descriptor on static",
+          "renderer.scene.Camera.forward: no own descriptor on static"
         ],
-        "observed": 21,
-        "total": 21
+        "observed": 117,
+        "total": 117
       },
       "apiProof": [
         {
@@ -3358,7 +3389,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 3,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -3409,8 +3440,8 @@
           "api": "Material",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
-          "reads": 6,
+          "calls": 2,
+          "reads": 9,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3426,7 +3457,7 @@
           "api": "Material.initialize",
           "proof": "verified",
           "state": "executed",
-          "calls": 26,
+          "calls": 27,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -3443,7 +3474,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 3,
+          "calls": 4,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -3461,7 +3492,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 22,
+          "reads": 29,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3478,7 +3509,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 3,
-          "reads": 16,
+          "reads": 24,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -3593,10 +3624,522 @@
           ]
         },
         {
-          "api": "math.Vec3",
+          "api": "geometry.AABB",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 20,
+          "via": "call",
+          "mechanism": "frozen-namespace-class",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.center",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1194,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:geometry.AABB",
+          "observedVia": "geometry.AABB",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.create",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.fromPoints",
           "proof": "verified",
           "state": "executed",
           "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.getBoundary",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 12,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.halfExtents",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1034,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.merge",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.mergeFrustum",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.mergePoint",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 11,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.mergePoints",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.prototype.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.prototype.copy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.prototype.transform",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "namespace-member",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.toBoundingSphere",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.transform",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.AABB.type",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 14,
+          "via": "call",
+          "mechanism": "frozen-namespace-class",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.clone",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.computeHit",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:geometry.Ray",
+          "observedVia": "geometry.Ray",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.copy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.create",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.d",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 17,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.fromPoints",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.o",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 15,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.set",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.Ray.type",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "geometry.intersect",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "math.Vec3",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 17,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -3614,7 +4157,7 @@
           "api": "primitives.box",
           "proof": "verified",
           "state": "executed",
-          "calls": 1,
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "frozen-namespace-member",
@@ -3622,6 +4165,91 @@
           "bindings": [
             {
               "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 4,
+          "via": "call",
+          "mechanism": "frozen-namespace-class",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.aperture",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.apertureValue",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.aspect",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.attachToScene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -3645,10 +4273,1031 @@
           ]
         },
         {
+          "api": "renderer.scene.Camera.cameraType",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.cameraUsage",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.changeTargetWindow",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.clearColor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 714,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.clearDepth",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 181,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.clearFlag",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 537,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.clearStencil",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 180,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:renderer.scene.Camera",
+          "observedVia": "renderer.scene.Camera",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.destroy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "resource-released",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.detachCamera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.detachFromScene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.enabled",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.exposure",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 357,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.farClip",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 180,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.forward",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.fov",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.fovAxis",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.frustum",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 163,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.geometryRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 536,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "renderer.scene.Camera.getClipSpaceMinz",
           "proof": "verified",
           "state": "executed",
-          "calls": 155,
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.height",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.initGeometryRenderer",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.initialize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.isWindowSize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.iso",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.isoValue",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.matProj",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.matProjInv",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.matView",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.matViewProj",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.matViewProjInv",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.name",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.nearClip",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 180,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.node",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 358,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.orthoHeight",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.pipeline",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.pipelineSettings",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.position",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 357,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.postProcess",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.priority",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.projectionType",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.resize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 4,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.scene",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1782,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.screenPointToRay",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.screenScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.screenToWorld",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.setFixedSize",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.setViewportInOrientedSpace",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.shutter",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.shutterValue",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.standardExposureValue",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 180,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.standardLightMeterScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "static",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.surfaceTransform",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 179,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.systemWindowId",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.trackingType",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.update",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 180,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.usePostProcess",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.viewport",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 891,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.visibility",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 181,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.width",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "renderer.scene.Camera.window",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1969,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -3679,10 +5328,27 @@
           ]
         },
         {
-          "api": "utils.createMesh",
+          "api": "renderer.scene.Camera.worldToScreen",
           "proof": "verified",
           "state": "executed",
           "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "utils.createMesh",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
           "reads": 0,
           "via": "call",
           "mechanism": "frozen-namespace-member",
@@ -3733,7 +5399,9 @@
         "visual": [
           "visible-frame"
         ],
-        "lifecycle": [],
+        "lifecycle": [
+          "resource-released"
+        ],
         "capability": []
       },
       "validatorResults": [
@@ -3756,14 +5424,19 @@
           "validatorId": "visible-frame",
           "state": "PASS",
           "detail": "litRatio=1.0000"
+        },
+        {
+          "validatorId": "resource-released",
+          "state": "PASS",
+          "detail": "held=2 leaked=0 reloaded=true litRatio=1.0000 assetUnits=6"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/camera-geometry-extras.png",
-        "bytes": 4786,
-        "hash": "27043b102f5559eb"
+        "bytes": 6778,
+        "hash": "3259f823486b9cad"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -3779,8 +5452,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55262,
-        "hash": "c99f18e4b0fb2e1c",
+        "bytes": 55399,
+        "hash": "de6acb19855e9b0b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -4215,8 +5888,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55350,
-        "hash": "53499ebd38466633",
+        "bytes": 55487,
+        "hash": "bbdc5d1f229892e7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -4651,8 +6324,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55250,
-        "hash": "a295b6c3ed5366f9",
+        "bytes": 55387,
+        "hash": "f3d6e0a1fac8db19",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -5087,8 +6760,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55577,
-        "hash": "44227e76b7f491a9",
+        "bytes": 55714,
+        "hash": "cddc15436a705ec3",
         "notes": [
           "Camera.screenPointToRay: no own descriptor on static",
           "Camera.screenToWorld: no own descriptor on static",
@@ -5546,8 +7219,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 55462,
-        "hash": "a272820d06c4dc9a",
+        "bytes": 55599,
+        "hash": "c9a265abf2bdf333",
         "notes": [
           "Camera.screenToWorld: no own descriptor on static",
           "Camera.worldToScreen: no own descriptor on static",
@@ -5987,8 +7660,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 54,
-        "bytes": 58778,
-        "hash": "78f840913e06fb09",
+        "bytes": 58915,
+        "hash": "9a45f33fce80e175",
         "notes": [
           "Camera.aperture: no own descriptor on static",
           "Camera.camera: no own descriptor on static",
@@ -7203,8 +8876,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 37,
-        "bytes": 56786,
-        "hash": "093cde19890fd3a3",
+        "bytes": 56923,
+        "hash": "e9bc681cdd1fd381",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioSource.play: no own descriptor on static",
@@ -7535,7 +9208,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 2646,
+          "calls": 2655,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7552,7 +9225,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 1466,
+          "calls": 1471,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -7740,7 +9413,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 2837,
+          "calls": 2846,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -8031,8 +9704,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/collector-dodge.png",
-        "bytes": 13901,
-        "hash": "3997c45922fa1932"
+        "bytes": 13888,
+        "hash": "6148fbb0599f0a6c"
       },
       "assetDigests": [
         {
@@ -8056,8 +9729,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 55584,
-        "hash": "2d6e0c157256c52b",
+        "bytes": 55721,
+        "hash": "b9dc00f85e0bf1b2",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -8495,8 +10168,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 26,
-        "bytes": 56587,
-        "hash": "3d7e1ea0cbc88a38",
+        "bytes": 56724,
+        "hash": "1bd0cd33713b762f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -9036,8 +10709,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 56121,
-        "hash": "000397e832153d75",
+        "bytes": 56258,
+        "hash": "5935329ef7f5de5c",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioSource.play: no own descriptor on static",
@@ -9725,8 +11398,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/contra-action.png",
-        "bytes": 11236,
-        "hash": "b68d557eac7c4b74"
+        "bytes": 11231,
+        "hash": "6a2760df33461084"
       },
       "assetDigests": [
         {
@@ -9750,8 +11423,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55406,
-        "hash": "d8c87c0443ce29cd",
+        "bytes": 55543,
+        "hash": "c943a73d57f2cd69",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -10166,15 +11839,15 @@
     {
       "id": "dragonbones-basic",
       "result": "PASS",
-      "specFingerprint": "7c755d620c3d",
-      "sourceFingerprint": "a9c357ebb1b5e758",
+      "specFingerprint": "a4eee0d7c11b",
+      "sourceFingerprint": "771ca54965703158",
       "candidateFingerprint": "7f3b89f6ac076cbf",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 46,
-        "bytes": 59715,
-        "hash": "49026cecb48907f3",
+        "unitCount": 98,
+        "bytes": 69413,
+        "hash": "c72c84aa07517d38",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -10193,23 +11866,32 @@
           "dragonBones.ArmatureData.getSkin: no own descriptor on static",
           "dragonBones.ArmatureData.slots: no own descriptor on static",
           "dragonBones.ArmatureData.slots: no own descriptor on prototype",
+          "dragonBones.ArmatureDisplay.addEventListener: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.animationName: no own descriptor on static",
           "dragonBones.ArmatureDisplay.armature: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.armatureName: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.attachUtil: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.attachUtil: no own descriptor on prototype",
+          "dragonBones.ArmatureDisplay.buildArmature: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.customMaterial: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.debugBones: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.dragonAsset: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.dragonAtlasAsset: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.drawList: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.enableBatch: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.getAnimationNames: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.getArmatureKey: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.getArmatureNames: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.initFactory: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.invalidAnimationCache: no own descriptor on static",
           "dragonBones.ArmatureDisplay.isAnimationCached: no own descriptor on static",
-          "dragonBones.ArmatureDisplay.playAnimation: no own descriptor on static",
-          "dragonBones.ArmatureDisplay.playTimes: no own descriptor on static",
-          "dragonBones.ArmatureDisplay.playTimes: no own descriptor on prototype",
-          "dragonBones.ArmatureDisplay.setAnimationCacheMode: no own descriptor on static",
-          "dragonBones.CCFactory.getDragonBonesDataByUUID: no own descriptor on static",
-          "dragonBones.DragonBonesAsset.init: no own descriptor on static",
-          "dragonBones.DragonBonesAtlasAsset.init: no own descriptor on static",
-          "dragonBones.DragonBonesData.armatureNames: no own descriptor on static",
-          "dragonBones.DragonBonesData.armatureNames: no own descriptor on prototype",
-          "dragonBones.DragonBonesData.getArmature: no own descriptor on static",
-          "dragonBones.DragonBonesData.version: no own descriptor on static",
-          "dragonBones.DragonBonesData.version: no own descriptor on prototype"
+          "dragonBones.ArmatureDisplay.markForUpdateRenderData: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.off: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.on: no own descriptor on static",
+          "dragonBones.ArmatureDisplay.onDisable: no own descriptor on static"
         ],
-        "observed": 40,
-        "total": 46
+        "observed": 93,
+        "total": 98
       },
       "apiProof": [
         {
@@ -10318,7 +12000,7 @@
           "api": "Node",
           "proof": "verified",
           "state": "executed",
-          "calls": 4,
+          "calls": 6,
           "reads": 31,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -10352,7 +12034,7 @@
           "api": "Node.addComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 7,
+          "calls": 15,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10369,7 +12051,7 @@
           "api": "Node.on",
           "proof": "verified",
           "state": "executed",
-          "calls": 12,
+          "calls": 15,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10437,8 +12119,8 @@
           "api": "UITransform",
           "proof": "verified",
           "state": "executed",
-          "calls": 3,
-          "reads": 10,
+          "calls": 5,
+          "reads": 14,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -10556,7 +12238,7 @@
           "api": "dragonBones.Armature.advanceTime",
           "proof": "verified",
           "state": "executed",
-          "calls": 334,
+          "calls": 336,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10573,7 +12255,7 @@
           "api": "dragonBones.Armature.animation",
           "proof": "verified",
           "state": "executed",
-          "calls": 24,
+          "calls": 26,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10590,7 +12272,7 @@
           "api": "dragonBones.Armature.getBones",
           "proof": "verified",
           "state": "executed",
-          "calls": 354,
+          "calls": 358,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10607,7 +12289,7 @@
           "api": "dragonBones.Armature.getSlots",
           "proof": "verified",
           "state": "executed",
-          "calls": 49,
+          "calls": 53,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10710,13 +12392,64 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 3,
+          "reads": 5,
           "via": "call",
           "mechanism": "frozen-namespace-class",
           "bound": true,
           "bindings": [
             {
               "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.AnimationCacheMode",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.addEventListener",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.animationName",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 22,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -10740,10 +12473,266 @@
           ]
         },
         {
+          "api": "dragonBones.ArmatureDisplay.armatureName",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 16,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.attachUtil",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 321,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.buildArmature",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:dragonBones.ArmatureDisplay",
+          "observedVia": "dragonBones.ArmatureDisplay",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.customMaterial",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 298,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.debugBones",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 299,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.dragonAsset",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 28,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.dragonAtlasAsset",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 37,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.drawList",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 298,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.enableBatch",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.getAnimationNames",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.getArmatureKey",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.getArmatureNames",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.initFactory",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.invalidAnimationCache",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "dragonBones.ArmatureDisplay.isAnimationCached",
           "proof": "verified",
           "state": "executed",
-          "calls": 937,
+          "calls": 944,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -10751,6 +12740,125 @@
           "bindings": [
             {
               "validator": "visible-frame",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.markForUpdateRenderData",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.off",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.on",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.onDisable",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.onEnable",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.onLoad",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.once",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -10775,16 +12883,84 @@
         },
         {
           "api": "dragonBones.ArmatureDisplay.playTimes",
-          "proof": "attested",
-          "state": "unresolved",
+          "proof": "verified",
+          "state": "executed",
           "calls": 0,
-          "reads": 0,
-          "via": null,
-          "mechanism": "unresolved",
+          "reads": 12,
+          "via": "read",
+          "mechanism": "instance-data-property",
           "bound": true,
           "bindings": [
             {
               "validator": "animation-playing",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.premultipliedAlpha",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 297,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.querySocketPathByName",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.querySockets",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.removeEventListener",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -10808,6 +12984,91 @@
           ]
         },
         {
+          "api": "dragonBones.ArmatureDisplay.socketNodes",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 314,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.sockets",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 314,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.timeScale",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 7,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.updateAnimation",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 314,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.ArmatureDisplay.updateAnimationCache",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "dragonBones.CCFactory",
           "proof": "verified",
           "state": "executed",
@@ -10819,6 +13080,57 @@
           "bindings": [
             {
               "validator": "resource-released",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.CCFactory.buildArmatureDisplay",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 6,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.CCFactory.createArmatureNode",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.CCFactory.getDragonBonesDataByRawData",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -10845,7 +13157,7 @@
           "api": "dragonBones.CCFactory.getInstance",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 7,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -10859,10 +13171,95 @@
           ]
         },
         {
+          "api": "dragonBones.CCFactory.id",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.CCFactory.initUpdate",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.CCFactory.removeDragonBonesDataByUUID",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.CCFactory.update",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 314,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.CCFactory.uuid",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 0,
+          "reads": 1,
+          "via": "read",
+          "mechanism": "instance-data-property",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "dragonBones.DragonBonesAsset",
           "proof": "verified",
           "state": "executed",
-          "calls": 2,
+          "calls": 3,
           "reads": 1,
           "via": "call",
           "mechanism": "frozen-namespace-class",
@@ -10876,7 +13273,93 @@
           ]
         },
         {
+          "api": "dragonBones.DragonBonesAsset.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:dragonBones.DragonBonesAsset",
+          "observedVia": "dragonBones.DragonBonesAsset",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAsset.createNode",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAsset.destroy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "resource-released",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAsset.dragonBonesJson",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 3,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "dragonBones.DragonBonesAsset.init",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 8,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "resource-released",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAsset.reset",
           "proof": "verified",
           "state": "executed",
           "calls": 6,
@@ -10886,7 +13369,7 @@
           "bound": true,
           "bindings": [
             {
-              "validator": "resource-released",
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -10910,7 +13393,93 @@
           ]
         },
         {
+          "api": "dragonBones.DragonBonesAtlasAsset.atlasJson",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 5,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAtlasAsset.constructor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "alias:dragonBones.DragonBonesAtlasAsset",
+          "observedVia": "dragonBones.DragonBonesAtlasAsset",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAtlasAsset.createNode",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAtlasAsset.destroy",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "resource-released",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "dragonBones.DragonBonesAtlasAsset.init",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 7,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "resource-released",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dragonBones.DragonBonesAtlasAsset.texture",
           "proof": "verified",
           "state": "executed",
           "calls": 4,
@@ -10920,7 +13489,7 @@
           "bound": true,
           "bindings": [
             {
-              "validator": "resource-released",
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -10947,7 +13516,7 @@
           "api": "dragonBones.DragonBonesData.getArmature",
           "proof": "verified",
           "state": "executed",
-          "calls": 10,
+          "calls": 14,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -11095,6 +13664,12 @@
           "observation": "server-response"
         },
         {
+          "path": "/assets/AirDragon_atlas.png",
+          "status": 200,
+          "bytes": 175,
+          "observation": "server-response"
+        },
+        {
           "path": "/assets/AirDragon.json",
           "status": 200,
           "bytes": 6583,
@@ -11105,18 +13680,12 @@
           "status": 200,
           "bytes": 768,
           "observation": "server-response"
-        },
-        {
-          "path": "/assets/AirDragon_atlas.png",
-          "status": 200,
-          "bytes": 175,
-          "observation": "server-response"
         }
       ],
       "artifact": {
         "path": "docs/evidence/examples/dragonbones-basic.png",
-        "bytes": 15961,
-        "hash": "f9e478403c500b06"
+        "bytes": 15973,
+        "hash": "84d5f2d60a7a4ebb"
       },
       "assetDigests": [
         {
@@ -11154,8 +13723,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 56524,
-        "hash": "c266a2295d6d1856",
+        "bytes": 56661,
+        "hash": "3994525604ceb092",
         "notes": [
           "GLTFAsset.animations: no own descriptor on static",
           "GLTFAsset.document: no own descriptor on static",
@@ -11831,8 +14400,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 17,
-        "bytes": 55127,
-        "hash": "48fab57bd6d8768d",
+        "bytes": 55264,
+        "hash": "eb96e718efd15b4e",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -12291,8 +14860,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 15,
-        "bytes": 54921,
-        "hash": "1df5342a4f7e9f78",
+        "bytes": 55058,
+        "hash": "4003c8b29bd48572",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -12675,8 +15244,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 14,
-        "bytes": 54855,
-        "hash": "09bbac9e55b9e1c9",
+        "bytes": 54992,
+        "hash": "6968d5628a1e9896",
         "notes": [
           "GLTFLoader.getExtensionSupport: no own descriptor on static",
           "GLTFLoader.parseAsync: no own descriptor on static",
@@ -13042,8 +15611,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 29,
-        "bytes": 56813,
-        "hash": "4f16484221cbf35a",
+        "bytes": 56950,
+        "hash": "83bcf411b92270b1",
         "notes": [
           "GLTFExtensionRegistry.createHandlers: no own descriptor on static",
           "GLTFExtensionRegistry.register: no own descriptor on static",
@@ -13672,15 +16241,15 @@
     {
       "id": "gltf-meshopt",
       "result": "PASS",
-      "specFingerprint": "e3b586ec08c7",
-      "sourceFingerprint": "815ef7631c5affe0",
+      "specFingerprint": "1e6e4a0eac13",
+      "sourceFingerprint": "f41fd530b51a57df",
       "candidateFingerprint": "7f3b89f6ac076cbf",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 20,
-        "bytes": 55549,
-        "hash": "cd9851312241bc56",
+        "unitCount": 30,
+        "bytes": 56924,
+        "hash": "50dbaa8552b8059f",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -13691,8 +16260,8 @@
           "Node.setPosition: no own descriptor on static",
           "Node.setRotationFromEuler: no own descriptor on static"
         ],
-        "observed": 20,
-        "total": 20
+        "observed": 26,
+        "total": 30
       },
       "apiProof": [
         {
@@ -13724,6 +16293,23 @@
           "bindings": [
             {
               "validator": "node-exists",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "EXT_MESHOPT_COMPRESSION",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -13809,6 +16395,57 @@
           "bindings": [
             {
               "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "KHR_DRACO_MESH_COMPRESSION",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "KHR_MESHOPT_COMPRESSION",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "KHR_MESH_QUANTIZATION",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -13951,6 +16588,40 @@
           ]
         },
         {
+          "api": "createDracoDecoder",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "createKTX2Transcoder",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "createMeshoptDecoder",
           "proof": "verified",
           "state": "executed",
@@ -13962,6 +16633,40 @@
           "bindings": [
             {
               "validator": "capability-status",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "dracoCompressionFactory",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "isKTX2Available",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -14032,6 +16737,40 @@
           "bindings": [
             {
               "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "meshQuantizationFactory",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "meshoptCompressionFactory",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -14165,8 +16904,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 55418,
-        "hash": "50e058af0aa5926a",
+        "bytes": 55555,
+        "hash": "7ae1cb003fc24969",
         "notes": [
           "Animation.play: no own descriptor on static",
           "GLTFAsset.destroy: no own descriptor on static",
@@ -14605,7 +17344,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1751"
+          "detail": "litRatio=0.1749"
         },
         {
           "validatorId": "resource-released",
@@ -14656,8 +17395,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55556,
-        "hash": "9e7c6cf1cab30e36",
+        "bytes": 55693,
+        "hash": "f5813873ba9c3917",
         "notes": [
           "Animation.play: no own descriptor on static",
           "GLTFAsset.destroy: no own descriptor on static",
@@ -15119,7 +17858,7 @@
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1913 assetUnits=11"
+          "detail": "held=3 leaked=0 reloaded=true litRatio=0.1911 assetUnits=11"
         }
       ],
       "scenarioProbe": null,
@@ -15181,8 +17920,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/gltf-skin.png",
-        "bytes": 17482,
-        "hash": "0af17437f7ef9d27"
+        "bytes": 17538,
+        "hash": "618367964e387751"
       },
       "assetDigests": [
         {
@@ -15234,22 +17973,27 @@
     {
       "id": "gltf-viewer",
       "result": "PASS",
-      "specFingerprint": "d0b257740b12",
-      "sourceFingerprint": "de5f1509aa4ecbfc",
+      "specFingerprint": "12776fd319de",
+      "sourceFingerprint": "5ec6cd20a56c7383",
       "candidateFingerprint": "7f3b89f6ac076cbf",
       "instrumentation": {
         "name": "cocosair.traced.js",
         "exports": 575,
-        "unitCount": 12,
-        "bytes": 54624,
-        "hash": "70060b7a899d8055",
+        "unitCount": 20,
+        "bytes": 55980,
+        "hash": "836e550fff14d79d",
         "notes": [
+          "AirTransmissionCapture.lateUpdate: no own descriptor on static",
+          "AirTransmissionCapture.mainCamera: no own descriptor on static",
+          "AirTransmissionCapture.onDisable: no own descriptor on static",
+          "AirTransmissionCapture.onEnable: no own descriptor on static",
+          "AirTransmissionCapture.sceneColor: no own descriptor on static",
           "GLTFAsset.destroy: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static"
         ],
-        "observed": 12,
-        "total": 12
+        "observed": 18,
+        "total": 20
       },
       "apiProof": [
         {
@@ -15264,6 +18008,91 @@
           "bindings": [
             {
               "validator": "material-property",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AirTransmissionCapture.lateUpdate",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 291,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AirTransmissionCapture.mainCamera",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 293,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AirTransmissionCapture.onDisable",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AirTransmissionCapture.onEnable",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "AirTransmissionCapture.sceneColor",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 2,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "prototype",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -15406,6 +18235,23 @@
           ]
         },
         {
+          "api": "TRANSMISSION_LAYER",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
           "api": "createAirApp",
           "proof": "verified",
           "state": "executed",
@@ -15417,6 +18263,40 @@
           "bindings": [
             {
               "validator": "scene-ready",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "defaultTransmissionVisibility",
+          "proof": "attested",
+          "state": "unresolved",
+          "calls": 0,
+          "reads": 0,
+          "via": null,
+          "mechanism": "unresolved",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
+              "passed": true,
+              "ok": true
+            }
+          ]
+        },
+        {
+          "api": "isTransmissionMaterial",
+          "proof": "verified",
+          "state": "executed",
+          "calls": 1,
+          "reads": 0,
+          "via": "call",
+          "mechanism": "export-wrapper",
+          "bound": true,
+          "bindings": [
+            {
+              "validator": "no-runtime-error",
               "passed": true,
               "ok": true
             }
@@ -15991,8 +18871,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 17,
-        "bytes": 55070,
-        "hash": "10c4ba4c71c9e1dc",
+        "bytes": 55207,
+        "hash": "328f340ef4b7808b",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -16160,7 +19040,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 169,
+          "calls": 183,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -16365,15 +19245,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0456"
+          "detail": "litRatio=0.0446"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/hello-cube.png",
-        "bytes": 7597,
-        "hash": "9956cd3dd83dc60e"
+        "bytes": 6280,
+        "hash": "1eccd732e843b189"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -16389,8 +19269,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 15,
-        "bytes": 54796,
-        "hash": "853544d8ffa73ed7",
+        "bytes": 54933,
+        "hash": "27cb393a086f6dcd",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -16760,8 +19640,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 56189,
-        "hash": "ad659a42fc5663c5",
+        "bytes": 56326,
+        "hash": "b59f1877d884a9e9",
         "notes": [
           "Input.getAllTouches: no own descriptor on static",
           "Input.getTouch: no own descriptor on static",
@@ -17344,8 +20224,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 55320,
-        "hash": "84126c986a7ba8a9",
+        "bytes": 55457,
+        "hash": "d4a8ebfc751aa892",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -17565,7 +20445,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 288,
+          "calls": 292,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -17802,8 +20682,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 26,
-        "bytes": 55996,
-        "hash": "62a46a09a80853c1",
+        "bytes": 56133,
+        "hash": "79f12f693ac96f01",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -18343,8 +21223,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 56139,
-        "hash": "026c9762824136a2",
+        "bytes": 56276,
+        "hash": "8a2f37fa65b7c88b",
         "notes": [
           "Light.onLoad: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
@@ -18689,7 +21569,7 @@
           "api": "renderer.scene.DirectionalLight.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 142,
+          "calls": 156,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -18837,8 +21717,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 24,
-        "bytes": 55775,
-        "hash": "5ec84f873cb48de4",
+        "bytes": 55912,
+        "hash": "372fa72e808f13cd",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -19028,7 +21908,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 193,
+          "calls": 195,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19369,8 +22249,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-point.png",
-        "bytes": 43343,
-        "hash": "1489da3c2f7a6e6c"
+        "bytes": 43012,
+        "hash": "ecc8adb320c4a5aa"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19386,8 +22266,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55974,
-        "hash": "8cb4bcd47a90a9fa",
+        "bytes": 56111,
+        "hash": "7766545ca662d384",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -19595,7 +22475,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 223,
+          "calls": 225,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -19954,8 +22834,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-sphere.png",
-        "bytes": 32647,
-        "hash": "6e43452eb12cb113"
+        "bytes": 32636,
+        "hash": "bbda44f6c49f4ad4"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -19971,8 +22851,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 45,
-        "bytes": 57797,
-        "hash": "6f9bcadcca2b178a",
+        "bytes": 57934,
+        "hash": "42ea98a4682b58ca",
         "notes": [
           "Light.baked: no own descriptor on static",
           "Light.color: no own descriptor on static",
@@ -20418,7 +23298,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 251,
+          "calls": 230,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -20843,12 +23723,12 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.5446"
+          "detail": "litRatio=0.5357"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.5503 assetUnits=9"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.5463 assetUnits=9"
         }
       ],
       "scenarioProbe": {
@@ -20985,8 +23865,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/light-spot.png",
-        "bytes": 15101,
-        "hash": "33b97cd2bf304768"
+        "bytes": 15473,
+        "hash": "64043bfffc7727c3"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -21002,8 +23882,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 37,
-        "bytes": 57995,
-        "hash": "a94420f6bc076945",
+        "bytes": 58132,
+        "hash": "e8e2c4f9756f4e7d",
         "notes": [
           "DirectionalLight.csmAdvancedOptions: no own descriptor on static",
           "DirectionalLight.csmLayerLambda: no own descriptor on static",
@@ -21858,8 +24738,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55500,
-        "hash": "480cb2b3ce5e753a",
+        "bytes": 55637,
+        "hash": "02fdaff46a7f0e2f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -22452,8 +25332,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 14,
-        "bytes": 54832,
-        "hash": "f08e8a6d7fea1bce",
+        "bytes": 54969,
+        "hash": "408859fd45a4bc16",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -22793,8 +25673,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 55016,
-        "hash": "af0f670eba1e32af",
+        "bytes": 55153,
+        "hash": "cdf81b504e8841ce",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -23170,8 +26050,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55694,
-        "hash": "52b0cf4f200376cd",
+        "bytes": 55831,
+        "hash": "a176a22ce302e165",
         "notes": [
           "Material.initDefault: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
@@ -23665,8 +26545,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 56469,
-        "hash": "5f807e45bf2d65dc",
+        "bytes": 56606,
+        "hash": "b266253754d2f241",
         "notes": [
           "Material.copy: no own descriptor on static",
           "Material.effectAsset: no own descriptor on static",
@@ -24293,8 +27173,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-ops.png",
-        "bytes": 6939,
-        "hash": "9972843a462ab127"
+        "bytes": 6954,
+        "hash": "c2ac278164b553ae"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -24310,8 +27190,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55686,
-        "hash": "81ebc6cf0a58df29",
+        "bytes": 55823,
+        "hash": "1ecdacdb2a9a1c93",
         "notes": [
           "GLTFAsset.instantiate: no own descriptor on static",
           "GLTFLoader.parseAsync: no own descriptor on static",
@@ -24806,8 +27686,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 54979,
-        "hash": "ea3a3f409f288987",
+        "bytes": 55116,
+        "hash": "d36f24b9f1656f80",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -24957,7 +27837,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 391,
+          "calls": 347,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -25158,15 +28038,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1127"
+          "detail": "litRatio=0.1126"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/material-unlit.png",
-        "bytes": 9652,
-        "hash": "f2bca2240993341b"
+        "bytes": 9721,
+        "hash": "4b47b66f8a403bef"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -25182,8 +28062,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55847,
-        "hash": "339cc0b77c4afd25",
+        "bytes": 55984,
+        "hash": "727bbfbe478098ca",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -25712,8 +28592,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56896,
-        "hash": "b36d9f96bdf85183",
+        "bytes": 57033,
+        "hash": "8bcb1b00a02cfc85",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -26423,8 +29303,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55510,
-        "hash": "a682f533df7364d7",
+        "bytes": 55647,
+        "hash": "dd1598195bcc30db",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -26879,8 +29759,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55537,
-        "hash": "5c01a1f272e8f2bc",
+        "bytes": 55674,
+        "hash": "f7ccda6d72b34453",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -27335,8 +30215,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55915,
-        "hash": "96fcb3936f327525",
+        "bytes": 56052,
+        "hash": "0ede96114c5e3e05",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -27862,8 +30742,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 62,
-        "bytes": 59472,
-        "hash": "ca58ce4af487a8de",
+        "bytes": 59609,
+        "hash": "f855dd52aec62cfd",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -29063,8 +31943,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55482,
-        "hash": "05f4f2f22fd6f107",
+        "bytes": 55619,
+        "hash": "9378db96d141111f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -29522,8 +32402,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55337,
-        "hash": "a5a4455d83c53e51",
+        "bytes": 55474,
+        "hash": "af4c7ab4f0ff24f8",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -29945,8 +32825,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55602,
-        "hash": "eb1e3148df9bde01",
+        "bytes": 55739,
+        "hash": "8b7539153ad1a938",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -30420,8 +33300,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 61,
-        "bytes": 60003,
-        "hash": "d579f18e02bcaf8f",
+        "bytes": 60140,
+        "hash": "044a2ef438acef57",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -31638,8 +34518,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 28,
-        "bytes": 56006,
-        "hash": "0964a5a2f2b46b55",
+        "bytes": 56143,
+        "hash": "3b6529a6e644acb7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -32232,8 +35112,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 56271,
-        "hash": "d17252ce8a5df74c",
+        "bytes": 56408,
+        "hash": "b7ecc7f616b8e022",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -32877,8 +35757,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55723,
-        "hash": "f69f7dc6c897a279",
+        "bytes": 55860,
+        "hash": "749df635373d37c5",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -33367,8 +36247,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 85,
-        "bytes": 62243,
-        "hash": "efb4538083d3287a",
+        "bytes": 62380,
+        "hash": "e744d853a754e79d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -34018,7 +36898,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1058,
+          "reads": 1052,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34035,7 +36915,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1058,
+          "reads": 1052,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34052,7 +36932,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1054,
+          "reads": 1048,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34069,7 +36949,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1056,
+          "reads": 1050,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34086,7 +36966,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1054,
+          "reads": 1048,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34103,7 +36983,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1054,
+          "reads": 1048,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34120,7 +37000,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1044,
+          "reads": 1038,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34137,7 +37017,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1040,
+          "reads": 1034,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -34154,7 +37034,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 1040,
+          "reads": 1034,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -35036,8 +37916,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 24,
-        "bytes": 55846,
-        "hash": "0d86588f7c97578b",
+        "bytes": 55983,
+        "hash": "794ecaa039560479",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -35544,8 +38424,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 56220,
-        "hash": "18cd01ec50a5b1f0",
+        "bytes": 56357,
+        "hash": "83c06418c31c525b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -36168,8 +39048,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 57,
-        "bytes": 59222,
-        "hash": "a0548e0ae6dc504b",
+        "bytes": 59359,
+        "hash": "86c12059a8584a68",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -37277,8 +40157,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55652,
-        "hash": "98dadded55ec5199",
+        "bytes": 55789,
+        "hash": "c4ec290c0beb4854",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -37776,8 +40656,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 25,
-        "bytes": 55961,
-        "hash": "49bb79d794ce98fc",
+        "bytes": 56098,
+        "hash": "1033ca87ddeb77bc",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -38301,8 +41181,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 33,
-        "bytes": 56537,
-        "hash": "6fd50b7b248f610a",
+        "bytes": 56674,
+        "hash": "b3cc0d1ced3fcb73",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -38972,8 +41852,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 55207,
-        "hash": "0c7103231bfd8ed7",
+        "bytes": 55344,
+        "hash": "654c800c22d264d4",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -39377,8 +42257,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 35,
-        "bytes": 56749,
-        "hash": "3e99aba9eecdfe69",
+        "bytes": 56886,
+        "hash": "95f7c29790b45d64",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -39851,7 +42731,7 @@
           "api": "math.Rect.w",
           "proof": "verified",
           "state": "executed",
-          "calls": 136,
+          "calls": 155,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -39936,7 +42816,7 @@
           "api": "math.Rect.z",
           "proof": "verified",
           "state": "executed",
-          "calls": 136,
+          "calls": 155,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -40085,8 +42965,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 35,
-        "bytes": 56989,
-        "hash": "ac9e809c584cee82",
+        "bytes": 57126,
+        "hash": "1c91239ea344950f",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -40811,8 +43691,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 47,
-        "bytes": 57934,
-        "hash": "36a746e6111b7421",
+        "bytes": 58071,
+        "hash": "23e6ec637c233924",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -41719,8 +44599,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 32,
-        "bytes": 56576,
-        "hash": "056e12cf04fb906c",
+        "bytes": 56713,
+        "hash": "ed2f4bf24dc37e03",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -42387,8 +45267,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55727,
-        "hash": "ef8ee171f99dffed",
+        "bytes": 55864,
+        "hash": "5697da82a5f3bd09",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -42878,8 +45758,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 69,
-        "bytes": 60454,
-        "hash": "538bdaa81314cd52",
+        "bytes": 60591,
+        "hash": "71edfe4f891df7e4",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -44240,8 +47120,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55514,
-        "hash": "68712a9ac2973802",
+        "bytes": 55651,
+        "hash": "21c3ae3c411788da",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -44701,8 +47581,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 29,
-        "bytes": 56273,
-        "hash": "4955f0dd4c9b84d5",
+        "bytes": 56410,
+        "hash": "1b51889989d81f45",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -45302,8 +48182,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 27,
-        "bytes": 56051,
-        "hash": "14582512b634b533",
+        "bytes": 56188,
+        "hash": "a56e7cabd9c1b4fb",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -45864,8 +48744,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55335,
-        "hash": "b3837355b72acc9b",
+        "bytes": 55472,
+        "hash": "32e4552e90be6d63",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -46287,8 +49167,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55680,
-        "hash": "02b52e5859b532dc",
+        "bytes": 55817,
+        "hash": "f9d034c682739656",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -46778,8 +49658,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 44,
-        "bytes": 58178,
-        "hash": "1ee01abcc19fd72b",
+        "bytes": 58315,
+        "hash": "7487ea9260d928e1",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -47482,7 +50362,7 @@
           "api": "math.Vec3.subtract",
           "proof": "verified",
           "state": "executed",
-          "calls": 181,
+          "calls": 182,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -47710,8 +50590,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55560,
-        "hash": "60de3149baeca0d8",
+        "bytes": 55697,
+        "hash": "e2853ad8e806bfc6",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -48190,8 +51070,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 56357,
-        "hash": "2ea66f7d7d302e48",
+        "bytes": 56494,
+        "hash": "fc9eaaca380812ae",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -48810,8 +51690,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 70,
-        "bytes": 60103,
-        "hash": "c3496c4f316bb8f1",
+        "bytes": 60240,
+        "hash": "4a5f0d483f60ced5",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -49363,7 +52243,7 @@
           "api": "math.Vec3.dot",
           "proof": "verified",
           "state": "executed",
-          "calls": 161,
+          "calls": 145,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -49805,7 +52685,7 @@
           "api": "math.Vec3.toArray",
           "proof": "verified",
           "state": "executed",
-          "calls": 311,
+          "calls": 279,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -49925,7 +52805,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 2646,
+          "reads": 2390,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -49942,7 +52822,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 2646,
+          "reads": 2390,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -49959,7 +52839,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 2646,
+          "reads": 2390,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -50202,7 +53082,7 @@
           {
             "name": "Vec3.random",
             "ok": true,
-            "detail": "1.9021353065938535,0.29524019609027835,-0.5428761387477636"
+            "detail": "0.5504495173664675,-1.2862008866741004,1.4292279761989621"
           },
           {
             "name": "Vec3.transformMat4Normal",
@@ -50326,8 +53206,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55328,
-        "hash": "8558e00b618c9e11",
+        "bytes": 55465,
+        "hash": "eedd21c9ddbdd25d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -50749,8 +53629,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 76,
-        "bytes": 61207,
-        "hash": "b7804e9b4f611477",
+        "bytes": 61344,
+        "hash": "54978b3cc37a8475",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -52227,8 +55107,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55652,
-        "hash": "b467b63eb8f35030",
+        "bytes": 55789,
+        "hash": "5956164e70063be8",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -52726,8 +55606,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 56430,
-        "hash": "9cf2cba62d25cc9a",
+        "bytes": 56567,
+        "hash": "e8a57c5344f60622",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -53340,8 +56220,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55737,
-        "hash": "8f6e442ceb4ae3d3",
+        "bytes": 55874,
+        "hash": "f9c79ae350ea9362",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -53835,8 +56715,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 55229,
-        "hash": "2ed24240bd2b0fc7",
+        "bytes": 55366,
+        "hash": "8b0cc08a7fa2f8c4",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -54039,7 +56919,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 199,
+          "calls": 198,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -54230,8 +57110,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-cylinder.png",
-        "bytes": 10824,
-        "hash": "3ac1850b740e1599"
+        "bytes": 10795,
+        "hash": "a799789fbae1f5b8"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -54247,8 +57127,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 37,
-        "bytes": 57089,
-        "hash": "e53171e481840ca5",
+        "bytes": 57226,
+        "hash": "24adafc16632b224",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -55001,8 +57881,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55653,
-        "hash": "fada4de997d0682b",
+        "bytes": 55790,
+        "hash": "aabe3a41c1d12d38",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -55479,8 +58359,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 55053,
-        "hash": "695d072db06b7029",
+        "bytes": 55190,
+        "hash": "aba70fd007846fa4",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -55870,8 +58750,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55302,
-        "hash": "0c015dd412bf8aee",
+        "bytes": 55439,
+        "hash": "1f40a3a66e0f926b",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -56074,7 +58954,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 198,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -56282,8 +59162,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-plane.png",
-        "bytes": 16801,
-        "hash": "d17aad9ac21c969d"
+        "bytes": 16883,
+        "hash": "9d3e4ec08797262f"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -56299,8 +59179,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55446,
-        "hash": "0405e9a8b00a15fa",
+        "bytes": 55583,
+        "hash": "c8f66f2446efc3fa",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -56755,8 +59635,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 55221,
-        "hash": "1c572336a930b588",
+        "bytes": 55358,
+        "hash": "3b87b163d19b7bfc",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -57143,15 +60023,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0494"
+          "detail": "litRatio=0.0493"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-sphere.png",
-        "bytes": 17182,
-        "hash": "a441025f5a7d6df5"
+        "bytes": 17246,
+        "hash": "407a40bc98d03526"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -57167,8 +60047,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 55217,
-        "hash": "11a1ee7ecce85a77",
+        "bytes": 55354,
+        "hash": "055c9a6ff14015df",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -57555,15 +60435,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0427"
+          "detail": "litRatio=0.0426"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/mesh-torus.png",
-        "bytes": 17511,
-        "hash": "a883912cd98fd545"
+        "bytes": 17418,
+        "hash": "238407557f85e512"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -57579,8 +60459,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 50,
-        "bytes": 59761,
-        "hash": "a01e6f2e2a3e630e",
+        "bytes": 59898,
+        "hash": "eaffb50cba78aac3",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -58706,8 +61586,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 45,
-        "bytes": 58021,
-        "hash": "1c6b46348bd1d641",
+        "bytes": 58158,
+        "hash": "39802622ea5f8433",
         "notes": [
           "Animation.getState: no own descriptor on static",
           "Animation.pause: no own descriptor on static",
@@ -59628,22 +62508,22 @@
           {
             "name": "animation-clock-started",
             "ok": true,
-            "detail": "tA=0.237（8s 内动画时钟未起步）"
+            "detail": "tA=0.253（8s 内动画时钟未起步）"
           },
           {
             "name": "independent-animation-clocks",
             "ok": true,
-            "detail": "tA=0.616 tB=1.707 ratio=2.77"
+            "detail": "tA=0.600 tB=1.706 ratio=2.84"
           },
           {
             "name": "pause-freezes-time",
             "ok": true,
-            "detail": "paused=1.707 after320ms=1.707"
+            "detail": "paused=1.706 after320ms=1.706"
           },
           {
             "name": "resume-advances-time",
             "ok": true,
-            "detail": "still=1.707 resumed=2.375"
+            "detail": "still=1.706 resumed=2.373"
           },
           {
             "name": "instanceB-disposed",
@@ -59653,7 +62533,7 @@
           {
             "name": "charA-unaffected-by-B-release",
             "ok": true,
-            "detail": "tA 1.504 → 1.904"
+            "detail": "tA 1.503 → 1.919"
           }
         ],
         "state": {
@@ -59671,8 +62551,8 @@
           },
           "timeline": {
             "clipName": "animation_0",
-            "tA": 1.9037000000029798,
-            "tB": 2.3747999999970197,
+            "tA": 1.9191999999955287,
+            "tB": 2.3729999999850984,
             "charBValid": false,
             "charAValid": true,
             "clicks": 0
@@ -59743,8 +62623,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/model-character-interaction.png",
-        "bytes": 9566,
-        "hash": "f39ee59e558cf7e5"
+        "bytes": 9618,
+        "hash": "5a8506ce8d1ac71a"
       },
       "assetDigests": [
         {
@@ -59803,8 +62683,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 18,
-        "bytes": 55209,
-        "hash": "0cf62913e791c219",
+        "bytes": 55346,
+        "hash": "77d29557e9ce48d8",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -60217,8 +63097,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 24,
-        "bytes": 55813,
-        "hash": "f5b1ebbd58431a9c",
+        "bytes": 55950,
+        "hash": "a9518e65e4b93fc8",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -60737,8 +63617,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55537,
-        "hash": "f5df7fb56053bd42",
+        "bytes": 55674,
+        "hash": "b408d917308d96b7",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -61196,8 +64076,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 33,
-        "bytes": 56408,
-        "hash": "c06b991186b1dd8b",
+        "bytes": 56545,
+        "hash": "27962360370d7ba6",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -61871,8 +64751,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 81,
-        "bytes": 60672,
-        "hash": "339de771f57a253d",
+        "bytes": 60809,
+        "hash": "7be8d55cb5a106f2",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -62231,7 +65111,7 @@
           "api": "Node.clearNodeArray",
           "proof": "verified",
           "state": "executed",
-          "calls": 144,
+          "calls": 145,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -62265,7 +65145,7 @@
           "api": "Node.eulerAngles",
           "proof": "verified",
           "state": "executed",
-          "calls": 145,
+          "calls": 146,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62487,7 +65367,7 @@
           "api": "Node.hasChangedFlags",
           "proof": "verified",
           "state": "executed",
-          "calls": 1643,
+          "calls": 1654,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62504,7 +65384,7 @@
           "api": "Node.invalidateChildren",
           "proof": "verified",
           "state": "executed",
-          "calls": 175,
+          "calls": 176,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62572,7 +65452,7 @@
           "api": "Node.layer",
           "proof": "verified",
           "state": "executed",
-          "calls": 868,
+          "calls": 874,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62693,7 +65573,7 @@
           "api": "Node.resetHasChangedFlags",
           "proof": "verified",
           "state": "executed",
-          "calls": 144,
+          "calls": 145,
           "reads": 0,
           "via": "call",
           "mechanism": "static",
@@ -62796,7 +65676,7 @@
           "api": "Node.scene",
           "proof": "verified",
           "state": "executed",
-          "calls": 595,
+          "calls": 599,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -62864,7 +65744,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 144,
+          "calls": 145,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63000,7 +65880,7 @@
           "api": "Node.updateWorldTransform",
           "proof": "verified",
           "state": "executed",
-          "calls": 607,
+          "calls": 611,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63034,7 +65914,7 @@
           "api": "Node.worldMatrix",
           "proof": "verified",
           "state": "executed",
-          "calls": 146,
+          "calls": 147,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -63481,7 +66361,7 @@
           {
             "name": "node-read:Node.uuid",
             "ok": true,
-            "detail": "string:Node.814"
+            "detail": "string:Node.722"
           },
           {
             "name": "node-read:Node.children",
@@ -63653,8 +66533,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-hierarchy.png",
-        "bytes": 5742,
-        "hash": "d4e9c4092f41f56d"
+        "bytes": 5724,
+        "hash": "19c98b233c553ed0"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -63670,8 +66550,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55548,
-        "hash": "c66cb92414203b0a",
+        "bytes": 55685,
+        "hash": "7b001d90d9c34d3e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -64129,8 +67009,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55284,
-        "hash": "bdcfa4a3f6903442",
+        "bytes": 55421,
+        "hash": "6978cfce4142e3e4",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -64334,7 +67214,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 202,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -64537,15 +67417,15 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0574"
+          "detail": "litRatio=0.0572"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/node-scale.png",
-        "bytes": 8164,
-        "hash": "049b75341e551691"
+        "bytes": 8091,
+        "hash": "05366d42dfeef0b7"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -64561,8 +67441,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 19,
-        "bytes": 55316,
-        "hash": "a5dd0ca0e2d6a115",
+        "bytes": 55453,
+        "hash": "f4641247fd94557d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -64985,8 +67865,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 34,
-        "bytes": 56887,
-        "hash": "e34d53a7e48c7342",
+        "bytes": 57024,
+        "hash": "b8770327dcf90348",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -65684,8 +68564,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/particle-2d-basic.png",
-        "bytes": 41117,
-        "hash": "42dccb8189fb9cd9"
+        "bytes": 42561,
+        "hash": "17ad0d6e7a21d2ca"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -65701,8 +68581,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56799,
-        "hash": "1b1cf548dff2b0fb",
+        "bytes": 56936,
+        "hash": "5244005b48ad0c05",
         "notes": [
           "Collider2D.TYPE: no own descriptor on static",
           "Collider2D.TYPE: no own descriptor on prototype",
@@ -66434,8 +69314,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 33,
-        "bytes": 56438,
-        "hash": "6a310057941cedd1",
+        "bytes": 56575,
+        "hash": "1acddfbee9763b70",
         "notes": [
           "Collider2D.apply: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
@@ -66524,7 +69404,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 288,
+          "reads": 279,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -66592,7 +69472,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 6628,
+          "reads": 6421,
           "via": "read",
           "mechanism": "export-object",
           "bound": true,
@@ -66745,7 +69625,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 293,
+          "reads": 284,
           "via": "read",
           "mechanism": "export-object",
           "bound": true,
@@ -66762,7 +69642,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 289,
+          "reads": 280,
           "via": "read",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -67121,8 +70001,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 69,
-        "bytes": 61995,
-        "hash": "97e1de9acc225cae",
+        "bytes": 62132,
+        "hash": "9906a771fcd9e96d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -67394,7 +70274,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 306,
+          "calls": 294,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67430,7 +70310,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 289,
+          "reads": 277,
           "via": "read",
           "mechanism": "export-object",
           "bound": true,
@@ -67480,8 +70360,8 @@
           "api": "geometry.Ray",
           "proof": "verified",
           "state": "executed",
-          "calls": 3718,
-          "reads": 3718,
+          "calls": 3562,
+          "reads": 3562,
           "via": "call",
           "mechanism": "frozen-namespace-class",
           "bound": true,
@@ -67514,7 +70394,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 2092,
+          "calls": 2008,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -67531,7 +70411,7 @@
           "api": "math.Quat",
           "proof": "verified",
           "state": "executed",
-          "calls": 286,
+          "calls": 274,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Quat",
@@ -67549,7 +70429,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 1166,
+          "calls": 1118,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -67604,7 +70484,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 1145,
+          "reads": 1097,
           "via": "call",
           "mechanism": "alias:Collider",
           "observedVia": "Collider",
@@ -67743,7 +70623,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 858,
+          "reads": 822,
           "via": "call",
           "mechanism": "alias:PhysicsRayResult",
           "observedVia": "PhysicsRayResult",
@@ -67761,7 +70641,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 1,
-          "reads": 1435,
+          "reads": 1375,
           "via": "call",
           "mechanism": "alias:PhysicsSystem",
           "observedVia": "PhysicsSystem",
@@ -67812,7 +70692,7 @@
           "api": "physics.PhysicsSystem.lineStripCast",
           "proof": "verified",
           "state": "executed",
-          "calls": 286,
+          "calls": 274,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67863,7 +70743,7 @@
           "api": "physics.PhysicsSystem.raycast",
           "proof": "verified",
           "state": "executed",
-          "calls": 3146,
+          "calls": 3014,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67880,7 +70760,7 @@
           "api": "physics.PhysicsSystem.raycastClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 858,
+          "calls": 822,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67948,7 +70828,7 @@
           "api": "physics.PhysicsSystem.sweepBox",
           "proof": "verified",
           "state": "executed",
-          "calls": 286,
+          "calls": 274,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -67965,7 +70845,7 @@
           "api": "physics.PhysicsSystem.sweepBoxClosest",
           "proof": "verified",
           "state": "executed",
-          "calls": 286,
+          "calls": 274,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -68257,7 +71137,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 286,
+          "reads": 274,
           "via": "read",
           "mechanism": "data-property",
           "bound": true,
@@ -68460,8 +71340,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 56930,
-        "hash": "d55ddb60041b21b4",
+        "bytes": 57067,
+        "hash": "1c79a1327ea7dedc",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -68706,7 +71586,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 217,
+          "calls": 201,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -69100,8 +71980,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-3d-collision.png",
-        "bytes": 10952,
-        "hash": "68bcd31186997969"
+        "bytes": 10992,
+        "hash": "94ac629cd34fbfc6"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -69117,8 +71997,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 41,
-        "bytes": 57594,
-        "hash": "230042285494abc1",
+        "bytes": 57731,
+        "hash": "87abfdde35a280bb",
         "notes": [
           "Camera.screenPointToRay: no own descriptor on static",
           "EventTouch.getLocation: no own descriptor on static",
@@ -69465,7 +72345,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 302,
+          "calls": 289,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -70011,8 +72891,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/physics-interaction.png",
-        "bytes": 12340,
-        "hash": "981fccfd306b47bf"
+        "bytes": 12371,
+        "hash": "fed63e7b6f3effd2"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -70028,8 +72908,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55575,
-        "hash": "023a77ae158f1e1e",
+        "bytes": 55712,
+        "hash": "7fd69fdee36b42c0",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -70501,8 +73381,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 21,
-        "bytes": 55446,
-        "hash": "0405e9a8b00a15fa",
+        "bytes": 55583,
+        "hash": "c8f66f2446efc3fa",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -70957,8 +73837,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55691,
-        "hash": "031731f9c6886b17",
+        "bytes": 55828,
+        "hash": "08691baebcc8d3b9",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -71430,8 +74310,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 41,
-        "bytes": 57692,
-        "hash": "e134a276d62f246a",
+        "bytes": 57829,
+        "hash": "b930f0865e355698",
         "notes": [
           "Animation.play: no own descriptor on static",
           "AnimationClip.wrapMode: no own descriptor on static",
@@ -71904,7 +74784,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 263,
+          "calls": 258,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -72074,7 +74954,7 @@
           "api": "isValid",
           "proof": "verified",
           "state": "executed",
-          "calls": 678,
+          "calls": 670,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -72246,7 +75126,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.9998"
+          "detail": "litRatio=0.9994"
         },
         {
           "validatorId": "interaction:button-click",
@@ -72534,8 +75414,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55704,
-        "hash": "ac37dd2a96443954",
+        "bytes": 55841,
+        "hash": "ae09ddc63518a57c",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -73021,8 +75901,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/profiler-overlay.png",
-        "bytes": 19256,
-        "hash": "b8c63507afefb011"
+        "bytes": 19076,
+        "hash": "78c90b6022190fe1"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -73038,8 +75918,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 32,
-        "bytes": 56520,
-        "hash": "c12aa0bde01654f0",
+        "bytes": 56657,
+        "hash": "a79093d0d90ce229",
         "notes": [
           "Camera.worldToScreen: no own descriptor on static",
           "Component.destroy: no own descriptor on static",
@@ -73333,7 +76213,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 311,
+          "calls": 251,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -73768,7 +76648,7 @@
           {
             "name": "p4-rendertarget-visible",
             "ok": true,
-            "detail": "quad non-bg=3205px warm(快照内容)=2421px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
+            "detail": "quad non-bg=3203px warm(快照内容)=2417px rep=[195,45,30,255] worldToScreen=[46.46061552573158,231.91256908686654,0.9816176954968052]"
           },
           {
             "name": "p5-rt-resize-readback",
@@ -73793,7 +76673,7 @@
           {
             "name": "p5-resized-rt-still-renders",
             "ok": true,
-            "detail": "quad@128 non-bg=3881px warm=2832px rep=[19,28,49,255] rect={\"x\":0,\"y\":0,\"w\":1,\"h\":1}"
+            "detail": "quad@128 non-bg=3881px warm=2831px rep=[19,28,49,255] rect={\"x\":0,\"y\":0,\"w\":1,\"h\":1}"
           }
         ],
         "state": {
@@ -73813,8 +76693,8 @@
             255
           ],
           "quadRegion": {
-            "count": 3205,
-            "warm": 2421,
+            "count": 3203,
+            "warm": 2417,
             "pixel": [
               195,
               45,
@@ -73824,7 +76704,7 @@
           },
           "quadRegionAfterRTResize": {
             "count": 3881,
-            "warm": 2832,
+            "warm": 2831,
             "pixel": [
               19,
               28,
@@ -73857,8 +76737,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/render-composite.png",
-        "bytes": 8823,
-        "hash": "b883a836c6658b02"
+        "bytes": 8855,
+        "hash": "99edbf1370d508eb"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -73874,8 +76754,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 16,
-        "bytes": 55050,
-        "hash": "30fa51cd3a46db7c",
+        "bytes": 55187,
+        "hash": "6010bb66ae5827e4",
         "notes": [
           "GLTFAsset.destroy: no own descriptor on static",
           "GLTFAsset.instantiate: no own descriptor on static",
@@ -74283,8 +77163,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 55487,
-        "hash": "7372f88f618a93d2",
+        "bytes": 55624,
+        "hash": "3de04fff4d6432e0",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -74732,8 +77612,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 29,
-        "bytes": 56573,
-        "hash": "9ecfc985806d61f5",
+        "bytes": 56710,
+        "hash": "dd915f0ee1db299d",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -75011,7 +77891,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 309,
+          "reads": 313,
           "via": "read",
           "mechanism": "instance-data-property",
           "bound": true,
@@ -75346,8 +78226,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 56283,
-        "hash": "02d5d37a8b35a4a9",
+        "bytes": 56420,
+        "hash": "4c3a4a6a09cf6b06",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -75679,7 +78559,7 @@
           "api": "Scene.globals",
           "proof": "verified",
           "state": "executed",
-          "calls": 296,
+          "calls": 382,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -75971,8 +78851,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 32,
-        "bytes": 56348,
-        "hash": "36d83c9a81ade943",
+        "bytes": 56485,
+        "hash": "0db35ceae5093fc2",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -76407,7 +79287,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 0,
-          "reads": 23,
+          "reads": 21,
           "via": "read",
           "mechanism": "export-object",
           "bound": true,
@@ -76663,7 +79543,7 @@
           {
             "name": "gen1-running",
             "ok": true,
-            "detail": "updates=18"
+            "detail": "updates=17"
           },
           {
             "name": "gen1-lifecycle-once",
@@ -76673,7 +79553,7 @@
           {
             "name": "gen2-running",
             "ok": true,
-            "detail": "updates=27"
+            "detail": "updates=29"
           },
           {
             "name": "autoReleaseAssets-recorded",
@@ -76683,7 +79563,7 @@
           {
             "name": "gen1-frozen",
             "ok": true,
-            "detail": "gen1 updates 18 → 18 after switch"
+            "detail": "gen1 updates 17 → 17 after switch"
           },
           {
             "name": "gen1-scene-destroyed",
@@ -76703,7 +79583,7 @@
           {
             "name": "gen2-frozen",
             "ok": true,
-            "detail": "gen2 updates 45 → 45"
+            "detail": "gen2 updates 47 → 47"
           },
           {
             "name": "gen2-scene-destroyed",
@@ -76729,7 +79609,7 @@
             {
               "gen": 1,
               "variant": "A",
-              "updates": 18,
+              "updates": 17,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -76737,7 +79617,7 @@
             {
               "gen": 2,
               "variant": "B",
-              "updates": 45,
+              "updates": 47,
               "clicks": 0,
               "onDisable": 1,
               "onDestroy": 1
@@ -76745,7 +79625,7 @@
             {
               "gen": 3,
               "variant": "A",
-              "updates": 44,
+              "updates": 43,
               "clicks": 0,
               "onDisable": 0,
               "onDestroy": 0
@@ -76758,8 +79638,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/scene-switch-reentry.png",
-        "bytes": 10463,
-        "hash": "9fd7546b90c2aebf"
+        "bytes": 10468,
+        "hash": "bc30480631539e51"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -76775,8 +79655,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 33,
-        "bytes": 56695,
-        "hash": "cd3f62d6efcc5107",
+        "bytes": 56832,
+        "hash": "eb7d1f77709359de",
         "notes": [
           "EffectAsset.combinations: no own descriptor on static",
           "EffectAsset.combinations: no own descriptor on prototype",
@@ -77476,17 +80356,17 @@
           {
             "name": "gradient-horizontal",
             "ok": true,
-            "detail": "left=[164,79,117,255]（偏红）right=[112,96,173,255]（偏蓝）"
+            "detail": "left=[164,79,117,255]（偏红）right=[112,96,172,255]（偏蓝）"
           },
           {
             "name": "uniform-vec4-colorA",
             "ok": true,
-            "detail": "left after colorA=green: [45,175,129,255]"
+            "detail": "left after colorA=green: [45,174,128,255]"
           },
           {
             "name": "time-animation-frame-diff",
             "ok": true,
-            "detail": "maxDiff=4"
+            "detail": "maxDiff=3"
           },
           {
             "name": "uniform-float-freeze",
@@ -77507,36 +80387,36 @@
             "right": [
               112,
               96,
-              173,
+              172,
               255
             ]
           },
           "afterColorA": [
             45,
-            175,
-            129,
+            174,
+            128,
             255
           ],
           "animDiff": {
             "d0": [
-              38,
-              121,
-              116,
+              37,
+              120,
+              115,
               255
             ],
             "d1": [
-              37,
+              36,
               117,
-              113,
+              112,
               255
             ],
             "d2": [
               37,
-              117,
+              118,
               113,
               255
             ],
-            "maxDiff": 4
+            "maxDiff": 3
           },
           "frozen": {
             "f0": [
@@ -77558,8 +80438,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-custom-gradient.png",
-        "bytes": 6638,
-        "hash": "39fc2ab9c830474a"
+        "bytes": 6673,
+        "hash": "592277d5b4790dad"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -77575,8 +80455,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 31,
-        "bytes": 56367,
-        "hash": "bb2192191a9b988f",
+        "bytes": 56504,
+        "hash": "2d456203b4b81e2e",
         "notes": [
           "EffectAsset.destroy: no own descriptor on static",
           "EffectAsset.onLoaded: no own descriptor on static",
@@ -77836,7 +80716,7 @@
           "api": "Material.setProperty",
           "proof": "verified",
           "state": "executed",
-          "calls": 275,
+          "calls": 274,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -78277,8 +81157,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/shader-dissolve.png",
-        "bytes": 7361,
-        "hash": "de3bd81550cf484b"
+        "bytes": 7273,
+        "hash": "ef75ed17e922c325"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -78294,8 +81174,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 54,
-        "bytes": 59847,
-        "hash": "22cd683a342580a4",
+        "bytes": 59984,
+        "hash": "04b669635afd605c",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Node.addChild: no own descriptor on static",
@@ -78481,7 +81361,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 434,
+          "calls": 410,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -79345,20 +82225,20 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.0651"
+          "detail": "litRatio=0.0643"
         },
         {
           "validatorId": "resource-released",
           "state": "PASS",
-          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0644 assetUnits=10"
+          "detail": "held=4 leaked=0 reloaded=true litRatio=0.0635 assetUnits=10"
         }
       ],
       "scenarioProbe": null,
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/skinned-animation.png",
-        "bytes": 6291,
-        "hash": "87429b85fa41c8b7"
+        "bytes": 6248,
+        "hash": "d44168a9116b95db"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -79374,8 +82254,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 9,
-        "bytes": 54307,
-        "hash": "c5634311dd011a91",
+        "bytes": 54444,
+        "hash": "c155d0e58170648b",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static"
@@ -79618,8 +82498,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55603,
-        "hash": "4e5fcdb26b1098ee",
+        "bytes": 55740,
+        "hash": "62451e1ca9235baa",
         "notes": [
           "Material.destroy: no own descriptor on static",
           "Mesh.destroy: no own descriptor on static",
@@ -80127,8 +83007,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/static-model.png",
-        "bytes": 12049,
-        "hash": "a87e01734676ac45"
+        "bytes": 12090,
+        "hash": "3979da3dfe400b2d"
       },
       "assetDigests": [
         {
@@ -80152,8 +83032,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 27,
-        "bytes": 56050,
-        "hash": "4157278bb9b97934",
+        "bytes": 56187,
+        "hash": "fd647b4066290d32",
         "notes": [
           "AudioClip.getDuration: no own descriptor on static",
           "AudioSource.play: no own descriptor on static",
@@ -80847,8 +83727,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 23,
-        "bytes": 55569,
-        "hash": "cd53d2731808e0e2",
+        "bytes": 55706,
+        "hash": "9ca3b3b97faf6d9e",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -81425,8 +84305,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 40,
-        "bytes": 57538,
-        "hash": "11a8c8cedd929279",
+        "bytes": 57675,
+        "hash": "20e54eff772ab4bc",
         "notes": [
           "Material.destroy: no own descriptor on static",
           "Material.initialize: no own descriptor on static",
@@ -82206,7 +85086,7 @@
         {
           "validatorId": "visible-frame",
           "state": "PASS",
-          "detail": "litRatio=0.1003"
+          "detail": "litRatio=0.1004"
         },
         {
           "validatorId": "resource-released",
@@ -82235,8 +85115,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 56509,
-        "hash": "e3e9b765124820c3",
+        "bytes": 56646,
+        "hash": "f849faf1136b7048",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -82863,8 +85743,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 22,
-        "bytes": 55665,
-        "hash": "c9d487fc722d9165",
+        "bytes": 55802,
+        "hash": "36d88e997ad131c2",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -83348,8 +86228,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 48,
-        "bytes": 58339,
-        "hash": "ee5c1ef3339d1407",
+        "bytes": 58476,
+        "hash": "dbf7eb2c1765daec",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -83797,7 +86677,7 @@
           "api": "TiledLayer.isCullingDirty",
           "proof": "verified",
           "state": "executed",
-          "calls": 533,
+          "calls": 535,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -83865,7 +86745,7 @@
           "api": "TiledMap.getLayers",
           "proof": "verified",
           "state": "executed",
-          "calls": 576,
+          "calls": 578,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84339,8 +87219,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 14,
-        "bytes": 54821,
-        "hash": "6f80b47425fb18ff",
+        "bytes": 54958,
+        "hash": "a1537d2ea55bf6cb",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -84440,7 +87320,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 227,
+          "calls": 228,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84457,7 +87337,7 @@
           "api": "Node.setRotationFromEuler",
           "proof": "verified",
           "state": "executed",
-          "calls": 225,
+          "calls": 226,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84474,7 +87354,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 223,
+          "calls": 224,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -84542,7 +87422,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 451,
+          "calls": 453,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -84675,8 +87555,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/transform.png",
-        "bytes": 7162,
-        "hash": "be546cd1711aa96c"
+        "bytes": 7050,
+        "hash": "bb06dbbca4a1860d"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -84692,8 +87572,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 59,
-        "bytes": 58593,
-        "hash": "4d87277bdff15cc7",
+        "bytes": 58730,
+        "hash": "f177e4a01f36599d",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.setPosition: no own descriptor on static",
@@ -84841,7 +87721,7 @@
           "api": "Node.setPosition",
           "proof": "verified",
           "state": "executed",
-          "calls": 108,
+          "calls": 106,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85046,7 +87926,7 @@
           "api": "Tween.getTarget",
           "proof": "verified",
           "state": "executed",
-          "calls": 88,
+          "calls": 86,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85625,7 +88505,7 @@
           "api": "TweenSystem.update",
           "proof": "verified",
           "state": "executed",
-          "calls": 528,
+          "calls": 524,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -85851,7 +88731,7 @@
           {
             "name": "pause-freezes",
             "ok": true,
-            "detail": "0.5675999999977648"
+            "detail": "0.5256000000089407"
           },
           {
             "name": "resume-reaches-end",
@@ -85974,7 +88854,7 @@
       "artifact": {
         "path": "docs/evidence/examples/tween-basic.png",
         "bytes": 5605,
-        "hash": "25bcfb55e04ed5b7"
+        "hash": "71fdefdbb0786cb6"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -85990,8 +88870,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 17,
-        "bytes": 55447,
-        "hash": "2be68e284b0be5ce",
+        "bytes": 55584,
+        "hash": "40545578d405cc9a",
         "notes": [
           "Label.onDestroy: no own descriptor on static",
           "Sprite.onDestroy: no own descriptor on static",
@@ -86424,8 +89304,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 30,
-        "bytes": 56019,
-        "hash": "e40908c014ff96ec",
+        "bytes": 56156,
+        "hash": "7fd58ea49312a5a5",
         "notes": [
           "AssetManager.assets: no own descriptor on static",
           "AssetManager.assets: no own descriptor on prototype",
@@ -87130,8 +90010,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 96,
-        "bytes": 62351,
-        "hash": "b31f396a81a9a560",
+        "bytes": 62488,
+        "hash": "342848900f6797e0",
         "notes": [
           "EditBox.focus: no own descriptor on static",
           "EditBox.isFocused: no own descriptor on static",
@@ -87982,7 +90862,7 @@
           "api": "Node.setScale",
           "proof": "verified",
           "state": "executed",
-          "calls": 336,
+          "calls": 335,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -88527,7 +91407,7 @@
           "api": "UIRenderer.color",
           "proof": "verified",
           "state": "executed",
-          "calls": 18927,
+          "calls": 18871,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -88544,7 +91424,7 @@
           "api": "UIRenderer.customMaterial",
           "proof": "verified",
           "state": "executed",
-          "calls": 6595,
+          "calls": 6575,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -88629,7 +91509,7 @@
           "api": "UIRenderer.postUpdateAssembler",
           "proof": "verified",
           "state": "executed",
-          "calls": 9766,
+          "calls": 9737,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -89201,8 +92081,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/ui-components.png",
-        "bytes": 18477,
-        "hash": "5de2f9a1c7f84641"
+        "bytes": 18481,
+        "hash": "441a26be64f96a1b"
       },
       "assetDigests": [],
       "nodeCount": 0,
@@ -89218,8 +92098,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 49,
-        "bytes": 58107,
-        "hash": "c26ac75763d1a685",
+        "bytes": 58244,
+        "hash": "0e087184154f5aa7",
         "notes": [
           "Node.addChild: no own descriptor on static",
           "Node.addComponent: no own descriptor on static",
@@ -89446,7 +92326,7 @@
           "api": "Node.getComponent",
           "proof": "verified",
           "state": "executed",
-          "calls": 1657,
+          "calls": 1641,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -89550,7 +92430,7 @@
           "proof": "verified",
           "state": "executed",
           "calls": 12,
-          "reads": 3094,
+          "reads": 3062,
           "via": "call",
           "mechanism": "export-wrapper",
           "bound": true,
@@ -89566,7 +92446,7 @@
           "api": "UITransform.convertToWorldSpaceAR",
           "proof": "verified",
           "state": "executed",
-          "calls": 1528,
+          "calls": 1512,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -90060,7 +92940,7 @@
           "api": "math.Vec3",
           "proof": "verified",
           "state": "executed",
-          "calls": 3056,
+          "calls": 3024,
           "reads": 0,
           "via": "call",
           "mechanism": "alias:Vec3",
@@ -90230,8 +93110,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 20,
-        "bytes": 55351,
-        "hash": "4045906bacc462c7",
+        "bytes": 55488,
+        "hash": "facec9b9be4cae93",
         "notes": [
           "Material.initialize: no own descriptor on static",
           "Material.setProperty: no own descriptor on static",
@@ -90669,8 +93549,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56881,
-        "hash": "340ff0bed9cad394",
+        "bytes": 57018,
+        "hash": "d45183a3b0b31461",
         "notes": [
           "EventHandler.component: no own descriptor on static",
           "EventHandler.component: no own descriptor on prototype",
@@ -90733,7 +93613,7 @@
           "api": "Color",
           "proof": "verified",
           "state": "executed",
-          "calls": 974,
+          "calls": 982,
           "reads": 0,
           "via": "call",
           "mechanism": "export-wrapper",
@@ -90869,7 +93749,7 @@
           "api": "GraphicsComponent.clear",
           "proof": "verified",
           "state": "executed",
-          "calls": 641,
+          "calls": 646,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -90886,7 +93766,7 @@
           "api": "GraphicsComponent.fill",
           "proof": "verified",
           "state": "executed",
-          "calls": 330,
+          "calls": 333,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -90903,7 +93783,7 @@
           "api": "GraphicsComponent.rect",
           "proof": "verified",
           "state": "executed",
-          "calls": 971,
+          "calls": 979,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -90920,7 +93800,7 @@
           "api": "GraphicsComponent.stroke",
           "proof": "verified",
           "state": "executed",
-          "calls": 641,
+          "calls": 646,
           "reads": 0,
           "via": "call",
           "mechanism": "prototype",
@@ -91432,8 +94312,8 @@
       ],
       "artifact": {
         "path": "docs/evidence/examples/video-basic.png",
-        "bytes": 14954,
-        "hash": "1c462bbbeee7c25b"
+        "bytes": 14973,
+        "hash": "a2b8b0c4524cac2d"
       },
       "assetDigests": [
         {
@@ -91457,8 +94337,8 @@
         "name": "cocosair.traced.js",
         "exports": 575,
         "unitCount": 36,
-        "bytes": 56911,
-        "hash": "0d9cb23cbaa000d4",
+        "bytes": 57048,
+        "hash": "ee7a458fdf35bc99",
         "notes": [
           "EventHandler.component: no own descriptor on static",
           "EventHandler.component: no own descriptor on prototype",
@@ -92188,8 +95068,8 @@
       "networkAssets": [],
       "artifact": {
         "path": "docs/evidence/examples/webview-basic.png",
-        "bytes": 20415,
-        "hash": "b5c49f37a56b5db1"
+        "bytes": 20419,
+        "hash": "a40f1132bc47499a"
       },
       "assetDigests": [
         {

@@ -27,7 +27,17 @@
   },
   "api": {
     "primary": ["GLTFLoader", "AirTransmissionCapture"],
-    "supporting": ["Animation"],
+    "supporting": [
+      "Animation",
+      "AirTransmissionCapture.mainCamera",
+      "AirTransmissionCapture.sceneColor",
+      "AirTransmissionCapture.onEnable",
+      "AirTransmissionCapture.onDisable",
+      "AirTransmissionCapture.lateUpdate",
+      "isTransmissionMaterial",
+      "TRANSMISSION_LAYER",
+      "defaultTransmissionVisibility"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -40,7 +50,15 @@
       "Node.addChild",
       "Node.setPosition",
       "GLTFAsset.destroy",
-      "isValid"
+      "isValid",
+      "AirTransmissionCapture.mainCamera",
+      "AirTransmissionCapture.sceneColor",
+      "AirTransmissionCapture.onEnable",
+      "AirTransmissionCapture.onDisable",
+      "AirTransmissionCapture.lateUpdate",
+      "isTransmissionMaterial",
+      "TRANSMISSION_LAYER",
+      "defaultTransmissionVisibility"
     ],
     "forbiddenShortcut": ["渲染外网远端模型（本地资产为准）", "静态贴图冒充 transmission 折射"],
     "evidence": [
@@ -48,73 +66,121 @@
         "api": "createAirApp",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L28"
+        "sourceLocation": "L32"
       },
       {
         "api": "Scene",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L30"
+        "sourceLocation": "L34"
       },
       {
         "api": "Node",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L35"
+        "sourceLocation": "L39"
       },
       {
         "api": "Animation",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L86"
+        "sourceLocation": "L110"
       },
       {
         "api": "AnimationClip",
         "source": "main.js",
         "validator": "asset-loaded",
-        "sourceLocation": "L167"
+        "sourceLocation": "L191"
       },
       {
         "api": "GLTFLoader",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L40"
+        "sourceLocation": "L64"
       },
       {
         "api": "AirTransmissionCapture",
         "source": "main.js",
         "validator": "material-property",
-        "sourceLocation": "L37"
+        "sourceLocation": "L41"
       },
       {
         "api": "math.Vec3",
         "source": "main.js",
         "validator": "scene-ready",
-        "sourceLocation": "L47"
+        "sourceLocation": "L71"
       },
       {
         "api": "Node.addChild",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L36"
+        "sourceLocation": "L40"
       },
       {
         "api": "Node.setPosition",
         "source": "main.js",
         "validator": "node-exists",
-        "sourceLocation": "L79"
+        "sourceLocation": "L103"
       },
       {
         "api": "GLTFAsset.destroy",
         "source": "main.js",
         "validator": "resource-released",
-        "sourceLocation": "L275"
+        "sourceLocation": "L299"
       },
       {
         "api": "isValid",
         "source": "shared/asset-lifecycle.js",
         "validator": "resource-released",
         "sourceLocation": "L27"
+      },
+      {
+        "api": "AirTransmissionCapture.mainCamera",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L42"
+      },
+      {
+        "api": "AirTransmissionCapture.sceneColor",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "AirTransmissionCapture.onEnable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "AirTransmissionCapture.onDisable",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "AirTransmissionCapture.lateUpdate",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L63"
+      },
+      {
+        "api": "isTransmissionMaterial",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L52"
+      },
+      {
+        "api": "TRANSMISSION_LAYER",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L54"
+      },
+      {
+        "api": "defaultTransmissionVisibility",
+        "source": "main.js",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L54"
       }
     ]
   },
@@ -196,11 +262,11 @@
     }
   },
   "promotion": {
-    "spec": "d0b257740b12",
-    "source": "de5f1509aa4ecbfc",
+    "spec": "12776fd319de",
+    "source": "5ec6cd20a56c7383",
     "candidate": "7f3b89f6ac076cbf",
-    "verified": 12,
-    "attested": 0,
-    "units": 12
+    "verified": 18,
+    "attested": 2,
+    "units": 20
   }
 }

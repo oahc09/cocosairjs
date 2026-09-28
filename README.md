@@ -6,8 +6,8 @@
 > **V0.1 RC**（2026-09-12）：验收矩阵 L0–L14 全部通过，详见 `docs/acceptance-report.md`。
 > **V0.2 RC**（2026-09-12）：Code First DX & SDK 化，验收矩阵 L0–L17 全部通过，详见 `docs/acceptance-report-v02.md`。
 > **V0.3**（2026-09-12）：完成 V0.2 审查修复、资源 Inspect/Validate、多实例生命周期和独立静态验证，见 [验证记录](docs/11-v03-verification.md)。V0.2 原增量/helper 验收的更正也记录于此。
-> **V1.1**：当前 Gallery 登记 145 例（144 stable、1 draft）。规格、逐例浏览器证据及 API 覆盖必须绑定同一候选；逐例原始证据保存在仓库中，不随 npm 包发布。覆盖未达到任务书的 100%/90%/80% Release 目标，不能据示例数量宣称可发布。口径见 `docs/v11-baseline.md`、`docs/v11-example-specs.md`、`docs/api-coverage-report.json` 与 `docs/release-coverage-work.md`。
-> **V1.2 特性回归（r46 批复结案口径，2026-09-24）**：16 组上游能力逐组回归，逐组状态见 `docs/v12-upstream-regression.md` §3；
+> **V1.1 Release Check（r50，2026-09-28）**：Gallery 登记 146 例（145 stable、1 draft）；全量浏览器示例 141/141 PASS。API Coverage：Core 963/963、Important 272/272、Advanced 180/191（94.2%），documented-only 11/191（5.8%），uncovered=0；100%/90%/80% Release Coverage 门槛均满足。逐例原始证据保存在仓库中，不随 npm 包发布；当前门禁与剩余边界见 [V1.1 Release Gates r50](docs/v06-v10-release-gates.md) 和 [Wave 16 coverage record](docs/api-coverage-wave16.md)。
+> **V1.2 特性回归（r50，2026-09-28）**：三引擎矩阵 39/39 PASS；16 组上游能力逐组状态见 `docs/v12-upstream-regression.md` §3；
 > 门禁读数与部分通过项见 `docs/acceptance-report-v12.md`。资产缺口档（spine / bullet / physx / box2d-wasm / webgpu-glslang）
 > 与 D9 残留 14 项均已按批复口径结案（`UPSTREAM.md` Deviation-04/05/06）；交付期物理后端切换：
 > `createAirApp({ physics: 'builtin' | 'cannon' })`（默认 builtin，additive 登记 `docs/v08-api-stability.md`）。

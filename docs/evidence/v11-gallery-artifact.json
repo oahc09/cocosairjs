@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-27T21:41:02.334Z",
+  "measuredAt": "2026-09-28T00:02:56.585Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
@@ -8,15 +8,15 @@
     "examples": 146,
     "booted": 141,
     "devToolsPagesServed": 5,
-    "lifecycle": 52
+    "lifecycle": 53
   },
   "artifactBytes": {
     "engineCopySha256_16": "05f7eb14b1014d5d",
     "liveBundleSha256_16": "05f7eb14b1014d5d",
     "identical": true
   },
-  "total": 219,
-  "pass": 219,
+  "total": 220,
+  "pass": 220,
   "results": [
     {
       "id": "artifact:no-absolute-path-dependency",
@@ -91,7 +91,7 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:50307/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:51803/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",
@@ -137,6 +137,11 @@
       "id": "example-boot:camera-geometry-extras",
       "ok": true,
       "detail": "booted via /camera-geometry-extras/"
+    },
+    {
+      "id": "lifecycle:camera-geometry-extras",
+      "ok": true,
+      "detail": "held=2 leaked=0 reloaded=true"
     },
     {
       "id": "example-boot:camera-lookat",
@@ -1096,7 +1101,7 @@
     {
       "id": "artifact:lifecycle-covered",
       "ok": true,
-      "detail": "52 §25 合同示例在部署物内完成释放核对"
+      "detail": "53 §25 合同示例在部署物内完成释放核对"
     },
     {
       "id": "artifact:no-http-errors",

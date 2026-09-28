@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-27T21:38:00.885Z",
+  "generatedAt": "2026-09-28T00:00:20.788Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T21:36:57.041Z",
+      "measuredAt": "2026-09-27T23:59:51.982Z",
       "mode": "spec-driven-v3"
     },
     {
@@ -24,16 +24,16 @@
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
   "candidateFingerprint": "7f3b89f6ac076cbf",
-  "inventoryFingerprint": "584e7c5677527260",
-  "apiInventoryRevision": "190aa74d8e4fcbc8",
+  "inventoryFingerprint": "238a4afd6897feea",
+  "apiInventoryRevision": "a9139c31a9277f1c",
   "inventoryConsistency": [],
   "totalUnits": 12229,
-  "totalRequired": 4365,
-  "totalClaimed": 1511,
-  "totalAttested": 58,
-  "totalVerified": 1453,
-  "totalVerifiedViaCall": 1284,
-  "totalVerifiedViaRead": 169,
+  "totalRequired": 1426,
+  "totalClaimed": 1672,
+  "totalAttested": 63,
+  "totalVerified": 1609,
+  "totalVerifiedViaCall": 1425,
+  "totalVerifiedViaRead": 184,
   "totalVerifiedViaUnknown": 0,
   "staleEvidenceExamples": [],
   "claimsNotInInventory": [
@@ -58,7 +58,7 @@
       "instrumentation": {
         "observed": 68,
         "total": 68,
-        "hash": "ef9c707a709f7e0a"
+        "hash": "f1c28067af91bfe4"
       },
       "claims": 68,
       "tally": {
@@ -82,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "0cf62913e791c219"
+        "hash": "77d29557e9ce48d8"
       },
       "claims": 18,
       "tally": {
@@ -106,7 +106,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "c140b70fe3783fa0"
+        "hash": "4a09fcfcd55ba285"
       },
       "claims": 28,
       "tally": {
@@ -154,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "772ed706b7b85783"
+        "hash": "be97a07d09e6b0d7"
       },
       "claims": 21,
       "tally": {
@@ -178,7 +178,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 13,
-        "hash": "be0d3aa9f964604b"
+        "hash": "a54070dce7b7efad"
       },
       "claims": 13,
       "tally": {
@@ -200,17 +200,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 21,
-        "total": 21,
-        "hash": "5f13836d585d8cdb"
+        "observed": 117,
+        "total": 117,
+        "hash": "8121c8959ed7e4aa"
       },
-      "claims": 21,
+      "claims": 117,
       "tally": {
-        "verified": 21,
+        "verified": 117,
         "attested": 0,
         "claimedOnly": 0,
-        "verifiedCall": 20,
-        "verifiedRead": 1
+        "verifiedCall": 105,
+        "verifiedRead": 12
       }
     },
     {
@@ -226,7 +226,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "c99f18e4b0fb2e1c"
+        "hash": "de6acb19855e9b0b"
       },
       "claims": 19,
       "tally": {
@@ -250,7 +250,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "53499ebd38466633"
+        "hash": "bbdc5d1f229892e7"
       },
       "claims": 19,
       "tally": {
@@ -274,7 +274,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "a295b6c3ed5366f9"
+        "hash": "f3d6e0a1fac8db19"
       },
       "claims": 19,
       "tally": {
@@ -298,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "44227e76b7f491a9"
+        "hash": "cddc15436a705ec3"
       },
       "claims": 21,
       "tally": {
@@ -322,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "a272820d06c4dc9a"
+        "hash": "c9a265abf2bdf333"
       },
       "claims": 20,
       "tally": {
@@ -346,7 +346,7 @@
       "instrumentation": {
         "observed": 54,
         "total": 54,
-        "hash": "78f840913e06fb09"
+        "hash": "9a45f33fce80e175"
       },
       "claims": 54,
       "tally": {
@@ -370,7 +370,7 @@
       "instrumentation": {
         "observed": 37,
         "total": 37,
-        "hash": "093cde19890fd3a3"
+        "hash": "e9bc681cdd1fd381"
       },
       "claims": 37,
       "tally": {
@@ -394,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "2d6e0c157256c52b"
+        "hash": "b9dc00f85e0bf1b2"
       },
       "claims": 20,
       "tally": {
@@ -418,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "3d7e1ea0cbc88a38"
+        "hash": "1bd0cd33713b762f"
       },
       "claims": 26,
       "tally": {
@@ -442,7 +442,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "000397e832153d75"
+        "hash": "5935329ef7f5de5c"
       },
       "claims": 28,
       "tally": {
@@ -466,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "d8c87c0443ce29cd"
+        "hash": "c943a73d57f2cd69"
       },
       "claims": 19,
       "tally": {
@@ -488,17 +488,17 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 40,
-        "total": 46,
-        "hash": "49026cecb48907f3"
+        "observed": 93,
+        "total": 98,
+        "hash": "c72c84aa07517d38"
       },
-      "claims": 46,
+      "claims": 98,
       "tally": {
-        "verified": 40,
-        "attested": 6,
+        "verified": 93,
+        "attested": 5,
         "claimedOnly": 0,
-        "verifiedCall": 32,
-        "verifiedRead": 8
+        "verifiedCall": 79,
+        "verifiedRead": 14
       }
     },
     {
@@ -514,7 +514,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "c266a2295d6d1856"
+        "hash": "3994525604ceb092"
       },
       "claims": 31,
       "tally": {
@@ -538,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "48fab57bd6d8768d"
+        "hash": "eb96e718efd15b4e"
       },
       "claims": 17,
       "tally": {
@@ -582,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "1df5342a4f7e9f78"
+        "hash": "4003c8b29bd48572"
       },
       "claims": 15,
       "tally": {
@@ -606,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "09bbac9e55b9e1c9"
+        "hash": "6968d5628a1e9896"
       },
       "claims": 14,
       "tally": {
@@ -630,7 +630,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "4f16484221cbf35a"
+        "hash": "83bcf411b92270b1"
       },
       "claims": 29,
       "tally": {
@@ -652,16 +652,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 20,
-        "total": 20,
-        "hash": "cd9851312241bc56"
+        "observed": 26,
+        "total": 30,
+        "hash": "50dbaa8552b8059f"
       },
-      "claims": 20,
+      "claims": 30,
       "tally": {
-        "verified": 20,
-        "attested": 0,
+        "verified": 26,
+        "attested": 4,
         "claimedOnly": 0,
-        "verifiedCall": 19,
+        "verifiedCall": 25,
         "verifiedRead": 1
       }
     },
@@ -678,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "50e058af0aa5926a"
+        "hash": "7ae1cb003fc24969"
       },
       "claims": 20,
       "tally": {
@@ -702,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "9e7c6cf1cab30e36"
+        "hash": "f5813873ba9c3917"
       },
       "claims": 21,
       "tally": {
@@ -724,16 +724,16 @@
       },
       "hasApiProof": true,
       "instrumentation": {
-        "observed": 12,
-        "total": 12,
-        "hash": "70060b7a899d8055"
+        "observed": 18,
+        "total": 20,
+        "hash": "836e550fff14d79d"
       },
-      "claims": 12,
+      "claims": 20,
       "tally": {
-        "verified": 12,
-        "attested": 0,
+        "verified": 18,
+        "attested": 2,
         "claimedOnly": 0,
-        "verifiedCall": 10,
+        "verifiedCall": 16,
         "verifiedRead": 2
       }
     },
@@ -750,7 +750,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "10c4ba4c71c9e1dc"
+        "hash": "328f340ef4b7808b"
       },
       "claims": 17,
       "tally": {
@@ -774,7 +774,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "853544d8ffa73ed7"
+        "hash": "27cb393a086f6dcd"
       },
       "claims": 15,
       "tally": {
@@ -798,7 +798,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "ad659a42fc5663c5"
+        "hash": "b59f1877d884a9e9"
       },
       "claims": 28,
       "tally": {
@@ -822,7 +822,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "84126c986a7ba8a9"
+        "hash": "d4a8ebfc751aa892"
       },
       "claims": 20,
       "tally": {
@@ -846,7 +846,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 26,
-        "hash": "62a46a09a80853c1"
+        "hash": "79f12f693ac96f01"
       },
       "claims": 26,
       "tally": {
@@ -870,7 +870,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "026c9762824136a2"
+        "hash": "8a2f37fa65b7c88b"
       },
       "claims": 23,
       "tally": {
@@ -894,7 +894,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "5ec84f873cb48de4"
+        "hash": "372fa72e808f13cd"
       },
       "claims": 24,
       "tally": {
@@ -918,7 +918,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "8cb4bcd47a90a9fa"
+        "hash": "7766545ca662d384"
       },
       "claims": 25,
       "tally": {
@@ -942,7 +942,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "6f9bcadcca2b178a"
+        "hash": "42ea98a4682b58ca"
       },
       "claims": 45,
       "tally": {
@@ -966,7 +966,7 @@
       "instrumentation": {
         "observed": 37,
         "total": 37,
-        "hash": "a94420f6bc076945"
+        "hash": "e8e2c4f9756f4e7d"
       },
       "claims": 37,
       "tally": {
@@ -990,7 +990,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "480cb2b3ce5e753a"
+        "hash": "02fdaff46a7f0e2f"
       },
       "claims": 22,
       "tally": {
@@ -1014,7 +1014,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "f08e8a6d7fea1bce"
+        "hash": "408859fd45a4bc16"
       },
       "claims": 14,
       "tally": {
@@ -1038,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "af0f670eba1e32af"
+        "hash": "cdf81b504e8841ce"
       },
       "claims": 16,
       "tally": {
@@ -1062,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "52b0cf4f200376cd"
+        "hash": "a176a22ce302e165"
       },
       "claims": 23,
       "tally": {
@@ -1086,7 +1086,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "5f807e45bf2d65dc"
+        "hash": "b266253754d2f241"
       },
       "claims": 31,
       "tally": {
@@ -1110,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "81ebc6cf0a58df29"
+        "hash": "1ecdacdb2a9a1c93"
       },
       "claims": 22,
       "tally": {
@@ -1134,7 +1134,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "ea3a3f409f288987"
+        "hash": "d36f24b9f1656f80"
       },
       "claims": 16,
       "tally": {
@@ -1158,7 +1158,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "339cc0b77c4afd25"
+        "hash": "727bbfbe478098ca"
       },
       "claims": 25,
       "tally": {
@@ -1182,7 +1182,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 36,
-        "hash": "b36d9f96bdf85183"
+        "hash": "8bcb1b00a02cfc85"
       },
       "claims": 36,
       "tally": {
@@ -1206,7 +1206,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "a682f533df7364d7"
+        "hash": "dd1598195bcc30db"
       },
       "claims": 21,
       "tally": {
@@ -1230,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "5c01a1f272e8f2bc"
+        "hash": "f7ccda6d72b34453"
       },
       "claims": 21,
       "tally": {
@@ -1254,7 +1254,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "96fcb3936f327525"
+        "hash": "0ede96114c5e3e05"
       },
       "claims": 25,
       "tally": {
@@ -1278,7 +1278,7 @@
       "instrumentation": {
         "observed": 62,
         "total": 62,
-        "hash": "ca58ce4af487a8de"
+        "hash": "f855dd52aec62cfd"
       },
       "claims": 62,
       "tally": {
@@ -1302,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "05f4f2f22fd6f107"
+        "hash": "9378db96d141111f"
       },
       "claims": 21,
       "tally": {
@@ -1326,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "a5a4455d83c53e51"
+        "hash": "af4c7ab4f0ff24f8"
       },
       "claims": 19,
       "tally": {
@@ -1350,7 +1350,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "eb1e3148df9bde01"
+        "hash": "8b7539153ad1a938"
       },
       "claims": 22,
       "tally": {
@@ -1374,7 +1374,7 @@
       "instrumentation": {
         "observed": 61,
         "total": 61,
-        "hash": "d579f18e02bcaf8f"
+        "hash": "044a2ef438acef57"
       },
       "claims": 61,
       "tally": {
@@ -1398,7 +1398,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "0964a5a2f2b46b55"
+        "hash": "3b6529a6e644acb7"
       },
       "claims": 28,
       "tally": {
@@ -1422,7 +1422,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "d17252ce8a5df74c"
+        "hash": "b7ecc7f616b8e022"
       },
       "claims": 31,
       "tally": {
@@ -1446,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "f69f7dc6c897a279"
+        "hash": "749df635373d37c5"
       },
       "claims": 23,
       "tally": {
@@ -1470,7 +1470,7 @@
       "instrumentation": {
         "observed": 85,
         "total": 85,
-        "hash": "efb4538083d3287a"
+        "hash": "e744d853a754e79d"
       },
       "claims": 85,
       "tally": {
@@ -1494,7 +1494,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "0d86588f7c97578b"
+        "hash": "794ecaa039560479"
       },
       "claims": 24,
       "tally": {
@@ -1518,7 +1518,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "18cd01ec50a5b1f0"
+        "hash": "83c06418c31c525b"
       },
       "claims": 30,
       "tally": {
@@ -1542,7 +1542,7 @@
       "instrumentation": {
         "observed": 57,
         "total": 57,
-        "hash": "a0548e0ae6dc504b"
+        "hash": "86c12059a8584a68"
       },
       "claims": 57,
       "tally": {
@@ -1566,7 +1566,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "98dadded55ec5199"
+        "hash": "c4ec290c0beb4854"
       },
       "claims": 23,
       "tally": {
@@ -1590,7 +1590,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "49bb79d794ce98fc"
+        "hash": "1033ca87ddeb77bc"
       },
       "claims": 25,
       "tally": {
@@ -1614,7 +1614,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "6fd50b7b248f610a"
+        "hash": "b3cc0d1ced3fcb73"
       },
       "claims": 33,
       "tally": {
@@ -1638,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "0c7103231bfd8ed7"
+        "hash": "654c800c22d264d4"
       },
       "claims": 18,
       "tally": {
@@ -1662,7 +1662,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "3e99aba9eecdfe69"
+        "hash": "95f7c29790b45d64"
       },
       "claims": 35,
       "tally": {
@@ -1686,7 +1686,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "ac9e809c584cee82"
+        "hash": "1c91239ea344950f"
       },
       "claims": 35,
       "tally": {
@@ -1710,7 +1710,7 @@
       "instrumentation": {
         "observed": 47,
         "total": 47,
-        "hash": "36a746e6111b7421"
+        "hash": "23e6ec637c233924"
       },
       "claims": 47,
       "tally": {
@@ -1734,7 +1734,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "056e12cf04fb906c"
+        "hash": "ed2f4bf24dc37e03"
       },
       "claims": 32,
       "tally": {
@@ -1758,7 +1758,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "ef8ee171f99dffed"
+        "hash": "5697da82a5f3bd09"
       },
       "claims": 23,
       "tally": {
@@ -1782,7 +1782,7 @@
       "instrumentation": {
         "observed": 69,
         "total": 69,
-        "hash": "538bdaa81314cd52"
+        "hash": "71edfe4f891df7e4"
       },
       "claims": 69,
       "tally": {
@@ -1806,7 +1806,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "68712a9ac2973802"
+        "hash": "21c3ae3c411788da"
       },
       "claims": 21,
       "tally": {
@@ -1830,7 +1830,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "4955f0dd4c9b84d5"
+        "hash": "1b51889989d81f45"
       },
       "claims": 29,
       "tally": {
@@ -1854,7 +1854,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "14582512b634b533"
+        "hash": "a56e7cabd9c1b4fb"
       },
       "claims": 27,
       "tally": {
@@ -1878,7 +1878,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "b3837355b72acc9b"
+        "hash": "32e4552e90be6d63"
       },
       "claims": 19,
       "tally": {
@@ -1902,7 +1902,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "02b52e5859b532dc"
+        "hash": "f9d034c682739656"
       },
       "claims": 23,
       "tally": {
@@ -1926,7 +1926,7 @@
       "instrumentation": {
         "observed": 44,
         "total": 44,
-        "hash": "1ee01abcc19fd72b"
+        "hash": "7487ea9260d928e1"
       },
       "claims": 44,
       "tally": {
@@ -1950,7 +1950,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "60de3149baeca0d8"
+        "hash": "e2853ad8e806bfc6"
       },
       "claims": 22,
       "tally": {
@@ -1974,7 +1974,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "2ea66f7d7d302e48"
+        "hash": "fc9eaaca380812ae"
       },
       "claims": 30,
       "tally": {
@@ -1998,7 +1998,7 @@
       "instrumentation": {
         "observed": 70,
         "total": 70,
-        "hash": "c3496c4f316bb8f1"
+        "hash": "4a5f0d483f60ced5"
       },
       "claims": 70,
       "tally": {
@@ -2022,7 +2022,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "8558e00b618c9e11"
+        "hash": "eedd21c9ddbdd25d"
       },
       "claims": 19,
       "tally": {
@@ -2046,7 +2046,7 @@
       "instrumentation": {
         "observed": 76,
         "total": 76,
-        "hash": "b7804e9b4f611477"
+        "hash": "54978b3cc37a8475"
       },
       "claims": 76,
       "tally": {
@@ -2070,7 +2070,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "b467b63eb8f35030"
+        "hash": "5956164e70063be8"
       },
       "claims": 23,
       "tally": {
@@ -2094,7 +2094,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "9cf2cba62d25cc9a"
+        "hash": "e8a57c5344f60622"
       },
       "claims": 30,
       "tally": {
@@ -2118,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "8f6e442ceb4ae3d3"
+        "hash": "f9c79ae350ea9362"
       },
       "claims": 23,
       "tally": {
@@ -2142,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "2ed24240bd2b0fc7"
+        "hash": "8b0cc08a7fa2f8c4"
       },
       "claims": 18,
       "tally": {
@@ -2166,7 +2166,7 @@
       "instrumentation": {
         "observed": 37,
         "total": 37,
-        "hash": "e53171e481840ca5"
+        "hash": "24adafc16632b224"
       },
       "claims": 37,
       "tally": {
@@ -2190,7 +2190,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "fada4de997d0682b"
+        "hash": "aabe3a41c1d12d38"
       },
       "claims": 22,
       "tally": {
@@ -2214,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "695d072db06b7029"
+        "hash": "aba70fd007846fa4"
       },
       "claims": 16,
       "tally": {
@@ -2238,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "0c015dd412bf8aee"
+        "hash": "1f40a3a66e0f926b"
       },
       "claims": 19,
       "tally": {
@@ -2262,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "0405e9a8b00a15fa"
+        "hash": "c8f66f2446efc3fa"
       },
       "claims": 21,
       "tally": {
@@ -2286,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "1c572336a930b588"
+        "hash": "3b87b163d19b7bfc"
       },
       "claims": 18,
       "tally": {
@@ -2310,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "11a1ee7ecce85a77"
+        "hash": "055c9a6ff14015df"
       },
       "claims": 18,
       "tally": {
@@ -2334,7 +2334,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 50,
-        "hash": "a01e6f2e2a3e630e"
+        "hash": "eaffb50cba78aac3"
       },
       "claims": 50,
       "tally": {
@@ -2358,7 +2358,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "1c6b46348bd1d641"
+        "hash": "39802622ea5f8433"
       },
       "claims": 45,
       "tally": {
@@ -2382,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "0cf62913e791c219"
+        "hash": "77d29557e9ce48d8"
       },
       "claims": 18,
       "tally": {
@@ -2406,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "f5b1ebbd58431a9c"
+        "hash": "a9518e65e4b93fc8"
       },
       "claims": 24,
       "tally": {
@@ -2430,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "f5df7fb56053bd42"
+        "hash": "b408d917308d96b7"
       },
       "claims": 21,
       "tally": {
@@ -2454,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "c06b991186b1dd8b"
+        "hash": "27962360370d7ba6"
       },
       "claims": 33,
       "tally": {
@@ -2478,7 +2478,7 @@
       "instrumentation": {
         "observed": 81,
         "total": 81,
-        "hash": "339de771f57a253d"
+        "hash": "7be8d55cb5a106f2"
       },
       "claims": 81,
       "tally": {
@@ -2502,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "c66cb92414203b0a"
+        "hash": "7b001d90d9c34d3e"
       },
       "claims": 21,
       "tally": {
@@ -2526,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "bdcfa4a3f6903442"
+        "hash": "6978cfce4142e3e4"
       },
       "claims": 19,
       "tally": {
@@ -2550,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "a5dd0ca0e2d6a115"
+        "hash": "f4641247fd94557d"
       },
       "claims": 19,
       "tally": {
@@ -2574,7 +2574,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 34,
-        "hash": "e34d53a7e48c7342"
+        "hash": "b8770327dcf90348"
       },
       "claims": 34,
       "tally": {
@@ -2598,7 +2598,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 36,
-        "hash": "1b1cf548dff2b0fb"
+        "hash": "5244005b48ad0c05"
       },
       "claims": 36,
       "tally": {
@@ -2622,7 +2622,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 33,
-        "hash": "6a310057941cedd1"
+        "hash": "1acddfbee9763b70"
       },
       "claims": 33,
       "tally": {
@@ -2646,7 +2646,7 @@
       "instrumentation": {
         "observed": 63,
         "total": 69,
-        "hash": "97e1de9acc225cae"
+        "hash": "9906a771fcd9e96d"
       },
       "claims": 69,
       "tally": {
@@ -2670,7 +2670,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 31,
-        "hash": "d55ddb60041b21b4"
+        "hash": "1c79a1327ea7dedc"
       },
       "claims": 31,
       "tally": {
@@ -2694,7 +2694,7 @@
       "instrumentation": {
         "observed": 41,
         "total": 41,
-        "hash": "230042285494abc1"
+        "hash": "87abfdde35a280bb"
       },
       "claims": 41,
       "tally": {
@@ -2718,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "023a77ae158f1e1e"
+        "hash": "7fd69fdee36b42c0"
       },
       "claims": 22,
       "tally": {
@@ -2742,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "0405e9a8b00a15fa"
+        "hash": "c8f66f2446efc3fa"
       },
       "claims": 21,
       "tally": {
@@ -2766,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "031731f9c6886b17"
+        "hash": "08691baebcc8d3b9"
       },
       "claims": 22,
       "tally": {
@@ -2790,7 +2790,7 @@
       "instrumentation": {
         "observed": 41,
         "total": 41,
-        "hash": "e134a276d62f246a"
+        "hash": "b930f0865e355698"
       },
       "claims": 41,
       "tally": {
@@ -2814,7 +2814,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "ac37dd2a96443954"
+        "hash": "ae09ddc63518a57c"
       },
       "claims": 23,
       "tally": {
@@ -2934,7 +2934,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 32,
-        "hash": "c12aa0bde01654f0"
+        "hash": "a79093d0d90ce229"
       },
       "claims": 32,
       "tally": {
@@ -2958,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "30fa51cd3a46db7c"
+        "hash": "6010bb66ae5827e4"
       },
       "claims": 16,
       "tally": {
@@ -2982,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "7372f88f618a93d2"
+        "hash": "3de04fff4d6432e0"
       },
       "claims": 20,
       "tally": {
@@ -3006,7 +3006,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 29,
-        "hash": "9ecfc985806d61f5"
+        "hash": "dd915f0ee1db299d"
       },
       "claims": 29,
       "tally": {
@@ -3030,7 +3030,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "02d5d37a8b35a4a9"
+        "hash": "4c3a4a6a09cf6b06"
       },
       "claims": 30,
       "tally": {
@@ -3054,7 +3054,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "36d83c9a81ade943"
+        "hash": "0db35ceae5093fc2"
       },
       "claims": 32,
       "tally": {
@@ -3078,7 +3078,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "cd3f62d6efcc5107"
+        "hash": "eb7d1f77709359de"
       },
       "claims": 33,
       "tally": {
@@ -3102,7 +3102,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "bb2192191a9b988f"
+        "hash": "2d456203b4b81e2e"
       },
       "claims": 31,
       "tally": {
@@ -3126,7 +3126,7 @@
       "instrumentation": {
         "observed": 54,
         "total": 54,
-        "hash": "22cd683a342580a4"
+        "hash": "04b669635afd605c"
       },
       "claims": 54,
       "tally": {
@@ -3150,7 +3150,7 @@
       "instrumentation": {
         "observed": 9,
         "total": 9,
-        "hash": "c5634311dd011a91"
+        "hash": "c155d0e58170648b"
       },
       "claims": 9,
       "tally": {
@@ -3174,7 +3174,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "4e5fcdb26b1098ee"
+        "hash": "62451e1ca9235baa"
       },
       "claims": 23,
       "tally": {
@@ -3198,7 +3198,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "4157278bb9b97934"
+        "hash": "fd647b4066290d32"
       },
       "claims": 27,
       "tally": {
@@ -3222,7 +3222,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "cd53d2731808e0e2"
+        "hash": "9ca3b3b97faf6d9e"
       },
       "claims": 23,
       "tally": {
@@ -3246,7 +3246,7 @@
       "instrumentation": {
         "observed": 40,
         "total": 40,
-        "hash": "11a8c8cedd929279"
+        "hash": "20e54eff772ab4bc"
       },
       "claims": 40,
       "tally": {
@@ -3270,7 +3270,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "e3e9b765124820c3"
+        "hash": "f849faf1136b7048"
       },
       "claims": 30,
       "tally": {
@@ -3294,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "c9d487fc722d9165"
+        "hash": "36d88e997ad131c2"
       },
       "claims": 22,
       "tally": {
@@ -3318,7 +3318,7 @@
       "instrumentation": {
         "observed": 48,
         "total": 48,
-        "hash": "ee5c1ef3339d1407"
+        "hash": "dbf7eb2c1765daec"
       },
       "claims": 48,
       "tally": {
@@ -3342,7 +3342,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "6f80b47425fb18ff"
+        "hash": "a1537d2ea55bf6cb"
       },
       "claims": 14,
       "tally": {
@@ -3366,7 +3366,7 @@
       "instrumentation": {
         "observed": 59,
         "total": 59,
-        "hash": "4d87277bdff15cc7"
+        "hash": "f177e4a01f36599d"
       },
       "claims": 59,
       "tally": {
@@ -3390,7 +3390,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "2be68e284b0be5ce"
+        "hash": "40545578d405cc9a"
       },
       "claims": 17,
       "tally": {
@@ -3414,7 +3414,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 30,
-        "hash": "e40908c014ff96ec"
+        "hash": "7fd58ea49312a5a5"
       },
       "claims": 30,
       "tally": {
@@ -3438,7 +3438,7 @@
       "instrumentation": {
         "observed": 96,
         "total": 96,
-        "hash": "b31f396a81a9a560"
+        "hash": "342848900f6797e0"
       },
       "claims": 96,
       "tally": {
@@ -3462,7 +3462,7 @@
       "instrumentation": {
         "observed": 49,
         "total": 49,
-        "hash": "c26ac75763d1a685"
+        "hash": "0e087184154f5aa7"
       },
       "claims": 49,
       "tally": {
@@ -3486,7 +3486,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "4045906bacc462c7"
+        "hash": "facec9b9be4cae93"
       },
       "claims": 20,
       "tally": {
@@ -3510,7 +3510,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "340ff0bed9cad394"
+        "hash": "d45183a3b0b31461"
       },
       "claims": 36,
       "tally": {
@@ -3534,7 +3534,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 36,
-        "hash": "0d9cb23cbaa000d4"
+        "hash": "ee7a458fdf35bc99"
       },
       "claims": 36,
       "tally": {
@@ -3605,31 +3605,31 @@
     },
     "advanced": {
       "denominator": "coverageRequired",
-      "total": 3130,
-      "required": 3130,
-      "claimed": 182,
-      "attested": 33,
-      "verified": 149,
-      "requiredClaimed": 182,
-      "requiredVerified": 149,
-      "documentedOnly": 0,
-      "documentedOnlyRate": 0,
-      "uncovered": 2981,
-      "unstated": 2981,
-      "verifiedViaCall": 126,
-      "verifiedViaRead": 23,
+      "total": 191,
+      "required": 191,
+      "claimed": 186,
+      "attested": 6,
+      "verified": 180,
+      "requiredClaimed": 186,
+      "requiredVerified": 180,
+      "documentedOnly": 11,
+      "documentedOnlyRate": 0.058,
+      "uncovered": 0,
+      "unstated": 0,
+      "verifiedViaCall": 161,
+      "verifiedViaRead": 19,
       "verifiedViaUnknown": 0,
-      "requiredVerifiedViaCall": 126,
-      "requiredVerifiedViaRead": 23,
+      "requiredVerifiedViaCall": 161,
+      "requiredVerifiedViaRead": 19,
       "requiredVerifiedViaUnknown": 0,
-      "requiredVerifiedViaCallRate": 0.04,
-      "claimedRate": 0.058,
-      "verifiedRate": 0.048,
-      "allUnitsVerifiedRate": 0.048,
+      "requiredVerifiedViaCallRate": 0.843,
+      "claimedRate": 0.974,
+      "verifiedRate": 0.942,
+      "allUnitsVerifiedRate": 0.942,
       "gate": "V1.1 Release: >=80% verified of coverageRequired",
       "threshold": 0.8,
       "applicable": true,
-      "pass": false
+      "pass": true
     }
   },
   "verifiedList": [
@@ -4489,7 +4489,7 @@
     },
     {
       "unit": "Component",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "anim-position",
@@ -6321,7 +6321,7 @@
     },
     {
       "unit": "Canvas",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic",
@@ -6340,7 +6340,7 @@
     },
     {
       "unit": "UITransform",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic",
@@ -6471,7 +6471,7 @@
     },
     {
       "unit": "view",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "audio-basic",
@@ -6490,7 +6490,7 @@
     },
     {
       "unit": "ResolutionPolicy",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "audio-basic",
@@ -6509,7 +6509,7 @@
     },
     {
       "unit": "assetManager",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "audio-basic",
@@ -6525,7 +6525,7 @@
     },
     {
       "unit": "AudioSource",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic",
@@ -6536,7 +6536,7 @@
     },
     {
       "unit": "AudioClip",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "audio-basic"
@@ -6544,7 +6544,7 @@
     },
     {
       "unit": "AudioPCMDataView",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "audio-basic"
@@ -6552,7 +6552,7 @@
     },
     {
       "unit": "AudioPCMDataView.getData",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic"
@@ -6560,7 +6560,7 @@
     },
     {
       "unit": "AudioClip.validate",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic"
@@ -6568,7 +6568,7 @@
     },
     {
       "unit": "AudioClip.getDuration",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic",
@@ -6579,7 +6579,7 @@
     },
     {
       "unit": "AudioSource.play",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic",
@@ -6590,7 +6590,7 @@
     },
     {
       "unit": "AudioSource.pause",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic"
@@ -6598,7 +6598,7 @@
     },
     {
       "unit": "AudioSource.stop",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic",
@@ -6609,7 +6609,7 @@
     },
     {
       "unit": "AudioSource.playOneShot",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic"
@@ -6617,7 +6617,7 @@
     },
     {
       "unit": "AudioSource.getPCMData",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic"
@@ -6625,7 +6625,7 @@
     },
     {
       "unit": "AudioSource.getSampleRate",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "audio-basic"
@@ -6824,8 +6824,786 @@
       ]
     },
     {
-      "unit": "input",
+      "unit": "renderer.scene.Camera",
       "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.standardExposureValue",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.standardLightMeterScale",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.name",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.scene",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.node",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.systemWindowId",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.window",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.enabled",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.visibility",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.priority",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.width",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.height",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.position",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.forward",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.aperture",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.apertureValue",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.shutter",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.shutterValue",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.iso",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.isoValue",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.exposure",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.clearFlag",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.clearColor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.clearDepth",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.clearStencil",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.projectionType",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.aspect",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.orthoHeight",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.fovAxis",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.fov",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.nearClip",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.farClip",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.viewport",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.frustum",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.matView",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.matProj",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.matProjInv",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.matViewProj",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.matViewProjInv",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.isWindowSize",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.screenScale",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.postProcess",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.usePostProcess",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.pipeline",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras",
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.pipelineSettings",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.constructor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.initialize",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.destroy",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.attachToScene",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.detachFromScene",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.resize",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.setFixedSize",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.update",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.surfaceTransform",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.setViewportInOrientedSpace",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras",
+        "camera-viewport-props"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.initGeometryRenderer",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.geometryRenderer",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.cameraType",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.trackingType",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.cameraUsage",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.changeTargetWindow",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.detachCamera",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.screenPointToRay",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.screenToWorld",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "renderer.scene.Camera.worldToScreen",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.intersect",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras",
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "geometry.Ray",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras",
+        "model-character-interaction",
+        "physics-3d-basic",
+        "physics-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.create",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.clone",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.copy",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.fromPoints",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.set",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.o",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.d",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.type",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.constructor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.Ray.computeHit",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras",
+        "model-character-interaction",
+        "product-viewer"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.create",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.fromPoints",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.set",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.merge",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.toBoundingSphere",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.transform",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.center",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.halfExtents",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.type",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.constructor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.getBoundary",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.prototype.transform",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.prototype.clone",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.prototype.copy",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.mergePoint",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.mergePoints",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "geometry.AABB.mergeFrustum",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "camera-geometry-extras"
+      ]
+    },
+    {
+      "unit": "input",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "camera-lookat",
@@ -6968,14 +7746,6 @@
       ]
     },
     {
-      "unit": "renderer.scene.Camera.pipeline",
-      "tier": "advanced",
-      "via": "read",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
       "unit": "Camera.screenScale",
       "tier": "core",
       "via": "call",
@@ -6987,14 +7757,6 @@
       "unit": "Camera.ClearFlag",
       "tier": "core",
       "via": "read",
-      "examples": [
-        "camera-viewport-props"
-      ]
-    },
-    {
-      "unit": "renderer.scene.Camera.setViewportInOrientedSpace",
-      "tier": "advanced",
-      "via": "call",
       "examples": [
         "camera-viewport-props"
       ]
@@ -7366,7 +8128,7 @@
     },
     {
       "unit": "ColorKey",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "color-timeline-key"
@@ -7417,7 +8179,7 @@
     },
     {
       "unit": "Director",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "dragonbones-basic"
@@ -7518,6 +8280,14 @@
       ]
     },
     {
+      "unit": "dragonBones.ArmatureDisplay.playTimes",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
       "unit": "dragonBones.ArmatureDisplay.setAnimationCacheMode",
       "tier": "advanced",
       "via": "call",
@@ -7608,6 +8378,422 @@
     {
       "unit": "dragonBones.DragonBonesData.getArmature",
       "tier": "supporting",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.AnimationCacheMode",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.dragonAsset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.dragonAtlasAsset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.armatureName",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.animationName",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.timeScale",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.premultipliedAlpha",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.debugBones",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.enableBatch",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.sockets",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.socketNodes",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.attachUtil",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.drawList",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.customMaterial",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.getArmatureKey",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.querySockets",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.querySocketPathByName",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.getArmatureNames",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.getAnimationNames",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.on",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.off",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.once",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.addEventListener",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.removeEventListener",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.updateAnimation",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.markForUpdateRenderData",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.id",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.uuid",
+      "tier": "advanced",
+      "via": "read",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.update",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.getDragonBonesDataByRawData",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.createArmatureNode",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.removeDragonBonesDataByUUID",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAsset.dragonBonesJson",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAsset.constructor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAsset.createNode",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAsset.reset",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAsset.destroy",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAtlasAsset.constructor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAtlasAsset.atlasJson",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAtlasAsset.texture",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAtlasAsset.createNode",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.DragonBonesAtlasAsset.destroy",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.initFactory",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.updateAnimationCache",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.invalidAnimationCache",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.buildArmature",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.onEnable",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.onDisable",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.initUpdate",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.CCFactory.buildArmatureDisplay",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.constructor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "dragonbones-basic"
+      ]
+    },
+    {
+      "unit": "dragonBones.ArmatureDisplay.onLoad",
+      "tier": "advanced",
       "via": "call",
       "examples": [
         "dragonbones-basic"
@@ -7937,7 +9123,103 @@
       ]
     },
     {
+      "unit": "createDracoDecoder",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "createKTX2Transcoder",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "isKTX2Available",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "meshQuantizationFactory",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "meshoptCompressionFactory",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "dracoCompressionFactory",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
       "unit": "AirTransmissionCapture",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "AirTransmissionCapture.mainCamera",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "AirTransmissionCapture.sceneColor",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "AirTransmissionCapture.onEnable",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "AirTransmissionCapture.onDisable",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "AirTransmissionCapture.lateUpdate",
+      "tier": "advanced",
+      "via": "call",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "isTransmissionMaterial",
       "tier": "advanced",
       "via": "call",
       "examples": [
@@ -14038,37 +15320,8 @@
     },
     {
       "unit": "Renderer.setSharedMaterial",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "geometry.Ray",
-      "tier": "advanced",
-      "via": "call",
-      "examples": [
-        "model-character-interaction",
-        "physics-3d-basic",
-        "physics-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "geometry.AABB",
-      "tier": "advanced",
-      "via": "call",
-      "examples": [
-        "model-character-interaction",
-        "product-viewer"
-      ]
-    },
-    {
-      "unit": "geometry.intersect",
-      "tier": "advanced",
-      "via": "read",
       "examples": [
         "model-character-interaction",
         "product-viewer"
@@ -14076,7 +15329,7 @@
     },
     {
       "unit": "EventTouch.getLocation",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "model-character-interaction",
@@ -14777,7 +16030,7 @@
     },
     {
       "unit": "NodePool.constructor",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "node-pool"
@@ -14785,7 +16038,7 @@
     },
     {
       "unit": "NodePool.size",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "node-pool"
@@ -14793,7 +16046,7 @@
     },
     {
       "unit": "NodePool.get",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "node-pool"
@@ -14801,7 +16054,7 @@
     },
     {
       "unit": "SpriteFrame",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "particle-2d-basic",
@@ -14815,7 +16068,7 @@
     },
     {
       "unit": "ImageAsset",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "particle-2d-basic",
@@ -14832,7 +16085,7 @@
     },
     {
       "unit": "ParticleSystem2D",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "particle-2d-basic"
@@ -14840,7 +16093,7 @@
     },
     {
       "unit": "ParticleSystem2D.resetSystem",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "particle-2d-basic"
@@ -14848,7 +16101,7 @@
     },
     {
       "unit": "ParticleAsset",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "particle-2d-basic"
@@ -14901,7 +16154,7 @@
     },
     {
       "unit": "PhysicsSystem2D",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "physics-2d-basic",
@@ -14910,7 +16163,7 @@
     },
     {
       "unit": "PhysicsSystem2D.testPoint",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic"
@@ -14918,7 +16171,7 @@
     },
     {
       "unit": "PhysicsSystem2D.testAABB",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic"
@@ -14926,7 +16179,7 @@
     },
     {
       "unit": "PhysicsSystem2D.raycast",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic"
@@ -14934,7 +16187,7 @@
     },
     {
       "unit": "RigidBody2D",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic",
@@ -14943,7 +16196,7 @@
     },
     {
       "unit": "RigidBody2D.getMass",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic"
@@ -14951,7 +16204,7 @@
     },
     {
       "unit": "Collider2D",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "physics-2d-basic",
@@ -14960,7 +16213,7 @@
     },
     {
       "unit": "Collider2D.apply",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic",
@@ -14969,7 +16222,7 @@
     },
     {
       "unit": "BoxCollider2D",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic",
@@ -14978,7 +16231,7 @@
     },
     {
       "unit": "CircleCollider2D",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic",
@@ -14987,7 +16240,7 @@
     },
     {
       "unit": "PolygonCollider2D",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-basic"
@@ -14995,7 +16248,7 @@
     },
     {
       "unit": "PhysicsSystem2D.step",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "physics-2d-collision"
@@ -15003,7 +16256,7 @@
     },
     {
       "unit": "Contact2DType",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "physics-2d-collision"
@@ -15011,7 +16264,7 @@
     },
     {
       "unit": "PhysicsGroup",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "physics-2d-collision",
@@ -15398,7 +16651,7 @@
     },
     {
       "unit": "profiler",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "profiler-overlay"
@@ -15406,7 +16659,7 @@
     },
     {
       "unit": "Profiler",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "profiler-overlay"
@@ -15414,7 +16667,7 @@
     },
     {
       "unit": "Profiler.showStats",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "profiler-overlay"
@@ -15422,7 +16675,7 @@
     },
     {
       "unit": "Profiler.isShowingStats",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "profiler-overlay"
@@ -15430,7 +16683,7 @@
     },
     {
       "unit": "Profiler.setBackgroundColor",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "profiler-overlay"
@@ -15438,7 +16691,7 @@
     },
     {
       "unit": "Profiler.setFontColor",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "profiler-overlay"
@@ -15446,7 +16699,7 @@
     },
     {
       "unit": "Component.destroy",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "render-composite"
@@ -15454,7 +16707,7 @@
     },
     {
       "unit": "RenderTexture",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "render-composite"
@@ -15462,7 +16715,7 @@
     },
     {
       "unit": "RenderTexture.reset",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "render-composite"
@@ -15470,7 +16723,7 @@
     },
     {
       "unit": "SceneAsset.constructor",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "scene-asset-meta"
@@ -15705,7 +16958,7 @@
     },
     {
       "unit": "buildSkeletonTree",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "skinned-animation"
@@ -15713,7 +16966,7 @@
     },
     {
       "unit": "restoreBindPose",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "skinned-animation"
@@ -16025,7 +17278,7 @@
     },
     {
       "unit": "loadAssetAsync",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "static-model",
@@ -16266,7 +17519,7 @@
     },
     {
       "unit": "Size",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic",
@@ -16275,7 +17528,7 @@
     },
     {
       "unit": "TiledMap",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16283,7 +17536,7 @@
     },
     {
       "unit": "TiledMapAsset",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16291,7 +17544,7 @@
     },
     {
       "unit": "TiledLayer",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "tiledmap-basic"
@@ -16299,7 +17552,7 @@
     },
     {
       "unit": "TiledObjectGroup",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "tiledmap-basic"
@@ -16307,7 +17560,7 @@
     },
     {
       "unit": "TiledMap.getMapSize",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16315,7 +17568,7 @@
     },
     {
       "unit": "TiledMap.getTileSize",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16323,7 +17576,7 @@
     },
     {
       "unit": "TiledMap.getMapOrientation",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16331,7 +17584,7 @@
     },
     {
       "unit": "TiledMap.getLayers",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16339,7 +17592,7 @@
     },
     {
       "unit": "TiledMap.getLayer",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16347,7 +17600,7 @@
     },
     {
       "unit": "TiledMap.getObjectGroups",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16355,7 +17608,7 @@
     },
     {
       "unit": "TiledMap.getObjectGroup",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16363,7 +17616,7 @@
     },
     {
       "unit": "TiledMap.getProperties",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16371,7 +17624,7 @@
     },
     {
       "unit": "TiledMap.getProperty",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16379,7 +17632,7 @@
     },
     {
       "unit": "TiledMap.getPropertiesForGID",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16387,7 +17640,7 @@
     },
     {
       "unit": "TiledLayer.getTileGIDAt",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16395,7 +17648,7 @@
     },
     {
       "unit": "TiledLayer.getTileFlagsAt",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16403,7 +17656,7 @@
     },
     {
       "unit": "TiledLayer.setTileGIDAt",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16411,7 +17664,7 @@
     },
     {
       "unit": "TiledLayer.getLayerName",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16419,7 +17672,7 @@
     },
     {
       "unit": "TiledLayer.getLayerSize",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16427,7 +17680,7 @@
     },
     {
       "unit": "TiledLayer.getPositionAt",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16435,7 +17688,7 @@
     },
     {
       "unit": "TiledLayer.getTextures",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16443,7 +17696,7 @@
     },
     {
       "unit": "TiledLayer.getTileSet",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16451,7 +17704,7 @@
     },
     {
       "unit": "TiledLayer.isCullingDirty",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16459,7 +17712,7 @@
     },
     {
       "unit": "TiledLayer.getProperties",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16467,7 +17720,7 @@
     },
     {
       "unit": "TiledObjectGroup.getObjects",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16475,7 +17728,7 @@
     },
     {
       "unit": "TiledObjectGroup.getObject",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16483,7 +17736,7 @@
     },
     {
       "unit": "TiledObjectGroup.getGroupName",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16491,7 +17744,7 @@
     },
     {
       "unit": "TiledObjectGroup.getProperties",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16499,7 +17752,7 @@
     },
     {
       "unit": "TiledObjectGroup.getPositionOffset",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "tiledmap-basic"
@@ -16995,7 +18248,7 @@
     },
     {
       "unit": "SpriteFrame.createWithImage",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-asset-loading"
@@ -17003,7 +18256,7 @@
     },
     {
       "unit": "Button",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-asset-loading",
@@ -17012,7 +18265,7 @@
     },
     {
       "unit": "AssetManager.releaseAsset",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-asset-loading"
@@ -17020,7 +18273,7 @@
     },
     {
       "unit": "Toggle",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17028,7 +18281,7 @@
     },
     {
       "unit": "ToggleContainer",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17036,7 +18289,7 @@
     },
     {
       "unit": "Slider",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17044,7 +18297,7 @@
     },
     {
       "unit": "ProgressBar",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17052,7 +18305,7 @@
     },
     {
       "unit": "Layout",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components",
@@ -17061,7 +18314,7 @@
     },
     {
       "unit": "ScrollView",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17069,7 +18322,7 @@
     },
     {
       "unit": "EditBox",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17077,7 +18330,7 @@
     },
     {
       "unit": "UITransform.convertToWorldSpaceAR",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components",
@@ -17086,7 +18339,7 @@
     },
     {
       "unit": "ScrollView.scrollToBottom",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17094,7 +18347,7 @@
     },
     {
       "unit": "ScrollView.getScrollOffset",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17102,7 +18355,7 @@
     },
     {
       "unit": "EditBox.focus",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17110,7 +18363,7 @@
     },
     {
       "unit": "EditBox.isFocused",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "ui-components"
@@ -17814,7 +19067,7 @@
     },
     {
       "unit": "GraphicsComponent",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
@@ -17823,7 +19076,7 @@
     },
     {
       "unit": "GraphicsComponent.rect",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
@@ -17832,7 +19085,7 @@
     },
     {
       "unit": "GraphicsComponent.clear",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
@@ -17841,7 +19094,7 @@
     },
     {
       "unit": "GraphicsComponent.stroke",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
@@ -17850,7 +19103,7 @@
     },
     {
       "unit": "GraphicsComponent.fill",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
@@ -17859,7 +19112,7 @@
     },
     {
       "unit": "EventHandler",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic",
@@ -17868,7 +19121,7 @@
     },
     {
       "unit": "VideoPlayer",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic"
@@ -17876,7 +19129,7 @@
     },
     {
       "unit": "VideoPlayer.play",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic"
@@ -17884,7 +19137,7 @@
     },
     {
       "unit": "VideoPlayer.pause",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic"
@@ -17892,7 +19145,7 @@
     },
     {
       "unit": "VideoPlayer.resume",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "video-basic"
@@ -17900,7 +19153,7 @@
     },
     {
       "unit": "VideoPlayer.ResourceType",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "video-basic"
@@ -17908,7 +19161,7 @@
     },
     {
       "unit": "VideoClip",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "video-basic"
@@ -17916,7 +19169,7 @@
     },
     {
       "unit": "screen",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "video-basic"
@@ -17933,7 +19186,7 @@
     },
     {
       "unit": "macro",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "read",
       "examples": [
         "video-basic"
@@ -17941,7 +19194,7 @@
     },
     {
       "unit": "WebView",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -17949,7 +19202,7 @@
     },
     {
       "unit": "WebView.evaluateJS",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -17957,7 +19210,7 @@
     },
     {
       "unit": "WebView.setJavascriptInterfaceScheme",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -17965,7 +19218,7 @@
     },
     {
       "unit": "WebView.setOnJSCallback",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -17981,7 +19234,7 @@
     },
     {
       "unit": "WebView.onEnable",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -17989,7 +19242,7 @@
     },
     {
       "unit": "WebView.onDisable",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -17997,7 +19250,7 @@
     },
     {
       "unit": "WebView.onDestroy",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -18005,7 +19258,7 @@
     },
     {
       "unit": "WebView.update",
-      "tier": "advanced",
+      "tier": "supporting",
       "via": "call",
       "examples": [
         "webview-basic"
@@ -18071,13 +19324,6 @@
       ]
     },
     {
-      "unit": "dragonBones.ArmatureDisplay.playTimes",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
       "unit": "dragonBones.ArmatureData.animations",
       "tier": "supporting",
       "examples": [
@@ -18113,6 +19359,48 @@
       ]
     },
     {
+      "unit": "KHR_MESH_QUANTIZATION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "KHR_MESHOPT_COMPRESSION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "EXT_MESHOPT_COMPRESSION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "KHR_DRACO_MESH_COMPRESSION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "TRANSMISSION_LAYER",
+      "tier": "advanced",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "defaultTransmissionVisibility",
+      "tier": "advanced",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
       "unit": "Node._originalSceneId",
       "tier": "internal",
       "examples": [
@@ -18135,84 +19423,84 @@
     },
     {
       "unit": "ParticleSystem2D.emitterMode",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.gravity",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.speed",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.startSize",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.endSize",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.life",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.emissionRate",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.duration",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.rotationIsDir",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "Collider2D.TYPE",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-basic"
       ]
     },
     {
       "unit": "PolygonCollider2D.threshold",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-basic"
       ]
     },
     {
       "unit": "PHYSICS_2D_PTM_RATIO",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-basic",
         "physics-2d-collision"
@@ -18220,14 +19508,14 @@
     },
     {
       "unit": "PhysicsSystem2D.collisionMatrix",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-collision"
       ]
     },
     {
       "unit": "RigidBody2D.enabledContactListener",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-collision"
       ]
@@ -18277,7 +19565,7 @@
     },
     {
       "unit": "SceneGlobals.ambient",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "render-composite",
         "scene-globals-read"
@@ -18285,14 +19573,14 @@
     },
     {
       "unit": "SceneAsset.scene",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-asset-meta"
       ]
     },
     {
       "unit": "SceneGlobals.shadows",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
@@ -18306,49 +19594,49 @@
     },
     {
       "unit": "SceneGlobals.fog",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.octree",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.skin",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.lightProbeInfo",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.postSettings",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.bakedWithStationaryMainLight",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.disableLightmap",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
@@ -18362,14 +19650,14 @@
     },
     {
       "unit": "AssetManager.assets",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "ui-asset-loading"
       ]
     },
     {
       "unit": "EventHandler.target",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18377,7 +19665,7 @@
     },
     {
       "unit": "EventHandler.component",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18385,7 +19673,7 @@
     },
     {
       "unit": "EventHandler.handler",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18393,7 +19681,7 @@
     },
     {
       "unit": "EventHandler.customEventData",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18401,7 +19689,7 @@
     },
     {
       "unit": "VideoPlayer.videoPlayerEvent",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic"
       ]
@@ -18415,14 +19703,14 @@
     },
     {
       "unit": "Screen.exitFullScreen",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic"
       ]
     },
     {
       "unit": "WebView.webviewEvents",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "webview-basic"
       ]
@@ -18487,13 +19775,6 @@
       ]
     },
     {
-      "unit": "dragonBones.ArmatureDisplay.playTimes",
-      "tier": "advanced",
-      "examples": [
-        "dragonbones-basic"
-      ]
-    },
-    {
       "unit": "dragonBones.ArmatureData.animations",
       "tier": "supporting",
       "examples": [
@@ -18529,6 +19810,48 @@
       ]
     },
     {
+      "unit": "KHR_MESH_QUANTIZATION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "KHR_MESHOPT_COMPRESSION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "EXT_MESHOPT_COMPRESSION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "KHR_DRACO_MESH_COMPRESSION",
+      "tier": "advanced",
+      "examples": [
+        "gltf-meshopt"
+      ]
+    },
+    {
+      "unit": "TRANSMISSION_LAYER",
+      "tier": "advanced",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
+      "unit": "defaultTransmissionVisibility",
+      "tier": "advanced",
+      "examples": [
+        "gltf-viewer"
+      ]
+    },
+    {
       "unit": "Node._originalSceneId",
       "tier": "internal",
       "examples": [
@@ -18551,84 +19874,84 @@
     },
     {
       "unit": "ParticleSystem2D.emitterMode",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.gravity",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.speed",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.startSize",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.endSize",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.life",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.emissionRate",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.duration",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "ParticleSystem2D.rotationIsDir",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "particle-2d-basic"
       ]
     },
     {
       "unit": "Collider2D.TYPE",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-basic"
       ]
     },
     {
       "unit": "PolygonCollider2D.threshold",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-basic"
       ]
     },
     {
       "unit": "PHYSICS_2D_PTM_RATIO",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-basic",
         "physics-2d-collision"
@@ -18636,14 +19959,14 @@
     },
     {
       "unit": "PhysicsSystem2D.collisionMatrix",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-collision"
       ]
     },
     {
       "unit": "RigidBody2D.enabledContactListener",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "physics-2d-collision"
       ]
@@ -18693,7 +20016,7 @@
     },
     {
       "unit": "SceneGlobals.ambient",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "render-composite",
         "scene-globals-read"
@@ -18701,14 +20024,14 @@
     },
     {
       "unit": "SceneAsset.scene",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-asset-meta"
       ]
     },
     {
       "unit": "SceneGlobals.shadows",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
@@ -18722,49 +20045,49 @@
     },
     {
       "unit": "SceneGlobals.fog",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.octree",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.skin",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.lightProbeInfo",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.postSettings",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.bakedWithStationaryMainLight",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
     },
     {
       "unit": "SceneGlobals.disableLightmap",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "scene-globals-read"
       ]
@@ -18778,14 +20101,14 @@
     },
     {
       "unit": "AssetManager.assets",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "ui-asset-loading"
       ]
     },
     {
       "unit": "EventHandler.target",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18793,7 +20116,7 @@
     },
     {
       "unit": "EventHandler.component",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18801,7 +20124,7 @@
     },
     {
       "unit": "EventHandler.handler",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18809,7 +20132,7 @@
     },
     {
       "unit": "EventHandler.customEventData",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic",
         "webview-basic"
@@ -18817,7 +20140,7 @@
     },
     {
       "unit": "VideoPlayer.videoPlayerEvent",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic"
       ]
@@ -18831,19 +20154,19 @@
     },
     {
       "unit": "Screen.exitFullScreen",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "video-basic"
       ]
     },
     {
       "unit": "WebView.webviewEvents",
-      "tier": "advanced",
+      "tier": "supporting",
       "examples": [
         "webview-basic"
       ]
     }
   ],
   "unclaimedCore": [],
-  "unclaimedRequired": 2948
+  "unclaimedRequired": 5
 }
