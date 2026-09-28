@@ -14,7 +14,9 @@
 | W02    | ✅ 完成    | `tools/debug/probes/coldstart-probe/` + `tools/verify/w02-coldstart.cjs` + `docs/evidence/w02-coldstart.json`（历史缺陷**未复现**，不改初始化代码） |
 | W03    | ✅ 完成    | `tools/debug/probes/capture-probe/` + `tools/verify/w03-capture.cjs` + `docs/evidence/w03-capture.json` + 截图 ×4 + 手册 capturing-screenshots.md + **WebGL2 preserveDrawingBuffer 缺陷修复**（webgl2-swapchain.ts，file-map/UPSTREAM 已登记） |
 | W04–W08 | ✅ 完成    | 详见下五节（W04 画布覆盖+冲突合同、W05 坐标矩阵、W06 GAP-W6-1 修复、W07 Label 语义矩阵、W08 单时钟驱动）              |
-| W09–W14 | ⬜ 待办   | P2 装配层（2D helper/场景栈/音频/调试树/性能/发布）                                                                |
+| W09–W11 | ✅ 完成    | `src/air/{ui-kit,scene-stack,audio-service}.ts` + assembly 探针 25/25（详见下三节）                                   |
+| W12–W13 | ⬜ 待办   | 调试树扩展 / 性能分轴（设计已列，见下）                                                                              |
+| W14     | 🟡 部分   | 尺寸记录已落（docs/evidence/w14-sizes.json）；独立消费项目/CSP/sourcemap 面待后续批次                                  |
 
 ## W01 — WebGL 上下文丢失（P0）
 
