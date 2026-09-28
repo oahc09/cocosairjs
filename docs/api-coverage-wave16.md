@@ -42,4 +42,4 @@ The final Wave 16 report is bound to inventory fingerprint `238a4afd6897feea` an
 
 The 11 documented-only units are four engine-owned DragonBones lifecycle/singleton entries, six primitive top-level extension constants that the current per-API trace cannot observe without changing their runtime types, and `AirTransmissionCapture.onDestroy`, whose direct invocation would bypass component teardown ownership. The stable examples still check the primitive values, and the other Advanced feature paths have runtime proofs.
 
-The V1.1 API Coverage gate now passes with the original 100% / 90% / 80% thresholds. The overall release verdict still requires the current Gallery artifact, V1.1/DevTools evidence, V1.2 matrix, and a clean candidate check.
+The V1.1 API Coverage gate passes with the original 100% / 90% / 80% thresholds. The complete runtime/Gallery release gate then passed on the clean Wave 16 candidate: `npm run verify:release` returned **READY (0 blockers)** after confirming the current Gallery artifact, V1.1 and DevTools evidence, and V1.2 matrix.

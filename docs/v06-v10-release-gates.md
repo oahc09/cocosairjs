@@ -114,6 +114,6 @@ The r49 NOT READY verdict is superseded for the public Web runtime release candi
 | Specification compliance | No blocking compliance failures | 0 fail / 1 documented Draco decoder warning | PASS |
 | Dependency license audit | No unresolved fail | 0 FAIL / 1 accepted engine-pal risk | PASS |
 
-The current runtime/Gallery release scope is READY when `npm run verify:release` passes on the final clean commit. That checker also binds V1.1, DevTools, Gallery, V1.2, and inventory evidence to the same candidate. The final clean-candidate invocation is performed after this Wave 16 commit.
+The complete runtime/Gallery release scope passed on the clean Wave 16 candidate: `npm run verify:release` returned **READY (0 blockers)**. That checker bound V1.1, DevTools, Gallery, V1.2, and inventory evidence to the same candidate.
 
 The V0.9 LLM Agent Gate remains NOT_RUN because it requires external LLM credentials and scores agent behavior rather than the runtime package. It is separated from the npm runtime release gate; do not claim an Agent Gate score until that evaluation is run. `npm publish` was not performed.
