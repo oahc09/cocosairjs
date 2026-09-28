@@ -16,7 +16,7 @@
 
 **用户已确认的 5 个决策：**
 1. 正文中文，篇目标题保留英文原名对照（如「Materials 材质」）
-2. 目录全量对齐：无对应能力的篇目保留条目，正文如实写"当前不包含"+ 指向 README §Air V0.1 能力边界
+2. 目录全量对齐：无对应能力的篇目保留条目，正文如实写"当前不包含"+ 指向 README §Air Engine Extraction 能力边界
 3. 有能力的篇目**每篇新建专属示例**；确定 N/A 的篇目无示例
 4. 纯 Markdown，不做 HTML 手册站
 5. **示例位置：`docs/manual/examples/manual-<slug>/`**（第二轮反馈调整；不进 `examples/` 主树）
@@ -85,7 +85,7 @@ API 以 `build/cocosair.module.d.ts` 为准；相关专题文档见延伸阅读�
 # <英文原名> <中文标题>
 > 开篇定义段（说明 three.js 中这是什么、AIR 为何当前不包含）。
 ## 当前不包含
-（如实陈述；引用 README §Air V0.1 能力边界）
+（如实陈述；引用 README §Air Engine Extraction 能力边界）
 ## 近似替代
 （指向最近的真实能力：如 How to use Post Processing → ToneMappingType 色调映射单项；
  Using Shadertoy shaders → 自定义 effect 机制 docs/gltf-extension-reference.md）
@@ -280,7 +280,7 @@ window.__airApp = app;                 // 每个示例末尾固定，供控制�
 
 - `README.md`「文档」区块首行加一条：`- [开发手册](docs/manual/index.md) — 对齐 three.js manual 的 60 篇体系教程`
 - 旧教程不迁移：manual 对应篇「延伸阅读」回链（06→creating-a-scene/setup、07→loading-models、08→animation-system、09→setup/debugging-javascript）
-- N/A 篇目统一回链 README §Air V0.1 能力边界
+- N/A 篇目统一回链 README §Air Engine Extraction 能力边界
 
 ## 七、风险与已证陷阱（执行时逐条对照）
 

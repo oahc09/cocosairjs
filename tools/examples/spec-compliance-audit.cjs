@@ -390,7 +390,7 @@ function main () {
   const dirs = fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
     .filter((e) => e.isDirectory() && e.name !== 'shared' && e.name !== 'node_modules')
     .map((e) => e.name).sort();
-  const report = { measuredAt: new Date().toISOString(), tool: 'tools/examples/spec-compliance-audit.cjs', spec: 'ai/Cocos Air V1.1 — Example Specification 补充执行规范.md', total: 0, examples: [], globalFindings };
+  const report = { measuredAt: new Date().toISOString(), tool: 'tools/examples/spec-compliance-audit.cjs', spec: 'ai/Cocos Air — Example Specification 补充执行规范.md', total: 0, examples: [], globalFindings };
   for (const dir of dirs) {
     const file = path.join(EXAMPLES_DIR, dir, 'example.json');
     if (!fs.existsSync(file)) { continue; }

@@ -3,7 +3,7 @@
 > 审查人：WorkBuddy（独立于 V0.3 实施会话）
 > 审查时间：2026-09-12 17:04–17:35
 > 审查对象：`cb64da4..563e6a0` 的 V0.3 交付 + 工作区当前状态
-> 依据：《Cocos Air V0.3 — Asset Integration & Runtime Verification 任务计划书》与 `docs/11-v03-verification.md` 的自验收声明
+> 依据：[Cocos Air Standalone Asset Pipeline — Asset Integration & Runtime Verification 任务计划书](../ai/Cocos Air — Standalone Asset Pipeline 任务计划书.md) 与 `docs/11-v03-verification.md` 的自验收声明
 
 ## 结论
 

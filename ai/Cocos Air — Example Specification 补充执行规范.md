@@ -1,4 +1,4 @@
-# Cocos Air V1.1 — Example Specification 执行规范
+# Cocos Air — Example Specification 执行规范
 
 ## 1. Example 不再以“名称”作为实施单位
 
@@ -1171,7 +1171,7 @@ World Transform
 使用：
 
 ```text
-V0.5.1 DevTools Session Contract
+Developer Ecosystem DevTools Session Contract
 inspectScene
 inspectNode
 ```
@@ -1535,7 +1535,7 @@ files.json
 
 ---
 
-# 25. V1.1 DoD 增补
+# 25. Gallery & API Coverage DoD 增补
 
 原 DoD 之外增加：
 
@@ -1571,7 +1571,7 @@ API verified coverage：
 
 # 26. 最终原则
 
-V1.1 不应该是：
+Gallery & API Coverage 不应该是：
 
 ```text
 120 个漂亮 Demo

@@ -13,7 +13,7 @@
 > `createAirApp({ physics: 'builtin' | 'cannon' })`（默认 builtin，additive 登记 `docs/v08-api-stability.md`）。
 > **发布面 provenance**：文中盘符绝对路径（取证 scratch / 上游快照 / benchmark 目录）不随 npm 包发布、不保证可复现；
 > 可复现判据一律以仓库内 `npm run verify:*` 系列门禁为准（F-130 / owner-decisions #17(a)）。
-> 版本号 `1.2.0`（r48，owner-decisions §5：对齐 V1.2 里程碑；`package.json` / `AIR_VERSION` 由 smoke-01 锁定一致）。registry 就绪核对：npm ping PONG；npm whoami ENEEDAUTH（本环境无发布凭据，npm publish 须在有凭据环境单独执行）。
+> 版本号 `1.0.0`（`package.json` / `AIR_VERSION` 由 smoke-01 锁定一致）。registry 就绪核对：npm ping PONG；npm whoami ENEEDAUTH（本环境无发布凭据，`npm publish` 须在有凭据环境单独执行）。
 
 ```bash
 npm install

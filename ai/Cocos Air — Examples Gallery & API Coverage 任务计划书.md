@@ -1,20 +1,20 @@
-# Cocos Air V1.1 — Examples Gallery & API Coverage 任务计划书
+# Cocos Air — Examples Gallery & API Coverage 任务计划书
 ## 最终完整执行版
 
 ---
 
 # 0. 阶段定位
 
-V1.1 不以新增 Engine Feature 为主要目标。
+Gallery & API Coverage 不以新增 Engine Feature 为主要目标。
 
 核心目标：
 
 > 建立 Cocos Air 官方 Examples Gallery，使 Examples 成为开发者与 Agent 的能力发现、学习、源码参考和可验证运行入口，并建立 Public API → Example → Recipe → Benchmark 的可计算覆盖体系。
 
-V1.1 不假设此前：
+Gallery & API Coverage 不假设此前：
 
 ```text
-V1.0.0 已完成
+Runtime Release 已完成
 30+ Recipe 已 Stable
 Agent Gate 已通过
 ```
@@ -34,9 +34,9 @@ in-progress
 
 ---
 
-# 1. V1.1 开工硬门禁 G0 — 基线交接
+# 1. Gallery & API Coverage 开工硬门禁 G0 — 基线交接
 
-V1.1 开工首先记录当前真实基线。
+Gallery & API Coverage 开工首先记录当前真实基线。
 
 必须记录：
 
@@ -108,7 +108,7 @@ cataloged capability
 
 ---
 
-# 3. V1.1 可并行工作的范围
+# 3. Gallery & API Coverage 可并行工作的范围
 
 即使前序 Gate 尚未完全完成，也允许先实施：
 
@@ -133,13 +133,13 @@ API Inventory Tooling
 但这些只能标记为：
 
 ```text
-V1.1 Framework Work
+Gallery & API Coverage Framework Work
 ```
 
 不能据此宣称：
 
 ```text
-V1.1 inherited all V1.0 capabilities
+Gallery & API Coverage inherited all Runtime Release capabilities
 ```
 
 Recipe / Benchmark / DevTools / Package 的正式关联只有在对应交付冻结后才能纳入 Release Gate。
@@ -159,7 +159,7 @@ test/
 tools/
 ```
 
-V1.1 不新增：
+Gallery & API Coverage 不新增：
 
 ```text
 addons/
@@ -268,7 +268,7 @@ One Feature / One Example
 
 ---
 
-# 7. V1.1 实施顺序原则
+# 7. Gallery & API Coverage 实施顺序原则
 
 禁止：
 
@@ -636,9 +636,9 @@ internal
 
 不进入 Gallery Coverage Gate。
 
-### V1.1 API 分级范围冻结（2026-09-28）
+### Gallery & API Coverage API 分级范围冻结（2026-09-28）
 
-V1.1 的 tier 必须由声明的产品/API 范围决定，不能把“未被其他正则匹配”自动解释成 Advanced。分级规则如下：
+Gallery & API Coverage 的 tier 必须由声明的产品/API 范围决定，不能把“未被其他正则匹配”自动解释成 Advanced。分级规则如下：
 
 - Core、Important 按当前已冻结的公开 API 分级策略执行。
 - Advanced 只包含明确纳入本次发布 API 覆盖的功能面：DragonBones 资产、显示对象、工厂和动画缓存；`geometry.Ray`、`geometry.AABB` 与 `geometry.intersect`；`renderer.scene.Camera`；glTF decoder 与几何压缩入口；AIR transmission 材质与 capture 入口。
@@ -802,7 +802,7 @@ CoreVerifiedRate
 CoreVerified / CoreTotal
 ```
 
-V1.1 Release：
+Gallery & API Coverage Release：
 
 ```text
 CoreVerifiedRate = 100%
@@ -850,7 +850,7 @@ AdvancedTotal
 - AdvancedDocumentedOnly
 ```
 
-V1.1 Release：
+Gallery & API Coverage Release：
 
 ```text
 AdvancedVerifiedRate >= 80%
@@ -1239,7 +1239,7 @@ Deprecated 默认隐藏。
 
 当前服务器若只支持一级目录：
 
-V1.1 必须升级：
+Gallery & API Coverage 必须升级：
 
 ```text
 Recursive Discovery
@@ -1889,7 +1889,7 @@ Important API Verified Coverage >= 80%
 
 ---
 
-# 69. Wave 3 — V1.1 Release
+# 69. Wave 3 — Gallery & API Coverage Release
 
 增加：
 
@@ -1903,7 +1903,7 @@ Showcase
 Remaining API Coverage
 ```
 
-V1.1 Release 数量门槛：
+Gallery & API Coverage Release 数量门槛：
 
 ```text
 Stable Examples >= 120
@@ -1931,7 +1931,7 @@ Stretch Goal
 130–136 Stable Examples
 ```
 
-不是 V1.1.0 Release blocker。
+不是 Gallery & API Coverage Release blocker。
 
 ---
 
@@ -2256,7 +2256,7 @@ Evidence
 
 # 86. API Coverage Release Gate
 
-V1.1：
+Gallery & API Coverage：
 
 ```text
 CoreVerifiedRate = 100%
@@ -2504,7 +2504,7 @@ Expected Error / Fallback PASS
 
 ---
 
-# 97. V1.1 测试范围
+# 97. Gallery & API Coverage 测试范围
 
 必须新增：
 
@@ -2552,7 +2552,7 @@ Asset License
 
 ---
 
-# 98. V1.1 Definition of Done
+# 98. Gallery & API Coverage Definition of Done
 
 必须同时满足：
 
@@ -2597,7 +2597,7 @@ Wave 1 >= 40 Stable
 
 Wave 2 >= 90 Stable
 
-V1.1 Release >= 120 Stable
+Gallery & API Coverage Release >= 120 Stable
 
 Core Verified Coverage = 100%
 
@@ -2631,16 +2631,16 @@ Gallery Artifact 独立运行 PASS
 作为：
 
 ```text
-V1.1.x
+Gallery & API Coverage.x
 ```
 
 扩展目标。
 
-不是 V1.1.0 Release Blocker。
+不是 Gallery & API Coverage Release Blocker。
 
 ---
 
-# 100. V1.1 最终执行顺序
+# 100. Gallery & API Coverage 最终执行顺序
 
 严格：
 
@@ -2683,7 +2683,7 @@ Wave 3 — 120 Stable
  ↓
 License / Consumer / URL Full Regression
  ↓
-V1.1 RC
+Gallery & API Coverage RC
 ```
 
 ---
@@ -2734,9 +2734,9 @@ Asset License
 
 ---
 
-# 102. V1.1 最终判断标准
+# 102. Gallery & API Coverage 最终判断标准
 
-V1.1 不以：
+Gallery & API Coverage 不以：
 
 ```text
 Examples 目录很多
@@ -2778,7 +2778,7 @@ Asset License 是否可追踪？
 
 # 103. 最终目标
 
-Cocos Air V1.1 建立：
+Cocos Air Gallery & API Coverage 建立：
 
 ```text
                 Cocos Air Examples
@@ -2807,4 +2807,4 @@ Benchmark
 
 的长期能力知识网络。
 
-这才是 V1.1 正式完成的定义。
+这才是 Gallery & API Coverage 正式完成的定义。

@@ -1,6 +1,6 @@
 {
  "name": "cocosair.js",
- "version": "1.2.0",
+ "version": "1.0.0",
  "description": "Cocos AIR — Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
  "license": "MIT",
  "type": "commonjs",
@@ -94,5 +94,8 @@
   "@cocos/box2d": "1.0.2",
   "@cocos/cannon": "1.2.8",
   "@cocos/dragonbones-js": "^1.0.1"
+ },
+ "overrides": {
+  "decamelize": "1.0.0"
  }
 }

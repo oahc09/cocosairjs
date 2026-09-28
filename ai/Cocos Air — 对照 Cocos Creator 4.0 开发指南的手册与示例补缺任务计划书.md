@@ -38,7 +38,7 @@
 | P1 | `physics-2d/physics-2d-system.md`、`physics/physics-example.md` 及碰撞相关篇 | 有 Gallery 物理样例，但手册缺碰撞层/Mask、刚体类型、事件及 backend 差异 | 在 `physics.md` 之后增加 `docs/manual/physics-2d-and-3d.md` 或明确分节；默认 backend 和可选 backend 分开写 | 复用 `examples/physics-2d-collision`、`physics-3d-collision`；验证真实碰撞/触发事件、过滤规则、重置，不能用距离判定冒充物理 |
 | P1 | `audio-system/overview.md`、`audio-system/audiosource.md`、`ui-system/components/editor/{videoplayer,webview}.md` | `index.md` 称音视频不包含；手册无 Web 用户手势解锁、播放错误、DOM overlay 边界 | 新增 `docs/manual/audio-video-webview.md`，分三节记录 Web 环境限制和释放 | 复用 `examples/audio-basic`、`video-basic`、`webview-basic`；验证用户手势、状态变化、失败或不可用提示、卸载后无遗留 DOM/音频 |
 | P1 | `asset/dragonbones.md`、`asset/spine.md`、`asset/tiledmap.md`、`particle-system/2d-particle/2d-particle.md` | 手册“能力边界”仍把 DragonBones 归入不包含；其他三类基本无入口 | 加 `docs/manual/2d-assets-and-effects.md`，按四小节写能力/资产格式/初始化/释放；Spine 能力状态单独核对，不由 DragonBones 推断 | 复用 `examples/dragonbones-basic`、`tiledmap-basic`、`particle-2d-basic`；Spine 若无已验证示例，先列为待验证候选，不强建 |
-| P2 | `render-pipeline/use-post-process.md`、`render-pipeline/post-process/custom.md`、`shader/index.md` | `post-processing.md`、`how-to-use-post-processing.md`、`debugging-glsl.md`、`shadertoy.md` 保留早期探针结论；V1.2 已有 custom pipeline 出口，但用户侧装配能力未在本次证实 | 做小范围能力复核，记录 API→样例→像素效果；通过后再改手册状态；Shader 正式示例与既有 `ai` 计划衔接 | 必须有像素级变化、参数变化和故意编译错误定位，不能以属性读回或非空首帧作为完成 |
+| P2 | `render-pipeline/use-post-process.md`、`render-pipeline/post-process/custom.md`、`shader/index.md` | `post-processing.md`、`how-to-use-post-processing.md`、`debugging-glsl.md`、`shadertoy.md` 保留早期探针结论；Feature Regression 已有 custom pipeline 出口，但用户侧装配能力未在本次证实 | 做小范围能力复核，记录 API→样例→像素效果；通过后再改手册状态；Shader 正式示例与既有 `ai` 计划衔接 | 必须有像素级变化、参数变化和故意编译错误定位，不能以属性读回或非空首帧作为完成 |
 
 ### 实施时必须处理的交叉错误
 

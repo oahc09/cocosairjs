@@ -28,13 +28,13 @@
 - 单仓库 src/build/examples/test/tools/docs，不引入 Addons、平行引擎 API、离线导入器要求或新的默认调试 Runtime 层。
 - 使用当前冻结公开 API/声明和包配置，不按旧方案擅自更改产物名、包名、CommonJS/ESM 或构建命令。
 - Runtime 默认不包含 tools/debug、Gallery 或 Benchmark runner；DevTools 与 Gallery 是显式独立产物，安装 runtime 包不等于获得它们。
-- V0.5 的 21 项扩展按真实 handler/decoder/device/渲染证据审查；cataloged/字段存在/shader 编译成功不是视觉支持证据。
+- glTF Extension Coverage 的 21 项扩展按真实 handler/decoder/device/渲染证据审查；cataloged/字段存在/shader 编译成功不是视觉支持证据。
 - Engine Gate 用冻结参考实现；Agent Gate 用真实生成源码，两者共用 validator 但独立判定。scripted solver 不算 LLM 能力。源代码任务必须 fresh build/fresh page，不接受只修当前 session。
 - 环境与参考有效时的运行时回归是 Engine FAIL，不是 INFRA。参考文件损坏/浏览器无法可信启动才是 INFRA。正确拒绝 Agent 越权请求仍为 VALID；真实隔离突破才 INVALID_RUN，阻断并修复环境。
 - eligible 计入编译失败、Agent 超时、预算耗尽、错误终态、拒绝后失败。保留全部计划 repetition 和 attempt，不无限补跑挑最好结果。First Compile 只统计源码任务；不同 Agent/Knowledge profile 不混算。
 - Benchmark 至少 100 个独立点；申报版本更高的冻结覆盖要求必须保留。采用申报版本已批准的成功率门槛，不临时修改。
 - Recipe 的 validated 计数为 validated ∪ stable；draft/deprecated 不计有效。RC/1.0 至少 30 stable，完整场景/交互/视觉/生命周期证据不可缺。
-- V1.1 全部 Wave 示例先有 Frozen Spec：准确 API、效果、资产、场景、操作、Ready、Validator/阈值、视觉、生命周期。累计 stable 唯一 ID：40→90→120，Pilot 计入累计；130–136 是扩展目标。
+- Gallery & API Coverage 全部 Wave 示例先有 Frozen Spec：准确 API、效果、资产、场景、操作、Ready、Validator/阈值、视觉、生命周期。累计 stable 唯一 ID：40→90→120，Pilot 计入累计；130–136 是扩展目标。
 - API 分母冻结；claimed 不算 verified。Core verified=100%，Important≥90%，Advanced verified≥80%、documented-only≤20%、剩余未解决=0。文档不计 verified 分子；API 标签不是证据。
 - Manifest 先允许缺图生成，截图工具消费同一清单，发布才强制 stable 图 current。缩略图不能未经批准变成回归参考。证据变化按内容依赖失效。
 - 保留旧 URL、统一发现、--example、深链刷新、嵌套部署、多文件 Source Viewer、显式 DevTools、公开知识与私有答案隔离。

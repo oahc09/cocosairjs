@@ -1,7 +1,7 @@
 # Cocos Air 进展日志（V0.1 → V0.6；V1.x 见文末分工说明）
 
 > 基线：`cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)`
-> 依据：《Cocos Air V0.1 — cocos4 Web-TS Engine Extraction 任务计划书》
+> 依据：《Cocos Air — cocos4 Web-TS Engine Extraction 任务计划书》
 > 详细验收证据见 `docs/acceptance-report.md`。
 
 ---
@@ -89,7 +89,7 @@
 
 ## 2026-09-12（V0.2）：Code First DX & SDK 化 → **V0.2 RC**
 
-依据《Cocos Air V0.2 — Code First DX & SDK 化任务计划书（与 V0.1 连续版）》，L0–L17 全部通过：
+依据《Cocos Air — Code First DX & SDK 化任务计划书》，L0–L17 全部通过：
 
 - **Task 1/6/7 核心 API**：`createAirApp` 支持 `canvas: string(selector) | HTMLCanvasElement`，
   新增 `AirApp.getScene()`；`src/air/utils/` 新增 `load-asset.ts`（Promise Asset Helper）、

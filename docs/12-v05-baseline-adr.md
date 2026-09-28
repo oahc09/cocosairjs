@@ -1,7 +1,7 @@
 # V0.5 — T0 基线报告与 ADR
 
 > 阶段：T0（Gate G0）· 日期：2026-09-12
-> 依据：《Cocos Air V0.5 — Full glTF Extension Coverage 任务计划书》§6 T0
+> 依据：《Cocos Air — Full glTF Extension Coverage 任务计划书（参考 Three.js GLTFLoader）》§6 T0
 
 ## 1. 基线验证（2026-09-12 21:10）
 

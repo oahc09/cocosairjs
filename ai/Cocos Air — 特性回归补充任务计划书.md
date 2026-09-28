@@ -1,28 +1,28 @@
-# Cocos Air V1.2 — 特性回归补充任务计划书
+# Cocos Air — 特性回归补充任务计划书
 
-> 起草日期：2026-09-19（v1.1 修订：并入 3D 物理后端、post-process/custom pipeline 完整版、ui 完整组件集、marionette 2D pose-nodes）
+> 起草日期：2026-09-19（Gallery & API Coverage 修订：并入 3D 物理后端、post-process/custom pipeline 完整版、ui 完整组件集、marionette 2D pose-nodes）
 > 上游基线：`cocos4`（本地 git 仓库，已从 `4.0.0-alpha.33 snapshot 2026-09-12` 更新至 **`4.0.0-alpha.34`**）
-> 前置版本：V1.1（Examples Gallery & API Coverage，12 examples / 8 categories，Browser Matrix 3/3 PASS）
+> 前置版本：Gallery & API Coverage（Examples Gallery & API Coverage，12 examples / 8 categories，Browser Matrix 3/3 PASS）
 
 ---
 
 # 0. 阶段定位
 
-V1.1 以 Examples Gallery 与 API Coverage 体系为主要目标，不以新增 Engine Feature 为目标。
+Gallery & API Coverage 以 Examples Gallery 与 API Coverage 体系为主要目标，不以新增 Engine Feature 为目标。
 
-V1.2 解决一个历史欠账：
+Feature Regression 解决一个历史欠账：
 
-> V0.1 Extraction 时按 Web Code First 最小闭包裁剪掉了官方模块。V1.2 将这些裁剪项**全部回归**到 Cocos Air —— 共 **16 个回归组**（12 项整模块/入口级回归 + 4 组模块内差量补齐），使 Air 的模块覆盖面从「3D 核心运行时」扩展到「官方 Web feature unit 的完整对齐」。
+> Engine Extraction Extraction 时按 Web Code First 最小闭包裁剪掉了官方模块。Feature Regression 将这些裁剪项**全部回归**到 Cocos Air —— 共 **16 个回归组**（12 项整模块/入口级回归 + 4 组模块内差量补齐），使 Air 的模块覆盖面从「3D 核心运行时」扩展到「官方 Web feature unit 的完整对齐」。
 
-V1.2 的三个硬性判定：
+Feature Regression 的三个硬性判定：
 
 1. **全部回归，不再裁剪**：16 个回归组一个不少（个别项经评估后按 Deviation 登记豁免的，必须给出可复核理由并经确认，默认不豁免）。
 2. **抽取来源是官方代码**：所有回归文件从 `cocos4` 本地仓库原样复制，禁止手写替代实现；确需修改的文件逐个登记 `upstream-file-map.json` reason。已登记的 Air 修改中，因回归而不再需要的（如 `pose-graph/runtime-exports.ts` 的 pose-nodes 导入删除）必须恢复官方原文并更新登记。
-3. **不回退存量能力**：V1.1 结束时的 12 examples、API Coverage 体系、Browser Matrix、benchmark 回归基线全部保持绿色。
+3. **不回退存量能力**：Gallery & API Coverage 结束时的 12 examples、API Coverage 体系、Browser Matrix、benchmark 回归基线全部保持绿色。
 
 ---
 
-# 1. V1.2 回归范围 — 16 个回归组
+# 1. Feature Regression 回归范围 — 16 个回归组
 
 ## 1.1 回归组总表
 
@@ -60,9 +60,9 @@ cocos/2d/renderer/native-2d.jsb.ts            # jsb 变体，跳过（native-2d-
 
 随基座一并恢复官方 2D 关联 exports：`2d.ts`、`graphics.ts`、`intersection-2d.ts`、`sorting-2d.ts`、`mask.ts`、`geometry-renderer.ts`（是否全量进 `air.ts` 聚合导出面，见决策点 D5）。
 
-事实澄清（相对 v1.0 计划稿的修正）：`cocos/rendering/custom/` 管线核心 **22/26 文件 Air 已保留**，`src/exports/custom-pipeline.ts` 已接线——「custom pipeline 完整版」的真实差量只有 3 个布局图工具文件；真正的差量大头在 `post-process/`（37 文件，Air 仅存 2 个 setting 组件文件）。
+事实澄清（相对 Runtime Release 计划稿的修正）：`cocos/rendering/custom/` 管线核心 **22/26 文件 Air 已保留**，`src/exports/custom-pipeline.ts` 已接线——「custom pipeline 完整版」的真实差量只有 3 个布局图工具文件；真正的差量大头在 `post-process/`（37 文件，Air 仅存 2 个 setting 组件文件）。
 
-## 1.3 明确不在 V1.2 范围
+## 1.3 明确不在 Feature Regression 范围
 
 ```text
 native/、editor/、extensions/、templates/、vendor/
@@ -70,7 +70,7 @@ pal 的 native / minigame / nodejs 实现
 其余 54 个 *.jsb.ts 平台变体（各批次内随回归项逐个指名的 jsb 例外除外）
 ```
 
-除上述平台性排除项外，官方 Web feature unit 与 Air 的差集在 V1.2 后应为空（个别 Deviation 豁免见决策点 D4）。
+除上述平台性排除项外，官方 Web feature unit 与 Air 的差集在 Feature Regression 后应为空（个别 Deviation 豁免见决策点 D4）。
 
 ---
 
@@ -78,7 +78,7 @@ pal 的 native / minigame / nodejs 实现
 
 ## 2.1 基线事实核验（开工第一件事）
 
-V0.1 的 `UPSTREAM.md` Deviation-01 记录「上游 commit SHA 不可得」。**该 Deviation 已失效**：`cocos4` 现在是 git 仓库且有完整历史。G0 必须完成：
+Engine Extraction 的 `UPSTREAM.md` Deviation-01 记录「上游 commit SHA 不可得」。**该 Deviation 已失效**：`cocos4` 现在是 git 仓库且有完整历史。G0 必须完成：
 
 ```text
 1. 记录 cocos4 当前 HEAD SHA、版本号（package.json version = 4.0.0-alpha.34）
@@ -86,8 +86,8 @@ V0.1 的 `UPSTREAM.md` Deviation-01 记录「上游 commit SHA 不可得」。**
 3. 确认 alpha.33 → alpha.34 之间 cocos/ 的全部变更提交
    （当前已知仅 2 个触及引擎源码：#336 createMesh、#338 noise function）
 4. 重跑一次全量比对脚本，刷新「官方独有文件 / 共同文件 / 内容漂移文件」三张清单
-   （V1.2 立项时的实测：官方独有 554 文件；共同 787；漂移 2 —— 以 G0 重测为准）
-5. 核对 16 个回归组的差量清单与 extraction-manifest 现状，生成 V1.2 抽取总账（预计 ~400 文件）
+   （Feature Regression 立项时的实测：官方独有 554 文件；共同 787；漂移 2 —— 以 G0 重测为准）
+5. 核对 16 个回归组的差量清单与 extraction-manifest 现状，生成 Feature Regression 抽取总账（预计 ~400 文件）
 ```
 
 ## 2.2 上游漂移修复（P0，先于一切抽取）
@@ -116,7 +116,7 @@ npm run typecheck && npm test && npm run build && npm run build:min
 UPSTREAM.md                    → 基线升级记录：alpha.33 (snapshot 2026-09-12) → alpha.34 (commit SHA, 2026-09-19)
                                  Deviation-01 关闭（commit SHA 可得）
 docs/00-upstream-baseline.md   → 同步更新
-docs/17-baseline-comparison.md → 追加 V1.2 章节锚点（V1.2 结束时回填对比数据）
+docs/17-baseline-comparison.md → 追加 Feature Regression 章节锚点（Feature Regression 结束时回填对比数据）
 ```
 
 ---
@@ -137,7 +137,7 @@ package.json dependencies 新增：
 
 ## P2 — 外部二进制资产部署模式
 
-复用 V0.5 已验证的 glTF decoder 部署模式（`docs/gltf-decoder-deployment.md`）：大型 wasm/二进制**不进 bundle**，构建期落盘到 `build/decoders/`（或同级资产目录），运行时按需 fetch。
+复用 glTF Extension Coverage 已验证的 glTF decoder 部署模式（`docs/gltf-decoder-deployment.md`）：大型 wasm/二进制**不进 bundle**，构建期落盘到 `build/decoders/`（或同级资产目录），运行时按需 fetch。
 
 ```text
 需要落位的资产：
@@ -370,7 +370,7 @@ D-3 physics-2d-box2d / box2d-wasm
   - 不支持 WebGPU 的浏览器（当前 Firefox/WebKit 稳定版）必须优雅回退并输出探测日志
 Example：examples/webgpu-basic
 验收口径：WebGPU 后端在支持的浏览器（Chromium）通过即判 PASS；
-        Firefox/WebKit 记录 skip + 探测证据，不计失败 —— 与 V0.8 Browser Matrix 口径的扩展约定一致。
+        Firefox/WebKit 记录 skip + 探测证据，不计失败 —— 与 Benchmark Hardening Browser Matrix 口径的扩展约定一致。
 风险：高。官方 webgpu 后端在 alpha.34 处于演进期，预期跟随上游修补；本批次允许
      「注册 + 探测 + 基础出图」达标即冻结，深度一致性验证延后至上游稳定。
 ```
@@ -458,14 +458,14 @@ F-1 deprecated.ts：原样抽取（1 文件，仅对 Root 的 replaceProperty �
     在 exports/base 或独立出口中按官方引用方式挂接，验证无副作用
 F-2 root.jsb.ts：决策点 D4 默认处置 = 不抽取，登记 Deviation
     「native 入口变体，Web 闭包无引用，抽取反而引入 jsb 符号面」；
-    在 UPSTREAM.md 与 17-baseline-comparison V1.2 章节双处登记
+    在 UPSTREAM.md 与 17-baseline-comparison Feature Regression 章节双处登记
     （若评审要求 12/12 物理对齐，则原样复制 + 不接线，零风险满足口径）
 F-3 簿记回填：
     - extraction-manifest.json / upstream-file-map.json 全量增量提交
       （含 pose-graph/runtime-exports.ts、physics-selector.ts 两处 Air 修改的关闭记录）
-    - docs/17-baseline-comparison.md 追加「V1.2 回归后闭包对比」章节
+    - docs/17-baseline-comparison.md 追加「Feature Regression 回归后闭包对比」章节
       （目标口径：官方 Web 全量 feature unit 与 Air feature unit 的差集 = 约定豁免集）
-    - docs/01-web-feature-set.md 增补 V1.2 feature 表
+    - docs/01-web-feature-set.md 增补 Feature Regression feature 表
     - README 特性矩阵、docs/progress.md 更新
     - tools/examples/api-inventory.cjs 重跑（预期 coverage units 大幅增加），
       api-coverage-report.json 刷新；capabilities 更新
@@ -473,9 +473,9 @@ F-3 簿记回填：
 
 ---
 
-# 12. V1.2 验收矩阵（LV12）
+# 12. Feature Regression 验收矩阵（LV12）
 
-沿用 V0.1（L0–L14）/ V0.2（L0–L17）风格。每个批次出口门禁（GA–GE / GG / GH）是 LV12 对应项的前置。
+沿用 Engine Extraction（L0–L14）/ Code First DX（L0–L17）风格。每个批次出口门禁（GA–GE / GG / GH）是 LV12 对应项的前置。
 
 | 项 | 内容 | 通过标准 |
 |---|---|---|
@@ -505,10 +505,10 @@ F-3 簿记回填：
 
 ---
 
-# 13. 回归护栏（V1.2 全程不得回退）
+# 13. 回归护栏（Feature Regression 全程不得回退）
 
 ```text
-1. 存量 12 examples（V1.1 冻结态）行为与出图不回退
+1. 存量 12 examples（Gallery & API Coverage 冻结态）行为与出图不回退
 2. bundle 体积：建立 docs/v12-bundle-budget.md 预算表，每批次登记增量；
    总量超预算即触发 D1 决策复议（默认单文件原则不动摇，wasm/大运行库走运行时资产）
 3. benchmark 回归：npm run verify:benchmark 不劣化超阈值（沿用现行阈值）
@@ -535,7 +535,7 @@ F-3 簿记回填：
 | R4 | spine-core.js / box2d / bullet / physx 运行库使 bundle 与资产体积显著增大 | 中 | P2 运行时资产模式 + bundle 预算表 + D1 复议机制 |
 | R5 | 官方 webgpu 后端仍在演进（alpha.34 演进期），回归后上游修补频繁 | 中 | 批次 E 达标即冻结；建立「跟随上游 webgpu 修补」的轻量同步流程（每版对齐） |
 | R6 | plist/tmx/spine/dragonbones 资产在无 Creator 管线下的 Code First 构造入口不明确 | 中 | 每特性先做「资产加载可行性 spike」，结论入 docs/v12-*.md；loadRemote URL 加载为保底路径 |
-| R7 | 上游 alpha.34 之后继续演进，V1.2 期间再次漂移 | 低 | G0 已建立 git 基线，V1.2 期间冻结对齐点（记录 SHA），漂移延后到 V1.2.x 处理 |
+| R7 | 上游 alpha.34 之后继续演进，Feature Regression 期间再次漂移 | 低 | G0 已建立 git 基线，Feature Regression 期间冻结对齐点（记录 SHA），漂移延后到 Feature Regression.x 处理 |
 | R8 | bullet（ammo）/ physx 的 emscripten 二进制不在官方仓库快照内，来源不明 | 高 | G-3 开工前出结论：官方全量安装（engine-native / external 下载脚本）/ 上游发布资产渠道；结论前 G-3 只做抽取不接线；不可得则按「回归+降级」部分通过结案 |
 | R9 | ui editbox 等组件依赖 DOM 输入焦点链，三浏览器行为差异大 | 中 | 四步走查（布局→按钮→容器→editbox）；editbox 单列验收允许记录浏览器差异注释 |
 | R10 | marionette pose-graph 无 Creator 动画图时的 Code First 装配入口不明 | 中 | C3 spike 先行；不可达则验收口径降级为闭包完整 + 单元级求值，登记后结案 |
@@ -554,7 +554,7 @@ F-3 簿记回填：
 | D5 | air.ts 聚合导出面扩大的范围 | 每特性单独评审：优先并入（与官方 exports 同名导出保持一致），体积/命名冲突项挂到独立出口 |
 | D6 | WebGPU 设备选择 API | createAirApp 增加 device 偏好（'webgl2' 默认/'webgpu'/'auto'），additive 登记 |
 | D7 | 3D 物理默认后端与 Code First 选择入口 | 默认 builtin（零依赖可用）；createAirApp 增加物理后端配置项（'builtin'/'cannon'/'bullet'/'physx'，additive 登记）；对齐官方 physics-selector 常量语义 |
-| D8 | bullet/physx 资产不可得时的结案口径 | 「代码回归 + 选择器可达 + 降级路径可测」部分通过，验收报告显著标注，不阻塞 V1.2 整体 Gate |
+| D8 | bullet/physx 资产不可得时的结案口径 | 「代码回归 + 选择器可达 + 降级路径可测」部分通过，验收报告显著标注，不阻塞 Feature Regression 整体 Gate |
 
 ---
 
@@ -596,7 +596,7 @@ examples/ 新增 15+：profiler-overlay、audio-basic、video-basic、webview-ba
 # 17. 执行纪律（继承既有约定）
 
 1. 不执行 `git clone / pull`；抽取一律以本地 `cocos4` git 仓库的**冻结 SHA**为源，逐批记录。
-2. 官方文件原样复制；任何改动必须在 `upstream-file-map.json` 登记 reason（V0.1 的 6 处修改是范例格式）；因回归而失效的 Air 修改（pose-graph/runtime-exports.ts、physics-selector.ts）必须恢复官方原文并关闭登记。
+2. 官方文件原样复制；任何改动必须在 `upstream-file-map.json` 登记 reason（Engine Extraction 的 6 处修改是范例格式）；因回归而失效的 Air 修改（pose-graph/runtime-exports.ts、physics-selector.ts）必须恢复官方原文并关闭登记。
 3. 状态如实：每个 LV12 项只有 `verified / in-progress / blocked / not-delivered` 四态，禁止把计划值写成完成事实；部分通过（bullet/physx 资产口径）必须显式标注。
 4. Browser Matrix 口径：默认 3/3（Chromium + Firefox + WebKit）；WebGPU 项按第 8 节扩展口径、bullet/physx 按 G-3 口径（skip/部分通过须附证据）。
 5. 每批次结束提交一次，提交说明注明批次号、LV12 项、bundle 增量。

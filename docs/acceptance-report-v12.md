@@ -172,7 +172,7 @@
    r45e 先改了 3 处（本报告 LV12-10 行、§4 spine 归因、决策表第 9 行），改完声称「全仓无 D2 决定记录」——**该声称当时过强**：
    r45f 复查 `grep -rn "D2" docs/ ai/ --include="*.md"`（r45f 现读 **28** 条命中）又挖出 **2 处同样把未决项写成已决**的归因，均已就地订正并加 ⚠️ 标记：
    `docs/v12-dragonbones-notes.md:197`（原文「仍按决策 **D2** 不在本期交付」）、`docs/v12-upstream-regression.md:701`（原文「**Spine（LV12-10）仍按 D2 不交付**」）。
-   28 条逐条核读后**全部合规**，按文件分布：`ai/Cocos Air V1.2 — 特性回归补充任务计划书.md` **4**（D2 定义本身与默认行为条款）、`docs/v12-spine-asset-sourcing.md` **2**（标题与结论＝**LV12-10 运行时验收 BLOCKED**，无虚构批复）、
+   28 条逐条核读后**全部合规**，按文件分布：`ai/Cocos Air — 特性回归补充任务计划书.md` **4**（D2 定义本身与默认行为条款）、`docs/v12-spine-asset-sourcing.md` **2**（标题与结论＝**LV12-10 运行时验收 BLOCKED**，无虚构批复）、
    `docs/v12-physics-asset-sourcing.md` **2**（把 D2 与 D10 并列待决）、`docs/v12-owner-decisions.md` **1**（决策表行本体）、
    `docs/audits/global-quality-audit-2026-09-19/verification-summary.md` **2**（`:991` 措辞为「已由决策点 **D2** … **登记**在册」＝登记而非批复，且该文件受追加式纪律约束不回写）、
    `docs/manual/game.md:264` **1**（十六进制常量 `0x6D2B79F5` 假阳性）、`docs/v12-dragonbones-notes.md` **2** 与 `docs/v12-upstream-regression.md` **1**（r45f 订正句）、`docs/acceptance-report-v12.md` **13**（本节叙述）。

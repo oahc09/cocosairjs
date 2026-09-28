@@ -221,7 +221,7 @@ FirstCompileRate = 初次源码提交 build/typecheck PASS / Eligible Type-B tri
 
 编译失败、错误结果、Agent timeout、预算耗尽、主动放弃、被正确拒绝后任务失败均计分母。INFRA/INVALID 及合同限定不可评测设备项单列。每个计划 repetition 保留固定槽位和每次 attempt，基础设施补跑不能覆盖原记录或无限挑最好结果；未完成必需槽位阻断完整性结论。预算、补跑上限采用冻结试验政策，缺失则先裁决，不在审查中临时优化成绩。
 
-V0.6 已讨论门槛：最终成功率≥80%，各域≥70%，First Compile≥60%，成功 trial repair 中位数≤3。RC 已讨论门槛：最终≥90%，各域≥85%，First Compile≥75%，成功 trial repair 中位数≤2。先确认申报版本对应有效批准合同，不把两套口径混用。分母为 0 不报 100%，报不可评测并阻断相应必需域。
+Recipe Final Gate 已讨论门槛：最终成功率≥80%，各域≥70%，First Compile≥60%，成功 trial repair 中位数≤3。RC 已讨论门槛：最终≥90%，各域≥85%，First Compile≥75%，成功 trial repair 中位数≤2。先确认申报版本对应有效批准合同，不把两套口径混用。分母为 0 不报 100%，报不可评测并阻断相应必需域。
 
 ### 7.2 失败归因
 
@@ -251,7 +251,7 @@ ValidatedCount = count(validated ∪ stable)
 StableCount = count(stable)
 ```
 
-V0.6 至少 30 validated（累计）且 20 stable；申报 RC/1.0 时至少 30 stable。完整场景、交互、视觉和生命周期证据都需对应真实运行，不能由目录标题或单个 node-exists 断言晋升。
+Recipe Final Gate 至少 30 validated（累计）且 20 stable；申报 RC/1.0 时至少 30 stable。完整场景、交互、视觉和生命周期证据都需对应真实运行，不能由目录标题或单个 node-exists 断言晋升。
 
 ### 7.5 Example 计数与规格
 
@@ -259,7 +259,7 @@ V0.6 至少 30 validated（累计）且 20 stable；申报 RC/1.0 时至少 30 s
 
 `primary/supporting API` 必须绑定正式 inventory symbol/signature，不能写“Input API”等占位；不存在的 API 为 BLOCKED。
 
-Wave 数量是累计唯一 stable ID：Pilot 12 可计入 Wave 1；Wave 1≥40，Wave 2≥90，V1.1 Release≥120；130–136 为扩展目标，不重复计数 Draco 等多标签条目。旧例可继续旧 URL，但未经新 spec/evidence 验证不能直接算 stable。
+Wave 数量是累计唯一 stable ID：Pilot 12 可计入 Wave 1；Wave 1≥40，Wave 2≥90，Gallery & API Coverage Release≥120；130–136 为扩展目标，不重复计数 Draco 等多标签条目。旧例可继续旧 URL，但未经新 spec/evidence 验证不能直接算 stable。
 
 ### 7.6 API Coverage 复算
 
@@ -387,7 +387,7 @@ retest-plan.md
 
 ## 12. 依据与边界
 
-项目合同依据：会话中已讨论的各版本任务及修订；已提供《V0.5 — Full glTF Extension Coverage》§3/§4/T7/T8/§10/DoD，以及《V0.5.1 — Developer Ecosystem & Agent Ready Runtime》交接、consumer、session、性能、测试与授权边界。实际执行仍需读取本地最终批准版本，不用本任务书替代它们。
+项目合同依据：会话中已讨论的各阶段任务及修订；已提供《Cocos Air — Full glTF Extension Coverage 任务计划书》§3/§4/T7/T8/§10/DoD，以及《Cocos Air — Developer Ecosystem & Agent Ready Runtime 任务计划书》交接、consumer、session、性能、测试与授权边界。实际执行仍需读取本地最终批准版本，不用本任务书替代它们。
 
 外部工具事实核对（不要求升级项目工具版本）：
 

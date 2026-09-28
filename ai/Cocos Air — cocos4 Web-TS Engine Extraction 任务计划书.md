@@ -1,4 +1,4 @@
-# Cocos Air V0.1 — cocos4 Web/TS Engine Extraction 任务计划书
+# Cocos Air — cocos4 Web/TS Engine Extraction 任务计划书
 
 ## 0. 项目定义
 
@@ -49,9 +49,9 @@ app.run(scene);
 
 ---
 
-# 1. V0.1 核心目标
+# 1. Engine Extraction 核心目标
 
-V0.1 只解决一个问题：
+Engine Extraction 只解决一个问题：
 
 > 将当前 cocos4 中 Web 平台实际需要的 TypeScript Engine 抽取成一个可以独立构建、独立运行、独立开发的 `cocosair.js` 仓库。
 
@@ -120,7 +120,7 @@ inverse(bindpose)
 正确 Skinning
 ```
 
-因此 V0.1 不再重新验证“Cocos 是否支持 Code First”。
+因此 Engine Extraction 不再重新验证“Cocos 是否支持 Code First”。
 
 重点转为：
 
@@ -239,7 +239,7 @@ Extraction
 
 ---
 
-## 4.2 V0.1 优先行为一致
+## 4.2 Engine Extraction 优先行为一致
 
 优先级：
 
@@ -279,7 +279,7 @@ if (HTML5) {
 KEEP
 ```
 
-V0.1 优先依靠：
+Engine Extraction 优先依靠：
 
 ```text
 constants
@@ -316,7 +316,7 @@ src/air/
 
 ---
 
-# 5. V0.1 非目标
+# 5. Engine Extraction 非目标
 
 本阶段不做：
 
@@ -401,7 +401,7 @@ tools/     开发期工具
 docs/      分析和设计文档
 ```
 
-V0.1 暂不采用：
+Engine Extraction 暂不采用：
 
 ```text
 packages/
@@ -522,7 +522,7 @@ docs/01-web-feature-set.md
 
 至少包含：
 
-| Feature | Web | Air V0.1 |
+| Feature | Web | Air Engine Extraction |
 |---|---:|---:|
 | Core | Yes | Yes |
 | Scene | Yes | Yes |
@@ -1011,7 +1011,7 @@ Example Dev Server
 
 Engine 内部状态复杂。
 
-V0.1 接受：
+Engine Extraction 接受：
 
 ```text
 Full Page Reload
@@ -1082,7 +1082,7 @@ Material
 Texture
 ```
 
-这是 V0.1 最重要的复杂场景验收。
+这是 Engine Extraction 最重要的复杂场景验收。
 
 如果：
 
@@ -1129,7 +1129,7 @@ frameObject()
 
 # 23. Phase 16 — Test
 
-V0.1 不建立巨型测试体系。
+Engine Extraction 不建立巨型测试体系。
 
 最低要求：
 
@@ -1324,9 +1324,9 @@ CommonJS
 
 ---
 
-# 29. V0.1 能力边界
+# 29. Engine Extraction 能力边界
 
-Cocos AIR V0.1 应至少保留：
+Cocos AIR Engine Extraction 应至少保留：
 
 ```text
 Core
@@ -1367,7 +1367,7 @@ Terrain
 先保留
 ```
 
-V0.1 不为了减包体主动扩大裁剪风险。
+Engine Extraction 不为了减包体主动扩大裁剪风险。
 
 ---
 
@@ -1421,7 +1421,7 @@ Yes
 
 当前 Build System 中还有哪些 cocos4 历史包袱？
 
-列出来，不要求 V0.1 全部重写。
+列出来，不要求 Engine Extraction 全部重写。
 
 ### Q7
 
@@ -1482,7 +1482,7 @@ No
 只有以下全部成立才能标记：
 
 ```text
-Cocos Air V0.1 DONE
+Cocos Air Engine Extraction DONE
 ```
 
 条件：
@@ -1578,7 +1578,7 @@ Cocos Air V0.1 DONE
         ↓
 23 README
         ↓
-24 V0.1 RC
+24 Engine Extraction RC
 ```
 
 ---
@@ -1608,14 +1608,14 @@ Impact:
 Source tree contains NATIVE conditional code, but build graph does not reach Native implementation.
 
 Action:
-Keep shared module in V0.1; rely on platform constants/tree-shaking.
+Keep shared module in Engine Extraction; rely on platform constants/tree-shaking.
 ```
 
 不要为了保持目录“看起来纯净”扩大重构。
 
 ---
 
-# 35. V0.1 成功后的产品形态
+# 35. Engine Extraction 成功后的产品形态
 
 最终项目：
 
@@ -1659,13 +1659,13 @@ browser reload
 result
 ```
 
-这就是 V0.1 真正需要建立起来的基础。
+这就是 Engine Extraction 真正需要建立起来的基础。
 
 ---
 
-# 36. V0.2 暂定方向
+# 36. Code First DX 暂定方向
 
-V0.1 完成后再考虑：
+Engine Extraction 完成后再考虑：
 
 ```text
 更好的 Code First DX
@@ -1679,4 +1679,4 @@ Agent-friendly examples
 
 Asset Importer 独立化继续放后面。
 
-不要在 V0.1 同时解决。
+不要在 Engine Extraction 同时解决。

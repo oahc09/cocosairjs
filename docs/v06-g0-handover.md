@@ -1,6 +1,6 @@
 # V0.6 G0 — 前置版本正式交接（V0.5 → V0.5.1 → V0.6）
 
-> 依据《Cocos Air V0.6 → V1.0 演进任务书》§1。本文将任务书要求的每项硬前置映射到
+> 依据《Cocos Air Runtime Release Evolution 任务书》§1。本文将任务书要求的每项硬前置映射到
 > 冻结 revision 与证据位置；任一缺失即 V0.6 = BLOCKED。结论：**全部在场，V0.6 放行**。
 
 - V0.5 最终交付 revision：`aec5882`（三轮 Review 修复后，G5 报告见 `docs/acceptance-v0.5.md`）

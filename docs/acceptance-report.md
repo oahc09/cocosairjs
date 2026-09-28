@@ -2,7 +2,7 @@
 
 > 基线：`cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)`
 > 报告时间：2026-09-12
-> 执行依据：《Cocos Air V0.1 — cocos4 Web-TS Engine Extraction 任务计划书》
+> 执行依据：《Cocos Air — cocos4 Web-TS Engine Extraction 任务计划书》
 
 ## 1. 验收矩阵
 

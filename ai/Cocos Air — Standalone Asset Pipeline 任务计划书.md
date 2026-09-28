@@ -1,33 +1,33 @@
-# Cocos Air V0.3 — Asset Integration & Runtime Verification 任务计划书
+# Cocos Air Standalone Asset Pipeline — Asset Integration & Runtime Verification 任务计划书
 
-> 与 V0.1 / V0.2 连续演进。修订日期：2026-09-12。
-> 状态：本版范围已实施并验证（2026-09-12）。V0.2 经前置审查补修；外部 glTF/GLB 已交付子集完成使用侧集成，其他格式覆盖仍由对应任务负责。见 [验收记录](../docs/11-v03-verification.md)。
+> 与 Engine Extraction / Code First DX 连续演进。修订日期：2026-09-12。
+> 状态：本版范围已实施并验证（2026-09-12）。Code First DX 经前置审查补修；外部 glTF/GLB 已交付子集完成使用侧集成，其他格式覆盖仍由对应任务负责。见 [验收记录](../docs/11-v03-verification.md)。
 > 合并修订：纳入补充计划的资源关系分析、资源索引说明、Code First 组装、资源检查与角色示例；glTF/GLB 加载、解析、导入和转换仍由外部任务负责。
-> 保留原文件路径以兼容已有链接；原 Standalone Asset Pipeline 标题不再代表本版范围。
+> 文件名和标题已去除阶段版本号；历史验收记录仍按原样保留。
 
-## 0. 版本关系
+## 0. 阶段关系
 
-| 版本/任务 | 职责 | 与本版关系 |
+| 阶段/任务 | 职责 | 与本阶段关系 |
 |---|---|---|
-| V0.1 | 独立 Web/TS 引擎、构建、启动和基础示例 | 保留已成立能力 |
-| V0.2 | Code First helper、类型声明、开发反馈链 | 使用最终验收版本，不重复实施 |
+| Engine Extraction | 独立 Web/TS 引擎、构建、启动和基础示例 | 保留已成立能力 |
+| Code First DX | Code First helper、类型声明、开发反馈链 | 使用最终验收版本，不重复实施 |
 | 独立 glTF/GLB 任务 | 模型加载及其配套实现 | 接口与支持范围以该任务交付为准 |
-| V0.3 | 资源关系与索引、Code First 组装、资源检查、运行时回归和静态验证 | 消费既有成果，不建立另一条加载链 |
+| Standalone Asset Pipeline | 资源关系与索引、Code First 组装、资源检查、运行时回归和静态验证 | 消费既有成果，不建立另一条加载链 |
 
-本次用户明确调整优先于 V0.2 计划书第 40 节的暂定方向。V0.2 原计划保持不变，执行 V0.3 时以本修订的范围为准。
+本次用户明确调整优先于 Code First DX 计划书第 40 节的暂定方向。Code First DX 原计划保持不变，执行 Standalone Asset Pipeline 时以本修订的范围为准。
 
-合并来源：用户提供的下载文件《Cocos Air V0.3 — Standalone Asset Pipeline（V0.1-V0.2连续版）任务计划书.md》。来源文件保持原样；章节合并位置与冲突处理见第 12 节。
+合并来源：用户提供的下载文件《Cocos Air Standalone Asset Pipeline — Standalone Asset Pipeline（Engine Extraction-Code First DX连续版）任务计划书.md》。来源文件保持原样；章节合并位置与冲突处理见第 12 节。
 
 ```text
 Source Asset
     → 外部资源加载/生产任务（实现方式以交付为准）
     → 原 Cocos Runtime 数据
-    → V0.3 Code First Assembly / Inspect / Validate
+    → Standalone Asset Pipeline Code First Assembly / Inspect / Validate
     → Cocos Air Runtime
     → Browser
 ```
 
-资源生产、代码创建、运行时渲染与 Web 开发体验构成整体闭环；其完成状态由各任务真实交付共同证明，不能仅由 V0.3 回归结果推定。
+资源生产、代码创建、运行时渲染与 Web 开发体验构成整体闭环；其完成状态由各任务真实交付共同证明，不能仅由 Standalone Asset Pipeline 回归结果推定。
 
 ## 1. 当前依据与验证边界
 
@@ -35,13 +35,13 @@ Source Asset
 
 | Evidence：依据 | Finding：已知边界 | Path：本版处理 |
 |---|---|---|
-| [V0.2 计划书](<Cocos Air V0.2 — Code First DX & SDK 化任务计划书（与 V0.1 连续版）.md>) | DX 与 SDK 化由 V0.2 负责 | T0 核对交接，避免重做 |
-| [V0.1 验收报告](../docs/acceptance-report.md) | 报告记录部分程序化资产与动画验证，不能证明所有真实模型路径 | T1 明确已有证据覆盖范围 |
+| [Code First DX 计划书](<Cocos Air — Code First DX & SDK 化任务计划书.md>) | DX 与 SDK 化由 Code First DX 负责 | T0 核对交接，避免重做 |
+| [Engine Extraction 验收报告](../docs/acceptance-report.md) | 报告记录部分程序化资产与动画验证，不能证明所有真实模型路径 | T1 明确已有证据覆盖范围 |
 | [static-model](../examples/static-model/main.js) | 前次观察为 JSON/程序化资源示例 | 保留基础回归，不改成新的导入器示例 |
 | [skinned-animation](../examples/skinned-animation/main.js) | 前次观察为三关节代码驱动 | 不将其描述成外部 clip 导入验收 |
-| [load-asset.ts](../src/air/utils/load-asset.ts) | V0.2 期间接口仍有变化 | 使用最终语义，不增加模型格式重载 |
+| [load-asset.ts](../src/air/utils/load-asset.ts) | Code First DX 期间接口仍有变化 | 使用最终语义，不增加模型格式重载 |
 
-37 关节和真实 clip 的既有计划要求由相应任务如实交接。V0.3 不再新增“至少 37 关节、至少两段导入 clip”的硬性要求，也不把前序未验证项改写成已通过。
+37 关节和真实 clip 的既有计划要求由相应任务如实交接。Standalone Asset Pipeline 不再新增“至少 37 关节、至少两段导入 clip”的硬性要求，也不把前序未验证项改写成已通过。
 
 ## 2. 范围与协作边界
 
@@ -49,7 +49,7 @@ Source Asset
 
 - 资源生产结果与 Runtime 必需数据的关系分析，区分源数据、生成数据与编辑器附属数据。
 - 沿用现有资源索引与依赖描述，补充 inspect/validate 能力及 Code First 组装示例。
-- V0.2 完成后的公共入口、类型及既有示例回归。
+- Code First DX 完成后的公共入口、类型及既有示例回归。
 - 已有原 Cocos 对象的材质、动画使用与生命周期验证。
 - 普通静态服务下的示例运行、相对路径与构建产物验证。
 - glTF/GLB 任务已交付时，按其文档进行使用侧集成验证。
@@ -72,11 +72,11 @@ glTF/GLB 任务负责自己的格式支持、错误行为、返回对象、缓�
 
 1. 保持单仓库及现有一级目录，不新增产品层或迁移技术栈。
 2. 原 Cocos API 继续作为主 API，不新增 AirNode/AirMaterial/AirAnimation。
-3. 保留 V0.2 公共接口、构建命令、类型声明流程与产物名称。
+3. 保留 Code First DX 公共接口、构建命令、类型声明流程与产物名称。
 4. 不为验证需求新增公共运行时诊断接口；测试控制入口留在 test/examples/tools。
 5. 保留上游布局、版权及映射，不自动同步 cocos4；实际引擎修改按既有机制记录。
 6. 未交接前不编辑其他 Agent 的工作文件。编辑前重新检查目标差异并保留并发改动。
-7. 用户已授权先审查修复 V0.2，再实施本计划；不自动提交、发布或远端部署。
+7. 用户已授权先审查修复 Code First DX，再实施本计划；不自动提交、发布或远端部署。
 
 目录落位规则：
 
@@ -89,9 +89,9 @@ glTF/GLB 任务负责自己的格式支持、错误行为、返回对象、缓�
 
 外部任务若已有 `tools/import/`，保留其职责与所有权；本版不要求创建 gltf/texture/compiler 子树。现有 `tools/dev/` 等实际目录继续沿用。
 
-## 4. Task T0 — V0.2 交接与验证清单
+## 4. Task T0 — Code First DX 交接与验证清单
 
-输入：V0.2 最终代码、验证报告及未完成事项。
+输入：Code First DX 最终代码、验证报告及未完成事项。
 
 1. 记录 commit、工作区改动、Node/npm、实际构建命令。
 2. 核对 createAirApp、helper、公共导出、d.ts 和 source map 的最终状态。
@@ -99,9 +99,9 @@ glTF/GLB 任务负责自己的格式支持、错误行为、返回对象、缓�
 4. 按“已验证 / 未验证 / 已知失败”列出差异，不重复无变化且证据充分的昂贵验证。
 5. 确认共享文件责任人；将前序遗留问题与本版新增问题分开。
 
-保留 V0.2 开发反馈链：示例修改不触发无关引擎全量重建，Engine/Air 修改沿用已有 build/reload。若外部任务提供 Asset Build，资源修改按其命令更新后进入已有刷新流程；本版不强制新增自动导入 watch。
+保留 Code First DX 开发反馈链：示例修改不触发无关引擎全量重建，Engine/Air 修改沿用已有 build/reload。若外部任务提供 Asset Build，资源修改按其命令更新后进入已有刷新流程；本版不强制新增自动导入 watch。
 
-退出条件：本版需要的 V0.2 基础已交接，验证对象和已知限制明确。未交接部分暂缓，继续不依赖它的文档与证据整理。
+退出条件：本版需要的 Code First DX 基础已交接，验证对象和已知限制明确。未交接部分暂缓，继续不依赖它的文档与证据整理。
 
 ### T0-A — 资源生产关系分析与索引约定
 
@@ -134,7 +134,7 @@ glTF/GLB 任务负责自己的格式支持、错误行为、返回对象、缓�
 | 多实例 | 在现有 API 支持的实例化方式下检查状态隔离 | 一份对象的操作不意外改变另一份 |
 | 释放 | 按现有所有权规则释放本实例资源 | 不破坏共享或 builtin 资源；不强制新建 dispose API |
 
-资源共享、缓存与释放以已交付实现的合同为准。若合同缺失，先由对应任务补齐，不在 V0.3 擅自重定义。
+资源共享、缓存与释放以已交付实现的合同为准。若合同缺失，先由对应任务补齐，不在 Standalone Asset Pipeline 擅自重定义。
 
 对于没有可用 clip 或没有相应能力承诺的路径，记录未验证原因；不以新增 loader、采样器或转换算法填补。已声明支持而实际失败的路径必须记录失败，不能归为不适用。
 
@@ -159,7 +159,7 @@ glTF/GLB 任务负责自己的格式支持、错误行为、返回对象、缓�
 
 承接补充计划 Phase 6/8。使用原 `Node`、`MeshRenderer`、`SkinnedMeshRenderer`、`Animation` 组装；已返回完整节点树时直接使用，不重复拆解重建。
 
-V0.2 的 `buildSkeletonTree()` / `restoreBindPose()` 仅在交付数据符合其约定时复用，不能盲目覆盖源姿态。通用演示代码留在 `examples/shared/`，不提升为新的模型公共 API。
+Code First DX 的 `buildSkeletonTree()` / `restoreBindPose()` 仅在交付数据符合其约定时复用，不能盲目覆盖源姿态。通用演示代码留在 `examples/shared/`，不提升为新的模型公共 API。
 
 优先完善外部任务已有角色示例；确实没有覆盖组合使用的示例时，再新增 `examples/character-runtime/`，展示其已支持的 Mesh、Material、Texture、Skeleton 和 AnimationClip 协同。按实际能力提供播放控制、错误提示及资源释放说明。
 
@@ -204,7 +204,7 @@ npm run verify:web-only
 npm test
 ```
 
-若 V0.2 的最终流程另有必检项，继续保留。只改文档时做内容、引用及 diff 检查；实际修改代码或画面时运行对应行为验证。
+若 Code First DX 的最终流程另有必检项，继续保留。只改文档时做内容、引用及 diff 检查；实际修改代码或画面时运行对应行为验证。
 
 退出条件：独立静态示例与公共入口验证通过，本版变动所需的既有检查通过。
 
@@ -217,7 +217,7 @@ npm test
 | `docs/10-v03-runtime-integration.md` | 资源生产关系分析、索引约定、Code First 组装、检查入口、生命周期、静态运行与外部交接状态 |
 | `docs/11-v03-verification.md` | 基线、验收矩阵、复现命令、证据、已知限制与问题归属 |
 
-编号开工时核对，不覆盖 V0.2 或外部任务已创建的文件。README 仅补充实际验证的使用方式。
+编号开工时核对，不覆盖 Code First DX 或外部任务已创建的文件。README 仅补充实际验证的使用方式。
 
 不保留旧计划的 import CLI、资产包格式和转换算法文档要求。
 
@@ -227,7 +227,7 @@ npm test
 
 | ID | 验收项 | 完成标准 | 是否必需 |
 |---|---|---|---|
-| L0 | V0.2 交接 | 实际接口、证据和遗留项明确 | 是 |
+| L0 | Code First DX 交接 | 实际接口、证据和遗留项明确 | 是 |
 | L1 | 原有示例兼容 | 本版修改未破坏已有验收行为 | 是 |
 | L2 | 运行时与生命周期 | 按已交付能力合同验证；失败如实归属 | 是 |
 | L3 | 外部模型功能集成 | 复用外部交付，公开入口可用 | 条件项；未交付时明确未执行 |
@@ -237,7 +237,7 @@ npm test
 | L7 | 资源关系与索引 | 已有资源的来源、生成数据、依赖、运行时使用与所有权有依据 | 是；外部未知部分明确记录 |
 | L8 | Inspect / Validate | 已有资源可检查，正常与损坏用例诊断符合预期 | 是；外部专属格式不在本版实现 |
 | L9 | Code First 角色组装 | 复用外部示例或补充组合演示，公开 API 协同 | 条件项；依赖已交付角色资源 |
-| L10 | V0.2 Dev Loop 连续 | 本版工具与示例变动未破坏已有构建刷新分类 | 是；按实际改动验证 |
+| L10 | Code First DX Dev Loop 连续 | 本版工具与示例变动未破坏已有构建刷新分类 | 是；按实际改动验证 |
 
 浏览器证据记录环境、实际 WebGL 后端、视口、关键操作和控制台错误。jsdom/HEADLESS 不替代材质、纹理与蒙皮的真实画面检查。
 
@@ -267,20 +267,20 @@ npm test
 - 原因：用户明确 glTF/GLB 加载功能已有独立任务处理，要求从本计划移除。
 - 影响：撤销原计划的解析/导入、资产包、CLI、加载 API、转换实现及相应验收与排期。
 - 处理：本版不实施资源生产管线；合并补充计划后增加资源关系分析、索引说明、组装与检查能力，模型功能以外部交付为条件集成。
-- 不变约束：V0.1/V0.2 连续性、原 Cocos API、单仓库结构、既有强制检查和并发修改保护。
+- 不变约束：Engine Extraction/Code First DX 连续性、原 Cocos API、单仓库结构、既有强制检查和并发修改保护。
 
 ## 12. 补充计划合并对照
 
 | 下载版章节 | 合并位置/处理 | 说明 |
 |---|---|---|
-| §0–1 阶段定位与核心目标 | §0 整体闭环、T0-A | V0.2 完成状态以交接为准，资源生产属于外部任务 |
+| §0–1 阶段定位与核心目标 | §0 整体闭环、T0-A | Code First DX 完成状态以交接为准，资源生产属于外部任务 |
 | §2–3 仓库/API 边界、非目标 | §2–3、§10 | 保留原 Cocos 类型，不建新 Runtime Format、Editor、AssetDB、MCP/DSL |
 | §4 工具目录 | §3 目录规则 | 工具与运行时隔离；不强制新增 tools/import 或搬迁 app 文件 |
 | §5 Creator Import 分析 | T0-A | 合入数据来源与 Runtime 必需性分析，不重写 importer |
 | §6 Runtime Asset Manifest | T0-A | 沿用已有资源索引，不另建格式或强制 manifest |
 | §7–8 Asset Build / GLTF Pipeline | §2 外部职责 | 不纳入本版实现或硬性验收；支持范围以外部交付为准 |
 | §9 Runtime Asset Loading | T2 | 保留既有公共入口，不强制扩展 loadAssetAsync |
-| §10 Model Assembly | T2-A | 原 Node/Renderer/Animation 与适用的 V0.2 helper |
+| §10 Model Assembly | T2-A | 原 Node/Renderer/Animation 与适用的 Code First DX helper |
 | §11 Asset CLI | T2-B | 合入 inspect/validate；build 属外部，不要求另建 CLI 产品 |
 | §12 Examples | T2-A | 保留旧示例，角色/管线示例按实际交付补齐，避免重复 |
 | §13 Test | T2-B、§9 | 合入资源及运行时检查；沿用 unit/smoke，不复制 importer 测试 |
@@ -288,4 +288,4 @@ npm test
 | §15–16 验收与 DoD | §9–10 | 合并使用侧验收；资源生产项不作为本版门禁 |
 | §17 最终关系 | §0 整体闭环 | 描述跨任务目标，不宣称独立生产链已经完成 |
 
-上述对照是范围裁定：补充计划中的模型格式、转换和加载要求不会通过合并重新进入 V0.3。任何尚未交付的外部能力继续明确记录，不能用运行时回归代替其功能验收。
+上述对照是范围裁定：补充计划中的模型格式、转换和加载要求不会通过合并重新进入 Standalone Asset Pipeline。任何尚未交付的外部能力继续明确记录，不能用运行时回归代替其功能验收。

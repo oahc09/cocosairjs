@@ -1,9 +1,9 @@
-# Cocos Air V0.2 — Code First DX & SDK 化任务计划书
-## 与 V0.1 连续演进版本
+# Cocos Air — Code First DX & SDK 化任务计划书
+## 与 Engine Extraction 连续演进版本
 
 ## 0. 阶段关系
 
-V0.1 已完成的目标：
+Engine Extraction 已完成的目标：
 
 ```text
 cocos4 Web/TS Runtime
@@ -26,25 +26,25 @@ Code First Bootstrap
 Browser
 ```
 
-V0.2 不改变上述结构。
+Code First DX 不改变上述结构。
 
-V0.2 只做：
+Code First DX 只做：
 
-> 在 V0.1 已成立的独立 Web Runtime 基础上，把 Code First 使用方式整理成稳定、简单、适合高频开发的开发体验。
+> 在 Engine Extraction 已成立的独立 Web Runtime 基础上，把 Code First 使用方式整理成稳定、简单、适合高频开发的开发体验。
 
 核心变化：
 
 ```text
-V0.1
+Engine Extraction
 能独立运行
     ↓
-V0.2
+Code First DX
 方便开发和复用
 ```
 
 ---
 
-# 1. V0.2 核心目标
+# 1. Code First DX 核心目标
 
 目标开发链：
 
@@ -96,9 +96,9 @@ result
 
 ---
 
-# 2. V0.2 必须继承 V0.1 的仓库结构
+# 2. Code First DX 必须继承 Engine Extraction 的仓库结构
 
-V0.2 不改变仓库一级目录。
+Code First DX 不改变仓库一级目录。
 
 继续使用：
 
@@ -129,7 +129,7 @@ cocosair.js/
 └── tsconfig.json
 ```
 
-禁止在 V0.2 新增：
+禁止在 Code First DX 新增：
 
 ```text
 packages/
@@ -143,9 +143,9 @@ workspace/
 
 ---
 
-# 3. V0.2 `src/` 结构
+# 3. Code First DX `src/` 结构
 
-V0.1 已确定：
+Engine Extraction 已确定：
 
 ```text
 src/
@@ -156,7 +156,7 @@ src/
 └── predefine.ts
 ```
 
-V0.2 只扩展：
+Code First DX 只扩展：
 
 ```text
 src/air/
@@ -179,7 +179,7 @@ src/air/
 
 如果后续 `utils/` 数量明显增加，再评估细分目录。
 
-V0.2 不提前拆：
+Code First DX 不提前拆：
 
 ```text
 assets/
@@ -193,9 +193,9 @@ scene/
 
 ---
 
-# 4. V0.2 API 边界
+# 4. Code First DX API 边界
 
-保持 V0.1 的原则：
+保持 Engine Extraction 的原则：
 
 > 原 Cocos Engine API 继续作为主 API。
 
@@ -241,9 +241,9 @@ frameObject()
 
 # 5. Public Entry 保持单入口
 
-V0.1 已经计划通过统一入口 re-export。
+Engine Extraction 已经计划通过统一入口 re-export。
 
-V0.2 继续采用：
+Code First DX 继续采用：
 
 ```text
 src/air/index.ts
@@ -286,9 +286,9 @@ import ... from 'cocosair/internal/...'
 
 # 6. Task 1 — 稳定 `createAirApp()`
 
-V0.1 已实现 Code First bootstrap。
+Engine Extraction 已实现 Code First bootstrap。
 
-V0.2 不重新设计启动流程，只把它正式整理成稳定入口。
+Code First DX 不重新设计启动流程，只把它正式整理成稳定入口。
 
 建议：
 
@@ -309,7 +309,7 @@ Main Loop
 Scene 启动
 ```
 
-V0.2 不让 `createAirApp()` 承担：
+Code First DX 不让 `createAirApp()` 承担：
 
 ```text
 资源系统抽象
@@ -355,7 +355,7 @@ resources.load(path)
 
 足够支持 Code First。
 
-因此 V0.2 不建立新 Asset System。
+因此 Code First DX 不建立新 Asset System。
 
 只增加 Promise wrapper：
 
@@ -449,7 +449,7 @@ Camera
 
 # 10. Task 5 — 不正式封装 Model API
 
-上一版 V0.2 提到：
+上一版 Code First DX 提到：
 
 ```text
 createStaticModel()
@@ -458,7 +458,7 @@ createSkinnedModel()
 
 这里调整。
 
-V0.2 默认不进入正式 `src/air/` API。
+Code First DX 默认不进入正式 `src/air/` API。
 
 先放在：
 
@@ -466,7 +466,7 @@ V0.2 默认不进入正式 `src/air/` API。
 examples/shared/
 ```
 
-如果多个 Example 都重复使用并验证稳定，再考虑 V0.3 是否提升为公共 helper。
+如果多个 Example 都重复使用并验证稳定，再考虑 Standalone Asset Pipeline 是否提升为公共 helper。
 
 原因：
 
@@ -476,13 +476,13 @@ examples/shared/
 第二套 Model abstraction
 ```
 
-与 V0.1 的设计原则冲突。
+与 Engine Extraction 的设计原则冲突。
 
 ---
 
-# 11. Task 6 — 保持 V0.1 构建命令
+# 11. Task 6 — 保持 Engine Extraction 构建命令
 
-V0.1 已确定：
+Engine Extraction 已确定：
 
 ```bash
 npm install
@@ -494,7 +494,7 @@ npm run verify:web-only
 npm test
 ```
 
-V0.2 不新增另一套同义命令。
+Code First DX 不新增另一套同义命令。
 
 只增强这些命令的实现。
 
@@ -530,13 +530,13 @@ build/cocosair.module.min.js
 Production/minified ESM build
 ```
 
-V0.2 不改变文件命名。
+Code First DX 不改变文件命名。
 
 ---
 
 # 14. `npm run dev`
 
-V0.1 已定义：
+Engine Extraction 已定义：
 
 ```text
 Engine Watch
@@ -544,7 +544,7 @@ Engine Watch
 Example Dev Server
 ```
 
-V0.2 的任务是把它真正优化好。
+Code First DX 的任务是把它真正优化好。
 
 目标：
 
@@ -612,14 +612,14 @@ Dev Server compile
 
 # 16. Task 8 — Incremental Engine Build
 
-V0.1 已经实现：
+Engine Extraction 已经实现：
 
 ```text
 Engine TS
 → rebuild
 ```
 
-V0.2 在原 build system 上增加增量能力。
+Code First DX 在原 build system 上增加增量能力。
 
 要求记录：
 
@@ -637,13 +637,13 @@ docs/05-v02-build-performance.md
 
 不为了追求增量性能直接更换整个 bundler。
 
-优先复用 V0.1 的 build pipeline。
+优先复用 Engine Extraction 的 build pipeline。
 
 ---
 
 # 17. Task 9 — Browser Reload
 
-V0.2 第一阶段只要求：
+Code First DX 第一阶段只要求：
 
 ```text
 Full Page Reload
@@ -673,7 +673,7 @@ save
 → full reload
 ```
 
-作为 V0.2 正式行为。
+作为 Code First DX 正式行为。
 
 ---
 
@@ -705,7 +705,7 @@ bundle line 30000
 
 # 19. Task 11 — Type Declaration
 
-V0.2 必须保证：
+Code First DX 必须保证：
 
 ```text
 TypeScript autocomplete
@@ -715,9 +715,9 @@ Static Type Check
 
 生成对应 `.d.ts`。
 
-具体输出位置应与 V0.1 Build System 保持一致。
+具体输出位置应与 Engine Extraction Build System 保持一致。
 
-如果 V0.1 已有 declaration build：
+如果 Engine Extraction 已有 declaration build：
 
 ```text
 沿用
@@ -727,9 +727,9 @@ Static Type Check
 
 ---
 
-# 20. Task 12 — Example 体系保持 V0.1 连续
+# 20. Task 12 — Example 体系保持 Engine Extraction 连续
 
-V0.1 已有：
+Engine Extraction 已有：
 
 ```text
 examples/
@@ -738,7 +738,7 @@ examples/
 └── skinned-animation/
 ```
 
-V0.2 必须保留。
+Code First DX 必须保留。
 
 新增：
 
@@ -796,13 +796,13 @@ const scene = new Scene('Main');
 app.run(scene);
 ```
 
-这个 Example 是 V0.2 最核心的入门模板。
+这个 Example 是 Code First DX 最核心的入门模板。
 
 ---
 
 # 22. hello-cube
 
-保持 V0.1 行为不变。
+保持 Engine Extraction 行为不变。
 
 继续作为：
 
@@ -841,13 +841,13 @@ Texture
 resources.load
 ```
 
-V0.2 改用：
+Code First DX 改用：
 
 ```text
 loadAssetAsync()
 ```
 
-后必须保证结果与 V0.1 一致。
+后必须保证结果与 Engine Extraction 一致。
 
 ---
 
@@ -867,7 +867,7 @@ Material
 Texture
 ```
 
-V0.2 需要将 Demo 中已经验证的：
+Code First DX 需要将 Demo 中已经验证的：
 
 ```text
 关节树构建
@@ -886,7 +886,7 @@ src/air/utils/
 
 # 25. Task 13 — Error Visibility
 
-V0.2 不建立新的调试框架。
+Code First DX 不建立新的调试框架。
 
 利用现有：
 
@@ -917,7 +917,7 @@ Asset Load Error
 getRuntimeInfo()
 ```
 
-重新核查后，V0.2 暂不作为正式 API。
+重新核查后，Code First DX 暂不作为正式 API。
 
 原因：
 
@@ -943,13 +943,13 @@ tools/
 examples/shared/
 ```
 
-避免 V0.2 扩张公共 API。
+避免 Code First DX 扩张公共 API。
 
 ---
 
-# 27. Task 15 — tools 目录保持 V0.1 结构
+# 27. Task 15 — tools 目录保持 Engine Extraction 结构
 
-V0.1：
+Engine Extraction：
 
 ```text
 tools/
@@ -959,7 +959,7 @@ tools/
 └── verify/
 ```
 
-V0.2 不改变。
+Code First DX 不改变。
 
 新增开发工具继续按职责进入：
 
@@ -985,9 +985,9 @@ devtools/
 
 作为平级重复目录。
 
-如果 V0.1 仍存在少量历史 `scripts/`：
+如果 Engine Extraction 仍存在少量历史 `scripts/`：
 
-V0.2 应优先逐步收敛至：
+Code First DX 应优先逐步收敛至：
 
 ```text
 tools/
@@ -999,7 +999,7 @@ tools/
 
 # 28. Task 16 — Web-only Guard 必须持续通过
 
-V0.2 所有改动都必须保持：
+Code First DX 所有改动都必须保持：
 
 ```bash
 npm run verify:web-only
@@ -1038,7 +1038,7 @@ Browser Startup
 docs/05-v02-build-performance.md
 ```
 
-V0.2 不做：
+Code First DX 不做：
 
 ```text
 Renderer performance tuning
@@ -1054,7 +1054,7 @@ Developer Loop Performance
 
 ---
 
-# 30. Bundle Size 继续沿用 V0.1 Output
+# 30. Bundle Size 继续沿用 Engine Extraction Output
 
 记录：
 
@@ -1074,7 +1074,7 @@ gzip size
 但：
 
 ```text
-V0.2 不以减包体为目标
+Code First DX 不以减包体为目标
 ```
 
 ---
@@ -1100,7 +1100,7 @@ asset-load
 skinning-animation
 ```
 
-V0.2 新增：
+Code First DX 新增：
 
 ```text
 promise-asset-helper
@@ -1111,7 +1111,7 @@ skeleton-utils
 
 # 32. Documentation 连续编号
 
-基于 V0.1：
+基于 Engine Extraction：
 
 ```text
 docs/
@@ -1122,7 +1122,7 @@ docs/
 ├── 04-v01-verification.md
 ```
 
-V0.2 继续：
+Code First DX 继续：
 
 ```text
 docs/
@@ -1147,14 +1147,14 @@ development.md
 
 # 33. README 增量更新
 
-V0.1 README 已经说明：
+Engine Extraction README 已经说明：
 
 ```text
 A standalone Web TypeScript runtime extracted from Cocos,
 designed for Code First interactive applications.
 ```
 
-V0.2 不改变项目定位。
+Code First DX 不改变项目定位。
 
 只增加：
 
@@ -1168,7 +1168,7 @@ Engine Development
 
 ---
 
-# 34. V0.2 不改变 Upstream Strategy
+# 34. Code First DX 不改变 Upstream Strategy
 
 继续使用：
 
@@ -1177,14 +1177,14 @@ UPSTREAM.md
 docs/upstream-file-map.json
 ```
 
-记录 V0.1 的 cocos4 baseline。
+记录 Engine Extraction 的 cocos4 baseline。
 
-V0.2 不自动同步新的 cocos4 upstream。
+Code First DX 不自动同步新的 cocos4 upstream。
 
 否则：
 
 ```text
-V0.2 DX 修改
+Code First DX DX 修改
 +
 Upstream Engine 更新
 ```
@@ -1195,11 +1195,11 @@ Upstream sync 应作为独立任务。
 
 ---
 
-# 35. V0.2 验收矩阵
+# 35. Code First DX 验收矩阵
 
 | Level | 验收项 | 必须 |
 |---|---|---:|
-| L0 | V0.1 全部验证继续通过 | Yes |
+| L0 | Engine Extraction 全部验证继续通过 | Yes |
 | L1 | 原仓库结构不变化 | Yes |
 | L2 | `createAirApp()` 整理完成 | Yes |
 | L3 | Promise Asset Helper | Yes |
@@ -1222,10 +1222,10 @@ Upstream sync 应作为独立任务。
 
 # 36. Definition of Done
 
-V0.2 完成必须满足：
+Code First DX 完成必须满足：
 
 ```text
-1. V0.1 仓库结构保持不变
+1. Engine Extraction 仓库结构保持不变
 
 2. src/air 是唯一 Air 新增 Runtime 层
 
@@ -1279,9 +1279,9 @@ V0.2 完成必须满足：
 # 37. 推荐执行顺序
 
 ```text
-01 冻结 V0.1 RC baseline
+01 冻结 Engine Extraction RC baseline
         ↓
-02 检查 V0.1 tests / examples 全部通过
+02 检查 Engine Extraction tests / examples 全部通过
         ↓
 03 整理 createAirApp
         ↓
@@ -1319,17 +1319,17 @@ V0.2 完成必须满足：
         ↓
 20 Docs / README
         ↓
-21 V0.2 RC
+21 Code First DX RC
 ```
 
 ---
 
-# 38. V0.1 → V0.2 变化清单
+# 38. Engine Extraction → Code First DX 变化清单
 
 明确只有：
 
 ```text
-V0.1
+Engine Extraction
 src/air/
     bootstrap
     basic app
@@ -1337,7 +1337,7 @@ src/air/
 
         ↓
 
-V0.2
+Code First DX
 src/air/
     stable createAirApp
     Promise asset helper
@@ -1349,13 +1349,13 @@ src/air/
 以及：
 
 ```text
-V0.1
+Engine Extraction
 npm run dev
     basic watch
 
         ↓
 
-V0.2
+Code First DX
 npm run dev
     incremental build
     browser reload
@@ -1378,7 +1378,7 @@ Engine API
 
 ---
 
-# 39. V0.2 结束后的真实产品状态
+# 39. Code First DX 结束后的真实产品状态
 
 ```text
 cocosair.js/
@@ -1430,13 +1430,13 @@ Air API
 Cocos
 ```
 
-这是 V0.1 与 V0.2 必须共同坚持的边界。
+这是 Engine Extraction 与 Code First DX 必须共同坚持的边界。
 
 ---
 
-# 40. V0.3 暂定边界
+# 40. Standalone Asset Pipeline 暂定边界
 
-V0.2 完成之后，V0.3 才讨论：
+Code First DX 完成之后，Standalone Asset Pipeline 才讨论：
 
 ```text
 Standalone Asset Pipeline
@@ -1452,7 +1452,7 @@ Cocos Air Import Tool
 Runtime Assets
 ```
 
-V0.3 也应继续保持现有仓库结构。
+Standalone Asset Pipeline 也应继续保持现有仓库结构。
 
 如果需要 Import 工具，优先进入：
 

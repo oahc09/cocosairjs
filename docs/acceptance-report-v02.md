@@ -2,7 +2,7 @@
 
 > 基线：V0.1 RC（`v0.1.0-rc.1`）
 > 报告时间：2026-09-12
-> 执行依据：《Cocos Air V0.2 — Code First DX & SDK 化任务计划书（与 V0.1 连续版）》
+> 执行依据：《Cocos Air — Code First DX & SDK 化任务计划书》
 > V0.1 验收证据见 `docs/acceptance-report.md`（保持不变）。
 
 > **V0.3 前置审查更正（2026-09-12）**：原表 L7/L8 将全量 rebuild 标为增量能力通过，不充分；L5 正交取景、相机父节点和乱序关节复位缺少针对性验证，source map 搬运也未重定位 sources。

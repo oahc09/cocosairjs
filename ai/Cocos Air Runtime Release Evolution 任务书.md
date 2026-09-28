@@ -1,52 +1,52 @@
-# Cocos Air V0.6 → V1.0 演进任务书
+# Cocos Air Recipe Final Gate → Runtime Release 演进任务书
 ## 最终执行版
 
 ---
 
 # 0. 文档定位
 
-本任务书从 V0.6 开始。
+本任务书从 Recipe Final Gate 开始。
 
 直接前置：
 
 ```text
-V0.5
+glTF Extension Coverage
 Full glTF Extension Coverage
         ↓ G5 + 正式移交
 
-V0.5.1
+Developer Ecosystem
 Developer Ecosystem
 +
 Agent Ready Runtime
         ↓ 正式验收 + 移交
 
-V0.6
+Recipe Final Gate
 Agent Creation Workflow
         ↓
-V0.7
+Pattern Mining
 Data-driven Interaction Patterns
         ↓
-V0.8
+Benchmark Hardening
 Production Hardening
         ↓
-V0.9
+Agent Quality Gate
 Release Candidate
         ↓
-V1.0.0
+Runtime Release
 Stable Release
 ```
 
-本文不假设 V0.5 / V0.5.1 已完成。
+本文不假设 glTF Extension Coverage / Developer Ecosystem 已完成。
 
 任何“继承能力”均表示：
 
-> V0.6 开工前必须通过正式 revision、Gate 和交付记录确认存在。
+> Recipe Final Gate 开工前必须通过正式 revision、Gate 和交付记录确认存在。
 
 ---
 
-# 1. V0.6 开工硬门禁 G0
+# 1. Recipe Final Gate 开工硬门禁 G0
 
-必须取得 V0.5 最终交付：
+必须取得 glTF Extension Coverage 最终交付：
 
 ```text
 Final Revision
@@ -84,7 +84,7 @@ Lifecycle Baseline
 glTF Documentation
 ```
 
-必须取得 V0.5.1 最终交付：
+必须取得 Developer Ecosystem 最终交付：
 
 ```text
 Final Revision
@@ -114,7 +114,7 @@ Documentation Index
 若任一硬前置缺失：
 
 ```text
-V0.6 = BLOCKED
+Recipe Final Gate = BLOCKED
 ```
 
 不得缩小 Benchmark 范围绕过。
@@ -226,7 +226,7 @@ runtime error collection
 
 它验证的是：
 
-> V0.5.1 Agent Development Session 是否正确。
+> Developer Ecosystem Agent Development Session 是否正确。
 
 不用于评价：
 
@@ -1267,7 +1267,7 @@ Budget Exhausted Trial 的 Repair 数：
 
 # 39. Repair Budget
 
-V0.6 默认：
+Recipe Final Gate 默认：
 
 ```text
 Max Repair Iterations = 5
@@ -1681,7 +1681,7 @@ EXPECTED_FALLBACK
 
 ---
 
-# 52. V0.6 Agent Gate
+# 52. Recipe Final Gate Agent Gate
 
 冻结 Reference Agent Profile 下：
 
@@ -1703,7 +1703,7 @@ Budget Exhaustion Rate
 
 ---
 
-# 53. V0.9 Agent RC Gate
+# 53. Agent Quality Gate Agent RC Gate
 
 提升：
 
@@ -1854,7 +1854,7 @@ Example
 
 # 58. Recipe Catalog
 
-V0.6 最低：
+Recipe Final Gate 最低：
 
 ```text
 Catalog Total >= 30
@@ -1912,7 +1912,7 @@ deprecated
 
 ---
 
-# 60. V0.6 Recipe Gate
+# 60. Recipe Gate
 
 要求：
 
@@ -1942,7 +1942,7 @@ Stable Count = 20
 
 ---
 
-# 61. V0.9 Recipe Gate
+# 61. Agent Quality Gate Recipe Gate
 
 必须：
 
@@ -2190,7 +2190,7 @@ Runtime Error Collection
 Benchmark Runtime Adapter
 ```
 
-V0.6 不要求独立 npm 发布。
+Recipe Final Gate 不要求独立 npm 发布。
 
 ---
 
@@ -2250,7 +2250,7 @@ contractVersion
 
 # 72. Performance 合同继承
 
-V0.6 不降低 V0.5 / V0.5.1 已定义指标。V0.5 已要求 BoxTextured 30 次加载中位数相对基线回退不得超过 15%，且需要 50 次 load/instantiate/dispose 后资源回到基线。
+Recipe Final Gate 不降低 glTF Extension Coverage / Developer Ecosystem 已定义指标。glTF Extension Coverage 已要求 BoxTextured 30 次加载中位数相对基线回退不得超过 15%，且需要 50 次 load/instantiate/dispose 后资源回到基线。
 
 ---
 
@@ -2332,7 +2332,7 @@ DevTools ON
 
 不能跨机器计算 regression。
 
-V0.5.1 已明确要求同环境、同场景测量，并对不可获取内存项使用 `unavailable`。
+Developer Ecosystem 已明确要求同环境、同场景测量，并对不可获取内存项使用 `unavailable`。
 
 ---
 
@@ -2358,7 +2358,7 @@ unavailable
 
 ---
 
-# 77. V0.6 执行顺序
+# 77. Recipe Final Gate 执行顺序
 
 严格：
 
@@ -2401,17 +2401,17 @@ Runtime / DevTools Distribution
         ↓
 Performance / Lifecycle Regression
         ↓
-V0.6 Final Gate
+Recipe Final Gate Final Gate
 ```
 
 ---
 
-# 78. V0.6 Definition of Done
+# 78. Recipe Final Gate Definition of Done
 
 必须同时：
 
 ```text
-V0.5/V0.5.1 正式交接
+glTF Extension Coverage/Developer Ecosystem 正式交接
 
 Provider-neutral Driver 完成
 
@@ -2455,9 +2455,9 @@ Runtime / DevTools 分发边界通过
 
 ---
 
-# 79. V0.7 — Data-driven Interaction Patterns
+# 79. Pattern Mining — Data-driven Interaction Patterns
 
-V0.7 不预设新的 Framework。
+Pattern Mining 不预设新的 Framework。
 
 输入：
 
@@ -2513,7 +2513,7 @@ Repeated Validation Failure
 
 ---
 
-# 81. V0.7 候选
+# 81. Pattern Mining 候选
 
 可能包括：
 
@@ -2531,7 +2531,7 @@ Animation Coordination
 Selection Helper
 ```
 
-实际列表由 V0.6 数据决定。
+实际列表由 Recipe Final Gate 数据决定。
 
 禁止提前建设：
 
@@ -2547,7 +2547,7 @@ New Behavior Runtime
 
 ---
 
-# 82. V0.7 Gate
+# 82. Pattern Mining Gate
 
 每新增 helper：
 
@@ -2569,7 +2569,7 @@ Existing Regression
 
 ---
 
-# 83. V0.8 — Production Hardening
+# 83. Benchmark Hardening — Production Hardening
 
 进入：
 
@@ -2638,7 +2638,7 @@ Transmission / Volume / Dispersion
 
 ---
 
-# 85. V0.8 Engine Gate
+# 85. Benchmark Hardening Engine Gate
 
 支持环境中的 deterministic Runtime test：
 
@@ -2760,7 +2760,7 @@ Agent Session Contract
 
 # 89. License Inventory
 
-V0.8 提前建立：
+Benchmark Hardening 提前建立：
 
 ```text
 Source License Inventory
@@ -2774,11 +2774,11 @@ Example Asset Inventory
 Decoder Inventory
 ```
 
-不能等 V1.0.0 发布前才第一次整理。
+不能等 Runtime Release 发布前才第一次整理。
 
 ---
 
-# 90. V0.8 DoD
+# 90. Benchmark Hardening DoD
 
 必须：
 
@@ -2803,7 +2803,7 @@ API Stability Classification 完成
 
 ---
 
-# 91. V0.9 — Release Candidate
+# 91. Agent Quality Gate — Release Candidate
 
 进入：
 
@@ -2973,7 +2973,7 @@ Error Collection
 
 ---
 
-# 96. G-LICENSE — V1.0.0 硬 Gate
+# 96. G-LICENSE — Runtime Release 硬 Gate
 
 检查范围：
 
@@ -3088,7 +3088,7 @@ Purpose
 无法确认许可：
 
 ```text
-不得进入 V1.0.0 正式发布范围
+不得进入 Runtime Release 正式发布范围
 ```
 
 ---
@@ -3142,7 +3142,7 @@ Hash
 Source
 ```
 
-必须与 V0.5 冻结记录一致。
+必须与 glTF Extension Coverage 冻结记录一致。
 
 ---
 
@@ -3298,7 +3298,7 @@ private dev files
 
 ---
 
-# 106. V0.9 DoD
+# 106. Agent Quality Gate DoD
 
 必须：
 
@@ -3334,7 +3334,7 @@ Documentation Freeze
 
 ---
 
-# 107. V1.0.0 Release Gates
+# 107. Runtime Release Release Gates
 
 必须全部：
 
@@ -3368,7 +3368,7 @@ PASS。
 
 ---
 
-# 108. V1.0.0 核心能力
+# 108. Runtime Release 核心能力
 
 ## Runtime
 
@@ -3453,7 +3453,7 @@ Validation
 
 ---
 
-# 109. V1.0.0 明确不包含
+# 109. Runtime Release 明确不包含
 
 默认不做：
 
@@ -3475,11 +3475,11 @@ Scene DSL
 A2Graphics IR
 ```
 
-这些属于 V1.x / V2 后续判断。
+这些属于后续阶段判断。
 
 ---
 
-# 110. V1.0.0 后扩展口
+# 110. Runtime Release 后扩展口
 
 Benchmark：
 
@@ -3535,26 +3535,26 @@ Recipe Core
 # 111. 最终版本路线
 
 ```text
-V0.6
+Recipe Final Gate
 可信 Agent Creation Workflow
 100+ Benchmark
 30+ Recipe
         ↓
-V0.7
+Pattern Mining
 基于数据提炼 Interaction Patterns
         ↓
-V0.8
+Benchmark Hardening
 Production Hardening
 150+ Benchmark
 License Inventory
         ↓
-V0.9
+Agent Quality Gate
 Release Candidate
 Feature Freeze
 30 Stable Recipe
 Full License / Repo Cleanup
         ↓
-V1.0.0
+Runtime Release
 Stable Release
 ```
 
@@ -3562,7 +3562,7 @@ Stable Release
 
 # 112. 四个永久独立 Gate
 
-从 V0.6 开始始终分开：
+从 Recipe Final Gate 开始始终分开：
 
 ```text
 Engine 正不正确？
@@ -3590,7 +3590,7 @@ Capability Gate
 
 ---
 
-# 113. V0.6 扩充 100 Benchmark 前必须冻结的合同
+# 113. Recipe Final Gate 扩充 100 Benchmark 前必须冻结的合同
 
 必须全部完成：
 

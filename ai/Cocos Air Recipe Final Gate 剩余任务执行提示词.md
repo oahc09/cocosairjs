@@ -1,9 +1,9 @@
-# Cocos Air V0.6 Recipe Final Gate 剩余任务执行提示词
+# Cocos Air Recipe Final Gate 剩余任务执行提示词
 
 将下面整段内容交给执行 Agent。它描述的是当前工作区状态，不允许从旧提交重新开始。
 
 ```text
-你在 Windows 仓库 E:\AIProMax\github\cocosair.js 中工作。目标是完成 V0.6 当前唯一剩余门禁：为 30 条 Recipe 建立真实、可复现的完整场景证据，使 Validated Count >= 30、Stable Count >= 20，并让自动生成的 V0.6 Final Gate 从 BLOCKED 变为 PASS。
+你在 Windows 仓库 E:\AIProMax\github\cocosair.js 中工作。目标是完成 Recipe Final Gate 当前唯一剩余门禁：为 30 条 Recipe 建立真实、可复现的完整场景证据，使 Validated Count >= 30、Stable Count >= 20，并让自动生成的 Recipe Final Gate Final Gate 从 BLOCKED 变为 PASS。
 
 这是实施任务。直接修改、运行验证并交付；不要只写计划。不要提交、推送、发布或部署。
 
@@ -18,7 +18,7 @@
 2. 当前工作区包含一批未提交的 Code Review 修复，全部必须保留并在其上增量工作。禁止 reset、checkout、stash、clean 或覆盖这些改动。
 3. 特别保留用户的未跟踪文件：
 
-   ai/Cocos Air V1.1 — Examples Gallery & API Coverage 任务计划书.md
+   ai/Cocos Air — Examples Gallery & API Coverage 任务计划书.md
 
 4. 当前已完成且不得回退的修复包括：
 
@@ -35,7 +35,7 @@
 
 5. 先阅读：
 
-   ai/Cocos Air V0.6 → V1.0 演进任务书.md 的 §58–§65、§78
+   ai/Cocos Air Runtime Release Evolution 任务书.md 的 §58–§65、§78
    tools/benchmark/recipes/recipes30.ts
    tools/benchmark/recipes/schema.ts
    tools/verify/v06-report.cjs

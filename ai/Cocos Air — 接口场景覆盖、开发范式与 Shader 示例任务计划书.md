@@ -21,7 +21,7 @@
 3. 固定 Code First 脚本组件开发流程、示例目录结构和代码风格，并使新示例自动遵循。
 4. 交付可运行、可验证的自定义 Shader 最小示例；若底层缺口阻断，先给出实测结论、接口设计与实施次序。
 
-不把 V1.2 遗留的全量 feature 回归、Advanced 8,060 单元逐项穷举、WebGPU 全平台等价性纳入本轮。不得降低现有 API 覆盖门槛或通过改 `coverageRequired` 缩小分母；确有分类错误时单列证据和评审记录。
+不把 Feature Regression 遗留的全量 feature 回归、Advanced 8,060 单元逐项穷举、WebGPU 全平台等价性纳入本轮。不得降低现有 API 覆盖门槛或通过改 `coverageRequired` 缩小分母；确有分类错误时单列证据和评审记录。
 
 ## 3. 执行批次
 
@@ -107,7 +107,7 @@
 ## 6. 风险与决策点
 
 - **覆盖率规模**：现有 Core/Important 缺口远超 5 个组合示例可填满。本轮交付的是可复用场景体系和优先级最高的一批；若目标是达到 Core 100% / Important 90%，需在 G0 后另开批次预算，不能宣称本轮已达标。
-- **旧文档漂移**：手册 `game.md`、`shadertoy.md` 的结论与现有 V1.2 feature 面可能跨版本；引用时以当前可运行验证为准，更新状态须附新证据。
+- **旧文档漂移**：手册 `game.md`、`shadertoy.md` 的结论与现有 Feature Regression feature 面可能跨版本；引用时以当前可运行验证为准，更新状态须附新证据。
 - **Shader 资源格式**：`EffectAsset.register` 具备线索但无用户侧成功样例。探针结果决定实施分支，不先设计过大的 `ShaderMaterial` 新抽象。
 - **工作区并发改动**：起草时 `docs/evidence/v11-gallery-artifact.json` 与 `examples/gltf-catalog/main.js` 已有未提交修改；后续实施需先复查这些文件，不能覆盖或据其变动推断本计划的完成情况。
 
