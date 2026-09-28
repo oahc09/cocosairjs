@@ -149,16 +149,26 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         }
     });
 
-    test('PAL 的唯一 AIR 改动是已登记且文档化的 Web DPR cap', () => {
+    test('PAL 的 AIR 改动均已登记且文档化（DPR cap + W04 画布覆盖）', () => {
         const fileMap = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
         const modified = fileMap.mapping.filter((row: any) => row.airPath.startsWith('src/pal/') && row.modified);
-        expect(modified.map((row: any) => row.airPath)).toEqual(['src/pal/screen-adapter/web/screen-adapter.js']);
-        expect(modified[0].reason).toContain('window.__CCDPR_CAP__');
+        // W04（2026-09-28）：三个 Web 输入源加入画布覆盖；与 screen-adapter 同为已登记 PAL 差异。
+        expect(modified.map((row: any) => row.airPath)).toEqual([
+            'src/pal/input/web/keyboard-input.js',
+            'src/pal/input/web/mouse-input.js',
+            'src/pal/input/web/touch-input.js',
+            'src/pal/screen-adapter/web/screen-adapter.js',
+        ]);
+        for (const row of modified) {
+            expect(row.reason).toContain('__CC_CANVAS__');
+        }
+        expect(modified[3].reason).toContain('window.__CCDPR_CAP__');
 
         const source = readFileSync(join(ROOT, 'src', 'pal', 'screen-adapter', 'web', 'screen-adapter.js'), 'utf8');
         const manual = readFileSync(join(ROOT, 'docs', 'manual', 'responsive.md'), 'utf8');
         expect(source).toContain('window.__CCDPR_CAP__');
         expect(source).toContain('Number.isFinite(cap)&&cap>0?cap:2');
+        expect(source).toContain('globalThis.__CC_CANVAS__');
         expect(manual).toContain('window.__CCDPR_CAP__');
         expect(manual).toContain('默认上限 2');
     });

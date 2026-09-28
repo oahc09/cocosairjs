@@ -180,6 +180,10 @@ The override must be assigned before importing the engine. The usage and pixel-u
 `src/cocos/gfx/webgl/webgl-swapchain.ts` sets `preserveDrawingBuffer: true` (AIR, 2026-09-12) so Code First pages remain pixel-readable for debuggers, verifiers and `canvas.toDataURL()` capture after the frame is presented. `src/cocos/gfx/webgl2/webgl2-swapchain.ts` now matches (AIR, 2026-09-28): the original change had missed the WebGL2 `getContext`, so on the WebGL2 backend any readback outside the `AFTER_DRAW` window (after a window resize, while paused, or from a timer) returned a black canvas while WebGL1 kept the last frame. The WebXR branch keeps the upstream `false`. Both files are marked modified in `docs/upstream-file-map.json`; the regression is locked by `tools/verify/w03-capture.cjs` (resize/paused phases must stay non-black on both backends).
 
 
+## Intentional AIR adaptation: host canvas override (`__CC_CANVAS__`)
+
+The Web PAL input sources (keyboard/mouse/touch) and the screen adapter resolve the game canvas once, at module-evaluation time, via `document.getElementById("GameCanvas")`. AIR adds an element-reference override read before that lookup: assigning `globalThis.__CC_CANVAS__ = <canvas>` **before importing the engine** binds input and screen adaptation to any canvas regardless of its DOM id, without renaming user DOM. Affected files: `src/pal/input/web/{keyboard,mouse,touch}-input.js` and `src/pal/screen-adapter/web/screen-adapter.js` (the adapter also keeps the `__CCDPR_CAP__` override above). `createAirApp` additionally: throws explicitly when the page already contains a *different* `#GameCanvas` (previously input silently bound the wrong element), warns when a custom-id canvas was not resolvable at import time, and defaults `tabIndex = 0` so the PAL click/touch auto-focus can receive keyboard events. Regression locked by `tools/verify/w04-canvas-binding.cjs` (classic / any-id-via-override / decoy-conflict modes).
+
 ## 基线快照统计（2026-09-12）
 
 | 项 | 值 |

@@ -105,8 +105,11 @@ Lissajous 指针在两帧 400ms 间隔内可能停在同一格或格间（`hit=-
 
 - **求交谁做**：AIR 引擎只给"屏幕→射线"这一步，
   射线与什么求交、怎么求交全在应用层。好处是形状语义自由（AABB/球/物理体任选），代价是要自己写。
-- **坐标系**：AIR `screenPointToRay` 吃**像素**坐标且 y 以左下为原点向上，
-  而事件 `getUILocation()` 给的是左上角 y 向下的 UI 坐标——两套坐标约定别混（§2 踩坑）。
+- **坐标系**：AIR `screenPointToRay` 吃**像素**坐标且 y 以左下为原点向上。
+  事件 `getUILocation()` 在默认设置（未显式设设计分辨率）下与 `getLocation()` **同空间同向**
+  （W05 实测：离中心点击 (800,200) → loc=(800,520)=ui，DPR 1/2 一致，y 均为左下原点向上；
+  证据 `docs/evidence/w05-coordinate-spaces.json`）——本页早期"UI 坐标左上 y 向下"的说法
+  与当期引擎实测不符，已修正。设置设计分辨率后 UI 空间随缩放变化，届时另行验证。
 - **事件层**：AIR 鼠标走 window 级 `input.on(MOUSE_MOVE)`（与 [tips](tips.md) 键盘锚点同源），
   无需给 canvas 绑 DOM 监听、也无需聚焦。
 

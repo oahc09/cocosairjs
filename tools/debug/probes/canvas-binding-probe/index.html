@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>cocosair — canvas-binding-probe</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 三模式由 main.js 按查询参数自建 DOM：
+             classic   — 模板结构 + #GameCanvas（控制组）
+             anyid     — 自定义 id 画布 + import 前设置 __CC_CANVAS__ 覆盖（动态 import）
+             decoy     — 页面已含另一个 #GameCanvas + 传入自定义 id 画布（应显式抛错） -->
+        <script type="module" src="./main.js"></script>
+    </body>
+</html>

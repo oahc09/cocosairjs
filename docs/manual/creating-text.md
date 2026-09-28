@@ -38,6 +38,22 @@ function addLabel(node, text, fontSize, color) {
 字体能力边界：AIR 无字体资产管线（Creator 的 `LabelAtlas`/富文本字体资源属编辑器工作流），
 `Label` 使用系统字体渲染；描边/阴影由 `LabelOutline` / `LabelShadow` 组件提供（导出面在）。
 
+### 溢出模式语义矩阵（W07 实测，2026-09-28）
+
+验证器 `tools/verify/w07-label-semantics.cjs`（几何断言读 `UITransform.getContentSize()`、
+像素断言做墨迹统计；证据 `docs/evidence/w07-label-semantics.json`）。测试载荷：固定盒
+300×40、fontSize 40、长句 "A rather long single-line sentence..."：
+
+| overflow       | contentSize 结果 | 语义要点                                                                 |
+| -------------- | ---------------- | ------------------------------------------------------------------------ |
+| `NONE`         | 1072×63          | **不折行**（已确认语义）：宽度随文本增长（短句 38→长句 1072），高度=文本高   |
+| `CLAMP`        | 300×40           | 盒恒定，文本被裁剪；不把 CLAMP 冒充原版单行截断/省略号（那是独立能力，未交付） |
+| `SHRINK`       | 300×40           | 盒恒定；**实际渲染字号内化在 `_actualFontSize`（实测 40→16）**，`fontSize` 属性保持原值——断言渲染结果别读属性 |
+| `RESIZE_HEIGHT`| 300×263          | 宽恒定、高度随折行增长；**折行为该模式固有——`enableWrapText=false` 仍折行**（实测 h=263） |
+
+字影：`enableShadow/shadowColor/shadowBlur/shadowOffset` 实测生效（同帧差分 hash 变化、
+墨迹 +468px），见证据 `shadow` 段。
+
 ## 路线二：Canvas 纹理文字（世界空间）
 
 把文字画进 2D canvas，`new Texture2D(...)` 上传，贴到一个 `Plane`/`Box` 面上——文字成为场景

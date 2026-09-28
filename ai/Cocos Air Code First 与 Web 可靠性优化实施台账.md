@@ -13,7 +13,7 @@
 | W01    | ✅ 完成    | `src/air/context-health.ts` + `tools/debug/probes/context-loss-probe/` + `tools/verify/w01-context-loss.cjs` + `docs/evidence/w01-context-loss.json` + 手册 webgl-compatibility-check.md 新章节 |
 | W02    | ✅ 完成    | `tools/debug/probes/coldstart-probe/` + `tools/verify/w02-coldstart.cjs` + `docs/evidence/w02-coldstart.json`（历史缺陷**未复现**，不改初始化代码） |
 | W03    | ✅ 完成    | `tools/debug/probes/capture-probe/` + `tools/verify/w03-capture.cjs` + `docs/evidence/w03-capture.json` + 截图 ×4 + 手册 capturing-screenshots.md + **WebGL2 preserveDrawingBuffer 缺陷修复**（webgl2-swapchain.ts，file-map/UPSTREAM 已登记） |
-| W04–W08 | ⬜ 待办   | P1 公共合同（画布绑定/坐标/DPR/Label/单时钟）                                                                      |
+| W04–W08 | ✅ 完成    | 详见下五节（W04 画布覆盖+冲突合同、W05 坐标矩阵、W06 GAP-W6-1 修复、W07 Label 语义矩阵、W08 单时钟驱动）              |
 | W09–W14 | ⬜ 待办   | P2 装配层（2D helper/场景栈/音频/调试树/性能/发布）                                                                |
 
 ## W01 — WebGL 上下文丢失（P0）
@@ -81,7 +81,61 @@
 - 导出面增量：`AirContextHealthState/Backend/Snapshot/LossOptions/Health`、`attachContextHealth`、
   `AirApp.contextHealth`、`AirAppOptions.contextLoss`（dts 已再生成，face 门禁当期跑）。
 
-## 门禁（P0 批次当期）
+
+## W04 — 画布绑定和键盘焦点（P1）
+
+- **时序锁定**：PAL 三输入源（keyboard/mouse/touch）与 screen-adapter 在**引擎 import 期**以
+  `getElementById("GameCanvas")` 解析画布（`export const input = new Input()` 模块求值期字段初始化）——
+  早于 createAirApp/ensureCanvasDOM。自定义 id 画布此前输入必断绑（源持 null 静默无监听），
+  页面另有 #GameCanvas 时静默错绑。
+- **实现**：四个 PAL 查找点支持 `globalThis.__CC_CANVAS__` 元素引用覆盖（import 前设置=任意 id 可用、
+  零 DOM 改写；file-map 登记，modifiedCount 31→34，UPSTREAM.md 新节）；ensureCanvasDOM 补：
+  decoy 冲突显式抛错（可行动信息）、自定义 id 迟绑定警告（两条修复路径）、tabIndex 默认 0 +
+  focus-visible 样式（PAL mousedown/touchstart 自动 focus，键盘仅聚焦时到达）。
+- **实测**（三模式 7/8/2 断言，pageerror=0）：classic 控制组（鼠标坐标精确映射 (400,420)、
+  键盘焦点门控 1/0、复焦 ✓）；anyid（__CC_CANVAS__+动态 import：渲染+输入+真实触摸 hasTouch tap ✓）；
+  decoy（显式拒绝 ✓）。鼠标模拟触摸路径（无触摸平台）未单测，如实登记。
+- **复现**：`tools/verify/w04-canvas-binding.cjs`。
+
+## W05 — 坐标空间（P1）
+
+- **实测矩阵**（DPR 1/2，离中心点击 (800,200) 判别 y 方向）：getLocation 左下原点像素精确
+  （(800,520) 双 DPR）；**getUILocation 默认设置下与 getLocation 同空间同向**（左下原点向上，
+  离中心点击判别——picking.md 早期"UI 左上 y 向下"说法与实测不符已修正）；相机射线
+  screenPointToRay 中心精确命中 lookAt 点（miss=0）；变换父节点（平移+旋转+缩放）下
+  **经父 UITransform.convertToNodeSpaceAR 的世界→局部精确回到 (0.3,0.2,0.1)**，
+  "朴素减画面中心"偏差 2.3+（反例留证）。
+- 设计分辨率非默认时的 UI 空间缩放关系未测（登记）；命中区域断言由 picking.md 既有示例链承载。
+- **复现**：`tools/verify/w05-coordinate-spaces.cjs`（探针 tools/debug/probes/coordinate-spaces-probe/）。
+
+## W06 — DPR（P1）
+
+- **GAP-W6-1 已修复**：ensureCanvasDOM 启动缓冲改为 `CSS × 有效 DPR`（与 resize 链对齐；
+  公式与 screen-adapter devicePixelRatio getter 同源含 __CCDPR_CAP__ 上限）。实测 DPR=2 启动缓冲
+  2560×1440（effectiveBufferRatio 2）、DPR=1 逐位不变（dpr=1 证据链零影响）。responsive.md §3 补记。
+- 可配置上限（__CCDPR_CAP__）为 f082ff1 既有交付；本批补齐量化链证据（W03 dprChain ×4 模式）。
+- **未测条件**：Android 真机 framebuffer/性能/电量指标（无设备）；按任务书"文档不把浏览器原始 DPR
+  写成实际 framebuffer 倍率"已落实（capturing-screenshots.md §采集与 DPR + responsive.md）。
+
+## W07 — Label 语义（P1）
+
+- 四溢出模式矩阵（几何读 contentSize + 像素墨迹，9/9 断言）：NONE 不折行（38→1072 宽）、CLAMP 恒盒、
+  SHRINK 实际字号内化 `_actualFontSize`（40→16，属性保持原值——断言渲染结果别读属性）、
+  RESIZE_HEIGHT 强制折行（enableWrapText=false 仍 h=263）。字影实测生效（同帧差分+墨迹 468）。
+  手册 creating-text.md 新增语义矩阵表。单行截断/省略号按任务书评估为独立能力未交付。
+- **复现**：`tools/verify/w07-label-semantics.cjs`。
+
+## W08 — 确定性单时钟（P1）
+
+- `src/air/step-clock.ts`：createStepClock() 三步合同（begin=game.pause 停真实 pacer；
+  step(dt)=director.tick+等本帧 AFTER_DRAW，**运行态调用抛错反双时钟**；end=resume）。
+- 实测（8/8）：双时钟门卫触发；begin 后真实 rAF 冻结（500ms delta=0）；90 步 dt 累计精确 1.5s、
+  旋转角精确 135°；第 30 步中间值 45°；end 恢复（+1.155s）；**两轮同序列像素哈希全同**
+  （cdf2552594083eab，SwiftShader 确定性渲染）。
+- **复现**：`tools/verify/w08-step-clock.cjs`。
+
+## 门禁（P1 批次当期）
+（P0 批次门禁见上；P1 批次）
 
 - **绿**：typecheck 0 错 · verify:web-only · verify:file-map（modifiedCount 30→31 同步后 PASS）·
   verify:doc-refs（150 文档 1332 引用 0 断链）· build:dts（新导出面 12 处 contextHealth 族在 d.ts）·

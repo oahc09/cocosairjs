@@ -1,0 +1,106 @@
+{
+  "measuredAt": "2026-09-28T14:41:24.053Z",
+  "evidence": "w08-step-clock (Code First 与 Web 可靠性任务清单 W04)",
+  "taskDoc": "ai/Cocos Air Code First 与 Web 可靠性优化任务清单.md",
+  "bundle": {
+    "sha256_16": "77d66dfafa03a5ed",
+    "bytes": 6607440
+  },
+  "browser": {
+    "name": "chromium headless (ANGLE/SwiftShader)",
+    "viewport": "1280x720",
+    "hasTouchNote": "anyid 模式 hasTouch=true（真实触摸 tap）；鼠标模拟触摸路径由引擎 input 系统在无触摸能力平台自处理，未单测"
+  },
+  "contract": {
+    "begin": "game.pause() 停真实 pacer（rAF/渲染/业务时钟/音频）",
+    "step": "director.tick(dt ?? 1/60) + 等本帧 AFTER_DRAW；运行态调用抛错（反双时钟）",
+    "end": "game.resume() 恢复真实时钟"
+  },
+  "runs": [
+    {
+      "mode": "step-clock",
+      "pass": true,
+      "durationMs": 3906,
+      "probe": {
+        "ok": true,
+        "checks": [
+          {
+            "name": "A_dual_clock_guard",
+            "pass": true,
+            "detail": "[cocosair] step(): real clock is running — call begin() (game.pause()) first. Running rAF and manual stepping at the sam"
+          },
+          {
+            "name": "C_dt_accumulates",
+            "pass": true,
+            "detail": "1.4999999999999996"
+          },
+          {
+            "name": "C_rotation_exact",
+            "pass": true,
+            "detail": "135"
+          },
+          {
+            "name": "D_mid_value",
+            "pass": true,
+            "detail": "{\"step\":30,\"angle\":45,\"sum\":0.5}"
+          },
+          {
+            "name": "B_real_clock_frozen",
+            "pass": true,
+            "detail": "0"
+          },
+          {
+            "name": "E_resume_advances",
+            "pass": true,
+            "detail": "1.1545999999940402"
+          },
+          {
+            "name": "F_hash_stability",
+            "pass": true,
+            "detail": "cdf2552594083eab vs cdf2552594083eab"
+          },
+          {
+            "name": "F_second_run_exact",
+            "pass": true,
+            "detail": "135"
+          }
+        ],
+        "samples": {
+          "A_dualClockGuard": "[cocosair] step(): real clock is running — call begin() (game.pause()) first. Running rAF and manual stepping at the same time is forbidden (dual clock).",
+          "D_midValue": {
+            "step": 30,
+            "angle": 45,
+            "sum": 0.5
+          },
+          "C_stepDeterminism": {
+            "steps": 90,
+            "sum": 1.5,
+            "angle": 135
+          },
+          "B_realClockFrozen": {
+            "frozenDelta": 0
+          },
+          "E_resume": {
+            "resumedDelta": 1.155
+          },
+          "F_hashStability": {
+            "run1": "cdf2552594083eab",
+            "run2": "cdf2552594083eab",
+            "equal": true
+          }
+        },
+        "info": {
+          "steppedTotal": 180
+        }
+      },
+      "failedChecks": [],
+      "pageErrors": [],
+      "runError": null,
+      "consoleSummary": {
+        "total": 9,
+        "warns": 0
+      }
+    }
+  ],
+  "verdict": "PASS"
+}

@@ -9,6 +9,7 @@ export * from './app';
 export * from './bootstrap';
 export * from './physics-backend';
 export * from './context-health';
+export * from './step-clock';
 export * from './utils';
 export * from './assets/gltf';
 export * from './rendering/transmission-capture';

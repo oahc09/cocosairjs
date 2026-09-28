@@ -1,10 +1,10 @@
 {
-  "measuredAt": "2026-09-28T14:11:24.713Z",
+  "measuredAt": "2026-09-28T14:43:26.176Z",
   "evidence": "w03-capture (Code First 与 Web 可靠性任务清单 W03)",
   "taskDoc": "ai/Cocos Air Code First 与 Web 可靠性优化任务清单.md",
   "bundle": {
     "sha256_16": "a5b3d9fc1c42fdb4",
-    "bytes": 6604543
+    "bytes": 6607817
   },
   "browser": {
     "name": "chromium headless (ANGLE/SwiftShader)",
@@ -21,7 +21,7 @@
       "mode": "webgl2-dpr1",
       "dpr": 1,
       "pass": true,
-      "durationMs": 4268,
+      "durationMs": 5393,
       "probe": {
         "id": "capture-probe",
         "ready": true,
@@ -137,7 +137,7 @@
               900,
               600
             ],
-            "sha16": "ac91bb337d318c88",
+            "sha16": "084ae126c84c1947",
             "clearRatio": 0.909,
             "avg": [
               31,
@@ -148,7 +148,7 @@
           },
           "D_paused": {
             "waitingCaptureError": "CAPTURE_FAILED: no AFTER_DRAW within 1500ms (paused)",
-            "waitedMs": 1507,
+            "waitedMs": 1501,
             "directToDataURLLen": 30406,
             "directSha16": "a8100700165a68da",
             "directCenterPx": [
@@ -198,7 +198,7 @@
       "mode": "webgl2-dpr2",
       "dpr": 2,
       "pass": true,
-      "durationMs": 4116,
+      "durationMs": 5145,
       "probe": {
         "id": "capture-probe",
         "ready": true,
@@ -212,7 +212,7 @@
           {
             "name": "A_toDataURL_nonempty",
             "pass": true,
-            "detail": "len=35030"
+            "detail": "len=134370"
           },
           {
             "name": "A_readPixels_no_glerror",
@@ -222,7 +222,7 @@
           {
             "name": "A_clear_ratio_mixed",
             "pass": true,
-            "detail": "0.918"
+            "detail": "0.924"
           },
           {
             "name": "A_not_black",
@@ -237,7 +237,7 @@
           {
             "name": "A_clear_ratio_agrees",
             "pass": true,
-            "detail": "0.918 vs 0.918"
+            "detail": "0.924 vs 0.924"
           },
           {
             "name": "B_fbo_complete",
@@ -252,7 +252,7 @@
           {
             "name": "C_resize_capture_ok",
             "pass": true,
-            "detail": "{\"before\":[1280,720],\"after\":[1800,1200],\"resized\":true}"
+            "detail": "{\"before\":[2560,1440],\"after\":[1800,1200],\"resized\":true}"
           },
           {
             "name": "C_resize_content_visible",
@@ -267,21 +267,21 @@
           {
             "name": "D_direct_capture_keeps_last_frame",
             "pass": true,
-            "detail": "len=88774 px=[40,89,186]"
+            "detail": "len=88722 px=[40,89,186]"
           }
         ],
         "samples": {
           "A_sameFrame": {
             "toDataURL": {
-              "byteLen": 35030,
-              "sha16": "3ec8a88cb03f6e17"
+              "byteLen": 134370,
+              "sha16": "cc10f177cc12c277"
             },
             "readPixels": {
-              "w": 1280,
-              "h": 720,
-              "sha16": "93e31d4f3881aeda",
+              "w": 2560,
+              "h": 1440,
+              "sha16": "eb3d8bfb9cddd4ba",
               "glError": 0,
-              "clearRatio": 0.918,
+              "clearRatio": 0.924,
               "avg": [
                 31,
                 44,
@@ -289,10 +289,10 @@
               ]
             },
             "canvas2dCopy": {
-              "w": 1280,
-              "h": 720,
-              "sha16": "93e31d4f3881aeda",
-              "clearRatio": 0.918,
+              "w": 2560,
+              "h": 1440,
+              "sha16": "eb3d8bfb9cddd4ba",
+              "clearRatio": 0.924,
               "avg": [
                 31,
                 44,
@@ -307,14 +307,14 @@
           },
           "C_resize": {
             "before": [
-              1280,
-              720
+              2560,
+              1440
             ],
             "after": [
               1800,
               1200
             ],
-            "sha16": "a80d7781564a9107",
+            "sha16": "aabdc30098fddfcb",
             "clearRatio": 0.909,
             "avg": [
               31,
@@ -325,9 +325,9 @@
           },
           "D_paused": {
             "waitingCaptureError": "CAPTURE_FAILED: no AFTER_DRAW within 1500ms (paused)",
-            "waitedMs": 1504,
-            "directToDataURLLen": 88774,
-            "directSha16": "9423e6c691be0845",
+            "waitedMs": 1500,
+            "directToDataURLLen": 88722,
+            "directSha16": "a145e338c6f842aa",
             "directCenterPx": [
               40,
               89,
@@ -345,18 +345,18 @@
               720
             ],
             "buffer": [
-              1280,
-              720
+              2560,
+              1440
             ],
-            "effectiveBufferRatio": 1
+            "effectiveBufferRatio": 2
           },
           "finalBackend": "webgl2"
         }
       },
       "shot": {
         "path": "docs\\evidence\\examples\\w03-capture-webgl2-dpr2.png",
-        "bytes": 17059,
-        "sha256_16": "0ee8155ebde33692",
+        "bytes": 22275,
+        "sha256_16": "9f0cdb9f23b902cf",
         "size": [
           2560,
           1440
@@ -375,7 +375,7 @@
       "mode": "webgl1-dpr1",
       "dpr": 1,
       "pass": true,
-      "durationMs": 4071,
+      "durationMs": 4600,
       "probe": {
         "id": "capture-probe",
         "ready": true,
@@ -389,7 +389,7 @@
           {
             "name": "A_toDataURL_nonempty",
             "pass": true,
-            "detail": "len=43714"
+            "detail": "len=43722"
           },
           {
             "name": "A_readPixels_no_glerror",
@@ -444,19 +444,19 @@
           {
             "name": "D_direct_capture_keeps_last_frame",
             "pass": true,
-            "detail": "len=30422 px=[40,89,186]"
+            "detail": "len=30406 px=[40,89,186]"
           }
         ],
         "samples": {
           "A_sameFrame": {
             "toDataURL": {
-              "byteLen": 43714,
-              "sha16": "ebdfee5f0556839a"
+              "byteLen": 43722,
+              "sha16": "9aad1ff0086e3bb8"
             },
             "readPixels": {
               "w": 1280,
               "h": 720,
-              "sha16": "937a1f42585add4d",
+              "sha16": "5e181e2156a7c6d0",
               "glError": 0,
               "clearRatio": 0.923,
               "avg": [
@@ -468,7 +468,7 @@
             "canvas2dCopy": {
               "w": 1280,
               "h": 720,
-              "sha16": "937a1f42585add4d",
+              "sha16": "5e181e2156a7c6d0",
               "clearRatio": 0.923,
               "avg": [
                 31,
@@ -491,7 +491,7 @@
               900,
               600
             ],
-            "sha16": "ac91bb337d318c88",
+            "sha16": "084ae126c84c1947",
             "clearRatio": 0.909,
             "avg": [
               31,
@@ -503,8 +503,8 @@
           "D_paused": {
             "waitingCaptureError": "CAPTURE_FAILED: no AFTER_DRAW within 1500ms (paused)",
             "waitedMs": 1501,
-            "directToDataURLLen": 30422,
-            "directSha16": "d14cda9fd520759e",
+            "directToDataURLLen": 30406,
+            "directSha16": "a8100700165a68da",
             "directCenterPx": [
               40,
               89,
@@ -552,7 +552,7 @@
       "mode": "webgl1-dpr2",
       "dpr": 2,
       "pass": true,
-      "durationMs": 4279,
+      "durationMs": 5167,
       "probe": {
         "id": "capture-probe",
         "ready": true,
@@ -566,7 +566,7 @@
           {
             "name": "A_toDataURL_nonempty",
             "pass": true,
-            "detail": "len=35030"
+            "detail": "len=134370"
           },
           {
             "name": "A_readPixels_no_glerror",
@@ -576,7 +576,7 @@
           {
             "name": "A_clear_ratio_mixed",
             "pass": true,
-            "detail": "0.918"
+            "detail": "0.924"
           },
           {
             "name": "A_not_black",
@@ -591,7 +591,7 @@
           {
             "name": "A_clear_ratio_agrees",
             "pass": true,
-            "detail": "0.918 vs 0.918"
+            "detail": "0.924 vs 0.924"
           },
           {
             "name": "B_fbo_complete",
@@ -606,7 +606,7 @@
           {
             "name": "C_resize_capture_ok",
             "pass": true,
-            "detail": "{\"before\":[1280,720],\"after\":[1800,1200],\"resized\":true}"
+            "detail": "{\"before\":[2560,1440],\"after\":[1800,1200],\"resized\":true}"
           },
           {
             "name": "C_resize_content_visible",
@@ -627,15 +627,15 @@
         "samples": {
           "A_sameFrame": {
             "toDataURL": {
-              "byteLen": 35030,
-              "sha16": "3ec8a88cb03f6e17"
+              "byteLen": 134370,
+              "sha16": "cc10f177cc12c277"
             },
             "readPixels": {
-              "w": 1280,
-              "h": 720,
-              "sha16": "93e31d4f3881aeda",
+              "w": 2560,
+              "h": 1440,
+              "sha16": "eb3d8bfb9cddd4ba",
               "glError": 0,
-              "clearRatio": 0.918,
+              "clearRatio": 0.924,
               "avg": [
                 31,
                 44,
@@ -643,10 +643,10 @@
               ]
             },
             "canvas2dCopy": {
-              "w": 1280,
-              "h": 720,
-              "sha16": "93e31d4f3881aeda",
-              "clearRatio": 0.918,
+              "w": 2560,
+              "h": 1440,
+              "sha16": "eb3d8bfb9cddd4ba",
+              "clearRatio": 0.924,
               "avg": [
                 31,
                 44,
@@ -661,8 +661,8 @@
           },
           "C_resize": {
             "before": [
-              1280,
-              720
+              2560,
+              1440
             ],
             "after": [
               1800,
@@ -679,7 +679,7 @@
           },
           "D_paused": {
             "waitingCaptureError": "CAPTURE_FAILED: no AFTER_DRAW within 1500ms (paused)",
-            "waitedMs": 1500,
+            "waitedMs": 1515,
             "directToDataURLLen": 88774,
             "directSha16": "9423e6c691be0845",
             "directCenterPx": [
@@ -699,18 +699,18 @@
               720
             ],
             "buffer": [
-              1280,
-              720
+              2560,
+              1440
             ],
-            "effectiveBufferRatio": 1
+            "effectiveBufferRatio": 2
           },
           "finalBackend": "webgl"
         }
       },
       "shot": {
         "path": "docs\\evidence\\examples\\w03-capture-webgl1-dpr2.png",
-        "bytes": 17059,
-        "sha256_16": "0ee8155ebde33692",
+        "bytes": 22275,
+        "sha256_16": "9f0cdb9f23b902cf",
         "size": [
           2560,
           1440

@@ -48,6 +48,11 @@ screen.on('canvas-resize', () => {
 `canvas.clientWidth/clientHeight` 是 **CSS 像素**；`screen.windowSize` 与 `screen.resolution` 都已经是
 **物理像素**（前者 = CSS 尺寸 × 上面那个 clamp 后的 dpr；后者 = `windowSize × resolutionScale`，
 Web adapter 的 `resolutionScale` 默认 1，所以**二者相等**，只有渲染离屏缩放时才分开）。
+
+**启动链一致性（W06，GAP-W6-1 修复 2026-09-28）**：此前首帧画布缓冲只写 CSS 像素、窗口 resize 后
+才乘有效 DPR——高 DPR 设备首帧实际半分辨率。现 `createAirApp` 启动即按 `CSS × 有效 DPR` 设定
+（与 resize 链一致；DPR=1 数值不变）。实测（`docs/evidence/w03-capture.json` dprChain）：
+DPR=2 启动缓冲 2560×1440（effectiveBufferRatio=2）。Android 真机性能/电量指标为未测条件。
 做性能预算按 `windowSize`/`resolution` 算，按 CSS 尺寸算会低估像素量。
 
 想要原生清晰度（或更低）可以在**引擎模块求值之前**设置全局开关，它同时作用于 framebuffer 尺寸、

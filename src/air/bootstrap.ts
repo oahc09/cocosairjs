@@ -20,10 +20,38 @@ import { attachContextHealth } from './context-health';
 export type { AirApp, AirAppOptions } from './app';
 
 /**
- * DOM 结构与官方 Web 模板保持一致，pal/screen-adapter 与 findCanvas 依赖这些 id。
+ * DOM 结构与官方 Web 模板保持一致，pal/screen-adapter 与 PAL 输入源依赖这些 id。
  * 若用户的 canvas 已按模板挂载，则不做任何改动。
+ *
+ * W04 画布绑定合同（Code First 与 Web 可靠性任务清单）：
+ * - PAL 输入源（keyboard/mouse/touch）与 screen-adapter 在**引擎 import 时**按
+ *   `#GameCanvas` 或 `globalThis.__CC_CANVAS__`（元素引用，优先）解析画布——自定义 id
+ *   画布必须在 import 前设置 `__CC_CANVAS__`（静态页用内联脚本，或动态 import 前赋值）。
+ * - 页面已有**另一个** `#GameCanvas` 元素时（会静默错绑输入），显式抛错而非绑定错误元素。
+ * - 画布默认 `tabIndex=0`（可聚焦；PAL 在 mousedown/touchstart 时自动 focus），
+ *   键盘事件仅在画布聚焦时到达——焦点合同见 docs/manual/script-component-workflow.md。
  */
 function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
+    if (canvas.id !== 'GameCanvas') {
+        const decoy = document.getElementById('GameCanvas');
+        if (decoy && decoy !== canvas) {
+            throw new Error(
+                '[cocosair] createAirApp: page already contains another element with id "GameCanvas"'
+                + ` (found <${decoy.tagName.toLowerCase()}>), and the passed canvas has id "${canvas.id}".`
+                + ' Engine input binds by that id — rename/remove the other element, or pass it as the canvas.');
+        }
+        // 自定义 id 且未走 __CC_CANVAS__ 覆盖：PAL 输入在 import 期已解析为空 → 输入不可用。
+        // 渲染路径经下方归一化仍可用；显式警告并给出两条修复路径，不静默降级。
+        if (!(typeof globalThis !== 'undefined' && (globalThis as { __CC_CANVAS__?: unknown }).__CC_CANVAS__)) {
+            console.warn(
+                '[cocosair] canvas id "' + canvas.id + '" was not "#GameCanvas" at engine import time;'
+                + ' PAL input (keyboard/mouse/touch) resolves the canvas during import and has bound nothing.'
+                + ' Fix: keep id "GameCanvas" in HTML before importing the engine, or set'
+                + ' globalThis.__CC_CANVAS__ = <canvas> before import (e.g. before a dynamic import()).');
+        }
+    }
+    // 焦点合同：可聚焦（PAL 的 mousedown/touchstart 回调会 canvas.focus()）；用户显式设置的 tabIndex 不改写。
+    if (canvas.tabIndex < 0) { canvas.tabIndex = 0; }
     if (document.body && !canvas.parentElement) {
         const frame = document.createElement('div');
         frame.id = 'GameDiv';
@@ -39,6 +67,7 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
             '#GameDiv { width: 100%; height: 100%; position: relative; }',
             '#Cocos3dGameContainer { width: 100%; height: 100%; }',
             '#GameCanvas { width: 100%; height: 100%; display: block; outline: none; }',
+            '#GameCanvas:focus-visible { outline: 2px solid rgba(64,148,235,0.8); }',
         ].join('\n');
         document.head.appendChild(style);
     }
@@ -47,10 +76,19 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
     if (canvas.id !== 'GameCanvas' && !document.getElementById('GameCanvas')) {
         canvas.id = 'GameCanvas';
     }
-    // 画布绘图缓冲必须匹配窗口尺寸（屏幕适配器只在窗口变化时触发，初始尺寸需在此设定）
-    if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    // 画布绘图缓冲必须匹配窗口尺寸（屏幕适配器只在窗口变化时触发，初始尺寸需在此设定）。
+    // W06（GAP-W6-1 修复，2026-09-28）：与 resize 链对齐——上游 screen-adapter 的 windowSize
+    // 为 CSS×有效 DPR，而此处此前只写 CSS 像素，导致高 DPR 设备首帧半分辨率（直到首次窗口
+    // 变化）。公式与 src/pal/screen-adapter/web/screen-adapter.js 的 devicePixelRatio getter
+    // 同源（__CCDPR_CAP__ 上限，默认 2）；DPR=1 时数值与旧行为逐位一致（dpr=1 证据链不受影响）。
+    const dprCapRaw = Number((globalThis as { __CCDPR_CAP__?: unknown }).__CCDPR_CAP__);
+    const dprCap = Number.isFinite(dprCapRaw) && dprCapRaw > 0 ? dprCapRaw : 2;
+    const effDpr = Math.min(window.devicePixelRatio ?? 1, dprCap);
+    const bufW = Math.round(window.innerWidth * effDpr);
+    const bufH = Math.round(window.innerHeight * effDpr);
+    if (canvas.width !== bufW || canvas.height !== bufH) {
+        canvas.width = bufW;
+        canvas.height = bufH;
     }
 }
 
