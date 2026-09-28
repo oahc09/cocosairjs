@@ -175,6 +175,11 @@ Owner 批复「按照建议执行，确保最优」，`docs/v12-d9-residual-tria
 
 The override must be assigned before importing the engine. The usage and pixel-unit contract are documented in [docs/manual/responsive.md](docs/manual/responsive.md) §3. This is the single intentional PAL byte difference; `docs/upstream-file-map.json` marks it modified and `test/smoke/smoke-30-v12-regression.test.ts` checks that no other PAL file drifts.
 
+## Intentional AIR adaptation: `preserveDrawingBuffer` on both WebGL backends
+
+`src/cocos/gfx/webgl/webgl-swapchain.ts` sets `preserveDrawingBuffer: true` (AIR, 2026-09-12) so Code First pages remain pixel-readable for debuggers, verifiers and `canvas.toDataURL()` capture after the frame is presented. `src/cocos/gfx/webgl2/webgl2-swapchain.ts` now matches (AIR, 2026-09-28): the original change had missed the WebGL2 `getContext`, so on the WebGL2 backend any readback outside the `AFTER_DRAW` window (after a window resize, while paused, or from a timer) returned a black canvas while WebGL1 kept the last frame. The WebXR branch keeps the upstream `false`. Both files are marked modified in `docs/upstream-file-map.json`; the regression is locked by `tools/verify/w03-capture.cjs` (resize/paused phases must stay non-black on both backends).
+
+
 ## 基线快照统计（2026-09-12）
 
 | 项 | 值 |

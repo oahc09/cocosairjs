@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>cocosair — coldstart-probe</title>
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                background: #fff;
+            }
+            #GameDiv {
+                width: 100%;
+                height: 100%;
+            }
+            #Cocos3dGameContainer {
+                width: 100%;
+                height: 100%;
+            }
+            #GameCanvas {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+        </style>
+        <script type="importmap">
+            { "imports": { "cocosair": "/build/cocosair.module.js" } }
+        </script>
+    </head>
+    <body>
+        <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配。
+             空缓存冷启动：无 Creator settings.json / 无远程资产包，仅 bundle import。 -->
+        <div id="GameDiv">
+            <div id="Cocos3dGameContainer">
+                <canvas id="GameCanvas"></canvas>
+            </div>
+        </div>
+        <script type="module" src="./main.js"></script>
+    </body>
+</html>

@@ -144,7 +144,7 @@ export function getContext (canvas: HTMLCanvasElement): WebGL2RenderingContext |
             depth: true,
             stencil: true,
             premultipliedAlpha: false,
-            preserveDrawingBuffer: false,
+            preserveDrawingBuffer: true, // AIR(2026-09-28): 与 webgl-swapchain 的既定 AIR 修改对齐（Code First 调试与像素验收需要；W03 发现该遗漏致 WebGL2 帧外读回恒黑——resize/暂停后 canvas.toDataURL/readPixels 拿不到内容，docs/upstream-file-map.json）
             powerPreference: 'default',
             failIfMajorPerformanceCaveat: false,
         };

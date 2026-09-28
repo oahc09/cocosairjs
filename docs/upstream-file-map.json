@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 30
+    "modifiedCount": 31
   },
   "mapping": [
     {
@@ -4041,8 +4041,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-swapchain.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-swapchain.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: getContext 普通分支 preserveDrawingBuffer=true（与 webgl-swapchain 2026-09-12 的既定 AIR 修改对齐——Code First 像素级验收与截图需要。W03 实测该遗漏使 WebGL2 帧外读回恒黑：resize/暂停后 toDataURL/readPixels 无内容；XR 分支保持上游 false）"
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-texture.ts",

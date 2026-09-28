@@ -15,6 +15,7 @@ import { AirAppImpl } from './app';
 import type { AirApp, AirAppOptions } from './app';
 import { registerBuiltinAirAssets } from './builtin/register';
 import { selectPhysicsBackend } from './physics-backend';
+import { attachContextHealth } from './context-health';
 
 export type { AirApp, AirAppOptions } from './app';
 
@@ -80,6 +81,9 @@ export async function createAirApp (options: AirAppOptions): Promise<AirApp> {
     }
     ensureCanvasDOM(canvas);
 
+    // W01：上下文健康状态机（在引擎 init 前挂接，早于 swapchain 自身的 lost 告警监听）。
+    const contextHealth = attachContextHealth(canvas, options.contextLoss);
+
     // 3D 物理后端选择（r46，#8(a)）：官方两个 instantiate 在模块求值期向
     // Game.EVENT_PRE_SUBSYSTEM_INIT 各挂一个 register 监听器（builtin 先、cannon 后，
     // 故模块序默认会让 cannon 胜出）。本监听器在两个之后注册 ⇒ 同事件内最后执行，
@@ -96,5 +100,5 @@ export async function createAirApp (options: AirAppOptions): Promise<AirApp> {
         overrideSettings: { rendering: { renderMode: options.renderMode } },
     });
 
-    return new AirAppImpl(canvas);
+    return new AirAppImpl(canvas, contextHealth);
 }

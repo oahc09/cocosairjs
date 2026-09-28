@@ -281,6 +281,36 @@ const cap = (k: string) => (caps[k] === undefined ? 'n/a' : caps[k]);
 console.log('[manual/webgl-compat] running on cocosair');
 ```
 
+## 上下文丢失（Context Loss）与 AIR 生命周期合同
+
+移动端 GPU 驱动回收、标签页休眠或驱动崩溃都会触发 `webglcontextlost`——所有 GPU 资源（纹理/buffer/program/FBO）即刻失效。上游引擎对此只打印告警（`warnID(11000)`），渲染循环继续向已死的上下文提交调用。AIR 在**不动上游 gfx 文件**的前提下，于画布层挂接同一标准事件，提供显式状态机：
+
+| 状态          | 进入时机                     | AIR 行为                                                                       |
+| ------------- | ---------------------------- | ------------------------------------------------------------------------------ |
+| `healthy`     | 启动后                       | 正常运行                                                                       |
+| `lost`        | `webglcontextlost`           | `event.preventDefault()`（为受控恢复留门）+ `game.pause()`：rAF、渲染、业务时钟、音频全部暂停——不再向失效上下文提交无效 GL 调用 |
+| `restoring`   | `webglcontextrestored`（瞬时）| 状态机观测点，立即进入下态                                                      |
+| `failed`      | 恢复事件到达后               | **如实判定**：AIR 本期不重建 GPU 资源（全量重建属引擎级能力，上游 Web 端同样缺失），恢复到的空上下文不能继续正确渲染；给出 `suggestion: 'reload'` 与受控重载入口。不宣称「自愈」 |
+
+```ts
+const app = await createAirApp({ canvas: '#GameCanvas' });
+
+app.contextHealth.onChange((snap) => {
+    // snap.state / .backend / .lostCount / .isContextLost / .gamePaused / .reason / .suggestion
+    if (snap.state === 'failed') {
+        // 受控重载（自定义确认 UI / 上报埋点后再调）：
+        app.contextHealth.requestReload(); // 默认 window.location.reload()，可经 contextLoss.reload 注入替代
+    }
+});
+```
+
+要点：
+
+- `requestReload()` 有门掣：`healthy` 态调用返回 `false` 且不动作；仅 `failed` 态真正执行。
+- 测试注入：`createAirApp({ contextLoss: { reload: () => recordCall() } })` 可在不真实导航的前提下断言重载合同。
+- 人为复现：`WEBGL_lose_context` 扩展（`gl.getExtension('WEBGL_lose_context')` → `loseContext()` / `restoreContext()`）。
+- 回归锁定：`tools/verify/w01-context-loss.cjs`（双后端 × 全相位，证据 `docs/evidence/w01-context-loss.json`）。
+
 ## API 参考
 
 `gfx.API`（`WEBGL2:7` / `WEBGPU:8`）、`director.root.device`（`.constructor.name` / `.capabilities` / `.numDrawCalls` / `.numTris`）、`sys`（`platform` / `browserType` / `browserVersion` / `os` / `isMobile`；**无** `sys.browser`）、`screen.devicePixelRatio`。以 `build/cocosair.module.d.ts` 为准。

@@ -46,6 +46,7 @@
 | [Uniform Types Uniform 类型](./uniform-types.md)                             | PARTIAL | ▶ `manual-uniform-types`    |
 | [Useful Links 有用链接](./useful-links.md)                                   | META    | –                           |
 | [WebGL Compatibility Check WebGL 兼容性检查](./webgl-compatibility-check.md) | FULL    | ▶ `manual-webgl-compat`     |
+| [Capturing Screenshots 页面截图采集](./capturing-screenshots.md)             | FULL    | – （W03 矩阵实测，验证器 `tools/verify/w03-capture.cjs`） |
 
 ## Next Steps（进阶）
 

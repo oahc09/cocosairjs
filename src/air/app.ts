@@ -8,6 +8,7 @@
 
 import { game, director } from '../cocos/game';
 import { Scene } from '../cocos/scene-graph/scene';
+import type { AirContextHealth, AirContextLossOptions } from './context-health';
 
 /**
  * @en Cocos AIR runtime version. The single source of truth is the `version` field of
@@ -35,11 +36,21 @@ export interface AirAppOptions {
      * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
      */
     physics?: 'builtin' | 'cannon';
+    /**
+     * 可选：WebGL 上下文丢失状态机（W01）。lost 时默认自动 game.pause() 停止绘制与
+     * 业务时钟；恢复路径如实现不能安全重建 GPU 资源，进入 failed 并提供受控重载。
+     */
+    contextLoss?: AirContextLossOptions;
 }
 
 export interface AirApp {
     /** @en The canvas this app renders into. @zh 本应用渲染目标画布（构造时传入）。 */
     readonly canvas: HTMLCanvasElement;
+    /**
+     * @en Context-health state machine handle (W01). @zh 上下文健康状态机句柄：
+     * snapshot() 轮询状态、onChange 订阅迁移、requestReload() 受控重载（仅 failed 态）。
+     */
+    readonly contextHealth: AirContextHealth;
     /** @en Run the given scene and start the main loop. @zh 运行场景并启动主循环（幂等）。 */
     run(scene: Scene): void;
     /** @en Current running scene, or null before run(). @zh 当前运行中的场景；run() 之前为 null。 */
@@ -53,7 +64,10 @@ export interface AirApp {
 export class AirAppImpl implements AirApp {
     private _started = false;
 
-    constructor (readonly canvas: HTMLCanvasElement) {
+    constructor (
+        readonly canvas: HTMLCanvasElement,
+        readonly contextHealth: AirContextHealth,
+    ) {
     }
 
     /**
