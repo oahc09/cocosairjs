@@ -7,7 +7,7 @@
  * Layout（VERTICAL 自动排布 + GRID 自动排布）、ScrollView（程序化滚动）、
  * EditBox（DOM input，headless 行为按引擎如实记录）。
  *
- * 交互断言：三浏览器矩阵（tools/v12/browser-matrix-contract.json）按 480x360 视口
+ * 交互断言：三浏览器矩阵（tools/verify/browser-matrix-contract.json）按 480x360 视口
  * 向 Button 发一次真实鼠标点击；页面在布局完成后把该按钮的实测页面坐标写进
  * clickTargets 供核对，window.__observed 记录真实输入前后的观察值。
  */

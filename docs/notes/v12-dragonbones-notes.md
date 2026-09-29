@@ -92,7 +92,7 @@ displayIndexSwapped = true      allFramesStable = true（每帧钉帧后跨真�
 
 **两个决定性与非确定性教训**：
 
-1. 矩阵一次运行只调用 **一次** `window.__probe()`（`tools/v12/browser-matrix.cjs`），所以任何「多次采样累积」的量都变成挂钟依赖。首版合同钉 `live.tipSeenInLiveSampling`（`render.everTip`，随 probe 调用时刻而变）⇒ 三引擎全红：`probeEquals:live.tipSeenInLiveSampling want true got false`（`db-probe/matrix-dry-r1.json`）。它的确定性孪生量 `live.tipSeenInPerFrameSampling`（钉帧阶段采，`tipRenderedAtFrames.length>0`）在 `matrix-dry-r2.json` 三引擎全绿。合同据此把累积量降为 `probePresent`（存在性），只把钉帧量留作 `probeEquals`。
+1. 矩阵一次运行只调用 **一次** `window.__probe()`（`tools/verify/browser-matrix.cjs`），所以任何「多次采样累积」的量都变成挂钟依赖。首版合同钉 `live.tipSeenInLiveSampling`（`render.everTip`，随 probe 调用时刻而变）⇒ 三引擎全红：`probeEquals:live.tipSeenInLiveSampling want true got false`（`db-probe/matrix-dry-r1.json`）。它的确定性孪生量 `live.tipSeenInPerFrameSampling`（钉帧阶段采，`tipRenderedAtFrames.length>0`）在 `matrix-dry-r2.json` 三引擎全绿。合同据此把累积量降为 `probePresent`（存在性），只把钉帧量留作 `probeEquals`。
 2. 终态读数**不是**逐引擎全等：当期全量矩阵里 chromium/firefox 的 `live.pixels.counts` 同为 `{plate:120, wing:137, tip:0, background:0}`，webkit 为 `{plate:117, wing:136, tip:0}`（2 像素步长 + ±24 容差下的光栅化差，3 个采样点）。合同因此对 `live.pixels.counts` 只用 `probeNonEmpty`（对象非空）+ `probePresent`（`.tip` 键存在），**不钉数值**；被钉成 `probeEquals` 的是钉帧通路：`tipRenderedAtFrames [6,12]`、`plateRenderedAtFrames [0,6,12,18,23]`、15 条 `regionSequence`、70 条 `goToFrame.*` 姿态 —— 这些三引擎逐字段一致。注意终态 `tip:0` 与 `tipSeenInLiveSampling:false` 是**同一事实的两面**（probe 那一刻 tail 正贴 plate），不是「红像素从不存在」。截图字节下界据实测 10898/12867/11521 定在 8000（对最小值留 ~27% 余量）。
 
 ## 5. 生命周期（§25）与 V1.1 证据链
@@ -124,10 +124,10 @@ node tools/examples/spec-compliance-audit.cjs                              → S
 全量三引擎矩阵（12 行 × 3 引擎，`subset=false`）：
 
 ```
-NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/v12/browser-matrix.cjs
+NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/browser-matrix.cjs
 → 36/36 PASS across 3 engines → docs/evidence/v12/browser-matrix.json（completed=true，runPass=runTotal=36，measuredAt 2026-09-22T18:28:59Z）
    bundle 绑定：build/cocosair.module.js 6081668 B / sha256₁₆ 35496aebda066ab5（与 §12 三次构建前后同值）
-   contractFingerprint dee8a12fe8b222f5（= 当期 tools/v12/browser-matrix-contract.json，含本组新行）
+   contractFingerprint dee8a12fe8b222f5（= 当期 tools/verify/browser-matrix-contract.json，含本组新行）
 ```
 
 覆盖前已做逐字节快照：`db-probe/browser-matrix.snapshot-before-20260923-022022.json`（2046611 B，`db-probe/matrix-before.sha256`；旧文件 33 记录 = 11 行 × 3，正是覆盖率断言里缺的 dragonbones 三格）。

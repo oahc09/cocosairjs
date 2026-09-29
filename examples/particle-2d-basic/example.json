@@ -67,7 +67,7 @@
   "learning": {
     "goal": "V1.2 回归：程序化生成的 plist 必须走引擎自己的 `assetManager.parser.parsePlist → ParticleAsset._nativeAsset → ParticleSystem2D.file → _applyFile → _initWithDictionary` 真实通路，字段映射、两种发射器模式、三种 positionType、duration 收尾与贴图/混合状态都要在种子化随机 + 手工定步下三引擎逐字节一致，并且真的出图",
     "points": [
-      "决定性三件套：plist 文本运行时程序化生成后交引擎解析（不是手写组件属性）；`math.setRandGenerator(seededRandom)` 换掉随机源让所有 variance 抽样跨引擎同串；求值用 `simulator.step(1/60)×N` 手工定步。实测 chromium/firefox/webkit 三份 `__probe()` 的 28 个 phase 键、约 50 项读回逐字节相同（`tools/v12/browser-matrix-contract.json` 的 probeEquals 全等，`docs/evidence/v12/browser-matrix.json` 三引擎 records 全 PASS）",
+      "决定性三件套：plist 文本运行时程序化生成后交引擎解析（不是手写组件属性）；`math.setRandGenerator(seededRandom)` 换掉随机源让所有 variance 抽样跨引擎同串；求值用 `simulator.step(1/60)×N` 手工定步。实测 chromium/firefox/webkit 三份 `__probe()` 的 28 个 phase 键、约 50 项读回逐字节相同（`tools/verify/browser-matrix-contract.json` 的 probeEquals 全等，`docs/evidence/v12/browser-matrix.json` 三引擎 records 全 PASS）",
       "`step(dt)` 会把 dt 夹到 `assembler.maxParticleDeltaTime`，而该值只在**第一次**取 assembler 时由 `cclegacy.game.frameTime/1000*2` 定死（本例首取实测 0.033333）。不定住它，同一段定步代码在慢机器上会被悄悄夹小 ⇒ 本例首行就把它读到 results 里再显式设成 0.05，收尾时还原",
       "`custom = true` 会整段跳过 `_initWithDictionary` ⇒ 号称「程序化 plist」其实 plist 解析与字段映射一行都没跑。本例恒置 `custom = false`，并断言 `emitterMode/gravity/speed/startSize/endSize/life/emissionRate/duration/rotationIsDir` 全部由 plist 推导出来（P1 读回 gravity=[0,-100]、speed=60、life=1、emissionRate=10、duration=-1）",
       "plist 缺省推导规则实测：无 `emissionRate` 键 ⇒ `min(maxParticles/life)`（24/1.5=16）；`finishParticleSize: -1` ⇒ `endSize=-1` 且尺寸不随寿命衰减（P4 60 步后首粒 size 仍是 6）；`maxParticles: 40.7` ⇒ `totalParticles` 取整为 40；`rotationIsDir` 的 plist 布尔被解析成 JSON `true` 并映射为组件 `rotationIsDir=true`",

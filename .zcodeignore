@@ -1,6 +1,6 @@
 # Cocos Air V0.1
 node_modules/
-# V1.2 P1：引擎根内的 vendored 运行库（tools/v12/vendor-pkg.cjs 逐字节复制，必须入库以满足「源码自包含」）
+# V1.2 P1：引擎根内的 vendored 运行库（tools/build/vendor-package-subset.cjs 逐字节复制，必须入库以满足「源码自包含」）
 !src/node_modules/
 bin/
 build/.tmp-*/

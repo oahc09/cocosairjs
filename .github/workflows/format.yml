@@ -36,11 +36,11 @@ jobs:
       - run: npm run verify:test-inventory
       - run: npm run verify:benchmark
       - run: npm run verify:file-map
-      - run: npm run verify:v12-backends
-      - run: npm run verify:v12-feature-face
-      - run: npm run verify:v12-custom-face
+      - run: npm run verify:wasm-backends
+      - run: npm run verify:feature-exports
+      - run: npm run verify:custom-exports
       - run: npm run verify:doc-refs
-      - run: npm run verify:v11-chain-face
+      - run: npm run verify:example-chain
       - if: startsWith(github.ref, 'refs/tags/v')
         run: node tools/examples/coverage-report.cjs --check
       - if: startsWith(github.ref, 'refs/tags/v')

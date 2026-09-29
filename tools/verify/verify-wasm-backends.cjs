@@ -1,7 +1,7 @@
 /**
- * V1.2 批次 D-4 / G-3（wasm 三后端）护栏门禁（UPSTREAM.md Deviation-05 / F-123 / F-124 / F-125）
+ * WASM 物理后端源码闭包与能力边界的只读门禁。
  *
- *   node tools/v12/verify-wasm-backends.cjs [--json] [--out=<path>]
+ *   node tools/verify/verify-wasm-backends.cjs [--json] [--out=<path>]
  *
  * 只读。把此前住在仓库外 scratch 的一次性判据（`wasm-backend-closure` / `closure-unresolved-detail` /
  * `feature-units` / `physx-count-recon` / `lv12-16-attribution`）固化成可复跑门禁，钉住七条不变量：
@@ -70,7 +70,7 @@ const toRel = (abs) => path.relative(UPSTREAM, abs).split(path.sep).join('/');
 const sha16 = (abs) => crypto.createHash('sha256').update(fs.readFileSync(abs)).digest('hex').slice(0, 16);
 
 if (!fs.existsSync(UPSTREAM)) {
-    console.error(`[v12-backends] FAILED: 找不到上游快照 ${UPSTREAM}（用 COCOS_UPSTREAM 指定）`);
+    console.error(`[wasm-backends] FAILED: 找不到上游快照 ${UPSTREAM}（用 COCOS_UPSTREAM 指定）`);
     process.exit(2);
 }
 

@@ -58,7 +58,7 @@ tm.tmxAsset = asset;                 // setter → _applyFile()（tiled-map.ts:1
 
 ```
 NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules \
-  node tools/v12/browser-matrix.cjs --ids=tiledmap-basic --engines=chromium \
+  node tools/verify/browser-matrix.cjs --ids=tiledmap-basic --engines=chromium \
   --out=E:/AIProMax/cocosair-scratch/v12-diag/matrix-debug-tiledmap-chromium-r2.json
 → result FAIL，checks.frameChanged=false，p8RenderLoop={pulseRunning:true, filled:24, verts:0}
 ```
@@ -92,7 +92,7 @@ NODE_PATH=… node tools/verify/v11-examples-verify.cjs --ids=tiledmap-basic →
 全量三引擎矩阵（含本示例，`subset=false` / `completed=true` / `contractFingerprint 3dd04e191f69fcd3`）：
 
 ```
-NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/v12/browser-matrix.cjs
+NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/browser-matrix.cjs
 → 21/21 PASS across 3 engines → docs/evidence/v12/browser-matrix.json（bundle 未变：build/cocosair.module.js sha256_16 35496aebda066ab5）
 ```
 
@@ -111,7 +111,7 @@ NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/v12/bro
 只把 `assets/tiles.tsx` 的 `<animation>` 三行删掉（其余一字不动），并用一份剥掉全部 `results.p8TileAnimation.*` 断言的合同副本（`E:/AIProMax/cocosair-scratch/v12-diag/contract-no-p8.json`，剩 145 条 `probeEquals`）单跑 chromium，好让「画面没变」不被 P8 的连带失败掩盖：
 
 ```
-NODE_PATH=… node tools/v12/browser-matrix.cjs --ids=tiledmap-basic --engines=chromium \
+NODE_PATH=… node tools/verify/browser-matrix.cjs --ids=tiledmap-basic --engines=chromium \
   --contract=E:/AIProMax/cocosair-scratch/v12-diag/contract-no-p8.json \
   --out=E:/AIProMax/cocosair-scratch/v12-diag/matrix-negctl-tiledmap-noanim.json
 → result FAIL · checks={noConsoleError:true, noFailedRequest:true, frameChanged:false, pngBytesAboveFloor:true, probeAssertions:true} · failedAssertions=[] · pngBytes=12460

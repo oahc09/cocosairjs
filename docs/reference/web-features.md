@@ -16,9 +16,9 @@ feature 声明来自 `src/cc.config.json`，默认构建集合来自 `tools/buil
 
 ```bash
 npm run verify:web-only
-npm run verify:v12-feature-face
-npm run verify:v12-custom-face
-npm run verify:v12-backends
+npm run verify:feature-exports
+npm run verify:custom-exports
+npm run verify:wasm-backends
 ```
 
 这些检查分别验证依赖闭包、默认组成、custom pipeline 导出及 WASM 后端登记；浏览器行为需要另行验证。上游基线和有意差异见 [UPSTREAM.md](../UPSTREAM.md)，API 兼容约定见 [稳定性登记](v08-api-stability.md)。

@@ -1,7 +1,7 @@
 # V1.2 LV12-15（3D 物理 builtin）实测笔记
 
 对象：`examples/physics-3d-basic`（计划书 G1：默认发行产物里 3D 物理后端 = builtin，逐 API 钉死能力边界）。
-断言位置：`tools/v12/browser-matrix-contract.json` 的 `physics-3d-basic` 行（组 LV12-15，三引擎，
+断言位置：`tools/verify/browser-matrix-contract.json` 的 `physics-3d-basic` 行（组 LV12-15，三引擎，
 **304 条 `probeEquals`（274 顶层 + 15 条 `before.*` + 15 条 `unsynced.*`）+ 2 条 `probeNonEmpty`**，
 `waitMs 3500`、`click 240,180`、`afterClickMs 1500`、`minPngBytes 8000`、`frameChanged false`）。
 本笔记每条引擎行为结论都附「实测命令 + JSON 产物路径」；未附的即「待核」，不作为结论使用。
@@ -236,7 +236,7 @@ chromium 11402 B `d1aaeb5bc0e179ce`、firefox 13690 B `3107a3292153d018`、webki
 
 ```
 NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules \
-  node tools/v12/browser-matrix.cjs --ids=physics-3d-basic \
+  node tools/verify/browser-matrix.cjs --ids=physics-3d-basic \
   --out=E:/AIProMax/cocosair-scratch/v12-diag/matrix-physics3d-3eng-r7.json   # 3/3 PASS, completed=true
 ```
 
@@ -258,15 +258,15 @@ NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules \
 
 ## 13. 全量三引擎矩阵权威捕获（r39，本组收口）
 
-契约行追加完成后，`tools/v12/browser-matrix.cjs` 必须**不带 `--ids`** 重跑一次，因为
+契约行追加完成后，`tools/verify/browser-matrix.cjs` 必须**不带 `--ids`** 重跑一次，因为
 `test/smoke/smoke-30-v12-regression.test.ts` 同时校验 ① 证据 `contractFingerprint` 与磁盘契约文件的
 sha16 相等、② 每条记录的 `pngSha256` 与 `docs/evidence/v12/<id>/matrix-<engine>.png` 当前字节相等、
 ③ 契约声明的 `示例×引擎` 全集都有记录（缺一条即红）。单例 `--ids` 覆盖写死的 PNG 会立刻让 ② 失效。
 
 ```
-NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/v12/browser-matrix.cjs
+NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules node tools/verify/browser-matrix.cjs
 → docs\evidence\v12\browser-matrix.json  33/33 PASS across 3 engines, completed=true, subset=false
-   contractFingerprint 1b545ae5a7bef3f3（== 磁盘 `tools/v12/browser-matrix-contract.json` 的 sha16）
+   contractFingerprint 1b545ae5a7bef3f3（== 磁盘 `tools/verify/browser-matrix-contract.json` 的 sha16）
    bundle build/cocosair.module.js 6,081,668 B sha16 35496aebda066ab5
    measuredAt 2026-09-22T15:44:47.861Z
 ```
@@ -327,7 +327,7 @@ verified 35, attested 34, units 69 }`（`status: stable`、`specStatus: frozen`�
 
 口径先说死：本节是**诊断级**证据，不是计划书 §12 的验收证据。两条硬约束决定了它只能到诊断级：
 
-1. `tools/v12/browser-matrix.cjs:181` 把产物路径写死为 `build/cocosair.module.js`（`:204` 记录其指纹），
+1. `tools/verify/browser-matrix.cjs:181` 把产物路径写死为 `build/cocosair.module.js`（`:204` 记录其指纹），
    没有任何环境变量出口 ⇒ 换 bundle 就换门禁口径，`smoke-30` 的字节货币断言会立刻失配。
 2. 本组 304 条 `probeEquals` 契约与 **builtin 后端绑定**：示例探针直接读
    `collider.shape.worldObb / worldSphere / worldCapsule` 与 `sharedBody.shapes`，这些 getter

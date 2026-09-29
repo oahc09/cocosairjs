@@ -1,7 +1,7 @@
 /**
  * V1.2 簿记完整性门禁（计划书 §11 F-3 / LV12-21）
  *
- *   node tools/v12/verify-file-map.cjs
+ *   node tools/verify/verify-file-map.cjs
  *
  * 核验 docs/upstream-file-map.json 与 docs/extraction-manifest.json 是否与磁盘事实一致：
  *   1) 每条 map 行的 airPath 必须存在；

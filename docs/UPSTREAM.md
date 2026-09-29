@@ -60,7 +60,7 @@
 ## Deviation-04: gfx-webgpu 子图「已抽取、未接线、暂不类型核对」（V1.2 批次 E / 决策点 D10）—— **部分交付 + 待确认**
 
 - 已完成：`cocos/gfx/webgpu/**`（24）+ `cocos/webgpu/instantiated.ts` + `exports/gfx-webgpu.ts` 共 26 文件按官方原文逐字节抽取
-  （`node tools/v12/regress.cjs --group E1 …` → `wrote 26/26; byte-identical 26; DIFF 0; MISSING 0`），并已登记进
+  （`node tools/analyze/import-upstream-group.cjs --group E1 …` → `wrote 26/26; byte-identical 26; DIFF 0; MISSING 0`），并已登记进
   `docs/extraction-manifest.json` 与 `docs/upstream-file-map.json`；类型面补上官方逐字节 `@types/webGPU.d.ts`（3258 行）。
 - 受阻事实（三条，均可复现，证据见 `docs/evidence/v12/d10/README.md`）：
   1. **上游引用图本身不经过 Web**：`cocos/gfx/index.ts`（web 变体）对 webgpu 零引用，唯一接线者是 `cocos/gfx/index.ems.ts`
@@ -89,7 +89,7 @@
 - 已完成：`cocos/physics/bullet/**`（30）+ `cocos/physics/physx/**`（26）+ `cocos/physics-2d/box2d-wasm/**`（23）+
   `exports/physics-ammo.ts` / `exports/physics-physx.ts` / `exports/physics-2d-box2d-wasm.ts` 共 **82** 文件按官方原文逐字节抽取，并已登记进
   `docs/extraction-manifest.json`（1196 → 1278）与 `docs/upstream-file-map.json`（1233 → 1315）：
-  `node tools/v12/regress.cjs --group G3-physics-bullet-physx --features physics-ammo,physics-physx --prefix cocos/physics/bullet,cocos/physics/physx --exports physics-ammo,physics-physx`
+  `node tools/analyze/import-upstream-group.cjs --group G3-physics-bullet-physx --features physics-ammo,physics-physx --prefix cocos/physics/bullet,cocos/physics/physx --exports physics-ammo,physics-physx`
   → `wrote 58/58; byte-identical 58; DIFF 0; MISSING 0`；`--group D4-physics-2d-box2d-wasm` 同型 → `24/24 byte-identical`。
   `npm run verify:file-map` PASS（`rows=1315 manifest=1278`）。上游第 83 个种子 `cocos/physics/physx/instantiate.jsb.ts`
   按 §1.3 / 护栏 5 **零进入**（`regress.cjs` 自动 skip，且 `smoke-30` 断言磁盘上不存在该文件）。
@@ -127,21 +127,21 @@
   (b) 从官方 npm/CDN 引入 wasm 资产入发行物（需许可登记 + `verify:licenses` / `verify:web-only` / bundle 预算三处门禁同步改 + 全量重采）；
   (c) 记「不达」。答复前 LV12-14 / LV12-16 不计入验收通过。
 - 自办欠账进度：**~~`asm.js` 兜底分支零用例~~ 已收口**（r45c 写就 `test/smoke/smoke-32-wasm-fallback.test.ts` 6 条 / r45d 整表复跑 + 清单回填，见上一条）；
-  **~~scratch 判据脚本随文件系统即失~~ 部分清偿**（r45d 新增正式门禁 `npm run verify:v12-backends` = `tools/v12/verify-wasm-backends.cjs`，
+  **~~scratch 判据脚本随文件系统即失~~ 部分清偿**（r45d 新增正式门禁 `npm run verify:wasm-backends` = `tools/verify/verify-wasm-backends.cjs`，
   把 `wasm-backend-closure` / `closure-unresolved-detail` / `feature-units` / `physx-count-recon` 四份一次性判据固化成六条只读不变量：
   A1 闭包 764 文件（除 1 个 jsb 变体）全部落盘、A2 seed/闭包/jsb 集合/默认 `AIR_FEATURES` 数未漂移、
   A2 seed 内相对说明符零条解析不到上游、A3 闭包内字节偏差集合 ⊆ 在册 3 项、A4 `external:emscripten/**` 仍是登记的 9 个且只出现在动态分支、
   A5 feature 声明面 34/55/22 + `airOnly=["air"]` + 三后端定义与上游逐字段相同且不进默认集、
   A6 上游 `types[]` 一旦能解析到 `{bullet,physx,box2d}` 声明即判红 = **Deviation-05 的解禁触发器**（对应 owner #14 候选 (b)）。
-  r45d 现读 `verify:v12-backends` **EXIT=0**（`{"ok":true,"seeds":83,"closureTotal":764,"airByteIdentical":760,"drifted":3,"specs":9}`）；
+  r45d 现读 `verify:wasm-backends` **EXIT=0**（`{"ok":true,"seeds":83,"closureTotal":764,"airByteIdentical":760,"drifted":3,"specs":9}`）；
   负向对照（仓库外副本改常量）EXIT=1 且两条断言各自起火 ⇒ 门禁非空转。判据脚本仍在 scratch 的其余项：`lv12-16-attribution` / `physx-which-file` / `check-doc-refs`。
-- **UPDATE-r45f（上一行末的「仍在 scratch 的其余项」自本行作废）**：`verify:v12-backends` 增至**七条**（新增 **A7「物理后端子树缺件必须登记在 旧版基线差集报告（已清理） 差集任一桶内」**，
+- **UPDATE-r45f（上一行末的「仍在 scratch 的其余项」自本行作废）**：`verify:wasm-backends` 增至**七条**（新增 **A7「物理后端子树缺件必须登记在 旧版基线差集报告（已清理） 差集任一桶内」**，
   子树 = `SEED_DIRS` + `cocos/physics/cannon` + `cocos/physics-2d/box2d`；`SEED_DIRS` 另断言非 jsb 缺件数 = 0）。r45f 现读 `EXIT=0`
   （`{"ok":true,"seeds":83,"closureTotal":764,"airByteIdentical":760,"drifted":3,"specs":9,"subtreeUnregistered":0,"registeredFace":96}`；
   子树计数 `bullet 30/0/0`、`physx 27/1/0`、`box2d-wasm 23/0/0`、`cannon 20/0/0`、`box2d 22/0/0`，physx 那条 1 即 **Deviation-02** 的 jsb 变体不抽口径下的 `cocos/physics/physx/instantiate.jsb.ts`）；
   A7 负向控制三份（`pg-probe/negctl-a7*.cjs`：删在册差集条目 / 塞不存在的子树 / 仅钉 ROOT 的阳性对照）→ 前两份 EXIT=1 各报 A7 红项、阳性 EXIT=0。
   同轮新增两份只读门禁、均不改任何既有判定阈值：`verify:doc-refs`（文档互引棘轮，登记 46 条历史断链为 LV12-21 债务 = F-127）、
-  `verify:v12-custom-face`（LV12-17「custom 导出面一致」半项：两个 `src/exports/custom-pipeline*.ts` 与上游逐字节同、
+  `verify:custom-exports`（LV12-17「custom 导出面一致」半项：两个 `src/exports/custom-pipeline*.ts` 与上游逐字节同、
   `cocos/rendering/post-process` 34/34 与 `cocos/rendering/custom` 25/26 逐字节同且逐张登记在 `docs/upstream-file-map.json`）。
 
 - **UPDATE-r46（2026-09-24，Deviation-04 / Deviation-05 结案注记）**：owner 批复 #7=(b)、#14=(a)、#10=(a)（见 `docs/reference/owner-decisions.md` §4）
@@ -162,7 +162,7 @@ Owner 批复「按照建议执行，确保最优」，`docs/reference/scope-deci
   `cocos/native-binding/decorators.ts`、`cocos/rendering/lod-group-editor-utility.ts` —— 非 `*.jsb.ts` 形态的平台（ems）/编辑器（editor）变体，
   并入本豁免口径，补全 §1.3「其余 54 个 `*.jsb.ts`」的文字缺口（r46 实测：`cocos/` 树官方独有 87 = jsb 77 + 上述 4 + D9 已分类 6 个具体路径）。
 
-本豁免不改变「抽取件与官方逐字节」护栏；`verify:v12-backends` A6 解禁触发器保持有效。
+本豁免不改变「抽取件与官方逐字节」护栏；`verify:wasm-backends` A6 解禁触发器保持有效。
 
 ## 发布面 provenance 声明（F-130 / owner-decisions #17）
 

@@ -135,7 +135,7 @@ requireCheck(
 );
 requireCheck(v12.bundle.sha256_16 === bundle, 'V1.2 browser matrix uses a different bundle');
 requireCheck(
-    v12.contractFingerprint === sha16('tools/v12/browser-matrix-contract.json'),
+    v12.contractFingerprint === sha16('tools/verify/browser-matrix-contract.json'),
     'V1.2 browser matrix uses an old contract',
 );
 

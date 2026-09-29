@@ -41,7 +41,7 @@ airDangling = []   ← Air 没有任何 feature 指向「已声明但文件不�
 
 > ⚠️ 可移植性边界（诚实说明）：下表 `.../d9-probe/*.cjs` 是本轮的**仓库外**探测脚本（`E:/AIProMax/cocosair-scratch/d9-probe/`，产物同名 `.json` 留在该目录），
 > 不随仓库分发 —— 新克隆拿不到它们。仓库内**自足**可复跑的是：`node tools/compare/baseline-compare.cjs`（§1 的 178/124/14 分桶）、
-> `node tools/v12/verify-file-map.cjs`（含 r43 的 `moduleOverrides` 第 7 类断言）、以及本文件与 §3 各表里写明的 `grep` 命令（feature 名单 / `-empty` 映射 / importer）。
+> `node tools/verify/verify-file-map.cjs`（含 r43 的 `moduleOverrides` 第 7 类断言）、以及本文件与 §3 各表里写明的 `grep` 命令（feature 名单 / `-empty` 映射 / importer）。
 > 即：**结论的证据链有仓库内一半**，探测脚本只是把同一批判据批量化的加速器。
 
 | 判据 | 命令 | 产物 |
@@ -120,7 +120,7 @@ airDangling = []   ← Air 没有任何 feature 指向「已声明但文件不�
 ## 5. 与计划书护栏的关系（诚实结论）
 
 - 护栏 ②（抽取件与官方逐字节、偏差登记）：**不受本节影响**——14 项都是「Air 未声明该 feature」而非「Air 改了上游文件」；`verify:file-map` 当期 PASS、`airDangling=[]`。
-  r43 起该护栏的覆盖面**已扩到 `moduleOverrides` 替换件**（`tools/v12/verify-file-map.cjs` 第 7 类断言，接进 `npm test` 的 `smoke-30`）：
+  r43 起该护栏的覆盖面**已扩到 `moduleOverrides` 替换件**（`tools/verify/verify-file-map.cjs` 第 7 类断言，接进 `npm test` 的 `smoke-30`）：
   当期实测 `moduleOverrides pairs upstream=103 air=104 airOnlyRegistered=1 byteChecked=72 excludedOneSide=77 missingBoth=10 → PASS`，
   负向控制（上游镜像里把 `native-2d-empty.ts` 改成不同字节）应转红并已转红 ⇒ F-118 的 `minimalFix` 已落地，不再是人肉判据。
 - 护栏 ①（16 组全回归，豁免需理由 + 确认）：本文把 D9 的「理由」半边补齐，**确认仍缺**，因此 §4 表里 历史记录（v12-upstream-regression.md，已清理） 的 D9 状态只能从「14 项待分类」升到「14 项已分类、待 owner 批复」，不能升到「豁免成立」。

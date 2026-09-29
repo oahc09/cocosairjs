@@ -73,7 +73,7 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 
 ## 7. V1.2 内嵌第三方运行时（回归补全带入的运行库，2026-09-22 审计）
 
-`npm run verify:licenses`（`tools/v12/verify-licenses.cjs`）是本节的门禁：每项必须有
+`npm run verify:licenses`（`tools/verify/verify-licenses.cjs`）是本节的门禁：每项必须有
 （a）`licenses/`（或 `build/gltf-decoders/`）下的许可原文，且与来源**逐字节一致**（不许手写许可）；
 （b）产物指纹与发布形态相符；（c）需所有者判断的项必须在 `docs/license-decisions.json` 有处置登记。
 `licenses/` 已列入 `package.json` `files[]`，许可原文随 npm 包发布。

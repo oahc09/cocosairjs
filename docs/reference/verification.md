@@ -29,7 +29,7 @@ npm run verify:tarball-consumer
 ## 浏览器证据与发布就绪
 
 ```bash
-npm run verify:v12-matrix
+npm run verify:browser-matrix
 npm run verify:perf-lifecycle
 npm run verify:release
 ```

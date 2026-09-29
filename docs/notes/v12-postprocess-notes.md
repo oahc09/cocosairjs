@@ -7,7 +7,7 @@
 
 - `cocos/rendering/post-process` 34/34、`cocos/rendering/custom` 25/26（1 个 jsb 变体按 §1.3 排除）与上游**逐字节同**；
   两个 feature unit（`custom-pipeline`、`custom-pipeline-post-process`）的 `src/exports/*.ts` 与官方同名文件逐字节同。
-- 门禁 `npm run verify:v12-custom-face`（C1–C5，r45f 建立）持续 EXIT=0，把上述事实固化为只读不变量。
+- 门禁 `npm run verify:custom-exports`（C1–C5，r45f 建立）持续 EXIT=0，把上述事实固化为只读不变量。
 - 默认 `AIR_FEATURES` 已含 `custom-pipeline-post-process` ⇒ 后处理代码在默认 bundle 内（产物面 verified）。
 
 ## 2. 运行面不可达的三闸门（D11 根因，维持原判）
@@ -22,7 +22,7 @@
 
 - **(b) 档 = 变体构建级证据**：构建面已由默认 bundle 覆盖（`custom-pipeline-post-process` 在默认集内，
   `build`/`build:min` EXIT=0，r46 新基线 `cb89ea808968596d`/6,599,938 B）；代码/导出面由
-  `verify:v12-custom-face` 与 `verify:v12-feature-face` 持续锁定（两者 r46 全量门禁复跑 EXIT=0）。
+  `verify:custom-exports` 与 `verify:feature-exports` 持续锁定（两者 r46 全量门禁复跑 EXIT=0）。
 - **像素级 bloom/fxaa/color-grading 开关对照未交付**：其前置是 custom 管线运行时可达，
   而 (a) opt-in（`createAirApp` 增 `pipeline: 'custom'` 或暴露 `CUSTOM_PIPELINE_NAME`）属默认行为变更，
   owner 已批复不执行 (a)。此项按计划书「状态如实」纪律记 **not-delivered（显著标注）**，不阻塞 V1.2 Gate（同 D8 口径）。

@@ -1,7 +1,7 @@
 # V1.2 LV12-05（web-view）实测笔记
 
 对象：`examples/webview-basic`（计划书 A4：iframe 挂载/卸载、事件、与 UI 事件穿透行为）。
-断言位置：`tools/v12/browser-matrix-contract.json` 第 10 行 `webview-basic`（组 LV12-05，三引擎，108 条 `probeEquals` + 12 条 `probeNonEmpty` + 10 条 `probePresent`，`waitMs 12000`、`click 240,166`、`afterClickMs 3000`、`minPngBytes 15000`、`frameChanged true`）。
+断言位置：`tools/verify/browser-matrix-contract.json` 第 10 行 `webview-basic`（组 LV12-05，三引擎，108 条 `probeEquals` + 12 条 `probeNonEmpty` + 10 条 `probePresent`，`waitMs 12000`、`click 240,166`、`afterClickMs 3000`、`minPngBytes 15000`、`frameChanged true`）。
 本笔记每条引擎行为结论都附「实测命令 + JSON 产物路径」；未附的即「待核」，不作为结论使用。
 诊断证据目录：`E:/AIProMax/cocosair-scratch/v12-diag/`（仓库外 scratch，逐条列在第 9 节）。
 
@@ -27,7 +27,7 @@
   确定性地触发，实测 `errorWithinMs 21/39/32 ms`、`errorEvents 1`、`stateAfterError 'error'`、
   `urlAfterError './assets/page-error-like.html'`，且矩阵全程 `failedRequests []`（零 >=400 响应）。
 - **真 404 页面若不写「404」字样就不报**：无法用真失败请求取证——矩阵 harness 把任何 `status>=400`
-  记为失败请求并判红（`tools/v12/browser-matrix.cjs:97`）。所以本例的 error 分支刻意走正文嗅探。
+  记为失败请求并判红（`tools/verify/browser-matrix.cjs:97`）。所以本例的 error 分支刻意走正文嗅探。
 
 恢复语义：切回正常页后 `recoveredState 'loaded'`，`businessSequenceAfterRecover
 'loading,loaded,loading,loaded,error,loading,loaded'`（事件序列本身即三态机跑通的证据）。
@@ -101,7 +101,7 @@ NODE_PATH=E:/AIProMax/Y2026M08/AIShaderBenchmark/node_modules \
 webkit `Can't find variable: notDefinedAnywhere`——文案按引擎，条数一致），
 `evaluateJSThrewInPage null`（错误被吞在 impl 内，页面对调用方不抛）。
 基线另有 1 条 `console.error`：`[Physics] PhysicsSystem initDefaultMaterial()`，
-是全部示例共有的良性日志（矩阵 `BENIGN_CONSOLE` 白名单，见 `tools/v12/browser-matrix.cjs:38`）。
+是全部示例共有的良性日志（矩阵 `BENIGN_CONSOLE` 白名单，见 `tools/verify/browser-matrix.cjs:38`）。
 
 ⚠️ 该取证脚本的静态服务器 `REPO` 必须写成 `path.resolve(...)` 形式：`path.join` 产出反斜杠路径，
 若用正斜杠字面量做 `file.startsWith(REPO)` 越界检查，会**把所有请求判成 404** 而页面看起来只是「没起来」

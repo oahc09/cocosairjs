@@ -15,10 +15,10 @@ node E:/AIProMax/cocosair-scratch/v12-logs/audio-group-byte-compare.cjs
 
 出处两套：`src/cocos/audio/**`（7）与 `src/exports/audio.ts`、`src/@types/pal/audio.d.ts` 对官方
 `E:/AIProMax/github/cocos4`；`src/pal/audio/**`（8）对 npm `@cocos/engine-pal@1.0.4` 的 `dist/*`
-（门禁 `tools/v12/verify-file-map.cjs:46` 的 `pal/` 前缀解析）。全仓库口径：
+（门禁 `tools/verify/verify-file-map.cjs:46` 的 `pal/` 前缀解析）。全仓库口径：
 
 ```
-node tools/v12/verify-file-map.cjs → rows=1233 modified=28 scanned=1186 manifest=1196 PASS
+node tools/verify/verify-file-map.cjs → rows=1233 modified=28 scanned=1186 manifest=1196 PASS
 ```
 
 ⇒ 本组**零修改**，`docs/upstream-file-map.json` 不需要新增偏差条目。

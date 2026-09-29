@@ -5,7 +5,7 @@
 
 结论全部来自当期可复跑门禁，不采信示例自报：
 
-- 三引擎矩阵：`node tools/v12/browser-matrix.cjs`（契约块 `tools/v12/browser-matrix-contract.json` 的
+- 三引擎矩阵：`node tools/verify/browser-matrix.cjs`（契约块 `tools/verify/browser-matrix-contract.json` 的
   `video-basic`，group LV12-04）→ `docs/evidence/v12/browser-matrix.json` + `docs/evidence/v12/video-basic/matrix-<engine>.png`。
 - 契约断言只取**三引擎逐字节一致**的探针路径：由
   `E:/AIProMax/cocosair-scratch/v12-diag/probe-cross.cjs` 对

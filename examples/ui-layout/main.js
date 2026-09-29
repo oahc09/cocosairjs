@@ -5,7 +5,7 @@
  * （bottom 对齐）、中央 HORIZONTAL Layout（RIGHT_TO_LEFT 起排 + Widget 左右各留 30 拉伸），
  * 视口变化后单元几何与单元格排布都必须重算。顶栏标题实时显示当前视口，视口变化即重采集几何写入
  * window.__geom（页面自身持续行为，不靠探针触发）。
- * 由三浏览器矩阵（tools/v12/browser-matrix-contract.json 的 resize 步骤）真实改变浏览器视口（setViewportSize
+ * 由三浏览器矩阵（tools/verify/browser-matrix-contract.json 的 resize 步骤）真实改变浏览器视口（setViewportSize
  * → window resize → 引擎 screenAdapter/widgetManager 全链路），probe 两次采集几何。
  */
 

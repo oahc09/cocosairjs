@@ -7,7 +7,7 @@
  *   2) 默认 bundle 在该浏览器是否照常完成 WebGL2 初始化并出图（回退路径可用）。
  * 产物：docs/evidence/v12/d10/fallback-probe-<engine>.json + .png（只读现有 example 页面，不改产物）。
  *
- * 执行：NODE_PATH=<playwright> node tools/v12/webgpu-fallback-probe.cjs
+ * 执行：NODE_PATH=<playwright> node tools/verify/webgpu-fallback-probe.cjs
  */
 const fs = require('fs');
 const path = require('path');
@@ -15,7 +15,7 @@ const http = require('http');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'v12', 'd10');
-const { ENGINES, launchOptions } = require('../verify/browser-engines.cjs');
+const { ENGINES, launchOptions } = require('./browser-engines.cjs');
 const EXT = { '.js': 'text/javascript', '.html': 'text/html', '.json': 'application/json', '.png': 'image/png' };
 
 function serveRepo () {

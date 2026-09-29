@@ -1,7 +1,7 @@
 /**
- * V1.2 LV12-17「custom 导出面一致」半项的只读门禁（r45f，任务 #19）
+ * custom pipeline / post-process 导出面一致性的只读门禁。
  *
- *   node tools/v12/verify-custom-export-face.cjs [--json] [--out=<path>]
+ *   node tools/verify/verify-custom-exports.cjs [--json] [--out=<path>]
  *
  * 上游快照路径可用 COCOS_UPSTREAM 覆盖。原判据住在仓库外 scratch（`pg-probe/h-export-face.cjs`，只 dump 不断言），
  * 本脚本把同一批事实固化成五条不变量：
@@ -34,7 +34,7 @@ const EXPECT = {
     },
     featureUnitsShared: ['custom-pipeline', 'custom-pipeline-post-process'],
     featureUnitsNotAir: ['custom-pipeline-builtin-scripts'],
-    defaultAirFeatures: 27,
+    defaultAirFeatures: 26, // Approved WebGL2-only runtime: gfx-webgl was retired.
 };
 
 const errors = [];
@@ -45,7 +45,7 @@ const h16 = (abs) => crypto.createHash('sha256').update(fs.readFileSync(abs)).di
 const toRel = (abs, base) => path.relative(base, abs).split(path.sep).join('/');
 
 if (!fs.existsSync(UPSTREAM)) {
-    console.error(`[v12-custom-face] FAILED: 找不到上游快照 ${UPSTREAM}（用 COCOS_UPSTREAM 指定）`);
+    console.error(`[custom-exports] FAILED: 找不到上游快照 ${UPSTREAM}（用 COCOS_UPSTREAM 指定）`);
     process.exit(2);
 }
 

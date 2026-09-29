@@ -10,56 +10,56 @@
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/bootstrap.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/bootstrap.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/bootstrap.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/builtin-effects.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-effects.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-effects.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/builtin-glsl4.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-glsl4.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-glsl4.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/builtin-material.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-material.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-material.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/builtin/register.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/register.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/builtin/register.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/index.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/air/utils/index.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/utils/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/v12/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/utils/index.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
     },
     {
       "airPath": "src/cocos/2d/assembler/graphics/helper.ts",

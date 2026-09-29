@@ -1,7 +1,7 @@
 /**
  * V1.2 文档互引完整性门禁（LV12-21 簿记面；F-120 那类自伤的仓库侧兜底）
  *
- *   node tools/v12/verify-doc-refs.cjs [--json] [--out=<path>] [<相对路径>.md ...]
+ *   node tools/verify/verify-doc-refs.cjs [--json] [--out=<path>] [<相对路径>.md ...]
  *
  * 只读。不传文件参数时扫默认面：根 `README.md` + `docs/{gltf,guides,reference,manual,notes}/*.md` + `docs/*.md`。
  * 判据：文档里以 **反引号** 或 **`](…)`** 形式写出的仓库内路径必须真实存在。
@@ -13,7 +13,7 @@
  * 行号后缀（`docs/x.md:123`、`docs/x.md#L123`）会先剥掉再查存在性。
  * 反引号内**跨行**的片段不参与匹配（不做跨行拼接，避免把一句话里的两个 token 粘成假路径）。
  *
- * **棘轮基线**（`tools/v12/doc-refs-baseline.json`）：首次落地时仓库里已有数十条历史断链（V0.x 期证据路径、
+ * **棘轮基线**（`tools/verify/doc-refs-baseline.json`）：首次落地时仓库里已有数十条历史断链（V0.x 期证据路径、
  * 手册未移植的兄弟页链接、生成物路径、D9 待决项的「将来文件」），本期不扩范围去修它们，
  * 而是逐条登记 `doc` + `ref` + `class`，判据变成两条：
  *   R1 出现**基线外**的新断链 ⇒ 红（新写入的引用必须可解析）；
@@ -61,7 +61,7 @@ function refsFrom (txt) {
 const files = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const targetList = files.length ? files : defaultFiles();
 const BASELINE_ARG = process.argv.find((a) => a.startsWith('--baseline='));
-const BASELINE_PATH = BASELINE_ARG ? path.resolve(BASELINE_ARG.slice(11)) : path.join(ROOT, 'tools', 'v12', 'doc-refs-baseline.json');
+const BASELINE_PATH = BASELINE_ARG ? path.resolve(BASELINE_ARG.slice(11)) : path.join(ROOT, 'tools', 'verify', 'doc-refs-baseline.json');
 const baselineEntries = fs.existsSync(BASELINE_PATH) ? (JSON.parse(fs.readFileSync(BASELINE_PATH, 'utf8')).entries || []) : [];
 if (!fs.existsSync(BASELINE_PATH)) console.error(`[doc-refs] 找不到棘轮基线 ${BASELINE_PATH}（缺失时门禁视为全红，防止基线被顺手删掉）`);
 const keyOf = (b) => `${b.doc} -> ${b.ref}`;
@@ -109,7 +109,7 @@ for (const rel of targetList) {
 const staleBaseline = baselineEntries.filter((e) => !hitKeys.has(keyOf(e)));
 const errors = [
     ...bad.map((b) => `R1 新断链（不在棘轮基线内）：${b.doc} -> ${b.ref}`),
-    ...staleBaseline.map((e) => `R2 基线条目已不再命中，须从 tools/v12/doc-refs-baseline.json 删除：${e.doc} -> ${e.ref}`),
+    ...staleBaseline.map((e) => `R2 基线条目已不再命中，须从 tools/verify/doc-refs-baseline.json 删除：${e.doc} -> ${e.ref}`),
 ];
 
 const report = {

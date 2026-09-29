@@ -76,10 +76,10 @@ cocosair.js/
 | `npm run verify:web-only` | Web-only 依赖守卫（按依赖可达性判定，禁止 native/minigame 泄入） |
 | `npm run verify:file-map` | 簿记一致性：每行上游可解析 + 逐字节比对 + `modified` 标记互证 + `moduleOverrides` 替换件清点（r43 起） |
 | `npm run verify:licenses` | 上游/第三方许可头清点（抽取件不得丢版权头） |
-| `npm run verify:v12-matrix` | 三引擎（chromium/firefox/webkit）逐例截图 + probe 断言矩阵 → 产物指针见 `docs/reference/verification.md`（证据目录未随 npm 包发布） |
-| `npm run verify:v12-backends` | wasm 三后端护栏（只读，A1–A7）：抽取闭包落盘 / 范围计数不漂移 / 字节偏差 ⊆ 在册 / emscripten 说明符只在动态分支 / feature 声明面对账 / **A6 = 类型豁免解禁触发器** / **A7 = 物理子树缺件必须登记在差集** |
-| `npm run verify:v12-custom-face` | 后处理与 custom 管线交付面护栏（只读，C1–C5）：接线门面与子图逐字节 + 簿记在册 + feature unit 声明与默认发行姿态不漂移 |
-| `npm run verify:doc-refs` | 文档互引棘轮（只读）：markdown 里的仓库内路径必须存在；历史断链 46 条登记在 `tools/v12/doc-refs-baseline.json`，新增断链或基线腐烂即红 |
+| `npm run verify:browser-matrix` | 三引擎（chromium/firefox/webkit）逐例截图 + probe 断言矩阵 → 产物指针见 `docs/reference/verification.md`（证据目录未随 npm 包发布） |
+| `npm run verify:wasm-backends` | wasm 三后端护栏（只读，A1–A7）：抽取闭包落盘 / 范围计数不漂移 / 字节偏差 ⊆ 在册 / emscripten 说明符只在动态分支 / feature 声明面对账 / **A6 = 类型豁免解禁触发器** / **A7 = 物理子树缺件必须登记在差集** |
+| `npm run verify:custom-exports` | 后处理与 custom 管线交付面护栏（只读，C1–C5）：接线门面与子图逐字节 + 簿记在册 + feature unit 声明与默认发行姿态不漂移 |
+| `npm run verify:doc-refs` | 文档互引棘轮（只读）：markdown 里的仓库内路径必须存在；历史断链 46 条登记在 `tools/verify/doc-refs-baseline.json`，新增断链或基线腐烂即红 |
 | `npm run verify:benchmark` | 包体/加载基线回归（绑定当期 bundle sha256₁₆） |
 | `npm run verify:api-coverage` | 逐 API 执行证明与 V1.1 正式 100%/90%/80% 覆盖门槛；`--check` 可只读核对报告是否对应当期库存、规格和证据 |
 | `npm run verify:release` | 发布候选总门禁：干净工作树、覆盖率、示例数、V1.1/DevTools/Gallery/V1.2 证据与当前构建一致性 |
@@ -116,10 +116,10 @@ V1.x 回归期新增（**能力名**，逐名对账见下）：**2D/UI**（`2d` 
 - **已声明但不在默认集**：`audio` `physics-2d-builtin` `physics-ammo` `physics-physx` `physics-2d-box2d-wasm` `physics-cannon` `marionette` `procedural-animation`（共 8 项，逐条理由见 `docs/reference/web-features.md` §7.3）。
 - **不是 Air 声明的 feature unit，但能力确在默认产物里**：`mask` `graphics` `sorting` `intersection-2d` `geometry-renderer` `spine`（真实 unit 名是 `spine-3.8`/`spine-4.2`）`physics-framework`。机制：`src/exports/air.ts` 把它们**静态再导出**（`export * from` 一行一个）挂进 bundle 入口，走的是 **import 图**而不是 feature 开关（`src/exports/` 39 个文件里 **9** 个的名字未在册 unit：`geometry-renderer` `gfx-webgpu` `graphics` `intersection-2d` `mask` `physics-framework` `sorting` `sorting-2d` `spine`；其中 `gfx-webgpu.ts` **没有**被 `air.ts` 聚合，其余 8 个是）。
   产物侧核对（整词计数，`build/cocosair.module.js`）：`Graphics` 19、`Mask` 14、`Sorting2D` 4、`GeometryRenderer` 10、`PhysicsSystem` 33、`PhysicsSystem2D` 30、`AudioSource` 11、`TiledMap` 5、`UIRenderer` 31 ⇒ 「产物里有这个能力」为真；「它是可关掉的 feature unit」为假。
-  ⇒ 讲**开关面 / 变体构建**必须用 §7 的 unit 名；讲**发行产物含什么**才用上面的能力名。自查（仓库内只读门禁）：`npm run verify:v12-feature-face` —— D2 打印「入口文件名不是已声明 unit」的集合，D3 打印被 `air.ts` 聚合的那批，D4 是**默认产物组成锁**（在册能力符号整词命中 ≥1 + 非默认后端的世界类整词命中 == 0），D5 逐个复核上面每个能力名的依据还在不在。
+  ⇒ 讲**开关面 / 变体构建**必须用 §7 的 unit 名；讲**发行产物含什么**才用上面的能力名。自查（仓库内只读门禁）：`npm run verify:feature-exports` —— D2 打印「入口文件名不是已声明 unit」的集合，D3 打印被 `air.ts` 聚合的那批，D4 是**默认产物组成锁**（在册能力符号整词命中 ≥1 + 非默认后端的世界类整词命中 == 0），D5 逐个复核上面每个能力名的依据还在不在。
 
 入口面实测（r45g 现读，两个独立事实源交叉）：`src/exports/` **39** 个 feature 入口文件；`src/cc.config.json` 声明 **34** 个 feature unit（上游 55、缺 **22**、`airOnly=[air]`）；默认构建集 **26** 项。
-交叉源：`npm run verify:v12-feature-face` 的 D1 臂与 `npm run verify:v12-backends` 的 A4/A5 两臂 —— 同一对面、两个独立实现，现读一致。逐名分组见 `docs/reference/web-features.md` §7；复跑命令与历史增量见 `docs/UPSTREAM.md` §9.1。
+交叉源：`npm run verify:feature-exports` 的 D1 臂与 `npm run verify:wasm-backends` 的 A4/A5 两臂 —— 同一对面、两个独立实现，现读一致。逐名分组见 `docs/reference/web-features.md` §7；复跑命令与历史增量见 `docs/UPSTREAM.md` §9.1。
 （本段替换掉的是 r43 期口径「31 个 unit / 共有 30 / onlyUpstream 25 / 36 个入口」——批次 D-4/G-3 并入 3 个物理 unit 与 3 个入口文件后未随轮刷新，登记为 **F-130**。）
 
 **不包含 / 有条件（每条都有决策点，未确认前不自行豁免）**：

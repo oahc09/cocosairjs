@@ -1,9 +1,9 @@
 /**
- * V1.2 P1 — 把 npm 依赖 vendoring 成 Air 自包含 ESM 文件（计划书 P1「所有包内容按需复制进 src/，
- * 保持 Air 源码自包含原则」；ccbuild 的 rollup 不把 node_modules 打进 bundle，
- * 直接复制包内 CJS 入口又缺 commonjs 互操作，故用 esbuild 一次性转 ESM）。
+ * 将 npm 包转换为自包含 ESM 文件的辅助工具（主复制路径见 vendor-package-subset.cjs）。
+ * 使用 esbuild 合并指定包入口，并登记生成文件与 moduleOverrides。
+ * 需要保留包布局及 CommonJS default 导出互操作时，使用 vendor-package-subset.cjs。
  *
- *   node tools/v12/vendor-npm.cjs <@scope/pkg>[:entry] [--out <name>]
+ *   node tools/build/vendor-package-esm.cjs <@scope/pkg>[:entry] [--out <name>]
  *
  * 产出 src/external/<name>/air-<name>.esm.js，顶部带 provenance 注释；
  * 并把 moduleOverrides 的 isVirtualModule 规则（`@cocos/x` -> 该文件）写进 src/cc.config.json。
@@ -15,7 +15,7 @@ const { buildSync } = require('esbuild');
 const ROOT = path.resolve(__dirname, '..', '..');
 const argv = process.argv.slice(2);
 if (!argv.length) {
-    console.error('usage: node tools/v12/vendor-npm.cjs <pkg>[:entry] [--out <name>]');
+    console.error('usage: node tools/build/vendor-package-esm.cjs <pkg>[:entry] [--out <name>]');
     process.exit(2);
 }
 const spec = argv[0];
@@ -37,7 +37,7 @@ const relOut = path.relative(ROOT, outFile).replace(/\\/g, '/');
 const banner = [
     `PROVENANCE  package : ${pkgName}@${version}`,
     `            entry   : ${entry}`,
-    `            command : node tools/v12/vendor-npm.cjs ${spec}${argv.includes('--out') ? ` --out ${outName}` : ''}`,
+    `            command : node tools/build/vendor-package-esm.cjs ${spec}${argv.includes('--out') ? ` --out ${outName}` : ''}`,
     '            note    : V1.2 计划书 P1 依赖 vendoring —— 由 esbuild 以 ESM 单文件重打包进 Air bundle；',
     '                      不参与 src/ 的上游逐字节比对（Air 侧生成物，非官方引擎源码）。',
 ].join('\n');

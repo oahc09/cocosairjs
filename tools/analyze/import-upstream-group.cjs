@@ -1,7 +1,7 @@
 /**
- * V1.2 — 回归组接线工具（计划书 P3 的 ①②③ 步自动化）
+ * 上游分组导入与 feature 接线工具（保留既有抽取登记与校验合同）
  *
- *   node tools/v12/regress.cjs --group <id> --features <f1,f2> [--prefix <p1,p2>]
+ *   node tools/analyze/import-upstream-group.cjs --group <id> --features <f1,f2> [--prefix <p1,p2>]
  *        [--exports <e1,e2>] [--air-export <name>] [--upstream <dir>] [--dry]
  *
  * ① 抽取登记：向 docs/extraction-manifest.json 追加缺失条目（文本插入，不重排全文件）

@@ -22,12 +22,13 @@ Start with [README.md](README.md) for the current quick start and capability bou
 | `docs/` | Getting-started material, engine analysis, API guidance, and verification records. |
 | `docs/manual/` | Developer manual and its examples. |
 | `tools/` | Build, development server, analysis, and verification tooling. `tools/debug/` contains optional development tools. |
+| `tools/build/`, `tools/analyze/`, `tools/verify/` | Dependency vendoring and builds; dependency analysis and upstream group import; static gates and browser probes. Organize active tools by purpose, not release version. |
 | `test/` | Smoke tests and fixtures. |
 | `ai/` | Version plans and implementation briefs; these describe intended work and are not proof that a feature shipped. |
 
 ## Development workflow
 
-以下说明对应 [package.json](package.json) 当前的 36 个 `scripts`。除下文特别说明的 `baseline` 外，从仓库根目录执行；`npm test` 等价于 `npm run test`，传递脚本参数使用 `npm run <名称> -- <参数>`。
+以下说明对应 [package.json](package.json) 当前的 37 个 `scripts`。除下文特别说明的 `baseline` 外，从仓库根目录执行；`npm test` 等价于 `npm run test`，传递脚本参数使用 `npm run <名称> -- <参数>`。
 
 首次开发建议先安装依赖、生成开发 bundle，再启动服务：
 
@@ -63,6 +64,7 @@ npm run dev
 | `npm run build:min` | 构建同一运行时的压缩 ESM 版本。 | `build/cocosair.module.min.js`、`build/cocosair.module.min.js.map`；刷新模块格式标记；不更新普通 bundle 或类型声明。 |
 | `npm run build:dts` | 汇总引擎声明，并转换为 npm 包可直接导入的 SDK 声明。 | `build/cocosair.module.d.ts`；可能保留 `build/.dts-tmp-*`、`build/.dts-before-bundle-*` 中间目录，不生成运行时 JS。 |
 | `npm run build:all` | 顺序执行普通 ESM、压缩 ESM、类型构建，生成 `build/npm/` 无 source map 发布副本，再检查发布 bundle 的内置资源。 | 本地开发 JS + map、`.d.ts`、`build/npm/` 发布 JS 副本和模块格式标记；检查结果写终端。**不会**生成 `.tgz`、静态 Gallery 或重新采集浏览器证据，也不执行发布。 |
+| `npm run prepack` | 从已有本地 bundle 准备 npm 发布副本；`npm pack` 自动调用。 | 写入 `build/npm/` 无 source map 的 JS 副本，不编译引擎，不上传包。 |
 | `npm run build:system` | 构建 SystemJS 模块格式，用于需要该加载方式的场景。 | `build/cc.js`、`build/cc.js.map`，并刷新模块格式标记；不是默认 npm ESM 入口，不包含在 `build:all` 中。 |
 | `npm run baseline` | 历史上游 cocos4 Web 基线构建，排除依赖缺失 native/external 资产的 feature，使用 SystemJS 分包。 | 在**当前引擎目录**写 `bin/dev/cc-baseline/`。脚本直接读取 `cwd/cc.config.json`，而 AIR 仓库根没有该文件，直接从本仓库运行此 npm script 会失败；应在上游 cocos4 根目录直接调用本仓库的 `tools/baseline/build-baseline.cjs`。 |
 
@@ -90,10 +92,10 @@ npm run dev
 | `npm run verify:file-map` | 比较抽取文件、上游原文、修改登记、manifest 和 moduleOverrides 的完整性。 | 终端结论，无默认写入；需要可访问的上游 cocos4（`COCOS_UPSTREAM` 可指定）及依赖包。 |
 | `npm run verify:licenses` | 检查第三方运行时的许可文本、包内携带规则及 bundle 指纹，与默认/变体能力对应。 | 终端结论，无默认报告文件，不自动补许可证。 |
 | `npm run verify:doc-refs` | 检查根 README、docs 顶层和各文档主题目录的本地路径引用，按既有断链基线阻止新增断链或失效基线。 | 默认仅终端 JSON 与退出码；可选输出参数才写报告，不改文档。它不检查外部网址是否可访问。 |
-| `npm run verify:v12-backends` | 检查 WASM 物理后端的源码闭包、登记、feature 边界与类型豁免条件。 | 默认终端结果，无固定产物；源码检查不等于后端已在浏览器运行。 |
-| `npm run verify:v12-custom-face` | 检查 custom pipeline / post-process 的源码、聚合导出和默认 feature 边界。 | 默认终端结果，无固定产物；不验证像素效果。 |
-| `npm run verify:v12-feature-face` | 对账能力名、feature unit、聚合导出及默认 bundle 的组成。 | 默认终端结果，无固定产物；bundle 缺失时部分检查会跳过，应查看输出范围。 |
-| `npm run verify:v11-chain-face` | 检查现有 V1.1 证据的结构、逐项 validator、完成标记、内部候选一致性及测试消费者。 | 默认终端结果，无固定产物，不启动浏览器。当前候选与证据不匹配会披露，不能仅凭本门禁通过就认定证据最新。 |
+| `npm run verify:wasm-backends` | 检查 WASM 物理后端的源码闭包、登记、feature 边界与类型豁免条件。 | 默认终端结果，无固定产物；源码检查不等于后端已在浏览器运行。 |
+| `npm run verify:custom-exports` | 检查 custom pipeline / post-process 的源码、聚合导出和默认 feature 边界。 | 默认终端结果，无固定产物；不验证像素效果。 |
+| `npm run verify:feature-exports` | 对账能力名、feature unit、聚合导出及默认 bundle 的组成。 | 默认终端结果，无固定产物；bundle 缺失时部分检查会跳过，应查看输出范围。 |
+| `npm run verify:example-chain` | 检查现有 V1.1 证据的结构、逐项 validator、完成标记、内部候选一致性及测试消费者。 | 默认终端结果，无固定产物，不启动浏览器。当前候选与证据不匹配会披露，不能仅凭本门禁通过就认定证据最新。 |
 | `npm run verify:test-inventory` | 实际运行 Jest，并将 suite/test 名称、执行状态与已登记清单核对，防止漏发现或跳过测试。 | 默认输出终端 JSON；临时 `build/.test-inventory-<pid>.json` 读后删除。只有显式 `-- --update` 才重写 `docs/test-inventory.json`。 |
 | `npm run verify:benchmark` | 先对 benchmark 工具做 `noEmit` 类型检查，再回归编译诊断、指标聚合、隔离/超时及 Recipe 目录可编译性。 | 终端 JSON 与已清理的临时工作目录，不生成 benchmark 成绩报告，不是全量性能测试。 |
 | `npm run verify:g3-tooling` | 回归嵌套源码指纹、开发服务器 JS/TS 解析优先级、纹理行方向、资源状态码与字节数判断。 | 终端结论；测试文件在系统临时目录创建并清理，不生成正式证据 JSON。 |
@@ -107,7 +109,7 @@ npm run dev
 
 | 命令 | 含义与前置条件 | 产物与写入行为 |
 |---|---|---|
-| `npm run verify:v12-matrix` | 按 `tools/v12/browser-matrix-contract.json` 在 Chromium、Firefox、WebKit 执行契约条目；需要 bundle、示例资产和相应浏览器。范围由契约决定，不等于所有 Gallery 示例。 | 默认重写 `docs/evidence/v12/browser-matrix.json`，截图写入 `docs/evidence/v12/<id>/matrix-<engine>.png`（部分还有 `-before.png`）。子集运行不是全量证明；`--out=` 只重定向 JSON，截图仍写上述目录。 |
+| `npm run verify:browser-matrix` | 按 `tools/verify/browser-matrix-contract.json` 在 Chromium、Firefox、WebKit 执行契约条目；需要 bundle、示例资产和相应浏览器。范围由契约决定，不等于所有 Gallery 示例。 | 默认重写 `docs/evidence/v12/browser-matrix.json`，截图写入 `docs/evidence/v12/<id>/matrix-<engine>.png`（部分还有 `-before.png`）。子集运行不是全量证明；`--out=` 只重定向 JSON，截图仍写上述目录。 |
 | `npm run verify:perf-lifecycle` | 使用已生成的 `build/examples/` 静态 Gallery，在 Chromium 中验证重复加载/实例化/销毁与加载耗时稳定性。 | 重写 `docs/evidence/v11-perf-lifecycle.json`；不构建静态 Gallery，内存读数不可用会记录 unavailable。 |
 | `npm run verify:tarball-consumer` | 临时打包并离线安装到新项目，让 Chromium 实际运行安装包，验证启动、API、像素、无 sourcemap 的 npm 入口、本地 dev sourcemap 和嵌套路径/CSP 场景。 | 重写 `docs/evidence/v11-tarball-browser-consumer.json`；`prepack` 刷新 `build/npm/`，临时包和 consumer 目录完成后清理。 |
 | `npm run verify:g3-dev` | 自动启动开发服务器和 Chromium，检查 `starter`、`hello-cube`、`scene-switch-reentry` 的模块加载、组件更新与交互。 | 成功后写 `docs/evidence/g3-dev-samples.json`；截图为 `output/playwright/g3-<id>.png`，收尾关闭服务和浏览器。 |

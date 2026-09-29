@@ -1,7 +1,7 @@
 /**
- * V1.2「V1.1 证据链完整性」只读门禁（r45h4，自办任务 #27）
+ * 示例执行证据链完整性的只读门禁。
  *
- *   node tools/v12/verify-v11-chain-face.cjs [--json] [--out=<path>] [--evidence=<path>]
+ *   node tools/verify/verify-example-chain.cjs [--json] [--out=<path>] [--evidence=<path>]
  *
  * 立门禁的理由（先证伪再建，勿重复造轮子）：三引擎矩阵证据的字节货币**早已**是 jest 断言
  * （`test/smoke/smoke-30-v12-regression.test.ts` 的「三浏览器矩阵证据字节货币」5 条），而
@@ -47,14 +47,14 @@ const errors = [];
 const fail = (msg) => errors.push(msg);
 
 if (!fs.existsSync(evidencePath)) {
-    console.error(`[v11-chain-face] FAILED: 证据不在盘 ${evidencePath}`);
+    console.error(`[example-chain] FAILED: 证据不在盘 ${evidencePath}`);
     process.exit(2);
 }
 let j;
 try {
     j = JSON.parse(fs.readFileSync(evidencePath, 'utf8'));
 } catch (e) {
-    console.error(`[v11-chain-face] FAILED: 证据不可解析（${e.message}）`);
+    console.error(`[example-chain] FAILED: 证据不可解析（${e.message}）`);
     process.exit(2);
 }
 

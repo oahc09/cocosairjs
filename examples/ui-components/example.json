@@ -892,7 +892,7 @@
   "interaction": {
     "steps": [
       {
-        "action": "三浏览器矩阵（tools/v12/browser-matrix-contract.json）在 480x360 视口向 (110,68) 发一次真实鼠标点击（该坐标 = 页面布局完成后实测的 Button 世界坐标换算值，probe 里回读 clickTargets.button 核对）",
+        "action": "三浏览器矩阵（tools/verify/browser-matrix-contract.json）在 480x360 视口向 (110,68) 发一次真实鼠标点击（该坐标 = 页面布局完成后实测的 Button 世界坐标换算值，probe 里回读 clickTargets.button 核对）",
         "expected": "button.realClicks=1、button.labelBefore='Press me' → labelAfterLive='Clicked x1'、COLOR transition 使 sprite 颜色变化"
       },
       {

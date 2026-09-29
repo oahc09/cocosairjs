@@ -1,7 +1,7 @@
 /**
  * LV12-11 · dragonbones-basic —「龙骨资产运行时构造 + 动画播放」（Cocos Air Code First）
  *
- * 合同（计划书 §LV12-11 + `tools/v12/browser-matrix-contract.json` 行 `dragonbones-basic`）：
+ * 合同（计划书 §LV12-11 + `tools/verify/browser-matrix-contract.json` 行 `dragonbones-basic`）：
  *  1. 资产**不来自** assetManager 的 uuid 依赖图，而是运行期构造：
  *     `new dragonBones.DragonBonesAtlasAsset()` 填 `atlasJson` + `texture`，
  *     `new dragonBones.DragonBonesAsset()` 填 `dragonBonesJson`，

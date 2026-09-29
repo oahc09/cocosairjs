@@ -1,8 +1,8 @@
 /**
- * V1.2「能力边界三个面」的只读门禁（r45g，计划书 F-3 簿记项「README 特性矩阵 / docs/01 feature 表」的判据落点）
+ * 能力声明、feature unit 与默认 bundle 导出面的只读门禁。
  *
- *   npm run verify:v12-feature-face        （人读输出）
- *   node tools/v12/verify-feature-face.cjs --json [--out=<path>]
+ *   npm run verify:feature-exports        （人读输出）
+ *   node tools/verify/verify-feature-exports.cjs --json [--out=<path>]
  *
  * 存在理由：README「能力边界」与 `docs/reference/web-features.md` §4/§5 各用一种口径描述「Air 有什么」，
  * 三者（**能力名** / **feature unit 声明名** / **默认构建集**）不是一回事，历史上已因此写出互相矛盾的陈述（F-129、F-130）。
@@ -10,7 +10,7 @@
  *
  *   D1 声明面计数：Air 声明 unit 数 / 上游声明数 / 上游有而 Air 无 / airOnly / 默认 `AIR_FEATURES` 数 = 登记常量，
  *      且默认集里**不得**出现未声明名（`@cocos/ccbuild` 对未声明名是静默忽略，产物逐字节不变 ⇒ 只能靠断言防）。
- *      （同一对面 `verify:v12-backends` A4/A5 也查一遍 —— 故意两路独立实现，写错任一侧都会对不上。）
+ *      （同一对面 `verify:wasm-backends` A4/A5 也查一遍 —— 故意两路独立实现，写错任一侧都会对不上。）
  *   D2 入口名与单元名对账：`src/exports/*.ts` 里「文件名不是已声明 unit」的集合 = 登记集合（增删都算发行面变化）。
  *   D3 聚合面：`src/exports/air.ts` 的静态 `export *` 目标全部有对应文件；且 D2 那批未声明入口里被 air 入口聚合的 = 登记集合
  *      （`gfx-webgpu` 必须**不**在 —— 它未声明、未聚合、未进默认产物）。

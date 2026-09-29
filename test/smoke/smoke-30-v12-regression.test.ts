@@ -312,11 +312,11 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
     });
 
     test('F-3 簿记完整性：upstream-file-map / extraction-manifest 与磁盘事实一致', () => {
-        // 由 tools/v12/verify-file-map.cjs 逐项核验：每行上游可解析、字节一致性与 modified 标记互证、
+        // 由 tools/verify/verify-file-map.cjs 逐项核验：每行上游可解析、字节一致性与 modified 标记互证、
         // modifiedCount 与实际相符、src/{cocos,exports,pal,node_modules} 全量文件有行、抽取件有 manifest 条目。
         let stdout: string;
         try {
-            stdout = execFileSync(process.execPath, [join(ROOT, 'tools', 'v12', 'verify-file-map.cjs')], {
+            stdout = execFileSync(process.execPath, [join(ROOT, 'tools', 'verify', 'verify-file-map.cjs')], {
                 cwd: ROOT,
                 encoding: 'utf8',
             });
@@ -409,7 +409,7 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         });
 
         test('26 个 gfx-webgpu 抽取文件仍与官方逐字节一致（豁免只作用于类型核对，不改内容）', () => {
-            // 逐字节一致性由 tools/v12/verify-file-map.cjs 全量覆盖；这里只确认登记行仍在，
+            // 逐字节一致性由 tools/verify/verify-file-map.cjs 全量覆盖；这里只确认登记行仍在，
             // 防止「文件在盘但脱离簿记」的静默漂移。
             const map = JSON.parse(readFileSync(join(ROOT, 'docs', 'upstream-file-map.json'), 'utf8'));
             const registered = new Set<string>(map.mapping.map((r: any) => r.airPath));
@@ -499,9 +499,9 @@ describe('smoke 30 — V1.2 回归组产物面与运行时', () => {
         });
     });
 
-    describe('V1.2 三浏览器矩阵证据（tools/v12/browser-matrix.cjs）字节货币', () => {
+    describe('V1.2 三浏览器矩阵证据（tools/verify/browser-matrix.cjs）字节货币', () => {
         const EVIDENCE = join(ROOT, 'docs', 'evidence', 'v12', 'browser-matrix.json');
-        const CONTRACT = join(ROOT, 'tools', 'v12', 'browser-matrix-contract.json');
+        const CONTRACT = join(ROOT, 'tools', 'verify', 'browser-matrix-contract.json');
         const sha16 = (path: string): string => digest(path).slice(0, 16);
 
         test('证据在案且已完成：completed=true（缺标记即 NOT_RUN）', () => {

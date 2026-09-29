@@ -109,7 +109,7 @@ AIR_FEATURES="$(默认 26 项),marionette,procedural-animation" \
 结果 `EXIT=0`，但日志仍打出 `Redirect module .../marionette/runtime-exports.ts -> .../index-empty.ts`，
 且产物与默认**逐字节相同**（6,081,668 B / sha256₁₆ `35496aebda066ab5`，见 `pg-probe/variant-vs-default-r1.json`）
 ⇒ **ccbuild 对未声明的 feature 名是静默忽略的**，任何「变体已取证」的结论若不检查 Redirect 行或产物哈希，都可能建立在空气上。
-（本仓库既有 D10/D12 类变体取证走的是 `tools/v12/regress.cjs`，它会先写 config，故不受影响；但手工 `AIR_FEATURES` 会。）
+（本仓库既有 D10/D12 类变体取证走的是 `tools/analyze/import-upstream-group.cjs`，它会先写 config，故不受影响；但手工 `AIR_FEATURES` 会。）
 
 已落护栏：`tools/build/build.cjs` 在构建前把请求的 feature 集与 `src/cc.config.json` 的 `features` 键集比对，
 未声明即 `EXIT=1` 并列出未声明项（r43e 控制组：`AIR_FEATURES=base,not-a-real-feature` → `NEG_EXIT=1` 且输出目录未被创建；
@@ -143,7 +143,7 @@ AIR_FEATURES="$(默认 26 项),marionette,procedural-animation" \
 - 未声称 `pose-nodes/` 下各结点逐个求值正确：本轮只覆盖 `PoseNodeApplyTransform`
   与链接/求值/应用骨架本身；`play-motion`/`sample-motion`/`blend-*`/`ik`/`motion-sync`/`stash`
   等仍未有单元级证据。
-- 未在浏览器矩阵契约（`tools/v12/browser-matrix-contract.json`）里登记该示例，因此护栏第 9 条的
+- 未在浏览器矩阵契约（`tools/verify/browser-matrix-contract.json`）里登记该示例，因此护栏第 9 条的
   PASS 数不包含它。
 
 ## 6. 批复注记（r46，2026-09-24）

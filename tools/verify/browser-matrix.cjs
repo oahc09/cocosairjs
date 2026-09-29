@@ -1,7 +1,7 @@
 /* V1.2 §12 取证 — 三浏览器矩阵（Chromium / Firefox / WebKit）。
  *
  * 与 V1.1 的 spec-driven 门禁互补：V1.1 矩阵在 Chromium 上验 Example Specification，
- * 本工具把同一份示例在三个引擎上各跑一次，按 tools/v12/browser-matrix-contract.json
+ * 本工具把同一份示例在三个引擎上各跑一次，按 tools/verify/browser-matrix-contract.json
  * 的机器可读断言（示例页内 window.__probe() 回读值 + 帧变化 + 截图字节下界）判定通过，
  * 截图与逐引擎记录入库 docs/evidence/v12/。
  *
@@ -12,7 +12,7 @@
  * 证据绑定字节：记录 build/cocosair.module.js 与每张截图的 sha256_16（F-86 口径），
  * 只有完整跑完全部契约条目才盖 completed:true（F-72 口径，消费端缺标记即 NOT_RUN）。
  *
- * 执行：NODE_PATH=<playwright> node tools/v12/browser-matrix.cjs [--ids=a,b] [--engines=chromium,firefox,webkit]
+ * 执行：NODE_PATH=<playwright> node tools/verify/browser-matrix.cjs [--ids=a,b] [--engines=chromium,firefox,webkit]
  * 产出：docs/evidence/v12/browser-matrix.json + docs/evidence/v12/<id>/matrix-<engine>.png
  */
 const fs = require('fs');
@@ -22,7 +22,7 @@ const crypto = require('crypto');
 
 const REPO = path.resolve(__dirname, '..', '..');
 const CONTRACT_ARG = process.argv.find((a) => a.startsWith('--contract='));
-const CONTRACT = CONTRACT_ARG ? path.resolve(REPO, CONTRACT_ARG.slice(11)) : path.join(REPO, 'tools', 'v12', 'browser-matrix-contract.json');
+const CONTRACT = CONTRACT_ARG ? path.resolve(REPO, CONTRACT_ARG.slice(11)) : path.join(REPO, 'tools', 'verify', 'browser-matrix-contract.json');
 const OUT_DIR = path.join(REPO, 'docs', 'evidence', 'v12');
 const OUT_ARG = process.argv.find((a) => a.startsWith('--out='));
 const OUT = OUT_ARG ? path.resolve(REPO, OUT_ARG.slice(6)) : path.join(OUT_DIR, 'browser-matrix.json');
@@ -195,11 +195,11 @@ async function runOne (pw, id, contract, port, engines) {
   let completed = true;
   for (const id of ids) {
     const contract = contractAll[id];
-    if (!contract) { console.log(`[v12-matrix] SKIP ${id}: 不在契约文件里（不伪造断言）`); completed = false; continue; }
+    if (!contract) { console.log(`[browser-matrix] SKIP ${id}: 不在契约文件里（不伪造断言）`); completed = false; continue; }
     const rows = await runOne(pw, id, contract, port, (enginesArg ? enginesArg.slice(10).split(',') : contract.engines));
     records.push(...rows);
     for (const r of rows) { if (r.result !== 'PASS') { completed = false; } }
-    for (const r of rows) { console.log(`[v12-matrix] ${id} ${r.engine} → ${r.result}${r.reason ? ' (' + r.reason + ')' : ''}`); }
+    for (const r of rows) { console.log(`[browser-matrix] ${id} ${r.engine} → ${r.result}${r.reason ? ' (' + r.reason + ')' : ''}`); }
   }
   server.close();
   const pass = records.filter((r) => r.result === 'PASS').length;
@@ -217,6 +217,6 @@ async function runOne (pw, id, contract, port, engines) {
     benignConsoleAllowlist: BENIGN_CONSOLE,
     records,
   });
-  console.log(`[v12-matrix] ${pass}/${records.length} PASS across ${new Set(records.map((r) => r.engine)).size} engines → ${path.relative(REPO, OUT)} (completed=${completed})`);
+  console.log(`[browser-matrix] ${pass}/${records.length} PASS across ${new Set(records.map((r) => r.engine)).size} engines → ${path.relative(REPO, OUT)} (completed=${completed})`);
   if (!completed) { process.exitCode = 1; }
 })();

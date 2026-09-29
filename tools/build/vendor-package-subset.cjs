@@ -1,5 +1,5 @@
 /**
- * V1.2 P1 — 把 npm 依赖按「真实包布局」复制进引擎根目录 src/node_modules/。
+ * 将 npm 依赖的运行时子集按真实包布局复制到 src/node_modules/。
  *
  * 为什么不是 src/external/*.esm.js + cc.config moduleOverrides：
  *   ccbuild 的 module-overrides 插件把虚拟模块实现为
@@ -18,7 +18,7 @@
  *   已安装的 node_modules 声明（box2d 的 index.d.ts 依赖其 33 MB 的 src/ 源，
  *   不进仓库）。因此依赖仍需按 P1 声明在 package.json 中供 typecheck 使用。
  *
- * 用法: node tools/v12/vendor-pkg.cjs
+ * 用法: node tools/build/vendor-package-subset.cjs
  */
 const fs = require('fs');
 const path = require('path');

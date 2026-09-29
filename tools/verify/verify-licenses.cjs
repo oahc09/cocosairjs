@@ -3,7 +3,7 @@
  *   2) docs/license-decisions.json 里的处置登记（obligation/owner 决定或 pending 状态）；
  *   3) package.json files[] 真的把许可文本随包发布（Spine 明文要求再分发必须附许可）。
  *
- * 执行：node tools/v12/verify-licenses.cjs [--json]
+ * 执行：node tools/verify/verify-licenses.cjs [--json]
  */
 const fs = require('fs');
 const path = require('path');
