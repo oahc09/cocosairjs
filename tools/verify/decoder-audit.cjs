@@ -99,7 +99,7 @@ try {
     for (const required of ['build/cocosair.module.js', 'build/gltf-decoders/MANIFEST.md',
         'build/gltf-decoders/meshopt/meshopt_decoder.cjs', 'build/gltf-decoders/draco/draco3d.js',
         'build/gltf-decoders/draco/draco_decoder.wasm', 'build/gltf-decoders/basis/basis_transcoder.js',
-        'build/gltf-decoders/basis/basis_transcoder.wasm', 'THIRD_PARTY_LICENSES.md', 'LICENSE']) {
+        'build/gltf-decoders/basis/basis_transcoder.wasm', 'docs/THIRD_PARTY_LICENSES.md', 'LICENSE']) {
         if (!fs.existsSync(path.join(pkg, required))) { failures.push(`npm pack missing: ${required}`); }
     }
     // Loading the meshopt decoder from the unpacked tree proves offline usability.

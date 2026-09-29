@@ -28,9 +28,7 @@
   "docs/manual/",
   "README.md",
   "LICENSE",
-  "licenses/",
-  "UPSTREAM.md",
-  "THIRD_PARTY_LICENSES.md"
+  "licenses/"
  ],
  "engines": {
   "node": ">=18.0.0"

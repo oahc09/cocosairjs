@@ -63,7 +63,7 @@ const requiredFiles = [
     'build/gltf-decoders/basis/basis_transcoder.wasm',
     'README.md',
     'LICENSE',
-    'THIRD_PARTY_LICENSES.md',
+    'docs/THIRD_PARTY_LICENSES.md',
 ];
 for (const file of requiredFiles) {
     if (!fs.existsSync(path.join(nodeModules, file))) { failures.push(`missing in installed package: ${file}`); }

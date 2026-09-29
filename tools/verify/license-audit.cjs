@@ -9,11 +9,11 @@ var issues = [];
 var licenses = {};
 var scanned = 0;
 
-// 1. 根级许可文件
-var requiredRoot = ['LICENSE', 'THIRD_PARTY_LICENSES.md', 'UPSTREAM.md'];
+// 1. 必需的许可与上游说明文件
+var requiredRoot = ['LICENSE', 'docs/THIRD_PARTY_LICENSES.md', 'docs/UPSTREAM.md'];
 for (var i = 0; i < requiredRoot.length; i++) {
   var rp = path.join(REPO, requiredRoot[i]);
-  if (!fs.existsSync(rp)) { issues.push('missing required root: ' + requiredRoot[i]); continue; }
+  if (!fs.existsSync(rp)) { issues.push('missing required file: ' + requiredRoot[i]); continue; }
   licenses[requiredRoot[i]] = fs.statSync(rp).size;
 }
 

@@ -9,7 +9,7 @@
 > **V1.1 Release Check（r50，2026-09-28）**：Gallery 登记 146 例（145 stable、1 draft）；全量浏览器示例 141/141 PASS。API Coverage：Core 963/963、Important 272/272、Advanced 180/191（94.2%），documented-only 11/191（5.8%），uncovered=0；100%/90%/80% Release Coverage 门槛均满足。干净候选的 `npm run verify:release` 为 READY（0 blockers）。逐例原始证据保存在仓库中，不随 npm 包发布；当前门禁与剩余边界见 [V1.1 Release Gates r50](docs/v06-v10-release-gates.md) 和 [Wave 16 coverage record](docs/api-coverage-wave16.md)。
 > **V1.2 特性回归（r50，2026-09-28）**：三引擎矩阵 39/39 PASS；16 组上游能力逐组状态见 `docs/v12-upstream-regression.md` §3；
 > 门禁读数与部分通过项见 `docs/acceptance-report-v12.md`。资产缺口档（spine / bullet / physx / box2d-wasm / webgpu-glslang）
-> 与 D9 残留 14 项均已按批复口径结案（`UPSTREAM.md` Deviation-04/05/06）；交付期物理后端切换：
+> 与 D9 残留 14 项均已按批复口径结案（`docs/UPSTREAM.md` Deviation-04/05/06）；交付期物理后端切换：
 > `createAirApp({ physics: 'builtin' | 'cannon' })`（默认 builtin，additive 登记 `docs/v08-api-stability.md`）。
 > **发布面 provenance**：文中盘符绝对路径（取证 scratch / 上游快照 / benchmark 目录）不随 npm 包发布、不保证可复现；
 > 可复现判据一律以仓库内 `npm run verify:*` 系列门禁为准（F-130 / owner-decisions #17(a)）。
@@ -167,9 +167,9 @@ V1.x 回归期新增（**能力名**，逐名对账见下）：**2D/UI**（`2d` 
 源码基线：`cocos4 @ 4.0.0-alpha.34`，实测 commit `557b06f7e6`，V1.2 G0 冻结点 `fffd9a514a`，MIT 许可。
 闭包实测（`node tools/compare/baseline-compare.cjs` → `docs/v12-baseline-compare.json`）：
 上游 scope 1299 / Air 侧 1241 / 同名共有 1203 / 官方独有 96（排除 jsb 变体后 42）/ 语义漂移 6（全部已登记 `modified:true` + reason）/ Air 独有 38。
-上游对应关系、抽取清单与修改记录见 `UPSTREAM.md`、`docs/upstream-file-map.json`（**1315** 条映射）、
+上游对应关系、抽取清单与修改记录见 [docs/UPSTREAM.md](docs/UPSTREAM.md)、`docs/upstream-file-map.json`（**1315** 条映射）、
 `docs/extraction-manifest.json`（**1278** 条）、`docs/00-upstream-baseline.md` 与 `docs/17-baseline-comparison.md` §9。
 
 ## 许可
 
-MIT（见 LICENSE）。第三方许可见 THIRD_PARTY_LICENSES.md。
+MIT（见 LICENSE）。第三方许可见 [docs/THIRD_PARTY_LICENSES.md](docs/THIRD_PARTY_LICENSES.md)。

@@ -40,7 +40,7 @@ function captureFrame(): Promise<ImageData> {
 ## 什么时候会黑图（与 AIR 的保障）
 
 - **暂停 / resize 之后、下一帧之前**：规范上呈现后的 drawing buffer 会被清空。AIR 的两个 WebGL
-  swapchain 都以 `preserveDrawingBuffer: true` 创建上下文（[UPSTREAM.md](../../UPSTREAM.md)
+  swapchain 都以 `preserveDrawingBuffer: true` 创建上下文（[UPSTREAM.md](../UPSTREAM.md)
   「preserveDrawingBuffer on both WebGL backends」），因此**帧外读取保留最后一帧**。
   2026-09-28 之前 WebGL2 后端漏配该项：resize/暂停后 `toDataURL`/`readPixels` 恒黑而 WebGL1 正常
   ——W03 矩阵实测捕获并已修复，`tools/verify/w03-capture.cjs` 锁定回归。

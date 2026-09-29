@@ -81,7 +81,7 @@ function walk(base, current) {
 }
 // Verify required license files exist
 var required = [
-  [REPO, 'LICENSE'], [REPO, 'THIRD_PARTY_LICENSES.md'], [REPO, 'UPSTREAM.md'],
+  [REPO, 'LICENSE'], [REPO, 'docs/THIRD_PARTY_LICENSES.md'], [REPO, 'docs/UPSTREAM.md'],
   [REPO, 'build/gltf-decoders/draco/LICENSE.md'],
   [REPO, 'build/gltf-decoders/meshopt/LICENSE.md'],
 ];
