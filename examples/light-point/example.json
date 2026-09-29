@@ -19,7 +19,9 @@
     "visual": "三块彩色板与灰地板仅被一个游走的点光源照亮，板上明暗随光源靠近/远离实时流动，形成明显距离衰减"
   },
   "api": {
-    "primary": ["PointLight"],
+    "primary": [
+      "PointLight"
+    ],
     "supporting": [
       "Component",
       "Node.setPosition",
@@ -55,7 +57,10 @@
       "PointLight.term",
       "PointLight.range"
     ],
-    "forbiddenShortcut": ["用贴图烘焙的假光斑冒充动态点光源", "保留场景默认灯光参与照明（会掩盖单光源语义）"],
+    "forbiddenShortcut": [
+      "用贴图烘焙的假光斑冒充动态点光源",
+      "保留场景默认灯光参与照明（会掩盖单光源语义）"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -203,23 +208,41 @@
       }
     ]
   },
-  "capabilities": ["lights"],
+  "capabilities": [
+    "lights"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "PointLightNode", "Floor", "Left", "Center", "Right"]
+      "nodes": [
+        "Main Camera",
+        "PointLightNode",
+        "Floor",
+        "Left",
+        "Center",
+        "Right"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -234,7 +257,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.6, 7.5],
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -247,9 +274,18 @@
         "position": {
           "vary": true,
           "range": [
-            [-2.2, 2.2],
-            [3.2, 3.2],
-            [-2.2, 2.2]
+            [
+              -2.2,
+              2.2
+            ],
+            [
+              3.2,
+              3.2
+            ],
+            [
+              -2.2,
+              2.2
+            ]
           ],
           "minDelta": 0.0001
         },
@@ -262,7 +298,11 @@
         ]
       },
       "Floor": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -272,7 +312,11 @@
         ]
       },
       "Left": {
-        "position": [-2.2, 0.4, 0],
+        "position": [
+          -2.2,
+          0.4,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -282,7 +326,11 @@
         ]
       },
       "Center": {
-        "position": [0, 0.4, 0],
+        "position": [
+          0,
+          0.4,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -292,7 +340,11 @@
         ]
       },
       "Right": {
-        "position": [2.2, 0.4, 0],
+        "position": [
+          2.2,
+          0.4,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -307,7 +359,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [80, 90, 110, 255],
+            "value": [
+              80,
+              90,
+              110,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -322,7 +379,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [65, 155, 235, 255],
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -337,7 +399,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 255],
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -352,7 +419,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [235, 125, 65, 255],
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -376,7 +448,7 @@
   "promotion": {
     "spec": "ea400d8377c2",
     "source": "44280f19ae58d54e",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 24,
     "attested": 0,
     "units": 24

@@ -1,10 +1,10 @@
 {
-  "measuredAt": "2026-09-28T14:36:40.769Z",
+  "measuredAt": "2026-09-28T23:42:28.601Z",
   "evidence": "w04-canvas-binding (Code First 与 Web 可靠性任务清单 W04)",
   "taskDoc": "ai/Cocos Air Code First 与 Web 可靠性优化任务清单.md",
   "bundle": {
-    "sha256_16": "22633f5921c01c2b",
-    "bytes": 6605677
+    "sha256_16": "bf07c87924fb2476",
+    "bytes": 6610182
   },
   "browser": {
     "name": "chromium headless (ANGLE/SwiftShader)",
@@ -21,10 +21,15 @@
       "mode": "classic",
       "hasTouch": false,
       "pass": true,
-      "durationMs": 2154,
+      "durationMs": 2371,
       "probe": {
         "ok": true,
         "checks": [
+          {
+            "name": "boot_canvas_id_preserved",
+            "pass": true,
+            "detail": "GameCanvas"
+          },
           {
             "name": "boot_tabindex_focusable",
             "pass": true,
@@ -98,10 +103,15 @@
       "mode": "anyid",
       "hasTouch": true,
       "pass": true,
-      "durationMs": 2132,
+      "durationMs": 2116,
       "probe": {
         "ok": true,
         "checks": [
+          {
+            "name": "boot_canvas_id_preserved",
+            "pass": true,
+            "detail": "my-game"
+          },
           {
             "name": "boot_tabindex_focusable",
             "pass": true,
@@ -164,7 +174,7 @@
           }
         },
         "info": {
-          "canvasIdAtCreate": "GameCanvas",
+          "canvasIdAtCreate": "my-game",
           "tabIndex": 0
         }
       },
@@ -172,7 +182,7 @@
       "pageErrors": [],
       "runError": null,
       "consoleSummary": {
-        "total": 9,
+        "total": 11,
         "warns": 0
       }
     },
@@ -180,24 +190,48 @@
       "mode": "decoy",
       "hasTouch": false,
       "pass": true,
-      "durationMs": 322,
+      "durationMs": 308,
       "probe": {
         "ok": true,
         "checks": [
           {
             "name": "decoy_rejects_explicitly",
             "pass": true,
-            "detail": "[cocosair] createAirApp: page already contains another element with id \"GameCanvas\" (found <canvas>), and the passed canvas has id \"real-canvas\". Engine input b"
-          },
-          {
-            "name": "decoy_no_silent_binding",
-            "pass": true,
-            "detail": "must not silently bind to the decoy"
+            "detail": "[cocosair] createAirApp: page already contains another element with id \"GameCanvas\" (found <canvas>), and the passed canvas has id \"real-canvas\". Engine input binds by that id — rename/remove the other element, or pass it as the canvas."
           }
         ],
         "samples": {
           "decoyRejection": "[cocosair] createAirApp: page already contains another element with id \"GameCanvas\" (found <canvas>), and the passed canvas has id \"real-canvas\". Engine input binds by that id — rename/remove the other element, or pass it as the canvas."
         },
+        "info": {}
+      },
+      "failedChecks": [],
+      "pageErrors": [],
+      "runError": null,
+      "consoleSummary": {
+        "total": 0,
+        "warns": 0
+      }
+    },
+    {
+      "mode": "unbound",
+      "hasTouch": false,
+      "pass": true,
+      "durationMs": 231,
+      "probe": {
+        "ok": true,
+        "checks": [
+          {
+            "name": "unbound_rejects_explicitly",
+            "pass": true,
+            "detail": "[cocosair] canvas not found at engine import; set globalThis.__CC_CANVAS__ before import or use #GameCanvas"
+          },
+          {
+            "name": "unbound_id_preserved",
+            "pass": true
+          }
+        ],
+        "samples": {},
         "info": {}
       },
       "failedChecks": [],

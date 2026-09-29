@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-28T00:02:56.585Z",
+  "measuredAt": "2026-09-29T00:39:22.332Z",
   "mount": "/apps/gallery",
   "base": "<self-hosted>",
   "runner": "tools/verify/v11-gallery-artifact.cjs",
@@ -11,8 +11,8 @@
     "lifecycle": 53
   },
   "artifactBytes": {
-    "engineCopySha256_16": "05f7eb14b1014d5d",
-    "liveBundleSha256_16": "05f7eb14b1014d5d",
+    "engineCopySha256_16": "bf07c87924fb2476",
+    "liveBundleSha256_16": "bf07c87924fb2476",
     "identical": true
   },
   "total": 220,
@@ -31,7 +31,7 @@
     {
       "id": "artifact:engine-copy-current",
       "ok": true,
-      "detail": "artifact 05f7eb14b1014d5d vs live build 05f7eb14b1014d5d"
+      "detail": "artifact bf07c87924fb2476 vs live build bf07c87924fb2476"
     },
     {
       "id": "static:index.html",
@@ -91,7 +91,7 @@
     {
       "id": "gallery:deep-link",
       "ok": true,
-      "detail": "iframe src=http://127.0.0.1:51803/apps/gallery/mesh-sphere/"
+      "detail": "iframe src=http://127.0.0.1:54248/apps/gallery/mesh-sphere/"
     },
     {
       "id": "gallery:source-view",

@@ -20,8 +20,16 @@
     "visual": "深蓝背景中蓝色立方体缓慢自转（Spinner，采样窗暂停）；P3 后变黄色纹理盒；左上方出现显示 RT 快照的 quad；点击后主体在蓝色 standard 与黄色纹理 unlit 之间切换、点光源开关；左上角 DOM 面板显示 light/RT 状态"
   },
   "api": {
-    "primary": ["RenderTexture", "Camera.worldToScreen", "Material.setProperty"],
-    "supporting": ["PointLight", "SceneGlobals.ambient", "Component.destroy"],
+    "primary": [
+      "RenderTexture",
+      "Camera.worldToScreen",
+      "Material.setProperty"
+    ],
+    "supporting": [
+      "PointLight",
+      "SceneGlobals.ambient",
+      "Component.destroy"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -257,11 +265,19 @@
       }
     ]
   },
-  "capabilities": ["rendering"],
+  "capabilities": [
+    "rendering"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "SubjectBox", "PointLightNode", "RTQuad"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "SubjectBox",
+        "PointLightNode",
+        "RTQuad"
+      ]
     }
   },
   "interaction": {
@@ -273,13 +289,27 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "material-property", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "material-property",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -293,7 +323,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 1.6, 6],
+        "position": [
+          0,
+          1.6,
+          6
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -303,8 +337,16 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
-        "rotationEuler": [-45, -30, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -319,7 +361,11 @@
         ]
       },
       "SubjectBox": {
-        "position": [0, 1, 0],
+        "position": [
+          0,
+          1,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -329,7 +375,11 @@
         ]
       },
       "PointLightNode": {
-        "position": [2, 2, 2],
+        "position": [
+          2,
+          2,
+          2
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -339,8 +389,16 @@
         ]
       },
       "RTQuad": {
-        "position": [-2.3, 1.7, 0.8],
-        "rotationEuler": [90, 0, 0],
+        "position": [
+          -2.3,
+          1.7,
+          0.8
+        ],
+        "rotationEuler": [
+          90,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -360,7 +418,12 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [255, 255, 255, 255],
+            "value": [
+              255,
+              255,
+              255,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -383,7 +446,12 @@
         "effect": "builtin-unlit",
         "props": {
           "mainColor": {
-            "value": [255, 255, 255, 255],
+            "value": [
+              255,
+              255,
+              255,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.01,
             "provenance": {
@@ -419,7 +487,7 @@
   "promotion": {
     "spec": "2722e26e69ef",
     "source": "eed46d5241592949",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 31,
     "attested": 1,
     "units": 32

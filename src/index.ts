@@ -8,6 +8,7 @@
 export * from './air';
 export * from './exports/base';
 export * from './exports/3d';
+export * from './exports/2d';
 export * from './exports/animation';
 export * from './exports/skeletal-animation';
 export * from './exports/primitive';

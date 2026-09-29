@@ -51,7 +51,7 @@ const BENCH_PRELUDE = `(async function(){
   window.__benchReady = true;
 })().catch(e => { window.__benchError = String(e && e.stack || e); });`;
 
-const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.ts': 'text/javascript', '.json': 'application/json', '.glb': 'model/gltf-binary', '.png': 'image/png', '.txt': 'text/plain', '.wasm': 'application/wasm', '.bin': 'application/octet-stream' };
+const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.ts': 'text/javascript', '.json': 'application/json', '.glb': 'model/gltf-binary', '.png': 'image/png', '.txt': 'text/plain', '.wasm': 'application/wasm', '.bin': 'application/octet-stream', '.mp4': 'video/mp4', '.webm': 'video/webm', '.ogg': 'video/ogg', '.wav': 'audio/wav' };
 
 function serveTs (esbuild, res, file) {
   try {

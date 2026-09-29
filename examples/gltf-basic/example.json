@@ -19,8 +19,14 @@
     "visual": "带纹理的立方体模型完整居中显示，纹理清晰可辨，无裁切"
   },
   "api": {
-    "primary": ["GLTFLoader.loadAsync", "GLTFAsset.instantiate"],
-    "supporting": ["frameObject", "GLTFLoader"],
+    "primary": [
+      "GLTFLoader.loadAsync",
+      "GLTFAsset.instantiate"
+    ],
+    "supporting": [
+      "frameObject",
+      "GLTFLoader"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -149,24 +155,42 @@
       }
     ]
   },
-  "capabilities": ["gltf"],
-  "assets": ["assets/BoxTextured.glb"],
+  "capabilities": [
+    "gltf"
+  ],
+  "assets": [
+    "assets/BoxTextured.glb"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light"]
+      "nodes": [
+        "Main Camera",
+        "Main Light"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "asset-loaded", "no-runtime-error", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "no-runtime-error",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -180,7 +204,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -188,7 +216,11 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       }
     },
     "asset-loaded": {
@@ -217,7 +249,7 @@
   "promotion": {
     "spec": "ee8c608d946f",
     "source": "59577d7d6b6c60e8",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 17,
     "attested": 0,
     "units": 17

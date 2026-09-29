@@ -1,7 +1,7 @@
 {
   "source": "build/cocosair.module.d.ts",
-  "sourceFingerprint": "60d78ef3fb99db53",
-  "apiInventoryRevision": "a9139c31a9277f1c",
+  "sourceFingerprint": "cd4ed667ba6b9a02",
+  "apiInventoryRevision": "7532fc2bceeac726",
   "units": {
     "MeshBuffer": {
       "kind": "class",
@@ -53159,6 +53159,12 @@
       "coverageRequired": false,
       "parent": "AirAppImpl"
     },
+    "AirAppImpl.contextHealth": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AirAppImpl"
+    },
     "AirAppImpl.constructor": {
       "kind": "constructor",
       "tier": "supporting",
@@ -53188,6 +53194,222 @@
       "tier": "supporting",
       "coverageRequired": false,
       "parent": null
+    },
+    "attachContextHealth": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createStepClock": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "createUICanvas": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "spriteNode": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "labelNode": {
+      "kind": "function",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AssetBank": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AssetBank.size": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AssetBank"
+    },
+    "AssetBank.refCount": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AssetBank"
+    },
+    "AssetBank.load": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AssetBank"
+    },
+    "AssetBank.release": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AssetBank"
+    },
+    "SceneStack": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "SceneStack.inputBlockedCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.top": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.depth": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.cachedCount": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.inTransition": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.push": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.pop": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "SceneStack.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "SceneStack"
+    },
+    "AudioService": {
+      "kind": "class",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": null
+    },
+    "AudioService.sfxDropped": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.constructor": {
+      "kind": "constructor",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.load": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.bgmId": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.musicEnabled": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.sfxEnabled": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.sfxActive": {
+      "kind": "property",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.playBgm": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.pauseBgm": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.resumeBgm": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.playSfx": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.setMusicEnabled": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.setSfxEnabled": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.bgmState": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
+    },
+    "AudioService.dispose": {
+      "kind": "method",
+      "tier": "supporting",
+      "coverageRequired": false,
+      "parent": "AudioService"
     },
     "loadAssetAsync": {
       "kind": "function",
@@ -74326,9 +74548,9 @@
     "core": 963,
     "important": 272,
     "advanced": 191,
-    "supporting": 8152,
+    "supporting": 8189,
     "internal": 2651
   },
-  "totalUnits": 12229,
+  "totalUnits": 12266,
   "coverageRequiredUnits": 1426
 }

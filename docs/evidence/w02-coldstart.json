@@ -1,10 +1,10 @@
 {
-  "measuredAt": "2026-09-28T14:04:04.866Z",
+  "measuredAt": "2026-09-28T15:44:36.377Z",
   "evidence": "w02-coldstart (Code First 与 Web 可靠性任务清单 W02)",
   "taskDoc": "ai/Cocos Air Code First 与 Web 可靠性优化任务清单.md",
   "bundle": {
-    "sha256_16": "0541cdb3e099e9ef",
-    "bytes": 6604543
+    "sha256_16": "fb111c7ab853ce0b",
+    "bytes": 6621169
   },
   "browser": {
     "name": "chromium headless (ANGLE/SwiftShader)",
@@ -25,7 +25,7 @@
       "path": "builtin",
       "run": 1,
       "pass": true,
-      "durationMs": 1815,
+      "durationMs": 3400,
       "probe": {
         "id": "coldstart-probe",
         "ready": true,
@@ -90,23 +90,23 @@
             },
             {
               "name": "pre-subsystem",
-              "at": 34
+              "at": 97
             },
             {
               "name": "post-subsystem",
-              "at": 37
+              "at": 106
             },
             {
               "name": "createAirApp-resolved",
-              "at": 49
+              "at": 145
             },
             {
               "name": "scene-running",
-              "at": 565
+              "at": 1133
             },
             {
               "name": "second-scene-running",
-              "at": 1048
+              "at": 1614
             }
           ],
           "consoleErrors": [],
@@ -125,7 +125,7 @@
       "path": "builtin",
       "run": 2,
       "pass": true,
-      "durationMs": 1328,
+      "durationMs": 1959,
       "probe": {
         "id": "coldstart-probe",
         "ready": true,
@@ -190,23 +190,23 @@
             },
             {
               "name": "pre-subsystem",
-              "at": 31
+              "at": 87
             },
             {
               "name": "post-subsystem",
-              "at": 35
+              "at": 95
             },
             {
               "name": "createAirApp-resolved",
-              "at": 46
+              "at": 135
             },
             {
               "name": "scene-running",
-              "at": 392
+              "at": 511
             },
             {
               "name": "second-scene-running",
-              "at": 858
+              "at": 978
             }
           ],
           "consoleErrors": [],
@@ -225,7 +225,7 @@
       "path": "cannon",
       "run": 1,
       "pass": true,
-      "durationMs": 1317,
+      "durationMs": 1950,
       "probe": {
         "id": "coldstart-probe",
         "ready": true,
@@ -292,23 +292,23 @@
             },
             {
               "name": "pre-subsystem",
-              "at": 26
+              "at": 76
             },
             {
               "name": "post-subsystem",
-              "at": 30
+              "at": 85
             },
             {
               "name": "createAirApp-resolved",
-              "at": 41
+              "at": 121
             },
             {
               "name": "scene-running",
-              "at": 389
+              "at": 502
             },
             {
               "name": "second-scene-running",
-              "at": 855
+              "at": 1002
             }
           ],
           "consoleErrors": [],
@@ -327,7 +327,7 @@
       "path": "cannon",
       "run": 2,
       "pass": true,
-      "durationMs": 1318,
+      "durationMs": 1948,
       "probe": {
         "id": "coldstart-probe",
         "ready": true,
@@ -394,23 +394,23 @@
             },
             {
               "name": "pre-subsystem",
-              "at": 28
+              "at": 75
             },
             {
               "name": "post-subsystem",
-              "at": 31
+              "at": 83
             },
             {
               "name": "createAirApp-resolved",
-              "at": 42
+              "at": 119
             },
             {
               "name": "scene-running",
-              "at": 387
+              "at": 501
             },
             {
               "name": "second-scene-running",
-              "at": 854
+              "at": 1001
             }
           ],
           "consoleErrors": [],
@@ -429,7 +429,7 @@
       "path": "lowlevel",
       "run": 1,
       "pass": true,
-      "durationMs": 681,
+      "durationMs": 1265,
       "probe": {
         "id": "coldstart-probe",
         "ready": true,
@@ -482,19 +482,19 @@
             },
             {
               "name": "pre-subsystem",
-              "at": 29
+              "at": 80
             },
             {
               "name": "post-subsystem",
-              "at": 32
+              "at": 89
             },
             {
               "name": "game-inited",
-              "at": 35
+              "at": 96
             },
             {
               "name": "first-frames",
-              "at": 221
+              "at": 276
             }
           ],
           "consoleErrors": [],
@@ -513,7 +513,7 @@
       "path": "lowlevel",
       "run": 2,
       "pass": true,
-      "durationMs": 668,
+      "durationMs": 1250,
       "probe": {
         "id": "coldstart-probe",
         "ready": true,
@@ -566,19 +566,19 @@
             },
             {
               "name": "pre-subsystem",
-              "at": 28
+              "at": 88
             },
             {
               "name": "post-subsystem",
-              "at": 31
+              "at": 96
             },
             {
               "name": "game-inited",
-              "at": 33
+              "at": 106
             },
             {
               "name": "first-frames",
-              "at": 208
+              "at": 290
             }
           ],
           "consoleErrors": [],

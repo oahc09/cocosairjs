@@ -8,14 +8,22 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "掌握程序化动画的最小骨架：Component.update(dt) 中推进时间并改写位置",
-    "points": ["update 的 dt 增量语义（与帧率无关的推进）", "Math.sin 生成往复轨迹", "setPosition 每帧覆盖位置"]
+    "points": [
+      "update 的 dt 增量语义（与帧率无关的推进）",
+      "Math.sin 生成往复轨迹",
+      "setPosition 每帧覆盖位置"
+    ]
   },
   "effect": {
     "functional": "Mover 的 X 坐标按 sin(t*2)*2.2 持续变化；动画相位由 dt 累加驱动；position(t1) != position(t0)。",
     "visual": "蓝色方块在画面中左右匀速往复滑动，路径为水平直线"
   },
   "api": {
-    "primary": ["Component", "Node.setPosition", "Animation"],
+    "primary": [
+      "Component",
+      "Node.setPosition",
+      "Animation"
+    ],
     "supporting": [
       "MeshRenderer",
       "primitives.box",
@@ -140,7 +148,9 @@
       "AnimationClip.renameAuxiliaryCurve_experimental",
       "AnimationClip.removeAuxiliaryCurve_experimental"
     ],
-    "forbiddenShortcut": ["用 CSS/ DOM 动画移动 canvas 冒充场景动画"],
+    "forbiddenShortcut": [
+      "用 CSS/ DOM 动画移动 canvas 冒充场景动画"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -552,24 +562,42 @@
       }
     ]
   },
-  "capabilities": ["animation"],
+  "capabilities": [
+    "animation"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Mover"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Mover"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -583,7 +611,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 1.4, 4.8],
+        "position": [
+          0,
+          1.4,
+          4.8
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -593,7 +625,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -606,15 +642,28 @@
             "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "Mover": {
         "position": {
           "vary": true,
           "range": [
-            [-0.8, 0.8],
-            [0.6, 0.6],
-            [0, 0]
+            [
+              -0.8,
+              0.8
+            ],
+            [
+              0.6,
+              0.6
+            ],
+            [
+              0,
+              0
+            ]
           ],
           "minDelta": 0.0001
         },
@@ -632,7 +681,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [65, 155, 235, 255],
+            "value": [
+              65,
+              155,
+              235,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -648,7 +702,7 @@
   "promotion": {
     "spec": "113419aed33a",
     "source": "9630b2703491c62c",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 68,
     "attested": 0,
     "units": 68

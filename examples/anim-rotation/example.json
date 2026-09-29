@@ -8,15 +8,25 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "掌握欧拉角逐帧累加的标准自转写法：读取当前 eulerAngles.y 后按 dt 增量写回",
-    "points": ["eulerAngles.y 读取当前朝向", "setRotationFromEuler 写回累加结果", "90°/s 匀速旋转的 dt 无关性"]
+    "points": [
+      "eulerAngles.y 读取当前朝向",
+      "setRotationFromEuler 写回累加结果",
+      "90°/s 匀速旋转的 dt 无关性"
+    ]
   },
   "effect": {
     "functional": "Spinner 的 Y 轴欧拉角每帧增加 dt*90；rotation(t1) != rotation(t0)；转轴恒为 Y。",
     "visual": "橙色立方体绕竖直轴匀速自转，可依次看到四个侧面"
   },
   "api": {
-    "primary": ["Component", "Node.setRotationFromEuler"],
-    "supporting": ["Node.setPosition", "MeshRenderer"],
+    "primary": [
+      "Component",
+      "Node.setRotationFromEuler"
+    ],
+    "supporting": [
+      "Node.setPosition",
+      "MeshRenderer"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -37,7 +47,9 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["旋转相机冒充物体自转"],
+    "forbiddenShortcut": [
+      "旋转相机冒充物体自转"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -149,23 +161,39 @@
       }
     ]
   },
-  "capabilities": ["animation"],
+  "capabilities": [
+    "animation"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Spinner"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Spinner"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame", "frame-diff"],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -180,7 +208,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.6, 7.5],
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -190,7 +222,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -198,10 +234,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "Spinner": {
-        "position": [0, 0.6, 0],
+        "position": [
+          0,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -224,7 +268,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [235, 125, 65, 255],
+            "value": [
+              235,
+              125,
+              65,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -248,7 +297,7 @@
   "promotion": {
     "spec": "87b16f3be7f8",
     "source": "e354b22cadf41979",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 18,
     "attested": 0,
     "units": 18

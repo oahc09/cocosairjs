@@ -98,6 +98,13 @@ const TONE = '/examples/audio-basic/assets/tone.wav';
 const p1 = bank.load(TONE);
 const p2 = bank.load(TONE);
 check('W09_bank_dedup', p1 === p2 || (await p1) === (await p2), '并发同 URL 共享同一资产');
+const peerBank = new AssetBank();
+const peerAsset = await peerBank.load(TONE);
+check(
+    'W09_cross_bank_same_asset',
+    peerAsset === (await p1) && peerAsset.isValid,
+    'two banks hold the same cached asset',
+);
 check('W09_bank_refcount_2', bank.refCount(TONE) === 2, String(bank.refCount(TONE)));
 const releasedEarly = bank.release(TONE);
 check(
@@ -107,6 +114,12 @@ check(
 );
 const releasedFinal = bank.release(TONE);
 check('W09_bank_zero_releases', releasedFinal === true && bank.size === 0, `size=${bank.size}`);
+check(
+    'W09_cross_bank_survives_release',
+    peerAsset.isValid && peerBank.refCount(TONE) === 1,
+    `valid=${peerAsset.isValid} refs=${peerBank.refCount(TONE)}`,
+);
+peerBank.release(TONE);
 let badLoad = null;
 try {
     await bank.load('/examples/audio-basic/assets/nope.wav');
@@ -187,7 +200,7 @@ await pushA;
 await pushB;
 check(
     'W10_rapid_switch_supersedes',
-    stack.top.name === 'page-d' && stack.depth === 4,
+    stack.top.name === 'page-d' && stack.depth === 3,
     `top=${stack.top.name} depth=${stack.depth}`,
 );
 
@@ -206,6 +219,12 @@ await new Promise((resolve) => {
 check('W10_pop_destroys', popped.name === 'page-d' && isValid(popped.node) === false);
 const topAfterPop = stack.top;
 check('W10_state_preserved', topAfterPop.name === 'page-c' && topAfterPop.node.active === true, topAfterPop.name);
+await stack.pop();
+check(
+    'W10_evicted_page_not_returned',
+    stack.top?.name === 'detail' && stack.top.node.isValid,
+    `top=${stack.top?.name} depth=${stack.depth}`,
+);
 
 window.__phase = 'W11';
 // ============ W11：audio-service ============
@@ -259,6 +278,8 @@ check(
     audio.sfxActive === 5 && audio.sfxDropped === 2,
     `active=${audio.sfxActive} dropped=${audio.sfxDropped}`,
 );
+await sleep(2100);
+check('W11_sfx_ended_releases_slots', audio.sfxActive === 0, `active=${audio.sfxActive}`);
 
 // 开关独立性
 audio.setMusicEnabled(false);

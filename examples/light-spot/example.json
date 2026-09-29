@@ -19,7 +19,9 @@
     "visual": "灰地板上有一团边界清晰的圆形亮斑缓慢环绕中央紫色展台扫动，光斑外区域明显更暗"
   },
   "api": {
-    "primary": ["SpotLight"],
+    "primary": [
+      "SpotLight"
+    ],
     "supporting": [
       "Component",
       "Node.setPosition",
@@ -97,7 +99,9 @@
       "SpotLight.shadowBias",
       "SpotLight.shadowNormalBias"
     ],
-    "forbiddenShortcut": ["用 emissive 自发光材质冒充聚光照明"],
+    "forbiddenShortcut": [
+      "用 emissive 自发光材质冒充聚光照明"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -371,24 +375,42 @@
       }
     ]
   },
-  "capabilities": ["lights"],
+  "capabilities": [
+    "lights"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "SpotLightNode", "Floor", "Pedestal"]
+      "nodes": [
+        "Main Camera",
+        "SpotLightNode",
+        "Floor",
+        "Pedestal"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -402,7 +424,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.6, 7.5],
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -415,9 +441,18 @@
         "position": {
           "vary": true,
           "range": [
-            [-1.5, 1.5],
-            [4.5, 4.5],
-            [-1.5, 1.5]
+            [
+              -1.5,
+              1.5
+            ],
+            [
+              4.5,
+              4.5
+            ],
+            [
+              -1.5,
+              1.5
+            ]
           ],
           "minDelta": 0.0001
         },
@@ -433,10 +468,18 @@
             "text": "lightNode.setRotationFromEuler(-90, 0, 0);"
           }
         ],
-        "rotationEuler": [-90, 0, 0]
+        "rotationEuler": [
+          -90,
+          0,
+          0
+        ]
       },
       "Floor": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -446,7 +489,11 @@
         ]
       },
       "Pedestal": {
-        "position": [0, 0.5, 0],
+        "position": [
+          0,
+          0.5,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -461,7 +508,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [80, 90, 110, 255],
+            "value": [
+              80,
+              90,
+              110,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -476,7 +528,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [205, 90, 190, 255],
+            "value": [
+              205,
+              90,
+              190,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -500,7 +557,7 @@
   "promotion": {
     "spec": "c42cdd481052",
     "source": "b03352118c34029e",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 45,
     "attested": 0,
     "units": 45

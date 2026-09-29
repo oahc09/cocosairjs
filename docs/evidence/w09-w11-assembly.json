@@ -1,10 +1,10 @@
 {
-  "measuredAt": "2026-09-28T15:54:04.419Z",
+  "measuredAt": "2026-09-28T23:42:17.507Z",
   "evidence": "w08-step-clock (Code First 与 Web 可靠性任务清单 W04)",
   "taskDoc": "ai/Cocos Air Code First 与 Web 可靠性优化任务清单.md",
   "bundle": {
-    "sha256_16": "ac4595641ea7a6cc",
-    "bytes": 6621454
+    "sha256_16": "bf07c87924fb2476",
+    "bytes": 6610182
   },
   "browser": {
     "name": "chromium headless (ANGLE/SwiftShader)",
@@ -21,7 +21,7 @@
     {
       "mode": "assembly",
       "pass": true,
-      "durationMs": 14821,
+      "durationMs": 15424,
       "probe": {
         "ok": true,
         "checks": [
@@ -44,6 +44,11 @@
             "detail": "并发同 URL 共享同一资产"
           },
           {
+            "name": "W09_cross_bank_same_asset",
+            "pass": true,
+            "detail": "two banks hold the same cached asset"
+          },
+          {
             "name": "W09_bank_refcount_2",
             "pass": true,
             "detail": "2"
@@ -57,6 +62,11 @@
             "name": "W09_bank_zero_releases",
             "pass": true,
             "detail": "size=0"
+          },
+          {
+            "name": "W09_cross_bank_survives_release",
+            "pass": true,
+            "detail": "valid=true refs=1"
           },
           {
             "name": "W09_bank_failure_clean",
@@ -85,7 +95,7 @@
           {
             "name": "W10_rapid_switch_supersedes",
             "pass": true,
-            "detail": "top=page-d depth=4"
+            "detail": "top=page-d depth=3"
           },
           {
             "name": "W10_cache_lru",
@@ -102,24 +112,34 @@
             "detail": "page-c"
           },
           {
+            "name": "W10_evicted_page_not_returned",
+            "pass": true,
+            "detail": "top=detail depth=1"
+          },
+          {
             "name": "W11_clock_advances",
             "pass": true,
-            "detail": "t 0 → 0.2500999999940401（判据=currentTime 推进，非 playing）"
+            "detail": "t 0.1262000000029797 → 0.6292999999970199（判据=currentTime 推进，非 playing）"
           },
           {
             "name": "W11_pause_freezes",
             "pass": true,
-            "detail": "0.2505000000000006 vs 0.2505000000000006"
+            "detail": "0.6296000000089403 vs 0.6296000000089403"
           },
           {
             "name": "W11_resume_continues",
             "pass": true,
-            "detail": "resume t=0.5510000000000002 > paused 0.2505000000000006"
+            "detail": "resume t=0.9385000000148995 > paused 0.6296000000089403"
           },
           {
             "name": "W11_sfx_pool_cap",
             "pass": true,
             "detail": "active=5 dropped=2"
+          },
+          {
+            "name": "W11_sfx_ended_releases_slots",
+            "pass": true,
+            "detail": "active=0"
           },
           {
             "name": "W11_music_off_pauses",
@@ -152,12 +172,12 @@
           },
           "W11_clock": {
             "s1": {
-              "playing": false,
-              "t": 0
+              "playing": true,
+              "t": 0.13
             },
             "s2": {
               "playing": true,
-              "t": 0.25
+              "t": 0.63
             }
           }
         },

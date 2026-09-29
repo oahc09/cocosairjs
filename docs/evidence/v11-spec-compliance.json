@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-09-28T00:04:07.756Z",
+  "measuredAt": "2026-09-29T00:48:55.965Z",
   "tool": "tools/examples/spec-compliance-audit.cjs",
-  "spec": "ai/Cocos Air V1.1 — Example Specification 补充执行规范.md",
+  "spec": "ai/Cocos Air — Example Specification 补充执行规范.md",
   "total": 146,
   "examples": [
     {

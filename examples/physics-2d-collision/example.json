@@ -42,12 +42,24 @@
     "PhysicsGroup",
     "PHYSICS_2D_PTM_RATIO"
   ],
-  "capabilities": ["physics-2d"],
+  "capabilities": [
+    "physics-2d"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -68,7 +80,11 @@
     "visual": "深蓝底一屏：底部灰色地面长条，其上横贯一条青色半透明 sensor 带；左侧橙色方块与绿色圆球静息在地面上（绿球带轻微穿透后的落定高度），中间浅灰方块（listener 晚开的那颗）也停在地面上，右侧蓝色 P 与黄色 Q 在终态已穿过地面落到画面外；顶部状态行写着 `collision step=490 keys=58 P↔Q gap 25px→30.77px`"
   },
   "api": {
-    "primary": ["PhysicsSystem2D", "RigidBody2D", "Collider2D"],
+    "primary": [
+      "PhysicsSystem2D",
+      "RigidBody2D",
+      "Collider2D"
+    ],
     "supporting": [
       "PhysicsSystem2D.collisionMatrix",
       "PhysicsSystem2D.step",
@@ -331,7 +347,18 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Ground", "SensorBand", "Box", "Ball", "Mute", "P", "Q", "Status"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Ground",
+        "SensorBand",
+        "Box",
+        "Ball",
+        "Mute",
+        "P",
+        "Q",
+        "Status"
+      ]
     }
   },
   "interaction": {
@@ -343,12 +370,18 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -358,7 +391,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -368,7 +405,11 @@
         ]
       },
       "Ground": {
-        "position": [0, -130, 0],
+        "position": [
+          0,
+          -130,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -378,7 +419,11 @@
         ]
       },
       "SensorBand": {
-        "position": [0, -36, 0],
+        "position": [
+          0,
+          -36,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -388,7 +433,11 @@
         ]
       },
       "Box": {
-        "position": [-160, 130, 0],
+        "position": [
+          -160,
+          130,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -398,7 +447,11 @@
         ]
       },
       "Ball": {
-        "position": [-80, 130, 0],
+        "position": [
+          -80,
+          130,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -408,7 +461,11 @@
         ]
       },
       "Mute": {
-        "position": [0, 130, 0],
+        "position": [
+          0,
+          130,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -418,7 +475,11 @@
         ]
       },
       "P": {
-        "position": [70, 130, 0],
+        "position": [
+          70,
+          130,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -428,7 +489,11 @@
         ]
       },
       "Q": {
-        "position": [95, 130, 0],
+        "position": [
+          95,
+          130,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -438,7 +503,11 @@
         ]
       },
       "Status": {
-        "position": [-10, 158, 0],
+        "position": [
+          -10,
+          158,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -460,7 +529,7 @@
   "promotion": {
     "spec": "1146afbe7bfc",
     "source": "651f615374c33ffe",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 30,
     "attested": 3,
     "units": 33

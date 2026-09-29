@@ -12,6 +12,10 @@
 import { TextDecoder, TextEncoder } from 'util';
 Object.assign(globalThis, { TextDecoder, TextEncoder });
 import * as cc from '../../src';
+import { UITransform } from '../../src/cocos/2d/framework/ui-transform';
+import { Sprite } from '../../src/cocos/2d/components/sprite';
+import { SpriteFrame } from '../../src/cocos/2d/assets/sprite-frame';
+import { Label } from '../../src/cocos/2d/components/label';
 import { createAgentSession, AgentSessionImpl } from '../../tools/debug/agent-session';
 import type { AgentSessionImpl as Session } from '../../tools/debug/agent-session';
 
@@ -131,6 +135,32 @@ describe('agent session — 观察合同（G3）', () => {
         const childView = session.inspectNode(view.childrenIds[0]);
         expect(childView.parentId).toBe(rootEntry.id);
         expect(view.components.every((c) => typeof c.type === 'string')).toBe(true); // 不简化 type
+    });
+
+    test('UI and SpriteFrame inspection keeps stable asset identity without creating material instances', () => {
+        const spriteNode = new cc.Node('inspect-sprite'); spriteNode.active = false; scene.addChild(spriteNode);
+        const transform = spriteNode.addComponent(UITransform);
+        transform.setContentSize(80, 48); transform.setAnchorPoint(0.25, 0.75);
+        const texture = new cc.Texture2D();
+        const frame = new SpriteFrame(); frame.texture = texture; frame.name = 'registered-frame';
+        session.registerAssetLabel(frame, 'hero/idle-0');
+        const sprite = spriteNode.addComponent(Sprite); sprite.sizeMode = Sprite.SizeMode.CUSTOM; sprite.spriteFrame = frame;
+        const labelNode = new cc.Node('inspect-label'); labelNode.active = false; scene.addChild(labelNode);
+        const label = labelNode.addComponent(Label); label.string = 'Score';
+        const entries = session.inspectScene().nodes;
+        const spriteId = entries.find((entry) => entry.name === 'inspect-sprite')!.id;
+        const labelId = entries.find((entry) => entry.name === 'inspect-label')!.id;
+        const first = session.inspectNode(spriteId);
+        const second = session.inspectNode(spriteId);
+        expect(first.visual.ui).toEqual({ size: [80, 48], anchor: [0.25, 0.75] });
+        expect(first.visual.sprite?.frameName).toBe('registered-frame');
+        expect(first.visual.sprite?.frameId).toBe(second.visual.sprite?.frameId);
+        expect(first.visual.sprite?.frameLabel).toBe('hero/idle-0');
+        expect(first.visual.sprite?.textureId).toBe(second.visual.sprite?.textureId);
+        expect(first.visual.sprite?.textureValid).toBe(true);
+        expect(session.inspectNode(labelId).visual.label?.text).toBe('Score');
+        spriteNode.destroy();
+        expect(() => session.inspectNode(spriteId)).toThrow(/destroyed|not in the running scene/);
     });
 
     test('销毁节点 → STALE_TARGET；场景替换后旧 ID → STALE_TARGET', () => {

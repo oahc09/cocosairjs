@@ -19,8 +19,13 @@
     "visual": "透视模式下三个方块近大远小；切到正交后三者等大、仅被相互遮挡，画面顶部状态文字同步"
   },
   "api": {
-    "primary": ["Camera"],
-    "supporting": ["input", "Input"],
+    "primary": [
+      "Camera"
+    ],
+    "supporting": [
+      "input",
+      "Input"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -42,7 +47,9 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["用拉远相机模拟正交（透视不会因此变成等大）"],
+    "forbiddenShortcut": [
+      "用拉远相机模拟正交（透视不会因此变成等大）"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -160,11 +167,19 @@
       }
     ]
   },
-  "capabilities": ["camera"],
+  "capabilities": [
+    "camera"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "DepthCube-0", "DepthCube-1", "DepthCube-2"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "DepthCube-0",
+        "DepthCube-1",
+        "DepthCube-2"
+      ]
     }
   },
   "interaction": {
@@ -180,12 +195,23 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -200,7 +226,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.2, 6.5],
+        "position": [
+          0,
+          2.2,
+          6.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -210,7 +240,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -218,10 +252,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "DepthCube-0": {
-        "position": [0, 0.5, 0],
+        "position": [
+          0,
+          0.5,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -231,7 +273,11 @@
         ]
       },
       "DepthCube-1": {
-        "position": [0, 0.5, -2],
+        "position": [
+          0,
+          0.5,
+          -2
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -241,7 +287,11 @@
         ]
       },
       "DepthCube-2": {
-        "position": [0, 0.5, -4],
+        "position": [
+          0,
+          0.5,
+          -4
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -256,7 +306,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 255],
+            "value": [
+              95,
+              205,
+              120,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -271,7 +326,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 215],
+            "value": [
+              95,
+              205,
+              120,
+              215
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -286,7 +346,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [95, 205, 120, 175],
+            "value": [
+              95,
+              205,
+              120,
+              175
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -310,7 +375,7 @@
   "promotion": {
     "spec": "91aa75cbfdff",
     "source": "376aa633d7649377",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 19,
     "attested": 0,
     "units": 19

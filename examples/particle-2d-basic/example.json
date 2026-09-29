@@ -43,12 +43,24 @@
     "Node.addComponent",
     "Node.on"
   ],
-  "capabilities": ["particle-2d"],
+  "capabilities": [
+    "particle-2d"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -74,7 +86,10 @@
     "visual": "深蓝底（clearColor 10,14,26）一屏：左下橙色火焰柱（gravity 型，相加混合，底部亮黄向上渐红渐隐），右中蓝色环形烟花（radius 型，绕心旋转的散点环），顶部一行状态文字 `particle plist step=30 count=4 p0=(24,-8.3333) verts=16`。点击前画面只有状态行与深蓝底，点击后两团粒子真实出图（frame-diff 可测，三引擎矩阵 frameChanged 全 PASS，PNG 54–64 KB ≫ 5000 B 地板）"
   },
   "api": {
-    "primary": ["ParticleSystem2D", "ParticleAsset"],
+    "primary": [
+      "ParticleSystem2D",
+      "ParticleAsset"
+    ],
     "supporting": [
       "ParticleSystem2D.resetSystem",
       "ParticleSystem2D._simulator",
@@ -352,7 +367,15 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Status", "Rig", "Flame", "Ring", "Probe"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "Rig",
+        "Flame",
+        "Ring",
+        "Probe"
+      ]
     }
   },
   "interaction": {
@@ -364,14 +387,28 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -381,7 +418,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -391,7 +432,11 @@
         ]
       },
       "Status": {
-        "position": [0, 162, 0],
+        "position": [
+          0,
+          162,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -401,7 +446,11 @@
         ]
       },
       "Rig": {
-        "position": [30, -20, 0],
+        "position": [
+          30,
+          -20,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -411,7 +460,11 @@
         ]
       },
       "Flame": {
-        "position": [-140, -120, 0],
+        "position": [
+          -140,
+          -120,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -421,7 +474,11 @@
         ]
       },
       "Ring": {
-        "position": [140, -60, 0],
+        "position": [
+          140,
+          -60,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -431,7 +488,11 @@
         ]
       },
       "Probe": {
-        "position": [0, 40, 0],
+        "position": [
+          0,
+          40,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -453,7 +514,7 @@
   "promotion": {
     "spec": "dc33c48be26c",
     "source": "af9084853704646e",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 23,
     "attested": 11,
     "units": 34

@@ -7,27 +7,51 @@
   "requiresDevTools": false,
   "title": "Transform Hierarchy",
   "category": "basics",
-  "apiClaims": ["Node.addChild", "Node.setPosition", "Node.setRotationFromEuler"],
-  "capabilities": ["basics"],
+  "apiClaims": [
+    "Node.addChild",
+    "Node.setPosition",
+    "Node.setRotationFromEuler"
+  ],
+  "capabilities": [
+    "basics"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error",
+      "material-property"
+    ],
     "interaction": [],
-    "visual": ["visible-frame", "frame-diff"],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
     "lifecycle": [],
     "capability": []
   },
   "specStatus": "frozen",
   "learning": {
     "goal": "层级变换组合：root 旋转带动 child/grandchild，各层再叠加自身摆动",
-    "points": ["三层嵌套的 parent × local 合成", "Component.update 中分层动画", "setScale 非均匀缩放与层级叠加"]
+    "points": [
+      "三层嵌套的 parent × local 合成",
+      "Component.update 中分层动画",
+      "setScale 非均匀缩放与层级叠加"
+    ]
   },
   "effect": {
     "functional": "root 每帧旋转带动整条链；child/grandchild 各自叠加摆动相位；层级世界变换持续变化。",
     "visual": "三节链式结构做蛇形摆动，越往末端摆幅越大"
   },
   "api": {
-    "primary": ["Node", "Component"],
-    "supporting": ["Node.setScale", "utils.createMesh"],
+    "primary": [
+      "Node",
+      "Component"
+    ],
+    "supporting": [
+      "Node.setScale",
+      "utils.createMesh"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -44,7 +68,9 @@
       "Node.setScale",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["每帧手动计算 world 变换冒充层级合成"],
+    "forbiddenShortcut": [
+      "每帧手动计算 world 变换冒充层级合成"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -151,7 +177,9 @@
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -164,7 +192,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "examples/shared/scene-kit.js",
@@ -172,7 +204,11 @@
             "text": "position 默认值 [0,8,0]（shared 形参默认值）"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "root": {
         "rotationEuler": {
@@ -199,7 +235,11 @@
         ]
       },
       "grandchild": {
-        "position": [0, 1, 0],
+        "position": [
+          0,
+          1,
+          0
+        ],
         "provenance": [
           {
             "source": "main.ts",
@@ -209,9 +249,21 @@
         ]
       },
       "root-cube": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.ts",
@@ -221,9 +273,21 @@
         ]
       },
       "child-cube": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.ts",
@@ -233,9 +297,21 @@
         ]
       },
       "grandchild-cube": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.ts",
@@ -301,7 +377,7 @@
   "promotion": {
     "spec": "80b0c3becc83",
     "source": "1a37f130b093f25a",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 14,
     "attested": 0,
     "units": 14

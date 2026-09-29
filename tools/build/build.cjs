@@ -83,6 +83,10 @@ const moduleFormat = formatIdx >= 0 ? args[formatIdx + 1] : 'esm';
         platform: 'HTML5',
         out: tmpOut,
         compress: min,
+        // Web consumers commonly deploy with CSP script-src without unsafe-eval.
+        // The upstream SUPPORT_JIT path constructs Function(...) during module
+        // evaluation; select its existing non-JIT scheduler for the Web bundle.
+        flags: { SUPPORT_JIT: false },
         // V0.2 Task 10（L11）：dev 构建必须附带 source map，浏览器异常可定位 src/**/*.ts。
         sourceMap: true,
         features: FEATURES.length ? FEATURES : AIR_FEATURES,

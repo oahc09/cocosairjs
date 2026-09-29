@@ -8,15 +8,25 @@
   "requiresDevTools": false,
   "learning": {
     "goal": "理解 node.active 停用语义：停用后不渲染不更新，但节点仍在场景树中",
-    "points": ["用 active 属性开关节点", "停用期间 getChildByName 仍可命中", "Component.update 中驱动定时切换"]
+    "points": [
+      "用 active 属性开关节点",
+      "停用期间 getChildByName 仍可命中",
+      "Component.update 中驱动定时切换"
+    ]
   },
   "effect": {
     "functional": "Blinker 每 1.5s 切换一次 active；停用期间画面回到清屏色，节点仍可通过 getChildByName 找到。",
     "visual": "黄色方块以 1.5s 周期出现/消失（闪烁），消失时仅剩背景色"
   },
   "api": {
-    "primary": ["Node", "Component"],
-    "supporting": ["MeshRenderer", "primitives.box"],
+    "primary": [
+      "Node",
+      "Component"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "primitives.box"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -37,7 +47,9 @@
       "Node.setPosition",
       "Node.setRotationFromEuler"
     ],
-    "forbiddenShortcut": ["用 scale=0 或移出相机视锥冒充停用"],
+    "forbiddenShortcut": [
+      "用 scale=0 或移出相机视锥冒充停用"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -149,23 +161,38 @@
       }
     ]
   },
-  "capabilities": ["basics"],
+  "capabilities": [
+    "basics"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Blinker"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Blinker"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error", "material-property", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error",
+      "material-property",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -180,7 +207,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -188,10 +219,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "Blinker": {
-        "position": [0, 0.6, 0],
+        "position": [
+          0,
+          0.6,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -206,7 +245,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [235, 205, 75, 255],
+            "value": [
+              235,
+              205,
+              75,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -230,7 +274,7 @@
   "promotion": {
     "spec": "1600f4b3bd82",
     "source": "5a3ed945031356f0",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 18,
     "attested": 0,
     "units": 18

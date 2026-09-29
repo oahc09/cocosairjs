@@ -50,97 +50,119 @@ if (mode === 'classic') {
     const canvas = document.createElement('canvas');
     canvas.id = 'real-canvas';
     document.body.appendChild(canvas);
+} else if (mode === 'unbound') {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'unbound-canvas';
+    document.body.appendChild(canvas);
 }
 
-const cc = await import('/build/cocosair.module.js');
-const { createAirApp, Scene, Node, Camera, Color, Layers, Vec3, input, Input } = cc;
-
-if (mode === 'decoy') {
-    let rejected = null;
-    try {
-        await createAirApp({ canvas: '#real-canvas' });
-    } catch (e) {
-        rejected = String((e && e.message) || e);
+let cc = null;
+try {
+    cc = await import('/build/cocosair.module.js');
+} catch (error) {
+    if (mode !== 'unbound') {
+        throw error;
     }
-    probe.samples.decoyRejection = rejected;
-    check(
-        'decoy_rejects_explicitly',
-        rejected !== null && rejected.indexOf('another element with id "GameCanvas"') >= 0,
-        rejected ? rejected.slice(0, 160) : 'created without error',
-    );
-    check('decoy_no_silent_binding', rejected !== null, 'must not silently bind to the decoy');
+    const message = String((error && error.message) || error);
+    check('unbound_rejects_explicitly', message.includes('__CC_CANVAS__'), message);
+    check('unbound_id_preserved', document.getElementById('unbound-canvas') !== null);
     probe.ready = true;
-} else {
-    const app = await createAirApp({ canvas: mode === 'anyid' ? '#my-game' : '#GameCanvas' });
-    const canvas = app.canvas;
-    window.__bindingCanvas = canvas;
-    probe.info.canvasIdAtCreate = canvas.id;
-    probe.info.tabIndex = canvas.tabIndex;
-    check('boot_tabindex_focusable', canvas.tabIndex >= 0, `tabIndex=${canvas.tabIndex}`);
+}
+if (cc) {
+    const { createAirApp, Scene, Node, Camera, Color, Layers, Vec3, input, Input } = cc;
 
-    const scene = new Scene('binding-probe');
-    const cameraNode = new Node('Cam');
-    scene.addChild(cameraNode);
-    cameraNode.setPosition(new Vec3(0, 1.6, 6));
-    cameraNode.lookAt(new Vec3(0, 1, 0));
-    const camera = cameraNode.addComponent(Camera);
-    camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
-    camera.clearColor = new Color(30, 40, 60, 255);
-    camera.visibility = Layers.Enum.DEFAULT;
-    app.run(scene);
-    await sleep(500);
-    check('boot_scene_running', app.getScene() === scene, app.getScene() && app.getScene().name);
-    check('boot_anyid_override_render', true, 'render path OK in ' + mode);
-
-    probe.mouseEvents = [];
-    probe.keyEvents = [];
-    probe.touchEvents = [];
-    input.on(Input.EventType.MOUSE_DOWN, (e) => {
-        probe.mouseEvents.push({ x: Math.round(e.getLocationX()), y: Math.round(e.getLocationY()) });
-    });
-    input.on(Input.EventType.KEY_DOWN, (e) => {
-        probe.keyEvents.push({ keyCode: e.keyCode });
-    });
-    input.on(Input.EventType.TOUCH_START, () => {
-        probe.touchEvents.push(1);
-    });
-
-    probe.samples.focusBefore = { activeIsCanvas: document.activeElement === canvas, tabIndex: canvas.tabIndex };
-    window.__bindingArmed = true;
-
-    const t0 = Date.now();
-    while (!window.__bindingResults && Date.now() - t0 < 30000) {
-        await sleep(100);
-    }
-    if (window.__bindingResults) {
-        const r = window.__bindingResults;
-        probe.samples.interaction = r;
-        if (r.mouseDown) {
-            // DPR=1 全屏画布：location = (clientX, viewportH - clientY)（左下原点，PAL mouse-input 换算）
+    if (mode === 'decoy' || mode === 'unbound') {
+        let rejected = null;
+        try {
+            await createAirApp({ canvas: mode === 'decoy' ? '#real-canvas' : '#unbound-canvas' });
+        } catch (e) {
+            rejected = String((e && e.message) || e);
+        }
+        probe.samples.decoyRejection = rejected;
+        if (mode === 'decoy') {
             check(
-                'mouse_location_mapping',
-                r.mouseDown.x === r.expectedMouse.x && r.mouseDown.y === r.expectedMouse.y,
-                JSON.stringify(r.mouseDown) + ' expect ' + JSON.stringify(r.expectedMouse),
+                'decoy_rejects_explicitly',
+                rejected !== null && rejected.includes('another element with id "GameCanvas"'),
+                rejected,
             );
         } else {
-            check('mouse_event_received', false, 'no MOUSE_DOWN recorded');
+            check('unbound_rejects_explicitly', rejected !== null && rejected.includes('__CC_CANVAS__'), rejected);
+            check('unbound_id_preserved', document.getElementById('unbound-canvas') !== null);
         }
-        if (r.focusAfterClick) {
-            check('focus_on_click', true);
-            check(
-                'keyboard_gated_by_focus',
-                r.keyWhileFocused > 0 && r.keyWhileBlurred === 0,
-                `focused=${r.keyWhileFocused} blurred=${r.keyWhileBlurred}`,
-            );
-            check('focus_restorable', r.focusAfterReclick === true);
-        } else {
-            check('focus_on_click', false, 'activeElement !== canvas after click');
-        }
-        if (r.touchTested) {
-            check('touch_event_received', r.touchStart === true, 'TOUCH_START recorded: ' + r.touchStart);
-        }
+        probe.ready = true;
     } else {
-        check('runner_interaction_timeout', false, 'no __bindingResults within 30s');
+        const app = await createAirApp({ canvas: mode === 'anyid' ? '#my-game' : '#GameCanvas' });
+        const canvas = app.canvas;
+        window.__bindingCanvas = canvas;
+        probe.info.canvasIdAtCreate = canvas.id;
+        check('boot_canvas_id_preserved', canvas.id === (mode === 'anyid' ? 'my-game' : 'GameCanvas'), canvas.id);
+        probe.info.tabIndex = canvas.tabIndex;
+        check('boot_tabindex_focusable', canvas.tabIndex >= 0, `tabIndex=${canvas.tabIndex}`);
+
+        const scene = new Scene('binding-probe');
+        const cameraNode = new Node('Cam');
+        scene.addChild(cameraNode);
+        cameraNode.setPosition(new Vec3(0, 1.6, 6));
+        cameraNode.lookAt(new Vec3(0, 1, 0));
+        const camera = cameraNode.addComponent(Camera);
+        camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+        camera.clearColor = new Color(30, 40, 60, 255);
+        camera.visibility = Layers.Enum.DEFAULT;
+        app.run(scene);
+        await sleep(500);
+        check('boot_scene_running', app.getScene() === scene, app.getScene() && app.getScene().name);
+        check('boot_anyid_override_render', true, 'render path OK in ' + mode);
+
+        probe.mouseEvents = [];
+        probe.keyEvents = [];
+        probe.touchEvents = [];
+        input.on(Input.EventType.MOUSE_DOWN, (e) => {
+            probe.mouseEvents.push({ x: Math.round(e.getLocationX()), y: Math.round(e.getLocationY()) });
+        });
+        input.on(Input.EventType.KEY_DOWN, (e) => {
+            probe.keyEvents.push({ keyCode: e.keyCode });
+        });
+        input.on(Input.EventType.TOUCH_START, () => {
+            probe.touchEvents.push(1);
+        });
+
+        probe.samples.focusBefore = { activeIsCanvas: document.activeElement === canvas, tabIndex: canvas.tabIndex };
+        window.__bindingArmed = true;
+
+        const t0 = Date.now();
+        while (!window.__bindingResults && Date.now() - t0 < 30000) {
+            await sleep(100);
+        }
+        if (window.__bindingResults) {
+            const r = window.__bindingResults;
+            probe.samples.interaction = r;
+            if (r.mouseDown) {
+                // DPR=1 全屏画布：location = (clientX, viewportH - clientY)（左下原点，PAL mouse-input 换算）
+                check(
+                    'mouse_location_mapping',
+                    r.mouseDown.x === r.expectedMouse.x && r.mouseDown.y === r.expectedMouse.y,
+                    JSON.stringify(r.mouseDown) + ' expect ' + JSON.stringify(r.expectedMouse),
+                );
+            } else {
+                check('mouse_event_received', false, 'no MOUSE_DOWN recorded');
+            }
+            if (r.focusAfterClick) {
+                check('focus_on_click', true);
+                check(
+                    'keyboard_gated_by_focus',
+                    r.keyWhileFocused > 0 && r.keyWhileBlurred === 0,
+                    `focused=${r.keyWhileFocused} blurred=${r.keyWhileBlurred}`,
+                );
+                check('focus_restorable', r.focusAfterReclick === true);
+            } else {
+                check('focus_on_click', false, 'activeElement !== canvas after click');
+            }
+            if (r.touchTested) {
+                check('touch_event_received', r.touchStart === true, 'TOUCH_START recorded: ' + r.touchStart);
+            }
+        } else {
+            check('runner_interaction_timeout', false, 'no __bindingResults within 30s');
+        }
+        probe.ready = true;
     }
-    probe.ready = true;
 }

@@ -17,6 +17,13 @@ const DEFAULT_LOCAL_APP_DATA = 'C:/Users/caosh/AppData/Local';
 function launchOptions (engine, localAppData = process.env.LOCALAPPDATA || DEFAULT_LOCAL_APP_DATA) {
     const conf = ENGINES[engine];
     if (!conf) { throw new Error(`未知浏览器引擎: ${engine}（可选 ${Object.keys(ENGINES).join('/')}）`); }
+    // Chromium 1193 (the installed package's default) cannot decode the checked-in
+    // H.264 clip. The project-pinned 1228 has been verified by the video example.
+    // Use the same media-capable browser for all Chromium example evidence.
+    if (engine === 'chromium' && arguments.length < 2) {
+        const pinned = path.join(localAppData, 'ms-playwright', conf.dir, conf.exe.replace(/\//g, path.sep));
+        if (fs.existsSync(pinned)) { return { executablePath: pinned, args: conf.args.slice() }; }
+    }
     // Prefer the revision required by the installed Playwright package. A pinned
     // WebKit from a different revision can launch but hang at the protocol layer.
     if (arguments.length < 2) {

@@ -1,9 +1,15 @@
 {
   "runner": "tools/verify/tarball-browser-consumer.cjs",
-  "measuredAt": "2026-09-25T04:16:51.203Z",
-  "tarball": "cocosair.js-1.2.0.tgz",
+  "measuredAt": "2026-09-28T23:43:11.944Z",
+  "tarball": "cocosair.js-1.0.0.tgz",
   "installed": {
-    "files": 7
+    "files": 7,
+    "bundleSha256_16": "bf07c87924fb2476"
+  },
+  "sourceMap": {
+    "present": true,
+    "sources": 896,
+    "linked": true
   },
   "booted": true,
   "probe": {
@@ -12,5 +18,9 @@
     "canvasSize": "480x320"
   },
   "pageErrors": [],
+  "nested": {
+    "booted": true,
+    "cspErrors": []
+  },
   "ok": true
 }

@@ -130,19 +130,24 @@ export class SceneStack {
             const resolve = this._transitionResolve;
             this._transitionResolve = null;
             // 收口语义：栈顶之下全部退隐（同 push 完成路径），并 resolve 在途等待者
-            for (let i = 0; i < this._stack.length - 1; i++) { this._retire(this._stack[i]); }
+            for (const page of this._stack.slice(0, -1)) { this._retire(page); }
             if (resolve) { resolve(this._stack[this._stack.length - 1]!); }
         }
     }
 
     private _retire (page: PageHandle | undefined): void {
         if (!page) { return; }
+        if (this._cache.includes(page)) { return; }
         // 状态保存：active=false 保活（组件与子树状态保留）；缓存上限 LRU 超限销毁最旧
         page.node.active = false;
         (page as { visible: boolean }).visible = false;
         this._cache.push(page);
         while (this._cache.length > this._maxCached) {
             const oldest = this._cache.shift()!;
+            // An evicted page cannot be returned to by pop(): remove its handle from
+            // the navigation stack before destroying its node.
+            const index = this._stack.indexOf(oldest);
+            if (index >= 0) { this._stack.splice(index, 1); }
             oldest.node.destroy();
         }
     }

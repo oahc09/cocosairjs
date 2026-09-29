@@ -91,6 +91,15 @@ export interface NodeSummary {
     components: { id: string; type: string; enabled: boolean }[];
     local: { position: number[]; rotationEuler: number[]; scale: number[] };
     world: { position: number[] };
+    /** Optional UI/renderer observations; absent components are represented by null. */
+    visual: {
+        ui: { size: number[]; anchor: number[] } | null;
+        label: { text: string; overflow: number; fontSize: number } | null;
+        sprite: { frameId: string | null; frameName: string | null; rect: number[] | null;
+            textureId: string | null; textureValid: boolean | null;
+            frameLabel: string | null; textureLabel: string | null } | null;
+        mesh: { meshId: string | null; materialIds: (string | null)[] } | null;
+    };
 }
 
 export interface AssetReport {
@@ -216,8 +225,10 @@ class Collector {
             // 无 hub 才安装自有 window 监听与 getContext 包裹（shader/link 观察）；detach 恢复原函数。
             const onError = ((event: ErrorEvent) => {
                 const isResource = event.target && (event.target as HTMLElement).tagName;
+                const target = event.target as HTMLElement & { error?: { code?: number }; src?: string };
+                const mediaError = target?.error?.code ?? (target?.parentElement as HTMLMediaElement | null)?.error?.code ?? null;
                 push('window-error', isResource
-                    ? `RESOURCE: ${(event.target as HTMLImageElement).src || (event.target as HTMLElement).tagName}`
+                    ? `RESOURCE: ${target.src || target.tagName} [tag=${target.tagName}, mediaCode=${mediaError}, connected=${target.isConnected}]`
                     : String(event.error && (event.error as Error).stack || event.message).slice(0, 600));
             }) as EventListener;
             const onRejection = ((event: PromiseRejectionEvent) => {
@@ -309,6 +320,7 @@ export class AgentSessionImpl {
     private readonly componentIds = new Map<cc.Component, string>();
     private readonly assetIds = new Map<cc.Asset, string>();
     private readonly assetsById = new Map<string, cc.Asset>();
+    private readonly assetLabels = new Map<cc.Asset, string>();
     private readonly ownedNodes = new Set<cc.Node>();
     private readonly ownedInstances: { id: string; assetId: string; instance: { dispose (): void; root: cc.Node } }[] = [];
     private readonly ownedAssets = new Set<cc.Asset>();
@@ -323,6 +335,13 @@ export class AgentSessionImpl {
         this.id = `agent-session-${++AgentSessionImpl.counter}`;
         this.collector = Collector.for(options.app, options.errorBufferLimit ?? DEFAULT_ERROR_LIMIT);
         this.collector.attach(this);
+    }
+
+    /** Business-supplied names for assets such as atlas frames; never inferred from a texture UUID. */
+    registerAssetLabel (asset: cc.Asset, label: string): void {
+        this.requireOpen();
+        if (!cc.isValid(asset, true) || !label) { throw new AgentSessionError('INVALID_ARGUMENT', 'a live asset and nonempty label are required'); }
+        this.assetLabels.set(asset, label);
     }
 
     private static counter = 0;
@@ -473,6 +492,13 @@ export class AgentSessionImpl {
         const parent = node.parent;
         const euler = node.eulerAngles;
         const world = node.worldPosition;
+        const ui = node.getComponent(cc.UITransform);
+        const label = node.getComponent(cc.Label);
+        const sprite = node.getComponent(cc.Sprite);
+        const frame = sprite?.spriteFrame;
+        const texture = frame?.texture;
+        const renderer = node.getComponent(cc.MeshRenderer);
+        const rect = frame?.rect;
         return {
             id: this.nodeId(node),
             name: node.name,
@@ -491,6 +517,23 @@ export class AgentSessionImpl {
                 scale: [node.scale.x, node.scale.y, node.scale.z],
             },
             world: { position: [world.x, world.y, world.z] },
+            visual: {
+                ui: ui ? { size: [ui.width, ui.height], anchor: [ui.anchorX, ui.anchorY] } : null,
+                label: label ? { text: label.string, overflow: label.overflow, fontSize: label.fontSize } : null,
+                sprite: sprite ? {
+                    frameId: frame ? this.assetId(frame) : null,
+                    frameName: frame?.name ?? null,
+                    rect: rect ? [rect.x, rect.y, rect.width, rect.height] : null,
+                    textureId: texture ? this.assetId(texture) : null,
+                    textureValid: texture ? cc.isValid(texture, true) : null,
+                    frameLabel: frame ? this.assetLabels.get(frame) ?? null : null,
+                    textureLabel: texture ? this.assetLabels.get(texture) ?? null : null,
+                } : null,
+                mesh: renderer ? {
+                    meshId: renderer.mesh ? this.assetId(renderer.mesh) : null,
+                    materialIds: renderer.sharedMaterials.map((material) => material ? this.assetId(material) : null),
+                } : null,
+            },
         };
     }
 
@@ -863,6 +906,7 @@ export class AgentSessionImpl {
         this.componentIds.clear();
         this.assetIds.clear();
         this.assetsById.clear();
+        this.assetLabels.clear();
         this.requestLog.clear();
     }
 }

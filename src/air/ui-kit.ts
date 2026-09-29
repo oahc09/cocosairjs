@@ -3,7 +3,8 @@
  *
  * 最小工具集：createUICanvas / spriteNode / labelNode / AssetBank。全部复用原生
  * Node/UITransform/Sprite/Label/Camera/Canvas，不创建平行 Scene/Node 抽象；
- * createAirApp 不承载业务布局。按任务书为「可选面」——不并入默认导出也不影响核心。
+ * createAirApp 不承载业务布局。调用层可选择不用这些 helper；为维持现有
+ * 公共 API 兼容，本模块仍由默认入口导出，尚未独立拆包。
  *
  * 本文件为 Air 原创（上游 cocos4 无同名文件）。
  */
@@ -136,8 +137,8 @@ interface BankEntry {
  * @en Minimal reference-counted asset bank over `assetManager.loadRemote`.
  * @zh 基于 assetManager.loadRemote 的最小引用计数资产库：
  * - 并发去重：同 URL 在途请求只发一次，等待者共享同一 Promise；
- * - 引用计数：acquire 递增、release 递减，归零才真正 releaseAsset——共享引用不误释放，
- *   释放不影响其他场景持有的资产；
+ * - 每个 bank 对资产持有一份引擎引用；release 只归还自己的引用。其他持有者
+ *   也需使用 addRef/decRef 合同，不能使用强制 releaseAsset；
  * - 失败清理：加载失败不留悬挂条目；
  * - 进度：loadRemote 无任务级进度时以 0→100 两阶报告（如实，不伪造细粒度）。
  */
@@ -172,6 +173,7 @@ export class AssetBank {
                         return;
                     }
                     this._inFlight.delete(url);
+                    asset.addRef();
                     this._entries.set(url, { asset, refs: 0 });
                     resolve(asset);
                 });
@@ -187,8 +189,8 @@ export class AssetBank {
     }
 
     /**
-     * @en Decrement the refcount; the asset is released only when it reaches zero.
-     * @zh 递减引用计数；归零才真正释放（不破坏其他场景/持有者）。
+     * @en Release this bank's reference when its local count reaches zero.
+     * @zh 本 bank 归零时只归还自己持有的引擎引用。
      */
     release (url: string): boolean {
         const entry = this._entries.get(url);
@@ -196,7 +198,7 @@ export class AssetBank {
         entry.refs -= 1;
         if (entry.refs <= 0) {
             this._entries.delete(url);
-            assetManager.releaseAsset(entry.asset);
+            entry.asset.decRef();
             return true;
         }
         return false;

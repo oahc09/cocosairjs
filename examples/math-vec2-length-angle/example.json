@@ -50,7 +50,11 @@
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 110,170,210）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["math.Vec2.dot", "math.Vec2.angle", "math.Vec2.normalize"],
+    "primary": [
+      "math.Vec2.dot",
+      "math.Vec2.angle",
+      "math.Vec2.normalize"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -96,7 +100,9 @@
       "math.Vec2.rotate",
       "math.Vec2.project"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -265,21 +271,32 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "lifecycle": [],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -293,7 +310,7 @@
   "promotion": {
     "spec": "5e9a56f9e4d6",
     "source": "7d9357f712fd6afd",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 27,
     "attested": 0,
     "units": 27

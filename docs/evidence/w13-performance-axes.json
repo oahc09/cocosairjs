@@ -1,0 +1,49 @@
+{
+  "measuredAt": "2026-09-28T23:41:04.531Z",
+  "bundle": {
+    "sha256_16": "bf07c87924fb2476"
+  },
+  "browser": "chromium-headless",
+  "axes": {
+    "logic": {
+      "status": "measured",
+      "unit": "component updates",
+      "phases": [
+        {
+          "objects": 1,
+          "wallMs": 1214,
+          "logicalUpdates": 63,
+          "drawEvents": 63,
+          "mainThreadDrawIntervalMedianMs": 0.29999999701976776,
+          "gpuCompletionMedianMs": 0.006144
+        },
+        {
+          "objects": 15,
+          "wallMs": 1210,
+          "logicalUpdates": 1080,
+          "drawEvents": 72,
+          "mainThreadDrawIntervalMedianMs": 0.29999999701976776,
+          "gpuCompletionMedianMs": 0.045056
+        }
+      ]
+    },
+    "mainThreadDrawInterval": {
+      "status": "measured",
+      "unit": "ms",
+      "caveat": "BEFORE_DRAW to AFTER_DRAW includes renderer work; it is not GPU completion or screen present"
+    },
+    "gpuCompletion": {
+      "status": "measured",
+      "backend": "webgl2",
+      "timerQueryAvailable": true,
+      "unit": "ms",
+      "reason": null
+    },
+    "screenPresent": {
+      "status": "unavailable",
+      "reason": "headless has no device present timestamp; pass --present-json=<SurfaceFlinger trace export>"
+    }
+  },
+  "pageErrors": [],
+  "verdict": "PASS"
+}

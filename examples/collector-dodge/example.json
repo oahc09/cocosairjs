@@ -20,8 +20,16 @@
     "visual": "深色俯视 3D 场景：绿色草地平面、绿色玩家球（受伤闪烁）、5 枚立旋金币（拾取时 tween 缩放脉冲后原地换点位重生）、3 个红色巡逻方块敌人沿固定路线往返；左上角 DOM HUD 显示 state/score/hp/coins/respawns/hits/dash"
   },
   "api": {
-    "primary": ["tween", "Material.setProperty", "Component"],
-    "supporting": ["input", "assetManager", "AudioSource.play"],
+    "primary": [
+      "tween",
+      "Material.setProperty",
+      "Component"
+    ],
+    "supporting": [
+      "input",
+      "assetManager",
+      "AudioSource.play"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -292,11 +300,25 @@
       }
     ]
   },
-  "capabilities": ["game", "audio"],
-  "assets": ["assets/tone.wav"],
+  "capabilities": [
+    "game",
+    "audio"
+  ],
+  "assets": [
+    "assets/tone.wav"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "DirLight", "Ground", "Player", "Coins", "Enemies", "Driver", "Audio"]
+      "nodes": [
+        "Main Camera",
+        "DirLight",
+        "Ground",
+        "Player",
+        "Coins",
+        "Enemies",
+        "Driver",
+        "Audio"
+      ]
     }
   },
   "interaction": {
@@ -308,13 +330,27 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "transform-equals", "asset-loaded", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "asset-loaded",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -328,7 +364,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 10.5, 12.5],
+        "position": [
+          0,
+          10.5,
+          12.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -338,8 +378,16 @@
         ]
       },
       "DirLight": {
-        "position": [0, 8, 0],
-        "rotationEuler": [-40, 25, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
+        "rotationEuler": [
+          -40,
+          25,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -354,7 +402,11 @@
         ]
       },
       "Ground": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -364,7 +416,11 @@
         ]
       },
       "Coins": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -374,7 +430,11 @@
         ]
       },
       "Enemies": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -384,7 +444,11 @@
         ]
       },
       "Driver": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -394,7 +458,11 @@
         ]
       },
       "Audio": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -434,7 +502,7 @@
   "promotion": {
     "spec": "a7f63fc705a1",
     "source": "097992b17ba74405",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 37,
     "attested": 0,
     "units": 37

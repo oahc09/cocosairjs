@@ -14,6 +14,7 @@
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
+const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const NPM = process.platform === 'win32' ? 'npm.cmd' : 'npm'; // win32 spawnSync 需要 .cmd 解析
 
@@ -43,12 +44,20 @@ const OUT = path.join(REPO, 'docs', 'evidence', 'v11-tarball-browser-consumer.js
     const bundle = path.join(pkgDir, 'build', 'cocosair.module.js');
     if (!fs.existsSync(bundle)) { throw new Error('安装产物缺 build/cocosair.module.js'); }
     report.installed = { files: fs.readdirSync(path.join(pkgDir, 'build')).length };
+    report.installed.bundleSha256_16 = crypto.createHash('sha256').update(fs.readFileSync(bundle)).digest('hex').slice(0, 16);
+    const sourceMapPath = bundle + '.map';
+    const sourceMap = fs.existsSync(sourceMapPath) ? JSON.parse(fs.readFileSync(sourceMapPath, 'utf8')) : null;
+    report.sourceMap = { present: !!sourceMap, sources: sourceMap?.sources?.length ?? 0,
+      linked: /sourceMappingURL=cocosair\.module\.js\.map/.test(fs.readFileSync(bundle, 'utf8')) };
+    if (!report.sourceMap.present || !report.sourceMap.linked || report.sourceMap.sources === 0) {
+      fail('installed bundle sourcemap is absent, unlinked, or empty');
+    }
 
     // 3) 静态服务安装产物
     const EXT = { '.js': 'text/javascript', '.html': 'text/html' };
     server = http.createServer((req, res) => {
       const url = decodeURIComponent(req.url.split('?')[0]);
-      const file = path.join(pkgDir, url === '/' ? 'index.html' : url.replace(/^\//, ''));
+      const file = path.join(pkgDir, url === '/' || url === '/nested/' ? 'index.html' : url.replace(/^\//, ''));
       if (!file.startsWith(pkgDir) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end('404'); return; }
       res.writeHead(200, { 'Content-Type': EXT[path.extname(file).toLowerCase()] || 'application/octet-stream' });
       fs.createReadStream(file).pipe(res);
@@ -58,9 +67,10 @@ const OUT = path.join(REPO, 'docs', 'evidence', 'v11-tarball-browser-consumer.js
 
     // 4) 消费页：docs Quick Start 形态的 main.js（对齐 README 手册用法）
     const pageHtml = `<!DOCTYPE html><html><head><meta charset="utf-8">
-<script type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script></head>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-w14-test'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'">
+<script nonce="w14-test" type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script></head>
 <body style="margin:0"><canvas id="GameCanvas" width="480" height="320" style="width:480px;height:320px"></canvas>
-<script type="module">
+<script nonce="w14-test" type="module">
 import { createAirApp, Scene, Node, Camera, MeshRenderer, DirectionalLight, Material, Color, primitives, utils, Vec3 } from 'cocosair';
 const app = await createAirApp({ canvas: '#GameCanvas' });
 const scene = new Scene('TarballConsumer');
@@ -82,7 +92,7 @@ app.run(scene);
     const browser = await chromium.launch({ headless: true, executablePath: path.join(process.env.LOCALAPPDATA || '', 'ms-playwright', 'chromium-1228', 'chrome-win64', 'chrome.exe'), args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] });
     const page = await browser.newPage({ viewport: { width: 480, height: 320 } });
     const pageErrors = [];
-    page.on('pageerror', (e) => pageErrors.push(String(e).slice(0, 150)));
+    page.on('pageerror', (e) => pageErrors.push(String(e.stack || e).slice(0, 1000)));
     await page.goto(`http://127.0.0.1:${port}/`, { waitUntil: 'load' });
     const booted = await page.waitForFunction(() => !!(window).__consumer, undefined, { timeout: 30000 }).then(() => true).catch(() => false);
     report.booted = booted;
@@ -101,6 +111,16 @@ app.run(scene);
     }
     report.pageErrors = pageErrors;
     if (pageErrors.length) { fail(`${pageErrors.length} page errors: ${pageErrors[0]}`); }
+    const nested = await browser.newPage({ viewport: { width: 480, height: 320 } });
+    const cspErrors = [];
+    nested.on('pageerror', (error) => cspErrors.push(String(error).slice(0, 160)));
+    nested.on('console', (message) => {
+      if (/Content Security Policy|Refused to/.test(message.text())) cspErrors.push(message.text().slice(0, 160));
+    });
+    await nested.goto(`http://127.0.0.1:${port}/nested/`, { waitUntil: 'load' });
+    report.nested = { booted: await nested.waitForFunction(() => !!window.__consumer, undefined, { timeout: 30000 }).then(() => true).catch(() => false), cspErrors };
+    if (!report.nested.booted || cspErrors.length) { fail(`nested CSP consumer failed: ${JSON.stringify(report.nested)}`); }
+    await nested.close();
     await browser.close();
   } catch (e) {
     fail(`runner error: ${String(e).slice(0, 300)}`);

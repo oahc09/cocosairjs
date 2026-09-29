@@ -129,14 +129,20 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Camera 的进阶几何面：世界矩阵→屏幕投影（Mat4 出参）、裁剪空间 minz 查询、oblique 近平面矩阵计算（try 兜底）。",
-    "points": ["worldMatrixToScreen 出参为 Mat4", "getClipSpaceMinz 数值回读", "calculateObliqueMat 需平面参数（try）"]
+    "points": [
+      "worldMatrixToScreen 出参为 Mat4",
+      "getClipSpaceMinz 数值回读",
+      "calculateObliqueMat 需平面参数（try）"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 150,210,200）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["renderer.scene.Camera.worldMatrixToScreen"],
+    "primary": [
+      "renderer.scene.Camera.worldMatrixToScreen"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -272,7 +278,9 @@
       "geometry.AABB.mergePoints",
       "geometry.AABB.mergeFrustum"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -981,21 +989,34 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -1009,7 +1030,7 @@
   "promotion": {
     "spec": "b615901b7e17",
     "source": "eff5486133ed2729",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 117,
     "attested": 0,
     "units": 117

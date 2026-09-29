@@ -49,14 +49,21 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Mesh 生命周期数据操作：assign 结构注入、reset 复位、静态 merge 与合并合法性校验、子网格更新与初始化（全部 try 兜底确定性回读）。",
-    "points": ["validateMergingMesh 返回布尔", "merge 静态入口存在性", "assign/reset 后结构可再读"]
+    "points": [
+      "validateMergingMesh 返回布尔",
+      "merge 静态入口存在性",
+      "assign/reset 后结构可再读"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 190,210,240）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Mesh.merge", "Mesh.assign"],
+    "primary": [
+      "Mesh.merge",
+      "Mesh.assign"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -125,7 +132,9 @@
       "ModelRenderer.visibility",
       "ModelRenderer.priority"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -354,21 +363,34 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -382,7 +404,7 @@
   "promotion": {
     "spec": "83e8aa4de17a",
     "source": "22ad5db42f3d1a3a",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 37,
     "attested": 0,
     "units": 37

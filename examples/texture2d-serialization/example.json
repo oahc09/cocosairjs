@@ -34,14 +34,20 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Texture2D 的 mip 视图与序列化钩子面（只读/try 兜底，确定性回读）。",
-    "points": ["_mipmaps 为数组", "_serialize 在无数据时的安全路径", "onLoaded 空纹理安全"]
+    "points": [
+      "_mipmaps 为数组",
+      "_serialize 在无数据时的安全路径",
+      "onLoaded 空纹理安全"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 215,185,235）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Texture2D._mipmaps"],
+    "primary": [
+      "Texture2D._mipmaps"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -82,7 +88,9 @@
       "Texture2D._deserialize",
       "Texture2D.onLoaded"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -221,21 +229,34 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -249,7 +270,7 @@
   "promotion": {
     "spec": "bfa4c738187b",
     "source": "6512223704e49e45",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 21,
     "attested": 1,
     "units": 22

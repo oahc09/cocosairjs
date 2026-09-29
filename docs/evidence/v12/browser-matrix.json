@@ -1,14 +1,14 @@
 {
   "schema": "v12-browser-matrix-v1",
   "completed": true,
-  "measuredAt": "2026-09-27T23:17:35.940Z",
+  "measuredAt": "2026-09-29T00:48:17.178Z",
   "subset": false,
   "runPass": 39,
   "runTotal": 39,
   "bundle": {
     "path": "build/cocosair.module.js",
-    "bytes": 6600941,
-    "sha256_16": "05f7eb14b1014d5d"
+    "bytes": 6610182,
+    "sha256_16": "bf07c87924fb2476"
   },
   "contractFile": "tools/v12/browser-matrix-contract.json",
   "contractFingerprint": "420f2a3f2267a2ec",
@@ -36,8 +36,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-chromium.png",
-      "pngBytes": 12280,
-      "pngSha256_16": "a1e4e222a0479105",
+      "pngBytes": 12305,
+      "pngSha256_16": "7fedc1a4b83d411a",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -53,7 +53,7 @@
         "overlayActive": true,
         "counters": {
           "fps": {
-            "value": 59.88,
+            "value": 60,
             "enabled": false
           },
           "draws": {
@@ -65,7 +65,7 @@
             "enabled": false
           },
           "frame": {
-            "value": 0.4,
+            "value": 0.3,
             "enabled": false
           },
           "instances": {
@@ -77,7 +77,7 @@
             "enabled": false
           },
           "logic": {
-            "value": 0.1,
+            "value": 0,
             "enabled": false
           },
           "physics": {
@@ -121,8 +121,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-firefox.png",
-      "pngBytes": 14866,
-      "pngSha256_16": "20780acfdcd4e36a",
+      "pngBytes": 14076,
+      "pngSha256_16": "9da98cb15a956167",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -150,7 +150,7 @@
             "enabled": false
           },
           "frame": {
-            "value": 0,
+            "value": 1,
             "enabled": false
           },
           "instances": {
@@ -162,7 +162,7 @@
             "enabled": false
           },
           "logic": {
-            "value": 0,
+            "value": 1,
             "enabled": false
           },
           "physics": {
@@ -206,8 +206,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\profiler-overlay\\matrix-webkit.png",
-      "pngBytes": 11879,
-      "pngSha256_16": "966401c72d234b74",
+      "pngBytes": 11768,
+      "pngSha256_16": "10dd57d000c5eeca",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -291,8 +291,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-chromium.png",
-      "pngBytes": 12601,
-      "pngSha256_16": "be6473fa05a68e35",
+      "pngBytes": 12986,
+      "pngSha256_16": "2c7e069d2264cb22",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -423,7 +423,8 @@
           },
           "focused": true,
           "events": [
-            "began"
+            "began",
+            "ended"
           ]
         },
         "clickTargets": {
@@ -452,8 +453,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-firefox.png",
-      "pngBytes": 15752,
-      "pngSha256_16": "0709e5c2e1ce06cc",
+      "pngBytes": 15913,
+      "pngSha256_16": "f9155ecf20f5e1c3",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -584,7 +585,8 @@
           },
           "focused": true,
           "events": [
-            "began"
+            "began",
+            "ended"
           ]
         },
         "clickTargets": {
@@ -613,8 +615,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\ui-components\\matrix-webkit.png",
-      "pngBytes": 14204,
-      "pngSha256_16": "2ae02ffbe0bab0c1",
+      "pngBytes": 14519,
+      "pngSha256_16": "b222445a8c3236a7",
       "pngBefore": null,
       "pngFloors": {
         "after": 9000,
@@ -745,7 +747,8 @@
           },
           "focused": true,
           "events": [
-            "began"
+            "began",
+            "ended"
           ]
         },
         "clickTargets": {
@@ -1260,8 +1263,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-basic\\matrix-chromium.png",
-      "pngBytes": 10209,
-      "pngSha256_16": "f7a89851c033e337",
+      "pngBytes": 10360,
+      "pngSha256_16": "bd2a5922ff83d41e",
       "pngBefore": null,
       "pngFloors": {
         "after": 3500,
@@ -1672,8 +1675,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-basic\\matrix-webkit.png",
-      "pngBytes": 11305,
-      "pngSha256_16": "0c48c7a14c6e3462",
+      "pngBytes": 11346,
+      "pngSha256_16": "373aa08a11ca5ea5",
       "pngBefore": null,
       "pngFloors": {
         "after": 3500,
@@ -1878,8 +1881,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-collision\\matrix-chromium.png",
-      "pngBytes": 10845,
-      "pngSha256_16": "2ab2e808c62920c2",
+      "pngBytes": 10980,
+      "pngSha256_16": "384d6ec35dca4e42",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -43766,8 +43769,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-2d-collision\\matrix-webkit.png",
-      "pngBytes": 11885,
-      "pngSha256_16": "1d90c0d418f4b1fe",
+      "pngBytes": 11927,
+      "pngSha256_16": "0c91bd995d7a392f",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -64710,8 +64713,1194 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-chromium.png",
-      "pngBytes": 54544,
-      "pngSha256_16": "a013b8f0c5a66fbc",
+      "pngBytes": 50077,
+      "pngSha256_16": "dfa31f193a5af431",
+      "pngBefore": null,
+      "pngFloors": {
+        "after": 5000,
+        "exemptedByEngine": {}
+      },
+      "viewports": [
+        {
+          "width": 480,
+          "height": 360
+        }
+      ],
+      "probe": {
+        "results": {
+          "clampFromFirstAssemblerFetch": 0.033333,
+          "p1ParseErr": "null",
+          "p1DictKeys": 35,
+          "p1AtStep6": {
+            "count": 0,
+            "emitCounter": 0.1
+          },
+          "p1AtStep7": {
+            "count": 1,
+            "emitCounter": 0.016667
+          },
+          "p1": {
+            "tag": "gravity@30",
+            "count": 4,
+            "elapsed": 0.5,
+            "emitCounter": 0.1,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 40,
+            "life": 1,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 16,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 24,
+              "y": -8.3333,
+              "dx": 60,
+              "dy": -40,
+              "size": 12,
+              "rotation": 36,
+              "ttl": 0.6,
+              "color": [
+                255,
+                153,
+                0,
+                255
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 6,
+              "y": -0.5833,
+              "ttl": 0.9
+            }
+          },
+          "p2": {
+            "tag": "gravity@160",
+            "count": 10,
+            "elapsed": 2.666667,
+            "emitCounter": 0.066667,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 40,
+            "life": 1,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 40,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 46,
+              "y": -30.0278,
+              "dx": 60,
+              "dy": -76.6667,
+              "size": 4.6667,
+              "rotation": 69,
+              "ttl": 0.233333,
+              "color": [
+                255,
+                60,
+                0,
+                255
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 4,
+              "y": -0.2778,
+              "ttl": 0.933333
+            }
+          },
+          "p2AfterReset": {
+            "tag": "afterReset",
+            "count": 0,
+            "elapsed": 0,
+            "emitCounter": 0,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 40,
+            "life": 1,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 0,
+            "clampDt": 0.05
+          },
+          "p3EmittedOnFirstStep": 2,
+          "p3Cap": {
+            "tag": "cap3",
+            "count": 3,
+            "elapsed": 0.333333,
+            "emitCounter": 0.006667,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 3,
+            "life": 5,
+            "emissionRate": 50,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 12,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 19,
+              "y": -5.2778,
+              "dx": 60,
+              "dy": -31.6667,
+              "size": 18.7333,
+              "rotation": 5.7,
+              "ttl": 4.683333,
+              "color": [
+                255,
+                239,
+                0,
+                255
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 17,
+              "y": -4.25,
+              "ttl": 4.716667
+            }
+          },
+          "p4": {
+            "hasEmissionRateKey": false,
+            "emissionRate": 16,
+            "endSizeFromPlist": -1
+          },
+          "p4SizeFlat": {
+            "first": 6,
+            "startSize": 6
+          },
+          "p5Rig": [
+            30,
+            -20
+          ],
+          "p5Node": [
+            0,
+            40
+          ],
+          "p5World": [
+            30,
+            20
+          ],
+          "p5Free": {
+            "tag": "free",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.066667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 2,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0.8,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0.8,
+              "y": 0,
+              "ttl": 4.933333
+            }
+          },
+          "p5Relative": {
+            "tag": "relative",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.066667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 2,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 1,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0.8,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                0,
+                40
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0.8,
+              "y": 0,
+              "ttl": 4.933333
+            }
+          },
+          "p6FirstEmitStep": 7,
+          "p6Radius": {
+            "tag": "radius@10",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.016667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 1,
+            "life": 2,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 1,
+            "positionType": 1,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 12,
+            "endSize": 12,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": -57.6823,
+              "y": -6.0627,
+              "dx": 0,
+              "dy": 0,
+              "size": 12,
+              "rotation": 0,
+              "ttl": 1.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                0,
+                40
+              ],
+              "radius": 58,
+              "angle": 0.10472,
+              "dps": 1.570796
+            },
+            "last": {
+              "x": -57.6823,
+              "y": -6.0627,
+              "ttl": 1.933333
+            }
+          },
+          "p7Rotated": {
+            "tag": "worldRotation90",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.016667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 1,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 30,
+            "startSize": 8,
+            "endSize": 8,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0,
+              "y": 2,
+              "dx": 0,
+              "dy": 30,
+              "size": 8,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0,
+              "y": 2,
+              "ttl": 4.933333
+            }
+          },
+          "p8DurationStopStep": 13,
+          "p8ElapsedAtStop": 0.2,
+          "p8": {
+            "tag": "afterDuration",
+            "count": 2,
+            "elapsed": 0.2,
+            "emitCounter": 0,
+            "active": false,
+            "uvFilled": 15,
+            "stopped": true,
+            "totalParticles": 40,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": 0.2,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 8,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 5.4,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.55,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 4.2,
+              "y": 0,
+              "ttl": 4.65
+            }
+          },
+          "p9Grouped": {
+            "tag": "grouped",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.016667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 1,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 2,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0.8,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0.8,
+              "y": 0,
+              "ttl": 4.933333
+            }
+          },
+          "p9WorldAfterMove": [
+            30,
+            -120
+          ],
+          "p10": {
+            "rawMaxParticles": 40.7,
+            "mappedTotalParticles": 40,
+            "rotationIsDirJson": "true",
+            "mappedRotationIsDir": true,
+            "dataTagValue": "null",
+            "unknownKeyPresent": true,
+            "blendPrivate": {
+              "src": 770,
+              "dst": 1
+            },
+            "blendPublicGetter": "no-such-getter",
+            "materialInstance": "instance",
+            "spriteFrameStillOwnedByExample": true
+          },
+          "p10BlendDefaults": {
+            "src": 2,
+            "dst": 4
+          },
+          "p11NoLifespan": {
+            "life": 0,
+            "emissionRateIsMaxValue": true,
+            "totalParticles": 40,
+            "count": 0,
+            "vertexCount": 0
+          },
+          "randomRestored": true
+        },
+        "live": {
+          "flame": 148,
+          "ring": 137
+        },
+        "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
+        "clamp": 0.033333,
+        "phaseKeys": 29
+      },
+      "consoleErrors": [],
+      "benignConsole": [],
+      "failedRequests": []
+    },
+    {
+      "engine": "firefox",
+      "example": "particle-2d-basic",
+      "group": "LV12-07",
+      "frameShotAttempts": 2,
+      "result": "PASS",
+      "checks": {
+        "noConsoleError": true,
+        "noFailedRequest": true,
+        "frameChanged": true,
+        "pngBytesAboveFloor": true,
+        "probeAssertions": true
+      },
+      "failedAssertions": [],
+      "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-firefox.png",
+      "pngBytes": 64644,
+      "pngSha256_16": "b21dc0a0458a02d0",
+      "pngBefore": null,
+      "pngFloors": {
+        "after": 5000,
+        "exemptedByEngine": {}
+      },
+      "viewports": [
+        {
+          "width": 480,
+          "height": 360
+        }
+      ],
+      "probe": {
+        "results": {
+          "clampFromFirstAssemblerFetch": 0.033333,
+          "p1ParseErr": "null",
+          "p1DictKeys": 35,
+          "p1AtStep6": {
+            "count": 0,
+            "emitCounter": 0.1
+          },
+          "p1AtStep7": {
+            "count": 1,
+            "emitCounter": 0.016667
+          },
+          "p1": {
+            "tag": "gravity@30",
+            "count": 4,
+            "elapsed": 0.5,
+            "emitCounter": 0.1,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 40,
+            "life": 1,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 16,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 24,
+              "y": -8.3333,
+              "dx": 60,
+              "dy": -40,
+              "size": 12,
+              "rotation": 36,
+              "ttl": 0.6,
+              "color": [
+                255,
+                153,
+                0,
+                255
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 6,
+              "y": -0.5833,
+              "ttl": 0.9
+            }
+          },
+          "p2": {
+            "tag": "gravity@160",
+            "count": 10,
+            "elapsed": 2.666667,
+            "emitCounter": 0.066667,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 40,
+            "life": 1,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 40,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 46,
+              "y": -30.0278,
+              "dx": 60,
+              "dy": -76.6667,
+              "size": 4.6667,
+              "rotation": 69,
+              "ttl": 0.233333,
+              "color": [
+                255,
+                60,
+                0,
+                255
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 4,
+              "y": -0.2778,
+              "ttl": 0.933333
+            }
+          },
+          "p2AfterReset": {
+            "tag": "afterReset",
+            "count": 0,
+            "elapsed": 0,
+            "emitCounter": 0,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 40,
+            "life": 1,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 0,
+            "clampDt": 0.05
+          },
+          "p3EmittedOnFirstStep": 2,
+          "p3Cap": {
+            "tag": "cap3",
+            "count": 3,
+            "elapsed": 0.333333,
+            "emitCounter": 0.006667,
+            "active": true,
+            "uvFilled": 11,
+            "stopped": false,
+            "totalParticles": 3,
+            "life": 5,
+            "emissionRate": 50,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              -100
+            ],
+            "speed": 60,
+            "startSize": 20,
+            "endSize": 0,
+            "vertexCount": 12,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 19,
+              "y": -5.2778,
+              "dx": 60,
+              "dy": -31.6667,
+              "size": 18.7333,
+              "rotation": 5.7,
+              "ttl": 4.683333,
+              "color": [
+                255,
+                239,
+                0,
+                255
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 17,
+              "y": -4.25,
+              "ttl": 4.716667
+            }
+          },
+          "p4": {
+            "hasEmissionRateKey": false,
+            "emissionRate": 16,
+            "endSizeFromPlist": -1
+          },
+          "p4SizeFlat": {
+            "first": 6,
+            "startSize": 6
+          },
+          "p5Rig": [
+            30,
+            -20
+          ],
+          "p5Node": [
+            0,
+            40
+          ],
+          "p5World": [
+            30,
+            20
+          ],
+          "p5Free": {
+            "tag": "free",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.066667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 2,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0.8,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0.8,
+              "y": 0,
+              "ttl": 4.933333
+            }
+          },
+          "p5Relative": {
+            "tag": "relative",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.066667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 2,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 1,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0.8,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                0,
+                40
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0.8,
+              "y": 0,
+              "ttl": 4.933333
+            }
+          },
+          "p6FirstEmitStep": 7,
+          "p6Radius": {
+            "tag": "radius@10",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.016667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 1,
+            "life": 2,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 1,
+            "positionType": 1,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 12,
+            "endSize": 12,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": -57.6823,
+              "y": -6.0627,
+              "dx": 0,
+              "dy": 0,
+              "size": 12,
+              "rotation": 0,
+              "ttl": 1.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                0,
+                40
+              ],
+              "radius": 58,
+              "angle": 0.10472,
+              "dps": 1.570796
+            },
+            "last": {
+              "x": -57.6823,
+              "y": -6.0627,
+              "ttl": 1.933333
+            }
+          },
+          "p7Rotated": {
+            "tag": "worldRotation90",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.016667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 1,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 30,
+            "startSize": 8,
+            "endSize": 8,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0,
+              "y": 2,
+              "dx": 0,
+              "dy": 30,
+              "size": 8,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0,
+              "y": 2,
+              "ttl": 4.933333
+            }
+          },
+          "p8DurationStopStep": 13,
+          "p8ElapsedAtStop": 0.2,
+          "p8": {
+            "tag": "afterDuration",
+            "count": 2,
+            "elapsed": 0.2,
+            "emitCounter": 0,
+            "active": false,
+            "uvFilled": 15,
+            "stopped": true,
+            "totalParticles": 40,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": 0.2,
+            "emitterMode": 0,
+            "positionType": 0,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 8,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 5.4,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.55,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 4.2,
+              "y": 0,
+              "ttl": 4.65
+            }
+          },
+          "p9Grouped": {
+            "tag": "grouped",
+            "count": 1,
+            "elapsed": 0.166667,
+            "emitCounter": 0.016667,
+            "active": true,
+            "uvFilled": 15,
+            "stopped": false,
+            "totalParticles": 1,
+            "life": 5,
+            "emissionRate": 10,
+            "duration": -1,
+            "emitterMode": 0,
+            "positionType": 2,
+            "gravity": [
+              0,
+              0
+            ],
+            "speed": 12,
+            "startSize": 10,
+            "endSize": 10,
+            "vertexCount": 4,
+            "clampDt": 0.05,
+            "p0": {
+              "x": 0.8,
+              "y": 0,
+              "dx": 12,
+              "dy": 0,
+              "size": 10,
+              "rotation": 0,
+              "ttl": 4.933333,
+              "color": [
+                0,
+                0,
+                0,
+                0
+              ],
+              "start": [
+                30,
+                20
+              ],
+              "radius": 0,
+              "angle": 0,
+              "dps": 0
+            },
+            "last": {
+              "x": 0.8,
+              "y": 0,
+              "ttl": 4.933333
+            }
+          },
+          "p9WorldAfterMove": [
+            30,
+            -120
+          ],
+          "p10": {
+            "rawMaxParticles": 40.7,
+            "mappedTotalParticles": 40,
+            "rotationIsDirJson": "true",
+            "mappedRotationIsDir": true,
+            "dataTagValue": "null",
+            "unknownKeyPresent": true,
+            "blendPrivate": {
+              "src": 770,
+              "dst": 1
+            },
+            "blendPublicGetter": "no-such-getter",
+            "materialInstance": "instance",
+            "spriteFrameStillOwnedByExample": true
+          },
+          "p10BlendDefaults": {
+            "src": 2,
+            "dst": 4
+          },
+          "p11NoLifespan": {
+            "life": 0,
+            "emissionRateIsMaxValue": true,
+            "totalParticles": 40,
+            "count": 0,
+            "vertexCount": 0
+          },
+          "randomRestored": true
+        },
+        "live": {
+          "flame": 153,
+          "ring": 149
+        },
+        "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
+        "clamp": 0.033333,
+        "phaseKeys": 29
+      },
+      "consoleErrors": [],
+      "benignConsole": [],
+      "failedRequests": []
+    },
+    {
+      "engine": "webkit",
+      "example": "particle-2d-basic",
+      "group": "LV12-07",
+      "frameShotAttempts": 2,
+      "result": "PASS",
+      "checks": {
+        "noConsoleError": true,
+        "noFailedRequest": true,
+        "frameChanged": true,
+        "pngBytesAboveFloor": true,
+        "probeAssertions": true
+      },
+      "failedAssertions": [],
+      "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-webkit.png",
+      "pngBytes": 56679,
+      "pngSha256_16": "9c61728d1b651199",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -65278,1193 +66467,7 @@
         },
         "live": {
           "flame": 156,
-          "ring": 143
-        },
-        "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
-        "clamp": 0.033333,
-        "phaseKeys": 29
-      },
-      "consoleErrors": [],
-      "benignConsole": [],
-      "failedRequests": []
-    },
-    {
-      "engine": "firefox",
-      "example": "particle-2d-basic",
-      "group": "LV12-07",
-      "frameShotAttempts": 2,
-      "result": "PASS",
-      "checks": {
-        "noConsoleError": true,
-        "noFailedRequest": true,
-        "frameChanged": true,
-        "pngBytesAboveFloor": true,
-        "probeAssertions": true
-      },
-      "failedAssertions": [],
-      "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-firefox.png",
-      "pngBytes": 62297,
-      "pngSha256_16": "79c26c0944c35e5c",
-      "pngBefore": null,
-      "pngFloors": {
-        "after": 5000,
-        "exemptedByEngine": {}
-      },
-      "viewports": [
-        {
-          "width": 480,
-          "height": 360
-        }
-      ],
-      "probe": {
-        "results": {
-          "clampFromFirstAssemblerFetch": 0.033333,
-          "p1ParseErr": "null",
-          "p1DictKeys": 35,
-          "p1AtStep6": {
-            "count": 0,
-            "emitCounter": 0.1
-          },
-          "p1AtStep7": {
-            "count": 1,
-            "emitCounter": 0.016667
-          },
-          "p1": {
-            "tag": "gravity@30",
-            "count": 4,
-            "elapsed": 0.5,
-            "emitCounter": 0.1,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 40,
-            "life": 1,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 16,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 24,
-              "y": -8.3333,
-              "dx": 60,
-              "dy": -40,
-              "size": 12,
-              "rotation": 36,
-              "ttl": 0.6,
-              "color": [
-                255,
-                153,
-                0,
-                255
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 6,
-              "y": -0.5833,
-              "ttl": 0.9
-            }
-          },
-          "p2": {
-            "tag": "gravity@160",
-            "count": 10,
-            "elapsed": 2.666667,
-            "emitCounter": 0.066667,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 40,
-            "life": 1,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 40,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 46,
-              "y": -30.0278,
-              "dx": 60,
-              "dy": -76.6667,
-              "size": 4.6667,
-              "rotation": 69,
-              "ttl": 0.233333,
-              "color": [
-                255,
-                60,
-                0,
-                255
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 4,
-              "y": -0.2778,
-              "ttl": 0.933333
-            }
-          },
-          "p2AfterReset": {
-            "tag": "afterReset",
-            "count": 0,
-            "elapsed": 0,
-            "emitCounter": 0,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 40,
-            "life": 1,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 0,
-            "clampDt": 0.05
-          },
-          "p3EmittedOnFirstStep": 2,
-          "p3Cap": {
-            "tag": "cap3",
-            "count": 3,
-            "elapsed": 0.333333,
-            "emitCounter": 0.006667,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 3,
-            "life": 5,
-            "emissionRate": 50,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 12,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 19,
-              "y": -5.2778,
-              "dx": 60,
-              "dy": -31.6667,
-              "size": 18.7333,
-              "rotation": 5.7,
-              "ttl": 4.683333,
-              "color": [
-                255,
-                239,
-                0,
-                255
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 17,
-              "y": -4.25,
-              "ttl": 4.716667
-            }
-          },
-          "p4": {
-            "hasEmissionRateKey": false,
-            "emissionRate": 16,
-            "endSizeFromPlist": -1
-          },
-          "p4SizeFlat": {
-            "first": 6,
-            "startSize": 6
-          },
-          "p5Rig": [
-            30,
-            -20
-          ],
-          "p5Node": [
-            0,
-            40
-          ],
-          "p5World": [
-            30,
-            20
-          ],
-          "p5Free": {
-            "tag": "free",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.066667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 2,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0.8,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0.8,
-              "y": 0,
-              "ttl": 4.933333
-            }
-          },
-          "p5Relative": {
-            "tag": "relative",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.066667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 2,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 1,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0.8,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                0,
-                40
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0.8,
-              "y": 0,
-              "ttl": 4.933333
-            }
-          },
-          "p6FirstEmitStep": 7,
-          "p6Radius": {
-            "tag": "radius@10",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.016667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 1,
-            "life": 2,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 1,
-            "positionType": 1,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 12,
-            "endSize": 12,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": -57.6823,
-              "y": -6.0627,
-              "dx": 0,
-              "dy": 0,
-              "size": 12,
-              "rotation": 0,
-              "ttl": 1.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                0,
-                40
-              ],
-              "radius": 58,
-              "angle": 0.10472,
-              "dps": 1.570796
-            },
-            "last": {
-              "x": -57.6823,
-              "y": -6.0627,
-              "ttl": 1.933333
-            }
-          },
-          "p7Rotated": {
-            "tag": "worldRotation90",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.016667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 1,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 30,
-            "startSize": 8,
-            "endSize": 8,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0,
-              "y": 2,
-              "dx": 0,
-              "dy": 30,
-              "size": 8,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0,
-              "y": 2,
-              "ttl": 4.933333
-            }
-          },
-          "p8DurationStopStep": 13,
-          "p8ElapsedAtStop": 0.2,
-          "p8": {
-            "tag": "afterDuration",
-            "count": 2,
-            "elapsed": 0.2,
-            "emitCounter": 0,
-            "active": false,
-            "uvFilled": 15,
-            "stopped": true,
-            "totalParticles": 40,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": 0.2,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 8,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 5.4,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.55,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 4.2,
-              "y": 0,
-              "ttl": 4.65
-            }
-          },
-          "p9Grouped": {
-            "tag": "grouped",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.016667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 1,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 2,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0.8,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0.8,
-              "y": 0,
-              "ttl": 4.933333
-            }
-          },
-          "p9WorldAfterMove": [
-            30,
-            -120
-          ],
-          "p10": {
-            "rawMaxParticles": 40.7,
-            "mappedTotalParticles": 40,
-            "rotationIsDirJson": "true",
-            "mappedRotationIsDir": true,
-            "dataTagValue": "null",
-            "unknownKeyPresent": true,
-            "blendPrivate": {
-              "src": 770,
-              "dst": 1
-            },
-            "blendPublicGetter": "no-such-getter",
-            "materialInstance": "instance",
-            "spriteFrameStillOwnedByExample": true
-          },
-          "p10BlendDefaults": {
-            "src": 2,
-            "dst": 4
-          },
-          "p11NoLifespan": {
-            "life": 0,
-            "emissionRateIsMaxValue": true,
-            "totalParticles": 40,
-            "count": 0,
-            "vertexCount": 0
-          },
-          "randomRestored": true
-        },
-        "live": {
-          "flame": 158,
-          "ring": 141
-        },
-        "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
-        "clamp": 0.033333,
-        "phaseKeys": 29
-      },
-      "consoleErrors": [],
-      "benignConsole": [],
-      "failedRequests": []
-    },
-    {
-      "engine": "webkit",
-      "example": "particle-2d-basic",
-      "group": "LV12-07",
-      "frameShotAttempts": 2,
-      "result": "PASS",
-      "checks": {
-        "noConsoleError": true,
-        "noFailedRequest": true,
-        "frameChanged": true,
-        "pngBytesAboveFloor": true,
-        "probeAssertions": true
-      },
-      "failedAssertions": [],
-      "png": "docs\\evidence\\v12\\particle-2d-basic\\matrix-webkit.png",
-      "pngBytes": 55739,
-      "pngSha256_16": "9a349584e6984fda",
-      "pngBefore": null,
-      "pngFloors": {
-        "after": 5000,
-        "exemptedByEngine": {}
-      },
-      "viewports": [
-        {
-          "width": 480,
-          "height": 360
-        }
-      ],
-      "probe": {
-        "results": {
-          "clampFromFirstAssemblerFetch": 0.033333,
-          "p1ParseErr": "null",
-          "p1DictKeys": 35,
-          "p1AtStep6": {
-            "count": 0,
-            "emitCounter": 0.1
-          },
-          "p1AtStep7": {
-            "count": 1,
-            "emitCounter": 0.016667
-          },
-          "p1": {
-            "tag": "gravity@30",
-            "count": 4,
-            "elapsed": 0.5,
-            "emitCounter": 0.1,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 40,
-            "life": 1,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 16,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 24,
-              "y": -8.3333,
-              "dx": 60,
-              "dy": -40,
-              "size": 12,
-              "rotation": 36,
-              "ttl": 0.6,
-              "color": [
-                255,
-                153,
-                0,
-                255
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 6,
-              "y": -0.5833,
-              "ttl": 0.9
-            }
-          },
-          "p2": {
-            "tag": "gravity@160",
-            "count": 10,
-            "elapsed": 2.666667,
-            "emitCounter": 0.066667,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 40,
-            "life": 1,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 40,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 46,
-              "y": -30.0278,
-              "dx": 60,
-              "dy": -76.6667,
-              "size": 4.6667,
-              "rotation": 69,
-              "ttl": 0.233333,
-              "color": [
-                255,
-                60,
-                0,
-                255
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 4,
-              "y": -0.2778,
-              "ttl": 0.933333
-            }
-          },
-          "p2AfterReset": {
-            "tag": "afterReset",
-            "count": 0,
-            "elapsed": 0,
-            "emitCounter": 0,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 40,
-            "life": 1,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 0,
-            "clampDt": 0.05
-          },
-          "p3EmittedOnFirstStep": 2,
-          "p3Cap": {
-            "tag": "cap3",
-            "count": 3,
-            "elapsed": 0.333333,
-            "emitCounter": 0.006667,
-            "active": true,
-            "uvFilled": 11,
-            "stopped": false,
-            "totalParticles": 3,
-            "life": 5,
-            "emissionRate": 50,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              -100
-            ],
-            "speed": 60,
-            "startSize": 20,
-            "endSize": 0,
-            "vertexCount": 12,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 19,
-              "y": -5.2778,
-              "dx": 60,
-              "dy": -31.6667,
-              "size": 18.7333,
-              "rotation": 5.7,
-              "ttl": 4.683333,
-              "color": [
-                255,
-                239,
-                0,
-                255
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 17,
-              "y": -4.25,
-              "ttl": 4.716667
-            }
-          },
-          "p4": {
-            "hasEmissionRateKey": false,
-            "emissionRate": 16,
-            "endSizeFromPlist": -1
-          },
-          "p4SizeFlat": {
-            "first": 6,
-            "startSize": 6
-          },
-          "p5Rig": [
-            30,
-            -20
-          ],
-          "p5Node": [
-            0,
-            40
-          ],
-          "p5World": [
-            30,
-            20
-          ],
-          "p5Free": {
-            "tag": "free",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.066667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 2,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0.8,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0.8,
-              "y": 0,
-              "ttl": 4.933333
-            }
-          },
-          "p5Relative": {
-            "tag": "relative",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.066667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 2,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 1,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0.8,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                0,
-                40
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0.8,
-              "y": 0,
-              "ttl": 4.933333
-            }
-          },
-          "p6FirstEmitStep": 7,
-          "p6Radius": {
-            "tag": "radius@10",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.016667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 1,
-            "life": 2,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 1,
-            "positionType": 1,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 12,
-            "endSize": 12,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": -57.6823,
-              "y": -6.0627,
-              "dx": 0,
-              "dy": 0,
-              "size": 12,
-              "rotation": 0,
-              "ttl": 1.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                0,
-                40
-              ],
-              "radius": 58,
-              "angle": 0.10472,
-              "dps": 1.570796
-            },
-            "last": {
-              "x": -57.6823,
-              "y": -6.0627,
-              "ttl": 1.933333
-            }
-          },
-          "p7Rotated": {
-            "tag": "worldRotation90",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.016667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 1,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 30,
-            "startSize": 8,
-            "endSize": 8,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0,
-              "y": 2,
-              "dx": 0,
-              "dy": 30,
-              "size": 8,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0,
-              "y": 2,
-              "ttl": 4.933333
-            }
-          },
-          "p8DurationStopStep": 13,
-          "p8ElapsedAtStop": 0.2,
-          "p8": {
-            "tag": "afterDuration",
-            "count": 2,
-            "elapsed": 0.2,
-            "emitCounter": 0,
-            "active": false,
-            "uvFilled": 15,
-            "stopped": true,
-            "totalParticles": 40,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": 0.2,
-            "emitterMode": 0,
-            "positionType": 0,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 8,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 5.4,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.55,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 4.2,
-              "y": 0,
-              "ttl": 4.65
-            }
-          },
-          "p9Grouped": {
-            "tag": "grouped",
-            "count": 1,
-            "elapsed": 0.166667,
-            "emitCounter": 0.016667,
-            "active": true,
-            "uvFilled": 15,
-            "stopped": false,
-            "totalParticles": 1,
-            "life": 5,
-            "emissionRate": 10,
-            "duration": -1,
-            "emitterMode": 0,
-            "positionType": 2,
-            "gravity": [
-              0,
-              0
-            ],
-            "speed": 12,
-            "startSize": 10,
-            "endSize": 10,
-            "vertexCount": 4,
-            "clampDt": 0.05,
-            "p0": {
-              "x": 0.8,
-              "y": 0,
-              "dx": 12,
-              "dy": 0,
-              "size": 10,
-              "rotation": 0,
-              "ttl": 4.933333,
-              "color": [
-                0,
-                0,
-                0,
-                0
-              ],
-              "start": [
-                30,
-                20
-              ],
-              "radius": 0,
-              "angle": 0,
-              "dps": 0
-            },
-            "last": {
-              "x": 0.8,
-              "y": 0,
-              "ttl": 4.933333
-            }
-          },
-          "p9WorldAfterMove": [
-            30,
-            -120
-          ],
-          "p10": {
-            "rawMaxParticles": 40.7,
-            "mappedTotalParticles": 40,
-            "rotationIsDirJson": "true",
-            "mappedRotationIsDir": true,
-            "dataTagValue": "null",
-            "unknownKeyPresent": true,
-            "blendPrivate": {
-              "src": 770,
-              "dst": 1
-            },
-            "blendPublicGetter": "no-such-getter",
-            "materialInstance": "instance",
-            "spriteFrameStillOwnedByExample": true
-          },
-          "p10BlendDefaults": {
-            "src": 2,
-            "dst": 4
-          },
-          "p11NoLifespan": {
-            "life": 0,
-            "emissionRateIsMaxValue": true,
-            "totalParticles": 40,
-            "count": 0,
-            "vertexCount": 0
-          },
-          "randomRestored": true
-        },
-        "live": {
-          "flame": 149,
-          "ring": 142
+          "ring": 149
         },
         "summary": "particle plist step=30 count=4 p0=(24,-8.3333) verts=16",
         "clamp": 0.033333,
@@ -66478,7 +66481,7 @@
       "engine": "chromium",
       "example": "tiledmap-basic",
       "group": "LV12-08",
-      "frameShotAttempts": 2,
+      "frameShotAttempts": 4,
       "result": "PASS",
       "checks": {
         "noConsoleError": true,
@@ -66489,8 +66492,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\tiledmap-basic\\matrix-chromium.png",
-      "pngBytes": 12170,
-      "pngSha256_16": "cfe3a7628b98decf",
+      "pngBytes": 12261,
+      "pngSha256_16": "3ab43dfd0d940fae",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -67691,8 +67694,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\tiledmap-basic\\matrix-webkit.png",
-      "pngBytes": 13273,
-      "pngSha256_16": "cdff8fb5b6fb04d3",
+      "pngBytes": 13315,
+      "pngSha256_16": "cd62ecfcf5b294a7",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68292,8 +68295,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-chromium.png",
-      "pngBytes": 12459,
-      "pngSha256_16": "f54581c840645cda",
+      "pngBytes": 12537,
+      "pngSha256_16": "f6b5f1968f14a49a",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68313,7 +68316,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 693,
+              "tMs": 648,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68324,7 +68327,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 1005,
+              "tMs": 954,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68375,7 +68378,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 571,
+            "unlockLatencyMs": 593,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68385,8 +68388,8 @@
           },
           "p5TimeMachine": {
             "clockAdvancedWhilePlaying": true,
-            "posDelta": 0.051,
-            "wallDeltaMs": 51,
+            "posDelta": 0.052,
+            "wallDeltaMs": 52,
             "stateAfterPause": "PAUSED(2)",
             "frozenWhilePaused": 0,
             "resumedState": "PLAYING(1)",
@@ -68435,10 +68438,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22317,
+            "tMs": 22260,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.841,
+            "currentTime": 0.873,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68446,10 +68449,10 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22317,
+            "tMs": 22261,
             "playing": true,
             "state": "PLAYING(1)",
-            "currentTime": 0.294,
+            "currentTime": 0.234,
             "duration": 1.6,
             "volume": 0.35,
             "loop": true,
@@ -68482,7 +68485,7 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@13260|started@13260|started@13536|ended@13845|started@13871|started@14102"
+          "events": "started@13220|started@13220|started@13522|ended@13831|started@13858|started@14093"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
@@ -68506,8 +68509,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-firefox.png",
-      "pngBytes": 18226,
-      "pngSha256_16": "0af7d63c950a48f4",
+      "pngBytes": 18217,
+      "pngSha256_16": "21d587fadf45ac48",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68527,7 +68530,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 1144,
+              "tMs": 1313,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68538,7 +68541,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 1453,
+              "tMs": 1618,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68589,7 +68592,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 509,
+            "unlockLatencyMs": 486,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68599,8 +68602,8 @@
           },
           "p5TimeMachine": {
             "clockAdvancedWhilePlaying": true,
-            "posDelta": 0.05,
-            "wallDeltaMs": 50,
+            "posDelta": 0.051,
+            "wallDeltaMs": 51,
             "stateAfterPause": "PAUSED(2)",
             "frozenWhilePaused": 0,
             "resumedState": "PLAYING(1)",
@@ -68619,7 +68622,7 @@
             "seekLatencyMs": 0,
             "afterSeekPos": 1.5,
             "seekLandedsInRange": true,
-            "endLatencyMs": 102,
+            "endLatencyMs": 101,
             "endEventFired": true,
             "endedDelta": 1,
             "stateAfterEnd": "INIT(0)",
@@ -68649,10 +68652,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22706,
+            "tMs": 22890,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.832,
+            "currentTime": 0.813,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68660,10 +68663,10 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22706,
+            "tMs": 22891,
             "playing": true,
             "state": "PLAYING(1)",
-            "currentTime": 0.363,
+            "currentTime": 0.384,
             "duration": 1.6,
             "volume": 0.35,
             "loop": true,
@@ -68696,7 +68699,7 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@13569|started@13569|started@13873|ended@14175|started@14177|started@14400"
+          "events": "started@13751|started@13751|started@14036|ended@14341|started@14342|started@14565"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
@@ -68720,8 +68723,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\audio-basic\\matrix-webkit.png",
-      "pngBytes": 13004,
-      "pngSha256_16": "fa577d6edf9849a4",
+      "pngBytes": 13045,
+      "pngSha256_16": "fde42444f257b1f0",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68741,7 +68744,7 @@
             "isLoadedAtCall": false,
             "stateRightAfterPlayCall": {
               "tag": "afterPlayCall",
-              "tMs": 8532,
+              "tMs": 8552,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68752,7 +68755,7 @@
             },
             "later": {
               "tag": "later300ms",
-              "tMs": 8840,
+              "tMs": 8854,
               "playing": false,
               "state": "INIT(0)",
               "currentTime": 0,
@@ -68803,7 +68806,7 @@
           "p4Gesture": {
             "stateAtGesture": "INIT(0)",
             "stateRightAfterPlay": "INIT(0)",
-            "unlockLatencyMs": 1233,
+            "unlockLatencyMs": 942,
             "unlockedByGesture": true,
             "stateAfterGesture": "PLAYING(1)",
             "playingAfterGesture": true,
@@ -68813,8 +68816,8 @@
           },
           "p5TimeMachine": {
             "clockAdvancedWhilePlaying": true,
-            "posDelta": 0.08,
-            "wallDeltaMs": 349,
+            "posDelta": 0.061,
+            "wallDeltaMs": 62,
             "stateAfterPause": "PAUSED(2)",
             "frozenWhilePaused": 0,
             "resumedState": "PLAYING(1)",
@@ -68833,7 +68836,7 @@
             "seekLatencyMs": 0,
             "afterSeekPos": 1.5,
             "seekLandedsInRange": true,
-            "endLatencyMs": 157,
+            "endLatencyMs": 156,
             "endEventFired": true,
             "endedDelta": 1,
             "stateAfterEnd": "INIT(0)",
@@ -68847,7 +68850,7 @@
             "loopFlagOnPlayer": true,
             "stateWhileLooping": "PLAYING(1)",
             "stillPlaying": true,
-            "wrapLatencyMs": 157,
+            "wrapLatencyMs": 149,
             "wrappedBelowSeekTarget": true,
             "endedDeltaDuringLoop": 0,
             "playingBeforeOneShot": true,
@@ -68863,10 +68866,10 @@
         "live": {
           "srcA": {
             "tag": "liveA",
-            "tMs": 22514,
+            "tMs": 22864,
             "playing": false,
             "state": "PAUSED(2)",
-            "currentTime": 0.751,
+            "currentTime": 0.779,
             "duration": 1.6,
             "volume": 1,
             "loop": false,
@@ -68874,7 +68877,7 @@
           },
           "srcB": {
             "tag": "liveB",
-            "tMs": 22514,
+            "tMs": 22864,
             "playing": true,
             "state": "PLAYING(1)",
             "currentTime": 0,
@@ -68893,7 +68896,7 @@
               "ended": false,
               "seeking": false,
               "readyState": 3,
-              "currentTime": 0.751,
+              "currentTime": 0.779,
               "duration": 1.6,
               "loop": false,
               "errCode": 0,
@@ -68934,7 +68937,7 @@
           "canvasChildren": 5,
           "endedCount": 1,
           "startedCount": 5,
-          "events": "started@16551|started@16551|started@17153|ended@17512|started@17541|started@17825"
+          "events": "started@16572|started@16572|started@16915|ended@17260|started@17287|started@17564"
         },
         "summary": "audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)",
         "phaseKeys": 8
@@ -68958,8 +68961,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-chromium.png",
-      "pngBytes": 27990,
-      "pngSha256_16": "c1afc9d300f323fb",
+      "pngBytes": 28011,
+      "pngSha256_16": "014c732931e02242",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -68976,7 +68979,7 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 47,
+          "startedAtMs": 78,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
@@ -68989,7 +68992,7 @@
             "cacheHasUrl": true
           },
           "p1Mount": {
-            "metaLoadedWithinMs": 21,
+            "metaLoadedWithinMs": 20,
             "readyToPlayWithinMs": 0,
             "videoCount": 1,
             "className": "cocosVideo",
@@ -69025,12 +69028,12 @@
             "playingWithinMs": 21,
             "startedAt": 0.02,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.422,
+            "tAfter400ms": 0.426,
             "pausedWithinMs": 22,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": false,
-            "seekedTo": 0.122,
+            "seekedTo": 0.128,
             "rateReadback": [
               2,
               2
@@ -69096,7 +69099,7 @@
           },
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
-            "remoteMetaWithinMs": 22,
+            "remoteMetaWithinMs": 20,
             "backToLocalWithinMs": 0,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
@@ -69117,14 +69120,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 1911,
-            "wrapWithinMs": 1111,
+            "seekSettledWithinMs": 1903,
+            "wrapWithinMs": 1105,
             "completedDeltaDuringLoop": 0,
             "stateNow": "playing",
-            "currentTimeNow": 0.019
+            "currentTimeNow": 0.004
           },
           "sequenceComplete": true,
-          "sequenceMs": 8430,
+          "sequenceMs": 8486,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69147,7 +69150,7 @@
             },
             "awakeVideoCountBeforeClip": 1,
             "awake": {
-              "metaWithinMs": 21,
+              "metaWithinMs": 20,
               "fullScreenOnAwakeReadback": true,
               "videoCount": 2,
               "fsEl": "null",
@@ -69254,7 +69257,7 @@
           "frameMeanNow": 113.68,
           "liveFramesAdvance": true,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 35520
+          "elapsedMs": 35558
         }
       },
       "consoleErrors": [],
@@ -69276,8 +69279,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-firefox.png",
-      "pngBytes": 25998,
-      "pngSha256_16": "5d4043e933147a59",
+      "pngBytes": 26004,
+      "pngSha256_16": "54c4f09c23d7f487",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -69294,7 +69297,7 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 167,
+          "startedAtMs": 176,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
@@ -69340,15 +69343,15 @@
             "logPrefix": "handler:meta-loaded>meta-loaded>handler:ready-to-play"
           },
           "p3Controls": {
-            "playingWithinMs": 21,
+            "playingWithinMs": 20,
             "startedAt": 0,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.408,
+            "tAfter400ms": 0.406,
             "pausedWithinMs": 21,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": true,
-            "seekedTo": 1.281,
+            "seekedTo": 1.28,
             "rateReadback": [
               2,
               2
@@ -69414,7 +69417,7 @@
           },
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
-            "remoteMetaWithinMs": 21,
+            "remoteMetaWithinMs": 20,
             "backToLocalWithinMs": 0,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
@@ -69435,14 +69438,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 21,
-            "wrapWithinMs": 1024,
+            "seekSettledWithinMs": 20,
+            "wrapWithinMs": 1025,
             "completedDeltaDuringLoop": 0,
             "stateNow": "playing",
-            "currentTimeNow": 0.009
+            "currentTimeNow": 0.015
           },
           "sequenceComplete": true,
-          "sequenceMs": 6208,
+          "sequenceMs": 6394,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69465,7 +69468,7 @@
             },
             "awakeVideoCountBeforeClip": 1,
             "awake": {
-              "metaWithinMs": 21,
+              "metaWithinMs": 20,
               "fullScreenOnAwakeReadback": true,
               "videoCount": 2,
               "fsEl": "null",
@@ -69540,7 +69543,7 @@
           "frameMeanNow": 116.62,
           "liveFramesAdvance": true,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 35701
+          "elapsedMs": 35885
         }
       },
       "consoleErrors": [],
@@ -69562,8 +69565,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\video-basic\\matrix-webkit.png",
-      "pngBytes": 29149,
-      "pngSha256_16": "4a4f4932ef8a9a73",
+      "pngBytes": 29157,
+      "pngSha256_16": "585517ee7c83d16d",
       "pngBefore": null,
       "pngFloors": {
         "after": 5000,
@@ -69580,12 +69583,12 @@
         "phaseKeys": 11,
         "results": {
           "phase": "init",
-          "startedAtMs": 261,
+          "startedAtMs": 276,
           "p0Asset": {
             "clipCtor": "VideoClip",
             "isVideoClip": true,
             "nativeTag": "VIDEO",
-            "videoCurrentSrcEmpty": false,
+            "videoCurrentSrcEmpty": true,
             "sourceChildSrcScheme": "blob:",
             "nativeUrlIsRequestUrl": true,
             "clipDurationField": "NaN",
@@ -69593,7 +69596,7 @@
             "cacheHasUrl": true
           },
           "p1Mount": {
-            "metaLoadedWithinMs": 543,
+            "metaLoadedWithinMs": 605,
             "readyToPlayWithinMs": -1,
             "videoCount": 1,
             "className": "cocosVideo",
@@ -69626,15 +69629,15 @@
             "logPrefix": "handler:meta-loaded>meta-loaded>handler:completed"
           },
           "p3Controls": {
-            "playingWithinMs": 33,
+            "playingWithinMs": 29,
             "startedAt": 0,
             "advancedWhilePlaying": true,
-            "tAfter400ms": 0.399,
-            "pausedWithinMs": 30,
+            "tAfter400ms": 0.402,
+            "pausedWithinMs": 29,
             "frozenWhilePaused": true,
             "resumedFromOffset": true,
             "seekLandedNear12": true,
-            "seekedTo": 1.297,
+            "seekedTo": 1.3,
             "rateReadback": [
               2,
               2
@@ -69691,17 +69694,17 @@
               "colorBins": 333
             },
             "frameB": {
-              "mean": 115.42,
+              "mean": 115.49,
               "nonBlackRatio": 1,
-              "colorBins": 353
+              "colorBins": 337
             },
             "decodedFramesAdvance": true,
             "frameNotBlank": true
           },
           "p6SourceSwitch": {
             "videoCountAfterEnumOnly": 0,
-            "remoteMetaWithinMs": 145,
-            "backToLocalWithinMs": 0,
+            "remoteMetaWithinMs": 170,
+            "backToLocalWithinMs": 1,
             "elementRecreated": true,
             "videoCountAfterSwitch": 1,
             "oldElementDetached": true,
@@ -69713,7 +69716,7 @@
             "endedDelta": 0,
             "stateAfterEnd": "meta-loaded",
             "isPlayingAfterEnd": false,
-            "currentTimeAfterEnd": 2.905,
+            "currentTimeAfterEnd": 2.901,
             "clampedBeyondDuration": [
               3,
               3
@@ -69721,14 +69724,14 @@
           },
           "p8Loop": {
             "wrappedBelowSeekTarget": true,
-            "seekSettledWithinMs": 64,
-            "wrapWithinMs": 1001,
+            "seekSettledWithinMs": 31,
+            "wrapWithinMs": 993,
             "completedDeltaDuringLoop": 0,
-            "stateNow": "paused",
-            "currentTimeNow": 0.002
+            "stateNow": "playing",
+            "currentTimeNow": 0
           },
           "sequenceComplete": true,
-          "sequenceMs": 10988,
+          "sequenceMs": 11023,
           "p9Fullscreen": {
             "clickedEventsAtGesture": 1,
             "supportsFullScreen": true,
@@ -69751,7 +69754,7 @@
             },
             "awakeVideoCountBeforeClip": 1,
             "awake": {
-              "metaWithinMs": 169,
+              "metaWithinMs": 153,
               "fullScreenOnAwakeReadback": true,
               "videoCount": 2,
               "fsEl": "null",
@@ -69781,6 +69784,8 @@
           "playing",
           "handler:playing",
           "playing",
+          "handler:playing",
+          "playing",
           "handler:paused",
           "paused",
           "handler:playing",
@@ -69791,6 +69796,8 @@
           "meta-loaded",
           "handler:meta-loaded",
           "meta-loaded",
+          "handler:playing",
+          "playing",
           "handler:playing",
           "playing",
           "handler:playing",
@@ -69818,7 +69825,7 @@
           "frameMeanNow": 113.34,
           "liveFramesAdvance": false,
           "statusString": "video fullscreen ok",
-          "elapsedMs": 36291
+          "elapsedMs": 35752
         }
       },
       "consoleErrors": [],
@@ -69840,8 +69847,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-chromium.png",
-      "pngBytes": 31954,
-      "pngSha256_16": "3f9d13650634a2c0",
+      "pngBytes": 32155,
+      "pngSha256_16": "95bd6ca12d8ac23a",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -69858,15 +69865,15 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 619,
+          "startedAtMs": 608,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 21,
-            "matrixSizeWithinMs": 77,
+            "loadedWithinMs": 104,
+            "matrixSizeWithinMs": 0,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
             "wrapperId": "webview-wrapper",
@@ -69974,7 +69981,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 674
+          "sequenceMs": 694
         },
         "eventLog": [
           "cb:loading",
@@ -70012,7 +70019,7 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15091
+          "elapsedMs": 15110
         }
       },
       "consoleErrors": [],
@@ -70034,8 +70041,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-firefox.png",
-      "pngBytes": 30047,
-      "pngSha256_16": "de42cd1bdb0371f8",
+      "pngBytes": 30071,
+      "pngSha256_16": "352f077af851902c",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -70052,14 +70059,14 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 789,
+          "startedAtMs": 792,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 98,
+            "loadedWithinMs": 463,
             "matrixSizeWithinMs": 0,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
@@ -70132,7 +70139,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 28,
+            "errorWithinMs": 41,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -70168,7 +70175,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 856
+          "sequenceMs": 1257
         },
         "eventLog": [
           "cb:loading",
@@ -70206,7 +70213,7 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15310
+          "elapsedMs": 15689
         }
       },
       "consoleErrors": [],
@@ -70228,8 +70235,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\webview-basic\\matrix-webkit.png",
-      "pngBytes": 25858,
-      "pngSha256_16": "66915b784bb2a184",
+      "pngBytes": 25914,
+      "pngSha256_16": "c43cc02f49c4bde4",
       "pngBefore": null,
       "pngFloors": {
         "after": 15000,
@@ -70246,15 +70253,15 @@
         "phaseKeys": 9,
         "results": {
           "phase": "done",
-          "startedAtMs": 242,
+          "startedAtMs": 257,
           "p1Mount": {
             "wrappersBefore": 0,
             "iframesBefore": 0,
             "stateBeforeActivate": "none",
             "wrappersAtMount": 0,
             "loadingWithinMs": 0,
-            "loadedWithinMs": 104,
-            "matrixSizeWithinMs": 0,
+            "loadedWithinMs": 34,
+            "matrixSizeWithinMs": 61,
             "mountedWrapperCount": 1,
             "mountedIframeCount": 1,
             "wrapperId": "webview-wrapper",
@@ -70326,7 +70333,7 @@
             "hitBackAtFinalCenter": "IFRAME"
           },
           "p6ErrorBranch": {
-            "errorWithinMs": 35,
+            "errorWithinMs": 40,
             "errorEvents": 1,
             "stateAfterError": "error",
             "urlAfterError": "./assets/page-error-like.html",
@@ -70351,7 +70358,7 @@
             "stateAfterDestroy": "none",
             "hitAfterDestroy": "CANVAS",
             "isValidAfterDestroy": false,
-            "reloadedWithinMs": 28,
+            "reloadedWithinMs": 29,
             "matrixSizeWithinMs": 0,
             "wrappersAfterRebuild": 1,
             "iframesAfterRebuild": 1,
@@ -70362,7 +70369,7 @@
             "contentSizeAfterRebuild": "200x150"
           },
           "sequenceComplete": true,
-          "sequenceMs": 909
+          "sequenceMs": 934
         },
         "eventLog": [
           "cb:loading",
@@ -70400,7 +70407,7 @@
           "iframePathname": "/examples/webview-basic/assets/page.html",
           "titleNow": "AIR WebView Page",
           "engineStampNow": "undefined",
-          "elapsedMs": 15308
+          "elapsedMs": 15300
         }
       },
       "consoleErrors": [],
@@ -70422,8 +70429,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-basic\\matrix-chromium.png",
-      "pngBytes": 11340,
-      "pngSha256_16": "41346f907df70f66",
+      "pngBytes": 11423,
+      "pngSha256_16": "33d376bb7ebedc78",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -72232,8 +72239,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-basic\\matrix-webkit.png",
-      "pngBytes": 12828,
-      "pngSha256_16": "f30950970319ae68",
+      "pngBytes": 12867,
+      "pngSha256_16": "d4b6ee0a7c54c7d3",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -73137,8 +73144,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-chromium.png",
-      "pngBytes": 10764,
-      "pngSha256_16": "aaf2320c319bc36d",
+      "pngBytes": 10749,
+      "pngSha256_16": "9b75f1cd9b556dcf",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -75229,8 +75236,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\dragonbones-basic\\matrix-webkit.png",
-      "pngBytes": 11513,
-      "pngSha256_16": "1e7699377d59114c",
+      "pngBytes": 11550,
+      "pngSha256_16": "ea38383dbea63142",
       "pngBefore": null,
       "pngFloors": {
         "after": 8000,
@@ -76241,13 +76248,13 @@
               480,
               360
             ],
-            "litRatio": 0.0235,
+            "litRatio": 0.0237,
             "platePresent": true,
             "wingPresent": true,
             "tipPresent": false,
             "counts": {
-              "plate": 120,
-              "wing": 137,
+              "plate": 116,
+              "wing": 136,
               "tip": 0,
               "background": 0
             }
@@ -76275,8 +76282,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-chromium.png",
-      "pngBytes": 4716,
-      "pngSha256_16": "71d4150212f6d022",
+      "pngBytes": 4682,
+      "pngSha256_16": "00175753810e8cfa",
       "pngBefore": null,
       "pngFloors": {
         "after": 1,
@@ -76343,8 +76350,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-firefox.png",
-      "pngBytes": 5005,
-      "pngSha256_16": "bf30d9136a32b66f",
+      "pngBytes": 5019,
+      "pngSha256_16": "a2ef68c948a324c0",
       "pngBefore": null,
       "pngFloors": {
         "after": 1,
@@ -76390,7 +76397,7 @@
         "rayHitNormalY": 1,
         "rayClosestName": "Ground",
         "rayClosestDist": 10,
-        "frames": 205
+        "frames": 219
       },
       "consoleErrors": [],
       "benignConsole": [],
@@ -76411,8 +76418,8 @@
       },
       "failedAssertions": [],
       "png": "docs\\evidence\\v12\\physics-3d-collision\\matrix-webkit.png",
-      "pngBytes": 5500,
-      "pngSha256_16": "3fe78032c3afe73e",
+      "pngBytes": 5508,
+      "pngSha256_16": "546f59a912e77086",
       "pngBefore": null,
       "pngFloors": {
         "after": 1,
@@ -76458,7 +76465,7 @@
         "rayHitNormalY": 1,
         "rayClosestName": "Ground",
         "rayClosestDist": 10,
-        "frames": 197
+        "frames": 195
       },
       "consoleErrors": [],
       "benignConsole": [],

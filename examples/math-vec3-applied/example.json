@@ -35,14 +35,21 @@
   "capabilities": [],
   "learning": {
     "goal": "用已掌握的 Vec3 API 组合出可验证的几何恒等式：正交基零点积、叉积模=平行四边形面积、lerp 中点公式。",
-    "points": ["正交基 dot=0", "|a×b|=|a||b|sinθ（取整回读）", "lerp(a,b,0.5)=(a+b)/2"]
+    "points": [
+      "正交基 dot=0",
+      "|a×b|=|a||b|sinθ（取整回读）",
+      "lerp(a,b,0.5)=(a+b)/2"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 220,165,115）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["math.Vec3.dot", "math.Vec3.normalize"],
+    "primary": [
+      "math.Vec3.dot",
+      "math.Vec3.normalize"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -84,7 +91,9 @@
       "math.Vec3.length",
       "math.Vec3.lerp"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -229,21 +238,32 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "lifecycle": [],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -257,7 +277,7 @@
   "promotion": {
     "spec": "42ac85f4d283",
     "source": "888e4f69808a0c53",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 23,
     "attested": 0,
     "units": 23

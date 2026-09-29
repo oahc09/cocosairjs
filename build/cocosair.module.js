@@ -48,7 +48,9 @@ tryDefineGlobal('CC_MINIGAME', false);
 
 const RUNTIME_BASED = false;
 tryDefineGlobal('CC_RUNTIME_BASED', false);
-tryDefineGlobal('CC_SUPPORT_JIT', true);
+
+const SUPPORT_JIT = false;
+tryDefineGlobal('CC_SUPPORT_JIT', false);
 
 const JSB = false;
 tryDefineGlobal('CC_JSB', false);
@@ -2925,25 +2927,11 @@ function define$1(className, baseClass, options) {
   }
   return cls;
 }
-function getNewValueTypeCodeJit(value) {
-  const clsName = getClassName(value);
-  const type = value.constructor;
-  let res = `new ${clsName}(`;
-  for (let i = 0; i < type.__props__.length; i++) {
-    const prop = type.__props__[i];
-    const propVal = value[prop];
-    res += propVal;
-    if (i < type.__props__.length - 1) {
-      res += ',';
-    }
-  }
-  return `${res})`;
-}
-function escapeForJS$1(s) {
+function escapeForJS(s) {
   return JSON.stringify(s)
   .replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
 }
-const IDENTIFIER_RE$1 = /^[A-Za-z_$][0-9A-Za-z_$]*$/;
+const IDENTIFIER_RE = /^[A-Za-z_$][0-9A-Za-z_$]*$/;
 function declareProperties(cls, className, properties, baseClass) {
   cls.__props__ = [];
   if (baseClass && baseClass.__props__) {
@@ -3098,9 +3086,9 @@ CCClass.isArray = function (defaultVal) {
   return Array.isArray(defaultVal);
 };
 CCClass.getDefault = getDefault;
-CCClass.escapeForJS = escapeForJS$1;
-CCClass.IDENTIFIER_RE = IDENTIFIER_RE$1;
-CCClass.getNewValueTypeCode = getNewValueTypeCodeJit;
+CCClass.escapeForJS = escapeForJS;
+CCClass.IDENTIFIER_RE = IDENTIFIER_RE;
+CCClass.getNewValueTypeCode = SUPPORT_JIT;
 legacyCC.Class = CCClass;
 
 const editorExtrasTag = '__editorExtras__';
@@ -3181,21 +3169,11 @@ function compileDestruct(obj, ctor) {
     }
   }
   {
-    let func = '';
-    for (key in propsToReset) {
-      let statement;
-      if (CCClass.IDENTIFIER_RE.test(key)) {
-        statement = `o.${key}=`;
-      } else {
-        statement = `o[${CCClass.escapeForJS(key)}]=`;
+    return o => {
+      for (const _key in propsToReset) {
+        o[_key] = propsToReset[_key];
       }
-      let val = propsToReset[key];
-      if (val === '') {
-        val = '""';
-      }
-      func += `${statement + val};\n`;
-    }
-    return Function('o', func);
+    };
   }
 }
 class CCObject {
@@ -14981,7 +14959,10 @@ class ScreenAdapter extends EventTarget {
     this._ccprivate$_orientationDevice = Orientation$1.AUTO;
     this._ccprivate$_gameFrame = document.getElementById("GameDiv");
     this._ccprivate$_gameContainer = document.getElementById("Cocos3dGameContainer");
-    this._ccprivate$_gameCanvas = document.getElementById("GameCanvas");
+    this._ccprivate$_gameCanvas = globalThis.__CC_CANVAS__ || document.getElementById("GameCanvas");
+    if (!this._ccprivate$_gameCanvas) {
+      throw new Error("[cocosair] canvas not found at engine import; set globalThis.__CC_CANVAS__ before import or use #GameCanvas");
+    }
     {
       if (!this._ccprivate$_gameFrame) {
         var _this$_ccprivate$_gam, _this$_ccprivate$_gam2;
@@ -23775,85 +23756,94 @@ cclegacy.internal.encodeCCONBinary = encodeCCONBinary;
 cclegacy.internal.CCON = CCON;
 cclegacy.internal.BufferBuilder = BufferBuilder;
 
-function compileObjectTypeJit(sources, defaultValue, accessorToSet, propNameLiteralToSet, assumeHavePropIfIsValue) {
-  if (defaultValue instanceof cclegacy.ValueType) {
-    if (!assumeHavePropIfIsValue) {
-      sources.push('if(prop){');
-    }
-    const ctorCode = getClassName(defaultValue);
-    sources.push(`s._deserializeFastDefinedObject(o${accessorToSet},prop,${ctorCode});`);
-    if (!assumeHavePropIfIsValue) {
-      sources.push(`}else o${accessorToSet}=null;`);
-    }
-  } else {
-    sources.push(`
-if (prop) {
-    s._deserializeAndAssignField(o, prop, ${propNameLiteralToSet});
-} else {
-    o${accessorToSet}=null;
-}
-`);
-  }
-}
-const compileDeserialize = compileDeserializeJIT ;
+const compileDeserialize = compileDeserializeNative;
 const DELIMITER = CCClass.Attr.DELIMETER;
 const POSTFIX_TYPE = `${DELIMITER}type`;
 const POSTFIX_DEFAULT = `${DELIMITER}default`;
 const POSTFIX_FORMERLY_SERIALIZED_AS = `${DELIMITER}formerlySerializedAs`;
-function compileDeserializeJIT(self, klass) {
-  const attrs = CCClass.Attr.getClassAttrs(klass);
-  const props = klass.__values__;
-  const sources = ['var prop;'];
+function compileDeserializeNative(_self, klass) {
   const fastMode = canBeDeserializedInFastMode(klass);
-  for (let p = 0; p < props.length; p++) {
-    const propName = props[p];
-
-    let accessorToSet;
-    let propNameLiteralToSet;
-    if (CCClass.IDENTIFIER_RE.test(propName)) {
-      propNameLiteralToSet = `"${propName}"`;
-      accessorToSet = `.${propName}`;
-    } else {
-      propNameLiteralToSet = CCClass.escapeForJS(propName);
-      accessorToSet = `[${propNameLiteralToSet}]`;
-    }
-    let accessorToGet = accessorToSet;
-    if (attrs[propName + POSTFIX_FORMERLY_SERIALIZED_AS]) {
-      const propNameToRead = attrs[propName + POSTFIX_FORMERLY_SERIALIZED_AS];
-      if (CCClass.IDENTIFIER_RE.test(propNameToRead)) {
-        accessorToGet = `.${propNameToRead}`;
-      } else {
-        accessorToGet = `[${CCClass.escapeForJS(propNameToRead)}]`;
+  const shouldCopyId = isChildClassOf(klass, cclegacy.Node) || isChildClassOf(klass, cclegacy.Component);
+  let shouldCopyRawData = false;
+  const simpleProps = [];
+  let simplePropsToRead = simpleProps;
+  const advancedProps = [];
+  let advancedPropsToRead = advancedProps;
+  const advancedPropsValueType = [];
+  (() => {
+    const props = klass.__values__;
+    shouldCopyRawData = props[props.length - 1] === '_$erialized';
+    const attrs = CCClass.Attr.getClassAttrs(klass);
+    for (let p = 0; p < props.length; p++) {
+      const propName = props[p];
+      let propNameToRead = propName;
+      if (attrs[propName + POSTFIX_FORMERLY_SERIALIZED_AS]) {
+        propNameToRead = attrs[propName + POSTFIX_FORMERLY_SERIALIZED_AS];
       }
-    }
-    sources.push(`prop=d${accessorToGet};`);
-    sources.push(`if(typeof ${'prop'}!=="undefined"){`);
-    const defaultValue = CCClass.getDefault(attrs[propName + POSTFIX_DEFAULT]);
-    const userType = attrs[propName + POSTFIX_TYPE];
-    if (fastMode && (defaultValue !== undefined || userType)) {
-      const isPrimitiveTypeInFastMode = isPrimitivePropertyByDefaultOrType(defaultValue, userType);
+      const defaultValue = CCClass.getDefault(attrs[propName + POSTFIX_DEFAULT]);
+      const userType = attrs[propName + POSTFIX_TYPE];
+      let isPrimitiveTypeInFastMode = false;
+      if (fastMode && (defaultValue !== undefined || userType)) {
+        isPrimitiveTypeInFastMode = isPrimitivePropertyByDefaultOrType(defaultValue, userType);
+      }
       if (isPrimitiveTypeInFastMode) {
-        sources.push(`o${accessorToSet}=prop;`);
+        if (propNameToRead !== propName && simplePropsToRead === simpleProps) {
+          simplePropsToRead = simpleProps.slice();
+        }
+        simpleProps.push(propName);
+        if (simplePropsToRead !== simpleProps) {
+          simplePropsToRead.push(propNameToRead);
+        }
       } else {
-        compileObjectTypeJit(sources, defaultValue, accessorToSet, propNameLiteralToSet, true);
+        if (propNameToRead !== propName && advancedPropsToRead === advancedProps) {
+          advancedPropsToRead = advancedProps.slice();
+        }
+        advancedProps.push(propName);
+        if (advancedPropsToRead !== advancedProps) {
+          advancedPropsToRead.push(propNameToRead);
+        }
+        advancedPropsValueType.push(defaultValue instanceof cclegacy.ValueType && defaultValue.constructor);
       }
-    } else {
-      sources.push(`${`if(typeof ${'prop'}!=="object"){` + 'o'}${accessorToSet}=prop;` + `}else{`);
-      compileObjectTypeJit(sources, defaultValue, accessorToSet, propNameLiteralToSet, false);
-      sources.push('}');
     }
-    sources.push('}');
-  }
-  if (isChildClassOf(klass, cclegacy.Node) || isChildClassOf(klass, cclegacy.Component)) {
-    {
-      sources.push('d._id&&(o._id=d._id);');
+  })();
+  return (s, o, d, k) => {
+    for (let i = 0; i < simpleProps.length; ++i) {
+      const prop = d[simplePropsToRead[i]];
+      if (prop !== undefined) {
+        o[simpleProps[i]] = prop;
+      }
     }
-  }
-  if (props[props.length - 1] === '_$erialized') {
-    sources.push('o._$erialized=JSON.parse(JSON.stringify(d));');
-    sources.push('s._fillPlainObject(o._$erialized,d);');
-  }
-  return Function('s', 'o', 'd', 'k', sources.join(''));
+    for (let i = 0; i < advancedProps.length; ++i) {
+      const propName = advancedProps[i];
+      const prop = d[advancedPropsToRead[i]];
+      if (prop === undefined) {
+        continue;
+      }
+      if (!fastMode && typeof prop !== 'object') {
+        o[propName] = prop;
+      } else {
+        const valueTypeCtor = advancedPropsValueType[i];
+        if (valueTypeCtor) {
+          if (fastMode || prop) {
+            s._deserializeFastDefinedObject(o[propName], prop, valueTypeCtor);
+          } else {
+            o[propName] = null;
+          }
+        } else if (prop) {
+          s._deserializeAndAssignField(o, prop, propName);
+        } else {
+          o[propName] = null;
+        }
+      }
+    }
+    if (shouldCopyId && d._id) {
+      o._id = d._id;
+    }
+    if (shouldCopyRawData) {
+      o._$erialized = JSON.parse(JSON.stringify(d));
+      s._fillPlainObject(o._$erialized, d);
+    }
+  };
 }
 function canBeDeserializedInFastMode(klass) {
   return BUILTIN_CLASSID_RE.test(getClassId(klass));
@@ -27425,7 +27415,7 @@ class PlistParser extends SAXParser {
 }
 const plistParser = new PlistParser();
 
-let Parser$1 = class Parser {
+class Parser {
   static get instance() {
     if (!this._instance) {
       this._instance = new Parser();
@@ -27561,9 +27551,9 @@ let Parser$1 = class Parser {
       }
     });
   }
-};
-Parser$1._instance = void 0;
-var parser = Parser$1.instance;
+}
+Parser._instance = void 0;
+var parser = Parser.instance;
 
 function load(task, done) {
   let firstTask = false;
@@ -28312,7 +28302,7 @@ AssetManager.Bundle = Bundle;
 AssetManager.BuiltinBundleName = BuiltinBundleName;
 AssetManager.CacheManager = CacheManager;
 AssetManager.Downloader = Downloader;
-AssetManager.Parser = Parser$1;
+AssetManager.Parser = Parser;
 AssetManager.DependUtil = DependUtil;
 const assetManager = cclegacy.assetManager = AssetManager.instance;
 cclegacy.AssetManager = AssetManager;
@@ -39068,7 +39058,9 @@ function createNodeWithPrefab(node) {
   node[editorExtrasTag];
   cclegacy.game._isCloning = true;
   {
-    prefabInfo.asset._doInstantiate(node);
+    const prefabRoot = prefabInfo.asset.data;
+    prefabRoot._iN$t = node;
+    cclegacy.instantiate._clone(prefabRoot, prefabRoot);
   }
   cclegacy.game._isCloning = false;
   node._objFlags = _objFlags;
@@ -41687,7 +41679,7 @@ class KeyboardInputSource {
     this._ccprivate$_eventTarget.on(eventType, callback, target);
   }
   _ccprivate$_registerEvent() {
-    const canvas = document.getElementById("GameCanvas");
+    const canvas = globalThis.__CC_CANVAS__ || document.getElementById("GameCanvas");
     canvas == null ? void 0 : canvas.addEventListener("keydown", this._ccprivate$_handleKeyboardDown.bind(this));
     canvas == null ? void 0 : canvas.addEventListener("keyup", this._ccprivate$_handleKeyboardUp.bind(this));
   }
@@ -41726,7 +41718,7 @@ class MouseInputSource {
     this._ccprivate$_handleMouseMove = void 0;
     this._ccprivate$_handleMouseUp = void 0;
     if (systemInfo.hasFeature(Feature$1.EVENT_MOUSE)) {
-      this._ccprivate$_canvas = document.getElementById("GameCanvas");
+      this._ccprivate$_canvas = globalThis.__CC_CANVAS__ || document.getElementById("GameCanvas");
       if (!this._ccprivate$_canvas && !TEST && !EDITOR) {
         warn("failed to access canvas");
       }
@@ -41953,7 +41945,7 @@ class TouchInputSource {
     this._ccprivate$_canvas = void 0;
     this._ccprivate$_eventTarget = new EventTarget();
     if (systemInfo.hasFeature(Feature$1.INPUT_TOUCH)) {
-      this._ccprivate$_canvas = document.getElementById("GameCanvas");
+      this._ccprivate$_canvas = globalThis.__CC_CANVAS__ || document.getElementById("GameCanvas");
       if (!this._ccprivate$_canvas && !TEST && !EDITOR) {
         warn("failed to access canvas");
       }
@@ -42834,12 +42826,6 @@ class ReusableInvoker extends LifeCycleInvoker {
     }
   }
 }
-function createInvokeImplJit(code, useDt, ensureFlag) {
-  const body = `${'var a=it.array;' + 'for(it.i=0;it.i<a.length;++it.i){' + 'var c=a[it.i];'}${code}}`;
-  const fastPath = useDt ? Function('it', 'dt', body) : Function('it', body);
-  const singleInvoke = Function('c', 'dt', code);
-  return createInvokeImpl(singleInvoke, fastPath, ensureFlag);
-}
 function createInvokeImpl(singleInvoke, fastPath, ensureFlag) {
   return (iterator, dt) => {
     try {
@@ -42864,9 +42850,33 @@ function createInvokeImpl(singleInvoke, fastPath, ensureFlag) {
     }
   };
 }
-const invokeStart = createInvokeImplJit(`c.start();c._objFlags|=${IsStartCalled}`, false, IsStartCalled) ;
-const invokeUpdate = createInvokeImplJit('c.update(dt)', true) ;
-const invokeLateUpdate = createInvokeImplJit('c.lateUpdate(dt)', true) ;
+const invokeStart = createInvokeImpl(c => {
+  c.start();
+  c._objFlags |= IsStartCalled;
+}, iterator => {
+  const array = iterator.array;
+  for (iterator.i = 0; iterator.i < array.length; ++iterator.i) {
+    const comp = array[iterator.i];
+    comp.start();
+    comp._objFlags |= IsStartCalled;
+  }
+}, IsStartCalled);
+const invokeUpdate = createInvokeImpl((c, dt) => {
+  c.update(dt);
+}, (iterator, dt) => {
+  const array = iterator.array;
+  for (iterator.i = 0; iterator.i < array.length; ++iterator.i) {
+    array[iterator.i].update(dt);
+  }
+});
+const invokeLateUpdate = createInvokeImpl((c, dt) => {
+  c.lateUpdate(dt);
+}, (iterator, dt) => {
+  const array = iterator.array;
+  for (iterator.i = 0; iterator.i < array.length; ++iterator.i) {
+    array[iterator.i].lateUpdate(dt);
+  }
+});
 const invokeOnEnable = iterator => {
   const compScheduler = legacyCC.director._compScheduler;
   const array = iterator.array;
@@ -43007,8 +43017,26 @@ class UnsortedInvoker extends LifeCycleInvoker {
     this._zero.array.length = 0;
   }
 }
-const invokePreload = createInvokeImplJit('c.__preload();') ;
-const invokeOnLoad = createInvokeImplJit(`c.onLoad();c._objFlags|=${IsOnLoadCalled}`, false, IsOnLoadCalled) ;
+const invokePreload = createInvokeImpl(c => {
+  c.internalPreload == null ? void 0 : c.internalPreload();
+}, iterator => {
+  const array = iterator.array;
+  for (iterator.i = 0; iterator.i < array.length; ++iterator.i) {
+    var _array$iterator$i$int, _array$iterator$i;
+    (_array$iterator$i$int = (_array$iterator$i = array[iterator.i]).internalPreload) == null ? void 0 : _array$iterator$i$int.call(_array$iterator$i);
+  }
+});
+const invokeOnLoad = createInvokeImpl(c => {
+  c.internalOnLoad == null ? void 0 : c.internalOnLoad();
+  c._objFlags |= IsOnLoadCalled;
+}, iterator => {
+  const array = iterator.array;
+  for (iterator.i = 0; iterator.i < array.length; ++iterator.i) {
+    const comp = array[iterator.i];
+    comp.internalOnLoad == null ? void 0 : comp.internalOnLoad();
+    comp._objFlags |= IsOnLoadCalled;
+  }
+}, IsOnLoadCalled);
 const activateTasksPool = new Pool(MAX_POOL_SIZE);
 activateTasksPool.get = function getActivateTask() {
   const task = this._get() || {
@@ -43164,365 +43192,6 @@ class NodeActivator {
   }
 }
 
-const Destroyed$1 = CCObjectFlags.Destroyed;
-const PersistentMask$1 = CCObjectFlags.PersistentMask;
-const DEFAULT = `${CCClass.Attr.DELIMETER}default`;
-const IDENTIFIER_RE = CCClass.IDENTIFIER_RE;
-const VAR = 'var ';
-const LOCAL_OBJ = 'o';
-const LOCAL_TEMP_OBJ = 't';
-const LOCAL_ARRAY = 'a';
-const LINE_INDEX_OF_NEW_OBJ = 0;
-const DEFAULT_MODULE_CACHE = {
-  'cc.ClickEvent': false,
-  'cc.PrefabInfo': false
-};
-const escapeForJS = CCClass.escapeForJS;
-class Declaration {
-  constructor(varName, expression) {
-    this.varName = varName;
-    this.expression = expression;
-  }
-  toString() {
-    return `${VAR + this.varName}=${this.expression};`;
-  }
-}
-function mergeDeclaration(statement, expression) {
-  if (expression instanceof Declaration) {
-    return new Declaration(expression.varName, statement + expression.expression);
-  } else {
-    return statement + expression;
-  }
-}
-function writeAssignment(codeArray, statement, expression) {
-  if (Array.isArray(expression)) {
-    expression[0] = mergeDeclaration(statement, expression[0]);
-    codeArray.push(expression);
-  } else {
-    codeArray.push(`${mergeDeclaration(statement, expression)};`);
-  }
-}
-class Assignments {
-  constructor(targetExpression) {
-    this._exps = [];
-    this._targetExp = targetExpression;
-  }
-  setTargetExp(value) {
-    this._targetExp = value;
-  }
-  append(key, expression) {
-    this._exps.push([key, expression]);
-  }
-  writeCode(codeArray) {
-    let targetVar;
-    if (this._exps.length > 1) {
-      codeArray.push(`${LOCAL_TEMP_OBJ}=${this._targetExp};`);
-      targetVar = LOCAL_TEMP_OBJ;
-    } else if (this._exps.length === 1) {
-      targetVar = this._targetExp;
-    } else {
-      return;
-    }
-    for (let i = 0; i < this._exps.length; i++) {
-      const pair = this._exps[i];
-      writeAssignment(codeArray, `${targetVar + getPropAccessor(pair[0])}=`, pair[1]);
-    }
-  }
-}
-Assignments.pool = new Pool(obj => {
-  obj._exps.length = 0;
-  obj._targetExp = null;
-}, 1);
-Assignments.pool.get = function get(targetExpression) {
-  const cache = this._get() || new Assignments();
-  cache.setTargetExp(targetExpression);
-  return cache;
-};
-function getPropAccessor(key) {
-  return IDENTIFIER_RE.test(key) ? `.${key}` : `[${escapeForJS(key)}]`;
-}
-class Parser {
-  constructor(obj, parent) {
-    this.objsToClear_iN$t = [];
-    this.codeArray = [];
-    this.objs = [];
-    this.funcs = [];
-    this.globalVariables = [];
-    this.globalVariableId = 0;
-    this.localVariableId = 0;
-    this.parent = parent;
-    this.funcModuleCache = createMap();
-    mixin(this.funcModuleCache, DEFAULT_MODULE_CACHE);
-    this.codeArray.push(`${VAR + LOCAL_OBJ},${LOCAL_TEMP_OBJ};`, 'if(R){', `${LOCAL_OBJ}=R;`, '}else{', `${LOCAL_OBJ}=R=new ${this.getFuncModule(obj.constructor, true)}();`, '}');
-    obj._iN$t = {
-      globalVar: 'R'
-    };
-    this.objsToClear_iN$t.push(obj);
-    this.enumerateObject(this.codeArray, obj);
-    let globalVariablesDeclaration;
-    if (this.globalVariables.length > 0) {
-      globalVariablesDeclaration = `${VAR + this.globalVariables.join(',')};`;
-    }
-    const code = flattenCodeArray(['return (function(R){', globalVariablesDeclaration || [], this.codeArray, 'return o;', '})']);
-    this.result = Function('O', 'F', code)(this.objs, this.funcs);
-    for (let i = 0, len = this.objsToClear_iN$t.length; i < len; ++i) {
-      this.objsToClear_iN$t[i]._iN$t = null;
-    }
-    this.objsToClear_iN$t.length = 0;
-  }
-  getFuncModule(func, usedInNew) {
-    const clsName = getClassName(func);
-    if (clsName) {
-      const cache = this.funcModuleCache[clsName];
-      if (cache) {
-        return cache;
-      } else if (cache === undefined) {
-        let clsNameIsModule = clsName.indexOf('.') !== -1;
-        if (clsNameIsModule) {
-          try {
-            clsNameIsModule = func === Function(`return ${clsName}`)();
-            if (clsNameIsModule) {
-              this.funcModuleCache[clsName] = clsName;
-              return clsName;
-            }
-          } catch (e) {}
-        }
-      }
-    }
-    let index = this.funcs.indexOf(func);
-    if (index < 0) {
-      index = this.funcs.length;
-      this.funcs.push(func);
-    }
-    let res = `F[${index}]`;
-    if (usedInNew) {
-      res = `(${res})`;
-    }
-    this.funcModuleCache[clsName] = res;
-    return res;
-  }
-  getObjRef(obj) {
-    let index = this.objs.indexOf(obj);
-    if (index < 0) {
-      index = this.objs.length;
-      this.objs.push(obj);
-    }
-    return `O[${index}]`;
-  }
-  setValueType(codeArray, defaultValue, srcValue, targetExpression) {
-    const assignments = Assignments.pool.get(targetExpression);
-    let fastDefinedProps = defaultValue.constructor.__props__;
-    if (!fastDefinedProps) {
-      fastDefinedProps = Object.keys(defaultValue);
-    }
-    for (let i = 0; i < fastDefinedProps.length; i++) {
-      const propName = fastDefinedProps[i];
-      const prop = srcValue[propName];
-      if (defaultValue[propName] === prop) {
-        continue;
-      }
-      const expression = this.enumerateField(srcValue, propName, prop);
-      assignments.append(propName, expression);
-    }
-    assignments.writeCode(codeArray);
-    Assignments.pool.put(assignments);
-  }
-  enumerateCCClass(codeArray, obj, klass) {
-    const props = klass.__values__;
-    const attrs = CCClass.Attr.getClassAttrs(klass);
-    for (let p = 0; p < props.length; p++) {
-      const key = props[p];
-      const val = obj[key];
-      let defaultValue = attrs[key + DEFAULT];
-      if (equalsToDefault(defaultValue, val)) {
-        continue;
-      }
-      if (typeof val === 'object' && val instanceof cclegacy.ValueType) {
-        defaultValue = CCClass.getDefault(defaultValue);
-        if (defaultValue && defaultValue.constructor === val.constructor) {
-          const targetExpression = LOCAL_OBJ + getPropAccessor(key);
-          this.setValueType(codeArray, defaultValue, val, targetExpression);
-          continue;
-        }
-      }
-      this.setObjProp(codeArray, obj, key, val);
-    }
-  }
-  instantiateArray(value) {
-    if (value.length === 0) {
-      return '[]';
-    }
-    const arrayVar = LOCAL_ARRAY + ++this.localVariableId;
-    const declaration = new Declaration(arrayVar, `new Array(${value.length})`);
-    const codeArray = [declaration];
-    value._iN$t = {
-      globalVar: '',
-      source: codeArray
-    };
-
-    this.objsToClear_iN$t.push(value);
-    for (let i = 0; i < value.length; ++i) {
-      const statement = `${arrayVar}[${i}]=`;
-      const expression = this.enumerateField(value, i, value[i]);
-      writeAssignment(codeArray, statement, expression);
-    }
-    return codeArray;
-  }
-  instantiateTypedArray(value) {
-    const type = value.constructor.name;
-    if (value.length === 0) {
-      return `new ${type}`;
-    }
-    const arrayVar = LOCAL_ARRAY + ++this.localVariableId;
-    const declaration = new Declaration(arrayVar, `new ${type}(${value.length})`);
-    const codeArray = [declaration];
-    value._iN$t = {
-      globalVar: '',
-      source: codeArray
-    };
-
-    this.objsToClear_iN$t.push(value);
-    for (let i = 0; i < value.length; ++i) {
-      if (value[i] !== 0) {
-        const statement = `${arrayVar}[${i}]=`;
-        writeAssignment(codeArray, statement, value[i]);
-      }
-    }
-    return codeArray;
-  }
-  enumerateField(obj, key, value) {
-    if (typeof value === 'object' && value) {
-      const _iN$t = value._iN$t;
-      if (_iN$t) {
-        let globalVar = _iN$t.globalVar;
-        if (!globalVar) {
-          globalVar = _iN$t.globalVar = `v${++this.globalVariableId}`;
-          this.globalVariables.push(globalVar);
-          const line = _iN$t.source[LINE_INDEX_OF_NEW_OBJ];
-          _iN$t.source[LINE_INDEX_OF_NEW_OBJ] = mergeDeclaration(`${globalVar}=`, line);
-        }
-
-        return globalVar;
-      } else if (ArrayBuffer.isView(value)) {
-        return this.instantiateTypedArray(value);
-      } else if (Array.isArray(value)) {
-        return this.instantiateArray(value);
-      } else {
-        return this.instantiateObj(value);
-      }
-    } else if (typeof value === 'function') {
-      return this.getFuncModule(value);
-    } else if (typeof value === 'string') {
-      return escapeForJS(value);
-    } else {
-      if (key === '_objFlags' && isCCObject(obj)) {
-        value &= PersistentMask$1;
-      }
-      return value;
-    }
-  }
-  setObjProp(codeArray, obj, key, value) {
-    const statement = `${LOCAL_OBJ + getPropAccessor(key)}=`;
-    const expression = this.enumerateField(obj, key, value);
-    writeAssignment(codeArray, statement, expression);
-  }
-  enumerateObject(codeArray, obj) {
-    const klass = obj.constructor;
-    if (isCCClassOrFastDefined(klass)) {
-      this.enumerateCCClass(codeArray, obj, klass);
-    } else {
-      for (const key in obj) {
-        if (!Object.prototype.hasOwnProperty.call(obj, key) || key.charCodeAt(0) === 95 && key.charCodeAt(1) === 95 && key !== '__type__') {
-          continue;
-        }
-        const value = obj[key];
-        if (typeof value === 'object' && value && value === obj._iN$t) {
-          continue;
-        }
-        this.setObjProp(codeArray, obj, key, value);
-      }
-    }
-  }
-  instantiateObj(obj) {
-    if (obj instanceof cclegacy.ValueType) {
-      return CCClass.getNewValueTypeCode(obj);
-    }
-    if (obj instanceof cclegacy.Asset) {
-      return this.getObjRef(obj);
-    }
-    if (obj._objFlags & Destroyed$1) {
-      return null;
-    }
-    let createCode;
-    const ctor = obj.constructor;
-    if (isCCClassOrFastDefined(ctor)) {
-      if (this.parent) {
-        if (this.parent instanceof cclegacy.Component) {
-          if (obj instanceof cclegacy.Node || obj instanceof cclegacy.Component) {
-            return this.getObjRef(obj);
-          }
-        } else if (this.parent instanceof cclegacy.Node) {
-          if (obj instanceof cclegacy.Node) {
-            if (!obj.isChildOf(this.parent)) {
-              return this.getObjRef(obj);
-            }
-          } else if (obj instanceof cclegacy.Component) {
-            var _obj$node;
-            if (!((_obj$node = obj.node) != null && _obj$node.isChildOf(this.parent))) {
-              return this.getObjRef(obj);
-            }
-          }
-        }
-      }
-      createCode = new Declaration(LOCAL_OBJ, `new ${this.getFuncModule(ctor, true)}()`);
-    } else if (ctor === Object) {
-      createCode = new Declaration(LOCAL_OBJ, '{}');
-    } else if (!ctor) {
-      createCode = new Declaration(LOCAL_OBJ, 'Object.create(null)');
-    } else {
-      return this.getObjRef(obj);
-    }
-    const codeArray = [createCode];
-    obj._iN$t = {
-      globalVar: '',
-      source: codeArray
-    };
-
-    this.objsToClear_iN$t.push(obj);
-    this.enumerateObject(codeArray, obj);
-    return ['(function(){', codeArray, 'return o;})();'];
-  }
-}
-function equalsToDefault(def, value) {
-  if (typeof def === 'function') {
-    try {
-      def = def();
-    } catch (e) {
-      return false;
-    }
-  }
-  if (def === value) {
-    return true;
-  }
-  if (def && value && typeof def === 'object' && typeof value === 'object' && def.constructor === value.constructor) {
-    if (def instanceof cclegacy.ValueType) {
-      if (def.equals(value)) {
-        return true;
-      }
-    } else if (Array.isArray(def)) {
-      return def.length === 0 && value.length === 0;
-    } else if (def.constructor === Object) {
-      return isEmptyObject(def) && isEmptyObject(value);
-    }
-  }
-  return false;
-}
-function compile(node) {
-  const root = node instanceof cclegacy.Node && node;
-  const parser = new Parser(node, root);
-  return parser.result;
-}
-
 var _dec$2H, _class$2K, _class2$2d, _initializer$29, _initializer2$1K, _initializer3$1e, _Prefab;
 const OptimizationPolicy = Enum({
   AUTO: 0,
@@ -43544,9 +43213,6 @@ let Prefab = (_dec$2H = ccclass$w('cc.Prefab'), _dec$2H(_class$2K = (_class2$2d 
     cb(null, node);
   }
   compileCreateFunction() {
-    {
-      this._createFunction = compile(this.data);
-    }
   }
   _doInstantiate(rootToRedirect) {
     if (!this.data._prefab) {
@@ -43559,20 +43225,7 @@ let Prefab = (_dec$2H = ccclass$w('cc.Prefab'), _dec$2H(_class$2K = (_class2$2d 
   }
   _instantiate() {
     let node;
-    let useJit = false;
     {
-      if (this.optimizationPolicy === OptimizationPolicy.SINGLE_INSTANCE) {
-        useJit = false;
-      } else if (this.optimizationPolicy === OptimizationPolicy.MULTI_INSTANCE) {
-        useJit = true;
-      } else {
-        useJit = this._instantiatedTimes + 1 >= Prefab.OptimizationPolicyThreshold;
-      }
-    }
-    if (useJit) {
-      node = this._doInstantiate();
-      this.data._instantiate(node);
-    } else {
       node = this.data._instantiate();
     }
     ++this._instantiatedTimes;
@@ -56860,21 +56513,10 @@ let TrackBinding = (_dec2$1L = ccclass$w(`${CLASS_NAME_PREFIX_ANIM}TrackBinding`
       let setValue;
       let getValue;
       {
-        let animationFunction = TrackBinding._animationFunctions.get(resultTarget.constructor);
-        if (!animationFunction) {
-          animationFunction = new Map();
-          TrackBinding._animationFunctions.set(resultTarget.constructor, animationFunction);
-        }
-        let accessor = animationFunction.get(lastPropertyKey);
-        if (!accessor) {
-          accessor = {
-            setValue: Function('value', `this.target["${lastPropertyKey}"] = value;`),
-            getValue: Function(`return this.target["${lastPropertyKey}"];`)
-          };
-          animationFunction.set(lastPropertyKey, accessor);
-        }
-        setValue = accessor.setValue;
-        getValue = accessor.getValue;
+        setValue = value => {
+          resultTarget[lastPropertyKey] = value;
+        };
+        getValue = () => resultTarget[lastPropertyKey];
       }
       return {
         target: resultTarget,
@@ -135930,11 +135572,12 @@ markAsWarning(AudioClip.prototype, 'AudioClip.prototype', ['state', 'play', 'pau
 cclegacy.AudioSourceComponent = AudioSource;
 setClassAlias(AudioSource, 'cc.AudioSourceComponent');
 
-const AIR_VERSION = '1.2.0';
+const AIR_VERSION = '1.0.0';
 class AirAppImpl {
-  constructor(canvas) {
+  constructor(canvas, contextHealth) {
     this._started = false;
     this.canvas = canvas;
+    this.contextHealth = contextHealth;
   }
   run(scene) {
     director.runSceneImmediate(scene);
@@ -141726,7 +141369,164 @@ function seedDefaultPhysicsMaterial() {
 }
 seedDefaultPhysicsMaterial();
 
+const TIMELINE_LIMIT = 32;
+function attachContextHealth(canvas, options = {}) {
+  const autoPause = options.autoPause !== false;
+  let state = 'healthy';
+  let backend = 'unknown';
+  let lostCount = 0;
+  let restoredCount = 0;
+  let reason = null;
+  let lastEvent = null;
+  let lastEventAt = null;
+  let gl = null;
+  const timeline = [];
+  const listeners = new Set();
+  if (typeof options.onEvent === 'function') {
+    listeners.add(options.onEvent);
+  }
+  function acquireGl() {
+    if (gl) {
+      return gl;
+    }
+    try {
+      const g2 = canvas.getContext('webgl2');
+      if (g2) {
+        gl = g2;
+        backend = 'webgl2';
+        return gl;
+      }
+      const g1 = canvas.getContext('webgl');
+      if (g1) {
+        gl = g1;
+        backend = 'webgl';
+        return gl;
+      }
+      backend = 'none';
+    } catch {
+      backend = 'none';
+    }
+    return null;
+  }
+  function readGamePaused() {
+    try {
+      var _paused;
+      return (_paused = game._paused) !== null && _paused !== void 0 ? _paused : null;
+    } catch {
+      return null;
+    }
+  }
+  function snapshot() {
+    let isLost = null;
+    const g = acquireGl();
+    if (g) {
+      try {
+        isLost = g.isContextLost();
+      } catch {
+        isLost = null;
+      }
+    }
+    return {
+      state,
+      backend,
+      lostCount,
+      restoredCount,
+      isContextLost: isLost,
+      gamePaused: readGamePaused(),
+      reason,
+      suggestion: state === 'failed' ? 'reload' : 'none',
+      lastEvent,
+      lastEventAt,
+      timeline: timeline.slice()
+    };
+  }
+  function transition(next, detail) {
+    state = next;
+    if (next === 'failed') {
+      reason = detail !== null && detail !== void 0 ? detail : 'unknown';
+    } else {
+      reason = null;
+    }
+    timeline.push({
+      at: Date.now(),
+      type: next,
+      detail
+    });
+    if (timeline.length > TIMELINE_LIMIT) {
+      timeline.splice(0, timeline.length - TIMELINE_LIMIT);
+    }
+    lastEvent = next === 'healthy' ? null : next;
+    lastEventAt = Date.now();
+    const snap = snapshot();
+    for (const cb of listeners) {
+      try {
+        cb(snap);
+      } catch {}
+    }
+  }
+  function onLost(event) {
+    try {
+      event.preventDefault();
+    } catch {}
+    acquireGl();
+    lostCount += 1;
+    if (autoPause) {
+      try {
+        game.pause();
+      } catch {}
+    }
+    transition('lost', 'webglcontextlost');
+  }
+  function onRestored() {
+    restoredCount += 1;
+    transition('restoring', 'webglcontextrestored');
+    transition('failed', 'context-restored-but-gpu-resources-not-rebuilt');
+  }
+  canvas.addEventListener('webglcontextlost', onLost, false);
+  canvas.addEventListener('webglcontextrestored', onRestored, false);
+  return {
+    snapshot,
+    onChange(cb) {
+      listeners.add(cb);
+      return () => {
+        listeners.delete(cb);
+      };
+    },
+    requestReload() {
+      var _options$reload;
+      if (state !== 'failed') {
+        return false;
+      }
+      const reload = (_options$reload = options.reload) !== null && _options$reload !== void 0 ? _options$reload : () => {
+        if (typeof window !== 'undefined' && window.location) {
+          window.location.reload();
+        }
+      };
+      reload();
+      return true;
+    },
+    destroy() {
+      canvas.removeEventListener('webglcontextlost', onLost, false);
+      canvas.removeEventListener('webglcontextrestored', onRestored, false);
+      listeners.clear();
+    }
+  };
+}
+
 function ensureCanvasDOM(canvas) {
+  var _window$devicePixelRa;
+  if (canvas.id !== 'GameCanvas') {
+    const decoy = document.getElementById('GameCanvas');
+    if (decoy && decoy !== canvas) {
+      throw new Error('[cocosair] createAirApp: page already contains another element with id "GameCanvas"' + ` (found <${decoy.tagName.toLowerCase()}>), and the passed canvas has id "${canvas.id}".` + ' Engine input binds by that id — rename/remove the other element, or pass it as the canvas.');
+    }
+    if (globalThis.__CC_CANVAS__ !== canvas) {
+      throw new Error('[cocosair] custom canvas must be assigned to globalThis.__CC_CANVAS__ before importing the engine');
+    }
+  }
+  if (canvas.tabIndex < 0) {
+    canvas.tabIndex = 0;
+  }
   if (document.body && !canvas.parentElement) {
     const frame = document.createElement('div');
     frame.id = 'GameDiv';
@@ -141736,15 +141536,17 @@ function ensureCanvasDOM(canvas) {
     container.appendChild(canvas);
     document.body.appendChild(frame);
     const style = document.createElement('style');
-    style.textContent = ['html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }', '#GameDiv { width: 100%; height: 100%; position: relative; }', '#Cocos3dGameContainer { width: 100%; height: 100%; }', '#GameCanvas { width: 100%; height: 100%; display: block; outline: none; }'].join('\n');
+    style.textContent = ['html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }', '#GameDiv { width: 100%; height: 100%; position: relative; }', '#Cocos3dGameContainer { width: 100%; height: 100%; }', '#Cocos3dGameContainer canvas { width: 100%; height: 100%; display: block; outline: none; }', '#Cocos3dGameContainer canvas:focus-visible { outline: 2px solid rgba(64,148,235,0.8); }'].join('\n');
     document.head.appendChild(style);
   }
-  if (canvas.id !== 'GameCanvas' && !document.getElementById('GameCanvas')) {
-    canvas.id = 'GameCanvas';
-  }
-  if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  const dprCapRaw = Number(globalThis.__CCDPR_CAP__);
+  const dprCap = Number.isFinite(dprCapRaw) && dprCapRaw > 0 ? dprCapRaw : 2;
+  const effDpr = Math.min((_window$devicePixelRa = window.devicePixelRatio) !== null && _window$devicePixelRa !== void 0 ? _window$devicePixelRa : 1, dprCap);
+  const bufW = Math.round(window.innerWidth * effDpr);
+  const bufH = Math.round(window.innerHeight * effDpr);
+  if (canvas.width !== bufW || canvas.height !== bufH) {
+    canvas.width = bufW;
+    canvas.height = bufH;
   }
 }
 async function createAirApp(options) {
@@ -141760,6 +141562,7 @@ async function createAirApp(options) {
     throw new Error('[cocosair] createAirApp requires a canvas.');
   }
   ensureCanvasDOM(canvas);
+  const contextHealth = attachContextHealth(canvas, options.contextLoss);
   game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, () => {
     var _options$physics;
     return selectPhysicsBackend((_options$physics = options.physics) !== null && _options$physics !== void 0 ? _options$physics : 'builtin');
@@ -141774,7 +141577,528 @@ async function createAirApp(options) {
       }
     }
   });
-  return new AirAppImpl(canvas);
+  return new AirAppImpl(canvas, contextHealth);
+}
+
+function createStepClock(options = {}) {
+  var _options$frameRate, _options$stepTimeoutM;
+  const frameRate = (_options$frameRate = options.frameRate) !== null && _options$frameRate !== void 0 ? _options$frameRate : 60;
+  const stepTimeoutMs = (_options$stepTimeoutM = options.stepTimeoutMs) !== null && _options$stepTimeoutM !== void 0 ? _options$stepTimeoutM : 2000;
+  let stepping = false;
+  let stepped = 0;
+  function assertPaused() {
+    const paused = game._paused;
+    if (paused !== true) {
+      throw new Error('[cocosair] step(): real clock is running — call begin() (game.pause()) first.' + ' Running rAF and manual stepping at the same time is forbidden (dual clock).');
+    }
+  }
+  return {
+    get stepping() {
+      return stepping;
+    },
+    get stepped() {
+      return stepped;
+    },
+    begin() {
+      if (stepping) {
+        return;
+      }
+      game.pause();
+      stepping = true;
+    },
+    step(dt = 1 / frameRate) {
+      assertPaused();
+      const index = stepped + 1;
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          director.off(Director.EVENT_AFTER_DRAW, onDraw);
+          reject(new Error(`[cocosair] step(): no AFTER_DRAW within ${stepTimeoutMs}ms`));
+        }, stepTimeoutMs);
+        function onDraw() {
+          director.off(Director.EVENT_AFTER_DRAW, onDraw);
+          clearTimeout(timer);
+          stepped = index;
+          resolve({
+            step: index,
+            dt,
+            afterDraw: true
+          });
+        }
+        director.on(Director.EVENT_AFTER_DRAW, onDraw);
+        director.tick(dt);
+      });
+    },
+    end() {
+      if (!stepping) {
+        return;
+      }
+      stepping = false;
+      game.resume();
+    }
+  };
+}
+
+function createUICanvas(scene, name = 'UICanvas', options = {}) {
+  var _options$layer, _options$designWidth, _options$designHeight;
+  const layer = (_options$layer = options.layer) !== null && _options$layer !== void 0 ? _options$layer : Layers.Enum.UI_2D;
+  const w = (_options$designWidth = options.designWidth) !== null && _options$designWidth !== void 0 ? _options$designWidth : 1280;
+  const h = (_options$designHeight = options.designHeight) !== null && _options$designHeight !== void 0 ? _options$designHeight : 720;
+  const node = new Node$1(name);
+  node.layer = layer;
+  const ut = node.addComponent(UITransform);
+  ut.setContentSize(w, h);
+  ut.setAnchorPoint(0.5, 0.5);
+  const canvas = node.addComponent(Canvas);
+  const widget = node.addComponent(Widget);
+  widget.isAlignLeft = widget.isAlignRight = widget.isAlignTop = widget.isAlignBottom = true;
+  widget.left = widget.right = widget.top = widget.bottom = 0;
+  widget.alignMode = Widget.AlignMode.ON_WINDOW_RESIZE;
+  scene.addChild(node);
+  const cameraNode = new Node$1(name + '/Camera');
+  cameraNode.layer = layer;
+  cameraNode.addComponent(UITransform).setContentSize(1, 1);
+  const camera = cameraNode.addComponent(Camera);
+  camera.projection = Camera.ProjectionType.ORTHO;
+  camera.clearFlags = Camera.ClearFlag.SOLID_COLOR;
+  camera.clearColor = new Color(24, 30, 44, 255);
+  camera.visibility = layer;
+  camera.near = 1;
+  camera.far = 2000;
+  node.addChild(cameraNode);
+  canvas.cameraComponent = camera;
+  return node;
+}
+
+function spriteNode(parent, name = 'Sprite', options = {}) {
+  var _options$layer2, _options$size$, _options$size, _options$size$2, _options$size2;
+  const node = new Node$1(name);
+  node.layer = (_options$layer2 = options.layer) !== null && _options$layer2 !== void 0 ? _options$layer2 : Layers.Enum.UI_2D;
+  const ut = node.addComponent(UITransform);
+  ut.setContentSize((_options$size$ = (_options$size = options.size) == null ? void 0 : _options$size[0]) !== null && _options$size$ !== void 0 ? _options$size$ : 100, (_options$size$2 = (_options$size2 = options.size) == null ? void 0 : _options$size2[1]) !== null && _options$size$2 !== void 0 ? _options$size$2 : 100);
+  ut.setAnchorPoint(0.5, 0.5);
+  const sprite = node.addComponent(Sprite);
+  sprite.sizeMode = Sprite.SizeMode.CUSTOM;
+  if (options.color) {
+    sprite.color = options.color.clone();
+  }
+  if (options.position) {
+    node.setPosition(options.position[0], options.position[1], 0);
+  }
+  parent.addChild(node);
+  return node;
+}
+
+function labelNode(parent, text, name = 'Label', options = {}) {
+  var _options$layer3, _options$fontSize, _options$boxSize$, _options$boxSize, _options$boxSize$2, _options$boxSize2, _options$color;
+  const node = new Node$1(name);
+  node.layer = (_options$layer3 = options.layer) !== null && _options$layer3 !== void 0 ? _options$layer3 : Layers.Enum.UI_2D;
+  const fontSize = (_options$fontSize = options.fontSize) !== null && _options$fontSize !== void 0 ? _options$fontSize : 28;
+  const ut = node.addComponent(UITransform);
+  ut.setContentSize((_options$boxSize$ = (_options$boxSize = options.boxSize) == null ? void 0 : _options$boxSize[0]) !== null && _options$boxSize$ !== void 0 ? _options$boxSize$ : 0, (_options$boxSize$2 = (_options$boxSize2 = options.boxSize) == null ? void 0 : _options$boxSize2[1]) !== null && _options$boxSize$2 !== void 0 ? _options$boxSize$2 : 0);
+  ut.setAnchorPoint(0.5, 0.5);
+  const label = node.addComponent(Label);
+  label.string = text;
+  label.fontSize = fontSize;
+  label.lineHeight = Math.round(fontSize * 1.25);
+  label.color = (_options$color = options.color) !== null && _options$color !== void 0 ? _options$color : Color.WHITE.clone();
+  if (options.overflow !== undefined) {
+    label.overflow = options.overflow;
+  }
+  if (options.position) {
+    node.setPosition(options.position[0], options.position[1], 0);
+  }
+  parent.addChild(node);
+  return node;
+}
+class AssetBank {
+  constructor() {
+    this._entries = new Map();
+    this._inFlight = new Map();
+  }
+  get size() {
+    return this._entries.size;
+  }
+  refCount(url) {
+    var _this$_entries$get$re, _this$_entries$get;
+    return (_this$_entries$get$re = (_this$_entries$get = this._entries.get(url)) == null ? void 0 : _this$_entries$get.refs) !== null && _this$_entries$get$re !== void 0 ? _this$_entries$get$re : 0;
+  }
+  load(url, onProgress) {
+    const existing = this._entries.get(url);
+    if (existing) {
+      existing.refs += 1;
+      onProgress == null ? void 0 : onProgress(1, 1);
+      return Promise.resolve(existing.asset);
+    }
+    let pending = this._inFlight.get(url);
+    if (!pending) {
+      pending = new Promise((resolve, reject) => {
+        assetManager.loadRemote(url, (err, asset) => {
+          if (err || !asset) {
+            this._inFlight.delete(url);
+            reject(new Error(`[AssetBank] load failed: ${url} (${err && err.message || err})`));
+            return;
+          }
+          this._inFlight.delete(url);
+          asset.addRef();
+          this._entries.set(url, {
+            asset,
+            refs: 0
+          });
+          resolve(asset);
+        });
+      });
+      this._inFlight.set(url, pending);
+    }
+    return pending.then(asset => {
+      const entry = this._entries.get(url);
+      entry.refs += 1;
+      onProgress == null ? void 0 : onProgress(1, 1);
+      return asset;
+    });
+  }
+  release(url) {
+    const entry = this._entries.get(url);
+    if (!entry) {
+      return false;
+    }
+    entry.refs -= 1;
+    if (entry.refs <= 0) {
+      this._entries.delete(url);
+      entry.asset.decRef();
+      return true;
+    }
+    return false;
+  }
+}
+
+class SceneStack {
+  constructor(scene, options = {}) {
+    var _options$maxCachedPag, _options$canvas;
+    this._scene = void 0;
+    this._maxCached = void 0;
+    this._stack = [];
+    this._cache = [];
+    this._transitionTimer = null;
+    this._transitionResolve = null;
+    this._blockListener = null;
+    this._canvas = void 0;
+    this.inputBlockedCount = 0;
+    this._scene = scene;
+    this._maxCached = (_options$maxCachedPag = options.maxCachedPages) !== null && _options$maxCachedPag !== void 0 ? _options$maxCachedPag : 4;
+    this._canvas = (_options$canvas = options.canvas) !== null && _options$canvas !== void 0 ? _options$canvas : typeof document !== 'undefined' ? document.getElementById('GameCanvas') : null;
+  }
+  get top() {
+    var _this$_stack;
+    return (_this$_stack = this._stack[this._stack.length - 1]) !== null && _this$_stack !== void 0 ? _this$_stack : null;
+  }
+  get depth() {
+    return this._stack.length;
+  }
+  get cachedCount() {
+    return this._cache.length;
+  }
+  get inTransition() {
+    return this._transitionTimer !== null;
+  }
+  push(build, name, options = {}) {
+    var _options$transitionMs;
+    this._finishTransition();
+    const node = build();
+    this._scene.addChild(node);
+    const handle = {
+      name,
+      node,
+      visible: true
+    };
+    this._stack.push(handle);
+    const previous = this._stack[this._stack.length - 2];
+    const ms = (_options$transitionMs = options.transitionMs) !== null && _options$transitionMs !== void 0 ? _options$transitionMs : 0;
+    if (ms <= 0) {
+      this._retire(previous);
+      return Promise.resolve(handle);
+    }
+    this._beginInputBlock();
+    return new Promise(resolve => {
+      this._transitionResolve = resolve;
+      this._transitionTimer = setTimeout(() => {
+        this._transitionTimer = null;
+        this._transitionResolve = null;
+        this._endInputBlock();
+        this._retire(previous);
+        resolve(handle);
+      }, ms);
+    });
+  }
+  pop() {
+    this._finishTransition();
+    const popped = this._stack.pop();
+    if (!popped) {
+      return Promise.resolve(null);
+    }
+    popped.node.destroy();
+    const next = this._stack[this._stack.length - 1];
+    if (next) {
+      const idx = this._cache.indexOf(next);
+      if (idx >= 0) {
+        this._cache.splice(idx, 1);
+      }
+      next.node.active = true;
+      next.visible = true;
+    }
+    return Promise.resolve(popped);
+  }
+  _finishTransition() {
+    if (this._transitionTimer !== null) {
+      clearTimeout(this._transitionTimer);
+      this._transitionTimer = null;
+      this._endInputBlock();
+      const resolve = this._transitionResolve;
+      this._transitionResolve = null;
+      for (const page of this._stack.slice(0, -1)) {
+        this._retire(page);
+      }
+      if (resolve) {
+        resolve(this._stack[this._stack.length - 1]);
+      }
+    }
+  }
+  _retire(page) {
+    if (!page) {
+      return;
+    }
+    if (this._cache.includes(page)) {
+      return;
+    }
+    page.node.active = false;
+    page.visible = false;
+    this._cache.push(page);
+    while (this._cache.length > this._maxCached) {
+      const oldest = this._cache.shift();
+      const index = this._stack.indexOf(oldest);
+      if (index >= 0) {
+        this._stack.splice(index, 1);
+      }
+      oldest.node.destroy();
+    }
+  }
+  _beginInputBlock() {
+    if (!this._canvas || this._blockListener) {
+      return;
+    }
+    this._blockListener = e => {
+      this.inputBlockedCount += 1;
+      e.stopImmediatePropagation();
+    };
+    for (const type of ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchmove', 'touchend', 'keydown', 'keyup', 'wheel']) {
+      this._canvas.addEventListener(type, this._blockListener, {
+        capture: true
+      });
+    }
+  }
+  _endInputBlock() {
+    if (!this._canvas || !this._blockListener) {
+      return;
+    }
+    for (const type of ['mousedown', 'mouseup', 'mousemove', 'touchstart', 'touchmove', 'touchend', 'keydown', 'keyup', 'wheel']) {
+      this._canvas.removeEventListener(type, this._blockListener, {
+        capture: true
+      });
+    }
+    this._blockListener = null;
+  }
+  dispose() {
+    this._finishTransition();
+    this._endInputBlock();
+    for (const page of this._stack) {
+      if (isValid(page.node)) {
+        page.node.destroy();
+      }
+    }
+    for (const page of this._cache) {
+      if (isValid(page.node)) {
+        page.node.destroy();
+      }
+    }
+    this._stack.length = 0;
+    this._cache.length = 0;
+  }
+}
+
+class AudioService {
+  constructor(scene, options = {}) {
+    var _options$maxSfxVoices;
+    this._scene = void 0;
+    this._sources = new Map();
+    this._clips = new Map();
+    this._sfxVoices = new Set();
+    this._maxSfx = void 0;
+    this._musicEnabled = true;
+    this._sfxEnabled = true;
+    this._bgmId = null;
+    this.sfxDropped = 0;
+    this._scene = scene;
+    const max = (_options$maxSfxVoices = options.maxSfxVoices) !== null && _options$maxSfxVoices !== void 0 ? _options$maxSfxVoices : 5;
+    if (!Number.isInteger(max) || max < 1) {
+      throw new Error('[AudioService] maxSfxVoices must be a positive integer');
+    }
+    this._maxSfx = max;
+  }
+  async load(id, url) {
+    const existing = this._clips.get(id);
+    if (existing) {
+      return existing;
+    }
+    const clip = await new Promise((resolve, reject) => {
+      assetManager.loadRemote(url, (err, asset) => {
+        if (err || !asset) {
+          reject(new Error(`[AudioService] load failed: ${url}`));
+          return;
+        }
+        resolve(asset);
+      });
+    });
+    this._clips.set(id, clip);
+    return clip;
+  }
+  _sourceFor(id) {
+    let src = this._sources.get(id);
+    if (!src) {
+      var _this$_clips$get;
+      const node = new Node$1(`AudioService/BGM/${id}`);
+      node.active = false;
+      this._scene.addChild(node);
+      src = node.addComponent(AudioSource);
+      src.playOnAwake = false;
+      src.clip = (_this$_clips$get = this._clips.get(id)) !== null && _this$_clips$get !== void 0 ? _this$_clips$get : null;
+      node.active = true;
+      this._sources.set(id, src);
+    }
+    return src;
+  }
+  get bgmId() {
+    return this._bgmId;
+  }
+  get musicEnabled() {
+    return this._musicEnabled;
+  }
+  get sfxEnabled() {
+    return this._sfxEnabled;
+  }
+  get sfxActive() {
+    return this._sfxVoices.size;
+  }
+  playBgm(id, loop = true) {
+    if (!this._musicEnabled) {
+      return;
+    }
+    if (!this._clips.has(id)) {
+      throw new Error(`[AudioService] BGM '${id}' is not loaded`);
+    }
+    for (const [otherId, src] of this._sources) {
+      if (otherId !== id && src.playing) {
+        src.pause();
+      }
+    }
+    const src = this._sourceFor(id);
+    src.loop = loop;
+    src.play();
+    this._bgmId = id;
+  }
+  pauseBgm() {
+    const src = this._bgmId ? this._sources.get(this._bgmId) : null;
+    if (src) {
+      src.pause();
+    }
+  }
+  resumeBgm() {
+    var _this$_sources$get;
+    if (!this._musicEnabled || !this._bgmId) {
+      return;
+    }
+    (_this$_sources$get = this._sources.get(this._bgmId)) == null ? void 0 : _this$_sources$get.play();
+  }
+  playSfx(id, volume = 1) {
+    if (!this._sfxEnabled) {
+      return;
+    }
+    const clip = this._clips.get(id);
+    if (!clip) {
+      return;
+    }
+    if (this._sfxVoices.size >= this._maxSfx) {
+      this.sfxDropped += 1;
+      return;
+    }
+    const node = new Node$1(`AudioService/SFX/${id}`);
+    node.active = false;
+    this._scene.addChild(node);
+    const source = node.addComponent(AudioSource);
+    source.playOnAwake = false;
+    source.clip = clip;
+    source.loop = false;
+    source.volume = volume;
+    const voice = {
+      source,
+      timeout: null
+    };
+    const release = () => {
+      if (!this._sfxVoices.delete(voice)) {
+        return;
+      }
+      clearTimeout(voice.timeout);
+      source.stop();
+      node.destroy();
+    };
+    node.once(AudioSource.EventType.ENDED, release);
+    this._sfxVoices.add(voice);
+    voice.timeout = setTimeout(release, Math.max(1000, clip.duration * 1000 + 5000));
+    node.active = true;
+    try {
+      source.play();
+    } catch (error) {
+      release();
+      throw error;
+    }
+  }
+  setMusicEnabled(on) {
+    this._musicEnabled = on;
+    if (!on) {
+      this.pauseBgm();
+    }
+  }
+  setSfxEnabled(on) {
+    this._sfxEnabled = on;
+  }
+  bgmState() {
+    if (!this._bgmId) {
+      return null;
+    }
+    const src = this._sources.get(this._bgmId);
+    if (!src) {
+      return null;
+    }
+    return {
+      id: this._bgmId,
+      playing: src.playing,
+      currentTime: src.currentTime,
+      loop: src.loop
+    };
+  }
+  dispose() {
+    for (const src of this._sources.values()) {
+      src.stop();
+      src.node.destroy();
+    }
+    this._sources.clear();
+    this._clips.clear();
+    for (const voice of this._sfxVoices) {
+      clearTimeout(voice.timeout);
+      voice.source.stop();
+      voice.source.node.destroy();
+    }
+    this._sfxVoices.clear();
+    this._bgmId = null;
+  }
 }
 
 function check(condition, message) {
@@ -155725,7 +156049,7 @@ function getContext(canvas) {
       depth: true,
       stencil: true,
       premultipliedAlpha: false,
-      preserveDrawingBuffer: false,
+      preserveDrawingBuffer: true,
       powerPreference: 'default',
       failIfMajorPerformanceCaveat: false
     };
@@ -160949,5 +161273,5 @@ var legacy_rendering = /*#__PURE__*/Object.freeze({
 
 legacyCC.legacy_rendering = legacy_rendering;
 
-export { AIR_VERSION, Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebGLDevice, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, lerp, loadAssetAsync, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
+export { AIR_VERSION, Acceleration, AirAppImpl, AirTransmissionCapture, AlphaKey, AmbientInfo, AnimCurve, Animation$1 as Animation, AnimationClip, Animation$1 as AnimationComponent, AnimationManager, AnimationState$1 as AnimationState, Asset, AssetBank, AssetLibrary, AssetManager, AsyncDelegate, Atlas, AudioClip, AudioPCMDataView, AudioService, AudioSource, AudioSource as AudioSourceComponent, BASELINE_RATIO, BITMASK_TAG, Node$1 as BaseNode, BaseRenderData, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, BatchingUtility, BitMask, BitmapFont, BlockInputEvents, BlockInputEvents as BlockInputEventsComponent, BloomStage, BoxCharacterController, BoxCollider, BoxCollider2D, BoxCollider as BoxColliderComponent, BufferAsset, BuiltinResMgr, Button, Button as ButtonComponent, CCBoolean, CCClass, CCFloat, CCInteger, CCLoader, CCObject, CCObjectFlags, CCString, CacheMode, CachedArray, CallbacksInvoker, Camera, Camera as CameraComponent, Canvas, Canvas as CanvasComponent, CapsuleCharacterController, CapsuleCollider, CapsuleCollider as CapsuleColliderComponent, CharacterController, CharacterControllerContact, CircleCollider2D, Collider, Collider2D, Collider as ColliderComponent, Color, ColorKey, CompactValueTypeArray, Component, ConeCollider, ConfigurableConstraint, ConstantForce, Constraint, Contact2DType, CylinderCollider, CylinderCollider as CylinderColliderComponent, DEFAULT_OCTREE_DEPTH, DEFAULT_WORLD_MAX_POS, DEFAULT_WORLD_MIN_POS, DebugMode, DebugView, DeferredPipeline, Details, DirectionalLight, DirectionalLight as DirectionalLightComponent, Director, DirectorEvent, DistanceJoint2D, DynamicAtlasManager, EAxisDirection, ECollider2DType, EColliderType, EJoint2DType, ENUM_TAG, EPSILON$3 as EPSILON, EPhysics2DDrawFlags, EPhysicsDrawFlags, ERaycast2DType, ERigidBody2DType, ERigidBodyType, EXT_MESHOPT_COMPRESSION, EasingMethod, EditBox, EditBox as EditBoxComponent, EditorExtendable, EffectAsset, EmptyDevice, Enum, Event, EventAcceleration, EventGamepad, EventHMD, EventHandheld, EventHandle, EventHandler, EventInfo, EventKeyboard, EventMouse, EventTarget, EventTouch, Eventify, ExtrapolationMode, FeedStatusController, FixedConstraint, FixedJoint2D, FogInfo, Font, ForwardFlow, ForwardPipeline, ForwardStage, GCObject, GLTFAsset, GLTFError, GLTFExtensionRegistry, GLTFLoader, Game, GbufferStage, GeometryRenderer, Gradient, Graphics, Graphics as GraphicsComponent, HALF_PI, HingeConstraint, HingeJoint2D, HorizontalTextAlignment, HtmlTextParser, ImageAsset, Input, InstanceMaterialType, InstancedBuffer, Intersection2D, JavaScript, Joint2D, JsonAsset, KHR_DRACO_MESH_COMPRESSION, KHR_MESHOPT_COMPRESSION, KHR_MESH_QUANTIZATION, KTX2_RAW_MIME, KeyCode, LOD, LODGroup, LRUCache, Label, LabelAtlas, Label as LabelComponent, LabelOutline, LabelOutline as LabelOutlineComponent, LabelShadow, Layers, Layout$1 as Layout, Layout$1 as LayoutComponent, Light, Light as LightComponent, LightProbeInfo, LightingStage, MATH_FLOAT_ARRAY, MIDDLE_RATIO, MainFlow, Mask, Mask as MaskComponent, MaskType, Mat3, Mat4, Material, MathBase, Mesh, MeshBuffer, MeshCollider, MeshCollider as MeshColliderComponent, MeshRenderData, MeshRenderer, MissingScript, MobilityMode, MeshRenderer as ModelComponent, ModelRenderer, MotionStreak, MotionStreakAssemblerManager, MouseJoint2D, Node$1 as Node, NodeActivator, NodeEventType, NodePool, NodeSpace, ObjectCurve, OctreeInfo, Overflow$1 as Overflow, PHYSICS_2D_PTM_RATIO, PageView, PageView as PageViewComponent, PageViewIndicator, PageViewIndicator as PageViewIndicatorComponent, ParticleAsset, ParticleSystem2D, ParticleSystem2DAssembler, PhysicsMaterial as PhysicMaterial, Physics2DManifoldType, Physics2DUtils, PhysicsGroup$1 as PhysicsGroup, PhysicsGroup2D, PhysicsLineStripCastResult, PhysicsMaterial, PhysicsRayResult, PhysicsSystem, PhysicsSystem2D, PipelineEventProcessor, PipelineEventType, PipelineInputAssemblerData, PipelineSceneData, PipelineStateManager, PlaneCollider, PointLight, PointToPointConstraint, PolygonCollider2D, Pool$1 as Pool, PostProcessStage, PostSettingsInfo, Prefab, PrefabLink, Primitive, PrivateNode, Profiler, ProgressBar, ProgressBar as ProgressBarComponent, QuadRenderData, Quat, QuatCurve, QuatInterpolationMode, RangedDirectionalLight, RatioSampler, RealCurve, RealInterpolationMode, Rect, RecyclePool, ReflectionProbe, ReflectionProbeFlow, ReflectionProbeManager, ReflectionProbeStage, ReflectionProbeType, RelativeJoint2D, UIRenderer as RenderComponent, RenderData$1 as RenderData, RenderFlow, RenderPipeline, RenderRoot2D, RenderStage, RenderTexture, UIRenderer as Renderable2D, ModelRenderer as RenderableComponent, Renderer, RenderingSubMesh, ResolutionPolicy, RichText as RichTextComponent, RigidBody, RigidBody2D, RigidBody as RigidBodyComponent, Root, SUPPORTED_IMAGE_MIMES, SafeArea, SafeArea as SafeAreaComponent, Scene, SceneAsset, SceneGlobals, SceneStack, Scheduler, Script, ScrollBar, ScrollBar as ScrollBarComponent, ScrollView, ScrollView as ScrollViewComponent, Settings, SettingsCategory, ShadowFlow, ShadowStage, ShadowsInfo, SimplexCollider, Size, SkelAnimDataHub, SkeletalAnimation, SkeletalAnimation as SkeletalAnimationComponent, SkeletalAnimationState, Skeleton$1 as Skeleton, SkinInfo, SkinnedMeshBatchRenderer, SkinnedMeshRenderer, SkinnedMeshUnit, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, SkyboxInfo, Slider, Slider as SliderComponent, SliderJoint2D, Socket, Sorting, Sorting2D, SortingLayers, SphereCollider, SphereCollider as SphereColliderComponent, SphereLight, SphereLight as SphereLightComponent, SpotLight, SpotLight as SpotLightComponent, SpringJoint2D, Sprite, SpriteAtlas, Sprite as SpriteComponent, SpriteFrame, SpriteFrameEvent, SpriteRenderer, StencilManager, SubContextView, System, SystemEvent, SystemEventType, SystemPriority, TRANSMISSION_LAYER, TTFFont, TWO_PI, TangentWeightMode, TerrainCollider, TextAsset, Texture2D, TextureCube, TiledLayer, TiledMap, TiledMapAsset, TiledObjectGroup, TiledTile, TiledUserNodeData, Toggle, Toggle as ToggleComponent, ToggleContainer, ToggleContainer as ToggleContainerComponent, Touch, TransformBit, Tween, TweenAction, TweenSystem, TypeScript, Batcher2D as UI, UIComponent, UICoordinateTracker, UICoordinateTracker as UICoordinateTrackerComponent, UIDrawBatch, UIMeshRenderer, UIMeshRenderer as UIModelComponent, UIOpacity, UIOpacity as UIOpacityComponent, UIRenderer as UIRenderable, UIRenderer, UIReorderComponent, UIStaticBatch, UIStaticBatch as UIStaticBatchComponent, UITransform, UITransform as UITransformComponent, vertexFormat as UIVertexFormat, engineVersion as VERSION, ValueType, Vec2, Vec3, Vec4, VerticalTextAlignment, VideoClip, VideoPlayer, View, ViewGroup, WebGL2Device, WebGLDevice, WebView, WheelJoint2D, Widget, Widget as WidgetComponent, WorldNode3DToLocalNodeUI, WorldNode3DToWorldNodeUI, __checkObsoleteInNamespace__, __checkObsolete__, _decorator, _resetDebugSetting, absMax, absMaxComponent, animation, applyMixins, approx, approxGE, approxGT, approxLE, approxLT, assert, assertID, assertIsNonNullable, assertIsTrue, assertsArrayIndex, assetManager, attachContextHealth, bezier$1 as bezier, bezierByTime, binarySearch, binarySearchBy, binarySearchEpsilon, bits, buildSkeletonTree, builtinResMgr, ccenum, cclegacy, clamp$1 as clamp, clamp01, color, computeRatioByType, configureGLTFLoaderDefaults, convertUtils, createAirApp, createDefaultPipeline, createDracoDecoder, createKTX2Transcoder, createMeshoptDecoder, createStepClock, createUICanvas, debug, debugID, defaultTransmissionVisibility, deprecateModuleExportedName, deserialize, deserializeTag, detectImageMime, director, disallowAnimation$1 as disallowAnimation, displayName$2 as displayName, displayOrder$3 as displayOrder, dracoCompressionFactory, index$1 as dragonBones, dynamicAtlasManager, easing, editable$6 as editable, editorExtrasTag, enumerableProps, equals$2 as equals, error, errorID, find, flattenCodeArray, floatToHalf, formerlySerializedAs$3 as formerlySerializedAs, fragmentText, frameObject, game, garbageCollectionManager, geometry, getBaselineOffset, getEnglishWordPartAtFirst, getEnglishWordPartAtLast, getError, getPathFromRoot, getPhaseID$1 as getPhaseID, getSerializationMetadata, getSymbolAt, getSymbolCodeAt, getSymbolLength, getWorldTransformUntilRoot, index$4 as gfx, graphicsAssemblerManager as graphicsAssembler, halfToFloat, input, instantiate, inverseLerp, isCCClassOrFastDefined, isCCObject, isDisplayStats, isEnglishWordPartAtFirst, isEnglishWordPartAtLast, isKTX2, isKTX2Available, isMeshoptAvailable, isTransmissionMaterial, isUnicodeCJK, isUnicodeSpace, isValid, js$1 as js, labelAssembler, labelNode, lerp, loadAssetAsync, loadWasmModuleSpine, loader, log, logID, macro, markAsWarning, mat4, math, index$5 as memop, meshQuantizationFactory, meshoptCompressionFactory, misc, murmurhash2_32_gc, native, nextPow2, override$1 as override, path, physics, pingPong, define as pipeline, index as postProcess, preTransforms, primitives, profiler, pseudoRandom, pseudoRandomRange, pseudoRandomRangeInt, quat$1 as quat, random, randomRange, randomRangeInt, range$2 as range, rangeStep, rect, registerGLTFLoader, removeProperty, renderer, rendering, repeat$2 as repeat, replaceProperty, resources, restoreBindPose, safeMeasureText, sampleAnimationCurve, screen$1 as screen, selectPhysicsBackend, selector$1 as selector, serializable$c as serializable, serializeTag, setDefaultLogTimes, setDisplayStats, setPropertyEnumType, setPropertyEnumTypeOnAttrs, setRandGenerator, setTextureSupportForTesting, settings, shift, size, slide$2 as slide, index$2 as sp, spriteAssembler, spriteNode, sys, systemEvent, tiledLayerAssembler, toDegree, toRadian, tooltip$3 as tooltip, tween, tweenProgress, tweenUtil, url, utils, v2$1 as v2, v3, v4, view, visible$5 as visible, visibleRect, warn, warnID, widgetManager };
 //# sourceMappingURL=cocosair.module.js.map

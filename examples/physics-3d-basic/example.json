@@ -78,12 +78,24 @@
     "physics.PhysicsRayResult",
     "physics.PhysicsMaterial"
   ],
-  "capabilities": ["physics"],
+  "capabilities": [
+    "physics"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -104,7 +116,11 @@
     "visual": "深底一屏：灰色地面长条横贯下方，其上左橙木箱、中绿球、右蓝胶囊、最右紫色圆环四个受光体（DirectionalLight illuminance 20000，与 examples/gltf-viewer 同档）；触发盒无形态。真实点击把木箱瞬移到半空触发盒里——因 builtin 不积分，它停在那儿不下落（截图取点击后状态，frameChanged=false 即此事实）。材质在本例只是让物理状态「看得见」的手段，逐节点 effect/属性取证由 examples/mesh-sphere 的 material-property 承担；本例的判别力全在 304 条物理 probeEquals 上"
   },
   "api": {
-    "primary": ["physics.PhysicsSystem", "physics.RigidBody", "physics.Collider"],
+    "primary": [
+      "physics.PhysicsSystem",
+      "physics.RigidBody",
+      "physics.Collider"
+    ],
     "supporting": [
       "physics.BoxCollider",
       "physics.SphereCollider",
@@ -630,7 +646,17 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Ground", "Crate", "Ball", "Capsule", "Sensor", "Trimesh", "PhysicsHost"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Ground",
+        "Crate",
+        "Ball",
+        "Capsule",
+        "Sensor",
+        "Trimesh",
+        "PhysicsHost"
+      ]
     }
   },
   "interaction": {
@@ -642,7 +668,9 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -655,7 +683,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 3.6, 9.4],
+        "position": [
+          0,
+          3.6,
+          9.4
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -665,7 +697,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -675,7 +711,11 @@
         ]
       },
       "Ground": {
-        "position": [0, -0.15, 0],
+        "position": [
+          0,
+          -0.15,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -685,7 +725,11 @@
         ]
       },
       "Crate": {
-        "position": [-2.2, 0.75, 0],
+        "position": [
+          -2.2,
+          0.75,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -695,7 +739,11 @@
         ]
       },
       "Ball": {
-        "position": [0, 0.7, 0],
+        "position": [
+          0,
+          0.7,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -705,7 +753,11 @@
         ]
       },
       "Capsule": {
-        "position": [2.2, 0.8, 0],
+        "position": [
+          2.2,
+          0.8,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -715,7 +767,11 @@
         ]
       },
       "Sensor": {
-        "position": [-2.2, 3.6, 0],
+        "position": [
+          -2.2,
+          3.6,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -725,7 +781,11 @@
         ]
       },
       "Trimesh": {
-        "position": [4.2, 0.9, 0],
+        "position": [
+          4.2,
+          0.9,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -735,9 +795,21 @@
         ]
       },
       "PhysicsHost": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -751,7 +823,7 @@
   "promotion": {
     "spec": "c8e36fab4e52",
     "source": "5a37fd3d3300ace6",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 63,
     "attested": 6,
     "units": 69

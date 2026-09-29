@@ -19,8 +19,14 @@
     "visual": "画面并排三个纯色立方体（红/绿/蓝），形状光照完全一致，仅颜色不同"
   },
   "api": {
-    "primary": ["Material.initialize", "Material.setProperty"],
-    "supporting": ["math.Color", "MeshRenderer"],
+    "primary": [
+      "Material.initialize",
+      "Material.setProperty"
+    ],
+    "supporting": [
+      "math.Color",
+      "MeshRenderer"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -39,7 +45,10 @@
       "Node.addChild",
       "Node.setPosition"
     ],
-    "forbiddenShortcut": ["用顶点色或贴图冒充材质主色", "共享同一 Material 实例再临时改色"],
+    "forbiddenShortcut": [
+      "用顶点色或贴图冒充材质主色",
+      "共享同一 Material 实例再临时改色"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -139,23 +148,40 @@
       }
     ]
   },
-  "capabilities": ["materials"],
+  "capabilities": [
+    "materials"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Red", "Green", "Blue"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Red",
+        "Green",
+        "Blue"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "material-property", "no-runtime-error", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "material-property",
+      "no-runtime-error",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "lifecycle": [],
     "capability": []
   },
@@ -170,7 +196,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0, 2.6, 7.5],
+        "position": [
+          0,
+          2.6,
+          7.5
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -180,7 +210,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -188,10 +222,18 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       },
       "Red": {
-        "position": [-2.4, 0.5, 0],
+        "position": [
+          -2.4,
+          0.5,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -201,7 +243,11 @@
         ]
       },
       "Green": {
-        "position": [0, 0.5, 0],
+        "position": [
+          0,
+          0.5,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -211,7 +257,11 @@
         ]
       },
       "Blue": {
-        "position": [2.4, 0.5, 0],
+        "position": [
+          2.4,
+          0.5,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -226,7 +276,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [235, 70, 70, 255],
+            "value": [
+              235,
+              70,
+              70,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -241,7 +296,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [70, 200, 90, 255],
+            "value": [
+              70,
+              200,
+              90,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -256,7 +316,12 @@
         "effect": "builtin-standard",
         "props": {
           "mainColor": {
-            "value": [70, 120, 235, 255],
+            "value": [
+              70,
+              120,
+              235,
+              255
+            ],
             "encoding": "0-255",
             "tolerance": 0.002,
             "provenance": {
@@ -280,7 +345,7 @@
   "promotion": {
     "spec": "d332c2a0874b",
     "source": "1c35d1d3e8c24f0e",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 16,
     "attested": 0,
     "units": 16

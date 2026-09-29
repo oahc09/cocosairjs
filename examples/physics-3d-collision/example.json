@@ -40,7 +40,9 @@
     "physics.PhysicsSystem.step",
     "physics.PhysicsSystem.emitEvents"
   ],
-  "capabilities": ["physics"],
+  "capabilities": [
+    "physics"
+  ],
   "learning": {
     "goal": "V1.2 r46（owner 批复 #8(a)=D12）：默认 bundle 同时编入 physics-builtin 与 physics-cannon 后，验证交付期后端切换 `createAirApp({ physics: 'cannon' })` 的真实模拟链路——重力下落、刚体叠稳、碰撞事件对次序、真实命中法线，与 physics-3d-basic 的 builtin「不模拟」面互为对照",
     "points": [
@@ -56,7 +58,11 @@
     "visual": "深蓝灰底（clearColor 18,26,34）静态三体场景：绿色地面、橙色 BallA、蓝色 BallB 叠放于画面中央，左侧灰色圆环（SpinRing 每帧 yaw+90°/s 持续旋转）为 frameChanged 护栏提供与模拟无关的帧间变化；相机 PERSPECTIVE fov45 (0,4.2,9.8) lookAt (0,1.2,0)。"
   },
   "api": {
-    "primary": ["physics.RigidBody", "physics.SphereCollider", "physics.PhysicsSystem.raycast"],
+    "primary": [
+      "physics.RigidBody",
+      "physics.SphereCollider",
+      "physics.PhysicsSystem.raycast"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -299,21 +305,39 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Ground", "BallA", "BallB", "SpinRing", "FrameHost"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Ground",
+        "BallA",
+        "BallB",
+        "SpinRing",
+        "FrameHost"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "interaction": [],
-    "visual": ["visible-frame", "frame-diff"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame",
+      "frame-diff"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -326,7 +350,7 @@
   "promotion": {
     "spec": "3ff3f3d53ed9",
     "source": "6f5ec74fcc298655",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 30,
     "attested": 1,
     "units": 31

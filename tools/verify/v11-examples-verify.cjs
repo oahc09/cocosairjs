@@ -614,7 +614,7 @@ async function runLifecycleChecks (example, runtime, channel, spec) {
   if (post && !(post.litRatio >= 0.01)) { problems.push(`post-release frame empty (litRatio=${post.litRatio.toFixed(4)})`); }
   const errorsAfter = ((await channel.errorReport({ limit: 50 })) || {}).errors || [];
   const newErrors = errorsAfter.slice(errorsBefore.length);
-  if (newErrors.length > 0) { problems.push(`${newErrors.length} runtime errors during release/reload: ${String(newErrors[0].message || '').slice(0, 80)}`); }
+  if (newErrors.length > 0) { problems.push(`${newErrors.length} runtime errors during release/reload: ${String(newErrors[0].message || '').slice(0, 160)}`); }
   // 与 Reference Track 的 resource-released 同语义：资产报告不得残留 DESTROYED_RESOURCE
   const assetReport = await channel.inspect({ kind: 'inspectAsset' });
   const dangling = ((assetReport || {}).diagnostics || []).filter((d) => d.code === 'DESTROYED_RESOURCE');

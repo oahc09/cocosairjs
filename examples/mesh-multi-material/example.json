@@ -19,8 +19,14 @@
     "visual": "一个物体左半红色粗糙、右半蓝色金属，两个材质区域属于同一 MeshRenderer"
   },
   "api": {
-    "primary": ["GLTFLoader.parseAsync", "GLTFAsset.instantiate"],
-    "supporting": ["MeshRenderer", "Node.getComponentInChildren"],
+    "primary": [
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate"
+    ],
+    "supporting": [
+      "MeshRenderer",
+      "Node.getComponentInChildren"
+    ],
     "claims": [
       "createAirApp",
       "Scene",
@@ -39,7 +45,10 @@
       "GLTFAsset.destroy",
       "isValid"
     ],
-    "forbiddenShortcut": ["用两个完全独立 Mesh 冒充 multiple material", "用两台 MeshRenderer 挂同一节点伪装"],
+    "forbiddenShortcut": [
+      "用两个完全独立 Mesh 冒充 multiple material",
+      "用两台 MeshRenderer 挂同一节点伪装"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -139,24 +148,42 @@
       }
     ]
   },
-  "capabilities": ["materials"],
+  "capabilities": [
+    "materials"
+  ],
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "MultiMaterialCube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "MultiMaterialCube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "asset-loaded", "material-property", "no-runtime-error", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "material-property",
+      "no-runtime-error",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "coverage": {
@@ -170,9 +197,21 @@
   "validationExpectations": {
     "transform-equals": {
       "MultiMaterialCube": {
-        "position": [0, 0, 0],
-        "rotationEuler": [0, 0, 0],
-        "scale": [1, 1, 1],
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotationEuler": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -188,7 +227,11 @@
         "handAuthored": true
       },
       "Main Camera": {
-        "position": [0, 0.9, 3.4],
+        "position": [
+          0,
+          0.9,
+          3.4
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -198,7 +241,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -206,7 +253,11 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       }
     },
     "material-property": {
@@ -217,7 +268,12 @@
             "materialName": "red-half",
             "props": {
               "albedo": {
-                "value": [0.85, 0.2, 0.2, 1],
+                "value": [
+                  0.85,
+                  0.2,
+                  0.2,
+                  1
+                ],
                 "encoding": "0-1",
                 "tolerance": 0.002,
                 "provenance": {
@@ -233,7 +289,12 @@
             "materialName": "blue-half",
             "props": {
               "albedo": {
-                "value": [0.2, 0.45, 0.85, 1],
+                "value": [
+                  0.2,
+                  0.45,
+                  0.85,
+                  1
+                ],
                 "encoding": "0-1",
                 "tolerance": 0.002,
                 "provenance": {
@@ -280,7 +341,7 @@
   "promotion": {
     "spec": "aaa92922c830",
     "source": "3248cf0cb2aab8c6",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 16,
     "attested": 0,
     "units": 16

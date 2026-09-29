@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-28T00:00:20.788Z",
+  "generatedAt": "2026-09-29T00:37:22.227Z",
   "evidenceSources": [
     {
       "path": "docs/evidence/v11-examples-verified.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T23:59:51.982Z",
+      "measuredAt": "2026-09-29T00:37:11.994Z",
       "mode": "spec-driven-v3"
     },
     {
       "path": "docs/evidence/v11-devtools-examples.json",
       "present": true,
       "status": "COMPLETE",
-      "measuredAt": "2026-09-27T21:03:55.661Z",
+      "measuredAt": "2026-09-29T00:01:16.794Z",
       "mode": "devtools-session-v3"
     }
   ],
@@ -23,11 +23,11 @@
     "verifiedChannels": "verified 再按观察通道拆分：call=被当作函数/构造器执行；read=仅观察到顶层导出的成员读取（命名空间用法）；unknown=证据行未记录通道。门禁数字含 read，引用时必须一并给出 call/read 拆分",
     "denominator": "门禁分母 = docs/example-api-inventory.json 的 coverageRequired=true 单元；required=0 的 tier 记 NOT_APPLICABLE"
   },
-  "candidateFingerprint": "7f3b89f6ac076cbf",
-  "inventoryFingerprint": "238a4afd6897feea",
-  "apiInventoryRevision": "a9139c31a9277f1c",
+  "candidateFingerprint": "2360fa3fb4cea194",
+  "inventoryFingerprint": "ef8b3943f04d6145",
+  "apiInventoryRevision": "7532fc2bceeac726",
   "inventoryConsistency": [],
-  "totalUnits": 12229,
+  "totalUnits": 12266,
   "totalRequired": 1426,
   "totalClaimed": 1672,
   "totalAttested": 63,
@@ -58,7 +58,7 @@
       "instrumentation": {
         "observed": 68,
         "total": 68,
-        "hash": "f1c28067af91bfe4"
+        "hash": "0bff133ad98a5deb"
       },
       "claims": 68,
       "tally": {
@@ -82,7 +82,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "77d29557e9ce48d8"
+        "hash": "2aa4cf1b129caf38"
       },
       "claims": 18,
       "tally": {
@@ -106,7 +106,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "4a09fcfcd55ba285"
+        "hash": "4e5bf7029fea3459"
       },
       "claims": 28,
       "tally": {
@@ -130,7 +130,7 @@
       "instrumentation": {
         "observed": 9,
         "total": 11,
-        "hash": "31a83ddbe79a2906"
+        "hash": "39f0c3a4b35fcc1b"
       },
       "claims": 11,
       "tally": {
@@ -154,7 +154,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "be97a07d09e6b0d7"
+        "hash": "683b9dd24798e8c4"
       },
       "claims": 21,
       "tally": {
@@ -178,7 +178,7 @@
       "instrumentation": {
         "observed": 13,
         "total": 13,
-        "hash": "a54070dce7b7efad"
+        "hash": "3c9aaf67eb578e5c"
       },
       "claims": 13,
       "tally": {
@@ -202,7 +202,7 @@
       "instrumentation": {
         "observed": 117,
         "total": 117,
-        "hash": "8121c8959ed7e4aa"
+        "hash": "ecf20cbdeb5d43aa"
       },
       "claims": 117,
       "tally": {
@@ -226,7 +226,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "de6acb19855e9b0b"
+        "hash": "506dd7a4dab96c91"
       },
       "claims": 19,
       "tally": {
@@ -250,7 +250,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "bbdc5d1f229892e7"
+        "hash": "6d2887c1b3bd345b"
       },
       "claims": 19,
       "tally": {
@@ -274,7 +274,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "f3d6e0a1fac8db19"
+        "hash": "1495c7bef433515d"
       },
       "claims": 19,
       "tally": {
@@ -298,7 +298,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "cddc15436a705ec3"
+        "hash": "bb2a7f8c963f596b"
       },
       "claims": 21,
       "tally": {
@@ -322,7 +322,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "c9a265abf2bdf333"
+        "hash": "02c9709083e851f8"
       },
       "claims": 20,
       "tally": {
@@ -346,7 +346,7 @@
       "instrumentation": {
         "observed": 54,
         "total": 54,
-        "hash": "9a45f33fce80e175"
+        "hash": "e780fbf85b08dc56"
       },
       "claims": 54,
       "tally": {
@@ -370,7 +370,7 @@
       "instrumentation": {
         "observed": 37,
         "total": 37,
-        "hash": "e9bc681cdd1fd381"
+        "hash": "015b7dd9eac0ba90"
       },
       "claims": 37,
       "tally": {
@@ -394,7 +394,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "b9dc00f85e0bf1b2"
+        "hash": "b8e0f675908ca7bc"
       },
       "claims": 20,
       "tally": {
@@ -418,7 +418,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 26,
-        "hash": "1bd0cd33713b762f"
+        "hash": "cd09b86db144a3a8"
       },
       "claims": 26,
       "tally": {
@@ -442,7 +442,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "5935329ef7f5de5c"
+        "hash": "b0d372992e7c4469"
       },
       "claims": 28,
       "tally": {
@@ -466,7 +466,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "c943a73d57f2cd69"
+        "hash": "ffd7dbab2094b40d"
       },
       "claims": 19,
       "tally": {
@@ -490,7 +490,7 @@
       "instrumentation": {
         "observed": 93,
         "total": 98,
-        "hash": "c72c84aa07517d38"
+        "hash": "a6a9687217c0328f"
       },
       "claims": 98,
       "tally": {
@@ -514,7 +514,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "3994525604ceb092"
+        "hash": "ef7fc480e49bab5b"
       },
       "claims": 31,
       "tally": {
@@ -538,7 +538,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "eb96e718efd15b4e"
+        "hash": "6f1b0cdc06e9e660"
       },
       "claims": 17,
       "tally": {
@@ -582,7 +582,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "4003c8b29bd48572"
+        "hash": "f3f5ea962b511dc7"
       },
       "claims": 15,
       "tally": {
@@ -606,7 +606,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "6968d5628a1e9896"
+        "hash": "4de4b1c7d41c7290"
       },
       "claims": 14,
       "tally": {
@@ -630,7 +630,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "83bcf411b92270b1"
+        "hash": "3aebc513ad9d0ad4"
       },
       "claims": 29,
       "tally": {
@@ -654,7 +654,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 30,
-        "hash": "50dbaa8552b8059f"
+        "hash": "d4cc4426e04d1248"
       },
       "claims": 30,
       "tally": {
@@ -678,7 +678,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "7ae1cb003fc24969"
+        "hash": "a70725761d366288"
       },
       "claims": 20,
       "tally": {
@@ -702,7 +702,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "f5813873ba9c3917"
+        "hash": "cd9789592e46334a"
       },
       "claims": 21,
       "tally": {
@@ -726,7 +726,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 20,
-        "hash": "836e550fff14d79d"
+        "hash": "710af6271c0c0ee1"
       },
       "claims": 20,
       "tally": {
@@ -750,7 +750,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "328f340ef4b7808b"
+        "hash": "47a7eab821148b7c"
       },
       "claims": 17,
       "tally": {
@@ -774,7 +774,7 @@
       "instrumentation": {
         "observed": 15,
         "total": 15,
-        "hash": "27cb393a086f6dcd"
+        "hash": "a1ad5fbfc5fc0b5e"
       },
       "claims": 15,
       "tally": {
@@ -798,7 +798,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "b59f1877d884a9e9"
+        "hash": "a3ef81e8e2f1f21d"
       },
       "claims": 28,
       "tally": {
@@ -822,7 +822,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "d4a8ebfc751aa892"
+        "hash": "f7a22a3266947b93"
       },
       "claims": 20,
       "tally": {
@@ -846,7 +846,7 @@
       "instrumentation": {
         "observed": 26,
         "total": 26,
-        "hash": "79f12f693ac96f01"
+        "hash": "60e2806d1d5138ec"
       },
       "claims": 26,
       "tally": {
@@ -870,7 +870,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "8a2f37fa65b7c88b"
+        "hash": "3b405df4f575de83"
       },
       "claims": 23,
       "tally": {
@@ -894,7 +894,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "372fa72e808f13cd"
+        "hash": "a95991c660f1575d"
       },
       "claims": 24,
       "tally": {
@@ -918,7 +918,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "7766545ca662d384"
+        "hash": "be62b87c2d93580e"
       },
       "claims": 25,
       "tally": {
@@ -942,7 +942,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "42ea98a4682b58ca"
+        "hash": "ad7b52c8c5a7da8f"
       },
       "claims": 45,
       "tally": {
@@ -966,7 +966,7 @@
       "instrumentation": {
         "observed": 37,
         "total": 37,
-        "hash": "e8e2c4f9756f4e7d"
+        "hash": "b35e6185141c7dc1"
       },
       "claims": 37,
       "tally": {
@@ -990,7 +990,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "02fdaff46a7f0e2f"
+        "hash": "c0fabb5cc45e68ef"
       },
       "claims": 22,
       "tally": {
@@ -1014,7 +1014,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "408859fd45a4bc16"
+        "hash": "bd865e9a8ff440fb"
       },
       "claims": 14,
       "tally": {
@@ -1038,7 +1038,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "cdf81b504e8841ce"
+        "hash": "3e8c438353645d15"
       },
       "claims": 16,
       "tally": {
@@ -1062,7 +1062,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "a176a22ce302e165"
+        "hash": "b7b837c987f95343"
       },
       "claims": 23,
       "tally": {
@@ -1086,7 +1086,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "b266253754d2f241"
+        "hash": "f0283b95409b8749"
       },
       "claims": 31,
       "tally": {
@@ -1110,7 +1110,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "1ecdacdb2a9a1c93"
+        "hash": "bb25a1954300c459"
       },
       "claims": 22,
       "tally": {
@@ -1134,7 +1134,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "d36f24b9f1656f80"
+        "hash": "cb152537933359a2"
       },
       "claims": 16,
       "tally": {
@@ -1158,7 +1158,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "727bbfbe478098ca"
+        "hash": "e6d5c0164255302b"
       },
       "claims": 25,
       "tally": {
@@ -1182,7 +1182,7 @@
       "instrumentation": {
         "observed": 36,
         "total": 36,
-        "hash": "8bcb1b00a02cfc85"
+        "hash": "063b6b440cdb9eac"
       },
       "claims": 36,
       "tally": {
@@ -1206,7 +1206,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "dd1598195bcc30db"
+        "hash": "95a5383c48285471"
       },
       "claims": 21,
       "tally": {
@@ -1230,7 +1230,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "f7ccda6d72b34453"
+        "hash": "ace064c03d1d711d"
       },
       "claims": 21,
       "tally": {
@@ -1254,7 +1254,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "0ede96114c5e3e05"
+        "hash": "d97d9ea1e8f55c7f"
       },
       "claims": 25,
       "tally": {
@@ -1278,7 +1278,7 @@
       "instrumentation": {
         "observed": 62,
         "total": 62,
-        "hash": "f855dd52aec62cfd"
+        "hash": "82abca317deaeaa9"
       },
       "claims": 62,
       "tally": {
@@ -1302,7 +1302,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "9378db96d141111f"
+        "hash": "e366f61211bf96ba"
       },
       "claims": 21,
       "tally": {
@@ -1326,7 +1326,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "af4c7ab4f0ff24f8"
+        "hash": "7a71ad00d56a427a"
       },
       "claims": 19,
       "tally": {
@@ -1350,7 +1350,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "8b7539153ad1a938"
+        "hash": "0d4c1b88b87bfde1"
       },
       "claims": 22,
       "tally": {
@@ -1374,7 +1374,7 @@
       "instrumentation": {
         "observed": 61,
         "total": 61,
-        "hash": "044a2ef438acef57"
+        "hash": "4496267f9c23c3e4"
       },
       "claims": 61,
       "tally": {
@@ -1398,7 +1398,7 @@
       "instrumentation": {
         "observed": 28,
         "total": 28,
-        "hash": "3b6529a6e644acb7"
+        "hash": "983587f7002b6968"
       },
       "claims": 28,
       "tally": {
@@ -1422,7 +1422,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "b7ecc7f616b8e022"
+        "hash": "cb0ff5337a1ddb70"
       },
       "claims": 31,
       "tally": {
@@ -1446,7 +1446,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "749df635373d37c5"
+        "hash": "d178e7a3873b7bcd"
       },
       "claims": 23,
       "tally": {
@@ -1470,7 +1470,7 @@
       "instrumentation": {
         "observed": 85,
         "total": 85,
-        "hash": "e744d853a754e79d"
+        "hash": "460ccf072b46302c"
       },
       "claims": 85,
       "tally": {
@@ -1494,7 +1494,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "794ecaa039560479"
+        "hash": "6ccc7c3f49ce5683"
       },
       "claims": 24,
       "tally": {
@@ -1518,7 +1518,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "83c06418c31c525b"
+        "hash": "8abbe96f726c9c9f"
       },
       "claims": 30,
       "tally": {
@@ -1542,7 +1542,7 @@
       "instrumentation": {
         "observed": 57,
         "total": 57,
-        "hash": "86c12059a8584a68"
+        "hash": "c27df49f6024cce5"
       },
       "claims": 57,
       "tally": {
@@ -1566,7 +1566,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "c4ec290c0beb4854"
+        "hash": "3afe94e1912e71d2"
       },
       "claims": 23,
       "tally": {
@@ -1590,7 +1590,7 @@
       "instrumentation": {
         "observed": 25,
         "total": 25,
-        "hash": "1033ca87ddeb77bc"
+        "hash": "671a2386af8766dd"
       },
       "claims": 25,
       "tally": {
@@ -1614,7 +1614,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "b3cc0d1ced3fcb73"
+        "hash": "27d3ce006bbdb4b5"
       },
       "claims": 33,
       "tally": {
@@ -1638,7 +1638,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "654c800c22d264d4"
+        "hash": "19c9d1f2627786aa"
       },
       "claims": 18,
       "tally": {
@@ -1662,7 +1662,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "95f7c29790b45d64"
+        "hash": "f9741e47f41dcaad"
       },
       "claims": 35,
       "tally": {
@@ -1686,7 +1686,7 @@
       "instrumentation": {
         "observed": 35,
         "total": 35,
-        "hash": "1c91239ea344950f"
+        "hash": "8899f63e8173e6a1"
       },
       "claims": 35,
       "tally": {
@@ -1710,7 +1710,7 @@
       "instrumentation": {
         "observed": 47,
         "total": 47,
-        "hash": "23e6ec637c233924"
+        "hash": "23c702c39c07bca8"
       },
       "claims": 47,
       "tally": {
@@ -1734,7 +1734,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "ed2f4bf24dc37e03"
+        "hash": "8d7e11333df77873"
       },
       "claims": 32,
       "tally": {
@@ -1758,7 +1758,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "5697da82a5f3bd09"
+        "hash": "2d76d0f9c742fdfe"
       },
       "claims": 23,
       "tally": {
@@ -1782,7 +1782,7 @@
       "instrumentation": {
         "observed": 69,
         "total": 69,
-        "hash": "71edfe4f891df7e4"
+        "hash": "247bc6a5586a2c04"
       },
       "claims": 69,
       "tally": {
@@ -1806,7 +1806,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "21c3ae3c411788da"
+        "hash": "2d465e6110191929"
       },
       "claims": 21,
       "tally": {
@@ -1830,7 +1830,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 29,
-        "hash": "1b51889989d81f45"
+        "hash": "68559916f3aecdaa"
       },
       "claims": 29,
       "tally": {
@@ -1854,7 +1854,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "a56e7cabd9c1b4fb"
+        "hash": "ba9d6488405709d5"
       },
       "claims": 27,
       "tally": {
@@ -1878,7 +1878,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "32e4552e90be6d63"
+        "hash": "85aad669c7da0b40"
       },
       "claims": 19,
       "tally": {
@@ -1902,7 +1902,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "f9d034c682739656"
+        "hash": "67844c6d537374bd"
       },
       "claims": 23,
       "tally": {
@@ -1926,7 +1926,7 @@
       "instrumentation": {
         "observed": 44,
         "total": 44,
-        "hash": "7487ea9260d928e1"
+        "hash": "696c091ac99951d8"
       },
       "claims": 44,
       "tally": {
@@ -1950,7 +1950,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "e2853ad8e806bfc6"
+        "hash": "4840f45cfc1a1b50"
       },
       "claims": 22,
       "tally": {
@@ -1974,7 +1974,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "fc9eaaca380812ae"
+        "hash": "1471dc91daefc4c5"
       },
       "claims": 30,
       "tally": {
@@ -1998,7 +1998,7 @@
       "instrumentation": {
         "observed": 70,
         "total": 70,
-        "hash": "4a5f0d483f60ced5"
+        "hash": "8017b4d29fc33527"
       },
       "claims": 70,
       "tally": {
@@ -2022,7 +2022,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "eedd21c9ddbdd25d"
+        "hash": "deb91473fa7f2d79"
       },
       "claims": 19,
       "tally": {
@@ -2046,7 +2046,7 @@
       "instrumentation": {
         "observed": 76,
         "total": 76,
-        "hash": "54978b3cc37a8475"
+        "hash": "4a344c30352f22e2"
       },
       "claims": 76,
       "tally": {
@@ -2070,7 +2070,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "5956164e70063be8"
+        "hash": "d39b9f658494cb5a"
       },
       "claims": 23,
       "tally": {
@@ -2094,7 +2094,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "e8a57c5344f60622"
+        "hash": "48a28e18ff5c67c4"
       },
       "claims": 30,
       "tally": {
@@ -2118,7 +2118,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "f9c79ae350ea9362"
+        "hash": "64495c504f13dc68"
       },
       "claims": 23,
       "tally": {
@@ -2142,7 +2142,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "8b0cc08a7fa2f8c4"
+        "hash": "064d07d02dbea089"
       },
       "claims": 18,
       "tally": {
@@ -2166,7 +2166,7 @@
       "instrumentation": {
         "observed": 37,
         "total": 37,
-        "hash": "24adafc16632b224"
+        "hash": "8a646b7ac1bf2d70"
       },
       "claims": 37,
       "tally": {
@@ -2190,7 +2190,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "aabe3a41c1d12d38"
+        "hash": "d87cddd6c48fc1e4"
       },
       "claims": 22,
       "tally": {
@@ -2214,7 +2214,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "aba70fd007846fa4"
+        "hash": "67008d6ff017e665"
       },
       "claims": 16,
       "tally": {
@@ -2238,7 +2238,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "1f40a3a66e0f926b"
+        "hash": "af1641f88a34127b"
       },
       "claims": 19,
       "tally": {
@@ -2262,7 +2262,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "c8f66f2446efc3fa"
+        "hash": "c672b185bff556d0"
       },
       "claims": 21,
       "tally": {
@@ -2286,7 +2286,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "3b87b163d19b7bfc"
+        "hash": "5ba907924000f4b3"
       },
       "claims": 18,
       "tally": {
@@ -2310,7 +2310,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "055c9a6ff14015df"
+        "hash": "11b65dae3dd6313e"
       },
       "claims": 18,
       "tally": {
@@ -2334,7 +2334,7 @@
       "instrumentation": {
         "observed": 50,
         "total": 50,
-        "hash": "eaffb50cba78aac3"
+        "hash": "c5d01736153d0fe0"
       },
       "claims": 50,
       "tally": {
@@ -2358,7 +2358,7 @@
       "instrumentation": {
         "observed": 45,
         "total": 45,
-        "hash": "39802622ea5f8433"
+        "hash": "b6be17af5f945f87"
       },
       "claims": 45,
       "tally": {
@@ -2382,7 +2382,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 18,
-        "hash": "77d29557e9ce48d8"
+        "hash": "2aa4cf1b129caf38"
       },
       "claims": 18,
       "tally": {
@@ -2406,7 +2406,7 @@
       "instrumentation": {
         "observed": 24,
         "total": 24,
-        "hash": "a9518e65e4b93fc8"
+        "hash": "16ec4e692b1834eb"
       },
       "claims": 24,
       "tally": {
@@ -2430,7 +2430,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "b408d917308d96b7"
+        "hash": "62262c2773191ee1"
       },
       "claims": 21,
       "tally": {
@@ -2454,7 +2454,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "27962360370d7ba6"
+        "hash": "e1533cd4d0854b7b"
       },
       "claims": 33,
       "tally": {
@@ -2478,7 +2478,7 @@
       "instrumentation": {
         "observed": 81,
         "total": 81,
-        "hash": "7be8d55cb5a106f2"
+        "hash": "952b7b1487ede69e"
       },
       "claims": 81,
       "tally": {
@@ -2502,7 +2502,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "7b001d90d9c34d3e"
+        "hash": "5d3204ca7e0512f6"
       },
       "claims": 21,
       "tally": {
@@ -2526,7 +2526,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 19,
-        "hash": "6978cfce4142e3e4"
+        "hash": "68356c247a9a15e4"
       },
       "claims": 19,
       "tally": {
@@ -2550,7 +2550,7 @@
       "instrumentation": {
         "observed": 18,
         "total": 19,
-        "hash": "f4641247fd94557d"
+        "hash": "507c9e8e53c8f34e"
       },
       "claims": 19,
       "tally": {
@@ -2574,7 +2574,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 34,
-        "hash": "b8770327dcf90348"
+        "hash": "58395a7dd58fa36c"
       },
       "claims": 34,
       "tally": {
@@ -2598,7 +2598,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 36,
-        "hash": "5244005b48ad0c05"
+        "hash": "61681e5a2b2caa5c"
       },
       "claims": 36,
       "tally": {
@@ -2622,7 +2622,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 33,
-        "hash": "1acddfbee9763b70"
+        "hash": "8aec8bc20e3da11d"
       },
       "claims": 33,
       "tally": {
@@ -2646,7 +2646,7 @@
       "instrumentation": {
         "observed": 63,
         "total": 69,
-        "hash": "9906a771fcd9e96d"
+        "hash": "635eff24d792dd7f"
       },
       "claims": 69,
       "tally": {
@@ -2670,7 +2670,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 31,
-        "hash": "1c79a1327ea7dedc"
+        "hash": "24c78869dc47a4d6"
       },
       "claims": 31,
       "tally": {
@@ -2694,7 +2694,7 @@
       "instrumentation": {
         "observed": 41,
         "total": 41,
-        "hash": "87abfdde35a280bb"
+        "hash": "62288657e8863c8b"
       },
       "claims": 41,
       "tally": {
@@ -2718,7 +2718,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "7fd69fdee36b42c0"
+        "hash": "f6f9d740ad09eef3"
       },
       "claims": 22,
       "tally": {
@@ -2742,7 +2742,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 21,
-        "hash": "c8f66f2446efc3fa"
+        "hash": "c672b185bff556d0"
       },
       "claims": 21,
       "tally": {
@@ -2766,7 +2766,7 @@
       "instrumentation": {
         "observed": 22,
         "total": 22,
-        "hash": "08691baebcc8d3b9"
+        "hash": "bc2da14dfb9a4769"
       },
       "claims": 22,
       "tally": {
@@ -2790,7 +2790,7 @@
       "instrumentation": {
         "observed": 41,
         "total": 41,
-        "hash": "b930f0865e355698"
+        "hash": "519d1a26f2448427"
       },
       "claims": 41,
       "tally": {
@@ -2814,7 +2814,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "ae09ddc63518a57c"
+        "hash": "37310a65811a04a7"
       },
       "claims": 23,
       "tally": {
@@ -2838,7 +2838,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 18,
-        "hash": "69dd3b434fa06cb6"
+        "hash": "1a63a671ecfda910"
       },
       "claims": 18,
       "tally": {
@@ -2862,7 +2862,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 20,
-        "hash": "da4874d22d15ab41"
+        "hash": "7294f4f69a0268ec"
       },
       "claims": 20,
       "tally": {
@@ -2886,7 +2886,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "40779167a6139325"
+        "hash": "29fb950f6d06c9ba"
       },
       "claims": 19,
       "tally": {
@@ -2910,7 +2910,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 19,
-        "hash": "11d594663e300e59"
+        "hash": "9f278e4ab730834d"
       },
       "claims": 19,
       "tally": {
@@ -2934,7 +2934,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 32,
-        "hash": "a79093d0d90ce229"
+        "hash": "0f261cd6e25fa0d8"
       },
       "claims": 32,
       "tally": {
@@ -2958,7 +2958,7 @@
       "instrumentation": {
         "observed": 16,
         "total": 16,
-        "hash": "6010bb66ae5827e4"
+        "hash": "8f257db49e4f429e"
       },
       "claims": 16,
       "tally": {
@@ -2982,7 +2982,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 20,
-        "hash": "3de04fff4d6432e0"
+        "hash": "4f44fa2e68ea7345"
       },
       "claims": 20,
       "tally": {
@@ -3006,7 +3006,7 @@
       "instrumentation": {
         "observed": 19,
         "total": 29,
-        "hash": "dd915f0ee1db299d"
+        "hash": "d5f0b9c2e9b84e6b"
       },
       "claims": 29,
       "tally": {
@@ -3030,7 +3030,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "4c3a4a6a09cf6b06"
+        "hash": "2bae360a7d4682f2"
       },
       "claims": 30,
       "tally": {
@@ -3054,7 +3054,7 @@
       "instrumentation": {
         "observed": 32,
         "total": 32,
-        "hash": "0db35ceae5093fc2"
+        "hash": "245b16f7e51bc826"
       },
       "claims": 32,
       "tally": {
@@ -3078,7 +3078,7 @@
       "instrumentation": {
         "observed": 33,
         "total": 33,
-        "hash": "eb7d1f77709359de"
+        "hash": "729fb6b2f7fcc06c"
       },
       "claims": 33,
       "tally": {
@@ -3102,7 +3102,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 31,
-        "hash": "2d456203b4b81e2e"
+        "hash": "1f487c7e2a4b4814"
       },
       "claims": 31,
       "tally": {
@@ -3126,7 +3126,7 @@
       "instrumentation": {
         "observed": 54,
         "total": 54,
-        "hash": "04b669635afd605c"
+        "hash": "17aa6f3da8568d9d"
       },
       "claims": 54,
       "tally": {
@@ -3150,7 +3150,7 @@
       "instrumentation": {
         "observed": 9,
         "total": 9,
-        "hash": "c155d0e58170648b"
+        "hash": "b97144ea3e4ea239"
       },
       "claims": 9,
       "tally": {
@@ -3174,7 +3174,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "62451e1ca9235baa"
+        "hash": "a20c38c55a8fc8be"
       },
       "claims": 23,
       "tally": {
@@ -3198,7 +3198,7 @@
       "instrumentation": {
         "observed": 27,
         "total": 27,
-        "hash": "fd647b4066290d32"
+        "hash": "36a7c610bcacefed"
       },
       "claims": 27,
       "tally": {
@@ -3222,7 +3222,7 @@
       "instrumentation": {
         "observed": 23,
         "total": 23,
-        "hash": "9ca3b3b97faf6d9e"
+        "hash": "2b157643630a9d65"
       },
       "claims": 23,
       "tally": {
@@ -3246,7 +3246,7 @@
       "instrumentation": {
         "observed": 40,
         "total": 40,
-        "hash": "20e54eff772ab4bc"
+        "hash": "c39eb94a315c13a5"
       },
       "claims": 40,
       "tally": {
@@ -3270,7 +3270,7 @@
       "instrumentation": {
         "observed": 30,
         "total": 30,
-        "hash": "f849faf1136b7048"
+        "hash": "3c511848dd894b78"
       },
       "claims": 30,
       "tally": {
@@ -3294,7 +3294,7 @@
       "instrumentation": {
         "observed": 21,
         "total": 22,
-        "hash": "36d88e997ad131c2"
+        "hash": "df0e79916ab3b07f"
       },
       "claims": 22,
       "tally": {
@@ -3318,7 +3318,7 @@
       "instrumentation": {
         "observed": 48,
         "total": 48,
-        "hash": "dbf7eb2c1765daec"
+        "hash": "cbf430d291491d25"
       },
       "claims": 48,
       "tally": {
@@ -3342,7 +3342,7 @@
       "instrumentation": {
         "observed": 14,
         "total": 14,
-        "hash": "a1537d2ea55bf6cb"
+        "hash": "e88c4868c85f840e"
       },
       "claims": 14,
       "tally": {
@@ -3366,7 +3366,7 @@
       "instrumentation": {
         "observed": 59,
         "total": 59,
-        "hash": "f177e4a01f36599d"
+        "hash": "9515c072622b17bd"
       },
       "claims": 59,
       "tally": {
@@ -3390,7 +3390,7 @@
       "instrumentation": {
         "observed": 17,
         "total": 17,
-        "hash": "40545578d405cc9a"
+        "hash": "bc1ce22710f6cb68"
       },
       "claims": 17,
       "tally": {
@@ -3414,7 +3414,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 30,
-        "hash": "7fd58ea49312a5a5"
+        "hash": "8be1e0c6278c4129"
       },
       "claims": 30,
       "tally": {
@@ -3438,7 +3438,7 @@
       "instrumentation": {
         "observed": 96,
         "total": 96,
-        "hash": "342848900f6797e0"
+        "hash": "ef7364000a89312e"
       },
       "claims": 96,
       "tally": {
@@ -3462,7 +3462,7 @@
       "instrumentation": {
         "observed": 49,
         "total": 49,
-        "hash": "0e087184154f5aa7"
+        "hash": "fc0c1e0faf6f2239"
       },
       "claims": 49,
       "tally": {
@@ -3486,7 +3486,7 @@
       "instrumentation": {
         "observed": 20,
         "total": 20,
-        "hash": "facec9b9be4cae93"
+        "hash": "ad10d69ec8f36d2a"
       },
       "claims": 20,
       "tally": {
@@ -3510,7 +3510,7 @@
       "instrumentation": {
         "observed": 29,
         "total": 36,
-        "hash": "d45183a3b0b31461"
+        "hash": "c9404e78ff676948"
       },
       "claims": 36,
       "tally": {
@@ -3534,7 +3534,7 @@
       "instrumentation": {
         "observed": 31,
         "total": 36,
-        "hash": "ee7a458fdf35bc99"
+        "hash": "dfe5ec878fb6cbc3"
       },
       "claims": 36,
       "tally": {

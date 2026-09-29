@@ -149,3 +149,23 @@
   （resize 非黑 13/13 断言在该构建上通过，证据对其记录哈希有效）。
 - **build/ 在途产物不入本批提交**：留给并行集成分支统一落（避免捕获瞬态）。
 
+## 2026-09-29 续批复验与 W12–W14
+
+本节记录后续代码与独立证据；上文 P0/P1 的哈希与测试数量是历史快照，不能代替本节当前产物判断。
+
+| 工作项 | 当前状态 | 本轮证据与边界 |
+| --- | --- | --- |
+| W04、W09–W11 复审修复 | 行为修复完成 | `w04-canvas-binding.json` 四模式 PASS；`w09-w11-assembly.json` PASS。修复画布 ID 保留/导入期错误、跨 Bank 引用、淘汰页出栈、SFX 独立播放器按 ENDED 回收。 |
+| W12 调试树 | 已实现 | `inspectNode.visual` 返回 UI 尺寸/锚点、Label、SpriteFrame rect、texture/material/mesh 稳定资产 ID；业务可注册 frame/texture label，未知值返回 null。`smoke-22` 24/24。仅 DevTools 导出，不进默认 bundle。 |
+| W13 性能分轴 | 工具完成；设备呈现待测 | `w13-performance-axes.json` 记录逻辑更新、主线程 BEFORE_DRAW→AFTER_DRAW、WebGL2 timer query GPU 时间；headless present 明确 unavailable。`--present-json=` 支持单独导入带设备名的 SurfaceFlinger 时间戳。无设备数据不得宣称设备 FPS 达标。 |
+| W14 独立消费 | 包消费 PASS；release 仍阻塞 | `w14-package-readiness.json` 与 `v11-tarball-browser-consumer.json`：离线 pack/install、声明消费、浏览器运行、嵌套 URL、nonce CSP（不含 unsafe-eval）、sourcemap、normal/min/gzip/brotli 尺寸。Web 构建将 `SUPPORT_JIT` 设为 false，复用上游非 JIT scheduler。`verify:release` 仍因工作树未提交、API inventory/Gallery/矩阵旧 bundle 指纹而 NOT READY；需集成后重采。 |
+
+证据一致性修正：W03 runner 原先把 bundle **路径**交给 `sha256_16`，导致哈希不随内容变化；现改为 `sha256_16(fs.readFileSync(bundlePath))`。W03 四模式复跑 PASS，记录指纹与本轮 `build/cocosair.module.js` 一致。W09 的 ui-kit 为保留现有公共 API 仍由默认入口导出；如要做到字节级独立子包，需要另起兼容迁移，不可仅靠注释声称已拆包。
+
+### 2026-09-29 集成复验
+
+- Web 默认构建关闭 `SUPPORT_JIT`，复用上游已有非 JIT 调度分支；独立 tarball 的 nonce CSP（不含 `unsafe-inline`/`unsafe-eval` 脚本授权）、嵌套路径、sourcemap 验收 PASS。当前正常 bundle `bf07c87924fb2476`。
+- W13 在 Chromium headless 用 GPU timer query 测得 GPU 轴；SurfaceFlinger 屏幕 present 保持 `unavailable`，有真实设备 trace 时用 `--present-json` 补录，不用 rAF 推断设备 FPS。
+- V1.1 141/141 PASS（DevTools 5/5）；Gallery 静态部署 220/220 PASS（可启动例 141/141，生命周期 53）；V1.2 三浏览器矩阵 39/39 PASS；API 覆盖 core 963/963、important 272/272、advanced 180/191，门槛全过。
+- 重采中定位验证环境 `chromium-1193` 对仓库 H.264 样例解码失败；切到项目已验证的 `chromium-1228` 后 `video-basic` 单例及 V1.1 全量均通过。Benchmark 静态服务也补充媒体 MIME，保证与开发服务器一致。未削弱视频资源错误断言。
+- 最终本地检查：Jest 32 suites / 266 tests、`typecheck`、`verify:web-only`、`verify:file-map`、`verify:doc-refs`、API coverage `--check` 全过。`verify:release` 仅余工作树未提交一项；需把本轮源码、产物和证据作为同一候选提交后复跑。这里的 PASS 是本机浏览器及已记录的模拟后端结论，Android 设备 present 仍无数据。

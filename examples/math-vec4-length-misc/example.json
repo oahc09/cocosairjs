@@ -42,14 +42,22 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Vec4 度量与杂项：dot/叉积、长度族、归一化、lerp/clampf、Mat4 变换与相等语义。",
-    "points": ["dot 正交基为零", "normalize 后长度为 1（取整回读）", "变换后 w 分量语义保持"]
+    "points": [
+      "dot 正交基为零",
+      "normalize 后长度为 1（取整回读）",
+      "变换后 w 分量语义保持"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 150,200,170）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["math.Vec4.dot", "math.Vec4.normalize", "math.Vec4.transformMat4"],
+    "primary": [
+      "math.Vec4.dot",
+      "math.Vec4.normalize",
+      "math.Vec4.transformMat4"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -98,7 +106,9 @@
       "math.Vec4.strictEquals",
       "math.Vec4.strictEquals4f"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -285,21 +295,32 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
     "lifecycle": [],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -313,7 +334,7 @@
   "promotion": {
     "spec": "aba2d336dced",
     "source": "0aba272be450bb84",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 30,
     "attested": 0,
     "units": 30

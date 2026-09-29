@@ -37,12 +37,24 @@
     "Node.addComponent",
     "Node.on"
   ],
-  "capabilities": ["audio"],
+  "capabilities": [
+    "audio"
+  ],
   "validation": {
-    "functional": ["node-exists", "transform-equals", "no-runtime-error"],
-    "interaction": ["frame-diff"],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "transform-equals",
+      "no-runtime-error"
+    ],
+    "interaction": [
+      "frame-diff"
+    ],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "capability": []
   },
   "specStatus": "frozen",
@@ -70,7 +82,11 @@
     "visual": "深蓝底（clearColor 12,16,24）一屏：顶部状态行 `audio: loading` → 点击后改写为 `audio clip=1.6s vol=0.35 loop=true ended=1 state=PLAYING(1)`；中部一条 420×120 的 64 bin 波形（前半 440 Hz 高幅、后半 660 Hz 低幅，2:1 设计肉眼可分），波形上叠一条琥珀色竖线＝播放头（仅 `playing` 时绘制），波形下方一条绿色小块＝帧时钟（每 2400 ms 横扫一次，与音频后端无关）；底部一行提示 `unlocked: playing`。frame-diff 的持续帧间变化来源是绿色帧时钟：三引擎都有牙（chromium/firefox 播放头也在走，webkit 播放头因 DOM 后端假阳性冻结，见 learning 末条）⇒ 三引擎 frameChanged 全 PASS，而「音频是否真出声」由 probe 的 `players.srcB.{backend,paused,currentTime,srcBDelta}` 独立回读，不用画面替引擎背书"
   },
   "api": {
-    "primary": ["AudioSource", "AudioClip", "AudioPCMDataView"],
+    "primary": [
+      "AudioSource",
+      "AudioClip",
+      "AudioPCMDataView"
+    ],
     "supporting": [
       "AudioClip.validate",
       "AudioClip.getDuration",
@@ -298,10 +314,19 @@
       }
     ]
   },
-  "assets": ["assets/tone.wav"],
+  "assets": [
+    "assets/tone.wav"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Canvas", "UICamera", "Status", "Wave", "Hint", "AudioHost"]
+      "nodes": [
+        "Canvas",
+        "UICamera",
+        "Status",
+        "Wave",
+        "Hint",
+        "AudioHost"
+      ]
     }
   },
   "interaction": {
@@ -313,12 +338,18 @@
     ]
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validationExpectations": {
     "transform-equals": {
       "Canvas": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -328,7 +359,11 @@
         ]
       },
       "UICamera": {
-        "position": [0, 0, 1000],
+        "position": [
+          0,
+          0,
+          1000
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -338,7 +373,11 @@
         ]
       },
       "Status": {
-        "position": [0, 148, 0],
+        "position": [
+          0,
+          148,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -348,7 +387,11 @@
         ]
       },
       "Wave": {
-        "position": [0, -22, 0],
+        "position": [
+          0,
+          -22,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -358,7 +401,11 @@
         ]
       },
       "Hint": {
-        "position": [0, -112, 0],
+        "position": [
+          0,
+          -112,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -368,7 +415,11 @@
         ]
       },
       "AudioHost": {
-        "position": [0, 0, 0],
+        "position": [
+          0,
+          0,
+          0
+        ],
         "provenance": [
           {
             "source": "main.js",
@@ -390,7 +441,7 @@
   "promotion": {
     "spec": "7ac2fe951476",
     "source": "38d2fec0f38626ee",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 28,
     "attested": 0,
     "units": 28

@@ -158,7 +158,7 @@ function pngSize (buf) {
     await browser.close();
     server.close();
 
-    const bundle = { sha256_16: sha256_16(bundlePath), bytes: fs.statSync(bundlePath).size };
+    const bundle = { sha256_16: sha256_16(fs.readFileSync(bundlePath)), bytes: fs.statSync(bundlePath).size };
     const verdictPass = runs.every((r) => r.pass);
     const evidence = {
         measuredAt: new Date().toISOString(),

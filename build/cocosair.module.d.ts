@@ -55659,7 +55659,7 @@
      * Cocos 引擎版本），而 `export *` 的同名成员会被 ESM 静默丢弃，因此这里用 `AIR_` 前缀。
      * 里程碑身份（V0.1/V0.2/…）由 git tag 与 `docs/v11-baseline.md` 承载，不写入此常量。
      */
-    export const AIR_VERSION = "1.2.0";
+    export const AIR_VERSION = "1.0.0";
     export interface AirAppOptions {
         /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
         canvas: HTMLCanvasElement | string;
@@ -55671,10 +55671,20 @@
          * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
          */
         physics?: "builtin" | "cannon";
+        /**
+         * 可选：WebGL 上下文丢失状态机（W01）。lost 时默认自动 game.pause() 停止绘制与
+         * 业务时钟；恢复路径如实现不能安全重建 GPU 资源，进入 failed 并提供受控重载。
+         */
+        contextLoss?: AirContextLossOptions;
     }
     export interface AirApp {
         /** @en The canvas this app renders into. @zh 本应用渲染目标画布（构造时传入）。 */
         readonly canvas: HTMLCanvasElement;
+        /**
+         * @en Context-health state machine handle (W01). @zh 上下文健康状态机句柄：
+         * snapshot() 轮询状态、onChange 订阅迁移、requestReload() 受控重载（仅 failed 态）。
+         */
+        readonly contextHealth: AirContextHealth;
         /** @en Run the given scene and start the main loop. @zh 运行场景并启动主循环（幂等）。 */
         run(scene: Scene): void;
         /** @en Current running scene, or null before run(). @zh 当前运行中的场景；run() 之前为 null。 */
@@ -55686,7 +55696,8 @@
      */
     export class AirAppImpl implements AirApp {
         readonly canvas: HTMLCanvasElement;
-        constructor(canvas: HTMLCanvasElement);
+        readonly contextHealth: AirContextHealth;
+        constructor(canvas: HTMLCanvasElement, contextHealth: AirContextHealth);
         /**
          * @en Run the given scene and start the main loop (idempotent for the loop).
          * @zh 运行传入的场景并启动主循环（主循环只启动一次）。
@@ -55738,6 +55749,326 @@
      * - `'cannon'`：cannon.js 全量刚体模拟（纯 JS，来自 vendored `@cocos/cannon`）。
      */
     export type AirPhysicsBackend = "builtin" | "cannon";
+    /**
+     * @en Attach the W01 context-health state machine to a canvas.
+     * @zh 在画布上挂接 W01 上下文健康状态机。createAirApp 内部调用；HEADLESS 等无 GL
+     * 后端时安全空转（backend='none'，事件不来则状态恒 healthy）。
+     */
+    export function attachContextHealth(canvas: HTMLCanvasElement, options?: AirContextLossOptions): AirContextHealth;
+    /**
+     * Cocos AIR — WebGL 上下文健康状态机（W01，Code First 与 Web 可靠性任务清单）。
+     *
+     * 上游 webgl/webgl2 swapchain 对 webglcontextlost 仅告警（warnID 11000），没有恢复闭环。
+     * AIR 在不触碰上游 gfx 文件的前提下，于画布层挂接同一标准事件，提供显式状态机：
+     *
+     *   healthy → lost（webglcontextlost）
+     *           → restoring（webglcontextrestored）
+     *           → failed（如实判定：本期不重建 GPU 资源）
+     *
+     * - lost：preventDefault()（为受控恢复路径留门）+ game.pause()（引擎级停摆：rAF、渲染、
+     *   业务时钟与音频一并暂停，不再向已失效的上下文提交 GL 调用）。
+     * - restoring→failed：AIR 本期不重建 GPU 资源（纹理/buffer/program/FBO 全量重建属引擎级
+     *   能力，上游 Web 端同样缺失），恢复事件到达即显式判定失败并给出受控重载建议；
+     *   不宣称「自愈」，restoring 作为瞬时态保留在 timeline 中供观测。
+     * - failed：requestReload() 受控重载入口（默认 window.location.reload()，可注入替换
+     *   以便测试）；healthy 态调用为无操作并返回 false（门掣）。
+     *
+     * 本文件为 Air 原创（上游 cocos4 无同名文件）。
+     */
+    /** @en Context health state. @zh 上下文健康状态（W01 状态机）。 */
+    export type AirContextHealthState = "healthy" | "lost" | "restoring" | "failed";
+    /** @en Detected WebGL backend of the attached canvas. @zh 画布实际使用的 WebGL 后端。 */
+    export type AirContextBackend = "webgl" | "webgl2" | "none" | "unknown";
+    /** @en Readable point-in-time health report. @zh 可轮询的健康快照。 */
+    export interface AirContextHealthSnapshot {
+        state: AirContextHealthState;
+        backend: AirContextBackend;
+        /** 累计 webglcontextlost 次数（多次丢失观测）。 */
+        lostCount: number;
+        /** 累计 webglcontextrestored 次数。 */
+        restoredCount: number;
+        /** 实时 gl.isContextLost()；不可得时为 null。 */
+        isContextLost: boolean | null;
+        /** 引擎主循环暂停态（读私有字段，不可得时为 null）。 */
+        gamePaused: boolean | null;
+        /** 进入 failed 的原因；非 failed 态为 null。 */
+        reason: string | null;
+        /** 建议动作：failed 态为 'reload'，其余 'none'。 */
+        suggestion: "reload" | "none";
+        /** 最近一次状态事件类型与时间戳（epoch ms）。 */
+        lastEvent: "lost" | "restoring" | "failed" | null;
+        lastEventAt: number | null;
+        /** 状态迁移时间线（含瞬时态，最多保留 32 条）。 */
+        timeline: {
+            at: number;
+            type: AirContextHealthState;
+            detail?: string;
+        }[];
+    }
+    /** @en Options for the context-loss state machine. @zh 上下文丢失状态机选项。 */
+    export interface AirContextLossOptions {
+        /** lost 时自动 game.pause()（默认 true）。 */
+        autoPause?: boolean;
+        /**
+         * 受控重载动作（默认 window.location.reload()）。测试可注入记录函数替代真实导航。
+         */
+        reload?: () => void;
+        /** 每次状态迁移回调（观察者）。 */
+        onEvent?: (snapshot: AirContextHealthSnapshot) => void;
+    }
+    /** @en Health handle exposed on [[AirApp]]. @zh 挂在 AirApp 上的健康句柄。 */
+    export interface AirContextHealth {
+        snapshot(): AirContextHealthSnapshot;
+        /** 订阅状态迁移，返回退订函数。 */
+        onChange(cb: (snapshot: AirContextHealthSnapshot) => void): () => void;
+        /**
+         * @en Trigger the controlled reload. Only acts in `failed` state; returns whether
+         * the reload action was invoked.
+         * @zh 触发受控重载。仅 failed 态生效；返回是否真正调用了重载动作。
+         */
+        requestReload(): boolean;
+        /** 摘除事件监听（页面卸载/测试清理用）。 */
+        destroy(): void;
+    }
+    /**
+     * @en Create a deterministic single-clock test driver bound to the running game.
+     * @zh 创建绑定当前 game 的确定性单时钟测试驱动。
+     */
+    export function createStepClock(options?: AirStepClockOptions): AirStepClock;
+    /**
+     * Cocos Air — 确定性单时钟测试驱动（W08，Code First 与 Web 可靠性任务清单）。
+     *
+     * `game.step()` 只做 `director.tick(fixedDT)`，不会先暂停主循环——运行中直接调用等于
+     * 真实 rAF 与手动步进双时钟并发（任务书明令禁止）。本封装把三步合同固化：
+     *
+     *   begin()  — game.pause()（停真实 pacer：rAF/渲染/业务时钟/音频）
+     *   step(dt) — director.tick(dt ?? 1/frameRate)，等待本帧 AFTER_DRAW 后返回；
+     *              未处于暂停态调用直接抛错（反双时钟门卫）
+     *   end()    — game.resume()（恢复真实时钟）
+     *
+     * 用法（测试/验收页）：
+     *   const clock = createStepClock();
+     *   clock.begin();
+     *   for (let i = 0; i < 60; i++) { await clock.step(); readMidValues(); }
+     *   clock.end();
+     *
+     * 本文件为 Air 原创（上游 cocos4 无同名文件）。
+     */
+    /** @en Single stepped frame receipt. @zh 一次手动步进的回执。 */
+    export interface AirStepFrame {
+        /** 步进序号（本次 begin() 起）。 */
+        step: number;
+        /** 本帧 dt（秒）。 */
+        dt: number;
+        /** AFTER_DRAW 已触发（画面已提交）。 */
+        afterDraw: true;
+    }
+    /** @en Deterministic single-clock test driver. @zh 确定性单时钟测试驱动句柄。 */
+    export interface AirStepClock {
+        /** 进入手动步进（暂停真实时钟；幂等）。 */
+        begin(): void;
+        /**
+         * @en Advance exactly one frame with the given dt (default 1/frameRate) and wait for
+         * its AFTER_DRAW. Throws if the real clock is running (dual-clock guard).
+         * @zh 以给定 dt（默认 1/frameRate）精确步进一帧并等待其 AFTER_DRAW。
+         * 真实时钟未暂停时抛错（禁止双时钟并发）。
+         */
+        step(dt?: number): Promise<AirStepFrame>;
+        /** 退出手动步进，恢复真实时钟（幂等）。 */
+        end(): void;
+        readonly stepping: boolean;
+        readonly stepped: number;
+    }
+    /** @en Options for [[createStepClock]]. @zh 步进时钟选项。 */
+    export interface AirStepClockOptions {
+        /** 默认帧率（默认 60，步进 dt 缺省值 = 1/frameRate）。 */
+        frameRate?: number;
+        /** 单步 AFTER_DRAW 等待超时毫秒（默认 2000；超时抛错而非静默成功）。 */
+        stepTimeoutMs?: number;
+    }
+    /**
+     * @en Assemble a fullscreen UI Canvas (Canvas + Widget + ortho UI camera) under the scene.
+     * @zh 在场景内组装全屏 UI Canvas（Canvas + Widget 全对齐 + 正交 UI 相机）。
+     * 返回 canvas 根节点；相机挂在其子节点上并已链接 `canvasComponent.cameraComponent`。
+     */
+    export function createUICanvas(scene: Scene, name?: string, options?: UICanvasOptions): Node;
+    /**
+     * @en Create a UI child node with UITransform + Sprite (CUSTOM size mode).
+     * @zh 创建带 UITransform + Sprite 的 UI 子节点（CUSTOM 尺寸模式；设 spriteFrame 后即渲染）。
+     */
+    export function spriteNode(parent: Node, name?: string, options?: SpriteNodeOptions): Node;
+    /**
+     * @en Create a UI child node with UITransform + Label（examples 同款默认排版）。
+     * @zh 创建带 UITransform + Label 的 UI 子节点。
+     */
+    export function labelNode(parent: Node, text: string, name?: string, options?: LabelNodeOptions): Node;
+    /** @en Options for [[createUICanvas]]. @zh createUICanvas 选项。 */
+    export interface UICanvasOptions {
+        /** 设计宽高（默认 1280×720）。 */
+        designWidth?: number;
+        designHeight?: number;
+        /** UI 可见层（默认 Layers.Enum.UI_2D）。 */
+        layer?: number;
+    }
+    /** @en Options for [[spriteNode]]. @zh spriteNode 选项。 */
+    export interface SpriteNodeOptions {
+        size?: [
+            number,
+            number
+        ];
+        position?: [
+            number,
+            number
+        ];
+        color?: math.Color;
+        layer?: number;
+    }
+    /** @en Options for [[labelNode]]. @zh labelNode 选项。 */
+    export interface LabelNodeOptions {
+        fontSize?: number;
+        position?: [
+            number,
+            number
+        ];
+        color?: math.Color;
+        overflow?: number;
+        boxSize?: [
+            number,
+            number
+        ];
+        layer?: number;
+    }
+    /**
+     * @en Minimal reference-counted asset bank over `assetManager.loadRemote`.
+     * @zh 基于 assetManager.loadRemote 的最小引用计数资产库：
+     * - 并发去重：同 URL 在途请求只发一次，等待者共享同一 Promise；
+     * - 每个 bank 对资产持有一份引擎引用；release 只归还自己的引用。其他持有者
+     *   也需使用 addRef/decRef 合同，不能使用强制 releaseAsset；
+     * - 失败清理：加载失败不留悬挂条目；
+     * - 进度：loadRemote 无任务级进度时以 0→100 两阶报告（如实，不伪造细粒度）。
+     */
+    export class AssetBank {
+        /** 当前在库条目数（测试观测面）。 */
+        get size(): number;
+        /** 引用计数（测试观测面）。 */
+        refCount(url: string): number;
+        /**
+         * @en Load (or join the in-flight load of) an asset by URL, incrementing its refcount.
+         * @zh 按 URL 加载（或在途合并）资产并递增引用计数。
+         */
+        load<T extends Asset>(url: string, onProgress?: __private._air_ui_kit__ProgressFn): Promise<T>;
+        /**
+         * @en Release this bank's reference when its local count reaches zero.
+         * @zh 本 bank 归零时只归还自己持有的引擎引用。
+         */
+        release(url: string): boolean;
+    }
+    /** @en A persistent page handle. @zh 常驻页面句柄。 */
+    export interface PageHandle {
+        readonly name: string;
+        readonly node: Node;
+        /** 页面当前是否处于展示态（栈顶且未在隐藏保活）。 */
+        readonly visible: boolean;
+    }
+    /** @en Page factory. @zh 页面工厂：构建页面 Node 子树（常驻语义——内容由调用方维护状态）。 */
+    export type PageBuilder = () => Node;
+    /** @en Options for [[SceneStack.push]]. @zh push 选项。 */
+    export interface PushOptions {
+        /** 过渡毫秒（双页同绘窗口；0 = 立即切换）。默认 0。 */
+        transitionMs?: number;
+    }
+    /** @en Options for [[SceneStack]] constructor. @zh SceneStack 选项。 */
+    export interface SceneStackOptions {
+        /** 非激活页面的缓存上限（LRU 超限销毁最旧页；默认 4）。 */
+        maxCachedPages?: number;
+        /** 输入屏蔽挂载的画布（默认 document.getElementById('GameCanvas')）。 */
+        canvas?: HTMLCanvasElement | null;
+    }
+    /**
+     * @en Persistent-page navigation stack inside one long-lived scene.
+     * @zh 单一长驻场景内的常驻页面导航栈。
+     */
+    export class SceneStack {
+        /** 过渡期输入被屏蔽的累计次数（测试观测面）。 */
+        inputBlockedCount: number;
+        constructor(scene: Scene, options?: SceneStackOptions);
+        /** 当前展示的页面（栈顶），空栈为 null。 */
+        get top(): PageHandle | null;
+        get depth(): number;
+        get cachedCount(): number;
+        get inTransition(): boolean;
+        /**
+         * @en Push a page. During `transitionMs` both pages render (dual-page window) and input is
+         * blocked; a new navigation supersedes (finishes) an in-flight transition immediately.
+         * @zh 压入页面。transitionMs 窗口内双页同绘且输入屏蔽；在途转场被新导航立即收口
+         * （转场取消/快速重复切换语义）。
+         */
+        push(build: PageBuilder, name: string, options?: PushOptions): Promise<PageHandle>;
+        /**
+         * @en Pop the top page: it is destroyed (its subtree's state ends with it); the previous
+         * cached page becomes visible again with its state preserved.
+         * @zh 弹出栈顶：销毁该页；前一缓存页重新可见且状态保留（active 恢复）。
+         */
+        pop(): Promise<PageHandle | null>;
+        /** @en Cleanup（测试/页面销毁）。 @zh 清理：摘除屏蔽监听并销毁全部页面。 */
+        dispose(): void;
+    }
+    /** @en BGM channel state. @zh BGM 通道状态（currentTime 为实测时钟，非 playing 标志）。 */
+    export interface BgmState {
+        id: string;
+        playing: boolean;
+        /** 实测播放头（秒）；未播放/无 clip 为 0。 */
+        currentTime: number;
+        loop: boolean;
+    }
+    /** @en Options for [[AudioService]]. @zh AudioService 选项。 */
+    export interface AudioServiceOptions {
+        /** 音效并发上限（默认 5）。 */
+        maxSfxVoices?: number;
+    }
+    /**
+     * @en Business-level audio channels over native AudioSource.
+     * @zh 原生 AudioSource 之上的业务音频通道服务。
+     */
+    export class AudioService {
+        /** 超限被丢弃的音效次数（观测面）。 */
+        sfxDropped: number;
+        constructor(scene: Scene, options?: AudioServiceOptions);
+        /** 注册音频资产（按 ID 寻址；重复注册同 ID 覆盖引用）。 */
+        load(id: string, url: string): Promise<AudioClip>;
+        /** 当前 BGM 台（无则 null）。 */
+        get bgmId(): string | null;
+        get musicEnabled(): boolean;
+        get sfxEnabled(): boolean;
+        /** 已发起、尚未收到结束事件或释放的音效实例数。 */
+        get sfxActive(): number;
+        /**
+         * @en Play (or resume) the BGM channel for an id; other channels pause. Resuming continues
+         * from the preserved currentTime（续播合同）.
+         * @zh 播放/续播指定 ID 的 BGM；他台暂停。续播从保留的 currentTime 继续。
+         */
+        playBgm(id: string, loop?: boolean): void;
+        pauseBgm(): void;
+        /** 恢复当前 BGM 台（从暂停点续播）。 */
+        resumeBgm(): void;
+        /**
+         * @en Fire a single-play SFX. Concurrent voices are capped at maxSfxVoices; excess fires are
+         * dropped and counted（不静默排队）.
+         * @zh 触发一次性音效。在途实例上限 maxSfxVoices，超限丢弃并计数。
+         */
+        playSfx(id: string, volume?: number): void;
+        /** 音乐开关（独立于音效开关；关闭时暂停当前 BGM）。 */
+        setMusicEnabled(on: boolean): void;
+        /** 音效开关（独立于音乐开关）。 */
+        setSfxEnabled(on: boolean): void;
+        /**
+         * @en Observable BGM state — currentTime is the measured clock（判据纪律：不单独信 playing）。
+         * @zh 可观测 BGM 状态——currentTime 为实测时钟。
+         */
+        bgmState(): BgmState | null;
+        /** @en Stop everything and destroy source nodes（页面销毁路径）。 @zh 停止并销毁全部源节点。 */
+        dispose(): void;
+    }
     /**
      * @en Promise wrapper for engine asset loading (resources.load when available,
      *     otherwise the Code First global assets registry keyed by path).
@@ -68696,6 +69027,7 @@
             ENDED = "ended"
         }
         export type _pal_audio_type__AudioBufferView = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
+        export type _air_ui_kit__ProgressFn = (current: number, total: number) => void;
         /** glTF 2.0 wire types. Unknown extension data is retained, never executed. */
         export interface _air_assets_gltf_schema__Property {
             name?: string;

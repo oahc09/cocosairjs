@@ -42,14 +42,20 @@
   "capabilities": [],
   "learning": {
     "goal": "掌握 Scene 运行面：组件挂载到场景根、autoReleaseAssets 开关、dependAssets 只读、updateWorldTransform 强制刷新。",
-    "points": ["addComponent 后 getComponent 命中", "autoReleaseAssets 可写可读", "updateWorldTransform 安全调用"]
+    "points": [
+      "addComponent 后 getComponent 命中",
+      "autoReleaseAssets 可写可读",
+      "updateWorldTransform 安全调用"
+    ]
   },
   "effect": {
     "functional": "脚手架（Main Camera/Main Light/Cube）+ 主题 API 的确定性 readback：window.__probe() 返回的每个字段在同一构建下取值唯一，跨引擎逐位相等；__airApp 在场景启动后出现。",
     "visual": "深蓝底（clearColor 28,36,52）三件套场景：居中立方体（颜色 200,220,260）、方向光、透视相机。"
   },
   "api": {
-    "primary": ["Scene.autoReleaseAssets"],
+    "primary": [
+      "Scene.autoReleaseAssets"
+    ],
     "supporting": [
       "createAirApp",
       "Scene",
@@ -108,7 +114,9 @@
       "builtinResMgr",
       "Vec3"
     ],
-    "forbiddenShortcut": ["不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"],
+    "forbiddenShortcut": [
+      "不得以 console 断言替代 __probe readback；readback 值必须确定性可比对。"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -295,21 +303,34 @@
   "assets": [],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light", "Cube"]
+      "nodes": [
+        "Main Camera",
+        "Main Light",
+        "Cube"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "validation": {
-    "functional": ["node-exists", "no-runtime-error"],
-    "lifecycle": ["resource-released"],
+    "functional": [
+      "node-exists",
+      "no-runtime-error"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
+    "visual": [
+      "visible-frame"
+    ],
     "capability": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "coverage": {
     "benchmarkRefs": [],
@@ -323,7 +344,7 @@
   "promotion": {
     "spec": "72ed9b905b71",
     "source": "99edfa6fc0060f0f",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 30,
     "attested": 0,
     "units": 30

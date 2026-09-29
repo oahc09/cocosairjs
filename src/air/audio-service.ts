@@ -3,7 +3,7 @@
  *
  * 先用现有 AudioSource 的 loop/currentTime/pause/playOneShot 做业务抽象（任务书首选路径）：
  * - BGM 按 ID 一份可续播状态（每 ID 一个持久 AudioSource 节点；切换即暂停他台）；
- * - 音效池并发上限（默认 5）：playOneShot 在途实例计数，超限丢弃并计数（不静默排队假装播放）；
+ * - 音效池并发上限（默认 5）：每次触发创建独立 AudioSource，以 ENDED 回收并发位；
  * - 音乐/音效开关独立；
  * - 判据纪律：不以 playing=true 单独证明时钟推进——以 currentTime 实测推进为准（probe 断言）。
  *
@@ -35,7 +35,7 @@ export interface AudioServiceOptions {
     maxSfxVoices?: number;
 }
 
-interface SfxVoice { endsAt: number; }
+interface SfxVoice { source: AudioSource; timeout: ReturnType<typeof setTimeout>; }
 
 /**
  * @en Business-level audio channels over native AudioSource.
@@ -45,7 +45,7 @@ export class AudioService {
     private readonly _scene: Scene;
     private readonly _sources = new Map<string, AudioSource>();
     private readonly _clips = new Map<string, AudioClip>();
-    private readonly _sfxVoices: SfxVoice[] = [];
+    private readonly _sfxVoices = new Set<SfxVoice>();
     private readonly _maxSfx: number;
     private _musicEnabled = true;
     private _sfxEnabled = true;
@@ -55,7 +55,9 @@ export class AudioService {
 
     constructor (scene: Scene, options: AudioServiceOptions = {}) {
         this._scene = scene;
-        this._maxSfx = options.maxSfxVoices ?? 5;
+        const max = options.maxSfxVoices ?? 5;
+        if (!Number.isInteger(max) || max < 1) { throw new Error('[AudioService] maxSfxVoices must be a positive integer'); }
+        this._maxSfx = max;
     }
 
     /** 注册音频资产（按 ID 寻址；重复注册同 ID 覆盖引用）。 */
@@ -76,9 +78,12 @@ export class AudioService {
         let src = this._sources.get(id);
         if (!src) {
             const node = new Node(`AudioService/BGM/${id}`);
+            node.active = false;
             this._scene.addChild(node);
             src = node.addComponent(AudioSource);
+            src.playOnAwake = false;
             src.clip = this._clips.get(id) ?? null;
+            node.active = true;
             this._sources.set(id, src);
         }
         return src;
@@ -88,8 +93,8 @@ export class AudioService {
     get bgmId (): string | null { return this._bgmId; }
     get musicEnabled (): boolean { return this._musicEnabled; }
     get sfxEnabled (): boolean { return this._sfxEnabled; }
-    /** 在途音效实例数（估算窗口内）。 */
-    get sfxActive (): number { return this._sfxVoices.length; }
+    /** 已发起、尚未收到结束事件或释放的音效实例数。 */
+    get sfxActive (): number { return this._sfxVoices.size; }
 
     /**
      * @en Play (or resume) the BGM channel for an id; other channels pause. Resuming continues
@@ -98,6 +103,7 @@ export class AudioService {
      */
     playBgm (id: string, loop = true): void {
         if (!this._musicEnabled) { return; }
+        if (!this._clips.has(id)) { throw new Error(`[AudioService] BGM '${id}' is not loaded`); }
         for (const [otherId, src] of this._sources) {
             if (otherId !== id && src.playing) { src.pause(); }
         }
@@ -119,7 +125,7 @@ export class AudioService {
     }
 
     /**
-     * @en Fire a one-shot SFX. Concurrent voices are capped at maxSfxVoices; excess fires are
+     * @en Fire a single-play SFX. Concurrent voices are capped at maxSfxVoices; excess fires are
      * dropped and counted（不静默排队）.
      * @zh 触发一次性音效。在途实例上限 maxSfxVoices，超限丢弃并计数。
      */
@@ -127,16 +133,29 @@ export class AudioService {
         if (!this._sfxEnabled) { return; }
         const clip = this._clips.get(id);
         if (!clip) { return; }
-        const now = performance.now();
-        // 清理已结束实例（按 clip 时长估算窗口）
-        for (let i = this._sfxVoices.length - 1; i >= 0; i--) {
-            if (this._sfxVoices[i].endsAt <= now) { this._sfxVoices.splice(i, 1); }
-        }
-        if (this._sfxVoices.length >= this._maxSfx) { this.sfxDropped += 1; return; }
-        const src = this._bgmId ? this._sources.get(this._bgmId) : null;
-        const emitter = (src && src.clip === clip) ? src : this._sourceFor(`__sfx__${id}`);
-        emitter.playOneShot(clip, volume);
-        this._sfxVoices.push({ endsAt: now + (clip.duration || 0.5) * 1000 + 50 });
+        if (this._sfxVoices.size >= this._maxSfx) { this.sfxDropped += 1; return; }
+        const node = new Node(`AudioService/SFX/${id}`);
+        node.active = false;
+        this._scene.addChild(node);
+        const source = node.addComponent(AudioSource);
+        source.playOnAwake = false;
+        source.clip = clip;
+        source.loop = false;
+        source.volume = volume;
+        const voice = { source, timeout: null as unknown as ReturnType<typeof setTimeout> };
+        const release = (): void => {
+            if (!this._sfxVoices.delete(voice)) { return; }
+            clearTimeout(voice.timeout);
+            source.stop();
+            node.destroy();
+        };
+        node.once(AudioSource.EventType.ENDED, release);
+        this._sfxVoices.add(voice);
+        // Browser autoplay rejection may not emit ENDED. A bounded fallback frees
+        // that voice; normal playback uses the native completion event above.
+        voice.timeout = setTimeout(release, Math.max(1000, clip.duration * 1000 + 5000));
+        node.active = true;
+        try { source.play(); } catch (error) { release(); throw error; }
     }
 
     /** 音乐开关（独立于音效开关；关闭时暂停当前 BGM）。 */
@@ -169,7 +188,12 @@ export class AudioService {
         }
         this._sources.clear();
         this._clips.clear();
-        this._sfxVoices.length = 0;
+        for (const voice of this._sfxVoices) {
+            clearTimeout(voice.timeout);
+            voice.source.stop();
+            voice.source.node.destroy();
+        }
+        this._sfxVoices.clear();
         this._bgmId = null;
     }
 }

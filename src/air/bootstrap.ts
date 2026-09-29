@@ -20,7 +20,8 @@ import { attachContextHealth } from './context-health';
 export type { AirApp, AirAppOptions } from './app';
 
 /**
- * DOM 结构与官方 Web 模板保持一致，pal/screen-adapter 与 PAL 输入源依赖这些 id。
+ * DOM 结构与官方 Web 模板保持一致。自定义 canvas 必须在 import 前经
+ * globalThis.__CC_CANVAS__ 绑定；不会改写调用方的 canvas ID。
  * 若用户的 canvas 已按模板挂载，则不做任何改动。
  *
  * W04 画布绑定合同（Code First 与 Web 可靠性任务清单）：
@@ -40,14 +41,10 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
                 + ` (found <${decoy.tagName.toLowerCase()}>), and the passed canvas has id "${canvas.id}".`
                 + ' Engine input binds by that id — rename/remove the other element, or pass it as the canvas.');
         }
-        // 自定义 id 且未走 __CC_CANVAS__ 覆盖：PAL 输入在 import 期已解析为空 → 输入不可用。
-        // 渲染路径经下方归一化仍可用；显式警告并给出两条修复路径，不静默降级。
-        if (!(typeof globalThis !== 'undefined' && (globalThis as { __CC_CANVAS__?: unknown }).__CC_CANVAS__)) {
-            console.warn(
-                '[cocosair] canvas id "' + canvas.id + '" was not "#GameCanvas" at engine import time;'
-                + ' PAL input (keyboard/mouse/touch) resolves the canvas during import and has bound nothing.'
-                + ' Fix: keep id "GameCanvas" in HTML before importing the engine, or set'
-                + ' globalThis.__CC_CANVAS__ = <canvas> before import (e.g. before a dynamic import()).');
+        // Input and screen-adapter bind during engine import. Renaming here would
+        // silently leave input attached to a different element (or to nothing).
+        if ((globalThis as { __CC_CANVAS__?: unknown }).__CC_CANVAS__ !== canvas) {
+            throw new Error('[cocosair] custom canvas must be assigned to globalThis.__CC_CANVAS__ before importing the engine');
         }
     }
     // 焦点合同：可聚焦（PAL 的 mousedown/touchstart 回调会 canvas.focus()）；用户显式设置的 tabIndex 不改写。
@@ -66,15 +63,10 @@ function ensureCanvasDOM (canvas: HTMLCanvasElement): void {
             'html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }',
             '#GameDiv { width: 100%; height: 100%; position: relative; }',
             '#Cocos3dGameContainer { width: 100%; height: 100%; }',
-            '#GameCanvas { width: 100%; height: 100%; display: block; outline: none; }',
-            '#GameCanvas:focus-visible { outline: 2px solid rgba(64,148,235,0.8); }',
+            '#Cocos3dGameContainer canvas { width: 100%; height: 100%; display: block; outline: none; }',
+            '#Cocos3dGameContainer canvas:focus-visible { outline: 2px solid rgba(64,148,235,0.8); }',
         ].join('\n');
         document.head.appendChild(style);
-    }
-    // ScreenAdapter 硬编码按 id 'GameCanvas' 查找画布：用户自定义 id（如 '#game'）需归一化，
-    // 仅当文档中不存在真正的 #GameCanvas 时改写，避免与模板 DOM 冲突。
-    if (canvas.id !== 'GameCanvas' && !document.getElementById('GameCanvas')) {
-        canvas.id = 'GameCanvas';
     }
     // 画布绘图缓冲必须匹配窗口尺寸（屏幕适配器只在窗口变化时触发，初始尺寸需在此设定）。
     // W06（GAP-W6-1 修复，2026-09-28）：与 resize 链对齐——上游 screen-adapter 的 windowSize

@@ -1,0 +1,26 @@
+{
+  "measuredAt": "2026-09-28T23:43:41.082Z",
+  "sizes": {
+    "build/cocosair.module.js": {
+      "bytes": 6610182,
+      "sha256_16": "bf07c87924fb2476",
+      "gzip": 1181300,
+      "brotli": 870703
+    },
+    "build/cocosair.module.min.js": {
+      "bytes": 3686861,
+      "sha256_16": "7f42be9d412dd2fb",
+      "gzip": 885057,
+      "brotli": 667417
+    }
+  },
+  "checks": {
+    "installedImport": true,
+    "currentBundle": true,
+    "nestedDeployment": true,
+    "cspWithoutEval": true,
+    "sourceMap": true
+  },
+  "note": "Registry publishing and broader V1.1/V1.2 evidence gates remain separate.",
+  "verdict": "PASS"
+}

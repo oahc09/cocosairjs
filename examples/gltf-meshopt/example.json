@@ -19,7 +19,10 @@
     "visual": "画面中央显示解压后的模型几何，左上角面板展示 isMeshoptAvailable=true 与两种模式的结果"
   },
   "api": {
-    "primary": ["GLTFLoader.setMeshoptDecoder", "createMeshoptDecoder"],
+    "primary": [
+      "GLTFLoader.setMeshoptDecoder",
+      "createMeshoptDecoder"
+    ],
     "supporting": [
       "isMeshoptAvailable",
       "GLTFLoader.parseAsync",
@@ -66,7 +69,10 @@
       "dracoCompressionFactory",
       "KHR_DRACO_MESH_COMPRESSION"
     ],
-    "forbiddenShortcut": ["加载未压缩模型冒充 meshopt 成功", "跳过 decoder-missing 教学模式"],
+    "forbiddenShortcut": [
+      "加载未压缩模型冒充 meshopt 成功",
+      "跳过 decoder-missing 教学模式"
+    ],
     "evidence": [
       {
         "api": "createAirApp",
@@ -250,33 +256,58 @@
       }
     ]
   },
-  "capabilities": ["gltf"],
-  "assets": ["assets/meshopt-khr.glb"],
+  "capabilities": [
+    "gltf"
+  ],
+  "assets": [
+    "assets/meshopt-khr.glb"
+  ],
   "scene": {
     "expectedGraph": {
-      "nodes": ["Main Camera", "Main Light"]
+      "nodes": [
+        "Main Camera",
+        "Main Light"
+      ]
     }
   },
   "interaction": {
     "steps": []
   },
   "ready": {
-    "validators": ["scene-ready"]
+    "validators": [
+      "scene-ready"
+    ]
   },
   "validation": {
-    "functional": ["node-exists", "asset-loaded", "capability-status", "no-runtime-error", "transform-equals"],
+    "functional": [
+      "node-exists",
+      "asset-loaded",
+      "capability-status",
+      "no-runtime-error",
+      "transform-equals"
+    ],
     "interaction": [],
-    "visual": ["visible-frame"],
-    "lifecycle": ["resource-released"],
-    "capability": ["capability-status"],
+    "visual": [
+      "visible-frame"
+    ],
+    "lifecycle": [
+      "resource-released"
+    ],
+    "capability": [
+      "capability-status"
+    ],
     "capabilityExpectations": [
       {
         "extension": "KHR_meshopt_compression",
-        "statuses": ["decoder-required"]
+        "statuses": [
+          "decoder-required"
+        ]
       },
       {
         "extension": "EXT_meshopt_compression",
-        "statuses": ["decoder-required"]
+        "statuses": [
+          "decoder-required"
+        ]
       }
     ]
   },
@@ -291,7 +322,11 @@
   "validationExpectations": {
     "transform-equals": {
       "Main Camera": {
-        "position": [0.2, 0.6, 2.6],
+        "position": [
+          0.2,
+          0.6,
+          2.6
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -301,7 +336,11 @@
         ]
       },
       "Main Light": {
-        "position": [0, 8, 0],
+        "position": [
+          0,
+          8,
+          0
+        ],
         "provenance": [
           {
             "source": "src/main.ts",
@@ -309,7 +348,11 @@
             "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
           }
         ],
-        "rotationEuler": [-45, -30, 0]
+        "rotationEuler": [
+          -45,
+          -30,
+          0
+        ]
       }
     },
     "asset-loaded": {
@@ -338,7 +381,7 @@
   "promotion": {
     "spec": "1e6e4a0eac13",
     "source": "f41fd530b51a57df",
-    "candidate": "7f3b89f6ac076cbf",
+    "candidate": "2360fa3fb4cea194",
     "verified": 26,
     "attested": 4,
     "units": 30

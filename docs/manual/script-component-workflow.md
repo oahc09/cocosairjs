@@ -17,8 +17,9 @@ mat.initialize({ effectName: "builtin-standard" });
 - **`Material.initialize` / `EffectAsset.onLoaded` 必须在 `createAirApp` 之后**。引导前调用会抛
   `TypeError: Cannot read properties of undefined (reading 'capabilities')`（WebProgramLibrary 空 device）。
   实证：`docs/evidence/g4-shader-probe.json` 的 `registerBeforeBoot` 相位（双后端复现）。
-- `#GameCanvas` 必须在引擎模块 import 前存在于 DOM（pal/screen-adapter 为模块顶层单例）——
-  使用官方 `index.html` 模板（见 §8）。
+- 默认模板的 `#GameCanvas` 必须在引擎模块 import 前存在于 DOM。使用自定义 id 时，
+  在动态 import 前执行 `globalThis.__CC_CANVAS__ = canvas`；`createAirApp` 不改写该 id，
+  缺少预绑定会明确报错。键盘事件要求 canvas 聚焦。
 - 物理后端等启动配置在 `createAirApp({ physics: 'cannon' })` 一次性给定（`physics-interaction` 实证；
   r46 owner 批复 #8(a) 的交付期后端切换）。
 
