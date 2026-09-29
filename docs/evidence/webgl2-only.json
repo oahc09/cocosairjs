@@ -1,0 +1,213 @@
+{
+  "measuredAt": "2026-09-29T22:49:47.032Z",
+  "runner": "tools/verify/webgl2-only.cjs",
+  "bundles": [
+    {
+      "file": "build/cocosair.module.js",
+      "sha256_16": "9edc4be858de13fe"
+    },
+    {
+      "file": "build/npm/cocosair.module.min.js",
+      "sha256_16": "ef27ccdb823ada0b"
+    }
+  ],
+  "completed": true,
+  "total": 8,
+  "pass": 8,
+  "results": [
+    {
+      "bundle": "build/cocosair.module.js",
+      "mode": "webgl2",
+      "observed": {
+        "started": true,
+        "api": 7,
+        "expectedApi": 7,
+        "pixel": [
+          225,
+          89,
+          11,
+          255
+        ],
+        "webgl1Export": "undefined",
+        "requests": [
+          "webgl2",
+          "webgl2"
+        ],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    },
+    {
+      "bundle": "build/cocosair.module.js",
+      "mode": "missing-constructor",
+      "observed": {
+        "started": false,
+        "code": "WEBGL2_REQUIRED",
+        "message": "[cocosair] WebGL 2 is required; WebGL 1 is unsupported.",
+        "inited": false,
+        "requests": [],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    },
+    {
+      "bundle": "build/cocosair.module.js",
+      "mode": "context-failure",
+      "observed": {
+        "started": false,
+        "code": "WEBGL2_REQUIRED",
+        "message": "[cocosair] WebGL 2 is required; WebGL 1 is unsupported.",
+        "inited": false,
+        "requests": [
+          "webgl2"
+        ],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    },
+    {
+      "bundle": "build/cocosair.module.js",
+      "mode": "headless",
+      "observed": {
+        "started": true,
+        "api": 0,
+        "expectedApi": 0,
+        "pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "webgl1Export": "undefined",
+        "requests": [],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    },
+    {
+      "bundle": "build/npm/cocosair.module.min.js",
+      "mode": "webgl2",
+      "observed": {
+        "started": true,
+        "api": 7,
+        "expectedApi": 7,
+        "pixel": [
+          225,
+          89,
+          11,
+          255
+        ],
+        "webgl1Export": "undefined",
+        "requests": [
+          "webgl2",
+          "webgl2"
+        ],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    },
+    {
+      "bundle": "build/npm/cocosair.module.min.js",
+      "mode": "missing-constructor",
+      "observed": {
+        "started": false,
+        "code": "WEBGL2_REQUIRED",
+        "message": "[cocosair] WebGL 2 is required; WebGL 1 is unsupported.",
+        "inited": false,
+        "requests": [],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    },
+    {
+      "bundle": "build/npm/cocosair.module.min.js",
+      "mode": "context-failure",
+      "observed": {
+        "started": false,
+        "code": "WEBGL2_REQUIRED",
+        "message": "[cocosair] WebGL 2 is required; WebGL 1 is unsupported.",
+        "inited": false,
+        "requests": [
+          "webgl2"
+        ],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    },
+    {
+      "bundle": "build/npm/cocosair.module.min.js",
+      "mode": "headless",
+      "observed": {
+        "started": true,
+        "api": 0,
+        "expectedApi": 0,
+        "pixel": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "webgl1Export": "undefined",
+        "requests": [],
+        "nativeWebGL1": true
+      },
+      "pageErrors": [],
+      "checks": {
+        "noPageError": true,
+        "noWebGL1Fallback": true,
+        "outcome": true,
+        "visibleFrame": true
+      },
+      "pass": true
+    }
+  ]
+}

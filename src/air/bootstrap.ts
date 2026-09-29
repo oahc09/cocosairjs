@@ -120,15 +120,20 @@ export async function createAirApp (options: AirAppOptions): Promise<AirApp> {
     // 用户后端确定性胜出；世界在该事件之后的子系统初始化期才创建，时序安全。
     game.once(Game.EVENT_PRE_SUBSYSTEM_INIT, () => selectPhysicsBackend(options.physics ?? 'builtin'));
 
-    // 注册引擎同源 builtin effects/materials（含 glsl1 降写，见 builtin/register.ts）
+    // 注册引擎同源 builtin effects/materials（glsl3 适配，见 builtin/register.ts）
     game.on(Game.EVENT_POST_SUBSYSTEM_INIT, registerBuiltinAirAssets);
 
     // V0.1: 无远程 settings.json；默认走 legacy 渲染管线
-    await game.init({
-        debugMode: DebugMode.ERROR,
-        settingsPath: '',
-        overrideSettings: { rendering: { renderMode: options.renderMode } },
-    });
+    try {
+        await game.init({
+            debugMode: DebugMode.ERROR,
+            settingsPath: '',
+            overrideSettings: { rendering: { renderMode: options.renderMode } },
+        });
+    } catch (error) {
+        contextHealth.destroy();
+        throw error;
+    }
 
     return new AirAppImpl(canvas, contextHealth);
 }

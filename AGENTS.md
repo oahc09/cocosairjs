@@ -4,7 +4,7 @@ Guidance for AI agents (and humans) working in this repository.
 
 ## What this repo is
 
-**Cocos AIR** (Cocos Agent-first Interactive Runtime) is a standalone TypeScript runtime for interactive 3D web applications. It was extracted from the cocos4 Web engine so developers can create scenes with code and run them in a browser without Cocos Creator or its Editor asset pipeline. A typical application calls `createAirApp()`, builds a scene with the original Cocos `Scene`, `Node`, `Camera`, renderer, material, and animation APIs, then runs that scene through WebGL.
+**Cocos AIR** (Cocos Agent-first Interactive Runtime) is a standalone TypeScript runtime for interactive 3D web applications. It was extracted from the cocos4 Web engine so developers can create scenes with code and run them in a browser without Cocos Creator or its Editor asset pipeline. A typical application calls `createAirApp()`, builds a scene with the original Cocos `Scene`, `Node`, `Camera`, renderer, material, and animation APIs, then runs that scene through WebGL 2. Browser targets require WebGL 2; unsupported contexts reject startup with `WEBGL2_REQUIRED` (see [browser support policy](docs/webgl2-only.md)).
 
 The runtime also supports direct glTF/GLB loading, including materials, skeletal animation, and supported extensions. The examples and manual teach those APIs. Separate development tools provide inspection, validation, and agent feedback; they are not part of the default runtime bundle. This repository is a Web engine and developer toolkit, not a Creator plugin, visual editor, or native-platform runtime.
 
@@ -43,7 +43,7 @@ npm run dev
 |---|---|---|
 | `npm install` | 按依赖声明安装本项目依赖。 | 写入 `node_modules/`，依赖解析变化时可能更新 `package-lock.json`；不会自动构建引擎。 |
 | `npm ci` | 严格按已有 lockfile 安装，适用于 CI 或复现依赖环境。 | 先清理再重建 `node_modules/`；不更新 lockfile，不构建引擎。 |
-| `npm pack` | 按 `package.json` 的发布文件规则打出本地 npm 包。 | 默认在当前目录生成 `cocosair.js-<version>.tgz`；打包已有文件，不自动执行 `build:all`，不上传 registry。 |
+| `npm pack` | `prepack` 从现有本地 bundle 准备无 source map 的 `build/npm/` 发布副本，再按 `package.json` 文件清单打包。 | 默认在当前目录生成 `cocosair.js-<version>.tgz`；不会编译引擎，打包前须运行 `npm run build:all`；不上传 registry。 |
 
 ### 日常开发与格式
 
@@ -62,7 +62,7 @@ npm run dev
 | `npm run build` | 构建默认 feature 集的未压缩 Web ESM 运行时。 | `build/cocosair.module.js`、`build/cocosair.module.js.map`；刷新下述模块格式标记，可能更新增量缓存；不更新 min bundle 或类型声明。 |
 | `npm run build:min` | 构建同一运行时的压缩 ESM 版本。 | `build/cocosair.module.min.js`、`build/cocosair.module.min.js.map`；刷新模块格式标记；不更新普通 bundle 或类型声明。 |
 | `npm run build:dts` | 汇总引擎声明，并转换为 npm 包可直接导入的 SDK 声明。 | `build/cocosair.module.d.ts`；可能保留 `build/.dts-tmp-*`、`build/.dts-before-bundle-*` 中间目录，不生成运行时 JS。 |
-| `npm run build:all` | 顺序执行普通 ESM、压缩 ESM、类型构建，再检查发布 bundle 是否包含源码注册的内置资源。 | 上述两套 JS + map、`.d.ts` 和模块格式标记；检查结果写终端。**不会**生成 `.tgz`、静态 Gallery 或重新采集浏览器证据，也不执行发布。 |
+| `npm run build:all` | 顺序执行普通 ESM、压缩 ESM、类型构建，生成 `build/npm/` 无 source map 发布副本，再检查发布 bundle 的内置资源。 | 本地开发 JS + map、`.d.ts`、`build/npm/` 发布 JS 副本和模块格式标记；检查结果写终端。**不会**生成 `.tgz`、静态 Gallery 或重新采集浏览器证据，也不执行发布。 |
 | `npm run build:system` | 构建 SystemJS 模块格式，用于需要该加载方式的场景。 | `build/cc.js`、`build/cc.js.map`，并刷新模块格式标记；不是默认 npm ESM 入口，不包含在 `build:all` 中。 |
 | `npm run baseline` | 历史上游 cocos4 Web 基线构建，排除依赖缺失 native/external 资产的 feature，使用 SystemJS 分包。 | 在**当前引擎目录**写 `bin/dev/cc-baseline/`。脚本直接读取 `cwd/cc.config.json`，而 AIR 仓库根没有该文件，直接从本仓库运行此 npm script 会失败；应在上游 cocos4 根目录直接调用本仓库的 `tools/baseline/build-baseline.cjs`。 |
 
@@ -109,12 +109,12 @@ npm run dev
 |---|---|---|
 | `npm run verify:v12-matrix` | 按 `tools/v12/browser-matrix-contract.json` 在 Chromium、Firefox、WebKit 执行契约条目；需要 bundle、示例资产和相应浏览器。范围由契约决定，不等于所有 Gallery 示例。 | 默认重写 `docs/evidence/v12/browser-matrix.json`，截图写入 `docs/evidence/v12/<id>/matrix-<engine>.png`（部分还有 `-before.png`）。子集运行不是全量证明；`--out=` 只重定向 JSON，截图仍写上述目录。 |
 | `npm run verify:perf-lifecycle` | 使用已生成的 `build/examples/` 静态 Gallery，在 Chromium 中验证重复加载/实例化/销毁与加载耗时稳定性。 | 重写 `docs/evidence/v11-perf-lifecycle.json`；不构建静态 Gallery，内存读数不可用会记录 unavailable。 |
-| `npm run verify:tarball-consumer` | 临时打包并离线安装到新项目，让 Chromium 实际运行安装包，验证启动、API、像素及嵌套路径/CSP 场景。 | 重写 `docs/evidence/v11-tarball-browser-consumer.json`；临时包和 consumer 目录完成后清理，不更改安装包内容。 |
+| `npm run verify:tarball-consumer` | 临时打包并离线安装到新项目，让 Chromium 实际运行安装包，验证启动、API、像素、无 sourcemap 的 npm 入口、本地 dev sourcemap 和嵌套路径/CSP 场景。 | 重写 `docs/evidence/v11-tarball-browser-consumer.json`；`prepack` 刷新 `build/npm/`，临时包和 consumer 目录完成后清理。 |
 | `npm run verify:g3-dev` | 自动启动开发服务器和 Chromium，检查 `starter`、`hello-cube`、`scene-switch-reentry` 的模块加载、组件更新与交互。 | 成功后写 `docs/evidence/g3-dev-samples.json`；截图为 `output/playwright/g3-<id>.png`，收尾关闭服务和浏览器。 |
 
 报告文件存在不表示本次运行成功：检查命令退出码、报告时间、完成/子集标记和适用的源码/bundle/契约指纹。不要仅为查询命令含义而运行会改写证据的脚本。新增或修改 npm script 时，同步维护本节的用途、输出路径和写入行为。
 
-The `#GameCanvas` element must exist before importing the engine in a browser page because the screen adapter initializes during module import. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf/gltf-runtime.md](docs/gltf/gltf-runtime.md) and [docs/gltf/gltf-decoder-deployment.md](docs/gltf/gltf-decoder-deployment.md).
+The `#GameCanvas` element must exist before importing the engine in a browser page because the screen adapter initializes during module import. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf-runtime.md](docs/gltf-runtime.md) and [docs/gltf-decoder-deployment.md](docs/gltf-decoder-deployment.md).
 
 ## Working agreements
 

@@ -1,7 +1,10 @@
 # Capturing Screenshots 页面截图采集
 
+> 当前支持范围（2026-09-30）：浏览器渲染要求 WebGL 2；WebGL 1 已正式退役。启动不可用时返回 `WEBGL2_REQUIRED`，不会回退到空渲染设备。详见 [支持策略](../webgl2-only.md)。
+
+
 > 什么时候读画布才有内容、用哪个 API、什么情况下会拿到黑图。结论来自 W03 矩阵实测
-> （后端 {WebGL2, WebGL1} × DPR {1, 2}，含 resize、暂停、离屏 FBO 相位，
+> （WebGL2 × DPR {1, 2}，含 resize、暂停、离屏 FBO 相位，
 > `docs/evidence/w03-capture.json`），不是推测。
 
 > 前置阅读：[WebGL Compatibility Check WebGL 兼容性检查](./webgl-compatibility-check.md)

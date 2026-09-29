@@ -55778,7 +55778,7 @@
     /** @en Context health state. @zh 上下文健康状态（W01 状态机）。 */
     export type AirContextHealthState = "healthy" | "lost" | "restoring" | "failed";
     /** @en Detected WebGL backend of the attached canvas. @zh 画布实际使用的 WebGL 后端。 */
-    export type AirContextBackend = "webgl" | "webgl2" | "none" | "unknown";
+    export type AirContextBackend = "webgl2" | "none" | "unknown";
     /** @en Readable point-in-time health report. @zh 可轮询的健康快照。 */
     export interface AirContextHealthSnapshot {
         state: AirContextHealthState;
@@ -57925,46 +57925,6 @@
         flushCommands(cmdBuffs: Readonly<gfx.CommandBuffer[]>): void;
         acquire(swapchains: Readonly<gfx.Swapchain[]>): void;
         present(): void;
-        createCommandBuffer(info: Readonly<gfx.CommandBufferInfo>): gfx.CommandBuffer;
-        createSwapchain(info: Readonly<gfx.SwapchainInfo>): gfx.Swapchain;
-        createBuffer(info: Readonly<gfx.BufferInfo> | Readonly<gfx.BufferViewInfo>): gfx.Buffer;
-        createTexture(info: Readonly<gfx.TextureInfo> | Readonly<gfx.TextureViewInfo>): gfx.Texture;
-        createDescriptorSet(info: Readonly<gfx.DescriptorSetInfo>): gfx.DescriptorSet;
-        createShader(info: Readonly<gfx.ShaderInfo>): gfx.Shader;
-        createInputAssembler(info: Readonly<gfx.InputAssemblerInfo>): gfx.InputAssembler;
-        createRenderPass(info: Readonly<gfx.RenderPassInfo>): gfx.RenderPass;
-        createFramebuffer(info: Readonly<gfx.FramebufferInfo>): gfx.Framebuffer;
-        createDescriptorSetLayout(info: Readonly<gfx.DescriptorSetLayoutInfo>): gfx.DescriptorSetLayout;
-        createPipelineLayout(info: Readonly<gfx.PipelineLayoutInfo>): gfx.PipelineLayout;
-        createPipelineState(info: Readonly<gfx.PipelineStateInfo>): gfx.PipelineState;
-        createQueue(info: Readonly<gfx.QueueInfo>): gfx.Queue;
-        getSampler(info: Readonly<gfx.SamplerInfo>): gfx.Sampler;
-        getSwapchains(): Readonly<gfx.Swapchain[]>;
-        getGeneralBarrier(info: Readonly<gfx.GeneralBarrierInfo>): gfx.GeneralBarrier;
-        getTextureBarrier(info: Readonly<gfx.TextureBarrierInfo>): gfx.TextureBarrier;
-        getBufferBarrier(info: Readonly<gfx.BufferBarrierInfo>): __private._cocos_gfx_base_states_buffer_barrier__BufferBarrier;
-        copyBuffersToTexture(buffers: Readonly<ArrayBufferView[]>, texture: gfx.Texture, regions: Readonly<gfx.BufferTextureCopy[]>): void;
-        copyTextureToBuffers(texture: Readonly<gfx.Texture>, buffers: ArrayBufferView[], regions: Readonly<gfx.BufferTextureCopy[]>): void;
-        copyTexImagesToTexture(texImages: Readonly<TexImageSource[]>, texture: gfx.Texture, regions: Readonly<gfx.BufferTextureCopy[]>): void;
-    }
-    /** @mangle */
-    export class WebGLDevice extends gfx.Device {
-        constructor();
-        get gl(): WebGLRenderingContext;
-        get extensions(): __private._cocos_gfx_webgl_webgl_define__IWebGLExtensions;
-        get stateCache(): __private._cocos_gfx_webgl_webgl_state_cache__WebGLStateCache;
-        get nullTex2D(): __private._cocos_gfx_webgl_webgl_texture__WebGLTexture;
-        get nullTexCube(): __private._cocos_gfx_webgl_webgl_texture__WebGLTexture;
-        get textureExclusive(): boolean[];
-        get bindingMappings(): __private._cocos_gfx_webgl_webgl_gpu_objects__IWebGLBindingMapping;
-        get blitManager(): __private._cocos_gfx_webgl_webgl_gpu_objects__IWebGLBlitManager;
-        protected _textureExclusive: boolean[];
-        initialize(info: Readonly<gfx.DeviceInfo>): boolean;
-        destroy(): void;
-        flushCommands(cmdBuffs: gfx.CommandBuffer[]): void;
-        acquire(swapchains: gfx.Swapchain[]): void;
-        present(): void;
-        protected initFormatFeatures(exts: __private._cocos_gfx_webgl_webgl_define__IWebGLExtensions): void;
         createCommandBuffer(info: Readonly<gfx.CommandBufferInfo>): gfx.CommandBuffer;
         createSwapchain(info: Readonly<gfx.SwapchainInfo>): gfx.Swapchain;
         createBuffer(info: Readonly<gfx.BufferInfo> | Readonly<gfx.BufferViewInfo>): gfx.Buffer;
@@ -69332,6 +69292,10 @@
             readonly FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE_EXT: GLenum;
             readonly UNSIGNED_NORMALIZED_EXT: GLenum;
         }
+        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_float {
+        }
+        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_float {
+        }
         export interface ___node_modules_typescript_lib_libdom__WEBGL_multi_draw {
             multiDrawArraysInstancedWEBGL(mode: GLenum, firstsList: Int32Array | GLint[], firstsOffset: GLuint, countsList: Int32Array | GLsizei[], countsOffset: GLuint, instanceCountsList: Int32Array | GLsizei[], instanceCountsOffset: GLuint, drawcount: GLsizei): void;
             multiDrawArraysWEBGL(mode: GLenum, firstsList: Int32Array | GLint[], firstsOffset: GLuint, countsList: Int32Array | GLsizei[], countsOffset: GLuint, drawcount: GLsizei): void;
@@ -69380,117 +69344,6 @@
             readonly COMPRESSED_RGBA_PVRTC_4BPPV1_IMG: GLenum;
             readonly COMPRESSED_RGB_PVRTC_2BPPV1_IMG: GLenum;
             readonly COMPRESSED_RGBA_PVRTC_2BPPV1_IMG: GLenum;
-        }
-        /** @mangle */
-        export interface _cocos_gfx_webgl_webgl_define__IWebGLExtensions {
-            EXT_texture_filter_anisotropic: EXT_texture_filter_anisotropic | null;
-            EXT_blend_minmax: EXT_blend_minmax | null;
-            EXT_frag_depth: EXT_frag_depth | null;
-            EXT_shader_texture_lod: EXT_shader_texture_lod | null;
-            EXT_sRGB: EXT_sRGB | null;
-            OES_vertex_array_object: OES_vertex_array_object | null;
-            EXT_color_buffer_half_float: ___node_modules_typescript_lib_libdom__EXT_color_buffer_half_float | null;
-            WEBGL_multi_draw: ___node_modules_typescript_lib_libdom__WEBGL_multi_draw | null;
-            WEBGL_color_buffer_float: WEBGL_color_buffer_float | null;
-            WEBGL_compressed_texture_etc1: ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc1 | null;
-            WEBGL_compressed_texture_etc: ___node_modules_typescript_lib_libdom__WEBGL_compressed_texture_etc | null;
-            WEBGL_compressed_texture_pvrtc: __types_webGLextras__WEBGL_compressed_texture_pvrtc | null;
-            WEBGL_compressed_texture_astc: WEBGL_compressed_texture_astc | null;
-            WEBGL_compressed_texture_s3tc: WEBGL_compressed_texture_s3tc | null;
-            WEBGL_compressed_texture_s3tc_srgb: WEBGL_compressed_texture_s3tc_srgb | null;
-            WEBGL_debug_shaders: WEBGL_debug_shaders | null;
-            WEBGL_draw_buffers: WEBGL_draw_buffers | null;
-            WEBGL_lose_context: WEBGL_lose_context | null;
-            WEBGL_depth_texture: WEBGL_depth_texture | null;
-            WEBGL_debug_renderer_info: WEBGL_debug_renderer_info | null;
-            OES_texture_half_float: OES_texture_half_float | null;
-            OES_texture_half_float_linear: OES_texture_half_float_linear | null;
-            OES_texture_float: OES_texture_float | null;
-            OES_texture_float_linear: OES_texture_float_linear | null;
-            OES_standard_derivatives: OES_standard_derivatives | null;
-            OES_element_index_uint: OES_element_index_uint | null;
-            ANGLE_instanced_arrays: ANGLE_instanced_arrays | null;
-            destroyShadersImmediately: boolean;
-            noCompressedTexSubImage2D: boolean;
-            isLocationActive: (glLoc: unknown) => glLoc is WebGLUniformLocation;
-            useVAO: boolean;
-        }
-        /** @mangle */
-        export interface _cocos_gfx_webgl_webgl_state_cache__IWebGLTexUnit {
-            glTexture: WebGLTexture | null;
-        }
-        /** @mangle */
-        export class _cocos_gfx_webgl_webgl_state_cache__WebGLStateCache {
-            glArrayBuffer: WebGLBuffer | null;
-            glElementArrayBuffer: WebGLBuffer | null;
-            glVAO: WebGLVertexArrayObjectOES | null;
-            texUnit: number;
-            glTexUnits: _cocos_gfx_webgl_webgl_state_cache__IWebGLTexUnit[];
-            glRenderbuffer: WebGLRenderbuffer | null;
-            glFramebuffer: WebGLFramebuffer | null;
-            viewport: gfx.Viewport;
-            scissorRect: gfx.Rect;
-            rs: gfx.RasterizerState;
-            dss: gfx.DepthStencilState;
-            bs: gfx.BlendState;
-            glProgram: WebGLProgram | null;
-            glEnabledAttribLocs: boolean[];
-            glCurrentAttribLocs: boolean[];
-            texUnitCacheMap: Record<string, number>;
-            initialize(texUnit: number, vertexAttributes: number): void;
-        }
-        /** @mangle */
-        export interface _cocos_gfx_webgl_webgl_gpu_objects__IWebGLGPUTexture {
-            type: gfx.TextureType;
-            format: gfx.Format;
-            usage: gfx.TextureUsage;
-            width: number;
-            height: number;
-            depth: number;
-            size: number;
-            arrayLayer: number;
-            mipLevel: number;
-            samples: gfx.SampleCount;
-            flags: gfx.TextureFlags;
-            isPowerOf2: boolean;
-            glTarget: GLenum;
-            glInternalFmt: GLenum;
-            glFormat: GLenum;
-            glType: GLenum;
-            glUsage: GLenum;
-            glTexture: WebGLTexture | null;
-            glRenderbuffer: WebGLRenderbuffer | null;
-            glWrapS: GLenum;
-            glWrapT: GLenum;
-            glMinFilter: GLenum;
-            glMagFilter: GLenum;
-            isSwapchainTexture: boolean;
-        }
-        /** @mangle */
-        export class _cocos_gfx_webgl_webgl_texture__WebGLTexture extends gfx.Texture {
-            get gpuTexture(): _cocos_gfx_webgl_webgl_gpu_objects__IWebGLGPUTexture;
-            get lodLevel(): number;
-            constructor();
-            initialize(info: Readonly<gfx.TextureInfo> | Readonly<gfx.TextureViewInfo>, isSwapchainTexture?: boolean): void;
-            destroy(): void;
-            getTextureHandle(): number;
-            resize(width: number, height: number): void;
-        }
-        /** @mangle */
-        export interface _cocos_gfx_webgl_webgl_gpu_objects__IWebGLBindingMapping {
-            blockOffsets: number[];
-            samplerTextureOffsets: number[];
-            flexibleSet: number;
-        }
-        /** @mangle */
-        export class _cocos_gfx_webgl_webgl_gpu_objects__IWebGLBlitManager {
-            constructor();
-            destroy(): void;
-            draw(gpuTextureSrc: _cocos_gfx_webgl_webgl_gpu_objects__IWebGLGPUTexture, gpuTextureDst: _cocos_gfx_webgl_webgl_gpu_objects__IWebGLGPUTexture, regions: gfx.TextureBlit[], filter: gfx.Filter): void;
-        }
-        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_float {
-        }
-        export interface ___node_modules_typescript_lib_libdom__EXT_color_buffer_float {
         }
         /** @mangle */
         export interface _cocos_gfx_webgl2_webgl2_define__IWebGL2Extensions {

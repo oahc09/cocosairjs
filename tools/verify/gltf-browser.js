@@ -22,6 +22,7 @@ async (page) => {
         });
         await page.setViewportSize({ width: 1280, height: 800 });
         const webgl1 = page.url().includes('webgl=1');
+        if (webgl1) throw new Error('WEBGL2_REQUIRED: WebGL 1 verification mode is retired; use the WebGL 2 mode.');
         await page.goto(`http://127.0.0.1:7462/gltf-viewer/${webgl1 ? '?webgl=1' : ''}`);
         const results = [];
         for (const name of ['BoxTextured.glb', 'SimpleSkin.gltf', 'AnimatedMorphCube.glb', 'diagnostics.glb', 'combined.glb']) {

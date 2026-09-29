@@ -1,5 +1,8 @@
 # WebGL Compatibility Check WebGL 兼容性检查
 
+> 当前支持范围（2026-09-30）：浏览器渲染要求 WebGL 2；WebGL 1 已正式退役。启动不可用时返回 `WEBGL2_REQUIRED`，不会回退到空渲染设备。详见 [支持策略](../webgl2-only.md)。
+
+
 > 在跑渲染之前，先问清楚当前环境到底支持什么、支持到什么程度。
 > Cocos AIR 里这件事分**三层**，缺一不可：浏览器原生能力（`canvas.getContext('webgl2')`）、引擎枚举（`gfx.API.*` 的数值）、以及**引擎实际跑在哪个后端 + 硬件上限**（`device.constructor.name` + `device.capabilities`）。
 > 本篇给一个只做检测、不渲染花哨内容的页面，把三层全部问出来打到覆盖层，并解释为什么不能只看 `gfx.API`。

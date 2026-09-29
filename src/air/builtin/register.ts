@@ -1,14 +1,7 @@
 /**
- * Air 内建资产注册（glsl1 适配）。
- *
- * 本引擎快照的 Web 设备为 WebGL1（API.WEBGL，见 src/cocos/gfx/webgl/webgl-swapchain.ts
- * getContext('webgl')），着色器版本为 glsl1（ESSL 1.00）。引擎测试 fixtures
- * （builtin-effects/builtin-glsl4，与本引擎同源）只提供 glsl4 源码，因此这里内置一个
- * glsl4 → glsl1 降写器：去 set/binding/layout 限定符、UBO 展开为独立 uniform、
- * in/out → attribute/varying、texture() → texture2D()、fragment 输出映射到 gl_FragColor。
- *
- * 注册时机：EVENT_POST_SUBSYSTEM_INIT（effects 先于材质），
- * 材质 pass 编译由 fixtures 的 builtin-material.ts 在 EVENT_GAME_INITED 完成。
+ * AIR builtin assets for the WebGL 2-only runtime.
+ * Convert upstream glsl4 into ESSL 3.00 (glsl3) while retaining UBO layout.
+ * WebGL 1 shader lowering was retired with the browser support policy.
  */
 
 import { builtinResMgr } from '../../cocos/asset/asset-manager';
@@ -17,39 +10,6 @@ import { EffectAsset } from '../../cocos/asset/assets/effect-asset';
 import { effects } from './builtin-effects';
 import { glsl4 } from './builtin-glsl4';
 import { initBuiltinMaterial } from './builtin-material';
-
-type GLSLSource = { vert: string; frag: string };
-
-/** UBO 成员展开：`layout(std140) uniform CCGlobal { highp mat4 cc_matView; ... };` → 逐条 `uniform` 声明 */
-function expandUniformBlocks (src: string, blockName: string): string {
-    // 匹配（可能带修饰的）uniform block：uniform BlockName { ... };
-    const re = new RegExp(`uniform\\s+${blockName}\\s*\\{([^}]*)\\}\\s*;`, 'g');
-    return src.replace(re, (_m, body: string) => body
-        .split(';')
-        .map((line) => line.trim())
-        .filter((line) => line.length > 0)
-        .map((line) => {
-            // 成员形如 `highp mat4 cc_matView` / `mediump vec4 cc_screenSize[2]`
-            const m = line.match(/^([a-zA-Z]+\s+)?([a-zA-Z_0-9]+\s+)([a-zA-Z_0-9]+(\[[0-9]+\])?)$/);
-            if (!m) return '';
-            const precision = (m[1] || '').trim();
-            const type = m[2].trim();
-            const name = m[3];
-            return `uniform ${precision ? precision + ' ' : ''}${type} ${name};`;
-        })
-        .join('\n'));
-}
-
-function expandAllUniformBlocks (src: string): string {
-    // 已去掉 set/binding 修饰后，形如 `uniform NAME { ... };` 的块
-    const names: string[] = [];
-    const re = /uniform\s+([A-Za-z_0-9]+)\s*\{/g;
-    let m: RegExpExecArray | null;
-    while ((m = re.exec(src))) names.push(m[1]);
-    let out = src;
-    for (const n of names) out = expandUniformBlocks(out, n);
-    return out;
-}
 
 /**
  * glsl4(ESSL3+set 风格) → glsl3(ESSL3，WebGL2 设备)。去 set/binding 限定符、
@@ -67,56 +27,6 @@ function toGlsl3 (src: string): string {
         // （glVertexAttribPointer）驱动，蒙皮 a_joints 网格格式为 RGBA32F，
         // 因此映射为 vecN（与上游引擎 glsl3 目标的 float joints 声明一致）。
         .replace(/\bu32vec([234])\b/g, 'vec$1');
-}
-
-function toGlsl1 (src: string, stage: 'vert' | 'frag'): string {
-    let out = src;
-    // 0. 去掉扩展声明（ESSL1 不认识 ESSL3 的扩展）与已废弃的 composite pack 成员
-    out = out.replace(/#extension[^\n]*\n/g, '');
-    out = out.replace(/^[^\n]*cc_debug_view_composite_pack_\d+;[^\n]*$/gm, '');
-    // 0.1 Vulkan GLSL 显式 int 类型 → ESSL1 合法类型（u32vec4 a_joints 为蒙皮顶点属性，
-    //     网格格式 RGBA32F，映射为 vec4 后由 glsl1 的 attribute float 通路读取）
-    out = out.replace(/\bu32vec([234])\b/g, 'vec$1');
-    // 1. 去掉 Vulkan 风格 set/binding 与 location 限定符（仅限行内括号段）
-    out = out.replace(/layout\s*\(([^)]*)\)\s*/g, '');
-    // 2. 展开所有 uniform block 为独立 uniform
-    out = expandAllUniformBlocks(out);
-    // 3. 纹理采样函数名
-    out = out.replace(/\btexture\s*\(/g, 'texture2D(');
-    // 4. stage 特有处理：行首全局声明优先；再兜底处理紧跟在语句后的同 Line 声明
-    if (stage === 'vert') {
-        out = out.replace(/^\s*in\s+/gm, 'attribute ');
-        out = out.replace(/([;}\n])\s*in\s+/g, '$1attribute ');
-        out = out.replace(/^\s*out\s+/gm, 'varying ');
-        out = out.replace(/([;}\n])\s*out\s+/g, '$1varying ');
-    } else {
-        out = out.replace(/^\s*in\s+/gm, 'varying ');
-        out = out.replace(/([;}\n])\s*in\s+/g, '$1varying ');
-    }
-    // 5. 清理残留空行
-    out = out.replace(/\n\s*\n\s*\n/g, '\n\n');
-    return out;
-}
-
-/** fragment 输出变量重命名：删除 `out vec4 <name>;` 声明并把该变量名改写为 gl_FragColor */
-function renameFragOutput (fragSrc: string): string {
-    const names: string[] = [];
-    const src = fragSrc.replace(/\bout\s+vec4\s+([A-Za-z_0-9]+)\s*;/g, (_m, name: string) => {
-        names.push(name);
-        return '';
-    });
-    if (!names.length) return fragSrc;
-    let out = src;
-    for (const name of names) {
-        out = out.replace(new RegExp(`\\b${name}\\b`, 'g'), 'gl_FragColor');
-    }
-    return out;
-}
-
-function makeGlsl1 (source: GLSLSource): GLSLSource {
-    const vert = renameFragOutput(toGlsl1(source.vert, 'vert'));
-    const frag = renameFragOutput(toGlsl1(source.frag, 'frag'));
-    return { vert, frag };
 }
 
 /**
@@ -188,8 +98,7 @@ function assignEffectBindings (effect: EffectAsset): void {
 }
 
 export function registerBuiltinAirAssets (): void {
-    // 1. 注册 builtin effects：glsl4 为引擎同源源码；glsl3 供 WebGL2 设备、
-    //    glsl1 供 WebGL1 回退设备（均为 Air 侧降写生成）
+    // 1. 注册 builtin effects：glsl4 为引擎同源源码；glsl3 供 WebGL2 设备。
     effects.forEach((e, effectIndex) => {
         const effect = Object.assign(new EffectAsset(), e);
         effect.shaders.forEach((shaderInfo, shaderIndex) => {
@@ -200,7 +109,6 @@ export function registerBuiltinAirAssets (): void {
                     vert: toGlsl3(source.vert),
                     frag: toGlsl3(source.frag),
                 };
-                shaderInfo.glsl1 = makeGlsl1(source);
             }
         });
         assignEffectBindings(effect);

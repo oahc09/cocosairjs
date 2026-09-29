@@ -52,8 +52,8 @@ const nodeModules = path.join(consumerDir, 'node_modules', 'cocosair');
 const requiredFiles = [
     'package.json',
     'build/package.json', // {"type":"module"} — makes the ESM .js entries resolvable
-    'build/cocosair.module.js',
-    'build/cocosair.module.min.js',
+    'build/npm/cocosair.module.js',
+    'build/npm/cocosair.module.min.js',
     'build/cocosair.module.d.ts',
     'build/gltf-decoders/MANIFEST.md',
     'build/gltf-decoders/meshopt/meshopt_decoder.cjs',
@@ -83,7 +83,7 @@ if (fs.existsSync(path.join(nodeModules, 'build', 'package.json'))) {
 // that is a documented runtime characteristic — the consumer gate must still perform the
 // actual import instead of patching or skipping it.
 let exportCount = 0;
-const entryPath = path.join(nodeModules, 'build', 'cocosair.module.js');
+const entryPath = path.join(nodeModules, 'build', 'npm', 'cocosair.module.js');
 try {
     const { JSDOM } = require(path.join(root, 'node_modules', 'jsdom'));
     // 引擎 ScreenAdapter 约束：模块求值期即按 id 查找 GameCanvas（docs/06）。

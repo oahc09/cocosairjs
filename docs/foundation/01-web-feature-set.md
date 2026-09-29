@@ -1,5 +1,7 @@
 # 01 — Web Feature Set 分析（Phase 1 / 验收 L1）
 
+> 当前支持策略（2026-09-30）：WebGL 2-only；`gfx-webgl` 已退役，当前 AIR 声明 33 项、默认 26 项，上游 55 项、上游独有 23 项。下文旧取舍表为历史快照；现行规则见 [WebGL 2-only 策略](../webgl2-only.md)。
+
 > 基线：`cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)`
 > 判据来源：`cc.config.json` + `cocos4/scripts/build-h5-source.js`（上游仓库内文件，本仓库无 `scripts/` 目录；AIR 侧对应实现为 `tools/build/build.cjs`）+ 实际构建验证（docs/03），不人工假设。
 

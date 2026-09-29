@@ -37,6 +37,7 @@ const EXPECT = {
         'cocos/core/platform/debug.ts',
         'cocos/core/utils/path.ts',
         'cocos/rendering/global-descriptor-set-manager.ts',
+        'cocos/gfx/device-manager.ts', // Owner-approved WebGL 2-only startup policy.
     ],
     emscriptenSpecs: [
         'external:emscripten/box2d/box2d.release.asm.js',
@@ -49,13 +50,13 @@ const EXPECT = {
         'external:emscripten/physx/physx.release.wasm.js',
         'external:emscripten/physx/physx.release.wasm.wasm',
     ],
-    featureUnitsAir: 34,
+    featureUnitsAir: 33,
     featureUnitsUpstream: 55,
-    featureUnitsMissing: 22,
+    featureUnitsMissing: 23,
     airOnlyFeatures: ['air'],
     wasmBackendFeatures: ['physics-ammo', 'physics-physx', 'physics-2d-box2d-wasm'],
     // r46（owner #8(a)）：physics-cannon 入默认集（交付期切换），26 → 27；三个 wasm 后端仍不入。
-    defaultAirFeatures: 27,
+    defaultAirFeatures: 26, // Owner-approved retirement of gfx-webgl from the default runtime.
     // A7 核对的子树（三 wasm 后端 + 两个已在 Air 的对照后端）
     physicsSubtreeDirs: [...SEED_DIRS, 'cocos/physics/cannon', 'cocos/physics-2d/box2d'],
 };

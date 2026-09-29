@@ -121,7 +121,9 @@ cocosair.js/
 ## 能力边界（V1.2）
 
 **保留（在默认交付产物里）**：Core/Math/Scene Graph/Component/Game/Director/Asset/
-GFX(WebGL2 + WebGL1 回退)/Render Scene/Render Pipeline/Camera/Light/Mesh/Material/Texture/
+**浏览器最低要求：WebGL 2。** WebGL 1 已正式退役；不可用时 `createAirApp()` 拒绝并携带 `WEBGL2_REQUIRED` 错误码，详见 [支持策略](docs/webgl2-only.md)。
+
+GFX(WebGL2 required)/Render Scene/Render Pipeline/Camera/Light/Mesh/Material/Texture/
 Animation/Skeleton/Skinning/primitive/tween/Web Input/Web PAL + builtin 材质与效果（Air 程序化注册，见 `src/air/builtin`）；
 V1.x 回归期新增（**能力名**，逐名对账见下）：**2D/UI**（`2d` `ui` `mask` `graphics` `tiled-map` `particle-2d` `sorting`）、
 **音频/视频/WebView**（`audio` `video` `webview`）、**物理**（3D `physics-builtin`；2D `physics-2d-box2d` / `physics-2d-builtin`）、

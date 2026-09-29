@@ -96,11 +96,18 @@ try {
     // Relative paths + cwd: Git Bash tar treats 'E:\...' as a remote-host spec.
         execSync(`tar -xzf "${tarball}" -C "${path.relative(root, unpackDir)}"`, { cwd: root, stdio: 'inherit' });
     const pkg = path.join(unpackDir, 'package');
-    for (const required of ['build/cocosair.module.js', 'build/gltf-decoders/MANIFEST.md',
+    for (const required of ['build/npm/cocosair.module.js', 'build/npm/cocosair.module.min.js', 'build/gltf-decoders/MANIFEST.md',
         'build/gltf-decoders/meshopt/meshopt_decoder.cjs', 'build/gltf-decoders/draco/draco3d.js',
         'build/gltf-decoders/draco/draco_decoder.wasm', 'build/gltf-decoders/basis/basis_transcoder.js',
         'build/gltf-decoders/basis/basis_transcoder.wasm', 'docs/THIRD_PARTY_LICENSES.md', 'LICENSE']) {
         if (!fs.existsSync(path.join(pkg, required))) { failures.push(`npm pack missing: ${required}`); }
+    }
+    for (const relPath of ['build/npm/cocosair.module.js', 'build/npm/cocosair.module.min.js']) {
+        const bundle = path.join(pkg, relPath);
+        if (fs.existsSync(bundle) && /\/\/# sourceMappingURL=/.test(fs.readFileSync(bundle, 'utf8'))) {
+            failures.push(`${relPath}: published bundle still links to a source map`);
+        }
+        if (fs.existsSync(`${bundle}.map`)) { failures.push(`${relPath}.map must stay out of the npm package`); }
     }
     // Loading the meshopt decoder from the unpacked tree proves offline usability.
     try {

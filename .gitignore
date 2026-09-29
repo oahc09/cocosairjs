@@ -4,6 +4,7 @@ node_modules/
 !src/node_modules/
 bin/
 build/.tmp-*/
+build/npm/
 *.log
 .playwright-cli/
 

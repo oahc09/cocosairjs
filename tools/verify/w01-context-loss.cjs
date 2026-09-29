@@ -1,6 +1,6 @@
 /* W01 上下文丢失运行器 — tools/debug/probes/context-loss-probe（隔离探针，不进 Gallery/coverage 门禁）。
  *
- * 任务清单 W01：WEBGL_lose_context 在 WebGL2/WebGL1 双后端实际复现上下文丢失，验证
+ * 任务清单 W01：在受支持的 WebGL2 后端实际复现 WEBGL_lose_context，验证
  * Air 生命周期合同（healthy→lost→restoring→failed 状态机）：
  *   - lost 后 game.pause() 生效（AFTER_DRAW 计数与业务时钟冻结 = 暂停无效提交）；
  *   - 恢复路径如实判定 failed（不宣称自愈）+ 受控重载门掣（healthy 拒绝 / failed 生效）；
@@ -9,7 +9,7 @@
  * 执行：NODE_PATH=<含 playwright 的 node_modules> node tools/verify/w01-context-loss.cjs
  * 产出：docs/evidence/w01-context-loss.json（独立证据路径，不覆写并发工作的正式证据）
  *
- * 判定：两后端 probe.ok ∧ probe.ready ∧ pageErrors=0 ∧ checks 全 PASS ⇒ verdict=PASS，退出码 0。
+ * 判定：WebGL2 probe.ok ∧ probe.ready ∧ pageErrors=0 ∧ checks 全 PASS ⇒ verdict=PASS，退出码 0。
  */
 const fs = require('fs');
 const path = require('path');
@@ -82,12 +82,14 @@ function sha256_16 (file) {
 
     const { server, port } = await startServer();
     const launchOpts = { headless: true, args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] };
+    if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH) {
+        launchOpts.executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
+    }
     const browser = await playwright.chromium.launch(launchOpts);
 
-    // 双后端：默认（WebGL2）+ 强制 WebGL1（init script 屏蔽 WebGL2RenderingContext，g4 同款机制）
+    // WebGL 1 startup rejection is verified separately by webgl2-only.cjs.
     const MODES = [
         { id: 'webgl2', expect: 'webgl2', initScript: null },
-        { id: 'webgl1', expect: 'webgl', initScript: 'window.WebGL2RenderingContext = undefined;' },
     ];
 
     const runs = [];

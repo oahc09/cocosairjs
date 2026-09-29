@@ -10,7 +10,12 @@ const evidence = JSON.parse(
     fs.readFileSync(path.join(root, 'docs/evidence/v11-tarball-browser-consumer.json'), 'utf8'),
 );
 const sizes = {};
-for (const relative of ['build/cocosair.module.js', 'build/cocosair.module.min.js']) {
+for (const relative of [
+    'build/cocosair.module.js',
+    'build/cocosair.module.min.js',
+    'build/npm/cocosair.module.js',
+    'build/npm/cocosair.module.min.js',
+]) {
     const bytes = fs.readFileSync(path.join(root, relative));
     sizes[relative] = {
         bytes: bytes.length,
@@ -21,11 +26,12 @@ for (const relative of ['build/cocosair.module.js', 'build/cocosair.module.min.j
 }
 const checks = {
     installedImport: evidence.ok === true && evidence.booted === true,
-    currentBundle: evidence.installed?.bundleSha256_16 === sizes['build/cocosair.module.js'].sha256_16,
+    currentBundle: evidence.installed?.bundleSha256_16 === sizes['build/npm/cocosair.module.js'].sha256_16,
     nestedDeployment: evidence.nested?.booted === true,
     cspWithoutEval: Array.isArray(evidence.nested?.cspErrors) && evidence.nested.cspErrors.length === 0,
-    sourceMap:
-        evidence.sourceMap?.present === true && evidence.sourceMap.linked === true && evidence.sourceMap.sources > 0,
+    localDevelopmentSourceMap:
+        evidence.developmentSourceMap?.present === true && evidence.developmentSourceMap.linked === true,
+    npmSourceMapOmitted: evidence.sourceMap?.present === false && evidence.sourceMap.linked === false,
 };
 const report = {
     measuredAt: new Date().toISOString(),

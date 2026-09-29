@@ -1,8 +1,11 @@
 # Using Shadertoy Shaders（使用 Shadertoy 着色器）
 
+> 当前支持范围（2026-09-30）：浏览器渲染要求 WebGL 2；WebGL 1 已正式退役。启动不可用时返回 `WEBGL2_REQUIRED`，不会回退到空渲染设备。详见 [支持策略](../webgl2-only.md)。
+
+
 > 话题：把 Shadertoy 的 fragment 着色器搬进引擎——用用户可写的着色器材质 + 全屏 quad，喂 `iTime`/`iResolution`/`iMouse` 等 uniform。
 > 状态：**PARTIAL（2026-09-25 升级，原 N/A）** —— 用户手写 GLSL → `EffectAsset` 注册 → `Material` 绑定 → uniform 更新 → 上屏
-> 的全链路已实测走通（WebGL2 与强制 WebGL1 双后端，`docs/evidence/g4-shader-probe.json` 28/28 PASS）；
+> 的全链路已实测走通（当前仅验证 WebGL2，结果见 `docs/evidence/g4-shader-probe.json`）；
 > 两级 Gallery 示例（`shader-custom-gradient` / `shader-dissolve`）已过 staging 试验，正典集成后升 FULL。
 > 姊妹篇：[debugging-glsl](debugging-glsl.md)（编译错误诊断已实测）、[custom-shaders](custom-shaders.md)（完整开发工作流）。
 

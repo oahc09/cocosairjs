@@ -1,7 +1,10 @@
 # 自定义 Shader 开发（Custom Shaders）
 
-> 状态：**FULL（2026-09-26）**。用户手写 GLSL 的完整链路已双后端实测
-> （`docs/evidence/g4-shader-probe.json`，WebGL2 + 强制 WebGL1 共 28/28 PASS）；
+> 当前支持范围（2026-09-30）：浏览器渲染要求 WebGL 2；WebGL 1 已正式退役。启动不可用时返回 `WEBGL2_REQUIRED`，不会回退到空渲染设备。详见 [支持策略](../webgl2-only.md)。
+
+
+> 状态：**FULL（2026-09-26）**。用户手写 GLSL 的完整链路在 WebGL2 上实测
+> （`docs/evidence/g4-shader-probe.json`，当前 WebGL2 probe 的结果以报告为准；旧的双后端结果为历史证据）；
 > 两级示例 `shader-custom-gradient`（渐变 + uniform）与 `shader-dissolve`（贴图 + 溶解 + 交互）
 > 已进入 Gallery，具备正典 API、像素变化及资源释放证据。
 > 相关篇目：[shadertoy](shadertoy.md)（Shadertoy 移植语义）、[debugging-glsl](debugging-glsl.md)（编译错误诊断）。
@@ -68,11 +71,12 @@ AIR 没有 `ShaderMaterial` 类；用户 Shader 的入口是 **手写编译后�
 **set/binding 约定**（`src/cocos/rendering/define.ts`）：GLOBAL=0（CCGlobal:0、CCCamera:1）；
 MATERIAL=1（用户 Constants 块 binding 0 起，采样器顺延）；LOCAL=2（CCLocal:0）。
 
-## 2. 三套 GLSL 变体（兼容性）
+## 2. GLSL 变体与当前支持范围
 
-运行期 `program-lib` 按设备选源码（`getDeviceShaderVersion`）：**WebGL2 → glsl3，WebGL1 → glsl1**，
-无 chunk include——每个变体必须自包含。当前快照浏览器默认拿到 WebGL2 设备
-（device-manager 优选 WebGL2Device；`getContext('webgl')` 只在 WebGL2 不可用时出现）。
+运行期 `program-lib` 按设备选源码（`getDeviceShaderVersion`）：**WebGL2 → glsl3**。
+无 chunk include——每个变体必须自包含。浏览器必须成功初始化 WebGL2Device，
+否则启动失败；不会调用 `getContext('webgl')` 降级。下表的 `glsl1` 是保留的上游
+数据格式，当前运行时不消费它，也不要求自定义 shader 提供该变体。
 
 | 变体  | 形态                                                                                                 | 生成方式                                                               |
 | ----- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -137,9 +141,9 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 
 | 文件                                      | 内容                                                                       |
 | ----------------------------------------- | -------------------------------------------------------------------------- |
-| `tools/debug/probes/shader-probe/main.js` | 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁，双后端） |
+| `tools/debug/probes/shader-probe/main.js` | WebGL2 全链路探针（注册/uniform/动画/冻结/编译错误/remove/重复注册/销毁） |
 | `examples/shader-custom-gradient/`        | 一级示例：渐变 + colorA/colorB/timeScale uniform + 交互切换 + lifecycle    |
 | `examples/shader-dissolve/`               | 二级示例：sampler2D 棋盘 + discard 溶解 + 边缘发光 + 逐帧 uniform 动画     |
 | `examples/shared/shader-blocks.js`        | UBO 块样板 + standardVert + makeUserEffectJson                             |
-| `src/air/builtin/register.ts`             | 引擎内建注册路径（glsl4→3/1 降写器 + set/binding 分配的同源参考）          |
-| `docs/evidence/g4-shader-probe.json`      | 探针证据（28/28 PASS，含 WebGL1/WebGL2 后端与 registerBeforeBoot 边界）    |
+| `src/air/builtin/register.ts`             | 引擎内建注册路径（glsl4→3 转换 + set/binding 分配的同源参考）          |
+| `docs/evidence/g4-shader-probe.json`      | 当前 WebGL2 探针证据（14/14 PASS，含 registerBeforeBoot 边界）    |

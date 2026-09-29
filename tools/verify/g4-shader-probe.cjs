@@ -139,18 +139,13 @@ function startServer() {
     launchOpts.args = ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'];
     const browser = await playwright.chromium.launch(launchOpts);
 
-    // 双后端：默认（device-manager 优选 WebGL2）+ 强制 WebGL1 降级对照
-    //（init script 屏蔽 WebGL2RenderingContext → useWebGL2=false → WebGLDevice → program-lib 选 glsl1）
+    // Supported rendering backend: WebGL2. Missing/failed WebGL2 is a rejection,
+    // covered by webgl2-only.cjs rather than a positive shader-rendering mode.
     const MODES = [
         {
             id: 'default',
             initScript: null,
             screenshot: path.join(REPO, 'docs', 'evidence', 'examples', 'g4-shader-probe-default.png'),
-        },
-        {
-            id: 'force-webgl1',
-            initScript: 'window.WebGL2RenderingContext = undefined;',
-            screenshot: path.join(REPO, 'docs', 'evidence', 'examples', 'g4-shader-probe-force-webgl1.png'),
         },
     ];
 

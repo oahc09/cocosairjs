@@ -27,21 +27,21 @@ const ROOT = path.resolve(process.env.AIR_ROOT || path.resolve(__dirname, '..', 
 const UPSTREAM = path.resolve(process.env.COCOS_UPSTREAM || 'E:/AIProMax/github/cocos4');
 
 const EXPECT = {
-    declared: { air: 34, upstream: 55, missing: 22, airOnly: ['air'], defaultAirFeatures: 27 }, // r46：#8(a) physics-cannon 入默认集，26 → 27
+    declared: { air: 33, upstream: 55, missing: 23, airOnly: ['air'], defaultAirFeatures: 26 }, // WebGL 2-only: gfx-webgl retired by owner.
     undeclaredExportNames: [
-        'geometry-renderer', 'gfx-webgpu', 'graphics', 'intersection-2d', 'mask',
+        'geometry-renderer', 'gfx-webgl', 'gfx-webgpu', 'graphics', 'intersection-2d', 'mask',
         'physics-framework', 'sorting', 'sorting-2d', 'spine',
     ],
     aggregatedByAirEntry: [
         'geometry-renderer', 'graphics', 'intersection-2d', 'mask',
         'physics-framework', 'sorting', 'sorting-2d', 'spine',
     ],
-    notAggregatedByAirEntry: ['gfx-webgpu'],
+    notAggregatedByAirEntry: ['gfx-webgl', 'gfx-webgpu'],
     bundleSymbolsPresent: [
         'PhysicsSystem', 'PhysicsSystem2D', 'b2PhysicsWorld', 'WebGL2Device', 'AudioSource',
         'TiledMap', 'Graphics', 'Mask', 'Sorting2D', 'GeometryRenderer', 'UIRenderer',
     ],
-    bundleSymbolsAbsent: ['BuiltinPhysicsWorld', 'B2PhysicsWorld'],
+    bundleSymbolsAbsent: ['BuiltinPhysicsWorld', 'B2PhysicsWorld', 'WebGLDevice'],
     // D5：README「能力边界」括号里出现过的能力名 → 允许的归属（default | declaredOnly | symbol）
     capabilityNames: {
         '2d': ['default'], ui: ['default'], 'tiled-map': ['default'], 'particle-2d': ['default'],

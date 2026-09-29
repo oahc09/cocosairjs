@@ -21,7 +21,7 @@ const ENGINE = join(ROOT, 'src');
 
 const AIR_FEATURES = [
     'air', // bundle 入口: src/exports/air.ts（含 base/3d/animation/... 与 createAirApp）
-    'base', 'gfx-webgl', 'gfx-webgl2', 'gfx-empty', '3d', 'animation', 'skeletal-animation',
+    'base', 'gfx-webgl2', 'gfx-empty', '3d', 'animation', 'skeletal-animation',
     'primitive', 'tween', 'custom-pipeline', 'legacy-pipeline',
     // V1.2 批次 A 回归组
     'profiler', 'video', 'webview',

@@ -23,8 +23,7 @@
  THE SOFTWARE.
  */
 
-import { WebGLDevice } from '../cocos/gfx/webgl/webgl-device';
-import { legacyCC } from '../cocos/core/global-exports';
-
-export { WebGLDevice };
-legacyCC.WebGLDevice = WebGLDevice;
+// AIR (2026-09-30): the supported browser runtime requires WebGL 2.
+// Retain this upstream entry path for extraction provenance, without exporting or
+// registering the legacy backend. It is no longer a declared build feature.
+export {};

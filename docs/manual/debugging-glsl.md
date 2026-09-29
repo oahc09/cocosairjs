@@ -1,5 +1,8 @@
 # 调试 GLSL（Debugging GLSL）
 
+> 当前支持范围（2026-09-30）：浏览器渲染要求 WebGL 2；WebGL 1 已正式退役。启动不可用时返回 `WEBGL2_REQUIRED`，不会回退到空渲染设备。详见 [支持策略](../webgl2-only.md)。
+
+
 > shader 编译/链接出错时怎么定位。
 > 配套示例：`shader-custom-gradient` / `shader-dissolve`（`examples/` 正典，r52 集成）；
 > 探针：`tools/debug/probes/shader-probe/`（F 相位 = 故意编译错误的诊断实测）。

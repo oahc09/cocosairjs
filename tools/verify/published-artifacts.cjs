@@ -11,8 +11,7 @@ const SOURCE = path.join(root, 'src', 'air', 'builtin', 'register.ts');
 function publishedBundles () {
   const files = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).files || [];
   return files
-    .filter((entry) => /^build\/[^/]+\.js$/.test(entry))
-    .map((entry) => entry.replace(/^build\//, ''));
+    .filter((entry) => /^build\/npm\/cocosair\.module(?:\.min)?\.js$/.test(entry));
 }
 
 function registeredMarkers () {
@@ -22,13 +21,19 @@ function registeredMarkers () {
 
 function check () {
   const markers = registeredMarkers();
+  const packageFiles = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8')).files || [];
   const bundles = publishedBundles();
   const failures = [];
   const checked = [];
+  if (packageFiles.some((entry) => /\.map$/.test(entry))) {
+    failures.push('package.json files[] must not publish source maps; local build maps stay in build/');
+  }
+  if (bundles.length !== 2) { failures.push(`expected two build/npm runtime bundles, found ${bundles.length}`); }
   for (const bundle of bundles) {
-    const abs = path.join(root, 'build', bundle);
-    if (!fs.existsSync(abs)) { failures.push(`${bundle}: listed in package.json files[] but absent from build/`); continue; }
+    const abs = path.join(root, bundle);
+    if (!fs.existsSync(abs)) { failures.push(`${bundle}: listed in package.json files[] but absent`); continue; }
     const text = fs.readFileSync(abs, 'utf8');
+    if (/\/\/# sourceMappingURL=/.test(text)) { failures.push(`${bundle}: published runtime still links a source map`); }
     const missing = markers.filter((m) => !text.includes(m));
     checked.push({ bundle, bytes: fs.statSync(abs).size, missing });
     for (const m of missing) { failures.push(`${bundle}: missing registered builtin "${m}" (source has it, shipped bundle does not)`); }

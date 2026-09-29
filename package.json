@@ -4,22 +4,20 @@
  "description": "Cocos AIR — Agent-first Interactive Runtime. A code-first, standalone Web TypeScript engine extracted from cocos4.",
  "license": "MIT",
  "type": "commonjs",
- "main": "build/cocosair.module.js",
- "module": "build/cocosair.module.js",
+ "main": "build/npm/cocosair.module.js",
+ "module": "build/npm/cocosair.module.js",
  "types": "./build/cocosair.module.d.ts",
  "exports": {
   ".": {
    "types": "./build/cocosair.module.d.ts",
-   "import": "./build/cocosair.module.js",
-   "default": "./build/cocosair.module.js"
+   "import": "./build/npm/cocosair.module.js",
+   "default": "./build/npm/cocosair.module.js"
   }
  },
  "files": [
   "build/package.json",
-  "build/cocosair.module.js",
-  "build/cocosair.module.js.map",
-  "build/cocosair.module.min.js",
-  "build/cocosair.module.min.js.map",
+  "build/npm/cocosair.module.js",
+  "build/npm/cocosair.module.min.js",
   "build/cocosair.module.d.ts",
   "build/gltf-decoders/package.json",
   "build/gltf-decoders/",
@@ -30,8 +28,8 @@
   "docs/guides/",
   "docs/reference/",
   "docs/versions/",
-  "docs/notes/",
   "docs/manual/",
+  "docs/notes/",
   "README.md",
   "LICENSE",
   "licenses/"
@@ -43,7 +41,8 @@
   "build": "node tools/build/build.cjs --format esm",
   "build:min": "node tools/build/build.cjs --format esm --min",
   "build:dts": "node tools/build/build-dts.cjs",
-  "build:all": "node tools/build/build.cjs --format esm && node tools/build/build.cjs --format esm --min && node tools/build/build-dts.cjs && node tools/verify/published-artifacts.cjs",
+  "build:all": "node tools/build/build.cjs --format esm && node tools/build/build.cjs --format esm --min && node tools/build/build-dts.cjs && node tools/build/prepare-package.cjs && node tools/verify/published-artifacts.cjs",
+  "prepack": "node tools/build/prepare-package.cjs",
   "build:system": "node tools/build/build.cjs --format system",
   "baseline": "node tools/baseline/build-baseline.cjs",
   "analyze": "node tools/analyze/dep-graph.cjs",

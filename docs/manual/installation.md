@@ -210,7 +210,7 @@ frameRate: 60
 几点值得注意：
 
 - `VERSION` 是 `4.0.0`（引擎基线），而 `package.json` 的 `version` 是 `0.1.0`（AIR 封装层版本）—— 两个版本号含义不同，别混。
-- `device.constructor.name` 给出真实后端：`WebGL2Device` / `WebGLDevice` / `EmptyDevice`。`gfx.API` 枚举同时列出了 `WEBGL2`、`WEBGL`、`WEBGPU` 等取值，但 AIR 当前只创建 WebGL 系设备（见 [WebGL Compatibility Check](./webgl-compatibility-check.md)）。
+- `device.constructor.name` 给出真实后端：`WebGL2Device`；显式 HEADLESS 为 `EmptyDevice`。`gfx.API` 枚举同时列出了 `WEBGL2`、`WEBGL`、`WEBGPU` 等取值，但 AIR 浏览器发行版要求 WebGL2，枚举中的 WEBGL 不表示继续支持 WebGL1（见 [WebGL Compatibility Check](./webgl-compatibility-check.md)）。
 - `device.capabilities`（**不是 `device.caps`**）才是能力查询入口，字段包含 `maxTextureSize`、`maxVertexAttributes`、`maxColorRenderTargets`、`supportQuery` 等。
 - 上面这次 `maxColorRenderTargets` 报 `0`，是软件光栅化环境的结果；真机 GPU 上通常 >1。写代码时不要假设它非零。
 - `sys.browser` 是 `undefined`，要用 `sys.browserType` / `sys.browserVersion`。

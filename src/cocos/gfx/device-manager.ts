@@ -155,7 +155,6 @@ export class DeviceManager {
                 this._gfxDevice = gfx.DeviceManager.create(deviceInfo);
             } else {
                 let useWebGL2 = (!!globalThis.WebGL2RenderingContext);
-                const userAgent = globalThis.navigator.userAgent.toLowerCase();
                 // UC browser implementation doesn't conform to WebGL2 standard
                 if (sys.browserType === BrowserType.UC) {
                     useWebGL2 = false;
@@ -171,14 +170,19 @@ export class DeviceManager {
                         });
                     });
                 }
-                if (useWebGL2 && cclegacy.WebGL2Device) {
-                    this._tryInitializeDeviceSync(cclegacy.WebGL2Device, deviceInfo);
-                }
-                if (cclegacy.WebGLDevice) {
-                    this._tryInitializeDeviceSync(cclegacy.WebGLDevice, deviceInfo);
-                }
-                if (cclegacy.EmptyDevice) {
-                    this._tryInitializeDeviceSync(cclegacy.EmptyDevice, deviceInfo);
+                // AIR: visible browser rendering requires WebGL 2. EmptyDevice is
+                // reserved for the explicit HEADLESS branch, never a visual fallback.
+                try {
+                    if (!useWebGL2 || !cclegacy.WebGL2Device
+                        || !this._tryInitializeDeviceSync(cclegacy.WebGL2Device, deviceInfo)) {
+                        throw new Error('A WebGL 2 context could not be initialized.');
+                    }
+                } catch (cause) {
+                    this._deviceInitialized = false;
+                    this._renderType = RenderType.UNKNOWN;
+                    throw Object.assign(new Error('[cocosair] WebGL 2 is required; WebGL 1 is unsupported.'), {
+                        code: 'WEBGL2_REQUIRED', cause,
+                    });
                 }
                 this._initSwapchain();
             }

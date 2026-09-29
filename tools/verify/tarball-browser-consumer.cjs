@@ -41,16 +41,24 @@ const OUT = path.join(REPO, 'docs', 'evidence', 'v11-tarball-browser-consumer.js
     fs.writeFileSync(path.join(consumerDir, 'package.json'), JSON.stringify({ name: 'tarball-consumer', private: true, type: 'module' }, null, 2));
     execFileSync('npm', ['install', path.join(tmpRoot, tarball), '--no-save', '--offline', '--ignore-scripts'], { cwd: consumerDir, stdio: 'pipe', shell: process.platform === 'win32' });
     const pkgDir = path.join(consumerDir, 'node_modules', 'cocosair.js');
-    const bundle = path.join(pkgDir, 'build', 'cocosair.module.js');
-    if (!fs.existsSync(bundle)) { throw new Error('安装产物缺 build/cocosair.module.js'); }
-    report.installed = { files: fs.readdirSync(path.join(pkgDir, 'build')).length };
+    const bundle = path.join(pkgDir, 'build', 'npm', 'cocosair.module.js');
+    if (!fs.existsSync(bundle)) { throw new Error('安装产物缺 build/npm/cocosair.module.js'); }
+    report.installed = { files: fs.readdirSync(path.join(pkgDir, 'build')).length, entry: 'build/npm/cocosair.module.js' };
     report.installed.bundleSha256_16 = crypto.createHash('sha256').update(fs.readFileSync(bundle)).digest('hex').slice(0, 16);
     const sourceMapPath = bundle + '.map';
-    const sourceMap = fs.existsSync(sourceMapPath) ? JSON.parse(fs.readFileSync(sourceMapPath, 'utf8')) : null;
-    report.sourceMap = { present: !!sourceMap, sources: sourceMap?.sources?.length ?? 0,
-      linked: /sourceMappingURL=cocosair\.module\.js\.map/.test(fs.readFileSync(bundle, 'utf8')) };
-    if (!report.sourceMap.present || !report.sourceMap.linked || report.sourceMap.sources === 0) {
-      fail('installed bundle sourcemap is absent, unlinked, or empty');
+    const releaseCode = fs.readFileSync(bundle, 'utf8');
+    report.sourceMap = { present: fs.existsSync(sourceMapPath), linked: /\/\/# sourceMappingURL=/.test(releaseCode) };
+    if (report.sourceMap.present || report.sourceMap.linked) {
+      fail('published bundle must not include or link to a source map');
+    }
+    const devBundle = path.join(REPO, 'build', 'cocosair.module.js');
+    const devMap = `${devBundle}.map`;
+    report.developmentSourceMap = {
+      present: fs.existsSync(devMap),
+      linked: fs.existsSync(devBundle) && /sourceMappingURL=cocosair\.module\.js\.map/.test(fs.readFileSync(devBundle, 'utf8')),
+    };
+    if (!report.developmentSourceMap.present || !report.developmentSourceMap.linked) {
+      fail('local development bundle must retain its linked source map');
     }
 
     // 3) 静态服务安装产物
@@ -68,7 +76,7 @@ const OUT = path.join(REPO, 'docs', 'evidence', 'v11-tarball-browser-consumer.js
     // 4) 消费页：docs Quick Start 形态的 main.js（对齐 README 手册用法）
     const pageHtml = `<!DOCTYPE html><html><head><meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'nonce-w14-test'; connect-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'">
-<script nonce="w14-test" type="importmap">{"imports":{"cocosair":"/build/cocosair.module.js"}}</script></head>
+<script nonce="w14-test" type="importmap">{"imports":{"cocosair":"/build/npm/cocosair.module.js"}}</script></head>
 <body style="margin:0"><canvas id="GameCanvas" width="480" height="320" style="width:480px;height:320px"></canvas>
 <script nonce="w14-test" type="module">
 import { createAirApp, Scene, Node, Camera, MeshRenderer, DirectionalLight, Material, Color, primitives, utils, Vec3 } from 'cocosair';

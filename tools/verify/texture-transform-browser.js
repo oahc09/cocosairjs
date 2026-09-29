@@ -1,6 +1,7 @@
 /* Compare transformed sampling with independently baked UVs, then load official test models. */
 async (page) => {
     const webgl1 = page.url().includes('webgl=1');
+        if (webgl1) throw new Error('WEBGL2_REQUIRED: WebGL 1 verification mode is retired; use the WebGL 2 mode.');
     await page.addInitScript((forceWebGL1) => {
         if (forceWebGL1) {
             const original = HTMLCanvasElement.prototype.getContext;

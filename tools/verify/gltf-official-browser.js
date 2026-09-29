@@ -1,6 +1,7 @@
 /* Official Khronos assets only. Run via playwright-cli run-code --filename. */
 async (page) => {
     const webgl1 = page.url().includes('webgl=1');
+        if (webgl1) throw new Error('WEBGL2_REQUIRED: WebGL 1 verification mode is retired; use the WebGL 2 mode.');
     const errors = [];
     const compatibilityWarnings = [];
     const expectedDiagnostics = [];

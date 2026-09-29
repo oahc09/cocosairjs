@@ -1,29 +1,29 @@
 {
-  "measuredAt": "2026-09-29T14:49:05.543Z",
+  "measuredAt": "2026-09-29T22:54:05.231Z",
   "sizes": {
     "build/cocosair.module.js": {
-      "bytes": 6610182,
-      "sha256_16": "bf07c87924fb2476",
-      "gzip": 1181300,
-      "brotli": 870703
+      "bytes": 6432928,
+      "sha256_16": "9edc4be858de13fe",
+      "gzip": 1153567,
+      "brotli": 862938
     },
     "build/cocosair.module.min.js": {
-      "bytes": 3686861,
-      "sha256_16": "7f42be9d412dd2fb",
-      "gzip": 885057,
-      "brotli": 667417
+      "bytes": 3595641,
+      "sha256_16": "bc7aedda4dcdb919",
+      "gzip": 864255,
+      "brotli": 660109
     },
     "build/npm/cocosair.module.js": {
-      "bytes": 6610138,
-      "sha256_16": "3cf4a04de827cefa",
-      "gzip": 1181264,
-      "brotli": 870758
+      "bytes": 6432884,
+      "sha256_16": "113d4c4068a2932d",
+      "gzip": 1153535,
+      "brotli": 862623
     },
     "build/npm/cocosair.module.min.js": {
-      "bytes": 3686813,
-      "sha256_16": "f9d1c389c6b88d94",
-      "gzip": 885016,
-      "brotli": 667618
+      "bytes": 3595593,
+      "sha256_16": "ef27ccdb823ada0b",
+      "gzip": 864214,
+      "brotli": 660264
     }
   },
   "checks": {

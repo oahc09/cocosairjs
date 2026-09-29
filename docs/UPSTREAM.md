@@ -177,6 +177,10 @@ The override must be assigned before importing the engine. The usage and pixel-u
 
 ## Intentional AIR adaptation: `preserveDrawingBuffer` on both WebGL backends
 
+Historical dual-backend scope: since the owner decision of 2026-09-30, only WebGL 2 is
+supported in the browser runtime. The WebGL 1 source modification below is retained as
+extraction provenance and is excluded from the default bundle.
+
 `src/cocos/gfx/webgl/webgl-swapchain.ts` sets `preserveDrawingBuffer: true` (AIR, 2026-09-12) so Code First pages remain pixel-readable for debuggers, verifiers and `canvas.toDataURL()` capture after the frame is presented. `src/cocos/gfx/webgl2/webgl2-swapchain.ts` now matches (AIR, 2026-09-28): the original change had missed the WebGL2 `getContext`, so on the WebGL2 backend any readback outside the `AFTER_DRAW` window (after a window resize, while paused, or from a timer) returned a black canvas while WebGL1 kept the last frame. The WebXR branch keeps the upstream `false`. Both files are marked modified in `docs/upstream-file-map.json`; the regression is locked by `tools/verify/w03-capture.cjs` (resize/paused phases must stay non-black on both backends).
 
 
@@ -201,3 +205,22 @@ The Web PAL input sources (keyboard/mouse/touch) and the screen adapter resolve 
 2. 所有后续报告、提交说明引用基线时使用：
    `cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)`。
 3. 上游文件与 Air 文件的对应关系记录在 `docs/upstream-file-map.json`。
+
+## Intentional AIR adaptation: WebGL 2-only target environments
+
+Owner decision (2026-09-30): WebGL 1 is no longer supported. The default build drops
+`gfx-webgl`; its feature declaration is removed and `src/exports/gfx-webgl.ts` is
+an inert retained provenance entry. `src/cocos/gfx/device-manager.ts` requires a
+successfully initialized WebGL 2 device for browser rendering and throws
+`WEBGL2_REQUIRED` instead of falling back to WebGL 1 or EmptyDevice. Explicit
+HEADLESS remains supported. Both extracted files are recorded as modified in
+`docs/upstream-file-map.json`. The legacy backend source remains in the extraction
+tree but is not exported or shipped in the runtime. AIR builtin registration no longer
+generates WebGL 1 shaders. Current positive W01/W03/G4 probes are WebGL 2-only, with
+startup rejection and HEADLESS verified by `tools/verify/webgl2-only.cjs`.
+
+Current feature counts: 33 declared AIR units, 55 upstream units, 23 upstream-only
+units, one AIR-only unit, 26 default features. Historical counts in earlier sections
+remain snapshots; the current invariant gates use this approved support policy.
+
+See [browser support policy](webgl2-only.md) for validation and release-evidence requirements.

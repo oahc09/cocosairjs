@@ -1,6 +1,6 @@
 /* W03 官方截图时机运行器 — tools/debug/probes/capture-probe（隔离探针，不进 Gallery/coverage 门禁）。
  *
- * 任务清单 W03：矩阵 = 后端{webgl2, webgl1} × DPR{1,2}。每轮：
+ * 任务清单 W03：矩阵 = WebGL2 × DPR{1,2}。每轮：
  *   - 页面 A 相位（同帧三路对照）后截 Playwright 页面截图（compositor 输出，存证 + 尺寸断言）；
  *   - 驱动 setViewportSize(900,600) 触发 C 相位 resize 链；
  *   - D 相位验证暂停态采集边界（事件等待式 → CAPTURE_FAILED；直接读 → 上一帧）。
@@ -83,13 +83,14 @@ function pngSize (buf) {
     }
     const { server, port } = await startServer();
     const launchOpts = { headless: true, args: ['--use-gl=angle', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox'] };
+    if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH) {
+        launchOpts.executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
+    }
     const browser = await playwright.chromium.launch(launchOpts);
 
     const MODES = [
         { id: 'webgl2-dpr1', expect: 'webgl2', dpr: 1, initScript: null },
         { id: 'webgl2-dpr2', expect: 'webgl2', dpr: 2, initScript: null },
-        { id: 'webgl1-dpr1', expect: 'webgl', dpr: 1, initScript: 'window.WebGL2RenderingContext = undefined;' },
-        { id: 'webgl1-dpr2', expect: 'webgl', dpr: 2, initScript: 'window.WebGL2RenderingContext = undefined;' },
     ];
 
     fs.mkdirSync(SHOT_DIR, { recursive: true });
@@ -166,7 +167,7 @@ function pngSize (buf) {
         taskDoc: 'ai/Cocos Air Code First 与 Web 可靠性优化任务清单.md',
         bundle,
         browser: { name: 'chromium headless (ANGLE/SwiftShader)', viewport: '1280x720', launchArgs: launchOpts.args },
-        matrix: 'backend{webgl2,webgl1} × DPR{1,2}',
+        matrix: 'webgl2 × DPR{1,2}',
         runs,
         verdict: verdictPass ? 'PASS' : 'FAIL',
     };

@@ -25,7 +25,7 @@ import { game } from '../cocos/game';
 export type AirContextHealthState = 'healthy' | 'lost' | 'restoring' | 'failed';
 
 /** @en Detected WebGL backend of the attached canvas. @zh 画布实际使用的 WebGL 后端。 */
-export type AirContextBackend = 'webgl' | 'webgl2' | 'none' | 'unknown';
+export type AirContextBackend = 'webgl2' | 'none' | 'unknown';
 
 /** @en Readable point-in-time health report. @zh 可轮询的健康快照。 */
 export interface AirContextHealthSnapshot {
@@ -96,7 +96,7 @@ export function attachContextHealth (
     let reason: string | null = null;
     let lastEvent: AirContextHealthSnapshot['lastEvent'] = null;
     let lastEventAt: number | null = null;
-    let gl: (WebGLRenderingContext | WebGL2RenderingContext) | null = null;
+    let gl: WebGL2RenderingContext | null = null;
     const timeline: AirContextHealthSnapshot['timeline'] = [];
     const listeners = new Set<(snapshot: AirContextHealthSnapshot) => void>();
     if (typeof options.onEvent === 'function') { listeners.add(options.onEvent); }
@@ -107,8 +107,6 @@ export function attachContextHealth (
             // 同类型 getContext 返回既有上下文（引擎创建后）；跨类型返回 null。
             const g2 = canvas.getContext('webgl2');
             if (g2) { gl = g2; backend = 'webgl2'; return gl; }
-            const g1 = canvas.getContext('webgl');
-            if (g1) { gl = g1; backend = 'webgl'; return gl; }
             backend = 'none';
         } catch {
             backend = 'none';
