@@ -1,7 +1,7 @@
 # V1.2 · R8：wasm/emscripten 资产来源结论（physics 为主，含同族四例）
 
 日期：2026-09-22（r44 建立）。归属：计划书 **D3**（box2d wasm 资产来源与部署路径）与 **R8**（wasm 资产不可得时的取证影响），
-被引用于 `docs/versions/acceptance-report-v12.md` §1 LV12-14 行、`docs/versions/v12-bundle-budget.md:41`、`docs/versions/v12-owner-decisions.md` #10。
+相关旧验收与预算报告已清理；保留的处置决定见 `docs/reference/owner-decisions.md` #10。
 本文只交付**实测 + 可选路径 + 建议口径**，不代替 owner 批复（计划书护栏 ①：豁免需「理由 + 确认」）。
 
 ## 1. 一句话结论

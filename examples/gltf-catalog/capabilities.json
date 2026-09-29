@@ -4,7 +4,7 @@
   "generatedAt": "2026-09-23T00:17:57.827Z",
   "catalogRevision": "90d7ede14c7e280af263824604b427a1ca02cb66",
   "decoderManifest": "build/gltf-decoders/MANIFEST.md",
-  "performanceBaseline": "docs/gltf/gltf-performance-baseline.md",
+  "performanceBaseline": "docs/reference/verification.md",
   "errorCodes": [
     "GLTF_EXTENSION_UNSUPPORTED",
     "GLTF_DECODER_MISSING",

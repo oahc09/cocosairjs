@@ -1,7 +1,7 @@
 # Cocos Air Standalone Asset Pipeline — Asset Integration & Runtime Verification 任务计划书
 
 > 与 Engine Extraction / Code First DX 连续演进。修订日期：2026-09-12。
-> 状态：本版范围已实施并验证（2026-09-12）。Code First DX 经前置审查补修；外部 glTF/GLB 已交付子集完成使用侧集成，其他格式覆盖仍由对应任务负责。见 [验收记录](../docs/versions/11-v03-verification.md)。
+> 状态：本版范围已实施并验证（2026-09-12）。Code First DX 经前置审查补修；外部 glTF/GLB 已交付子集完成使用侧集成，其他格式覆盖仍由对应任务负责。见 验收记录（历史文档已清理）。
 > 合并修订：纳入补充计划的资源关系分析、资源索引说明、Code First 组装、资源检查与角色示例；glTF/GLB 加载、解析、导入和转换仍由外部任务负责。
 > 文件名和标题已去除阶段版本号；历史验收记录仍按原样保留。
 
@@ -36,7 +36,7 @@ Source Asset
 | Evidence：依据 | Finding：已知边界 | Path：本版处理 |
 |---|---|---|
 | [Code First DX 计划书](<Cocos Air — Code First DX & SDK 化任务计划书.md>) | DX 与 SDK 化由 Code First DX 负责 | T0 核对交接，避免重做 |
-| [Engine Extraction 验收报告](../docs/versions/acceptance-report.md) | 报告记录部分程序化资产与动画验证，不能证明所有真实模型路径 | T1 明确已有证据覆盖范围 |
+| Engine Extraction 验收报告（历史文档已清理） | 报告记录部分程序化资产与动画验证，不能证明所有真实模型路径 | T1 明确已有证据覆盖范围 |
 | [static-model](../examples/static-model/main.js) | 前次观察为 JSON/程序化资源示例 | 保留基础回归，不改成新的导入器示例 |
 | [skinned-animation](../examples/skinned-animation/main.js) | 前次观察为三关节代码驱动 | 不将其描述成外部 clip 导入验收 |
 | [load-asset.ts](../src/air/utils/load-asset.ts) | Code First DX 期间接口仍有变化 | 使用最终语义，不增加模型格式重载 |
@@ -214,8 +214,8 @@ npm test
 
 | 文件 | 内容 |
 |---|---|
-| `docs/versions/10-v03-runtime-integration.md` | 资源生产关系分析、索引约定、Code First 组装、检查入口、生命周期、静态运行与外部交接状态 |
-| `docs/versions/11-v03-verification.md` | 基线、验收矩阵、复现命令、证据、已知限制与问题归属 |
+| `docs/guides/runtime-inspection.md` | 资源生产关系分析、索引约定、Code First 组装、检查入口、生命周期、静态运行与外部交接状态 |
+| 历史记录（11-v03-verification.md，已清理） | 基线、验收矩阵、复现命令、证据、已知限制与问题归属 |
 
 编号开工时核对，不覆盖 Code First DX 或外部任务已创建的文件。README 仅补充实际验证的使用方式。
 

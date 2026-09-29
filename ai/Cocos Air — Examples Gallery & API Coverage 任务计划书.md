@@ -65,7 +65,7 @@ License Manifest Revision
 输出：
 
 ```text
-docs/versions/v11-baseline.md
+历史基线记录（已清理）
 ```
 
 ---

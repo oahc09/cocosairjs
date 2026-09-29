@@ -49,7 +49,7 @@
 | `Collider` / `BoxCollider` / `SphereCollider` / `CapsuleCollider` / `MeshCollider` | Physics 3D | `MeshCollider` 在 builtin 下永不进世界；`boundingSphere` 恒为默认球（F-109） |
 | `PhysicsMaterial` / `setDefaultPhysicsMaterial` | Physics 3D | Code First 下 `initDefaultMaterial()` 取不到 internal 资产 ⇒ cannon 侧需先注入默认材质（F-112） |
 | `PhysicsRayResult` | Physics 3D | 可自构造且默认即「未命中」形状 ⇒ 判定必须读返回值；`raycastClosest()` 返回 Boolean |
-| `selector`（`register` / `switchTo` / `backend` / `physicsWorld`） | Physics 3D | 运行时切换要求两个后端同在一个 bundle 内（变体构建见 `docs/foundation/17-baseline-comparison.md` §9.4） |
+| `selector`（`register` / `switchTo` / `backend` / `physicsWorld`） | Physics 3D | 运行时切换要求两个后端同在一个 bundle 内（变体构建见 `docs/UPSTREAM.md` §9.4） |
 
 未列入的 V1.2 批次面（不在默认发布类型面上，无可定级对象）：`gfx-webgpu`（D10，子图已移出类型核对与声明图）、
 后处理批（D11）、`box2d-wasm`（LV12-14 blocked）、bullet/physx（LV12-16 blocked，R8 资产不随快照分发）。

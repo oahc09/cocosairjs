@@ -1,18 +1,18 @@
-# 文档目录
+# Cocos AIR 文档
 
-这里按用途保留文档和验证数据。日常开发先看 [使用手册](manual/index.md) 和 [Code First 入门](guides/06-code-first-getting-started.md)；模型加载与部署见 [glTF 运行时](gltf/gltf-runtime.md) 和 [解码器部署](gltf/gltf-decoder-deployment.md)。能力边界见 [Web 功能集](foundation/01-web-feature-set.md)，版本结论见 [V1.2 验收记录](versions/acceptance-report-v12.md)。
+从 [开发手册](manual/index.md) 或 [Code First 入门](guides/code-first.md) 开始。浏览器运行要求见 [WebGL 2 支持策略](webgl2-only.md)。
 
-| 位置 | 内容 | 维护原则 |
-|---|---|---|
-| `manual/` | 面向使用者的教程和可运行示例 | 与示例源码和公开 API 保持一致 |
-| `foundation/` | 上游基线、Web 能力范围和差异对照 | 与抽取映射及 Web 门禁一起维护 |
-| `guides/` | 资产加载、蒙皮模型与引擎开发指南 | 供 Code First 开发者按主题查阅 |
-| `gltf/` | glTF 运行时、扩展、目录与验证文档 | 与加载器及模型示例共同维护 |
-| `reference/` | API 稳定性和场景缺口登记 | 保持引用路径与示例说明一致 |
-| `versions/` | 各版验收、移交和阶段进展记录 | 历史结论不作为当前发布就绪证明 |
-| `notes/` | V1.2 专题调查与资产来源结论 | 保留代码诊断与示例规格指向的完整路径 |
-| `evidence/` | 示例、手册、Recipe 的运行证据 | 发布门禁缺证据时必须判未就绪 |
+| 目录 | 阅读内容 |
+|---|---|
+| `guides/` | 启动、资产加载、骨骼工具、开发服务器和调试会话 |
+| `manual/` | API 使用教程及对应的可运行示例 |
+| `gltf/` | 模型加载、扩展语义、解码器部署和官方模型预览 |
+| `reference/` | 功能边界、API 合同、决策依据和验证方法 |
+| `notes/` | 专题行为调查与外部资产限制 |
+| `evidence/` | 保留的示例、手册和 Recipe 运行材料 |
 
-根目录中的 `upstream-file-map.json`、`extraction-manifest.json`、`web-dependency-graph.json` 是上游抽取和文件映射的登记数据；`example-api-inventory.json`、`api-coverage-report.json`、`test-inventory.json`、`v12-baseline-compare.json` 是当前检查或报告的输入。它们虽可由工具生成，但不属于随手清理的临时文件。
+上游基线与修改登记见 [UPSTREAM.md](UPSTREAM.md)，第三方许可见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。验证和发布流程见 [验证指南](reference/verification.md)。旧版验收、交接和进展快照已移除，Git 历史可用于追溯；当前发布状态以重新运行的门禁结果为准。
 
-上游差异见 [UPSTREAM.md](UPSTREAM.md)，第三方许可见 [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md)。版本验收结论仍以对应报告和当前门禁结果为准；历史截图和日志不能替代本轮验证。
+顶层 JSON 是工具输入或登记数据：`upstream-file-map.json`、`extraction-manifest.json` 描述抽取关系；`example-api-inventory.json`、`api-coverage-report.json`、`test-inventory.json` 支撑覆盖和回归检查；`license-decisions.json` 保存许可处置。它们与对应脚本共同维护。
+
+可再生成的基线比较和依赖图报告写入 build/reports/，不作为 docs 的长期文档或 npm 发布内容。WASM 子树检查与 Web 依赖检查直接读取当前源码，无需恢复旧快照。

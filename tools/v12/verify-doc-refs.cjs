@@ -3,7 +3,7 @@
  *
  *   node tools/v12/verify-doc-refs.cjs [--json] [--out=<path>] [<相对路径>.md ...]
  *
- * 只读。不传文件参数时扫默认面：根 `README.md` + `docs/{foundation,gltf,guides,reference,versions,manual,notes}/*.md` + `docs/*.md`。
+ * 只读。不传文件参数时扫默认面：根 `README.md` + `docs/{gltf,guides,reference,manual,notes}/*.md` + `docs/*.md`。
  * 判据：文档里以 **反引号** 或 **`](…)`** 形式写出的仓库内路径必须真实存在。
  * 三类引用**只登记不判红**（写进报告 `skipped`，便于人工抽查而不是把门禁天然弄红）：
  *   S1 通配/brace/占位：含 `* ? { } < >`（如 `docs/evidence/v12/**`、`matrix-{chromium,firefox,webkit}.png`、`matrix-<engine>.png`）
@@ -31,7 +31,7 @@ const ROOT_DIRS = ['docs', 'tools', 'src', 'examples', 'build', 'test', 'ai', 'm
 function defaultFiles () {
     const acc = [];
     for (const f of ['README.md']) if (fs.existsSync(path.join(ROOT, f))) acc.push(f);
-    for (const d of ['docs', 'docs/foundation', 'docs/gltf', 'docs/guides', 'docs/reference', 'docs/versions', 'docs/manual', 'docs/notes']) {
+    for (const d of ['docs', 'docs/gltf', 'docs/guides', 'docs/reference', 'docs/manual', 'docs/notes']) {
         const abs = path.join(ROOT, d);
         if (!fs.existsSync(abs)) continue;
         for (const e of fs.readdirSync(abs, { withFileTypes: true })) {

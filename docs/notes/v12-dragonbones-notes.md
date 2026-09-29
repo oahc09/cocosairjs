@@ -195,5 +195,5 @@ node db-probe/read-v11-full.cjs → {completed:true, partial:false, total/pass/r
 - 数据格式只钉 DragonBones **5.5 文本**（`dataVersion '5.5'`），二进制导出通路未覆盖。
 - 像素判据是 ±24 容差的近似色计数：三引擎在固定 480×360 视口逐字段一致，但未覆盖 DPR≠1 / 高分屏 / 其他 `ResolutionPolicy` ⇒ **待核**。
 - Spine（同段另一骨骼框架，LV12-10）未在本期交付，未开重复 finding。⚠️ **r45f 订正**：本行原文把归因写成「仍按决策 **D2**」，但 **D2 没有任何 owner 批复记录**
-  （`docs/versions/v12-owner-decisions.md` 第 9 行批复列为空）⇒ 现状只能是「**D2 尚未批复**」；且 r45e 实测运行级卡点是上游 alpha.34 Web 侧 spine **只有 emscripten 后端**
-  （`src/cocos/spine/lib/spine-core.js` = 3,747 B、全仓无 spine 的 `.wasm/.asm.js/.mem`），与 D3/R8 属同一份资产缺口，不是「归属决定」。详见 `docs/versions/acceptance-report-v12.md` §3 事故 F。
+  （`docs/reference/owner-decisions.md` 第 9 行批复列为空）⇒ 现状只能是「**D2 尚未批复**」；且 r45e 实测运行级卡点是上游 alpha.34 Web 侧 spine **只有 emscripten 后端**
+  （`src/cocos/spine/lib/spine-core.js` = 3,747 B、全仓无 spine 的 `.wasm/.asm.js/.mem`），与 D3/R8 属同一份资产缺口，不是「归属决定」。资产限制详见 `docs/notes/v12-spine-asset-sourcing.md`。

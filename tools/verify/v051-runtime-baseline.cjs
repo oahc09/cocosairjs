@@ -3,7 +3,7 @@
  * Requires the dev server: node tools/dev/dev-server.cjs --port 7455
  *
  * 口径：
- *  - BoxTextured 30 次冷加载中位数，相对 V0.5 冻结基线（docs/gltf/gltf-performance-baseline.md
+ *  - BoxTextured 30 次冷加载中位数，相对 V0.5 冻结基线（docs/reference/verification.md
  *    的 4.1 ms）回退不得超过 15%（同机同口径；工具关闭状态）。
  *  - 新增指标（startup / scene ready / first visible frame / asset load / debug overhead /
  *    memory）每配置 3 次页面加载，报告中位数与范围。
@@ -14,7 +14,7 @@ const path = require('path');
 
 const BASE = 'http://127.0.0.1:7455';
 const RUNS = 3;
-const V05_MEDIAN_MS = 4.1; // docs/gltf/gltf-performance-baseline.md 冻结基线
+const V05_MEDIAN_MS = 4.1; // docs/reference/verification.md 冻结基线
 const REGRESSION_LIMIT = 1.15;
 const exe = process.env.AIR_CHROMIUM
     || ['C:', 'Users', 'caosh', 'AppData', 'Local', 'ms-playwright', 'chromium-1234', 'chrome-win64', 'chrome.exe'].join('\\');

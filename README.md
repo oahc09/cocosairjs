@@ -3,17 +3,7 @@
 **Cocos Agent-first Interactive Runtime** — 基于 cocos4 的纯 TypeScript Web 引擎，
 脱离 Cocos Creator、Editor 与 Native Engine 的 **Code First** Web 运行时。
 
-> **V0.1 RC**（2026-09-12）：验收矩阵 L0–L14 全部通过，详见 `docs/versions/acceptance-report.md`。
-> **V0.2 RC**（2026-09-12）：Code First DX & SDK 化，验收矩阵 L0–L17 全部通过，详见 `docs/versions/acceptance-report-v02.md`。
-> **V0.3**（2026-09-12）：完成 V0.2 审查修复、资源 Inspect/Validate、多实例生命周期和独立静态验证，见 [验证记录](docs/versions/11-v03-verification.md)。V0.2 原增量/helper 验收的更正也记录于此。
-> **V1.1 Release Check（r50，2026-09-28）**：Gallery 登记 146 例（145 stable、1 draft）；全量浏览器示例 141/141 PASS。API Coverage：Core 963/963、Important 272/272、Advanced 180/191（94.2%），documented-only 11/191（5.8%），uncovered=0；100%/90%/80% Release Coverage 门槛均满足。干净候选的 `npm run verify:release` 为 READY（0 blockers）。该记录为历史快照；证据清理后当前 `npm run verify:release` 为 `NOT READY`，须重采后才能重新声明就绪；当前门禁与剩余边界见 [V1.1 Release Gates r50](docs/versions/v06-v10-release-gates.md) 和 [API coverage report](docs/api-coverage-report.json)。
-> **V1.2 特性回归（r50，2026-09-28）**：三引擎矩阵 39/39 PASS；16 组上游能力逐组状态见 `docs/versions/v12-upstream-regression.md` §3；
-> 门禁读数与部分通过项见 `docs/versions/acceptance-report-v12.md`。资产缺口档（spine / bullet / physx / box2d-wasm / webgpu-glslang）
-> 与 D9 残留 14 项均已按批复口径结案（`docs/UPSTREAM.md` Deviation-04/05/06）；交付期物理后端切换：
-> `createAirApp({ physics: 'builtin' | 'cannon' })`（默认 builtin，additive 登记 `docs/reference/v08-api-stability.md`）。
-> **发布面 provenance**：文中盘符绝对路径（取证 scratch / 上游快照 / benchmark 目录）不随 npm 包发布、不保证可复现；
-> 可复现判据一律以仓库内 `npm run verify:*` 系列门禁为准（F-130 / owner-decisions #17(a)）。
-> 版本号 `1.0.0`（`package.json` / `AIR_VERSION` 由 smoke-01 锁定一致）。registry 就绪核对：npm ping PONG；npm whoami ENEEDAUTH（本环境无发布凭据，`npm publish` 须在有凭据环境单独执行）。
+浏览器运行要求 WebGL 2，支持边界见 [支持策略](docs/webgl2-only.md)。旧版验收快照与部分原始证据已清理；当前发布状态须重新运行门禁确认，见 [验证与发布检查](docs/reference/verification.md)。
 
 ```bash
 npm install
@@ -65,7 +55,7 @@ cocosair.js/
 │   └── skinned-animation/   # 3 骨骼蒙皮 + 骨骼动画（Code First 骨骼链路）
 ├── src/            # 引擎源码（engine root，与上游 cocos4 相对布局一致）
 │   ├── air/                 # Cocos AIR 新增：bootstrap/app/utils/builtin
-│   ├── cocos/               # 引擎核心（r45g 现读：上游 Web scope 闭包 1299 文件里 1203 个同名落地，Air 侧共 1241，见 docs/foundation/17-baseline-comparison.md §9）
+│   ├── cocos/               # 引擎核心（r45g 现读：上游 Web scope 闭包 1299 文件里 1203 个同名落地，Air 侧共 1241，见 docs/UPSTREAM.md §9）
 │   ├── exports/             # ccbuild feature unit 入口（air.ts 为 bundle 入口）
 │   ├── pal/                 # 平台抽象层（Web 实现）
 │   └── cc.config.json       # Air 引擎构建配置（由 tools/analyze/make-air-config 派生）
@@ -86,7 +76,7 @@ cocosair.js/
 | `npm run verify:web-only` | Web-only 依赖守卫（按依赖可达性判定，禁止 native/minigame 泄入） |
 | `npm run verify:file-map` | 簿记一致性：每行上游可解析 + 逐字节比对 + `modified` 标记互证 + `moduleOverrides` 替换件清点（r43 起） |
 | `npm run verify:licenses` | 上游/第三方许可头清点（抽取件不得丢版权头） |
-| `npm run verify:v12-matrix` | 三引擎（chromium/firefox/webkit）逐例截图 + probe 断言矩阵 → 产物指针见 `docs/versions/acceptance-report-v12.md`（证据目录未随 npm 包发布） |
+| `npm run verify:v12-matrix` | 三引擎（chromium/firefox/webkit）逐例截图 + probe 断言矩阵 → 产物指针见 `docs/reference/verification.md`（证据目录未随 npm 包发布） |
 | `npm run verify:v12-backends` | wasm 三后端护栏（只读，A1–A7）：抽取闭包落盘 / 范围计数不漂移 / 字节偏差 ⊆ 在册 / emscripten 说明符只在动态分支 / feature 声明面对账 / **A6 = 类型豁免解禁触发器** / **A7 = 物理子树缺件必须登记在差集** |
 | `npm run verify:v12-custom-face` | 后处理与 custom 管线交付面护栏（只读，C1–C5）：接线门面与子图逐字节 + 簿记在册 + feature unit 声明与默认发行姿态不漂移 |
 | `npm run verify:doc-refs` | 文档互引棘轮（只读）：markdown 里的仓库内路径必须存在；历史断链 46 条登记在 `tools/v12/doc-refs-baseline.json`，新增断链或基线腐烂即红 |
@@ -99,24 +89,15 @@ cocosair.js/
 
 ## 文档
 
-- [Cocos AIR 开发手册](docs/manual/index.md) — 对齐 three.js manual 的 64 条目（60 篇骨架文章 + 索引）+ 8 篇 Cocos 4.0 工作流专题与[覆盖矩阵](docs/manual/cocos4-coverage-matrix.md)；44 个零外部资产手册示例（`docs/manual/examples/`，`manual-examples-verify.cjs` 44/44）+ 58 个主示例（23 类，见 `examples/files.json`）；能力边界总说明
-- [V1.2 特性回归总账](docs/versions/v12-upstream-regression.md) — 16 组逐组状态（verified / 部分交付 / blocked）与护栏现状
-- [V1.2 验收报告](docs/versions/acceptance-report-v12.md) — 门禁逐条现读（含仍 FAIL 项）、证据指针、未达项归因
-- [V1.2 范围外残留差集分类](docs/versions/v12-d9-residual-triage.md) — 14 项逐条理由 + 纳入成本 + 可复跑判据（D9 提案，待批复）
-- [基线对比与闭包口径](docs/foundation/17-baseline-comparison.md) §9 — Air vs 官方的文件面/产物面/变体构建面对比
-- [资源集成与运行时检查](docs/versions/10-v03-runtime-integration.md) — 资源关系、Code First 组装、Inspect/Validate、生命周期与静态复现
-- [V0.2 审查与 V0.3 验收](docs/versions/11-v03-verification.md) — 修复证据、验证矩阵与限制
-- [直接加载 glTF / GLB](docs/gltf/gltf-runtime.md) — 运行时模型加载、PBR、骨骼动画与 Morph；完整示例见 `examples/gltf-viewer/`
-- [V0.5 验收与 V0.5.1 移交](docs/versions/acceptance-v0.5.md) — 扩展支持矩阵、Gate 证据链、已知限制与消费合同
-- [glTF 扩展参考](docs/gltf/gltf-extension-reference.md) — 逐扩展实现映射、通道语义、错误码与限制
-- [glTF decoder 部署](docs/gltf/gltf-decoder-deployment.md) — 注入 API、MIME/CORS/缓存/worker、离线验收
-- [glTF 验证记录](docs/gltf/gltf-validation.md) · [性能/包体/稳定性基线](docs/gltf/gltf-performance-baseline.md) · [官方模型目录](docs/gltf/gltf-catalog.md)
-- [官方模型目录与对照预览](docs/gltf/gltf-catalog.md) — 150 个官方模型、格式选择、AIR 预览与 Khronos Viewer 对照
-- `docs/guides/06-code-first-getting-started.md` — 最小入门（createAirApp / GameCanvas 约束）
-- `docs/guides/07-asset-loading.md` — Promise Asset Helper
-- `docs/guides/08-skinned-model.md` — 骨骼工具集（buildSkeletonTree / restoreBindPose / frameObject）
-- `docs/guides/09-engine-development.md` — dev server 三频道 / 错误可见性 / 诊断端点
-- `docs/versions/05-v02-build-performance.md` — 构建性能基线（只记录不优化）
+- [文档导航](docs/README.md) — 目录与主题入口
+- [开发手册](docs/manual/index.md) — API 教程与可运行示例
+- [Code First 入门](docs/guides/code-first.md) — 启动与画布约定
+- [资源加载](docs/guides/asset-loading.md) · [骨骼工具](docs/guides/skinned-model.md) · [开发循环](docs/guides/engine-development.md)
+- [运行时资源检查](docs/guides/runtime-inspection.md) · [Agent 调试会话](docs/guides/agent-development.md)
+- [glTF / GLB 加载](docs/gltf/gltf-runtime.md) · [扩展参考](docs/gltf/gltf-extension-reference.md) · [解码器部署](docs/gltf/gltf-decoder-deployment.md)
+- [官方模型目录与对照预览](docs/gltf/gltf-catalog.md)
+- [功能范围](docs/reference/web-features.md) · [验证与发布检查](docs/reference/verification.md)
+- [上游差异](docs/UPSTREAM.md) · [第三方许可](docs/THIRD_PARTY_LICENSES.md)
 
 ## 能力边界（V1.2）
 
@@ -131,21 +112,21 @@ V1.x 回归期新增（**能力名**，逐名对账见下）：**2D/UI**（`2d` 
 
 **⚠️ r45g 现读：上面括号里是「能力名」，不逐条等同于 `src/cc.config.json` 的 feature unit 名。**三个面要分开讲，混了就会读到相反结论：
 
-- **上面括号里已声明、且在默认构建集的 unit**：`2d` `ui` `tiled-map` `particle-2d` `video` `webview` `profiler` `custom-pipeline` `physics-builtin` `physics-2d-box2d` `physics-2d-framework` `dragon-bones` `spine-3.8` `spine-4.2` `custom-pipeline-post-process`（默认集共 **26** 项，全表见 `docs/foundation/01-web-feature-set.md` §7.2）。
-- **已声明但不在默认集**：`audio` `physics-2d-builtin` `physics-ammo` `physics-physx` `physics-2d-box2d-wasm` `physics-cannon` `marionette` `procedural-animation`（共 8 项，逐条理由见 `docs/foundation/01-web-feature-set.md` §7.3）。
+- **上面括号里已声明、且在默认构建集的 unit**：`2d` `ui` `tiled-map` `particle-2d` `video` `webview` `profiler` `custom-pipeline` `physics-builtin` `physics-2d-box2d` `physics-2d-framework` `dragon-bones` `spine-3.8` `spine-4.2` `custom-pipeline-post-process`（默认集共 **26** 项，全表见 `docs/reference/web-features.md` §7.2）。
+- **已声明但不在默认集**：`audio` `physics-2d-builtin` `physics-ammo` `physics-physx` `physics-2d-box2d-wasm` `physics-cannon` `marionette` `procedural-animation`（共 8 项，逐条理由见 `docs/reference/web-features.md` §7.3）。
 - **不是 Air 声明的 feature unit，但能力确在默认产物里**：`mask` `graphics` `sorting` `intersection-2d` `geometry-renderer` `spine`（真实 unit 名是 `spine-3.8`/`spine-4.2`）`physics-framework`。机制：`src/exports/air.ts` 把它们**静态再导出**（`export * from` 一行一个）挂进 bundle 入口，走的是 **import 图**而不是 feature 开关（`src/exports/` 39 个文件里 **9** 个的名字未在册 unit：`geometry-renderer` `gfx-webgpu` `graphics` `intersection-2d` `mask` `physics-framework` `sorting` `sorting-2d` `spine`；其中 `gfx-webgpu.ts` **没有**被 `air.ts` 聚合，其余 8 个是）。
   产物侧核对（整词计数，`build/cocosair.module.js`）：`Graphics` 19、`Mask` 14、`Sorting2D` 4、`GeometryRenderer` 10、`PhysicsSystem` 33、`PhysicsSystem2D` 30、`AudioSource` 11、`TiledMap` 5、`UIRenderer` 31 ⇒ 「产物里有这个能力」为真；「它是可关掉的 feature unit」为假。
   ⇒ 讲**开关面 / 变体构建**必须用 §7 的 unit 名；讲**发行产物含什么**才用上面的能力名。自查（仓库内只读门禁）：`npm run verify:v12-feature-face` —— D2 打印「入口文件名不是已声明 unit」的集合，D3 打印被 `air.ts` 聚合的那批，D4 是**默认产物组成锁**（在册能力符号整词命中 ≥1 + 非默认后端的世界类整词命中 == 0），D5 逐个复核上面每个能力名的依据还在不在。
 
 入口面实测（r45g 现读，两个独立事实源交叉）：`src/exports/` **39** 个 feature 入口文件；`src/cc.config.json` 声明 **34** 个 feature unit（上游 55、缺 **22**、`airOnly=[air]`）；默认构建集 **26** 项。
-交叉源：`npm run verify:v12-feature-face` 的 D1 臂与 `npm run verify:v12-backends` 的 A4/A5 两臂 —— 同一对面、两个独立实现，现读一致。逐名分组见 `docs/foundation/01-web-feature-set.md` §7；复跑命令与历史增量见 `docs/foundation/17-baseline-comparison.md` §9.1。
+交叉源：`npm run verify:v12-feature-face` 的 D1 臂与 `npm run verify:v12-backends` 的 A4/A5 两臂 —— 同一对面、两个独立实现，现读一致。逐名分组见 `docs/reference/web-features.md` §7；复跑命令与历史增量见 `docs/UPSTREAM.md` §9.1。
 （本段替换掉的是 r43 期口径「31 个 unit / 共有 30 / onlyUpstream 25 / 36 个入口」——批次 D-4/G-3 并入 3 个物理 unit 与 3 个入口文件后未随轮刷新，登记为 **F-130**。）
 
 **不包含 / 有条件（每条都有决策点，未确认前不自行豁免）**：
 
 - **D9 待批复 13 项**：地形 `cocos/terrain/**`（5 文件）、3D 粒子（`cocos/particle/animator/optimized-curve.ts` + `exports/particle.ts`）、
   `exports/xr.ts`、`exports/light-probe.ts`、4 个 convenience 门面（`affine-transform`/`rich-text`/`ui-skew`/`vendor-google`）
-  ⇒ 逐条理由与纳入成本见 `docs/versions/v12-d9-residual-triage.md`（同文档里那 1 项零引用上游桩已在 r43 实测结案）。
+  ⇒ 逐条理由与纳入成本见 `docs/reference/scope-decisions.md`（同文档里那 1 项零引用上游桩已在 r43 实测结案）。
 - **WebGPU（D10）**：`cocos/gfx/webgpu/**` 26 个文件已逐字节入仓，但 feature unit **不登记**、子图移出类型核对与声明图
   ——登记即造成「`cc.d.ts` 里有 `WebGPUDevice` 类型、产物里没有符号」。
 - **物理后端（D3/R8、D12）**：bullet/physx 与 box2d-wasm 依赖官方 wasm/原生扩展资产，不随快照分发（LV12-14 / LV12-16 blocked）；
@@ -162,16 +143,11 @@ V1.x 回归期新增（**能力名**，逐名对账见下）：**2D/UI**（`2d` 
 - builtin 材质/效果由 `src/air/builtin/register.ts` 程序化注册（无 Creator internal db）。
 - `Skeleton.joints` 必须是**相对 skinningRoot 的完整路径**（`getChildByPath` 解析），
   层级骨骼写 `bone0/bone1` 而非 `bone1`，否则关节不会注册、蒙皮不变形。
-- `skinned-animation` 示例（三关节蒙皮 + 骨骼动画）已实测通过，
-  验证与修复记录见 `docs/versions/acceptance-report.md` §7。
+- 三关节蒙皮与骨骼动画用法见 `examples/skinned-animation/`，工具说明见 [骨骼工具](docs/guides/skinned-model.md)。
 
 ## 基线与上游
 
-源码基线：`cocos4 @ 4.0.0-alpha.34`，实测 commit `557b06f7e6`，V1.2 G0 冻结点 `fffd9a514a`，MIT 许可。
-闭包实测（`node tools/compare/baseline-compare.cjs` → `docs/v12-baseline-compare.json`）：
-上游 scope 1299 / Air 侧 1241 / 同名共有 1203 / 官方独有 96（排除 jsb 变体后 42）/ 语义漂移 6（全部已登记 `modified:true` + reason）/ Air 独有 38。
-上游对应关系、抽取清单与修改记录见 [docs/UPSTREAM.md](docs/UPSTREAM.md)、`docs/upstream-file-map.json`（**1315** 条映射）、
-`docs/extraction-manifest.json`（**1278** 条）、`docs/foundation/00-upstream-baseline.md` 与 `docs/foundation/17-baseline-comparison.md` §9。
+源码基线与有意差异见 [UPSTREAM.md](docs/UPSTREAM.md)。文件对应关系由 `docs/upstream-file-map.json` 和 `docs/extraction-manifest.json` 登记；当前对比可以运行 `node tools/compare/baseline-compare.cjs` 重新生成 build/reports/baseline-compare.json。
 
 ## 许可
 

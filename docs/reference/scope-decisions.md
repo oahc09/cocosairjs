@@ -1,6 +1,6 @@
 # V1.2 · D9 范围外残留差集逐条分类（**提案**，待 owner 确认）
 
-日期：2026-09-22（r42 建立，**r43 补扫结案**）。用途：把 `docs/versions/v12-upstream-regression.md` §4 的「范围外残留差集」从「需逐个分类后方可判定」推进到**逐条有理由、有实测、有成本**的可确认清单。
+日期：2026-09-22（r42 建立，**r43 补扫结案**）。用途：把 历史记录（v12-upstream-regression.md，已清理） §4 的「范围外残留差集」从「需逐个分类后方可判定」推进到**逐条有理由、有实测、有成本**的可确认清单。
 
 r43 增量：D 组（`deserialize-dynamic-empty.ts`）从「高置信推断 + 待核」升为**实测结案**，代价是发现并修正了 r42 初版对 `cc.config.json` 的一句错报（§2 末条留痕）；14 项里现在 **13 项待批**（A 组 7 / B 组 1 / C 组 5），D 组 1 项只剩「确认口径」一句。
 
@@ -8,7 +8,7 @@ r43 增量：D 组（`deserialize-dynamic-empty.ts`）从「高置信推断 + �
 
 ## 1. 现读口径（先纠正 §4 的陈旧数字）
 
-`docs/v12-baseline-compare.json` 现读：
+旧版基线差集报告的历史读数如下（快照已清理，当前差集需重跑比较工具）：
 
 ```
 counts.upstreamOnly            = 178          （上游有、Air 无）      → r45c 复测 96
@@ -123,7 +123,7 @@ airDangling = []   ← Air 没有任何 feature 指向「已声明但文件不�
   r43 起该护栏的覆盖面**已扩到 `moduleOverrides` 替换件**（`tools/v12/verify-file-map.cjs` 第 7 类断言，接进 `npm test` 的 `smoke-30`）：
   当期实测 `moduleOverrides pairs upstream=103 air=104 airOnlyRegistered=1 byteChecked=72 excludedOneSide=77 missingBoth=10 → PASS`，
   负向控制（上游镜像里把 `native-2d-empty.ts` 改成不同字节）应转红并已转红 ⇒ F-118 的 `minimalFix` 已落地，不再是人肉判据。
-- 护栏 ①（16 组全回归，豁免需理由 + 确认）：本文把 D9 的「理由」半边补齐，**确认仍缺**，因此 §4 表里 `docs/versions/v12-upstream-regression.md` 的 D9 状态只能从「14 项待分类」升到「14 项已分类、待 owner 批复」，不能升到「豁免成立」。
+- 护栏 ①（16 组全回归，豁免需理由 + 确认）：本文把 D9 的「理由」半边补齐，**确认仍缺**，因此 §4 表里 历史记录（v12-upstream-regression.md，已清理） 的 D9 状态只能从「14 项待分类」升到「14 项已分类、待 owner 批复」，不能升到「豁免成立」。
 - 计划书 §1.3 的断言（「除平台性排除项外，官方 Web feature unit 与 Air 的差集在 V1.2 后应为空」）按现读**仍不成立**：Air 少声明 **25 个** feature unit。
   ⚠️ 本行 r42 初版记的是 **27**，r43 在 `src/cc.config.json` 补登 `marionette` / `procedural-animation`（官方原文 `cc.config.json:236-247`，均 `modules: []`）后**下移到 25**：
   现读判据 `node E:/AIProMax/cocosair-scratch/pg-probe/feature-units.cjs` → `feature-units-r1.json` = `airCount 31 / upCount 55 / missingCount 25 / differing 0 / airOnly ["air"]`

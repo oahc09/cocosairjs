@@ -1,7 +1,7 @@
 {
   "schema": "v12-license-decisions-v1",
   "updated": "2026-09-25",
-  "note": "disposition 取值：accepted（许可清晰，可随默认产物发布）/ pending-owner-decision（须所有者决定，未决定前不得对外发布该组件路径）。门禁 tools/v12/verify-licenses.cjs 读取本文件。 r48：owner 指令「完成剩余事项」= 对下列 pending 项的批复授权（登记于 docs/versions/v12-owner-decisions.md §5）。",
+  "note": "disposition 取值：accepted（许可清晰，可随默认产物发布）/ pending-owner-decision（须所有者决定，未决定前不得对外发布该组件路径）。门禁 tools/v12/verify-licenses.cjs 读取本文件。 r48：owner 指令「完成剩余事项」= 对下列 pending 项的批复授权（登记于 docs/reference/owner-decisions.md §5）。",
   "decisions": {
     "spine runtime (spine-core.js)": {
       "disposition": "accepted",

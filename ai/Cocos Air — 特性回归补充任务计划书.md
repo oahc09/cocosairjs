@@ -115,8 +115,8 @@ npm run typecheck && npm test && npm run build && npm run build:min
 ```text
 UPSTREAM.md                    → 基线升级记录：alpha.33 (snapshot 2026-09-12) → alpha.34 (commit SHA, 2026-09-19)
                                  Deviation-01 关闭（commit SHA 可得）
-docs/foundation/00-upstream-baseline.md   → 同步更新
-docs/foundation/17-baseline-comparison.md → 追加 Feature Regression 章节锚点（Feature Regression 结束时回填对比数据）
+历史记录（00-upstream-baseline.md，已清理）   → 同步更新
+历史记录（17-baseline-comparison.md，已清理） → 追加 Feature Regression 章节锚点（Feature Regression 结束时回填对比数据）
 ```
 
 ---
@@ -162,7 +162,7 @@ Air 构建已满足「新增模块目录自动纳入」：`src/cc.config.json in
 ③ 入口接线：src/exports/<name>.ts 按官方同名文件原样复制；
    是否并入 src/exports/air.ts 聚合面按 D5 决策执行
 ④ 接线验证：npm run typecheck && npm run build && npm run build:min
-   bundle 体积增量记入 docs/versions/v12-bundle-budget.md
+   bundle 体积增量记入 历史记录（v12-bundle-budget.md，已清理）
 ```
 
 ---
@@ -463,10 +463,10 @@ F-2 root.jsb.ts：决策点 D4 默认处置 = 不抽取，登记 Deviation
 F-3 簿记回填：
     - extraction-manifest.json / upstream-file-map.json 全量增量提交
       （含 pose-graph/runtime-exports.ts、physics-selector.ts 两处 Air 修改的关闭记录）
-    - docs/foundation/17-baseline-comparison.md 追加「Feature Regression 回归后闭包对比」章节
+    - 历史记录（17-baseline-comparison.md，已清理） 追加「Feature Regression 回归后闭包对比」章节
       （目标口径：官方 Web 全量 feature unit 与 Air feature unit 的差集 = 约定豁免集）
-    - docs/foundation/01-web-feature-set.md 增补 Feature Regression feature 表
-    - README 特性矩阵、docs/versions/progress.md 更新
+    - docs/reference/web-features.md 增补 Feature Regression feature 表
+    - README 特性矩阵、历史记录（progress.md，已清理） 更新
     - tools/examples/api-inventory.cjs 重跑（预期 coverage units 大幅增加），
       api-coverage-report.json 刷新；capabilities 更新
 ```
@@ -509,7 +509,7 @@ F-3 簿记回填：
 
 ```text
 1. 存量 12 examples（Gallery & API Coverage 冻结态）行为与出图不回退
-2. bundle 体积：建立 docs/versions/v12-bundle-budget.md 预算表，每批次登记增量；
+2. bundle 体积：建立 历史记录（v12-bundle-budget.md，已清理） 预算表，每批次登记增量；
    总量超预算即触发 D1 决策复议（默认单文件原则不动摇，wasm/大运行库走运行时资产）
 3. benchmark 回归：npm run verify:benchmark 不劣化超阈值（沿用现行阈值）
 4. API 稳定性：对已冻结的公共 API 仅允许 additive 变更（createAirApp device 参数、
@@ -577,9 +577,9 @@ M8  批次 F（收尾 + 簿记回填 + 全量验收报告）           → LV12-
 最终产出物清单：
 
 ```text
-docs/versions/acceptance-report-v12.md        # LV12 全矩阵验收报告（证据截图 docs/evidence/v12/）
-docs/versions/v12-bundle-budget.md            # bundle 预算与实际增量表
-docs/versions/v12-upstream-regression.md      # 16 组回归的抽取/接线/偏差逐项记录
+历史记录（acceptance-report-v12.md，已清理）        # LV12 全矩阵验收报告（证据截图 docs/evidence/v12/）
+历史记录（v12-bundle-budget.md，已清理）            # bundle 预算与实际增量表
+历史记录（v12-upstream-regression.md，已清理）      # 16 组回归的抽取/接线/偏差逐项记录
 docs/notes/v12-particle2d-notes.md 等      # 各特性 spike 结论
 docs/notes/v12-physics-asset-sourcing.md   # R8 资产来源结论（bullet/physx/box2d）
 更新：UPSTREAM.md / 00-upstream-baseline.md / 17-baseline-comparison.md /

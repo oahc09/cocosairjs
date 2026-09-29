@@ -1,4 +1,4 @@
-# V0.3 — 资源集成与运行时检查
+# 运行时资源检查
 
 V0.3 复用现有资源和外部 glTF/GLB 任务的公开 API，增加开发期 Inspect/Validate、生命周期回归和独立静态验证。没有新增资源格式、导入器、公共模型包装或 AssetDB。
 
@@ -108,4 +108,4 @@ npx --yes --package @playwright/cli playwright-cli -s=v03 run-code --filename=to
 
 脚本遇到验证错误会抛出并使 CLI 非零退出，不能只看工具调用完成。结果包含 `ok`、每个示例的资源数/前景像素、材质变化像素、动画变化和生命周期计数；截图放入 output/playwright。临时目录可用于本地演示，不自动发布远端。
 
-当前实测结论、限制与前置修复见 [验收记录](11-v03-verification.md)。
+复跑流程与发布要求见 [验证指南](../reference/verification.md)。

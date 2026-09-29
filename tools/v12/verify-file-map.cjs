@@ -100,20 +100,9 @@ if (map.meta.modifiedCount !== actualModified) {
     fail(`meta.modifiedCount=${map.meta.modifiedCount} 与实际 ${actualModified} 不符`);
 }
 
-// 三份生成物必须声明同一基线：alpha.33 的陈旧标签曾在 extraction-manifest / web-dependency-graph 里长期存活。
-const DX_PATH = path.join(ROOT, 'docs', 'web-dependency-graph.json');
-for (const [label, file] of [
-    ['extraction-manifest', MAN_PATH],
-    ['web-dependency-graph', DX_PATH],
-]) {
-    if (!fs.existsSync(file)) {
-        fail(`${label} 缺失：${file}`);
-        continue;
-    }
-    const baseline = (JSON.parse(fs.readFileSync(file, 'utf8')).meta || {}).baseline;
-    if (baseline !== map.meta.baseline) {
-        fail(`${label} meta.baseline 与 file-map 不一致: ${baseline}`);
-    }
+// 两份持久登记必须使用同一基线；依赖图由 verify:web-only 现场重新分析，不再读取旧快照。
+if ((man.meta || {}).baseline !== map.meta.baseline) {
+    fail(`extraction-manifest meta.baseline 与 file-map 不一致: ${(man.meta || {}).baseline}`);
 }
 
 const manSources = new Set(man.entries.map((e) => e.source));

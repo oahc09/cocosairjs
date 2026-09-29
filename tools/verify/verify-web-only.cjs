@@ -19,7 +19,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const ALLOWED_EXTERNAL = new Set([
-    // meshopt wasm 分支被 CULL_MESHOPT=true 常量折叠（docs/foundation/03-upstream-web-build-log.md）
+    // meshopt wasm 分支被 CULL_MESHOPT=true 常量折叠（docs/UPSTREAM.md）
     'cocos/3d/misc/mesh-codec.ts',
 ]);
 

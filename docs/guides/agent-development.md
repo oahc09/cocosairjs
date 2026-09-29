@@ -1,4 +1,4 @@
-# V0.5.1 Agent Development Session 与 Debug 面板（T3/T4/T5）
+# Agent 调试会话与面板
 
 > 位置：`tools/debug/agent-session.ts`、`tools/debug/panel.ts`。**不属于默认
 > cocosair Runtime 导出**：不进入 `build/cocosair.module.js`（smoke-23 真实输出

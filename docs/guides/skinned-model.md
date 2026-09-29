@@ -1,7 +1,6 @@
-# 08 — Skinned Model
+# 骨骼工具
 
-> V0.2 文档 08：骨骼工具集（Skeleton Utilities）。对应 `src/air/utils/skeleton-tree.ts`、
-> `restore-bind-pose.ts` 与 `examples/skinned-animation/`。
+> 使用 `buildSkeletonTree`、`restoreBindPose` 和 `frameObject` 组装及查看模型。
 
 ## 背景（V0.1 L13 经验）
 

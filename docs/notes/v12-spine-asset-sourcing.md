@@ -36,7 +36,7 @@
 1. **代码回归侧（已完成，不缩范围）**：`cocos/spine` 24 文件（含 `lib/spine-core.js`、`lib/spine-core.d.ts`、`LICENSE`）按官方原文抽取入库，byte-identical；`exports/spine.ts` 官方原文接线；`features.spine-3.8 / spine-4.2` 注册（含 `SPINE_3_8/SPINE_4_2` 常量与 3 条 spine `moduleOverrides` 规则原样保留）；`external:emscripten/spine/*` 的 ambient 声明补入 `src/@types/emscripten-assets.d.ts`（仅为 typecheck 面）。
 2. **构建侧**：新增 `src/cocos/spine/lib/air-spine-instantiate-js.ts`，经 `src/cc.config.json` 末位 `moduleOverrides` 规则顶替 `cocos/spine/lib/spine-instantiate.ts`。上游 `spine-instantiate.ts / -3.8.ts / -4.2.ts / -dynamic.ts` 四个文件保留官方原文不改，只是不在默认构建闭包内。
 3. **运行侧**：shim 注入 `spine.wasmUtil` 缺失守卫（上游调用点无守卫），任何 spine 资产调用输出单条可读 `warn` 并返回 null，引擎启动与其余模块不受影响；同时保留 `_CC_SPINE_VERSION` → `setSpineVersion()` 的官方版本选择语义（单版本构建无 `setSpineVersion`，按需调用）。
-4. **登记**：`docs/upstream-file-map.json` 新增该条（`modified: true` + 完整 reason）；`docs/versions/acceptance-report-v12.md` LV12-10 标 **PARTIAL/BLOCKED**。
+4. **登记**：`docs/upstream-file-map.json` 新增该条（`modified: true` + 完整 reason）；旧验收报告的 LV12-10 标记为 **PARTIAL/BLOCKED**，该历史报告现已清理。
 
 ## 4. 解除阻塞需要的动作（后续会话）
 

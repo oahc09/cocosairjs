@@ -2,8 +2,6 @@
 
 打开 **http://127.0.0.1:7462/gltf-catalog/**。目录当前包含 150 个 Khronos 官方模型，可以搜索、分类、选择文件格式，并在 Cocos AIR 与官方 Viewer 中查看同一版本的模型。
 
-> **证据链接可读性说明（V1.2 补）**：本文中指向 `../output/playwright/` 下文件的 Markdown 链接，目标是 `.gitignore` 排除的瞬态验证目录 `output/`；V0.x 期的捕获只写在当时的开发机上、**从未随仓库入库**，因此在干净检出的仓库里不可解析。这些链接仅作 provenance 指针保留，**不据此判「证据在仓库内可得」**。已逐条登记在 `tools/v12/doc-refs-baseline.json`（class `v0x-evidence-path`，本文 5 条），由 `npm run verify:doc-refs` 棘轮锁定。
-
 ## 启动与使用
 
 ```bash
@@ -52,8 +50,4 @@ node tools/verify/update-gltf-catalog.cjs
 npx --yes --package @playwright/cli playwright-cli -s=gltf run-code --filename=tools/verify/gltf-catalog-browser.js --raw
 ```
 
-已验证：完整 150 项目录、6 项本地筛选、搜索与空状态、Morph 本地模型、真实远程 TriangleWithoutIndices 的 glTF 和 Embedded 两种格式、旋转/重置、同源状态消息、官方对照 URL、官方 iframe canvas、390px 手机无横向溢出。
-
-另通过独立故障注入检查未支持扩展的错误提示与官方入口保留；该注入不代表 TriangleWithoutIndices 原文件含有 Draco。此前 7 个官方模型的加载与动画回归仍然通过。
-
-证据：[目录测试结果](../../output/playwright/gltf-catalog-result.json)、[官方模型回归](../../output/playwright/gltf-catalog-regression.json)、[桌面目录](../../output/playwright/gltf-catalog-desktop.png)、[并排对照](../../output/playwright/gltf-catalog-compare.png)、[手机布局](../../output/playwright/gltf-catalog-mobile.png)。
+检查应覆盖目录搜索、格式切换、AIR 模型加载、动画、官方对照地址及手机布局。脚本报错或浏览器控制台错误需要独立处理；旧版的开发机截图与报告已经清理，不作为当前通过证明。完整发布检查见 [验证指南](../reference/verification.md)。

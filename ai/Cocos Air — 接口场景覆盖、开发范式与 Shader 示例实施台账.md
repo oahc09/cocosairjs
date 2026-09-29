@@ -128,7 +128,7 @@ product-viewer 11。G4 探针双后端 28/28。GAP-L1 光照诊断页（tmp-ligh
 
 ### 最终验收
 
-- G0–G4 本轮计划交付收口，详见 `docs/versions/interface-scenarios-repair-report.md`。上方 r52 历史表中的“试验级/待集成/延后”不再代表当前状态。
+- G0–G4 本轮计划交付收口，详见 历史记录（interface-scenarios-repair-report.md，已清理）。上方 r52 历史表中的“试验级/待集成/延后”不再代表当前状态。
 - Chromium 140/140、DevTools 5/5、Gallery 209/209、手册 44/44；新增 13 例 Firefox/WebKit 各 13/13；Shader 双后端 28/28。
 - `format:check` / `typecheck` / `verify:file-map` / `verify:g3-tooling` / `verify:g3-dev` 全部通过；Jest 31 套全量通过，加修复后的规格套件 6/6，合计 32 套/263 用例已核验。
 - 145 例规格冻结、3470 API 引用零漂移；verified 439，stale=0，schema gap=0；分母与既有覆盖门槛未改。

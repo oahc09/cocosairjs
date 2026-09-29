@@ -1,6 +1,6 @@
-# 09 — Engine Development Loop
+# 引擎开发循环
 
-> V0.2 文档 09：`npm run dev` 自动开发闭环。对应 `tools/dev/dev-server.cjs`。
+> 使用 `npm run dev` 监听源码和示例变化，对应 `tools/dev/dev-server.cjs`。
 
 ## 启动
 
@@ -44,7 +44,7 @@ V0.3 前置审查补充 `tools/build/incremental.cjs`，为 ccbuild 原有 Rollu
 - air-prelude：捕获 window error / unhandledrejection / 资源加载错误到 `window.__airErrors`，
   并观察 WebGL draw 计数、shader/link 错误到 `window.__glStats`。
   不调用 getError 消耗错误状态，也不查询无效枚举；像素采样由独立验收工具负责。
-- `/__runtime-assets.js`：只读 Inspect/Validate 工具，使用方法见 [V0.3 运行时集成](../versions/10-v03-runtime-integration.md)。
+- `/__runtime-assets.js`：只读 Inspect/Validate 工具，使用方法见 [V0.3 运行时集成](runtime-inspection.md)。
 
 ## 示例验证
 
@@ -55,14 +55,14 @@ NODE_PATH=<playwright 所在目录> node tools/verify/v02-examples.cjs
 
 ## 已知约束
 
-1. 画布 id 必须是 `GameCanvas`（引擎 import 阶段即查找，见 `06-code-first-getting-started.md`）。
+1. 默认模板使用 `GameCanvas`；自定义 canvas 需在引擎 import 前预绑定，见 [启动约定](code-first.md)。
 2. `fs.watch` 只响应内容变化；仅 mtime 的 touch 不触发事件（实际编辑器保存无影响）。
 3. Windows 下 recursive watch 可用；其他平台若不可用则退化为无 watch（终端有告警）。
 
 ## V0.5.1 增量
 
 - dev 页面注入右下角 `debug` 按钮（`/__debug-button.js`，点击才加载
-  `tools/debug/panel.ts` 面板）；agent session 合同见 `v051-agent-development.md`。
+  `tools/debug/panel.ts` 面板）；agent session 合同见 [Agent 调试会话](agent-development.md)。
 - `tools/debug/**` 变更与 examples 同频道：仅浏览器 reload，不触发引擎构建。
 - 开发期性能测量页：`examples/shared/bench.html`（示例发现排除 shared/），
-  口径与结果见 `v051-runtime-baseline.md`。
+  测量和发布检查见 [验证指南](../reference/verification.md)。

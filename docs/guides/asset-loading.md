@@ -1,6 +1,6 @@
-# 07 — Asset Loading
+# 资源加载
 
-> V0.2 文档 07：Promise Asset Helper（`loadAssetAsync`）。对应 `src/air/utils/load-asset.ts`、`examples/static-model/`。
+> Promise 加载 helper `loadAssetAsync`，对应 `src/air/utils/load-asset.ts`。
 
 ## 为什么需要
 

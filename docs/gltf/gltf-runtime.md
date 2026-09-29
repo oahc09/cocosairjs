@@ -180,7 +180,7 @@ npx --yes --package @playwright/cli playwright-cli -s=gltf run-code --filename=t
 
 先创建 `output/playwright/` 截图目录。脚本检查实际 canvas 像素、动画前后变化、UV 方向、透明混合、镜像绕序以及浏览器错误。HEADLESS 单测不替代这些画面检查。
 
-WebGL1 验证：先用同一 CLI 会话打开 `http://127.0.0.1:7462/gltf-viewer/?webgl=1`，再运行同一脚本；脚本在导航前禁用 WebGL2 context 以强制回退。当前验证结果、已有工具告警和截图见 [验证记录](gltf-validation.md)。
+当前运行时要求 WebGL 2，不提供 WebGL 1 回退。测试环境和采集要求见 [支持策略](../webgl2-only.md) 与 [验证指南](../reference/verification.md)。
 
 ## 实现依据
 

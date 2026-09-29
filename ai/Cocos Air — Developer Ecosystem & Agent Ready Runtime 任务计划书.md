@@ -17,8 +17,8 @@
 实施依据：
 
 - [Standalone Asset Pipeline 任务书](<Cocos Air — Standalone Asset Pipeline 任务计划书.md>)。
-- [Standalone Asset Pipeline 集成指南](../docs/versions/10-v03-runtime-integration.md)与[验收记录](../docs/versions/11-v03-verification.md)。
-- [Standalone Asset Pipeline 独立复审](../docs/versions/acceptance-review-v03.md)：仅作为历史证据；旧缓存异常不再单独设为本版追因任务。
+- [Standalone Asset Pipeline 集成指南](../docs/guides/runtime-inspection.md)与验收记录（历史文档已清理）。
+- Standalone Asset Pipeline 独立复审（历史文档已清理）：仅作为历史证据；旧缓存异常不再单独设为本版追因任务。
 - [glTF Extension Coverage 计划书](<Cocos Air — Full glTF Extension Coverage 任务计划书（参考 Three.js GLTFLoader）.md>) §3、§4、T7/T8、G5 与 §10：分别规定公共接口、所有权、构建交付、示例/文档和性能口径。
 - [模型加载指南](../docs/gltf/gltf-runtime.md)与[官方模型目录](../docs/gltf/gltf-catalog.md)：开工时采用 glTF Extension Coverage 最终验收 revision 对应版本，包括 capabilities.json 与新增 viewer 场景。
 

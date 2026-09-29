@@ -1,6 +1,6 @@
-# 06 — Code First Getting Started
+# Code First 入门
 
-> V0.2 文档 06：最小入门模板。对应 `examples/starter/`。
+> 创建场景并在浏览器运行。最小模板见 `examples/starter/`。
 
 ## 最小应用
 
@@ -29,7 +29,7 @@
 
 ```bash
 npm run dev -- --example starter
-# → http://127.0.0.1:7456/（或 --port 指定端口）
+# → http://127.0.0.1:7454/（或 --port 指定端口）
 ```
 
 ## API 速览
@@ -39,7 +39,7 @@ npm run dev -- --example starter
 | options      | 类型                          | 说明                                 |
 | ------------ | ----------------------------- | ------------------------------------ |
 | `canvas`     | `HTMLCanvasElement \| string` | 画布元素或 CSS selector              |
-| `renderMode` | `number`                      | 渲染后端（3 = WebGL2 优先，同 V0.1） |
+| `renderMode` | `number`                      | 浏览器默认 WebGL2；3 为测试用 HEADLESS |
 
 | AirApp 成员  | 说明                                      |
 | ------------ | ----------------------------------------- |
@@ -58,8 +58,7 @@ npm run dev -- --example starter
 
 ## 下一步
 
-- 示例导航（transform/camera/input 等学习示例）：见 `v051-examples.md`，
-  dev server 下打开 `/index.html`
-- 资产加载：见 `07-asset-loading.md`
-- 蒙皮模型：见 `08-skinned-model.md`
-- 引擎开发循环：见 `09-engine-development.md`
+- [资源加载](asset-loading.md)
+- [骨骼工具](skinned-model.md)
+- [开发循环](engine-development.md)
+- [完整开发手册](../manual/index.md)

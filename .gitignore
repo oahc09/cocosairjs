@@ -5,6 +5,7 @@ node_modules/
 bin/
 build/.tmp-*/
 build/npm/
+build/reports/
 *.log
 .playwright-cli/
 

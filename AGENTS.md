@@ -74,13 +74,13 @@ npm run dev
 
 | 命令 | 含义 | 产物与写入行为 |
 |---|---|---|
-| `npm run analyze` | 分析 Web feature 的依赖可达性、平台替换和上游抽取关系。 | 默认重写 `docs/web-dependency-graph.json`、`docs/extraction-manifest.json`、`docs/upstream-file-map.json`；`OUT_DIR` 可重定向输出，`AIR_FEATURES` 可指定 feature 集。 |
+| `npm run analyze` | 分析 Web feature 的依赖可达性、平台替换和上游抽取关系。 | 默认重写 `docs/extraction-manifest.json`、`docs/upstream-file-map.json`，依赖图写入 `build/reports/web-dependency-graph.json`；`OUT_DIR` 可重定向输出，`AIR_FEATURES` 可指定 feature 集。 |
 | `npm run vendor:npm` | 从已安装 npm 包复制 Box2D、Cannon、DragonBones 的运行时子集，使 `src/` 内构建器能解析真实包布局。 | 写入 `src/node_modules/@cocos/{box2d,cannon,dragonbones-js}/` 的运行文件和精简 `package.json`；缺少登记时追加 `docs/upstream-file-map.json`。不是单纯安装依赖。 |
 | `npm run gallery:manifest` | 从各 `examples/<id>/example.json` 汇总 Gallery 展示字段。 | 重写 `examples/files.json`；不编译示例、不生成 Gallery HTML、不产生浏览器验证证据。 |
 | `npm run gallery:api` | 从 `build/cocosair.module.d.ts` 的 AST 生成公开 API 清单、分类及指纹。 | 重写 `docs/example-api-inventory.json`；需要当前类型声明，不执行 API 用例。 |
 | `npm run capabilities` | 在真实浏览器读取 glTF 扩展支持矩阵，再合并已有验证等级和模型目录信息。 | 重写 `examples/gltf-catalog/capabilities.json`。需要可用的 Bash/Playwright CLI（`PWCLI` 可指定 wrapper），以及运行在 `127.0.0.1:7462` 的开发服务，例如另开终端执行 `npm run dev -- --port 7462`。 |
 | `npm run verify:api-coverage` | 用 API 清单、示例规格、执行证据及指纹计算 claimed/attested/verified 和覆盖率，执行覆盖门禁。 | 默认重写 `docs/api-coverage-report.json`，门禁失败也可能已写报告；`-- --check` 改为核对现有报告而不重写。不会自动运行浏览器补齐证据；回归下限通过不等于 release 门禁通过。 |
-| `npm run verify:v06-gate` | 汇总既有 Golden Reference、Catalog、Recipe 等证据，判定 V0.6 阶段门禁。 | 重写 `docs/evidence/v06-review-gate.json` 和 `docs/versions/v06-final-gate.md`；不自动重跑这些证据的采集器，失败时报告可标为 `BLOCKED`。 |
+| `npm run verify:v06-gate` | 汇总既有 Golden Reference、Catalog、Recipe 等证据，判定 V0.6 阶段门禁。 | 重写 `docs/evidence/v06-review-gate.json` 和 `build/reports/v06-final-gate.md`；不自动重跑这些证据的采集器，失败时报告可标为 `BLOCKED`。 |
 
 ### 静态门禁、测试与包消费验证
 
@@ -89,7 +89,7 @@ npm run dev
 | `npm run verify:web-only` | 在临时目录重建依赖图，检查运行时闭包不引入 Native、MiniGame 等平台实现及未登记外部依赖。 | 终端结论；临时分析 JSON 完成后清理，不重写 `docs/` 的正典依赖清单。 |
 | `npm run verify:file-map` | 比较抽取文件、上游原文、修改登记、manifest 和 moduleOverrides 的完整性。 | 终端结论，无默认写入；需要可访问的上游 cocos4（`COCOS_UPSTREAM` 可指定）及依赖包。 |
 | `npm run verify:licenses` | 检查第三方运行时的许可文本、包内携带规则及 bundle 指纹，与默认/变体能力对应。 | 终端结论，无默认报告文件，不自动补许可证。 |
-| `npm run verify:doc-refs` | 检查根 README、`docs/*.md`、`docs/manual/*.md` 的仓库内路径引用，按既有断链基线阻止新增断链或失效基线。 | 默认仅终端 JSON 与退出码；可选输出参数才写报告，不改文档。它不检查外部网址是否可访问。 |
+| `npm run verify:doc-refs` | 检查根 README、docs 顶层和各文档主题目录的本地路径引用，按既有断链基线阻止新增断链或失效基线。 | 默认仅终端 JSON 与退出码；可选输出参数才写报告，不改文档。它不检查外部网址是否可访问。 |
 | `npm run verify:v12-backends` | 检查 WASM 物理后端的源码闭包、登记、feature 边界与类型豁免条件。 | 默认终端结果，无固定产物；源码检查不等于后端已在浏览器运行。 |
 | `npm run verify:v12-custom-face` | 检查 custom pipeline / post-process 的源码、聚合导出和默认 feature 边界。 | 默认终端结果，无固定产物；不验证像素效果。 |
 | `npm run verify:v12-feature-face` | 对账能力名、feature unit、聚合导出及默认 bundle 的组成。 | 默认终端结果，无固定产物；bundle 缺失时部分检查会跳过，应查看输出范围。 |
@@ -114,7 +114,7 @@ npm run dev
 
 报告文件存在不表示本次运行成功：检查命令退出码、报告时间、完成/子集标记和适用的源码/bundle/契约指纹。不要仅为查询命令含义而运行会改写证据的脚本。新增或修改 npm script 时，同步维护本节的用途、输出路径和写入行为。
 
-The `#GameCanvas` element must exist before importing the engine in a browser page because the screen adapter initializes during module import. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf-runtime.md](docs/gltf-runtime.md) and [docs/gltf-decoder-deployment.md](docs/gltf-decoder-deployment.md).
+The `#GameCanvas` element must exist before importing the engine in a browser page because the screen adapter initializes during module import. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf/gltf-runtime.md](docs/gltf/gltf-runtime.md) and [docs/gltf/gltf-decoder-deployment.md](docs/gltf/gltf-decoder-deployment.md).
 
 ## Working agreements
 

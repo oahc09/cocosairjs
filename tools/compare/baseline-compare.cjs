@@ -16,7 +16,7 @@ function arg(name, def) {
 }
 
 const UPSTREAM = path.resolve(arg('upstream', 'E:/AIProMax/github/cocos4'));
-const OUT = path.resolve(arg('out', 'docs/v12-baseline-compare.json'));
+const OUT = path.resolve(arg('out', path.join(ROOT, 'build/reports/baseline-compare.json')));
 const SCOPES = ['cocos', 'pal', 'exports'];
 
 if (!fs.existsSync(path.join(UPSTREAM, 'cocos'))) {

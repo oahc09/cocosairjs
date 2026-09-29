@@ -14,8 +14,8 @@
  *      且它们**不在**默认 AIR_FEATURES（在 ⇒ 默认产物字节货币变动 ⇒ 须走批复 + 全量重采）。
  *   A6 豁免必要性 = 解禁触发器：上游 `tsconfig.json` 的 `types[]` 若能解析到 `native/external/emscripten/{bullet,physx,box2d}`，
  *      Deviation-05 的 exclude 必须撤销并复跑 `npm run typecheck`（对应 owner #14 候选 (b)）。
- *   A7 缺失必在册：五条物理后端子树里「上游有、Air 无」的每个 `.ts` 都必须出现在 `docs/v12-baseline-compare.json` 的某个桶内，
- *      且批次已结项的三棵子树（SEED_DIRS）非 jsb 缺失数必须为 0 —— 防「范围静默缩小」既不被 A1 也不被 file-map 抓到。
+ *   A7 子树不得缩小：直接比较五条物理后端子树，只允许 EXPECT.jsbInClosure 登记的具体平台文件缺失。
+ *      其他缺件一律失败，不依赖旧版比较报告或自动生成的差集为缺件放行。
  *
  * 退出码非 0 = 不变量被破坏（不得进入验收）。上游快照路径可用 COCOS_UPSTREAM 覆盖。
  */
@@ -26,7 +26,7 @@ const crypto = require('crypto');
 const ROOT = path.resolve(__dirname, '..', '..');
 const UPSTREAM = path.resolve(process.env.COCOS_UPSTREAM || 'E:/AIProMax/github/cocos4');
 
-// ---- 登记常量（改动必须同步 UPSTREAM.md Deviation-05、docs/versions/v12-owner-decisions.md §1、F-123/F-124）----
+// ---- 登记常量（改动必须同步 UPSTREAM.md Deviation-05、docs/reference/owner-decisions.md §1、F-123/F-124）----
 const SEED_DIRS = ['cocos/physics/bullet', 'cocos/physics/physx', 'cocos/physics-2d/box2d-wasm'];
 const SEED_FILES = ['exports/physics-ammo.ts', 'exports/physics-physx.ts', 'exports/physics-2d-box2d-wasm.ts'];
 const EXPECT = {
@@ -61,7 +61,6 @@ const EXPECT = {
     physicsSubtreeDirs: [...SEED_DIRS, 'cocos/physics/cannon', 'cocos/physics-2d/box2d'],
 };
 // A7：这三条子树本期已结项 ⇒ 非 jsb 上游文件缺失数必须为 0（jsb 变体按计划书 §1.3 平台排除，允许缺失但须在册）。
-const EXPECTED_FULLY_EXTRACTED = SEED_DIRS;
 
 const errors = [];
 const fail = (msg) => errors.push(msg);
@@ -188,18 +187,10 @@ for (const e of ['bullet/bullet', 'physx/physx', 'box2d/box2d']) {
     if (resolved) fail(`A6 快照内已出现 ${e} 的类型声明 ⇒ Deviation-05 exclude 必须撤销，复跑 npm run typecheck + 全量重采（owner #14 候选 (b) 的条件已具备）`);
 }
 
-// ---- A7 物理后端子树：Air 缺失的上游文件必须**在册**（内联自 scratch `lv12-16-attribution.cjs`）----
-// 与 A1 的分工：A1 管「抽出来的闭包文件是否落盘」，A7 管「子树里 Air 没有的那些文件是否都被基线差集登记过」，
-// 防的是「悄悄少抽一个文件又没登记」——那既不是字节偏差也不是闭包缺件，只表现为范围静默缩小（计划书 §1.3 意义上的未在册）。
-// 登记面 = `docs/v12-baseline-compare.json`（`upstreamOnly` + 全部 `upstreamOnlyByCategory` 桶）。该表陈旧只会**少**条目 ⇒ 判据偏红不偏绿。
-const REG = path.join(ROOT, 'docs/v12-baseline-compare.json');
-if (!fs.existsSync(REG)) fail('A7 找不到登记表 docs/v12-baseline-compare.json（先跑 node tools/compare/baseline-compare.cjs）');
-const reg = fs.existsSync(REG) ? JSON.parse(fs.readFileSync(REG, 'utf8')) : {};
-const registered = new Set([...(reg.upstreamOnly || [])].map((f) => String(f).replace(/^src\//, '')));
-for (const v of Object.values(reg.upstreamOnlyByCategory || {})) {
-    for (const f of (Array.isArray(v) ? v : (v && v.files) || [])) registered.add(String(f).replace(/^src\//, ''));
-}
-if (!registered.size && !errors.length) fail('A7 登记表面为空（无法证明缺失文件已登记 ⇒ 门禁失效，须修门禁而非删断言）');
+// ---- A7 物理后端子树：现场比较，只豁免已经登记的具体 JSB 文件 ----
+// A1 检查静态依赖闭包，A7 还覆盖没有被 seeds 引用的子树文件。
+// 重新生成比较报告不会扩大允许缺失的集合。
+const registered = new Set(EXPECT.jsbInClosure);
 const subtrees = {};
 for (const d of EXPECT.physicsSubtreeDirs) {
     if (!fs.existsSync(upAbs(d))) { subtrees[d] = { upstreamExists: false }; fail(`A7 上游子树不再存在：${d}（登记需同步删除）`); continue; }
@@ -208,10 +199,7 @@ for (const d of EXPECT.physicsSubtreeDirs) {
     const unregistered = missing.filter((f) => !registered.has(f));
     const missingNonJsb = missing.filter((f) => !/\.jsb\.ts$/.test(f));
     subtrees[d] = { upstreamTs: upstreamTs.length, missing: missing.length, missingNonJsb: missingNonJsb.length, unregistered };
-    for (const f of unregistered) fail(`A7 ${d} 有上游文件 Air 未落盘且未登记在基线差集任何桶内（要么抽取，要么在 baseline-compare 归类，不能隐身）：${f}`);
-    if (EXPECTED_FULLY_EXTRACTED.includes(d) && missingNonJsb.length) {
-        fail(`A7 ${d} 批次已结项，非 jsb 上游文件不应缺失：实测 ${missingNonJsb.length} 个，例如 ${missingNonJsb[0]}`);
-    }
+    for (const f of unregistered) fail(`A7 ${d} 有上游文件 Air 未落盘且不属于已登记的 JSB 排除项：${f}`);
 }
 
 const byteIdentical = all.filter((f) => fs.existsSync(airAbs(f)) && sha16(upAbs(f)) === sha16(airAbs(f))).length;

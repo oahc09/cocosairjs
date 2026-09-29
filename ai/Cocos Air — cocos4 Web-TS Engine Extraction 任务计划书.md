@@ -162,7 +162,7 @@ git status --short
 
 ```text
 UPSTREAM.md
-docs/foundation/00-upstream-baseline.md
+历史记录（00-upstream-baseline.md，已清理）
 ```
 
 记录：
@@ -429,7 +429,7 @@ OS
 输出：
 
 ```text
-docs/foundation/00-upstream-baseline.md
+历史记录（00-upstream-baseline.md，已清理）
 ```
 
 ---
@@ -517,7 +517,7 @@ constants
 输出：
 
 ```text
-docs/foundation/01-web-feature-set.md
+docs/reference/web-features.md
 ```
 
 至少包含：
@@ -572,7 +572,7 @@ alias
 生成机器可读：
 
 ```text
-docs/web-dependency-graph.json
+build/reports/web-dependency-graph.json
 ```
 
 节点建议：

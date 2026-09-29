@@ -564,7 +564,7 @@ codex/gltf-ext-verification
 docs/gltf/gltf-runtime.md
 docs/gltf/gltf-extension-reference.md
 docs/gltf/gltf-decoder-deployment.md
-docs/gltf/gltf-validation.md
+历史记录（gltf-validation.md，已清理）
 examples/gltf-catalog/capabilities.json
 THIRD_PARTY_LICENSES.md
 README.md

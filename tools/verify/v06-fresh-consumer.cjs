@@ -37,7 +37,7 @@ function run (cmd, opts) {
     }, null, 2) + '\n');
     fs.writeFileSync(path.join(devtoolsDir, 'README.md'),
         '# cocosair devtools\n\n显式启用：页面 importmap 解析 `cocosair` 后 `import(\'./agent-session.js\')`。\n'
-        + '合同见仓库 docs/versions/v051-agent-development.md。不属于默认 runtime 包。\n');
+        + '合同见仓库 docs/guides/agent-development.md。不属于默认 runtime 包。\n');
     report.devtoolsArtifact = { files: fs.readdirSync(devtoolsDir) };
     const sessionJs = fs.readFileSync(path.join(devtoolsDir, 'agent-session.js'), 'utf8');
     for (const marker of ['createAgentSession', 'STALE_TARGET', 'SESSION_CLOSED']) {

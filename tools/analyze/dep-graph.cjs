@@ -1,7 +1,7 @@
 /**
  * Phase 1-3 — Web dependency graph 分析器。
  *
- * 用法: AIR_FEATURES=air,base,3d,... node tools/analyze/dep-graph.cjs [--out-dir docs]
+ * 用法: AIR_FEATURES=air,base,3d,... OUT_DIR=<目录> node tools/analyze/dep-graph.cjs
  *       （feature 集走 AIR_FEATURES 环境变量；必须与 tools/build/build.cjs 的 AIR_FEATURES 一致，
  *        否则会产生假阳性 UNREACHABLE——如缺 gfx-webgl 时会把整个 webgl 后端误标为不可达）
  *
@@ -11,7 +11,7 @@
  *  3. 从 Air feature 集对应的 exports/*.ts 入口计算可达闭包
  *  4. 文件分类: WEB_REQUIRED / COMMON_REQUIRED / TYPE_ONLY / NATIVE_ONLY / EDITOR_ONLY /
  *     MINIGAME_ONLY / PLATFORM_OTHER_ONLY / UNUSED_IN_AIR_V01
- *  5. 产出 docs/web-dependency-graph.json + docs/extraction-manifest.json + docs/upstream-file-map.json
+ *  5. 登记数据写 docs/；依赖图写 build/reports/。显式 OUT_DIR 将三份输出全部重定向。
  *
  * 分类判据是 Dependency Reachability，不是 grep "NATIVE"（计划书 §15）。
  */
@@ -335,7 +335,9 @@ const depGraph = {
     },
     nodes: nodes.sort((a, b) => a.path.localeCompare(b.path)),
 };
-fs.writeFileSync(path.join(outDir, 'web-dependency-graph.json'), JSON.stringify(depGraph, null, 2));
+const graphOutDir = process.env.OUT_DIR ? outDir : path.join(ROOT, 'build', 'reports');
+fs.mkdirSync(graphOutDir, { recursive: true });
+fs.writeFileSync(path.join(graphOutDir, 'web-dependency-graph.json'), JSON.stringify(depGraph, null, 2));
 
 // manifest: 提取集合 = COMMON_REQUIRED + WEB_REQUIRED + TYPE_ONLY + virtual 目标真实文件
 const extractSet = [...CATEGORY.COMMON_REQUIRED, ...CATEGORY.WEB_REQUIRED, ...CATEGORY.TYPE_ONLY].sort();
@@ -343,7 +345,7 @@ const manifest = {
     meta: {
         generatedAt: depGraph.meta.generatedAt,
         baseline: depGraph.meta.baseline,
-        sourceOfTruth: 'docs/web-dependency-graph.json',
+        sourceOfTruth: 'tools/analyze/dep-graph.cjs',
         note: 'destination = src/<source relative path>; engine root = src/',
     },
     entries: [

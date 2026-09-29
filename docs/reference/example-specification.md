@@ -1,4 +1,4 @@
-# V1.1 — Example Specification 体系落地
+# 示例规格与验证约定
 
 > 依据《Cocos Air — Example Specification 补充执行规范》实施。
 > 更新：2026-09-19（第二轮——规格驱动验证 + stable 晋级 + 基础设施证据）。
