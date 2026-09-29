@@ -3,12 +3,13 @@
  *
  *   node tools/v12/verify-doc-refs.cjs [--json] [--out=<path>] [<相对路径>.md ...]
  *
- * 只读。不传文件参数时扫默认面：根 `README.md` + `docs/*.md` + `docs/manual/*.md`。
+ * 只读。不传文件参数时扫默认面：根 `README.md` + `docs/{foundation,gltf,guides,reference,versions,manual,notes}/*.md` + `docs/*.md`。
  * 判据：文档里以 **反引号** 或 **`](…)`** 形式写出的仓库内路径必须真实存在。
  * 三类引用**只登记不判红**（写进报告 `skipped`，便于人工抽查而不是把门禁天然弄红）：
  *   S1 通配/brace/占位：含 `* ? { } < >`（如 `docs/evidence/v12/**`、`matrix-{chromium,firefox,webkit}.png`、`matrix-<engine>.png`）
  *   S2 外链与锚点：`http(s)://`、`#…`、`mailto:`
- *   S3 仓库外绝对路径：盘符 `X:/…`、`/…`、`~`（台账里指向 scratch/上游快照的路径属这类，且 `docs/audits/**` 整体不在默认面内——受追加式纪律约束，不能让新门禁回头改它）
+ *   S3 仓库外绝对路径：盘符 `X:/…`、`/…`、`~`（台账里指向 scratch/上游快照的路径属这类）。
+ * 已按清理要求移除的 `docs/evidence/` 非保留组和 `docs/audits/` 历史材料单独登记，不作为当前证据通过。
  * 行号后缀（`docs/x.md:123`、`docs/x.md#L123`）会先剥掉再查存在性。
  * 反引号内**跨行**的片段不参与匹配（不做跨行拼接，避免把一句话里的两个 token 粘成假路径）。
  *
@@ -30,7 +31,7 @@ const ROOT_DIRS = ['docs', 'tools', 'src', 'examples', 'build', 'test', 'ai', 'm
 function defaultFiles () {
     const acc = [];
     for (const f of ['README.md']) if (fs.existsSync(path.join(ROOT, f))) acc.push(f);
-    for (const d of ['docs', 'docs/manual']) {
+    for (const d of ['docs', 'docs/foundation', 'docs/gltf', 'docs/guides', 'docs/reference', 'docs/versions', 'docs/manual', 'docs/notes']) {
         const abs = path.join(ROOT, d);
         if (!fs.existsSync(abs)) continue;
         for (const e of fs.readdirSync(abs, { withFileTypes: true })) {
@@ -69,7 +70,7 @@ const baselineMap = new Map(baselineEntries.map((e) => [keyOf(e), e]));
 const bad = [];
 const exempted = [];
 const hitKeys = new Set();
-const skipped = { glob: [], external: [], outOfRepo: [] };
+const skipped = { glob: [], external: [], outOfRepo: [], removedEvidence: [], removedAudit: [] };
 const perDoc = {};
 
 for (const rel of targetList) {
@@ -85,6 +86,19 @@ for (const rel of targetList) {
         const cand = [path.join(ROOT, bare), path.join(ROOT, path.posix.dirname(rel), bare)];
         if (cand.some((c) => fs.existsSync(c))) { resolved++; continue; }
         if (/^https?:/i.test(bare)) { skipped.external.push({ doc: rel, ref: r }); continue; }
+        const evidenceRoot = path.join(ROOT, 'docs', 'evidence') + path.sep;
+        const removedEvidence = cand.some((c) => {
+            const full = path.resolve(c);
+            if (!full.startsWith(evidenceRoot)) return false;
+            const group = path.relative(evidenceRoot, full).split(path.sep)[0];
+            return !['examples', 'manual', 'recipes'].includes(group);
+        });
+        if (removedEvidence) { skipped.removedEvidence.push({ doc: rel, ref: r }); continue; }
+        const auditRoot = path.join(ROOT, 'docs', 'audits') + path.sep;
+        if (cand.some((c) => path.resolve(c).startsWith(auditRoot))) {
+            skipped.removedAudit.push({ doc: rel, ref: r });
+            continue;
+        }
         const item = { doc: rel, ref: r };
         if (baselineMap.has(keyOf(item))) { hitKeys.add(keyOf(item)); exempted.push(Object.assign({}, item, { class: baselineMap.get(keyOf(item)).class })); }
         else bad.push(item);
@@ -103,7 +117,7 @@ const report = {
     ok: errors.length === 0,
     docs: targetList.length,
     refsChecked: Object.values(perDoc).reduce((a, s) => a + s.resolved, 0),
-    skippedCounts: { glob: skipped.glob.length, external: skipped.external.length, outOfRepo: skipped.outOfRepo.length },
+    skippedCounts: { glob: skipped.glob.length, external: skipped.external.length, outOfRepo: skipped.outOfRepo.length, removedEvidence: skipped.removedEvidence.length, removedAudit: skipped.removedAudit.length },
     baselineEntries: baselineEntries.length,
     baselineHits: exempted.length,
     unresolved: bad,

@@ -7,7 +7,7 @@
  * - 对照组 2（SceneGlobals ambient）：skyColorHDR.set 原位变更 → 像素显著变化（绿偏 [19,75,19]）；
  * - renderScene._pointLights 已注册（count=1）、管线为 ForwardPipeline。
  * 判定：主光/点光的视觉贡献与其属性运行期同步在该快照不可观察（GAP-L1）。
- * 证据：docs/evidence/g1-light-contribution-gap.json；登记：docs/api-scenario-gap-matrix.md §7。
+ * 证据：docs/evidence/g1-light-contribution-gap.json；登记：docs/reference/api-scenario-gap-matrix.md §7。
  *
  * 运行：NODE_PATH=<playwright> node tools/verify/g1-trial-run.cjs --root=tools/debug/probes --ids=tmp-light-probe
  */

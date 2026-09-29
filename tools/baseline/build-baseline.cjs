@@ -4,7 +4,7 @@
  * 说明：
  * - 上游默认 `npm run build:dev` 不传 features = 全量 feature 集，其中
  *   gfx-webgpu / physics-physx / physics-ammo / physics-2d-box2d-wasm / spine-* /
- *   meshopt 需要下载 native/external（本快照缺失，见 docs/00-upstream-baseline.md）。
+ *   meshopt 需要下载 native/external（本快照缺失，见 docs/foundation/00-upstream-baseline.md）。
  * - 本脚本使用同一构建器 @cocos/ccbuild + 同一 cc.config.json，仅显式传入
  *   排除上述 feature 后的 Web feature 集，不修改任何上游文件。
  */

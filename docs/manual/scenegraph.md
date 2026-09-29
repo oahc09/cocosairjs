@@ -274,4 +274,4 @@ console.log('[manual/scenegraph] running on cocosair');
 
 ## 局部/世界变换的可运行契约
 
-Gallery 的 `node-hierarchy` 现含独立的 `examples/node-hierarchy/src/transform-contract.ts`，验证父节点旋转/缩放后的世界坐标、逆变换、世界空间赋值、getWorldMatrix/getWorldRS/getWorldRT 和销毁。完整覆盖与证据见 [本波次说明](../api-coverage-wave1.md)。
+Gallery 的 `node-hierarchy` 现含独立的 `examples/node-hierarchy/src/transform-contract.ts`，验证父节点旋转/缩放后的世界坐标、逆变换、世界空间赋值、getWorldMatrix/getWorldRS/getWorldRT 和销毁。完整覆盖与证据见 [API 场景缺口矩阵](../reference/api-scenario-gap-matrix.md)。

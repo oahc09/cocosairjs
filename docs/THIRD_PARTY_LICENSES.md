@@ -92,7 +92,7 @@ Cocos AIR V0.1 基于以下第三方代码/数据构建。本文件为 Source Li
 
 1. **Spine**：该协议要求「产品的每个用户须自备 Spine Editor 许可」且「任何形式的再分发必须附带本许可与版权声明」。
    现状已满足第二项（文本随包发布），第一项与仓库根 `license: MIT` 的单文件引擎发行姿态并不等价。
-   风险面比字面看起来小：按 `docs/v12-spine-asset-sourcing.md` 的实测，alpha.34 的 Web 侧 spine 只有
+   风险面比字面看起来小：按 `docs/notes/v12-spine-asset-sourcing.md` 的实测，alpha.34 的 Web 侧 spine 只有
    wasm/asm 后端，随仓库抽取的 `spine-core.js` 实际是枚举/类型桩，而 emscripten 运行资产并未取得（D2 受阻），
    故默认产物目前并不含 Esoteric 的完整运行时实现。
    ~~选项：保留默认产物 + 显式声明该条件（当前做法）/ 移入常量变体 / 移除该组（与计划书「16 组全部回归」冲突）。~~

@@ -101,14 +101,14 @@ NODE_PATH=<含 playwright 的 node_modules 路径> node tools/verify/examples-sm
 
 ## 7. glTF 类示例的额外前提
 
-引擎**永不内嵌** WASM 解码器（体积与许可考虑）。Draco / meshopt / KTX2-BasisU 示例需要应用侧注入 decoder 资产：仓库已备好的在 `build/gltf-decoders/`，dev server 经 `/build/` 路由提供（`.wasm` MIME 正确）。注入 API、MIME/CORS/worker 与离线验收见 [`docs/gltf-decoder-deployment.md`](../docs/gltf-decoder-deployment.md)；逐扩展支持状态见 `examples/gltf-catalog/capabilities.json`。
+引擎**永不内嵌** WASM 解码器（体积与许可考虑）。Draco / meshopt / KTX2-BasisU 示例需要应用侧注入 decoder 资产：仓库已备好的在 `build/gltf-decoders/`，dev server 经 `/build/` 路由提供（`.wasm` MIME 正确）。注入 API、MIME/CORS/worker 与离线验收见 [`docs/gltf/gltf-decoder-deployment.md`](../docs/gltf/gltf-decoder-deployment.md)；逐扩展支持状态见 `examples/gltf-catalog/capabilities.json`。
 
 ## 8. 注意事项（Code First 踩坑点）
 
 - `#GameCanvas` 必须在引擎 import **之前**存在于 DOM（`pal/screen-adapter` 是模块顶层单例，按 id 查找画布）。
 - Camera 组件需显式 `visibility = Layers.Enum.DEFAULT`（4.0-alpha 默认值为 `undefined`，否则什么都不画）。
 - `Skeleton.joints` 必须是相对 skinningRoot 的**完整路径**（`bone0/bone1`，不是 `bone1`）。
-- 官方模型清单与 Khronos Viewer 对照：[`docs/gltf-catalog.md`](../docs/gltf-catalog.md)。
+- 官方模型清单与 Khronos Viewer 对照：[`docs/gltf/gltf-catalog.md`](../docs/gltf/gltf-catalog.md)。
 
 ## 9. 当前示例实现状态（诚实清单）
 

@@ -1,5 +1,0 @@
-{"f":"docs/evidence/v06-recipes.json","present":true,"bytes":91243,"sha256_16":"474ff2bbd3b5c02d","measuredAt":"2026-09-19T13:06:14.806Z"}
-{"f":"docs/evidence/v06-catalog-runtime-gate.json","present":true,"bytes":9798,"sha256_16":"a87f480f93c7ad8b","measuredAt":"2026-09-19T13:52:19.240Z"}
-{"f":"docs/evidence/v06-report.json","present":false}
-{"f":"docs/evidence/v06-dual.json","present":false}
-{"f":"docs/evidence/v06-golden-dual-track.json","present":true,"bytes":18680,"sha256_16":"2a6e5391c5a8b749","measuredAt":"2026-09-19T13:02:37.589Z"}

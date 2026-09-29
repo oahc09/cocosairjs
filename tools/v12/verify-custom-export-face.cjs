@@ -13,7 +13,7 @@
  *      （抽了不回填簿记 ⇒ 红；出现字节偏差 ⇒ 先在 UPSTREAM.md 登记再更新常量）。
  *   C4 feature unit 声明面：`custom-pipeline` / `custom-pipeline-post-process` 定义与上游逐字段相同，
  *      且上游那条 `custom-pipeline-builtin-scripts` **不得**被静默引入 Air 声明
- *      （`docs/01-web-feature-set.md` 已把它记为非目标；引入即改默认产物字节 ⇒ 须走 owner 批复）。
+ *      （`docs/foundation/01-web-feature-set.md` 已把它记为非目标；引入即改默认产物字节 ⇒ 须走 owner 批复）。
  *   C5 默认发行姿态：上述两个 feature unit **必须**在 `tools/build/build.cjs` 的默认 `AIR_FEATURES` 内
  *      —— 与 A5 对 wasm 后端的要求**极性相反**：后处理效果类是已发布 bundle 的一部分，把它移出默认集同样改产物字节。
  *
@@ -114,7 +114,7 @@ for (const f of EXPECT.featureUnitsShared) {
     else if (JSON.stringify(airCfg.features[f]) !== JSON.stringify(upCfg.features[f])) fail(`C4 ${f} 定义与上游不一致（接线面须按原文保留）`);
 }
 for (const f of EXPECT.featureUnitsNotAir) {
-    if (f in airCfg.features) fail(`C4 ${f} 进了 Air 声明 ⇒ 默认产物字节将变，须先取得 owner 批复（docs/01-web-feature-set.md 记录其为非目标）`);
+    if (f in airCfg.features) fail(`C4 ${f} 进了 Air 声明 ⇒ 默认产物字节将变，须先取得 owner 批复（docs/foundation/01-web-feature-set.md 记录其为非目标）`);
     else if (!(f in upCfg.features)) fail(`C4 上游已不再声明 ${f}，本断言需重新核对`);
 }
 

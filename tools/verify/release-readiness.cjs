@@ -20,6 +20,18 @@ const sha16 = (file) =>
 const manifest = read('examples/files.json');
 const coverage = read('docs/api-coverage-report.json');
 const inventory = read('docs/example-api-inventory.json');
+const requiredEvidence = [
+    'docs/evidence/v11-examples-verified.json',
+    'docs/evidence/v11-devtools-examples.json',
+    'docs/evidence/v11-gallery-artifact.json',
+    'docs/evidence/v12/browser-matrix.json',
+];
+const missingEvidence = requiredEvidence.filter((file) => !fs.existsSync(path.join(root, file)));
+if (missingEvidence.length) {
+    for (const file of missingEvidence) console.error(`[release] FAIL missing evidence: ${file}`);
+    console.log(`[release] NOT READY (${missingEvidence.length} missing evidence files)`);
+    process.exit(1);
+}
 const v11 = read('docs/evidence/v11-examples-verified.json');
 const devtools = read('docs/evidence/v11-devtools-examples.json');
 const gallery = read('docs/evidence/v11-gallery-artifact.json');

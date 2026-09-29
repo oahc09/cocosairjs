@@ -4,7 +4,7 @@
  * 为什么单独一篇：批次 D-4 / G-3 抽进 Air 的 bullet / physx / box2d-wasm 三族，
  * 其 `instantiated.ts`（physx 是 `physx-adapter.ts`）都带同一条官方结构
  * 「`shouldUseWasmModule()` 分流 → wasm 成对 import 或 asm.js 单文件 import」，
- * 而 **asm.js 兜底一支此前零用例**（`docs/v12-owner-decisions.md` §2.1 列为自办欠账，不待批复）。
+ * 而 **asm.js 兜底一支此前零用例**（`docs/versions/v12-owner-decisions.md` §2.1 列为自办欠账，不待批复）。
  *
  * 与 Deviation-05 的关系：这三族被移出**类型核对**（`UPSTREAM.md` Deviation-05），但运行面可以测；
  * ts-jest 走 `diagnostics:false + isolatedModules`，`external:emscripten/**` 虚拟说明符

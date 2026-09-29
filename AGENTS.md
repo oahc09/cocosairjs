@@ -80,7 +80,7 @@ npm run dev
 | `npm run gallery:api` | 从 `build/cocosair.module.d.ts` 的 AST 生成公开 API 清单、分类及指纹。 | 重写 `docs/example-api-inventory.json`；需要当前类型声明，不执行 API 用例。 |
 | `npm run capabilities` | 在真实浏览器读取 glTF 扩展支持矩阵，再合并已有验证等级和模型目录信息。 | 重写 `examples/gltf-catalog/capabilities.json`。需要可用的 Bash/Playwright CLI（`PWCLI` 可指定 wrapper），以及运行在 `127.0.0.1:7462` 的开发服务，例如另开终端执行 `npm run dev -- --port 7462`。 |
 | `npm run verify:api-coverage` | 用 API 清单、示例规格、执行证据及指纹计算 claimed/attested/verified 和覆盖率，执行覆盖门禁。 | 默认重写 `docs/api-coverage-report.json`，门禁失败也可能已写报告；`-- --check` 改为核对现有报告而不重写。不会自动运行浏览器补齐证据；回归下限通过不等于 release 门禁通过。 |
-| `npm run verify:v06-gate` | 汇总既有 Golden Reference、Catalog、Recipe 等证据，判定 V0.6 阶段门禁。 | 重写 `docs/evidence/v06-review-gate.json` 和 `docs/v06-final-gate.md`；不自动重跑这些证据的采集器，失败时报告可标为 `BLOCKED`。 |
+| `npm run verify:v06-gate` | 汇总既有 Golden Reference、Catalog、Recipe 等证据，判定 V0.6 阶段门禁。 | 重写 `docs/evidence/v06-review-gate.json` 和 `docs/versions/v06-final-gate.md`；不自动重跑这些证据的采集器，失败时报告可标为 `BLOCKED`。 |
 
 ### 静态门禁、测试与包消费验证
 
@@ -114,7 +114,7 @@ npm run dev
 
 报告文件存在不表示本次运行成功：检查命令退出码、报告时间、完成/子集标记和适用的源码/bundle/契约指纹。不要仅为查询命令含义而运行会改写证据的脚本。新增或修改 npm script 时，同步维护本节的用途、输出路径和写入行为。
 
-The `#GameCanvas` element must exist before importing the engine in a browser page because the screen adapter initializes during module import. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf-runtime.md](docs/gltf-runtime.md) and [docs/gltf-decoder-deployment.md](docs/gltf-decoder-deployment.md).
+The `#GameCanvas` element must exist before importing the engine in a browser page because the screen adapter initializes during module import. Use `examples/starter/` for the minimal page structure. For model loading and decoder deployment, see [docs/gltf/gltf-runtime.md](docs/gltf/gltf-runtime.md) and [docs/gltf/gltf-decoder-deployment.md](docs/gltf/gltf-decoder-deployment.md).
 
 ## Working agreements
 

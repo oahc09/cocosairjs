@@ -561,10 +561,10 @@ codex/gltf-ext-verification
 实施完成后更新：
 
 ```text
-docs/gltf-runtime.md
-docs/gltf-extension-reference.md
-docs/gltf-decoder-deployment.md
-docs/gltf-validation.md
+docs/gltf/gltf-runtime.md
+docs/gltf/gltf-extension-reference.md
+docs/gltf/gltf-decoder-deployment.md
+docs/gltf/gltf-validation.md
 examples/gltf-catalog/capabilities.json
 THIRD_PARTY_LICENSES.md
 README.md

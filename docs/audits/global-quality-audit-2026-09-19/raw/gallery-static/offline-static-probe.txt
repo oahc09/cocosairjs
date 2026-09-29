@@ -1,8 +1,0 @@
-# gallery-root = E:\AIProMax\github\cocosair.js\build\examples (plain static server; NO /build/ route, NO /__debug/)
-200  /gltf-meshopt/main.boot.js
-404  /build/gltf-decoders/meshopt/meshopt_decoder.mjs
-200  /gltf-decoders/meshopt/meshopt_decoder.mjs
-200  /gltf-meshopt/assets/meshopt-khr.glb
-200  /cocosair.module.js
-200  /mesh-sphere/main.boot.js
-# absolute /build|/__debug URLs in shipped boot.js (excluding guarded __debugBase uses): [["/__debug/agent-session.js","automation"],["/build/gltf-decoders/meshopt/meshopt_decoder.mjs","gltf-meshopt"]]

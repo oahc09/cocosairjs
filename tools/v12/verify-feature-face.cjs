@@ -4,7 +4,7 @@
  *   npm run verify:v12-feature-face        （人读输出）
  *   node tools/v12/verify-feature-face.cjs --json [--out=<path>]
  *
- * 存在理由：README「能力边界」与 `docs/01-web-feature-set.md` §4/§5 各用一种口径描述「Air 有什么」，
+ * 存在理由：README「能力边界」与 `docs/foundation/01-web-feature-set.md` §4/§5 各用一种口径描述「Air 有什么」，
  * 三者（**能力名** / **feature unit 声明名** / **默认构建集**）不是一回事，历史上已因此写出互相矛盾的陈述（F-129、F-130）。
  * 本门禁把三面的现读关系钉成五条不变量，任一侧漂移即红。上游快照路径可用 COCOS_UPSTREAM 覆盖；ROOT 可用 AIR_ROOT 覆盖（负向对照副本用）。
  *

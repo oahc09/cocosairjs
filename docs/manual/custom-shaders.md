@@ -128,7 +128,7 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 - **黑屏排查序**：① `EffectAsset.get(name)` 命中？② `program` 与 `shaders[0].name` 逐字一致？
   ③ attributes 的 format/location 与网格属性匹配（a_position=32/0，a_texCoord=21/2）？
   ④ UBO 成员序与引擎同源？⑤ 当前设备取的哪个变体（`director.root.device.gfxAPI`：WEBGL2(7)→glsl3、WEBGL(6)→glsl1）？
-- **已知缺口对照**：`docs/api-scenario-gap-matrix.md` §7。GAP-L1 已于 r53 修复：用户 Shader 可正常消费
+- **已知缺口对照**：`docs/reference/api-scenario-gap-matrix.md` §7。GAP-L1 已于 r53 修复：用户 Shader 可正常消费
   `cc_mainLitDir/cc_mainLitColor`（**必须用 HDR 量级**：主光 illuminance ≈65000，isHDR 默认 true、
   exposure=1/38400，LDR 量级数值视觉归零）；点光/球光经 CCForwardLight 附加 pass 生效（fixture 已对齐
   上游 4.0 判别语义）。GAP-B1 时机边界仍适用。

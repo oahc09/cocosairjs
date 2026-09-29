@@ -1,3 +1,0 @@
-[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract
-[FAIL] hello-cube S11-SCREENSHOT: §11：Stable 公式要求 Screenshot Current，但 docs/evidence/examples/hello-cube.png 当期 bytes=5847（文件不存在）
-[spec-compliance] 45 examples: 1 fail / 1 warn → docs\evidence\v11-spec-compliance.json

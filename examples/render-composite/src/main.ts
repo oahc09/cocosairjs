@@ -602,7 +602,7 @@ async function main(): Promise<void> {
         maxTextureSize: gl ? Number(gl.getParameter(gl.MAX_TEXTURE_SIZE)) : 0,
         rtValid: !!rt && isValid(rt),
         rtSize: rt ? [(rt as any).width, (rt as any).height] : null,
-        gapRef: 'GAP-L1 已于 r53 修复（fixture 4.0 语义对齐）；Camera 组件 resize 导出面缺口（GAP-C2）见 docs/api-scenario-gap-matrix.md §7',
+        gapRef: 'GAP-L1 已于 r53 修复（fixture 4.0 语义对齐）；Camera 组件 resize 导出面缺口（GAP-C2）见 docs/reference/api-scenario-gap-matrix.md §7',
     };
     probe.ready = true;
     probe.ok = probe.checks.every((c) => c.ok);

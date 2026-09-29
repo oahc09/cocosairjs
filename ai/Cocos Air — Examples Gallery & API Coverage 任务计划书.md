@@ -65,7 +65,7 @@ License Manifest Revision
 输出：
 
 ```text
-docs/v11-baseline.md
+docs/versions/v11-baseline.md
 ```
 
 ---
@@ -645,7 +645,7 @@ Gallery & API Coverage 的 tier 必须由声明的产品/API 范围决定，不�
 - 其余公开声明继续留在 API Inventory 中并归入 Supporting，除非未来通过 §18 的 Inventory Revision 明确提升。
 - 类下公开成员继承所属类的 tier；`@internal`、私有成员和 `@deprecated` 规则优先适用。
 
-该范围修正不得依据当前 verified 数量反向筛选 API，也不得改变本计划的 100% / 90% / 80% 覆盖阈值、Advanced documented-only 上限或 uncovered 归零条件。当前清单、逐项变更及门禁读数见 [`docs/api-coverage-wave16.md`](../docs/api-coverage-wave16.md)。
+该范围修正不得依据当前 verified 数量反向筛选 API，也不得改变本计划的 100% / 90% / 80% 覆盖阈值、Advanced documented-only 上限或 uncovered 归零条件。当前清单、逐项变更及门禁读数见 [`docs/api-coverage-report.json`](../docs/api-coverage-report.json)。
 
 ---
 

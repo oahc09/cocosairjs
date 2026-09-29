@@ -162,7 +162,7 @@ git status --short
 
 ```text
 UPSTREAM.md
-docs/00-upstream-baseline.md
+docs/foundation/00-upstream-baseline.md
 ```
 
 记录：
@@ -429,7 +429,7 @@ OS
 输出：
 
 ```text
-docs/00-upstream-baseline.md
+docs/foundation/00-upstream-baseline.md
 ```
 
 ---
@@ -517,7 +517,7 @@ constants
 输出：
 
 ```text
-docs/01-web-feature-set.md
+docs/foundation/01-web-feature-set.md
 ```
 
 至少包含：

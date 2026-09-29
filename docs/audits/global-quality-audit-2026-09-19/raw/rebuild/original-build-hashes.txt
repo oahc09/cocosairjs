@@ -1,4 +1,0 @@
-c75d5961a6f865b5f1010cfbe10b4eca0433982735f39d709fed6a964f246b0d *build/cocosair.module.js
-1c41316ba85adfeb463596dcf5f801fd1967896643e438ceaa8c77a4cc7e777f *build/cocosair.module.min.js
-ff987a513ddb649eacba2d3980b06ba7fba465874ecba37ba1f1999fc9f8e6e9 *build/cocosair.module.d.ts
-ca3e56d50ef4c1f7d3e0e72b85c8c16cc15f4853a3553e38301f354df25a61f2 *build/cocosair.module.js.map

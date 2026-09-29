@@ -1,6 +1,6 @@
 {
  "generatedAt": "2026-09-22T22:56:19.940Z",
- "purpose": "tools/v12/verify-doc-refs.cjs 的棘轮基线：这些是 V1.2 之前遗留的文档断链，本期只登记不修（LV12-21 欠账，见 docs/acceptance-report-v12.md §3 与台账新 finding）。门禁两条判据：R1 出现基线外的新断链即红；R2 基线条目不再命中（已修好或文档已删）即红，必须删掉该条。r45f2 起：原 46 条中 15 条已按实测目标修好并从本基线删除（上游归属、同主题已存在页、符号真实所在文件、生成器真实输出路径、占位符展开）；余下 30 条 class=v0x-evidence-path 指向 .gitignore 的瞬态目录 output/playwright/（V0.x 期开发机捕获，从未入库），已分别在 docs/11-v03-verification.md、docs/gltf-catalog.md、docs/gltf-validation.md 顶部加「证据链接可读性说明」，声明其仅为 provenance 指针；1 条 class=d9-proposed-file 是 D9 A-4 待决项的「将来文件」，批复前保持登记。",
+ "purpose": "tools/v12/verify-doc-refs.cjs 的棘轮基线：这些是 V1.2 之前遗留的文档断链，本期只登记不修（LV12-21 欠账，见 docs/versions/acceptance-report-v12.md §3 与台账新 finding）。门禁两条判据：R1 出现基线外的新断链即红；R2 基线条目不再命中（已修好或文档已删）即红，必须删掉该条。r45f2 起：原 46 条中 15 条已按实测目标修好并从本基线删除（上游归属、同主题已存在页、符号真实所在文件、生成器真实输出路径、占位符展开）；余下 30 条 class=v0x-evidence-path 指向 .gitignore 的瞬态目录 output/playwright/（V0.x 期开发机捕获，从未入库），已分别在 docs/versions/11-v03-verification.md、docs/gltf/gltf-catalog.md、docs/gltf/gltf-validation.md 顶部加「证据链接可读性说明」，声明其仅为 provenance 指针；1 条 class=d9-proposed-file 是 D9 A-4 待决项的「将来文件」，批复前保持登记。",
  "counts": {
   "total": 31,
   "byClass": {
@@ -8,195 +8,195 @@
    "d9-proposed-file": 1
   },
   "byDoc": {
-   "docs/11-v03-verification.md": 5,
-   "docs/gltf-catalog.md": 5,
-   "docs/gltf-validation.md": 20,
-   "docs/v12-d9-residual-triage.md": 1
+   "docs/versions/11-v03-verification.md": 5,
+   "docs/gltf/gltf-catalog.md": 5,
+   "docs/gltf/gltf-validation.md": 20,
+   "docs/versions/v12-d9-residual-triage.md": 1
   }
  },
  "entries": [
   {
-   "doc": "docs/11-v03-verification.md",
-   "ref": "../output/playwright/v03-browser-result.json",
+   "doc": "docs/versions/11-v03-verification.md",
+   "ref": "../../output/playwright/v03-browser-result.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/11-v03-verification.md",
-   "ref": "../output/playwright/v03-dev-loop.json",
+   "doc": "docs/versions/11-v03-verification.md",
+   "ref": "../../output/playwright/v03-dev-loop.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/11-v03-verification.md",
-   "ref": "../output/playwright/v03-normal-gltf-viewer.png",
+   "doc": "docs/versions/11-v03-verification.md",
+   "ref": "../../output/playwright/v03-normal-gltf-viewer.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/11-v03-verification.md",
-   "ref": "../output/playwright/v03-normal-skinned-animation.png",
+   "doc": "docs/versions/11-v03-verification.md",
+   "ref": "../../output/playwright/v03-normal-skinned-animation.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/11-v03-verification.md",
-   "ref": "../output/playwright/v03-normal-static-model.png",
+   "doc": "docs/versions/11-v03-verification.md",
+   "ref": "../../output/playwright/v03-normal-static-model.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-catalog.md",
-   "ref": "../output/playwright/gltf-catalog-compare.png",
+   "doc": "docs/gltf/gltf-catalog.md",
+   "ref": "../../output/playwright/gltf-catalog-compare.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-catalog.md",
-   "ref": "../output/playwright/gltf-catalog-desktop.png",
+   "doc": "docs/gltf/gltf-catalog.md",
+   "ref": "../../output/playwright/gltf-catalog-desktop.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-catalog.md",
-   "ref": "../output/playwright/gltf-catalog-mobile.png",
+   "doc": "docs/gltf/gltf-catalog.md",
+   "ref": "../../output/playwright/gltf-catalog-mobile.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-catalog.md",
-   "ref": "../output/playwright/gltf-catalog-regression.json",
+   "doc": "docs/gltf/gltf-catalog.md",
+   "ref": "../../output/playwright/gltf-catalog-regression.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-catalog.md",
-   "ref": "../output/playwright/gltf-catalog-result.json",
+   "doc": "docs/gltf/gltf-catalog.md",
+   "ref": "../../output/playwright/gltf-catalog-result.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/AnimatedMorphCube.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/AnimatedMorphCube.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/BoxTextured.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/BoxTextured.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/SimpleSkin.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/SimpleSkin.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/TextureTransformMultiTest-webgl2.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/TextureTransformMultiTest-webgl2.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/TextureTransformTest-webgl2.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/TextureTransformTest-webgl2.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/combined.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/combined.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/diagnostics.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/diagnostics.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/gltf-build.log",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/gltf-build.log",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/gltf-dts.log",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/gltf-dts.log",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/gltf-official-webgl1.json",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/gltf-official-webgl1.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/gltf-official-webgl2.json",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/gltf-official-webgl2.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/gltf-webgl1-result.json",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/gltf-webgl1-result.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/gltf-webgl2-result.json",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/gltf-webgl2-result.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/official-InterpolationTest-webgl2.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/official-InterpolationTest-webgl2.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/official-Material_AlphaBlend_00-webgl2.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/official-Material_AlphaBlend_00-webgl2.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/official-SimpleSparseAccessor-webgl2.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/official-SimpleSparseAccessor-webgl2.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/official-VertexColorTest-webgl2.png",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/official-VertexColorTest-webgl2.png",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/texture-transform-regression.json",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/texture-transform-regression.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/texture-transform-webgl1.json",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/texture-transform-webgl1.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/gltf-validation.md",
-   "ref": "../output/playwright/texture-transform-webgl2.json",
+   "doc": "docs/gltf/gltf-validation.md",
+   "ref": "../../output/playwright/texture-transform-webgl2.json",
    "class": "v0x-evidence-path",
    "since": "r45f"
   },
   {
-   "doc": "docs/v12-d9-residual-triage.md",
+   "doc": "docs/versions/v12-d9-residual-triage.md",
    "ref": "src/vendor/google.ts",
    "class": "d9-proposed-file",
    "since": "r45f"

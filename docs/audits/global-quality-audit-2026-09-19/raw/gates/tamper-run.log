@@ -1,4 +1,0 @@
-[FAIL] anim-position S11-PROMOTION-DRIFT: §11：promotion 与当期证据不符 → candidate deadbeef00000000≠5612c4c2746f395b
-[FAIL] anim-position S23-MANIFEST: §23：files.json 的 promotion={"spec":"8ebd4d7639df","source":"c6fc70109be99971","candidate":"5612c4c2746f395b","verified":17,"attested":0,"units":17} 与 example.json {"spec":"8ebd4d7639df","source":"c6fc70109be99971","candidate":"deadbeef00000000","verified":17,"attested":0,"units":17} 不一致（双份漂移）
-[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract
-[spec-compliance] 45 examples: 2 fail / 1 warn → docs\evidence\v11-spec-compliance.json

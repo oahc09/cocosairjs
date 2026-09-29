@@ -1,5 +1,0 @@
-
-> cocosair.js@0.1.0 verify:benchmark
-> tsc -p tools/benchmark/tsconfig.json && node tools/verify/benchmark-regression.cjs
-
-{"ok":true,"checks":8}

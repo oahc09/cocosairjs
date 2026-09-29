@@ -39,7 +39,7 @@
    tools/benchmark/recipes/recipes30.ts
    tools/benchmark/recipes/schema.ts
    tools/verify/v06-report.cjs
-   docs/v06-final-gate.md
+   docs/versions/v06-final-gate.md
    docs/evidence/v06-review-gate.json
 
 二、完成标准
@@ -147,7 +147,7 @@ verify:v06-gate 在 Recipe 未达标时应非零；只有全部门禁满足后�
 
 七、报告与交付
 
-1. docs/v06-final-gate.md 只能由机器证据生成，禁止手工宣布全绿。
+1. docs/versions/v06-final-gate.md 只能由机器证据生成，禁止手工宣布全绿。
 2. docs/evidence/v06-review-gate.json 必须与当前源码哈希一致。
 3. 清晰区分 PASS、EXPECTED_UNSUPPORTED、BLOCKED 和 FAIL。
 4. A001 是 scripted reference solver，只证明工作流，不宣称 LLM 智能水平。

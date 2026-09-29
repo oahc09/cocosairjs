@@ -2,7 +2,7 @@
 
 > 全部材质类型 × 关键属性 × 适用场景
 > 的速查大表。AIR 的"材质表"分两半：**手写的 builtin 表**（本篇 §1–§2）和
-> **glTF 资产自动选表**（§3，底本 [docs/gltf-extension-reference.md](../gltf-extension-reference.md)）。
+> **glTF 资产自动选表**（§3，底本 [docs/gltf/gltf-extension-reference.md](../gltf/gltf-extension-reference.md)）。
 > 纯参考篇，不配示例；每行的实测出处标了对应示例文章。
 
 ## 1. 手写材质速查（builtin 效果表）
@@ -44,7 +44,7 @@ AIR 包内注册 14 个 `builtin-*` 效果（build js 效果名逐一 grep 实�
 | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 核心 PBR（pbrMetallicRoughness，无扩展）                                                                                    | `air-gltf-standard`                                                                           | identity 路径，与手写 standard 零差异                                                                                                                                               |
 | `KHR_materials_unlit`                                                                                                       | `AIR_GLTF_UNLIT` 单 pass                                                                      | 与全部 KHR 材质扩展互斥（忽略并告警）                                                                                                                                               |
-| `emissive_strength / ior / specular / clearcoat / anisotropy / iridescence / EXT_bump / transmission / volume / dispersion` | `air-gltf-physical`（版本化 superset：UBO 稳定 + 宏裁剪 permutation + sampler binding 15–27） | 逐扩展字段语义/通道/限制**以 [gltf-extension-reference.md](../gltf-extension-reference.md) §材质表为唯一权威**，本篇不复制第二份以免漂移；支持状态机器可读版 `npm run capabilities` |
+| `emissive_strength / ior / specular / clearcoat / anisotropy / iridescence / EXT_bump / transmission / volume / dispersion` | `air-gltf-physical`（版本化 superset：UBO 稳定 + 宏裁剪 permutation + sampler binding 15–27） | 逐扩展字段语义/通道/限制**以 [gltf-extension-reference.md](../gltf/gltf-extension-reference.md) §材质表为唯一权威**，本篇不复制第二份以免漂移；支持状态机器可读版 `npm run capabilities` |
 | sheen（`KHR_materials_sheen`）                                                                                              | 不在上表 → 未实现                                                                             | required 引用会 `GLTF_EXTENSION_UNSUPPORTED`                                                                                                                                        |
 
 **T6 透射的两条实操红线**（底本原文，值得所有手写材质的人知道）：transmission 需要

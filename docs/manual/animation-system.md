@@ -474,4 +474,4 @@ console.log('[manual/animation-system] running on cocosair');
 
 ## Tween 控制与组合
 
-Gallery 的 `tween-basic` 现含 `examples/tween-basic/src/tween-contract.ts`，覆盖暂停/恢复、顺序/并行、克隆隔离、重复、反转与节点移除。使用直接的 reverseTime() 反转前一个动作；嵌入序列分支的已知终点问题及证据见 [本波次说明](../api-coverage-wave1.md)。
+Gallery 的 `tween-basic` 现含 `examples/tween-basic/src/tween-contract.ts`，覆盖暂停/恢复、顺序/并行、克隆隔离、重复、反转与节点移除。使用直接的 reverseTime() 反转前一个动作；嵌入序列分支的已知终点问题及证据见 [API 场景缺口矩阵](../reference/api-scenario-gap-matrix.md)。

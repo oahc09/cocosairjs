@@ -1,7 +1,7 @@
 /* 三引擎 Playwright 二进制定位（win32）。
  * 优先使用当前 Playwright 包匹配且已安装的二进制；缺失时保留既有缓存回退。
  * 注：tools/v12/browser-matrix.cjs 目前仍带自己的一份同表副本（它是顶层 IIFE 脚本、被证据链引用，
- * 迁移要等下一次矩阵重采窗口一起做，见 docs/v12-upstream-regression.md §7.6）。改这张表时两处都要改。
+ * 迁移要等下一次矩阵重采窗口一起做，见 docs/versions/v12-upstream-regression.md §7.6）。改这张表时两处都要改。
  */
 const path = require('path');
 const fs = require('fs');

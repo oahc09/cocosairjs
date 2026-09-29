@@ -28,7 +28,7 @@
 
 | 批次            | 状态                                                                                                        | 关键产物                                                                                                                                                                     |
 | --------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| G0 诊断         | ✅ 完成                                                                                                     | `docs/api-scenario-gap-matrix.md`（基线/Top20/盘点/§0.2 并发/§7 缺口）                                                                                                       |
+| G0 诊断         | ✅ 完成                                                                                                     | `docs/reference/api-scenario-gap-matrix.md`（基线/Top20/盘点/§0.2 并发/§7 缺口）                                                                                                       |
 | G4 Shader 探针  | ✅ 完成（判「路径可用」→ G4.2 分支）                                                                        | `tools/verify/g4-shader-probe.cjs`、`docs/evidence/g4-shader-probe.json`（双后端 28/28 PASS）、截图 ×2、探针页 `ai/g1-staging/shader-probe/`                                 |
 | G1 组合场景 ×5  | 🟢 试验级完成（5/5 试验绿 + 5/5 spec-validate 0 issues）                                                    | `ai/g1-staging/{scene-switch-reentry,ui-asset-loading,model-character-interaction,physics-interaction,render-composite}/`                                                    |
 | G2 游戏/应用 ×6 | 🟢 试验级完成（6/6 试验绿 + 6/6 spec-validate 0 issues）                                                    | `ai/g1-staging/{tetris-classic,match3-classic,tank-battle,contra-action,collector-dodge,product-viewer}/`                                                                    |
@@ -128,7 +128,7 @@ product-viewer 11。G4 探针双后端 28/28。GAP-L1 光照诊断页（tmp-ligh
 
 ### 最终验收
 
-- G0–G4 本轮计划交付收口，详见 `docs/interface-scenarios-repair-report.md`。上方 r52 历史表中的“试验级/待集成/延后”不再代表当前状态。
+- G0–G4 本轮计划交付收口，详见 `docs/versions/interface-scenarios-repair-report.md`。上方 r52 历史表中的“试验级/待集成/延后”不再代表当前状态。
 - Chromium 140/140、DevTools 5/5、Gallery 209/209、手册 44/44；新增 13 例 Firefox/WebKit 各 13/13；Shader 双后端 28/28。
 - `format:check` / `typecheck` / `verify:file-map` / `verify:g3-tooling` / `verify:g3-dev` 全部通过；Jest 31 套全量通过，加修复后的规格套件 6/6，合计 32 套/263 用例已核验。
 - 145 例规格冻结、3470 API 引用零漂移；verified 439，stale=0，schema gap=0；分母与既有覆盖门槛未改。

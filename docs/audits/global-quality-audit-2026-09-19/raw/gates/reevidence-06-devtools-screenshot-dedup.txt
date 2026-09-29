@@ -1,5 +1,0 @@
-pre-automation.png          5999B  480x360  sha16=281aa3a571d5477a
-pre-rc-capture-frame.png    6337B  480x360  sha16=f27e7c41239b9f21
-pre-rc-create-node.png      5254B  480x360  sha16=80cdb10343a2ac68
-pre-rc-error-report.png     5254B  480x360  sha16=80cdb10343a2ac68
-pre-rc-inspect-scene.png    5254B  480x360  sha16=80cdb10343a2ac68

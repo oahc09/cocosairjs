@@ -632,7 +632,7 @@ Single-file Engine rebuild
 输出：
 
 ```text
-docs/05-v02-build-performance.md
+docs/versions/05-v02-build-performance.md
 ```
 
 不为了追求增量性能直接更换整个 bundler。
@@ -1035,7 +1035,7 @@ Browser Startup
 输出：
 
 ```text
-docs/05-v02-build-performance.md
+docs/versions/05-v02-build-performance.md
 ```
 
 Code First DX 不做：

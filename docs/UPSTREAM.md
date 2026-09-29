@@ -22,7 +22,7 @@
 3. 冻结点后 HEAD 另有 `b46553e615` #341、`557b06f7e6` #343 两个提交，均标注 native platform，
    按计划书 R7「V1.2 期间冻结对齐点」不追。
 4. 漂移修复执行：`src/cocos/3d/misc/create-mesh.ts`、`src/cocos/particle/noise.ts` 已从上游逐字节复制对齐；
-   `src/cocos/rendering/custom/web-program-library.ts` 实测此前已一致。详见 `docs/v12-upstream-regression.md`。
+   `src/cocos/rendering/custom/web-program-library.ts` 实测此前已一致。详见 `docs/versions/v12-upstream-regression.md`。
 5. 全量比对脚本化：`node tools/compare/baseline-compare.cjs [--upstream <dir>]` → `docs/v12-baseline-compare.json`。
 
 ## Deviation-01: 上游 commit SHA 不可得 —— **已关闭（2026-09-19，V1.2 G0）**
@@ -43,7 +43,7 @@
 - 处置：**不抽取**，作为 §1.1 回归组 12 的约定豁免。可复核证据：
   `node tools/compare/baseline-compare.cjs` → `docs/v12-baseline-compare.json`
   的 `upstreamOnlyByCategory["platform.jsb-variant"]`（54 项，含 `cocos/root.jsb.ts`）。
-  同步登记于 `docs/17-baseline-comparison.md` §9.2。
+  同步登记于 `docs/foundation/17-baseline-comparison.md` §9.2。
 - 复议条件：若评审要求「12/12 物理对齐」，则按计划书备选口径原样复制且不接线（零风险），需另行授权。
 
 ## Deviation-03: 上游零引用者文件按原文落位但不接线（V1.2 批次 F-1）
@@ -119,10 +119,10 @@
   bullet 仅 wasm 支写 `globalThis.Bullet`、physx 的 asm 用 `Object.assign` 而 wasm 重绑定 `PX`、asm 工厂为 null 时早退不改写 `bt`、
   三族在未开 `LOAD_*_MANUALLY` 时常驻挂在 `game.onPostInfrastructureInitDelegate`。此法**不引第三方资产、不改 `jest.config.js` 的 `moduleNameMapper`**，
   其余既有用例不受影响（全量计数以 `docs/test-inventory.json` 为准，r45d 为 32 套件 / 261 用例）。运行级**真实出图**（三引擎矩阵）仍卡 #10 的资产缺口。
-- 待确认（D3 / R8，见 `docs/v12-owner-decisions.md` §2 #10 与 §2.1）：本行只覆盖**编译面**的处置。运行级取证
+- 待确认（D3 / R8，见 `docs/versions/v12-owner-decisions.md` §2 #10 与 §2.1）：本行只覆盖**编译面**的处置。运行级取证
   （box2d-wasm / ammo / physx 三示例 × 三引擎矩阵）仍卡在同一资产缺口——`external:emscripten/**` 既不在上游快照也不在上游 git
   （`git ls-files external` 仅 11 文件，Air 11/11 逐字节镜像），且 `@cocos/box2d@1.0.2` 包内 `.wasm` 计数为 **0**，
-  故计划书 D3「来源 = @cocos/box2d 包内资产」前提为假（明细 `docs/v12-physics-asset-sourcing.md`）。三选一：
+  故计划书 D3「来源 = @cocos/box2d 包内资产」前提为假（明细 `docs/notes/v12-physics-asset-sourcing.md`）。三选一：
   (a) 按计划书自带默认 D8 口径结案（代码回归 + 选择器可达 + 降级路径可测 = 部分通过、显著标注、不阻塞 Gate）；
   (b) 从官方 npm/CDN 引入 wasm 资产入发行物（需许可登记 + `verify:licenses` / `verify:web-only` / bundle 预算三处门禁同步改 + 全量重采）；
   (c) 记「不达」。答复前 LV12-14 / LV12-16 不计入验收通过。
@@ -144,13 +144,13 @@
   `verify:v12-custom-face`（LV12-17「custom 导出面一致」半项：两个 `src/exports/custom-pipeline*.ts` 与上游逐字节同、
   `cocos/rendering/post-process` 34/34 与 `cocos/rendering/custom` 25/26 逐字节同且逐张登记在 `docs/upstream-file-map.json`）。
 
-- **UPDATE-r46（2026-09-24，Deviation-04 / Deviation-05 结案注记）**：owner 批复 #7=(b)、#14=(a)、#10=(a)（见 `docs/v12-owner-decisions.md` §4）
+- **UPDATE-r46（2026-09-24，Deviation-04 / Deviation-05 结案注记）**：owner 批复 #7=(b)、#14=(a)、#10=(a)（见 `docs/versions/v12-owner-decisions.md` §4）
   ⇒ 两个 Deviation 的「待确认」升级为**已批复结案**：gfx-webgpu 维持「三浏览器回退探测证据」交付档（firefox/webkit 探测腿 r46 补齐）；
   三个 wasm 后端维持「已抽取、未接线、暂不类型核对」豁免（#8(a) 只把 builtin + cannon 接进默认集，不触及本豁免面）；A6 解禁触发器保持有效。
 
 ## Deviation-06: D9 残留差集显式豁免（V1.2 批次 F-3 收口 / owner-decisions #1–#4）—— **豁免登记（已批复 2026-09-24）**
 
-Owner 批复「按照建议执行，确保最优」，`docs/v12-d9-residual-triage.md` 全部 14 项残留按**文件**口径显式豁免，不纳入 V1.2：
+Owner 批复「按照建议执行，确保最优」，`docs/versions/v12-d9-residual-triage.md` 全部 14 项残留按**文件**口径显式豁免，不纳入 V1.2：
 
 - **A 组（7 个 `exports/*.ts` 入口门面）**：`affine-transform` / `rich-text` / `ui-skew` / `light-probe` / `xr` / `particle` / `vendor-google`。
   理由链：实现均在树内（vendor-google 除外，另含第三方 Google Cast SDK 许可面）；各差 1–26 行 re-export 门面；

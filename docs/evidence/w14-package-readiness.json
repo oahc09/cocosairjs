@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-09-28T23:43:41.082Z",
+  "measuredAt": "2026-09-29T14:49:05.543Z",
   "sizes": {
     "build/cocosair.module.js": {
       "bytes": 6610182,
@@ -12,6 +12,18 @@
       "sha256_16": "7f42be9d412dd2fb",
       "gzip": 885057,
       "brotli": 667417
+    },
+    "build/npm/cocosair.module.js": {
+      "bytes": 6610138,
+      "sha256_16": "3cf4a04de827cefa",
+      "gzip": 1181264,
+      "brotli": 870758
+    },
+    "build/npm/cocosair.module.min.js": {
+      "bytes": 3686813,
+      "sha256_16": "f9d1c389c6b88d94",
+      "gzip": 885016,
+      "brotli": 667618
     }
   },
   "checks": {
@@ -19,7 +31,8 @@
     "currentBundle": true,
     "nestedDeployment": true,
     "cspWithoutEval": true,
-    "sourceMap": true
+    "localDevelopmentSourceMap": true,
+    "npmSourceMapOmitted": true
   },
   "note": "Registry publishing and broader V1.1/V1.2 evidence gates remain separate.",
   "verdict": "PASS"

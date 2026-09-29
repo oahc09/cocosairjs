@@ -120,7 +120,7 @@ const capabilities = {
     generatedAt: new Date().toISOString(),
     catalogRevision: catalog.revision,
     decoderManifest: 'build/gltf-decoders/MANIFEST.md',
-    performanceBaseline: 'docs/gltf-performance-baseline.md',
+    performanceBaseline: 'docs/gltf/gltf-performance-baseline.md',
     errorCodes: [
         'GLTF_EXTENSION_UNSUPPORTED', 'GLTF_DECODER_MISSING', 'GLTF_DEVICE_UNSUPPORTED',
         'GLTF_EXTENSION_INVALID', 'GLTF_DECODE_FAILED',

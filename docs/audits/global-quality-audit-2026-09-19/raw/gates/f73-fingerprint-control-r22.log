@@ -1,5 +1,0 @@
-base sourceFingerprint = ea448f328c7d5108
-C1 promotion write-back : IDEMPOTENT (expected)  PASS
-C2 expectation edit Main Camera.position [0,2.6,7.5] -> [0.5,2.6,7.5] : DETECTED  PASS
-C3 entry-source byte edit (src\main.ts) : DETECTED  PASS
-scratch copy left at E:/AIProMax/cocosair-fp-scratch/f73-1789845497582 (outside repo, deletable)

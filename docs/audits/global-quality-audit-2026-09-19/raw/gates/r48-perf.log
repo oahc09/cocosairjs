@@ -1,2 +1,0 @@
-[perf-lifecycle] 30-load median=16.5ms drift=2.9% | dispose 50: 50/50 | memory={"usedJSHeapMB":33} → PASS
-PERF_EXIT=0

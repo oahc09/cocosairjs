@@ -26,7 +26,7 @@ const crypto = require('crypto');
 const ROOT = path.resolve(__dirname, '..', '..');
 const UPSTREAM = path.resolve(process.env.COCOS_UPSTREAM || 'E:/AIProMax/github/cocos4');
 
-// ---- 登记常量（改动必须同步 UPSTREAM.md Deviation-05、docs/v12-owner-decisions.md §1、F-123/F-124）----
+// ---- 登记常量（改动必须同步 UPSTREAM.md Deviation-05、docs/versions/v12-owner-decisions.md §1、F-123/F-124）----
 const SEED_DIRS = ['cocos/physics/bullet', 'cocos/physics/physx', 'cocos/physics-2d/box2d-wasm'];
 const SEED_FILES = ['exports/physics-ammo.ts', 'exports/physics-physx.ts', 'exports/physics-2d-box2d-wasm.ts'];
 const EXPECT = {

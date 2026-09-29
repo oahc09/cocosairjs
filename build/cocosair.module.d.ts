@@ -55657,7 +55657,7 @@
      * 保持一致（由 `test/smoke/smoke-01-bootstrap.test.ts` 锁定，漂移即 RED）。
      * 注意：`VERSION` 已被上游引擎占用（`src/cocos/core/global-exports.ts` 以 `VERSION` 导出
      * Cocos 引擎版本），而 `export *` 的同名成员会被 ESM 静默丢弃，因此这里用 `AIR_` 前缀。
-     * 里程碑身份（V0.1/V0.2/…）由 git tag 与 `docs/v11-baseline.md` 承载，不写入此常量。
+     * 里程碑身份（V0.1/V0.2/…）由 git tag 与 `docs/versions/v11-baseline.md` 承载，不写入此常量。
      */
     export const AIR_VERSION = "1.0.0";
     export interface AirAppOptions {

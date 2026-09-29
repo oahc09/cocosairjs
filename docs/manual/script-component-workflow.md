@@ -179,7 +179,7 @@ app.run(sceneB); // = director.runSceneImmediate(sceneB)
   `illuminance`/`luminance` 必须用 HDR 量级（主光 ~30000–65000 lux、点光 ~千级以上）；
   LDR 量级（2/40/120）× exposure ≈ 0 = 视觉不可见。GAP-L1（点/球光 att≡0）已修复
   （fixture 对齐上游 4.0 判别语义），四型光源均有真实可视贡献。
-- 已知缺口对照表见 `docs/api-scenario-gap-matrix.md` §7（worldToScreen 的参数顺序与深度口径、
+- 已知缺口对照表见 `docs/reference/api-scenario-gap-matrix.md` §7（worldToScreen 的参数顺序与深度口径、
   Camera 组件与渲染相机的接口区别、USE_TEXTURE 宏名等）——写断言前先查表，别把缺口当自己的 bug 调。
 
 ## 8. 项目结构与发布

@@ -1,5 +1,0 @@
-
-> cocosair.js@0.1.0 verify:v11-chain-face
-> node tools/v12/verify-v11-chain-face.cjs
-
-{"ok":true,"records":53,"runPass":"53/53","fps":"927bb491cc9119b1","apiProof":"verified:1029 attested:135 unproven:0","live":"927bb491cc9119b1==evidence","errorCount":0}

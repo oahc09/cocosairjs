@@ -1,4 +1,0 @@
-[WARN] gltf-draco S25-LIFECYCLE: §25：本示例的 capabilityExpectations 明示解码器不可用（KHR_draco_mesh_compression=decoder-required），无已解码资产可释放；正向加载路径 BLOCKED，不伪造 Lifecycle Contract
-[FAIL] gltf-viewer S11-NO-EVIDENCE: §11：status=stable 但当期证据 result=FAIL（docs/evidence/v11-examples-verified.json）
-[FAIL] gltf-viewer S15-ASSET-PROVENANCE: §15：assets/BoxTextured.glb 内容哈希 140f5c64dccb9476 ≠ 交付自带出处清单记载的 b510eca2e2ef33f6（资产在产证之前即已被替换，实物与证据一同失真）
-[spec-compliance] 45 examples: 2 fail / 1 warn → docs\evidence\v11-spec-compliance.json

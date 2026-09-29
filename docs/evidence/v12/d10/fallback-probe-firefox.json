@@ -1,9 +1,0 @@
-{
-  "engine": "firefox",
-  "navigatorGpu": true,
-  "gpuAdapter": "adapter-null",
-  "bundleBackend": "WebGL 2.0",
-  "appCreated": true,
-  "consoleErrors": [],
-  "fallback": "WEBGL2-FALLBACK-OK"
-}

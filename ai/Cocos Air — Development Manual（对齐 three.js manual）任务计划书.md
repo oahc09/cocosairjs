@@ -88,7 +88,7 @@ API 以 `build/cocosair.module.d.ts` 为准；相关专题文档见延伸阅读�
 （如实陈述；引用 README §Air Engine Extraction 能力边界）
 ## 近似替代
 （指向最近的真实能力：如 How to use Post Processing → ToneMappingType 色调映射单项；
- Using Shadertoy shaders → 自定义 effect 机制 docs/gltf-extension-reference.md）
+ Using Shadertoy shaders → 自定义 effect 机制 docs/gltf/gltf-extension-reference.md）
 ## 下一步
 ```
 
@@ -272,7 +272,7 @@ window.__airApp = app;                 // 每个示例末尾固定，供控制�
 
 ### Wave 6：WebGPU / WebXR / Reference（6 条目 → 6 篇文章，0 例）+ 衔接 + 终验
 - [ ] webgpurenderer.md / webgpu-postprocessing.md / webxr-basics.md / webxr-look-to-select.md / webxr-point-to-select.md：5 篇 N 诚实模板（WebGPU→当前 GFX 是 WebGL2/WebGL1；WebXR 三篇→无 XR 设备 API，近似替代指向相机交互篇）
-- [ ] material-table.md：builtin 材质 × 关键属性 × glTF 扩展映射大表（底本 docs/gltf-extension-reference.md），无示例
+- [ ] material-table.md：builtin 材质 × 关键属性 × glTF 扩展映射大表（底本 docs/gltf/gltf-extension-reference.md），无示例
 - [ ] README.md「文档」区块加开发手册入口一行
 - [ ] 终验（命令见 §八）
 

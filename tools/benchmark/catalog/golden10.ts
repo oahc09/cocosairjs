@@ -148,7 +148,7 @@ const material = (id: string, files: Record<string, string>): void => {
 
 material('B001', {
     'src/main.ts': '// TODO: create the scene (see benchmark prompt)\n',
-    'docs-agent/getting-started.md': 'See docs/06-code-first-getting-started.md semantics: createAirApp({canvas:"#GameCanvas"}).',
+    'docs-agent/getting-started.md': 'See docs/guides/06-code-first-getting-started.md semantics: createAirApp({canvas:"#GameCanvas"}).',
 });
 material('B011', {
     'src/main.ts': '// TODO: two cubes + switchable camera\n',

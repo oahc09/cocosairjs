@@ -8,7 +8,7 @@
  *   build/cocosair.module.min.js   (--min)
  *   build/cc.js                    (systemjs 格式，用于 baseline 对比)
  *
- * 引擎根目录为 src/（与上游相对布局一致）；feature 集见 docs/01-web-feature-set.md。
+ * 引擎根目录为 src/（与上游相对布局一致）；feature 集见 docs/foundation/01-web-feature-set.md。
  */
 const { join, dirname, resolve, relative, isAbsolute } = require('path');
 const fs = require('fs');

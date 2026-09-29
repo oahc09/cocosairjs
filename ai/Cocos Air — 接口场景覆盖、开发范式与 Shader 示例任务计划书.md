@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | 单点示例 | `examples/files.json` 当前登记 58 例，含 2D/3D 物理、UI、动画、glTF、音视频等；`docs/manual/examples/manual-mini-game/` 另有吃金币小游戏 | 有基础，但不能把单接口演示等同于复杂组合或完整产品场景 |
 | API 覆盖 | `docs/api-coverage-report.json` 的 2026-09-24 快照：8,060 单元，2,589 个 `coverageRequired`；Core verified 56/816，Important verified 20/1,773；Advanced required 为 0，门禁不适用。报告另有 5 个 stale evidence examples、1 个 schema gap | 既有覆盖体系可复用，先校验证据时效和分母，再补高价值缺口；不得用 claimed/attested 冒充 verified |
-| 开发范式 | `docs/06-code-first-getting-started.md`、`examples/hello-cube/main.js` 已说明启动与 `Component.update`；现有例子同时使用根目录 `main.js`、`main.ts` 和 `src/main.ts`，`material-basic/src/main.ts` 仍有一行多语句与 `var` | 需要统一用户工程的脚本组件结构、构建运行流程和示例样式；不要对抽取的上游源码做全仓格式化 |
+| 开发范式 | `docs/guides/06-code-first-getting-started.md`、`examples/hello-cube/main.js` 已说明启动与 `Component.update`；现有例子同时使用根目录 `main.js`、`main.ts` 和 `src/main.ts`，`material-basic/src/main.ts` 仍有一行多语句与 `var` | 需要统一用户工程的脚本组件结构、构建运行流程和示例样式；不要对抽取的上游源码做全仓格式化 |
 | 格式化工具 | `.editorconfig` 已规定 UTF-8、LF、4 空格；`package.json` 没有 format/lint 脚本，也未发现 Prettier/ESLint/Biome 配置 | 先定范围和规则，再做分批机械修改及 CI 检查 |
 | Shader | `docs/manual/shadertoy.md`、`debugging-glsl.md` 均标 N/A；已有内建 effect 与材质参数示例，尚无经验证的“用户提供 GLSL → 编译 → 材质绑定 → 上屏”示例。`EffectAsset.register` 是待验证候选路径 | 先做可行性探针。可用则补完整 Shader 开发示例；不可用则立最小受支持入口任务，不能仅加一段无法运行的代码 |
 
@@ -33,7 +33,7 @@
 - 从 `docs/example-api-inventory.json` 按模块与 tier 提取未 verified 的 `coverageRequired` 单元，排出 Top 20 组合路径。每项标明：调用链、正常结果、边界/错误、现有示例、缺少的 validator、浏览器/后端约束、预计成本。
 - 盘点 `examples/`、`docs/manual/examples/` 与 Recipes 的重复或断链；把“已有但未进 Gallery/coverage”的内容单独标记，避免重复建设。
 
-**交付**：`docs/api-scenario-gap-matrix.md`（含稳定 API ID 和优先级）、基线记录。**退出条件**：Top 20 均有证据定位和实施去向，过期证据被明确隔离。
+**交付**：`docs/reference/api-scenario-gap-matrix.md`（含稳定 API ID 和优先级）、基线记录。**退出条件**：Top 20 均有证据定位和实施去向，过期证据被明确隔离。
 
 ### G1 — 接口组合场景与故障路径（P0）
 
@@ -113,4 +113,4 @@
 
 ## 7. 本轮实施验收（2026-09-26）
 
-计划修复及合并后的统一验收已完成（候选 `8746fc59b6aa0408`），记录见 `docs/interface-scenarios-repair-report.md`。本结论仅覆盖本计划明确交付范围，Core/Important 的完整覆盖目标仍按后续批次推进。
+计划修复及合并后的统一验收已完成（候选 `8746fc59b6aa0408`），记录见 `docs/versions/interface-scenarios-repair-report.md`。本结论仅覆盖本计划明确交付范围，Core/Important 的完整覆盖目标仍按后续批次推进。
